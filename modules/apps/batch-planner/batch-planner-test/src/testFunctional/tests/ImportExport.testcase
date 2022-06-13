@@ -816,7 +816,7 @@ definition {
 		task ("Then the file should be imported successfully") {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 
-			Button.clickDone();
+			Button.click(button = "Back to the List");
 
 			CommerceChannels.openChannelsAdmin();
 
@@ -1438,7 +1438,7 @@ definition {
 		}
 
 		task ("And given a succesful export") {
-			Button.clickCancel();
+			Button.click(button = "Back to the List");
 
 			ImportExport.mapExport(exportFields = "name,type,description,externalReferenceCode");
 
@@ -1631,7 +1631,7 @@ definition {
 		task ("Then the only the rows without error should be imported") {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 
-			Button.clickDone();
+			Button.click(button = "Back to the List");
 
 			Accounts.openAccountsAdmin();
 

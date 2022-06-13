@@ -316,7 +316,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 
-		Button.clickDone();
+		Button.click(button = "Back to the List");
 	}
 
 	macro mapExport {

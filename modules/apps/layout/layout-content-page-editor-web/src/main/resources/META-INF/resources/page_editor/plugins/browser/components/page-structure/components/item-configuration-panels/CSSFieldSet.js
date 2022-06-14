@@ -18,6 +18,7 @@ import {
 	useDispatch,
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
+import selectCanUpdateCSSAdvancedOptions from '../../../../../../app/selectors/selectCanUpdateCSSAdvancedOptions';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {FieldSet} from './FieldSet';
@@ -34,6 +35,9 @@ const FIELD_SET = {
 };
 
 export default function CSSFieldSet({item}) {
+	const canUpdateCSSAdvancedOptions = useSelector(
+		selectCanUpdateCSSAdvancedOptions
+	);
 	const languageId = useSelector((state) => state.languageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const dispatch = useDispatch();
@@ -53,7 +57,7 @@ export default function CSSFieldSet({item}) {
 		);
 	};
 
-	return Liferay.FeatureFlags['LPS-147511'] ? (
+	return Liferay.FeatureFlags['LPS-147511'] && canUpdateCSSAdvancedOptions ? (
 		<div className="mt-3">
 			<FieldSet
 				fields={FIELD_SET.fields}

@@ -123,9 +123,34 @@ public class ObjectRelationshipResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		long objectDefinitionId2 = GetterUtil.getLong(
+			objectRelationship.getObjectDefinitionId2());
+
+		if ((objectRelationship.getObjectDefinitionId2() == 0) &&
+			(objectRelationship.getObjectDefinitionExternalReferenceCode2() !=
+				null)) {
+
+			com.liferay.object.model.ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						contextCompany.getCompanyId(),
+						objectRelationship.
+							getObjectDefinitionExternalReferenceCode2());
+
+			if (objectDefinition == null) {
+				objectDefinition =
+					_objectDefinitionLocalService.addObjectDefinition(
+						objectRelationship.
+							getObjectDefinitionExternalReferenceCode2(),
+						contextUser.getUserId());
+			}
+
+			objectDefinitionId2 = objectDefinition.getObjectDefinitionId();
+		}
+
 		return _toObjectRelationship(
 			_objectRelationshipService.addObjectRelationship(
-				objectDefinitionId, objectRelationship.getObjectDefinitionId2(),
+				objectDefinitionId, objectDefinitionId2,
 				GetterUtil.getLong(
 					objectRelationship.getParameterObjectFieldId()),
 				objectRelationship.getDeletionTypeAsString(),
@@ -173,6 +198,8 @@ public class ObjectRelationshipResourceImpl
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectRelationship.getLabelMap());
 				name = objectRelationship.getName();
+				objectDefinitionExternalReferenceCode2 =
+					objectDefinition.getExternalReferenceCode();
 				objectDefinitionId1 =
 					objectRelationship.getObjectDefinitionId1();
 				objectDefinitionId2 =

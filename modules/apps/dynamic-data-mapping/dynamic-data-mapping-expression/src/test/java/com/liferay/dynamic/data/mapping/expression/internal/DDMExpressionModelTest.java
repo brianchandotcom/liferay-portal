@@ -14,6 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.expression.internal;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.dynamic.data.mapping.expression.model.AndExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ArithmeticExpression;
 import com.liferay.dynamic.data.mapping.expression.model.ComparisonExpression;
@@ -25,14 +28,19 @@ import com.liferay.dynamic.data.mapping.expression.model.NotExpression;
 import com.liferay.dynamic.data.mapping.expression.model.OrExpression;
 import com.liferay.dynamic.data.mapping.expression.model.Parenthesis;
 import com.liferay.dynamic.data.mapping.expression.model.Term;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Matchers;
+import org.mockito.Mockito;
 
 /**
  * @author Leonardo Barros
@@ -44,10 +52,29 @@ public class DDMExpressionModelTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@BeforeClass
+	public static void setUpClass() {
+		_ddmExpressionFunctionTracker = Mockito.mock(
+			DDMExpressionFunctionTracker.class);
+
+		Mockito.when(
+			_ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
+				Matchers.any())
+		).thenReturn(
+			HashMapBuilder.<String, DDMExpressionFunctionFactory>put(
+				"date", new TestFunctionFactory()
+			).put(
+				"equals", new TestFunctionFactory()
+			).put(
+				"sum", new TestFunctionFactory()
+			).build()
+		);
+	}
+
 	@Test
 	public void testAndExpression() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
-			"true && (2 != 3)");
+			_ddmExpressionFunctionTracker, "true && (2 != 3)");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
 
@@ -95,7 +122,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testArithmeticExpression() throws Exception {
 		DDMExpressionImpl<Double> ddmExpressionImpl = new DDMExpressionImpl<>(
-			"a + b * c - d");
+			_ddmExpressionFunctionTracker, "a + b * c - d");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
 
@@ -160,7 +187,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testFunctionCallExpression() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
-			"date()");
+			_ddmExpressionFunctionTracker, "date()");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
 
@@ -177,7 +204,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testGreaterThanExpression() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
-			"(2 * 5) > 3");
+			_ddmExpressionFunctionTracker, "(2 * 5) > 3");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
 
@@ -234,6 +261,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testLessThanEqualExpression() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
+			_ddmExpressionFunctionTracker,
 			"((1 + 4) / (5 - 2)) <= sum(Var1,Var2)");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
@@ -363,7 +391,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testNotExpression() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
-			"not false");
+			_ddmExpressionFunctionTracker, "not false");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
 
@@ -383,6 +411,7 @@ public class DDMExpressionModelTest {
 	@Test
 	public void testOrExpression() throws Exception {
 		DDMExpressionImpl<Boolean> ddmExpressionImpl = new DDMExpressionImpl<>(
+			_ddmExpressionFunctionTracker,
 			"(-3 < Var1) || (not equals(Var2,sum(Var3,Var4)))");
 
 		Expression expressionModel = ddmExpressionImpl.getModel();
@@ -492,6 +521,18 @@ public class DDMExpressionModelTest {
 		term = (Term)parameterExpression4;
 
 		Assert.assertEquals("Var4", term.getValue());
+	}
+
+	private static DDMExpressionFunctionTracker _ddmExpressionFunctionTracker;
+
+	private static class TestFunctionFactory
+		implements DDMExpressionFunctionFactory {
+
+		@Override
+		public DDMExpressionFunction create() {
+			return null;
+		}
+
 	}
 
 }

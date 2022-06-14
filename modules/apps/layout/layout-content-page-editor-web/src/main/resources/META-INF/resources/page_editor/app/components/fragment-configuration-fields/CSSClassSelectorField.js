@@ -17,7 +17,7 @@ import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayMultiSelect from '@clayui/multi-select';
 import {FocusScope} from '@clayui/shared';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
 import {useSelector} from '../../contexts/StoreContext';
@@ -46,6 +46,7 @@ export default function CSSClassSelectorField({
 	const helpTextId = useId();
 
 	const multiSelectRef = useRef();
+	const firstOptionRef = useRef();
 
 	const onKeyDown = (event) => {
 		if (event.key === 'Escape') {
@@ -105,7 +106,13 @@ export default function CSSClassSelectorField({
 							setValue('');
 						}
 					}}
-					onChange={setValue}
+					onChange={(value) => {
+						setValue(value);
+
+						if (!dropDownActive) {
+							setDropdownActive(true);
+						}
+					}}
 					onFocus={() => {
 						setDropdownActive(false);
 						setValue((previousValue) => previousValue.trim());
@@ -126,7 +133,13 @@ export default function CSSClassSelectorField({
 					}}
 					onKeyDown={(event) => {
 						if (event.key === ' ' && value.trim().length > 0) {
-							setDropdownActive(true);
+							addItem(value.trim());
+							setValue('');
+						}
+						else if (event.key === 'ArrowDown') {
+							event.preventDefault();
+
+							firstOptionRef.current?.focus();
 						}
 					}}
 					placeholder={
@@ -147,6 +160,7 @@ export default function CSSClassSelectorField({
 			<CSSClassSelectorDropDown
 				active={dropDownActive}
 				cssClass={value}
+				firstOptionRef={firstOptionRef}
 				multiSelectRef={multiSelectRef}
 				onItemClick={onItemClick}
 				onKeyDown={onKeyDown}
@@ -159,13 +173,13 @@ export default function CSSClassSelectorField({
 function CSSClassSelectorDropDown({
 	active,
 	cssClass,
+	firstOptionRef,
 	multiSelectRef,
 	onItemClick,
 	onKeyDown,
 	onSetActive,
 }) {
 	const dropdownRef = useRef();
-	const dropdownItemRef = useRef();
 
 	const availableCssClasses = useSelector((state) => {
 		const layoutData = state.layoutData;
@@ -188,15 +202,9 @@ function CSSClassSelectorDropDown({
 		);
 	}, [availableCssClasses, cssClass]);
 
-	useEffect(() => {
-		if (active) {
-			dropdownItemRef.current?.focus();
-		}
-	}, [active]);
-
 	return (
 		<ClayDropDown.Menu
-			active={active}
+			active={active && cssClass}
 			alignElementRef={multiSelectRef}
 			className="page-editor__css-class-selector-dropdown"
 			containerProps={{
@@ -214,7 +222,7 @@ function CSSClassSelectorDropDown({
 						>
 							<ClayDropDown.Item
 								className="align-items-center d-flex text-3"
-								innerRef={dropdownItemRef}
+								innerRef={firstOptionRef}
 								onClick={() => onItemClick(cssClass)}
 							>
 								{Liferay.Language.get('create')}

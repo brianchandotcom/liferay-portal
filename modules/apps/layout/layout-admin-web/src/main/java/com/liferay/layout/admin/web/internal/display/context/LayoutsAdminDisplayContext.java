@@ -90,6 +90,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -509,7 +510,14 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getFaviconURL() {
-		return FaviconUtil.getFaviconURL(_cetManager, getSelLayoutSet());
+		String faviconURL = FaviconUtil.getFaviconURL(
+			_cetManager, getSelLayoutSet());
+
+		if (Validator.isNotNull(faviconURL)) {
+			return faviconURL;
+		}
+
+		return getThemeFavicon();
 	}
 
 	public String getFileEntryItemSelectorURL() {
@@ -1235,6 +1243,11 @@ public class LayoutsAdminDisplayContext {
 				return cetItemSelectorURL.toString();
 			}
 		).build();
+	}
+
+	public String getThemeFavicon() {
+		return themeDisplay.getPathThemeImages() + "/" +
+			PropsUtil.get(PropsKeys.THEME_SHORTCUT_ICON);
 	}
 
 	public String getTitle(boolean privatePages) {

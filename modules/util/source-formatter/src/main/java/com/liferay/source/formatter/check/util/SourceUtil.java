@@ -445,7 +445,7 @@ public class SourceUtil {
 	private static final Log _log = LogFactoryUtil.getLog(SourceUtil.class);
 
 	private static final Pattern _annotationMemberValuePairPattern =
-		Pattern.compile("(\\w+) = \"(.+?)\"");
+		Pattern.compile("(\\w+) = \"(.*?)\"");
 	private static final Pattern _modifierPattern = Pattern.compile(
 		"[^\n]\n(\t*)(public|protected|private)");
 

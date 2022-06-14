@@ -14,6 +14,7 @@
 
 package com.liferay.info.internal.request.struts;
 
+import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.form.InfoForm;
@@ -60,6 +61,8 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			ParamUtil.getLong(originalHttpServletRequest, "classNameId"));
 
 		try {
+			CaptchaUtil.check(httpServletRequest);
+
 			InfoItemCreator<Object> infoItemCreator =
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemCreator.class, className);

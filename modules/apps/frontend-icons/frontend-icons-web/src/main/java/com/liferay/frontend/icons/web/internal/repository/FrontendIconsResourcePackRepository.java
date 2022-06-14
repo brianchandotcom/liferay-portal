@@ -16,7 +16,6 @@ package com.liferay.frontend.icons.web.internal.repository;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -164,12 +163,9 @@ public class FrontendIconsResourcePackRepository {
 				new FrontendIconsResourcePack(
 					extraSettings.contains("editable=true"), title);
 
-			List<FrontendIconsResource> frontendIconsResources =
-				SVGUtil.getFrontendIconsResources(
-					StringUtil.read(fileEntry.getContentStream()));
-
 			frontendIconsResourcePack.addFrontendIconsResources(
-				frontendIconsResources);
+				SVGUtil.getFrontendIconsResources(
+					StringUtil.read(fileEntry.getContentStream())));
 
 			frontendIconsResourcePacks.add(frontendIconsResourcePack);
 		}

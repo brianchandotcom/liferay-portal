@@ -107,14 +107,12 @@ public class FrontendIconsServlet extends HttpServlet {
 				new ArrayList<>();
 
 			for (String iconPack : iconPacks) {
-				FrontendIconsResourcePack frontendIconsResourcePack =
+				frontendIconsResourcePacks.add(
 					_frontendIconsResourcePackRepository.
 						getFrontendIconsResourcePack(
 							(Long)httpServletRequest.getAttribute(
 								WebKeys.COMPANY_ID),
-							iconPack);
-
-				frontendIconsResourcePacks.add(frontendIconsResourcePack);
+							iconPack));
 			}
 
 			if (frontendIconsResourcePacks.isEmpty()) {

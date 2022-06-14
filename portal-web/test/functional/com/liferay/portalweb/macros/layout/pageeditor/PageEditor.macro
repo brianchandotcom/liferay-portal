@@ -2218,20 +2218,6 @@ definition {
 		if ("${panel}" == "General") {
 			Navigator.gotoNavTab(navTab = "General");
 
-			if ("${source}" == "Other Content Type") {
-				Select(
-					key_fieldLabel = "Source",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Other Content Type");
-
-				PageEditor.waitForAutoSave();
-
-				AssertSelectedLabel(
-					key_fieldLabel = "Source",
-					locator1 = "Select#GENERIC_SELECT_FIELD",
-					value1 = "Other Content Type");
-			}
-
 			if (isSet(contentType)) {
 				Select(
 					key_fieldLabel = "Content Type",

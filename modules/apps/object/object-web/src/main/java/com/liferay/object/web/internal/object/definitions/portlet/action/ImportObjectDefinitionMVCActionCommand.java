@@ -14,20 +14,11 @@
 
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
-import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
-import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
-import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
-import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
-import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
-import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
-import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.exception.ObjectDefinitionNameException;
-import com.liferay.object.web.internal.object.definitions.portlet.action.util.ExportImportObjectDefinitiontUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -43,12 +34,9 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
 import com.liferay.portal.util.PropsUtil;
-
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -125,25 +113,6 @@ public class ImportObjectDefinitionMVCActionCommand
 				liferayPortletRequest.getPortletName()));
 	}
 
-	private void _importObjectActions(
-			ObjectDefinition objectDefinition,
-			ObjectDefinition postObjectDefinition, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		ObjectActionResource.Builder objectActionResourcedBuilder =
-			_objectActionResourceFactory.create();
-
-		ObjectActionResource objectActionResource =
-			objectActionResourcedBuilder.user(
-				themeDisplay.getUser()
-			).build();
-
-		for (ObjectAction objectAction : objectDefinition.getObjectActions()) {
-			objectActionResource.postObjectDefinitionObjectAction(
-				postObjectDefinition.getId(), objectAction);
-		}
-	}
-
 	private void _importObjectDefinition(ActionRequest actionRequest)
 		throws Exception {
 
@@ -166,19 +135,6 @@ public class ImportObjectDefinitionMVCActionCommand
 		JSONObject objectDefinitionJSONObject =
 			JSONFactoryUtil.createJSONObject(objectDefinitionJSON);
 
-		ExportImportObjectDefinitiontUtil.apply(
-			objectDefinitionJSONObject,
-			objectLayoutColumnJSONObject -> {
-				objectLayoutColumnJSONObject.remove("objectFieldName");
-
-				return objectLayoutColumnJSONObject;
-			});
-
-		String titleObjectFieldName = (String)objectDefinitionJSONObject.get(
-			"titleObjectFieldName");
-
-		objectDefinitionJSONObject.remove("titleObjectFieldName");
-
 		ObjectDefinition objectDefinition = ObjectDefinition.toDTO(
 			objectDefinitionJSONObject.toString());
 
@@ -186,14 +142,6 @@ public class ImportObjectDefinitionMVCActionCommand
 
 		ObjectDefinition postObjectDefinition =
 			objectDefinitionResource.postObjectDefinition(objectDefinition);
-
-		for (ObjectField objectField : postObjectDefinition.getObjectFields()) {
-			if (Objects.equals(objectField.getName(), titleObjectFieldName)) {
-				postObjectDefinition.setTitleObjectFieldId(objectField.getId());
-
-				break;
-			}
-		}
 
 		postObjectDefinition.setPortlet(objectDefinition.getPortlet());
 
@@ -203,100 +151,13 @@ public class ImportObjectDefinitionMVCActionCommand
 
 		objectDefinitionResource.putObjectDefinition(
 			postObjectDefinition.getId(), postObjectDefinition);
-
-		_importObjectActions(
-			objectDefinition, postObjectDefinition, themeDisplay);
-
-		objectDefinitionJSONObject = JSONFactoryUtil.createJSONObject(
-			objectDefinitionJSON);
-
-		_importObjectLayouts(
-			objectDefinitionJSONObject, postObjectDefinition, themeDisplay);
-
-		_importObjectViews(
-			objectDefinition, postObjectDefinition, themeDisplay);
-	}
-
-	private void _importObjectLayouts(
-			JSONObject objectDefinitionJSONObject,
-			ObjectDefinition postObjectDefinition, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		ObjectLayoutResource.Builder builder =
-			_objectLayoutResourceFactory.create();
-
-		ObjectLayoutResource objectLayoutResource = builder.user(
-			themeDisplay.getUser()
-		).build();
-
-		ExportImportObjectDefinitiontUtil.apply(
-			objectDefinitionJSONObject,
-			objectLayoutColumnJSONObject -> {
-				for (ObjectField objectField :
-						postObjectDefinition.getObjectFields()) {
-
-					if (StringUtil.equals(
-							objectField.getName(),
-							objectLayoutColumnJSONObject.getString(
-								"objectFieldName"))) {
-
-						objectLayoutColumnJSONObject.put(
-							"objectFieldId", objectField.getId());
-
-						break;
-					}
-				}
-
-				objectLayoutColumnJSONObject.remove("objectFieldName");
-
-				return objectLayoutColumnJSONObject;
-			});
-
-		JSONArray objectLayoutsJSONArray =
-			(JSONArray)objectDefinitionJSONObject.get("objectLayouts");
-
-		for (int i = 0; i < objectLayoutsJSONArray.length(); i++) {
-			JSONObject objectLayoutJSONObject =
-				(JSONObject)objectLayoutsJSONArray.get(i);
-
-			objectLayoutResource.postObjectDefinitionObjectLayout(
-				postObjectDefinition.getId(),
-				ObjectLayout.toDTO(objectLayoutJSONObject.toString()));
-		}
-	}
-
-	private void _importObjectViews(
-			ObjectDefinition objectDefinition,
-			ObjectDefinition postObjectDefinition, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		ObjectViewResource.Builder objectViewResourcedBuilder =
-			_objectViewResourceFactory.create();
-
-		ObjectViewResource objectViewResource = objectViewResourcedBuilder.user(
-			themeDisplay.getUser()
-		).build();
-
-		for (ObjectView objectView : objectDefinition.getObjectViews()) {
-			objectViewResource.postObjectDefinitionObjectView(
-				postObjectDefinition.getId(), objectView);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportObjectDefinitionMVCActionCommand.class);
 
 	@Reference
-	private ObjectActionResource.Factory _objectActionResourceFactory;
-
-	@Reference
 	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
-
-	@Reference
-	private ObjectLayoutResource.Factory _objectLayoutResourceFactory;
-
-	@Reference
-	private ObjectViewResource.Factory _objectViewResourceFactory;
 
 	@Reference
 	private Portal _portal;

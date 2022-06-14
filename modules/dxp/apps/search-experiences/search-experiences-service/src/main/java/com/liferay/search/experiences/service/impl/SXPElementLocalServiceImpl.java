@@ -165,8 +165,6 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		sxpElement.setDescriptionMap(descriptionMap);
 		sxpElement.setElementDefinitionJSON(elementDefinitionJSON);
 		sxpElement.setHidden(hidden);
-		sxpElement.setExternalReferenceCode(
-			sxpElement.getExternalReferenceCode());
 		sxpElement.setSchemaVersion(schemaVersion);
 		sxpElement.setTitleMap(titleMap);
 		sxpElement.setVersion(

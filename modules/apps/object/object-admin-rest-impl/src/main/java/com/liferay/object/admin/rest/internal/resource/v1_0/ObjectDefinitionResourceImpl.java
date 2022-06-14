@@ -25,17 +25,22 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectViewDTOCo
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectLayoutUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectDefinitionEntityModel;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.service.ObjectActionLocalService;
+import com.liferay.object.service.ObjectActionService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
+import com.liferay.object.service.ObjectViewService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -245,7 +250,69 @@ public class ObjectDefinitionResourceImpl
 				objectDefinition.getPortlet(),
 				LocalizedMapUtil.getLocalizedMap(
 					objectDefinition.getPluralLabel()),
-				objectDefinition.getScope()));
+				objectDefinition.getScope());
+
+		ObjectAction[] objectActions = objectDefinition.getObjectActions();
+
+		if (objectActions != null) {
+			ObjectActionResource.Builder objectActionResourcedBuilder =
+				_objectActionResourceFactory.create();
+
+			ObjectActionResource objectActionResource =
+				objectActionResourcedBuilder.user(
+					contextUser
+				).build();
+
+			_objectActionLocalService.deleteObjectActions(objectDefinitionId);
+
+			for (ObjectAction objectAction :
+					objectDefinition.getObjectActions()) {
+
+				objectActionResource.postObjectDefinitionObjectAction(
+					objectDefinitionId, objectAction);
+			}
+		}
+
+		ObjectLayout[] objectLayouts = objectDefinition.getObjectLayouts();
+
+		if (objectLayouts != null) {
+			ObjectLayoutResource.Builder builder =
+				_objectLayoutResourceFactory.create();
+
+			ObjectLayoutResource objectLayoutResource = builder.user(
+				contextUser
+			).build();
+
+			_objectLayoutLocalService.deleteObjectLayouts(objectDefinitionId);
+
+			for (ObjectLayout objectLayout : objectLayouts) {
+				objectLayoutResource.postObjectDefinitionObjectLayout(
+					objectDefinitionId, objectLayout);
+			}
+		}
+
+		ObjectView[] objectViews = objectDefinition.getObjectViews();
+
+		if (objectViews != null) {
+			ObjectViewResource.Builder objectViewResourcedBuilder =
+				_objectViewResourceFactory.create();
+
+			ObjectViewResource objectViewResource =
+				objectViewResourcedBuilder.user(
+					contextUser
+				).build();
+
+			_objectViewLocalService.deleteObjectViews(objectDefinitionId);
+
+			for (ObjectView objectView : objectDefinition.getObjectViews()) {
+				objectViewResource.postObjectDefinitionObjectView(
+					objectDefinitionId, objectView);
+			}
+		}
+
+		return _toObjectDefinition(objectDefinition1);
+	}
+
 	@Override
 	public ObjectDefinition putObjectDefinitionByExternalReferenceCode(
 			String externalReferenceCode, ObjectDefinition objectDefinition)
@@ -405,7 +472,6 @@ public class ObjectDefinitionResourceImpl
 				}
 
 				system = objectDefinition.isSystem();
-				titleObjectFieldId = objectDefinition.getTitleObjectFieldId();
 			}
 		};
 	}
@@ -415,6 +481,12 @@ public class ObjectDefinitionResourceImpl
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;
+
+	@Reference
+	private ObjectActionResource.Factory _objectActionResourceFactory;
+
+	@Reference
+	private ObjectActionService _objectActionService;
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
@@ -429,9 +501,18 @@ public class ObjectDefinitionResourceImpl
 	private ObjectLayoutLocalService _objectLayoutLocalService;
 
 	@Reference
+	private ObjectLayoutResource.Factory _objectLayoutResourceFactory;
+
+	@Reference
 	private ObjectViewDTOConverter _objectViewDTOConverter;
 
 	@Reference
 	private ObjectViewLocalService _objectViewLocalService;
+
+	@Reference
+	private ObjectViewResource.Factory _objectViewResourceFactory;
+
+	@Reference
+	private ObjectViewService _objectViewService;
 
 }

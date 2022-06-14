@@ -125,6 +125,31 @@ public class ObjectFieldLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public ObjectField addOrUpdateSystemObjectField(
+			long userId, ObjectDefinition objectDefinition,
+			ObjectField objectField)
+		throws PortalException {
+
+		ObjectField existingObjectField = objectFieldPersistence.fetchByODI_N(
+			objectDefinition.getObjectDefinitionId(), objectField.getName());
+
+		if (existingObjectField == null) {
+			return objectFieldLocalService.addSystemObjectField(
+				userId, objectDefinition.getObjectDefinitionId(),
+				objectField.getBusinessType(), objectField.getDBColumnName(),
+				objectDefinition.getDBTableName(), objectField.getDBType(),
+				objectField.isIndexed(), objectField.isIndexedAsKeyword(),
+				objectField.getIndexedLanguageId(), objectField.getLabelMap(),
+				objectField.getName(), objectField.isRequired());
+		}
+
+		existingObjectField.setLabel(objectField.getLabel());
+
+		return objectFieldLocalService.updateObjectField(existingObjectField);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String businessType,
 			String dbColumnName, String dbTableName, String dbType,

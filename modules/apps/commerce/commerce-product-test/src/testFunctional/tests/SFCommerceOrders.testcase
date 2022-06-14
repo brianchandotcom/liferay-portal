@@ -153,6 +153,7 @@ definition {
 	@description = "Verify the external reference code (ERC) of an order is present in the placed order details."
 	@priority = "3"
 	test AssertERCInPlacedOrderDetails {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a buyer user connected to the Commerce Account") {
@@ -212,6 +213,7 @@ definition {
 	@description = "Verify the shipping and billing addresses of an order are present in the placed order details."
 	@priority = "3"
 	test AssertNameOfTheShippingAndBillingAddressInPlacedOrderDetails {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a buyer user connected to the Commerce Account") {
@@ -306,6 +308,7 @@ definition {
 	@description = "Verify the status of an order is shown in the placed order details."
 	@priority = "3"
 	test AssertOrderStatusInPlacedOrderDetails {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a buyer user connected to the Commerce Account") {
@@ -361,6 +364,7 @@ definition {
 	@description = "Verify the selected order type for an order is displayed in the Open Carts widget."
 	@priority = "3"
 	test AssertOrderTypeInOpenCartsWidgetList {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a buyer user connected to the Commerce Account") {
@@ -414,6 +418,7 @@ definition {
 	@description = "Verify the selected order type for an order is displayed in the Placed Orders list."
 	@priority = "3"
 	test AssertOrderTypeInPlacedOrdersList {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a buyer user connected to the Commerce Account") {

@@ -72,40 +72,59 @@ definition {
 	}
 
 	macro assertOrderImportPreviewEntry {
-		AssertTextEquals(
-			key_columnNumber = "1",
-			key_productName = "${productName}",
-			key_value = "${productSku}",
-			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
-			value1 = "${productSku}");
+		if (isSet(productSku)) {
+			AssertTextEquals(
+				key_columnNumber = "1",
+				key_productName = "${productName}",
+				key_value = "${productSku}",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+				value1 = "${productSku}");
+		}
 
-		AssertTextEquals.assertPartialText(
-			key_columnNumber = "3",
-			key_productName = "${productName}",
-			key_value = "${unitPrice}",
-			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
-			value1 = "${unitPrice}");
+		if (isSet(unitPrice)) {
+			AssertTextEquals.assertPartialText(
+				key_columnNumber = "3",
+				key_productName = "${productName}",
+				key_value = "${unitPrice}",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+				value1 = "${unitPrice}");
+		}
 
-		AssertTextEquals(
-			key_columnNumber = "4",
-			key_productName = "${productName}",
-			key_value = "${productQuantity}",
-			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
-			value1 = "${productQuantity}");
+		if (isSet(productQuantity)) {
+			AssertTextEquals(
+				key_columnNumber = "4",
+				key_productName = "${productName}",
+				key_value = "${productQuantity}",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+				value1 = "${productQuantity}");
+		}
 
-		AssertTextEquals.assertPartialText(
-			key_columnNumber = "5",
-			key_productName = "${productName}",
-			key_value = "${totalPrice}",
-			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
-			value1 = "${totalPrice}");
+		if (isSet(totalPrice)) {
+			AssertTextEquals.assertPartialText(
+				key_columnNumber = "5",
+				key_productName = "${productName}",
+				key_value = "${totalPrice}",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+				value1 = "${totalPrice}");
+		}
 
-		AssertTextEquals.assertPartialText(
-			key_columnNumber = "6",
-			key_productName = "${productName}",
-			key_value = "${importStatus}",
-			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
-			value1 = "${importStatus}");
+		if (isSet(importStatus)) {
+			AssertTextEquals.assertPartialText(
+				key_columnNumber = "6",
+				key_productName = "${productName}",
+				key_value = "${importStatus}",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+				value1 = "${importStatus}");
+		}
+
+		if (isSet(requestedDeliveryDate)) {
+			AssertTextEquals.assertPartialText(
+				key_columnNumber = "8",
+				key_productName = "${productName}",
+				key_value = "${requestedDeliveryDate}",
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT",
+				value1 = "${requestedDeliveryDate}");
+		}
 	}
 
 	macro assertOrderRulesEntry {

@@ -109,15 +109,6 @@ public class ObjectEntryOpenAPIResourceImpl
 				continue;
 			}
 
-			if (propertySchema.getExtensions() != null) {
-				Map<String, Object> propertySchemaExtensions =
-					propertySchema.getExtensions();
-
-				propertyName =
-					propertySchemaExtensions.get("x-parent-map") + "_" +
-						propertyName;
-			}
-
 			fields.put(
 				propertyName,
 				Field.of(

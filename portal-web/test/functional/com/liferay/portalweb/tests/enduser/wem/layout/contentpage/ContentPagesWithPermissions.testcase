@@ -227,7 +227,7 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
-				resourceName = "com.liferay.layout.seocom.liferay.layout.seo",
+				resourceName = "com.liferay.layout.seo",
 				roleTitle = "Roles Siterole Name",
 				roleType = "site");
 
@@ -1086,7 +1086,7 @@ definition {
 
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW",
-				resourceName = "com.liferay.layout.seocom.liferay.layout.seo",
+				resourceName = "com.liferay.layout.seo",
 				roleTitle = "Roles Siterole Name",
 				roleType = "site");
 

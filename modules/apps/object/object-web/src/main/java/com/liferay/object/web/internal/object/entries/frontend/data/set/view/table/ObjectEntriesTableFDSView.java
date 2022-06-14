@@ -101,7 +101,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 					label = objectField.getLabel(locale, true);
 				}
 
-				if (objectField == null) {
+				if ((objectField == null) || objectField.isSystem()) {
 					_addNonbjectField(
 						fdsTableSchemaBuilder, label,
 						objectViewColumn.getObjectFieldName());
@@ -226,6 +226,10 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 	private void _addObjectField(
 		FDSTableSchemaBuilder fdsTableSchemaBuilder, String label,
 		ObjectField objectField) {
+
+		if (objectField.isSystem()) {
+			return;
+		}
 
 		if (Validator.isNull(objectField.getRelationshipType())) {
 			_addFDSTableSchemaField(

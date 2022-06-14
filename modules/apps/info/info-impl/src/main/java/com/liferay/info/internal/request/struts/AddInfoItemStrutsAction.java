@@ -63,6 +63,10 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				_infoItemServiceTracker.getFirstInfoItemService(
 					InfoItemCreator.class, className);
 
+			if (infoItemCreator == null) {
+				throw new InfoFormException();
+			}
+
 			infoItemCreator.createFromInfoItemFieldValues(
 				InfoItemFieldValues.builder(
 				).infoFieldValues(

@@ -171,10 +171,10 @@ definition {
 				fragmentName = "Form Container");
 		}
 
-		task ("Then the page creator could see Place fragments here message shown in Form Container") {
+		task ("Then the page creator could see Select a content type to start creating the form message shown in Form Container") {
 			AssertVisible(
 				key_fragmentName = "Form Container",
-				key_messageInfo = "Place fragments here.",
+				key_messageInfo = "Select a content type to start creating the form.",
 				key_position = "1",
 				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
 		}
@@ -183,19 +183,7 @@ definition {
 			PageEditor.gotoConfiguration(fragmentName = "Form Container");
 		}
 
-		task ("Then the page creator could change the content type of Form Container") {
-			AssertSelectedLabel(
-				key_fieldLabel = "Source",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Basic Web Content (Default)");
-
-			Select(
-				key_fieldLabel = "Source",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Other Content Type");
-
-			PageEditor.waitForAutoSave();
-
+		task ("Then the page creator could select the content type of Form Container") {
 			AssertSelectedLabel(
 				key_fieldLabel = "Content Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -204,14 +192,14 @@ definition {
 			Select(
 				key_fieldLabel = "Content Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Document");
+				value1 = "Web Content Article");
 
 			PageEditor.waitForAutoSave();
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Subtype",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Basic Document");
+				value1 = "Basic Web Content");
 		}
 	}
 

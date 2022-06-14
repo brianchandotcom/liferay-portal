@@ -35,7 +35,8 @@ taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider" %><%@
+<%@ page import="com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration" %><%@
+page import="com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider" %><%@
 page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
 page import="com.liferay.asset.kernel.model.AssetVocabularyConstants" %><%@
@@ -201,6 +202,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil" %
 page import="com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
+page import="com.liferay.portal.util.PropsUtil" %><%@
 page import="com.liferay.rss.util.RSSUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.util.CustomAttributesUtil" %>

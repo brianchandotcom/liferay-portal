@@ -58,7 +58,7 @@ public class ClientExtensionsServicePreAction extends Action {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout == null) {
+		if ((layout == null) || layout.isTypeControlPanel()) {
 			return;
 		}
 

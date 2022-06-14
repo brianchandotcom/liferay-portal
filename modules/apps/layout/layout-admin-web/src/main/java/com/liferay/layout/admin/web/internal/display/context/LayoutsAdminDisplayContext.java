@@ -520,11 +520,11 @@ public class LayoutsAdminDisplayContext {
 			new FileEntryItemSelectorReturnType());
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153457"))) {
-			PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-				getSelectFaviconEventName(), itemSelectorCriterion);
-
-			return itemSelectorURL.toString();
+			return String.valueOf(
+				_itemSelector.getItemSelectorURL(
+					RequestBackedPortletURLFactoryUtil.create(
+						httpServletRequest),
+					getSelectFaviconEventName(), itemSelectorCriterion));
 		}
 
 		CETItemSelectorCriterion cetItemSelectorCriterion =
@@ -535,12 +535,11 @@ public class LayoutsAdminDisplayContext {
 		cetItemSelectorCriterion.setType(
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			getSelectFaviconEventName(), itemSelectorCriterion,
-			cetItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				getSelectFaviconEventName(), itemSelectorCriterion,
+				cetItemSelectorCriterion));
 	}
 
 	public String getFirstColumnConfigureLayoutURL(boolean privatePages) {
@@ -1227,13 +1226,10 @@ public class LayoutsAdminDisplayContext {
 			selectThemeCSSClientExtensionEventName
 		).put(
 			"selectThemeCSSClientExtensionURL",
-			() -> {
-				PortletURL cetItemSelectorURL = getCETItemSelectorURL(
+			() -> String.valueOf(
+				getCETItemSelectorURL(
 					selectThemeCSSClientExtensionEventName,
-					ClientExtensionEntryConstants.TYPE_THEME_CSS);
-
-				return cetItemSelectorURL.toString();
-			}
+					ClientExtensionEntryConstants.TYPE_THEME_CSS))
 		).build();
 	}
 

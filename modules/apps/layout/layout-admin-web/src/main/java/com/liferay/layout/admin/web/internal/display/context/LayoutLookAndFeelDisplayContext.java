@@ -51,8 +51,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -105,18 +103,13 @@ public class LayoutLookAndFeelDisplayContext {
 				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)
 		).put(
 			"globalCSSCETSelectorURL",
-			() -> {
-				PortletURL cetItemSelectorURL =
-					_layoutsAdminDisplayContext.getCETItemSelectorURL(
-						"selectGlobalCSSCETs",
-						ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
-
-				return PortletURLBuilder.create(
-					cetItemSelectorURL
-				).setParameter(
-					"multipleSelection", true
-				).buildString();
-			}
+			() -> PortletURLBuilder.create(
+				_layoutsAdminDisplayContext.getCETItemSelectorURL(
+					"selectGlobalCSSCETs",
+					ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)
+			).setParameter(
+				"multipleSelection", true
+			).buildString()
 		).put(
 			"selectGlobalCSSCETsEventName", "selectGlobalCSSCETs"
 		).build();
@@ -129,18 +122,13 @@ public class LayoutLookAndFeelDisplayContext {
 				ClientExtensionEntryConstants.TYPE_GLOBAL_JS)
 		).put(
 			"globalJSCETSelectorURL",
-			() -> {
-				PortletURL cetItemSelectorURL =
-					_layoutsAdminDisplayContext.getCETItemSelectorURL(
-						"selectGlobalJSCETs",
-						ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
-
-				return PortletURLBuilder.create(
-					cetItemSelectorURL
-				).setParameter(
-					"multipleSelection", true
-				).buildString();
-			}
+			() -> PortletURLBuilder.create(
+				_layoutsAdminDisplayContext.getCETItemSelectorURL(
+					"selectGlobalJSCETs",
+					ClientExtensionEntryConstants.TYPE_GLOBAL_JS)
+			).setParameter(
+				"multipleSelection", true
+			).buildString()
 		).put(
 			"selectGlobalJSCETsEventName", "selectGlobalJSCETs"
 		).build();

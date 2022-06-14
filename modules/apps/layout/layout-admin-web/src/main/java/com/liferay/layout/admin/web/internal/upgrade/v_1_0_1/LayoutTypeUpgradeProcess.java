@@ -118,11 +118,11 @@ public class LayoutTypeUpgradeProcess extends UpgradeProcess {
 			}
 		}
 		else {
-			long assetEntryId = _getAssetEntryId(
-				journalArticleResource.getResourcePrimKey());
-
 			portletPreferences.setValue(
-				"assetEntryId", String.valueOf(assetEntryId));
+				"assetEntryId",
+				String.valueOf(
+					_getAssetEntryId(
+						journalArticleResource.getResourcePrimKey())));
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);

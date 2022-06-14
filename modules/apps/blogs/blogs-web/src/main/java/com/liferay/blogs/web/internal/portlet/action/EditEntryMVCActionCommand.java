@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -76,6 +77,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.trash.service.TrashEntryService;
 import com.liferay.upload.AttachmentContentUpdater;
 
@@ -530,6 +532,12 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			BlogsEntry.class.getName(), actionRequest);
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150762"))) {
+			serviceContext.setAttribute(
+				"updateAutoTags",
+				ParamUtil.getBoolean(actionRequest, "updateAutoTags"));
+		}
 
 		BlogsEntry entry = null;
 

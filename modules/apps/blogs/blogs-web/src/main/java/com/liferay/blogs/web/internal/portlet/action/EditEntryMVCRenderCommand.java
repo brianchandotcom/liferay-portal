@@ -14,6 +14,8 @@
 
 package com.liferay.blogs.web.internal.portlet.action;
 
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.exception.NoSuchEntryException;
@@ -84,7 +86,8 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				BlogsEditEntryDisplayContext.class.getName(),
 				new BlogsEditEntryDisplayContext(
-					entry, _blogsFileUploadsConfiguration,
+					_getAssetAutoTaggerConfiguration(renderRequest), entry,
+					_blogsFileUploadsConfiguration,
 					BlogsGroupServiceSettings.getInstance(
 						themeDisplay.getScopeGroupId()),
 					_blogsItemSelectorHelper, httpServletRequest,
@@ -111,6 +114,20 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 		_blogsFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
 			BlogsFileUploadsConfiguration.class, properties);
 	}
+
+	private AssetAutoTaggerConfiguration _getAssetAutoTaggerConfiguration(
+		RenderRequest renderRequest) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _assetAutoTaggerConfigurationFactory.
+			getGroupAssetAutoTaggerConfiguration(themeDisplay.getSiteGroup());
+	}
+
+	@Reference
+	private AssetAutoTaggerConfigurationFactory
+		_assetAutoTaggerConfigurationFactory;
 
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
 	private volatile ModelResourcePermission<BlogsEntry>

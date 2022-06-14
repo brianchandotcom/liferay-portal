@@ -152,6 +152,21 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 						className="<%= BlogsEntry.class.getName() %>"
 						classPK="<%= blogsEditEntryDisplayContext.getEntryId() %>"
 					/>
+
+					<c:if test="<%= blogsEditEntryDisplayContext.isAutoTaggingEnabled() %>">
+						<clay:checkbox
+							checked="<%= blogsEditEntryDisplayContext.isUpdateAutoTags() %>"
+							id='<%= liferayPortletResponse.getNamespace() + "updateAutoTags" %>'
+							label='<%= LanguageUtil.get(request, "update-auto-tags") %>'
+							name='<%= liferayPortletResponse.getNamespace() + "updateAutoTags" %>'
+						/>
+
+						<div class="ml-4">
+							<small class="text-secondary">
+								<liferay-ui:message key="update-auto-tags-help" />
+							</small>
+						</div>
+					</c:if>
 				</aui:fieldset>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">

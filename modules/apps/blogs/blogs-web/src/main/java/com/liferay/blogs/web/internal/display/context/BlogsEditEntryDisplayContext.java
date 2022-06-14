@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.web.internal.display.context;
 
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.settings.BlogsGroupServiceSettings;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
@@ -50,6 +53,7 @@ import javax.servlet.http.HttpServletRequest;
 public class BlogsEditEntryDisplayContext {
 
 	public BlogsEditEntryDisplayContext(
+		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration,
 		BlogsEntry blogsEntry,
 		BlogsFileUploadsConfiguration blogsFileUploadsConfiguration,
 		BlogsGroupServiceSettings blogsGroupServiceSettings,
@@ -57,6 +61,7 @@ public class BlogsEditEntryDisplayContext {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		_assetAutoTaggerConfiguration = assetAutoTaggerConfiguration;
 		_blogsEntry = blogsEntry;
 		_blogsFileUploadsConfiguration = blogsFileUploadsConfiguration;
 		_blogsGroupServiceSettings = blogsGroupServiceSettings;
@@ -372,6 +377,16 @@ public class BlogsEditEntryDisplayContext {
 		return _allowTrackbacks;
 	}
 
+	public boolean isAutoTaggingEnabled() {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150762")) ||
+			(getBlogsEntry() == null)) {
+
+			return false;
+		}
+
+		return _assetAutoTaggerConfiguration.isEnabled();
+	}
+
 	public boolean isCustomAbstract() {
 		if (_customAbstract != null) {
 			return _customAbstract;
@@ -408,8 +423,13 @@ public class BlogsEditEntryDisplayContext {
 		return _emailEntryUpdatedEnabled;
 	}
 
+	public boolean isUpdateAutoTags() {
+		return _assetAutoTaggerConfiguration.isUpdateAutoTags();
+	}
+
 	private Boolean _allowPingbacks;
 	private Boolean _allowTrackbacks;
+	private final AssetAutoTaggerConfiguration _assetAutoTaggerConfiguration;
 	private final BlogsEntry _blogsEntry;
 	private final BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
 	private final BlogsGroupServiceSettings _blogsGroupServiceSettings;

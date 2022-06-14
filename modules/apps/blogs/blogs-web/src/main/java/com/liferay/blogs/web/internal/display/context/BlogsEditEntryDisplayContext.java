@@ -147,11 +147,12 @@ public class BlogsEditEntryDisplayContext {
 		).setRedirect(
 			getRedirect()
 		).setPortletResource(
-			getPortletResource()
+			ParamUtil.getString(_httpServletRequest, "portletResource")
 		).setParameter(
 			"entryId", getEntryId()
 		).setParameter(
-			"referringPortletResource", getReferringPortletResource()
+			"referringPortletResource",
+			ParamUtil.getString(_httpServletRequest, "referringPortletResource")
 		).buildString();
 	}
 
@@ -184,10 +185,6 @@ public class BlogsEditEntryDisplayContext {
 		return LanguageUtil.get(_httpServletRequest, "new-blog-entry");
 	}
 
-	public String getPortletResource() {
-		return ParamUtil.getString(_httpServletRequest, "portletResource");
-	}
-
 	public String getRedirect() {
 		if (_redirect != null) {
 			return _redirect;
@@ -196,11 +193,6 @@ public class BlogsEditEntryDisplayContext {
 		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		return _redirect;
-	}
-
-	public String getReferringPortletResource() {
-		return ParamUtil.getString(
-			_httpServletRequest, "referringPortletResource");
 	}
 
 	public long getSmallImageFileEntryId() {
@@ -230,17 +222,6 @@ public class BlogsEditEntryDisplayContext {
 		return _blogsItemSelectorHelper.getItemSelectorURL(
 			requestBackedPortletURLFactory, themeDisplay,
 			getSmallImageItemSelectorEventName());
-	}
-
-	public String getSubtitle() {
-		if (_subtitle != null) {
-			return _subtitle;
-		}
-
-		_subtitle = BeanParamUtil.getString(
-			getBlogsEntry(), _httpServletRequest, "subtitle");
-
-		return _subtitle;
 	}
 
 	public Map<String, Object> getTaglibContext() throws PortalException {
@@ -291,7 +272,9 @@ public class BlogsEditEntryDisplayContext {
 					).put(
 						"status", blogsEntry.getStatus()
 					).put(
-						"subtitle", getSubtitle()
+						"subtitle",
+						BeanParamUtil.getString(
+							getBlogsEntry(), _httpServletRequest, "subtitle")
 					).put(
 						"title", getTitle()
 					).put(
@@ -442,7 +425,6 @@ public class BlogsEditEntryDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
 	private Long _smallImageFileEntryId;
-	private String _subtitle;
 	private String _title;
 	private String _urlTitle;
 

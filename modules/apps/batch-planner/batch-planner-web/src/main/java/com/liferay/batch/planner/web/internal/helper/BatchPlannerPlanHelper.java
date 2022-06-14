@@ -64,17 +64,12 @@ public class BatchPlannerPlanHelper {
 
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType");
-		String internalClassName = ParamUtil.getString(
-			portletRequest, "internalClassName");
-		String taskItemDelegateName = ParamUtil.getString(
-			portletRequest, "taskItemDelegateName");
+		String internalClassName = _resolveInternalClassName(
+			ParamUtil.getString(portletRequest, "internalClassName"));
+		String taskItemDelegateName = _resolveTaskItemDelegateName(
+			ParamUtil.getString(portletRequest, "internalClassName"),
+			ParamUtil.getString(portletRequest, "taskItemDelegateName"));
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
-
-		if (internalClassName.contains("#")) {
-			taskItemDelegateName = _handleTaskItemDelegateName(
-				internalClassName);
-			internalClassName = _handleInternalClassName(internalClassName);
-		}
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
@@ -104,17 +99,12 @@ public class BatchPlannerPlanHelper {
 
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType", "CSV");
-		String internalClassName = ParamUtil.getString(
-			portletRequest, "internalClassName");
-		String taskItemDelegateName = ParamUtil.getString(
-			portletRequest, "taskItemDelegateName");
+		String internalClassName = _resolveInternalClassName(
+			ParamUtil.getString(portletRequest, "internalClassName"));
+		String taskItemDelegateName = _resolveTaskItemDelegateName(
+			ParamUtil.getString(portletRequest, "internalClassName"),
+			ParamUtil.getString(portletRequest, "taskItemDelegateName"));
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
-
-		if (internalClassName.contains("#")) {
-			taskItemDelegateName = _handleTaskItemDelegateName(
-				internalClassName);
-			internalClassName = _handleInternalClassName(internalClassName);
-		}
 
 		int size = 0;
 
@@ -347,18 +337,26 @@ public class BatchPlannerPlanHelper {
 		return batchPlannerMappings;
 	}
 
-	private String _handleInternalClassName(String internalClassName) {
-		String[] internalClassNameObjectDefinitionName =
-			internalClassName.split("#");
+	private String _resolveInternalClassName(String internalClassName) {
+		int idx = internalClassName.indexOf(StringPool.POUND);
 
-		return internalClassNameObjectDefinitionName[0];
+		if (idx < 0) {
+			return internalClassName;
+		}
+
+		return internalClassName.substring(0, idx);
 	}
 
-	private String _handleTaskItemDelegateName(String internalClassName) {
-		String[] internalClassNameObjectDefinitionName =
-			internalClassName.split("#");
+	private String _resolveTaskItemDelegateName(
+		String internalClassName, String taskItemDelegateName) {
 
-		return internalClassNameObjectDefinitionName[1].replace("C_", "");
+		int idx = internalClassName.indexOf(StringPool.POUND);
+
+		if (idx < 0) {
+			return taskItemDelegateName;
+		}
+
+		return internalClassName.substring(idx + 3);
 	}
 
 	private BatchPlannerPlan _updateBatchPlannerPlan(

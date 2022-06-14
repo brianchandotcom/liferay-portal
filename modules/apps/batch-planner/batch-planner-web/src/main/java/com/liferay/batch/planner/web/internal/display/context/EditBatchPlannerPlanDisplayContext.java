@@ -138,27 +138,13 @@ public class EditBatchPlannerPlanDisplayContext {
 			String[] internalClassNameParts = StringUtil.split(
 				internalClassName, StringPool.PERIOD);
 
-			if (internalClassName.contains("#")) {
-				String objectDefinitionName = internalClassName.split("#")[1];
-
-				internalClassNameSelectOptions.add(
-					new SelectOption(
-						String.format(
-							"%s (%s - %s)", objectDefinitionName,
-							internalClassNameParts
-								[internalClassNameParts.length - 2],
-							entry.getValue()),
-						internalClassName));
-
-				continue;
-			}
-
 			internalClassNameSelectOptions.add(
 				new SelectOption(
 					String.format(
 						"%s (%s - %s)",
-						internalClassNameParts
-							[internalClassNameParts.length - 1],
+						_resolveInternalClassSimpleName(
+							internalClassNameParts
+								[internalClassNameParts.length - 1]),
 						internalClassNameParts
 							[internalClassNameParts.length - 2],
 						entry.getValue()),
@@ -227,6 +213,16 @@ public class EditBatchPlannerPlanDisplayContext {
 		}
 
 		return templateSelectOptions;
+	}
+
+	private String _resolveInternalClassSimpleName(String internalClassName) {
+		int idx = internalClassName.indexOf(StringPool.POUND);
+
+		if (idx < 0) {
+			return internalClassName;
+		}
+
+		return internalClassName.substring(idx + 1);
 	}
 
 	private final List<SelectOption> _internalClassNameSelectOptions;

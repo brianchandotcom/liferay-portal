@@ -132,7 +132,8 @@ export default withRouter(
 							);
 							setError(errorObject);
 							setLoading(false);
-						} else {
+						}
+						else {
 							setQuestion(messageBoardThreadByFriendlyUrlPath);
 							setLoading(false);
 						}
@@ -222,7 +223,8 @@ export default withRouter(
 				await onSubscription();
 
 				fetchMessages();
-			} catch (error) {}
+			}
+			catch (error) {}
 		};
 
 		const deleteAnswer = useCallback(

@@ -140,10 +140,10 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		article = (JournalArticle)addVersion(article);
 
-		int articlesCount = JournalArticleLocalServiceUtil.getArticlesCount(
-			group.getGroupId(), article.getArticleId());
-
-		Assert.assertEquals(2, articlesCount);
+		Assert.assertEquals(
+			2,
+			JournalArticleLocalServiceUtil.getArticlesCount(
+				group.getGroupId(), article.getArticleId()));
 
 		Map<String, String[]> exportParameterMap = new HashMap<>();
 

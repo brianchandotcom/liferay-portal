@@ -365,11 +365,10 @@ public class JournalArticleStagedModelDataHandler
 						RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
 
 			if (changesetCollection != null) {
-				long classNameId = _classNameLocalService.getClassNameId(
-					JournalArticleResource.class);
-
 				_changesetEntryLocalService.deleteEntry(
-					changesetCollection.getChangesetCollectionId(), classNameId,
+					changesetCollection.getChangesetCollectionId(),
+					_classNameLocalService.getClassNameId(
+						JournalArticleResource.class),
 					article.getResourcePrimKey());
 			}
 		}

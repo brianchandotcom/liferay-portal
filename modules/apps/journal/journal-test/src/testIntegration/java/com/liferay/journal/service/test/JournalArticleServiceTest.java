@@ -620,12 +620,11 @@ public class JournalArticleServiceTest {
 
 		Assert.assertEquals(2, count);
 
-		List<JournalArticle> latestArticles =
+		Assert.assertEquals(
 			JournalArticleServiceUtil.getLatestArticles(
 				_group.getGroupId(), WorkflowConstants.STATUS_APPROVED,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-		Assert.assertEquals(latestArticles, articles);
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			articles);
 
 		_article = updateArticleStatus(
 			_article, WorkflowConstants.STATUS_DRAFT);

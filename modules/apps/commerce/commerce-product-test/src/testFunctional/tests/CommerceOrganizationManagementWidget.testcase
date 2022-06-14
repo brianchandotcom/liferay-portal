@@ -32,6 +32,58 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "COMMERCE-9401. Verify new accounts can be created using the Organization Management widget."
+	@priority = "3"
+	test CanCreateAccountUsingWidget {
+		task ("When the Organization Management Widget Page is reached") {
+			Navigator.openSitePage(
+				pageName = "Organization Management Widget Page",
+				siteName = "Minium");
+
+			Click(locator1 = "Button#EXPAND");
+		}
+
+		task ("And the organization svg node is clicked") {
+			Click(
+				key_nodeName = "Organization 1",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		}
+
+		task ("And the plus button is clicked") {
+			Click(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+		}
+
+		task ("And the account svg node is clicked") {
+			WaitForVisible(
+				key_orgType = "account",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
+
+			Click(
+				key_orgType = "account",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
+		}
+
+		task ("Then the admin is able to create a new account") {
+			Click.clickAtNotVisible(
+				key_radioOption = "Create New Account",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "Account 1");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the new account is present in the admin console") {
+			AssertElementPresent(
+				key_nodeName = "Account 1",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		}
+	}
+
 	@description = "COMMERCE-9400. Verify new child organizations can be created using the Organization Management widget."
 	@priority = "3"
 	test CanCreateOrganizationUsingWidget {

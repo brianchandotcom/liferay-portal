@@ -11,6 +11,7 @@
 
 import {useState} from 'react';
 import i18n from '../../../../common/I18n';
+import Skeleton from '../../../../common/components/Skeleton';
 import SearchBar from './components/SearchBar';
 
 const SearchHeader = ({count, loading, onSearchSubmit}) => {
@@ -34,7 +35,7 @@ const SearchHeader = ({count, loading, onSearchSubmit}) => {
 			/>
 
 			{loading ? (
-				<>Loading</>
+				<Skeleton height={22} width={85}/>
 			) : (
 				<h5 className="m-0 text-neutral-7">{getCounter()}</h5>
 			)}

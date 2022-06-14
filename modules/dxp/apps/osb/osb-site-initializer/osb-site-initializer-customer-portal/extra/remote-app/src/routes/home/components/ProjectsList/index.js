@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -44,6 +45,11 @@ const ProjectList = ({
 		));
 	};
 
+	const getLoadingCards = () =>
+		[...new Array(4)].map((_, index) => (
+			<ProjectCard key={index} loading />
+		));
+
 	const showResults = () => {
 		if (!koroneikiAccounts) {
 			return (
@@ -73,10 +79,6 @@ const ProjectList = ({
 		);
 	};
 
-	if (loading) {
-		return <>Loading</>;
-	}
-
 	return (
 		<div
 			className={classNames('d-flex flex-wrap', {
@@ -84,7 +86,7 @@ const ProjectList = ({
 				'cp-home-projects-sm pt-2': hasManyProjects,
 			})}
 		>
-			{showResults()}
+			{loading ? getLoadingCards() : showResults()}
 		</div>
 	);
 };

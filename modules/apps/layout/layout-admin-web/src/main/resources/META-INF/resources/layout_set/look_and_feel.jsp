@@ -18,6 +18,8 @@
 
 <%
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
+
+LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 %>
 
 <liferay-ui:error-marker
@@ -25,7 +27,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	value="look-and-feel"
 />
 
-<aui:model-context bean="<%= layoutsAdminDisplayContext.getSelLayoutSet() %>" model="<%= Layout.class %>" />
+<aui:model-context bean="<%= selLayoutSet %>" model="<%= Layout.class %>" />
 
 <aui:input name="devices" type="hidden" value="regular" />
 
@@ -39,7 +41,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	<clay:sheet-section>
 		<react:component
 			module="js/layout/look_and_feel/GlobalCSSCETsConfiguration"
-			props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps() %>"
+			props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps(LayoutSet.class.getName(), selLayoutSet.getLayoutSetId()) %>"
 		/>
 	</clay:sheet-section>
 </c:if>

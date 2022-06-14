@@ -158,7 +158,7 @@ else {
 		<div>
 			<react:component
 				module="js/layout/look_and_feel/GlobalCSSCETsConfiguration"
-				props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps() %>"
+				props="<%= layoutLookAndFeelDisplayContext.getGlobalCSSCETsConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
 			/>
 		</div>
 	</clay:sheet-section>

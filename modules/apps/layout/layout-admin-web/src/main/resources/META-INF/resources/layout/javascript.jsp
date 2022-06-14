@@ -43,7 +43,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	<clay:sheet-section>
 		<react:component
 			module="js/layout/look_and_feel/GlobalJSCETsConfiguration"
-			props="<%= layoutLookAndFeelDisplayContext.getGlobalJSCETsConfigurationProps() %>"
+			props="<%= layoutLookAndFeelDisplayContext.getGlobalJSCETsConfigurationProps(Layout.class.getName(), selLayout.getPlid()) %>"
 		/>
 	</clay:sheet-section>
 </c:if>

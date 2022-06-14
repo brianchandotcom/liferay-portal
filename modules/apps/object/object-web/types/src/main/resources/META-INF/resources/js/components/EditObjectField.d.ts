@@ -20,6 +20,7 @@ export default function EditObjectField({
 	forbiddenLastChars,
 	forbiddenNames,
 	isApproved,
+	isDefaultStorageType,
 	isSystemObject,
 	objectField: initialValues,
 	objectFieldTypes,
@@ -31,6 +32,7 @@ interface IProps {
 	forbiddenLastChars: string[];
 	forbiddenNames: string[];
 	isApproved: boolean;
+	isDefaultStorageType: boolean;
 	isSystemObject: boolean;
 	objectField: ObjectField;
 	objectFieldTypes: ObjectFieldType[];

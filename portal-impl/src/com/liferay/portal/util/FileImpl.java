@@ -42,6 +42,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 import java.io.Reader;
@@ -51,8 +52,6 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -818,25 +817,28 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public void unzip(File source, File destination) {
-		Path destinationPath = destination.toPath();
-
 		try (InputStream inputStream = new FileInputStream(source);
 			ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
 
 			ZipEntry entry = null;
 
 			while ((entry = zipInputStream.getNextEntry()) != null) {
-				Path path = destinationPath.resolve(entry.getName());
+				File destinationFile = new File(destination, entry.getName());
 
 				if (entry.isDirectory()) {
-					Files.createDirectories(path);
+					destinationFile.mkdirs();
 				}
 				else {
-					Files.createDirectories(path.getParent());
+					File parentFile = destinationFile.getParentFile();
 
-					Files.copy(
-						zipInputStream, path,
-						StandardCopyOption.REPLACE_EXISTING);
+					parentFile.mkdirs();
+
+					try (OutputStream outputStream = new FileOutputStream(
+							destinationFile)) {
+
+						StreamUtil.transfer(
+							zipInputStream, outputStream, false);
+					}
 				}
 			}
 		}

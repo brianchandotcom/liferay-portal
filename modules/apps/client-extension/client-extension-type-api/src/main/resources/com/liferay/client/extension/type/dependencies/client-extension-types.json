@@ -21,27 +21,27 @@
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "cssURLs",
 				"type": "list"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "friendlyURLMapping",
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "htmlElementName",
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "portletCategoryName",
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "urls",
 				"type": "list"
 			},
@@ -79,7 +79,7 @@
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "url",
 				"type": "string"
 			}
@@ -107,7 +107,7 @@
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "url",
 				"type": "string"
 			}
@@ -135,17 +135,17 @@
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "friendlyURLMapping",
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "portletCategoryName",
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "url",
 				"type": "string"
 			},
@@ -178,12 +178,12 @@
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "clayURL",
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "mainURL",
 				"type": "string"
 			}
@@ -211,7 +211,7 @@
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "url",
 				"type": "string"
 			}
@@ -239,7 +239,7 @@
 				"type": "string"
 			},
 			{
-				"default": "x",
+				"default": "",
 				"name": "url",
 				"type": "string"
 			}

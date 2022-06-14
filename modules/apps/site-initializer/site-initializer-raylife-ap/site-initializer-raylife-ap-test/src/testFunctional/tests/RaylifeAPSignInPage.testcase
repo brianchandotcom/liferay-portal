@@ -34,7 +34,7 @@ definition {
 	test CanSignIn {
 		Navigator.openSpecificURL(url = "/web/raylife-ap");
 
-		AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE");
+		AssertElementPresent(locator1 = "RaylifeAPSignIn#LOGIN_PAGE");
 
 		RaylifeAPSignIn.signInRaylifeAP();
 
@@ -46,13 +46,13 @@ definition {
 	test CanViewMessageEmailNotValid {
 		Navigator.openSpecificURL(url = "/web/raylife-ap");
 
-		AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE");
-
 		RaylifeAPSignIn.signInRaylifeAP(
 			emailAddress = "test",
 			password = "test");
 
-		AssertElementPresent(locator1 = "RaylifeAP#EMAIL_INVALID_MESSAGE");
+		AssertElementPresent(locator1 = "RaylifeAPSignIn#EMAIL_INVALID_MESSAGE");
+
+		User.firstLoginPG();
 	}
 
 	@description = "LPS-151790 - Check that the message 'This field is required' appears when the e-mail field is required"
@@ -60,13 +60,13 @@ definition {
 	test CanViewMessageFieldEmailRequired {
 		Navigator.openSpecificURL(url = "/web/raylife-ap");
 
-		AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE");
-
 		RaylifeAPSignIn.signInRaylifeAP(
 			emailAddress = "",
 			password = "test");
 
-		AssertElementPresent(locator1 = "RaylifeAP#FIELD_REQUIRED_MESSAGE");
+		AssertElementPresent(locator1 = "RaylifeAPSignIn#FIELD_REQUIRED_MESSAGE");
+
+		User.firstLoginPG();
 	}
 
 	@description = "LPS-151791 - Check that the message 'This field is required' appears when the password field is required"
@@ -74,13 +74,13 @@ definition {
 	test CanViewMessageFieldPasswordRequired {
 		Navigator.openSpecificURL(url = "/web/raylife-ap");
 
-		AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE");
-
 		RaylifeAPSignIn.signInRaylifeAP(
 			emailAddress = "test@liferay.com",
 			password = "");
 
-		AssertElementPresent(locator1 = "RaylifeAP#FIELD_REQUIRED_MESSAGE");
+		AssertElementPresent(locator1 = "RaylifeAPSignIn#FIELD_REQUIRED_MESSAGE");
+
+		User.firstLoginPG();
 	}
 
 }

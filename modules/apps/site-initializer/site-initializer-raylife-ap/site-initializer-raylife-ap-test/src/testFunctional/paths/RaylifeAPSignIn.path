@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>RaylifeAPSignIn</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RaylifeAPSignIn</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>LOGIN_PAGE</td>
+	<td>//h3[text()='Sign in to Raylife']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_LOGIN_FIELD</td>
+	<td>//input[contains(@id, 'LoginPortlet_login')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_LOGIN_FIELD</td>
+	<td>//input[contains(@id, 'LoginPortlet_password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_REQUIRED_MESSAGE</td>
+	<td>//div[contains(text(),'This field is required.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_INVALID_MESSAGE</td>
+	<td>//div[contains(text(),'Please enter a valid email address.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN_BUTTON</td>
+	<td>//span[contains(text(),'Sign In')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

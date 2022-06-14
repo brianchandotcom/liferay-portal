@@ -10,14 +10,14 @@ definition {
 		}
 
 		Type(
-			locator1 = "RaylifeAP#EMAIL_LOGIN_FIELD",
+			locator1 = "RaylifeAPSignIn#EMAIL_LOGIN_FIELD",
 			value1 = "${emailAddress}");
 
 		Type(
-			locator1 = "RaylifeAP#PASSWORD_LOGIN_FIELD",
+			locator1 = "RaylifeAPSignIn#PASSWORD_LOGIN_FIELD",
 			value1 = "${password}");
 
-		Click(locator1 = "RaylifeAP#SIGN_IN_BUTTON");
+		Click(locator1 = "RaylifeAPSignIn#SIGN_IN_BUTTON");
 	}
 
 }

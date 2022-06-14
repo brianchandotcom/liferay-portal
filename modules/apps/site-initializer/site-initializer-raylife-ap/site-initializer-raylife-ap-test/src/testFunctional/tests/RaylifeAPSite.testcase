@@ -28,10 +28,7 @@ definition {
 	@description = "Verify if Raylife AP can be created"
 	@priority = "5"
 	test CanRaylifeAPCreated {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		LexiconEntry.gotoAdd();
 

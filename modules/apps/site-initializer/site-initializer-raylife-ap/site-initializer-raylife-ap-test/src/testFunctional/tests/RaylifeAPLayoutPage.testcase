@@ -32,6 +32,10 @@ definition {
 	test CanViewSideBarExpand {
 		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
 
+		MouseOver(
+			locator1 = "RaylifeAP#MENU_SIDEBAR",
+			menu = "policies");
+
 		AssertElementPresent(
 			locator1 = "RaylifeAP#MENU_SIDEBAR",
 			menu = "policies");
@@ -41,6 +45,10 @@ definition {
 	@priority = "4"
 	test SectionApplicationsInTheSidebar {
 		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
+
+		MouseOver(
+			locator1 = "RaylifeAP#MENU_SIDEBAR",
+			menu = "applications");
 
 		AssertElementPresent(
 			locator1 = "RaylifeAP#MENU_SIDEBAR",

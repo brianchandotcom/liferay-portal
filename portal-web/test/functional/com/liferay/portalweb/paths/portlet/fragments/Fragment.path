@@ -150,6 +150,11 @@
 	<td>xpath=(//div[contains(@id,'fragment-')]//div[contains(@class,'forms-checkbox')]//input[@type='checkbox']//following-sibling::label//span[contains(@class,'sr-only')][normalize-space()='${fieldLabel}'])[${index}]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>INPUT_HELP_TEXT</td>
+	<td>xpath=(//div[contains(@id,'fragment-')]//div[contains(@class,'form')]//p[contains(@id,'${type}-help-text')])[${index}]</td>
+	<td></td>
+</tr>
 
 <!--FRAGMENT_COMMENT-->
 

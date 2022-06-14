@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -59,13 +58,10 @@ public abstract class BaseLayoutTypeAccessPolicy
 				httpServletRequest, layout, portlet);
 		}
 
-		PortletPreferencesIds portletPreferencesIds =
-			portletPreferencesFactory.getPortletPreferencesIds(
-				httpServletRequest, masterLayout, portlet.getPortletId());
-
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			portletPreferencesLocalService.fetchPreferences(
-				portletPreferencesIds);
+				portletPreferencesFactory.getPortletPreferencesIds(
+					httpServletRequest, masterLayout, portlet.getPortletId()));
 
 		if (jxPortletPreferences == null) {
 			return super.hasAccessPermission(

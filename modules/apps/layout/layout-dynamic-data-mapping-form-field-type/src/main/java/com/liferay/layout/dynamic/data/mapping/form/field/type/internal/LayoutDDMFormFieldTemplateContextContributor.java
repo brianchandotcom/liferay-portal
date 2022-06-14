@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -122,12 +120,12 @@ public class LayoutDDMFormFieldTemplateContextContributor
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			ddmFormFieldRenderingContext.getPortletNamespace() + "selectLayout",
-			layoutItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				ddmFormFieldRenderingContext.getPortletNamespace() +
+					"selectLayout",
+				layoutItemSelectorCriterion));
 	}
 
 	private String _getValue(

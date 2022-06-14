@@ -937,12 +937,11 @@ public class ContentPageEditorDisplayContext {
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new AssetCategoryTreeNodeItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			_renderResponse.getNamespace() + "selectAssetCategoryTreeNode",
-			itemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				_renderResponse.getNamespace() + "selectAssetCategoryTreeNode",
+				itemSelectorCriterion));
 	}
 
 	private Map<String, Object> _getAvailableLanguages() {
@@ -1298,14 +1297,12 @@ public class ContentPageEditorDisplayContext {
 			List<Map<String, Object>> filteredFragmentEntries =
 				_getFragmentEntries(fragmentEntries);
 
-			List<FragmentComposition> fragmentCompositions =
-				FragmentCompositionServiceUtil.getFragmentCompositions(
-					fragmentCollection.getGroupId(),
-					fragmentCollection.getFragmentCollectionId(),
-					WorkflowConstants.STATUS_APPROVED);
-
 			filteredFragmentEntries.addAll(
-				_getFragmentCompositions(fragmentCompositions));
+				_getFragmentCompositions(
+					FragmentCompositionServiceUtil.getFragmentCompositions(
+						fragmentCollection.getGroupId(),
+						fragmentCollection.getFragmentCollectionId(),
+						WorkflowConstants.STATUS_APPROVED)));
 
 			if (!includeEmpty && ListUtil.isEmpty(filteredFragmentEntries)) {
 				continue;
@@ -1643,12 +1640,12 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private String _getItemSelectorURL() {
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			_renderResponse.getNamespace() + "selectImage",
-			_getImageItemSelectorCriterion(), _getURLItemSelectorCriterion());
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				_renderResponse.getNamespace() + "selectImage",
+				_getImageItemSelectorCriterion(),
+				_getURLItemSelectorCriterion()));
 	}
 
 	private String _getLayoutItemSelectorURL() {
@@ -1661,12 +1658,11 @@ public class ContentPageEditorDisplayContext {
 		layoutItemSelectorCriterion.setShowHiddenPages(true);
 		layoutItemSelectorCriterion.setShowPrivatePages(true);
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			_renderResponse.getNamespace() + "selectLayout",
-			layoutItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				_renderResponse.getNamespace() + "selectLayout",
+				layoutItemSelectorCriterion));
 	}
 
 	private LayoutStructure _getLayoutStructure() throws Exception {
@@ -1958,12 +1954,11 @@ public class ContentPageEditorDisplayContext {
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new SiteNavigationMenuItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			_renderResponse.getNamespace() + "selectSiteNavigationMenu",
-			itemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				_renderResponse.getNamespace() + "selectSiteNavigationMenu",
+				itemSelectorCriterion));
 	}
 
 	private List<Map<String, Object>> _getStyleBooks() {
@@ -2028,12 +2023,11 @@ public class ContentPageEditorDisplayContext {
 		videoItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new VideoEmbeddableHTMLItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
-			_renderResponse.getNamespace() + "selectVideo",
-			videoItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
+				_renderResponse.getNamespace() + "selectVideo",
+				videoItemSelectorCriterion));
 	}
 
 	private boolean _hasPermissions(String actionId) {

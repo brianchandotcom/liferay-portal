@@ -96,6 +96,17 @@ public class ObjectDefinitionResourceImpl
 	}
 
 	@Override
+	public ObjectDefinition getObjectDefinitionByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		return _toObjectDefinition(
+			_objectDefinitionService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId()));
+	}
+
+	@Override
 	public Page<ObjectDefinition> getObjectDefinitionsPage(
 			String search, Aggregation aggregation, Filter filter,
 			Pagination pagination, Sort[] sorts)
@@ -143,20 +154,32 @@ public class ObjectDefinitionResourceImpl
 			throw new ObjectDefinitionStorageTypeException();
 		}
 
-		return _toObjectDefinition(
-			_objectDefinitionService.addCustomObjectDefinition(
-				LocalizedMapUtil.getLocalizedMap(objectDefinition.getLabel()),
-				objectDefinition.getName(), objectDefinition.getPanelAppOrder(),
-				objectDefinition.getPanelCategoryKey(),
-				LocalizedMapUtil.getLocalizedMap(
-					objectDefinition.getPluralLabel()),
-				objectDefinition.getScope(), objectDefinition.getStorageType(),
-				transformToList(
-					objectDefinition.getObjectFields(),
-					objectField -> ObjectFieldUtil.toObjectField(
-						objectField, _objectFieldLocalService,
-						_objectFieldSettingLocalService,
-						_objectFilterLocalService))));
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition =
+				_objectDefinitionService.addCustomObjectDefinition(
+					LocalizedMapUtil.getLocalizedMap(
+						objectDefinition.getLabel()),
+					objectDefinition.getName(),
+					objectDefinition.getPanelAppOrder(),
+					objectDefinition.getPanelCategoryKey(),
+					LocalizedMapUtil.getLocalizedMap(
+						objectDefinition.getPluralLabel()),
+					objectDefinition.getScope(),
+					objectDefinition.getStorageType(),
+					transformToList(
+						objectDefinition.getObjectFields(),
+						objectField -> ObjectFieldUtil.toObjectField(
+							objectField, _objectFieldLocalService,
+							_objectFieldSettingLocalService,
+							_objectFilterLocalService)));
+
+		if (!Validator.isBlank(objectDefinition.getExternalReferenceCode())) {
+			_objectDefinitionService.updateExternalReferenceCode(
+				objectDefinition.getExternalReferenceCode(),
+				serviceBuilderObjectDefinition.getObjectDefinitionId());
+		}
+
+		return _toObjectDefinition(serviceBuilderObjectDefinition);
 	}
 
 	@Override
@@ -181,11 +204,20 @@ public class ObjectDefinitionResourceImpl
 				_objectDefinitionService.getObjectDefinition(
 					objectDefinitionId);
 
+		long titleObjectFieldId = 0;
+
+		com.liferay.object.model.ObjectField titleObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinitionId, objectDefinition.getTitleObjectFieldName());
+
+		if (titleObjectField != null) {
+			titleObjectFieldId = titleObjectField.getObjectFieldId();
+		}
+
 		if (serviceBuilderObjectDefinition.isSystem()) {
 			return _toObjectDefinition(
 				_objectDefinitionService.updateTitleObjectFieldId(
-					objectDefinitionId,
-					objectDefinition.getTitleObjectFieldId()));
+					objectDefinitionId, titleObjectFieldId));
 		}
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-158672"))) {
@@ -196,8 +228,7 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getLong(
 						objectDefinition.
 							getAccountEntryRestrictedObjectFieldId()),
-					0,
-					GetterUtil.get(objectDefinition.getTitleObjectFieldId(), 0),
+					0, titleObjectFieldId,
 					GetterUtil.getBoolean(
 						objectDefinition.getAccountEntryRestricted()),
 					GetterUtil.getBoolean(objectDefinition.getActive(), true),
@@ -218,7 +249,7 @@ public class ObjectDefinitionResourceImpl
 				objectDefinition.getExternalReferenceCode(), objectDefinitionId,
 				GetterUtil.getLong(
 					objectDefinition.getAccountEntryRestrictedObjectFieldId()),
-				0, GetterUtil.get(objectDefinition.getTitleObjectFieldId(), 0),
+				0, titleObjectFieldId,
 				GetterUtil.getBoolean(
 					objectDefinition.getAccountEntryRestricted()),
 				GetterUtil.getBoolean(objectDefinition.getActive(), true),
@@ -231,6 +262,28 @@ public class ObjectDefinitionResourceImpl
 				LocalizedMapUtil.getLocalizedMap(
 					objectDefinition.getPluralLabel()),
 				objectDefinition.getScope()));
+	}
+
+	@Override
+	public ObjectDefinition putObjectDefinitionByExternalReferenceCode(
+			String externalReferenceCode, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderObjectDefinition =
+				_objectDefinitionService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						externalReferenceCode, contextCompany.getCompanyId());
+
+		objectDefinition.setExternalReferenceCode(externalReferenceCode);
+
+		if (serviceBuilderObjectDefinition != null) {
+			return putObjectDefinition(
+				serviceBuilderObjectDefinition.getObjectDefinitionId(),
+				objectDefinition);
+		}
+
+		return postObjectDefinition(objectDefinition);
 	}
 
 	private ObjectDefinition _toObjectDefinition(
@@ -369,7 +422,14 @@ public class ObjectDefinitionResourceImpl
 				}
 
 				system = objectDefinition.isSystem();
-				titleObjectFieldId = objectDefinition.getTitleObjectFieldId();
+
+				com.liferay.object.model.ObjectField titleObjectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectDefinition.getTitleObjectFieldId());
+
+				if (titleObjectField != null) {
+					titleObjectFieldName = titleObjectField.getName();
+				}
 
 				setParameterRequired(
 					() -> {

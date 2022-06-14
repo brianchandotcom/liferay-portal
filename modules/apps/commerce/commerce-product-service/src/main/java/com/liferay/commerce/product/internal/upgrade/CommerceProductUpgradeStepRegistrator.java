@@ -255,6 +255,11 @@ public class CommerceProductUpgradeStepRegistrator
 		registry.register(
 			"3.7.0", "3.8.0", new CPMeasurementUnitUpgradeProcess());
 
+		registry.register(
+			"3.8.0", "3.8.1",
+			new com.liferay.commerce.product.internal.upgrade.v3_8_1.
+				CPAttachmentFileEntryCDNUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

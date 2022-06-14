@@ -10,10 +10,9 @@
  */
 
 import getCN from 'classnames';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import CodeMirrorEditor from '../CodeMirrorEditor';
-import ThemeContext from '../ThemeContext';
 
 function JSONInput({
 	autocompleteSchema,
@@ -28,7 +27,6 @@ function JSONInput({
 	setFieldTouched,
 }) {
 	const [editValue, setEditValue] = useState(value);
-	const {featureFlagLps148749} = useContext(ThemeContext);
 
 	useEffect(() => {
 		setFieldValue(name, editValue);
@@ -55,9 +53,7 @@ function JSONInput({
 			</label>
 
 			<CodeMirrorEditor
-				autocompleteSchema={
-					featureFlagLps148749 ? autocompleteSchema : null
-				}
+				autocompleteSchema={autocompleteSchema}
 				onChange={setEditValue}
 				readOnly={readOnly}
 				value={editValue}

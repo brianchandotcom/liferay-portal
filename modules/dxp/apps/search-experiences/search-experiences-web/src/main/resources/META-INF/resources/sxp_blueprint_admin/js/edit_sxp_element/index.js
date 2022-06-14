@@ -79,7 +79,6 @@ const transformToSXPElementExportFormat = (
 
 export default function ({
 	defaultLocale,
-	featureFlagLps148749,
 	learnMessages,
 	locale,
 	namespace,
@@ -118,7 +117,6 @@ export default function ({
 			value={{
 				availableLanguages: Liferay.Language.available,
 				defaultLocale,
-				featureFlagLps148749,
 				learnMessages,
 				locale,
 				namespace,

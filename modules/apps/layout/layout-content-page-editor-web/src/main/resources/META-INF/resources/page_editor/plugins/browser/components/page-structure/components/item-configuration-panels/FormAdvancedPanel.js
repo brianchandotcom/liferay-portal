@@ -21,7 +21,7 @@ import CSSFieldSet from './CSSFieldSet';
 export default function FormAdvancedPanel({item}) {
 	return (
 		<>
-			<HideFromSearchField item={item} />;
+			<HideFromSearchField item={item} />
 			<CSSFieldSet item={item} />
 		</>
 	);

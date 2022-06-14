@@ -313,6 +313,104 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9404. Verify accounts and organizations can be moved using the Organization Management widget."
+	@priority = "3"
+	test CanMoveAccountsAndOrganizationsInWidget {
+		task ("Given a new organization with a child organization") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization 2",
+				organizationSite = "false");
+
+			JSONOrganization.addOrganization(
+				organizationName = "Child Org 1",
+				organizationSite = "false",
+				parentOrganizationName = "Organization 2");
+		}
+
+		task ("And given an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given the account belongs to Organization 2") {
+			Accounts.assignOrganizations(
+				accountName = "Commerce Account",
+				assigneeName = "Organization 2");
+		}
+
+		task ("When the Organization Management Widget Page is reached") {
+			Navigator.openSitePage(
+				pageName = "Organization Management Widget Page",
+				siteName = "Minium");
+
+			Click(locator1 = "Button#EXPAND");
+		}
+
+		task ("Then the admin is able to drag and drop the account to Organization 1") {
+			Click(
+				key_nodeName = "Organization 2",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+
+			DragAndDrop.dragAndDropPortletToPortletNoError(
+				key_nodeDestination = "Organization 1",
+				key_nodeOrigin = "Commerce Account",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
+				locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
+				value1 = "Commerce Account");
+
+			AssertConfirm(value1 = "Commerce Account will be moved into Organization 1.");
+		}
+
+		task ("And the admin is able to drag and drop the child organization to Organization 1") {
+			DragAndDrop.dragAndDropPortletToPortletNoError(
+				key_nodeDestination = "Organization 1",
+				key_nodeOrigin = "Child Org 1",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_ORIGIN",
+				locator2 = "CommerceOrganizationManagementWidget#NODE_DESTINATION",
+				value1 = "Child Org 1");
+
+			AssertConfirm(value1 = "Child Org 1 will be moved into Organization 1.");
+
+			Refresh();
+
+			Click(locator1 = "Button#EXPAND");
+		}
+
+		task ("And the admin is able to click on the child organization ellipses and click remove to move the child organization outside the parent organization") {
+			Click(
+				key_nodeName = "Organization 1",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+
+			Click(
+				key_nodeName = "Child Org 1",
+				locator1 = "CommerceOrganizationManagementWidget#VERTICAL_ELLIPSIS");
+
+			ClickNoError(
+				key_menuItem = "Remove",
+				locator1 = "CommerceEntry#ANY_MENU_ITEM");
+
+			AssertConfirm(value1 = "Child Org 1 will be removed from Organization 1.");
+
+			Refresh();
+
+			Click(locator1 = "Button#EXPAND");
+
+			AssertElementPresent(
+				key_nodeName = "Child Org 1",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		}
+	}
+
 	@description = "COMMERCE-9399. Verify organizations can be viewed in the Organization Management widget."
 	@priority = "3"
 	test CanViewOrganizationInWidget {

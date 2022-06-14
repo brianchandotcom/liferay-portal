@@ -72,6 +72,17 @@ public class ObjectFieldLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectField addOrUpdateSystemObjectField(
+			long userId,
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectField objectField)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldLocalService.addOrUpdateSystemObjectField(
+			userId, objectDefinition, objectField);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String businessType,
 			String dbColumnName, String dbTableName, String dbType,

@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.petra.sql.dsl.Table;
@@ -90,6 +91,12 @@ public interface ObjectFieldLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField addObjectField(ObjectField objectField);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectField addOrUpdateSystemObjectField(
+			long userId, ObjectDefinition objectDefinition,
+			ObjectField objectField)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField addSystemObjectField(

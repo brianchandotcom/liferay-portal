@@ -75,6 +75,16 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().addObjectField(objectField);
 	}
 
+	public static ObjectField addOrUpdateSystemObjectField(
+			long userId,
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			ObjectField objectField)
+		throws PortalException {
+
+		return getService().addOrUpdateSystemObjectField(
+			userId, objectDefinition, objectField);
+	}
+
 	public static ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String businessType,
 			String dbColumnName, String dbTableName, String dbType,

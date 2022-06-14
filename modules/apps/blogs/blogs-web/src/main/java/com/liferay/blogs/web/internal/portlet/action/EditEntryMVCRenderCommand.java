@@ -18,6 +18,7 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.internal.constants.BlogsWebKeys;
+import com.liferay.blogs.web.internal.display.context.BlogsEditEntryDisplayContext;
 import com.liferay.blogs.web.internal.helper.BlogsItemSelectorHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -79,6 +80,11 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER,
 				_blogsItemSelectorHelper);
+
+			renderRequest.setAttribute(
+				BlogsEditEntryDisplayContext.class.getName(),
+				new BlogsEditEntryDisplayContext(
+					httpServletRequest, renderResponse));
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchEntryException ||

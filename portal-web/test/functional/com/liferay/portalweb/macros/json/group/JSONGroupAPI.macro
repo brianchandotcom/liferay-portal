@@ -123,7 +123,10 @@ definition {
 		Variables.assertDefined(parameterList = "${depotName}");
 
 		var companyId = JSONCompany.getCompanyId();
-		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		if (!(isSet(defaultLocale))) {
 			var defaultLocale = "en_US";

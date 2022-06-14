@@ -233,7 +233,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectField(objectFieldId: ___){DBType, actions, businessType, id, indexed, indexedAsKeyword, indexedLanguageId, label, listTypeDefinitionId, name, objectFieldSettings, relationshipType, required, system, type}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectField(objectFieldId: ___){DBType, actions, businessType, externalReferenceCode, id, indexed, indexedAsKeyword, indexedLanguageId, label, listTypeDefinitionId, name, objectFieldSettings, relationshipType, required, system, type}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectField objectField(

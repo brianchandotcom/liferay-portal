@@ -180,6 +180,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 		ObjectField objectField = randomObjectField();
 
+		objectField.setExternalReferenceCode(regex);
 		objectField.setIndexedLanguageId(regex);
 		objectField.setName(regex);
 
@@ -189,6 +190,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 		objectField = ObjectFieldSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, objectField.getExternalReferenceCode());
 		Assert.assertEquals(regex, objectField.getIndexedLanguageId());
 		Assert.assertEquals(regex, objectField.getName());
 	}
@@ -625,6 +627,16 @@ public abstract class BaseObjectFieldResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (objectField.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("indexed", additionalAssertFieldName)) {
 				if (objectField.getIndexed() == null) {
 					valid = false;
@@ -836,6 +848,19 @@ public abstract class BaseObjectFieldResourceTestCase {
 				if (!Objects.deepEquals(
 						objectField1.getBusinessType(),
 						objectField2.getBusinessType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectField1.getExternalReferenceCode(),
+						objectField2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1088,6 +1113,14 @@ public abstract class BaseObjectFieldResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(objectField.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1198,6 +1231,8 @@ public abstract class BaseObjectFieldResourceTestCase {
 	protected ObjectField randomObjectField() throws Exception {
 		return new ObjectField() {
 			{
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				indexed = RandomTestUtil.randomBoolean();
 				indexedAsKeyword = RandomTestUtil.randomBoolean();

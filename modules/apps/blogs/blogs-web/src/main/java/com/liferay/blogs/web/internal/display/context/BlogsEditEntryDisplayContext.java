@@ -17,7 +17,6 @@ package com.liferay.blogs.web.internal.display.context;
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.settings.BlogsGroupServiceSettings;
-import com.liferay.blogs.web.internal.constants.BlogsWebKeys;
 import com.liferay.blogs.web.internal.helper.BlogsItemSelectorHelper;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -46,16 +45,18 @@ import javax.servlet.http.HttpServletRequest;
 public class BlogsEditEntryDisplayContext {
 
 	public BlogsEditEntryDisplayContext(
+		BlogsEntry blogsEntry, BlogsItemSelectorHelper blogsItemSelectorHelper,
 		HttpServletRequest httpServletRequest,
 		PortletResponse portletResponse) {
 
+		_blogsEntry = blogsEntry;
+		_blogsItemSelectorHelper = blogsItemSelectorHelper;
 		_httpServletRequest = httpServletRequest;
 		_portletResponse = portletResponse;
 	}
 
 	public BlogsEntry getBlogsEntry() {
-		return (BlogsEntry)_httpServletRequest.getAttribute(
-			WebKeys.BLOGS_ENTRY);
+		return _blogsEntry;
 	}
 
 	public String getContent() {
@@ -97,10 +98,6 @@ public class BlogsEditEntryDisplayContext {
 	}
 
 	public String getCoverImageItemSelectorURL() {
-		BlogsItemSelectorHelper blogsItemSelectorHelper =
-			(BlogsItemSelectorHelper)_httpServletRequest.getAttribute(
-				BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER);
-
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
 
@@ -108,7 +105,7 @@ public class BlogsEditEntryDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return blogsItemSelectorHelper.getItemSelectorURL(
+		return _blogsItemSelectorHelper.getItemSelectorURL(
 			requestBackedPortletURLFactory, themeDisplay,
 			getCoverImageItemSelectorEventName());
 	}
@@ -203,10 +200,6 @@ public class BlogsEditEntryDisplayContext {
 	}
 
 	public String getSmallImageItemSelectorURL() {
-		BlogsItemSelectorHelper blogsItemSelectorHelper =
-			(BlogsItemSelectorHelper)_httpServletRequest.getAttribute(
-				BlogsWebKeys.BLOGS_ITEM_SELECTOR_HELPER);
-
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
 
@@ -214,7 +207,7 @@ public class BlogsEditEntryDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return blogsItemSelectorHelper.getItemSelectorURL(
+		return _blogsItemSelectorHelper.getItemSelectorURL(
 			requestBackedPortletURLFactory, themeDisplay,
 			getSmallImageItemSelectorEventName());
 	}
@@ -335,6 +328,8 @@ public class BlogsEditEntryDisplayContext {
 
 	private Boolean _allowPingbacks;
 	private Boolean _allowTrackbacks;
+	private final BlogsEntry _blogsEntry;
+	private final BlogsItemSelectorHelper _blogsItemSelectorHelper;
 	private String _content;
 	private String _coverImageCaption;
 	private Long _coverImageFileEntryId;

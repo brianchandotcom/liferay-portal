@@ -18,11 +18,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -79,11 +77,9 @@ public class LayoutStructureCommonStylesCSSServletTest {
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		ServiceContext serviceContext =
+		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@After
@@ -186,11 +182,8 @@ public class LayoutStructureCommonStylesCSSServletTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Company company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
-
-		themeDisplay.setCompany(company);
-
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLanguageId(_group.getDefaultLanguageId());
 		themeDisplay.setLayout(_layout);
 		themeDisplay.setLocale(

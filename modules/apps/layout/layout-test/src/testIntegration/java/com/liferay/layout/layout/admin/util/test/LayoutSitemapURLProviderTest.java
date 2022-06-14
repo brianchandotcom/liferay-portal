@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -117,14 +116,12 @@ public class LayoutSitemapURLProviderTest {
 
 		Assert.assertNotNull(draftLayout);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getCompanyId(), _group.getGroupId(),
-				TestPropsValues.getUserId());
-
 		_layoutLocalService.updateStatus(
 			TestPropsValues.getUserId(), draftLayout.getPlid(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext);
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getCompanyId(), _group.getGroupId(),
+				TestPropsValues.getUserId()));
 
 		layoutSitemapURLProvider.visitLayout(
 			rootElement, layout.getUuid(), _layoutSet, _themeDisplay);
@@ -139,12 +136,11 @@ public class LayoutSitemapURLProviderTest {
 		Assert.assertEquals(
 			elements.toString(), availableLocales.size(), elements.size());
 
-		String canonicalURL = _portal.getCanonicalURL(
-			_portal.getLayoutFullURL(layout, _themeDisplay), _themeDisplay,
-			layout);
-
 		Map<Locale, String> alternateURLsMap = _portal.getAlternateURLs(
-			canonicalURL, _themeDisplay, layout);
+			_portal.getCanonicalURL(
+				_portal.getLayoutFullURL(layout, _themeDisplay), _themeDisplay,
+				layout),
+			_themeDisplay, layout);
 
 		for (Element element : elements) {
 			String layoutLocalizedURL = element.elementText("loc");
@@ -180,12 +176,11 @@ public class LayoutSitemapURLProviderTest {
 		Assert.assertEquals(
 			elements.toString(), availableLocales.size(), elements.size());
 
-		String canonicalURL = _portal.getCanonicalURL(
-			_portal.getLayoutFullURL(layout, _themeDisplay), _themeDisplay,
-			layout);
-
 		Map<Locale, String> alternateURLsMap = _portal.getAlternateURLs(
-			canonicalURL, _themeDisplay, layout);
+			_portal.getCanonicalURL(
+				_portal.getLayoutFullURL(layout, _themeDisplay), _themeDisplay,
+				layout),
+			_themeDisplay, layout);
 
 		for (Element element : elements) {
 			String layoutLocalizedURL = element.elementText("loc");

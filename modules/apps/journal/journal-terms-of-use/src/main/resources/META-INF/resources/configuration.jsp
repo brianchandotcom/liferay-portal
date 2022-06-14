@@ -16,10 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:field-wrapper helpMessage='<%= LanguageUtil.get(resourceBundle, "terms-of-use-web-content-help") %>' label='<%= LanguageUtil.get(resourceBundle, "terms-of-use-web-content") %>'>
+<aui:field-wrapper helpMessage="terms-of-use-web-content-help" label="terms-of-use-web-content">
 	<aui:fieldset>
-		<aui:input label='<%= LanguageUtil.get(resourceBundle, "group-id") %>' name='<%= "settings--" + journalArticleTermsOfUseDisplayContext.getTermsOfUseJournalArticleGroupIdConfigurationProperty() + "--" %>' type="text" value="<%= String.valueOf(journalArticleTermsOfUseDisplayContext.getTermsOfUseJournalArticleGroupId()) %>" />
+		<aui:input label="group-id" name='<%= "settings--" + journalArticleTermsOfUseDisplayContext.getTermsOfUseJournalArticleGroupIdConfigurationProperty() + "--" %>' type="text" value="<%= String.valueOf(journalArticleTermsOfUseDisplayContext.getTermsOfUseJournalArticleGroupId()) %>" />
 
-		<aui:input label='<%= LanguageUtil.get(resourceBundle, "article-id") %>' name='<%= "settings--" + journalArticleTermsOfUseDisplayContext.getTermsOfUseJournalArticleIdConfigurationProperty() + "--" %>' type="text" value="<%= journalArticleTermsOfUseDisplayContext.getTermsOfUseJournalArticleId() %>" />
+		<aui:input label="article-id" name='<%= "settings--" + journalArticleTermsOfUseDisplayContext.getTermsOfUseJournalArticleIdConfigurationProperty() + "--" %>' type="text" value="<%= journalArticleTermsOfUseDisplayContext.getTermsOfUseJournalArticleId() %>" />
 	</aui:fieldset>
 </aui:field-wrapper>

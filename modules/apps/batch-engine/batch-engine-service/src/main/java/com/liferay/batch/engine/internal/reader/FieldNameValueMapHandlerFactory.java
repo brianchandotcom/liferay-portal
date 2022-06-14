@@ -82,9 +82,6 @@ public class FieldNameValueMapHandlerFactory {
 			String key = fieldName.substring(
 				fieldName.lastIndexOf(_I18N_SUFFIX) + 6);
 
-			fieldName = fieldName.substring(
-				0, fieldName.lastIndexOf(_I18N_SUFFIX));
-
 			Map<String, String> valueMap =
 				(Map<String, String>)fieldNameValueMap.get(fieldName);
 

@@ -106,7 +106,17 @@ public class BatchEngineImportTaskItemReaderUtil {
 				entry.getKey());
 
 			if (Validator.isNotNull(targetFieldName)) {
-				targetFieldNameValueMap.put(targetFieldName, entry.getValue());
+				Object object = targetFieldNameValueMap.get(targetFieldName);
+
+				if ((object != null) && (object instanceof Map)) {
+					Map<?, ?> map = (Map)object;
+
+					map.putAll((Map)entry.getValue());
+				}
+				else {
+					targetFieldNameValueMap.put(
+						targetFieldName, entry.getValue());
+				}
 			}
 		}
 

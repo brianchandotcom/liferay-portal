@@ -388,6 +388,49 @@ definition {
 			fieldValue = "Option 1");
 	}
 
+	@description = "Verify can that a Form create an empty option in the Select from List"
+	@priority = "3"
+	test CanCreateEmptyOption {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		FormFields.editOptionsRowValueOrFieldReference(
+			fieldReference = "Option1234",
+			optionValue = "Option1",
+			rowNumber = "1");
+
+		FormFields.editOptionsRowValueOrFieldReference(
+			fieldReference = "Option2345",
+			optionValue = "",
+			rowNumber = "2");
+
+		AssertElementPresent(
+			key_rowNumber = "2",
+			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD");
+
+		AssertElementPresent(
+			key_rowNumber = "2",
+			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD_REFERENCE");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		AssertElementPresent(
+			key_itemName = " ",
+			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
+	}
+
 	@description = "Verify that a list can be created using Autofill"
 	@priority = "5"
 	test CanCreateListUsingAutofill {

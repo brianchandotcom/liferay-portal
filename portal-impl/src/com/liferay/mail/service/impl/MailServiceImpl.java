@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -60,15 +61,21 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		long companyId, long userId, List<Filter> filters,
 		List<String> emailAddresses, boolean leaveCopy) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("addForward");
-		}
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug("addForward");
+				}
 
-		MethodHandler methodHandler = new MethodHandler(
-			_addForwardMethodKey, companyId, userId, filters, emailAddresses,
-			leaveCopy);
+				MethodHandler methodHandler = new MethodHandler(
+					_addForwardMethodKey, companyId, userId, filters,
+					emailAddresses, leaveCopy);
 
-		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
+				MessageBusUtil.sendMessage(
+					DestinationNames.MAIL, methodHandler);
+
+				return null;
+			});
 	}
 
 	@Override
@@ -76,15 +83,21 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		long companyId, long userId, String password, String firstName,
 		String middleName, String lastName, String emailAddress) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("addUser");
-		}
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug("addUser");
+				}
 
-		MethodHandler methodHandler = new MethodHandler(
-			_addUserMethodKey, companyId, userId, password, firstName,
-			middleName, lastName, emailAddress);
+				MethodHandler methodHandler = new MethodHandler(
+					_addUserMethodKey, companyId, userId, password, firstName,
+					middleName, lastName, emailAddress);
 
-		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
+				MessageBusUtil.sendMessage(
+					DestinationNames.MAIL, methodHandler);
+
+				return null;
+			});
 	}
 
 	@Override
@@ -92,15 +105,21 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		long companyId, long userId, String emailAddress,
 		String vacationMessage) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("addVacationMessage");
-		}
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug("addVacationMessage");
+				}
 
-		MethodHandler methodHandler = new MethodHandler(
-			_addVacationMessageMethodKey, companyId, userId, emailAddress,
-			vacationMessage);
+				MethodHandler methodHandler = new MethodHandler(
+					_addVacationMessageMethodKey, companyId, userId,
+					emailAddress, vacationMessage);
 
-		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
+				MessageBusUtil.sendMessage(
+					DestinationNames.MAIL, methodHandler);
+
+				return null;
+			});
 	}
 
 	@Clusterable
@@ -121,26 +140,38 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 
 	@Override
 	public void deleteEmailAddress(long companyId, long userId) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("deleteEmailAddress");
-		}
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug("deleteEmailAddress");
+				}
 
-		MethodHandler methodHandler = new MethodHandler(
-			_deleteEmailAddressMethodKey, companyId, userId);
+				MethodHandler methodHandler = new MethodHandler(
+					_deleteEmailAddressMethodKey, companyId, userId);
 
-		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
+				MessageBusUtil.sendMessage(
+					DestinationNames.MAIL, methodHandler);
+
+				return null;
+			});
 	}
 
 	@Override
 	public void deleteUser(long companyId, long userId) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("deleteUser");
-		}
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug("deleteUser");
+				}
 
-		MethodHandler methodHandler = new MethodHandler(
-			_deleteUserMethodKey, companyId, userId);
+				MethodHandler methodHandler = new MethodHandler(
+					_deleteUserMethodKey, companyId, userId);
 
-		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
+				MessageBusUtil.sendMessage(
+					DestinationNames.MAIL, methodHandler);
+
+				return null;
+			});
 	}
 
 	@Override
@@ -336,51 +367,75 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 
 	@Override
 	public void sendEmail(MailMessage mailMessage) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("sendEmail");
-		}
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug("sendEmail");
+				}
 
-		MessageBusUtil.sendMessage(DestinationNames.MAIL, mailMessage);
+				MessageBusUtil.sendMessage(DestinationNames.MAIL, mailMessage);
+
+				return null;
+			});
 	}
 
 	@Override
 	public void updateBlocked(
 		long companyId, long userId, List<String> blocked) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("updateBlocked");
-		}
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug("updateBlocked");
+				}
 
-		MethodHandler methodHandler = new MethodHandler(
-			_updateBlockedMethodKey, companyId, userId, blocked);
+				MethodHandler methodHandler = new MethodHandler(
+					_updateBlockedMethodKey, companyId, userId, blocked);
 
-		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
+				MessageBusUtil.sendMessage(
+					DestinationNames.MAIL, methodHandler);
+
+				return null;
+			});
 	}
 
 	@Override
 	public void updateEmailAddress(
 		long companyId, long userId, String emailAddress) {
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("updateEmailAddress");
-		}
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug("updateEmailAddress");
+				}
 
-		MethodHandler methodHandler = new MethodHandler(
-			_updateEmailAddressMethodKey, companyId, userId, emailAddress);
+				MethodHandler methodHandler = new MethodHandler(
+					_updateEmailAddressMethodKey, companyId, userId,
+					emailAddress);
 
-		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
+				MessageBusUtil.sendMessage(
+					DestinationNames.MAIL, methodHandler);
+
+				return null;
+			});
 	}
 
 	@Override
 	public void updatePassword(long companyId, long userId, String password) {
-		if (_log.isDebugEnabled()) {
-			_log.debug("updatePassword");
-		}
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug("updatePassword");
+				}
 
-		MethodHandler methodHandler = new MethodHandler(
-			_updatePasswordMethodKey, companyId, userId, password);
+				MethodHandler methodHandler = new MethodHandler(
+					_updatePasswordMethodKey, companyId, userId, password);
 
-		MessageBusUtil.sendMessage(DestinationNames.MAIL, methodHandler);
+				MessageBusUtil.sendMessage(
+					DestinationNames.MAIL, methodHandler);
+
+				return null;
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

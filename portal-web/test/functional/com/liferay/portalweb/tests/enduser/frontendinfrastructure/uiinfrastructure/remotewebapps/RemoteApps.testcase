@@ -483,6 +483,8 @@ definition {
 
 		RemoteApps.goToRemoteAppsPortlet();
 
+		RemoteApps.addType(type = "IFrame");
+
 		RemoteApps.addApp(
 			entryName = "Test Remote App",
 			entryURL = "http://www.liferay.com");
@@ -500,11 +502,7 @@ definition {
 
 		RemoteApps.goToRemoteAppsPortlet();
 
-		LexiconEntry.gotoAdd();
-
-		Select(
-			locator1 = "Select#TYPE",
-			value1 = "${iFrameType}");
+		RemoteApps.addType(type = "iFrameType");
 
 		AssertNotVisible(
 			key_text = "HTML Element Name",

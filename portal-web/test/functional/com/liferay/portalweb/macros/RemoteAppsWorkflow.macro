@@ -1,7 +1,7 @@
 definition {
 
 	macro addApp {
-		LexiconEntry.gotoAdd();
+		RemoteApps.addType(type = "IFrame");
 
 		RemoteAppsEntry.addEntry(
 			entryName = "${entryName}",

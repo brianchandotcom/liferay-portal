@@ -2,7 +2,7 @@ definition {
 
 	macro addCSSURLRow {
 		Click(
-			key_id = "customElementCSSURLs",
+			key_id = "cssURLs",
 			locator1 = "RemoteAppsEntry#ADD_URL_ROW");
 	}
 
@@ -109,7 +109,7 @@ definition {
 
 	macro addURLRow {
 		Click(
-			key_id = "customElementURLs",
+			key_id = "ClientExtensionAdminPortlet__urls",
 			locator1 = "RemoteAppsEntry#ADD_URL_ROW");
 	}
 

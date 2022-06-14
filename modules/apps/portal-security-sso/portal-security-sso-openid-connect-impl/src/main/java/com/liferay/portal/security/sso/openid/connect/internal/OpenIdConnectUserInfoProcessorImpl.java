@@ -18,11 +18,17 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.internal.exception.StrangersNotAllowedException;
@@ -102,6 +108,33 @@ public class OpenIdConnectUserInfoProcessorImpl
 		serviceContext.setPathMain(mainPath);
 		serviceContext.setPortalURL(portalURL);
 
+		String roleName = _props.get(
+			"default.portal.regular.role.name.for.oidc");
+
+		if (Validator.isNotNull(roleName)) {
+			try {
+				Role role = _roleLocalService.getRole(
+					company.getCompanyId(), roleName);
+
+				int roleType = role.getType();
+
+				if (roleType == RoleConstants.TYPE_REGULAR) {
+					roleIds = new long[] {role.getRoleId()};
+				}
+				else {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Role name is not a Regular role: " + roleName);
+					}
+				}
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					"Invalid configuration of role name: " + roleName,
+					portalException);
+			}
+		}
+
 		user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
@@ -131,8 +164,17 @@ public class OpenIdConnectUserInfoProcessorImpl
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		OpenIdConnectUserInfoProcessorImpl.class);
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private Props _props;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

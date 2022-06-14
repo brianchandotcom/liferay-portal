@@ -178,4 +178,31 @@ definition {
 		}
 	}
 
+	@description = "LPS-154639. Assert component will switch to hotspot mode in the 2nd step when closing 2nd popover."
+	@priority = "5"
+	test WhenClosedCanTransitionToHotSpotModeOnCurrentStepElement {
+		task ("Given click hotspot element") {
+			Click(locator1 = "Walkthrough#HOTSPOT");
+		}
+
+		task ("Click on next step") {
+			Click(locator1 = "Button#OK");
+		}
+
+		task ("When Click close icon") {
+			Click(locator1 = "Walkthrough#CLOSE_POPOVER");
+		}
+
+		task ("Then hotspot element is present on the 2nd element") {
+			SetWindowSize(value1 = "800,800");
+
+			AssertElementPresent(locator1 = "Walkthrough#HOTSPOT");
+
+			AssertAttributeValue(
+				attribute1 = "style",
+				locator1 = "Walkthrough#HOTSPOT",
+				value1 = "left: 286.5px; top: 117px;");
+		}
+	}
+
 }

@@ -14,24 +14,35 @@
 
 package com.liferay.object.web.internal.object.definitions.display.context;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,13 +54,17 @@ public class ObjectDefinitionsDetailsDisplayContext
 
 	public ObjectDefinitionsDetailsDisplayContext(
 		HttpServletRequest httpServletRequest,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
+		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		PanelCategoryRegistry panelCategoryRegistry) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
+		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_panelCategoryRegistry = panelCategoryRegistry;
 	}
@@ -99,12 +114,58 @@ public class ObjectDefinitionsDetailsDisplayContext
 		return keyValuePairs;
 	}
 
+	public List<ObjectField> getObjectAccountRelationshipFields()
+		throws PortalException {
+
+		ObjectDefinition accountEntryObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				objectRequestHelper.getCompanyId(),
+				AccountEntry.class.getName());
+
+		Map<Long, ObjectField> objectFieldsMap = Stream.of(
+			getObjectFields()
+		).flatMap(
+			List::stream
+		).collect(
+			Collectors.toMap(
+				ObjectField::getObjectFieldId, objectField -> objectField)
+		);
+
+		return Stream.of(
+			_objectRelationshipLocalService.getObjectRelationships(
+				accountEntryObjectDefinition.getObjectDefinitionId(),
+				getObjectDefinitionId())
+		).flatMap(
+			List::stream
+		).map(
+			ObjectRelationship::getObjectFieldId2
+		).map(
+			objectFieldsMap::get
+		).collect(
+			Collectors.toList()
+		);
+	}
+
 	public ObjectDefinition getObjectDefinition() {
 		HttpServletRequest httpServletRequest =
 			objectRequestHelper.getRequest();
 
 		return (ObjectDefinition)httpServletRequest.getAttribute(
 			ObjectWebKeys.OBJECT_DEFINITION);
+	}
+
+	public List<ObjectField> getObjectFields() {
+		HttpServletRequest httpServletRequest =
+			objectRequestHelper.getRequest();
+
+		return (List<ObjectField>)httpServletRequest.getAttribute(
+			ObjectWebKeys.OBJECT_FIELDS);
+	}
+
+	public List<ObjectField> getObjectNonrelationshipFields() {
+		return ListUtil.filter(
+			getObjectFields(),
+			objectField -> Validator.isNull(objectField.getRelationshipType()));
 	}
 
 	public List<ObjectScopeProvider> getObjectScopeProviders() {
@@ -129,6 +190,9 @@ public class ObjectDefinitionsDetailsDisplayContext
 			ObjectActionKeys.PUBLISH_OBJECT_DEFINITION);
 	}
 
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectRelationshipLocalService
+		_objectRelationshipLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final PanelCategoryRegistry _panelCategoryRegistry;
 

@@ -285,9 +285,6 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, Layout layout, long userId)
 		throws PortalException {
 
-		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			_portal.getClassNameId(Layout.class), layout.getPlid());
-
 		String faviconCETExternalReferenceCode = ParamUtil.getString(
 			actionRequest, "faviconCETExternalReferenceCode");
 
@@ -297,6 +294,10 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				faviconCETExternalReferenceCode,
 				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 		}
+
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			_portal.getClassNameId(Layout.class), layout.getPlid(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
 
 		String[] globalCSSCETExternalReferenceCodes = ParamUtil.getStringValues(
 			actionRequest, "globalCSSCETExternalReferenceCodes");
@@ -309,6 +310,10 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				globalCSSCETExternalReferenceCode,
 				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
 		}
+
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			_portal.getClassNameId(Layout.class), layout.getPlid(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 
 		String[] globalJSCETExternalReferenceCodes = ParamUtil.getStringValues(
 			actionRequest, "globalJSCETExternalReferenceCodes");

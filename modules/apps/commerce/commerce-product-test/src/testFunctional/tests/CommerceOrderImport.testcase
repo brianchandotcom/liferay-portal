@@ -197,6 +197,59 @@ definition {
 		}
 	}
 
+	@description = "Verify a csv file with a valid requested delivery date can be imported."
+	@priority = "3"
+	test CanImportCSVWithValidRequestedDeliveryDate {
+		property portal.acceptance = "false";
+
+		task ("Given an empty order") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("When the buyer starts an import for a CSV with a valid requested delivery date") {
+			Click(locator1 = "CommerceEntry#DROPDOWN");
+
+			MenuItem.click(menuItem = "Import from CSV");
+
+			IFrame.selectModalFrame();
+
+			UploadDependencyFile.uploadFile(fileName = "commerce_valid_requested_delivery_date.csv");
+
+			Button.click(button = "Import");
+		}
+
+		task ("Then the import preview shows the Requested Delivery Date") {
+			var itemDeliveryDates = "Brake Fluid:2022-12-04,Brake Fluid:2022-08-13,Brake Fluid:2022-03-23,Premium Brake Fluid:2023-09-30,Premium Brake Pads:2022-02-23,Brake Rotors:2022-11-22";
+
+			for (var itemDeliveryDate : list "${itemDeliveryDates}") {
+				var productName = StringUtil.extractFirst("${itemDeliveryDate}", ":");
+				var requestedDeliveryDate = StringUtil.extractLast("${itemDeliveryDate}", ":");
+
+				CommerceOrders.assertOrderImportPreviewEntry(
+					productName = "${productName}",
+					requestedDeliveryDate = "${requestedDeliveryDate}");
+			}
+		}
+
+		task ("When the import is completed") {
+			Button.click(button = "Import");
+		}
+
+		task ("Then the item in the order (admin) shows the requested delivery date as empty") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Open");
+
+			AssertTextEquals(
+				locator1 = "CommerceOrders#ORDER_DETAILS_REQUESTED_DELIVERY_DATE",
+				value1 = "Click add to insert.");
+		}
+	}
+
 	@description = "Verify users can delete an order entry after importing an order"
 	@priority = "3"
 	test DeleteAnEntryIntoAnOrder {

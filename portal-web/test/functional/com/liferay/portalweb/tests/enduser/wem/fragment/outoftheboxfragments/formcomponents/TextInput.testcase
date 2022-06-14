@@ -270,6 +270,10 @@ definition {
 				PageEditor.addFragment(
 					collectionName = "Form Components",
 					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Web Content Article",
+					panel = "General");
 			}
 
 			task ("Add a Grid inside Form Container") {

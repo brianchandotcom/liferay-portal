@@ -122,10 +122,13 @@ public class LayoutLookAndFeelDisplayContext {
 		return _layoutsAdminDisplayContext.getThemeFavicon();
 	}
 
-	public Map<String, Object> getGlobalCSSCETsConfigurationProps() {
+	public Map<String, Object> getGlobalCSSCETsConfigurationProps(
+		String className, long classPK) {
+
 		return HashMapBuilder.<String, Object>put(
 			"globalCSSCETs",
 			_getClientExtensionEntryRelsJSONArray(
+				className, classPK,
 				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)
 		).put(
 			"globalCSSCETSelectorURL",
@@ -146,10 +149,13 @@ public class LayoutLookAndFeelDisplayContext {
 		).build();
 	}
 
-	public Map<String, Object> getGlobalJSCETsConfigurationProps() {
+	public Map<String, Object> getGlobalJSCETsConfigurationProps(
+		String className, long classPK) {
+
 		return HashMapBuilder.<String, Object>put(
 			"globalJSCETs",
 			_getClientExtensionEntryRelsJSONArray(
+				className, classPK,
 				ClientExtensionEntryConstants.TYPE_GLOBAL_JS)
 		).put(
 			"globalJSCETSelectorURL",
@@ -435,15 +441,15 @@ public class LayoutLookAndFeelDisplayContext {
 			selLayout.getLayoutSet(), _themeDisplay.getLocale());
 	}
 
-	private JSONArray _getClientExtensionEntryRelsJSONArray(String type) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+	private JSONArray _getClientExtensionEntryRelsJSONArray(
+		String className, long classPK, String type) {
 
-		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		List<ClientExtensionEntryRel> clientExtensionEntryRels =
 			ClientExtensionEntryRelLocalServiceUtil.getClientExtensionEntryRels(
-				PortalUtil.getClassNameId(Layout.class), selLayout.getPlid(),
-				type, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				PortalUtil.getClassNameId(className), classPK, type,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		CETManager cetManager = (CETManager)_httpServletRequest.getAttribute(
 			CETManager.class.getName());

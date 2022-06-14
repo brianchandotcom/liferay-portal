@@ -22,7 +22,6 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -139,7 +138,7 @@ public class ObjectFieldResourceImpl
 
 		return _toObjectField(
 			_objectFieldService.updateCustomObjectField(
-				objectFieldId, StringPool.BLANK,
+				objectFieldId, objectField.getExternalReferenceCode(),
 				objectField.getListTypeDefinitionId(),
 				objectField.getBusinessTypeAsString(),
 				ObjectFieldUtil.getDBType(

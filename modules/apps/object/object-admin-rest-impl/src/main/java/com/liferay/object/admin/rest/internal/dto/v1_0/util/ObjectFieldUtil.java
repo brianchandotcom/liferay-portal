@@ -55,6 +55,8 @@ public class ObjectFieldUtil {
 					serviceBuilderObjectField.getBusinessType());
 				DBType = ObjectField.DBType.create(
 					serviceBuilderObjectField.getDBType());
+				externalReferenceCode =
+					serviceBuilderObjectField.getExternalReferenceCode();
 				id = serviceBuilderObjectField.getObjectFieldId();
 				indexed = serviceBuilderObjectField.getIndexed();
 				indexedAsKeyword =

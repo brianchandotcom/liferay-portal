@@ -26,7 +26,6 @@ import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -424,7 +423,7 @@ public class FileEntryContentDashboardItemTest {
 
 		Mockito.when(
 			contentDashboardItemActionProvider.isShow(
-				Matchers.any(JournalArticle.class),
+				Matchers.any(FileEntry.class),
 				Matchers.any(HttpServletRequest.class))
 		).thenReturn(
 			true

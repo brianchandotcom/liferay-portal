@@ -363,13 +363,59 @@ definition {
 			userName = "Test Test");
 	}
 
-	@description = "LPS-149508 - Verify it's Additional Information is added, updated or deleted when modified the columns"
-	@ignore = "Test Stub"
+	@description = "LPS-149508 - Verify it's Additional Information is added or deleted when modified the columns"
 	@priority = "4"
 	test CanViewAdditionalInformationWhenModifyColumnsView {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153604",
+			objectName = "CustomObject153604",
+			pluralLabelName = "Custom Objects 153604");
 
-		// TODO LPS-153604 CanViewAdditionalInformationWhenModifyColumnsView pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153604");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		ObjectCustomViews.addColumnsViaUI(columnOption = "Author");
+
+		Button.clickSave();
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Author,objectFieldName",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "ADD",
+			key_resourceName = "ObjectViewColumn",
+			resourceAction = "ADD",
+			resourceName = "ObjectViewColumn",
+			userName = "Test Test");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153604");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
+
+		Audit.openAuditAdmin();
+
+		Audit.viewAuditDetails(
+			additionalInformation = "Author,objectFieldName",
+			clientIp = "127.0.0.1",
+			key_resourceAction = "DELETE",
+			key_resourceName = "ObjectViewColumn",
+			resourceAction = "DELETE",
+			resourceName = "ObjectViewColumn",
+			userName = "Test Test");
 	}
 
 	@description = "LPS-149508 - Verify it's Additional information is add, updated or deleted when set a default sort"

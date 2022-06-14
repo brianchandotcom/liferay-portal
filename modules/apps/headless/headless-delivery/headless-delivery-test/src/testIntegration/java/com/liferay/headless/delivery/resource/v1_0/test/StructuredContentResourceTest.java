@@ -383,14 +383,11 @@ public class StructuredContentResourceTest
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId()));
 
-		String structuredContentRenderedContentByDisplayPageDisplayPageKey =
+		Assert.assertNotNull(
 			structuredContentResource.
 				getStructuredContentRenderedContentByDisplayPageDisplayPageKey(
 					journalArticle.getResourcePrimKey(),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
-
-		Assert.assertNotNull(
-			structuredContentRenderedContentByDisplayPageDisplayPageKey);
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey()));
 	}
 
 	@Override

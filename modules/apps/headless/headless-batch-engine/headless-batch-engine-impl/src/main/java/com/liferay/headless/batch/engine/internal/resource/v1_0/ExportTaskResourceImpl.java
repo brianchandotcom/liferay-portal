@@ -84,11 +84,9 @@ public class ExportTaskResourceImpl extends BaseExportTaskResourceImpl {
 
 	@Override
 	public Response getExportTaskContent(Long exportTaskId) throws Exception {
-		BatchEngineExportTask batchEngineExportTask =
+		return _getExportTaskContent(
 			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
-				exportTaskId);
-
-		return _getExportTaskContent(batchEngineExportTask);
+				exportTaskId));
 	}
 
 	@Override

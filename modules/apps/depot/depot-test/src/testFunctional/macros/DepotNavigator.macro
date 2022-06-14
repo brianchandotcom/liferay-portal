@@ -336,7 +336,12 @@ definition {
 	macro openDepotStagingConfiguration {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet");
+		if (isSet(remoteStaging)) {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet");
+		}
+		else {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet");
+		}
 	}
 
 	macro openDepotTranslationProcesses {
@@ -417,7 +422,9 @@ definition {
 	}
 
 	macro openToDMEntryInDepot {
-		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+		var depotId = JSONGroupAPI._getDepotIdByName(
+			depotName = "${depotName}",
+			portalURL = "${baseURL}");
 
 		if (isSet(folderName)) {
 			Variables.assertDefined(parameterList = "${folderName},${depotName}");

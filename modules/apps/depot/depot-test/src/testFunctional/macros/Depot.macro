@@ -489,7 +489,9 @@ definition {
 	}
 
 	macro disableStagingDepot {
-		DepotNavigator.openDepotStagingConfiguration(depotName = "${depotName}");
+		DepotNavigator.openDepotStagingConfiguration(
+			depotName = "${depotName}",
+			remoteStaging = "${remoteStaging}");
 
 		Depot.deactivateStaging(depotName = "${depotName}");
 	}

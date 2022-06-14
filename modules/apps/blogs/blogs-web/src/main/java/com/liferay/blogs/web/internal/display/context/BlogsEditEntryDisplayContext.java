@@ -19,22 +19,28 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.settings.BlogsGroupServiceSettings;
 import com.liferay.blogs.web.internal.helper.BlogsItemSelectorHelper;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Map;
 import java.util.ResourceBundle;
-
-import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,14 +55,14 @@ public class BlogsEditEntryDisplayContext {
 		BlogsGroupServiceSettings blogsGroupServiceSettings,
 		BlogsItemSelectorHelper blogsItemSelectorHelper,
 		HttpServletRequest httpServletRequest,
-		PortletResponse portletResponse) {
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_blogsEntry = blogsEntry;
 		_blogsFileUploadsConfiguration = blogsFileUploadsConfiguration;
 		_blogsGroupServiceSettings = blogsGroupServiceSettings;
 		_blogsItemSelectorHelper = blogsItemSelectorHelper;
 		_httpServletRequest = httpServletRequest;
-		_portletResponse = portletResponse;
+		_liferayPortletResponse = liferayPortletResponse;
 	}
 
 	public BlogsEntry getBlogsEntry() {
@@ -98,7 +104,8 @@ public class BlogsEditEntryDisplayContext {
 	}
 
 	public String getCoverImageItemSelectorEventName() {
-		return _portletResponse.getNamespace() + "coverImageSelectedItem";
+		return _liferayPortletResponse.getNamespace() +
+			"coverImageSelectedItem";
 	}
 
 	public String getCoverImageItemSelectorURL() {
@@ -130,6 +137,22 @@ public class BlogsEditEntryDisplayContext {
 		_description = description;
 
 		return _description;
+	}
+
+	public String getEditEntryURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/blogs/edit_entry"
+		).setRedirect(
+			getRedirect()
+		).setPortletResource(
+			getPortletResource()
+		).setParameter(
+			"entryId", getEntryId()
+		).setParameter(
+			"referringPortletResource", getReferringPortletResource()
+		).buildString();
 	}
 
 	public long getEntryId() {
@@ -192,7 +215,8 @@ public class BlogsEditEntryDisplayContext {
 	}
 
 	public String getSmallImageItemSelectorEventName() {
-		return _portletResponse.getNamespace() + "smallImageSelectedItem";
+		return _liferayPortletResponse.getNamespace() +
+			"smallImageSelectedItem";
 	}
 
 	public String getSmallImageItemSelectorURL() {
@@ -219,6 +243,67 @@ public class BlogsEditEntryDisplayContext {
 		return _subtitle;
 	}
 
+	public Map<String, Object> getTaglibContext() throws PortalException {
+		return HashMapBuilder.<String, Object>put(
+			"constants",
+			HashMapBuilder.<String, Object>put(
+				"ACTION_PUBLISH", WorkflowConstants.ACTION_PUBLISH
+			).put(
+				"ACTION_SAVE_DRAFT", WorkflowConstants.ACTION_SAVE_DRAFT
+			).put(
+				"ADD", Constants.ADD
+			).put(
+				"CMD", Constants.CMD
+			).put(
+				"STATUS_DRAFT", WorkflowConstants.STATUS_DRAFT
+			).put(
+				"UPDATE", Constants.UPDATE
+			).build()
+		).put(
+			"descriptionLength", PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH
+		).put(
+			"editEntryURL",
+			PortletURLBuilder.createActionURL(
+				_liferayPortletResponse
+			).setActionName(
+				"/blogs/edit_entry"
+			).setParameter(
+				"ajax", true
+			).setWindowState(
+				LiferayWindowState.EXCLUSIVE
+			).buildString()
+		).put(
+			"emailEntryUpdatedEnabled", isEmailEntryUpdatedEnabled()
+		).put(
+			"entry",
+			() -> {
+				BlogsEntry blogsEntry = getBlogsEntry();
+
+				if (blogsEntry != null) {
+					return HashMapBuilder.<String, Object>put(
+						"content", UnicodeFormatter.toString(getContent())
+					).put(
+						"customDescription", isCustomAbstract()
+					).put(
+						"description", getDescription()
+					).put(
+						"pending", blogsEntry.isPending()
+					).put(
+						"status", blogsEntry.getStatus()
+					).put(
+						"subtitle", getSubtitle()
+					).put(
+						"title", getTitle()
+					).put(
+						"userId", blogsEntry.getUserId()
+					).build();
+				}
+
+				return null;
+			}
+		).build();
+	}
+
 	public String getTitle() {
 		if (_title != null) {
 			return _title;
@@ -230,6 +315,22 @@ public class BlogsEditEntryDisplayContext {
 		return _title;
 	}
 
+	public String getUploadCoverImageURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/blogs/upload_cover_image"
+		).buildString();
+	}
+
+	public String getUploadSmallImageURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/blogs/upload_small_image"
+		).buildString();
+	}
+
 	public String getURLTitle() {
 		if (_urlTitle != null) {
 			return _urlTitle;
@@ -239,6 +340,16 @@ public class BlogsEditEntryDisplayContext {
 			getBlogsEntry(), _httpServletRequest, "urlTitle");
 
 		return _urlTitle;
+	}
+
+	public String getViewEntryURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCRenderCommandName(
+			"/blogs/view_entry"
+		).setParameter(
+			"entryId", getEntryId()
+		).buildString();
 	}
 
 	public boolean isAllowPingbacks() {
@@ -328,7 +439,7 @@ public class BlogsEditEntryDisplayContext {
 	private Boolean _emailEntryUpdatedEnabled;
 	private Long _entryId;
 	private final HttpServletRequest _httpServletRequest;
-	private final PortletResponse _portletResponse;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
 	private Long _smallImageFileEntryId;
 	private String _subtitle;

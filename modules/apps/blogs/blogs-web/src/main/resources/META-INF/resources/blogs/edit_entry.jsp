@@ -27,17 +27,11 @@ portletDisplay.setURLBack(blogsEditEntryDisplayContext.getRedirect());
 renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle));
 %>
 
-<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
-
 <clay:container-fluid
 	cssClass="container-form-lg entry-body"
 >
-	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
+	<aui:form action="<%= blogsEditEntryDisplayContext.getEditEntryURL() %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= blogsEditEntryDisplayContext.getRedirect() %>" />
-		<aui:input name="portletResource" type="hidden" value="<%= blogsEditEntryDisplayContext.getPortletResource() %>" />
-		<aui:input name="referringPortletResource" type="hidden" value="<%= blogsEditEntryDisplayContext.getReferringPortletResource() %>" />
-		<aui:input name="entryId" type="hidden" value="<%= blogsEditEntryDisplayContext.getEntryId() %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
 		<div class="lfr-form-content">
@@ -82,8 +76,6 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
-					<portlet:actionURL name="/blogs/upload_cover_image" var="uploadCoverImageURL" />
-
 					<div class="lfr-blogs-cover-image-selector">
 						<liferay-item-selector:image-selector
 							draggableImage="vertical"
@@ -92,7 +84,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 							itemSelectorURL="<%= blogsEditEntryDisplayContext.getCoverImageItemSelectorURL() %>"
 							maxFileSize="<%= blogsEditEntryDisplayContext.getImageMaxSize() %>"
 							paramName="coverImageFileEntry"
-							uploadURL="<%= uploadCoverImageURL %>"
+							uploadURL="<%= blogsEditEntryDisplayContext.getUploadCoverImageURL() %>"
 							validExtensions="<%= StringUtil.merge(blogsEditEntryDisplayContext.getImageExtensions()) %>"
 						/>
 					</div>
@@ -231,8 +223,6 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 							</aui:input>
 						</div>
 
-						<portlet:actionURL name="/blogs/upload_small_image" var="uploadSmallImageURL" />
-
 						<div class="clearfix">
 							<label class="control-label"><liferay-ui:message key="small-image" /></label>
 						</div>
@@ -248,7 +238,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 								itemSelectorURL="<%= blogsEditEntryDisplayContext.getSmallImageItemSelectorURL() %>"
 								maxFileSize="<%= blogsEditEntryDisplayContext.getImageMaxSize() %>"
 								paramName="smallImageFileEntry"
-								uploadURL="<%= uploadSmallImageURL %>"
+								uploadURL="<%= blogsEditEntryDisplayContext.getUploadSmallImageURL() %>"
 								validExtensions="<%= StringUtil.merge(blogsEditEntryDisplayContext.getImageExtensions()) %>"
 							/>
 						</div>
@@ -383,74 +373,15 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 	</aui:form>
 </clay:container-fluid>
 
-<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="ajax" value="<%= Boolean.TRUE.toString() %>" />
-</portlet:actionURL>
-
-<%
-Map<String, Object> taglibContext = HashMapBuilder.<String, Object>put(
-	"constants",
-	HashMapBuilder.<String, Object>put(
-		"ACTION_PUBLISH", WorkflowConstants.ACTION_PUBLISH
-	).put(
-		"ACTION_SAVE_DRAFT", WorkflowConstants.ACTION_SAVE_DRAFT
-	).put(
-		"ADD", Constants.ADD
-	).put(
-		"CMD", Constants.CMD
-	).put(
-		"STATUS_DRAFT", WorkflowConstants.STATUS_DRAFT
-	).put(
-		"UPDATE", Constants.UPDATE
-	).build()
-).put(
-	"descriptionLength", PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH
-).put(
-	"editEntryURL", editEntryURL
-).put(
-	"emailEntryUpdatedEnabled", blogsEditEntryDisplayContext.isEmailEntryUpdatedEnabled()
-).build();
-
-if (entry != null) {
-	taglibContext.put(
-		"entry",
-		HashMapBuilder.<String, Object>put(
-			"content", UnicodeFormatter.toString(blogsEditEntryDisplayContext.getContent())
-		).put(
-			"customDescription", blogsEditEntryDisplayContext.isCustomAbstract()
-		).put(
-			"description", blogsEditEntryDisplayContext.getDescription()
-		).put(
-			"pending", entry.isPending()
-		).put(
-			"status", entry.getStatus()
-		).put(
-			"subtitle", blogsEditEntryDisplayContext.getSubtitle()
-		).put(
-			"title", blogsEditEntryDisplayContext.getTitle()
-		).put(
-			"userId", entry.getUserId()
-		).build());
-}
-%>
-
 <liferay-frontend:component
-	context="<%= taglibContext %>"
+	context="<%= blogsEditEntryDisplayContext.getTaglibContext() %>"
 	module="blogs/js/blogs"
 	servletContext="<%= application %>"
 />
 
 <%
 if (entry != null) {
-	PortalUtil.addPortletBreadcrumbEntry(
-		request, BlogsEntryUtil.getDisplayTitle(resourceBundle, entry),
-		PortletURLBuilder.createRenderURL(
-			renderResponse
-		).setMVCRenderCommandName(
-			"/blogs/view_entry"
-		).setParameter(
-			"entryId", entry.getEntryId()
-		).buildString());
+	PortalUtil.addPortletBreadcrumbEntry(request, BlogsEntryUtil.getDisplayTitle(resourceBundle, entry), blogsEditEntryDisplayContext.getViewEntryURL());
 
 	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }

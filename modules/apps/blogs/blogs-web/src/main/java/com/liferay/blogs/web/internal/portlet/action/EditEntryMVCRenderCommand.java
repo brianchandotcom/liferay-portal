@@ -88,7 +88,7 @@ public class EditEntryMVCRenderCommand implements MVCRenderCommand {
 					BlogsGroupServiceSettings.getInstance(
 						themeDisplay.getScopeGroupId()),
 					_blogsItemSelectorHelper, httpServletRequest,
-					renderResponse));
+					_portal.getLiferayPortletResponse(renderResponse)));
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchEntryException ||

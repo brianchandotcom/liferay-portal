@@ -1,6 +1,6 @@
 {
 	"description_i18n": {
-		"en_US": "Boost contents in a category for users belonging to a given user segment."
+		"en_US": "Boost contents in a category for users belonging to the given user segments."
 	},
 	"elementDefinition": {
 		"category": "conditional",
@@ -62,6 +62,6 @@
 		}
 	},
 	"title_i18n": {
-		"en_US": "Boost Contents in a Category for a User Segment"
+		"en_US": "Boost Contents in a Category for User Segments"
 	}
 }

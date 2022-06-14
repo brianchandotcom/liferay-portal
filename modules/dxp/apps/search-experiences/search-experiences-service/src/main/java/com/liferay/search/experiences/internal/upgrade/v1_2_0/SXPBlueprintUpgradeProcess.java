@@ -51,10 +51,9 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 		List<SXPElement> sxpElements = new ArrayList<>();
 
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(2);
 
-		sb.append("select SXPElement.externalReferenceCode, ");
-		sb.append("SXPElement.sxpElementId, SXPElement.version from ");
+		sb.append("select externalReferenceCode, sxpElementId, version from ");
 		sb.append("SXPElement");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -64,20 +63,20 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				SXPElementImpl sxpElementImpl = new SXPElementImpl();
 
-				sxpElementImpl.setExternalReferenceCode(resultSet.getString(1));
-				sxpElementImpl.setSXPElementId(resultSet.getLong(2));
-				sxpElementImpl.setVersion(resultSet.getString(3));
+				sxpElementImpl.setExternalReferenceCode(
+					resultSet.getString("externalReferenceCode"));
+				sxpElementImpl.setSXPElementId(
+					resultSet.getLong("sxpElementId"));
+				sxpElementImpl.setVersion(resultSet.getString("version"));
 
 				sxpElements.add(sxpElementImpl);
 			}
 		}
 
-		sb = new StringBundler(4);
+		sb = new StringBundler(2);
 
-		sb.append("select SXPBlueprint.elementInstancesJSON, ");
-		sb.append("SXPBlueprint.externalReferenceCode, ");
-		sb.append("SXPBlueprint.sxpBlueprintId, SXPBlueprint.version from ");
-		sb.append("SXPBlueprint");
+		sb.append("select elementInstancesJSON, externalReferenceCode, ");
+		sb.append("sxpBlueprintId, version from SXPBlueprint");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				sb.toString());
@@ -90,15 +89,16 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					String externalReferenceCode = resultSet.getString(2);
+					String externalReferenceCode = resultSet.getString(
+						"externalReferenceCode");
+
+					long sxpBlueprintId = resultSet.getLong("sxpBlueprintId");
+
+					String version = resultSet.getString("version");
 
 					if (Validator.isNull(externalReferenceCode)) {
-						continue;
+						externalReferenceCode = String.valueOf(sxpBlueprintId);
 					}
-
-					long sxpBlueprintId = resultSet.getLong(3);
-
-					String version = resultSet.getString(4);
 
 					if (Validator.isNull(version)) {
 						version = "1.0";

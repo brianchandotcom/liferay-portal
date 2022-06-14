@@ -130,9 +130,6 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getPermissionChecker(), layoutSet.getGroupId(),
 			ActionKeys.MANAGE_LAYOUTS);
 
-		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			themeDisplay.getCompanyId(), layoutSet.getLayoutSetId());
-
 		String faviconCETExternalReferenceCode = ParamUtil.getString(
 			actionRequest, "faviconCETExternalReferenceCode");
 
@@ -143,6 +140,10 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				layoutSet.getLayoutSetId(), faviconCETExternalReferenceCode,
 				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 		}
+
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			themeDisplay.getCompanyId(), layoutSet.getLayoutSetId(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
 
 		String[] globalCSSCETExternalReferenceCodes = ParamUtil.getStringValues(
 			actionRequest, "globalCSSCETExternalReferenceCodes");
@@ -155,6 +156,10 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				layoutSet.getLayoutSetId(), globalCSSCETExternalReferenceCode,
 				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
 		}
+
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			themeDisplay.getCompanyId(), layoutSet.getLayoutSetId(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 
 		String[] globalJSCETExternalReferenceCodes = ParamUtil.getStringValues(
 			actionRequest, "globalJSCETExternalReferenceCodes");

@@ -109,9 +109,34 @@ public class ObjectRelationshipResourceImpl
 			Long objectDefinitionId, ObjectRelationship objectRelationship)
 		throws Exception {
 
+		long objectDefinitionId2 = GetterUtil.getLong(
+			objectRelationship.getObjectDefinitionId2());
+
+		if ((objectRelationship.getObjectDefinitionId2() == 0) &&
+			(objectRelationship.getObjectDefinitionExternalReferenceCode2() !=
+				null)) {
+
+			com.liferay.object.model.ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.
+					fetchObjectDefinitionByExternalReferenceCode(
+						contextCompany.getCompanyId(),
+						objectRelationship.
+							getObjectDefinitionExternalReferenceCode2());
+
+			if (objectDefinition == null) {
+				objectDefinition =
+					_objectDefinitionLocalService.addObjectDefinition(
+						contextUser.getUserId(),
+						objectRelationship.
+							getObjectDefinitionExternalReferenceCode2());
+			}
+
+			objectDefinitionId2 = objectDefinition.getObjectDefinitionId();
+		}
+
 		return _toObjectRelationship(
 			_objectRelationshipService.addObjectRelationship(
-				objectDefinitionId, objectRelationship.getObjectDefinitionId2(),
+				objectDefinitionId, objectDefinitionId2,
 				objectRelationship.getDeletionTypeAsString(),
 				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
 				objectRelationship.getName(),
@@ -159,6 +184,8 @@ public class ObjectRelationshipResourceImpl
 					objectRelationship.getObjectDefinitionId1();
 				objectDefinitionId2 =
 					objectRelationship.getObjectDefinitionId2();
+				objectDefinitionExternalReferenceCode2 =
+					objectDefinition.getExternalReferenceCode();
 				objectDefinitionName2 = objectDefinition.getShortName();
 				reverse = objectRelationship.isReverse();
 				type = ObjectRelationship.Type.create(

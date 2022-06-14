@@ -647,6 +647,19 @@ public class ObjectDefinitionLocalServiceImpl
 			panelCategoryKey, portlet, null, null, pluralLabelMap, scope);
 	}
 
+	@Override
+	public ObjectDefinition updateExternalReferenceCode(
+			String externalReferenceCode, long objectDefinitionId)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		objectDefinition.setExternalReferenceCode(externalReferenceCode);
+
+		return objectDefinitionPersistence.update(objectDefinition);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition updateTitleObjectFieldId(

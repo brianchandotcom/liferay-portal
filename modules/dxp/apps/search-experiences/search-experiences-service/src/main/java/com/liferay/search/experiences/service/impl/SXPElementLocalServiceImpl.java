@@ -127,14 +127,6 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 	}
 
 	@Override
-	public SXPElement getSXPElementByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return sxpElementPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
-	}
-
-	@Override
 	public List<SXPElement> getSXPElements(long companyId, boolean readOnly) {
 		return sxpElementPersistence.findByC_R(companyId, readOnly);
 	}

@@ -35,7 +35,7 @@ const SearchHeader = ({count, loading, onSearchSubmit}) => {
 			/>
 
 			{loading ? (
-				<Skeleton height={22} width={85}/>
+				<Skeleton height={22} width={85} />
 			) : (
 				<h5 className="m-0 text-neutral-7">{getCounter()}</h5>
 			)}

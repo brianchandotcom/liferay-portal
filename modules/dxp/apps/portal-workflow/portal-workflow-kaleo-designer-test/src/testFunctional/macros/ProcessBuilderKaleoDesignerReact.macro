@@ -1286,4 +1286,22 @@ definition {
 			value1 = "${coordinateY}");
 	}
 
+	macro viewTimersRequiredFields {
+        AssertElementPresent(
+            key_requiredField = "name",
+            locator1 = "ProcessBuilderKaleoDesignerReact#REQUIRED_FIELD");
+
+        AssertElementPresent(
+            key_requiredField = "script",
+            locator1 = "ProcessBuilderKaleoDesignerReact#REQUIRED_FIELD");
+
+        AssertElementPresent(
+            key_requiredField = "timerScale",
+            locator1 = "ProcessBuilderKaleoDesignerReact#REQUIRED_FIELD");
+
+        AssertElementPresent(
+            key_requiredField = "timerValue",
+            locator1 = "ProcessBuilderKaleoDesignerReact#REQUIRED_FIELD");
+        }
+
 }

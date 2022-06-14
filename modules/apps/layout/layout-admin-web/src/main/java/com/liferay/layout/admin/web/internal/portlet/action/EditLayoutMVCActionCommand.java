@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -289,9 +290,26 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "faviconCETExternalReferenceCode");
 
 		if (Validator.isNotNull(faviconCETExternalReferenceCode)) {
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				userId, _portal.getClassNameId(Layout.class), layout.getPlid(),
-				faviconCETExternalReferenceCode,
+			ClientExtensionEntryRel clientExtensionEntryRel =
+				_clientExtensionEntryRelLocalService.
+					fetchClientExtensionEntryRelByExternalReferenceCode(
+						layout.getCompanyId(), faviconCETExternalReferenceCode);
+
+			if (clientExtensionEntryRel == null) {
+				_clientExtensionEntryRelLocalService.
+					deleteClientExtensionEntryRels(
+						_portal.getClassNameId(Layout.class), layout.getPlid(),
+						ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+					userId, _portal.getClassNameId(Layout.class),
+					layout.getPlid(), faviconCETExternalReferenceCode,
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+			}
+		}
+		else {
+			_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+				_portal.getClassNameId(Layout.class), layout.getPlid(),
 				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 		}
 

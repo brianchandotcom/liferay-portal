@@ -22,6 +22,10 @@ export default function propsTransformer({
 		onClick() {
 			const {faviconTitleValue} = additionalProps;
 
+			const faviconCETExternalReferenceCode = document.getElementById(
+				`${portletNamespace}faviconCETExternalReferenceCode`
+			);
+
 			const faviconFileEntryId = document.getElementById(
 				`${portletNamespace}faviconFileEntryId`
 			);
@@ -34,8 +38,14 @@ export default function propsTransformer({
 				`${portletNamespace}faviconTitle`
 			);
 
-			if (faviconFileEntryId && faviconImage && faviconTitle) {
-				faviconFileEntryId.value = '0';
+			if (
+				faviconCETExternalReferenceCode &&
+				faviconFileEntryId &&
+				faviconImage &&
+				faviconTitle
+			) {
+				faviconCETExternalReferenceCode.value = '';
+				faviconFileEntryId.value = 0;
 				faviconImage.classList.add('d-none');
 				faviconTitle.innerHTML = faviconTitleValue;
 			}

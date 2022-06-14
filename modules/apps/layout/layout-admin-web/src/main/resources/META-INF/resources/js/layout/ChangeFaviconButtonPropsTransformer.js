@@ -30,7 +30,6 @@ export default function propsTransformer({
 						const faviconCETExternalReferenceCode = document.getElementById(
 							`${portletNamespace}faviconCETExternalReferenceCode`
 						);
-
 						const faviconFileEntryId = document.getElementById(
 							`${portletNamespace}faviconFileEntryId`
 						);
@@ -57,8 +56,10 @@ export default function propsTransformer({
 							) {
 								faviconCETExternalReferenceCode.value =
 									itemValue.cetExternalReferenceCode;
+								faviconFileEntryId.value = 0;
 							}
 							else {
+								faviconCETExternalReferenceCode.value = '';
 								faviconFileEntryId.value =
 									itemValue.fileEntryId;
 							}

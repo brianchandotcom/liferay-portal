@@ -51,7 +51,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -291,12 +290,13 @@ public class InviteMembersPortlet extends MVCPortlet {
 			_portal.getCreateAccountURL(
 				_portal.getHttpServletRequest(actionRequest), themeDisplay));
 		serviceContext.setAttribute("loginURL", themeDisplay.getURLSignIn());
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			actionRequest, _groupLocalService.getGroup(groupId),
-			UserNotificationEvent.class.getName(), PortletProvider.Action.VIEW);
-
-		serviceContext.setAttribute("redirectURL", portletURL.toString());
+		serviceContext.setAttribute(
+			"redirectURL",
+			String.valueOf(
+				PortletProviderUtil.getPortletURL(
+					actionRequest, _groupLocalService.getGroup(groupId),
+					UserNotificationEvent.class.getName(),
+					PortletProvider.Action.VIEW)));
 
 		_memberRequestLocalService.addMemberRequests(
 			themeDisplay.getUserId(), groupId, receiverUserIds, invitedRoleId,

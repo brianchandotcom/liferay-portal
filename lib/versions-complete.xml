@@ -6,7 +6,7 @@
 		<libraries>
 			<library>
 				<file-name>com.liferay.adaptive.media.image.impl.jar!metadata-extractor.jar</file-name>
-				<version>2.13.0</version>
+				<version>2.18.0</version>
 				<project-name>metadata-extractor</project-name>
 				<project-url>https://drewnoakes.com/code/exif/</project-url>
 				<licenses>
@@ -18,13 +18,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.adaptive.media.image.impl.jar!xmpcore.jar</file-name>
-				<version>6.0.6</version>
-				<project-name>XMP Library for Java</project-name>
-				<project-url>https://zerowing.corp.adobe.com/display/granite</project-url>
+				<version>6.1.11</version>
+				<project-name>Adobe XMPCore</project-name>
+				<project-url>https://www.adobe.com/devnet/xmp/library/eula-xmp-library-java.html</project-url>
 				<licenses>
 					<license>
-						<license-name>The BSD License</license-name>
-						<license-url>http://www.adobe.com/devnet/xmp/library/eula-xmp-library-java.html</license-url>
+						<license-name>The BSD 3-Clause License (BSD3)</license-name>
+						<license-url>https://opensource.org/licenses/BSD-3-Clause</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2081,7 +2081,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!common-image.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: Common :: Image</project-name>
 				<licenses>
 					<license>
@@ -2092,7 +2092,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!common-io.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: Common :: IO</project-name>
 				<licenses>
 					<license>
@@ -2103,7 +2103,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!common-lang.jar</file-name>
-				<version>3.3.2</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: Common :: Language support</project-name>
 				<licenses>
 					<license>
@@ -2114,7 +2114,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-bmp.jar</file-name>
-				<version>3.4.3</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: BMP plugin</project-name>
 				<licenses>
 					<license>
@@ -2125,7 +2125,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-core.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: Core</project-name>
 				<licenses>
 					<license>
@@ -2136,7 +2136,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-hdr.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: HDR plugin</project-name>
 				<licenses>
 					<license>
@@ -2147,7 +2147,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-icns.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: ICNS plugin</project-name>
 				<licenses>
 					<license>
@@ -2158,7 +2158,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-iff.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: IFF plugin</project-name>
 				<licenses>
 					<license>
@@ -2169,7 +2169,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-jpeg.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: JPEG plugin</project-name>
 				<licenses>
 					<license>
@@ -2180,7 +2180,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-metadata.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: Metadata</project-name>
 				<licenses>
 					<license>
@@ -2191,7 +2191,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-pcx.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: PCX plugin</project-name>
 				<licenses>
 					<license>
@@ -2202,7 +2202,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-pict.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: PICT plugin</project-name>
 				<licenses>
 					<license>
@@ -2213,7 +2213,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-pnm.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: PNM plugin</project-name>
 				<licenses>
 					<license>
@@ -2224,7 +2224,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-psd.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: PSD plugin</project-name>
 				<licenses>
 					<license>
@@ -2235,7 +2235,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-sgi.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: SGI plugin</project-name>
 				<licenses>
 					<license>
@@ -2246,7 +2246,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-tga.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: TGA plugin</project-name>
 				<licenses>
 					<license>
@@ -2257,7 +2257,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-thumbsdb.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: Thumbs.db plugin</project-name>
 				<licenses>
 					<license>
@@ -2268,7 +2268,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.imageio.plugins.jar!imageio-tiff.jar</file-name>
-				<version>3.5</version>
+				<version>3.8.2</version>
 				<project-name>TwelveMonkeys :: ImageIO :: TIFF plugin</project-name>
 				<licenses>
 					<license>
@@ -4984,7 +4984,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.tika.jar!metadata-extractor.jar</file-name>
-				<version>2.13.0</version>
+				<version>2.18.0</version>
 				<project-name>metadata-extractor</project-name>
 				<project-url>https://drewnoakes.com/code/exif/</project-url>
 				<licenses>
@@ -5138,13 +5138,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.tika.jar!xmpcore.jar</file-name>
-				<version>6.0.6</version>
-				<project-name>XMP Library for Java</project-name>
-				<project-url>https://zerowing.corp.adobe.com/display/granite</project-url>
+				<version>6.1.11</version>
+				<project-name>Adobe XMPCore</project-name>
+				<project-url>https://www.adobe.com/devnet/xmp/library/eula-xmp-library-java.html</project-url>
 				<licenses>
 					<license>
-						<license-name>The BSD License</license-name>
-						<license-url>http://www.adobe.com/devnet/xmp/library/eula-xmp-library-java.html</license-url>
+						<license-name>The BSD 3-Clause License (BSD3)</license-name>
+						<license-url>https://opensource.org/licenses/BSD-3-Clause</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -7573,7 +7573,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jaxb-runtime.jar</file-name>
-				<version>2.3.1</version>
+				<version>2.3.1.LIFERAY-PATCHED-1</version>
 				<project-name>Java Architecture for XML Binding</project-name>
 				<project-url>https://javaee.github.io/jaxb-v2/</project-url>
 				<licenses>

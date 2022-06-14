@@ -325,7 +325,11 @@ public class ObjectEntryOpenAPIResourceImpl
 		}
 
 		return new DTOProperty(
-			Collections.singletonMap("x-parent-map", "properties"),
+			HashMapBuilder.<String, Object>put(
+				"x-parent-map", "properties"
+			).put(
+				"x-required", String.valueOf(objectField.isRequired())
+			).build(),
 			objectField.getName(), objectField.getDBType());
 	}
 

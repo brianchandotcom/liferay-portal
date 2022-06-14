@@ -135,6 +135,12 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 		getService().deleteClientExtensionEntryRels(classNameId, classPK);
 	}
 
+	public static void deleteClientExtensionEntryRels(
+		long classNameId, long classPK, String type) {
+
+		getService().deleteClientExtensionEntryRels(classNameId, classPK, type);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

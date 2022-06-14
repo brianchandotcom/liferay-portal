@@ -140,6 +140,14 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 			classNameId, classPK);
 	}
 
+	@Override
+	public void deleteClientExtensionEntryRels(
+		long classNameId, long classPK, String type) {
+
+		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+			classNameId, classPK, type);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

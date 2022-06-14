@@ -137,6 +137,9 @@ public interface ClientExtensionEntryRelLocalService
 
 	public void deleteClientExtensionEntryRels(long classNameId, long classPK);
 
+	public void deleteClientExtensionEntryRels(
+		long classNameId, long classPK, String type);
+
 	/**
 	 * @throws PortalException
 	 */

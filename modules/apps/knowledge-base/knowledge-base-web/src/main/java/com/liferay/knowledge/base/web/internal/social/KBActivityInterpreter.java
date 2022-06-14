@@ -214,11 +214,10 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 			return true;
 		}
 		else if (className.equals(KBTemplate.class.getName())) {
-			KBTemplate kbTemplate = _kbTemplateLocalService.getKBTemplate(
-				activity.getClassPK());
-
 			return _kbTemplateModelResourcePermission.contains(
-				permissionChecker, kbTemplate, KBActionKeys.VIEW);
+				permissionChecker,
+				_kbTemplateLocalService.getKBTemplate(activity.getClassPK()),
+				KBActionKeys.VIEW);
 		}
 
 		return false;

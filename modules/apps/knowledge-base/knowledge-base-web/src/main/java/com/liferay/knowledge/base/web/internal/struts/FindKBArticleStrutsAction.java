@@ -215,10 +215,9 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 		}
 
 		if (_PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED) {
-			String token = AuthTokenUtil.getToken(
-				httpServletRequest, plid, portletId);
-
-			portletURL.setParameter("p_p_auth", token);
+			portletURL.setParameter(
+				"p_p_auth",
+				AuthTokenUtil.getToken(httpServletRequest, plid, portletId));
 		}
 
 		portletURL.setPortletMode(PortletMode.VIEW);

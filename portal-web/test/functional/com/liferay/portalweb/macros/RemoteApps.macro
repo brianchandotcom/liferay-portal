@@ -20,12 +20,16 @@ definition {
 		PortletEntry.publish();
 	}
 
+	macro selectType() {
+    	Click(
+     		locator1 = "FormFields#FIELD_DROPDOWN_ITEM",
+      		key_itemName = "${type}");
+    }
+
 	macro addCustomElement {
 		LexiconEntry.gotoAdd();
 
-		Select(
-			locator1 = "Select#TYPE",
-			value1 = "Custom Element");
+		RemoteApps.selectType(type="Custom Element");
 
 		RemoteAppsEntry.addCustomElement(
 			entryHtmlName = "${entryHtmlName}",
@@ -38,9 +42,8 @@ definition {
 	macro addCustomElementAllFields {
 		LexiconEntry.gotoAdd();
 
-		Select(
-			locator1 = "Select#TYPE",
-			value1 = "Custom Element");
+		RemoteApps.selectType(type="Custom Element");
+
 
 		RemoteAppsEntry.addCustomElementAllFields(
 			entryCssurl = "${entryCssurl}",
@@ -57,9 +60,7 @@ definition {
 	macro addCustomElementMultipleURLs {
 		LexiconEntry.gotoAdd();
 
-		Select(
-			locator1 = "Select#TYPE",
-			value1 = "Custom Element");
+		RemoteApps.selectType(type="Custom Element");
 
 		RemoteAppsEntry.addCustomElementMultipleURLs(
 			entryCssurl1 = "https://liferay.github.io/liferay-frontend-projects/index1.css",
@@ -74,6 +75,8 @@ definition {
 
 	macro addEntryWithPortletCategory {
 		LexiconEntry.gotoAdd();
+
+		RemoteApps.selectType(type="IFrame");
 
 		RemoteAppsEntry.addEntry(
 			entryName = "Test Remote App",
@@ -99,7 +102,7 @@ definition {
 
 		AssertTextEquals(
 			custom_entryURL = "${entryURL}",
-			key_id = "customElementURLs",
+			key_id = "ClientExtensionAdminPortlet_url",
 			locator1 = "RemoteAppsEntry#URL",
 			value1 = "${entryURL}");
 
@@ -130,25 +133,25 @@ definition {
 			value1 = "vanilla-counter");
 
 		AssertTextEquals(
-			key_id = "customElementURLs",
+			key_id = "ClientExtensionAdminPortlet_url",
 			key_index = "1",
 			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
 			value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index1.js");
 
 		AssertTextEquals(
-			key_id = "customElementURLs",
+			key_id = "ClientExtensionAdminPortlet_url",
 			key_index = "2",
 			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
 			value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index2.js");
 
 		AssertTextEquals(
-			key_id = "customElementCSSURLs",
+			key_id = "cssURLs",
 			key_index = "1",
 			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
 			value1 = "https://liferay.github.io/liferay-frontend-projects/index1.css");
 
 		AssertTextEquals(
-			key_id = "customElementCSSURLs",
+			key_id = "cssURLs",
 			key_index = "2",
 			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
 			value1 = "https://liferay.github.io/liferay-frontend-projects/index2.css");

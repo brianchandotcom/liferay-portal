@@ -18,7 +18,7 @@ definition {
 			value1 = "${entryHtmlName}");
 
 		Type(
-			key_id = "customElementURLs",
+			key_id = "ClientExtensionAdminPortlet_url",
 			locator1 = "RemoteAppsEntry#URL",
 			value1 = "${entryURL}");
 	}
@@ -35,7 +35,7 @@ definition {
 			value1 = "${entryHtmlName}");
 
 		Type(
-			key_id = "customElementURLs",
+			key_id = "ClientExtensionAdminPortlet_url",
 			locator1 = "RemoteAppsEntry#URL",
 			value1 = "${entryURL}");
 
@@ -65,25 +65,25 @@ definition {
 		RemoteAppsEntry.addCSSURLRow();
 
 		Type(
-			key_id = "customElementURLs",
+			key_id = "ClientExtensionAdminPortlet_url",
 			key_index = "1",
 			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
 			value1 = "${entryUrl1}");
 
 		Type(
-			key_id = "customElementURLs",
+			key_id = "ClientExtensionAdminPortlet_url",
 			key_index = "2",
 			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
 			value1 = "${entryUrl2}");
 
 		Type(
-			key_id = "customElementCSSURLs",
+			key_id = "cssURLs",
 			key_index = "1",
 			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
 			value1 = "${entryCssurl1}");
 
 		Type(
-			key_id = "customElementCSSURLs",
+			key_id = "cssURLs",
 			key_index = "2",
 			locator1 = "RemoteAppsEntry#URL_ROW_INDEX",
 			value1 = "${entryCssurl2}");
@@ -96,7 +96,7 @@ definition {
 			value1 = "${entryName}");
 
 		Type(
-			key_id = "iFrameURL",
+			key_id = "ClientExtensionAdminPortlet_url",
 			locator1 = "RemoteAppsEntry#URL",
 			value1 = "${entryURL}");
 	}

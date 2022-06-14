@@ -887,6 +887,46 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-152446. When a user with edit permissions searches for a content page in pages administration, and then clicks on it in the results, the page editor is opened with the selected page ready to be edited."
+	@priority = "5"
+	test NavigateToPageEditorWhenClickOnContentPageTitleFromSearchResults {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator clicks on the content page title in search results of Pages admin") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Search.searchCP(searchTerm = "Test Page Name");
+
+			LexiconTable.clickTableEntryColumnLink(
+				columnName = "title",
+				tableEntry = "Test Page Name");
+		}
+
+		task ("Then the page creator accesses to the page editor") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Heading Example",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+	}
+
 	@description = "This is a test for LPS-154130. Given I'm in Page Administration When I search for a page Then relative path is clickable."
 	@priority = "3"
 	test NavigateToPageItemViaRelativePathFromSearchResults {

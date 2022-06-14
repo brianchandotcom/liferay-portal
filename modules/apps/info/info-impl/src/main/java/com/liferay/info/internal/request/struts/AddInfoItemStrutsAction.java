@@ -20,6 +20,7 @@ import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHelper;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -76,6 +77,8 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				).infoFieldValues(
 					_infoRequestFieldValuesProviderHelper.getInfoFieldValues(
 						httpServletRequest)
+				).infoItemReference(
+					new InfoItemReference(className, 0)
 				).build());
 		}
 		catch (InfoFormValidationException infoFormValidationException) {

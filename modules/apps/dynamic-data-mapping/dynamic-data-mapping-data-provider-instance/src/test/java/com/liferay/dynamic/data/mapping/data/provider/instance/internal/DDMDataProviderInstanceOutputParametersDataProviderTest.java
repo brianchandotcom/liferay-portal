@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
@@ -230,7 +231,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 		Mockito.when(
 			_ddmDataProviderInstanceService.getDataProviderInstance(1)
 		).thenThrow(
-			Exception.class
+			PortalException.class
 		);
 
 		DDMDataProviderResponse ddmDataProviderResponse =

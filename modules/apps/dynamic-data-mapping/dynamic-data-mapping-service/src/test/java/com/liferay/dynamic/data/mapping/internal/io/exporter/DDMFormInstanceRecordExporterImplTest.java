@@ -39,6 +39,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -222,7 +223,7 @@ public class DDMFormInstanceRecordExporterImplTest {
 				Matchers.anyLong(), Matchers.anyInt(), Matchers.anyInt(),
 				Matchers.anyInt(), Matchers.any(OrderByComparator.class))
 		).thenThrow(
-			Exception.class
+			SystemException.class
 		);
 
 		DDMFormInstanceRecordExporterRequest.Builder builder =

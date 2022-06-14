@@ -811,7 +811,7 @@ public class ObjectDefinitionLocalServiceImpl
 		if (objectFields != null) {
 			for (ObjectField objectField : objectFields) {
 				if (system || objectField.isSystem()) {
-					_objectFieldLocalService.addSystemObjectField(
+					_objectFieldLocalService.addOrUpdateSystemObjectField(
 						userId, objectDefinition.getObjectDefinitionId(),
 						objectField.getBusinessType(),
 						objectField.getDBColumnName(),

@@ -1,0 +1,167 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-150277=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Enable Inputs Fragment collection in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Disable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-151157. The page creator could configure the Checkbox fragment."
+	@priority = "5"
+	test ConfigureCheckbox {
+		property test.name.skip.portal.instance = "Checkbox#ConfigureCheckbox";
+
+		task ("Given a page creator has a Form Container mapped to an entity with boolean field") {
+			task ("Add a web content structure with a Boolean field") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				NavItem.gotoStructures();
+
+				WebContentStructures.addCP(structureName = "WC Structure Name");
+
+				DataEngine.addField(
+					fieldFieldLabel = "Boolean",
+					fieldName = "Boolean");
+
+				WebContentStructures.saveCP();
+			}
+
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Map the Form Container to new structure") {
+				PageEditor.editFormContainer(
+					contentType = "Web Content Article",
+					panel = "General",
+					subtype = "WC Structure Name");
+			}
+		}
+
+		task ("When the page creator adds a Checkbox fragment into the Form Container") {
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Checkbox");
+		}
+
+		task ("Then the page creator could configure the Checkbox fragment") {
+			task ("Rename the label") {
+				PageEditor.editInput(
+					field = "Boolean",
+					fragmentName = "Checkbox",
+					label = "Are you a fun of Stephen Curry?");
+
+				AssertVisible(
+					fieldLabel = "Are you a fun of Stephen Curry?",
+					index = "1",
+					locator1 = "Fragment#INPUT_LABEL",
+					type = "checkbox");
+			}
+
+			task ("Hide the label") {
+				PageEditor.editInput(
+					fragmentName = "Checkbox",
+					hideLabel = "true");
+
+				AssertElementPresent(
+					fieldLabel = "Are you a fun of Stephen Curry?",
+					index = "1",
+					locator1 = "Fragment#INPUT_LABEL_INVISIBLE",
+					type = "checkbox");
+			}
+
+			task ("View the placeholder of Help Text field") {
+				AssertAttributeValue(
+					attribute1 = "placeholder",
+					key_label = "Help Text",
+					locator1 = "TextArea#ANY_LABELED",
+					value1 = "Guide your users to fill in the field by adding help text here.");
+			}
+
+			task ("Change the Help Text to a space") {
+				PageEditor.editInput(
+					fragmentName = "Checkbox",
+					helpText = " ");
+
+				AssertElementNotPresent(
+					index = "1",
+					locator1 = "Fragment#INPUT_HELP_TEXT",
+					type = "checkbox");
+			}
+
+			task ("Change the Help Text to a sentence") {
+				PageEditor.editInput(
+					fragmentName = "Checkbox",
+					helpText = "This is a Help Text.");
+
+				AssertTextEquals(
+					index = "1",
+					locator1 = "Fragment#INPUT_HELP_TEXT",
+					type = "checkbox",
+					value1 = "This is a Help Text.");
+			}
+
+			task ("Hide the Help Text") {
+				PageEditor.editInput(
+					fragmentName = "Checkbox",
+					hideHelpText = "true");
+
+				AssertElementNotPresent(
+					index = "1",
+					locator1 = "Fragment#INPUT_HELP_TEXT",
+					type = "checkbox");
+			}
+		}
+	}
+
+}

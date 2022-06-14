@@ -17,10 +17,11 @@ package com.liferay.portal.k8s.agent.internal.mutator.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.k8s.agent.mutator.PortalK8sConfigurationPropertiesMutator;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
@@ -70,25 +71,28 @@ public class AnnotationsPortalK8sConfigurationPropertiesMutatorTest {
 				portalK8sConfigurationPropertiesMutator =
 					serviceTracker.waitForService(4000);
 
+			String mainDomain = RandomTestUtil.randomString();
+
+			String[] domains = {"ext.domain.example", "other.domain.example"};
+
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 			portalK8sConfigurationPropertiesMutator.
 				mutateConfigurationProperties(
 					HashMapBuilder.put(
-						"cloud.liferay.com/context-data",
-						JSONUtil.put(
-							"domains", JSONUtil.putAll("foo")
-						).put(
-							"environment", "uat"
-						).toString()
+						"ext.lxc.liferay.com/domains",
+						StringUtil.merge(domains, "\n")
+					).put(
+						"ext.lxc.liferay.com/mainDomain", mainDomain
 					).build(),
 					new HashMap<>(), properties);
 
-			Assert.assertArrayEquals(
-				new String[] {"foo"},
-				(String[])properties.get("com.liferay.lxc.ext.domains"));
 			Assert.assertEquals(
-				"uat", (String)properties.get("k8s.lxc.environment"));
+				mainDomain,
+				(String)properties.get("ext.lxc.liferay.com.mainDomain"));
+			Assert.assertArrayEquals(
+				new String[] {"ext.domain.example", "other.domain.example"},
+				(String[])properties.get("ext.lxc.liferay.com.domains"));
 		}
 		finally {
 			serviceTracker.close();

@@ -75,17 +75,18 @@ public class LabelsPortalK8sConfigurationPropertiesMutatorTest {
 				mutateConfigurationProperties(
 					new HashMap<>(),
 					HashMapBuilder.put(
-						"cloud.liferay.com/serviceId", "customrestservice"
+						"ext.lxc.liferay.com/serviceId", "customrestservice"
 					).put(
-						"dxp.liferay.com/configs", "true"
+						"lxc.liferay.com/metadataType", "ext-provision"
 					).build(),
 					properties);
 
 			Assert.assertEquals(
 				"customrestservice",
-				(String)properties.get("k8s.cloud.liferay.com.serviceId"));
+				(String)properties.get("ext.lxc.liferay.com.serviceId"));
 			Assert.assertEquals(
-				"true", (String)properties.get("k8s.dxp.liferay.com.configs"));
+				"ext-provision",
+				(String)properties.get("lxc.liferay.com.metadataType"));
 		}
 		finally {
 			serviceTracker.close();

@@ -14,10 +14,10 @@
 
 package com.liferay.portal.k8s.agent.internal.mutator;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.k8s.agent.mutator.PortalK8sConfigurationPropertiesMutator;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
 import java.util.Map;
@@ -31,8 +31,8 @@ import org.osgi.service.component.propertytypes.ServiceRanking;
 @Component(
 	immediate = true, service = PortalK8sConfigurationPropertiesMutator.class
 )
-@ServiceRanking(2000)
-public class LabelsPortalK8sConfigurationPropertiesMutator
+@ServiceRanking(1800)
+public class BaseURLPortalK8sConfigurationPropertiesMutator
 	implements PortalK8sConfigurationPropertiesMutator {
 
 	@Override
@@ -40,14 +40,11 @@ public class LabelsPortalK8sConfigurationPropertiesMutator
 		Map<String, String> annotations, Map<String, String> labels,
 		Dictionary<String, Object> properties) {
 
-		for (Map.Entry<String, String> entry : labels.entrySet()) {
-			String key = entry.getKey();
+		String mainDomain = GetterUtil.getString(
+			annotations.get("ext.lxc.liferay.com/mainDomain"));
 
-			if (key.contains(StringPool.SLASH)) {
-				key = StringUtil.replace(key, CharPool.SLASH, CharPool.PERIOD);
-			}
-
-			properties.put(key, entry.getValue());
+		if (Validator.isNotNull(mainDomain)) {
+			properties.put("baseURL", Http.HTTPS_WITH_SLASH.concat(mainDomain));
 		}
 	}
 

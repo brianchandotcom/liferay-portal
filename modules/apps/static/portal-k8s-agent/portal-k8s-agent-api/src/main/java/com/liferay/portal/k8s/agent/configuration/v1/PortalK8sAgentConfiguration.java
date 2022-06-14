@@ -38,7 +38,7 @@ public interface PortalK8sAgentConfiguration {
 	public String caCertData();
 
 	@Meta.AD(
-		deflt = "dxp.liferay.com/configs=true", required = false,
+		deflt = "lxc.liferay.com/metadataType=ext-provision", required = false,
 		type = Meta.Type.String
 	)
 	public String labelSelector();

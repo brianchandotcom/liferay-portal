@@ -486,7 +486,7 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 		return config;
 	}
 
-	private SharedIndexInformer _toSharedIndexInformer(
+	private SharedIndexInformer<ConfigMap> _toSharedIndexInformer(
 		KubernetesClient kubernetesClient,
 		PortalK8sAgentConfiguration portalK8sAgentConfiguration) {
 
@@ -590,7 +590,8 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 		"Configured service account does not have access. Service account " +
 			"may have been revoked.";
 
-	private static final String _FILE_EXTENSION = ".config.json";
+	private static final String _FILE_EXTENSION =
+		".client-extension-config.json";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalK8sAgentImpl.class);

@@ -292,6 +292,54 @@ definition {
 			value1 = "${orderQuantity}");
 	}
 
+	macro editOrderAddressCP {
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "Button#PLUS");
+
+		if (isSet(editedName)) {
+			Type(
+				key_fieldLabel = "Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${editedName}");
+		}
+
+		if (isSet(editedStreet1)) {
+			Type(
+				locator1 = "TextInput#STREET_1",
+				value1 = "${editedStreet1}");
+		}
+
+		if (isSet(editedCountry)) {
+			Select(
+				locator1 = "Select#COUNTRY",
+				value1 = "${editedCountry}");
+		}
+
+		if (isSet(editedZipCode)) {
+			Type(
+				key_fieldLabel = "Zip",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${editedZipCode}");
+		}
+
+		if (isSet(editedCity)) {
+			Type(
+				locator1 = "TextInput#CITY",
+				value1 = "${editedCity}");
+		}
+
+		if (isSet(editedRegion)) {
+			Select(
+				locator1 = "Select#REGION",
+				value1 = "${editedRegion}");
+		}
+
+		Button.click(button = "Submit");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro editOrderItemDetails {
 		CommerceNavigator.gotoEntry(entryName = "${orderItemSku}");
 
@@ -573,6 +621,51 @@ definition {
 				key_productName = "${channelName}",
 				key_value = "${shippingOption}",
 				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+		}
+	}
+
+	macro viewOrderAddress {
+		if ("${addressType}" == "Billing") {
+			AssertTextEquals.assertPartialText(
+				key_addressInfo = "${addressStreet1}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_BILLING_ADDRESS",
+				value1 = "${addressStreet1}");
+
+			AssertTextEquals.assertPartialText(
+				key_addressInfo = "${addressCity}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_BILLING_ADDRESS",
+				value1 = "${addressCity}");
+
+			AssertTextEquals.assertPartialText(
+				key_addressInfo = "${addressRegion}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_BILLING_ADDRESS",
+				value1 = "${addressRegion}");
+
+			AssertTextEquals.assertPartialText(
+				key_addressInfo = "${addressZipCode}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_BILLING_ADDRESS",
+				value1 = "${addressZipCode}");
+		}
+		else if ("${addressType}" == "Shipping") {
+			AssertTextEquals.assertPartialText(
+				key_addressInfo = "${addressStreet1}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_SHIPPING_ADDRESS",
+				value1 = "${addressStreet1}");
+
+			AssertTextEquals.assertPartialText(
+				key_addressInfo = "${addressCity}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_SHIPPING_ADDRESS",
+				value1 = "${addressCity}");
+
+			AssertTextEquals.assertPartialText(
+				key_addressInfo = "${addressRegion}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_SHIPPING_ADDRESS",
+				value1 = "${addressRegion}");
+
+			AssertTextEquals.assertPartialText(
+				key_addressInfo = "${addressZipCode}",
+				locator1 = "CommerceOrders#ORDER_DETAILS_SHIPPING_ADDRESS",
+				value1 = "${addressZipCode}");
 		}
 	}
 

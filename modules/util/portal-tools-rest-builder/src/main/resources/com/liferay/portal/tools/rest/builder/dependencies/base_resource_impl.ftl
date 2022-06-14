@@ -107,10 +107,10 @@ public abstract class Base${schemaName}ResourceImpl
 				<#assign getAssetLibraryBatchJavaMethodSignature = javaMethodSignature />
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getSite" + schemaName + "sPage")>
 				<#assign getSiteBatchJavaMethodSignature = javaMethodSignature />
-			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "sPage")>
-				<#assign getBatchJavaMethodSignature = javaMethodSignature />
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaName + "sPage")>
 				<#assign getParentBatchJavaMethodSignatures = getParentBatchJavaMethodSignatures + [javaMethodSignature] />
+			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "sPage")>
+				<#assign getBatchJavaMethodSignature = javaMethodSignature />
 			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "patch" + schemaName)>
 			<#assign patchBatchJavaMethodSignature = javaMethodSignature />
@@ -119,10 +119,10 @@ public abstract class Base${schemaName}ResourceImpl
 				<#assign postAssetLibraryBatchJavaMethodSignature = javaMethodSignature />
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "postSite" + schemaName)>
 				<#assign postSiteBatchJavaMethodSignature = javaMethodSignature />
-			<#elseif stringUtil.equals(javaMethodSignature.methodName, "post" + schemaName)>
-				<#assign postBatchJavaMethodSignature = javaMethodSignature />
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName)>
 				<#assign postParentBatchJavaMethodSignatures = postParentBatchJavaMethodSignatures + [javaMethodSignature] />
+			<#elseif stringUtil.equals(javaMethodSignature.methodName, "post" + schemaName)>
+				<#assign postBatchJavaMethodSignature = javaMethodSignature />
 			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName)>
 			<#assign putBatchJavaMethodSignature = javaMethodSignature />
@@ -381,6 +381,7 @@ public abstract class Base${schemaName}ResourceImpl
 									/>
 								);
 							}
+
 							<#if parentBatchJavaMethodSignature?has_next>
 								else
 							</#if>
@@ -423,7 +424,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 					<#if !postBatchJavaMethodSignature?? && scopeParameters?has_content>
 						else {
-							throw new NotSupportedException("One of the following parameters must be informed: [${scopeParameters?join(", ")}]");
+							throw new NotSupportedException("One of the following parameters must be specified: [${scopeParameters?join(", ")}]");
 						}
 					</#if>
 				}
@@ -547,6 +548,7 @@ public abstract class Base${schemaName}ResourceImpl
 					}
 					else
 				</#if>
+
 				<#if getParentBatchJavaMethodSignatures?has_content>
 					<#list getParentBatchJavaMethodSignatures as parentBatchJavaMethodSignature>
 						<#assign
@@ -576,7 +578,7 @@ public abstract class Base${schemaName}ResourceImpl
 					</#if>
 				<#else>
 					{
-						throw new NotSupportedException("One of the following parameters must be informed: [${scopeParameters?join(", ")}]");
+						throw new NotSupportedException("One of the following parameters must be specified: [${scopeParameters?join(", ")}]");
 					}
 				</#if>
 			<#else>

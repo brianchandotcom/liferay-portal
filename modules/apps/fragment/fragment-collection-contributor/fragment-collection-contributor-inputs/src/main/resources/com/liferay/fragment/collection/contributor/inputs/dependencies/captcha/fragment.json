@@ -1,7 +1,7 @@
 {
 	"cacheable": false,
 	"fragmentEntryKey": "captcha",
-	"icon": "captcha",
+	"icon": "reload",
 	"name": "captcha",
 	"type": "component"
 }

@@ -396,10 +396,9 @@ public class MBCategoryLocalServiceTest {
 
 		expectedCategories.add(excludedCategory2);
 
-		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
-			_group.getGroupId());
-
-		AssertUtils.assertEquals(expectedCategories, categories);
+		AssertUtils.assertEquals(
+			expectedCategories,
+			MBCategoryLocalServiceUtil.getCategories(_group.getGroupId()));
 
 		expectedCategories.remove(excludedCategory1);
 		expectedCategories.remove(excludedCategory2);
@@ -428,10 +427,9 @@ public class MBCategoryLocalServiceTest {
 
 		expectedCategories.add(excludedCategory);
 
-		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
-			_group.getGroupId());
-
-		AssertUtils.assertEquals(expectedCategories, categories);
+		AssertUtils.assertEquals(
+			expectedCategories,
+			MBCategoryLocalServiceUtil.getCategories(_group.getGroupId()));
 
 		expectedCategories.remove(excludedCategory);
 
@@ -466,10 +464,10 @@ public class MBCategoryLocalServiceTest {
 			draftCategory.getUserId(), draftCategory.getCategoryId(),
 			WorkflowConstants.STATUS_DRAFT);
 
-		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
-			_group.getGroupId(), WorkflowConstants.STATUS_APPROVED);
-
-		AssertUtils.assertEquals(expectedCategories, categories);
+		AssertUtils.assertEquals(
+			expectedCategories,
+			MBCategoryLocalServiceUtil.getCategories(
+				_group.getGroupId(), WorkflowConstants.STATUS_APPROVED));
 
 		expectedCategories.remove(excludedCategory1);
 		expectedCategories.remove(excludedCategory2);
@@ -505,10 +503,10 @@ public class MBCategoryLocalServiceTest {
 			draftCategory.getUserId(), draftCategory.getCategoryId(),
 			WorkflowConstants.STATUS_DRAFT);
 
-		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
-			_group.getGroupId(), WorkflowConstants.STATUS_APPROVED);
-
-		AssertUtils.assertEquals(expectedCategories, categories);
+		AssertUtils.assertEquals(
+			expectedCategories,
+			MBCategoryLocalServiceUtil.getCategories(
+				_group.getGroupId(), WorkflowConstants.STATUS_APPROVED));
 
 		expectedCategories.remove(excludedCategory);
 

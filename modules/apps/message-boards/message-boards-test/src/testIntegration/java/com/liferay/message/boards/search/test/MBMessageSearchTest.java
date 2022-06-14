@@ -115,16 +115,14 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 	protected void addAttachment(ClassedModel classedModel) throws Exception {
 		MBMessage message = (MBMessage)classedModel;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				message.getGroupId(), TestPropsValues.getUserId());
-
 		MBMessageLocalServiceUtil.updateMessage(
 			TestPropsValues.getUserId(), message.getMessageId(),
 			getSearchKeywords(), getSearchKeywords(),
 			MBTestUtil.getInputStreamOVPs(
 				"OSX_Test.docx", getClass(), getSearchKeywords()),
-			0, false, serviceContext);
+			0, false,
+			ServiceContextTestUtil.getServiceContext(
+				message.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Override

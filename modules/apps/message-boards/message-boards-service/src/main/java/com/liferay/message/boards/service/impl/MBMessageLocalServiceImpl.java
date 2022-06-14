@@ -1940,11 +1940,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				message.getMessageId());
 		}
 
-		String portletId = PortletProviderUtil.getPortletId(
-			MBMessage.class.getName(), PortletProvider.Action.VIEW);
-
 		String layoutURL = _getLayoutFullURL(
-			message, portletId, serviceContext);
+			message,
+			PortletProviderUtil.getPortletId(
+				MBMessage.class.getName(), PortletProvider.Action.VIEW),
+			serviceContext);
 
 		if (Validator.isNotNull(layoutURL)) {
 			return StringBundler.concat(

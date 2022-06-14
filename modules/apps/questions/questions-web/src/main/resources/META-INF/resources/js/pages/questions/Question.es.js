@@ -104,16 +104,11 @@ export default withRouter(
 				getMessages(question.id, page, pageSize).then(
 					({data: {messageBoardThreadMessageBoardMessages}}) => {
 						setAnswers(messageBoardThreadMessageBoardMessages);
+						setLoadingAnswer(false);
 					}
 				);
 			}
 		}, [question, page, pageSize]);
-
-		useEffect(() => {
-			if (answers.totalCount >= 0) {
-				setLoadingAnswer(false);
-			}
-		}, [answers.totalCount]);
 
 		useEffect(() => {
 			getThread(questionId, context.siteKey)

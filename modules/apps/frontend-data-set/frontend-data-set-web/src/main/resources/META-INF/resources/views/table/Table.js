@@ -17,7 +17,7 @@ import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useRef} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
@@ -96,12 +96,12 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 
 	const visibleFields = getVisibleFields(schema.fields, visibleFieldNames);
 
-	const showItemActions = useMemo(() => {
-		return Boolean(
+	const actionExistsRef = useRef(
+		Boolean(
 			itemsActions?.length ||
-				items?.find((item) => item.actions || item.actionDropdownItems)
-		);
-	}, [items, itemsActions]);
+				items?.find((item) => item.actionDropdownItems?.length)
+		)
+	);
 
 	const SelectionComponent =
 		selectionType === 'multiple' ? ClayCheckbox : ClayRadio;
@@ -202,23 +202,11 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 													itemsChanges[itemId]
 												)}
 
-												<DndTable.Cell
-													className="item-actions"
-													columnName="item-actions"
-												>
-													{(showItemActions ||
-														item.actions) && (
-														<Actions
-															actions={
-																itemsActions ||
-																item.actions ||
-																item.actionDropdownItems
-															}
-															itemData={item}
-															itemId={itemId}
-														/>
-													)}
-												</DndTable.Cell>
+												<ActionsCell
+													item={item}
+													itemId={itemId}
+													itemsActions={itemsActions}
+												/>
 											</DndTable.Row>
 
 											{nestedItems &&
@@ -246,7 +234,7 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 																selectable && 1
 															}
 															paddingRightCells={
-																showItemActions &&
+																actionExistsRef.current &&
 																1
 															}
 														>
@@ -297,6 +285,21 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 		</DndTable.ContextProvider>
 	);
 }
+
+const ActionsCell = ({item, itemId, itemsActions}) => {
+	return (
+		<DndTable.Cell className="item-actions" columnName="item-actions">
+			{(itemsActions?.length > 0 ||
+				item.actionDropdownItems?.length > 0) && (
+				<Actions
+					actions={itemsActions || item.actionDropdownItems}
+					itemData={item}
+					itemId={itemId}
+				/>
+			)}
+		</DndTable.Cell>
+	);
+};
 
 Table.propTypes = {
 	items: PropTypes.arrayOf(PropTypes.object),

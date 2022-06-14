@@ -99,7 +99,7 @@ definition {
 		}
 
 		task ("When all children checkboxes states are checked") {
-			Click.clickAtNotVisible(
+			DoubleClick.doubleClickNotVisible(
 				key_label = "Content & Data",
 				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
 

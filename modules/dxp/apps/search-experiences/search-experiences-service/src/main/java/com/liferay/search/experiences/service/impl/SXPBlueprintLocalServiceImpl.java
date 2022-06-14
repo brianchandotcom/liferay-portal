@@ -139,14 +139,6 @@ public class SXPBlueprintLocalServiceImpl
 	}
 
 	@Override
-	public SXPBlueprint getSXPBlueprintByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return sxpBlueprintPersistence.fetchByC_ERC(
-			companyId, externalReferenceCode);
-	}
-
-	@Override
 	public int getSXPBlueprintsCount(long companyId) {
 		return sxpBlueprintPersistence.countByCompanyId(companyId);
 	}

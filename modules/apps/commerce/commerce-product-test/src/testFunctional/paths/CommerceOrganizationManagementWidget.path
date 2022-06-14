@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>CommerceOrganizationManagementWidget</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CommerceOrganizationManagementWidget</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>NODE_TITLE</td>
+	<td>//*[contains(@class,'node-title') and contains(.,'${key_nodeName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_ORIGIN</td>
+	<td>//*[contains(@class,'node-title') and contains(.,'${key_nodeOrigin}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_DESTINATION</td>
+	<td>//*[contains(@class,'node-title') and contains(.,'${key_nodeDestination}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_ACTION</td>
+	<td>//*[@class='actions-wrapper menu-open']/*[contains(@class,'add-action-wrapper ${key_orgType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLUS_BUTTON</td>
+	<td>//*[contains(@class,'chart-item-add')]//*[contains(@class,'open-actions-wrapper')]//*[contains(@href,'plus')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITE_EMAIL_INPUT</td>
+	<td>//input[contains(@id,'inviteUsersEmailInput') and contains(@type,'text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_ACCOUNT_INPUT</td>
+	<td>//input[contains(@id,'searchAccountInput') and contains(@type,'text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_ROLE</td>
+	<td>//option[text()='${key_roleOption}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERTICAL_ELLIPSIS</td>
+	<td>//*[contains(@class,'node-title') and contains(.,'${key_nodeName}')]//following::*[contains(@class,'node-menu-wrapper')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

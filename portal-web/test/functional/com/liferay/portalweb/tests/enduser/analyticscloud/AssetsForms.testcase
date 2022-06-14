@@ -119,6 +119,8 @@ definition {
 		task ("Download the document with anonymous user") {
 			User.logoutPG();
 
+			ACUtils.clearLocalStorage();
+
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
 				pageName = "AC Page",

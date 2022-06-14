@@ -170,6 +170,8 @@ definition {
 
 		User.logoutPG();
 
+		ACUtils.clearLocalStorage();
+
 		ACUtils.navigateToSitePage(
 			pageName = "AC Page",
 			siteName = "Site Name");

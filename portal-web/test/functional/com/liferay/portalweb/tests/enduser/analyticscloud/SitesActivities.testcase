@@ -353,6 +353,8 @@ definition {
 		task ("Access the page as a anonymous user") {
 			User.logoutPG();
 
+			ACUtils.clearLocalStorage();
+
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",

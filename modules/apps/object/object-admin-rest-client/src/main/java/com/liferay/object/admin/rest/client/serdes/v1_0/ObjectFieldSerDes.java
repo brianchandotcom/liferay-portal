@@ -95,6 +95,20 @@ public class ObjectFieldSerDes {
 			sb.append("\"");
 		}
 
+		if (objectField.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectField.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (objectField.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -275,6 +289,15 @@ public class ObjectFieldSerDes {
 				"businessType", String.valueOf(objectField.getBusinessType()));
 		}
 
+		if (objectField.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(objectField.getExternalReferenceCode()));
+		}
+
 		if (objectField.getId() == null) {
 			map.put("id", null);
 		}
@@ -402,6 +425,14 @@ public class ObjectFieldSerDes {
 					objectField.setBusinessType(
 						ObjectField.BusinessType.create(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					objectField.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

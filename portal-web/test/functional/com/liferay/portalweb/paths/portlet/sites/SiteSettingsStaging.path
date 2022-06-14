@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLED_ON_REMOTE_LIVE_CHECKBOX</td>
+	<td>//label[contains(.,'Remote Live')]/input[@checked]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_CHECKBOX</td>
 	<td>//div[contains(@id,'stagingConfigurationControls')]//span[contains(.,'${key_contentName}')]</td>
 	<td></td>

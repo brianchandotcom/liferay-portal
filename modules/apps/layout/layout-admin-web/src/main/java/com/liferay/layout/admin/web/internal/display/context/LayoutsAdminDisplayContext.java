@@ -504,6 +504,23 @@ public class LayoutsAdminDisplayContext {
 		return StringPool.BLANK;
 	}
 
+	public String getFaviconCETExternalReferenceCode() {
+		LayoutSet setLayoutSet = getSelLayoutSet();
+
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			ClientExtensionEntryRelLocalServiceUtil.
+				fetchClientExtensionEntryRel(
+					PortalUtil.getClassNameId(LayoutSet.class),
+					setLayoutSet.getLayoutSetId(),
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+		if (clientExtensionEntryRel != null) {
+			return clientExtensionEntryRel.getCETExternalReferenceCode();
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public String getFaviconTitle() {
 		return FaviconUtil.getFaviconTitle(
 			getSelLayoutSet(), themeDisplay.getLocale());

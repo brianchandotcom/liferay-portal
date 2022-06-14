@@ -37,13 +37,13 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<aui:input name="devices" type="hidden" value="regular" />
-<aui:input name="faviconCETExternalReferenceCode" type="hidden" />
-<aui:input name="faviconFileEntryId" type="hidden" />
-
 <%
 LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLookAndFeelDisplayContext(request, layoutsAdminDisplayContext, liferayPortletResponse);
 %>
+
+<aui:input name="devices" type="hidden" value="regular" />
+<aui:input name="faviconCETExternalReferenceCode" type="hidden" value="<%= layoutLookAndFeelDisplayContext.getFaviconCETExternalReferenceCode() %>" />
+<aui:input name="faviconFileEntryId" type="hidden" value="<%= selLayout.getFaviconFileEntryId() %>" />
 
 <clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="favicon" /></h3>

@@ -68,6 +68,14 @@ public class ClientExtensionEntryRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteClientExtensionEntryRels(
+		long classNameId, long classPK, String type) {
+
+		clientExtensionEntryRelPersistence.removeByC_C_T(
+			classNameId, classPK, type);
+	}
+
+	@Override
 	public ClientExtensionEntryRel fetchClientExtensionEntryRel(
 		long classNameId, long classPK, String type) {
 

@@ -1524,7 +1524,9 @@ AUI.add(
 						var date = A.DataType.Date.parse(value);
 
 						if (!date) {
-							datePicker.selectDates('');
+							datePicker.get('activeInput').val('');
+
+							datePicker.clearSelection();
 
 							return;
 						}
@@ -1538,7 +1540,9 @@ AUI.add(
 						datePicker.selectDates(date);
 					}
 					else {
-						datePicker.selectDates('');
+						datePicker.get('activeInput').val('');
+
+						datePicker.clearSelection();
 					}
 				},
 			},

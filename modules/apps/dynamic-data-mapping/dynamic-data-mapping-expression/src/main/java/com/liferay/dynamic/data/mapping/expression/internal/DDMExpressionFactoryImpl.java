@@ -35,6 +35,7 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 		throws DDMExpressionException {
 
 		DDMExpressionImpl<T> ddmExpressionImpl = new DDMExpressionImpl<>(
+			ddmExpressionFunctionTracker,
 			createExpressionRequest.getExpression());
 
 		ddmExpressionImpl.setDDMExpressionActionHandler(
@@ -45,8 +46,6 @@ public class DDMExpressionFactoryImpl implements DDMExpressionFactory {
 			createExpressionRequest.getDDMExpressionObserver());
 		ddmExpressionImpl.setDDMExpressionParameterAccessor(
 			createExpressionRequest.getDDMExpressionParameterAccessor());
-		ddmExpressionImpl.setDDMExpressionFunctionTracker(
-			ddmExpressionFunctionTracker);
 
 		return ddmExpressionImpl;
 	}

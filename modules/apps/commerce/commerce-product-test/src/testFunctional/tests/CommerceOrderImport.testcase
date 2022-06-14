@@ -536,6 +536,54 @@ definition {
 		}
 	}
 
+	@description = "Verify a csv file with an invalid requested delivery date can be imported and the date is shown as invalid in the import preview."
+	@priority = "3"
+	test ValidateCSVWithInvalidRequestedDeliveryDate {
+		property portal.acceptance = "false";
+
+		task ("Given an empty order") {
+			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
+		}
+
+		task ("When the buyer starts an import for a CSV with an invalid requested delivery date") {
+			Click(locator1 = "CommerceEntry#DROPDOWN");
+
+			MenuItem.click(menuItem = "Import from CSV");
+
+			IFrame.selectModalFrame();
+
+			UploadDependencyFile.uploadFile(fileName = "commerce_invalid_requested_delivery_date.csv");
+
+			Button.click(button = "Import");
+		}
+
+		task ("Then the import preview shows the requested delivery date as invalid") {
+			for (var productName : list "Brake Fluid,Brake Fluid,Brake Fluid,Premium Brake Fluid") {
+				CommerceOrders.assertOrderImportPreviewEntry(
+					productName = "${productName}",
+					requestedDeliveryDate = "The requested delivery date is invalid.");
+			}
+		}
+
+		task ("When the import is completed") {
+			Button.click(button = "Import");
+		}
+
+		task ("Then the item in the order (admin) shows the requested delivery date as empty") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Open");
+
+			AssertTextEquals(
+				locator1 = "CommerceOrders#ORDER_DETAILS_REQUESTED_DELIVERY_DATE",
+				value1 = "Click add to insert.");
+		}
+	}
+
 	@description = "Verify existing orders are shown when importing an order."
 	@priority = "4"
 	test VerifyIfAllOrdersArePresent {

@@ -2,3 +2,21 @@
 	border: none;
 	padding: 0;
 }
+
+.form-input-captcha .taglib-captcha {
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 30ch;
+}
+
+.form-input-captcha .taglib-captcha .captcha {
+	flex-grow: 1;
+}
+
+.form-input-captcha .taglib-captcha .input-text-wrapper {
+	width: 100%;
+}
+
+.form-input-captcha .taglib-captcha .refresh {
+	margin-left: 1ch;
+}

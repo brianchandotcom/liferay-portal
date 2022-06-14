@@ -12,23 +12,6 @@
  * details.
  */
 
-/// <reference types="react" />
-
-import {CustomItem} from '@liferay/object-js-components-web';
-export default function EditObjectAction({
-	ffNotificationTemplates,
-	objectAction: {id, ...values},
-	objectActionExecutors,
-	objectActionTriggers,
-	readOnly,
-	validateExpressionBuilderContentURL,
-}: IProps): JSX.Element;
-interface IProps {
-	ffNotificationTemplates: boolean;
-	objectAction: ObjectAction;
-	objectActionExecutors: CustomItem[];
-	objectActionTriggers: CustomItem[];
-	readOnly?: boolean;
-	validateExpressionBuilderContentURL: string;
+declare module 'frontend-js-web' {
+	export * from 'frontend-js-web/src/main/resources/META-INF/resources/index';
 }
-export {};

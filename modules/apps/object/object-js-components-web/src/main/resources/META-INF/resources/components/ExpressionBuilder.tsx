@@ -15,6 +15,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
+import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 
 import CodeEditor, {SidebarCategory} from './CodeEditor/index';
@@ -80,14 +81,22 @@ export function ExpressionBuilder({
 export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 	const {observer, onOpenChange} = useModal();
 	const editorRef = useRef<CodeMirror.Editor>(null);
-	const [{error, onSave, source}, setState] = useState<{
+	const [
+		{error, onSave, source, validateExpressionBuilderContentURL},
+		setState,
+	] = useState<{
 		error?: string;
 		onSave?: Callback;
 		source?: string;
+		validateExpressionBuilderContentURL?: string;
 	}>({});
 
 	useEffect(() => {
-		const openModal = (params: {onSave: Callback; source: string}) => {
+		const openModal = (params: {
+			onSave: Callback;
+			source: string;
+			validateExpressionBuilderContentURL: string;
+		}) => {
 			setState(params);
 		};
 
@@ -109,18 +118,42 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 		onOpenChange(false);
 	};
 
-	const handleSave = () => {
+	const handleSave = async () => {
 		const source = editorRef.current?.getValue();
 
-		if (source?.trim()) {
-			onSave?.(source);
-			closeModal();
+		let error: string | undefined;
+
+		if (!source?.trim()) {
+			error = Liferay.Language.get('required');
 		}
-		else {
+		else if (
+			Liferay.FeatureFlags['LPS-152735'] &&
+			validateExpressionBuilderContentURL
+		) {
+			const response = await fetch(
+				createResourceURL(validateExpressionBuilderContentURL, {
+					expression: source,
+				}).href
+			);
+
+			const {valid} = (await response.json()) as {
+				valid: boolean;
+			};
+
+			if (!valid) {
+				error = Liferay.Language.get('syntax-error');
+			}
+		}
+
+		if (error) {
 			setState((state) => ({
 				...state,
-				error: Liferay.Language.get('required'),
+				error,
 			}));
+		}
+		else {
+			onSave?.(source);
+			closeModal();
 		}
 	};
 
@@ -151,7 +184,7 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 						</ClayButton>
 
 						<ClayButton onClick={handleSave}>
-							{Liferay.Language.get('save')}
+							{Liferay.Language.get('done')}
 						</ClayButton>
 					</ClayButton.Group>
 				}

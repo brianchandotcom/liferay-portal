@@ -20,11 +20,13 @@ export default function AddObjectAction({
 	ffNotificationTemplates,
 	objectActionExecutors,
 	objectActionTriggers,
+	validateExpressionBuilderContentURL,
 }: IProps): JSX.Element;
 interface IProps {
 	apiURL: string;
 	ffNotificationTemplates: boolean;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	validateExpressionBuilderContentURL: string;
 }
 export {};

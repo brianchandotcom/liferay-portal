@@ -22,6 +22,7 @@ export default function AddObjectAction({
 	ffNotificationTemplates,
 	objectActionExecutors = [],
 	objectActionTriggers = [],
+	validateExpressionBuilderContentURL,
 }: IProps) {
 	return (
 		<ObjectAction
@@ -37,6 +38,9 @@ export default function AddObjectAction({
 				'the-object-action-was-created-successfully'
 			)}
 			title={Liferay.Language.get('new-action')}
+			validateExpressionBuilderContentURL={
+				validateExpressionBuilderContentURL
+			}
 		/>
 	);
 }
@@ -46,4 +50,5 @@ interface IProps {
 	ffNotificationTemplates: boolean;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
+	validateExpressionBuilderContentURL: string;
 }

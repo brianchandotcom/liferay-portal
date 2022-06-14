@@ -146,6 +146,73 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9403. Verify the store admin can associate existing users to an organization by using the Organization Management widget."
+	@priority = "3"
+	test CanAssociateExistingUserUsingWidget {
+		task ("Given an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When the Organization Management Widget Page is reached") {
+			Navigator.openSitePage(
+				pageName = "Organization Management Widget Page",
+				siteName = "Minium");
+
+			Click(locator1 = "Button#EXPAND");
+		}
+
+		task ("And the organization svg node is clicked") {
+			Click(
+				key_nodeName = "Organization 1",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		}
+
+		task ("And the plus button is clicked") {
+			Click(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+		}
+
+		task ("And the user svg node is clicked") {
+			WaitForVisible(
+				key_orgType = "user",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
+
+			Click(
+				key_orgType = "user",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
+		}
+
+		task ("Then the admin is able to add an existing user's email to be associated with the organization") {
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#INVITE_EMAIL_INPUT",
+				value1 = "buyer@liferay.com");
+
+			Click(
+				key_roleOption = "Organization User",
+				locator1 = "CommerceOrganizationManagementWidget#SELECT_ROLE");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the user is present in the admin console") {
+			AssertElementPresent(
+				key_nodeName = "Buyer User",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		}
+	}
+
 	@description = "COMMERCE-9401. Verify new accounts can be created using the Organization Management widget."
 	@priority = "3"
 	test CanCreateAccountUsingWidget {

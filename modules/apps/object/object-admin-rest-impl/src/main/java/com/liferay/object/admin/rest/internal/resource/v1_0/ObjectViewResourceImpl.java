@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -45,15 +47,21 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/object-view.properties",
-	scope = ServiceScope.PROTOTYPE, service = ObjectViewResource.class
+	scope = ServiceScope.PROTOTYPE,
+	service = {NestedFieldSupport.class, ObjectViewResource.class}
 )
-public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
+public class ObjectViewResourceImpl
+	extends BaseObjectViewResourceImpl implements NestedFieldSupport {
 
 	@Override
 	public void deleteObjectView(Long objectViewId) throws Exception {
 		_objectViewService.deleteObjectView(objectViewId);
 	}
 
+	@NestedField(
+		parentClass = com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition.class,
+		value = "objectViews"
+	)
 	@Override
 	public Page<ObjectView> getObjectDefinitionObjectViewsPage(
 			Long objectDefinitionId, String search, Pagination pagination)

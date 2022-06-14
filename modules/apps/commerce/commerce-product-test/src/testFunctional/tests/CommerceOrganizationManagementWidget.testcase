@@ -32,6 +32,68 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "COMMERCE-9402. Verify the store admin can associate existing accounts to an organization by using the Organization Management widget."
+	@priority = "3"
+	test CanAssociateExistingAccountUsingWidget {
+		task ("Given an account") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Commerce Account",
+				accountEntryType = "Business");
+		}
+
+		task ("When the Organization Management Widget Page is reached") {
+			Navigator.openSitePage(
+				pageName = "Organization Management Widget Page",
+				siteName = "Minium");
+
+			Click(locator1 = "Button#EXPAND");
+		}
+
+		task ("And the organization svg node is clicked") {
+			Click(
+				key_nodeName = "Organization 1",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		}
+
+		task ("And the plus button is clicked") {
+			Click(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+		}
+
+		task ("And the account svg node is clicked") {
+			WaitForVisible(
+				key_orgType = "account",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
+
+			Click(
+				key_orgType = "account",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
+		}
+
+		task ("Then the admin is able to select an existing account to be associated with the organization") {
+			Click.clickAtNotVisible(
+				key_radioOption = "Select Accounts",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#SEARCH_ACCOUNT_INPUT",
+				value1 = "Commerce Account");
+
+			KeyPress(
+				locator1 = "CommerceOrganizationManagementWidget#SEARCH_ACCOUNT_INPUT",
+				value1 = "\ENTER");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the account is present in the admin console") {
+			AssertElementPresent(
+				key_nodeName = "Commerce Account",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		}
+	}
+
 	@description = "COMMERCE-9401. Verify new accounts can be created using the Organization Management widget."
 	@priority = "3"
 	test CanCreateAccountUsingWidget {

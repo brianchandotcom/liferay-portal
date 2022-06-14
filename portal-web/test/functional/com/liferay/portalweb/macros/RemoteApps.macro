@@ -20,16 +20,10 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro selectType() {
-    	Click(
-     		locator1 = "FormFields#FIELD_DROPDOWN_ITEM",
-      		key_itemName = "${type}");
-    }
-
 	macro addCustomElement {
 		LexiconEntry.gotoAdd();
 
-		RemoteApps.selectType(type="Custom Element");
+		RemoteApps.selectType(type = "Custom Element");
 
 		RemoteAppsEntry.addCustomElement(
 			entryHtmlName = "${entryHtmlName}",
@@ -42,8 +36,7 @@ definition {
 	macro addCustomElementAllFields {
 		LexiconEntry.gotoAdd();
 
-		RemoteApps.selectType(type="Custom Element");
-
+		RemoteApps.selectType(type = "Custom Element");
 
 		RemoteAppsEntry.addCustomElementAllFields(
 			entryCssurl = "${entryCssurl}",
@@ -60,7 +53,7 @@ definition {
 	macro addCustomElementMultipleURLs {
 		LexiconEntry.gotoAdd();
 
-		RemoteApps.selectType(type="Custom Element");
+		RemoteApps.selectType(type = "Custom Element");
 
 		RemoteAppsEntry.addCustomElementMultipleURLs(
 			entryCssurl1 = "https://liferay.github.io/liferay-frontend-projects/index1.css",
@@ -76,7 +69,7 @@ definition {
 	macro addEntryWithPortletCategory {
 		LexiconEntry.gotoAdd();
 
-		RemoteApps.selectType(type="IFrame");
+		RemoteApps.selectType(type = "IFrame");
 
 		RemoteAppsEntry.addEntry(
 			entryName = "Test Remote App",
@@ -241,6 +234,12 @@ definition {
 				panel = "Applications",
 				portlet = "Remote Apps");
 		}
+	}
+
+	macro selectType {
+		Click(
+			key_itemName = "${type}",
+			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 	}
 
 	macro tearDown {

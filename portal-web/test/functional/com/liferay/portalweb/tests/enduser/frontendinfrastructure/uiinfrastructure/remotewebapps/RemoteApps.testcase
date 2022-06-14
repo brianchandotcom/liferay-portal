@@ -43,7 +43,7 @@ definition {
 
 		task ("Create remote app entry with portlet category") {
 			RemoteApps.goToRemoteAppsPortlet();
-			
+
 			RemoteApps.addEntryWithPortletCategory();
 		}
 

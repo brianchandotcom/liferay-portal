@@ -116,6 +116,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-152446. When a user with edit permissions clicks a content page in page administration of live site, the page is opened in view mode."
+	@priority = "4"
+	test NavigateToViewModeWhenClickOnContentPageItemInLiveSite {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("When the page creator clicks on the content page item in Pages admin of live site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Click(
+				key_pageName = "Test Page Name",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_ENTRY_TITLE_LINK");
+		}
+
+		task ("Then the page creator accesses to the content page at view mode") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = "Heading Example");
+
+			AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
+		}
+	}
+
 	@description = "This is a test for LPS-110183. Can view information about collection items of collection page when enable Live."
 	@priority = "3"
 	test ViewCollectionItemInformationInStaging {

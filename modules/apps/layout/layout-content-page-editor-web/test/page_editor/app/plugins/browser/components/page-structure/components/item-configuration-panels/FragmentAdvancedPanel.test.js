@@ -87,6 +87,7 @@ const renderComponent = ({fragmentEntryLink = {}} = {}) =>
 				layoutData: {
 					items: [],
 				},
+				permissions: {UPDATE: true},
 				selectedViewportSize: VIEWPORT_SIZES.desktop,
 			})}
 		>

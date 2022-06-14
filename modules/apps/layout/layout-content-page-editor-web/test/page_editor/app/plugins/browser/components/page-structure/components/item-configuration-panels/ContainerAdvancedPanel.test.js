@@ -39,6 +39,7 @@ function renderComponent(
 				layoutData: {
 					items: [],
 				},
+				permissions: {UPDATE: true},
 				segmentsExperienceId: '0',
 				selectedViewportSize: 'desktop',
 			})}

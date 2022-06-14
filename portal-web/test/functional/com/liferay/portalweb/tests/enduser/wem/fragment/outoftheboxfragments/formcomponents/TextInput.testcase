@@ -189,7 +189,7 @@ definition {
 					navTab = "Fragments");
 
 				PageEditor.editInput(
-					field = "Title",
+					field = "Content",
 					fragmentName = "Text Input",
 					markAsRequired = "true");
 			}
@@ -244,7 +244,7 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertNotVisible(
-				key_text = "Title*",
+				key_text = "Content*",
 				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
 		}
 	}
@@ -290,7 +290,7 @@ definition {
 					navTab = "Fragments");
 
 				PageEditor.editInput(
-					field = "Description",
+					field = "Content",
 					fragmentName = "Text Input",
 					markAsRequired = "true");
 			}
@@ -354,7 +354,7 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
 
 			AssertNotVisible(
-				key_text = "Description*",
+				key_text = "Content*",
 				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
 		}
 	}

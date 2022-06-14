@@ -53,6 +53,11 @@ public class MoveFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
+	public String getIconCssClass() {
+		return "move-folder";
+	}
+
+	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
 			getResourceBundle(getLocale(portletRequest)), "move");

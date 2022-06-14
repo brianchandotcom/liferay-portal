@@ -784,62 +784,19 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewSharedContentViaEmail {
-		property custom.properties = "message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.smtp.auth=true${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.transport.protocol=smtp";
-		property test.name.skip.portal.instance = "DMSharing#CanViewSharedContentViaEmail";
-
-		var portalURL = PropsUtil.get("portal.url");
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		Gmail.login(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userPassword = PropsUtil.get("email.password.4"));
-
-		Gmail.gotoHtmlMode();
-
-		Gmail.deleteSpecificMail(gmailMessageTitleList = "Test Test has shared DM Document Title with you for viewing.,Your New Account,Your New Password");
-
-		Navigator.openSpecificURL(url = "${portalURL}");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
-
-		ServerAdministration.configureMailServerSettings(
-			needsReply = "true",
-			userName = PropsUtil.get("email.address.2"),
-			userPassword = PropsUtil.get("email.password.2"));
-
-		Navigator.openURL();
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
-
-		PortalInstances.editCP(
-			mailDomain = "gmail.com",
-			virtualHost = "localhost");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property test.smtp.server.enabled = "true";
 
 		JSONUser.addUser(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userScreenName = "usersn1");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -854,33 +811,30 @@ definition {
 		DMNavigator.gotoShare(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.sharePG(
-			userEmailAddress = PropsUtil.get("email.address.4"),
-			userName = "userfn1 userln1");
+			sharingPermissions = "Comment",
+			userEmailAddress = "userea@liferay.com",
+			userName = "userfn userln");
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.loginUserPG(
-			password = "test",
-			userEmailAddress = PropsUtil.get("email.address.4"));
+		MockMock.viewMail(
+			asset = "Test Test has shared DM Document Title with you for commenting",
+			content = "Test Test has shared DM Document Title with you for commenting",
+			recipient = "userfn userln",
+			sender = "Joe Bloggs",
+			subject = "Test Test has shared DM Document Title with you for commenting");
 
-		Pause(locator1 = "30000");
+		MockMock.openMockMock();
 
-		Gmail.gotoHtmlMode();
-
-		Gmail.viewMail(
-			emailFromUserName = "Joe Bloggs",
-			gmailAssetType = "DM Document Title",
-			gmailMessageBody = "Test Test has shared DM Document Title with you for viewing.",
-			gmailMessageTitle = "Test Test has shared DM Document Title with you for viewing.");
-
-		AssertClick(
-			locator1 = "Sharing#EMAIL_VIEW_DOCUMENT_BUTTON",
-			value1 = "View Document");
-
-		SelectWindow.selectPopUp(locator1 = "null");
+		MockMock.clickBodyLink(
+			asset = "Test Test has shared DM Document Title with you for commenting",
+			bodyLink = "DM Document Title",
+			recipient = "userfn userln");
 
 		DMDocumentSharing.viewDocumentViaSharedContent(
-			contentSharingPermission = "View",
+			contentSharingPermission = "Comment",
 			dmDocumentTitle = "DM Document Title");
 	}
 

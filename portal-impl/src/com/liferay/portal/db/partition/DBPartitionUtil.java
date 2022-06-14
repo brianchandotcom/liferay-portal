@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
@@ -184,6 +185,32 @@ public class DBPartitionUtil {
 		}
 	}
 
+	public static CacheModel<?> toCacheModel(
+		Class<?> clazz, BaseModel<?> entityModel) {
+
+		if (!_DATABASE_PARTITION_ENABLED) {
+			return entityModel.toCacheModel();
+		}
+
+		if (ShardedModel.class.isAssignableFrom(clazz) &&
+			!(entityModel instanceof ShardedModel)) {
+
+			// nullModel for a non control table
+
+			if (_nullModel == null) {
+				_nullModel = entityModel;
+			}
+
+			NullModel nullModel = new NullModel();
+
+			nullModel.setCompanyId(CompanyThreadLocal.getCompanyId());
+
+			return nullModel;
+		}
+
+		return entityModel.toCacheModel();
+	}
+
 	public static BaseModel<?> toEntityModel(BaseModel<?> entityModel) {
 		if (!_DATABASE_PARTITION_ENABLED) {
 			return entityModel;
@@ -196,6 +223,10 @@ public class DBPartitionUtil {
 					shardedModel.getCompanyId()) {
 
 				return null;
+			}
+
+			if (entityModel instanceof NullModel) {
+				return _nullModel;
 			}
 		}
 
@@ -763,5 +794,28 @@ public class DBPartitionUtil {
 		Arrays.asList("Company", "VirtualHost"));
 	private static volatile long _defaultCompanyId;
 	private static String _defaultSchemaName;
+	private static BaseModel<?> _nullModel;
+
+	private static class NullModel
+		implements CacheModel<BaseModel<?>>, ShardedModel {
+
+		@Override
+		public long getCompanyId() {
+			return _companyId;
+		}
+
+		@Override
+		public void setCompanyId(long companyId) {
+			_companyId = companyId;
+		}
+
+		@Override
+		public BaseModel<?> toEntityModel() {
+			return _nullModel;
+		}
+
+		private long _companyId;
+
+	}
 
 }

@@ -355,7 +355,7 @@ public class EntityCacheImpl
 			_notifyFinderCache(clazz.getName(), baseModel, null);
 		}
 
-		CacheModel<?> result = baseModel.toCacheModel();
+		CacheModel<?> result = DBPartitionUtil.toCacheModel(clazz, baseModel);
 
 		if (_isLocalCacheEnabled()) {
 			Map<Serializable, Serializable> localCache = _localCache.get();

@@ -26,23 +26,23 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CETCustomElement extends CET {
 
-	@CETProperty(defaultValue = "x", name = "cssURLs", type = "list")
+	@CETProperty(defaultValue = "", name = "cssURLs", type = "list")
 	public String getCSSURLs();
 
 	@CETProperty(
-		defaultValue = "x", name = "friendlyURLMapping", type = "string"
+		defaultValue = "", name = "friendlyURLMapping", type = "string"
 	)
 	public String getFriendlyURLMapping();
 
-	@CETProperty(defaultValue = "x", name = "htmlElementName", type = "string")
+	@CETProperty(defaultValue = "", name = "htmlElementName", type = "string")
 	public String getHTMLElementName();
 
 	@CETProperty(
-		defaultValue = "x", name = "portletCategoryName", type = "string"
+		defaultValue = "", name = "portletCategoryName", type = "string"
 	)
 	public String getPortletCategoryName();
 
-	@CETProperty(defaultValue = "x", name = "urls", type = "list")
+	@CETProperty(defaultValue = "", name = "urls", type = "list")
 	public String getURLs();
 
 	@CETProperty(

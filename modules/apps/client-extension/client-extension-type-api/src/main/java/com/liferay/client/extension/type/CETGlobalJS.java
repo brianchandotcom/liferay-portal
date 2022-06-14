@@ -26,7 +26,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CETGlobalJS extends CET {
 
-	@CETProperty(defaultValue = "x", name = "url", type = "string")
+	@CETProperty(defaultValue = "", name = "url", type = "string")
 	public String getURL();
 
 }

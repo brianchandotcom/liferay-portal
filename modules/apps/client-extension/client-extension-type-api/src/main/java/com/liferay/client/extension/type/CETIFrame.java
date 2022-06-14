@@ -27,16 +27,16 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface CETIFrame extends CET {
 
 	@CETProperty(
-		defaultValue = "x", name = "friendlyURLMapping", type = "string"
+		defaultValue = "", name = "friendlyURLMapping", type = "string"
 	)
 	public String getFriendlyURLMapping();
 
 	@CETProperty(
-		defaultValue = "x", name = "portletCategoryName", type = "string"
+		defaultValue = "", name = "portletCategoryName", type = "string"
 	)
 	public String getPortletCategoryName();
 
-	@CETProperty(defaultValue = "x", name = "url", type = "string")
+	@CETProperty(defaultValue = "", name = "url", type = "string")
 	public String getURL();
 
 	@CETProperty(

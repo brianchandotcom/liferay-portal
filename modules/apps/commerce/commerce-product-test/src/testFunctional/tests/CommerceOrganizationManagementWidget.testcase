@@ -5,64 +5,97 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-	property testray.main.component.name = "Commerce";
+	property testray.main.component.name = "Order Management";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp();
+		CommerceConfiguration.commerceSetUp(minium = "true");
 
-        CommerceConfiguration.commerceSetUp(minium = "true");
+		task ("Setup: Add a Minium page with an Organization Management widget") {
+			JSONLayout.addPublicLayout(
+				groupName = "Minium",
+				layoutName = "Organization Management Widget Page");
 
-		CommerceEntry.addAccountEntryUser(
-			accountName = "Commerce Account",
-			accountType = "Business",
-			agreeToTermsAndAnswerReminderQuery = "true",
-			createNewAccount = "true",
-			requireReset = "false",
-			userEmailAddress = "buyer@liferay.com",
-			userFirstName = "Buyer",
-			userLastName = "User",
-			userRole = "Buyer",
-			userScreenName = "buyeruser",
-			userSiteMembership = "Minium");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Minium",
+				layoutName = "Organization Management Widget Page",
+				widgetName = "Organization Management");
+		}
 
-        ApplicationsMenu.gotoSite(site = "Minium");
-
-        JSONLayout.addPublicLayout(
-            groupName = "Minium",
-            layoutName = "Test Public Content Page",
-            type = "content");
-
-        ContentPagesNavigator.openEditContentPage(
-            pageName = "Test Public Content Page",
-            siteName = "Minium");
-
-        PageEditor.addWidget(portletName = "Organization Management");
-
-        Button.clickPublish();
-
-        JSONOrganization.addOrganization(
-            organizationName = "Organization 1",
-            organizationSite = "true");
+		task ("Setup: Add an organization") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization 1",
+				organizationSite = "false");
+		}
 	}
 
 	tearDown {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-    @description = "COMMERCE-9399. Verify if organization is shown within the widget"
+	@description = "COMMERCE-9400. Verify new child organizations can be created using the Organization Management widget."
 	@priority = "3"
-	test CanViewOrganizationWidget {
-        task ("When the widget page is reached") {
-            Navigator.openSitePage(
-                pageName = "Test Public Content Page",
-                siteName = "Minium");
-        }
+	test CanCreateOrganizationUsingWidget {
+		task ("When the Organization Management Widget Page is reached") {
+			Navigator.openSitePage(
+				pageName = "Organization Management Widget Page",
+				siteName = "Minium");
 
-        task ("Then the organization is shown within the widget") {
-            AssertElementPresent(
-                locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE",
-                key_nodeName = "Organization 1");
-        }
-    }
+			Click(locator1 = "Button#EXPAND");
+		}
+
+		task ("And the organization svg node is clicked") {
+			Click(
+				key_nodeName = "Organization 1",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		}
+
+		task ("And the plus button is clicked") {
+			Click(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+		}
+
+		task ("And the organization icon is clicked") {
+			WaitForVisible(
+				key_orgType = "organization",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
+
+			Click(
+				key_orgType = "organization",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
+		}
+
+		task ("Then the admin is able to create a new child organization") {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = "Child Org 1");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And then the new child organization is present in the admin console") {
+			AssertElementPresent(
+				key_nodeName = "Child Org 1",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		}
+	}
+
+	@description = "COMMERCE-9399. Verify organizations can be viewed in the Organization Management widget."
+	@priority = "3"
+	test CanViewOrganizationInWidget {
+		task ("When the Organization Management Widget Page is reached") {
+			Navigator.openSitePage(
+				pageName = "Organization Management Widget Page",
+				siteName = "Minium");
+
+			Click(locator1 = "Button#EXPAND");
+		}
+
+		task ("Then the organization is shown within the widget") {
+			AssertElementPresent(
+				key_nodeName = "Organization 1",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		}
+	}
 
 }

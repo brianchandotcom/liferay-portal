@@ -180,12 +180,12 @@ public class ObjectRelationshipResourceImpl
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectRelationship.getLabelMap());
 				name = objectRelationship.getName();
+				objectDefinitionExternalReferenceCode2 =
+					objectDefinition.getExternalReferenceCode();
 				objectDefinitionId1 =
 					objectRelationship.getObjectDefinitionId1();
 				objectDefinitionId2 =
 					objectRelationship.getObjectDefinitionId2();
-				objectDefinitionExternalReferenceCode2 =
-					objectDefinition.getExternalReferenceCode();
 				objectDefinitionName2 = objectDefinition.getShortName();
 				reverse = objectRelationship.isReverse();
 				type = ObjectRelationship.Type.create(

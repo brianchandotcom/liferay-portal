@@ -157,6 +157,49 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public ObjectDefinition addObjectDefinition(
+			long userId, String externalReferenceCode)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		ObjectDefinition objectDefinition = objectDefinitionPersistence.create(
+			counterLocalService.increment());
+
+		objectDefinition.setCompanyId(user.getCompanyId());
+		objectDefinition.setUserId(user.getUserId());
+		objectDefinition.setUserName(user.getFullName());
+		objectDefinition.setActive(false);
+		objectDefinition.setExternalReferenceCode(externalReferenceCode);
+		objectDefinition.setName(externalReferenceCode);
+		objectDefinition.setStorageType(
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
+		objectDefinition.setSystem(false);
+		objectDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+
+		_resourceLocalService.addResources(
+			objectDefinition.getCompanyId(), 0, objectDefinition.getUserId(),
+			ObjectDefinition.class.getName(),
+			objectDefinition.getObjectDefinitionId(), false, true, true);
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
+			_objectFieldLocalService.addSystemObjectField(
+				userId, objectDefinition.getObjectDefinitionId(), "Text",
+				ObjectEntryTable.INSTANCE.status.getName(),
+				ObjectEntryTable.INSTANCE.getTableName(), "Integer", false,
+				false, null,
+				LocalizedMapUtil.getLocalizedMap(
+					LanguageUtil.get(LocaleUtil.getDefault(), "status")),
+				"status", false);
+		}
+
+		return objectDefinition;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public ObjectDefinition addOrUpdateSystemObjectDefinition(
 			long companyId,
 			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata)
@@ -854,49 +897,6 @@ public class ObjectDefinitionLocalServiceImpl
 		if (system) {
 			_createTable(
 				objectDefinition.getExtensionDBTableName(), objectDefinition);
-		}
-
-		return objectDefinition;
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public ObjectDefinition addObjectDefinition(
-			long userId, String externalReferenceCode)
-		throws PortalException {
-
-		User user = _userLocalService.getUser(userId);
-
-		ObjectDefinition objectDefinition = objectDefinitionPersistence.create(
-			counterLocalService.increment());
-
-		objectDefinition.setCompanyId(user.getCompanyId());
-		objectDefinition.setUserId(user.getUserId());
-		objectDefinition.setUserName(user.getFullName());
-		objectDefinition.setActive(false);
-		objectDefinition.setExternalReferenceCode(externalReferenceCode);
-		objectDefinition.setName(externalReferenceCode);
-		objectDefinition.setStorageType(
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
-		objectDefinition.setSystem(false);
-		objectDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
-
-		_resourceLocalService.addResources(
-			objectDefinition.getCompanyId(), 0, objectDefinition.getUserId(),
-			ObjectDefinition.class.getName(),
-			objectDefinition.getObjectDefinitionId(), false, true, true);
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
-			_objectFieldLocalService.addSystemObjectField(
-				userId, objectDefinition.getObjectDefinitionId(), "Text",
-				ObjectEntryTable.INSTANCE.status.getName(),
-				ObjectEntryTable.INSTANCE.getTableName(), "Integer", false,
-				false, null,
-				LocalizedMapUtil.getLocalizedMap(
-					LanguageUtil.get(LocaleUtil.getDefault(), "status")),
-				"status", false);
 		}
 
 		return objectDefinition;

@@ -22,8 +22,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.base.ObjectDefinitionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -66,6 +64,19 @@ public class ObjectDefinitionServiceImpl
 	}
 
 	@Override
+	public ObjectDefinition addObjectDefinition(
+			long userId, String externalReferenceCode)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), null,
+			ObjectActionKeys.ADD_OBJECT_DEFINITION);
+
+		return _objectDefinitionLocalService.addObjectDefinition(
+			userId, externalReferenceCode);
+	}
+
+	@Override
 	public ObjectDefinition deleteObjectDefinition(long objectDefinitionId)
 		throws PortalException {
 
@@ -92,19 +103,6 @@ public class ObjectDefinitionServiceImpl
 		}
 
 		return objectDefinition;
-	}
-
-	@Override
-	public ObjectDefinition addObjectDefinition(
-			long userId, String externalReferenceCode)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			ObjectActionKeys.ADD_OBJECT_DEFINITION);
-
-		return _objectDefinitionLocalService.addObjectDefinition(
-			userId, externalReferenceCode);
 	}
 
 	@Override

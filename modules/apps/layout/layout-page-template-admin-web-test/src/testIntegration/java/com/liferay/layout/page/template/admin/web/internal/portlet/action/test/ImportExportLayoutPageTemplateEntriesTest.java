@@ -901,10 +901,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 		List<LayoutPageTemplatesImporterResultEntry>
 			layoutPageTemplatesImporterResultEntries = null;
 
-		ServiceContext serviceContext = _getServiceContext(
-			_group1, TestPropsValues.getUserId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(
+			_getServiceContext(_group1, TestPropsValues.getUserId()));
 
 		try {
 			layoutPageTemplatesImporterResultEntries =

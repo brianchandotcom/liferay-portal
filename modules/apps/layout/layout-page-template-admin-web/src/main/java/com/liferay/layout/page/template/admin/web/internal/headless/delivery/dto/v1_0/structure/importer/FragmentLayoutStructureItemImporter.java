@@ -321,12 +321,9 @@ public class FragmentLayoutStructureItemImporter
 			}
 		);
 
-		Map<String, String> configurationTypes = _getConfigurationTypes(
-			configuration);
-
 		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
 			_toFreeMarkerFragmentEntryProcessorJSONObject(
-				configurationTypes,
+				_getConfigurationTypes(configuration),
 				(Map<String, Object>)definitionMap.get("fragmentConfig"));
 
 		_fragmentEntryValidator.validateConfigurationValues(

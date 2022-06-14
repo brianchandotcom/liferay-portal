@@ -80,22 +80,18 @@ public class FormLayoutStructureItemImporter
 			Map<String, Object> itemReferenceMap =
 				(Map<String, Object>)sourceMap.get("formReference");
 
-			String contextSource = (String)itemReferenceMap.get(
-				"contextSource");
-
 			if (Objects.equals(
 					ContextReference.ContextSource.DISPLAY_PAGE_ITEM.getValue(),
-					contextSource)) {
+					(String)itemReferenceMap.get("contextSource"))) {
 
 				formStyledLayoutStructureItem.setFormConfig(
 					FormStyledLayoutStructureItem.
 						FORM_CONFIG_DISPLAY_PAGE_ITEM_TYPE);
 			}
 			else {
-				long classNameId = _portal.getClassNameId(
-					(String)itemReferenceMap.get("className"));
-
-				formStyledLayoutStructureItem.setClassNameId(classNameId);
+				formStyledLayoutStructureItem.setClassNameId(
+					_portal.getClassNameId(
+						(String)itemReferenceMap.get("className")));
 
 				Integer subtypeId = (Integer)itemReferenceMap.get("subtypeId");
 

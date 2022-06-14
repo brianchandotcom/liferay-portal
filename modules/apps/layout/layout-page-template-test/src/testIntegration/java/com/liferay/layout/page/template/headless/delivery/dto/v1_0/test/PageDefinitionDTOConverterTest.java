@@ -150,12 +150,11 @@ public class PageDefinitionDTOConverterTest {
 	public void testToPageDefinitionDropZoneAllowedFragments()
 		throws Exception {
 
-		LayoutStructure layoutStructure = _getLayoutStructure(
-			"layout_data_drop_zone_allowed_fragments.json", new HashMap<>());
-
 		PageDefinition pageDefinition = _getPageDefinition(
 			_layoutLocalService.fetchLayout(_layoutPageTemplateEntry.getPlid()),
-			layoutStructure);
+			_getLayoutStructure(
+				"layout_data_drop_zone_allowed_fragments.json",
+				new HashMap<>()));
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -198,12 +197,11 @@ public class PageDefinitionDTOConverterTest {
 	public void testToPageDefinitionDropZoneUnallowedFragments()
 		throws Exception {
 
-		LayoutStructure layoutStructure = _getLayoutStructure(
-			"layout_data_drop_zone_unallowed_fragments.json", new HashMap<>());
-
 		PageDefinition pageDefinition = _getPageDefinition(
 			_layoutLocalService.fetchLayout(_layoutPageTemplateEntry.getPlid()),
-			layoutStructure);
+			_getLayoutStructure(
+				"layout_data_drop_zone_unallowed_fragments.json",
+				new HashMap<>()));
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -454,12 +452,9 @@ public class PageDefinitionDTOConverterTest {
 
 	@Test
 	public void testToPageDefinitionRow() throws Exception {
-		LayoutStructure layoutStructure = _getLayoutStructure(
-			"layout_data_row.json", new HashMap<>());
-
 		PageDefinition pageDefinition = _getPageDefinition(
 			_layoutLocalService.fetchLayout(_layoutPageTemplateEntry.getPlid()),
-			layoutStructure);
+			_getLayoutStructure("layout_data_row.json", new HashMap<>()));
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 
@@ -508,12 +503,9 @@ public class PageDefinitionDTOConverterTest {
 
 	@Test
 	public void testToPageDefinitionSection() throws Exception {
-		LayoutStructure layoutStructure = _getLayoutStructure(
-			"layout_data_section.json", new HashMap<>());
-
 		PageDefinition pageDefinition = _getPageDefinition(
 			_layoutLocalService.fetchLayout(_layoutPageTemplateEntry.getPlid()),
-			layoutStructure);
+			_getLayoutStructure("layout_data_section.json", new HashMap<>()));
 
 		PageElement rootPageElement = pageDefinition.getPageElement();
 

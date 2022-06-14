@@ -21,6 +21,7 @@ import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHe
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.creator.InfoItemCreator;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -89,8 +90,11 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				_log.debug("Unable to add info item", exception);
 			}
 
-			InfoForm infoForm = _infoItemServiceTracker.getFirstInfoItemService(
-				InfoForm.class, className);
+			InfoItemFormProvider<?> infoItemFormProvider =
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemFormProvider.class, className);
+
+			InfoForm infoForm = infoItemFormProvider.getInfoForm();
 
 			SessionErrors.add(
 				originalHttpServletRequest, infoForm.getName(),

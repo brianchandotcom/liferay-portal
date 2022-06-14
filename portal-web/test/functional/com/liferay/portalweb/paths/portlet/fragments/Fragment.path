@@ -141,13 +141,13 @@
 <!--FORM COMPONENTS-->
 
 <tr>
-	<td>FORM_CHECKBOX_LABEL</td>
-	<td>xpath=(//div[contains(@id,'fragment-')]//div[contains(@class,'forms-checkbox')]//input[@type='checkbox']//following-sibling::label[normalize-space()='${fieldLabel}'])[${index}]</td>
+	<td>INPUT_LABEL</td>
+	<td>xpath=(//div[contains(@id,'fragment-')]//div[contains(@class,'form')]//label[contains(@for,'${type}')][normalize-space()='${fieldLabel}'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_CHECKBOX_LABEL_INVISIBLE</td>
-	<td>xpath=(//div[contains(@id,'fragment-')]//div[contains(@class,'forms-checkbox')]//input[@type='checkbox']//following-sibling::label//span[contains(@class,'sr-only')][normalize-space()='${fieldLabel}'])[${index}]</td>
+	<td>INPUT_LABEL_INVISIBLE</td>
+	<td>xpath=(//div[contains(@id,'fragment-')]//div[contains(@class,'form')]//label[contains(@for,'${type}')])[${index}]//span[contains(@class,'sr-only')][normalize-space(text())='${fieldLabel}'] | (//div[contains(@id,'fragment-')]//div[contains(@class,'form')]//label[contains(@for,'${type}')][contains(@class,'sr-only')][normalize-space(text())='${fieldLabel}'])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

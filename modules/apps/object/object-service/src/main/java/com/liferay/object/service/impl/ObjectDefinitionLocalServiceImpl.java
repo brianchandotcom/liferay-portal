@@ -769,7 +769,7 @@ public class ObjectDefinitionLocalServiceImpl
 				null,
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "create-date")),
-				"createDate", false);
+				"dateCreated", false);
 
 			_objectFieldLocalService.addSystemObjectField(
 				userId, objectDefinition.getObjectDefinitionId(), "Text",
@@ -796,7 +796,7 @@ public class ObjectDefinitionLocalServiceImpl
 				null,
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "modified-date")),
-				"modifiedDate", false);
+				"dateModified", false);
 
 			_objectFieldLocalService.addSystemObjectField(
 				userId, objectDefinition.getObjectDefinitionId(), "Text",

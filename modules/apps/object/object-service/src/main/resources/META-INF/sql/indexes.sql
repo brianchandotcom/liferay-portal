@@ -15,6 +15,7 @@ create index IX_897D0EF4 on ObjectEntry (userId, objectDefinitionId);
 create index IX_49B9450D on ObjectEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_5AF9AACF on ObjectEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create unique index IX_8BEECA97 on ObjectField (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], objectDefinitionId);
 create index IX_736807B on ObjectField (listTypeDefinitionId);
 create index IX_5DDCF209 on ObjectField (objectDefinitionId, dbTableName[$COLUMN_LENGTH:75$]);
 create index IX_979A9013 on ObjectField (objectDefinitionId, dbType[$COLUMN_LENGTH:75$], indexed);

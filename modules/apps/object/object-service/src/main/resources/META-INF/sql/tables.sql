@@ -77,6 +77,7 @@ create table ObjectField (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	externalReferenceCode VARCHAR(75) null,
 	listTypeDefinitionId LONG,
 	objectDefinitionId LONG,
 	businessType VARCHAR(75) null,

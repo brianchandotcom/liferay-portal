@@ -209,6 +209,21 @@ public interface ObjectFieldModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the external reference code of this object field.
+	 *
+	 * @return the external reference code of this object field
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this object field.
+	 *
+	 * @param externalReferenceCode the external reference code of this object field
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the list type definition ID of this object field.
 	 *
 	 * @return the list type definition ID of this object field

@@ -351,10 +351,11 @@ public interface ObjectFieldLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField updateCustomObjectField(
-			long objectFieldId, long listTypeDefinitionId, String businessType,
-			String dbType, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId, Map<Locale, String> labelMap, String name,
-			boolean required, List<ObjectFieldSetting> objectFieldSettings)
+			long objectFieldId, String externalReferenceCode,
+			long listTypeDefinitionId, String businessType, String dbType,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required,
+			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException;
 
 	/**

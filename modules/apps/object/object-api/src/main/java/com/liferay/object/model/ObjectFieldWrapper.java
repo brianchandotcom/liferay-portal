@@ -51,6 +51,7 @@ public class ObjectFieldWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("listTypeDefinitionId", getListTypeDefinitionId());
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("businessType", getBusinessType());
@@ -117,6 +118,13 @@ public class ObjectFieldWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long listTypeDefinitionId = (Long)attributes.get(
@@ -278,6 +286,16 @@ public class ObjectFieldWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the external reference code of this object field.
+	 *
+	 * @return the external reference code of this object field
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -649,6 +667,16 @@ public class ObjectFieldWrapper
 	@Override
 	public void setDBType(String dbType) {
 		model.setDBType(dbType);
+	}
+
+	/**
+	 * Sets the external reference code of this object field.
+	 *
+	 * @param externalReferenceCode the external reference code of this object field
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

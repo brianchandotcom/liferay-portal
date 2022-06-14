@@ -84,6 +84,7 @@ public class ObjectFieldModelImpl
 		{"objectFieldId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"listTypeDefinitionId", Types.BIGINT},
 		{"objectDefinitionId", Types.BIGINT}, {"businessType", Types.VARCHAR},
 		{"dbColumnName", Types.VARCHAR}, {"dbTableName", Types.VARCHAR},
@@ -106,6 +107,7 @@ public class ObjectFieldModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("listTypeDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("businessType", Types.VARCHAR);
@@ -123,7 +125,7 @@ public class ObjectFieldModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,listTypeDefinitionId LONG,objectDefinitionId LONG,businessType VARCHAR(75) null,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,dbType VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,relationshipType VARCHAR(75) null,required BOOLEAN,system_ BOOLEAN)";
+		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,externalReferenceCode VARCHAR(75) null,listTypeDefinitionId LONG,objectDefinitionId LONG,businessType VARCHAR(75) null,dbColumnName VARCHAR(75) null,dbTableName VARCHAR(75) null,dbType VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,label STRING null,name VARCHAR(75) null,relationshipType VARCHAR(75) null,required BOOLEAN,system_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectField";
 
@@ -159,37 +161,43 @@ public class ObjectFieldModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long INDEXED_COLUMN_BITMASK = 8L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LISTTYPEDEFINITIONID_COLUMN_BITMASK = 16L;
+	public static final long INDEXED_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 32L;
+	public static final long LISTTYPEDEFINITIONID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 64L;
+	public static final long NAME_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SYSTEM_COLUMN_BITMASK = 128L;
+	public static final long OBJECTDEFINITIONID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 256L;
+	public static final long SYSTEM_COLUMN_BITMASK = 256L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -334,6 +342,12 @@ public class ObjectFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<ObjectField, Date>)ObjectField::setModifiedDate);
+		attributeGetterFunctions.put(
+			"externalReferenceCode", ObjectField::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<ObjectField, String>)
+				ObjectField::setExternalReferenceCode);
 		attributeGetterFunctions.put(
 			"listTypeDefinitionId", ObjectField::getListTypeDefinitionId);
 		attributeSetterBiConsumers.put(
@@ -571,6 +585,35 @@ public class ObjectFieldModelImpl
 		}
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1139,6 +1182,7 @@ public class ObjectFieldModelImpl
 		objectFieldImpl.setUserName(getUserName());
 		objectFieldImpl.setCreateDate(getCreateDate());
 		objectFieldImpl.setModifiedDate(getModifiedDate());
+		objectFieldImpl.setExternalReferenceCode(getExternalReferenceCode());
 		objectFieldImpl.setListTypeDefinitionId(getListTypeDefinitionId());
 		objectFieldImpl.setObjectDefinitionId(getObjectDefinitionId());
 		objectFieldImpl.setBusinessType(getBusinessType());
@@ -1177,6 +1221,8 @@ public class ObjectFieldModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		objectFieldImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		objectFieldImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		objectFieldImpl.setListTypeDefinitionId(
 			this.<Long>getColumnOriginalValue("listTypeDefinitionId"));
 		objectFieldImpl.setObjectDefinitionId(
@@ -1319,6 +1365,18 @@ public class ObjectFieldModelImpl
 		}
 		else {
 			objectFieldCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		objectFieldCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			objectFieldCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			objectFieldCacheModel.externalReferenceCode = null;
 		}
 
 		objectFieldCacheModel.listTypeDefinitionId = getListTypeDefinitionId();
@@ -1498,6 +1556,7 @@ public class ObjectFieldModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _externalReferenceCode;
 	private long _listTypeDefinitionId;
 	private long _objectDefinitionId;
 	private String _businessType;
@@ -1551,6 +1610,8 @@ public class ObjectFieldModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put(
 			"listTypeDefinitionId", _listTypeDefinitionId);
 		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
@@ -1606,33 +1667,35 @@ public class ObjectFieldModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("listTypeDefinitionId", 256L);
+		columnBitmasks.put("externalReferenceCode", 256L);
 
-		columnBitmasks.put("objectDefinitionId", 512L);
+		columnBitmasks.put("listTypeDefinitionId", 512L);
 
-		columnBitmasks.put("businessType", 1024L);
+		columnBitmasks.put("objectDefinitionId", 1024L);
 
-		columnBitmasks.put("dbColumnName", 2048L);
+		columnBitmasks.put("businessType", 2048L);
 
-		columnBitmasks.put("dbTableName", 4096L);
+		columnBitmasks.put("dbColumnName", 4096L);
 
-		columnBitmasks.put("dbType", 8192L);
+		columnBitmasks.put("dbTableName", 8192L);
 
-		columnBitmasks.put("indexed", 16384L);
+		columnBitmasks.put("dbType", 16384L);
 
-		columnBitmasks.put("indexedAsKeyword", 32768L);
+		columnBitmasks.put("indexed", 32768L);
 
-		columnBitmasks.put("indexedLanguageId", 65536L);
+		columnBitmasks.put("indexedAsKeyword", 65536L);
 
-		columnBitmasks.put("label", 131072L);
+		columnBitmasks.put("indexedLanguageId", 131072L);
 
-		columnBitmasks.put("name", 262144L);
+		columnBitmasks.put("label", 262144L);
 
-		columnBitmasks.put("relationshipType", 524288L);
+		columnBitmasks.put("name", 524288L);
 
-		columnBitmasks.put("required", 1048576L);
+		columnBitmasks.put("relationshipType", 1048576L);
 
-		columnBitmasks.put("system_", 2097152L);
+		columnBitmasks.put("required", 2097152L);
+
+		columnBitmasks.put("system_", 4194304L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

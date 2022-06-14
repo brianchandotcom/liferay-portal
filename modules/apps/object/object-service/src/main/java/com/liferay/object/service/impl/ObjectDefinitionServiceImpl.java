@@ -75,6 +75,23 @@ public class ObjectDefinitionServiceImpl
 	}
 
 	@Override
+	public ObjectDefinition fetchObjectDefinitionByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					companyId, externalReferenceCode);
+
+		if (objectDefinition != null) {
+			_objectDefinitionModelResourcePermission.check(
+				getPermissionChecker(), objectDefinition, ActionKeys.VIEW);
+		}
+
+		return objectDefinition;
+	}
+	@Override
 	public ObjectDefinition getObjectDefinition(long objectDefinitionId)
 		throws PortalException {
 
@@ -142,6 +159,18 @@ public class ObjectDefinitionServiceImpl
 			descriptionObjectFieldId, titleObjectFieldId,
 			accountEntryRestricted, active, labelMap, name, panelAppOrder,
 			panelCategoryKey, portlet, pluralLabelMap, scope);
+	}
+
+	@Override
+	public ObjectDefinition updateExternalReferenceCode(
+			long objectDefinitionId, String externalReferenceCode)
+		throws PortalException {
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
+
+		return _objectDefinitionLocalService.updateExternalReferenceCode(
+			objectDefinitionId, externalReferenceCode);
 	}
 
 	@Override

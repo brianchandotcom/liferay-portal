@@ -23,6 +23,7 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
+import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedObjectFieldIdException;
 import com.liferay.object.exception.ObjectDefinitionActiveException;
@@ -642,6 +643,19 @@ public class ObjectDefinitionLocalServiceImpl
 			descriptionObjectFieldId, titleObjectFieldId,
 			accountEntryRestricted, active, null, labelMap, name, panelAppOrder,
 			panelCategoryKey, portlet, null, null, pluralLabelMap, scope);
+	}
+
+	@Override
+	public ObjectDefinition updateExternalReferenceCode(
+			long objectDefinitionId, String externalReferenceCode)
+		throws NoSuchObjectDefinitionException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
+		objectDefinition.setExternalReferenceCode(externalReferenceCode);
+
+		return objectDefinitionPersistence.update(objectDefinition);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

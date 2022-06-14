@@ -169,6 +169,8 @@ public class ObjectDefinitionsFieldsDisplayContext
 		).put(
 			"DBType", objectField.getDBType()
 		).put(
+			"externalReferenceCode", objectField.getExternalReferenceCode()
+		).put(
 			"id", Long.valueOf(objectField.getObjectFieldId())
 		).put(
 			"indexed", objectField.isIndexed()

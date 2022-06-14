@@ -60,6 +60,7 @@ export default function EditObjectField({
 	forbiddenLastChars,
 	forbiddenNames,
 	isApproved,
+	isDefaultStorageType,
 	isSystemObject,
 	objectField: initialValues,
 	objectFieldTypes,
@@ -213,6 +214,17 @@ export default function EditObjectField({
 					readOnly={readOnly}
 					setValues={setValues}
 				/>
+			)}
+
+			{Liferay.FeatureFlags['LPS-135430'] && !isDefaultStorageType && (
+				<Card title={Liferay.Language.get('external-data-source')}>
+					<Input
+						label={Liferay.Language.get('external-reference-code')}
+						name="externalReferenceCode"
+						onChange={handleChange}
+						value={values.externalReferenceCode}
+					/>
+				</Card>
 			)}
 		</SidePanelForm>
 	);
@@ -497,6 +509,7 @@ interface IProps {
 	forbiddenLastChars: string[];
 	forbiddenNames: string[];
 	isApproved: boolean;
+	isDefaultStorageType: boolean;
 	isSystemObject: boolean;
 	objectField: ObjectField;
 	objectFieldTypes: ObjectFieldType[];

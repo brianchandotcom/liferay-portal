@@ -407,7 +407,8 @@ public class ObjectFieldLocalServiceImpl
 			}
 		}
 		else {
-			_validateName(objectFieldId, objectDefinition, name, false);
+			_validateName(
+				objectFieldId, objectDefinition, name, objectField.isSystem());
 		}
 
 		_setBusinessTypeAndDBType(businessType, dbType, objectField);

@@ -552,6 +552,7 @@ public abstract class Base${schemaName}ResourceImpl
 						<#assign
 							scopeParameters = scopeParameters + [parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"]
 						/>
+
 						if (parameters.containsKey("${parentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"}")) {
 							return ${parentBatchJavaMethodSignature.methodName}(
 								<@getGETBatchJavaMethodParameters javaMethodParameters=parentBatchJavaMethodSignature.javaMethodParameters />

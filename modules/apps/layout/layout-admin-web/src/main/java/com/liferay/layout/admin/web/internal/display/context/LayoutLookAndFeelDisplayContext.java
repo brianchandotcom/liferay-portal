@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
@@ -94,8 +95,14 @@ public class LayoutLookAndFeelDisplayContext {
 	}
 
 	public String getFaviconURL() {
-		return FaviconUtil.getFaviconURL(
+		String faviconURL = FaviconUtil.getFaviconURL(
 			_cetManager, _layoutsAdminDisplayContext.getSelLayout());
+
+		if (Validator.isNotNull(faviconURL)) {
+			return faviconURL;
+		}
+
+		return _layoutsAdminDisplayContext.getThemeFavicon();
 	}
 
 	public Map<String, Object> getGlobalCSSCETsConfigurationProps() {

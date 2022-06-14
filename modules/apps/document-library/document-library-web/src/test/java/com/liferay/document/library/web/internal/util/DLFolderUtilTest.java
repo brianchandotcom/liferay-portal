@@ -15,8 +15,8 @@
 package com.liferay.document.library.web.internal.util;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryService;
-import com.liferay.depot.service.DepotEntryServiceUtil;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -64,17 +64,18 @@ public class DLFolderUtilTest {
 			depotGroup
 		);
 
-		DepotEntryService depotEntryService = Mockito.mock(
-			DepotEntryService.class);
+		DepotEntryLocalService depotEntryLocalService = Mockito.mock(
+			DepotEntryLocalService.class);
 
 		List<DepotEntry> depotEntries = _getGroupConnectedDepotEntries(
 			depotGroupId);
 
 		ReflectionTestUtil.setFieldValue(
-			DepotEntryServiceUtil.class, "_service", depotEntryService);
+			DepotEntryLocalServiceUtil.class, "_service",
+			depotEntryLocalService);
 
 		Mockito.when(
-			depotEntryService.getGroupConnectedDepotEntries(
+			depotEntryLocalService.getGroupConnectedDepotEntries(
 				Matchers.anyLong(), Matchers.anyInt(), Matchers.anyInt())
 		).thenReturn(
 			depotEntries
@@ -103,21 +104,22 @@ public class DLFolderUtilTest {
 		ReflectionTestUtil.setFieldValue(
 			GroupLocalServiceUtil.class, "_service", groupLocalService);
 
-		DepotEntryService depotEntryService = Mockito.mock(
-			DepotEntryService.class);
+		DepotEntryLocalService depotEntryLocalService = Mockito.mock(
+			DepotEntryLocalService.class);
 
 		List<DepotEntry> depotEntries = _getGroupConnectedDepotEntries(
 			RandomTestUtil.randomLong());
 
 		Mockito.when(
-			depotEntryService.getGroupConnectedDepotEntries(
+			depotEntryLocalService.getGroupConnectedDepotEntries(
 				Matchers.anyLong(), Matchers.anyInt(), Matchers.anyInt())
 		).thenReturn(
 			depotEntries
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			DepotEntryServiceUtil.class, "_service", depotEntryService);
+			DepotEntryLocalServiceUtil.class, "_service",
+			depotEntryLocalService);
 
 		DLFolderUtil.validateDepotFolder(
 			RandomTestUtil.randomLong(), depotGroup.getGroupId(),

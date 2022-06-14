@@ -32,6 +32,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.search.experiences.exception.NoSuchSXPBlueprintException;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
@@ -92,10 +93,14 @@ public class SXPBlueprintLocalServiceTest {
 			_sxpBlueprintLocalService.getSXPBlueprintByExternalReferenceCode(
 				_group.getCompanyId(),
 				_sxpBlueprint.getExternalReferenceCode()));
+	}
 
-		Assert.assertNull(
-			_sxpBlueprintLocalService.getSXPBlueprintByExternalReferenceCode(
-				_group.getCompanyId(), RandomTestUtil.randomString()));
+	@Test(expected = NoSuchSXPBlueprintException.class)
+	public void testGetSXPBlueprintByExternalReferenceCodeNoExisting()
+		throws Exception {
+
+		_sxpBlueprintLocalService.getSXPBlueprintByExternalReferenceCode(
+			_group.getCompanyId(), RandomTestUtil.randomString());
 	}
 
 	@Test(expected = PersistenceException.class)

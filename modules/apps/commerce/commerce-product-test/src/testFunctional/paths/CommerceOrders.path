@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_DETAILS_REQUESTED_DELIVERY_DATE</td>
+	<td>//h5[contains(.,'Requested Delivery Date')]/../../div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_DETAILS_TOTAL_PRICE</td>
 	<td>//div[@class='dnd-td' and contains(.,'${key_productTotalPrice}')]</td>
 	<td></td>

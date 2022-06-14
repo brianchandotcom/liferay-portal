@@ -1,0 +1,98 @@
+definition {
+
+	macro getElementCirclePositionX {
+		WaitForSPARefresh();
+
+		var javascript = '''
+		let elem = document.querySelector('*.${elementClass}');
+
+		let elementCoordinates = elem.getBoundingClientRect();
+
+		let leftPositionX = Math.round(elementCoordinates.x);
+
+		let centerPositionX = (leftPositionX + (elementCoordinates.width)/2).toString();
+
+		return centerPositionX;
+		''';
+
+		var position_x = selenium.getEval("${javascript}");
+
+		return "${position_x}";
+	}
+
+	macro getElementCirclePositionY {
+		WaitForSPARefresh();
+
+		var javascript = '''
+		let elem = document.querySelector('*.${elementClass}');
+
+		let elementCoordinates = elem.getBoundingClientRect();
+
+		let topPositionY = Math.round(elementCoordinates.y);
+
+		let centerPositionY = (topPositionY + (elementCoordinates.width)/2).toString();
+
+		return centerPositionY;
+		''';
+
+		var position_y = selenium.getEval("${javascript}");
+
+		return "${position_y}";
+	}
+
+	macro getElementRectanglePositionX {
+		WaitForSPARefresh();
+
+		var javascript = '''
+		let elem = document.querySelector('#${elementId}');
+
+		let elementCoordinates = elem.getBoundingClientRect();
+
+		let positionX = Math.round(elementCoordinates.x).toString();
+
+		return positionX;
+		''';
+
+		var position_x = selenium.getEval("${javascript}");
+
+		return "${position_x}";
+	}
+
+	macro getElementRectanglePositionY {
+		WaitForSPARefresh();
+
+		var javascript = '''
+		let elem = document.querySelector('#${elementId}');
+
+		let elementCoordinates = elem.getBoundingClientRect();
+
+		let positionY = Math.round(elementCoordinates.y).toString();
+
+		return positionY;
+		''';
+
+		var position_y = selenium.getEval("${javascript}");
+
+		return "${position_y}";
+	}
+
+	macro viewCoordinatePositionMatchesElementStep {
+		var step_x = WalkthroughPopover.getElementRectanglePositionX(elementId = "${stepElementId}");
+		var step_y = WalkthroughPopover.getElementRectanglePositionY(elementId = "${stepElementId}");
+		var hotspot_x = WalkthroughPopover.getElementCirclePositionX(elementClass = "${hotspotElementClass}");
+		var hotspot_y = WalkthroughPopover.getElementCirclePositionY(elementClass = "${hotspotElementClass}");
+
+		echo("position step (x,y): ${step_x},${step_y}");
+
+		echo("position hotspot (x,y): ${hotspot_x},${hotspot_y}");
+
+		if ("${step_x}" != "${hotspot_x}") {
+			fail("FAIL. X coordinate positions do not match.");
+		}
+
+		if ("${step_y}" != "${hotspot_y}") {
+			fail("FAIL. Y coordinate positions do not match.");
+		}
+	}
+
+}

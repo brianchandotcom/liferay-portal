@@ -194,14 +194,11 @@ definition {
 		}
 
 		task ("Then hotspot element is present on the 2nd element") {
-			SetWindowSize(value1 = "800,800");
-
 			AssertElementPresent(locator1 = "Walkthrough#HOTSPOT");
 
-			AssertAttributeValue(
-				attribute1 = "style",
-				locator1 = "Walkthrough#HOTSPOT",
-				value1 = "left: 286.5px; top: 117px;");
+			WalkthroughPopover.viewCoordinatePositionMatchesElementStep(
+				hotspotElementClass = "lfr-walkthrough-hotspot-inner",
+				stepElementId = "step2");
 		}
 	}
 

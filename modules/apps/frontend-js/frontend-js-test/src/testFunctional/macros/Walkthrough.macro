@@ -14,4 +14,10 @@ definition {
 			locator1 = "Walkthrough#POPOVER_TITLE");
 	}
 
+	macro goToSpecificStep {
+		while (IsElementNotPresent(key_title = "Step ${key_step}", locator1 = "Walkthrough#POPOVER_TITLE")) {
+			Click(locator1 = "Button#OK");
+		}
+	}
+
 }

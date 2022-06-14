@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_4_x;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -118,7 +119,7 @@ public class UpgradeExternalReferenceCode extends UpgradeProcess {
 			while (resultSet.next()) {
 				long primKey = resultSet.getLong(1);
 
-				preparedStatement2.setString(1, String.valueOf(primKey));
+				preparedStatement2.setString(1, PortalUUIDUtil.generate());
 				preparedStatement2.setLong(2, primKey);
 
 				preparedStatement2.addBatch();

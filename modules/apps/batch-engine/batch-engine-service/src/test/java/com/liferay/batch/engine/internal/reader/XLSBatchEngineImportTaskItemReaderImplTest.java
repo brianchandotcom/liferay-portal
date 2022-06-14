@@ -72,7 +72,9 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 				).put(
 					"id1", "id"
 				).put(
-					"space name1", "name"
+					"space name1_i18n_en", "name"
+				).put(
+					"space name1_i18n_hr", "name"
 				).put(
 					"underscore_field1", "description"
 				).build(),
@@ -232,7 +234,18 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 
 				validate(
 					createDateString, "sample description " + rowCount,
-					rowCount, Collections.emptyMap(),
+					rowCount,
+					HashMapBuilder.put(
+						"createDate", "createDate"
+					).put(
+						"description", "description"
+					).put(
+						"id", "id"
+					).put(
+						"name_i18n_en", "name"
+					).put(
+						"name_i18n_hr", "name"
+					).build(),
 					xlsBatchEngineImportTaskItemReaderImpl.read(),
 					HashMapBuilder.put(
 						"en", "sample name " + rowCount
@@ -258,7 +271,17 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 
 			validate(
 				createDateString, "hey, here is comma inside", 1L,
-				Collections.emptyMap(),
+				HashMapBuilder.put(
+					"createDate", "createDate"
+				).put(
+					"description", "description"
+				).put(
+					"id", "id"
+				).put(
+					"name_i18n_en", "name"
+				).put(
+					"name_i18n_hr", "name"
+				).build(),
 				xlsBatchEngineImportTaskItemReaderImpl.read(),
 				HashMapBuilder.put(
 					"en", "sample name"
@@ -296,7 +319,18 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 						})) {
 
 			validate(
-				createDateString, null, 1L, Collections.emptyMap(),
+				createDateString, null, 1L,
+				HashMapBuilder.put(
+					"createDate", "createDate"
+				).put(
+					"description", "description"
+				).put(
+					"id", "id"
+				).put(
+					"name_i18n_en", "name"
+				).put(
+					"name_i18n_hr", "name"
+				).build(),
 				xlsBatchEngineImportTaskItemReaderImpl.read(),
 				new HashMap<String, String>() {
 					{
@@ -307,7 +341,17 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 
 			validate(
 				createDateString, "sample description 2", 2L,
-				Collections.emptyMap(),
+				HashMapBuilder.put(
+					"createDate", "createDate"
+				).put(
+					"description", "description"
+				).put(
+					"id", "id"
+				).put(
+					"name_i18n_en", "name"
+				).put(
+					"name_i18n_hr", "name"
+				).build(),
 				xlsBatchEngineImportTaskItemReaderImpl.read(),
 				HashMapBuilder.put(
 					"en", "sample name 2"

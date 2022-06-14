@@ -811,16 +811,8 @@ public class ObjectDefinitionLocalServiceImpl
 		if (objectFields != null) {
 			for (ObjectField objectField : objectFields) {
 				if (system || objectField.isSystem()) {
-					_objectFieldLocalService.addSystemObjectField(
-						userId, objectDefinition.getObjectDefinitionId(),
-						objectField.getBusinessType(),
-						objectField.getDBColumnName(),
-						objectDefinition.getDBTableName(),
-						objectField.getDBType(), objectField.isIndexed(),
-						objectField.isIndexedAsKeyword(),
-						objectField.getIndexedLanguageId(),
-						objectField.getLabelMap(), objectField.getName(),
-						objectField.isRequired());
+					_objectFieldLocalService.addOrUpdateSystemObjectField(
+						userId, objectDefinition, objectField);
 				}
 				else {
 					_objectFieldLocalService.addCustomObjectField(

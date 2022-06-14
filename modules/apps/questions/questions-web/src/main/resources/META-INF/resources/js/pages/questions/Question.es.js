@@ -95,10 +95,9 @@ export default withRouter(
 		const [pageSize, setPageSize] = useState(20);
 
 		const [loading, setLoading] = useState(true);
+		const [loadingAnswer, setLoadingAnswer] = useState(true);
 		const [question, setQuestion] = useState({});
-		const [answers, setAnswers] = useState({
-			totalCount: 0,
-		});
+		const [answers, setAnswers] = useState({});
 
 		const fetchMessages = useCallback(() => {
 			if (question && question.id) {
@@ -109,6 +108,12 @@ export default withRouter(
 				);
 			}
 		}, [question, page, pageSize]);
+
+		useEffect(() => {
+			if (answers.totalCount >= 0) {
+				setLoadingAnswer(false);
+			}
+		}, [answers.totalCount]);
 
 		useEffect(() => {
 			getThread(questionId, context.siteKey)
@@ -127,8 +132,7 @@ export default withRouter(
 							);
 							setError(errorObject);
 							setLoading(false);
-						}
-						else {
+						} else {
 							setQuestion(messageBoardThreadByFriendlyUrlPath);
 							setLoading(false);
 						}
@@ -218,8 +222,7 @@ export default withRouter(
 				await onSubscription();
 
 				fetchMessages();
-			}
-			catch (error) {}
+			} catch (error) {}
 		};
 
 		const deleteAnswer = useCallback(
@@ -511,10 +514,10 @@ export default withRouter(
 								</div>
 
 								<h3 className="c-mt-4 text-secondary">
-									{loading
-										? Liferay.Language.get(
+									{loadingAnswer
+										? `${Liferay.Language.get(
 												'loading-answers'
-										  )
+										  )}`
 										: `${
 												answers.totalCount
 										  } ${Liferay.Language.get('answers')}`}

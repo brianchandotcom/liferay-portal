@@ -2572,8 +2572,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_groupLocalService.updateGroup(group);
 	}
 
-	private void _addSiteNavigationMenu(
-			JSONObject jsonObject, ServiceContext serviceContext,
+private void _addSiteNavigationMenu(
+			JSONObject jsonObject,ServiceContext serviceContext,
 			Map<String, SiteNavigationMenuItemSetting>
 				siteNavigationMenuItemSettings)
 		throws Exception {
@@ -2581,10 +2581,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				jsonObject.getString("name"), serviceContext);
+				jsonObject.getString("name"), jsonObject.getInt("typeSite"), serviceContext);
 
 		_addSiteNavigationMenuItems(
-			jsonObject, siteNavigationMenu, 0, serviceContext,
+			jsonObject, siteNavigationMenu,0, serviceContext,
 			siteNavigationMenuItemSettings);
 	}
 
@@ -2710,7 +2710,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			_addSiteNavigationMenu(
-				jsonArray.getJSONObject(i), serviceContext,
+				jsonArray.getJSONObject(i),serviceContext,
 				siteNavigationMenuItemSettings);
 		}
 	}

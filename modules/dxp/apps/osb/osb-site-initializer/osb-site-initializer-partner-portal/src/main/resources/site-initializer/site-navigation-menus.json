@@ -1,0 +1,28 @@
+[
+	{
+		"menuItems": [
+			{
+				"friendlyURL": "/Home",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/Marketing",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/Sales",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/Enablement",
+				"privateLayout": false,
+				"type": "layout"
+			}
+		],
+		"name": "Navigation Menu",
+		"typeSite": 1
+	}
+]

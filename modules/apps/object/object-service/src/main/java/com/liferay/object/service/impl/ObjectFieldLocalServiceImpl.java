@@ -124,6 +124,32 @@ public class ObjectFieldLocalServiceImpl
 		return objectField;
 	}
 
+	@Override
+	public ObjectField addOrUpdateSystemObjectField(
+			long userId, ObjectDefinition objectDefinition,
+			ObjectField objectField)
+		throws PortalException {
+
+		ObjectField existingObjectField = objectFieldPersistence.fetchByODI_N(
+			objectDefinition.getObjectDefinitionId(), objectField.getName());
+
+		if (existingObjectField == null) {
+			return objectFieldLocalService.addSystemObjectField(
+				userId, objectDefinition.getObjectDefinitionId(),
+				objectField.getBusinessType(), objectField.getDBColumnName(),
+				objectDefinition.getDBTableName(), objectField.getDBType(),
+				objectField.isIndexed(), objectField.isIndexedAsKeyword(),
+				objectField.getIndexedLanguageId(), objectField.getLabelMap(),
+				objectField.getName(), objectField.isRequired());
+		}
+
+		existingObjectField.setLabel(objectField.getLabel());
+
+		return objectFieldLocalService.updateSystemObjectField(
+			existingObjectField.getObjectFieldId(),
+			existingObjectField.getLabelMap());
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField addSystemObjectField(
@@ -411,12 +437,28 @@ public class ObjectFieldLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField updateRequired(long objectFieldId, boolean required)
-		throws PortalException {
+	throws PortalException {
 
 		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
 			objectFieldId);
 
 		objectField.setRequired(required);
+
+		return objectFieldPersistence.update(objectField);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectField updateSystemObjectField(
+			long objectFieldId, Map<Locale, String> labelMap)
+		throws PortalException {
+
+		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
+			objectFieldId);
+
+		_validateLabel(labelMap);
+
+		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 
 		return objectFieldPersistence.update(objectField);
 	}

@@ -222,6 +222,10 @@ public class DBPartitionUtil {
 			if (CompanyThreadLocal.getCompanyId() !=
 					shardedModel.getCompanyId()) {
 
+				if (!(entityModel instanceof NullModel)) {
+					return _nullModel;
+				}
+
 				return null;
 			}
 

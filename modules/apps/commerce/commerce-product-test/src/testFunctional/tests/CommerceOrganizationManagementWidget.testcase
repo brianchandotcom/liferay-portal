@@ -32,6 +32,58 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "COMMERCE-9403. Verify new users can be added using the Organization Management widget."
+	@priority = "3"
+	test CanAddNewUserUsingWidget {
+		task ("When the Organization Management Widget Page is reached") {
+			Navigator.openSitePage(
+				pageName = "Organization Management Widget Page",
+				siteName = "Minium");
+
+			Click(locator1 = "Button#EXPAND");
+		}
+
+		task ("And the organization svg node is clicked") {
+			Click(
+				key_nodeName = "Organization 1",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		}
+
+		task ("And the plus button is clicked") {
+			Click(locator1 = "CommerceOrganizationManagementWidget#PLUS_BUTTON");
+		}
+
+		task ("And the user svg node is clicked") {
+			WaitForVisible(
+				key_orgType = "user",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
+
+			Click(
+				key_orgType = "user",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
+		}
+
+		task ("Then the admin is able to create and add a new user to the Organization by adding the user email and selecting the organization role") {
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#INVITE_EMAIL_INPUT",
+				value1 = "user@liferay.com");
+
+			Click(
+				key_roleOption = "Organization User",
+				locator1 = "CommerceOrganizationManagementWidget#SELECT_ROLE");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the user is present in the admin console") {
+			AssertElementPresent(
+				key_nodeName = "user@life",
+				locator1 = "CommerceOrganizationManagementWidget#NODE_TITLE");
+		}
+	}
+
 	@description = "COMMERCE-9402. Verify the store admin can associate existing accounts to an organization by using the Organization Management widget."
 	@priority = "3"
 	test CanAssociateExistingAccountUsingWidget {

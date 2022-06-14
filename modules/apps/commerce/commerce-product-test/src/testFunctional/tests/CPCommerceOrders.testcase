@@ -892,6 +892,97 @@ definition {
 
 	}
 
+	@description = "This is a test for bug COMMERCE-9467"
+	@priority = "5"
+	test CanEditAddressOfAnOpenOrderWithAddressAlreadySet {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
+
+		task ("Given the Admin already created a Minium Site and a buyer account") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When the buyer goes to Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And buyer adds a product to the cart") {
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("And the buyer creates an open order") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.setAddress(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("And the admin goes into orders portlet") {
+			User.logoutPG();
+
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
+		}
+
+		task ("And the admin edits Billing Address and can see the changes on the address") {
+			Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ORDER_ID");
+
+			for (var addressType : list "Billing,Shipping") {
+				Click(
+					key_text = "${addressType} Address",
+					locator1 = "CommerceOrders#EDIT_SHIPMENT_DETAILS");
+
+				CommerceOrders.editOrderAddressCP(
+					editedCity = "${addressType} City",
+					editedCountry = "Italy",
+					editedName = "${addressType} Address Name",
+					editedRegion = "Lombardia",
+					editedStreet1 = "${addressType} Street 1",
+					editedZipCode = "${addressType} Zip");
+
+				Refresh();
+
+				CommerceOrders.viewOrderAddress(
+					addressCity = "${addressType} City",
+					addressRegion = "Lombardia",
+					addressStreet1 = "${addressType} Street 1",
+					addressType = "${addressType}",
+					addressZipCode = "${addressType} Zip");
+			}
+		}
+	}
+
 	@description = "COMMERCE-7982. A system admin can edit order measurement unit."
 	@priority = "3"
 	test CanEditOrderMeasurementUnit {

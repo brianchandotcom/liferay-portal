@@ -251,13 +251,12 @@ public class LayoutsSEODisplayContext {
 			new FileEntryItemSelectorReturnType(),
 			new URLItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-			_liferayPortletResponse.getNamespace() +
-				"openGraphImageSelectedItem",
-			imageItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				_liferayPortletResponse.getNamespace() +
+					"openGraphImageSelectedItem",
+				imageItemSelectorCriterion));
 	}
 
 	public Long getLayoutId() {

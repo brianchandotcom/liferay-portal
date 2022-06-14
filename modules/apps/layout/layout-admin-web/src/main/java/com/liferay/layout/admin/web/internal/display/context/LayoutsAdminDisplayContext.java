@@ -503,13 +503,13 @@ public class LayoutsAdminDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public String getFaviconImage() {
-		return FaviconUtil.getFaviconURL(_cetManager, getSelLayoutSet());
-	}
-
 	public String getFaviconTitle() {
 		return FaviconUtil.getFaviconTitle(
 			getSelLayoutSet(), themeDisplay.getLocale());
+	}
+
+	public String getFaviconURL() {
+		return FaviconUtil.getFaviconURL(_cetManager, getSelLayoutSet());
 	}
 
 	public String getFileEntryItemSelectorURL() {

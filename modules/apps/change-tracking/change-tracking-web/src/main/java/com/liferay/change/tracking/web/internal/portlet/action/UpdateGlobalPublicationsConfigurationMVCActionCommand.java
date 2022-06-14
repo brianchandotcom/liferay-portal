@@ -14,16 +14,12 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.exception.CTStagingEnabledException;
-import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.model.CTPreferences;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.change.tracking.service.CTPreferencesService;
-import com.liferay.change.tracking.web.internal.scheduler.PublishScheduler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -33,10 +29,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
-
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -45,9 +37,6 @@ import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Samuel Trong Tran
@@ -75,24 +64,35 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 			actionRequest, CTPortletKeys.PUBLICATIONS,
 			PortletRequest.RENDER_PHASE);
 
-		boolean enablePublications = ParamUtil.getBoolean(
-			actionRequest, "enablePublications");
+		long companyId = themeDisplay.getCompanyId();
 
-		CTPreferences ctPreferences =
-			_ctPreferencesLocalService.fetchCTPreferences(
-				themeDisplay.getCompanyId(), 0);
+		CTSettingsConfiguration configuration =
+			_ctSettingsConfigurationHelper.getCTSettingsConfiguration(
+				companyId);
 
-		if ((ctPreferences != null) || !enablePublications) {
+		if (configuration.enabled()) {
 			redirectURL.setParameter(
 				"mvcRenderCommandName", "/change_tracking/view_settings");
 		}
 
+		boolean enablePublications = ParamUtil.getBoolean(
+			actionRequest, "enablePublications", configuration.enabled());
+		boolean enableSandboxOnly = ParamUtil.getBoolean(
+			actionRequest, "enableSandboxOnly", configuration.sandboxEnabled());
+
 		try {
-			_ctPreferencesService.enablePublications(
-				themeDisplay.getCompanyId(), enablePublications);
+			_ctSettingsConfigurationHelper.save(
+				companyId, enablePublications, enableSandboxOnly);
 		}
-		catch (CTStagingEnabledException ctStagingEnabledException) {
-			SessionErrors.add(actionRequest, "stagingEnabled");
+		catch (ConfigurationException configurationException) {
+			Throwable throwable = configurationException.getCause();
+
+			if (throwable.getCause() instanceof CTStagingEnabledException) {
+				SessionErrors.add(actionRequest, "stagingEnabled");
+			}
+			else {
+				SessionErrors.add(actionRequest, throwable.getClass());
+			}
 
 			redirectURL.setParameter(
 				"mvcRenderCommandName", "/change_tracking/view_settings");
@@ -100,19 +100,6 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 			sendRedirect(actionRequest, actionResponse, redirectURL.toString());
 
 			return;
-		}
-
-		if (!enablePublications && PropsValues.SCHEDULER_ENABLED) {
-			List<CTCollection> ctCollections =
-				_ctCollectionLocalService.getCTCollections(
-					themeDisplay.getCompanyId(),
-					WorkflowConstants.STATUS_SCHEDULED, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
-
-			for (CTCollection ctCollection : ctCollections) {
-				_publishScheduler.unschedulePublish(
-					ctCollection.getCtCollectionId());
-			}
 		}
 
 		hideDefaultSuccessMessage(actionRequest);
@@ -126,25 +113,12 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 	}
 
 	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference
-	private CTPreferencesLocalService _ctPreferencesLocalService;
-
-	@Reference
-	private CTPreferencesService _ctPreferencesService;
+	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;
 
 	@Reference
 	private Language _language;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile PublishScheduler _publishScheduler;
 
 }

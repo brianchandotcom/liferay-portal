@@ -34,11 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CTSettingsConfigurationHelper.class)
 public class CTSettingsConfigurationHelper {
 
-	public void delete(long companyId) throws PortalException {
-		_configurationProvider.deleteCompanyConfiguration(
-			CTSettingsConfiguration.class, companyId);
-	}
-
 	public boolean enabled(long companyId) {
 		CTSettingsConfiguration configuration = _getConfiguration(companyId);
 

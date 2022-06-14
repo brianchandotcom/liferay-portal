@@ -15,11 +15,11 @@
 package com.liferay.change.tracking.web.internal.portlet;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.context.PublicationsDisplayContext;
@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -105,14 +104,9 @@ public class PublicationsPortlet extends MVCPortlet {
 	protected void checkPermissions(PortletRequest portletRequest)
 		throws Exception {
 
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		if (!_ctSettingsConfigurationHelper.enabled(
+				_portal.getCompanyId(portletRequest))) {
 
-		CTPreferences ctPreferences =
-			_ctPreferencesLocalService.fetchCTPreferences(
-				permissionChecker.getCompanyId(), 0);
-
-		if (ctPreferences == null) {
 			String actionName = ParamUtil.getString(
 				portletRequest, ActionRequest.ACTION_NAME);
 			String mvcRenderCommandName = ParamUtil.getString(
@@ -129,7 +123,8 @@ public class PublicationsPortlet extends MVCPortlet {
 		}
 
 		_portletPermission.check(
-			permissionChecker, CTPortletKeys.PUBLICATIONS, ActionKeys.VIEW);
+			PermissionThreadLocal.getPermissionChecker(),
+			CTPortletKeys.PUBLICATIONS, ActionKeys.VIEW);
 	}
 
 	@Reference
@@ -146,6 +141,9 @@ public class PublicationsPortlet extends MVCPortlet {
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Reference
+	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;
 
 	@Reference
 	private Language _language;

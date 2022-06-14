@@ -17,13 +17,19 @@ package com.liferay.staging.processes.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.change.tracking.model.CTPreferences;
-import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
+
+import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,11 +56,10 @@ public class StagingProcessesPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		CTPreferences ctPreferences =
-			_ctPreferencesLocalService.fetchCTPreferences(
-				permissionChecker.getCompanyId(), 0);
+		CTSettingsConfiguration ctSettingsConfiguration = _getConfiguration(
+			group.getCompanyId());
 
-		if (ctPreferences != null) {
+		if (ctSettingsConfiguration.enabled()) {
 			return false;
 		}
 
@@ -70,7 +75,26 @@ public class StagingProcessesPanelApp extends BasePanelApp {
 		super.setPortlet(portlet);
 	}
 
+	private CTSettingsConfiguration _getConfiguration(long companyId) {
+		CTSettingsConfiguration configuration =
+			ConfigurableUtil.createConfigurable(
+				CTSettingsConfiguration.class, Collections.emptyMap());
+
+		try {
+			configuration = _configurationProvider.getCompanyConfiguration(
+				CTSettingsConfiguration.class, companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+		}
+
+		return configuration;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StagingProcessesPanelApp.class);
+
 	@Reference
-	private CTPreferencesLocalService _ctPreferencesLocalService;
+	private ConfigurationProvider _configurationProvider;
 
 }

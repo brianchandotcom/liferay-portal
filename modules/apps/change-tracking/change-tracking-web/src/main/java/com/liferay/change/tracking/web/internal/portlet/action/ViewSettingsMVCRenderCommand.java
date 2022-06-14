@@ -15,10 +15,9 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.PublicationsConfigurationDisplayContext;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -62,8 +61,8 @@ public class ViewSettingsMVCRenderCommand implements MVCRenderCommand {
 		PublicationsConfigurationDisplayContext
 			publicationsConfigurationDisplayContext =
 				new PublicationsConfigurationDisplayContext(
-					_ctPreferencesLocalService,
-					_portal.getHttpServletRequest(renderRequest), _language,
+					_ctSettingsConfigurationHelper,
+					_portal.getHttpServletRequest(renderRequest),
 					renderResponse);
 
 		renderRequest.setAttribute(
@@ -74,10 +73,7 @@ public class ViewSettingsMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private CTPreferencesLocalService _ctPreferencesLocalService;
-
-	@Reference
-	private Language _language;
+	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;
 
 	@Reference
 	private Portal _portal;

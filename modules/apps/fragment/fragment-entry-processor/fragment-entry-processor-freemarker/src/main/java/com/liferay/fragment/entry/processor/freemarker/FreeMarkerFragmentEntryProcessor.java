@@ -30,6 +30,7 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.petra.io.DummyWriter;
@@ -246,8 +247,8 @@ public class FreeMarkerFragmentEntryProcessor
 						"input",
 						new InputTemplateNode(
 							StringPool.BLANK, StringPool.BLANK,
-							StringPool.BLANK, "name", false, false, false,
-							"type", "value")
+							StringPool.BLANK, StringPool.BLANK, "name", false,
+							false, false, "type", "value")
 					).put(
 						"layoutMode", Constants.VIEW
 					).putAll(
@@ -409,11 +410,25 @@ public class FreeMarkerFragmentEntryProcessor
 				locale));
 
 		String type = "type";
+		String dataType = StringPool.BLANK;
 
 		if (infoField != null) {
 			InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
 			type = infoFieldType.getName();
+
+			if (infoFieldType instanceof NumberInfoFieldType) {
+				dataType = "integer";
+
+				Optional<Boolean> decimalOptional =
+					infoField.getAttributeOptional(NumberInfoFieldType.DECIMAL);
+
+				boolean decimal = decimalOptional.orElse(false);
+
+				if (decimal) {
+					dataType = "decimal";
+				}
+			}
 		}
 
 		String errorMessage = StringPool.BLANK;
@@ -431,7 +446,7 @@ public class FreeMarkerFragmentEntryProcessor
 		}
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
-			errorMessage, inputHelpText, inputLabel, name, required,
+			dataType, errorMessage, inputHelpText, inputLabel, name, required,
 			inputShowHelpText, inputShowLabel, type, "value");
 
 		if ((infoField != null) &&

@@ -19,6 +19,8 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutBox;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutRow;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -113,11 +115,15 @@ public class ObjectLayoutUtil {
 			return null;
 		}
 
+		// TODO don't use Util
+
+		ObjectField objectField = ObjectFieldLocalServiceUtil.fetchObjectField(
+			serviceBuilderObjectLayoutColumn.getObjectFieldId());
+
 		return new ObjectLayoutColumn() {
 			{
 				id = serviceBuilderObjectLayoutColumn.getObjectLayoutColumnId();
-				objectFieldId =
-					serviceBuilderObjectLayoutColumn.getObjectFieldId();
+				objectFieldName = objectField.getName();
 				priority = serviceBuilderObjectLayoutColumn.getPriority();
 				size = serviceBuilderObjectLayoutColumn.getSize();
 			}

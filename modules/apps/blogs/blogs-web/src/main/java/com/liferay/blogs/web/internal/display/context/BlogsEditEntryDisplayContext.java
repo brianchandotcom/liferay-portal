@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -45,11 +44,16 @@ import javax.servlet.http.HttpServletRequest;
 public class BlogsEditEntryDisplayContext {
 
 	public BlogsEditEntryDisplayContext(
-		BlogsEntry blogsEntry, BlogsItemSelectorHelper blogsItemSelectorHelper,
+		BlogsEntry blogsEntry,
+		BlogsFileUploadsConfiguration blogsFileUploadsConfiguration,
+		BlogsGroupServiceSettings blogsGroupServiceSettings,
+		BlogsItemSelectorHelper blogsItemSelectorHelper,
 		HttpServletRequest httpServletRequest,
 		PortletResponse portletResponse) {
 
 		_blogsEntry = blogsEntry;
+		_blogsFileUploadsConfiguration = blogsFileUploadsConfiguration;
+		_blogsGroupServiceSettings = blogsGroupServiceSettings;
 		_blogsItemSelectorHelper = blogsItemSelectorHelper;
 		_httpServletRequest = httpServletRequest;
 		_portletResponse = portletResponse;
@@ -140,19 +144,11 @@ public class BlogsEditEntryDisplayContext {
 	}
 
 	public String[] getImageExtensions() throws ConfigurationException {
-		BlogsFileUploadsConfiguration blogsFileUploadsConfiguration =
-			ConfigurationProviderUtil.getSystemConfiguration(
-				BlogsFileUploadsConfiguration.class);
-
-		return blogsFileUploadsConfiguration.imageExtensions();
+		return _blogsFileUploadsConfiguration.imageExtensions();
 	}
 
 	public long getImageMaxSize() throws ConfigurationException {
-		BlogsFileUploadsConfiguration blogsFileUploadsConfiguration =
-			ConfigurationProviderUtil.getSystemConfiguration(
-				BlogsFileUploadsConfiguration.class);
-
-		return blogsFileUploadsConfiguration.imageMaxSize();
+		return _blogsFileUploadsConfiguration.imageMaxSize();
 	}
 
 	public String getPageTitle(ResourceBundle resourceBundle) {
@@ -306,16 +302,8 @@ public class BlogsEditEntryDisplayContext {
 			return _emailEntryUpdatedEnabled;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		BlogsGroupServiceSettings blogsGroupServiceSettings =
-			BlogsGroupServiceSettings.getInstance(
-				themeDisplay.getScopeGroupId());
-
 		if ((getBlogsEntry() != null) &&
-			blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()) {
+			_blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()) {
 
 			_emailEntryUpdatedEnabled = true;
 		}
@@ -329,6 +317,8 @@ public class BlogsEditEntryDisplayContext {
 	private Boolean _allowPingbacks;
 	private Boolean _allowTrackbacks;
 	private final BlogsEntry _blogsEntry;
+	private final BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
+	private final BlogsGroupServiceSettings _blogsGroupServiceSettings;
 	private final BlogsItemSelectorHelper _blogsItemSelectorHelper;
 	private String _content;
 	private String _coverImageCaption;

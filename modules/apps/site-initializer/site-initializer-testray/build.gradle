@@ -74,11 +74,11 @@ processResources {
 		dependsOn buildExtraRemoteApp
 
 		into("site-initializer/documents/company/remote-app/" + webContextPath) {
-			from(new File(projectDir, "extra/remote-app/build/static/css")) {
+			from(new File(projectDir, "extra/remote-app/build/assets")) {
 				include "*.css"
 			}
 
-			from(new File(projectDir, "extra/remote-app/build/static/js")) {
+			from(new File(projectDir, "extra/remote-app/build/assets")) {
 				include "*.js"
 			}
 

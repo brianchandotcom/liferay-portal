@@ -6378,8 +6378,7 @@ public class UserGroupPersistenceImpl
 		UserGroupModelImpl userGroupModelImpl = (UserGroupModelImpl)userGroup;
 
 		if (Validator.isNull(userGroup.getExternalReferenceCode())) {
-			userGroup.setExternalReferenceCode(
-				String.valueOf(userGroup.getPrimaryKey()));
+			userGroup.setExternalReferenceCode(PortalUUIDUtil.generate());
 		}
 
 		if (Validator.isNull(userGroup.getUuid())) {

@@ -3584,7 +3584,7 @@ public class CommercePricingClassPersistenceImpl
 
 		if (Validator.isNull(commercePricingClass.getExternalReferenceCode())) {
 			commercePricingClass.setExternalReferenceCode(
-				String.valueOf(commercePricingClass.getPrimaryKey()));
+				_portalUUID.generate());
 		}
 
 		if (Validator.isNull(commercePricingClass.getUuid())) {

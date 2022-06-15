@@ -34271,8 +34271,7 @@ public class JournalArticlePersistenceImpl
 			(JournalArticleModelImpl)journalArticle;
 
 		if (Validator.isNull(journalArticle.getExternalReferenceCode())) {
-			journalArticle.setExternalReferenceCode(
-				String.valueOf(journalArticle.getPrimaryKey()));
+			journalArticle.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(journalArticle.getUuid())) {

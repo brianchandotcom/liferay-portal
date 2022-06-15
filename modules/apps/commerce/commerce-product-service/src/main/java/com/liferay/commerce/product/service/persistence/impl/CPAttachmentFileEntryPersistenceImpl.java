@@ -6402,7 +6402,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 				cpAttachmentFileEntry.getExternalReferenceCode())) {
 
 			cpAttachmentFileEntry.setExternalReferenceCode(
-				String.valueOf(cpAttachmentFileEntry.getPrimaryKey()));
+				_portalUUID.generate());
 		}
 
 		if (Validator.isNull(cpAttachmentFileEntry.getUuid())) {

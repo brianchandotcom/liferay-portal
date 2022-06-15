@@ -21666,8 +21666,7 @@ public class MBMessagePersistenceImpl
 		MBMessageModelImpl mbMessageModelImpl = (MBMessageModelImpl)mbMessage;
 
 		if (Validator.isNull(mbMessage.getExternalReferenceCode())) {
-			mbMessage.setExternalReferenceCode(
-				String.valueOf(mbMessage.getPrimaryKey()));
+			mbMessage.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(mbMessage.getUuid())) {

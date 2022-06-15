@@ -6711,7 +6711,7 @@ public class CommercePriceModifierPersistenceImpl
 				commercePriceModifier.getExternalReferenceCode())) {
 
 			commercePriceModifier.setExternalReferenceCode(
-				String.valueOf(commercePriceModifier.getPrimaryKey()));
+				_portalUUID.generate());
 		}
 
 		if (Validator.isNull(commercePriceModifier.getUuid())) {

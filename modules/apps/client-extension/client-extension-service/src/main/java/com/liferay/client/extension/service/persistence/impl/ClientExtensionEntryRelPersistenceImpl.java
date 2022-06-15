@@ -3024,7 +3024,7 @@ public class ClientExtensionEntryRelPersistenceImpl
 				clientExtensionEntryRel.getExternalReferenceCode())) {
 
 			clientExtensionEntryRel.setExternalReferenceCode(
-				String.valueOf(clientExtensionEntryRel.getPrimaryKey()));
+				_portalUUID.generate());
 		}
 
 		if (Validator.isNull(clientExtensionEntryRel.getUuid())) {

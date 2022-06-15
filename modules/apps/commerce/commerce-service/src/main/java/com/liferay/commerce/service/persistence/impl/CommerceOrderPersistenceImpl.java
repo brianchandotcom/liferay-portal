@@ -8072,8 +8072,7 @@ public class CommerceOrderPersistenceImpl
 			(CommerceOrderModelImpl)commerceOrder;
 
 		if (Validator.isNull(commerceOrder.getExternalReferenceCode())) {
-			commerceOrder.setExternalReferenceCode(
-				String.valueOf(commerceOrder.getPrimaryKey()));
+			commerceOrder.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(commerceOrder.getUuid())) {

@@ -6783,8 +6783,7 @@ public class AssetVocabularyPersistenceImpl
 			(AssetVocabularyModelImpl)assetVocabulary;
 
 		if (Validator.isNull(assetVocabulary.getExternalReferenceCode())) {
-			assetVocabulary.setExternalReferenceCode(
-				String.valueOf(assetVocabulary.getPrimaryKey()));
+			assetVocabulary.setExternalReferenceCode(PortalUUIDUtil.generate());
 		}
 
 		if (Validator.isNull(assetVocabulary.getUuid())) {

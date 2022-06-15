@@ -4006,8 +4006,7 @@ public class CPMeasurementUnitPersistenceImpl
 			(CPMeasurementUnitModelImpl)cpMeasurementUnit;
 
 		if (Validator.isNull(cpMeasurementUnit.getExternalReferenceCode())) {
-			cpMeasurementUnit.setExternalReferenceCode(
-				String.valueOf(cpMeasurementUnit.getPrimaryKey()));
+			cpMeasurementUnit.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(cpMeasurementUnit.getUuid())) {

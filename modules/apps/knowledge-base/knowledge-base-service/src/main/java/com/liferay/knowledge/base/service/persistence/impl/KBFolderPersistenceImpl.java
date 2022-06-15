@@ -3996,8 +3996,7 @@ public class KBFolderPersistenceImpl
 		KBFolderModelImpl kbFolderModelImpl = (KBFolderModelImpl)kbFolder;
 
 		if (Validator.isNull(kbFolder.getExternalReferenceCode())) {
-			kbFolder.setExternalReferenceCode(
-				String.valueOf(kbFolder.getPrimaryKey()));
+			kbFolder.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(kbFolder.getUuid())) {

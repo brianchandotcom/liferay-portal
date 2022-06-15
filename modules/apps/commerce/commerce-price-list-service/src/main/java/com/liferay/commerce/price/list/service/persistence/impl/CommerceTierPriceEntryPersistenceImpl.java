@@ -5445,7 +5445,7 @@ public class CommerceTierPriceEntryPersistenceImpl
 				commerceTierPriceEntry.getExternalReferenceCode())) {
 
 			commerceTierPriceEntry.setExternalReferenceCode(
-				String.valueOf(commerceTierPriceEntry.getPrimaryKey()));
+				_portalUUID.generate());
 		}
 
 		if (Validator.isNull(commerceTierPriceEntry.getUuid())) {

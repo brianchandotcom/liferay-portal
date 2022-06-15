@@ -4652,7 +4652,7 @@ public class ClientExtensionEntryPersistenceImpl
 
 		if (Validator.isNull(clientExtensionEntry.getExternalReferenceCode())) {
 			clientExtensionEntry.setExternalReferenceCode(
-				String.valueOf(clientExtensionEntry.getPrimaryKey()));
+				_portalUUID.generate());
 		}
 
 		if (Validator.isNull(clientExtensionEntry.getUuid())) {

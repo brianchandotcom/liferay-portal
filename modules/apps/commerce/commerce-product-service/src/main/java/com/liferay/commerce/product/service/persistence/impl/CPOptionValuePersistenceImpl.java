@@ -3070,8 +3070,7 @@ public class CPOptionValuePersistenceImpl
 			(CPOptionValueModelImpl)cpOptionValue;
 
 		if (Validator.isNull(cpOptionValue.getExternalReferenceCode())) {
-			cpOptionValue.setExternalReferenceCode(
-				String.valueOf(cpOptionValue.getPrimaryKey()));
+			cpOptionValue.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(cpOptionValue.getUuid())) {

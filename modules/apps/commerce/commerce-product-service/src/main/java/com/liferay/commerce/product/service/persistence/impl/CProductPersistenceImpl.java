@@ -2519,8 +2519,7 @@ public class CProductPersistenceImpl
 		CProductModelImpl cProductModelImpl = (CProductModelImpl)cProduct;
 
 		if (Validator.isNull(cProduct.getExternalReferenceCode())) {
-			cProduct.setExternalReferenceCode(
-				String.valueOf(cProduct.getPrimaryKey()));
+			cProduct.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(cProduct.getUuid())) {

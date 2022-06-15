@@ -21922,8 +21922,7 @@ public class BlogsEntryPersistenceImpl
 			(BlogsEntryModelImpl)blogsEntry;
 
 		if (Validator.isNull(blogsEntry.getExternalReferenceCode())) {
-			blogsEntry.setExternalReferenceCode(
-				String.valueOf(blogsEntry.getPrimaryKey()));
+			blogsEntry.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(blogsEntry.getUuid())) {

@@ -6830,8 +6830,7 @@ public class CommerceDiscountPersistenceImpl
 			(CommerceDiscountModelImpl)commerceDiscount;
 
 		if (Validator.isNull(commerceDiscount.getExternalReferenceCode())) {
-			commerceDiscount.setExternalReferenceCode(
-				String.valueOf(commerceDiscount.getPrimaryKey()));
+			commerceDiscount.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(commerceDiscount.getUuid())) {

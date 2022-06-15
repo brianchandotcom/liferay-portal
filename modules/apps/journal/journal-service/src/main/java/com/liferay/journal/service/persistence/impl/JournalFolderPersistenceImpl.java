@@ -8036,8 +8036,7 @@ public class JournalFolderPersistenceImpl
 			(JournalFolderModelImpl)journalFolder;
 
 		if (Validator.isNull(journalFolder.getExternalReferenceCode())) {
-			journalFolder.setExternalReferenceCode(
-				String.valueOf(journalFolder.getPrimaryKey()));
+			journalFolder.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		if (Validator.isNull(journalFolder.getUuid())) {

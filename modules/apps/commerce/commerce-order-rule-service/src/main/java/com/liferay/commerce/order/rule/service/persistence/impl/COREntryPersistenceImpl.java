@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -5565,8 +5566,7 @@ public class COREntryPersistenceImpl
 		COREntryModelImpl corEntryModelImpl = (COREntryModelImpl)corEntry;
 
 		if (Validator.isNull(corEntry.getExternalReferenceCode())) {
-			corEntry.setExternalReferenceCode(
-				String.valueOf(corEntry.getPrimaryKey()));
+			corEntry.setExternalReferenceCode(_portalUUID.generate());
 		}
 
 		ServiceContext serviceContext =
@@ -6105,6 +6105,9 @@ public class COREntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private COREntryModelArgumentsResolver _corEntryModelArgumentsResolver;

@@ -368,9 +368,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		SegmentsExperience segmentsExperience = _getSegmentsExperience(
 			layout, segmentsExperienceKey);
 
-		contextHttpServletRequest.setAttribute(
-			SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
-			new long[] {segmentsExperience.getSegmentsExperienceId()});
+		if (segmentsExperience != null) {
+			contextHttpServletRequest.setAttribute(
+				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
+				new long[] {segmentsExperience.getSegmentsExperienceId()});
+		}
 
 		contextHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));

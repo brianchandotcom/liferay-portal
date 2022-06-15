@@ -12,6 +12,10 @@
  * details.
  */
 
+import {initializeCache} from './src/main/resources/META-INF/resources/page_editor/app/utils/cache';
+
+initializeCache();
+
 if (typeof Array.prototype.flatMap !== 'function') {
 	Array.prototype.flatMap = function () {
 		return Array.prototype.map

@@ -5,6 +5,18 @@
 	"name": "RaylifeSalesGoal",
 	"objectFields": [
 		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Final Reference Date"
+			},
+			"name": "finalReferenceDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
 			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
 			"indexed": true,
@@ -31,16 +43,16 @@
 			"type": "Date"
 		},
 		{
-			"DBType": "Date",
-			"businessType": "Date",
+			"DBType": "String",
+			"businessType": "Text",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Final Reference Date"
+				"en_US": "Product Id"
 			},
-			"name": "finalReferenceDate",
+			"name": "productId",
 			"required": false,
-			"type": "Date"
+			"type": "String"
 		}
 	],
 	"panelAppOrder": "100",

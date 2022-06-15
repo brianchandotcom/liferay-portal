@@ -3,7 +3,7 @@
 	"label": {
 		"en_US": "User"
 	},
-	"name": "userToSalesGoal",
+	"name": "userToSalesGoals",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:RaylifeSalesGoal$]",
 	"objectDefinitionName2": "RaylifeSalesGoal",

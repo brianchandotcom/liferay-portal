@@ -136,9 +136,18 @@ public class ResponsiveLayoutStructureUtilTest {
 			PermissionThreadLocal.getPermissionChecker());
 		_themeDisplay.setPlid(_layout.getPlid());
 		_themeDisplay.setRealUser(TestPropsValues.getUser());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		_themeDisplay.setRequest(mockHttpServletRequest);
+
 		_themeDisplay.setScopeGroupId(_group.getGroupId());
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setUser(TestPropsValues.getUser());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
 	}
 
 	@Test

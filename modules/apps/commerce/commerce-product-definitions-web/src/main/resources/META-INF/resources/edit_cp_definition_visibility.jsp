@@ -36,6 +36,7 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= String.valueOf(cpDefinitionId) %>" />
 	<aui:input name="commerceAccountGroupIds" type="hidden" value="" />
 	<aui:input name="commerceChannelIds" type="hidden" value="" />
+	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 
 	<commerce-ui:panel
 		bodyClasses="p-0"

@@ -137,7 +137,13 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 			elementClasses="mt-4"
 			title='<%= LanguageUtil.get(request, "options") %>'
 		>
-			<aui:form action="<%= cpDefinitionOptionRelDisplayContext.getPortletURL() %>" method="post" name="fm">
+			<portlet:actionURL name="/cp_definitions/edit_cp_definition" var="editProductDefinitionOptionRelsActionURL" />
+
+			<aui:form action="<%= editProductDefinitionOptionRelsActionURL %>" method="post" name="fm">
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionOptionRelDisplayContext.getCPDefinitionId() %>" />
+				<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
+
 				<frontend-data-set:classic-display
 					contextParams='<%=
 						HashMapBuilder.<String, String>put(

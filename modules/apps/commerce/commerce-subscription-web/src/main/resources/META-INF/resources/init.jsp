@@ -56,6 +56,7 @@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
 <%@ page import="java.util.Calendar" %><%@

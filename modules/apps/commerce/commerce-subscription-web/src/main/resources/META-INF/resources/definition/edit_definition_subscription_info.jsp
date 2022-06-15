@@ -80,6 +80,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateSubscriptionInfo" />
 	<aui:input name="redirect" type="hidden" value="<%= String.valueOf(cpDefinitionSubscriptionInfoDisplayContext.getPortletURL()) %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 
 	<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 

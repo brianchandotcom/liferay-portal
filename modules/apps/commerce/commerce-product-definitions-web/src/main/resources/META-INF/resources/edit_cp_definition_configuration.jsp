@@ -36,6 +36,7 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 	<aui:input name="cpDefinitionInventoryId" type="hidden" value="<%= (cpDefinitionInventory == null) ? StringPool.BLANK : cpDefinitionInventory.getCPDefinitionInventoryId() %>" />
 	<aui:input name="cpdAvailabilityEstimateId" type="hidden" value="<%= (cpdAvailabilityEstimate == null) ? StringPool.BLANK : cpdAvailabilityEstimate.getCPDAvailabilityEstimateId() %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 
 	<aui:model-context bean="<%= cpDefinition %>" model="<%= CPDefinition.class %>" />
 

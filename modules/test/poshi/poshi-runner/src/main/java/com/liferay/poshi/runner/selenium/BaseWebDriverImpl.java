@@ -4522,7 +4522,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		public void waitFor(String throwException) throws Exception {
 			int timeout = PropsValues.TIMEOUT_EXPLICIT_WAIT * 1000;
-			int wait = 100;
+			int wait = 500;
 
 			for (int millisecond = 0; millisecond < timeout;
 				 millisecond += wait) {

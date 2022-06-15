@@ -364,7 +364,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [siteId]");
+					"One of the following parameters must be specified: [siteId]");
 			}
 		}
 
@@ -436,7 +436,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [siteId]");
+				"One of the following parameters must be specified: [siteId]");
 		}
 	}
 

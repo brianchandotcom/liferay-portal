@@ -163,7 +163,7 @@ public abstract class BaseProcessVersionResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [processId]");
+				"One of the following parameters must be specified: [processId]");
 		}
 	}
 

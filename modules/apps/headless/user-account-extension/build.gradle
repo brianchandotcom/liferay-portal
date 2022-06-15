@@ -1,0 +1,20 @@
+dependencies {
+	compileOnly project(":apps:headless:headless-admin-user:headless-admin-user-api")
+
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.2"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.2"
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.2.2"
+
+	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
+
+	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+
+	compileOnly group: "com.fasterxml.jackson.jaxrs", name: "jackson-jaxrs-json-provider", version: "2.9.8"
+	compileOnly group: "org.osgi", name: "org.osgi.service.jaxrs", version: "1.0.0"
+	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
+
+}

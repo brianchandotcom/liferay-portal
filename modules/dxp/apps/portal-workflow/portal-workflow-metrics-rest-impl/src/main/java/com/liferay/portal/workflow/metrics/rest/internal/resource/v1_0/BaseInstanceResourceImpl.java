@@ -419,7 +419,7 @@ public abstract class BaseInstanceResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [processId]");
+					"One of the following parameters must be specified: [processId]");
 			}
 		}
 
@@ -496,7 +496,7 @@ public abstract class BaseInstanceResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [processId]");
+				"One of the following parameters must be specified: [processId]");
 		}
 	}
 

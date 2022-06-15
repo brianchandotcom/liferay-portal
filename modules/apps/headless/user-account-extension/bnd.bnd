@@ -1,0 +1,3 @@
+Bundle-Name: User Account Extension
+Bundle-SymbolicName: com.liferay.useraccount.extension
+Bundle-Version: 1.0.0

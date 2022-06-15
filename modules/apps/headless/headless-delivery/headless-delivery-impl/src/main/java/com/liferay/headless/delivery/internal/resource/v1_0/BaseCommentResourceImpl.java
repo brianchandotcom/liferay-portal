@@ -1456,7 +1456,7 @@ public abstract class BaseCommentResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [blogPostingId, documentId, structuredContentId]");
+					"One of the following parameters must be specified: [blogPostingId, documentId, structuredContentId]");
 			}
 		}
 
@@ -1537,7 +1537,7 @@ public abstract class BaseCommentResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [blogPostingId, documentId, structuredContentId]");
+				"One of the following parameters must be specified: [blogPostingId, documentId, structuredContentId]");
 		}
 	}
 

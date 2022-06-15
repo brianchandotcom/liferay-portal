@@ -506,7 +506,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [messageBoardMessageId, messageBoardThreadId]");
+					"One of the following parameters must be specified: [messageBoardMessageId, messageBoardThreadId]");
 			}
 		}
 
@@ -588,7 +588,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [messageBoardMessageId, messageBoardThreadId]");
+				"One of the following parameters must be specified: [messageBoardMessageId, messageBoardThreadId]");
 		}
 	}
 

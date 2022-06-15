@@ -562,7 +562,7 @@ public abstract class BaseRegionResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [countryId]");
+					"One of the following parameters must be specified: [countryId]");
 			}
 		}
 

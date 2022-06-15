@@ -176,7 +176,7 @@ public abstract class BaseStatusResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [experimentId]");
+					"One of the following parameters must be specified: [experimentId]");
 			}
 		}
 

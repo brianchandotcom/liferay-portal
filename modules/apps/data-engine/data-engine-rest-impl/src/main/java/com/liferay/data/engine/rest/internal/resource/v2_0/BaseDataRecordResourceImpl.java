@@ -661,7 +661,7 @@ public abstract class BaseDataRecordResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [dataDefinitionId, dataRecordCollectionId]");
+					"One of the following parameters must be specified: [dataDefinitionId, dataRecordCollectionId]");
 			}
 		}
 
@@ -741,7 +741,7 @@ public abstract class BaseDataRecordResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [dataDefinitionId, dataRecordCollectionId]");
+				"One of the following parameters must be specified: [dataDefinitionId, dataRecordCollectionId]");
 		}
 	}
 

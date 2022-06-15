@@ -176,7 +176,7 @@ public abstract class BaseShippingMethodResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [channelId]");
+				"One of the following parameters must be specified: [channelId]");
 		}
 	}
 

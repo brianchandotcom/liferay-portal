@@ -234,7 +234,7 @@ public abstract class BasePhoneResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [organizationId, userAccountId]");
+				"One of the following parameters must be specified: [organizationId, userAccountId]");
 		}
 	}
 

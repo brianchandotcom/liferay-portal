@@ -337,7 +337,7 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [wikiPageId]");
+					"One of the following parameters must be specified: [wikiPageId]");
 			}
 		}
 
@@ -408,7 +408,7 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [wikiPageId]");
+				"One of the following parameters must be specified: [wikiPageId]");
 		}
 	}
 

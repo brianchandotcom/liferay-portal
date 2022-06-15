@@ -361,7 +361,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [knowledgeBaseArticleId]");
+					"One of the following parameters must be specified: [knowledgeBaseArticleId]");
 			}
 		}
 
@@ -440,7 +440,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [knowledgeBaseArticleId]");
+				"One of the following parameters must be specified: [knowledgeBaseArticleId]");
 		}
 	}
 

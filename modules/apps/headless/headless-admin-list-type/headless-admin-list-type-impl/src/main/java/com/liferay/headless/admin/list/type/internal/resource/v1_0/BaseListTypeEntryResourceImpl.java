@@ -437,7 +437,7 @@ public abstract class BaseListTypeEntryResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [listTypeDefinitionId]");
+					"One of the following parameters must be specified: [listTypeDefinitionId]");
 			}
 		}
 

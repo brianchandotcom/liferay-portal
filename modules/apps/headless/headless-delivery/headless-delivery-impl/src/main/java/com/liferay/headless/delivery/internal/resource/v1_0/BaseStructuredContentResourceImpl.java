@@ -2041,7 +2041,7 @@ public abstract class BaseStructuredContentResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [structuredContentFolderId, assetLibraryId, siteId]");
+					"One of the following parameters must be specified: [structuredContentFolderId, assetLibraryId, siteId]");
 			}
 		}
 
@@ -2142,7 +2142,7 @@ public abstract class BaseStructuredContentResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [assetLibraryId, siteId, contentStructureId, structuredContentFolderId]");
+				"One of the following parameters must be specified: [assetLibraryId, siteId, contentStructureId, structuredContentFolderId]");
 		}
 	}
 

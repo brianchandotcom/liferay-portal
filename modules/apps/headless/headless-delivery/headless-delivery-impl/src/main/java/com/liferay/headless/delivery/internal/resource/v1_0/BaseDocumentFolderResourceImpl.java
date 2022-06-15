@@ -1258,7 +1258,7 @@ public abstract class BaseDocumentFolderResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [assetLibraryId, siteId]");
+					"One of the following parameters must be specified: [assetLibraryId, siteId]");
 			}
 		}
 
@@ -1337,7 +1337,7 @@ public abstract class BaseDocumentFolderResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [assetLibraryId, siteId]");
+				"One of the following parameters must be specified: [assetLibraryId, siteId]");
 		}
 	}
 

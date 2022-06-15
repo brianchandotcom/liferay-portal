@@ -723,7 +723,7 @@ public abstract class BaseAccountRoleResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [accountId]");
+					"One of the following parameters must be specified: [accountId]");
 			}
 		}
 
@@ -794,7 +794,7 @@ public abstract class BaseAccountRoleResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [accountId]");
+				"One of the following parameters must be specified: [accountId]");
 		}
 	}
 

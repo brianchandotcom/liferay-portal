@@ -361,7 +361,7 @@ public abstract class BaseFormRecordResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [formId]");
+					"One of the following parameters must be specified: [formId]");
 			}
 		}
 
@@ -431,7 +431,7 @@ public abstract class BaseFormRecordResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [formId]");
+				"One of the following parameters must be specified: [formId]");
 		}
 	}
 

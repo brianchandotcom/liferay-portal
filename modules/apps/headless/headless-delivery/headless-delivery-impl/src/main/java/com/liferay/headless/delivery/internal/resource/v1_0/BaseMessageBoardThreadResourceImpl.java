@@ -1341,7 +1341,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [messageBoardSectionId, siteId]");
+					"One of the following parameters must be specified: [messageBoardSectionId, siteId]");
 			}
 		}
 
@@ -1419,7 +1419,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [siteId, messageBoardSectionId]");
+				"One of the following parameters must be specified: [siteId, messageBoardSectionId]");
 		}
 	}
 

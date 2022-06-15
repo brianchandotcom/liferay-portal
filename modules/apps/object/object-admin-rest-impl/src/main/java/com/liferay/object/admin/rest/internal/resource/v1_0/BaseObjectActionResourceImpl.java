@@ -485,7 +485,7 @@ public abstract class BaseObjectActionResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [objectDefinitionId]");
+					"One of the following parameters must be specified: [objectDefinitionId]");
 			}
 		}
 
@@ -557,7 +557,7 @@ public abstract class BaseObjectActionResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [objectDefinitionId]");
+				"One of the following parameters must be specified: [objectDefinitionId]");
 		}
 	}
 

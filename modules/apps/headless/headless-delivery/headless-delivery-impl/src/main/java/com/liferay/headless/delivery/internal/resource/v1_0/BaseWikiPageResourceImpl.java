@@ -805,7 +805,7 @@ public abstract class BaseWikiPageResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [wikiNodeId]");
+					"One of the following parameters must be specified: [wikiNodeId]");
 			}
 		}
 
@@ -885,7 +885,7 @@ public abstract class BaseWikiPageResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [wikiNodeId]");
+				"One of the following parameters must be specified: [wikiNodeId]");
 		}
 	}
 

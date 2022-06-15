@@ -166,7 +166,7 @@ public abstract class BaseShippingMethodResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [cartId]");
+				"One of the following parameters must be specified: [cartId]");
 		}
 	}
 

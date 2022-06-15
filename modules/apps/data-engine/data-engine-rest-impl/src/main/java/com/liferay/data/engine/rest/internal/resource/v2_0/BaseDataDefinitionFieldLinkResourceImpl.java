@@ -178,7 +178,7 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [dataDefinitionId]");
+				"One of the following parameters must be specified: [dataDefinitionId]");
 		}
 	}
 

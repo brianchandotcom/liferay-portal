@@ -208,7 +208,7 @@ public abstract class BaseFormStructureResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [siteId]");
+				"One of the following parameters must be specified: [siteId]");
 		}
 	}
 

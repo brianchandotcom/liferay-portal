@@ -1606,7 +1606,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [knowledgeBaseFolderId, siteId]");
+					"One of the following parameters must be specified: [knowledgeBaseFolderId, siteId]");
 			}
 		}
 
@@ -1699,7 +1699,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [siteId, knowledgeBaseFolderId]");
+				"One of the following parameters must be specified: [siteId, knowledgeBaseFolderId]");
 		}
 	}
 

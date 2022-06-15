@@ -434,7 +434,7 @@ public abstract class BaseObjectViewResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be informed: [objectDefinitionId]");
+					"One of the following parameters must be specified: [objectDefinitionId]");
 			}
 		}
 
@@ -506,7 +506,7 @@ public abstract class BaseObjectViewResourceImpl
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be informed: [objectDefinitionId]");
+				"One of the following parameters must be specified: [objectDefinitionId]");
 		}
 	}
 

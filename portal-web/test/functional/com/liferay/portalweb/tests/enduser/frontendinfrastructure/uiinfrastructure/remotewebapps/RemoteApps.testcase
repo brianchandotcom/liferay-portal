@@ -497,30 +497,27 @@ definition {
 	test IframeTypeCanDisplayProperFields {
 		property portal.acceptance = "true";
 
-		var customElementType = "Custom Element";
-		var iFrameType = "IFrame";
-
 		RemoteApps.goToRemoteAppsPortlet();
 
-		RemoteApps.addType(type = "iFrameType");
+		RemoteApps.addType(type = "Custom Element");
 
-		AssertNotVisible(
+		AssertVisible(
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY");
 
-		AssertNotVisible(
+		AssertVisible(
 			key_text = "CSS URL",
 			locator1 = "TextInput#ANY");
 
-		Select(
-			locator1 = "Select#TYPE",
-			value1 = "${customElementType}");
+		Click(locator1 = "Button#BACK");
 
-		AssertVisible(
+		RemoteApps.addType(type = "IFrame");
+
+		AssertElementNotPresent(
 			key_text = "HTML Element Name",
 			locator1 = "TextInput#ANY");
 
-		AssertVisible(
+		AssertElementNotPresent(
 			key_text = "CSS URL",
 			locator1 = "TextInput#ANY");
 	}

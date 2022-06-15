@@ -597,11 +597,12 @@ public class ObjectEntryDisplayContext {
 		}
 
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-154872"))) {
-			if (objectLayoutTab == null) {
-				for (ObjectField objectField :
-						_objectFieldLocalService.getCustomObjectFields(
-							objectDefinition.getObjectDefinitionId())) {
+			List<ObjectField> objectFields =
+				_objectFieldLocalService.getCustomObjectFields(
+					objectDefinition.getObjectDefinitionId());
 
+			if (objectLayoutTab == null) {
+				for (ObjectField objectField : objectFields) {
 					if (!_isActive(objectField)) {
 						continue;
 					}
@@ -612,10 +613,7 @@ public class ObjectEntryDisplayContext {
 			}
 			else {
 				_addDDMFormFields(
-					ddmForm,
-					_objectFieldLocalService.getObjectFields(
-						objectDefinition.getObjectDefinitionId()),
-					objectLayoutTab, readOnly);
+					ddmForm, objectFields, objectLayoutTab, readOnly);
 			}
 		}
 		else {

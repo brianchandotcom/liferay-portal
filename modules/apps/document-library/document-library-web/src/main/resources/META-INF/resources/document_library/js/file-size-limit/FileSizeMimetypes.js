@@ -79,11 +79,12 @@ const FileSizeField = ({
 				<ClayInput
 					defaultValue={size}
 					id="size"
-					min="0"
 					name={`${portletNamespace}size_${index}`}
 					onChange={({target}) => {
 						setSizeErrorMessage(
-							target.validity.valid ? '' : NumberErrorMessage
+							target.validity.valid && Number(target.value) >= 0
+								? ''
+								: NumberErrorMessage
 						);
 					}}
 					type="number"

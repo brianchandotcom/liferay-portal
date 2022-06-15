@@ -17,10 +17,6 @@ import {render} from '@testing-library/react';
 import Avatar from './Avatar';
 
 describe('Avatar', () => {
-	it('it work', () => {
-		expect(1).toBe(1);
-	});
-
 	it('renders with success', () => {
 		const {asFragment} = render(<Avatar />);
 

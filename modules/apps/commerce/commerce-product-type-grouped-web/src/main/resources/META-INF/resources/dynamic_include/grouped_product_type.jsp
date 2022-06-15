@@ -17,6 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
+
+long commerceAccountId = CommerceUtil.getCommerceAccountId(commerceContext);
+
 GroupedCPTypeHelper groupedCPTypeHelper = (GroupedCPTypeHelper)request.getAttribute(GroupedCPTypeWebKeys.GROUPED_CP_TYPE_HELPER);
 
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
@@ -29,15 +33,15 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 		<div class="col-lg-12">
 
 			<%
-			for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry : groupedCPTypeHelper.getCPDefinitionGroupedEntry(cpCatalogEntry.getCPDefinitionId())) {
+			for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry : groupedCPTypeHelper.getCPDefinitionGroupedEntry(commerceAccountId, commerceContext.getCommerceChannelGroupId(), cpCatalogEntry.getCPDefinitionId())) {
 				CProduct cProduct = cpDefinitionGroupedEntry.getEntryCProduct();
 
 				CPDefinition cProductCPDefinition = CPDefinitionLocalServiceUtil.getCPDefinition(cProduct.getPublishedCPDefinitionId());
 			%>
 
-				<div class="row">
+				<div class="mt-1 row">
 					<div class="col-md-4">
-						<img class="img-fluid" src="<%= cProductCPDefinition.getDefaultImageThumbnailSrc(CommerceUtil.getCommerceAccountId((CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT))) %>" />
+						<img class="img-fluid" src="<%= cProductCPDefinition.getDefaultImageThumbnailSrc(commerceAccountId) %>" />
 					</div>
 
 					<div class="col-md-8">
@@ -45,9 +49,9 @@ CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
 							<%= HtmlUtil.escape(cProductCPDefinition.getName(LocaleUtil.toLanguageId(locale))) %>
 						</h5>
 
-						<h6>
-							<liferay-ui:message arguments="<%= cpDefinitionGroupedEntry.getQuantity() %>" key="quantity-x" />
-						</h6>
+						<p>
+							<%= cProductCPDefinition.getShortDescription(LocaleUtil.toLanguageId(locale)) %>
+						</p>
 					</div>
 				</div>
 

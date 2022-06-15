@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -171,10 +170,9 @@ public class SourceServiceTest {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext();
 
-			ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-				_SOURCE_GROUP_PERMISSIONS, null, Source.class.getName());
-
-			serviceContext.setModelPermissions(modelPermissions);
+			serviceContext.setModelPermissions(
+				ModelPermissionsFactory.create(
+					_SOURCE_GROUP_PERMISSIONS, null, Source.class.getName()));
 
 			for (int i = 0; i < 5; i++) {
 				SourceLocalServiceUtil.addSource(

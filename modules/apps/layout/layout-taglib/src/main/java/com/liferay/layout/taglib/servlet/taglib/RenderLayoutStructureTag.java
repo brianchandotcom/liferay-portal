@@ -20,6 +20,8 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ColTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ContainerTag;
@@ -60,7 +62,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -79,7 +80,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -87,8 +87,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -209,8 +210,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		}
 
 		String formInputLabel = _getFormInputLabel(
-			formStyledLayoutStructureItem.getChildrenItemIds(),
-			infoFormValidationException.getInfoFieldUniqueId(), themeDisplay);
+			infoFormValidationException.getInfoFieldUniqueId(),
+			themeDisplay.getLocale());
 
 		if (Validator.isNotNull(formInputLabel)) {
 			return infoFormValidationException.getLocalizedMessage(
@@ -226,26 +227,18 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			formInputLabel, themeDisplay.getLocale());
 	}
 
-	private String _getFormInputLabel(
-			List<String> childrenItemIds, String infoFieldUniqueId,
-			ThemeDisplay themeDisplay)
-		throws Exception {
+	private String _getFormInputLabel(String infoFieldUniqueId, Locale locale) {
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser =
+			ServletContextUtil.getFragmentEntryConfigurationParser();
 
-		String formInputLabel = null;
-		Iterator<String> iterator = childrenItemIds.iterator();
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			_layoutStructure.getFragmentLayoutStructureItems();
 
-		while ((formInputLabel == null) && iterator.hasNext()) {
-			String childrenItemId = iterator.next();
-
-			LayoutStructureItem layoutStructureItem =
-				_layoutStructure.getLayoutStructureItem(childrenItemId);
+		for (LayoutStructureItem layoutStructureItem :
+				fragmentLayoutStructureItems.values()) {
 
 			if (!(layoutStructureItem instanceof
 					FragmentStyledLayoutStructureItem)) {
-
-				formInputLabel = _getFormInputLabel(
-					layoutStructureItem.getChildrenItemIds(), infoFieldUniqueId,
-					themeDisplay);
 
 				continue;
 			}
@@ -257,10 +250,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() <=
 					0) {
 
-				formInputLabel = _getFormInputLabel(
-					layoutStructureItem.getChildrenItemIds(), infoFieldUniqueId,
-					themeDisplay);
-
 				continue;
 			}
 
@@ -271,57 +260,30 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			if ((fragmentEntryLink == null) ||
 				Validator.isNull(fragmentEntryLink.getEditableValues())) {
 
-				formInputLabel = _getFormInputLabel(
-					layoutStructureItem.getChildrenItemIds(), infoFieldUniqueId,
-					themeDisplay);
-
 				continue;
 			}
 
-			JSONObject editableValuesJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues());
+			String inputFieldId = GetterUtil.getString(
+				fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getEditableValues(),
+					new FragmentConfigurationField(
+						"inputFieldId", "string", StringPool.BLANK, false,
+						"text"),
+					locale));
 
-			JSONObject freemarkerProcessorJSONObject =
-				editableValuesJSONObject.getJSONObject(
-					"com.liferay.fragment.entry.processor.freemarker." +
-						"FreeMarkerFragmentEntryProcessor");
-
-			if ((freemarkerProcessorJSONObject == null) ||
-				!Objects.equals(
-					freemarkerProcessorJSONObject.getString("inputFieldId"),
-					infoFieldUniqueId)) {
-
-				formInputLabel = _getFormInputLabel(
-					layoutStructureItem.getChildrenItemIds(), infoFieldUniqueId,
-					themeDisplay);
-
+			if (!Objects.equals(inputFieldId, infoFieldUniqueId)) {
 				continue;
 			}
 
-			if (!JSONUtil.isValid(
-					freemarkerProcessorJSONObject.getString("inputLabel"))) {
-
-				return freemarkerProcessorJSONObject.getString("inputLabel");
-			}
-
-			JSONObject inputLabelJSONObject =
-				freemarkerProcessorJSONObject.getJSONObject("inputLabel");
-
-			formInputLabel = inputLabelJSONObject.getString(
-				themeDisplay.getLanguageId());
-
-			if (Validator.isNull(formInputLabel)) {
-				formInputLabel = inputLabelJSONObject.getString(
-					LocaleUtil.toLanguageId(
-						PortalUtil.getSiteDefaultLocale(
-							themeDisplay.getScopeGroupId())));
-			}
-
-			return formInputLabel;
+			return GetterUtil.getString(
+				fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getEditableValues(),
+					new FragmentConfigurationField(
+						"inputLabel", "string", StringPool.BLANK, true, "text"),
+					locale));
 		}
 
-		return formInputLabel;
+		return StringPool.BLANK;
 	}
 
 	private InfoForm _getInfoForm(

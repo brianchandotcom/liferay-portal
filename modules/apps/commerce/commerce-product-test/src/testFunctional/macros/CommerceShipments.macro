@@ -14,4 +14,14 @@ definition {
 			value1 = "${quantityInShipment}");
 	}
 
+	macro assertOptionsInShipmentSteps {
+		AssertElementPresent(
+			locator1 = "CommerceOrders#SHIPMENT_ITEM_ERC_COLUMN",
+			key_ercColumnValue = "${key_ercColumnValue}");
+
+		AssertElementNotPresent(
+			key_text = "Edit",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+	}
+
 }

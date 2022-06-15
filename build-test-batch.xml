@@ -1909,80 +1909,6 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="run-lpkg-base-test">
-		<sequential>
-			<run-batch-test tomcat.gc.log="true">
-				<test-action>
-					<database-test-run-test database.type="mysql" stop.app.server="true">
-						<test-action>
-							<if>
-								<equals arg1="${build.profile}" arg2="dxp" />
-								<then>
-									<antcall inheritAll="false" target="setup-profile-dxp" />
-
-									<antcall target="install-portal-snapshots" />
-								</then>
-							</if>
-
-							<antcall inheritAll="false" target="prepare-log4j-ext-xml">
-								<param name="database.type" value="@{database.type}" />
-							</antcall>
-
-							<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="prepare-portal-ext-properties">
-								<param name="database.type" value="@{database.type}" />
-							</antcall>
-
-							<antcall inheritAll="false" target="prepare-system-ext-properties" />
-
-							<ant dir="modules" inheritAll="false" target="build-app-lpkg-base">
-								<property name="liferay.home" value="${liferay.home}" />
-							</ant>
-
-							<delete dir="${liferay.home}/osgi/deploy" />
-							<delete dir="${liferay.home}/osgi/modules" />
-							<delete dir="${liferay.home}/osgi/portal" />
-							<delete dir="${liferay.home}/osgi/static" />
-							<delete dir="${liferay.home}/osgi/war" />
-
-							<delete>
-								<fileset
-									dir="${liferay.home}/osgi/test"
-									excludes="com.liferay.arquillian.extension.junit.bridge.connector.jar,com.liferay.portal.test.jar"
-								/>
-							</delete>
-
-							<trycatch>
-								<try>
-									<antcall inheritall="false" target="start-app-server" />
-
-									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
-										<arg value="testIntegration" />
-										<arg value="--tests" />
-										<arg value="*.LPKGDeployerCleanStartupTest" />
-									</gradle-execute>
-
-									<antcall inheritall="false" target="run-selenium-test">
-										<param name="test.class" value="PortalSmoke#Smoke" />
-									</antcall>
-								</try>
-
-								<finally>
-									<ant dir="portal-kernel" inheritAll="false" target="test-class">
-										<property name="test.class" value="PortalLogAssertorTest" />
-									</ant>
-								</finally>
-							</trycatch>
-						</test-action>
-					</database-test-run-test>
-				</test-action>
-
-				<test-set-up>
-					<setup-test-environment />
-				</test-set-up>
-			</run-batch-test>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="run-lpkg-container-test">
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
@@ -5734,10 +5660,6 @@ log.sanitizer.enabled=false</echo>
 
 	<target name="legacy-functional-bundle-tomcat-sybase160">
 		<run-legacy-database-dump database.type="sybase" />
-	</target>
-
-	<target name="lpkg-base-jdk8">
-		<run-lpkg-base-test />
 	</target>
 
 	<target name="lpkg-container-jdk8">

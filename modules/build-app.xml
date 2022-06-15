@@ -215,61 +215,6 @@
 		</for>
 	</target>
 
-	<target name="build-app-lpkg-base">
-		<for param="app.dir">
-			<path>
-				<dirset
-					dir="${modules.dir}"
-				>
-					<include name="apps/*" />
-					<include name="dxp/apps/*" />
-					<exclude name="${build.exclude.dirs}" />
-					<present targetdir="${modules.dir}">
-						<mapper
-							from="*"
-							to="*/app.bnd"
-							type="glob"
-						/>
-					</present>
-				</dirset>
-			</path>
-
-			<sequential>
-				<local name="app.name" />
-				<local name="app.suite" />
-				<local name="Liferay-Releng-Suite" />
-
-				<basename file="@{app.dir}" property="app.name" />
-
-				<property file="@{app.dir}/app.bnd" />
-
-				<condition else="${app.name}" property="app.suite" value="${Liferay-Releng-Suite}">
-					<isset property="Liferay-Releng-Suite" />
-				</condition>
-
-				<if>
-					<or>
-						<equals arg1="${app.suite}" arg2="collaboration" />
-						<equals arg1="${app.suite}" arg2="forms-and-workflow" />
-						<equals arg1="${app.suite}" arg2="foundation" />
-						<equals arg1="${app.suite}" arg2="web-experience" />
-					</or>
-					<then>
-						<ant inheritAll="false" target="build-app-lpkg">
-							<property name="app.name" value="${app.name}" />
-							<property name="output.dir" value="${osgi.dir}/marketplace" />
-						</ant>
-					</then>
-				</if>
-			</sequential>
-		</for>
-
-		<ant inheritAll="false" target="build-app-lpkg">
-			<property name="app.name" value="static" />
-			<property name="output.dir" value="${osgi.dir}/marketplace" />
-		</ant>
-	</target>
-
 	<target name="build-app-lpkg-release">
 		<for param="app.dir">
 			<path>

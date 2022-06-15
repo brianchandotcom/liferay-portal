@@ -325,14 +325,22 @@ export function FormInputGeneralPanel({item}) {
 					)}
 
 					{configurationValues[FIELD_ID_CONFIGURATION_KEY] && (
-						<FieldSet
-							fields={configFields}
-							item={item}
-							label=""
-							languageId={languageId}
-							onValueSelect={handleValueSelect}
-							values={configurationValues}
-						/>
+						<>
+							<span className="sr-only">
+								{Liferay.Language.get(
+									'input-fragment-configuration'
+								)}
+							</span>
+
+							<FieldSet
+								fields={configFields}
+								item={item}
+								label=""
+								languageId={languageId}
+								onValueSelect={handleValueSelect}
+								values={configurationValues}
+							/>
+						</>
 					)}
 				</Collapse>
 			</div>

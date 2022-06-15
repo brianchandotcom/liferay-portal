@@ -85,11 +85,9 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				_log.debug(captchaException);
 			}
 
-			String formItemId = ParamUtil.getString(
-				httpServletRequest, "formItemId");
-
 			SessionErrors.add(
-				originalHttpServletRequest, formItemId,
+				originalHttpServletRequest,
+				ParamUtil.getString(httpServletRequest, "formItemId"),
 				new InfoFormValidationException.InvalidCaptcha());
 		}
 		catch (InfoFormValidationException infoFormValidationException) {
@@ -97,11 +95,9 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				_log.debug(infoFormValidationException);
 			}
 
-			String formItemId = ParamUtil.getString(
-				httpServletRequest, "formItemId");
-
 			SessionErrors.add(
-				originalHttpServletRequest, formItemId,
+				originalHttpServletRequest,
+				ParamUtil.getString(httpServletRequest, "formItemId"),
 				infoFormValidationException);
 
 			if (Validator.isNotNull(
@@ -118,11 +114,10 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				_log.debug(infoFormException);
 			}
 
-			String formItemId = ParamUtil.getString(
-				httpServletRequest, "formItemId");
-
 			SessionErrors.add(
-				originalHttpServletRequest, formItemId, infoFormException);
+				originalHttpServletRequest,
+				ParamUtil.getString(httpServletRequest, "formItemId"),
+				infoFormException);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -135,11 +130,10 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				infoFormException = new InfoFormPrincipalException();
 			}
 
-			String formItemId = ParamUtil.getString(
-				httpServletRequest, "formItemId");
-
 			SessionErrors.add(
-				originalHttpServletRequest, formItemId, infoFormException);
+				originalHttpServletRequest,
+				ParamUtil.getString(httpServletRequest, "formItemId"),
+				infoFormException);
 		}
 
 		httpServletResponse.sendRedirect(

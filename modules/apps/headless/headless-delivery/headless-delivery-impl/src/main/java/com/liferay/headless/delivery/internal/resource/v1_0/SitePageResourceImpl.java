@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.theme.ThemeUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -59,6 +60,7 @@ import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.segments.SegmentsEntryRetriever;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsExperience;
@@ -329,6 +331,13 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					contextHttpServletRequest, null, layout.getGroupId(),
 					_portal.getClassNameId(Layout.class.getName()),
 					layout.getPlid(), segmentsEntryIds);
+
+		if (ArrayUtil.isEmpty(segmentsExperienceIds)) {
+			return _segmentsExperienceLocalService.fetchSegmentsExperience(
+				layout.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_portal.getClassNameId(Layout.class.getName()),
+				layout.getPlid());
+		}
 
 		return _segmentsExperienceLocalService.getSegmentsExperience(
 			segmentsExperienceIds[0]);

@@ -536,6 +536,22 @@ definition {
 		Navigator.gotoPage(pageName = "Similar Results Page");
 	}
 
+	macro viewCopiedContent {
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "${groupName}",
+			siteURLKey = "${siteURLKey}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		Click(locator1 = "CKEditor#BODY");
+
+		RobotType.robotTypeShortcut(locator1 = "Ctrl + v");
+
+		WaitForElementPresent(
+			key_text = "${text}",
+			locator1 = "CKEditor#BODY_TEXT");
+	}
+
 	macro viewResultDetails {
 		AssertTextEquals(
 			locator1 = "SearchResults#ASSET_DETAILS_TITLE",

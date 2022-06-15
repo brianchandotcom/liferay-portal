@@ -3,6 +3,10 @@
 	padding: 0;
 }
 
+.form-input-captcha:disabled {
+	pointer-events: none;
+}
+
 .form-input-captcha .taglib-captcha {
 	display: flex;
 	flex-wrap: wrap;

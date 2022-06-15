@@ -261,6 +261,18 @@ public class StripFilterTest {
 		Assert.assertEquals("input type=\"text\"> ", stringWriter.toString());
 
 		Assert.assertEquals("c", String.valueOf(charBuffer.slice()));
+
+		// Input tag without any attribute
+
+		charBuffer = CharBuffer.wrap("input>");
+
+		stringWriter = new StringWriter();
+
+		stripFilter.extractAndTrimInput(charBuffer, stringWriter);
+
+		Assert.assertEquals("input>", stringWriter.toString());
+
+		Assert.assertEquals("", String.valueOf(charBuffer.slice()));
 	}
 
 	@Test

@@ -22,6 +22,9 @@ import com.liferay.commerce.constants.CommercePortletKeys;
  */
 public class CommerceOrderFDSNames {
 
+	public static final String BILLING_ADDRESSES =
+		CommercePortletKeys.COMMERCE_ORDER_CONTENT + "-billingAddress";
+
 	public static final String IMPORT_ORDERS =
 		CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT + "-importOrders";
 
@@ -39,6 +42,9 @@ public class CommerceOrderFDSNames {
 
 	public static final String PREVIEW_ORDER_ITEMS =
 		CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT + "-previewOrderItems";
+
+	public static final String SHIPPING_ADDRESSES =
+		CommercePortletKeys.COMMERCE_ORDER_CONTENT + "-shippingAddress";
 
 	public static final String WISH_LISTS =
 		CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT + "-wishLists";

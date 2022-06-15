@@ -15,34 +15,31 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import Icon from '@clayui/icon';
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Filter from './filters/Filter';
 
-function FiltersDropdown() {
-	const {filters} = useContext(FrontendDataSetContext);
+const FiltersDropdown = () => {
+	const {filters: initialFilters} = useContext(FrontendDataSetContext);
 
 	const [active, setActive] = useState(false);
-	const [query, setQuery] = useState('');
+	const [activeFilter, setActiveFilter] = useState(null);
+	const [filters, setFilters] = useState(initialFilters);
 
-	const visibleFilters = useMemo(
-		() => filters.filter((filter) => !filter.invisible),
-		[filters]
-	);
+	const onSearch = (event) => {
+		const query = event.target.value;
 
-	const [activeFilterId, setActiveFilterId] = useState(null);
+		setFilters(
+			query
+				? initialFilters.filter(({label}) =>
+						label.toLowerCase().match(query.toLowerCase())
+				  ) || []
+				: initialFilters
+		);
+	};
 
-	const activeFilter = useMemo(() => {
-		return visibleFilters.length && activeFilterId
-			? activeFilterId &&
-					visibleFilters.find(
-						(filter) => filter.id === activeFilterId
-					)
-			: null;
-	}, [visibleFilters, activeFilterId]);
-
-	return filters.length ? (
+	return (
 		<ClayDropDown
 			active={active}
 			className="filters-dropdown"
@@ -63,13 +60,17 @@ function FiltersDropdown() {
 				</button>
 			}
 		>
-			{activeFilterId ? (
+			{activeFilter ? (
 				<>
 					<li className="dropdown-subheader">
 						<ClayButtonWithIcon
 							className="btn-filter-navigation"
 							displayType="unstyled"
-							onClick={() => setActiveFilterId(null)}
+							onClick={() => {
+								setActiveFilter(null);
+
+								setFilters(initialFilters);
+							}}
 							small
 							symbol="angle-left"
 						/>
@@ -80,24 +81,21 @@ function FiltersDropdown() {
 				</>
 			) : (
 				<ClayDropDown.Group header={Liferay.Language.get('filters')}>
-					<ClayDropDown.Search
-						onChange={(event) => setQuery(event.target.value)}
-						value={query}
-					/>
+					<ClayDropDown.Search onChange={onSearch} />
 
 					<ClayDropDown.Divider className="m-0" />
 
-					{visibleFilters.length ? (
+					{filters.length ? (
 						<ClayDropDown.ItemList>
-							{visibleFilters.map((item) => (
+							{filters.map((filter) => (
 								<ClayDropDown.Item
-									active={item.value !== undefined}
-									key={item.id}
+									active={filter.value !== undefined}
+									key={filter.id}
 									onClick={() => {
-										setActiveFilterId(item.id);
+										setActiveFilter(filter);
 									}}
 								>
-									{item.label}
+									{filter.label}
 								</ClayDropDown.Item>
 							))}
 						</ClayDropDown.ItemList>
@@ -109,7 +107,7 @@ function FiltersDropdown() {
 				</ClayDropDown.Group>
 			)}
 		</ClayDropDown>
-	) : null;
-}
+	);
+};
 
 export default FiltersDropdown;

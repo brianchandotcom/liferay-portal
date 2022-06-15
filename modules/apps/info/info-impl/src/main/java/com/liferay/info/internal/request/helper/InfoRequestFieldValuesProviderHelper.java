@@ -14,6 +14,7 @@
 
 package com.liferay.info.internal.request.helper;
 
+import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.BooleanInfoFieldType;
@@ -66,7 +67,13 @@ public class InfoRequestFieldValuesProviderHelper {
 		String className = PortalUtil.getClassName(
 			ParamUtil.getLong(httpServletRequest, "classNameId"));
 
-		for (InfoField<?> infoField : _getInfoFields(className)) {
+		String classTypeId = ParamUtil.getString(
+			httpServletRequest, "classTypeId");
+
+		for (InfoField<?> infoField :
+				_getInfoFields(
+					className, classTypeId, themeDisplay.getScopeGroupId())) {
+
 			Map<String, String[]> parameterMap =
 				httpServletRequest.getParameterMap();
 
@@ -108,14 +115,30 @@ public class InfoRequestFieldValuesProviderHelper {
 		return null;
 	}
 
-	private <T> List<InfoField> _getInfoFields(String className) {
+	private <T> List<InfoField> _getInfoFields(
+		String className, String formVariationKey, long groupId) {
+
 		InfoItemFormProvider<T> infoItemFormProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormProvider.class, className);
 
-		InfoForm infoForm = infoItemFormProvider.getInfoForm();
+		if (infoItemFormProvider == null) {
+			return new ArrayList<>();
+		}
 
-		return infoForm.getAllInfoFields();
+		try {
+			InfoForm infoForm = infoItemFormProvider.getInfoForm(
+				formVariationKey, groupId);
+
+			return infoForm.getAllInfoFields();
+		}
+		catch (NoSuchFormVariationException noSuchFormVariationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFormVariationException);
+			}
+
+			return new ArrayList<>();
+		}
 	}
 
 	private InfoFieldValue<Object> _getInfoFieldValue(

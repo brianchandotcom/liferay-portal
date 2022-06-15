@@ -69,6 +69,15 @@ export function TextField({field, onValueSelect, value}) {
 
 					setNextValue(event.target.value);
 				}}
+				onKeyDown={(event) => {
+					if (event.key === 'Enter' && event.target.checkValidity()) {
+						setErrorMessage('');
+
+						if (nextValue !== value) {
+							onValueSelect(field.name, nextValue);
+						}
+					}
+				}}
 				placeholder={placeholder}
 				sizing="sm"
 				type={type}

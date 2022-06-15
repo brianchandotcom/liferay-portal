@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.internal.upgrade.v2_9_0;
+package com.liferay.fragment.internal.upgrade.v2_9_3;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -23,10 +23,6 @@ public class FragmentEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("FragmentEntry", "typeOptions")) {
-			alterTableAddColumn("FragmentEntry", "typeOptions", "TEXT");
-		}
-
 		if (!hasColumn("FragmentEntryVersion", "typeOptions")) {
 			alterTableAddColumn("FragmentEntryVersion", "typeOptions", "TEXT");
 		}

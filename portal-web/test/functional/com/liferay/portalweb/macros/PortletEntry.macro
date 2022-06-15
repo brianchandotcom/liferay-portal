@@ -156,7 +156,9 @@ definition {
 	}
 
 	macro save {
-		Button.clickSave();
+		Click(
+			key_text = "Save",
+			locator1 = "Button#ANY");
 
 		Alert.viewSuccessMessage();
 

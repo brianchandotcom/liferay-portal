@@ -178,6 +178,52 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	protected static final String LAYOUT_STRUCTURE =
 		RenderLayoutStructureTag.class.getName() + "#LAYOUT_STRUCTURE";
 
+	private String _getErrorMessage(
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			InfoForm infoForm)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		InfoFormException infoFormException =
+			(InfoFormException)SessionErrors.get(
+				httpServletRequest, formStyledLayoutStructureItem.getItemId());
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String errorMessage = infoFormException.getLocalizedMessage(
+			themeDisplay.getLocale());
+
+		if (infoFormException instanceof InfoFormValidationException) {
+			InfoFormValidationException infoFormValidationException =
+				(InfoFormValidationException)infoFormException;
+
+			if (Validator.isNotNull(
+					infoFormValidationException.getInfoFieldUniqueId())) {
+
+				String formInputLabel = _getFormInputLabel(
+					formStyledLayoutStructureItem.getChildrenItemIds(),
+					infoFormValidationException.getInfoFieldUniqueId(),
+					themeDisplay);
+
+				if (Validator.isNull(formInputLabel)) {
+					InfoField infoField = infoForm.getInfoField(
+						infoFormValidationException.getInfoFieldUniqueId());
+
+					formInputLabel = infoField.getLabel(
+						themeDisplay.getLocale());
+				}
+
+				errorMessage = infoFormValidationException.getLocalizedMessage(
+					formInputLabel, themeDisplay.getLocale());
+			}
+		}
+
+		return errorMessage;
+	}
+
 	private String _getFormInputLabel(
 			List<String> childrenItemIds, String infoFieldUniqueId,
 			ThemeDisplay themeDisplay)
@@ -915,52 +961,12 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write(formStyledLayoutStructureItem.getItemId());
 		jspWriter.write("\">");
 
-		HttpServletRequest httpServletRequest = getRequest();
-
 		if (SessionErrors.contains(
-				httpServletRequest,
-				formStyledLayoutStructureItem.getItemId())) {
-
-			InfoFormException infoFormException =
-				(InfoFormException)SessionErrors.get(
-					httpServletRequest,
-					formStyledLayoutStructureItem.getItemId());
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			String errorMessage = infoFormException.getLocalizedMessage(
-				themeDisplay.getLocale());
-
-			if (infoFormException instanceof InfoFormValidationException) {
-				InfoFormValidationException infoFormValidationException =
-					(InfoFormValidationException)infoFormException;
-
-				if (Validator.isNotNull(
-						infoFormValidationException.getInfoFieldUniqueId())) {
-
-					String formInputLabel = _getFormInputLabel(
-						layoutStructureItem.getChildrenItemIds(),
-						infoFormValidationException.getInfoFieldUniqueId(),
-						themeDisplay);
-
-					if (Validator.isNull(formInputLabel)) {
-						InfoField infoField = infoForm.getInfoField(
-							infoFormValidationException.getInfoFieldUniqueId());
-
-						formInputLabel = infoField.getLabel(
-							themeDisplay.getLocale());
-					}
-
-					errorMessage =
-						infoFormValidationException.getLocalizedMessage(
-							formInputLabel, themeDisplay.getLocale());
-				}
-			}
+				getRequest(), formStyledLayoutStructureItem.getItemId())) {
 
 			jspWriter.write("<div class=\"alert alert-danger\">");
-			jspWriter.write(errorMessage);
+			jspWriter.write(
+				_getErrorMessage(formStyledLayoutStructureItem, infoForm));
 			jspWriter.write("</div>");
 		}
 

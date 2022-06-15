@@ -146,12 +146,10 @@ public class OAuthClientASLocalMetadataServiceImpl
 			String wellKnownURISuffix)
 		throws PortalException {
 
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataLocalService.
-				getOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId);
-
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
-			getPermissionChecker(), oAuthClientASLocalMetadata,
+			getPermissionChecker(),
+			oAuthClientASLocalMetadataLocalService.
+				getOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId),
 			ActionKeys.UPDATE);
 
 		return oAuthClientASLocalMetadataLocalService.

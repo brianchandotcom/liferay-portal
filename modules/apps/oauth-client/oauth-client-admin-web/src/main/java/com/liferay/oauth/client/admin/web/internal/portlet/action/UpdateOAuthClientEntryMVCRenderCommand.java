@@ -61,13 +61,11 @@ public class UpdateOAuthClientEntryMVCRenderCommand
 					(ThemeDisplay)renderRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				OAuthClientEntry oAuthClientEntry =
+				renderRequest.setAttribute(
+					OAuthClientEntry.class.getName(),
 					_oAuthClientEntryService.getOAuthClientEntry(
 						themeDisplay.getCompanyId(), authServerWellKnownURI,
-						clientId);
-
-				renderRequest.setAttribute(
-					OAuthClientEntry.class.getName(), oAuthClientEntry);
+						clientId));
 			}
 		}
 		catch (PortalException portalException) {

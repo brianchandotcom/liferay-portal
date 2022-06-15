@@ -58,14 +58,11 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 					(ThemeDisplay)renderRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-					_oAuthClientASLocalMetadataService.
-						getOAuthClientASLocalMetadata(
-							themeDisplay.getCompanyId(), localWellKnownURI);
-
 				renderRequest.setAttribute(
 					OAuthClientASLocalMetadata.class.getName(),
-					oAuthClientASLocalMetadata);
+					_oAuthClientASLocalMetadataService.
+						getOAuthClientASLocalMetadata(
+							themeDisplay.getCompanyId(), localWellKnownURI));
 			}
 		}
 		catch (PortalException portalException) {

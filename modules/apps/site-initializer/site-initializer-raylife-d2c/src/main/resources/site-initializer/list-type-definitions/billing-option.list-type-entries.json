@@ -1,0 +1,18 @@
+[
+	{
+		"key": "payInFull",
+		"name": "Pay in Full",
+		"name_i18n": {
+			"en-US": "Pay in Full"
+		},
+		"type": "string"
+	},
+	{
+		"key": "installments",
+		"name": "Installments",
+		"name_i18n": {
+			"en-US": "Installments"
+		},
+		"type": "string"
+	}
+]

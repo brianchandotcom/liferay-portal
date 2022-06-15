@@ -17,6 +17,7 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.base.CPDefinitionServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -230,13 +231,14 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public CPDefinition copyCPDefinition(long cpDefinitionId, long groupId)
+	public CPDefinition copyCPDefinition(
+			long cpDefinitionId, long groupId, int status)
 		throws PortalException {
 
 		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.copyCPDefinition(
-			cpDefinitionId, groupId);
+			cpDefinitionId, groupId, status);
 	}
 
 	@Override
@@ -335,6 +337,20 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 		_checkCommerceCatalog(groupId, ActionKeys.VIEW);
 
 		return cpDefinitionLocalService.getCPDefinitionsCount(groupId, status);
+	}
+
+	@Override
+	public List<CPDefinition> getCProductCPDefinitions(
+			long cProductId, int status, int start, int end)
+		throws PortalException {
+
+		CProduct cProduct = cProductLocalService.getCProduct(cProductId);
+
+		_checkCommerceCatalogByCPDefinitionId(
+			cProduct.getPublishedCPDefinitionId(), ActionKeys.VIEW);
+
+		return cpDefinitionLocalService.getCProductCPDefinitions(
+			cProduct.getCProductId(), status, start, end);
 	}
 
 	@Override

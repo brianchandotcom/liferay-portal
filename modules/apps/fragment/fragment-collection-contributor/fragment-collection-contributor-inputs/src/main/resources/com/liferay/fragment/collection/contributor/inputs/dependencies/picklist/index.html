@@ -1,9 +1,9 @@
 <div class="forms-picklist">
 	<input name="${input.name}" [#if input.required]required[/#if] type="hidden" />
 
-	<label id="${fragmentEntryLinkNamespace}-label" class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]">${input.label}${input.required?string('*','')}</label>
+	<label id="${fragmentEntryLinkNamespace}-label" class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]">${input.label}${input.required?then('*', '')}</label>
 
-	<button [#if input.showHelpText && input.helpText?has_content]aria-describedby="${fragmentEntryLinkNamespace}-help-text"[/#if] aria-haspopup="${fragmentEntryLinkNamespace}-listbox" aria-labelledby="${fragmentEntryLinkNamespace}-label ${fragmentEntryLinkNamespace}-button" class="form-control text-left" id="${fragmentEntryLinkNamespace}-button" type="button"></button>
+	<button [#if input.showHelpText && input.helpText?has_content]aria-describedby="${fragmentEntryLinkNamespace}-help-text" [/#if] aria-haspopup="${fragmentEntryLinkNamespace}-listbox" aria-labelledby="${fragmentEntryLinkNamespace}-label ${fragmentEntryLinkNamespace}-button" class="form-control text-left" id="${fragmentEntryLinkNamespace}-button" type="button"></button>
 
 	[#if input.showHelpText && input.helpText?has_content]
 		<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-text-input-help-text">

@@ -18,7 +18,11 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.on.demand.admin.constants.OnDemandAdminPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,6 +46,17 @@ public class OnDemandAdminPanelApp extends BasePanelApp {
 	}
 
 	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (permissionChecker.getCompanyId() != _portal.getDefaultCompanyId()) {
+			return false;
+		}
+
+		return super.isShow(permissionChecker, group);
+	}
+
+	@Override
 	@Reference(
 		target = "(javax.portlet.name=" + OnDemandAdminPortletKeys.ON_DEMAND_ADMIN + ")",
 		unbind = "-"
@@ -49,5 +64,8 @@ public class OnDemandAdminPanelApp extends BasePanelApp {
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -18,7 +18,7 @@ import MockDefinitionBuilderContext from '../../../../../../mock/MockDefinitionB
 
 const props = {
 	displayNames: ['English (United States)'],
-	languageIds: ['en-US'],
+	languageIds: ['en_US'],
 	title: 'New Workflow',
 	translations: {},
 	version: '0',
@@ -41,7 +41,7 @@ describe('The UpperToolbar component should', () => {
 		const tbarItems = container.querySelectorAll('li.tbar-item');
 
 		expect(tbarItems.length).toBe(7);
-		expect(tbarItems[0]).toHaveTextContent('en-US');
+		expect(tbarItems[0]).toHaveTextContent('en_US');
 		const inputTitle = tbarItems[1].querySelector('input#definition-title');
 
 		expect(inputTitle).toBeTruthy();

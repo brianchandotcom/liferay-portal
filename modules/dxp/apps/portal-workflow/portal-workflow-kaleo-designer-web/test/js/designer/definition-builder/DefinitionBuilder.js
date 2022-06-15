@@ -17,7 +17,7 @@ import DefinitionBuilder from '../../../../src/main/resources/META-INF/resources
 
 const props = {
 	displayNames: ['English (United States)'],
-	languageIds: ['en-US'],
+	languageIds: ['en_US'],
 	title: 'New Workflow',
 	translations: {},
 	version: '0',

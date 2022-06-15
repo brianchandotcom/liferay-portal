@@ -51,7 +51,7 @@ describe('The JoinNode component should', () => {
 					<JoinNode
 						data={{
 							description: 'test description',
-							label: {'en-US': 'test label'},
+							label: {en_US: 'test label'},
 						}}
 					/>
 				</MockDiagramBuilderContext>

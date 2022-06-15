@@ -53,7 +53,7 @@ describe('The Sidebar component should', () => {
 			<MockDefinitionBuilderContext>
 				<MockDiagramBuilderContext
 					mockSelectedNode={{
-						data: {label: {'en-US': 'start node'}},
+						data: {label: {en_US: 'start node'}},
 						id: 'node_0',
 						type: 'start',
 					}}

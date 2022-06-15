@@ -641,9 +641,6 @@ describe('Winner declared', () => {
 			winnerSegmentsVariantId: '1',
 		});
 
-		const winner = getByText('-is-the-winner-variant');
-		within(winner).getByText('Variant');
-
 		getByText('publish-winner');
 		getByText('discard-test');
 		getByText('Winner Declared');

@@ -806,6 +806,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			String.valueOf(formStyledLayoutStructureItem.getClassTypeId()));
 		jspWriter.write("\">");
 
+		jspWriter.write("<input name=\"formItemId\" type=\"hidden\" value=\"");
+		jspWriter.write(formStyledLayoutStructureItem.getItemId());
+		jspWriter.write("\">");
+
 		_renderLayoutStructure(
 			layoutStructureItem.getChildrenItemIds(), collectionElementIndex,
 			infoForm, renderLayoutStructureDisplayContext);

@@ -115,38 +115,6 @@ describe('FragmentWithControls', () => {
 		expect(queryByText(document.body, 'duplicate')).not.toBeInTheDocument();
 	});
 
-	it('does not show the fragment if it has been hidden by the user', async () => {
-		await act(async () => {
-			renderFragment({
-				fragmentConfig: {
-					styles: {
-						display: 'none',
-					},
-				},
-			});
-		});
-
-		expect(
-			document.body.querySelector('.page-editor__fragment-content')
-		).not.toBeVisible();
-	});
-
-	it('shows the fragment if it has not been hidden by the user', async () => {
-		await act(async () => {
-			renderFragment({
-				fragmentConfig: {
-					styles: {
-						display: 'block',
-					},
-				},
-			});
-		});
-
-		expect(
-			document.body.querySelector('.page-editor__fragment-content')
-		).toBeVisible();
-	});
-
 	it('set classes for referencing the item', async () => {
 		await act(async () => {
 			renderFragment();

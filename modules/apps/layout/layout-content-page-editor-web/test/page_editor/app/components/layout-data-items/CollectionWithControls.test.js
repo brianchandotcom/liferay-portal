@@ -112,38 +112,6 @@ describe('CollectionWithControls', () => {
 		expect(queryByText('duplicate')).not.toBeInTheDocument();
 	});
 
-	it('does not show the collection if it has been hidden by the user', async () => {
-		const {baseElement} = renderCollection({
-			collectionConfig: {
-				styles: {
-					display: 'none',
-				},
-			},
-		});
-
-		const collection = baseElement.querySelector(
-			'.page-editor__collection'
-		);
-
-		expect(collection).not.toBeVisible();
-	});
-
-	it('shows the collection if it has not been hidden by the user', async () => {
-		const {baseElement} = renderCollection({
-			collectionConfig: {
-				styles: {
-					display: 'block',
-				},
-			},
-		});
-
-		const collection = baseElement.querySelector(
-			'.page-editor__collection'
-		);
-
-		expect(collection).toBeVisible();
-	});
-
 	it('set classes for referencing the item', () => {
 		const {baseElement} = renderCollection();
 

@@ -159,34 +159,6 @@ describe('RowWithControls', () => {
 		).toBeInTheDocument();
 	});
 
-	it('does not show the row if it has been hidden by the user', async () => {
-		const {baseElement} = renderRow({
-			rowConfig: {
-				styles: {
-					display: 'none',
-				},
-			},
-		});
-
-		const row = baseElement.querySelector('.page-editor__row');
-
-		expect(row).not.toBeVisible();
-	});
-
-	it('shows the row if it has not been hidden by the user', async () => {
-		const {baseElement} = renderRow({
-			rowConfig: {
-				styles: {
-					display: 'block',
-				},
-			},
-		});
-
-		const row = baseElement.querySelector('.page-editor__row');
-
-		expect(row).toBeVisible();
-	});
-
 	it('set classes for referencing the item', () => {
 		const {baseElement} = renderRow();
 

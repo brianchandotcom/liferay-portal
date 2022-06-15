@@ -44,4 +44,10 @@ public interface CommerceOrderContentPortletInstanceConfiguration {
 	)
 	public boolean showCommerceOrderCreateTime();
 
+	@Meta.AD(
+		deflt = "false", name = "show-updated-order-details-page",
+		required = false
+	)
+	public boolean showUpdatedCommerceOrderDetailsPage();
+
 }

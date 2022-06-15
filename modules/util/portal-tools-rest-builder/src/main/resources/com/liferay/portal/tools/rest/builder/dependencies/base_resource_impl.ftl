@@ -108,9 +108,11 @@ public abstract class Base${schemaName}ResourceImpl
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getSite" + schemaName + "sPage")>
 				<#assign getSiteBatchJavaMethodSignature = javaMethodSignature />
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaName + "sPage")>
-				<#assign getParentBatchJavaMethodSignatures = getParentBatchJavaMethodSignatures + [javaMethodSignature] />
-			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "sPage")>
-				<#assign getBatchJavaMethodSignature = javaMethodSignature />
+				<#if parentSchemaName?has_content>
+					<#assign getParentBatchJavaMethodSignatures = getParentBatchJavaMethodSignatures + [javaMethodSignature] />
+				<#else>
+					<#assign getBatchJavaMethodSignature = javaMethodSignature />
+				</#if>
 			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "patch" + schemaName)>
 			<#assign patchBatchJavaMethodSignature = javaMethodSignature />
@@ -120,9 +122,11 @@ public abstract class Base${schemaName}ResourceImpl
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "postSite" + schemaName)>
 				<#assign postSiteBatchJavaMethodSignature = javaMethodSignature />
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName)>
-				<#assign postParentBatchJavaMethodSignatures = postParentBatchJavaMethodSignatures + [javaMethodSignature] />
-			<#elseif stringUtil.equals(javaMethodSignature.methodName, "post" + schemaName)>
-				<#assign postBatchJavaMethodSignature = javaMethodSignature />
+				<#if parentSchemaName?has_content>
+					<#assign postParentBatchJavaMethodSignatures = postParentBatchJavaMethodSignatures + [javaMethodSignature] />
+				<#else>
+					<#assign postBatchJavaMethodSignature = javaMethodSignature />
+				</#if>
 			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName)>
 			<#assign putBatchJavaMethodSignature = javaMethodSignature />

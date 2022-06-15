@@ -414,7 +414,7 @@ public class FreeMarkerFragmentEntryProcessor
 			_fragmentEntryConfigurationParser.getFieldValue(
 				fragmentEntryLink.getEditableValues(),
 				new FragmentConfigurationField(
-					"inputShowHelpText", "boolean", "true", false, "checkbox"),
+					"inputShowHelpText", "boolean", "false", false, "checkbox"),
 				locale));
 
 		boolean inputShowLabel = GetterUtil.getBoolean(

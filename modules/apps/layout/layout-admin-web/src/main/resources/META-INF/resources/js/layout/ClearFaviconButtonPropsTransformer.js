@@ -22,8 +22,8 @@ export default function propsTransformer({
 		onClick() {
 			const {faviconTitleValue} = additionalProps;
 
-			const faviconCETExternalReferenceCode = document.getElementById(
-				`${portletNamespace}faviconCETExternalReferenceCode`
+			const themeFaviconCETExternalReferenceCode = document.getElementById(
+				`${portletNamespace}themeFaviconCETExternalReferenceCode`
 			);
 
 			const faviconFileEntryId = document.getElementById(
@@ -39,12 +39,12 @@ export default function propsTransformer({
 			);
 
 			if (
-				faviconCETExternalReferenceCode &&
+				themeFaviconCETExternalReferenceCode &&
 				faviconFileEntryId &&
 				faviconImage &&
 				faviconTitle
 			) {
-				faviconCETExternalReferenceCode.value = '';
+				themeFaviconCETExternalReferenceCode.value = '';
 				faviconFileEntryId.value = 0;
 				faviconImage.classList.add('d-none');
 				faviconTitle.innerHTML = faviconTitleValue;

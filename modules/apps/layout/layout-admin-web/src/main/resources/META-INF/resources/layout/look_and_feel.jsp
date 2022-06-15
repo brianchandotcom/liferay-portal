@@ -42,7 +42,7 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 %>
 
 <aui:input name="devices" type="hidden" value="regular" />
-<aui:input name="faviconCETExternalReferenceCode" type="hidden" value="<%= layoutLookAndFeelDisplayContext.getFaviconCETExternalReferenceCode() %>" />
+<aui:input name="themeFaviconCETExternalReferenceCode" type="hidden" value="<%= layoutLookAndFeelDisplayContext.getThemeFaviconCETExternalReferenceCode() %>" />
 <aui:input name="faviconFileEntryId" type="hidden" value="<%= selLayout.getFaviconFileEntryId() %>" />
 
 <clay:sheet-section>

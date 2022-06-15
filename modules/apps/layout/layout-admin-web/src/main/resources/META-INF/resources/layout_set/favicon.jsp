@@ -27,7 +27,7 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 		<b><liferay-ui:message key="favicon-name" />:</b> <span id="<portlet:namespace />faviconTitle"><%= layoutsAdminDisplayContext.getFaviconTitle() %></span>
 	</p>
 
-	<aui:input name="faviconCETExternalReferenceCode" type="hidden" value="<%= layoutsAdminDisplayContext.getFaviconCETExternalReferenceCode() %>" />
+	<aui:input name="themeFaviconCETExternalReferenceCode" type="hidden" value="<%= layoutsAdminDisplayContext.getThemeFaviconCETExternalReferenceCode() %>" />
 	<aui:input name="faviconFileEntryId" type="hidden" value="<%= selLayoutSet.getFaviconFileEntryId() %>" />
 
 	<aui:button name="selectFaviconButton" value="change-favicon" />
@@ -38,8 +38,8 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 		const clearFaviconButton = document.getElementById(
 			'<portlet:namespace />clearFaviconButton'
 		);
-		const faviconCETExternalReferenceCode = document.getElementById(
-			'<portlet:namespace />faviconCETExternalReferenceCode'
+		const themeFaviconCETExternalReferenceCode = document.getElementById(
+			'<portlet:namespace />themeFaviconCETExternalReferenceCode'
 		);
 		const faviconFileEntryId = document.getElementById(
 			'<portlet:namespace />faviconFileEntryId'
@@ -60,7 +60,7 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
 					if (
-						faviconCETExternalReferenceCode &&
+						themeFaviconCETExternalReferenceCode &&
 						faviconFileEntryId &&
 						faviconImage &&
 						faviconTitle &&
@@ -73,12 +73,12 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 							selectedItem.returnType ===
 							'<%= CETItemSelectorReturnType.class.getName() %>'
 						) {
-							faviconCETExternalReferenceCode.value =
+							themeFaviconCETExternalReferenceCode.value =
 								itemValue.cetExternalReferenceCode;
 							faviconFileEntryId.value = 0;
 						}
 						else {
-							faviconCETExternalReferenceCode.value = '';
+							themeFaviconCETExternalReferenceCode.value = '';
 							faviconFileEntryId.value = itemValue.fileEntryId;
 						}
 
@@ -100,14 +100,14 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 		});
 
 		if (
-			faviconCETExternalReferenceCode &&
+			themeFaviconCETExternalReferenceCode &&
 			clearFaviconButton &&
 			faviconFileEntryId &&
 			faviconImage &&
 			faviconTitle
 		) {
 			clearFaviconButton.addEventListener('click', (event) => {
-				faviconCETExternalReferenceCode.value = '';
+				themeFaviconCETExternalReferenceCode.value = '';
 				faviconFileEntryId.value = 0;
 				faviconImage.classList.add('d-none');
 				faviconTitle.innerHTML =

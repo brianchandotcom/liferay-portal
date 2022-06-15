@@ -286,14 +286,15 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, Layout layout, long userId)
 		throws PortalException {
 
-		String faviconCETExternalReferenceCode = ParamUtil.getString(
-			actionRequest, "faviconCETExternalReferenceCode");
+		String themeFaviconCETExternalReferenceCode = ParamUtil.getString(
+			actionRequest, "themeFaviconCETExternalReferenceCode");
 
-		if (Validator.isNotNull(faviconCETExternalReferenceCode)) {
+		if (Validator.isNotNull(themeFaviconCETExternalReferenceCode)) {
 			ClientExtensionEntryRel clientExtensionEntryRel =
 				_clientExtensionEntryRelLocalService.
 					fetchClientExtensionEntryRelByExternalReferenceCode(
-						layout.getCompanyId(), faviconCETExternalReferenceCode);
+						layout.getCompanyId(),
+						themeFaviconCETExternalReferenceCode);
 
 			if (clientExtensionEntryRel == null) {
 				_clientExtensionEntryRelLocalService.
@@ -303,7 +304,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 					userId, _portal.getClassNameId(Layout.class),
-					layout.getPlid(), faviconCETExternalReferenceCode,
+					layout.getPlid(), themeFaviconCETExternalReferenceCode,
 					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 			}
 		}

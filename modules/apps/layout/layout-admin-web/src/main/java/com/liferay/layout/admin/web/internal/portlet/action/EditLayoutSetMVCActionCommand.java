@@ -131,15 +131,15 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getPermissionChecker(), layoutSet.getGroupId(),
 			ActionKeys.MANAGE_LAYOUTS);
 
-		String faviconCETExternalReferenceCode = ParamUtil.getString(
-			actionRequest, "faviconCETExternalReferenceCode");
+		String themeFaviconCETExternalReferenceCode = ParamUtil.getString(
+			actionRequest, "themeFaviconCETExternalReferenceCode");
 
-		if (Validator.isNotNull(faviconCETExternalReferenceCode)) {
+		if (Validator.isNotNull(themeFaviconCETExternalReferenceCode)) {
 			ClientExtensionEntryRel clientExtensionEntryRel =
 				_clientExtensionEntryRelLocalService.
 					fetchClientExtensionEntryRelByExternalReferenceCode(
 						layoutSet.getCompanyId(),
-						faviconCETExternalReferenceCode);
+						themeFaviconCETExternalReferenceCode);
 
 			if (clientExtensionEntryRel == null) {
 				_clientExtensionEntryRelLocalService.
@@ -151,7 +151,8 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 					themeDisplay.getUserId(),
 					_portal.getClassNameId(LayoutSet.class),
-					layoutSet.getLayoutSetId(), faviconCETExternalReferenceCode,
+					layoutSet.getLayoutSetId(),
+					themeFaviconCETExternalReferenceCode,
 					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 			}
 		}

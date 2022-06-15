@@ -27,8 +27,8 @@ export default function propsTransformer({
 			openSelectionModal({
 				onSelect(selectedItem) {
 					if (selectedItem) {
-						const faviconCETExternalReferenceCode = document.getElementById(
-							`${portletNamespace}faviconCETExternalReferenceCode`
+						const themeFaviconCETExternalReferenceCode = document.getElementById(
+							`${portletNamespace}themeFaviconCETExternalReferenceCode`
 						);
 						const faviconFileEntryId = document.getElementById(
 							`${portletNamespace}faviconFileEntryId`
@@ -43,7 +43,7 @@ export default function propsTransformer({
 						if (
 							selectedItem &&
 							selectedItem.value &&
-							faviconCETExternalReferenceCode &&
+							themeFaviconCETExternalReferenceCode &&
 							faviconFileEntryId &&
 							faviconImage &&
 							faviconTitle
@@ -54,12 +54,12 @@ export default function propsTransformer({
 								selectedItem.returnType ===
 								'com.liferay.client.extension.type.item.selector.CETItemSelectorReturnType'
 							) {
-								faviconCETExternalReferenceCode.value =
+								themeFaviconCETExternalReferenceCode.value =
 									itemValue.cetExternalReferenceCode;
 								faviconFileEntryId.value = 0;
 							}
 							else {
-								faviconCETExternalReferenceCode.value = '';
+								themeFaviconCETExternalReferenceCode.value = '';
 								faviconFileEntryId.value =
 									itemValue.fileEntryId;
 							}

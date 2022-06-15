@@ -88,23 +88,6 @@ public class LayoutLookAndFeelDisplayContext {
 		).build();
 	}
 
-	public String getFaviconCETExternalReferenceCode() {
-		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
-
-		ClientExtensionEntryRel clientExtensionEntryRel =
-			ClientExtensionEntryRelLocalServiceUtil.
-				fetchClientExtensionEntryRel(
-					PortalUtil.getClassNameId(Layout.class),
-					selLayout.getPlid(),
-					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-
-		if (clientExtensionEntryRel != null) {
-			return clientExtensionEntryRel.getCETExternalReferenceCode();
-		}
-
-		return StringPool.BLANK;
-	}
-
 	public String getFaviconTitle() {
 		return FaviconUtil.getFaviconTitle(
 			_cetManager, _layoutsAdminDisplayContext.getSelLayout(),
@@ -308,6 +291,23 @@ public class LayoutLookAndFeelDisplayContext {
 		}
 
 		return LanguageUtil.get(_httpServletRequest, "styles-by-default");
+	}
+
+	public String getThemeFaviconCETExternalReferenceCode() {
+		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
+
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			ClientExtensionEntryRelLocalServiceUtil.
+				fetchClientExtensionEntryRel(
+					PortalUtil.getClassNameId(Layout.class),
+					selLayout.getPlid(),
+					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+
+		if (clientExtensionEntryRel != null) {
+			return clientExtensionEntryRel.getCETExternalReferenceCode();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public boolean hasEditableMasterLayout() {

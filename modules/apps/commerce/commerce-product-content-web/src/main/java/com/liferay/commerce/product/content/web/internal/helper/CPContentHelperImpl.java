@@ -15,12 +15,17 @@
 package com.liferay.commerce.product.content.web.internal.helper;
 
 import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
+import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.inventory.CommerceInventoryChecker;
+import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
+import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemLocalService;
+import com.liferay.commerce.inventory.util.comparator.CommerceInventoryReplenishmentItemAvailabilityDateComparator;
 import com.liferay.commerce.media.CommerceCatalogDefaultImage;
 import com.liferay.commerce.media.CommerceMediaProvider;
 import com.liferay.commerce.media.CommerceMediaResolver;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
@@ -58,6 +63,7 @@ import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.commerce.product.util.CPContentContributorRegistry;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
@@ -69,16 +75,20 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.text.Format;
 
 import java.util.List;
 import java.util.Map;
@@ -409,6 +419,47 @@ public class CPContentHelperImpl implements CPContentHelper {
 		CPMedia cpMedia = new CPMediaImpl(fileEntry, themeDisplay);
 
 		return cpMedia.getURL();
+	}
+
+	@Override
+	public String getIncomingQuantityLabel(
+			HttpServletRequest httpServletRequest, String sku)
+		throws PortalException {
+
+		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
+			_commerceInventoryReplenishmentItemLocalService.
+				fetchCommerceInventoryReplenishmentItem(
+					_portal.getCompanyId(httpServletRequest), sku,
+					new CommerceInventoryReplenishmentItemAvailabilityDateComparator());
+
+		if (commerceInventoryReplenishmentItem == null) {
+			return StringPool.BLANK;
+		}
+
+		User user = _portal.getUser(httpServletRequest);
+
+		Format dateFormat = FastDateFormatFactoryUtil.getDate(
+			user.getLocale(), user.getTimeZone());
+
+		return _language.format(
+			httpServletRequest, "incoming-date-quantity-x-x-items",
+			new Object[] {
+				dateFormat.format(
+					commerceInventoryReplenishmentItem.getAvailabilityDate()),
+				commerceInventoryReplenishmentItem.getQuantity()
+			});
+	}
+
+	public int getMinOrderQuantity(long cpDefinitionId) {
+		CPDefinitionInventory cpDefinitionInventory =
+			_cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
+
+		if (cpDefinitionInventory == null) {
+			return CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY;
+		}
+
+		return cpDefinitionInventory.getMinOrderQuantity();
 	}
 
 	@Override
@@ -745,6 +796,10 @@ public class CPContentHelperImpl implements CPContentHelper {
 		_commerceInventoryChecker;
 
 	@Reference
+	private CommerceInventoryReplenishmentItemLocalService
+		_commerceInventoryReplenishmentItemLocalService;
+
+	@Reference
 	private CommerceMediaProvider _commerceMediaProvider;
 
 	@Reference
@@ -771,6 +826,10 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

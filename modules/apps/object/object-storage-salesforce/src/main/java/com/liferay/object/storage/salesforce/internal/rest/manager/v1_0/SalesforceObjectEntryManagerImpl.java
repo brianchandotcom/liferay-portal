@@ -16,16 +16,19 @@ package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.storage.salesforce.internal.http.SalesforceHttp;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -46,6 +49,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
@@ -89,7 +93,17 @@ public class SalesforceObjectEntryManagerImpl
 			ObjectEntry objectEntry, String scopeKey)
 		throws Exception {
 
-		return null;
+		_salesforceHttp.patch(
+			companyId, getGroupId(objectDefinition, scopeKey),
+			StringBundler.concat(
+				"sobjects/",
+				_getSalesforceObjectName(objectDefinition.getName()), "/",
+				externalReferenceCode),
+			_toSalesforceEntry(objectDefinition, objectEntry));
+
+		return getObjectEntry(
+			dtoConverterContext, externalReferenceCode, companyId,
+			objectDefinition, scopeKey);
 	}
 
 	@Override
@@ -147,7 +161,8 @@ public class SalesforceObjectEntryManagerImpl
 
 		return Page.of(
 			_toObjectEntries(
-				companyId, responseJSONObject1.getJSONArray("records")),
+				companyId, responseJSONObject1.getJSONArray("records"),
+				objectDefinition),
 			pagination,
 			jsonArray.getJSONObject(
 				0
@@ -201,7 +216,8 @@ public class SalesforceObjectEntryManagerImpl
 				StringBundler.concat(
 					"sobjects/",
 					_getSalesforceObjectName(objectDefinition.getName()), "/",
-					externalReferenceCode)));
+					externalReferenceCode)),
+			objectDefinition);
 	}
 
 	@Override
@@ -228,6 +244,33 @@ public class SalesforceObjectEntryManagerImpl
 		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 	}
 
+	private ObjectField _getObjectFieldByExternalReferenceCode(
+		String externalReferenceCode, List<ObjectField> objectFields) {
+
+		for (ObjectField objectField : objectFields) {
+			if (Objects.equals(
+					externalReferenceCode,
+					objectField.getExternalReferenceCode())) {
+
+				return objectField;
+			}
+		}
+
+		return null;
+	}
+
+	private ObjectField _getObjectFieldByName(
+		String name, List<ObjectField> objectFields) {
+
+		for (ObjectField objectField : objectFields) {
+			if (Objects.equals(name, objectField.getName())) {
+				return objectField;
+			}
+		}
+
+		return null;
+	}
+
 	private String _getSalesforceObjectName(String objectDefinitionName) {
 		return StringUtil.removeFirst(objectDefinitionName, "C_") + "__c";
 	}
@@ -239,17 +282,19 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	private List<ObjectEntry> _toObjectEntries(
-			long companyId, JSONArray jsonArray)
+			long companyId, JSONArray jsonArray,
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		return JSONUtil.toList(
 			jsonArray,
 			jsonObject -> _toObjectEntry(
-				companyId, _getDateFormat(), jsonObject));
+				companyId, _getDateFormat(), jsonObject, objectDefinition));
 	}
 
 	private ObjectEntry _toObjectEntry(
-			long companyId, DateFormat dateFormat, JSONObject jsonObject)
+			long companyId, DateFormat dateFormat, JSONObject jsonObject,
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		ObjectEntry objectEntry = new ObjectEntry() {
@@ -274,30 +319,73 @@ public class SalesforceObjectEntryManagerImpl
 			}
 		};
 
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
 		Iterator<String> iterator = jsonObject.keys();
 
 		while (iterator.hasNext()) {
 			String key = iterator.next();
 
 			if (StringUtil.contains(key, "__c", StringPool.BLANK)) {
-				String customFieldName = StringUtil.removeLast(key, "__c");
+				ObjectField objectField =
+					_getObjectFieldByExternalReferenceCode(key, objectFields);
 
-				customFieldName = StringUtil.removeSubstring(
-					customFieldName, "_");
+				if (objectField != null) {
+					Map<String, Object> properties =
+						objectEntry.getProperties();
 
-				customFieldName = StringUtil.lowerCaseFirstLetter(
-					customFieldName);
-
-				Map<String, Object> properties = objectEntry.getProperties();
-
-				properties.put(
-					customFieldName,
-					jsonObject.isNull(key) ? null : jsonObject.get(key));
+					properties.put(
+						objectField.getName(),
+						jsonObject.isNull(key) ? null : jsonObject.get(key));
+				}
 			}
 		}
 
 		return objectEntry;
 	}
+
+	private JSONObject _toSalesforceEntry(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+		throws Exception {
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		for (Map.Entry<String, Object> entry : properties.entrySet()) {
+			ObjectField objectField = _getObjectFieldByName(
+				entry.getKey(), objectFields);
+
+			if (objectField != null) {
+				Object value =
+					Objects.equals(entry.getValue(), StringPool.BLANK) ? null :
+						entry.getValue();
+
+				jsonObject.put(objectField.getExternalReferenceCode(), value);
+
+				if (Objects.equals(
+						objectField.getObjectFieldId(),
+						objectDefinition.getTitleObjectFieldId())) {
+
+					jsonObject.put("Name", value);
+				}
+			}
+		}
+
+		return jsonObject;
+	}
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private Portal _portal;

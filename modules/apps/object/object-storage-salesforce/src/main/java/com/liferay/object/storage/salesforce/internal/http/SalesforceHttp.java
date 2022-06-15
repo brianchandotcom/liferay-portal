@@ -45,6 +45,20 @@ public class SalesforceHttp {
 		}
 	}
 
+	public JSONObject patch(
+		long companyId, long groupId, String location,
+		JSONObject bodyJSONObject) {
+
+		try {
+			return _invoke(
+				companyId, groupId, location, Http.Method.PATCH,
+				bodyJSONObject);
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
+	}
+
 	private JSONObject _getSalesforceAccessTokenJSONObject(
 		SalesforceConfiguration salesforceConfiguration) {
 

@@ -149,6 +149,9 @@ definition {
 		else if ("${widgetName}" == "Nested Applications") {
 			var portletId = "com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet";
 		}
+		else if ("${widgetName}" == "Organization Management") {
+			var portletId = "com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet";
+		}
 		else if ("${widgetName}" == "Profile") {
 			var portletId = "com_liferay_contacts_web_portlet_ProfilePortlet";
 		}

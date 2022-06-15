@@ -127,6 +127,12 @@ public interface CPContentHelper {
 	public String getImageURL(FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws Exception;
 
+	public String getIncomingQuantityLabel(
+			HttpServletRequest httpServletRequest, String sku)
+		throws PortalException;
+
+	public int getMinOrderQuantity(long cpDefinitionId);
+
 	public String getReplacementCommerceProductFriendlyURL(
 			CPSku cpSku, ThemeDisplay themeDisplay)
 		throws PortalException;

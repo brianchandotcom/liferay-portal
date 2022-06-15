@@ -23,10 +23,7 @@ definition {
 	}
 
 	macro createRaylifeSite {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		LexiconEntry.gotoAdd();
 
@@ -40,25 +37,14 @@ definition {
 
 		Click(locator1 = "Button#ADD");
 
-		AssertElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION");
+		Site.openSitesAdmin();
 
-		while (IsElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION")) {
-			Pause(locator1 = "2500");
+		while (IsElementNotPresent(locator1 = "Sites#SITE_TABLE_NAME", key_siteName = "${siteName}")) {
+			Refresh();
+
+			WaitForPageLoad();
 		}
 
-		Refresh();
-
-		WaitForElementPresent(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Click(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		AssertTextEquals(
-			locator1 = "SitesEditSite#DETAILS_NAME",
-			value1 = "${siteName}");
 	}
 
 	macro dismissAlert {

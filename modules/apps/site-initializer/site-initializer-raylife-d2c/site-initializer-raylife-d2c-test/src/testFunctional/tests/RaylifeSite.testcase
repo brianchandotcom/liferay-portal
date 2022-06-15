@@ -28,14 +28,11 @@ definition {
 	@description = "Verify if Raylife can be created"
 	@priority = "5"
 	test CanRaylifeBeCreated {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		LexiconEntry.gotoAdd();
 
-		LexiconCard.clickCard(card = "Raylife");
+		LexiconCard.clickCard(card = "Raylife D2C");
 
 		SelectFrame(
 			key_title = "Add Site",
@@ -45,25 +42,13 @@ definition {
 
 		Click(locator1 = "Button#ADD");
 
-		AssertElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION");
+		Site.openSitesAdmin();
 
-		while (IsElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION")) {
-			Pause(locator1 = "2500");
+		while (IsElementNotPresent(locator1 = "Sites#SITE_TABLE_NAME", key_siteName = "Raylife")) {
+			Refresh();
+
+			WaitForPageLoad();
 		}
-
-		Refresh();
-
-		WaitForElementPresent(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Click(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		AssertTextEquals(
-			locator1 = "SitesEditSite#DETAILS_NAME",
-			value1 = "Raylife");
 	}
 
 	@description = "LPS-142178 - Verify if when Raylife is created, a Catalog in Commerce will be created for it as well."

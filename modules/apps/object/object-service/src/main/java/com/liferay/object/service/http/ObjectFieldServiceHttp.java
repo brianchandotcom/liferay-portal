@@ -176,7 +176,7 @@ public class ObjectFieldServiceHttp {
 		}
 	}
 
-	public static com.liferay.object.model.ObjectField updateCustomObjectField(
+	public static com.liferay.object.model.ObjectField updateObjectField(
 			HttpPrincipal httpPrincipal, long objectFieldId,
 			long listTypeDefinitionId, String businessType, String dbType,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
@@ -188,8 +188,8 @@ public class ObjectFieldServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				ObjectFieldServiceUtil.class, "updateCustomObjectField",
-				_updateCustomObjectFieldParameterTypes3);
+				ObjectFieldServiceUtil.class, "updateObjectField",
+				_updateObjectFieldParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectFieldId, listTypeDefinitionId, businessType,
@@ -237,7 +237,7 @@ public class ObjectFieldServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getObjectFieldParameterTypes2 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateCustomObjectFieldParameterTypes3 =
+	private static final Class<?>[] _updateObjectFieldParameterTypes3 =
 		new Class[] {
 			long.class, long.class, String.class, String.class, boolean.class,
 			boolean.class, String.class, java.util.Map.class, String.class,

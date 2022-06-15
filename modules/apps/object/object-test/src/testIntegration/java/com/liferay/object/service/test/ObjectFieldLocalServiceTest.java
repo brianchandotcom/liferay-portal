@@ -805,7 +805,7 @@ public class ObjectFieldLocalServiceTest {
 		_assertObjectFieldSetting(
 			"maximumFileSize", objectField.getObjectFieldId(), "100");
 
-		objectField = _objectFieldLocalService.updateCustomObjectField(
+		objectField = _objectFieldLocalService.updateObjectField(
 			objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 			ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
@@ -825,7 +825,7 @@ public class ObjectFieldLocalServiceTest {
 
 		// Business type text
 
-		objectField = _objectFieldLocalService.updateCustomObjectField(
+		objectField = _objectFieldLocalService.updateObjectField(
 			objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
@@ -842,7 +842,7 @@ public class ObjectFieldLocalServiceTest {
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
 				objectField.getObjectFieldId(), "maximumFileSize"));
 
-		objectField = _objectFieldLocalService.updateCustomObjectField(
+		objectField = _objectFieldLocalService.updateObjectField(
 			objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
@@ -857,7 +857,7 @@ public class ObjectFieldLocalServiceTest {
 		_assertObjectFieldSetting(
 			"showCounter", objectField.getObjectFieldId(), "true");
 
-		objectField = _objectFieldLocalService.updateCustomObjectField(
+		objectField = _objectFieldLocalService.updateObjectField(
 			objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
@@ -905,7 +905,7 @@ public class ObjectFieldLocalServiceTest {
 		Assert.assertEquals("able", objectField.getName());
 		Assert.assertFalse(objectField.isRequired());
 
-		objectField = _objectFieldLocalService.updateCustomObjectField(
+		objectField = _objectFieldLocalService.updateObjectField(
 			objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
 			ObjectFieldConstants.DB_TYPE_LONG, false, true, "",
@@ -927,7 +927,7 @@ public class ObjectFieldLocalServiceTest {
 		String indexedLanguageId = LanguageUtil.getLanguageId(
 			LocaleUtil.getDefault());
 
-		objectField = _objectFieldLocalService.updateCustomObjectField(
+		objectField = _objectFieldLocalService.updateObjectField(
 			objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, true, false, indexedLanguageId,
@@ -951,7 +951,7 @@ public class ObjectFieldLocalServiceTest {
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
 
-		objectField = _objectFieldLocalService.updateCustomObjectField(
+		objectField = _objectFieldLocalService.updateObjectField(
 			objectField.getObjectFieldId(), 0,
 			ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 			ObjectFieldConstants.DB_TYPE_INTEGER, false, true, "",
@@ -1121,7 +1121,7 @@ public class ObjectFieldLocalServiceTest {
 				objectFieldNamePrefix +
 					objectDefinition1.getPKObjectFieldName());
 
-			_objectFieldLocalService.updateCustomObjectField(
+			_objectFieldLocalService.updateObjectField(
 				objectField.getObjectFieldId(),
 				objectField.getListTypeDefinitionId(),
 				objectField.getBusinessType(),

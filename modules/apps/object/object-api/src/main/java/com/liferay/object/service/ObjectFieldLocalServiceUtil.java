@@ -422,7 +422,7 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().getTable(objectDefinitionId, name);
 	}
 
-	public static ObjectField updateCustomObjectField(
+	public static ObjectField updateObjectField(
 			long objectFieldId, long listTypeDefinitionId, String businessType,
 			String dbType, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
@@ -431,7 +431,7 @@ public class ObjectFieldLocalServiceUtil {
 				objectFieldSettings)
 		throws PortalException {
 
-		return getService().updateCustomObjectField(
+		return getService().updateObjectField(
 			objectFieldId, listTypeDefinitionId, businessType, dbType, indexed,
 			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
 			objectFieldSettings);

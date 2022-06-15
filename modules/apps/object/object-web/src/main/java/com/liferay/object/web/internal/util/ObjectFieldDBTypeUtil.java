@@ -14,6 +14,7 @@
 
 package com.liferay.object.web.internal.util;
 
+import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
@@ -77,6 +78,19 @@ public class ObjectFieldDBTypeUtil {
 		}
 
 		return TextInfoFieldType.INSTANCE;
+	}
+
+	public static void setAttribute(
+		InfoField.FinalStep finalStep, ObjectField objectField) {
+
+		if (Objects.equals(
+				objectField.getDBType(),
+				ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
+			Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_DOUBLE)) {
+
+			finalStep.attribute(NumberInfoFieldType.DECIMAL, Boolean.TRUE);
+		}
 	}
 
 }

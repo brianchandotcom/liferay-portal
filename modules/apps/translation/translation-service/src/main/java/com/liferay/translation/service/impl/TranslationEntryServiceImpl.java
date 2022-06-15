@@ -39,8 +39,6 @@ import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.service.base.TranslationEntryServiceBaseImpl;
 
-import net.sf.okapi.common.LocaleId;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -76,11 +74,11 @@ public class TranslationEntryServiceImpl
 		throws PortalException {
 
 		try {
-			LocaleId targetLocaleId = XLIFFLocaleIdUtil.getTargetLocaleId(
-				_saxReader.read(content));
-
 			String languageId = _language.getLanguageId(
-				LocaleUtil.fromLanguageId(targetLocaleId.toString()));
+				LocaleUtil.fromLanguageId(
+					String.valueOf(
+						XLIFFLocaleIdUtil.getTargetLocaleId(
+							_saxReader.read(content)))));
 
 			_checkPermission(groupId, languageId, infoItemReference);
 

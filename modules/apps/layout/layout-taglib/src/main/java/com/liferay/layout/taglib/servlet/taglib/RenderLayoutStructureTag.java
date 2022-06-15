@@ -939,6 +939,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			jspWriter.write(
 				_getErrorMessage(formStyledLayoutStructureItem, infoForm));
 			jspWriter.write("</div>");
+
+			SessionErrors.remove(
+				getRequest(), formStyledLayoutStructureItem.getItemId());
 		}
 
 		_renderLayoutStructure(

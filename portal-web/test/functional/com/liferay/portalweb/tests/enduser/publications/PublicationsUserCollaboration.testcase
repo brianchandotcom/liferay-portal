@@ -52,7 +52,7 @@ definition {
 			roleTitle = "Publications User",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONPublications.enablePublications();
+		Publications.enablePublications();
 
 		JSONPublications.addPublication(publicationName = "Publication Name 1");
 
@@ -122,7 +122,8 @@ definition {
 
 	@priority = "3"
 	test ExplainEachRoleInInviteUsers {
-		JSONPublications.enablePublications();
+		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -186,7 +187,7 @@ definition {
 			resourceName = "com.liferay.change.tracking.model.CTCollection",
 			roleTitle = "Publications User");
 
-		JSONPublications.enablePublications();
+		Publications.enablePublications();
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -253,7 +254,7 @@ definition {
 			roleTitle = "Publications User",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONPublications.enablePublications();
+		Publications.enablePublications();
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -325,7 +326,7 @@ definition {
 			resourceName = "com.liferay.change.tracking.model.CTCollection",
 			roleTitle = "Publications User");
 
-		JSONPublications.enablePublications();
+		Publications.enablePublications();
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -388,7 +389,7 @@ definition {
 			roleTitle = "Site Administrator",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONPublications.enablePublications();
+		Publications.enablePublications();
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 

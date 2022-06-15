@@ -1387,10 +1387,8 @@ definition {
 	@description = "This ensures that an external video in the Blogs content field can be rendered correctly when publication is enabled."
 	@priority = "5"
 	test CanViewInlineVideoWithPublication {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
-		JSONPublications.enablePublications();
+		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config:com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;:enabled=B&quot;true&quot;";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 

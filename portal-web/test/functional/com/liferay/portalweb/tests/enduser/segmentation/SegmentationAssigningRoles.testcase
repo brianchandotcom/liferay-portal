@@ -501,10 +501,17 @@ definition {
 		}
 
 		task ("Assert the warning message is displayed") {
-			AssertTextPresent(
-				locator1 = "Segmentation#ASSIGN_SITE_ROLES_DISABLED_WARNING",
-				textValue = "Assigning roles by segment is disabled",
-				value1 = "Assigning roles by segment is disabled. To enable, go to Instance Settings > Segments > Segments Service.");
+			AssertVisible(
+				key_warningMessage = "Assigning roles by segment is disabled.",
+				locator1 = "Message#WARNING_SPECIFIC");
+
+			AssertVisible(
+				key_warningMessage = "To enable, go to",
+				locator1 = "Message#WARNING_SPECIFIC");
+
+			AssertVisible(
+				key_warningMessage = "Instance Settings",
+				locator1 = "Message#WARNING_SPECIFIC");
 		}
 	}
 
@@ -684,10 +691,7 @@ definition {
 		}
 
 		task ("Assert the warning message is NOT displayed") {
-			AssertTextNotPresent(
-				locator1 = "Segmentation#ASSIGN_SITE_ROLES_DISABLED_WARNING",
-				textValue = "Assigning roles by segment is disabled",
-				value1 = "Assigning roles by segment is disabled. To enable, go to System Settings > Segments > Segments Service.");
+			AssertElementNotPresent(locator1 = "Message#ERROR_3");
 		}
 	}
 

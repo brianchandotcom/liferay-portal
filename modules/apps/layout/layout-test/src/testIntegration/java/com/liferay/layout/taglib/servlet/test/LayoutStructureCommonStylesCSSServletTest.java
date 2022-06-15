@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import javax.servlet.Servlet;
@@ -68,11 +66,6 @@ public class LayoutStructureCommonStylesCSSServletTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_originalFeatureFlagLps132571 = GetterUtil.getBoolean(
-			PropsUtil.get("feature.flag.LPS-132571"));
-
-		PropsUtil.set("feature.flag.LPS-132571", "true");
-
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
@@ -84,10 +77,6 @@ public class LayoutStructureCommonStylesCSSServletTest {
 
 	@After
 	public void tearDown() {
-		PropsUtil.set(
-			"feature.flag.LPS-132571",
-			String.valueOf(_originalFeatureFlagLps132571));
-
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
@@ -219,8 +208,6 @@ public class LayoutStructureCommonStylesCSSServletTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	private boolean _originalFeatureFlagLps132571;
 
 	@Inject
 	private Portal _portal;

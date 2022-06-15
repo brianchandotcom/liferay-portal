@@ -74,7 +74,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
-import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -537,19 +536,14 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryFragmentResponsiveStyles()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-132571", Boolean.TRUE.toString())) {
+		_addTextFragmentEntry();
 
-			_addTextFragmentEntry();
+		File expectedFile = _generateZipFile(
+			"fragment/responsive/expected", null, null);
+		File inputFile = _generateZipFile(
+			"fragment/responsive/input", null, null);
 
-			File expectedFile = _generateZipFile(
-				"fragment/responsive/expected", null, null);
-			File inputFile = _generateZipFile(
-				"fragment/responsive/input", null, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test

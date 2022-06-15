@@ -389,20 +389,13 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		jspWriter.write("<div class=\"");
 
-		if (renderLayoutStructureDisplayContext.isCommonStylesFFEnabled()) {
-			jspWriter.write(
-				LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
-					collectionStyledLayoutStructureItem));
-			jspWriter.write(StringPool.SPACE);
-			jspWriter.write(
-				LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
-					layoutStructureItem));
-		}
-		else {
-			jspWriter.write(
-				renderLayoutStructureDisplayContext.getCssClass(
-					collectionStyledLayoutStructureItem));
-		}
+		jspWriter.write(
+			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
+				collectionStyledLayoutStructureItem));
+		jspWriter.write(StringPool.SPACE);
+		jspWriter.write(
+			LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
+				layoutStructureItem));
 
 		jspWriter.write("\" style=\"");
 		jspWriter.write(
@@ -732,49 +725,39 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write(htmlTag);
 		jspWriter.write(" class=\"");
 
-		if (renderLayoutStructureDisplayContext.isCommonStylesFFEnabled()) {
-			jspWriter.write(
-				LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
-					containerStyledLayoutStructureItem));
-			jspWriter.write(StringPool.SPACE);
-			jspWriter.write(
-				LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
-					layoutStructureItem));
-			jspWriter.write(StringPool.SPACE);
-			jspWriter.write(
-				LayoutStructureItemCSSUtil.
-					getStyledLayoutStructureItemCssClasses(
-						containerStyledLayoutStructureItem));
+		jspWriter.write(
+			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
+				containerStyledLayoutStructureItem));
+		jspWriter.write(StringPool.SPACE);
+		jspWriter.write(
+			LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
+				layoutStructureItem));
+		jspWriter.write(StringPool.SPACE);
+		jspWriter.write(
+			LayoutStructureItemCSSUtil.getStyledLayoutStructureItemCssClasses(
+				containerStyledLayoutStructureItem));
+
+		if (Objects.equals(
+				containerStyledLayoutStructureItem.getWidthType(), "fixed")) {
+
+			jspWriter.write(" container-fluid container-fluid-max-xl");
+		}
+
+		if (!Objects.equals(
+				containerStyledLayoutStructureItem.getDisplay(), "none")) {
 
 			if (Objects.equals(
-					containerStyledLayoutStructureItem.getWidthType(),
-					"fixed")) {
+					containerStyledLayoutStructureItem.getContentDisplay(),
+					"flex-column")) {
 
-				jspWriter.write(" container-fluid container-fluid-max-xl");
+				jspWriter.write(" d-flex flex-column");
 			}
-
-			if (!Objects.equals(
-					containerStyledLayoutStructureItem.getDisplay(), "none")) {
-
-				if (Objects.equals(
+			else if (Objects.equals(
 						containerStyledLayoutStructureItem.getContentDisplay(),
-						"flex-column")) {
+						"flex-row")) {
 
-					jspWriter.write(" d-flex flex-column");
-				}
-				else if (Objects.equals(
-							containerStyledLayoutStructureItem.
-								getContentDisplay(),
-							"flex-row")) {
-
-					jspWriter.write(" d-flex flex-row");
-				}
+				jspWriter.write(" d-flex flex-row");
 			}
-		}
-		else {
-			jspWriter.write(
-				renderLayoutStructureDisplayContext.getCssClass(
-					containerStyledLayoutStructureItem));
 		}
 
 		jspWriter.write("\" style=\"");
@@ -892,25 +875,17 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)layoutStructureItem;
 
-		if (renderLayoutStructureDisplayContext.isCommonStylesFFEnabled()) {
-			jspWriter.write(
-				LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
-					layoutStructureItem));
-			jspWriter.write(StringPool.SPACE);
-			jspWriter.write(
-				LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
-					layoutStructureItem));
-			jspWriter.write(StringPool.SPACE);
-			jspWriter.write(
-				LayoutStructureItemCSSUtil.
-					getStyledLayoutStructureItemCssClasses(
-						formStyledLayoutStructureItem));
-		}
-		else {
-			jspWriter.write(
-				renderLayoutStructureDisplayContext.getCssClass(
-					formStyledLayoutStructureItem));
-		}
+		jspWriter.write(
+			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
+				layoutStructureItem));
+		jspWriter.write(StringPool.SPACE);
+		jspWriter.write(
+			LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
+				layoutStructureItem));
+		jspWriter.write(StringPool.SPACE);
+		jspWriter.write(
+			LayoutStructureItemCSSUtil.getStyledLayoutStructureItemCssClasses(
+				formStyledLayoutStructureItem));
 
 		jspWriter.write("\" method=\"POST=\" style=\"");
 		jspWriter.write(
@@ -1203,25 +1178,17 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		jspWriter.write("<div class=\"");
 
-		if (renderLayoutStructureDisplayContext.isCommonStylesFFEnabled()) {
-			jspWriter.write(
-				LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
-					rowStyledLayoutStructureItem));
-			jspWriter.write(StringPool.SPACE);
-			jspWriter.write(
-				LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
-					layoutStructureItem));
-			jspWriter.write(StringPool.SPACE);
-			jspWriter.write(
-				LayoutStructureItemCSSUtil.
-					getStyledLayoutStructureItemCssClasses(
-						rowStyledLayoutStructureItem));
-		}
-		else {
-			jspWriter.write(
-				renderLayoutStructureDisplayContext.getCssClass(
-					rowStyledLayoutStructureItem));
-		}
+		jspWriter.write(
+			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
+				rowStyledLayoutStructureItem));
+		jspWriter.write(StringPool.SPACE);
+		jspWriter.write(
+			LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
+				layoutStructureItem));
+		jspWriter.write(StringPool.SPACE);
+		jspWriter.write(
+			LayoutStructureItemCSSUtil.getStyledLayoutStructureItemCssClasses(
+				rowStyledLayoutStructureItem));
 
 		jspWriter.write("\" style=\"");
 		jspWriter.write(
@@ -1315,27 +1282,19 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		jspWriter.write("<div class=\"");
 
-		if (renderLayoutStructureDisplayContext.isCommonStylesFFEnabled()) {
-			if (!_includeCommonStyles(fragmentEntryLink)) {
-				jspWriter.write(
-					LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
-						fragmentEntryLink));
-				jspWriter.write(StringPool.SPACE);
-				jspWriter.write(
-					LayoutStructureItemCSSUtil.
-						getLayoutStructureItemUniqueCssClass(
-							fragmentStyledLayoutStructureItem));
-				jspWriter.write(StringPool.SPACE);
-				jspWriter.write(
-					LayoutStructureItemCSSUtil.
-						getStyledLayoutStructureItemCssClasses(
-							fragmentStyledLayoutStructureItem));
-			}
-		}
-		else {
+		if (!_includeCommonStyles(fragmentEntryLink)) {
 			jspWriter.write(
-				renderLayoutStructureDisplayContext.getCssClass(
+				LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
+					fragmentEntryLink));
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(
+				LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
 					fragmentStyledLayoutStructureItem));
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(
+				LayoutStructureItemCSSUtil.
+					getStyledLayoutStructureItemCssClasses(
+						fragmentStyledLayoutStructureItem));
 		}
 
 		jspWriter.write("\" style=\"");

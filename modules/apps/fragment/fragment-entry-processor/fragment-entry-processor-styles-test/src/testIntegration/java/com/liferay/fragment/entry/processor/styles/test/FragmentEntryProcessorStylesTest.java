@@ -40,21 +40,18 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -77,24 +74,12 @@ public class FragmentEntryProcessorStylesTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_originalFeatureFlagLps132571 = GetterUtil.getBoolean(
-			PropsUtil.get("feature.flag.LPS-132571"));
-
-		PropsUtil.set("feature.flag.LPS-132571", "true");
-
 		_group = GroupTestUtil.addGroup();
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-	}
-
-	@After
-	public void tearDown() {
-		PropsUtil.set(
-			"feature.flag.LPS-132571",
-			String.valueOf(_originalFeatureFlagLps132571));
 	}
 
 	@Test
@@ -211,8 +196,6 @@ public class FragmentEntryProcessorStylesTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	private boolean _originalFeatureFlagLps132571;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

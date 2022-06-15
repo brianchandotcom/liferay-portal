@@ -19,6 +19,7 @@ import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
@@ -36,43 +37,43 @@ public class ObjectFieldDBTypeUtil {
 			return TextInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
 
 			return BooleanInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_DECIMAL) ||
 				 Objects.equals(
-					 objectField.getDBType(),
-					 ObjectFieldConstants.DB_TYPE_DOUBLE) ||
+					 objectField.getBusinessType(),
+					 ObjectFieldConstants.BUSINESS_TYPE_INTEGER) ||
 				 Objects.equals(
-					 objectField.getDBType(),
-					 ObjectFieldConstants.DB_TYPE_INTEGER) ||
+					 objectField.getBusinessType(),
+					 ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER) ||
 				 Objects.equals(
-					 objectField.getDBType(),
-					 ObjectFieldConstants.DB_TYPE_LONG)) {
+					 objectField.getBusinessType(),
+					 ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
 
 			return NumberInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_BLOB)) {
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
 			return ImageInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_DATE)) {
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_DATE)) {
 
 			return DateInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
-					objectField.getDBType(),
-					ObjectFieldConstants.DB_TYPE_STRING)) {
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
-			return TextInfoFieldType.INSTANCE;
+			return SelectInfoFieldType.INSTANCE;
 		}
 
 		return TextInfoFieldType.INSTANCE;

@@ -252,11 +252,4 @@ const portlet = {
 	},
 };
 
-window.Liferay = {
-	...(window.Liferay || {}),
-	Icons: {
-		spritemap: '/o/icons/pack/clay.svg',
-	},
-};
-
 global.portlet = portlet;

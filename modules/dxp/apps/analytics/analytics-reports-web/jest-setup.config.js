@@ -9,19 +9,6 @@
  * distribution rights of the Software.
  */
 
-const REGEX_SUB = /\x$/g;
-
-window.Liferay.Util.sub = function (string, data) {
-	if (
-		arguments.length > 2 ||
-		(typeof data !== 'object' && typeof data !== 'function')
-	) {
-		data = Array.prototype.slice.call(arguments, 1);
-	}
-
-	return string.replace(REGEX_SUB, data);
-};
-
 window.Liferay.FeatureFlags = {
 	'LPS-149256': false,
 };

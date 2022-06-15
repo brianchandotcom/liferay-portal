@@ -12,16 +12,9 @@
  * details.
  */
 
-window.themeDisplay = {
-	getBCP47LanguageId: () => 'en_US',
-	getDefaultLanguageId: () => 'en_US',
-	getLanguageId: () => 'en_US',
+window.Liferay.ThemeDisplay = {
+	...window.Liferay.ThemeDisplay,
 	getPathContext: () => '/',
 	getPathThemeImages: () => 'http://localhost:8080/o/admin-theme/images',
 	getScopeGroupId: () => '20126',
-};
-
-window.Liferay = {
-	...(window.Liferay || {}),
-	ThemeDisplay: window.themeDisplay,
 };

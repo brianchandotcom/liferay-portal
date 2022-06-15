@@ -57,18 +57,4 @@ beforeEach(() => {
 
 	// eslint-disable-next-line @liferay/no-dynamic-require
 	walk(build, (source) => require(source));
-
-	global.Liferay = {
-		Language: {
-			get(key) {
-				return key;
-			},
-		},
-
-		namespace(name) {
-			Liferay[name] = {};
-
-			return Liferay[name];
-		},
-	};
 });

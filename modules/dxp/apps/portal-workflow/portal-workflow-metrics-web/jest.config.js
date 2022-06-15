@@ -8,7 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-
+ 
 window.AUI = () => ({
 	use: (module, callback) => callback(module),
 });

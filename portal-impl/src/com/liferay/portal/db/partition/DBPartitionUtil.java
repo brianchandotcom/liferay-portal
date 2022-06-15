@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.VirtualHostModel;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -229,7 +230,9 @@ public class DBPartitionUtil {
 				return null;
 			}
 		}
-		else if (entityModel instanceof ShardedModel) {
+		else if ((entityModel instanceof ShardedModel) &&
+				 !(entityModel instanceof VirtualHostModel)) {
+
 			ShardedModel shardedModel = (ShardedModel)entityModel;
 
 			if (!_equalsCompany(

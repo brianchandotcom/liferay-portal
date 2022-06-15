@@ -37,7 +37,7 @@ definition {
 	test StructuredContentDraftByVersionContainsSetPriority {
 		property portal.acceptance = "true";
 
-		task ("When in Headless Admin Content I create a structuredContent draft with a priority field set") {
+		task ("Given in Headless Admin Content I create a structuredContent draft with a priority field set") {
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
 			var responseToParse = HeadlessWebcontentAPI.createStructuredContentDraft(
@@ -49,8 +49,8 @@ definition {
 				title = "Title");
 		}
 
-		task ("When web contents are filtered with 1.0 version") {
-			var response = HeadlessWebcontentAPI.filterStructuredVersion(
+		task ("When returning only web content with version 1.0") {
+			var response = HeadlessWebcontentAPI.versionStructureContent(
 				responseToParse = "${responseToParse}",
 				versionvalue = "1.0");
 		}

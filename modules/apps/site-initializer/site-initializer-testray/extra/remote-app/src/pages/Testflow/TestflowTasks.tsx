@@ -74,7 +74,7 @@ const TestFlowTasks = () => {
 
 	return (
 		<>
-			<Container collapsable title="Task Details">
+			<Container collapsable title={i18n.translate('task-details')}>
 				<div className="d-flex flex-wrap">
 					<div className="col-4 col-lg-4 col-md-12 p-0">
 						<QATable
@@ -102,7 +102,7 @@ const TestFlowTasks = () => {
 									value: (
 										<Avatar.Group
 											assignedUsers={assigned}
-											groupSize={5}
+											groupSize={3}
 										/>
 									),
 								},

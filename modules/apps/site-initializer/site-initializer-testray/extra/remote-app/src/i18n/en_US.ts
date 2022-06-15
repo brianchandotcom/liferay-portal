@@ -220,6 +220,7 @@ export default {
 	'suites': 'Suites',
 	'summary': 'Summary',
 	'task': 'Task',
+	'task-details': 'Task Details',
 	'tasks': 'Tasks',
 	'team': 'Team',
 	'teams': 'Teams',

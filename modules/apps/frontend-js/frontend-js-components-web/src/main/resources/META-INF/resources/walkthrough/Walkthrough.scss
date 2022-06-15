@@ -4,8 +4,8 @@
 	&-hotspot {
 		align-items: center;
 		background-color: rgb(255, 255, 255);
-		border: 2px solid $primary-d1;
 		border-radius: 100%;
+		border: 2px solid $primary-d1;
 		cursor: pointer;
 		display: flex;
 		height: 32px;
@@ -14,6 +14,7 @@
 		margin-top: -10px;
 		position: absolute;
 		width: 32px;
+		z-index: 1020;
 
 		&-inner {
 			background-color: $primary-d2;

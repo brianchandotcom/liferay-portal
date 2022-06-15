@@ -20,6 +20,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayPopover from '@clayui/popover';
 import {ReactPortal, usePrevious} from '@liferay/frontend-js-react-web';
+import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {
 	forwardRef,
@@ -31,6 +32,7 @@ import React, {
 } from 'react';
 
 import {doAlign} from './doAlign';
+import {useLocalStorage} from './useLocalStorage';
 import {useObserveRect} from './useObserveRect';
 
 const Hotspot = forwardRef(({onHotspotClick, trigger}, ref) => {
@@ -151,7 +153,11 @@ const WalkthroughOverlay = ({popoverVisible, trigger}) => {
 	);
 
 	useEffect(() => {
-		updateOverlayBounds();
+		if (trigger) {
+			updateOverlayBounds();
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [updateOverlayBounds]);
 
 	useObserveRect(updateOverlayBounds, trigger);
@@ -165,21 +171,38 @@ const WalkthroughOverlay = ({popoverVisible, trigger}) => {
 	);
 };
 
-const Walkthrough = ({closeOnClickOutside, closeable, skippable, steps}) => {
-	const [currentStepIndex, setCurrentStepIndex] = useState(0);
+const Walkthrough = ({
+	closeOnClickOutside,
+	closeable,
+	pages,
+	skippable,
+	steps,
+}) => {
+	const [currentStepIndex, setCurrentStepIndex] = useLocalStorage(
+		'walkthrough-current-step',
+		0
+	);
 
 	const popoverRef = useRef(null);
 
 	const hotspotRef = useRef(null);
 
-	const [popoverVisible, setPopoverVisible] = useState(false);
+	const [popoverVisible, setPopoverVisible] = useLocalStorage(
+		'walkthrough-popover-visible',
+		false
+	);
 
 	const {
 		content,
 		darkbg,
+		id,
+		next,
 		positioning: defaultPositioning = 'right-top',
+		previous,
 		title,
 	} = steps[currentStepIndex];
+
+	const path = location.pathname + location.search + location.hash;
 
 	const [currentAlignment, setCurrentAlignment] = useState(
 		defaultPositioning
@@ -196,12 +219,15 @@ const Walkthrough = ({closeOnClickOutside, closeable, skippable, steps}) => {
 	const previousTrigger = usePrevious(memoizedTrigger);
 
 	const changeStep = useCallback(
-		(isNext, index) => {
+		(action, isNext, index) => {
 			const hasElement = document.querySelector(
 				steps[index].nodeToHighlight
 			);
 
-			if (hasElement) {
+			if (
+				hasElement ||
+				(action && pages[action].includes(steps[index].id))
+			) {
 				setCurrentStepIndex(index);
 			}
 			else {
@@ -219,24 +245,30 @@ const Walkthrough = ({closeOnClickOutside, closeable, skippable, steps}) => {
 				setPopoverVisible(false);
 			}
 		},
-		[steps]
+		[pages, steps, setCurrentStepIndex, setPopoverVisible]
 	);
 
-	const onNext = useCallback(() => {
-		const maybeNextIndex = currentStepIndex + 1;
+	const onNext = useCallback(
+		(action) => {
+			const maybeNextIndex = currentStepIndex + 1;
 
-		if (steps[maybeNextIndex]) {
-			changeStep(true, maybeNextIndex);
-		}
-	}, [changeStep, currentStepIndex, steps]);
+			if (steps[maybeNextIndex]) {
+				changeStep(action, true, maybeNextIndex);
+			}
+		},
+		[changeStep, currentStepIndex, steps]
+	);
 
-	const onPrevious = useCallback(() => {
-		const maybePreviousIndex = currentStepIndex - 1;
+	const onPrevious = useCallback(
+		(action) => {
+			const maybePreviousIndex = currentStepIndex - 1;
 
-		if (steps[maybePreviousIndex]) {
-			changeStep(false, maybePreviousIndex);
-		}
-	}, [changeStep, currentStepIndex, steps]);
+			if (steps[maybePreviousIndex]) {
+				changeStep(action, false, maybePreviousIndex);
+			}
+		},
+		[changeStep, currentStepIndex, steps]
+	);
 
 	/**
 	 * This useEffect was necessary because Walkthrough(Step) components
@@ -299,6 +331,10 @@ const Walkthrough = ({closeOnClickOutside, closeable, skippable, steps}) => {
 	}, [align]);
 
 	useObserveRect(align, popoverRef?.current);
+
+	if (!pages[path]?.includes(id)) {
+		return null;
+	}
 
 	return (
 		<>
@@ -379,7 +415,13 @@ const Walkthrough = ({closeOnClickOutside, closeable, skippable, steps}) => {
 									{currentStepIndex > 0 && (
 										<ClayButton
 											displayType="secondary"
-											onClick={() => onPrevious()}
+											onClick={() => {
+												onPrevious(previous);
+
+												if (previous) {
+													navigate(previous);
+												}
+											}}
 											small
 										>
 											{Liferay.Language.get('previous')}
@@ -388,7 +430,13 @@ const Walkthrough = ({closeOnClickOutside, closeable, skippable, steps}) => {
 
 									{currentStepIndex + 1 !== steps.length ? (
 										<ClayButton
-											onClick={() => onNext()}
+											onClick={() => {
+												onNext(next);
+
+												if (next) {
+													navigate(next);
+												}
+											}}
 											small
 										>
 											{Liferay.Language.get('ok')}

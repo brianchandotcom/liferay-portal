@@ -49,10 +49,9 @@ public class ThemeFaviconTypeConfigurer
 
 					@SuppressWarnings("unused")
 					public void doCall(CopySpec copySpec) {
-						CopySpec fromSrc = copySpec.from(project.file("src"));
-
-						fromSrc.setIncludeEmptyDirs(false);
-						fromSrc.include("*.ico");
+						copySpec.from(project.file("src"));
+						copySpec.include("*.ico");
+						copySpec.setIncludeEmptyDirs(false);
 					}
 
 				}));

@@ -107,6 +107,8 @@ dependencies {
 	compile(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.19") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
+	compile group: "com.liferay", name: "com.liferay.petra.lang", version: "5.1.2"
+	compile group: "com.liferay", name: "com.liferay.petra.string", version: "5.2.0"
 	compile(group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.7.3") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
@@ -115,8 +117,6 @@ dependencies {
 		exclude group: "org.codehaus.plexus"
 		exclude group: "org.sonatype.plexus"
 	}
-	compile group: "com.liferay", name: "com.liferay.petra.string", version: "5.2.0"
-	compile group: "com.liferay", name: "com.liferay.petra.lang", version: "5.1.2"
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 	compile group: "net.java.dev.jna", name: "jna", version: "5.8.0"
 

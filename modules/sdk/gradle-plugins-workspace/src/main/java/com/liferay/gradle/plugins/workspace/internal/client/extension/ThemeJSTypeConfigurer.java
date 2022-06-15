@@ -48,10 +48,9 @@ public class ThemeJSTypeConfigurer implements ClientExtensionTypeConfigurer {
 
 					@SuppressWarnings("unused")
 					public void doCall(CopySpec copySpec) {
-						CopySpec fromSrc = copySpec.from(project.file("src"));
-
-						fromSrc.setIncludeEmptyDirs(false);
-						fromSrc.include("*.js");
+						copySpec.from(project.file("src"));
+						copySpec.include("*.js");
+						copySpec.setIncludeEmptyDirs(false);
 					}
 
 				}));

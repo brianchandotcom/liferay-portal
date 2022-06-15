@@ -1,22 +1,22 @@
 {
-	"kind": "Deployment",
-	"id": "__CLIENT_EXTENSION_ID__",
 	"cpu": 0.1,
-	"scale": 1,
+	"id": "__CLIENT_EXTENSION_ID__",
+	"kind": "Deployment",
 	"memory": 50,
-	"loadBalancer": {
-		"targetPort": 80,
-		"cdn": true
-	},
+	"scale": 1,
 	"environments": {
-		"infra": {
-			"deploy": false
-		},
 		"dev": {
 			"loadBalancer": {
-				"targetPort": 80,
-				"cdn": false
+				"cdn": false,
+				"targetPort": 80
 			}
+		},
+		"infra": {
+			"deploy": false
 		}
+	},
+	"loadBalancer": {
+		"cdn": true,
+		"targetPort": 80
 	}
 }

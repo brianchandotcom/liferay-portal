@@ -4,7 +4,7 @@ runGradleTest {
 	dependsOn ":sampleThemeFavicon:buildClientExtension"
 
 	doLast {
-		def sampleProject = project(":sampleThemeFavicon")
+		Project sampleProject = project(":sampleThemeFavicon")
 
 		File sampleConfigFile = new File(sampleProject.buildDir, "sample.client-extension-config.json")
 

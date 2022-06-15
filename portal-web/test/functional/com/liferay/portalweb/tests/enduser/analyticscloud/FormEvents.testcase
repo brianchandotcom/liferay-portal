@@ -195,6 +195,12 @@ definition {
 					ProxyUtil.startHarRecording("fieldBlurred");
 				}
 
+				task ("Click on the date field calendar icon") {
+					if ("${fieldName}" == "Date") {
+						Click(locator1 = "FormFields#DATE_CALENDAR");
+					}
+				}
+
 				task ("Close image or upload field modal") {
 					if (("${fieldName}" == "Image") || ("${fieldName}" == "Upload")) {
 						IFrame.closeFrame();

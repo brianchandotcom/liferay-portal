@@ -96,6 +96,292 @@ public class StripFilter extends BasePortalFilter {
 		return false;
 	}
 
+	protected void extractAndMinifyCSS(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, CharBuffer charBuffer,
+			Writer writer, char[] openTag)
+		throws Exception {
+
+		outputOpenTag(charBuffer, writer, openTag);
+
+		int length = KMPSearch.search(
+			charBuffer, _MARKER_STYLE_CLOSE, _MARKER_STYLE_CLOSE_NEXTS);
+
+		if (length == -1) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Missing </style>");
+			}
+
+			return;
+		}
+
+		if (length == 0) {
+			outputCloseTag(charBuffer, writer, _MARKER_STYLE_CLOSE);
+
+			return;
+		}
+
+		String content = extractContent(charBuffer, length);
+
+		String minifiedContent = content;
+
+		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_ENABLED) {
+			CacheKeyGenerator cacheKeyGenerator =
+				CacheKeyGeneratorUtil.getCacheKeyGenerator(
+					StripFilter.class.getName());
+
+			String key = String.valueOf(cacheKeyGenerator.getCacheKey(content));
+
+			minifiedContent = _minifierPortalCache.get(key);
+
+			if (minifiedContent == null) {
+				minifiedContent = MinifierUtil.minifyCss(content);
+
+				boolean skipCache = false;
+
+				for (String skipCss :
+						PropsValues.MINIFIER_INLINE_CONTENT_CACHE_SKIP_CSS) {
+
+					if (minifiedContent.contains(skipCss)) {
+						skipCache = true;
+
+						break;
+					}
+				}
+
+				if (!skipCache) {
+					_minifierPortalCache.put(key, minifiedContent);
+				}
+			}
+		}
+		else {
+			minifiedContent = MinifierUtil.minifyCss(content);
+		}
+
+		if (Validator.isNotNull(minifiedContent)) {
+			writer.write(minifiedContent);
+		}
+
+		outputCloseTag(charBuffer, writer, _MARKER_STYLE_CLOSE);
+	}
+
+	protected void extractAndMinifyJavaScript(
+			String resourceName, CharBuffer charBuffer, Writer writer,
+			char[] openTag)
+		throws Exception {
+
+		int endPos = openTag.length + 1;
+
+		char c = charBuffer.charAt(openTag.length);
+
+		if (c == CharPool.SPACE) {
+			int startPos = openTag.length + 1;
+
+			for (int i = startPos; i < charBuffer.length(); i++) {
+				c = charBuffer.charAt(i);
+
+				if (c == CharPool.GREATER_THAN) {
+
+					// Open script tag complete
+
+					endPos = i + 1;
+
+					int length = i - startPos;
+
+					int searchValue = KMPSearch.search(
+						charBuffer, startPos, length, _MARKER_TYPE_JAVASCRIPT,
+						_MARKER_TYPE_JAVASCRIPT_NEXTS);
+
+					if ((length < _MARKER_TYPE_JAVASCRIPT.length()) ||
+						(searchValue == -1)) {
+
+						// We have just determined that this is an open script
+						// tag that does not have the attribute
+						// type="text/javascript". Now check to see if it has
+						// the attribute language="JavaScript". If it does not,
+						// then we skip stripping.
+
+						if (!hasLanguageAttribute(
+								charBuffer, startPos, length)) {
+
+							return;
+						}
+					}
+
+					// Open script tag has no attribute or has attribute
+					// type="text/javascript". Start stripping.
+
+					break;
+				}
+				else if (c == CharPool.LESS_THAN) {
+
+					// Illegal open script tag. Found a '<' before seeing a '>'.
+
+					return;
+				}
+			}
+
+			if (endPos == charBuffer.length()) {
+
+				// Illegal open script tag. Unable to find a '>'.
+
+				return;
+			}
+		}
+		else if (c != CharPool.GREATER_THAN) {
+
+			// Illegal open script tag. Not followed by a '>' or a ' '.
+
+			return;
+		}
+
+		writer.append(charBuffer, 0, endPos);
+
+		charBuffer.position(charBuffer.position() + endPos);
+
+		int length = KMPSearch.search(
+			charBuffer, _MARKER_SCRIPT_CLOSE, _MARKER_SCRIPT_CLOSE_NEXTS);
+
+		if (length == -1) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Missing </script>");
+			}
+
+			return;
+		}
+
+		if (length == 0) {
+			outputCloseTag(charBuffer, writer, _MARKER_SCRIPT_CLOSE);
+
+			return;
+		}
+
+		String content = extractContent(charBuffer, length);
+
+		String minifiedContent = content;
+
+		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_ENABLED) {
+			CacheKeyGenerator cacheKeyGenerator =
+				CacheKeyGeneratorUtil.getCacheKeyGenerator(
+					StripFilter.class.getName());
+
+			String key = String.valueOf(cacheKeyGenerator.getCacheKey(content));
+
+			minifiedContent = _minifierPortalCache.get(key);
+
+			if (minifiedContent == null) {
+				minifiedContent = MinifierUtil.minifyJavaScript(
+					resourceName, content);
+
+				boolean skipCache = false;
+
+				for (String skipJavaScript :
+						PropsValues.
+							MINIFIER_INLINE_CONTENT_CACHE_SKIP_JAVASCRIPT) {
+
+					if (minifiedContent.contains(skipJavaScript)) {
+						skipCache = true;
+
+						break;
+					}
+				}
+
+				if (!skipCache) {
+					_minifierPortalCache.put(key, minifiedContent);
+				}
+			}
+		}
+		else {
+			minifiedContent = MinifierUtil.minifyJavaScript(
+				resourceName, content);
+		}
+
+		if (Validator.isNotNull(minifiedContent)) {
+			writer.write(minifiedContent);
+		}
+
+		outputCloseTag(charBuffer, writer, _MARKER_SCRIPT_CLOSE);
+	}
+
+	protected void extractAndTrimInput(CharBuffer oldCharBuffer, Writer writer)
+		throws Exception {
+
+		int length = KMPSearch.search(
+			oldCharBuffer, _MARKER_INPUT_OPEN.length + 1, _MARKER_INPUT_CLOSE,
+			_MARKER_INPUT_CLOSE_NEXTS);
+
+		if (length == -1) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Missing >");
+			}
+
+			outputOpenTag(oldCharBuffer, writer, _MARKER_INPUT_OPEN);
+
+			return;
+		}
+
+		length += _MARKER_INPUT_CLOSE.length();
+
+		String content = extractContent(oldCharBuffer, length);
+
+		writer.write(content);
+
+		skipWhiteSpace(oldCharBuffer, writer, true);
+	}
+
+	protected void extractAndTrimPre(CharBuffer oldCharBuffer, Writer writer)
+		throws Exception {
+
+		int length = KMPSearch.search(
+			oldCharBuffer, _MARKER_PRE_OPEN.length + 1, _MARKER_PRE_CLOSE,
+			_MARKER_PRE_CLOSE_NEXTS);
+
+		if (length == -1) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Missing </pre>");
+			}
+
+			outputOpenTag(oldCharBuffer, writer, _MARKER_PRE_OPEN);
+
+			return;
+		}
+
+		length += _MARKER_PRE_CLOSE.length();
+
+		String content = extractContent(oldCharBuffer, length);
+
+		writer.write(content);
+
+		skipWhiteSpace(oldCharBuffer, writer, true);
+	}
+
+	protected void extractAndTrimTextArea(
+			CharBuffer oldCharBuffer, Writer writer)
+		throws Exception {
+
+		int length = KMPSearch.search(
+			oldCharBuffer, _MARKER_TEXTAREA_OPEN.length + 1,
+			_MARKER_TEXTAREA_CLOSE, _MARKER_TEXTAREA_CLOSE_NEXTS);
+
+		if (length == -1) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Missing </textArea>");
+			}
+
+			outputOpenTag(oldCharBuffer, writer, _MARKER_TEXTAREA_OPEN);
+
+			return;
+		}
+
+		length += _MARKER_TEXTAREA_CLOSE.length();
+
+		String content = extractContent(oldCharBuffer, length);
+
+		writer.write(content);
+
+		skipWhiteSpace(oldCharBuffer, writer, true);
+	}
+
 	protected String extractContent(CharBuffer charBuffer, int length) {
 
 		// See LPS-10545
@@ -252,75 +538,6 @@ public class StripFilter extends BasePortalFilter {
 		charBuffer.position(charBuffer.position() + openTag.length);
 	}
 
-	protected void processCSS(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, CharBuffer charBuffer,
-			Writer writer, char[] openTag)
-		throws Exception {
-
-		outputOpenTag(charBuffer, writer, openTag);
-
-		int length = KMPSearch.search(
-			charBuffer, _MARKER_STYLE_CLOSE, _MARKER_STYLE_CLOSE_NEXTS);
-
-		if (length == -1) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Missing </style>");
-			}
-
-			return;
-		}
-
-		if (length == 0) {
-			outputCloseTag(charBuffer, writer, _MARKER_STYLE_CLOSE);
-
-			return;
-		}
-
-		String content = extractContent(charBuffer, length);
-
-		String minifiedContent = content;
-
-		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_ENABLED) {
-			CacheKeyGenerator cacheKeyGenerator =
-				CacheKeyGeneratorUtil.getCacheKeyGenerator(
-					StripFilter.class.getName());
-
-			String key = String.valueOf(cacheKeyGenerator.getCacheKey(content));
-
-			minifiedContent = _minifierPortalCache.get(key);
-
-			if (minifiedContent == null) {
-				minifiedContent = MinifierUtil.minifyCss(content);
-
-				boolean skipCache = false;
-
-				for (String skipCss :
-						PropsValues.MINIFIER_INLINE_CONTENT_CACHE_SKIP_CSS) {
-
-					if (minifiedContent.contains(skipCss)) {
-						skipCache = true;
-
-						break;
-					}
-				}
-
-				if (!skipCache) {
-					_minifierPortalCache.put(key, minifiedContent);
-				}
-			}
-		}
-		else {
-			minifiedContent = MinifierUtil.minifyCss(content);
-		}
-
-		if (Validator.isNotNull(minifiedContent)) {
-			writer.write(minifiedContent);
-		}
-
-		outputCloseTag(charBuffer, writer, _MARKER_STYLE_CLOSE);
-	}
-
 	@Override
 	protected void processFilter(
 			HttpServletRequest httpServletRequest,
@@ -390,222 +607,6 @@ public class StripFilter extends BasePortalFilter {
 		}
 	}
 
-	protected void processInput(CharBuffer oldCharBuffer, Writer writer)
-		throws Exception {
-
-		int length = KMPSearch.search(
-			oldCharBuffer, _MARKER_INPUT_OPEN.length + 1, _MARKER_INPUT_CLOSE,
-			_MARKER_INPUT_CLOSE_NEXTS);
-
-		if (length == -1) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Missing >");
-			}
-
-			outputOpenTag(oldCharBuffer, writer, _MARKER_INPUT_OPEN);
-
-			return;
-		}
-
-		length += _MARKER_INPUT_CLOSE.length();
-
-		String content = extractContent(oldCharBuffer, length);
-
-		writer.write(content);
-
-		skipWhiteSpace(oldCharBuffer, writer, true);
-	}
-
-	protected void processJavaScript(
-			String resourceName, CharBuffer charBuffer, Writer writer,
-			char[] openTag)
-		throws Exception {
-
-		int endPos = openTag.length + 1;
-
-		char c = charBuffer.charAt(openTag.length);
-
-		if (c == CharPool.SPACE) {
-			int startPos = openTag.length + 1;
-
-			for (int i = startPos; i < charBuffer.length(); i++) {
-				c = charBuffer.charAt(i);
-
-				if (c == CharPool.GREATER_THAN) {
-
-					// Open script tag complete
-
-					endPos = i + 1;
-
-					int length = i - startPos;
-
-					int searchValue = KMPSearch.search(
-						charBuffer, startPos, length, _MARKER_TYPE_JAVASCRIPT,
-						_MARKER_TYPE_JAVASCRIPT_NEXTS);
-
-					if ((length < _MARKER_TYPE_JAVASCRIPT.length()) ||
-						(searchValue == -1)) {
-
-						// We have just determined that this is an open script
-						// tag that does not have the attribute
-						// type="text/javascript". Now check to see if it has
-						// the attribute language="JavaScript". If it does not,
-						// then we skip stripping.
-
-						if (!hasLanguageAttribute(
-								charBuffer, startPos, length)) {
-
-							return;
-						}
-					}
-
-					// Open script tag has no attribute or has attribute
-					// type="text/javascript". Start stripping.
-
-					break;
-				}
-				else if (c == CharPool.LESS_THAN) {
-
-					// Illegal open script tag. Found a '<' before seeing a '>'.
-
-					return;
-				}
-			}
-
-			if (endPos == charBuffer.length()) {
-
-				// Illegal open script tag. Unable to find a '>'.
-
-				return;
-			}
-		}
-		else if (c != CharPool.GREATER_THAN) {
-
-			// Illegal open script tag. Not followed by a '>' or a ' '.
-
-			return;
-		}
-
-		writer.append(charBuffer, 0, endPos);
-
-		charBuffer.position(charBuffer.position() + endPos);
-
-		int length = KMPSearch.search(
-			charBuffer, _MARKER_SCRIPT_CLOSE, _MARKER_SCRIPT_CLOSE_NEXTS);
-
-		if (length == -1) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Missing </script>");
-			}
-
-			return;
-		}
-
-		if (length == 0) {
-			outputCloseTag(charBuffer, writer, _MARKER_SCRIPT_CLOSE);
-
-			return;
-		}
-
-		String content = extractContent(charBuffer, length);
-
-		String minifiedContent = content;
-
-		if (PropsValues.MINIFIER_INLINE_CONTENT_CACHE_ENABLED) {
-			CacheKeyGenerator cacheKeyGenerator =
-				CacheKeyGeneratorUtil.getCacheKeyGenerator(
-					StripFilter.class.getName());
-
-			String key = String.valueOf(cacheKeyGenerator.getCacheKey(content));
-
-			minifiedContent = _minifierPortalCache.get(key);
-
-			if (minifiedContent == null) {
-				minifiedContent = MinifierUtil.minifyJavaScript(
-					resourceName, content);
-
-				boolean skipCache = false;
-
-				for (String skipJavaScript :
-						PropsValues.
-							MINIFIER_INLINE_CONTENT_CACHE_SKIP_JAVASCRIPT) {
-
-					if (minifiedContent.contains(skipJavaScript)) {
-						skipCache = true;
-
-						break;
-					}
-				}
-
-				if (!skipCache) {
-					_minifierPortalCache.put(key, minifiedContent);
-				}
-			}
-		}
-		else {
-			minifiedContent = MinifierUtil.minifyJavaScript(
-				resourceName, content);
-		}
-
-		if (Validator.isNotNull(minifiedContent)) {
-			writer.write(minifiedContent);
-		}
-
-		outputCloseTag(charBuffer, writer, _MARKER_SCRIPT_CLOSE);
-	}
-
-	protected void processPre(CharBuffer oldCharBuffer, Writer writer)
-		throws Exception {
-
-		int length = KMPSearch.search(
-			oldCharBuffer, _MARKER_PRE_OPEN.length + 1, _MARKER_PRE_CLOSE,
-			_MARKER_PRE_CLOSE_NEXTS);
-
-		if (length == -1) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Missing </pre>");
-			}
-
-			outputOpenTag(oldCharBuffer, writer, _MARKER_PRE_OPEN);
-
-			return;
-		}
-
-		length += _MARKER_PRE_CLOSE.length();
-
-		String content = extractContent(oldCharBuffer, length);
-
-		writer.write(content);
-
-		skipWhiteSpace(oldCharBuffer, writer, true);
-	}
-
-	protected void processTextArea(CharBuffer oldCharBuffer, Writer writer)
-		throws Exception {
-
-		int length = KMPSearch.search(
-			oldCharBuffer, _MARKER_TEXTAREA_OPEN.length + 1,
-			_MARKER_TEXTAREA_CLOSE, _MARKER_TEXTAREA_CLOSE_NEXTS);
-
-		if (length == -1) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Missing </textArea>");
-			}
-
-			outputOpenTag(oldCharBuffer, writer, _MARKER_TEXTAREA_OPEN);
-
-			return;
-		}
-
-		length += _MARKER_TEXTAREA_CLOSE.length();
-
-		String content = extractContent(oldCharBuffer, length);
-
-		writer.write(content);
-
-		skipWhiteSpace(oldCharBuffer, writer, true);
-	}
-
 	protected boolean skipWhiteSpace(
 			CharBuffer charBuffer, Writer writer, boolean appendSeparator)
 		throws Exception {
@@ -650,29 +651,29 @@ public class StripFilter extends BasePortalFilter {
 
 			if (c == CharPool.LESS_THAN) {
 				if (hasMarker(charBuffer, _MARKER_INPUT_OPEN)) {
-					processInput(charBuffer, writer);
+					extractAndTrimInput(charBuffer, writer);
 
 					continue;
 				}
 				else if (hasMarker(charBuffer, _MARKER_PRE_OPEN)) {
-					processPre(charBuffer, writer);
+					extractAndTrimPre(charBuffer, writer);
 
 					continue;
 				}
 				else if (hasMarker(charBuffer, _MARKER_TEXTAREA_OPEN)) {
-					processTextArea(charBuffer, writer);
+					extractAndTrimTextArea(charBuffer, writer);
 
 					continue;
 				}
 				else if (hasMarker(charBuffer, _MARKER_SCRIPT_OPEN)) {
-					processJavaScript(
+					extractAndMinifyJavaScript(
 						String.valueOf(httpServletRequest.getRequestURL()),
 						charBuffer, writer, _MARKER_SCRIPT_OPEN);
 
 					continue;
 				}
 				else if (hasMarker(charBuffer, _MARKER_STYLE_OPEN)) {
-					processCSS(
+					extractAndMinifyCSS(
 						httpServletRequest, httpServletResponse, charBuffer,
 						writer, _MARKER_STYLE_OPEN);
 
@@ -682,7 +683,7 @@ public class StripFilter extends BasePortalFilter {
 							charBuffer,
 							_MARKER_STYLE_DATA_SENNA_TRACK_PERMANENT)) {
 
-					processCSS(
+					extractAndMinifyCSS(
 						httpServletRequest, httpServletResponse, charBuffer,
 						writer, _MARKER_STYLE_DATA_SENNA_TRACK_PERMANENT);
 
@@ -692,7 +693,7 @@ public class StripFilter extends BasePortalFilter {
 							charBuffer,
 							_MARKER_STYLE_DATA_SENNA_TRACK_TEMPORARY)) {
 
-					processCSS(
+					extractAndMinifyCSS(
 						httpServletRequest, httpServletResponse, charBuffer,
 						writer, _MARKER_STYLE_DATA_SENNA_TRACK_TEMPORARY);
 

@@ -33,6 +33,21 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 >
 	<h2>
 		<liferay-ui:message key="segments-service-company-configuration-name" />
+
+		<c:if test="<%= segmentsCompanyConfigurationDisplayContext.isSegmentsCompanyConfigurationDefined() %>">
+			<liferay-ui:icon-menu
+				cssClass="float-right"
+				direction="right"
+				markupView="lexicon"
+				showWhenSingleIcon="<%= true %>"
+			>
+				<liferay-ui:icon
+					message="reset-default-values"
+					method="post"
+					url="<%= segmentsCompanyConfigurationDisplayContext.getDeleteConfigurationActionURL() %>"
+				/>
+			</liferay-ui:icon-menu>
+		</c:if>
 	</h2>
 
 	<aui:form action="<%= segmentsCompanyConfigurationDisplayContext.getBindConfigurationActionURL() %>" method="post" name="fm">

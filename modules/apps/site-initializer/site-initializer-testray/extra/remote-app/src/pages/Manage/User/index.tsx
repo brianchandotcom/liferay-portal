@@ -45,6 +45,7 @@ const UserListView: React.FC<UserListViewProps> = ({
 			forceRefetch={formModal?.forceRefetch}
 			managementToolbarProps={{
 				addButton: () => navigate('create'),
+				title: i18n.translate('users'),
 			}}
 			query={getLiferayUserAccounts}
 			tableProps={{
@@ -90,7 +91,7 @@ const Users: React.FC = () => {
 	});
 
 	return (
-		<Container title={i18n.translate('users')}>
+		<Container>
 			<UserListView actions={actions} formModal={formModal} />
 
 			<UserFormModal modal={formModal.modal} />

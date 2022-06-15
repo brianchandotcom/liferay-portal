@@ -85,10 +85,15 @@ public class UpgradeExternalReferenceCode extends UpgradeProcess {
 			String tableName, String primKeyColumnName)
 		throws Exception {
 
-		if (!hasTable(tableName) ||
+		if (!hasTable(tableName)) {
+			return;
+		}
+
+		if (hasTable(tableName) &&
 			!hasColumn(tableName, "externalReferenceCode")) {
 
-			return;
+			alterTableAddColumn(
+				tableName, "externalReferenceCode", "VARCHAR(75)");
 		}
 
 		boolean hasUuid = hasColumn(tableName, "uuid_");

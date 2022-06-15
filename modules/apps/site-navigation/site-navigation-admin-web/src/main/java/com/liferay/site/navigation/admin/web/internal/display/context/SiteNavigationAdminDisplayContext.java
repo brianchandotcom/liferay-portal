@@ -515,10 +515,9 @@ public class SiteNavigationAdminDisplayContext {
 						(RenderResponse)_httpServletRequest.getAttribute(
 							JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-					PortletURL addURL = siteNavigationMenuItemType.getAddURL(
-						renderRequest, renderResponse);
-
-					return addURL.toString();
+					return String.valueOf(
+						siteNavigationMenuItemType.getAddURL(
+							renderRequest, renderResponse));
 				}
 			).put(
 				"addTitle",

@@ -37,8 +37,6 @@ import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMen
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -192,11 +190,10 @@ public class SiteNavigationMenuDisplayContext {
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-			eventName, itemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				eventName, itemSelectorCriterion));
 	}
 
 	public String getRootMenuItemType() {
@@ -366,11 +363,10 @@ public class SiteNavigationMenuDisplayContext {
 		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new UUIDItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-			eventName, itemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				eventName, itemSelectorCriterion));
 	}
 
 	public String getSiteNavigationMenuName() {

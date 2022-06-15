@@ -2,7 +2,7 @@
 	<div class="form-group mb-0">
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-numeric-input">${input.label}${input.required?then('*', '')}</label>
 
-	<input aria-describedby="${fragmentEntryLinkNamespace}-numeric-input-help-text" class="form-control" data-type="${input.dataType}" id="${fragmentEntryLinkNamespace}-numeric-input" max="999999999" name="${input.name}" [#if input.required]required[/#if] placeholder="${configuration.placeholder}" type="number" />
+	<input aria-describedby="${fragmentEntryLinkNamespace}-numeric-input-help-text" class="form-control" data-type="${input.dataType}" id="${fragmentEntryLinkNamespace}-numeric-input" max="999999999" name="${input.name}" [#if input.required]required[/#if] [#if input.dataType="decimal"]step="0.01"[/#if] placeholder="${configuration.placeholder}" type="number" />
 		[#if input.showHelpText && input.helpText?has_content]
 			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-numeric-input-help-text">${input.helpText}</p>
 		[/#if]

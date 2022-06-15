@@ -1,7 +1,17 @@
-if (layoutMode === 'edit') {
-	const input = document.getElementById(`${fragmentNamespace}-numeric-input`);
+const input = fragmentElement.querySelector(`#${fragmentNamespace}-numeric-input`);
+const isInteger = input.getAttribute('data-type') === 'integer';
 
-	if (input) {
+function handleOnKeydown(event) {
+	if (isInteger && (event.key === ',' || event.key === '.')) {
+		event.preventDefault();
+	}
+}
+
+if (input) {
+	if (layoutMode === 'edit') {
 		input.setAttribute('disabled', true);
+	}
+	else {
+		input.addEventListener('keydown', handleOnKeydown);
 	}
 }

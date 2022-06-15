@@ -19,6 +19,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Gustavo Lima
@@ -32,24 +33,19 @@ public class ObjectDefinitionNotificationType implements NotificationType {
 
 	@Override
 	public String getClassName(Object object) {
-		if (!(object instanceof ObjectEntry)) {
-			throw new IllegalArgumentException(
-				"Object " + object + " is not an object entry");
-		}
-
 		return ObjectEntry.class.getName();
 	}
 
 	@Override
 	public long getClassPK(Object object) {
-		if (!(object instanceof ObjectEntry)) {
+		if (!(object instanceof Map)) {
 			throw new IllegalArgumentException(
-				"Object " + object + " is not an object entry");
+				"Object " + object + " is not a map");
 		}
 
-		ObjectEntry objectEntry = (ObjectEntry)object;
+		Map<String, Object> values = (Map<String, Object>)object;
 
-		return objectEntry.getObjectEntryId();
+		return (Long)values.get("objectEntryId");
 	}
 
 	@Override

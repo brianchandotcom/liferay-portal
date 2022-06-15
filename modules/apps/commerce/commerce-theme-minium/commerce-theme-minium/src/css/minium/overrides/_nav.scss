@@ -5,6 +5,11 @@
 	height: 60px;
 	justify-content: center;
 
+	&.nav-left {
+		background: #fff;
+		justify-content: left !important;
+	}
+
 	.nav-item {
 		align-items: center;
 		color: $color-fg-alt;
@@ -17,6 +22,8 @@
 		text-transform: uppercase;
 
 		.nav-link {
+			box-shadow: none;
+			outline: none;
 			padding: 0;
 			position: static;
 
@@ -30,9 +37,8 @@
 					bottom: 0;
 					content: '';
 					height: 2px;
-					left: calc(50% - 25px);
 					position: absolute;
-					width: 50px;
+					width: 100%;
 				}
 			}
 		}

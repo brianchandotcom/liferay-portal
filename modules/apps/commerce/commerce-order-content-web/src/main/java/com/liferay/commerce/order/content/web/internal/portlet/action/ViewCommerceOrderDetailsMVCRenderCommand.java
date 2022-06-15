@@ -22,7 +22,9 @@ import com.liferay.commerce.order.content.web.internal.display.context.CommerceO
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
@@ -65,6 +67,12 @@ public class ViewCommerceOrderDetailsMVCRenderCommand
 				_commerceOrderHttpHelper.setCurrentCommerceOrder(
 					_portal.getHttpServletRequest(renderRequest),
 					commerceOrder);
+			}
+
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.COMMERCE-8949"))) {
+
+				return "/placed_commerce_orders/new_view.jsp";
 			}
 
 			return "/placed_commerce_orders/view_commerce_order_details.jsp";

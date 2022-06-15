@@ -187,7 +187,7 @@ String target = ParamUtil.getString(request, "target", groupItemSelectorCriterio
 												}
 												%>
 
-												<aui:a cssClass='<%= hasURL ? "selector-button " : " disabled text-muted " %>' data="<%= data %>" href='<%= hasURL ? "javascript:; " : " " %>'>
+												<aui:a cssClass='<%= hasURL ? "card-title selector-button text-truncate" : "disabled text-muted" %>' data="<%= data %>" href='<%= hasURL ? "javascript:;" : StringPool.BLANK %>'>
 													<%= HtmlUtil.escape(siteItemSelectorViewDisplayContext.getGroupName(group)) %>
 												</aui:a>
 											</c:when>

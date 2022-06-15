@@ -59,6 +59,19 @@ public class SalesforceHttp {
 		}
 	}
 
+	public JSONObject post(
+		long companyId, long groupId, String location,
+		JSONObject bodyJSONObject) {
+
+		try {
+			return _invoke(
+				companyId, groupId, location, Http.Method.POST, bodyJSONObject);
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
+	}
+
 	private JSONObject _getSalesforceAccessTokenJSONObject(
 		SalesforceConfiguration salesforceConfiguration) {
 
@@ -121,6 +134,7 @@ public class SalesforceHttp {
 				StringPool.UTF8);
 		}
 
+		options.setFollowRedirects(false);
 		options.setLocation(
 			StringBundler.concat(
 				jsonObject.getString("instance_url"), "/services/data/v54.0/",

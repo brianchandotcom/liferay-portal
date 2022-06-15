@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -74,7 +75,15 @@ public class SalesforceObjectEntryManagerImpl
 			String scopeKey)
 		throws Exception {
 
-		return null;
+		JSONObject responseJSONObject = _salesforceHttp.post(
+			objectDefinition.getCompanyId(),
+			getGroupId(objectDefinition, scopeKey),
+			"sobjects/" + _getSalesforceObjectName(objectDefinition.getName()),
+			_toSalesforceEntry(objectDefinition, objectEntry));
+
+		return getObjectEntry(
+			dtoConverterContext, responseJSONObject.getString("id"),
+			objectDefinition.getCompanyId(), objectDefinition, scopeKey);
 	}
 
 	@Override
@@ -209,6 +218,10 @@ public class SalesforceObjectEntryManagerImpl
 			String externalReferenceCode, long companyId,
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return null;
+		}
 
 		return _toObjectEntry(
 			companyId, _getDateFormat(),

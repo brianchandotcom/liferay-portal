@@ -203,12 +203,11 @@ public class EditStyleBookEntryDisplayContext {
 			setDesiredItemSelectorReturnTypes(
 				new FragmentCollectionItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
-			_renderResponse.getNamespace() + "selectPreviewItem",
-			fragmentCollectionItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+				_renderResponse.getNamespace() + "selectPreviewItem",
+				fragmentCollectionItemSelectorCriterion));
 	}
 
 	private JSONObject _getFragmentCollectionOptionJSONObject() {
@@ -415,13 +414,12 @@ public class EditStyleBookEntryDisplayContext {
 				layoutItemSelectorCriterion.setShowPrivatePages(
 					group.isPrivateLayoutsEnabled());
 
-				PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-					RequestBackedPortletURLFactoryUtil.create(
-						_httpServletRequest),
-					_renderResponse.getNamespace() + "selectPreviewItem",
-					layoutItemSelectorCriterion);
-
-				return itemSelectorURL.toString();
+				return String.valueOf(
+					_itemSelector.getItemSelectorURL(
+						RequestBackedPortletURLFactoryUtil.create(
+							_httpServletRequest),
+						_renderResponse.getNamespace() + "selectPreviewItem",
+						layoutItemSelectorCriterion));
 			}
 		).put(
 			"recentLayouts",

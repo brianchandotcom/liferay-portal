@@ -66,18 +66,13 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 			formFields
 		);
 
-		fields.push(
-			{
-				defaultValue: isRequiredField,
-				disabled: isRequiredField,
-				label: Liferay.Language.get('mark-as-required'),
-				name: REQUIRED_CONFIGURATION_KEY,
-				type: 'checkbox',
-			},
-			{
-				type: 'separator',
-			}
-		);
+		fields.push({
+			defaultValue: isRequiredField,
+			disabled: isRequiredField,
+			label: Liferay.Language.get('mark-as-required'),
+			name: REQUIRED_CONFIGURATION_KEY,
+			type: 'checkbox',
+		});
 	}
 
 	fields.push(
@@ -94,9 +89,6 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 			localizable: true,
 			name: LABEL_CONFIGURATION_KEY,
 			type: 'text',
-		},
-		{
-			type: 'separator',
 		},
 		{
 			defaultValue: true,
@@ -117,9 +109,6 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 					'guide-your-users-to-fill-in-the-field-by-adding-help-text-here'
 				),
 			},
-		},
-		{
-			type: 'separator',
 		}
 	);
 

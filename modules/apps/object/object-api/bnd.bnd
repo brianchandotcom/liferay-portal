@@ -13,6 +13,7 @@ Export-Package:\
 	com.liferay.object.field.filter.parser,\
 	com.liferay.object.field.render,\
 	com.liferay.object.model,\
+	com.liferay.object.notification.term.util,\
 	com.liferay.object.related.models,\
 	com.liferay.object.rest.context.path,\
 	com.liferay.object.scope,\

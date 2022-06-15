@@ -17,14 +17,13 @@ package com.liferay.object.internal.notification.term.contributor;
 import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,12 +49,10 @@ public class ObjectDefinitionNotificationTermContributor
 				objectDefinition.getObjectDefinitionId());
 
 		for (ObjectField objectField : objectFields) {
-			String termName = StringUtil.toUpperCase(
-				objectDefinition.getShortName() + "_" + objectField.getName());
-
-			termName = StringBundler.concat("[%", termName, "%]");
-
-			_objectFieldIds.put(termName, objectField.getObjectFieldId());
+			_objectFieldIds.put(
+				ObjectDefinitionNotificationTermUtil.getObjectFieldTerm(
+					objectDefinition.getShortName(), objectField.getName()),
+				objectField.getObjectFieldId());
 		}
 	}
 

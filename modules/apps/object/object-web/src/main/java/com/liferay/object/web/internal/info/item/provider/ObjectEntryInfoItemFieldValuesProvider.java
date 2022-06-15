@@ -18,6 +18,7 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.ImageInfoFieldType;
+import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
@@ -156,21 +157,29 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				TransformUtil.transform(
 					_objectFieldLocalService.getObjectFields(
 						objectEntry.getObjectDefinitionId()),
-					objectField -> new InfoFieldValue<>(
-						InfoField.builder(
-						).infoFieldType(
-							ObjectFieldDBTypeUtil.getInfoFieldType(objectField)
-						).namespace(
-							ObjectField.class.getSimpleName()
-						).name(
-							objectField.getName()
-						).labelInfoLocalizedValue(
-							InfoLocalizedValue.<String>builder(
-							).values(
-								objectField.getLabelMap()
-							).build()
-						).build(),
-						_getValue(objectField, values))));
+					objectField -> {
+						InfoField.FinalStep<InfoFieldType> finalStep =
+							InfoField.builder(
+							).infoFieldType(
+								ObjectFieldDBTypeUtil.getInfoFieldType(
+									objectField)
+							).namespace(
+								ObjectField.class.getSimpleName()
+							).name(
+								objectField.getName()
+							).labelInfoLocalizedValue(
+								InfoLocalizedValue.<String>builder(
+								).values(
+									objectField.getLabelMap()
+								).build()
+							);
+
+						ObjectFieldDBTypeUtil.setAttribute(
+							finalStep, objectField);
+
+						return new InfoFieldValue<>(
+							finalStep.build(), _getValue(objectField, values));
+					}));
 
 			return objectEntryFieldValues;
 		}

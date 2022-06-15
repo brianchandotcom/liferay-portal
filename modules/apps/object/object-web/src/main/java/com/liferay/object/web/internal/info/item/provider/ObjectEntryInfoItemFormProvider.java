@@ -209,24 +209,27 @@ public class ObjectEntryInfoItemFormProvider
 						}
 					}
 
-					unsafeConsumer.accept(
-						InfoField.builder(
-						).infoFieldType(
-							ObjectFieldDBTypeUtil.getInfoFieldType(objectField)
-						).namespace(
-							ObjectField.class.getSimpleName()
-						).name(
-							objectField.getName()
-						).editable(
-							true
-						).labelInfoLocalizedValue(
-							InfoLocalizedValue.<String>builder(
-							).values(
-								objectField.getLabelMap()
-							).build()
-						).required(
-							objectField.isRequired()
-						).build());
+					InfoField.FinalStep finalStep = InfoField.builder(
+					).infoFieldType(
+						ObjectFieldDBTypeUtil.getInfoFieldType(objectField)
+					).namespace(
+						ObjectField.class.getSimpleName()
+					).name(
+						objectField.getName()
+					).editable(
+						true
+					).labelInfoLocalizedValue(
+						InfoLocalizedValue.<String>builder(
+						).values(
+							objectField.getLabelMap()
+						).build()
+					).required(
+						objectField.isRequired()
+					);
+
+					ObjectFieldDBTypeUtil.setAttribute(finalStep, objectField);
+
+					unsafeConsumer.accept(finalStep.build());
 				}
 			}
 		).labelInfoLocalizedValue(

@@ -29,7 +29,6 @@ const useFactorCategoryActions = () => {
 		actions: [
 			{
 				action: (item: TestrayFactorCategory) => modal.open(item),
-				disabled: true,
 				name: i18n.translate('edit'),
 			},
 			{

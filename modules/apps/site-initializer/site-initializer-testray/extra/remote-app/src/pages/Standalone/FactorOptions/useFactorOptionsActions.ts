@@ -33,7 +33,6 @@ const useFactorOptionsActions = () => {
 						...item,
 						factorCategoryId: item.factorCategory?.id,
 					}),
-				disabled: true,
 				name: i18n.translate('edit'),
 			},
 			{

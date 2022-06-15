@@ -29,7 +29,6 @@ const useCaseTypeActions = () => {
 		actions: [
 			{
 				action: (item: TestrayCaseType) => modal.open(item),
-				disabled: true,
 				name: i18n.translate('edit'),
 			},
 			{

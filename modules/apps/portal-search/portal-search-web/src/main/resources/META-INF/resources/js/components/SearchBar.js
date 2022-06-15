@@ -256,7 +256,7 @@ export default function SearchBar({
 			searchParams.delete(paginationStartParameterName);
 		}
 
-		if (scope) {
+		if (letUserChooseScope) {
 			searchParams.set(scopeParameterName, scope);
 		}
 

@@ -48,6 +48,7 @@ import com.liferay.layout.admin.web.internal.exportimport.data.handler.helper.La
 import com.liferay.layout.configuration.LayoutExportImportConfiguration;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.model.LayoutClassedModelUsage;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -343,6 +344,26 @@ public class LayoutStagedModelDataHandler
 			}
 		}
 
+		if (layout.isTypeContent()) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+			if (layoutPageTemplateEntry == null) {
+				layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
+						fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+			}
+
+			if ((layoutPageTemplateEntry != null) &&
+				(layoutPageTemplateEntry.getType() ==
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
+
+				layoutElement.addAttribute(
+					"content-page-template", Boolean.TRUE.toString());
+			}
+		}
+
 		_exportCollectionLayoutCollection(portletDataContext, layout);
 
 		if (_layoutExportImportConfiguration.exportDraftLayout()) {
@@ -509,8 +530,12 @@ public class LayoutStagedModelDataHandler
 
 		boolean privateLayout = false;
 
-		if (portletDataContext.isPrivateLayout() &&
-			!layout.isTypeAssetDisplay()) {
+		boolean contentPageTemplate = GetterUtil.getBoolean(
+			layoutElement.attributeValue("content-page-template"));
+
+		if ((portletDataContext.isPrivateLayout() &&
+			 !layout.isTypeAssetDisplay()) ||
+			contentPageTemplate) {
 
 			privateLayout = true;
 		}

@@ -19,6 +19,7 @@ import com.liferay.commerce.account.item.selector.criterion.CommerceAccountGroup
 import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
+import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.item.selector.criterion.CommerceChannelItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -45,6 +46,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -52,6 +54,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -60,6 +63,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.ArrayList;
@@ -84,6 +88,7 @@ public class CPDefinitionsDisplayContext
 		CommerceAccountGroupRelService commerceAccountGroupRelService,
 		CommerceCatalogService commerceCatalogService,
 		CommerceChannelRelService commerceChannelRelService,
+		ConfigurationProvider configurationProvider,
 		CPDefinitionService cpDefinitionService, CPFriendlyURL cpFriendlyURL,
 		ItemSelector itemSelector) {
 
@@ -92,6 +97,7 @@ public class CPDefinitionsDisplayContext
 		_commerceAccountGroupRelService = commerceAccountGroupRelService;
 		_commerceCatalogService = commerceCatalogService;
 		_commerceChannelRelService = commerceChannelRelService;
+		_configurationProvider = configurationProvider;
 		_cpDefinitionService = cpDefinitionService;
 		_cpFriendlyURL = cpFriendlyURL;
 		_itemSelector = itemSelector;
@@ -398,7 +404,15 @@ public class CPDefinitionsDisplayContext
 
 		CPDefinition cpDefinition = getCPDefinition();
 
-		if ((cpDefinition != null) && cpDefinition.isDraft()) {
+		CProductVersionConfiguration cProductVersionConfiguration =
+			_configurationProvider.getConfiguration(
+				CProductVersionConfiguration.class,
+				new SystemSettingsLocator(
+					CProductVersionConfiguration.class.getName()));
+
+		if (((cpDefinition != null) && cpDefinition.isDraft()) ||
+			cProductVersionConfiguration.enabled()) {
+
 			HeaderActionModel saveAsDraftHeaderActionModel =
 				new HeaderActionModel(
 					null, liferayPortletResponse.getNamespace() + "fm",
@@ -407,7 +421,8 @@ public class CPDefinitionsDisplayContext
 					).setActionName(
 						"/cp_definitions/edit_cp_definition"
 					).buildString(),
-					null, "save-as-draft");
+					liferayPortletResponse.getNamespace() + "saveAsDraftButton",
+					"save-as-draft");
 
 			headerActionModels.add(saveAsDraftHeaderActionModel);
 		}
@@ -480,10 +495,39 @@ public class CPDefinitionsDisplayContext
 		return false;
 	}
 
+	public boolean showConfirmationMessage(CPDefinition cpDefinition)
+		throws PortalException {
+
+		if (cpDefinition == null) {
+			return false;
+		}
+
+		CProduct cProduct = cpDefinition.getCProduct();
+
+		if (cProduct.getPublishedCPDefinitionId() <= 0) {
+			return false;
+		}
+
+		List<CPDefinition> cProductCPDefinitions =
+			_cpDefinitionService.getCProductCPDefinitions(
+				cProduct.getCProductId(), WorkflowConstants.STATUS_DRAFT,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (((cProductCPDefinitions.size() == 1) &&
+			 !cpDefinition.equals(cProductCPDefinitions.get(0))) ||
+			(cProductCPDefinitions.size() > 1)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private final CommerceAccountGroupRelService
 		_commerceAccountGroupRelService;
 	private final CommerceCatalogService _commerceCatalogService;
 	private final CommerceChannelRelService _commerceChannelRelService;
+	private final ConfigurationProvider _configurationProvider;
 	private final CPDefinitionService _cpDefinitionService;
 	private final CPFriendlyURL _cpFriendlyURL;
 	private final ItemSelector _itemSelector;

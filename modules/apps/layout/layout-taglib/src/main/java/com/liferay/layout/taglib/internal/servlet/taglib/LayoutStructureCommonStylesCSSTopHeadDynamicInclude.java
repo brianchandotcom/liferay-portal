@@ -20,10 +20,8 @@ import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -51,8 +49,7 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 			HttpServletResponse httpServletResponse, String dynamicIncludeKey)
 		throws IOException {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571")) ||
-			Objects.equals(
+		if (Objects.equals(
 				ParamUtil.getString(
 					httpServletRequest, "p_l_mode", Constants.VIEW),
 				Constants.EDIT)) {

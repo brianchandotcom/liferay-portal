@@ -29,10 +29,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -53,20 +51,12 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public JSONArray getDataAttributesJSONArray() {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571"))) {
-			return null;
-		}
-
 		return JSONUtil.put("lfr-styles");
 	}
 
 	@Override
 	public JSONObject getDefaultEditableValuesJSONObject(
 		String html, String configuration) {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571"))) {
-			return null;
-		}
 
 		Document document = _getDocument(html);
 
@@ -83,10 +73,6 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 	public String processFragmentEntryLinkHTML(
 		FragmentEntryLink fragmentEntryLink, String html,
 		FragmentEntryProcessorContext fragmentEntryProcessorContext) {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571"))) {
-			return html;
-		}
 
 		Document document = _getDocument(html);
 
@@ -127,10 +113,6 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public void validateFragmentEntryHTML(String html, String configuration)
 		throws PortalException {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571"))) {
-			return;
-		}
 
 		Document document = _getDocument(html);
 

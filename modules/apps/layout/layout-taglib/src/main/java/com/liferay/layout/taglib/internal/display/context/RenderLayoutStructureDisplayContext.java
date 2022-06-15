@@ -57,12 +57,10 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -546,7 +544,7 @@ public class RenderLayoutStructureDisplayContext {
 	public String getStyle(StyledLayoutStructureItem styledLayoutStructureItem)
 		throws Exception {
 
-		StringBundler styleSB = new StringBundler(59);
+		StringBundler styleSB = new StringBundler(8);
 
 		JSONObject backgroundImageJSONObject =
 			styledLayoutStructureItem.getBackgroundImageJSONObject();
@@ -594,162 +592,12 @@ public class RenderLayoutStructureDisplayContext {
 		String backgroundImageURL = _getBackgroundImage(
 			backgroundImageJSONObject);
 
-		if (isCommonStylesFFEnabled()) {
-			if (Validator.isNotNull(backgroundImageURL)) {
-				styleSB.append("--lfr-background-image-");
-				styleSB.append(styledLayoutStructureItem.getItemId());
-				styleSB.append(": url(");
-				styleSB.append(backgroundImageURL);
-				styleSB.append(");");
-			}
-
-			return styleSB.toString();
-		}
-
 		if (Validator.isNotNull(backgroundImageURL)) {
-			styleSB.append("background-position: 50% 50%; background-repeat: ");
-			styleSB.append("no-repeat; background-size: cover; ");
-			styleSB.append("background-image: url(");
+			styleSB.append("--lfr-background-image-");
+			styleSB.append(styledLayoutStructureItem.getItemId());
+			styleSB.append(": url(");
 			styleSB.append(backgroundImageURL);
 			styleSB.append(");");
-		}
-
-		String backgroundColor = styledLayoutStructureItem.getBackgroundColor();
-
-		if (Validator.isNotNull(backgroundColor)) {
-			styleSB.append("background-color: ");
-			styleSB.append(getStyleFromStyleBookEntry(backgroundColor));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String borderColor = styledLayoutStructureItem.getBorderColor();
-
-		if (Validator.isNotNull(borderColor)) {
-			styleSB.append("border-color: ");
-			styleSB.append(getStyleFromStyleBookEntry(borderColor));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String borderRadius = styledLayoutStructureItem.getBorderRadius();
-
-		if (Validator.isNotNull(borderRadius)) {
-			styleSB.append("border-radius: ");
-			styleSB.append(getStyleFromStyleBookEntry(borderRadius));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String borderWidth = styledLayoutStructureItem.getBorderWidth();
-
-		if (Validator.isNotNull(borderWidth)) {
-			styleSB.append("border-style: solid; border-width: ");
-			styleSB.append(borderWidth);
-			styleSB.append("px;");
-		}
-
-		String shadow = styledLayoutStructureItem.getShadow();
-
-		if (Validator.isNotNull(shadow)) {
-			styleSB.append("box-shadow: ");
-			styleSB.append(getStyleFromStyleBookEntry(shadow));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String fontFamily = styledLayoutStructureItem.getFontFamily();
-
-		if (Validator.isNotNull(fontFamily)) {
-			styleSB.append("font-family: ");
-			styleSB.append(getStyleFromStyleBookEntry(fontFamily));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String fontSize = styledLayoutStructureItem.getFontSize();
-
-		if (Validator.isNotNull(fontSize)) {
-			styleSB.append("font-size: ");
-			styleSB.append(getStyleFromStyleBookEntry(fontSize));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String fontWeight = styledLayoutStructureItem.getFontWeight();
-
-		if (Validator.isNotNull(fontWeight)) {
-			styleSB.append("font-weight: ");
-			styleSB.append(getStyleFromStyleBookEntry(fontWeight));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String height = styledLayoutStructureItem.getHeight();
-
-		if (Validator.isNotNull(height)) {
-			styleSB.append("height: ");
-			styleSB.append(height);
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String maxHeight = styledLayoutStructureItem.getMaxHeight();
-
-		if (Validator.isNotNull(maxHeight)) {
-			styleSB.append("max-height: ");
-			styleSB.append(getStyleFromStyleBookEntry(maxHeight));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String maxWidth = styledLayoutStructureItem.getMaxWidth();
-
-		if (Validator.isNotNull(maxWidth)) {
-			styleSB.append("max-width: ");
-			styleSB.append(getStyleFromStyleBookEntry(maxWidth));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String minHeight = styledLayoutStructureItem.getMinHeight();
-
-		if (Validator.isNotNull(minHeight)) {
-			styleSB.append("min-height: ");
-			styleSB.append(getStyleFromStyleBookEntry(minHeight));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String minWidth = styledLayoutStructureItem.getMinWidth();
-
-		if (Validator.isNotNull(minWidth)) {
-			styleSB.append("min-width: ");
-			styleSB.append(getStyleFromStyleBookEntry(minWidth));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String opacityValue = styledLayoutStructureItem.getOpacity();
-
-		if (Validator.isNotNull(opacityValue)) {
-			int opacity = GetterUtil.getInteger(opacityValue, 100);
-
-			styleSB.append("opacity: ");
-			styleSB.append(opacity / 100.0);
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String overflow = styledLayoutStructureItem.getOverflow();
-
-		if (Validator.isNotNull(overflow)) {
-			styleSB.append("overflow: ");
-			styleSB.append(getStyleFromStyleBookEntry(overflow));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String textColor = styledLayoutStructureItem.getTextColor();
-
-		if (Validator.isNotNull(textColor)) {
-			styleSB.append("color: ");
-			styleSB.append(getStyleFromStyleBookEntry(textColor));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
-		String width = styledLayoutStructureItem.getWidth();
-
-		if (Validator.isNotNull(width)) {
-			styleSB.append("width: ");
-			styleSB.append(width);
-			styleSB.append(StringPool.SEMICOLON);
 		}
 
 		return styleSB.toString();
@@ -772,14 +620,6 @@ public class RenderLayoutStructureDisplayContext {
 			FrontendTokenMapping.TYPE_CSS_VARIABLE);
 
 		return "var(--" + cssVariable + ")";
-	}
-
-	public boolean isCommonStylesFFEnabled() {
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571"))) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private String _getBackgroundImage(JSONObject jsonObject) throws Exception {

@@ -104,7 +104,7 @@ public class RenderLayoutStructureDisplayContext {
 
 		sb.append(PortalUtil.getPortalURL(_httpServletRequest));
 		sb.append(PortalUtil.getPathContext());
-		sb.append("/c/info/add_info_item");
+		sb.append("/c/portal/add_info_item");
 
 		return sb.toString();
 	}

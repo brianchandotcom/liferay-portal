@@ -112,6 +112,10 @@ public class InfoItemFieldValues {
 		}
 
 		public Builder infoFieldValue(InfoFieldValue<Object> infoFieldValue) {
+			if (infoFieldValue == null) {
+				return this;
+			}
+
 			_infoFieldValues.add(infoFieldValue);
 
 			InfoField infoField = infoFieldValue.getInfoField();

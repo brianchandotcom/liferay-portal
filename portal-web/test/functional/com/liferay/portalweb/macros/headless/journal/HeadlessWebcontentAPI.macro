@@ -332,16 +332,16 @@ definition {
 		return "${response}";
 	}
 
-	macro versionStructureContent {
-		var response = HeadlessWebcontentAPI._versionStructureContent(
-			responseToParse = "${responseToParse}",
-			versionvalue = "${versionvalue}");
+	macro sortStructureContent {
+		var response = HeadlessWebcontentAPI._sortStructureContent(sortvalue = "${sortvalue}");
 
 		return "${response}";
 	}
 
-	macro sortStructureContent {
-		var response = HeadlessWebcontentAPI._sortStructureContent(sortvalue = "${sortvalue}");
+	macro versionStructureContent {
+		var response = HeadlessWebcontentAPI._versionStructureContent(
+			responseToParse = "${responseToParse}",
+			versionvalue = "${versionvalue}");
 
 		return "${response}";
 	}

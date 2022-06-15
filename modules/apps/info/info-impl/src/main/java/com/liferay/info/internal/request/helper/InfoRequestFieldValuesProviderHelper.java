@@ -19,6 +19,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -32,7 +33,10 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.math.BigDecimal;
 
 import java.text.ParseException;
 
@@ -41,6 +45,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -172,11 +177,33 @@ public class InfoRequestFieldValuesProviderHelper {
 			return _getDateInfoFieldValue(infoField, locale, value);
 		}
 
+		if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {
+			return _getNumberInfoFieldValue(infoField, locale, value);
+		}
+
 		if (infoField.getInfoFieldType() instanceof TextInfoFieldType) {
 			return _getInfoFieldValue(infoField, locale, (Object)value);
 		}
 
 		return null;
+	}
+
+	private InfoFieldValue<Object> _getNumberInfoFieldValue(
+		InfoField infoField, Locale locale, String value) {
+
+		Object objectValue = null;
+
+		Optional<Boolean> decimalOptional = infoField.getAttributeOptional(
+			NumberInfoFieldType.DECIMAL);
+
+		if (decimalOptional.orElse(false)) {
+			objectValue = new BigDecimal(value);
+		}
+		else {
+			objectValue = GetterUtil.getLong(value);
+		}
+
+		return _getInfoFieldValue(infoField, locale, objectValue);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

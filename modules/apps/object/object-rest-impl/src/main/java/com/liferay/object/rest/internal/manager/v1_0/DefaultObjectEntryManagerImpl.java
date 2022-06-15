@@ -783,14 +783,11 @@ public class DefaultObjectEntryManagerImpl
 
 		return TransformUtil.transform(
 			objectEntries,
-			objectEntry -> {
-				ObjectDefinition objectDefinition =
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-
-				return _toObjectEntry(
-					dtoConverterContext, objectDefinition, objectEntry);
-			});
+			objectEntry -> _toObjectEntry(
+				dtoConverterContext,
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectEntry.getObjectDefinitionId()),
+				objectEntry));
 	}
 
 	private ObjectEntry _toObjectEntry(

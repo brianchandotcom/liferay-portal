@@ -46,8 +46,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
@@ -168,13 +166,12 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FileEntryItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory,
-			_groupLocalService.fetchGroup(groupId), groupId,
-			portletNamespace + "selectAttachmentEntry",
-			fileItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				_groupLocalService.fetchGroup(groupId), groupId,
+				portletNamespace + "selectAttachmentEntry",
+				fileItemSelectorCriterion));
 	}
 
 	private int _getMaximumFileSize(

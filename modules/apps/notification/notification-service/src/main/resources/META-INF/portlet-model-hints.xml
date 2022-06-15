@@ -11,7 +11,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="notificationTemplateId" type="long" />
 		<field name="bcc" type="String" />
-		<field name="body" type="String" />
+		<field name="body" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="cc" type="String" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />

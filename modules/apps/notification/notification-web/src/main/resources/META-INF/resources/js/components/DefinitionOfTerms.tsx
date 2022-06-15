@@ -140,7 +140,7 @@ export function DefinitionOfTerms({baseResourceURL}: IProps) {
 			createResourceURL(baseResourceURL, {
 				objectDefinitionId: objectDefinition.id,
 				p_p_resource_id:
-					'/notification_templates/get_notification_template_terms',
+					'/notification_templates/notification_template_terms',
 			}).toString()
 		);
 

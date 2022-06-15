@@ -22,7 +22,9 @@ import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
+import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.order.importer.type.CommerceOrderImporterTypeRegistry;
+import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.percentage.PercentageFormatter;
@@ -33,6 +35,7 @@ import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
+import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -116,14 +119,15 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 				commerceOrderContentDisplayContext =
 					new CommerceOrderContentDisplayContext(
 						_commerceAddressService, _commerceChannelLocalService,
-						_commerceOrderHttpHelper,
+						_commerceOrderEngine, _commerceOrderHttpHelper,
 						_commerceOrderImporterTypeRegistry,
 						_commerceOrderNoteService,
 						_commerceOrderPriceCalculation, _commerceOrderService,
-						_commerceOrderTypeService,
+						_commerceOrderStatusRegistry, _commerceOrderTypeService,
 						_commercePaymentMethodGroupRelLocalService,
 						_commercePaymentMethodRegistry,
-						_commerceShipmentItemService, _dlAppLocalService,
+						_commerceShipmentItemService, _commerceTermEntryService,
+						_dlAppLocalService,
 						_portal.getHttpServletRequest(renderRequest),
 						_itemSelector, _modelResourcePermission,
 						_percentageFormatter, _portletResourcePermission);
@@ -191,6 +195,9 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
+	private CommerceOrderEngine _commerceOrderEngine;
+
+	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
 	@Reference
@@ -207,6 +214,9 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
+	private CommerceOrderStatusRegistry _commerceOrderStatusRegistry;
+
+	@Reference
 	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
@@ -221,6 +231,9 @@ public class CommerceOpenOrderContentPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;
+
+	@Reference
+	private CommerceTermEntryService _commerceTermEntryService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

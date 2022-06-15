@@ -18,7 +18,6 @@ import React, {useState} from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
-import {config} from '../../config/index';
 import {ResizeContextProvider} from '../../contexts/ResizeContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
@@ -26,7 +25,6 @@ import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataIte
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import isItemEmpty from '../../utils/isItemEmpty';
-import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import Topper from '../topper/Topper';
 import Row from './Row';
 
@@ -54,37 +52,13 @@ const RowWithControls = React.forwardRef(({children, item}, ref) => {
 	const [setRef, itemElement] = useSetRef(ref);
 	const {verticalAlignment} = rowResponsiveConfig;
 
-	const {
-		display,
-		height,
-		marginBottom,
-		marginLeft,
-		marginRight,
-		marginTop,
-		maxWidth,
-		minWidth,
-		width,
-	} = rowResponsiveConfig.styles;
+	const {height} = rowResponsiveConfig.styles;
 
 	return (
 		<Topper
-			className={classNames({
-				[getLayoutDataItemTopperUniqueClassName(
-					item.itemId
-				)]: config.featureFlagLps132571,
-				[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),
-				[`ml-${marginLeft}`]: isValidSpacingOption(marginLeft),
-				[`mr-${marginRight}`]: isValidSpacingOption(marginRight),
-				[`mt-${marginTop}`]: isValidSpacingOption(marginTop),
-			})}
+			className={getLayoutDataItemTopperUniqueClassName(item.itemId)}
 			item={item}
 			itemElement={itemElement}
-			style={{
-				display,
-				maxWidth,
-				minWidth,
-				width,
-			}}
 		>
 			<Row
 				className={classNames({

@@ -393,11 +393,7 @@ const Collection = React.memo(
 				className={classNames(
 					'page-editor__collection',
 					getLayoutDataItemUniqueClassName(item.itemId),
-					{
-						[getLayoutDataItemClassName(
-							item.type
-						)]: config.featureFlagLps132571,
-					}
+					getLayoutDataItemClassName(item.type)
 				)}
 				ref={ref}
 				style={style}

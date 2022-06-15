@@ -17,7 +17,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import {config} from '../../config/index';
 import {
 	useGetContent,
 	useGetFieldValue,
@@ -33,16 +32,12 @@ import {
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import checkStylesFF from '../../utils/checkStylesFF';
 import resolveEditableConfig from '../../utils/editable-value/resolveEditableConfig';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
-import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
-import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import getLayoutDataItemCssClasses from '../../utils/getLayoutDataItemCssClasses';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import hasInnerCommonStyles from '../../utils/hasInnerCustomStyles';
-import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
 import {useId} from '../../utils/useId';
 import UnsafeHTML from '../UnsafeHTML';
@@ -154,7 +149,9 @@ const FragmentContent = ({
 					'[data-lfr-styles]'
 				);
 
-				stylesElement.className = `${stylesElement.className} ${cssClasses}`;
+				if (stylesElement) {
+					stylesElement.className = `${stylesElement.className} ${cssClasses}`;
+				}
 			}
 
 			Promise.all(
@@ -217,36 +214,7 @@ const FragmentContent = ({
 		selectedViewportSize
 	);
 
-	const {
-		backgroundColor,
-		backgroundImage,
-		borderColor,
-		borderRadius,
-		borderWidth,
-		display,
-		fontFamily,
-		fontSize,
-		fontWeight,
-		height,
-		marginBottom,
-		marginLeft,
-		marginRight,
-		marginTop,
-		maxHeight,
-		maxWidth,
-		minHeight,
-		minWidth,
-		opacity,
-		overflow,
-		paddingBottom,
-		paddingLeft,
-		paddingRight,
-		paddingTop,
-		shadow,
-		textAlign,
-		textColor,
-		width,
-	} = responsiveConfig.styles;
+	const {backgroundImage} = responsiveConfig.styles;
 
 	const elementId = useId();
 	const backgroundImageValue = useBackgroundImageValue(
@@ -257,46 +225,16 @@ const FragmentContent = ({
 
 	const style = {};
 
-	style.backgroundColor = getFrontendTokenValue(backgroundColor);
-	style.borderColor = getFrontendTokenValue(borderColor);
-	style.borderRadius = getFrontendTokenValue(borderRadius);
-	style.color = getFrontendTokenValue(textColor);
-	style.fontFamily = getFrontendTokenValue(fontFamily);
-	style.fontSize = getFrontendTokenValue(fontSize);
-	style.fontWeight = getFrontendTokenValue(fontWeight);
-	style.height = height;
-	style.maxHeight = maxHeight;
-	style.minHeight = minHeight;
-	style.opacity = opacity ? opacity / 100 : null;
-	style.overflow = overflow;
-
-	if (borderWidth) {
-		style.borderWidth = `${borderWidth}px`;
-		style.borderStyle = 'solid';
-	}
-
-	if (!withinTopper) {
-		style.boxShadow = getFrontendTokenValue(shadow);
-		style.display = display;
-		style.maxWidth = maxWidth;
-		style.minWidth = minWidth;
-		style.width = width;
-	}
-
 	if (backgroundImageValue.url) {
-		style.backgroundImage = `url(${backgroundImageValue.url})`;
-		style.backgroundPosition = '50% 50%';
-		style.backgroundRepeat = 'no-repeat';
-		style.backgroundSize = 'cover';
+		style[
+			`--lfr-background-image-${item.itemId}`
+		] = `url(${backgroundImageValue.url})`;
 
 		if (backgroundImage?.fileEntryId) {
 			style['--background-image-file-entry-id'] =
 				backgroundImage.fileEntryId;
 		}
 	}
-
-	const textAlignDefaultValue = getCommonStyleByName('textAlign')
-		.defaultValue;
 
 	return (
 		<>
@@ -308,9 +246,8 @@ const FragmentContent = ({
 				<UnsafeHTML
 					className={classNames(
 						className,
-						'page-editor__fragment-content',
+						`page-editor__fragment-content ${fragmentEntryLink?.cssClass}`,
 						{
-							[`${fragmentEntryLink?.cssClass}`]: config.featureFlagLps132571,
 							[getLayoutDataItemCssClasses(item)]:
 								Liferay.FeatureFlags['LPS-147511'] &&
 								!hasInnerCommonStyles(fragmentEntryLink),
@@ -318,37 +255,6 @@ const FragmentContent = ({
 								item.itemId
 							)]: !hasInnerCommonStyles(fragmentEntryLink),
 							'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
-							[`mb-${marginBottom}`]:
-								isValidSpacingOption(marginBottom) &&
-								!withinTopper,
-							[`ml-${marginLeft}`]:
-								isValidSpacingOption(marginLeft) &&
-								!withinTopper,
-							[`mr-${marginRight}`]:
-								isValidSpacingOption(marginRight) &&
-								!withinTopper,
-							[`mt-${marginTop}`]:
-								isValidSpacingOption(marginTop) &&
-								!withinTopper,
-							[`pb-${paddingBottom}`]: isValidSpacingOption(
-								paddingBottom
-							),
-							[`pl-${paddingLeft}`]: isValidSpacingOption(
-								paddingLeft
-							),
-							[`pr-${paddingRight}`]: isValidSpacingOption(
-								paddingRight
-							),
-							[`pt-${paddingTop}`]: isValidSpacingOption(
-								paddingTop
-							),
-							[textAlign
-								? textAlign.startsWith('text-')
-									? textAlign
-									: `text-${textAlign}`
-								: `text-${textAlignDefaultValue}`]:
-								!config.featureFlagLps132571 &&
-								textAlignDefaultValue,
 						}
 					)}
 					contentRef={elementRef}
@@ -358,7 +264,7 @@ const FragmentContent = ({
 					id={elementId}
 					markup={content}
 					onRender={withinTopper ? onRender : () => {}}
-					style={checkStylesFF(item.itemId, style)}
+					style={style}
 				/>
 
 				{backgroundImageValue.mediaQueries ? (

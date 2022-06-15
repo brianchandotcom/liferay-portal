@@ -21,7 +21,6 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 import {CollectionWithControls} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
-import {config} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {
 	ControlsProvider,
 	useSelectItem,
@@ -146,8 +145,6 @@ describe('CollectionWithControls', () => {
 	});
 
 	it('set classes for referencing the item', () => {
-		config.featureFlagLps132571 = true;
-
 		const {baseElement} = renderCollection();
 
 		const classes = [

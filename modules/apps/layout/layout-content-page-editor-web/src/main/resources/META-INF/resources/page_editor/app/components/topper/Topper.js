@@ -110,7 +110,6 @@ function TopperContent({
 	isHovered,
 	item,
 	itemElement,
-	style,
 }) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const commentsPanelId = config.sidebarPanels?.comments?.sidebarPanelId;
@@ -221,9 +220,8 @@ function TopperContent({
 				hoverItem(item.itemId);
 			}}
 			ref={canBeDragged ? itemHandlerRef : null}
-			style={config.featureFlagLps132571 ? {} : style}
 		>
-			{(isActive || isHighlighted) && style?.display !== 'none' ? (
+			{isActive || isHighlighted ? (
 				<TopperLabel
 					itemElement={itemElement}
 					style={isDraggingSource ? {opacity: 0} : {}}

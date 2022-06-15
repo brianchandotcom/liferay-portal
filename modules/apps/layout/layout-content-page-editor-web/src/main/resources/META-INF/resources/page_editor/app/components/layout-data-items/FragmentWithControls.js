@@ -18,17 +18,13 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
-import {config} from '../../config/index';
 import {
 	useHoveredItemId,
 	useHoveredItemType,
 } from '../../contexts/ControlsContext';
-import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
-import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
+import {useSelectorCallback} from '../../contexts/StoreContext';
 import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
-import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import hasInnerCommonStyles from '../../utils/hasInnerCustomStyles';
-import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import FragmentContent from '../fragment-content/FragmentContent';
 import Topper from '../topper/Topper';
 import getAllPortals from './getAllPortals';
@@ -38,37 +34,13 @@ const FIELD_TYPES = ['itemSelector', 'collectionSelector'];
 
 const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	const [hovered, setHovered] = useState(false);
-	const selectedViewportSize = useSelector(
-		(state) => state.selectedViewportSize
-	);
 	const fragmentEntryLink = useSelectorCallback(
 		(state) => state.fragmentEntryLinks[item.config.fragmentEntryLinkId],
 		[item.config.fragmentEntryLinkId]
 	);
 
 	const getPortals = useCallback((element) => getAllPortals(element), []);
-	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 	const [setRef, itemElement] = useSetRef(ref);
-
-	const {
-		display,
-		marginBottom,
-		marginLeft,
-		marginRight,
-		marginTop,
-		maxWidth,
-		minWidth,
-		shadow,
-		width,
-	} = itemConfig.styles;
-
-	const style = {};
-
-	style.boxShadow = getFrontendTokenValue(shadow);
-	style.display = display;
-	style.maxWidth = maxWidth;
-	style.minWidth = minWidth;
-	style.width = width;
 
 	return (
 		<>
@@ -79,18 +51,13 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 			/>
 			<Topper
 				className={classNames({
-					[getLayoutDataItemTopperUniqueClassName(item.itemId)]:
-						config.featureFlagLps132571 &&
-						!hasInnerCommonStyles(fragmentEntryLink),
-					[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),
-					[`ml-${marginLeft}`]: isValidSpacingOption(marginLeft),
-					[`mr-${marginRight}`]: isValidSpacingOption(marginRight),
-					[`mt-${marginTop}`]: isValidSpacingOption(marginTop),
+					[getLayoutDataItemTopperUniqueClassName(
+						item.itemId
+					)]: !hasInnerCommonStyles(fragmentEntryLink),
 					'page-editor__topper--hovered': hovered,
 				})}
 				item={item}
 				itemElement={itemElement}
-				style={style}
 			>
 				<FragmentContent
 					elementRef={setRef}

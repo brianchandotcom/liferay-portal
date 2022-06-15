@@ -25,7 +25,9 @@ const FactorOptionsModal = () => {
 		<>
 			<ListView
 				forceRefetch={formModal.forceRefetch}
-				managementToolbarProps={{addButton: formModal.modal.open}}
+				managementToolbarProps={{
+					addButton: () => formModal.modal.open(),
+				}}
 				query={getFactorOptions}
 				tableProps={{
 					actions,

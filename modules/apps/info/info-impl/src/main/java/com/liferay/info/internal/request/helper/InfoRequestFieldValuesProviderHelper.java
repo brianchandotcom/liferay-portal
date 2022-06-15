@@ -16,6 +16,7 @@ package com.liferay.info.internal.request.helper;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -82,6 +84,13 @@ public class InfoRequestFieldValuesProviderHelper {
 		return infoFieldValues;
 	}
 
+	private InfoFieldValue<Object> _getBooleanInfoFieldValue(
+		InfoField<?> infoField, Locale locale, String value) {
+
+		return _getInfoFieldValue(
+			infoField, locale, GetterUtil.getBoolean(value));
+	}
+
 	private InfoFieldValue<Object> _getDateInfoFieldValue(
 		InfoField<?> infoField, Locale locale, String value) {
 
@@ -128,6 +137,10 @@ public class InfoRequestFieldValuesProviderHelper {
 
 	private InfoFieldValue<Object> _getInfoFieldValue(
 		InfoField<?> infoField, Locale locale, String value) {
+
+		if (infoField.getInfoFieldType() instanceof BooleanInfoFieldType) {
+			return _getBooleanInfoFieldValue(infoField, locale, value);
+		}
 
 		if (infoField.getInfoFieldType() instanceof DateInfoFieldType) {
 			return _getDateInfoFieldValue(infoField, locale, value);

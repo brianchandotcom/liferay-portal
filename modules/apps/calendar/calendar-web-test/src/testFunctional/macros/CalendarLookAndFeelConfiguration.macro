@@ -1,5 +1,7 @@
 definition {
 
+
+
 	macro checkToggleSwitch {
 		Click(
 			key_labelName = "${labelName}",
@@ -209,26 +211,24 @@ definition {
 	}
 
 	macro selectSameForAllInBorderStyles {
-		if ("${nameColumn}" == "Border Width") {
-			Click(
-				key_nameColumn = "border-width",
-				locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH",
-				value1 = "${nameColumn}");
+		if (isSet(borderWidthOption)) {
+			Click.javaScriptClick(
+				key_nameColumn = "${borderWidthOption}",
+				locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH_BUTTON");
 		}
 
-		if ("${nameColumn}" == "Border Style") {
-			Click(
-				key_nameColumn = "border-style",
-				locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH",
-				value1 = "${nameColumn}");
+		if (isSet(borderStyleOption)) {
+			Click.javaScriptClick(
+				key_nameColumn = "${borderStyleOption}",
+				locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH_BUTTON");
+		}
+		
+		if (isSet(borderColorOption)) {
+			Click.javaScriptClick(
+				key_nameColumn = "${borderColorOption}",
+				locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH_BUTTON");
 		}
 
-		if ("${nameColumn}" == "Border Color") {
-			Click(
-				key_nameColumn = "border-color",
-				locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH",
-				value1 = "${nameColumn}");
-		}
 	}
 
 	macro selectTab {
@@ -258,6 +258,36 @@ definition {
 				locator1 = "CalendarLookAndFeelConfiguration#BORDER_ARROUND",
 				value1 = "${borderName}");
 		}
+	}
+
+	macro chooseBackgroundColor {
+        Type(
+            locator1 = "CalendarLookAndFeelConfiguration#FIELD_BACKGROUND_COLOR",
+            value1 = "${colorValue}");
+    }
+
+	macro selectFontStyle {
+        Select(
+            locator1 = "CalendarLookAndFeelConfiguration#SELECT_FONT_STYLE",
+			value1 = "${fontOption}");
+    }
+
+	macro chooseFontColor {
+        Type(
+            locator1 = "CalendarLookAndFeelConfiguration#COLOR_FONT_STYLE",
+            value1 = "${colorValue}");
+    }
+
+	macro checkToggleFontStyleBold {
+		Click(
+			key_labelName = "Bold",
+			locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH_LABEL");		
+	}
+
+	macro checkToggleFontStyleItalic {
+		Click(
+			key_labelName = "Italic",
+			locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH_LABEL");		
 	}
 
 	macro viewCssValues {

@@ -42,8 +42,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOGGLE_SWITCH</td>
-	<td>//div[contains(@class, '${key_nameColumn}')]//input[contains(@class, 'field toggle-switch-check')]</td>
+	<td>TOGGLE_SWITCH_BUTTON</td>
+	<td>//span[contains(., '${key_nameColumn}')]/../..//input[contains(@class, 'field toggle-switch')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,6 +74,21 @@
 <tr>
 	<td>TOGGLE_SWITCH_LABEL</td>
 	<td>//label[contains(@class, 'toggle-switch')]//..//span[contains(@class, 'toggle-switch-label') and contains(text(), '${key_labelName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_BACKGROUND_COLOR</td>
+	<td>//div[contains(@class, 'clay-color-picker') and contains(label, 'Background Color')]//input[contains(@class, 'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FONT_STYLE</td>
+	<td>//div[contains(@class, 'col-md-4')]//select[contains(@id, 'fontFamily')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLOR_FONT_STYLE</td>
+	<td>//div[contains(@class, 'col-md-4')]//div[contains(@class, 'clay-color-picker') and contains(label, 'Color')]//input[contains(@class, 'form-control')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -98,29 +98,141 @@ definition {
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify Text Styles in the look and feel configuration page"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test ApplyModifiedTextStyles {
+		CalendarLookAndFeelConfiguration.gotoLookAndFeelConfiguration();
 
-		// TODO LRQA-71964 ApplyModifiedTextStyles pending implementation
+		CalendarLookAndFeelConfiguration.selectTab(tabName = "Text Styles");
+
+		CalendarLookAndFeelConfiguration.chooseFontColor(colorValue = "7F26FF");
+
+		CalendarLookAndFeelConfiguration.checkToggleFontStyleBold();
+
+		CalendarLookAndFeelConfiguration.checkToggleFontStyleItalic();
+
+		Button.clickSave();
+
+		CalendarNavigator.closeModal(modalTitle = "Look and Feel Configuration");
+
+		Refresh();
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "color",
+			cssValue = "#7f26ff");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "font-style",
+			cssValue = "italic");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "font-weight",
+			cssValue = "bold");
 
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify background in the Background Style tab"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanModifyBackground {
+		CalendarLookAndFeelConfiguration.gotoLookAndFeelConfiguration();
 
-		// TODO LRQA-71965 CanModifyBackground pending implementation
+		CalendarLookAndFeelConfiguration.selectTab(tabName = "Background Styles");
+
+		CalendarLookAndFeelConfiguration.chooseBackgroundColor(colorValue = "F8F2FF");	
+
+		Button.clickSave();
+
+		CalendarNavigator.closeModal(modalTitle = "Look and Feel Configuration");
+
+		Refresh();
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "background-color",
+			cssValue = "#f8f2ff");
 
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify border width, border style and border color in the border style tab"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanModifyBorder {
+		CalendarLookAndFeelConfiguration.gotoLookAndFeelConfiguration();
 
-		// TODO LRQA-71966 CanModifyBorder pending implementation
+		CalendarLookAndFeelConfiguration.selectTab(tabName = "Border Styles");
+
+		CalendarLookAndFeelConfiguration.fillBorderWidthColumn(
+			fieldTextTop = "40",
+			optionTop = "px",
+			fieldTextRight = "60",
+			optionRight = "px",
+			fieldTextBottom = "40",
+			optionBottom = "px",
+			fieldTextLeft = "60",
+			optionLeft = "px");
+
+		CalendarLookAndFeelConfiguration.fillBorderColorColumn(
+			colorValueTop = "FF0D0D",
+			colorValueRight = "FF8A1C",
+			colorValueBottom = "7F26FF",
+			colorValueLeft = "FF21A0");
+
+		Button.clickSave();
+
+		CalendarNavigator.closeModal(modalTitle = "Look and Feel Configuration");
+
+		Refresh();
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "border-top-width",
+			cssValue = "40px");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "border-right-width",
+			cssValue = "60px");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "border-bottom-width",
+			cssValue = "40px");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "border-left-width",
+			cssValue = "60px");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "border-top-color",
+			cssValue = "#ff0d0d");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "border-right-color",
+			cssValue = "#ff8a1c");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "border-bottom-color",
+			cssValue = "#7f26ff");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "border-left-color",
+			cssValue = "#ff21a0");
+
+		CalendarLookAndFeelConfiguration.gotoLookAndFeelConfiguration();
+
+		CalendarLookAndFeelConfiguration.selectTab(tabName = "Border Styles");
+
+		CalendarLookAndFeelConfiguration.selectSameForAllInBorderStyles(borderWidthOption = "Border Width");
+
+		CalendarLookAndFeelConfiguration.selectSameForAllInBorderStyles(borderColorOption = "Border Color");
+
+		Button.clickSave();
+
+		CalendarNavigator.closeModal(modalTitle = "Look and Feel Configuration");
+
+		Refresh();
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "border-width",
+			cssValue = "40px");		
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "border-color",
+			cssValue = "#ff0d0d");
 
 	}
 

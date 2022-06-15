@@ -190,6 +190,10 @@ public class ObjectEntryInfoItemFormProvider
 						_objectFieldLocalService.getObjectFields(
 							objectDefinitionId)) {
 
+					if (objectField.isSystem()) {
+						continue;
+					}
+
 					if (Validator.isNotNull(
 							objectField.getRelationshipType())) {
 

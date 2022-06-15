@@ -189,10 +189,17 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				PortalUtil.getClassName(classNameId));
 
 		if (infoItemFormProvider != null) {
+			HttpServletRequest httpServletRequest = getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			try {
 				return infoItemFormProvider.getInfoForm(
 					String.valueOf(
-						formStyledLayoutStructureItem.getClassTypeId()));
+						formStyledLayoutStructureItem.getClassTypeId()),
+					themeDisplay.getScopeGroupId());
 			}
 			catch (NoSuchFormVariationException noSuchFormVariationException) {
 				if (_log.isDebugEnabled()) {

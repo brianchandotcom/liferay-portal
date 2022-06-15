@@ -27,6 +27,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.PaginationBarTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.RowTag;
 import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -69,6 +70,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -809,6 +811,28 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write("<input name=\"formItemId\" type=\"hidden\" value=\"");
 		jspWriter.write(formStyledLayoutStructureItem.getItemId());
 		jspWriter.write("\">");
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		if (SessionErrors.contains(
+				httpServletRequest,
+				formStyledLayoutStructureItem.getItemId())) {
+
+			InfoFormException infoFormException =
+				(InfoFormException)SessionErrors.get(
+					httpServletRequest,
+					formStyledLayoutStructureItem.getItemId());
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			jspWriter.write("<div class=\"alert alert-danger\">");
+			jspWriter.write(
+				infoFormException.getLocalizedMessage(
+					themeDisplay.getLocale()));
+			jspWriter.write("</div>");
+		}
 
 		_renderLayoutStructure(
 			layoutStructureItem.getChildrenItemIds(), collectionElementIndex,

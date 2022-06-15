@@ -103,6 +103,17 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				originalHttpServletRequest, formItemId,
 				infoFormValidationException);
 		}
+		catch (InfoFormException infoFormException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(infoFormException);
+			}
+
+			String formItemId = ParamUtil.getString(
+				httpServletRequest, "formItemId");
+
+			SessionErrors.add(
+				originalHttpServletRequest, formItemId, infoFormException);
+		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Unable to add info item", exception);

@@ -416,17 +416,23 @@ public class ObjectFieldLocalServiceTest {
 		// Duplicate name
 
 		try {
-			_testAddSystemObjectField(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, "Able", "able",
-					_getObjectFieldSettings(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT)),
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, "Able", "able",
-					_getObjectFieldSettings(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT)));
+			ObjectDefinition objectDefinition =
+				ObjectDefinitionTestUtil.addObjectDefinition(
+					_objectDefinitionLocalService,
+					Collections.singletonList(
+						ObjectFieldUtil.createObjectField(
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING, "Able", "able",
+							_getObjectFieldSettings(
+								ObjectFieldConstants.BUSINESS_TYPE_TEXT))));
+
+			_objectFieldLocalService.addSystemObjectField(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
+				LocalizedMapUtil.getLocalizedMap("Able"), "able", false);
 
 			Assert.fail();
 		}

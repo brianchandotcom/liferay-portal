@@ -1,5 +1,15 @@
 definition {
 
+	macro assertOptionsInShipmentSteps {
+		AssertElementPresent(
+			key_ercColumnValue = "${key_ercColumnValue}",
+			locator1 = "CommerceOrders#SHIPMENT_ITEM_ERC_COLUMN");
+
+		AssertElementNotPresent(
+			key_text = "Edit",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+	}
+
 	macro assertShipmentItemWarehouseAndQuantityInShipment {
 		AssertTextEquals(
 			key_columnNumber = "4",
@@ -12,16 +22,6 @@ definition {
 			key_entryName = "${shipmentItemSku}",
 			locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
 			value1 = "${quantityInShipment}");
-	}
-
-	macro assertOptionsInShipmentSteps {
-		AssertElementPresent(
-			locator1 = "CommerceOrders#SHIPMENT_ITEM_ERC_COLUMN",
-			key_ercColumnValue = "${key_ercColumnValue}");
-
-		AssertElementNotPresent(
-			key_text = "Edit",
-			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
 	}
 
 }

@@ -558,10 +558,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 							BasicFileAttributes basicFileAttributes)
 						throws IOException {
 
-						if (dirPath.equals(destinationPath)) {
-							return FileVisitResult.SKIP_SUBTREE;
-						}
-
 						Files.createDirectories(
 							destinationPath.resolve(
 								sourcePath.relativize(dirPath)));

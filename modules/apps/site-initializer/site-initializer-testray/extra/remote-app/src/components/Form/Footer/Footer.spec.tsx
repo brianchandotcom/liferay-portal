@@ -13,6 +13,7 @@
  */
 
 import {fireEvent, render} from '@testing-library/react';
+import {vi} from 'vitest';
 
 import Footer from './Footer';
 
@@ -28,8 +29,8 @@ describe('Footer', () => {
 	});
 
 	it('renders and perform actions', () => {
-		const cancelFn = jest.fn();
-		const submitFn = jest.fn();
+		const cancelFn = vi.fn();
+		const submitFn = vi.fn();
 
 		const {queryByText} = render(
 			<Footer onClose={cancelFn} onSubmit={submitFn} />

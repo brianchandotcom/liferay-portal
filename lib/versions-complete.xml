@@ -2645,88 +2645,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.petra.json.web.service.client.jar!commons-codec.jar</file-name>
-				<version>1.7</version>
-				<project-name>Commons Codec</project-name>
-				<project-url>http://commons.apache.org/codec/</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.petra.json.web.service.client.jar!httpasyncclient.jar</file-name>
-				<version>4.1.4</version>
-				<project-name>Apache HttpAsyncClient</project-name>
-				<project-url>http://hc.apache.org/httpcomponents-asyncclient</project-url>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.petra.json.web.service.client.jar!httpclient.jar</file-name>
-				<version>4.5.13</version>
-				<project-name>Apache HttpClient</project-name>
-				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.petra.json.web.service.client.jar!httpcore-nio.jar</file-name>
-				<version>4.4.14</version>
-				<project-name>Apache HttpCore NIO</project-name>
-				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.petra.json.web.service.client.jar!httpcore.jar</file-name>
-				<version>4.4.14</version>
-				<project-name>HttpComponents Apache HttpCore</project-name>
-				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.petra.json.web.service.client.jar!signpost-commonshttp4.jar</file-name>
-				<version>1.2.1.2</version>
-				<project-name>signpost-commonshttp4</project-name>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>com.liferay.petra.json.web.service.client.jar!signpost-core.jar</file-name>
-				<version>1.2.1.2</version>
-				<project-name>signpost-core</project-name>
-				<licenses>
-					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.portal.cache.ehcache.impl.jar!net.sf.ehcache.jar</file-name>
 				<version>2.10.6.LIFERAY-PATCHED-2</version>
 				<project-name>ehcache</project-name>
@@ -2888,6 +2806,88 @@
 					<license>
 						<license-name>Go License</license-name>
 						<license-url>https://golang.org/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.json.web.service.client.jar!commons-codec.jar</file-name>
+				<version>1.7</version>
+				<project-name>Commons Codec</project-name>
+				<project-url>http://commons.apache.org/codec/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.json.web.service.client.jar!httpasyncclient.jar</file-name>
+				<version>4.1.4</version>
+				<project-name>Apache HttpAsyncClient</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-asyncclient</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.json.web.service.client.jar!httpclient.jar</file-name>
+				<version>4.5.13</version>
+				<project-name>Apache HttpClient</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.json.web.service.client.jar!httpcore-nio.jar</file-name>
+				<version>4.4.14</version>
+				<project-name>Apache HttpCore NIO</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.json.web.service.client.jar!httpcore.jar</file-name>
+				<version>4.4.14</version>
+				<project-name>HttpComponents Apache HttpCore</project-name>
+				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.json.web.service.client.jar!signpost-commonshttp4.jar</file-name>
+				<version>1.2.1.2</version>
+				<project-name>signpost-commonshttp4</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.json.web.service.client.jar!signpost-core.jar</file-name>
+				<version>1.2.1.2</version>
+				<project-name>signpost-core</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

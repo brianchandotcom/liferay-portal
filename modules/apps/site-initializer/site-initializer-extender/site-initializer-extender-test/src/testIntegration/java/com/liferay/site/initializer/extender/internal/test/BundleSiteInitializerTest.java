@@ -427,7 +427,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(clientExtensionEntry);
 
-		CETCustomElement cetCustomElement = _cetFactory.cetCustomElement(
+		CETCustomElement cetCustomElement = (CETCustomElement)_cetFactory.cet(
 			clientExtensionEntry);
 
 		Assert.assertEquals(

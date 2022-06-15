@@ -28,7 +28,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.RowTag;
 import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.InfoFormException;
+import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.exception.NoSuchFormVariationException;
+import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -827,10 +829,28 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			String errorMessage = infoFormException.getLocalizedMessage(
+				themeDisplay.getLocale());
+
+			if (infoFormException instanceof InfoFormValidationException) {
+				InfoFormValidationException infoFormValidationException =
+					(InfoFormValidationException)infoFormException;
+
+				if (Validator.isNotNull(
+						infoFormValidationException.getInfoFieldUniqueId())) {
+
+					InfoField infoField = infoForm.getInfoField(
+						infoFormValidationException.getInfoFieldUniqueId());
+
+					errorMessage =
+						infoFormValidationException.getLocalizedMessage(
+							infoField.getLabel(themeDisplay.getLocale()),
+							themeDisplay.getLocale());
+				}
+			}
+
 			jspWriter.write("<div class=\"alert alert-danger\">");
-			jspWriter.write(
-				infoFormException.getLocalizedMessage(
-					themeDisplay.getLocale()));
+			jspWriter.write(errorMessage);
 			jspWriter.write("</div>");
 		}
 

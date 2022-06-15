@@ -91,21 +91,44 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 				</p>
 
 				<%
-				Date displayDate = assetPublisherDisplayContext.isShowCreateDate() ? assetEntry.getCreateDate() : null;
+				StringBundler sb = new StringBundler(13);
+
+				if (assetPublisherDisplayContext.isShowCreateDate() && (assetEntry.getCreateDate() != null)) {
+					sb.append(LanguageUtil.get(request, "created"));
+					sb.append(StringPool.SPACE);
+					sb.append(dateFormatDate.format(assetEntry.getCreateDate()));
+					sb.append(" - ");
+				}
 
 				if (assetPublisherDisplayContext.isShowPublishDate() && (assetEntry.getPublishDate() != null)) {
-					displayDate = assetEntry.getPublishDate();
+					sb.append(LanguageUtil.get(request, "published"));
+					sb.append(StringPool.SPACE);
+					sb.append(dateFormatDate.format(assetEntry.getPublishDate()));
+					sb.append(" - ");
 				}
-				else if (assetPublisherDisplayContext.isShowModifiedDate() && (assetEntry.getModifiedDate() != null)) {
-					displayDate = assetEntry.getModifiedDate();
+
+				if (assetPublisherDisplayContext.isShowExpirationDate() && (assetEntry.getExpirationDate() != null)) {
+					sb.append(LanguageUtil.get(request, "expired"));
+					sb.append(StringPool.SPACE);
+					sb.append(dateFormatDate.format(assetEntry.getExpirationDate()));
+					sb.append(" - ");
+				}
+
+				if (assetPublisherDisplayContext.isShowModifiedDate() && (assetEntry.getModifiedDate() != null)) {
+					Date modifiedDate = assetEntry.getModifiedDate();
+
+					String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+
+					sb.append(LanguageUtil.format(request, "modified-x-ago", modifiedDateDescription));
+				}
+				else if (sb.index() > 1) {
+					sb.setIndex(sb.index() - 1);
 				}
 				%>
 
-				<c:if test="<%= displayDate != null %>">
-					<p class="list-group-subtitle text-truncate">
-						<%= dateFormatDateTime.format(displayDate) %>
-					</p>
-				</c:if>
+				<p class="list-group-subtitle text-truncate">
+					<%= sb.toString() %>
+				</p>
 
 				<c:if test="<%= assetPublisherDisplayContext.isShowCategories() || assetPublisherDisplayContext.isShowTags() %>">
 					<div class="list-group-detail">

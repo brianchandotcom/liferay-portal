@@ -225,10 +225,10 @@ public class CPDefinitionServiceUtil {
 	}
 
 	public static CPDefinition copyCPDefinition(
-			long cpDefinitionId, long groupId)
+			long cpDefinitionId, long groupId, int status)
 		throws PortalException {
 
-		return getService().copyCPDefinition(cpDefinitionId, groupId);
+		return getService().copyCPDefinition(cpDefinitionId, groupId, status);
 	}
 
 	public static void deleteAssetCategoryCPDefinition(
@@ -285,6 +285,14 @@ public class CPDefinitionServiceUtil {
 		throws PortalException {
 
 		return getService().getCPDefinitionsCount(groupId, status);
+	}
+
+	public static List<CPDefinition> getCProductCPDefinitions(
+			long cProductId, int status, int start, int end)
+		throws PortalException {
+
+		return getService().getCProductCPDefinitions(
+			cProductId, status, start, end);
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry

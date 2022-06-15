@@ -253,10 +253,10 @@ public class CPDefinitionLocalServiceUtil {
 	}
 
 	public static CPDefinition copyCPDefinition(
-			long cpDefinitionId, long groupId)
+			long cpDefinitionId, long groupId, int status)
 		throws PortalException {
 
-		return getService().copyCPDefinition(cpDefinitionId, groupId);
+		return getService().copyCPDefinition(cpDefinitionId, groupId, status);
 	}
 
 	/**
@@ -653,6 +653,13 @@ public class CPDefinitionLocalServiceUtil {
 		getCPDefinitionShortDescriptionMap(long cpDefinitionId) {
 
 		return getService().getCPDefinitionShortDescriptionMap(cpDefinitionId);
+	}
+
+	public static List<CPDefinition> getCProductCPDefinitions(
+		long cProductId, int status, int start, int end) {
+
+		return getService().getCProductCPDefinitions(
+			cProductId, status, start, end);
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry

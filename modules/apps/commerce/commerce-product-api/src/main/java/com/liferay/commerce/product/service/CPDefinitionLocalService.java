@@ -210,7 +210,8 @@ public interface CPDefinitionLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CPDefinition copyCPDefinition(long cpDefinitionId, long groupId)
+	public CPDefinition copyCPDefinition(
+			long cpDefinitionId, long groupId, int status)
 		throws PortalException;
 
 	/**
@@ -508,6 +509,10 @@ public interface CPDefinitionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Locale, String> getCPDefinitionShortDescriptionMap(
 		long cpDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinition> getCProductCPDefinitions(
+		long cProductId, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPAttachmentFileEntry getDefaultImageCPAttachmentFileEntry(

@@ -222,10 +222,12 @@ public class CPDefinitionServiceWrapper
 	}
 
 	@Override
-	public CPDefinition copyCPDefinition(long cpDefinitionId, long groupId)
+	public CPDefinition copyCPDefinition(
+			long cpDefinitionId, long groupId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinitionService.copyCPDefinition(cpDefinitionId, groupId);
+		return _cpDefinitionService.copyCPDefinition(
+			cpDefinitionId, groupId, status);
 	}
 
 	@Override
@@ -292,6 +294,15 @@ public class CPDefinitionServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionService.getCPDefinitionsCount(groupId, status);
+	}
+
+	@Override
+	public java.util.List<CPDefinition> getCProductCPDefinitions(
+			long cProductId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionService.getCProductCPDefinitions(
+			cProductId, status, start, end);
 	}
 
 	@Override

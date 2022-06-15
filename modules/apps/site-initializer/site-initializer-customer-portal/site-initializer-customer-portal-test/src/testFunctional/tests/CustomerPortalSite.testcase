@@ -29,7 +29,7 @@ definition {
 	@description = "LPS-146217 - Verify if when Customer Portal is created, Accounts Users will be created for it as well"
 	@priority = "4"
 	test AccountUsersAreCreatedForCP20 {
-		CustomerPortal.createCPSite(siteName = "Customer Portal");
+		CustomerPortal.addCustomerPortalSite(siteName = "Customer Portal");
 
 		AccountUsers.openAccountUsersAdmin();
 
@@ -120,7 +120,7 @@ definition {
 		}
 
 		task ("Create CP2.0 and verify that it has been created") {
-			CustomerPortal.createCPSite(siteName = "Customer Portal");
+			CustomerPortal.addCustomerPortalSite(siteName = "Customer Portal");
 
 			ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
@@ -196,7 +196,7 @@ definition {
 	@description = "LPS-146220 - Verify if when Customer Portal is created, Objects will be created for it as well"
 	@priority = "4"
 	test ObjectsAreCreatedForCP20 {
-		CustomerPortal.createCPSite(siteName = "Customer Portal");
+		CustomerPortal.addCustomerPortalSite(siteName = "Customer Portal");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -208,7 +208,7 @@ definition {
 	@description = "LPS-146219 - Verify if when Customer Portal is created, Remote Apps will be created for it as well"
 	@priority = "4"
 	test RemoteAppsAreCreatedForCP20 {
-		CustomerPortal.createCPSite(siteName = "Customer Portal");
+		CustomerPortal.addCustomerPortalSite(siteName = "Customer Portal");
 
 		RemoteApps.goToRemoteAppsPortlet();
 
@@ -220,7 +220,7 @@ definition {
 	@description = "LPS-146216 - Verify if when Customer Portal is created, Tests Accounts will be created for it as well"
 	@priority = "4"
 	test TestsAccountsAreCreatedForCP20 {
-		CustomerPortal.createCPSite(siteName = "Customer Portal");
+		CustomerPortal.addCustomerPortalSite(siteName = "Customer Portal");
 
 		Accounts.openAccountsAdmin();
 

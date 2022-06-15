@@ -7,14 +7,23 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Customer Portal";
 
+	var testSiteName = "Customer Portal";
+	var testSiteURL = "customer-portal";
+
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		//CustomerPortal.setUpForCP20();
+		task ("Create a new Masterclass Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
 
-		CustomerPortal.createCPSite(siteName = "Customer Portal");
+		task ("Create CP2.0 objects") {
+			CustomerPortal.createCPSiteObjects();
+		}
 	}
 
 	tearDown {
@@ -24,8 +33,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-
-			//CustomerPortal.tearDownForOktaAndSAML();
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 
 			CustomerPortal.customerPortalTearDown();
 

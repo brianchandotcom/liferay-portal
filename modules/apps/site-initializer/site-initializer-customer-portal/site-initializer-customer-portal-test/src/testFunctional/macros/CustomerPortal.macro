@@ -136,6 +136,23 @@ definition {
 		Click(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
 	}
 
+	macro addCustomerPortalSite {
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addSiteTemplateCP(
+			siteName = "${siteName}",
+			siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+	}
+
+	macro createCPSiteObjects {
+		CustomerPortal.showCPObject(title = "Account Flag");
+
+		CustomerPortal.showCPObject(title = "Koroneiki Account");
+	}
+
 	macro createCPSite {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -195,23 +212,6 @@ definition {
 		CustomerPortal.deleteCPObject(title = "Account Flag");
 
 		CustomerPortal.deleteCPObject(title = "Koroneiki Account");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Refresh();
-
-		PortletEntry.selectAll();
-
-		Click(locator1 = "Icon#SITES_VERTICAL_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "Delete");
-
-		Click(locator1 = "Button#MODAL_DELETE");
-
-		Alert.viewSuccessMessage();
 
 		CustomerPortal.customerPortalApisTearDown();
 	}

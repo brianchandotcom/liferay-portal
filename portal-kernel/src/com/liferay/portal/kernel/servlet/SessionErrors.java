@@ -314,6 +314,13 @@ public class SessionErrors {
 			clazz.getName());
 	}
 
+	public static void remove(
+		HttpServletRequest httpServletRequest, String key) {
+
+		_sessionMaps.remove(
+			_getPortalHttpSession(httpServletRequest), _CLASS_NAME, key);
+	}
+
 	public static int size(HttpServletRequest httpServletRequest) {
 		return size(_getPortalHttpSession(httpServletRequest));
 	}

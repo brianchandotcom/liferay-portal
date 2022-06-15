@@ -1,4 +1,6 @@
-const input = fragmentElement.querySelector(`#${fragmentNamespace}-numeric-input`);
+const input = fragmentElement.querySelector(
+	`#${fragmentNamespace}-numeric-input`
+);
 const isInteger = input.getAttribute('data-type') === 'integer';
 
 function handleOnKeydown(event) {

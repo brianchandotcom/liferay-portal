@@ -12,21 +12,25 @@
  * details.
  */
 
+function pictureTagTemplate({
+	fileEntryAttributeName,
+	fileEntryId,
+	sources,
+	defaultSrc,
+}) {
+	return `<picture ${fileEntryAttributeName}="${fileEntryId}">${sources}<img src="${defaultSrc}"></picture>`;
+}
+
+function sourceTagTemplate({srcset, media}) {
+	return `<source srcset="${srcset}" media="${media}">`;
+}
+
 (function () {
-	const Lang = AUI().Lang;
-
-	const IE9AndLater = AUI.Env.UA.ie >= 9;
-
 	const STR_ADAPTIVE_MEDIA_FILE_ENTRY_RETURN_TYPE =
 		'com.liferay.adaptive.media.image.item.selector.AMImageFileEntryItemSelectorReturnType';
 
 	const STR_ADAPTIVE_MEDIA_URL_RETURN_TYPE =
 		'com.liferay.adaptive.media.image.item.selector.AMImageURLItemSelectorReturnType';
-
-	const TPL_PICTURE_TAG =
-		'<picture {fileEntryAttributeName}="{fileEntryId}">{sources}<img src="{defaultSrc}"></picture>';
-
-	const TPL_SOURCE_TAG = '<source srcset="{srcset}" media="{media}">';
 
 	CKEDITOR.plugins.add('adaptivemedia', {
 		_bindEvent(editor) {
@@ -104,13 +108,13 @@
 						''
 					);
 
-					sources += Lang.sub(TPL_SOURCE_TAG, {
+					sources += sourceTagTemplate({
 						media: mediaText,
 						srcset: source.src,
 					});
 				});
 
-				const pictureHtml = Lang.sub(TPL_PICTURE_TAG, {
+				let pictureHtml = pictureTagTemplate({
 					defaultSrc: itemValue.defaultSource,
 					fileEntryAttributeName,
 					fileEntryId: itemValue.fileEntryId,
@@ -148,16 +152,11 @@
 				);
 			}
 
-			if (IE9AndLater) {
-				if (!editor.window.$.AlloyEditor) {
-					const elementOuterHtml = element.getOuterHtml();
-					const emptySelectionMarkup = '&nbsp;';
+			if (!editor.window.$.AlloyEditor) {
+				const elementOuterHtml = element.getOuterHtml();
+				const emptySelectionMarkup = '&nbsp;';
 
-					editor.insertHtml(elementOuterHtml + emptySelectionMarkup);
-				}
-				else {
-					editor.insertElement(element);
-				}
+				editor.insertHtml(elementOuterHtml + emptySelectionMarkup);
 			}
 			else {
 				editor.insertElement(element);

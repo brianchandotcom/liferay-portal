@@ -4,9 +4,6 @@
 	"jest": {
 		"modulePathIgnorePatterns": [
 			"test/js/mocks/*"
-		],
-		"setupFiles": [
-			"<rootDir>/jest-setup.config.js"
 		]
 	},
 	"name": "layout-reports-web",

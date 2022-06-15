@@ -10,9 +10,6 @@
 		"collectCoverageFrom": [
 			"src/main/resources/META-INF/resources/js/**/*.js"
 		],
-		"setupFiles": [
-			"<rootDir>/jest-setup.config.js"
-		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/js/[^/]+\\.js"
 		]

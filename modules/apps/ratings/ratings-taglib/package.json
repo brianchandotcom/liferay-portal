@@ -2,9 +2,6 @@
 	"dependencies": {
 	},
 	"jest": {
-		"setupFilesAfterEnv": [
-			"<rootDir>/test/setup.js"
-		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/setup.js",
 			"<rootDir>/test/utils.js"

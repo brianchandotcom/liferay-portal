@@ -4,9 +4,6 @@
 	"jest": {
 		"modulePathIgnorePatterns": [
 			"test/js/mocks/*"
-		],
-		"setupFilesAfterEnv": [
-			"<rootDir>/jest-setup.config.js"
 		]
 	},
 	"name": "content-dashboard-web",

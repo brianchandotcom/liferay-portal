@@ -1,9 +1,4 @@
 {
-	"jest": {
-		"setupFilesAfterEnv": [
-			"<rootDir>/jest-setup.js"
-		]
-	},
 	"name": "document-library-opener-onedrive-web",
 	"private": true,
 	"scripts": {

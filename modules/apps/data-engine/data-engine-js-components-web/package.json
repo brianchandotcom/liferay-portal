@@ -12,9 +12,6 @@
 			"/__mock__/",
 			"/__utils__/"
 		],
-		"setupFiles": [
-			"<rootDir>/jest-setup.config.js"
-		],
 		"snapshotSerializers": [
 			"metal-jest-serializer"
 		],

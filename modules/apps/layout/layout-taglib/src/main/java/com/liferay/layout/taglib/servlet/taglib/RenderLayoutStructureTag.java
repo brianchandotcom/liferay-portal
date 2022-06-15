@@ -60,6 +60,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -78,6 +79,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -85,6 +87,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -174,6 +177,104 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 	protected static final String LAYOUT_STRUCTURE =
 		RenderLayoutStructureTag.class.getName() + "#LAYOUT_STRUCTURE";
+
+	private String _getFormInputLabel(
+			List<String> childrenItemIds, String infoFieldUniqueId,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		String formInputLabel = null;
+		Iterator<String> iterator = childrenItemIds.iterator();
+
+		while ((formInputLabel == null) && iterator.hasNext()) {
+			String childrenItemId = iterator.next();
+
+			LayoutStructureItem layoutStructureItem =
+				_layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (!(layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem)) {
+
+				formInputLabel = _getFormInputLabel(
+					layoutStructureItem.getChildrenItemIds(), infoFieldUniqueId,
+					themeDisplay);
+
+				continue;
+			}
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() <=
+					0) {
+
+				formInputLabel = _getFormInputLabel(
+					layoutStructureItem.getChildrenItemIds(), infoFieldUniqueId,
+					themeDisplay);
+
+				continue;
+			}
+
+			FragmentEntryLink fragmentEntryLink =
+				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if ((fragmentEntryLink == null) ||
+				Validator.isNull(fragmentEntryLink.getEditableValues())) {
+
+				formInputLabel = _getFormInputLabel(
+					layoutStructureItem.getChildrenItemIds(), infoFieldUniqueId,
+					themeDisplay);
+
+				continue;
+			}
+
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+
+			JSONObject freemarkerProcessorJSONObject =
+				editableValuesJSONObject.getJSONObject(
+					"com.liferay.fragment.entry.processor.freemarker." +
+						"FreeMarkerFragmentEntryProcessor");
+
+			if ((freemarkerProcessorJSONObject == null) ||
+				!Objects.equals(
+					freemarkerProcessorJSONObject.getString("inputFieldId"),
+					infoFieldUniqueId)) {
+
+				formInputLabel = _getFormInputLabel(
+					layoutStructureItem.getChildrenItemIds(), infoFieldUniqueId,
+					themeDisplay);
+
+				continue;
+			}
+
+			if (!JSONUtil.isValid(
+					freemarkerProcessorJSONObject.getString("inputLabel"))) {
+
+				return freemarkerProcessorJSONObject.getString("inputLabel");
+			}
+
+			JSONObject inputLabelJSONObject =
+				freemarkerProcessorJSONObject.getJSONObject("inputLabel");
+
+			formInputLabel = inputLabelJSONObject.getString(
+				themeDisplay.getLanguageId());
+
+			if (Validator.isNull(formInputLabel)) {
+				formInputLabel = inputLabelJSONObject.getString(
+					LocaleUtil.toLanguageId(
+						PortalUtil.getSiteDefaultLocale(
+							themeDisplay.getScopeGroupId())));
+			}
+
+			return formInputLabel;
+		}
+
+		return formInputLabel;
+	}
 
 	private InfoForm _getInfoForm(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
@@ -839,13 +940,22 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				if (Validator.isNotNull(
 						infoFormValidationException.getInfoFieldUniqueId())) {
 
-					InfoField infoField = infoForm.getInfoField(
-						infoFormValidationException.getInfoFieldUniqueId());
+					String formInputLabel = _getFormInputLabel(
+						layoutStructureItem.getChildrenItemIds(),
+						infoFormValidationException.getInfoFieldUniqueId(),
+						themeDisplay);
+
+					if (Validator.isNull(formInputLabel)) {
+						InfoField infoField = infoForm.getInfoField(
+							infoFormValidationException.getInfoFieldUniqueId());
+
+						formInputLabel = infoField.getLabel(
+							themeDisplay.getLocale());
+					}
 
 					errorMessage =
 						infoFormValidationException.getLocalizedMessage(
-							infoField.getLabel(themeDisplay.getLocale()),
-							themeDisplay.getLocale());
+							formInputLabel, themeDisplay.getLocale());
 				}
 			}
 

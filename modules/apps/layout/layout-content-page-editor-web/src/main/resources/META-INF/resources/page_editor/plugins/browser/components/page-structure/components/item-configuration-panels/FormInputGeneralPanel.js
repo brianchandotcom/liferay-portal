@@ -98,9 +98,7 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 			typeOptions: {displayType: 'toggle'},
 		},
 		{
-			defaultValue: Liferay.Language.get(
-				'guide-your-users-to-fill-in-the-field-by-adding-help-text-here'
-			),
+			defaultValue: Liferay.Language.get('add-your-help-text-here'),
 			label: Liferay.Language.get('help-text'),
 			localizable: true,
 			name: HELP_TEXT_CONFIGURATION_KEY,

@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -862,6 +863,18 @@ public class PoshiRunnerExecutor {
 	}
 
 	public void runSeleniumElement(Element executeElement) throws Exception {
+		String namespace = PoshiContext.getTestCaseNamespacedClassCommandName();
+
+		Properties properties =
+			PoshiContext.getNamespacedClassCommandNameProperties(namespace);
+
+		if (GetterUtil.getBoolean(
+				properties.getProperty("disable-webdriver"))) {
+
+			throw new RuntimeException(
+				"Unable to call selenium method while webdriver is disabled");
+		}
+
 		PoshiStackTraceUtil.setCurrentElement(executeElement);
 
 		List<String> arguments = new ArrayList<>();

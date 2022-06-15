@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -252,6 +251,22 @@ public abstract class BaseLayoutStructureItemImporter {
 		}
 
 		jsonObject.put(
+			"backgroundColor", fragmentViewportStyle.get("backgroundColor")
+		).put(
+			"borderColor", fragmentViewportStyle.get("borderColor")
+		).put(
+			"borderRadius", fragmentViewportStyle.get("borderRadius")
+		).put(
+			"borderWidth", fragmentViewportStyle.get("borderWidth")
+		).put(
+			"fontFamily", fragmentViewportStyle.get("fontFamily")
+		).put(
+			"fontSize", fragmentViewportStyle.get("fontSize")
+		).put(
+			"fontWeight", fragmentViewportStyle.get("fontWeight")
+		).put(
+			"height", fragmentViewportStyle.get("height")
+		).put(
 			"marginBottom", fragmentViewportStyle.get("marginBottom")
 		).put(
 			"marginLeft", fragmentViewportStyle.get("marginLeft")
@@ -259,6 +274,18 @@ public abstract class BaseLayoutStructureItemImporter {
 			"marginRight", fragmentViewportStyle.get("marginRight")
 		).put(
 			"marginTop", fragmentViewportStyle.get("marginTop")
+		).put(
+			"maxHeight", fragmentViewportStyle.get("maxHeight")
+		).put(
+			"maxWidth", fragmentViewportStyle.get("maxWidth")
+		).put(
+			"minHeight", fragmentViewportStyle.get("minHeight")
+		).put(
+			"minWidth", fragmentViewportStyle.get("minWidth")
+		).put(
+			"opacity", fragmentViewportStyle.get("opacity")
+		).put(
+			"overflow", fragmentViewportStyle.get("overflow")
 		).put(
 			"paddingBottom", fragmentViewportStyle.get("paddingBottom")
 		).put(
@@ -268,46 +295,14 @@ public abstract class BaseLayoutStructureItemImporter {
 		).put(
 			"paddingTop", fragmentViewportStyle.get("paddingTop")
 		).put(
+			"shadow", fragmentViewportStyle.get("shadow")
+		).put(
 			"textAlign", fragmentViewportStyle.get("textAlign")
+		).put(
+			"textColor", fragmentViewportStyle.get("textColor")
+		).put(
+			"width", fragmentViewportStyle.get("width")
 		);
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571"))) {
-			jsonObject.put(
-				"backgroundColor", fragmentViewportStyle.get("backgroundColor")
-			).put(
-				"borderColor", fragmentViewportStyle.get("borderColor")
-			).put(
-				"borderRadius", fragmentViewportStyle.get("borderRadius")
-			).put(
-				"borderWidth", fragmentViewportStyle.get("borderWidth")
-			).put(
-				"fontFamily", fragmentViewportStyle.get("fontFamily")
-			).put(
-				"fontSize", fragmentViewportStyle.get("fontSize")
-			).put(
-				"fontWeight", fragmentViewportStyle.get("fontWeight")
-			).put(
-				"height", fragmentViewportStyle.get("height")
-			).put(
-				"maxHeight", fragmentViewportStyle.get("maxHeight")
-			).put(
-				"maxWidth", fragmentViewportStyle.get("maxWidth")
-			).put(
-				"minHeight", fragmentViewportStyle.get("minHeight")
-			).put(
-				"minWidth", fragmentViewportStyle.get("minWidth")
-			).put(
-				"opacity", fragmentViewportStyle.get("opacity")
-			).put(
-				"overflow", fragmentViewportStyle.get("overflow")
-			).put(
-				"shadow", fragmentViewportStyle.get("shadow")
-			).put(
-				"textColor", fragmentViewportStyle.get("textColor")
-			).put(
-				"width", fragmentViewportStyle.get("width")
-			);
-		}
 
 		return JSONUtil.put("styles", jsonObject);
 	}

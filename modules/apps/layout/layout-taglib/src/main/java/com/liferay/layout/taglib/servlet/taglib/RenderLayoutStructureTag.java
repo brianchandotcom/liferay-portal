@@ -193,35 +193,37 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String errorMessage = infoFormException.getLocalizedMessage(
-			themeDisplay.getLocale());
-
-		if (infoFormException instanceof InfoFormValidationException) {
-			InfoFormValidationException infoFormValidationException =
-				(InfoFormValidationException)infoFormException;
-
-			if (Validator.isNotNull(
-					infoFormValidationException.getInfoFieldUniqueId())) {
-
-				String formInputLabel = _getFormInputLabel(
-					formStyledLayoutStructureItem.getChildrenItemIds(),
-					infoFormValidationException.getInfoFieldUniqueId(),
-					themeDisplay);
-
-				if (Validator.isNull(formInputLabel)) {
-					InfoField infoField = infoForm.getInfoField(
-						infoFormValidationException.getInfoFieldUniqueId());
-
-					formInputLabel = infoField.getLabel(
-						themeDisplay.getLocale());
-				}
-
-				errorMessage = infoFormValidationException.getLocalizedMessage(
-					formInputLabel, themeDisplay.getLocale());
-			}
+		if (!(infoFormException instanceof InfoFormValidationException)) {
+			return infoFormException.getLocalizedMessage(
+				themeDisplay.getLocale());
 		}
 
-		return errorMessage;
+		InfoFormValidationException infoFormValidationException =
+			(InfoFormValidationException)infoFormException;
+
+		if (Validator.isNull(
+				infoFormValidationException.getInfoFieldUniqueId())) {
+
+			return infoFormException.getLocalizedMessage(
+				themeDisplay.getLocale());
+		}
+
+		String formInputLabel = _getFormInputLabel(
+			formStyledLayoutStructureItem.getChildrenItemIds(),
+			infoFormValidationException.getInfoFieldUniqueId(), themeDisplay);
+
+		if (Validator.isNotNull(formInputLabel)) {
+			return infoFormValidationException.getLocalizedMessage(
+				formInputLabel, themeDisplay.getLocale());
+		}
+
+		InfoField infoField = infoForm.getInfoField(
+			infoFormValidationException.getInfoFieldUniqueId());
+
+		formInputLabel = infoField.getLabel(themeDisplay.getLocale());
+
+		return infoFormValidationException.getLocalizedMessage(
+			formInputLabel, themeDisplay.getLocale());
 	}
 
 	private String _getFormInputLabel(

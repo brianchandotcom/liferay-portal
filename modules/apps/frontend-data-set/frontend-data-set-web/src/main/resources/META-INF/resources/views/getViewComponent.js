@@ -28,12 +28,8 @@ const VIEWS = {
 	timeline: Timeline,
 };
 
-export function getViewContentRenderer(contentRenderer) {
-	const view = VIEWS[contentRenderer];
+const getViewComponent = (name) => {
+	return VIEWS[name];
+};
 
-	return view
-		? Promise.resolve(view)
-		: Promise.reject(
-				`No content renderer found with the ID: "${contentRenderer}"`
-		  );
-}
+export default getViewComponent;

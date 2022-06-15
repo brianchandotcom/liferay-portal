@@ -54,7 +54,7 @@ import {
 import {logError} from './utils/logError';
 import getJsModule from './utils/modules';
 import ViewsContext from './views/ViewsContext';
-import {getViewContentRenderer} from './views/index';
+import getViewComponent from './views/getViewComponent';
 import {updateViewComponent, viewsReducer} from './views/viewsReducer';
 
 const DEFAULT_PAGINATION_DELTA = 20;
@@ -157,6 +157,8 @@ const FrontendDataSet = ({
 			}
 		}
 
+		initialActiveView.component = getViewComponent(initialActiveView.name);
+
 		return {
 			activeView: initialActiveView,
 			customViewsEnabled,
@@ -170,8 +172,7 @@ const FrontendDataSet = ({
 	);
 
 	const {
-		component: CurrentViewComponent,
-		contentRenderer,
+		component: View,
 		contentRendererModuleURL,
 		name: activeViewName,
 		...currentViewProps
@@ -198,31 +199,6 @@ const FrontendDataSet = ({
 			sorting
 		);
 	}, [apiURL, currentURL, delta, filters, pageNumber, searchParam, sorting]);
-
-	const requestComponent = useCallback(() => {
-		if (
-			!CurrentViewComponent &&
-			(contentRendererModuleURL || contentRenderer)
-		) {
-			return (contentRenderer
-				? getViewContentRenderer(contentRenderer)
-				: getJsModule(contentRendererModuleURL)
-			).catch((error) => {
-				logError(
-					`Requested module: ${contentRendererModuleURL} not available`,
-					error
-				);
-				openToast({
-					message: Liferay.Language.get('unexpected-error'),
-					type: 'danger',
-				});
-
-				throw error;
-			});
-		}
-
-		return Promise.resolve(CurrentViewComponent);
-	}, [contentRenderer, contentRendererModuleURL, CurrentViewComponent]);
 
 	const isMounted = useIsMounted();
 
@@ -345,19 +321,32 @@ const FrontendDataSet = ({
 	}, [selectedItemsValue, items, selectedItemsKey]);
 
 	useEffect(() => {
+		if (View || !contentRendererModuleURL) {
+			return;
+		}
+
 		setComponentLoading(true);
 
-		requestComponent().then((component) => {
-			if (isMounted()) {
-				setComponentLoading(false);
-				dispatch(updateViewComponent(activeViewName, component));
-			}
-		});
+		getJsModule(contentRendererModuleURL)
+			.then((component) => {
+				if (isMounted()) {
+					dispatch(updateViewComponent(activeViewName, component));
+
+					setComponentLoading(false);
+				}
+			})
+			.catch(() => {
+				openToast({
+					message: Liferay.Language.get('unexpected-error'),
+					type: 'danger',
+				});
+			});
 	}, [
+		View,
 		activeViewName,
+		contentRendererModuleURL,
 		dispatch,
 		isMounted,
-		requestComponent,
 		setComponentLoading,
 	]);
 
@@ -459,7 +448,7 @@ const FrontendDataSet = ({
 				{items?.length ||
 				overrideEmptyResultView ||
 				inlineAddingSettings ? (
-					<CurrentViewComponent
+					<View
 						frontendDataSetContext={FrontendDataSetContext}
 						items={items}
 						itemsActions={itemsActions}
@@ -772,10 +761,7 @@ const FrontendDataSet = ({
 };
 
 FrontendDataSet.propTypes = {
-	activeViewSettings: PropTypes.shape({
-		name: PropTypes.string,
-		visibleFieldNames: PropTypes.array,
-	}),
+	activeViewSettings: PropTypes.string,
 	apiURL: PropTypes.string,
 	appURL: PropTypes.string,
 	bulkActions: PropTypes.array,
@@ -835,9 +821,9 @@ FrontendDataSet.propTypes = {
 	views: PropTypes.arrayOf(
 		PropTypes.shape({
 			component: PropTypes.any,
-			contentRenderer: PropTypes.string,
 			contentRendererModuleURL: PropTypes.string,
 			label: PropTypes.string,
+			name: PropTypes.string,
 			schema: PropTypes.object,
 			thumbnail: PropTypes.string,
 		})

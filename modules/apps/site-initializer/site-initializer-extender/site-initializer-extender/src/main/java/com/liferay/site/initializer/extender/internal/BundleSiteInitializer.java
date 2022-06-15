@@ -715,7 +715,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 							StringPool.NEW_LINE),
 						"[$", "$]", documentsStringUtilReplaceValues)
 				).put(
-					"useESM",  jsonObject.getBoolean("useESM", false)
+					"useESM", jsonObject.getBoolean("useESM", false)
 				).buildString());
 
 			clientExtensionEntryIdsStringUtilReplaceValues.put(

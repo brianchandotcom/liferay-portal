@@ -43,9 +43,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
-import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsWebKeys;
@@ -266,23 +264,20 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			renderRequest, "workflowInstanceId");
 
 		if (workflowInstanceId > 0) {
-			WorkflowInstance workflowInstance =
-				WorkflowInstanceManagerUtil.getWorkflowInstance(
-					themeDisplay.getCompanyId(), workflowInstanceId);
-
 			renderRequest.setAttribute(
-				KaleoFormsWebKeys.WORKFLOW_INSTANCE, workflowInstance);
+				KaleoFormsWebKeys.WORKFLOW_INSTANCE,
+				WorkflowInstanceManagerUtil.getWorkflowInstance(
+					themeDisplay.getCompanyId(), workflowInstanceId));
 		}
 
 		long workflowTaskId = ParamUtil.getLong(
 			renderRequest, "workflowTaskId");
 
 		if (workflowTaskId > 0) {
-			WorkflowTask workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(
-				themeDisplay.getCompanyId(), workflowTaskId);
-
 			renderRequest.setAttribute(
-				KaleoFormsWebKeys.WORKFLOW_TASK, workflowTask);
+				KaleoFormsWebKeys.WORKFLOW_TASK,
+				WorkflowTaskManagerUtil.getWorkflowTask(
+					themeDisplay.getCompanyId(), workflowTaskId));
 		}
 	}
 

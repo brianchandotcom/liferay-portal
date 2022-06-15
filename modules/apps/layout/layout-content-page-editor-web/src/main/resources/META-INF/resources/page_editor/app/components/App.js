@@ -31,6 +31,7 @@ import {WidgetsContextProvider} from '../contexts/WidgetsContext';
 import {reducer} from '../reducers/index';
 import selectLanguageId from '../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
+import {disposeCache, initializeCache} from '../utils/cache';
 import {DragAndDropContextProvider} from '../utils/drag-and-drop/useDragAndDrop';
 import CommonStylesManager from './CommonStylesManager';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
@@ -64,6 +65,14 @@ export default function App({state}) {
 
 			return () => clearInterval(interval);
 		}
+	}, []);
+
+	useEffect(() => {
+		initializeCache();
+
+		return () => {
+			disposeCache();
+		};
 	}, []);
 
 	return (

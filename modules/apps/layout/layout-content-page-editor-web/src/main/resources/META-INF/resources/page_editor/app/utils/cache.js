@@ -12,7 +12,7 @@
  * details.
  */
 
-const cache = {};
+let cache = null;
 
 export const CACHE_KEYS = {
 	allowedInputTypes: 'allowedInputTypes',
@@ -25,6 +25,14 @@ export const CACHE_STATUS = {
 	saved: 'saved',
 };
 
+export function initializeCache() {
+	cache = new Map();
+}
+
+export function disposeCache() {
+	cache = null;
+}
+
 export function getCacheKey(key) {
 	if (Array.isArray(key)) {
 		return key.every((subkey) => subkey) ? key.join('-') : null;
@@ -34,17 +42,25 @@ export function getCacheKey(key) {
 }
 
 export function getCacheItem(key) {
-	return cache[key] || {};
+	if (!cache) {
+		throw new Error('cache is not initialized');
+	}
+
+	return cache.get(key) || {};
 }
 
 export function deleteCacheItem(key) {
-	delete cache[key];
+	if (!cache) {
+		throw new Error('cache is not initialized');
+	}
+
+	cache.delete(key);
 }
 
 export function setCacheItem({data, key, loadPromise, status}) {
-	cache[key] = {
+	cache.set(key, {
 		...(data && {data}),
 		...(loadPromise && {loadPromise}),
 		status,
-	};
+	});
 }

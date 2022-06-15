@@ -236,6 +236,12 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#HIDE_ANGLE_ICON");
 	}
 
+	macro restorePreviousVersion {
+		Click(
+			key_number = "${number}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#RESTORE_VERSION_ICON");
+	}
+
 	macro selectConnector {
 		Click(
 			key_connectorLabel = "${connectorLabel}",
@@ -772,6 +778,20 @@ definition {
 			value1 = "${definitionTitle}");
 	}
 
+	macro viewDetailsFieldsPresent {
+		AssertVisible(
+			key_fieldOption = "CREATED",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DETAILS_FIELDS");
+
+		AssertVisible(
+			key_fieldOption = "LAST MODIFIED",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DETAILS_FIELDS");
+
+		AssertVisible(
+			key_fieldOption = "TOTAL MODIFICATIONS",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DETAILS_FIELDS");
+	}
+
 	macro viewDiagramEditor {
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#REACT_PANEL");
 
@@ -1102,6 +1122,12 @@ definition {
 		}
 	}
 
+	macro viewRevisionHistoryFieldsPresent {
+		AssertVisible(
+			key_fieldOption = "Current Version",
+			locator1 = "ProcessBuilderKaleoDesignerReact#DETAILS_FIELDS");
+	}
+
 	macro viewSaveButtonPresent {
 		AssertElementPresent(locator1 = "KaleoDesigner#SAVE_BUTTON");
 	}
@@ -1288,16 +1314,6 @@ definition {
 			key_line = "${lineY}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_METADATA_ELEMENT",
 			value1 = "${coordinateY}");
-	}
-
-	macro gotoInfoWorkflowDefinition {
-        Click(locator1 = "Icon#INFO");
-    }
-
-	macro restorePreviousVersion {
-		Click(
-			key_number = "${number}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#RESTORE_VERSION_ICON");
 	}
 
 }

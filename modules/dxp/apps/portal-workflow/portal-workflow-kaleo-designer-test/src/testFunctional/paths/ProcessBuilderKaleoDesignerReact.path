@@ -366,6 +366,11 @@
 	<td>//div[contains(@class,'version-row')and contains(.,'Version ${key_number}')]//*[*[name()='svg'][contains(@class,'icon-restore')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DETAILS_FIELDS</td>
+	<td>//div[@class='info-group']//label[contains(text() ,'${key_fieldOption}')]/..//span | //div[@class='info-group']//label[contains(text() ,'${key_fieldOption}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

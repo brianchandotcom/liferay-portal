@@ -409,13 +409,14 @@ public class EntityCacheImpl
 			return null;
 		}
 
-		CacheModel<?> cacheModel = (CacheModel<?>)result;
+		BaseModel<?> entityModel = DBPartitionUtil.toEntityModel(
+			(CacheModel<?>)result);
 
-		BaseModel<?> entityModel = (BaseModel<?>)cacheModel.toEntityModel();
+		if (entityModel != null) {
+			entityModel.setCachedModel(true);
+		}
 
-		entityModel.setCachedModel(true);
-
-		return DBPartitionUtil.toEntityModel(entityModel);
+		return entityModel;
 	}
 
 	private static final String _GROUP_KEY_PREFIX =

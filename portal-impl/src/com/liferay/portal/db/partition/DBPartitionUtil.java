@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -211,25 +212,30 @@ public class DBPartitionUtil {
 		return entityModel.toCacheModel();
 	}
 
-	public static BaseModel<?> toEntityModel(BaseModel<?> entityModel) {
+	public static BaseModel<?> toEntityModel(CacheModel<?> cacheModel) {
+		BaseModel<?> entityModel = (BaseModel<?>)cacheModel.toEntityModel();
+
 		if (!_DATABASE_PARTITION_ENABLED) {
 			return entityModel;
 		}
 
-		if (entityModel instanceof ShardedModel) {
-			ShardedModel shardedModel = (ShardedModel)entityModel;
+		if (cacheModel instanceof NullModel) {
+			NullModel nullModel = (NullModel)cacheModel;
 
-			if (CompanyThreadLocal.getCompanyId() !=
-					shardedModel.getCompanyId()) {
-
-				if (!(entityModel instanceof NullModel)) {
-					return _nullModel;
-				}
+			if (!_equalsCompany(
+					CompanyThreadLocal.getCompanyId(),
+					nullModel.getCompanyId())) {
 
 				return null;
 			}
+		}
+		else if (entityModel instanceof ShardedModel) {
+			ShardedModel shardedModel = (ShardedModel)entityModel;
 
-			if (entityModel instanceof NullModel) {
+			if (!_equalsCompany(
+					CompanyThreadLocal.getCompanyId(),
+					shardedModel.getCompanyId())) {
+
 				return _nullModel;
 			}
 		}
@@ -325,6 +331,22 @@ public class DBPartitionUtil {
 		}
 
 		return true;
+	}
+
+	private static boolean _equalsCompany(long companyId1, long companyId2) {
+		if (companyId1 == companyId2) {
+			return true;
+		}
+
+		if (((companyId1 == CompanyConstants.SYSTEM) ||
+			 (companyId2 == CompanyConstants.SYSTEM)) &&
+			((companyId1 == _defaultCompanyId) ||
+			 (companyId2 == _defaultCompanyId))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static void _forEachCompanyIdConcurrently(
@@ -801,7 +823,7 @@ public class DBPartitionUtil {
 	private static BaseModel<?> _nullModel;
 
 	private static class NullModel
-		implements CacheModel<BaseModel<?>>, ShardedModel {
+		implements CacheModel<BaseModel<?>>, MVCCModel, ShardedModel {
 
 		@Override
 		public long getCompanyId() {
@@ -809,8 +831,17 @@ public class DBPartitionUtil {
 		}
 
 		@Override
+		public long getMvccVersion() {
+			return -1;
+		}
+
+		@Override
 		public void setCompanyId(long companyId) {
 			_companyId = companyId;
+		}
+
+		@Override
+		public void setMvccVersion(long mvccVersion) {
 		}
 
 		@Override

@@ -32,8 +32,6 @@ import com.liferay.wiki.item.selector.criterion.WikiPageItemSelectorCriterion;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -82,11 +80,13 @@ public abstract class BaseWikiLinksCKEditorConfigContributor
 				0, _getWikiPageItemSelectorCriterion(nodeId));
 		}
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, itemSelectedEventName,
-			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
-
-		jsonObject.put("filebrowserBrowseUrl", itemSelectorURL.toString());
+		jsonObject.put(
+			"filebrowserBrowseUrl",
+			String.valueOf(
+				itemSelector.getItemSelectorURL(
+					requestBackedPortletURLFactory, itemSelectedEventName,
+					itemSelectorCriteria.toArray(
+						new ItemSelectorCriterion[0]))));
 	}
 
 	protected abstract ItemSelectorReturnType getItemSelectorReturnType();

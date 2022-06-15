@@ -26,8 +26,6 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -65,11 +63,10 @@ public class WikiAttachmentImageCreoleEditorConfigContributor
 		ThemeDisplay themeDisplay) {
 
 		if (wikiPageResourcePrimKey == 0) {
-			PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-				requestBackedPortletURLFactory, itemSelectedEventName,
-				getURLItemSelectorCriterion());
-
-			return itemSelectorURL.toString();
+			return String.valueOf(
+				_itemSelector.getItemSelectorURL(
+					requestBackedPortletURLFactory, itemSelectedEventName,
+					getURLItemSelectorCriterion()));
 		}
 
 		ItemSelectorCriterion attachmentItemSelectorCriterion =
@@ -81,12 +78,11 @@ public class WikiAttachmentImageCreoleEditorConfigContributor
 				wikiPageResourcePrimKey, themeDisplay,
 				requestBackedPortletURLFactory);
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, itemSelectedEventName,
-			attachmentItemSelectorCriterion, getURLItemSelectorCriterion(),
-			uploadItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, itemSelectedEventName,
+				attachmentItemSelectorCriterion, getURLItemSelectorCriterion(),
+				uploadItemSelectorCriterion));
 	}
 
 	@Override

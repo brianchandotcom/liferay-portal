@@ -26,8 +26,6 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -68,11 +66,10 @@ public class WikiAttachmentImageHTMLEditorConfigContributor
 				new FileEntryItemSelectorReturnType());
 
 		if (wikiPageResourcePrimKey == 0) {
-			PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-				requestBackedPortletURLFactory, itemSelectedEventName,
-				imageItemSelectorCriterion, getURLItemSelectorCriterion());
-
-			return itemSelectorURL.toString();
+			return String.valueOf(
+				_itemSelector.getItemSelectorURL(
+					requestBackedPortletURLFactory, itemSelectedEventName,
+					imageItemSelectorCriterion, getURLItemSelectorCriterion()));
 		}
 
 		ItemSelectorCriterion attachmentItemSelectorCriterion =
@@ -84,12 +81,11 @@ public class WikiAttachmentImageHTMLEditorConfigContributor
 				wikiPageResourcePrimKey, themeDisplay,
 				requestBackedPortletURLFactory);
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, itemSelectedEventName,
-			attachmentItemSelectorCriterion, imageItemSelectorCriterion,
-			getURLItemSelectorCriterion(), uploadItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, itemSelectedEventName,
+				attachmentItemSelectorCriterion, imageItemSelectorCriterion,
+				getURLItemSelectorCriterion(), uploadItemSelectorCriterion));
 	}
 
 	@Override

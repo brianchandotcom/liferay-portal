@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
 /**
  * @author Michael C. Han
  */
-@ExtendedObjectClassDefinition(category = "search")
+@ExtendedObjectClassDefinition(category = "search", generateUI = false)
 @Meta.OCD(
 	id = "com.liferay.portal.search.configuration.IndexerRegistryConfiguration",
 	localization = "content/Language",

@@ -307,7 +307,7 @@ public class StripFilter extends BasePortalFilter {
 		throws Exception {
 
 		int length = KMPSearch.search(
-			oldCharBuffer, _MARKER_INPUT_OPEN.length + 1, _MARKER_INPUT_CLOSE,
+			oldCharBuffer, _MARKER_INPUT_OPEN.length, _MARKER_INPUT_CLOSE,
 			_MARKER_INPUT_CLOSE_NEXTS);
 
 		if (length == -1) {

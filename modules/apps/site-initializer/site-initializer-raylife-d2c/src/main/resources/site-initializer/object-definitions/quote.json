@@ -1,0 +1,80 @@
+{
+	"label": {
+		"en_US": "Raylife Quote"
+	},
+	"name": "RaylifeQuote",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Billing Option"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:BillingOption$]",
+			"name": "billingOption",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Data JSON"
+			},
+			"name": "dataJSON",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Quote Create Date"
+			},
+			"name": "quoteCreateDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Quote Group ID"
+			},
+			"name": "quoteGroupId",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Policy Term"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:PolicyTerm$]",
+			"name": "policyTerm",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelAppOrder": "100",
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Raylife Quotes"
+	},
+	"portlet": false,
+	"scope": "company"
+}

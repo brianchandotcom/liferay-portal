@@ -1,0 +1,11 @@
+{
+	"deletionType": "prevent",
+	"label": {
+		"en_US": "Commerce Order"
+	},
+	"name": "commerceOrderToQuotes",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:CommerceOrder$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:RaylifeQuote$]",
+	"objectDefinitionName2": "RaylifeQuote",
+	"type": "oneToMany"
+}

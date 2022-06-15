@@ -1,0 +1,11 @@
+{
+	"deletionType": "prevent",
+	"label": {
+		"en_US": "Underwriter User Id"
+	},
+	"name": "userToQuotes",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:RaylifeQuote$]",
+	"objectDefinitionName2": "RaylifeQuote",
+	"type": "oneToMany"
+}

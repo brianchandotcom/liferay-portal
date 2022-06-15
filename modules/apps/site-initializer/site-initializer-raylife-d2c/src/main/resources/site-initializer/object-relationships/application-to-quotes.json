@@ -1,0 +1,11 @@
+{
+	"deletionType": "prevent",
+	"label": {
+		"en_US": "Application"
+	},
+	"name": "applicationToQuotes",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:RaylifeApplication$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:RaylifeQuote$]",
+	"objectDefinitionName2": "RaylifeQuote",
+	"type": "oneToMany"
+}

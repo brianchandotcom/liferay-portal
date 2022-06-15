@@ -91,7 +91,7 @@ function getInputCommonConfiguration(configurationValues, formFields) {
 			type: 'text',
 		},
 		{
-			defaultValue: true,
+			defaultValue: false,
 			label: Liferay.Language.get('show-help-text'),
 			name: SHOW_HELP_TEXT_CONFIGURATION_KEY,
 			type: 'checkbox',

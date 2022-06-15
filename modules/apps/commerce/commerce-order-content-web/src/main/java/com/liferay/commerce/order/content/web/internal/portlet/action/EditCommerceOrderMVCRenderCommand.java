@@ -19,15 +19,20 @@ import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
+import com.liferay.commerce.order.content.web.internal.portlet.configuration.OpenCommerceOrderContentPortletInstanceConfiguration;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,10 +65,30 @@ public class EditCommerceOrderMVCRenderCommand implements MVCRenderCommand {
 			CommerceOrder commerceOrder =
 				commerceOrderContentDisplayContext.getCommerceOrder();
 
+			HttpServletRequest httpServletRequest =
+				_portal.getHttpServletRequest(renderRequest);
+
 			if ((commerceOrder != null) && commerceOrder.isOpen()) {
 				_commerceOrderHttpHelper.setCurrentCommerceOrder(
-					_portal.getHttpServletRequest(renderRequest),
-					commerceOrder);
+					httpServletRequest, commerceOrder);
+			}
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			OpenCommerceOrderContentPortletInstanceConfiguration
+				openCommerceOrderContentPortletInstanceConfiguration =
+					portletDisplay.getPortletInstanceConfiguration(
+						OpenCommerceOrderContentPortletInstanceConfiguration.
+							class);
+
+			if (openCommerceOrderContentPortletInstanceConfiguration.
+					showUpdatedCommerceOrderDetailsPage()) {
+
+				return "/pending_commerce_orders/new_view.jsp";
 			}
 
 			return "/pending_commerce_orders/edit_commerce_order.jsp";

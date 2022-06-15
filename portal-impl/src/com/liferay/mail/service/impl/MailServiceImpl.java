@@ -34,9 +34,9 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -196,82 +197,44 @@ public class MailServiceImpl implements IdentifiableOSGiService, MailService {
 		PortletPreferences systemPortletPreferences =
 			PrefsPropsUtil.getPreferences();
 
+		Function<String, String> getPreferenceFunction =
+			(String key) -> companyPortletPreferences.getValue(
+				key,
+				systemPortletPreferences.getValue(key, PropsUtil.get(key)));
+
 		if (!GetterUtil.getBoolean(
-				companyPortletPreferences.getValue(
-					PropsKeys.MAIL_SESSION_MAIL,
-					systemPortletPreferences.getValue(
-						PropsKeys.MAIL_SESSION_MAIL,
-						String.valueOf(PropsValues.MAIL_SESSION_MAIL))))) {
+				getPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL))) {
 
 			_sessions.put(companyId, session);
 
 			return session;
 		}
 
-		String advancedPropertiesString = companyPortletPreferences.getValue(
-			PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES,
-			systemPortletPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES,
-				PropsValues.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES));
-		String pop3Host = companyPortletPreferences.getValue(
-			PropsKeys.MAIL_SESSION_MAIL_POP3_HOST,
-			systemPortletPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL_POP3_HOST,
-				PropsValues.MAIL_SESSION_MAIL_POP3_HOST));
-		String pop3Password = companyPortletPreferences.getValue(
-			PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD,
-			systemPortletPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD,
-				PropsValues.MAIL_SESSION_MAIL_POP3_PASSWORD));
+		String advancedPropertiesString = getPreferenceFunction.apply(
+			PropsKeys.MAIL_SESSION_MAIL_ADVANCED_PROPERTIES);
+		String pop3Host = getPreferenceFunction.apply(
+			PropsKeys.MAIL_SESSION_MAIL_POP3_HOST);
+		String pop3Password = getPreferenceFunction.apply(
+			PropsKeys.MAIL_SESSION_MAIL_POP3_PASSWORD);
 		int pop3Port = GetterUtil.getInteger(
-			companyPortletPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL_POP3_PORT,
-				systemPortletPreferences.getValue(
-					PropsKeys.MAIL_SESSION_MAIL_POP3_PORT,
-					String.valueOf(PropsValues.MAIL_SESSION_MAIL_POP3_PORT))));
-		String pop3User = companyPortletPreferences.getValue(
-			PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
-			systemPortletPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
-				PropsValues.MAIL_SESSION_MAIL_POP3_USER));
-		String smtpHost = companyPortletPreferences.getValue(
-			PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST,
-			systemPortletPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST,
-				PropsValues.MAIL_SESSION_MAIL_SMTP_HOST));
-		String smtpPassword = companyPortletPreferences.getValue(
-			PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD,
-			systemPortletPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD,
-				PropsValues.MAIL_SESSION_MAIL_SMTP_PASSWORD));
+			getPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_POP3_PORT));
+		String pop3User = getPreferenceFunction.apply(
+			PropsKeys.MAIL_SESSION_MAIL_POP3_USER);
+		String smtpHost = getPreferenceFunction.apply(
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_HOST);
+		String smtpPassword = getPreferenceFunction.apply(
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_PASSWORD);
 		int smtpPort = GetterUtil.getInteger(
-			companyPortletPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
-				systemPortletPreferences.getValue(
-					PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT,
-					String.valueOf(PropsValues.MAIL_SESSION_MAIL_SMTP_PORT))));
+			getPreferenceFunction.apply(PropsKeys.MAIL_SESSION_MAIL_SMTP_PORT));
 		boolean smtpStartTLSEnable = GetterUtil.getBoolean(
-			companyPortletPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE,
-				systemPortletPreferences.getValue(
-					PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE,
-					String.valueOf(
-						PropsValues.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE))));
-		String smtpUser = companyPortletPreferences.getValue(
-			PropsKeys.MAIL_SESSION_MAIL_SMTP_USER,
-			systemPortletPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL_SMTP_USER,
-				PropsValues.MAIL_SESSION_MAIL_SMTP_USER));
-		String storeProtocol = companyPortletPreferences.getValue(
-			PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL,
-			systemPortletPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL,
-				PropsValues.MAIL_SESSION_MAIL_STORE_PROTOCOL));
-		String transportProtocol = companyPortletPreferences.getValue(
-			PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL,
-			systemPortletPreferences.getValue(
-				PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL,
-				PropsValues.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL));
+			getPreferenceFunction.apply(
+				PropsKeys.MAIL_SESSION_MAIL_SMTP_STARTTLS_ENABLE));
+		String smtpUser = getPreferenceFunction.apply(
+			PropsKeys.MAIL_SESSION_MAIL_SMTP_USER);
+		String storeProtocol = getPreferenceFunction.apply(
+			PropsKeys.MAIL_SESSION_MAIL_STORE_PROTOCOL);
+		String transportProtocol = getPreferenceFunction.apply(
+			PropsKeys.MAIL_SESSION_MAIL_TRANSPORT_PROTOCOL);
 
 		Properties properties = session.getProperties();
 

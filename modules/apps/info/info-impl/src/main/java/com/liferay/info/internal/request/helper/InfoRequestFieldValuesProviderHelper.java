@@ -20,6 +20,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -181,7 +182,9 @@ public class InfoRequestFieldValuesProviderHelper {
 			return _getNumberInfoFieldValue(infoField, locale, value);
 		}
 
-		if (infoField.getInfoFieldType() instanceof TextInfoFieldType) {
+		if (infoField.getInfoFieldType() instanceof SelectInfoFieldType ||
+			infoField.getInfoFieldType() instanceof TextInfoFieldType) {
+
 			return _getInfoFieldValue(infoField, locale, (Object)value);
 		}
 

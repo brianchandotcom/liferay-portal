@@ -26,6 +26,23 @@ definition {
 		}
 	}
 
+	macro assertTruncatedText {
+		WaitForSPARefresh();
+
+		var javascript = '''
+var element = document.evaluate("${element}", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+
+return (element.offsetWidth < element.scrollWidth).toString();
+
+		''';
+
+		var isTruncated = selenium.getEval("${javascript}");
+
+		if ("${isTruncated}" != "true") {
+			TestUtils.fail(message = "FAILED: The text is not truncated");
+		}
+	}
+
 	macro fail {
 		if (!(isSet(message))) {
 			var message = "FAIL";

@@ -211,220 +211,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteNotificationTemplate() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		NotificationTemplate notificationTemplate =
-			testDeleteNotificationTemplate_addNotificationTemplate();
-
-		assertHttpResponseStatusCode(
-			204,
-			notificationTemplateResource.deleteNotificationTemplateHttpResponse(
-				notificationTemplate.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			notificationTemplateResource.getNotificationTemplateHttpResponse(
-				notificationTemplate.getId()));
-
-		assertHttpResponseStatusCode(
-			404,
-			notificationTemplateResource.getNotificationTemplateHttpResponse(
-				0L));
-	}
-
-	protected NotificationTemplate
-			testDeleteNotificationTemplate_addNotificationTemplate()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLDeleteNotificationTemplate() throws Exception {
-		NotificationTemplate notificationTemplate =
-			testGraphQLDeleteNotificationTemplate_addNotificationTemplate();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteNotificationTemplate",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"notificationTemplateId",
-									notificationTemplate.getId());
-							}
-						})),
-				"JSONObject/data", "Object/deleteNotificationTemplate"));
-		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
-			invokeGraphQLQuery(
-				new GraphQLField(
-					"notificationTemplate",
-					new HashMap<String, Object>() {
-						{
-							put(
-								"notificationTemplateId",
-								notificationTemplate.getId());
-						}
-					},
-					new GraphQLField("id"))),
-			"JSONArray/errors");
-
-		Assert.assertTrue(errorsJSONArray.length() > 0);
-	}
-
-	protected NotificationTemplate
-			testGraphQLDeleteNotificationTemplate_addNotificationTemplate()
-		throws Exception {
-
-		return testGraphQLNotificationTemplate_addNotificationTemplate();
-	}
-
-	@Test
-	public void testGetNotificationTemplate() throws Exception {
-		NotificationTemplate postNotificationTemplate =
-			testGetNotificationTemplate_addNotificationTemplate();
-
-		NotificationTemplate getNotificationTemplate =
-			notificationTemplateResource.getNotificationTemplate(
-				postNotificationTemplate.getId());
-
-		assertEquals(postNotificationTemplate, getNotificationTemplate);
-		assertValid(getNotificationTemplate);
-	}
-
-	protected NotificationTemplate
-			testGetNotificationTemplate_addNotificationTemplate()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetNotificationTemplate() throws Exception {
-		NotificationTemplate notificationTemplate =
-			testGraphQLGetNotificationTemplate_addNotificationTemplate();
-
-		Assert.assertTrue(
-			equals(
-				notificationTemplate,
-				NotificationTemplateSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"notificationTemplate",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"notificationTemplateId",
-											notificationTemplate.getId());
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/notificationTemplate"))));
-	}
-
-	@Test
-	public void testGraphQLGetNotificationTemplateNotFound() throws Exception {
-		Long irrelevantNotificationTemplateId = RandomTestUtil.randomLong();
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"notificationTemplate",
-						new HashMap<String, Object>() {
-							{
-								put(
-									"notificationTemplateId",
-									irrelevantNotificationTemplateId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected NotificationTemplate
-			testGraphQLGetNotificationTemplate_addNotificationTemplate()
-		throws Exception {
-
-		return testGraphQLNotificationTemplate_addNotificationTemplate();
-	}
-
-	@Test
-	public void testPatchNotificationTemplate() throws Exception {
-		NotificationTemplate postNotificationTemplate =
-			testPatchNotificationTemplate_addNotificationTemplate();
-
-		NotificationTemplate randomPatchNotificationTemplate =
-			randomPatchNotificationTemplate();
-
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		NotificationTemplate patchNotificationTemplate =
-			notificationTemplateResource.patchNotificationTemplate(
-				postNotificationTemplate.getId(),
-				randomPatchNotificationTemplate);
-
-		NotificationTemplate expectedPatchNotificationTemplate =
-			postNotificationTemplate.clone();
-
-		BeanTestUtil.copyProperties(
-			randomPatchNotificationTemplate, expectedPatchNotificationTemplate);
-
-		NotificationTemplate getNotificationTemplate =
-			notificationTemplateResource.getNotificationTemplate(
-				patchNotificationTemplate.getId());
-
-		assertEquals(
-			expectedPatchNotificationTemplate, getNotificationTemplate);
-		assertValid(getNotificationTemplate);
-	}
-
-	protected NotificationTemplate
-			testPatchNotificationTemplate_addNotificationTemplate()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutNotificationTemplate() throws Exception {
-		NotificationTemplate postNotificationTemplate =
-			testPutNotificationTemplate_addNotificationTemplate();
-
-		NotificationTemplate randomNotificationTemplate =
-			randomNotificationTemplate();
-
-		NotificationTemplate putNotificationTemplate =
-			notificationTemplateResource.putNotificationTemplate(
-				postNotificationTemplate.getId(), randomNotificationTemplate);
-
-		assertEquals(randomNotificationTemplate, putNotificationTemplate);
-		assertValid(putNotificationTemplate);
-
-		NotificationTemplate getNotificationTemplate =
-			notificationTemplateResource.getNotificationTemplate(
-				putNotificationTemplate.getId());
-
-		assertEquals(randomNotificationTemplate, getNotificationTemplate);
-		assertValid(getNotificationTemplate);
-	}
-
-	protected NotificationTemplate
-			testPutNotificationTemplate_addNotificationTemplate()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetNotificationTemplatesPage() throws Exception {
 		Page<NotificationTemplate> page =
 			notificationTemplateResource.getNotificationTemplatesPage(
@@ -840,6 +626,220 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 	protected NotificationTemplate
 			testPostNotificationTemplate_addNotificationTemplate(
 				NotificationTemplate notificationTemplate)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteNotificationTemplate() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		NotificationTemplate notificationTemplate =
+			testDeleteNotificationTemplate_addNotificationTemplate();
+
+		assertHttpResponseStatusCode(
+			204,
+			notificationTemplateResource.deleteNotificationTemplateHttpResponse(
+				notificationTemplate.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			notificationTemplateResource.getNotificationTemplateHttpResponse(
+				notificationTemplate.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			notificationTemplateResource.getNotificationTemplateHttpResponse(
+				0L));
+	}
+
+	protected NotificationTemplate
+			testDeleteNotificationTemplate_addNotificationTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteNotificationTemplate() throws Exception {
+		NotificationTemplate notificationTemplate =
+			testGraphQLDeleteNotificationTemplate_addNotificationTemplate();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteNotificationTemplate",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"notificationTemplateId",
+									notificationTemplate.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteNotificationTemplate"));
+		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"notificationTemplate",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"notificationTemplateId",
+								notificationTemplate.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected NotificationTemplate
+			testGraphQLDeleteNotificationTemplate_addNotificationTemplate()
+		throws Exception {
+
+		return testGraphQLNotificationTemplate_addNotificationTemplate();
+	}
+
+	@Test
+	public void testGetNotificationTemplate() throws Exception {
+		NotificationTemplate postNotificationTemplate =
+			testGetNotificationTemplate_addNotificationTemplate();
+
+		NotificationTemplate getNotificationTemplate =
+			notificationTemplateResource.getNotificationTemplate(
+				postNotificationTemplate.getId());
+
+		assertEquals(postNotificationTemplate, getNotificationTemplate);
+		assertValid(getNotificationTemplate);
+	}
+
+	protected NotificationTemplate
+			testGetNotificationTemplate_addNotificationTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetNotificationTemplate() throws Exception {
+		NotificationTemplate notificationTemplate =
+			testGraphQLGetNotificationTemplate_addNotificationTemplate();
+
+		Assert.assertTrue(
+			equals(
+				notificationTemplate,
+				NotificationTemplateSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"notificationTemplate",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"notificationTemplateId",
+											notificationTemplate.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/notificationTemplate"))));
+	}
+
+	@Test
+	public void testGraphQLGetNotificationTemplateNotFound() throws Exception {
+		Long irrelevantNotificationTemplateId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"notificationTemplate",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"notificationTemplateId",
+									irrelevantNotificationTemplateId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected NotificationTemplate
+			testGraphQLGetNotificationTemplate_addNotificationTemplate()
+		throws Exception {
+
+		return testGraphQLNotificationTemplate_addNotificationTemplate();
+	}
+
+	@Test
+	public void testPatchNotificationTemplate() throws Exception {
+		NotificationTemplate postNotificationTemplate =
+			testPatchNotificationTemplate_addNotificationTemplate();
+
+		NotificationTemplate randomPatchNotificationTemplate =
+			randomPatchNotificationTemplate();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		NotificationTemplate patchNotificationTemplate =
+			notificationTemplateResource.patchNotificationTemplate(
+				postNotificationTemplate.getId(),
+				randomPatchNotificationTemplate);
+
+		NotificationTemplate expectedPatchNotificationTemplate =
+			postNotificationTemplate.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchNotificationTemplate, expectedPatchNotificationTemplate);
+
+		NotificationTemplate getNotificationTemplate =
+			notificationTemplateResource.getNotificationTemplate(
+				patchNotificationTemplate.getId());
+
+		assertEquals(
+			expectedPatchNotificationTemplate, getNotificationTemplate);
+		assertValid(getNotificationTemplate);
+	}
+
+	protected NotificationTemplate
+			testPatchNotificationTemplate_addNotificationTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutNotificationTemplate() throws Exception {
+		NotificationTemplate postNotificationTemplate =
+			testPutNotificationTemplate_addNotificationTemplate();
+
+		NotificationTemplate randomNotificationTemplate =
+			randomNotificationTemplate();
+
+		NotificationTemplate putNotificationTemplate =
+			notificationTemplateResource.putNotificationTemplate(
+				postNotificationTemplate.getId(), randomNotificationTemplate);
+
+		assertEquals(randomNotificationTemplate, putNotificationTemplate);
+		assertValid(putNotificationTemplate);
+
+		NotificationTemplate getNotificationTemplate =
+			notificationTemplateResource.getNotificationTemplate(
+				putNotificationTemplate.getId());
+
+		assertEquals(randomNotificationTemplate, getNotificationTemplate);
+		assertValid(getNotificationTemplate);
+	}
+
+	protected NotificationTemplate
+			testPutNotificationTemplate_addNotificationTemplate()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

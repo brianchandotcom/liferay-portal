@@ -59,6 +59,20 @@ public interface NotificationTemplateResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<NotificationTemplate> getNotificationTemplatesPage(
+			String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public NotificationTemplate postNotificationTemplate(
+			NotificationTemplate notificationTemplate)
+		throws Exception;
+
+	public Response postNotificationTemplateBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteNotificationTemplate(Long notificationTemplateId)
 		throws Exception;
 
@@ -81,20 +95,6 @@ public interface NotificationTemplateResource {
 		throws Exception;
 
 	public Response putNotificationTemplateBatch(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public Page<NotificationTemplate> getNotificationTemplatesPage(
-			String search,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			Filter filter, Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public NotificationTemplate postNotificationTemplate(
-			NotificationTemplate notificationTemplate)
-		throws Exception;
-
-	public Response postNotificationTemplateBatch(
 			String callbackURL, Object object)
 		throws Exception;
 

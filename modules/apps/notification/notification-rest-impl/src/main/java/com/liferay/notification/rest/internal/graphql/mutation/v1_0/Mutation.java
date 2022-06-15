@@ -54,6 +54,34 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public NotificationTemplate createNotificationTemplate(
+			@GraphQLName("notificationTemplate") NotificationTemplate
+				notificationTemplate)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_notificationTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			notificationTemplateResource ->
+				notificationTemplateResource.postNotificationTemplate(
+					notificationTemplate));
+	}
+
+	@GraphQLField
+	public Response createNotificationTemplateBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_notificationTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			notificationTemplateResource ->
+				notificationTemplateResource.postNotificationTemplateBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
 	public boolean deleteNotificationTemplate(
 			@GraphQLName("notificationTemplateId") Long notificationTemplateId)
 		throws Exception {
@@ -123,34 +151,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			notificationTemplateResource ->
 				notificationTemplateResource.putNotificationTemplateBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField
-	public NotificationTemplate createNotificationTemplate(
-			@GraphQLName("notificationTemplate") NotificationTemplate
-				notificationTemplate)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_notificationTemplateResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			notificationTemplateResource ->
-				notificationTemplateResource.postNotificationTemplate(
-					notificationTemplate));
-	}
-
-	@GraphQLField
-	public Response createNotificationTemplateBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_notificationTemplateResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			notificationTemplateResource ->
-				notificationTemplateResource.postNotificationTemplateBatch(
 					callbackURL, object));
 	}
 

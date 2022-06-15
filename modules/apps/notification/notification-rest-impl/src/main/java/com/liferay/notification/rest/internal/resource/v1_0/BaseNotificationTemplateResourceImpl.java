@@ -75,308 +75,6 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/notification/v1.0/notification-template/{notificationTemplateId}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "notificationTemplateId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "NotificationTemplate"
-			)
-		}
-	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/notification-template/{notificationTemplateId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteNotificationTemplate(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("notificationTemplateId")
-			Long notificationTemplateId)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/notification/v1.0/notification-template/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "NotificationTemplate"
-			)
-		}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/notification-template/batch")
-	@javax.ws.rs.Produces("application/json")
-	@Override
-	public Response deleteNotificationTemplateBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				NotificationTemplate.class.getName(), callbackURL, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/notification/v1.0/notification-template/{notificationTemplateId}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "notificationTemplateId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "NotificationTemplate"
-			)
-		}
-	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/notification-template/{notificationTemplateId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public NotificationTemplate getNotificationTemplate(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("notificationTemplateId")
-			Long notificationTemplateId)
-		throws Exception {
-
-		return new NotificationTemplate();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/notification/v1.0/notification-template/{notificationTemplateId}' -d $'{"bcc": ___, "body": ___, "cc": ___, "description": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "notificationTemplateId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "NotificationTemplate"
-			)
-		}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/notification-template/{notificationTemplateId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public NotificationTemplate patchNotificationTemplate(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("notificationTemplateId")
-			Long notificationTemplateId,
-			NotificationTemplate notificationTemplate)
-		throws Exception {
-
-		NotificationTemplate existingNotificationTemplate =
-			getNotificationTemplate(notificationTemplateId);
-
-		if (notificationTemplate.getActions() != null) {
-			existingNotificationTemplate.setActions(
-				notificationTemplate.getActions());
-		}
-
-		if (notificationTemplate.getBcc() != null) {
-			existingNotificationTemplate.setBcc(notificationTemplate.getBcc());
-		}
-
-		if (notificationTemplate.getBody() != null) {
-			existingNotificationTemplate.setBody(
-				notificationTemplate.getBody());
-		}
-
-		if (notificationTemplate.getCc() != null) {
-			existingNotificationTemplate.setCc(notificationTemplate.getCc());
-		}
-
-		if (notificationTemplate.getDateCreated() != null) {
-			existingNotificationTemplate.setDateCreated(
-				notificationTemplate.getDateCreated());
-		}
-
-		if (notificationTemplate.getDateModified() != null) {
-			existingNotificationTemplate.setDateModified(
-				notificationTemplate.getDateModified());
-		}
-
-		if (notificationTemplate.getDescription() != null) {
-			existingNotificationTemplate.setDescription(
-				notificationTemplate.getDescription());
-		}
-
-		if (notificationTemplate.getFrom() != null) {
-			existingNotificationTemplate.setFrom(
-				notificationTemplate.getFrom());
-		}
-
-		if (notificationTemplate.getFromName() != null) {
-			existingNotificationTemplate.setFromName(
-				notificationTemplate.getFromName());
-		}
-
-		if (notificationTemplate.getName() != null) {
-			existingNotificationTemplate.setName(
-				notificationTemplate.getName());
-		}
-
-		if (notificationTemplate.getName_i18n() != null) {
-			existingNotificationTemplate.setName_i18n(
-				notificationTemplate.getName_i18n());
-		}
-
-		if (notificationTemplate.getSubject() != null) {
-			existingNotificationTemplate.setSubject(
-				notificationTemplate.getSubject());
-		}
-
-		if (notificationTemplate.getTo() != null) {
-			existingNotificationTemplate.setTo(notificationTemplate.getTo());
-		}
-
-		preparePatch(notificationTemplate, existingNotificationTemplate);
-
-		return putNotificationTemplate(
-			notificationTemplateId, existingNotificationTemplate);
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-template/{notificationTemplateId}' -d $'{"bcc": ___, "body": ___, "cc": ___, "description": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "notificationTemplateId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "NotificationTemplate"
-			)
-		}
-	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/notification-template/{notificationTemplateId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
-	@Override
-	public NotificationTemplate putNotificationTemplate(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("notificationTemplateId")
-			Long notificationTemplateId,
-			NotificationTemplate notificationTemplate)
-		throws Exception {
-
-		return new NotificationTemplate();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-template/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "NotificationTemplate"
-			)
-		}
-	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/notification-template/batch")
-	@javax.ws.rs.Produces("application/json")
-	@javax.ws.rs.PUT
-	@Override
-	public Response putNotificationTemplateBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.putImportTask(
-				NotificationTemplate.class.getName(), callbackURL, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/notification/v1.0/notification-templates'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -497,6 +195,308 @@ public abstract class BaseNotificationTemplateResourceImpl
 		return responseBuilder.entity(
 			vulcanBatchEngineImportTaskResource.postImportTask(
 				NotificationTemplate.class.getName(), callbackURL, null, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "notificationTemplateId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "NotificationTemplate"
+			)
+		}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/notification-templates/{notificationTemplateId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteNotificationTemplate(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("notificationTemplateId")
+			Long notificationTemplateId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/notification/v1.0/notification-templates/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "NotificationTemplate"
+			)
+		}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/notification-templates/batch")
+	@javax.ws.rs.Produces("application/json")
+	@Override
+	public Response deleteNotificationTemplateBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				NotificationTemplate.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "notificationTemplateId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "NotificationTemplate"
+			)
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/notification-templates/{notificationTemplateId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public NotificationTemplate getNotificationTemplate(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("notificationTemplateId")
+			Long notificationTemplateId)
+		throws Exception {
+
+		return new NotificationTemplate();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"bcc": ___, "body": ___, "cc": ___, "description": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "notificationTemplateId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "NotificationTemplate"
+			)
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/notification-templates/{notificationTemplateId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public NotificationTemplate patchNotificationTemplate(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("notificationTemplateId")
+			Long notificationTemplateId,
+			NotificationTemplate notificationTemplate)
+		throws Exception {
+
+		NotificationTemplate existingNotificationTemplate =
+			getNotificationTemplate(notificationTemplateId);
+
+		if (notificationTemplate.getActions() != null) {
+			existingNotificationTemplate.setActions(
+				notificationTemplate.getActions());
+		}
+
+		if (notificationTemplate.getBcc() != null) {
+			existingNotificationTemplate.setBcc(notificationTemplate.getBcc());
+		}
+
+		if (notificationTemplate.getBody() != null) {
+			existingNotificationTemplate.setBody(
+				notificationTemplate.getBody());
+		}
+
+		if (notificationTemplate.getCc() != null) {
+			existingNotificationTemplate.setCc(notificationTemplate.getCc());
+		}
+
+		if (notificationTemplate.getDateCreated() != null) {
+			existingNotificationTemplate.setDateCreated(
+				notificationTemplate.getDateCreated());
+		}
+
+		if (notificationTemplate.getDateModified() != null) {
+			existingNotificationTemplate.setDateModified(
+				notificationTemplate.getDateModified());
+		}
+
+		if (notificationTemplate.getDescription() != null) {
+			existingNotificationTemplate.setDescription(
+				notificationTemplate.getDescription());
+		}
+
+		if (notificationTemplate.getFrom() != null) {
+			existingNotificationTemplate.setFrom(
+				notificationTemplate.getFrom());
+		}
+
+		if (notificationTemplate.getFromName() != null) {
+			existingNotificationTemplate.setFromName(
+				notificationTemplate.getFromName());
+		}
+
+		if (notificationTemplate.getName() != null) {
+			existingNotificationTemplate.setName(
+				notificationTemplate.getName());
+		}
+
+		if (notificationTemplate.getName_i18n() != null) {
+			existingNotificationTemplate.setName_i18n(
+				notificationTemplate.getName_i18n());
+		}
+
+		if (notificationTemplate.getSubject() != null) {
+			existingNotificationTemplate.setSubject(
+				notificationTemplate.getSubject());
+		}
+
+		if (notificationTemplate.getTo() != null) {
+			existingNotificationTemplate.setTo(notificationTemplate.getTo());
+		}
+
+		preparePatch(notificationTemplate, existingNotificationTemplate);
+
+		return putNotificationTemplate(
+			notificationTemplateId, existingNotificationTemplate);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"bcc": ___, "body": ___, "cc": ___, "description": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "notificationTemplateId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "NotificationTemplate"
+			)
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/notification-templates/{notificationTemplateId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public NotificationTemplate putNotificationTemplate(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("notificationTemplateId")
+			Long notificationTemplateId,
+			NotificationTemplate notificationTemplate)
+		throws Exception {
+
+		return new NotificationTemplate();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-templates/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "NotificationTemplate"
+			)
+		}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/notification-templates/batch")
+	@javax.ws.rs.Produces("application/json")
+	@javax.ws.rs.PUT
+	@Override
+	public Response putNotificationTemplateBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				NotificationTemplate.class.getName(), callbackURL, object)
 		).build();
 	}
 

@@ -61,24 +61,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationTemplate(notificationTemplateId: ___){actions, bcc, body, cc, dateCreated, dateModified, description, from, fromName, id, name, name_i18n, subject, to}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public NotificationTemplate notificationTemplate(
-			@GraphQLName("notificationTemplateId") Long notificationTemplateId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_notificationTemplateResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			notificationTemplateResource ->
-				notificationTemplateResource.getNotificationTemplate(
-					notificationTemplateId));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationTemplates(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -104,6 +86,24 @@ public class Query {
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
 						notificationTemplateResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationTemplate(notificationTemplateId: ___){actions, bcc, body, cc, dateCreated, dateModified, description, from, fromName, id, name, name_i18n, subject, to}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public NotificationTemplate notificationTemplate(
+			@GraphQLName("notificationTemplateId") Long notificationTemplateId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_notificationTemplateResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			notificationTemplateResource ->
+				notificationTemplateResource.getNotificationTemplate(
+					notificationTemplateId));
 	}
 
 	@GraphQLName("NotificationTemplatePage")

@@ -76,7 +76,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 				<c:if test="<%= (cpSku != null) && (cpSku.getDiscontinuedDate() != null) %>">
 
 					<%
-					Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMMM dd, yyyy", locale, timeZone);
+					Format dateFormat = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 					%>
 
 					<p class="my-2">
@@ -84,10 +84,21 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 							<%= LanguageUtil.get(request, "end-of-life") %>
 						</span>
 						<span>
-							<%= format.format(cpSku.getDiscontinuedDate()) %>
+							<%= dateFormat.format(cpSku.getDiscontinuedDate()) %>
 						</span>
 					</p>
 				</c:if>
+
+				<c:choose>
+					<c:when test="<%= cpSku != null %>">
+						<p class="m-0">
+							<%= cpContentHelper.getIncomingQuantityLabel(request, cpSku.getSku()) %>
+						</p>
+					</c:when>
+					<c:otherwise>
+						<p class="m-0" data-text-cp-instance-incoming-quantity-label></p>
+					</c:otherwise>
+				</c:choose>
 
 				<%
 				String hideCssClass = StringPool.BLANK;
@@ -99,7 +110,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 				<p class="my-2 <%= hideCssClass %>" data-text-cp-instance-sku>
 					<span class="font-weight-semi-bold">
-						<%= LanguageUtil.get(request, "sku") %>
+						<%= LanguageUtil.get(request, "sku-colon") %>
 					</span>
 					<span>
 						<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getSku()) %>
@@ -110,7 +121,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 				<p class="my-2 <%= hideCssClass %>" data-text-cp-instance-manufacturer-part-number>
 					<span class="font-weight-semi-bold">
-						<%= LanguageUtil.get(request, "mpn") %>
+						<%= LanguageUtil.get(request, "mpn-colon") %>
 					</span>
 					<span>
 						<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getManufacturerPartNumber()) %>
@@ -119,7 +130,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 
 				<p class="my-2 <%= hideCssClass %>" data-text-cp-instance-gtin>
 					<span class="font-weight-semi-bold">
-						<%= LanguageUtil.get(request, "gtin") %>
+						<%= LanguageUtil.get(request, "gtin-colon") %>
 					</span>
 					<span>
 						<%= (cpSku == null) ? StringPool.BLANK : HtmlUtil.escape(cpSku.getGtin()) %>
@@ -127,7 +138,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 				</p>
 			</header>
 
-			<p class="mt-3 product-description"><%= cpCatalogEntry.getDescription() %></p>
+			<p class="mt-3 product-description"><%= HtmlUtil.escape(cpCatalogEntry.getShortDescription()) %></p>
 
 			<h4 class="commerce-subscription-info mt-3">
 				<c:if test="<%= cpSku != null %>">
@@ -190,6 +201,16 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 				/>
 			</c:if>
 
+			<%
+			int minOrderQuantity = cpContentHelper.getMinOrderQuantity(cpDefinitionId);
+			%>
+
+			<c:if test="<%= minOrderQuantity > CPDefinitionInventoryConstants.DEFAULT_MIN_ORDER_QUANTITY %>">
+				<span class="min-quantity-per-order">
+					<liferay-ui:message arguments="<%= minOrderQuantity %>" key="minimum-quantity-per-order-x" />
+				</span>
+			</c:if>
+
 			<div class="align-items-center d-flex mt-3 product-detail-actions">
 				<commerce-ui:add-to-cart
 					alignment="left"
@@ -222,127 +243,180 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 List<CPDefinitionSpecificationOptionValue> cpDefinitionSpecificationOptionValues = cpContentHelper.getCPDefinitionSpecificationOptionValues(cpDefinitionId);
 List<CPMedia> cpMedias = cpContentHelper.getCPMedias(cpDefinitionId, themeDisplay);
 List<CPOptionCategory> cpOptionCategories = cpContentHelper.getCPOptionCategories(company.getCompanyId());
+
+String description = cpCatalogEntry.getDescription();
+
+boolean hasCPDefinitionSpecificationOptionValues = cpContentHelper.hasCPDefinitionSpecificationOptionValues(cpDefinitionId);
+boolean hasCPMedia = !cpMedias.isEmpty();
+boolean hasDescription = !Validator.isBlank(description);
+boolean hasDirectReplacement = cpContentHelper.hasDirectReplacement(cpSku);
+
+String navCPMediaId = liferayPortletResponse.getNamespace() + "navCPMedia";
+String navDescriptionId = liferayPortletResponse.getNamespace() + "navDescription";
+String navReplacementsId = liferayPortletResponse.getNamespace() + "navReplacements";
+String navSpecificationsId = liferayPortletResponse.getNamespace() + "navSpecifications";
 %>
 
-<c:if test="<%= cpContentHelper.hasCPDefinitionSpecificationOptionValues(cpDefinitionId) %>">
-	<commerce-ui:panel
-		elementClasses="flex-column mb-3"
-		title='<%= LanguageUtil.get(resourceBundle, "specifications") %>'
-	>
-		<dl class="specification-list">
+<div>
+	<react:component
+		module="product_detail/render/js/Tabs"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"hasCPDefinitionSpecificationOptionValues", hasCPDefinitionSpecificationOptionValues
+			).put(
+				"hasCPMedia", hasCPMedia
+			).put(
+				"hasDescription", hasDescription
+			).put(
+				"hasReplacements", hasDirectReplacement
+			).put(
+				"namespace", liferayPortletResponse.getNamespace()
+			).put(
+				"navCPMediaId", navCPMediaId
+			).put(
+				"navDescriptionId", navDescriptionId
+			).put(
+				"navReplacementsId", navReplacementsId
+			).put(
+				"navSpecificationsId", navSpecificationsId
+			).build()
+		%>'
+	/>
+</div>
 
-			<%
-			for (CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue : cpDefinitionSpecificationOptionValues) {
-				CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
-			%>
+<div class="tab-content">
+	<c:if test="<%= hasDescription %>">
+		<div aria-labelledby="navUnderlineFieldsTab" class="fade <portlet:namespace />tab-element tab-pane" id="<%= navDescriptionId %>" role="tabpanel">
+			<div class="p-4">
+				<%= description %>
+			</div>
+		</div>
+	</c:if>
 
-				<dt class="specification-term">
-					<%= HtmlUtil.escape(cpSpecificationOption.getTitle(languageId)) %>
-				</dt>
-				<dd class="specification-desc">
-					<%= HtmlUtil.escape(cpDefinitionSpecificationOptionValue.getValue(languageId)) %>
-				</dd>
-
-			<%
-			}
-
-			for (CPOptionCategory cpOptionCategory : cpOptionCategories) {
-				List<CPDefinitionSpecificationOptionValue> categorizedCPDefinitionSpecificationOptionValues = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(cpDefinitionId, cpOptionCategory.getCPOptionCategoryId());
-			%>
-
-				<c:if test="<%= !categorizedCPDefinitionSpecificationOptionValues.isEmpty() %>">
-
-					<%
-					for (CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue : categorizedCPDefinitionSpecificationOptionValues) {
-						CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
-					%>
-
-						<dt class="specification-term">
-							<%= HtmlUtil.escape(cpSpecificationOption.getTitle(languageId)) %>
-						</dt>
-						<dd class="specification-desc">
-							<%= HtmlUtil.escape(cpDefinitionSpecificationOptionValue.getValue(languageId)) %>
-						</dd>
-
-					<%
-					}
-					%>
-
-				</c:if>
-
-			<%
-			}
-			%>
-
-		</dl>
-	</commerce-ui:panel>
-</c:if>
-
-<c:if test="<%= !cpMedias.isEmpty() %>">
-	<commerce-ui:panel
-		elementClasses="mb-3"
-		title='<%= LanguageUtil.get(resourceBundle, "attachments") %>'
-	>
-		<dl class="specification-list">
-
-			<%
-			int attachmentsCount = 0;
-
-			for (CPMedia cpMedia : cpMedias) {
-			%>
-
-				<dt class="specification-term">
-					<%= HtmlUtil.escape(cpMedia.getTitle()) %>
-				</dt>
-				<dd class="specification-desc">
-					<aui:icon cssClass="icon-monospaced" image="download" markupView="lexicon" target="_blank" url="<%= cpMedia.getDownloadURL() %>" />
-				</dd>
+	<c:if test="<%= hasCPDefinitionSpecificationOptionValues %>">
+		<div aria-labelledby="navUnderlineFieldsTab" class="fade <portlet:namespace />tab-element tab-pane" id="<%= navSpecificationsId %>" role="tabpanel">
+			<dl class="specification-list">
 
 				<%
-				attachmentsCount = attachmentsCount + 1;
+				for (CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue : cpDefinitionSpecificationOptionValues) {
+					CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
 				%>
 
-				<c:if test="<%= attachmentsCount >= 2 %>">
-					<dt class="specification-empty specification-term"></dt>
-					<dd class="specification-desc specification-empty"></dd>
+					<dt class="specification-term">
+						<%= HtmlUtil.escape(cpSpecificationOption.getTitle(languageId)) %>
+					</dt>
+					<dd class="specification-desc">
+						<%= HtmlUtil.escape(cpDefinitionSpecificationOptionValue.getValue(languageId)) %>
+					</dd>
 
-					<%
-					attachmentsCount = 0;
-					%>
+				<%
+				}
 
-				</c:if>
+				for (CPOptionCategory cpOptionCategory : cpOptionCategories) {
+					List<CPDefinitionSpecificationOptionValue> categorizedCPDefinitionSpecificationOptionValues = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(cpDefinitionId, cpOptionCategory.getCPOptionCategoryId());
+				%>
 
-			<%
-			}
-			%>
+					<c:if test="<%= !categorizedCPDefinitionSpecificationOptionValues.isEmpty() %>">
+						<table class="table table-sm table-striped">
+							<thead>
+								<tr>
+									<th class="table-cell-expand"><%= HtmlUtil.escape(cpOptionCategory.getTitle(locale)) %></th>
+									<th class="table-column-text-end"></th>
+								</tr>
+							</thead>
 
-		</dl>
-	</commerce-ui:panel>
-</c:if>
+							<tbody>
 
-<c:if test="<%= cpContentHelper.hasDirectReplacement(cpSku) %>">
-	<commerce-ui:panel
-		elementClasses="mb-3"
-		title='<%= LanguageUtil.get(resourceBundle, "replacements") %>'
-	>
-		<frontend-data-set:classic-display
-			contextParams='<%=
-				HashMapBuilder.<String, String>put(
-					"commerceAccountId", (commerceAccount == null) ? "0" : String.valueOf(commerceAccount.getCommerceAccountId())
-				).put(
-					"commerceChannelGroupId", String.valueOf(commerceContext.getCommerceChannelGroupId())
-				).put(
-					"commerceOrderId", (commerceOrder == null) ? "0" : String.valueOf(commerceOrder.getCommerceOrderId())
-				).put(
-					"cpInstanceUuid", cpSku.getCPInstanceUuid()
-				).put(
-					"cProductId", String.valueOf(cpCatalogEntry.getCProductId())
-				).build()
-			%>'
-			dataProviderKey="<%= CPContentFDSNames.REPLACEMENT_CP_INSTANCES %>"
-			id="<%= CPContentFDSNames.REPLACEMENT_CP_INSTANCES %>"
-			itemsPerPage="<%= 10 %>"
-			style="stacked"
-		/>
-	</commerce-ui:panel>
-</c:if>
+								<%
+								for (CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue : categorizedCPDefinitionSpecificationOptionValues) {
+									CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
+								%>
+
+									<tr>
+										<td class="specification-term table-cell-minw-150 table-title">
+											<%= HtmlUtil.escape(cpSpecificationOption.getTitle(languageId)) %>
+										</td>
+										<td class="specification-desc table-cell-expand">
+											<%= HtmlUtil.escape(cpDefinitionSpecificationOptionValue.getValue(languageId)) %>
+										</td>
+									</tr>
+
+								<%
+								}
+								%>
+
+							</tbody>
+						</table>
+					</c:if>
+
+				<%
+				}
+				%>
+
+			</dl>
+		</div>
+	</c:if>
+
+	<c:if test="<%= hasCPMedia %>">
+		<div aria-labelledby="navUnderlineFieldsTab" class="fade <portlet:namespace />tab-element tab-pane" id="<%= navCPMediaId %>" role="tabpanel">
+			<ul class="list-group">
+
+				<%
+				for (CPMedia cpMedia : cpMedias) {
+				%>
+
+					<li class="list-group-item list-group-item-flex">
+						<div class="autofit-col my-auto">
+							<aui:icon cssClass="icon-monospaced" image="document-default" markupView="lexicon" />
+						</div>
+
+						<div class="autofit-col autofit-col-expand">
+							<h5><%= HtmlUtil.escape(cpMedia.getTitle()) %></h5>
+
+							<p class="m-0"><%= LanguageUtil.formatStorageSize(cpMedia.getSize(), locale) %></p>
+						</div>
+
+						<div class="autofit-col my-auto">
+							<clay:link
+								borderless="<%= false %>"
+								cssClass="btn-secondary"
+								href="<%= cpMedia.getDownloadURL() %>"
+								label='<%= LanguageUtil.get(request, "download") %>'
+								target="_blank"
+								type="button"
+							/>
+						</div>
+					</li>
+
+				<%
+				}
+				%>
+
+			</ul>
+		</div>
+	</c:if>
+
+	<c:if test="<%= hasDirectReplacement %>">
+		<div aria-labelledby="navUnderlineReplacementsTab" class="fade <portlet:namespace />tab-element tab-pane" id="<%= navReplacementsId %>" role="tabpanel">
+			<frontend-data-set:classic-display
+				contextParams='<%=
+					HashMapBuilder.<String, String>put(
+						"commerceAccountId", (commerceAccount == null) ? "0" : String.valueOf(commerceAccount.getCommerceAccountId())
+					).put(
+						"commerceChannelGroupId", String.valueOf(commerceContext.getCommerceChannelGroupId())
+					).put(
+						"commerceOrderId", (commerceOrder == null) ? "0" : String.valueOf(commerceOrder.getCommerceOrderId())
+					).put(
+						"cpInstanceUuid", cpSku.getCPInstanceUuid()
+					).put(
+						"cProductId", String.valueOf(cpCatalogEntry.getCProductId())
+					).build()
+				%>'
+				dataProviderKey="<%= CPContentFDSNames.REPLACEMENT_CP_INSTANCES %>"
+				id="<%= CPContentFDSNames.REPLACEMENT_CP_INSTANCES %>"
+				itemsPerPage="<%= 10 %>"
+				style="stacked"
+			/>
+		</div>
+	</c:if>
+</div>

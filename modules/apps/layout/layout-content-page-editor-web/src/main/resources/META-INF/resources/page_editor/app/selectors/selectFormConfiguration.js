@@ -34,7 +34,7 @@ export default function selectFormConfiguration(item, layoutData) {
 			const mappingSource = parentItem.config?.formConfig;
 
 			if (classNameId && classNameId !== '0') {
-				return parentItem.config;
+				return {...parentItem.config, formId: parentItem.itemId};
 			}
 			else if (
 				config.layoutType === LAYOUT_TYPES.display &&

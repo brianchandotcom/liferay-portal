@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>VARIATION_TITLE</td>
-	<td>//nav[contains(@role, 'navigation')] //a[contains(text(), '${key_variation}')]</td>
+	<td>//nav[@role='navigation']//a//span[text()='${key_variation}']</td>
 	<td></td>
 </tr>
 <tr>

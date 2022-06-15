@@ -231,11 +231,11 @@ definition {
 		return "${curl}";
 	}
 
-	macro _versionStructuredContent {
+	macro _versionStructureContent {
 		Variables.assertDefined(parameterList = "${versionvalue},${responseToParse}");
 
 		var structuredContentId = JSONUtil.getWithJSONPath("${responseToParse}", "$.['id']");
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
 			${portalURL}/o/headless-admin-content/v1.0/structured-contents/${structuredContentId}/by-version/${versionvalue} \
@@ -332,8 +332,8 @@ definition {
 		return "${response}";
 	}
 
-	macro filterStructuredVersion {
-		var response = HeadlessWebcontentAPI._versionStructuredContent(
+	macro versionStructureContent {
+		var response = HeadlessWebcontentAPI._versionStructureContent(
 			responseToParse = "${responseToParse}",
 			versionvalue = "${versionvalue}");
 

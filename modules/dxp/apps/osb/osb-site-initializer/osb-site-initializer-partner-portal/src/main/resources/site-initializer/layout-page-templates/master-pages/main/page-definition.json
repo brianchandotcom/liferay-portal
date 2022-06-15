@@ -158,7 +158,8 @@
 										"target": "Self"
 									},
 									"fragmentStyle": {
-										"borderWidth": "0"
+										"borderWidth": "0",
+										"textAlign": ""
 									},
 									"indexed": true,
 									"layout": {
@@ -191,23 +192,10 @@
 											},
 											"fragmentFields": [
 											],
-											"fragmentStyle": {
-												"fontFamily": "fontFamilyBase",
-												"fontWeight": "fontWeightLight",
-												"textAlign": "right"
-											},
 											"indexed": true,
 											"widgetInstances": [
 												{
 													"widgetConfig": {
-														"displayDepth": "0",
-														"displayStyle": "ddmTemplate_NAVBAR-BLANK-FTL",
-														"displayStyleGroupId": "42638",
-														"expandedLevels": "auto",
-														"rootMenuItemLevel": "0",
-														"rootMenuItemType": "absolute",
-														"siteNavigationMenuId": "0",
-														"siteNavigationMenuType": "-1"
 													},
 													"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
 												}

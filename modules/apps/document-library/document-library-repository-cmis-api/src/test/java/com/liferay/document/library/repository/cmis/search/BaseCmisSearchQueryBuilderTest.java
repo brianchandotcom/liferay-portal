@@ -47,7 +47,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Mika Koivisto
@@ -62,8 +61,6 @@ public class BaseCmisSearchQueryBuilderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		setUpPropsUtil();
 
 		setUpDateFormatFactoryUtil();

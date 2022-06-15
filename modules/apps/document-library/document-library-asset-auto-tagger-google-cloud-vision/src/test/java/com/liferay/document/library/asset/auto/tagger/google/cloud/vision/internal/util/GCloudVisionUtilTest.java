@@ -24,13 +24,10 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.io.ByteArrayInputStream;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Alejandro Tardín
@@ -40,11 +37,6 @@ public class GCloudVisionUtilTest {
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-	}
 
 	@Test
 	public void testGetAnnotateImagePayload() throws Exception {
@@ -70,10 +62,7 @@ public class GCloudVisionUtilTest {
 			GCloudVisionUtil.getAnnotateImagePayload(_fileEntry));
 	}
 
-	@Mock
-	private FileEntry _fileEntry;
-
-	@Mock
-	private FileVersion _fileVersion;
+	private final FileEntry _fileEntry = Mockito.mock(FileEntry.class);
+	private final FileVersion _fileVersion = Mockito.mock(FileVersion.class);
 
 }

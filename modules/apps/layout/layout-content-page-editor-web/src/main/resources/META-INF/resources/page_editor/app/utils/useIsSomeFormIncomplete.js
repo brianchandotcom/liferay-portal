@@ -13,6 +13,7 @@
  */
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {useGlobalContext} from '../contexts/GlobalContext';
 import {useSelectorRef} from '../contexts/StoreContext';
 import FormService from '../services/FormService';
 import {getCacheItem, getCacheKey} from './cache';
@@ -30,6 +31,7 @@ function getFormItems(layoutData) {
 }
 
 export default function useIsSomeFormIncomplete() {
+	const globalContext = useGlobalContext();
 	const stateRef = useSelectorRef((state) => state);
 
 	return () => {
@@ -45,7 +47,7 @@ export default function useIsSomeFormIncomplete() {
 			return Promise.resolve(false);
 		}
 
-		if (forms.some((form) => !hasSubmitChild(form.itemId))) {
+		if (forms.some((form) => !hasSubmitChild(form.itemId, globalContext))) {
 			return Promise.resolve(true);
 		}
 

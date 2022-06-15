@@ -39,10 +39,14 @@ export default function ActionBuilder({
 	const [notificationTemplates, setNotificationTemplates] = useState<any[]>(
 		[]
 	);
-	const [
-		selectedNotificationTemplate,
-		setSelectedNotificationTemplate,
-	] = useState('');
+
+	const notificationTemplateId = useMemo(() => {
+		return notificationTemplates.find(
+			(notificationTemplate) =>
+				notificationTemplate.value ===
+				values.parameters?.notificationTemplateId
+		)?.label;
+	}, [notificationTemplates, values.parameters]);
 
 	const actionExecutors = useMemo(() => {
 		const executors = new Map<string, string>();
@@ -65,7 +69,7 @@ export default function ActionBuilder({
 	}, [objectActionTriggers]);
 
 	useEffect(() => {
-		if (values.objectActionExecutorKey === 'notificationTemplate') {
+		if (values.objectActionExecutorKey === 'notification') {
 			const makeFetch = async () => {
 				const response = await fetch(
 					'/o/notification/v1.0/notification-templates',
@@ -198,13 +202,12 @@ export default function ActionBuilder({
 
 						{ffNotificationTemplates &&
 							values.objectActionExecutorKey ===
-								'notificationTemplate' && (
+								'notification' && (
 								<FormCustomSelect
 									className="lfr-object__action-builder-notification-then"
 									error={errors.objectActionExecutorKey}
 									label={Liferay.Language.get('notification')}
-									onChange={({label, value}) => {
-										setSelectedNotificationTemplate(label);
+									onChange={({value}) => {
 										setValues({
 											parameters: {
 												...values.parameters,
@@ -214,7 +217,7 @@ export default function ActionBuilder({
 									}}
 									options={notificationTemplates}
 									required
-									value={selectedNotificationTemplate}
+									value={notificationTemplateId}
 								/>
 							)}
 					</div>

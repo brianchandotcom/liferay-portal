@@ -70,7 +70,7 @@ public class KaleoNotificationRecipientModelImpl
 	public static final String TABLE_NAME = "KaleoNotificationRecipient";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"kaleoNotificationRecipientId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
@@ -91,6 +91,7 @@ public class KaleoNotificationRecipientModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoNotificationRecipientId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -112,7 +113,7 @@ public class KaleoNotificationRecipientModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoNotificationRecipient (mvccVersion LONG default 0 not null,kaleoNotificationRecipientId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoNotificationId LONG,recipientClassName VARCHAR(200) null,recipientClassPK LONG,recipientRoleType INTEGER,recipientScript TEXT null,recipientScriptLanguage VARCHAR(75) null,recipientScriptContexts STRING null,address VARCHAR(255) null,notificationReceptionType VARCHAR(3) null)";
+		"create table KaleoNotificationRecipient (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,kaleoNotificationRecipientId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoNotificationId LONG,recipientClassName VARCHAR(200) null,recipientClassPK LONG,recipientRoleType INTEGER,recipientScript TEXT null,recipientScriptLanguage VARCHAR(75) null,recipientScriptContexts STRING null,address VARCHAR(255) null,notificationReceptionType VARCHAR(3) null,primary key (kaleoNotificationRecipientId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table KaleoNotificationRecipient";
@@ -279,6 +280,12 @@ public class KaleoNotificationRecipientModelImpl
 			(BiConsumer<KaleoNotificationRecipient, Long>)
 				KaleoNotificationRecipient::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", KaleoNotificationRecipient::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<KaleoNotificationRecipient, Long>)
+				KaleoNotificationRecipient::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"kaleoNotificationRecipientId",
 			KaleoNotificationRecipient::getKaleoNotificationRecipientId);
 		attributeSetterBiConsumers.put(
@@ -415,6 +422,20 @@ public class KaleoNotificationRecipientModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -817,6 +838,7 @@ public class KaleoNotificationRecipientModelImpl
 			new KaleoNotificationRecipientImpl();
 
 		kaleoNotificationRecipientImpl.setMvccVersion(getMvccVersion());
+		kaleoNotificationRecipientImpl.setCtCollectionId(getCtCollectionId());
 		kaleoNotificationRecipientImpl.setKaleoNotificationRecipientId(
 			getKaleoNotificationRecipientId());
 		kaleoNotificationRecipientImpl.setGroupId(getGroupId());
@@ -858,6 +880,8 @@ public class KaleoNotificationRecipientModelImpl
 
 		kaleoNotificationRecipientImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoNotificationRecipientImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		kaleoNotificationRecipientImpl.setKaleoNotificationRecipientId(
 			this.<Long>getColumnOriginalValue("kaleoNotificationRecipientId"));
 		kaleoNotificationRecipientImpl.setGroupId(
@@ -988,6 +1012,9 @@ public class KaleoNotificationRecipientModelImpl
 				new KaleoNotificationRecipientCacheModel();
 
 		kaleoNotificationRecipientCacheModel.mvccVersion = getMvccVersion();
+
+		kaleoNotificationRecipientCacheModel.ctCollectionId =
+			getCtCollectionId();
 
 		kaleoNotificationRecipientCacheModel.kaleoNotificationRecipientId =
 			getKaleoNotificationRecipientId();
@@ -1205,6 +1232,7 @@ public class KaleoNotificationRecipientModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _kaleoNotificationRecipientId;
 	private long _groupId;
 	private long _companyId;
@@ -1253,6 +1281,7 @@ public class KaleoNotificationRecipientModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put(
 			"kaleoNotificationRecipientId", _kaleoNotificationRecipientId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1291,41 +1320,43 @@ public class KaleoNotificationRecipientModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("kaleoNotificationRecipientId", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("kaleoNotificationRecipientId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("kaleoDefinitionId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("kaleoDefinitionVersionId", 512L);
+		columnBitmasks.put("kaleoDefinitionId", 512L);
 
-		columnBitmasks.put("kaleoNotificationId", 1024L);
+		columnBitmasks.put("kaleoDefinitionVersionId", 1024L);
 
-		columnBitmasks.put("recipientClassName", 2048L);
+		columnBitmasks.put("kaleoNotificationId", 2048L);
 
-		columnBitmasks.put("recipientClassPK", 4096L);
+		columnBitmasks.put("recipientClassName", 4096L);
 
-		columnBitmasks.put("recipientRoleType", 8192L);
+		columnBitmasks.put("recipientClassPK", 8192L);
 
-		columnBitmasks.put("recipientScript", 16384L);
+		columnBitmasks.put("recipientRoleType", 16384L);
 
-		columnBitmasks.put("recipientScriptLanguage", 32768L);
+		columnBitmasks.put("recipientScript", 32768L);
 
-		columnBitmasks.put("recipientScriptContexts", 65536L);
+		columnBitmasks.put("recipientScriptLanguage", 65536L);
 
-		columnBitmasks.put("address", 131072L);
+		columnBitmasks.put("recipientScriptContexts", 131072L);
 
-		columnBitmasks.put("notificationReceptionType", 262144L);
+		columnBitmasks.put("address", 262144L);
+
+		columnBitmasks.put("notificationReceptionType", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

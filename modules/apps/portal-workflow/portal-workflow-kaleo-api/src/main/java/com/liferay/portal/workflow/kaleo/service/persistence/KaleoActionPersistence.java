@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchActionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface KaleoActionPersistence extends BasePersistence<KaleoAction> {
+public interface KaleoActionPersistence
+	extends BasePersistence<KaleoAction>, CTPersistence<KaleoAction> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

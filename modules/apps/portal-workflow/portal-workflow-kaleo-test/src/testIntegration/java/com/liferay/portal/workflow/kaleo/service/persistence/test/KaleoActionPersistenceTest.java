@@ -125,6 +125,8 @@ public class KaleoActionPersistenceTest {
 
 		newKaleoAction.setMvccVersion(RandomTestUtil.nextLong());
 
+		newKaleoAction.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newKaleoAction.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoAction.setCompanyId(RandomTestUtil.nextLong());
@@ -169,6 +171,9 @@ public class KaleoActionPersistenceTest {
 		Assert.assertEquals(
 			existingKaleoAction.getMvccVersion(),
 			newKaleoAction.getMvccVersion());
+		Assert.assertEquals(
+			existingKaleoAction.getCtCollectionId(),
+			newKaleoAction.getCtCollectionId());
 		Assert.assertEquals(
 			existingKaleoAction.getKaleoActionId(),
 			newKaleoAction.getKaleoActionId());
@@ -298,13 +303,14 @@ public class KaleoActionPersistenceTest {
 
 	protected OrderByComparator<KaleoAction> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KaleoAction", "mvccVersion", true, "kaleoActionId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "kaleoClassName",
-			true, "kaleoClassPK", true, "kaleoDefinitionId", true,
-			"kaleoDefinitionVersionId", true, "kaleoNodeName", true, "name",
-			true, "description", true, "executionType", true, "scriptLanguage",
-			true, "scriptRequiredContexts", true, "priority", true);
+			"KaleoAction", "mvccVersion", true, "ctCollectionId", true,
+			"kaleoActionId", true, "groupId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"kaleoClassName", true, "kaleoClassPK", true, "kaleoDefinitionId",
+			true, "kaleoDefinitionVersionId", true, "kaleoNodeName", true,
+			"name", true, "description", true, "executionType", true,
+			"scriptLanguage", true, "scriptRequiredContexts", true, "priority",
+			true);
 	}
 
 	@Test
@@ -522,6 +528,8 @@ public class KaleoActionPersistenceTest {
 		KaleoAction kaleoAction = _persistence.create(pk);
 
 		kaleoAction.setMvccVersion(RandomTestUtil.nextLong());
+
+		kaleoAction.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kaleoAction.setGroupId(RandomTestUtil.nextLong());
 

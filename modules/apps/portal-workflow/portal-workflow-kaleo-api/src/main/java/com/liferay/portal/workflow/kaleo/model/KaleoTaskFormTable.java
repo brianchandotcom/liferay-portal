@@ -34,6 +34,8 @@ public class KaleoTaskFormTable extends BaseTable<KaleoTaskFormTable> {
 
 	public final Column<KaleoTaskFormTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KaleoTaskFormTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoTaskFormTable, Long> kaleoTaskFormId =
 		createColumn(
 			"kaleoTaskFormId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

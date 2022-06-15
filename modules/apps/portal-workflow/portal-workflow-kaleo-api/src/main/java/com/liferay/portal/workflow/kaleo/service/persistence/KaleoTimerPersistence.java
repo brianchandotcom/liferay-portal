@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTimerException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
+public interface KaleoTimerPersistence
+	extends BasePersistence<KaleoTimer>, CTPersistence<KaleoTimer> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

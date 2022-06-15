@@ -14,7 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.service;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 
 /**
  * Provides a wrapper for {@link KaleoConditionLocalService}.
@@ -48,22 +51,16 @@ public class KaleoConditionLocalServiceWrapper
 	 * @return the kaleo condition that was added
 	 */
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition
-		addKaleoCondition(
-			com.liferay.portal.workflow.kaleo.model.KaleoCondition
-				kaleoCondition) {
-
+	public KaleoCondition addKaleoCondition(KaleoCondition kaleoCondition) {
 		return _kaleoConditionLocalService.addKaleoCondition(kaleoCondition);
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition
-			addKaleoCondition(
-				long kaleoDefinitionId, long kaleoDefinitionVersionId,
-				long kaleoNodeId,
-				com.liferay.portal.workflow.kaleo.definition.Condition
-					condition,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public KaleoCondition addKaleoCondition(
+			long kaleoDefinitionId, long kaleoDefinitionVersionId,
+			long kaleoNodeId,
+			com.liferay.portal.workflow.kaleo.definition.Condition condition,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoConditionLocalService.addKaleoCondition(
@@ -78,9 +75,7 @@ public class KaleoConditionLocalServiceWrapper
 	 * @return the new kaleo condition
 	 */
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition
-		createKaleoCondition(long kaleoConditionId) {
-
+	public KaleoCondition createKaleoCondition(long kaleoConditionId) {
 		return _kaleoConditionLocalService.createKaleoCondition(
 			kaleoConditionId);
 	}
@@ -112,11 +107,7 @@ public class KaleoConditionLocalServiceWrapper
 	 * @return the kaleo condition that was removed
 	 */
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition
-		deleteKaleoCondition(
-			com.liferay.portal.workflow.kaleo.model.KaleoCondition
-				kaleoCondition) {
-
+	public KaleoCondition deleteKaleoCondition(KaleoCondition kaleoCondition) {
 		return _kaleoConditionLocalService.deleteKaleoCondition(kaleoCondition);
 	}
 
@@ -132,8 +123,7 @@ public class KaleoConditionLocalServiceWrapper
 	 * @throws PortalException if a kaleo condition with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition
-			deleteKaleoCondition(long kaleoConditionId)
+	public KaleoCondition deleteKaleoCondition(long kaleoConditionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoConditionLocalService.deleteKaleoCondition(
@@ -263,9 +253,7 @@ public class KaleoConditionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition
-		fetchKaleoCondition(long kaleoConditionId) {
-
+	public KaleoCondition fetchKaleoCondition(long kaleoConditionId) {
 		return _kaleoConditionLocalService.fetchKaleoCondition(
 			kaleoConditionId);
 	}
@@ -292,8 +280,7 @@ public class KaleoConditionLocalServiceWrapper
 	 * @throws PortalException if a kaleo condition with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition
-			getKaleoCondition(long kaleoConditionId)
+	public KaleoCondition getKaleoCondition(long kaleoConditionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoConditionLocalService.getKaleoCondition(kaleoConditionId);
@@ -311,9 +298,8 @@ public class KaleoConditionLocalServiceWrapper
 	 * @return the range of kaleo conditions
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.portal.workflow.kaleo.model.KaleoCondition>
-			getKaleoConditions(int start, int end) {
+	public java.util.List<KaleoCondition> getKaleoConditions(
+		int start, int end) {
 
 		return _kaleoConditionLocalService.getKaleoConditions(start, end);
 	}
@@ -329,8 +315,7 @@ public class KaleoConditionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition
-			getKaleoNodeKaleoCondition(long kaleoNodeId)
+	public KaleoCondition getKaleoNodeKaleoCondition(long kaleoNodeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoConditionLocalService.getKaleoNodeKaleoCondition(
@@ -369,12 +354,28 @@ public class KaleoConditionLocalServiceWrapper
 	 * @return the kaleo condition that was updated
 	 */
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition
-		updateKaleoCondition(
-			com.liferay.portal.workflow.kaleo.model.KaleoCondition
-				kaleoCondition) {
-
+	public KaleoCondition updateKaleoCondition(KaleoCondition kaleoCondition) {
 		return _kaleoConditionLocalService.updateKaleoCondition(kaleoCondition);
+	}
+
+	@Override
+	public CTPersistence<KaleoCondition> getCTPersistence() {
+		return _kaleoConditionLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<KaleoCondition> getModelClass() {
+		return _kaleoConditionLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<KaleoCondition>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _kaleoConditionLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

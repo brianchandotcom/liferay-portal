@@ -131,6 +131,8 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 		newKaleoDefinitionVersion.setMvccVersion(RandomTestUtil.nextLong());
 
+		newKaleoDefinitionVersion.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newKaleoDefinitionVersion.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoDefinitionVersion.setCompanyId(RandomTestUtil.nextLong());
@@ -178,6 +180,9 @@ public class KaleoDefinitionVersionPersistenceTest {
 		Assert.assertEquals(
 			existingKaleoDefinitionVersion.getMvccVersion(),
 			newKaleoDefinitionVersion.getMvccVersion());
+		Assert.assertEquals(
+			existingKaleoDefinitionVersion.getCtCollectionId(),
+			newKaleoDefinitionVersion.getCtCollectionId());
 		Assert.assertEquals(
 			existingKaleoDefinitionVersion.getKaleoDefinitionVersionId(),
 			newKaleoDefinitionVersion.getKaleoDefinitionVersionId());
@@ -291,10 +296,10 @@ public class KaleoDefinitionVersionPersistenceTest {
 
 	protected OrderByComparator<KaleoDefinitionVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KaleoDefinitionVersion", "mvccVersion", true,
-			"kaleoDefinitionVersionId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionId", true, "name", true,
+			"KaleoDefinitionVersion", "mvccVersion", true, "ctCollectionId",
+			true, "kaleoDefinitionVersionId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "kaleoDefinitionId", true, "name", true,
 			"title", true, "description", true, "version", true,
 			"startKaleoNodeId", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
@@ -618,6 +623,8 @@ public class KaleoDefinitionVersionPersistenceTest {
 		KaleoDefinitionVersion kaleoDefinitionVersion = _persistence.create(pk);
 
 		kaleoDefinitionVersion.setMvccVersion(RandomTestUtil.nextLong());
+
+		kaleoDefinitionVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kaleoDefinitionVersion.setGroupId(RandomTestUtil.nextLong());
 

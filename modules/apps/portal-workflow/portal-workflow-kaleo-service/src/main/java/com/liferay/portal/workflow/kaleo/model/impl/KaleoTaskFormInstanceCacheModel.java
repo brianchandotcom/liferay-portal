@@ -78,10 +78,12 @@ public class KaleoTaskFormInstanceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", kaleoTaskFormInstanceId=");
 		sb.append(kaleoTaskFormInstanceId);
 		sb.append(", groupId=");
@@ -129,6 +131,7 @@ public class KaleoTaskFormInstanceCacheModel
 			new KaleoTaskFormInstanceImpl();
 
 		kaleoTaskFormInstanceImpl.setMvccVersion(mvccVersion);
+		kaleoTaskFormInstanceImpl.setCtCollectionId(ctCollectionId);
 		kaleoTaskFormInstanceImpl.setKaleoTaskFormInstanceId(
 			kaleoTaskFormInstanceId);
 		kaleoTaskFormInstanceImpl.setGroupId(groupId);
@@ -199,6 +202,8 @@ public class KaleoTaskFormInstanceCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		kaleoTaskFormInstanceId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -233,6 +238,8 @@ public class KaleoTaskFormInstanceCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(kaleoTaskFormInstanceId);
 
@@ -291,6 +298,7 @@ public class KaleoTaskFormInstanceCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long kaleoTaskFormInstanceId;
 	public long groupId;
 	public long companyId;

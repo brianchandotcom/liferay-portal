@@ -130,6 +130,9 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		newKaleoNotificationRecipient.setMvccVersion(RandomTestUtil.nextLong());
 
+		newKaleoNotificationRecipient.setCtCollectionId(
+			RandomTestUtil.nextLong());
+
 		newKaleoNotificationRecipient.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoNotificationRecipient.setCompanyId(RandomTestUtil.nextLong());
@@ -186,6 +189,9 @@ public class KaleoNotificationRecipientPersistenceTest {
 		Assert.assertEquals(
 			existingKaleoNotificationRecipient.getMvccVersion(),
 			newKaleoNotificationRecipient.getMvccVersion());
+		Assert.assertEquals(
+			existingKaleoNotificationRecipient.getCtCollectionId(),
+			newKaleoNotificationRecipient.getCtCollectionId());
 		Assert.assertEquals(
 			existingKaleoNotificationRecipient.
 				getKaleoNotificationRecipientId(),
@@ -298,10 +304,10 @@ public class KaleoNotificationRecipientPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"KaleoNotificationRecipient", "mvccVersion", true,
-			"kaleoNotificationRecipientId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionId", true,
+			"KaleoNotificationRecipient", "mvccVersion", true, "ctCollectionId",
+			true, "kaleoNotificationRecipientId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "kaleoDefinitionId", true,
 			"kaleoDefinitionVersionId", true, "kaleoNotificationId", true,
 			"recipientClassName", true, "recipientClassPK", true,
 			"recipientRoleType", true, "recipientScriptLanguage", true,
@@ -563,6 +569,8 @@ public class KaleoNotificationRecipientPersistenceTest {
 			_persistence.create(pk);
 
 		kaleoNotificationRecipient.setMvccVersion(RandomTestUtil.nextLong());
+
+		kaleoNotificationRecipient.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kaleoNotificationRecipient.setGroupId(RandomTestUtil.nextLong());
 

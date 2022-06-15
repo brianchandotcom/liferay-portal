@@ -38,6 +38,9 @@ public class KaleoNotificationRecipientTable
 	public final Column<KaleoNotificationRecipientTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KaleoNotificationRecipientTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoNotificationRecipientTable, Long>
 		kaleoNotificationRecipientId = createColumn(
 			"kaleoNotificationRecipientId", Long.class, Types.BIGINT,

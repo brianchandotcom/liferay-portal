@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface KaleoInstanceTokenModel
-	extends BaseModel<KaleoInstanceToken>, GroupedModel, MVCCModel,
-			ShardedModel {
+	extends BaseModel<KaleoInstanceToken>, CTModel<KaleoInstanceToken>,
+			GroupedModel, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -51,6 +52,7 @@ public interface KaleoInstanceTokenModel
 	 *
 	 * @return the primary key of this kaleo instance token
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -58,6 +60,7 @@ public interface KaleoInstanceTokenModel
 	 *
 	 * @param primaryKey the primary key of this kaleo instance token
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -75,6 +78,22 @@ public interface KaleoInstanceTokenModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this kaleo instance token.
+	 *
+	 * @return the ct collection ID of this kaleo instance token
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this kaleo instance token.
+	 *
+	 * @param ctCollectionId the ct collection ID of this kaleo instance token
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the kaleo instance token ID of this kaleo instance token.

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface KaleoNotificationModel
-	extends BaseModel<KaleoNotification>, GroupedModel, MVCCModel,
-			ShardedModel {
+	extends BaseModel<KaleoNotification>, CTModel<KaleoNotification>,
+			GroupedModel, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -51,6 +52,7 @@ public interface KaleoNotificationModel
 	 *
 	 * @return the primary key of this kaleo notification
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -58,6 +60,7 @@ public interface KaleoNotificationModel
 	 *
 	 * @param primaryKey the primary key of this kaleo notification
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -75,6 +78,22 @@ public interface KaleoNotificationModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this kaleo notification.
+	 *
+	 * @return the ct collection ID of this kaleo notification
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this kaleo notification.
+	 *
+	 * @param ctCollectionId the ct collection ID of this kaleo notification
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the kaleo notification ID of this kaleo notification.

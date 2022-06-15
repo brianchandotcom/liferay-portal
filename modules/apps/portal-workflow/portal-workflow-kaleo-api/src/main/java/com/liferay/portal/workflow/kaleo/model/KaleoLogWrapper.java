@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -43,6 +45,7 @@ public class KaleoLogWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("kaleoLogId", getKaleoLogId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -88,6 +91,12 @@ public class KaleoLogWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long kaleoLogId = (Long)attributes.get("kaleoLogId");
@@ -320,6 +329,16 @@ public class KaleoLogWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this kaleo log.
+	 *
+	 * @return the ct collection ID of this kaleo log
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -678,6 +697,16 @@ public class KaleoLogWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this kaleo log.
+	 *
+	 * @param ctCollectionId the ct collection ID of this kaleo log
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the current assignee class name of this kaleo log.
 	 *
 	 * @param currentAssigneeClassName the current assignee class name of this kaleo log
@@ -985,6 +1014,20 @@ public class KaleoLogWrapper
 	@Override
 	public void setWorkflowContext(String workflowContext) {
 		model.setWorkflowContext(workflowContext);
+	}
+
+	@Override
+	public Map<String, Function<KaleoLog, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<KaleoLog, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

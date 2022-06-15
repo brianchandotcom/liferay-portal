@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,7 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface KaleoTaskFormModel
-	extends BaseModel<KaleoTaskForm>, GroupedModel, MVCCModel, ShardedModel {
+	extends BaseModel<KaleoTaskForm>, CTModel<KaleoTaskForm>, GroupedModel,
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -50,6 +52,7 @@ public interface KaleoTaskFormModel
 	 *
 	 * @return the primary key of this kaleo task form
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -57,6 +60,7 @@ public interface KaleoTaskFormModel
 	 *
 	 * @param primaryKey the primary key of this kaleo task form
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -74,6 +78,22 @@ public interface KaleoTaskFormModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this kaleo task form.
+	 *
+	 * @return the ct collection ID of this kaleo task form
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this kaleo task form.
+	 *
+	 * @param ctCollectionId the ct collection ID of this kaleo task form
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the kaleo task form ID of this kaleo task form.

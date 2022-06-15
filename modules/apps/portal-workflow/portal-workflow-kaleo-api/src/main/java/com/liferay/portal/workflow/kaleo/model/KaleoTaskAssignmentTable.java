@@ -38,6 +38,9 @@ public class KaleoTaskAssignmentTable
 	public final Column<KaleoTaskAssignmentTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KaleoTaskAssignmentTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoTaskAssignmentTable, Long> kaleoTaskAssignmentId =
 		createColumn(
 			"kaleoTaskAssignmentId", Long.class, Types.BIGINT,

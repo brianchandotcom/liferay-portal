@@ -37,6 +37,9 @@ public class KaleoTaskFormInstanceTable
 	public final Column<KaleoTaskFormInstanceTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KaleoTaskFormInstanceTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoTaskFormInstanceTable, Long>
 		kaleoTaskFormInstanceId = createColumn(
 			"kaleoTaskFormInstanceId", Long.class, Types.BIGINT,

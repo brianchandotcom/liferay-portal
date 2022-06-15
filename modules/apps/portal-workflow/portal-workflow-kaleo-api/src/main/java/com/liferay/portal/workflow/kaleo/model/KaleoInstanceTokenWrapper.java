@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -43,6 +45,7 @@ public class KaleoInstanceTokenWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("kaleoInstanceTokenId", getKaleoInstanceTokenId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -72,6 +75,12 @@ public class KaleoInstanceTokenWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long kaleoInstanceTokenId = (Long)attributes.get(
@@ -249,6 +258,16 @@ public class KaleoInstanceTokenWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this kaleo instance token.
+	 *
+	 * @return the ct collection ID of this kaleo instance token
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	@Override
@@ -499,6 +518,16 @@ public class KaleoInstanceTokenWrapper
 		model.setCreateDate(createDate);
 	}
 
+	/**
+	 * Sets the ct collection ID of this kaleo instance token.
+	 *
+	 * @param ctCollectionId the ct collection ID of this kaleo instance token
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
 	@Override
 	public void setCurrentKaleoNode(KaleoNode kaleoNode)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -644,6 +673,20 @@ public class KaleoInstanceTokenWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	@Override
+	public Map<String, Function<KaleoInstanceToken, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<KaleoInstanceToken, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

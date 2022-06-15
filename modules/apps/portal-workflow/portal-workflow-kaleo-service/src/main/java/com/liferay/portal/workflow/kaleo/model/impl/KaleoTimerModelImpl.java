@@ -69,12 +69,12 @@ public class KaleoTimerModelImpl
 	public static final String TABLE_NAME = "KaleoTimer";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"kaleoTimerId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"kaleoClassName", Types.VARCHAR}, {"kaleoClassPK", Types.BIGINT},
-		{"kaleoDefinitionId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"kaleoTimerId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"kaleoClassName", Types.VARCHAR},
+		{"kaleoClassPK", Types.BIGINT}, {"kaleoDefinitionId", Types.BIGINT},
 		{"kaleoDefinitionVersionId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"blocking", Types.BOOLEAN}, {"description", Types.VARCHAR},
 		{"duration", Types.DOUBLE}, {"scale", Types.VARCHAR},
@@ -86,6 +86,7 @@ public class KaleoTimerModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoTimerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -107,7 +108,7 @@ public class KaleoTimerModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoTimer (mvccVersion LONG default 0 not null,kaleoTimerId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,name VARCHAR(75) null,blocking BOOLEAN,description STRING null,duration DOUBLE,scale VARCHAR(75) null,recurrenceDuration DOUBLE,recurrenceScale VARCHAR(75) null)";
+		"create table KaleoTimer (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,kaleoTimerId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,name VARCHAR(75) null,blocking BOOLEAN,description STRING null,duration DOUBLE,scale VARCHAR(75) null,recurrenceDuration DOUBLE,recurrenceScale VARCHAR(75) null,primary key (kaleoTimerId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoTimer";
 
@@ -262,6 +263,11 @@ public class KaleoTimerModelImpl
 			"mvccVersion",
 			(BiConsumer<KaleoTimer, Long>)KaleoTimer::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", KaleoTimer::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<KaleoTimer, Long>)KaleoTimer::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"kaleoTimerId", KaleoTimer::getKaleoTimerId);
 		attributeSetterBiConsumers.put(
 			"kaleoTimerId",
@@ -358,6 +364,20 @@ public class KaleoTimerModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -755,6 +775,7 @@ public class KaleoTimerModelImpl
 		KaleoTimerImpl kaleoTimerImpl = new KaleoTimerImpl();
 
 		kaleoTimerImpl.setMvccVersion(getMvccVersion());
+		kaleoTimerImpl.setCtCollectionId(getCtCollectionId());
 		kaleoTimerImpl.setKaleoTimerId(getKaleoTimerId());
 		kaleoTimerImpl.setGroupId(getGroupId());
 		kaleoTimerImpl.setCompanyId(getCompanyId());
@@ -786,6 +807,8 @@ public class KaleoTimerModelImpl
 
 		kaleoTimerImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoTimerImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		kaleoTimerImpl.setKaleoTimerId(
 			this.<Long>getColumnOriginalValue("kaleoTimerId"));
 		kaleoTimerImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
@@ -902,6 +925,8 @@ public class KaleoTimerModelImpl
 		KaleoTimerCacheModel kaleoTimerCacheModel = new KaleoTimerCacheModel();
 
 		kaleoTimerCacheModel.mvccVersion = getMvccVersion();
+
+		kaleoTimerCacheModel.ctCollectionId = getCtCollectionId();
 
 		kaleoTimerCacheModel.kaleoTimerId = getKaleoTimerId();
 
@@ -1083,6 +1108,7 @@ public class KaleoTimerModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _kaleoTimerId;
 	private long _groupId;
 	private long _companyId;
@@ -1131,6 +1157,7 @@ public class KaleoTimerModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put("kaleoTimerId", _kaleoTimerId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1165,41 +1192,43 @@ public class KaleoTimerModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("kaleoTimerId", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("kaleoTimerId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("kaleoClassName", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("kaleoClassPK", 512L);
+		columnBitmasks.put("kaleoClassName", 512L);
 
-		columnBitmasks.put("kaleoDefinitionId", 1024L);
+		columnBitmasks.put("kaleoClassPK", 1024L);
 
-		columnBitmasks.put("kaleoDefinitionVersionId", 2048L);
+		columnBitmasks.put("kaleoDefinitionId", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("kaleoDefinitionVersionId", 4096L);
 
-		columnBitmasks.put("blocking", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("description", 16384L);
+		columnBitmasks.put("blocking", 16384L);
 
-		columnBitmasks.put("duration", 32768L);
+		columnBitmasks.put("description", 32768L);
 
-		columnBitmasks.put("scale", 65536L);
+		columnBitmasks.put("duration", 65536L);
 
-		columnBitmasks.put("recurrenceDuration", 131072L);
+		columnBitmasks.put("scale", 131072L);
 
-		columnBitmasks.put("recurrenceScale", 262144L);
+		columnBitmasks.put("recurrenceDuration", 262144L);
+
+		columnBitmasks.put("recurrenceScale", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

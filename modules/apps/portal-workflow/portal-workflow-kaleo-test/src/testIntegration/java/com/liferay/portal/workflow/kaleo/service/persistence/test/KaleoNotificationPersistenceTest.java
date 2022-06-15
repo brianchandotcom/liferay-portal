@@ -126,6 +126,8 @@ public class KaleoNotificationPersistenceTest {
 
 		newKaleoNotification.setMvccVersion(RandomTestUtil.nextLong());
 
+		newKaleoNotification.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newKaleoNotification.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoNotification.setCompanyId(RandomTestUtil.nextLong());
@@ -170,6 +172,9 @@ public class KaleoNotificationPersistenceTest {
 		Assert.assertEquals(
 			existingKaleoNotification.getMvccVersion(),
 			newKaleoNotification.getMvccVersion());
+		Assert.assertEquals(
+			existingKaleoNotification.getCtCollectionId(),
+			newKaleoNotification.getCtCollectionId());
 		Assert.assertEquals(
 			existingKaleoNotification.getKaleoNotificationId(),
 			newKaleoNotification.getKaleoNotificationId());
@@ -283,13 +288,14 @@ public class KaleoNotificationPersistenceTest {
 
 	protected OrderByComparator<KaleoNotification> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KaleoNotification", "mvccVersion", true, "kaleoNotificationId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"kaleoClassName", true, "kaleoClassPK", true, "kaleoDefinitionId",
-			true, "kaleoDefinitionVersionId", true, "kaleoNodeName", true,
-			"name", true, "description", true, "executionType", true,
-			"templateLanguage", true, "notificationTypes", true);
+			"KaleoNotification", "mvccVersion", true, "ctCollectionId", true,
+			"kaleoNotificationId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
+			"kaleoDefinitionId", true, "kaleoDefinitionVersionId", true,
+			"kaleoNodeName", true, "name", true, "description", true,
+			"executionType", true, "templateLanguage", true,
+			"notificationTypes", true);
 	}
 
 	@Test
@@ -518,6 +524,8 @@ public class KaleoNotificationPersistenceTest {
 		KaleoNotification kaleoNotification = _persistence.create(pk);
 
 		kaleoNotification.setMvccVersion(RandomTestUtil.nextLong());
+
+		kaleoNotification.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kaleoNotification.setGroupId(RandomTestUtil.nextLong());
 

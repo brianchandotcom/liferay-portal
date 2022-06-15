@@ -14,7 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.service;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
 
 /**
  * Provides a wrapper for {@link KaleoNotificationLocalService}.
@@ -48,24 +51,20 @@ public class KaleoNotificationLocalServiceWrapper
 	 * @return the kaleo notification that was added
 	 */
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification
-		addKaleoNotification(
-			com.liferay.portal.workflow.kaleo.model.KaleoNotification
-				kaleoNotification) {
+	public KaleoNotification addKaleoNotification(
+		KaleoNotification kaleoNotification) {
 
 		return _kaleoNotificationLocalService.addKaleoNotification(
 			kaleoNotification);
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification
-			addKaleoNotification(
-				String kaleoClassName, long kaleoClassPK,
-				long kaleoDefinitionId, long kaleoDefinitionVersionId,
-				String kaleoNodeName,
-				com.liferay.portal.workflow.kaleo.definition.Notification
-					notification,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public KaleoNotification addKaleoNotification(
+			String kaleoClassName, long kaleoClassPK, long kaleoDefinitionId,
+			long kaleoDefinitionVersionId, String kaleoNodeName,
+			com.liferay.portal.workflow.kaleo.definition.Notification
+				notification,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoNotificationLocalService.addKaleoNotification(
@@ -81,9 +80,7 @@ public class KaleoNotificationLocalServiceWrapper
 	 * @return the new kaleo notification
 	 */
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification
-		createKaleoNotification(long kaleoNotificationId) {
-
+	public KaleoNotification createKaleoNotification(long kaleoNotificationId) {
 		return _kaleoNotificationLocalService.createKaleoNotification(
 			kaleoNotificationId);
 	}
@@ -126,10 +123,8 @@ public class KaleoNotificationLocalServiceWrapper
 	 * @return the kaleo notification that was removed
 	 */
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification
-		deleteKaleoNotification(
-			com.liferay.portal.workflow.kaleo.model.KaleoNotification
-				kaleoNotification) {
+	public KaleoNotification deleteKaleoNotification(
+		KaleoNotification kaleoNotification) {
 
 		return _kaleoNotificationLocalService.deleteKaleoNotification(
 			kaleoNotification);
@@ -147,8 +142,7 @@ public class KaleoNotificationLocalServiceWrapper
 	 * @throws PortalException if a kaleo notification with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification
-			deleteKaleoNotification(long kaleoNotificationId)
+	public KaleoNotification deleteKaleoNotification(long kaleoNotificationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoNotificationLocalService.deleteKaleoNotification(
@@ -271,9 +265,7 @@ public class KaleoNotificationLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification
-		fetchKaleoNotification(long kaleoNotificationId) {
-
+	public KaleoNotification fetchKaleoNotification(long kaleoNotificationId) {
 		return _kaleoNotificationLocalService.fetchKaleoNotification(
 			kaleoNotificationId);
 	}
@@ -301,8 +293,7 @@ public class KaleoNotificationLocalServiceWrapper
 	 * @throws PortalException if a kaleo notification with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification
-			getKaleoNotification(long kaleoNotificationId)
+	public KaleoNotification getKaleoNotification(long kaleoNotificationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoNotificationLocalService.getKaleoNotification(
@@ -321,28 +312,23 @@ public class KaleoNotificationLocalServiceWrapper
 	 * @return the range of kaleo notifications
 	 */
 	@Override
-	public java.util.List
-		<com.liferay.portal.workflow.kaleo.model.KaleoNotification>
-			getKaleoNotifications(int start, int end) {
+	public java.util.List<KaleoNotification> getKaleoNotifications(
+		int start, int end) {
 
 		return _kaleoNotificationLocalService.getKaleoNotifications(start, end);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.portal.workflow.kaleo.model.KaleoNotification>
-			getKaleoNotifications(String kaleoClassName, long kaleoClassPK) {
+	public java.util.List<KaleoNotification> getKaleoNotifications(
+		String kaleoClassName, long kaleoClassPK) {
 
 		return _kaleoNotificationLocalService.getKaleoNotifications(
 			kaleoClassName, kaleoClassPK);
 	}
 
 	@Override
-	public java.util.List
-		<com.liferay.portal.workflow.kaleo.model.KaleoNotification>
-			getKaleoNotifications(
-				String kaleoClassName, long kaleoClassPK,
-				String executionType) {
+	public java.util.List<KaleoNotification> getKaleoNotifications(
+		String kaleoClassName, long kaleoClassPK, String executionType) {
 
 		return _kaleoNotificationLocalService.getKaleoNotifications(
 			kaleoClassName, kaleoClassPK, executionType);
@@ -390,13 +376,31 @@ public class KaleoNotificationLocalServiceWrapper
 	 * @return the kaleo notification that was updated
 	 */
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotification
-		updateKaleoNotification(
-			com.liferay.portal.workflow.kaleo.model.KaleoNotification
-				kaleoNotification) {
+	public KaleoNotification updateKaleoNotification(
+		KaleoNotification kaleoNotification) {
 
 		return _kaleoNotificationLocalService.updateKaleoNotification(
 			kaleoNotification);
+	}
+
+	@Override
+	public CTPersistence<KaleoNotification> getCTPersistence() {
+		return _kaleoNotificationLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<KaleoNotification> getModelClass() {
+		return _kaleoNotificationLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<KaleoNotification>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _kaleoNotificationLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

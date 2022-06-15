@@ -34,6 +34,8 @@ public class KaleoNodeTable extends BaseTable<KaleoNodeTable> {
 
 	public final Column<KaleoNodeTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KaleoNodeTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoNodeTable, Long> kaleoNodeId = createColumn(
 		"kaleoNodeId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoNodeTable, Long> groupId = createColumn(

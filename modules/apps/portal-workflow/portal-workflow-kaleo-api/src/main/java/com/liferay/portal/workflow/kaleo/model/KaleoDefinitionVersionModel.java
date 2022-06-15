@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -42,8 +43,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface KaleoDefinitionVersionModel
-	extends BaseModel<KaleoDefinitionVersion>, GroupedModel, LocalizedModel,
-			MVCCModel, ShardedModel, WorkflowedModel {
+	extends BaseModel<KaleoDefinitionVersion>, CTModel<KaleoDefinitionVersion>,
+			GroupedModel, LocalizedModel, MVCCModel, ShardedModel,
+			WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -56,6 +58,7 @@ public interface KaleoDefinitionVersionModel
 	 *
 	 * @return the primary key of this kaleo definition version
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -63,6 +66,7 @@ public interface KaleoDefinitionVersionModel
 	 *
 	 * @param primaryKey the primary key of this kaleo definition version
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -80,6 +84,22 @@ public interface KaleoDefinitionVersionModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this kaleo definition version.
+	 *
+	 * @return the ct collection ID of this kaleo definition version
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this kaleo definition version.
+	 *
+	 * @param ctCollectionId the ct collection ID of this kaleo definition version
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the kaleo definition version ID of this kaleo definition version.

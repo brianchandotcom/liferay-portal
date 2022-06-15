@@ -35,6 +35,8 @@ public class KaleoActionTable extends BaseTable<KaleoActionTable> {
 
 	public final Column<KaleoActionTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KaleoActionTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoActionTable, Long> kaleoActionId = createColumn(
 		"kaleoActionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoActionTable, Long> groupId = createColumn(

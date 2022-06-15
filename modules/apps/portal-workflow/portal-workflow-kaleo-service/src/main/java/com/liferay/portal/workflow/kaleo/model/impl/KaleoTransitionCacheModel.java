@@ -78,10 +78,12 @@ public class KaleoTransitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", kaleoTransitionId=");
 		sb.append(kaleoTransitionId);
 		sb.append(", groupId=");
@@ -128,6 +130,7 @@ public class KaleoTransitionCacheModel
 		KaleoTransitionImpl kaleoTransitionImpl = new KaleoTransitionImpl();
 
 		kaleoTransitionImpl.setMvccVersion(mvccVersion);
+		kaleoTransitionImpl.setCtCollectionId(ctCollectionId);
 		kaleoTransitionImpl.setKaleoTransitionId(kaleoTransitionId);
 		kaleoTransitionImpl.setGroupId(groupId);
 		kaleoTransitionImpl.setCompanyId(companyId);
@@ -209,6 +212,8 @@ public class KaleoTransitionCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		kaleoTransitionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -241,6 +246,8 @@ public class KaleoTransitionCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(kaleoTransitionId);
 
@@ -309,6 +316,7 @@ public class KaleoTransitionCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long kaleoTransitionId;
 	public long groupId;
 	public long companyId;

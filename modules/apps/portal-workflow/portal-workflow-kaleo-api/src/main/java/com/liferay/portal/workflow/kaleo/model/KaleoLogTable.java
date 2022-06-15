@@ -35,6 +35,8 @@ public class KaleoLogTable extends BaseTable<KaleoLogTable> {
 
 	public final Column<KaleoLogTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KaleoLogTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoLogTable, Long> kaleoLogId = createColumn(
 		"kaleoLogId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoLogTable, Long> groupId = createColumn(

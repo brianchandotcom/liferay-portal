@@ -38,6 +38,9 @@ public class KaleoTaskInstanceTokenTable
 	public final Column<KaleoTaskInstanceTokenTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KaleoTaskInstanceTokenTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoTaskInstanceTokenTable, Long>
 		kaleoTaskInstanceTokenId = createColumn(
 			"kaleoTaskInstanceTokenId", Long.class, Types.BIGINT,

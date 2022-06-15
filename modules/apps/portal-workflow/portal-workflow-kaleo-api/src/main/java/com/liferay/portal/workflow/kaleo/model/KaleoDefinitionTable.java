@@ -36,6 +36,9 @@ public class KaleoDefinitionTable extends BaseTable<KaleoDefinitionTable> {
 
 	public final Column<KaleoDefinitionTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KaleoDefinitionTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoDefinitionTable, Long> kaleoDefinitionId =
 		createColumn(
 			"kaleoDefinitionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

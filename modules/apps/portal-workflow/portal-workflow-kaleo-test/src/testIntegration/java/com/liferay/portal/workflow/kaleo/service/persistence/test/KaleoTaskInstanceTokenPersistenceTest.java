@@ -131,6 +131,8 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 
 		newKaleoTaskInstanceToken.setMvccVersion(RandomTestUtil.nextLong());
 
+		newKaleoTaskInstanceToken.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newKaleoTaskInstanceToken.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoTaskInstanceToken.setCompanyId(RandomTestUtil.nextLong());
@@ -185,6 +187,9 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 		Assert.assertEquals(
 			existingKaleoTaskInstanceToken.getMvccVersion(),
 			newKaleoTaskInstanceToken.getMvccVersion());
+		Assert.assertEquals(
+			existingKaleoTaskInstanceToken.getCtCollectionId(),
+			newKaleoTaskInstanceToken.getCtCollectionId());
 		Assert.assertEquals(
 			existingKaleoTaskInstanceToken.getKaleoTaskInstanceTokenId(),
 			newKaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
@@ -335,10 +340,10 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 
 	protected OrderByComparator<KaleoTaskInstanceToken> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KaleoTaskInstanceToken", "mvccVersion", true,
-			"kaleoTaskInstanceTokenId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionId", true,
+			"KaleoTaskInstanceToken", "mvccVersion", true, "ctCollectionId",
+			true, "kaleoTaskInstanceTokenId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "kaleoDefinitionId", true,
 			"kaleoDefinitionVersionId", true, "kaleoInstanceId", true,
 			"kaleoInstanceTokenId", true, "kaleoTaskId", true, "kaleoTaskName",
 			true, "className", true, "classPK", true, "completionUserId", true,
@@ -658,6 +663,8 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 		KaleoTaskInstanceToken kaleoTaskInstanceToken = _persistence.create(pk);
 
 		kaleoTaskInstanceToken.setMvccVersion(RandomTestUtil.nextLong());
+
+		kaleoTaskInstanceToken.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kaleoTaskInstanceToken.setGroupId(RandomTestUtil.nextLong());
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface KaleoTaskAssignmentModel
-	extends BaseModel<KaleoTaskAssignment>, GroupedModel, MVCCModel,
-			ShardedModel {
+	extends BaseModel<KaleoTaskAssignment>, CTModel<KaleoTaskAssignment>,
+			GroupedModel, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -51,6 +52,7 @@ public interface KaleoTaskAssignmentModel
 	 *
 	 * @return the primary key of this kaleo task assignment
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -58,6 +60,7 @@ public interface KaleoTaskAssignmentModel
 	 *
 	 * @param primaryKey the primary key of this kaleo task assignment
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -75,6 +78,22 @@ public interface KaleoTaskAssignmentModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this kaleo task assignment.
+	 *
+	 * @return the ct collection ID of this kaleo task assignment
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this kaleo task assignment.
+	 *
+	 * @param ctCollectionId the ct collection ID of this kaleo task assignment
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the kaleo task assignment ID of this kaleo task assignment.

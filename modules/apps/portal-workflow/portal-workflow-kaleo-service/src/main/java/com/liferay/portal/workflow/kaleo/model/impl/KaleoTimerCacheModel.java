@@ -77,10 +77,12 @@ public class KaleoTimerCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", kaleoTimerId=");
 		sb.append(kaleoTimerId);
 		sb.append(", groupId=");
@@ -127,6 +129,7 @@ public class KaleoTimerCacheModel
 		KaleoTimerImpl kaleoTimerImpl = new KaleoTimerImpl();
 
 		kaleoTimerImpl.setMvccVersion(mvccVersion);
+		kaleoTimerImpl.setCtCollectionId(ctCollectionId);
 		kaleoTimerImpl.setKaleoTimerId(kaleoTimerId);
 		kaleoTimerImpl.setGroupId(groupId);
 		kaleoTimerImpl.setCompanyId(companyId);
@@ -207,6 +210,8 @@ public class KaleoTimerCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		kaleoTimerId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -239,6 +244,8 @@ public class KaleoTimerCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(kaleoTimerId);
 
@@ -307,6 +314,7 @@ public class KaleoTimerCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long kaleoTimerId;
 	public long groupId;
 	public long companyId;

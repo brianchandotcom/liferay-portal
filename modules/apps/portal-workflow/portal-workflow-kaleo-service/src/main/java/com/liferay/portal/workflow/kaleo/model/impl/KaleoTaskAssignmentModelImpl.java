@@ -70,12 +70,12 @@ public class KaleoTaskAssignmentModelImpl
 	public static final String TABLE_NAME = "KaleoTaskAssignment";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"kaleoTaskAssignmentId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"kaleoClassName", Types.VARCHAR}, {"kaleoClassPK", Types.BIGINT},
-		{"kaleoDefinitionId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"kaleoTaskAssignmentId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"kaleoClassName", Types.VARCHAR},
+		{"kaleoClassPK", Types.BIGINT}, {"kaleoDefinitionId", Types.BIGINT},
 		{"kaleoDefinitionVersionId", Types.BIGINT},
 		{"kaleoNodeId", Types.BIGINT}, {"assigneeClassName", Types.VARCHAR},
 		{"assigneeClassPK", Types.BIGINT}, {"assigneeActionId", Types.VARCHAR},
@@ -89,6 +89,7 @@ public class KaleoTaskAssignmentModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kaleoTaskAssignmentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -110,7 +111,7 @@ public class KaleoTaskAssignmentModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoTaskAssignment (mvccVersion LONG default 0 not null,kaleoTaskAssignmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,assigneeClassName VARCHAR(200) null,assigneeClassPK LONG,assigneeActionId VARCHAR(75) null,assigneeScript TEXT null,assigneeScriptLanguage VARCHAR(75) null,assigneeScriptRequiredContexts STRING null)";
+		"create table KaleoTaskAssignment (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,kaleoTaskAssignmentId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,kaleoDefinitionVersionId LONG,kaleoNodeId LONG,assigneeClassName VARCHAR(200) null,assigneeClassPK LONG,assigneeActionId VARCHAR(75) null,assigneeScript TEXT null,assigneeScriptLanguage VARCHAR(75) null,assigneeScriptRequiredContexts STRING null,primary key (kaleoTaskAssignmentId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table KaleoTaskAssignment";
@@ -284,6 +285,12 @@ public class KaleoTaskAssignmentModelImpl
 			(BiConsumer<KaleoTaskAssignment, Long>)
 				KaleoTaskAssignment::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", KaleoTaskAssignment::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<KaleoTaskAssignment, Long>)
+				KaleoTaskAssignment::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"kaleoTaskAssignmentId",
 			KaleoTaskAssignment::getKaleoTaskAssignmentId);
 		attributeSetterBiConsumers.put(
@@ -413,6 +420,20 @@ public class KaleoTaskAssignmentModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -833,6 +854,7 @@ public class KaleoTaskAssignmentModelImpl
 			new KaleoTaskAssignmentImpl();
 
 		kaleoTaskAssignmentImpl.setMvccVersion(getMvccVersion());
+		kaleoTaskAssignmentImpl.setCtCollectionId(getCtCollectionId());
 		kaleoTaskAssignmentImpl.setKaleoTaskAssignmentId(
 			getKaleoTaskAssignmentId());
 		kaleoTaskAssignmentImpl.setGroupId(getGroupId());
@@ -868,6 +890,8 @@ public class KaleoTaskAssignmentModelImpl
 
 		kaleoTaskAssignmentImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		kaleoTaskAssignmentImpl.setCtCollectionId(
+			this.<Long>getColumnOriginalValue("ctCollectionId"));
 		kaleoTaskAssignmentImpl.setKaleoTaskAssignmentId(
 			this.<Long>getColumnOriginalValue("kaleoTaskAssignmentId"));
 		kaleoTaskAssignmentImpl.setGroupId(
@@ -994,6 +1018,8 @@ public class KaleoTaskAssignmentModelImpl
 			new KaleoTaskAssignmentCacheModel();
 
 		kaleoTaskAssignmentCacheModel.mvccVersion = getMvccVersion();
+
+		kaleoTaskAssignmentCacheModel.ctCollectionId = getCtCollectionId();
 
 		kaleoTaskAssignmentCacheModel.kaleoTaskAssignmentId =
 			getKaleoTaskAssignmentId();
@@ -1195,6 +1221,7 @@ public class KaleoTaskAssignmentModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _kaleoTaskAssignmentId;
 	private long _groupId;
 	private long _companyId;
@@ -1243,6 +1270,7 @@ public class KaleoTaskAssignmentModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
 		_columnOriginalValues.put(
 			"kaleoTaskAssignmentId", _kaleoTaskAssignmentId);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1280,41 +1308,43 @@ public class KaleoTaskAssignmentModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("kaleoTaskAssignmentId", 2L);
+		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("groupId", 4L);
+		columnBitmasks.put("kaleoTaskAssignmentId", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("groupId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("kaleoClassName", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("kaleoClassPK", 512L);
+		columnBitmasks.put("kaleoClassName", 512L);
 
-		columnBitmasks.put("kaleoDefinitionId", 1024L);
+		columnBitmasks.put("kaleoClassPK", 1024L);
 
-		columnBitmasks.put("kaleoDefinitionVersionId", 2048L);
+		columnBitmasks.put("kaleoDefinitionId", 2048L);
 
-		columnBitmasks.put("kaleoNodeId", 4096L);
+		columnBitmasks.put("kaleoDefinitionVersionId", 4096L);
 
-		columnBitmasks.put("assigneeClassName", 8192L);
+		columnBitmasks.put("kaleoNodeId", 8192L);
 
-		columnBitmasks.put("assigneeClassPK", 16384L);
+		columnBitmasks.put("assigneeClassName", 16384L);
 
-		columnBitmasks.put("assigneeActionId", 32768L);
+		columnBitmasks.put("assigneeClassPK", 32768L);
 
-		columnBitmasks.put("assigneeScript", 65536L);
+		columnBitmasks.put("assigneeActionId", 65536L);
 
-		columnBitmasks.put("assigneeScriptLanguage", 131072L);
+		columnBitmasks.put("assigneeScript", 131072L);
 
-		columnBitmasks.put("assigneeScriptRequiredContexts", 262144L);
+		columnBitmasks.put("assigneeScriptLanguage", 262144L);
+
+		columnBitmasks.put("assigneeScriptRequiredContexts", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

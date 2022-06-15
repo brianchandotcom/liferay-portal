@@ -76,10 +76,12 @@ public class KaleoNodeCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", kaleoNodeId=");
 		sb.append(kaleoNodeId);
 		sb.append(", groupId=");
@@ -122,6 +124,7 @@ public class KaleoNodeCacheModel
 		KaleoNodeImpl kaleoNodeImpl = new KaleoNodeImpl();
 
 		kaleoNodeImpl.setMvccVersion(mvccVersion);
+		kaleoNodeImpl.setCtCollectionId(ctCollectionId);
 		kaleoNodeImpl.setKaleoNodeId(kaleoNodeId);
 		kaleoNodeImpl.setGroupId(groupId);
 		kaleoNodeImpl.setCompanyId(companyId);
@@ -198,6 +201,8 @@ public class KaleoNodeCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		kaleoNodeId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -226,6 +231,8 @@ public class KaleoNodeCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(kaleoNodeId);
 
@@ -290,6 +297,7 @@ public class KaleoNodeCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long kaleoNodeId;
 	public long groupId;
 	public long companyId;

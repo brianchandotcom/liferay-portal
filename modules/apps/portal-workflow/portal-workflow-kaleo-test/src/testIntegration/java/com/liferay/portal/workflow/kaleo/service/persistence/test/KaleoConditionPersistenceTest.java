@@ -127,6 +127,8 @@ public class KaleoConditionPersistenceTest {
 
 		newKaleoCondition.setMvccVersion(RandomTestUtil.nextLong());
 
+		newKaleoCondition.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newKaleoCondition.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoCondition.setCompanyId(RandomTestUtil.nextLong());
@@ -161,6 +163,9 @@ public class KaleoConditionPersistenceTest {
 		Assert.assertEquals(
 			existingKaleoCondition.getMvccVersion(),
 			newKaleoCondition.getMvccVersion());
+		Assert.assertEquals(
+			existingKaleoCondition.getCtCollectionId(),
+			newKaleoCondition.getCtCollectionId());
 		Assert.assertEquals(
 			existingKaleoCondition.getKaleoConditionId(),
 			newKaleoCondition.getKaleoConditionId());
@@ -246,10 +251,11 @@ public class KaleoConditionPersistenceTest {
 
 	protected OrderByComparator<KaleoCondition> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KaleoCondition", "mvccVersion", true, "kaleoConditionId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "kaleoDefinitionId",
-			true, "kaleoDefinitionVersionId", true, "kaleoNodeId", true,
+			"KaleoCondition", "mvccVersion", true, "ctCollectionId", true,
+			"kaleoConditionId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "kaleoDefinitionId", true,
+			"kaleoDefinitionVersionId", true, "kaleoNodeId", true,
 			"scriptLanguage", true, "scriptRequiredContexts", true);
 	}
 
@@ -531,6 +537,8 @@ public class KaleoConditionPersistenceTest {
 		KaleoCondition kaleoCondition = _persistence.create(pk);
 
 		kaleoCondition.setMvccVersion(RandomTestUtil.nextLong());
+
+		kaleoCondition.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kaleoCondition.setGroupId(RandomTestUtil.nextLong());
 

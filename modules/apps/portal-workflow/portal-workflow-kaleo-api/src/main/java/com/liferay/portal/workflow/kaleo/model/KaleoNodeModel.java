@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Locale;
@@ -41,8 +42,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface KaleoNodeModel
-	extends BaseModel<KaleoNode>, GroupedModel, LocalizedModel, MVCCModel,
-			ShardedModel {
+	extends BaseModel<KaleoNode>, CTModel<KaleoNode>, GroupedModel,
+			LocalizedModel, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -55,6 +56,7 @@ public interface KaleoNodeModel
 	 *
 	 * @return the primary key of this kaleo node
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -62,6 +64,7 @@ public interface KaleoNodeModel
 	 *
 	 * @param primaryKey the primary key of this kaleo node
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -79,6 +82,22 @@ public interface KaleoNodeModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this kaleo node.
+	 *
+	 * @return the ct collection ID of this kaleo node
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this kaleo node.
+	 *
+	 * @param ctCollectionId the ct collection ID of this kaleo node
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the kaleo node ID of this kaleo node.

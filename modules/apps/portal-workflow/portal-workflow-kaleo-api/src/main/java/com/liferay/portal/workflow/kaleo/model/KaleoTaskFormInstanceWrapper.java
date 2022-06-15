@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -45,6 +47,7 @@ public class KaleoTaskFormInstanceWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("kaleoTaskFormInstanceId", getKaleoTaskFormInstanceId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -75,6 +78,12 @@ public class KaleoTaskFormInstanceWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long kaleoTaskFormInstanceId = (Long)attributes.get(
@@ -214,6 +223,16 @@ public class KaleoTaskFormInstanceWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this kaleo task form instance.
+	 *
+	 * @return the ct collection ID of this kaleo task form instance
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -432,6 +451,16 @@ public class KaleoTaskFormInstanceWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this kaleo task form instance.
+	 *
+	 * @param ctCollectionId the ct collection ID of this kaleo task form instance
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the form value entry group ID of this kaleo task form instance.
 	 *
 	 * @param formValueEntryGroupId the form value entry group ID of this kaleo task form instance
@@ -619,6 +648,20 @@ public class KaleoTaskFormInstanceWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	@Override
+	public Map<String, Function<KaleoTaskFormInstance, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<KaleoTaskFormInstance, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

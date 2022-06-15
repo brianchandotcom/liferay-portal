@@ -38,6 +38,9 @@ public class KaleoDefinitionVersionTable
 	public final Column<KaleoDefinitionVersionTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KaleoDefinitionVersionTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoDefinitionVersionTable, Long>
 		kaleoDefinitionVersionId = createColumn(
 			"kaleoDefinitionVersionId", Long.class, Types.BIGINT,

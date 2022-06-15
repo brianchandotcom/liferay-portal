@@ -125,6 +125,8 @@ public class KaleoLogPersistenceTest {
 
 		newKaleoLog.setMvccVersion(RandomTestUtil.nextLong());
 
+		newKaleoLog.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newKaleoLog.setGroupId(RandomTestUtil.nextLong());
 
 		newKaleoLog.setCompanyId(RandomTestUtil.nextLong());
@@ -192,6 +194,9 @@ public class KaleoLogPersistenceTest {
 
 		Assert.assertEquals(
 			existingKaleoLog.getMvccVersion(), newKaleoLog.getMvccVersion());
+		Assert.assertEquals(
+			existingKaleoLog.getCtCollectionId(),
+			newKaleoLog.getCtCollectionId());
 		Assert.assertEquals(
 			existingKaleoLog.getKaleoLogId(), newKaleoLog.getKaleoLogId());
 		Assert.assertEquals(
@@ -349,11 +354,11 @@ public class KaleoLogPersistenceTest {
 
 	protected OrderByComparator<KaleoLog> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KaleoLog", "mvccVersion", true, "kaleoLogId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "kaleoClassName", true,
-			"kaleoClassPK", true, "kaleoDefinitionId", true,
-			"kaleoDefinitionVersionId", true, "kaleoInstanceId", true,
+			"KaleoLog", "mvccVersion", true, "ctCollectionId", true,
+			"kaleoLogId", true, "groupId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"kaleoClassName", true, "kaleoClassPK", true, "kaleoDefinitionId",
+			true, "kaleoDefinitionVersionId", true, "kaleoInstanceId", true,
 			"kaleoInstanceTokenId", true, "kaleoTaskInstanceTokenId", true,
 			"kaleoNodeName", true, "terminalKaleoNode", true, "kaleoActionId",
 			true, "kaleoActionName", true, "kaleoActionDescription", true,
@@ -576,6 +581,8 @@ public class KaleoLogPersistenceTest {
 		KaleoLog kaleoLog = _persistence.create(pk);
 
 		kaleoLog.setMvccVersion(RandomTestUtil.nextLong());
+
+		kaleoLog.setCtCollectionId(RandomTestUtil.nextLong());
 
 		kaleoLog.setGroupId(RandomTestUtil.nextLong());
 

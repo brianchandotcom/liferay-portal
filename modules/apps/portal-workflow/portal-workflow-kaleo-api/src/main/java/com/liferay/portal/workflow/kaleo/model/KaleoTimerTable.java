@@ -34,6 +34,8 @@ public class KaleoTimerTable extends BaseTable<KaleoTimerTable> {
 
 	public final Column<KaleoTimerTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KaleoTimerTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoTimerTable, Long> kaleoTimerId = createColumn(
 		"kaleoTimerId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoTimerTable, Long> groupId = createColumn(

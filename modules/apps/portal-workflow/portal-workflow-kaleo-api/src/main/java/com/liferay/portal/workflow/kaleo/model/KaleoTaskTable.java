@@ -34,6 +34,8 @@ public class KaleoTaskTable extends BaseTable<KaleoTaskTable> {
 
 	public final Column<KaleoTaskTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<KaleoTaskTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoTaskTable, Long> kaleoTaskId = createColumn(
 		"kaleoTaskId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KaleoTaskTable, Long> groupId = createColumn(

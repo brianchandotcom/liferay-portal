@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchConditionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 
@@ -33,7 +34,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface KaleoConditionPersistence
-	extends BasePersistence<KaleoCondition> {
+	extends BasePersistence<KaleoCondition>, CTPersistence<KaleoCondition> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

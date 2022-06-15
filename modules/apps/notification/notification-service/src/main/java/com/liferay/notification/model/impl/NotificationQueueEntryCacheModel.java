@@ -237,7 +237,9 @@ public class NotificationQueueEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		notificationQueueEntryId = objectInput.readLong();
@@ -251,7 +253,7 @@ public class NotificationQueueEntryCacheModel
 
 		notificationTemplateId = objectInput.readLong();
 		bcc = objectInput.readUTF();
-		body = objectInput.readUTF();
+		body = (String)objectInput.readObject();
 		cc = objectInput.readUTF();
 
 		classNameId = objectInput.readLong();
@@ -299,10 +301,10 @@ public class NotificationQueueEntryCacheModel
 		}
 
 		if (body == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(body);
+			objectOutput.writeObject(body);
 		}
 
 		if (cc == null) {

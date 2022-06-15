@@ -8,7 +8,7 @@ create table NotificationQueueEntry (
 	modifiedDate DATE null,
 	notificationTemplateId LONG,
 	bcc VARCHAR(75) null,
-	body VARCHAR(75) null,
+	body TEXT null,
 	cc VARCHAR(75) null,
 	classNameId LONG,
 	classPK LONG,

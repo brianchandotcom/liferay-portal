@@ -296,10 +296,10 @@ public class NotificationQueueEntryPersistenceTest {
 			"NotificationQueueEntry", "mvccVersion", true,
 			"notificationQueueEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"notificationTemplateId", true, "bcc", true, "body", true, "cc",
-			true, "classNameId", true, "classPK", true, "from", true,
-			"fromName", true, "priority", true, "sent", true, "sentDate", true,
-			"subject", true, "to", true, "toName", true);
+			"notificationTemplateId", true, "bcc", true, "cc", true,
+			"classNameId", true, "classPK", true, "from", true, "fromName",
+			true, "priority", true, "sent", true, "sentDate", true, "subject",
+			true, "to", true, "toName", true);
 	}
 
 	@Test

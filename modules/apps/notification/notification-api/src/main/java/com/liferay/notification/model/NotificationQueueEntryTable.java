@@ -17,6 +17,7 @@ package com.liferay.notification.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -61,8 +62,8 @@ public class NotificationQueueEntryTable
 			Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, String> bcc = createColumn(
 		"bcc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<NotificationQueueEntryTable, String> body =
-		createColumn("body", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<NotificationQueueEntryTable, Clob> body = createColumn(
+		"body", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, String> cc = createColumn(
 		"cc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationQueueEntryTable, Long> classNameId =

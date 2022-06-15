@@ -77,7 +77,7 @@ public class NotificationQueueEntryModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"notificationTemplateId", Types.BIGINT}, {"bcc", Types.VARCHAR},
-		{"body", Types.VARCHAR}, {"cc", Types.VARCHAR},
+		{"body", Types.CLOB}, {"cc", Types.VARCHAR},
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
 		{"from_", Types.VARCHAR}, {"fromName", Types.VARCHAR},
 		{"priority", Types.DOUBLE}, {"sent", Types.BOOLEAN},
@@ -98,7 +98,7 @@ public class NotificationQueueEntryModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("notificationTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("bcc", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("body", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("body", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("cc", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
@@ -113,7 +113,7 @@ public class NotificationQueueEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationQueueEntry (mvccVersion LONG default 0 not null,notificationQueueEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,notificationTemplateId LONG,bcc VARCHAR(75) null,body VARCHAR(75) null,cc VARCHAR(75) null,classNameId LONG,classPK LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,priority DOUBLE,sent BOOLEAN,sentDate DATE null,subject VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null)";
+		"create table NotificationQueueEntry (mvccVersion LONG default 0 not null,notificationQueueEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,notificationTemplateId LONG,bcc VARCHAR(75) null,body TEXT null,cc VARCHAR(75) null,classNameId LONG,classPK LONG,from_ VARCHAR(75) null,fromName VARCHAR(75) null,priority DOUBLE,sent BOOLEAN,sentDate DATE null,subject VARCHAR(75) null,to_ VARCHAR(75) null,toName VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationQueueEntry";

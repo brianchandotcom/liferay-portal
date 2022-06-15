@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -126,8 +127,8 @@ public class CPDefinitionDetailsScreenNavigationCategory
 			new CPDefinitionsDisplayContext(
 				_actionHelper, httpServletRequest,
 				_commerceAccountGroupRelService, _commerceCatalogService,
-				_commerceChannelRelService, _cpDefinitionService,
-				_cpFriendlyURL, _itemSelector);
+				_commerceChannelRelService, _configurationProvider,
+				_cpDefinitionService, _cpFriendlyURL, _itemSelector);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionsDisplayContext);
@@ -157,6 +158,9 @@ public class CPDefinitionDetailsScreenNavigationCategory
 
 	@Reference
 	private CommerceChannelRelService _commerceChannelRelService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

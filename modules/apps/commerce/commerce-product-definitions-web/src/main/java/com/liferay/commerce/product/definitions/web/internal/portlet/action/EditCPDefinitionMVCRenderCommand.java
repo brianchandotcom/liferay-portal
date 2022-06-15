@@ -26,6 +26,7 @@ import com.liferay.commerce.product.service.CommerceChannelRelService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -63,8 +64,8 @@ public class EditCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 				new CPDefinitionsDisplayContext(
 					_actionHelper, _portal.getHttpServletRequest(renderRequest),
 					_commerceAccountGroupRelService, _commerceCatalogService,
-					_commerceChannelRelService, _cpDefinitionService,
-					_cpFriendlyURL, _itemSelector);
+					_commerceChannelRelService, _configurationProvider,
+					_cpDefinitionService, _cpFriendlyURL, _itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpDefinitionsDisplayContext);
@@ -105,6 +106,9 @@ public class EditCPDefinitionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CommerceChannelRelService _commerceChannelRelService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

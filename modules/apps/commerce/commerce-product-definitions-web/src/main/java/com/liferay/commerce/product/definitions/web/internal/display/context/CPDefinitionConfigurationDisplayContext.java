@@ -43,6 +43,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -67,6 +68,7 @@ public class CPDefinitionConfigurationDisplayContext
 		CommerceChannelRelService commerceChannelRelService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceLowStockActivityRegistry commerceLowStockActivityRegistry,
+		ConfigurationProvider configurationProvider,
 		CPDAvailabilityEstimateService cpdAvailabilityEstimateService,
 		CPDefinitionInventoryEngineRegistry cpDefinitionInventoryEngineRegistry,
 		CPDefinitionInventoryService cpDefinitionInventoryService,
@@ -78,7 +80,8 @@ public class CPDefinitionConfigurationDisplayContext
 		super(
 			actionHelper, httpServletRequest, commerceAccountGroupRelService,
 			commerceCatalogService, commerceChannelRelService,
-			cpDefinitionService, cpFriendlyURL, itemSelector);
+			configurationProvider, cpDefinitionService, cpFriendlyURL,
+			itemSelector);
 
 		_commerceAvailabilityEstimateService =
 			commerceAvailabilityEstimateService;

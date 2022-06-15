@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -139,7 +140,7 @@ public class CPDefinitionConfigurationScreenNavigationCategory
 					_commerceAvailabilityEstimateService,
 					_commerceCatalogService, _commerceChannelRelService,
 					_commerceCurrencyLocalService,
-					_commerceLowStockActivityRegistry,
+					_commerceLowStockActivityRegistry, _configurationProvider,
 					_cpdAvailabilityEstimateService,
 					_cpDefinitionInventoryEngineRegistry,
 					_cpDefinitionInventoryService, _cpDefinitionService,
@@ -185,6 +186,9 @@ public class CPDefinitionConfigurationScreenNavigationCategory
 
 	@Reference
 	private CommerceLowStockActivityRegistry _commerceLowStockActivityRegistry;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPDAvailabilityEstimateService _cpdAvailabilityEstimateService;

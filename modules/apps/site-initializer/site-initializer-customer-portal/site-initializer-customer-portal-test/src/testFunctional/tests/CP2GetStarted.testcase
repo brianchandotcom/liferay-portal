@@ -16,7 +16,7 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Create a new Masterclass Site") {
+		task ("Create a new Customer Portal Site") {
 			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
 		}
 

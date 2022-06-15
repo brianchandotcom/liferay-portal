@@ -19,6 +19,17 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
+	macro addCustomerPortalSite {
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addSiteTemplateCP(
+			siteName = "${siteName}",
+			siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+	}
+
 	macro addIdPCForCustomerPortal {
 		AssertClick(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
@@ -136,23 +147,6 @@ definition {
 		Click(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
 	}
 
-	macro addCustomerPortalSite {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addSiteTemplateCP(
-			siteName = "${siteName}",
-			siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
-	}
-
-	macro createCPSiteObjects {
-		CustomerPortal.showCPObject(title = "Account Flag");
-
-		CustomerPortal.showCPObject(title = "Koroneiki Account");
-	}
-
 	macro createCPSite {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -191,6 +185,12 @@ definition {
 			locator1 = "SitesEditSite#DETAILS_NAME",
 			value1 = "${siteName}");
 
+		CustomerPortal.showCPObject(title = "Account Flag");
+
+		CustomerPortal.showCPObject(title = "Koroneiki Account");
+	}
+
+	macro createCPSiteObjects {
 		CustomerPortal.showCPObject(title = "Account Flag");
 
 		CustomerPortal.showCPObject(title = "Koroneiki Account");

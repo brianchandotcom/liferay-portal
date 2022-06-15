@@ -664,13 +664,14 @@ definition {
 	macro clickTableEntryEditButton {
 		WaitForPageLoad();
 
-		if (IsElementPresent(key_value = "${entryName}",locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS")) {
+		if (IsElementPresent(key_value = "${entryName}", locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS")) {
 			Click(
 				key_value = "${entryName}",
 				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 			DropdownMenuItem.click(menuItem = "Edit");
-		} else {
+		}
+		else {
 			Click(
 				key_entryName = "${entryName}",
 				key_table = "${table}",

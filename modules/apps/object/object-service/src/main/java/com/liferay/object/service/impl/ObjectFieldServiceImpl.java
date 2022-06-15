@@ -102,7 +102,7 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 	}
 
 	@Override
-	public ObjectField updateCustomObjectField(
+	public ObjectField updateObjectField(
 			long objectFieldId, long listTypeDefinitionId, String businessType,
 			String dbType, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId, Map<Locale, String> labelMap, String name,
@@ -116,7 +116,7 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 			getPermissionChecker(), objectField.getObjectDefinitionId(),
 			ActionKeys.UPDATE);
 
-		return objectFieldLocalService.updateCustomObjectField(
+		return objectFieldLocalService.updateObjectField(
 			objectFieldId, listTypeDefinitionId, businessType, dbType, indexed,
 			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
 			objectFieldSettings);

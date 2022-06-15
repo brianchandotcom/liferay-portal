@@ -19,7 +19,7 @@ definition {
 
 		AssertTextEquals(
 			custom_entryURL = "${upgradeURL}",
-			key_id = "customElementURLs",
+			key_id = "ClientExtensionAdminPortlet_url",
 			locator1 = "RemoteAppsEntry#URL",
 			value1 = "${upgradeURL}");
 
@@ -51,7 +51,7 @@ definition {
 
 		AssertTextEquals(
 			custom_entryURL = "${upgradeURL}",
-			key_id = "iFrameURL",
+			key_id = "ClientExtensionAdminPortlet_url",
 			locator1 = "RemoteAppsEntry#URL",
 			value1 = "${upgradeURL}");
 	}

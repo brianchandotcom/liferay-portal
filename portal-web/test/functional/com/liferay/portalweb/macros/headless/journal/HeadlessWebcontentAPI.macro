@@ -91,7 +91,7 @@ definition {
 	macro _createStructuredContent {
 		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title},${priority}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
@@ -126,7 +126,7 @@ definition {
 	macro _createStructuredContentDraft {
 		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${priority},${title}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
@@ -161,7 +161,7 @@ definition {
 	macro _editStructuredContent {
 		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title},${priority},${structuredContentId}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
@@ -196,7 +196,7 @@ definition {
 	macro _filterStructuredContent {
 		Variables.assertDefined(parameterList = "${filtervalue}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");
@@ -215,7 +215,7 @@ definition {
 	macro _sortStructureContent {
 		Variables.assertDefined(parameterList = "${sortvalue}");
 
-		var portalURL = JSONCompany.getDefaultPortalURL();
+		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
 			site = "true");

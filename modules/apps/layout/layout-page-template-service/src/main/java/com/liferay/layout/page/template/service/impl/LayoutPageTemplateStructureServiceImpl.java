@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerU
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.util.PropsUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,9 +51,8 @@ public class LayoutPageTemplateStructureServiceImpl
 				BaseModelPermissionCheckerUtil.containsBaseModelPermission(
 					getPermissionChecker(), groupId, Layout.class.getName(),
 					plid, ActionKeys.UPDATE)) ||
-			(GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571")) &&
-			 _layoutPermission.containsLayoutRestrictedUpdatePermission(
-				 getPermissionChecker(), plid))) {
+			_layoutPermission.containsLayoutRestrictedUpdatePermission(
+				getPermissionChecker(), plid)) {
 
 			return layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(

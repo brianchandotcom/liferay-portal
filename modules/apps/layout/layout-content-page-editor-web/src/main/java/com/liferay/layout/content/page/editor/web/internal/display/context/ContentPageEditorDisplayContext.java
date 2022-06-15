@@ -337,9 +337,6 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/edit_fragment_entry_link")
 			).put(
-				"featureFlagLps132571",
-				GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571"))
-			).put(
 				"featureFlagLps150277",
 				GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150277"))
 			).put(
@@ -688,45 +685,21 @@ public class ContentPageEditorDisplayContext {
 					_hasPermissions(ActionKeys.UPDATE)
 				).put(
 					ContentPageEditorActionKeys.UPDATE_LAYOUT_ADVANCED_OPTIONS,
-					() -> {
-						if (!GetterUtil.getBoolean(
-								PropsUtil.get("feature.flag.LPS-132571"))) {
-
-							return false;
-						}
-
-						return _hasPermissions(
-							ContentPageEditorActionKeys.
-								UPDATE_LAYOUT_ADVANCED_OPTIONS);
-					}
+					() -> _hasPermissions(
+						ContentPageEditorActionKeys.
+							UPDATE_LAYOUT_ADVANCED_OPTIONS)
 				).put(
 					ContentPageEditorActionKeys.UPDATE_LAYOUT_BASIC,
-					() -> {
-						if (!GetterUtil.getBoolean(
-								PropsUtil.get("feature.flag.LPS-132571"))) {
-
-							return false;
-						}
-
-						return _hasPermissions(
-							ContentPageEditorActionKeys.UPDATE_LAYOUT_BASIC);
-					}
+					() -> _hasPermissions(
+						ContentPageEditorActionKeys.UPDATE_LAYOUT_BASIC)
 				).put(
 					ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT,
 					_hasPermissions(
 						ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT)
 				).put(
 					ContentPageEditorActionKeys.UPDATE_LAYOUT_LIMITED,
-					() -> {
-						if (!GetterUtil.getBoolean(
-								PropsUtil.get("feature.flag.LPS-132571"))) {
-
-							return false;
-						}
-
-						return _hasPermissions(
-							ContentPageEditorActionKeys.UPDATE_LAYOUT_LIMITED);
-					}
+					() -> _hasPermissions(
+						ContentPageEditorActionKeys.UPDATE_LAYOUT_LIMITED)
 				).build()
 			).put(
 				"segmentsExperienceId", getSegmentsExperienceId()

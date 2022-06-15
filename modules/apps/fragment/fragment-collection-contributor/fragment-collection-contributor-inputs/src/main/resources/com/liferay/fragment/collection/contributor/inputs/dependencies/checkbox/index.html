@@ -1,6 +1,6 @@
 <div class="forms-checkbox">
 	<div class="custom-checkbox custom-control mb-0">
-		<input aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text" class="custom-control-input" id="${fragmentEntryLinkNamespace}-checkbox" name="${input.name}" [#if input.required]required[/#if] type="checkbox" />
+		<input aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text" class="custom-control-input" id="${fragmentEntryLinkNamespace}-checkbox" name="${input.name}" ${input.required?then('required', '')} type="checkbox" />
 
 		<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox">
 			<span class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]custom-control-label-text">${input.label}${input.required?then('*', '')}</span>

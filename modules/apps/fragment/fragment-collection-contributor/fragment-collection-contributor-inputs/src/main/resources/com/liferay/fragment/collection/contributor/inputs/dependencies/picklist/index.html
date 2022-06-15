@@ -1,5 +1,5 @@
 <div class="forms-picklist">
-	<input name="${input.name}" [#if input.required]required[/#if] type="hidden" />
+	<input name="${input.name}" ${input.required?then('required', '')} type="hidden" />
 
 	<label id="${fragmentEntryLinkNamespace}-label" class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]">${input.label}${input.required?then('*', '')}</label>
 

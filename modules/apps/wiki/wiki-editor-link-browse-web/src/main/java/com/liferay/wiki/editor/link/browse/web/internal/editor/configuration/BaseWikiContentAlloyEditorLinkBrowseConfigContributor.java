@@ -31,8 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -120,11 +118,13 @@ public abstract class BaseWikiContentAlloyEditorLinkBrowseConfigContributor
 			}
 		}
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, itemSelectedEventName,
-			itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]));
-
-		jsonObject.put("documentBrowseLinkUrl", itemSelectorURL.toString());
+		jsonObject.put(
+			"documentBrowseLinkUrl",
+			String.valueOf(
+				itemSelector.getItemSelectorURL(
+					requestBackedPortletURLFactory, itemSelectedEventName,
+					itemSelectorCriteria.toArray(
+						new ItemSelectorCriterion[0]))));
 	}
 
 	protected abstract ItemSelectorReturnType getItemSelectorReturnType();

@@ -75,6 +75,20 @@ public class InfoFormValidationException extends InfoFormException {
 
 	}
 
+	public static class InvalidCaptcha extends InfoFormValidationException {
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.get(locale, "captcha-verification-failed");
+		}
+
+		@Override
+		public String getLocalizedMessage(String fieldLabel, Locale locale) {
+			return getLocalizedMessage(locale);
+		}
+
+	}
+
 	public static class InvalidFileExtension
 		extends InfoFormValidationException {
 

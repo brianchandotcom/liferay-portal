@@ -17,12 +17,10 @@ package com.liferay.info.internal.request.struts;
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormValidationException;
-import com.liferay.info.form.InfoForm;
 import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHelper;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.creator.InfoItemCreator;
-import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -83,9 +81,11 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				_log.debug(infoFormValidationException);
 			}
 
+			String formItemId = ParamUtil.getString(
+				httpServletRequest, "formItemId");
+
 			SessionErrors.add(
-				originalHttpServletRequest,
-				infoFormValidationException.getInfoFieldUniqueId(),
+				originalHttpServletRequest, formItemId,
 				infoFormValidationException);
 		}
 		catch (Exception exception) {
@@ -93,14 +93,11 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				_log.debug("Unable to add info item", exception);
 			}
 
-			InfoItemFormProvider<?> infoItemFormProvider =
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFormProvider.class, className);
-
-			InfoForm infoForm = infoItemFormProvider.getInfoForm();
+			String formItemId = ParamUtil.getString(
+				httpServletRequest, "formItemId");
 
 			SessionErrors.add(
-				originalHttpServletRequest, infoForm.getName(),
+				originalHttpServletRequest, formItemId,
 				new InfoFormException());
 		}
 

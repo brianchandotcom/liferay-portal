@@ -1405,4 +1405,24 @@ definition {
 			value1 = "${coordinateY}");
 	}
 
+	macro gotoAndDeleteBySidebarCard {
+		Click(
+			key_propertyName = "${sidebarCardName}",
+			key_propertyValue = "${propertyValue}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
+
+		Click(
+			sidebarCard = "${sidebarCardName}",
+			locator1 = "WorkflowConfiguration#BLOGS_MOVE_TO_RECYCLE_BIN");
+
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
+	}
+
+	macro viewTimerNotPresent {
+		AssertElementNotPresent(
+			key_propertyName = "Timers",
+			key_propertyValue = "${propertyValue}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
+	}
+
 }

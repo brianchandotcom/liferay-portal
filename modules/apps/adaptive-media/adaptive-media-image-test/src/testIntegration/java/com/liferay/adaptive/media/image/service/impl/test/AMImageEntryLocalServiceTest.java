@@ -448,15 +448,23 @@ public class AMImageEntryLocalServiceTest {
 			null;
 
 		try {
-			amImageCounterServiceRegistration1 = _registerAMImageCounter(
-				"test1", 100);
-			amImageCounterServiceRegistration2 = _registerAMImageCounter(
-				"test2", 50);
+			int counter1 = RandomTestUtil.randomInt(100, 300);
 
-			Assert.assertEquals(
-				150,
+			amImageCounterServiceRegistration1 = _registerAMImageCounter(
+				"test1", counter1);
+
+			int counter2 = RandomTestUtil.randomInt(100, 300);
+
+			amImageCounterServiceRegistration2 = _registerAMImageCounter(
+				"test2", counter2);
+
+			int expectedAMImageEntriesCount =
 				AMImageEntryLocalServiceUtil.getExpectedAMImageEntriesCount(
-					company.getCompanyId()));
+					company.getCompanyId());
+
+			Assert.assertTrue(
+				String.valueOf(expectedAMImageEntriesCount),
+				expectedAMImageEntriesCount >= (counter1 + counter2));
 		}
 		finally {
 			_unregisterAMImageCounter(amImageCounterServiceRegistration1);
@@ -499,11 +507,10 @@ public class AMImageEntryLocalServiceTest {
 				amImageConfigurationEntry, fileEntry.getFileVersion(), 100, 200,
 				new UnsyncByteArrayInputStream(bytes), 12345);
 
-			Assert.assertEquals(
-				20,
-				AMImageEntryLocalServiceUtil.getPercentage(
-					company.getCompanyId(),
-					amImageConfigurationEntry.getUUID()));
+			int percentage = AMImageEntryLocalServiceUtil.getPercentage(
+				company.getCompanyId(), amImageConfigurationEntry.getUUID());
+
+			Assert.assertTrue(String.valueOf(percentage), percentage <= 20);
 		}
 		finally {
 			_unregisterAMImageCounter(amImageCounterServiceRegistration);

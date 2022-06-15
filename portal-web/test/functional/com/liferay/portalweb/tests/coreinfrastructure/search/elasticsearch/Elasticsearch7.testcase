@@ -382,6 +382,47 @@ definition {
 		SearchAdministration.executeReindex(executionScope = "All Instances");
 	}
 
+	@priority = "4"
+	test CopySearchInsightsJSON {
+		JSONGroup.addGroup(groupName = "New Site");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "New Site",
+			title = "apple");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "New Site");
+
+		PagesAdmin.addPage(
+			inheritChanges = "disable",
+			pageName = "Search",
+			pageTemplateName = "Search");
+
+		Search.openSearchPage(siteURLKey = "new-site");
+
+		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		Click(locator1 = "//a[contains(.,'Request')]//..//button[contains(.,'Copy')]");
+
+		SearchPortlets.viewCopiedContent(
+			groupName = "New Site",
+			siteURLKey = "new-site",
+			text = "explain");
+
+		Search.openSearchPage(siteURLKey = "new-site");
+
+		SearchPortlets.searchEmbedded(searchTerm = "apple");
+
+		Click(locator1 = "//a[contains(.,'Response')]//..//button[contains(.,'Copy')]");
+
+		SearchPortlets.viewCopiedContent(
+			groupName = "New Site",
+			siteURLKey = "new-site",
+			text = "_shards");
+	}
+
 	@priority = "5"
 	test ElasticsearchClusteringSmokeTest {
 		property elasticsearch.cluster.size = "2";

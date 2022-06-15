@@ -39,12 +39,11 @@ definition {
 
 		Site.openSitesAdmin();
 
-		while (IsElementNotPresent(locator1 = "Sites#SITE_TABLE_NAME", key_siteName = "${siteName}")) {
+		while (IsElementNotPresent(key_siteName = "${siteName}", locator1 = "Sites#SITE_TABLE_NAME")) {
 			Refresh();
 
 			WaitForPageLoad();
 		}
-
 	}
 
 	macro dismissAlert {

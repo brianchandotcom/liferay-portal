@@ -44,7 +44,7 @@ definition {
 
 		Site.openSitesAdmin();
 
-		while (IsElementNotPresent(locator1 = "Sites#SITE_TABLE_NAME", key_siteName = "Raylife")) {
+		while (IsElementNotPresent(key_siteName = "Raylife", locator1 = "Sites#SITE_TABLE_NAME")) {
 			Refresh();
 
 			WaitForPageLoad();

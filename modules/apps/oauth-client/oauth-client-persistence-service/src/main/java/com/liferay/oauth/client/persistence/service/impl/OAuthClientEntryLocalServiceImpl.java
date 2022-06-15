@@ -61,8 +61,8 @@ public class OAuthClientEntryLocalServiceImpl
 
 	@Override
 	public OAuthClientEntry addOAuthClientEntry(
-			long userId, String authServerWellKnownURI,
-			String authRequestParametersJSON, String infoJSON,
+			long userId, String authRequestParametersJSON,
+			String authServerWellKnownURI, String infoJSON,
 			String tokenRequestParametersJSON)
 		throws PortalException {
 
@@ -100,9 +100,9 @@ public class OAuthClientEntryLocalServiceImpl
 		oAuthClientEntry.setCompanyId(user.getCompanyId());
 		oAuthClientEntry.setUserId(user.getUserId());
 		oAuthClientEntry.setUserName(user.getFullName());
-		oAuthClientEntry.setAuthServerWellKnownURI(authServerWellKnownURI);
 		oAuthClientEntry.setAuthRequestParametersJSON(
 			authRequestParametersJSON);
+		oAuthClientEntry.setAuthServerWellKnownURI(authServerWellKnownURI);
 		oAuthClientEntry.setClientId(clientId);
 		oAuthClientEntry.setInfoJSON(infoJSON);
 		oAuthClientEntry.setTokenRequestParametersJSON(
@@ -205,8 +205,8 @@ public class OAuthClientEntryLocalServiceImpl
 
 	@Override
 	public OAuthClientEntry updateOAuthClientEntry(
-			long oAuthClientEntryId, String authServerWellKnownURI,
-			String authRequestParametersJSON, String infoJSON,
+			long oAuthClientEntryId, String authRequestParametersJSON,
+			String authServerWellKnownURI, String infoJSON,
 			String tokenRequestParametersJSON)
 		throws PortalException {
 
@@ -241,9 +241,9 @@ public class OAuthClientEntryLocalServiceImpl
 			_validateParametersJSON(tokenRequestParametersJSON);
 		}
 
-		oAuthClientEntry.setAuthServerWellKnownURI(authServerWellKnownURI);
 		oAuthClientEntry.setAuthRequestParametersJSON(
 			authRequestParametersJSON);
+		oAuthClientEntry.setAuthServerWellKnownURI(authServerWellKnownURI);
 		oAuthClientEntry.setClientId(clientId);
 		oAuthClientEntry.setInfoJSON(infoJSON);
 		oAuthClientEntry.setTokenRequestParametersJSON(

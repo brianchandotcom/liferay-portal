@@ -107,7 +107,7 @@ export default function EditNotificationTemplate({
 	const onSubmit = async (notification: TNotificationTemplate) => {
 		const response = await fetch(
 			editingNotificationTemplateId !== 0
-				? `/o/notification/v1.0/notification-template/${editingNotificationTemplateId}`
+				? `/o/notification/v1.0/notification-templates/${editingNotificationTemplateId}`
 				: '/o/notification/v1.0/notification-templates',
 			{
 				body: JSON.stringify(notification),
@@ -150,7 +150,7 @@ export default function EditNotificationTemplate({
 		if (editingNotificationTemplateId !== 0) {
 			const makeFetch = async () => {
 				const response = await fetch(
-					`/o/notification/v1.0/notification-template/${editingNotificationTemplateId}`,
+					`/o/notification/v1.0/notification-templates/${editingNotificationTemplateId}`,
 					{
 						headers: HEADERS,
 						method: 'GET',

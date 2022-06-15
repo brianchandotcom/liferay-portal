@@ -63,7 +63,75 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/notification-template/{notificationTemplateId}":
+    "/notification-templates":
+        get:
+            operationId: getNotificationTemplatesPage
+            parameters:
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/NotificationTemplate"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/NotificationTemplate"
+                                type: array
+            tags: ["NotificationTemplate"]
+        post:
+            operationId: postNotificationTemplate
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/NotificationTemplate"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/NotificationTemplate"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/NotificationTemplate"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/NotificationTemplate"
+            tags: ["NotificationTemplate"]
+    "/notification-templates/{notificationTemplateId}":
         delete:
             operationId: deleteNotificationTemplate
             parameters:
@@ -134,74 +202,6 @@ paths:
                   schema:
                       format: int64
                       type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/NotificationTemplate"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/NotificationTemplate"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/NotificationTemplate"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/NotificationTemplate"
-            tags: ["NotificationTemplate"]
-    "/notification-templates":
-        get:
-            operationId: getNotificationTemplatesPage
-            parameters:
-                - in: query
-                  name: aggregationTerms
-                  schema:
-                      items:
-                          type: string
-                      type: array
-                - in: query
-                  name: filter
-                  schema:
-                      type: string
-                - in: query
-                  name: page
-                  schema:
-                      type: integer
-                - in: query
-                  name: pageSize
-                  schema:
-                      type: integer
-                - in: query
-                  name: search
-                  schema:
-                      type: string
-                - in: query
-                  name: sort
-                  schema:
-                      type: string
-                - in: header
-                  name: Accept-Language
-                  schema:
-                      type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/NotificationTemplate"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/NotificationTemplate"
-                                type: array
-            tags: ["NotificationTemplate"]
-        post:
-            operationId: postNotificationTemplate
             requestBody:
                 content:
                     application/json:

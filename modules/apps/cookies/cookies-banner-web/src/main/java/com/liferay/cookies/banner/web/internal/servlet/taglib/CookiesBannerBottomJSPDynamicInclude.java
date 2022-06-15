@@ -70,7 +70,9 @@ public class CookiesBannerBottomJSPDynamicInclude
 						CookiesPreferenceHandlingConfiguration.class,
 						group.getGroupId());
 
-			if (!cookiesPreferenceHandlingConfiguration.enabled()) {
+			if (!cookiesPreferenceHandlingConfiguration.enabled() ||
+				!cookiesPreferenceHandlingConfiguration.explicitConsentMode()) {
+
 				return;
 			}
 		}

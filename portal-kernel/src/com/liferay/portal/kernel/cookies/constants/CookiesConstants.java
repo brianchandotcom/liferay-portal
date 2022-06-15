@@ -65,6 +65,9 @@ public class CookiesConstants {
 	public static final String NAME_REMOTE_PREFERENCE_PREFIX =
 		"REMOTE_PREFERENCE_";
 
+	public static final String NAME_USER_CONSENT_CONFIGURED =
+		"USER_CONSENT_CONFIGURED";
+
 	public static final String NAME_USER_UUID = "USER_UUID";
 
 }

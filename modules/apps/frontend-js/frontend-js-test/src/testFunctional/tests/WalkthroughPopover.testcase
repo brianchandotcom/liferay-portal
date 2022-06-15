@@ -178,30 +178,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-154639. Assert component will switch to hotspot mode in the 2nd step when closing 2nd popover."
-	@priority = "5"
-	test WhenClosedCanTransitionToHotSpotModeOnCurrentStepElement {
-		task ("Given click hotspot element") {
-			Click(locator1 = "Walkthrough#HOTSPOT");
-		}
-
-		task ("Click on next step") {
-			Click(locator1 = "Button#OK");
-		}
-
-		task ("When Click close icon") {
-			Click(locator1 = "Walkthrough#CLOSE_POPOVER");
-		}
-
-		task ("Then hotspot element is present on the 2nd element") {
-			AssertElementPresent(locator1 = "Walkthrough#HOTSPOT");
-
-			WalkthroughPopover.viewCoordinatePositionMatchesElementStep(
-				hotspotElementClass = "lfr-walkthrough-hotspot-inner",
-				stepElementId = "step2");
-		}
-	}
-
 	@description = "LPS-154647. Assert intermediate step displays previous and next step button."
 	@priority = "5"
 	test IntermediateStepHasPreviousAndNextStepPresent {
@@ -231,6 +207,30 @@ definition {
 
 		task ("And Then secondary button previous step is present") {
 			AssertElementPresent(locator1 = "Button#PREVIOUS");
+		}
+	}
+
+	@description = "LPS-154639. Assert component will switch to hotspot mode in the 2nd step when closing 2nd popover."
+	@priority = "5"
+	test WhenClosedCanTransitionToHotSpotModeOnCurrentStepElement {
+		task ("Given click hotspot element") {
+			Click(locator1 = "Walkthrough#HOTSPOT");
+		}
+
+		task ("Click on next step") {
+			Click(locator1 = "Button#OK");
+		}
+
+		task ("When Click close icon") {
+			Click(locator1 = "Walkthrough#CLOSE_POPOVER");
+		}
+
+		task ("Then hotspot element is present on the 2nd element") {
+			AssertElementPresent(locator1 = "Walkthrough#HOTSPOT");
+
+			WalkthroughPopover.viewCoordinatePositionMatchesElementStep(
+				hotspotElementClass = "lfr-walkthrough-hotspot-inner",
+				stepElementId = "step2");
 		}
 	}
 

@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useIsMounted, useThunk} from '@liferay/frontend-js-react-web';
 import {fetch, openToast} from 'frontend-js-web';
@@ -466,7 +467,7 @@ const FrontendDataSet = ({
 				)}
 			</div>
 		) : (
-			<span aria-hidden="true" className="loading-animation my-7" />
+			<ClayLoadingIndicator className="my-7" />
 		);
 
 	const paginationComponent =

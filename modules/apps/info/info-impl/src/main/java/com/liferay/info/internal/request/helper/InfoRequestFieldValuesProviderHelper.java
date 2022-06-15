@@ -160,6 +160,10 @@ public class InfoRequestFieldValuesProviderHelper {
 	private InfoFieldValue<Object> _getInfoFieldValue(
 		InfoField<?> infoField, Locale locale, String value) {
 
+		if (Validator.isBlank(value)) {
+			return null;
+		}
+
 		if (infoField.getInfoFieldType() instanceof BooleanInfoFieldType) {
 			return _getBooleanInfoFieldValue(infoField, locale, value);
 		}

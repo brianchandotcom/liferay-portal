@@ -77,14 +77,13 @@ public class GroupModelListenerTest {
 
 	@Test
 	public void testDeletingGroupDeletesSharingEntries() throws Exception {
-		long classNameId = _classNameLocalService.getClassNameId(
-			Group.class.getName());
 		long classPK = _group.getGroupId();
 
 		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(), classNameId, classPK,
-			_group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
-			null,
+			_user.getUserId(), _groupUser.getUserId(),
+			_classNameLocalService.getClassNameId(Group.class.getName()),
+			classPK, _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _user.getUserId()));
 

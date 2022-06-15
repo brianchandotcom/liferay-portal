@@ -65,14 +65,13 @@ public class AddOrUpdateSharingUserNotificationTest
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
-		long classNameId = _classNameLocalService.getClassNameId(
-			Group.class.getName());
 		long classPK = group.getGroupId();
 
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(
-			_fromUser.getUserId(), user.getUserId(), classNameId, classPK,
-			group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
-			null,
+			_fromUser.getUserId(), user.getUserId(),
+			_classNameLocalService.getClassNameId(Group.class.getName()),
+			classPK, group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId()));
 	}

@@ -147,14 +147,13 @@ public class SharingUserNotificationTest extends BaseUserNotificationTestCase {
 	private SharingEntry _share(BaseModel<?> model, User fromUser, User toUser)
 		throws Exception {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			model.getModelClassName());
 		long classPK = (Long)model.getPrimaryKeyObj();
 
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(
-			fromUser.getUserId(), toUser.getUserId(), classNameId, classPK,
-			group.getGroupId(), true, Arrays.asList(SharingEntryAction.VIEW),
-			null,
+			fromUser.getUserId(), toUser.getUserId(),
+			_classNameLocalService.getClassNameId(model.getModelClassName()),
+			classPK, group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), fromUser.getUserId()));
 	}

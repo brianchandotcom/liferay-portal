@@ -23,8 +23,11 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
+import com.liferay.document.library.visibility.controller.DLFileEntryTypeVisibilityController;
 import com.liferay.document.library.web.internal.icon.provider.DLFileEntryTypeIconProviderUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLFolderPermission;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,9 +54,16 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(immediate = true, service = MenuItemProvider.class)
 public class MenuItemProvider {
 
 	public List<MenuItem> getAddDocumentTypesMenuItems(
@@ -311,6 +321,20 @@ public class MenuItemProvider {
 		return urlMenuItem;
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, DLFileEntryTypeVisibilityController.class,
+			"dl.file.entry.type.key");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+
+		_serviceTrackerMap = null;
+	}
+
 	private long _getDefaultFileEntryTypeId(long folderId) {
 		try {
 			return DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
@@ -432,8 +456,10 @@ public class MenuItemProvider {
 
 		for (DLFileEntryType fileEntryType : fileEntryTypes) {
 			try {
-				if (fileEntryType.getFileEntryTypeId() !=
-						DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT) {
+				if ((fileEntryType.getFileEntryTypeId() !=
+						DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT) &&
+					_isFileEntryTypeVisible(
+						themeDisplay.getUserId(), fileEntryType)) {
 
 					MenuItem urlMenuItem = _getFileEntryTypeMenuItem(
 						folder, fileEntryTypes, fileEntryType, themeDisplay,
@@ -494,7 +520,36 @@ public class MenuItemProvider {
 		}
 	}
 
+	private boolean _isFileEntryTypeVisible(
+		long userId, DLFileEntryType fileEntryType) {
+
+		List<DLFileEntryTypeVisibilityController>
+			dlFileEntryTypeVisibilityControllers =
+				_serviceTrackerMap.getService(
+					fileEntryType.getFileEntryTypeKey());
+
+		if (dlFileEntryTypeVisibilityControllers == null) {
+			return true;
+		}
+
+		for (DLFileEntryTypeVisibilityController
+				dlFileEntryTypeVisibilityController :
+					dlFileEntryTypeVisibilityControllers) {
+
+			if (!dlFileEntryTypeVisibilityController.isVisible(
+					userId, fileEntryType)) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MenuItemProvider.class);
+
+	private ServiceTrackerMap<String, List<DLFileEntryTypeVisibilityController>>
+		_serviceTrackerMap;
 
 }

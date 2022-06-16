@@ -97,6 +97,7 @@ public class IGPortletToolbarContributor extends BasePortletToolbarContributor {
 	private DLPortletToolbarContributorHelper
 		_dlPortletToolbarContributorHelper;
 
-	private final MenuItemProvider _menuItemProvider = new MenuItemProvider();
+	@Reference
+	private MenuItemProvider _menuItemProvider;
 
 }

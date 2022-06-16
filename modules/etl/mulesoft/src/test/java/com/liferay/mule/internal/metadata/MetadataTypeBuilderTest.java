@@ -313,11 +313,8 @@ public class MetadataTypeBuilderTest {
 		MetadataType arrayItemMetadataType = defaultArrayType.getType();
 
 		Assert.assertTrue(arrayItemMetadataType instanceof ObjectType);
-
-		MetadataType entityMetadataType = getEntityMetadataType(
-			"/entities/{id}");
-
-		Assert.assertEquals(entityMetadataType, arrayItemMetadataType);
+		Assert.assertEquals(
+			getEntityMetadataType("/entities/{id}"), arrayItemMetadataType);
 	}
 
 	@Test

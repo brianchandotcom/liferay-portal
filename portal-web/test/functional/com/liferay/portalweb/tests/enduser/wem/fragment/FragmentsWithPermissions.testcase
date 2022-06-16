@@ -1,7 +1,7 @@
 @component-name = "portal-wcm"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-132571=true";
+	property custom.properties = "jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Fragments";

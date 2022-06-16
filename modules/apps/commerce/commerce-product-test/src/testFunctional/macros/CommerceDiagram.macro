@@ -224,7 +224,12 @@ definition {
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 		}
 
-		Button.clickUpdate();
+		if ("${buttonType}" == "Update") {
+			Button.clickUpdate();
+		}
+		else if ("${buttonType}" == "Save") {
+			Button.clickSave();
+		}
 
 		Refresh();
 

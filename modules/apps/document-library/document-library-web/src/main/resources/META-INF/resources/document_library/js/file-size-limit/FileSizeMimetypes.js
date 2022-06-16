@@ -22,10 +22,9 @@ import uuidv4 from 'uuid/v4';
 
 import '../../css/file_size_mimetypes.scss';
 
-const NumberErrorMessage =
-	Liferay.Language.get('error-colon') +
-	' ' +
-	Liferay.Language.get('please-enter-a-valid-number');
+const NumberErrorMessage = `${Liferay.Language.get(
+	'error-colon'
+)} ${Liferay.Language.get('please-enter-a-valid-number')}`;
 
 const FileSizeField = ({
 	handleAddClick,

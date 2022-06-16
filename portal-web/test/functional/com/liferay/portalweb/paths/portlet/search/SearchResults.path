@@ -241,6 +241,16 @@
 <!--SEARCH_INSIGHTS_PORTLET-->
 
 <tr>
+	<td>SEARCH_INSIGHTS_WIDGET_REQUEST_COPY_BUTTON</td>
+	<td>//div[contains(@id,'insightsRequestPanelContent')]//button[contains(.,'Copy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_INSIGHTS_WIDGET_RESPONSE_COPY_BUTTON</td>
+	<td>//div[contains(@id,'insightsResponsePanelContent')]//button[contains(.,'Copy')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY</td>
 	<td>//div[contains(@id,'insightsResponsePanelContent')]//div[contains(@class,'CodeMirror cm-s-default')]//span[contains(@class,'cm-string')][normalize-space()='${key_text}']</td>
 	<td></td>

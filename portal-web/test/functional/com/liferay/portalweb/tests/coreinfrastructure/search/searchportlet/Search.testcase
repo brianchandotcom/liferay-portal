@@ -580,7 +580,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
-		Click(locator1 = "//a[contains(.,'Request')]//..//button[contains(.,'Copy')]");
+		Click(locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_REQUEST_COPY_BUTTON");
 
 		SearchPortlets.viewCopiedContent(text = "explain");
 
@@ -588,7 +588,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
-		Click(locator1 = "//a[contains(.,'Response')]//..//button[contains(.,'Copy')]");
+		Click(locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_COPY_BUTTON");
 
 		SearchPortlets.viewCopiedContent(text = "_shards");
 	}

@@ -1,0 +1,14 @@
+sampleCustomElement:
+  type: "customElement"
+  name: "Sample Vanilla Counter Custom Element"
+  description: ""
+  sourceCodeURL: "https://www.liferay.com"
+  cssURLs:
+    - "vanilla-counter.css"
+  friendlyURLMapping: "vanilla-counter"
+  htmlElementName: "vanilla-counter"
+  portletCategoryName: "category.remote-apps"
+  urls:
+    - "index.js"
+  instanceable: false
+  useESM: false

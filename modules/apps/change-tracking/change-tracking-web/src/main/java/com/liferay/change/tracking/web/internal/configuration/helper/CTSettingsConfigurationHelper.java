@@ -39,17 +39,17 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CTSettingsConfigurationHelper {
 
-	public boolean enabled(long companyId) {
+	public CTSettingsConfiguration getCTSettingsConfiguration(long companyId) {
+		return _getConfiguration(companyId);
+	}
+
+	public boolean isEnabled(long companyId) {
 		CTSettingsConfiguration configuration = _getConfiguration(companyId);
 
 		return configuration.enabled();
 	}
 
-	public CTSettingsConfiguration getCTSettingsConfiguration(long companyId) {
-		return _getConfiguration(companyId);
-	}
-
-	public boolean sandboxEnabled(long companyId) {
+	public boolean isSandboxEnabled(long companyId) {
 		CTSettingsConfiguration configuration = _getConfiguration(companyId);
 
 		return configuration.sandboxEnabled();

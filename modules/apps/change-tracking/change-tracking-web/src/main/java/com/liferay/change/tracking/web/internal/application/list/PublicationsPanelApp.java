@@ -64,7 +64,7 @@ public class PublicationsPanelApp extends BasePanelApp {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!_ctSettingsConfigurationHelper.enabled(
+		if (!_ctSettingsConfigurationHelper.isEnabled(
 				themeDisplay.getCompanyId())) {
 
 			portletURL.setParameter(
@@ -81,7 +81,7 @@ public class PublicationsPanelApp extends BasePanelApp {
 		if (_portletPermission.contains(
 				permissionChecker, CTPortletKeys.PUBLICATIONS,
 				ActionKeys.CONFIGURATION) ||
-			(_ctSettingsConfigurationHelper.enabled(group.getCompanyId()) &&
+			(_ctSettingsConfigurationHelper.isEnabled(group.getCompanyId()) &&
 			 _portletPermission.contains(
 				 permissionChecker, CTPortletKeys.PUBLICATIONS,
 				 ActionKeys.VIEW))) {

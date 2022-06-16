@@ -104,7 +104,7 @@ public class PublicationsPortlet extends MVCPortlet {
 	protected void checkPermissions(PortletRequest portletRequest)
 		throws Exception {
 
-		if (!_ctSettingsConfigurationHelper.enabled(
+		if (!_ctSettingsConfigurationHelper.isEnabled(
 				_portal.getCompanyId(portletRequest))) {
 
 			String actionName = ParamUtil.getString(

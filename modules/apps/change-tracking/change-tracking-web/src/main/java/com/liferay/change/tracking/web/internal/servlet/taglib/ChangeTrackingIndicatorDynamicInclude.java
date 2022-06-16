@@ -83,7 +83,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			if (!_ctSettingsConfigurationHelper.enabled(
+			if (!_ctSettingsConfigurationHelper.isEnabled(
 					themeDisplay.getCompanyId()) ||
 				!_portletPermission.contains(
 					themeDisplay.getPermissionChecker(),

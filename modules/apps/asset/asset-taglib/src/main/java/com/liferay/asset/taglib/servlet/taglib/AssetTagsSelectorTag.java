@@ -218,11 +218,8 @@ public class AssetTagsSelectorTag extends IncludeTag {
 				return null;
 			}
 
-			if (_groupIds != null) {
-				portletURL.setParameter(
-					"groupIds",
-					StringUtil.merge(getGroupIds(), StringPool.COMMA));
-			}
+			portletURL.setParameter(
+				"groupIds", StringUtil.merge(getGroupIds(), StringPool.COMMA));
 
 			portletURL.setParameter("eventName", getEventName());
 			portletURL.setParameter("selectedTagNames", "{selectedTagNames}");

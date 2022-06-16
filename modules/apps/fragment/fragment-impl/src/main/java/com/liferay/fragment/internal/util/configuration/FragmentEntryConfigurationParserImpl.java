@@ -317,7 +317,7 @@ public class FragmentEntryConfigurationParserImpl
 					_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 			if (configurationValuesJSONObject == null) {
-				return StringPool.BLANK;
+				return fragmentConfigurationField.getDefaultValue();
 			}
 
 			return getFieldValue(
@@ -326,7 +326,7 @@ public class FragmentEntryConfigurationParserImpl
 					fragmentConfigurationField.getName()));
 		}
 		catch (Exception exception) {
-			return StringPool.BLANK;
+			return fragmentConfigurationField.getDefaultValue();
 		}
 	}
 

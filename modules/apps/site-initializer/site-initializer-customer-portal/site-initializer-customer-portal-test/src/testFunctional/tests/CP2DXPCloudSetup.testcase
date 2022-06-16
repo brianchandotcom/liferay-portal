@@ -186,7 +186,7 @@ definition {
 
 		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
-		Click(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
+		CustomerPortal.clickOnSubmitButton();
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#SUCCESS_MESSAGE");
 
@@ -405,6 +405,139 @@ definition {
 		AssertTextEquals(
 			locator1 = "CustomerPortalSite#ERROR_MESSAGE",
 			value1 = "This field is required.");
+	}
+
+	@description = "LPS-146676 - Verify if that when you click 'Finish Activation' the DXP Cloud configuration modal is shown"
+	@priority = "5"
+	test OpenSetUpModal {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2NavigationMenu.goToProductActivation();
+
+		CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
+
+		CP2DXPCloudSetup.clickOnFinishActivationButton();
+
+		AssertElementPresent(locator1 = "CP2DXPCloudSetup#SETUP_DXP_CLOUD_PAGE");
+	}
+
+	@description = "LPS-146677 - Verify if the project name and version is correct"
+	@priority = "4"
+	test NameAndVersionOfChosenProject {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2NavigationMenu.goToProductActivation();
+
+		CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
+
+		CP2DXPCloudSetup.clickOnFinishActivationButton();
+
+		AssertTextEquals(
+			locator1 = "CP2DXPCloudSetup#PROJECT_NAME_SETUP",
+			key_name = "Test Account 01",
+			value1 = "Test Account 01");
+	}
+
+	@description = "LPS-146684 - Verify if the admin user selects 'Cancel', then the user goes back to the project's Product Activation page"
+	@priority = "4"
+	test IfSelectsCancelThenTheUserGoesBackPreviousPage {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2NavigationMenu.goToProductActivation();
+
+		CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
+
+		CP2DXPCloudSetup.clickOnFinishActivationButton();
+
+		CustomerPortal.clickOnCancelButton();
+
+		AssertElementPresent(locator1 = "CustomerPortalSite#ACTIVATION_STATUS_PAGE");
+	}
+
+	@description = "LPS-146686 - Verify if the activation status of the card changes to (In Progress) after filling out the DXP Cloud Set up"
+	@priority = "4"
+	test SeeIfTheCardActivationStatusChanges {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CustomerPortal.clickOnSkipForNowButton();
+
+		CP2NavigationMenu.goToProductActivation();
+
+		CP2NavigationMenu.clickOnProductButton(product = "DXP Cloud");
+
+		CP2DXPCloudSetup.clickOnFinishActivationButton();
+
+		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+
+		CustomerPortal.clickOnSubmitButton();
+
+		CP2DXPCloudSetup.assertCardStatusChanged(
+			status = "In Progress",
+			value = "In Progress");
+
+		CP2DXPCloudSetup.clearDXPCloudInfo();
 	}
 
 }

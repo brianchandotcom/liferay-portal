@@ -57,7 +57,22 @@
 </tr>
 <tr>
 	<td>SETUP_DXP_CLOUD_PAGE</td>
-	<td>//h2[contains(text(), 'Set up DXP Cloud')]</td>
+	<td>//h2[contains(@class, 'text-neutral') and contains(.,'Set up DXP Cloud')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FINISH_ACTIVATION</td>
+	<td>//button[contains(@class, 'btn-link') and contains(.,'Finish Activation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_CARD</td>
+	<td>//span[contains(text(),'${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECT_NAME_SETUP</td>
+	<td>//p[contains(@class, 'project-name') and contains(.,'${key_name}')]</td>
 	<td></td>
 </tr>
 </tbody>

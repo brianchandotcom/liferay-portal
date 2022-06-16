@@ -15,6 +15,10 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro clickOnFinishActivationButton {
+		Click(locator1 = "CP2DXPCloudSetup#FINISH_ACTIVATION");
+	}
+
 	macro addCPDXPCloudObject {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -75,6 +79,13 @@ definition {
 		CustomerPortal.showCPObject(title = "Account Subscription Group");
 
 		CP2DXPCloudSetup.addCPDXPCloudObject();
+	}
+
+	macro assertCardStatusChanged {
+		AssertTextEquals(
+			locator1 = "CP2DXPCloudSetup#STATUS_CARD",
+			key_status = "${status}",
+			value1 = "${value}");
 	}
 
 	macro deactivateDisasterRecoveryDataCenter {

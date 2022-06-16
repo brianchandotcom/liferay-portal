@@ -20,10 +20,7 @@ definition {
 	}
 
 	macro addCustomerPortalSite {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		Site.openSitesAdmin();
 
 		Site.addSiteTemplateCP(
 			siteName = "${siteName}",
@@ -145,6 +142,10 @@ definition {
 
 	macro clickOnSubmitButton {
 		Click(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
+	}
+
+	macro clickOnCancelButton {
+		Click(locator1 = "CustomerPortalSite#CANCEL_BUTTON");
 	}
 
 	macro createCPSite {

@@ -200,6 +200,21 @@
 	<td>//div[contains(text(), '${type}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENT_HEADING</td>
+	<td>//div[contains(@id, 'welcome-user') and contains(.,'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(@type, 'button') and contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVATION_STATUS_PAGE</td>
+	<td>//div[contains(@class, 'mb-5') and contains(.,'Activation Status')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

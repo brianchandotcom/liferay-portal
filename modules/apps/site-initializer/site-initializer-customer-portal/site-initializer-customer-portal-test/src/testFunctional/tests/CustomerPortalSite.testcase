@@ -7,10 +7,20 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Customer Portal";
 
-	setUp {
-		TestCase.setUpPortalInstance();
 
-		User.firstLoginUI();
+	var testSiteName = "Customer Portal";
+	var testSiteURL = "customer-portal";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+		}
 	}
 
 	tearDown {
@@ -20,6 +30,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
 			CustomerPortal.customerPortalTearDown();
 
 			User.logoutPG();
@@ -155,42 +167,15 @@ definition {
 	@description = "LPS-146215 - Verify if Customer Portal can be created"
 	@priority = "5"
 	test CanCP20BeCreated {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		LexiconEntry.gotoAdd();
-
-		LexiconCard.clickCard(card = "Customer Portal");
-
-		SelectFrame(
-			key_title = "Add Site",
-			locator1 = "IFrame#MODAL_ANY");
-
-		PortletEntry.inputName(name = "Customer Portal");
-
-		Click(locator1 = "Button#ADD");
-
-		AssertElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION");
-
-		while (IsElementPresent(locator1 = "Raylife#SAVE_LOADING_ANIMATION")) {
-			Pause(locator1 = "1500");
+		task ("Go to Customer Portal Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
 		}
 
-		Refresh();
-
-		WaitForElementPresent(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		Click(
-			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		AssertTextEquals(
-			locator1 = "SitesEditSite#DETAILS_NAME",
-			value1 = "Customer Portal");
+		task ("Assert the Customer Portal Page is present") {
+			AssertElementPresent(
+				key_title = "Welcome,",
+				locator1 = "CustomerPortalSite#FRAGMENT_HEADING");
+		}
 	}
 
 	@description = "LPS-146220 - Verify if when Customer Portal is created, Objects will be created for it as well"

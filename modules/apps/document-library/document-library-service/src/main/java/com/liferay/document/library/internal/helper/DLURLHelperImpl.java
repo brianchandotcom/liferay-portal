@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.internal.helper;
 
-import com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration;
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -32,7 +31,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -64,16 +62,12 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-@Component(
-	configurationPid = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration",
-	service = DLURLHelper.class
-)
+@Component(service = DLURLHelper.class)
 public class DLURLHelperImpl implements DLURLHelper {
 
 	@Override
@@ -398,22 +392,11 @@ public class DLURLHelperImpl implements DLURLHelper {
 
 					types.forEach(emitter::emit);
 				});
-
-		_ffFriendlyURLEntryFileEntryConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFFriendlyURLEntryFileEntryConfiguration.class, properties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_dlFileVersionURLProviders.close();
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		_ffFriendlyURLEntryFileEntryConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFFriendlyURLEntryFileEntryConfiguration.class, properties);
 	}
 
 	private String _getDLFileVersionURLProviderURL(
@@ -439,8 +422,7 @@ public class DLURLHelperImpl implements DLURLHelper {
 		FileEntry fileEntry, String previewURLPrefix, String queryString,
 		boolean appendVersion) {
 
-		if (!_ffFriendlyURLEntryFileEntryConfiguration.enabled() ||
-			appendVersion || (fileEntry == null) ||
+		if (appendVersion || (fileEntry == null) ||
 			(fileEntry.getFileEntryId() == 0)) {
 
 			return null;
@@ -568,8 +550,6 @@ public class DLURLHelperImpl implements DLURLHelper {
 	private ServiceTrackerMap
 		<DLFileVersionURLProvider.Type, DLFileVersionURLProvider>
 			_dlFileVersionURLProviders;
-	private volatile FFFriendlyURLEntryFileEntryConfiguration
-		_ffFriendlyURLEntryFileEntryConfiguration;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

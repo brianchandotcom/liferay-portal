@@ -14,14 +14,12 @@
 
 package com.liferay.document.library.internal.service;
 
-import com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceWrapper;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -40,18 +38,13 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alicia García
  */
-@Component(
-	configurationPid = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration",
-	service = ServiceWrapper.class
-)
+@Component(service = ServiceWrapper.class)
 public class FriendlyURLDLFileEntryLocalServiceWrapper
 	extends DLFileEntryLocalServiceWrapper {
 
@@ -72,9 +65,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
 
-		if (_ffFriendlyURLEntryFileEntryConfiguration.enabled()) {
-			_addFriendlyURLEntry(dlFileEntry, _getUrlTitle(title, urlTitle));
-		}
+		_addFriendlyURLEntry(dlFileEntry, _getUrlTitle(title, urlTitle));
 
 		return dlFileEntry;
 	}
@@ -85,12 +76,10 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 
 		dlFileEntry = super.deleteFileEntry(dlFileEntry);
 
-		if (_ffFriendlyURLEntryFileEntryConfiguration.enabled()) {
-			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-				dlFileEntry.getGroupId(),
-				_classNameLocalService.getClassNameId(FileEntry.class),
-				dlFileEntry.getFileEntryId());
-		}
+		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+			dlFileEntry.getGroupId(),
+			_classNameLocalService.getClassNameId(FileEntry.class),
+			dlFileEntry.getFileEntryId());
 
 		return dlFileEntry;
 	}
@@ -111,19 +100,9 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			ddmFormValuesMap, file, inputStream, size, expirationDate,
 			reviewDate, serviceContext);
 
-		if (_ffFriendlyURLEntryFileEntryConfiguration.enabled()) {
-			_updateFriendlyURL(dlFileEntry, title, urlTitle);
-		}
+		_updateFriendlyURL(dlFileEntry, title, urlTitle);
 
 		return dlFileEntry;
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffFriendlyURLEntryFileEntryConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFFriendlyURLEntryFileEntryConfiguration.class, properties);
 	}
 
 	private void _addFriendlyURLEntry(DLFileEntry dlFileEntry, String urlTitle)
@@ -179,9 +158,6 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	private volatile FFFriendlyURLEntryFileEntryConfiguration
-		_ffFriendlyURLEntryFileEntryConfiguration;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

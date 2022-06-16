@@ -99,7 +99,6 @@ page import="com.liferay.document.library.kernel.util.VideoProcessorUtil" %><%@
 page import="com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException" %><%@
 page import="com.liferay.document.library.preview.exception.DLPreviewSizeException" %><%@
 page import="com.liferay.document.library.util.DLURLHelperUtil" %><%@
-page import="com.liferay.document.library.web.internal.configuration.FFFriendlyURLEntryFileEntryConfigurationUtil" %><%@
 page import="com.liferay.document.library.web.internal.constants.DLWebKeys" %><%@
 page import="com.liferay.document.library.web.internal.dao.search.DLResultRowSplitter" %><%@
 page import="com.liferay.document.library.web.internal.dao.search.IGResultRowSplitter" %><%@

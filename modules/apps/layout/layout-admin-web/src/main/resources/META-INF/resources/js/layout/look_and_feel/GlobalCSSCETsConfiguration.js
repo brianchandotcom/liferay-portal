@@ -30,8 +30,8 @@ export default function GlobalCSSCETsConfiguration({
 		setGlobalCSSCETs((previousGlobalCSSCETs) =>
 			previousGlobalCSSCETs.filter(
 				(globalCSSCET) =>
-					globalCSSCET.externalReferenceCode !==
-					deletedGlobalCSSCET.externalReferenceCode
+					globalCSSCET.cetExternalReferenceCode !==
+					deletedGlobalCSSCET.cetExternalReferenceCode
 			)
 		);
 	};
@@ -67,9 +67,9 @@ export default function GlobalCSSCETsConfiguration({
 					return nextGlobalCSSCETs.filter(
 						(globalCSSCET, index) =>
 							nextGlobalCSSCETs.findIndex(
-								({externalReferenceCode}) =>
-									globalCSSCET.externalReferenceCode ===
-									externalReferenceCode
+								({cetExternalReferenceCode}) =>
+									globalCSSCET.cetExternalReferenceCode ===
+									cetExternalReferenceCode
 							) === index
 					);
 				});
@@ -86,7 +86,9 @@ export default function GlobalCSSCETsConfiguration({
 				name={`${portletNamespace}globalCSSCETExternalReferenceCodes`}
 				type="hidden"
 				value={globalCSSCETs
-					.map((globalCSSCET) => globalCSSCET.externalReferenceCode)
+					.map(
+						(globalCSSCET) => globalCSSCET.cetExternalReferenceCode
+					)
 					.join(',')}
 			/>
 
@@ -123,7 +125,7 @@ export default function GlobalCSSCETsConfiguration({
 					<ClayTable.Body>
 						{globalCSSCETs.map((globalCSSCET) => (
 							<ClayTable.Row
-								key={globalCSSCET.externalReferenceCode}
+								key={globalCSSCET.cetExternalReferenceCode}
 							>
 								<ClayTable.Cell expanded headingTitle>
 									{globalCSSCET.name}

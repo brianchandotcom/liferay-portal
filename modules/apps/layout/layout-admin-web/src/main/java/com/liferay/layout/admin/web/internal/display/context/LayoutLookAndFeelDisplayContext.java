@@ -459,7 +459,7 @@ public class LayoutLookAndFeelDisplayContext {
 
 			jsonArray.put(
 				JSONUtil.put(
-					"externalReferenceCode",
+					"cetExternalReferenceCode",
 					clientExtensionEntryRel.getExternalReferenceCode()
 				).put(
 					"name",

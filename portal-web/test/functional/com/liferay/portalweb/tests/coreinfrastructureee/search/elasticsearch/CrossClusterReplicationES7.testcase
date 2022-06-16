@@ -479,8 +479,6 @@ definition {
 
 		Navigator.openURL();
 
-		Pause(locator1 = "70000");
-
 		var searchTerms = "banana,red apple,fruit";
 
 		for (var searchTerm : list "${searchTerms}") {

@@ -70,8 +70,7 @@ public class TermsOfUseStrutsAction implements StrutsAction {
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/terms_of_use/terms_of_use.jsp");
+			_servletContext.getRequestDispatcher("/terms_of_use.jsp");
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

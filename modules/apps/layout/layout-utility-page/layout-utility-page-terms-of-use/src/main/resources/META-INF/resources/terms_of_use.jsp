@@ -71,7 +71,17 @@ TermsOfUseContentProvider termsOfUseContentProvider = (TermsOfUseContentProvider
 
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include page="/terms_of_use/terms_of_use_default.jsp" servletContext="<%= application %>" />
+					<p>
+						<span>
+							<liferay-ui:message key="placeholder-terms-of-use" />
+						</span>
+					</p>
+
+					<p>
+						<span>
+							<liferay-ui:message key="you-must-configure-terms-of-use" />
+						</span>
+					</p>
 				</c:otherwise>
 			</c:choose>
 		</div>

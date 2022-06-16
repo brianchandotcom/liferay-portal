@@ -1,8 +1,13 @@
 definition {
 
 	macro gotoSuggestionResultDetails {
+		if (!(isSet(suggestionContributorDisplayGroupName))) {
+			var suggestionContributorDisplayGroupName = "suggestions";
+		}
+
 		Click.mouseDownMouseUp(
 			key_searchAssetTitle = "${searchAssetTitle}",
+			key_suggestionContributorDisplayGroupName = "${suggestionContributorDisplayGroupName}",
 			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_TITLE");
 	}
 
@@ -11,8 +16,13 @@ definition {
 	}
 
 	macro viewNoResultAssetTitle {
+		if (!(isSet(suggestionContributorDisplayGroupName))) {
+			var suggestionContributorDisplayGroupName = "suggestions";
+		}
+
 		AssertElementNotPresent(
 			key_searchAssetTitle = "${searchAssetTitle}",
+			key_suggestionContributorDisplayGroupName = "${suggestionContributorDisplayGroupName}",
 			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_TITLE");
 	}
 
@@ -23,8 +33,13 @@ definition {
 	}
 
 	macro viewSuggestions {
+		if (!(isSet(suggestionContributorDisplayGroupName))) {
+			var suggestionContributorDisplayGroupName = "suggestions";
+		}
+
 		AssertTextEquals.assertPartialText(
 			key_searchAssetTitle = "${searchAssetTitle}",
+			key_suggestionContributorDisplayGroupName = "${suggestionContributorDisplayGroupName}",
 			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_TITLE",
 			value1 = "${searchAssetTitle}");
 
@@ -32,6 +47,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_searchAssetDescription = "${searchAssetDescription}",
 				key_searchAssetTitle = "${searchAssetTitle}",
+				key_suggestionContributorDisplayGroupName = "${suggestionContributorDisplayGroupName}",
 				locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_DESCRIPTION",
 				value1 = "${searchAssetDescription}");
 		}

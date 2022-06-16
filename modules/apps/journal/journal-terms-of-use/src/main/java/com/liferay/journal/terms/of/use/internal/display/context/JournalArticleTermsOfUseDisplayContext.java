@@ -35,7 +35,6 @@ public class JournalArticleTermsOfUseDisplayContext {
 		throws Exception {
 
 		_journalServiceConfiguration = journalServiceConfiguration;
-		_themeDisplay = themeDisplay;
 
 		_settings = SettingsFactoryUtil.getSettings(
 			new CompanyServiceSettingsLocator(
@@ -92,6 +91,5 @@ public class JournalArticleTermsOfUseDisplayContext {
 
 	private final JournalServiceConfiguration _journalServiceConfiguration;
 	private final Settings _settings;
-	private final ThemeDisplay _themeDisplay;
 
 }

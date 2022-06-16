@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.internal.model.listener;
+package com.liferay.change.tracking.web.internal.model.listener;
 
 import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;

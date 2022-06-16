@@ -18,7 +18,7 @@ import {defineConfig} from 'vite';
 import {UserConfigExport as VitestConfigExport} from 'vitest/config';
 
 export default defineConfig({
-	build: {outDir: 'build'},
+	build: {assetsDir: 'static', outDir: 'build'},
 	plugins: [react()],
 	test: {
 		coverage: {

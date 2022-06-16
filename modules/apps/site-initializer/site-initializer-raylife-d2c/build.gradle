@@ -29,6 +29,7 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
 String dateString = dateFormat.format(new Date())
 
 File extraRemoteAppDir = new File(projectDir, "extra/remote-app/")
+File extraRemoteAppBuildDir = new File(extraRemoteAppDir, "build")
 File fragmentsSrcDir = new File(projectDir, "src/main/resources/site-initializer/fragments/")
 
 String webContextPath = ""
@@ -74,12 +75,22 @@ processResources {
 		dependsOn buildExtraRemoteApp
 
 		into("site-initializer/documents/company/remote-app/" + webContextPath) {
-			from(new File(projectDir, "extra/remote-app/build/static/css")) {
-				include "*.css"
-			}
+			File assetManifestFile = new File(extraRemoteAppBuildDir, "asset-manifest.json")
 
-			from(new File(projectDir, "extra/remote-app/build/static/js")) {
-				include "*.js"
+			if (assetManifestFile.exists()) {
+				from(new File(projectDir, "extra/remote-app/build/static/css")) {
+					include "*.css"
+				}
+
+				from(new File(projectDir, "extra/remote-app/build/static/js")) {
+					include "*.js"
+				}
+			}
+			else {
+				from(new File(projectDir, "extra/remote-app/build/static")) {
+					include "*.css"
+					include "*.js"
+				}
 			}
 
 			rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
@@ -160,12 +171,22 @@ zipExtraRemoteApp {
 		destinationDir new File(buildDir, "dist")
 
 		into("remote-app/" + webContextPath) {
-			from(new File(projectDir, "extra/remote-app/build/static/css")) {
-				include "*.css"
-			}
+			File assetManifestFile = new File(extraRemoteAppBuildDir, "asset-manifest.json")
 
-			from(new File(projectDir, "extra/remote-app/build/static/js")) {
-				include "*.js"
+			if (assetManifestFile.exists()) {
+				from(new File(projectDir, "extra/remote-app/build/static/css")) {
+					include "*.css"
+				}
+
+				from(new File(projectDir, "extra/remote-app/build/static/js")) {
+					include "*.js"
+				}
+			}
+			else {
+				from(new File(projectDir, "extra/remote-app/build/static")) {
+					include "*.css"
+					include "*.js"
+				}
 			}
 
 			rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')

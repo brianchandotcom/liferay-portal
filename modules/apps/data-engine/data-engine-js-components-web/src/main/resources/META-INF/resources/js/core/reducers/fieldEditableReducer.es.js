@@ -105,6 +105,7 @@ function updateFieldAffectedByActivatingRepeatable({
 }) {
 	if (
 		field.type === 'date' &&
+		field.validation?.parameter &&
 		isParameterRelatedToField(
 			field.validation.parameter,
 			repeatableFieldName

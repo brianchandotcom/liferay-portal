@@ -1,2 +1,2 @@
-FROM dxp/lxc-static-resources:latest
+FROM liferay/lxc-static-resources:latest
 COPY static/ /resources/

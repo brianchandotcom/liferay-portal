@@ -183,6 +183,18 @@ public class DDMTemplateLocalServiceWrapper
 			template, modelPermissions);
 	}
 
+	@Override
+	public DDMTemplate copyTemplate(
+			long userId, DDMTemplate template, long classPK,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmTemplateLocalService.copyTemplate(
+			userId, template, classPK, nameMap, descriptionMap, serviceContext);
+	}
+
 	/**
 	 * Copies the template, creating a new template with all the values
 	 * extracted from the original one. This method supports defining a new name

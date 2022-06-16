@@ -189,6 +189,13 @@ public interface DDMTemplateLocalService
 			DDMTemplate template, ModelPermissions modelPermissions)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public DDMTemplate copyTemplate(
+			long userId, DDMTemplate template, long classPK,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Copies the template, creating a new template with all the values
 	 * extracted from the original one. This method supports defining a new name

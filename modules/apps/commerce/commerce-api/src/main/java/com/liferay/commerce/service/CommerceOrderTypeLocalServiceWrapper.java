@@ -312,6 +312,21 @@ public class CommerceOrderTypeLocalServiceWrapper
 				companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the commerce order type with the matching UUID and company.
+	 *
+	 * @param uuid the commerce order type's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
+	 */
+	@Override
+	public com.liferay.commerce.model.CommerceOrderType
+		fetchCommerceOrderTypeByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _commerceOrderTypeLocalService.
+			fetchCommerceOrderTypeByUuidAndCompanyId(uuid, companyId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
@@ -352,6 +367,23 @@ public class CommerceOrderTypeLocalServiceWrapper
 		return _commerceOrderTypeLocalService.
 			getCommerceOrderTypeByExternalReferenceCode(
 				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce order type with the matching UUID and company.
+	 *
+	 * @param uuid the commerce order type's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order type
+	 * @throws PortalException if a matching commerce order type could not be found
+	 */
+	@Override
+	public com.liferay.commerce.model.CommerceOrderType
+			getCommerceOrderTypeByUuidAndCompanyId(String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderTypeLocalService.
+			getCommerceOrderTypeByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**
@@ -406,6 +438,16 @@ public class CommerceOrderTypeLocalServiceWrapper
 
 		return _commerceOrderTypeLocalService.getCommerceOrderTypesCount(
 			companyId, className, classPK, active);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _commerceOrderTypeLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override

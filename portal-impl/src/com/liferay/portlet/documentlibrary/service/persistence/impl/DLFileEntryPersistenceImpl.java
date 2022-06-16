@@ -15288,15 +15288,14 @@ public class DLFileEntryPersistenceImpl
 		DLFileEntryModelImpl dlFileEntryModelImpl =
 			(DLFileEntryModelImpl)dlFileEntry;
 
-		if (Validator.isNull(dlFileEntry.getExternalReferenceCode())) {
-			dlFileEntry.setExternalReferenceCode(
-				String.valueOf(dlFileEntry.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(dlFileEntry.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
 
 			dlFileEntry.setUuid(uuid);
+		}
+
+		if (Validator.isNull(dlFileEntry.getExternalReferenceCode())) {
+			dlFileEntry.setExternalReferenceCode(dlFileEntry.getUuid());
 		}
 
 		ServiceContext serviceContext =

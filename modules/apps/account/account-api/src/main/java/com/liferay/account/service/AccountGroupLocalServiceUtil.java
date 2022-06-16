@@ -251,6 +251,20 @@ public class AccountGroupLocalServiceUtil {
 	}
 
 	/**
+	 * Returns the account group with the matching UUID and company.
+	 *
+	 * @param uuid the account group's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching account group, or <code>null</code> if a matching account group could not be found
+	 */
+	public static AccountGroup fetchAccountGroupByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().fetchAccountGroupByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
 	 * Returns the account group with the primary key.
 	 *
 	 * @param accountGroupId the primary key of the account group
@@ -277,6 +291,21 @@ public class AccountGroupLocalServiceUtil {
 
 		return getService().getAccountGroupByExternalReferenceCode(
 			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the account group with the matching UUID and company.
+	 *
+	 * @param uuid the account group's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching account group
+	 * @throws PortalException if a matching account group could not be found
+	 */
+	public static AccountGroup getAccountGroupByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getAccountGroupByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**
@@ -329,6 +358,14 @@ public class AccountGroupLocalServiceUtil {
 
 	public static AccountGroup getDefaultAccountGroup(long companyId) {
 		return getService().getDefaultAccountGroup(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static

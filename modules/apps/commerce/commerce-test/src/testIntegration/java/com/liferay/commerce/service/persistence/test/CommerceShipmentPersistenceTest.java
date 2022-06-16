@@ -126,6 +126,8 @@ public class CommerceShipmentPersistenceTest {
 
 		newCommerceShipment.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCommerceShipment.setUuid(RandomTestUtil.randomString());
+
 		newCommerceShipment.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -169,6 +171,8 @@ public class CommerceShipmentPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceShipment.getMvccVersion(),
 			newCommerceShipment.getMvccVersion());
+		Assert.assertEquals(
+			existingCommerceShipment.getUuid(), newCommerceShipment.getUuid());
 		Assert.assertEquals(
 			existingCommerceShipment.getExternalReferenceCode(),
 			newCommerceShipment.getExternalReferenceCode());
@@ -220,6 +224,33 @@ public class CommerceShipmentPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceShipment.getStatus(),
 			newCommerceShipment.getStatus());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -298,11 +329,11 @@ public class CommerceShipmentPersistenceTest {
 
 	protected OrderByComparator<CommerceShipment> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceShipment", "mvccVersion", true, "externalReferenceCode",
-			true, "commerceShipmentId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commerceAccountId", true,
-			"commerceAddressId", true, "commerceShippingMethodId", true,
+			"CommerceShipment", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "commerceShipmentId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "commerceAccountId",
+			true, "commerceAddressId", true, "commerceShippingMethodId", true,
 			"carrier", true, "trackingNumber", true, "shippingDate", true,
 			"expectedDate", true, "status", true);
 	}
@@ -577,6 +608,17 @@ public class CommerceShipmentPersistenceTest {
 
 	private void _assertOriginalValues(CommerceShipment commerceShipment) {
 		Assert.assertEquals(
+			commerceShipment.getUuid(),
+			ReflectionTestUtil.invoke(
+				commerceShipment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
+		Assert.assertEquals(
+			Long.valueOf(commerceShipment.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				commerceShipment, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
 			Long.valueOf(commerceShipment.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				commerceShipment, "getColumnOriginalValue",
@@ -594,6 +636,8 @@ public class CommerceShipmentPersistenceTest {
 		CommerceShipment commerceShipment = _persistence.create(pk);
 
 		commerceShipment.setMvccVersion(RandomTestUtil.nextLong());
+
+		commerceShipment.setUuid(RandomTestUtil.randomString());
 
 		commerceShipment.setExternalReferenceCode(
 			RandomTestUtil.randomString());

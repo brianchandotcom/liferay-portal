@@ -80,10 +80,12 @@ public class CommerceOrderItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(121);
+		StringBundler sb = new StringBundler(123);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", uuid=");
+		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
 		sb.append(", commerceOrderItemId=");
@@ -213,6 +215,13 @@ public class CommerceOrderItemCacheModel
 			new CommerceOrderItemImpl();
 
 		commerceOrderItemImpl.setMvccVersion(mvccVersion);
+
+		if (uuid == null) {
+			commerceOrderItemImpl.setUuid("");
+		}
+		else {
+			commerceOrderItemImpl.setUuid(uuid);
+		}
 
 		if (externalReferenceCode == null) {
 			commerceOrderItemImpl.setExternalReferenceCode("");
@@ -394,6 +403,7 @@ public class CommerceOrderItemCacheModel
 		throws ClassNotFoundException, IOException {
 
 		mvccVersion = objectInput.readLong();
+		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
 		commerceOrderItemId = objectInput.readLong();
@@ -490,6 +500,13 @@ public class CommerceOrderItemCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
 
 		if (externalReferenceCode == null) {
 			objectOutput.writeUTF("");
@@ -649,6 +666,7 @@ public class CommerceOrderItemCacheModel
 	}
 
 	public long mvccVersion;
+	public String uuid;
 	public String externalReferenceCode;
 	public long commerceOrderItemId;
 	public long groupId;

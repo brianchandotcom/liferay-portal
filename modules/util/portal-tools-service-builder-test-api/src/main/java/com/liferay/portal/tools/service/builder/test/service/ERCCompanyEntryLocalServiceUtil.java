@@ -240,6 +240,20 @@ public class ERCCompanyEntryLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the erc company entry with the matching UUID and company.
+	 *
+	 * @param uuid the erc company entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching erc company entry, or <code>null</code> if a matching erc company entry could not be found
+	 */
+	public static ERCCompanyEntry fetchERCCompanyEntryByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().fetchERCCompanyEntryByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -299,6 +313,22 @@ public class ERCCompanyEntryLocalServiceUtil {
 
 		return getService().getERCCompanyEntryByExternalReferenceCode(
 			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the erc company entry with the matching UUID and company.
+	 *
+	 * @param uuid the erc company entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching erc company entry
+	 * @throws PortalException if a matching erc company entry could not be found
+	 */
+	public static ERCCompanyEntry getERCCompanyEntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getERCCompanyEntryByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	public static

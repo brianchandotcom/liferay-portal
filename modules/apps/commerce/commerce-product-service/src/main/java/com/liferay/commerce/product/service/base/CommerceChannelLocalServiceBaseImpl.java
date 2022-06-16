@@ -43,6 +43,11 @@ import com.liferay.commerce.product.service.persistence.CommerceCatalogPersisten
 import com.liferay.commerce.product.service.persistence.CommerceChannelPersistence;
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelFinder;
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelPersistence;
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -54,6 +59,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -278,6 +284,21 @@ public abstract class CommerceChannelLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce channel with the matching UUID and company.
+	 *
+	 * @param uuid the commerce channel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
+	 */
+	@Override
+	public CommerceChannel fetchCommerceChannelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return commerceChannelPersistence.fetchByUuid_C_First(
+			uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the commerce channel with the matching external reference code and company.
 	 *
 	 * @param companyId the primary key of the company
@@ -377,6 +398,72 @@ public abstract class CommerceChannelLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("commerceChannelId");
 	}
 
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
+			new ExportActionableDynamicQuery() {
+
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(
+						stagedModelType, modelAdditionCount);
+
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
+
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
+				}
+
+			});
+
+		exportActionableDynamicQuery.setCompanyId(
+			portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<CommerceChannel>() {
+
+				@Override
+				public void performAction(CommerceChannel commerceChannel)
+					throws PortalException {
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, commerceChannel);
+				}
+
+			});
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
+				PortalUtil.getClassNameId(CommerceChannel.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -412,6 +499,23 @@ public abstract class CommerceChannelLocalServiceBaseImpl
 		throws PortalException {
 
 		return commerceChannelPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the commerce channel with the matching UUID and company.
+	 *
+	 * @param uuid the commerce channel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce channel
+	 * @throws PortalException if a matching commerce channel could not be found
+	 */
+	@Override
+	public CommerceChannel getCommerceChannelByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return commerceChannelPersistence.findByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	/**

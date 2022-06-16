@@ -4650,15 +4650,15 @@ public class ClientExtensionEntryPersistenceImpl
 		ClientExtensionEntryModelImpl clientExtensionEntryModelImpl =
 			(ClientExtensionEntryModelImpl)clientExtensionEntry;
 
-		if (Validator.isNull(clientExtensionEntry.getExternalReferenceCode())) {
-			clientExtensionEntry.setExternalReferenceCode(
-				String.valueOf(clientExtensionEntry.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(clientExtensionEntry.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			clientExtensionEntry.setUuid(uuid);
+		}
+
+		if (Validator.isNull(clientExtensionEntry.getExternalReferenceCode())) {
+			clientExtensionEntry.setExternalReferenceCode(
+				clientExtensionEntry.getUuid());
 		}
 
 		ServiceContext serviceContext =

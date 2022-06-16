@@ -12426,15 +12426,14 @@ public class AssetCategoryPersistenceImpl
 		AssetCategoryModelImpl assetCategoryModelImpl =
 			(AssetCategoryModelImpl)assetCategory;
 
-		if (Validator.isNull(assetCategory.getExternalReferenceCode())) {
-			assetCategory.setExternalReferenceCode(
-				String.valueOf(assetCategory.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(assetCategory.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
 
 			assetCategory.setUuid(uuid);
+		}
+
+		if (Validator.isNull(assetCategory.getExternalReferenceCode())) {
+			assetCategory.setExternalReferenceCode(assetCategory.getUuid());
 		}
 
 		ServiceContext serviceContext =

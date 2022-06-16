@@ -15,9 +15,11 @@
 package com.liferay.account.service;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -262,6 +264,17 @@ public interface AccountEntryLocalService
 	public AccountEntry fetchAccountEntryByReferenceCode(
 		long companyId, String externalReferenceCode);
 
+	/**
+	 * Returns the account entry with the matching UUID and company.
+	 *
+	 * @param uuid the account entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching account entry, or <code>null</code> if a matching account entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntry fetchAccountEntryByUuidAndCompanyId(
+		String uuid, long companyId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountEntry fetchPersonAccountEntry(long userId);
 
@@ -322,8 +335,25 @@ public interface AccountEntryLocalService
 			long companyId, String externalReferenceCode)
 		throws PortalException;
 
+	/**
+	 * Returns the account entry with the matching UUID and company.
+	 *
+	 * @param uuid the account entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching account entry
+	 * @throws PortalException if a matching account entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntry getAccountEntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountEntry getGuestAccountEntry(long companyId)

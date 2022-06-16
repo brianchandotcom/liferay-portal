@@ -278,6 +278,20 @@ public class CommerceOrderTypeLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the commerce order type with the matching UUID and company.
+	 *
+	 * @param uuid the commerce order type's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
+	 */
+	public static CommerceOrderType fetchCommerceOrderTypeByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().fetchCommerceOrderTypeByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -312,6 +326,22 @@ public class CommerceOrderTypeLocalServiceUtil {
 
 		return getService().getCommerceOrderTypeByExternalReferenceCode(
 			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce order type with the matching UUID and company.
+	 *
+	 * @param uuid the commerce order type's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order type
+	 * @throws PortalException if a matching commerce order type could not be found
+	 */
+	public static CommerceOrderType getCommerceOrderTypeByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getCommerceOrderTypeByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	/**
@@ -361,6 +391,14 @@ public class CommerceOrderTypeLocalServiceUtil {
 
 		return getService().getCommerceOrderTypesCount(
 			companyId, className, classPK, active);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static

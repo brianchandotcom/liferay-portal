@@ -56,6 +56,21 @@ public interface ERCGroupEntryModel
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this erc group entry.
+	 *
+	 * @return the uuid of this erc group entry
+	 */
+	@AutoEscape
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this erc group entry.
+	 *
+	 * @param uuid the uuid of this erc group entry
+	 */
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the external reference code of this erc group entry.
 	 *
 	 * @return the external reference code of this erc group entry

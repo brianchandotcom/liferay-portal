@@ -16,10 +16,10 @@ package com.liferay.commerce.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
-import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 
 import java.util.Date;
 
@@ -38,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceOrderTypeRelModel
-	extends AttachedModel, AuditedModel, BaseModel<CommerceOrderTypeRel>,
-			MVCCModel, ShardedModel {
+	extends AttachedModel, BaseModel<CommerceOrderTypeRel>, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -76,6 +76,23 @@ public interface CommerceOrderTypeRelModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the uuid of this commerce order type rel.
+	 *
+	 * @return the uuid of this commerce order type rel
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this commerce order type rel.
+	 *
+	 * @param uuid the uuid of this commerce order type rel
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the external reference code of this commerce order type rel.

@@ -15,11 +15,13 @@
 package com.liferay.commerce.product.service;
 
 import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -259,6 +261,17 @@ public interface CommerceCatalogLocalService
 	public CommerceCatalog fetchCommerceCatalogByReferenceCode(
 		long companyId, String externalReferenceCode);
 
+	/**
+	 * Returns the commerce catalog with the matching UUID and company.
+	 *
+	 * @param uuid the commerce catalog's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCatalog fetchCommerceCatalogByUuidAndCompanyId(
+		String uuid, long companyId);
+
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceCatalog forceDeleteCommerceCatalog(
@@ -292,6 +305,19 @@ public interface CommerceCatalogLocalService
 			long companyId, String externalReferenceCode)
 		throws PortalException;
 
+	/**
+	 * Returns the commerce catalog with the matching UUID and company.
+	 *
+	 * @param uuid the commerce catalog's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce catalog
+	 * @throws PortalException if a matching commerce catalog could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceCatalog getCommerceCatalogByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Group getCommerceCatalogGroup(long commerceCatalogId)
 		throws PortalException;
@@ -321,6 +347,10 @@ public interface CommerceCatalogLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceCatalogsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

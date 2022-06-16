@@ -18,6 +18,7 @@ import com.liferay.commerce.model.CommerceOrderTypeRel;
 import com.liferay.commerce.model.CommerceOrderTypeRelModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -75,7 +76,8 @@ public class CommerceOrderTypeRelModelImpl
 	public static final String TABLE_NAME = "CommerceOrderTypeRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"commerceOrderTypeRelId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -88,6 +90,7 @@ public class CommerceOrderTypeRelModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceOrderTypeRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -101,7 +104,7 @@ public class CommerceOrderTypeRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderTypeRel (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceOrderTypeRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceOrderTypeId LONG)";
+		"create table CommerceOrderTypeRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderTypeRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,commerceOrderTypeId LONG)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceOrderTypeRel";
@@ -167,11 +170,17 @@ public class CommerceOrderTypeRelModelImpl
 	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 16L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.service.util.ServiceProps.get(
@@ -283,6 +292,11 @@ public class CommerceOrderTypeRelModelImpl
 			"mvccVersion",
 			(BiConsumer<CommerceOrderTypeRel, Long>)
 				CommerceOrderTypeRel::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CommerceOrderTypeRel::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<CommerceOrderTypeRel, String>)
+				CommerceOrderTypeRel::setUuid);
 		attributeGetterFunctions.put(
 			"externalReferenceCode",
 			CommerceOrderTypeRel::getExternalReferenceCode);
@@ -365,6 +379,35 @@ public class CommerceOrderTypeRelModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -617,6 +660,13 @@ public class CommerceOrderTypeRelModelImpl
 			this.<Long>getColumnOriginalValue("commerceOrderTypeId"));
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(CommerceOrderTypeRel.class.getName()),
+			getClassNameId());
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -676,6 +726,7 @@ public class CommerceOrderTypeRelModelImpl
 			new CommerceOrderTypeRelImpl();
 
 		commerceOrderTypeRelImpl.setMvccVersion(getMvccVersion());
+		commerceOrderTypeRelImpl.setUuid(getUuid());
 		commerceOrderTypeRelImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceOrderTypeRelImpl.setCommerceOrderTypeRelId(
@@ -702,6 +753,8 @@ public class CommerceOrderTypeRelModelImpl
 
 		commerceOrderTypeRelImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		commerceOrderTypeRelImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
 		commerceOrderTypeRelImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		commerceOrderTypeRelImpl.setCommerceOrderTypeRelId(
@@ -803,6 +856,14 @@ public class CommerceOrderTypeRelModelImpl
 			new CommerceOrderTypeRelCacheModel();
 
 		commerceOrderTypeRelCacheModel.mvccVersion = getMvccVersion();
+
+		commerceOrderTypeRelCacheModel.uuid = getUuid();
+
+		String uuid = commerceOrderTypeRelCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			commerceOrderTypeRelCacheModel.uuid = null;
+		}
 
 		commerceOrderTypeRelCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -952,6 +1013,7 @@ public class CommerceOrderTypeRelModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _uuid;
 	private String _externalReferenceCode;
 	private long _commerceOrderTypeRelId;
 	private long _companyId;
@@ -965,6 +1027,8 @@ public class CommerceOrderTypeRelModelImpl
 	private long _commerceOrderTypeId;
 
 	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
 		Function<CommerceOrderTypeRel, Object> function =
 			_attributeGetterFunctions.get(columnName);
 
@@ -992,6 +1056,7 @@ public class CommerceOrderTypeRelModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put(
@@ -1004,6 +1069,16 @@ public class CommerceOrderTypeRelModelImpl
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put("commerceOrderTypeId", _commerceOrderTypeId);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -1019,25 +1094,27 @@ public class CommerceOrderTypeRelModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("externalReferenceCode", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("commerceOrderTypeRelId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("commerceOrderTypeRelId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("classNameId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("classPK", 512L);
+		columnBitmasks.put("classNameId", 512L);
 
-		columnBitmasks.put("commerceOrderTypeId", 1024L);
+		columnBitmasks.put("classPK", 1024L);
+
+		columnBitmasks.put("commerceOrderTypeId", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

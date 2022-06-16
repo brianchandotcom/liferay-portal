@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.account.model.AccountEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="accountEntryId" type="long" />
 		<field name="companyId" type="long" />
@@ -52,6 +53,7 @@
 	</model>
 	<model name="com.liferay.account.model.AccountGroup">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="accountGroupId" type="long" />
 		<field name="companyId" type="long" />

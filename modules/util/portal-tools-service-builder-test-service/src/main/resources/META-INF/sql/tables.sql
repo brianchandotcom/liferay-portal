@@ -51,12 +51,14 @@ create table DataLimitEntry (
 );
 
 create table ERCCompanyEntry (
+	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	ercCompanyEntryId LONG not null primary key,
 	companyId LONG
 );
 
 create table ERCGroupEntry (
+	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	ercGroupEntryId LONG not null primary key,
 	groupId LONG,

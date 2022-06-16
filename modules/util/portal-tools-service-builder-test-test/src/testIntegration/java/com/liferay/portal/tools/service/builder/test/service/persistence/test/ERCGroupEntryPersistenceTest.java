@@ -124,6 +124,8 @@ public class ERCGroupEntryPersistenceTest {
 
 		ERCGroupEntry newERCGroupEntry = _persistence.create(pk);
 
+		newERCGroupEntry.setUuid(RandomTestUtil.randomString());
+
 		newERCGroupEntry.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -137,6 +139,8 @@ public class ERCGroupEntryPersistenceTest {
 			newERCGroupEntry.getPrimaryKey());
 
 		Assert.assertEquals(
+			existingERCGroupEntry.getUuid(), newERCGroupEntry.getUuid());
+		Assert.assertEquals(
 			existingERCGroupEntry.getExternalReferenceCode(),
 			newERCGroupEntry.getExternalReferenceCode());
 		Assert.assertEquals(
@@ -147,6 +151,33 @@ public class ERCGroupEntryPersistenceTest {
 		Assert.assertEquals(
 			existingERCGroupEntry.getCompanyId(),
 			newERCGroupEntry.getCompanyId());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -183,8 +214,8 @@ public class ERCGroupEntryPersistenceTest {
 
 	protected OrderByComparator<ERCGroupEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"ERCGroupEntry", "externalReferenceCode", true, "ercGroupEntryId",
-			true, "groupId", true, "companyId", true);
+			"ERCGroupEntry", "uuid", true, "externalReferenceCode", true,
+			"ercGroupEntryId", true, "groupId", true, "companyId", true);
 	}
 
 	@Test
@@ -452,6 +483,17 @@ public class ERCGroupEntryPersistenceTest {
 
 	private void _assertOriginalValues(ERCGroupEntry ercGroupEntry) {
 		Assert.assertEquals(
+			ercGroupEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				ercGroupEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
+		Assert.assertEquals(
+			Long.valueOf(ercGroupEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				ercGroupEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
 			Long.valueOf(ercGroupEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				ercGroupEntry, "getColumnOriginalValue",
@@ -467,6 +509,8 @@ public class ERCGroupEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		ERCGroupEntry ercGroupEntry = _persistence.create(pk);
+
+		ercGroupEntry.setUuid(RandomTestUtil.randomString());
 
 		ercGroupEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 

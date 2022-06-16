@@ -5441,17 +5441,17 @@ public class CommerceTierPriceEntryPersistenceImpl
 		CommerceTierPriceEntryModelImpl commerceTierPriceEntryModelImpl =
 			(CommerceTierPriceEntryModelImpl)commerceTierPriceEntry;
 
-		if (Validator.isNull(
-				commerceTierPriceEntry.getExternalReferenceCode())) {
-
-			commerceTierPriceEntry.setExternalReferenceCode(
-				String.valueOf(commerceTierPriceEntry.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(commerceTierPriceEntry.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			commerceTierPriceEntry.setUuid(uuid);
+		}
+
+		if (Validator.isNull(
+				commerceTierPriceEntry.getExternalReferenceCode())) {
+
+			commerceTierPriceEntry.setExternalReferenceCode(
+				commerceTierPriceEntry.getUuid());
 		}
 
 		ServiceContext serviceContext =

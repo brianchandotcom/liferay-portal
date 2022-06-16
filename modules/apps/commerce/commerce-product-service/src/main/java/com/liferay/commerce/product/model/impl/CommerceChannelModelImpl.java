@@ -18,6 +18,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -73,7 +75,7 @@ public class CommerceChannelModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"externalReferenceCode", Types.VARCHAR},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"commerceChannelId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -90,6 +92,7 @@ public class CommerceChannelModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceChannelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -107,7 +110,7 @@ public class CommerceChannelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceChannel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceChannelId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,priceDisplayType VARCHAR(75) null,discountsTargetNetPrice BOOLEAN,primary key (commerceChannelId, ctCollectionId))";
+		"create table CommerceChannel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceChannelId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null,commerceCurrencyCode VARCHAR(75) null,priceDisplayType VARCHAR(75) null,discountsTargetNetPrice BOOLEAN,primary key (commerceChannelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceChannel";
 
@@ -160,11 +163,17 @@ public class CommerceChannelModelImpl
 	public static final long SITEGROUPID_COLUMN_BITMASK = 4L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 8L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.product.service.util.ServiceProps.get(
@@ -278,6 +287,10 @@ public class CommerceChannelModelImpl
 			"ctCollectionId",
 			(BiConsumer<CommerceChannel, Long>)
 				CommerceChannel::setCtCollectionId);
+		attributeGetterFunctions.put("uuid", CommerceChannel::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<CommerceChannel, String>)CommerceChannel::setUuid);
 		attributeGetterFunctions.put(
 			"externalReferenceCode", CommerceChannel::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
@@ -387,6 +400,35 @@ public class CommerceChannelModelImpl
 		}
 
 		_ctCollectionId = ctCollectionId;
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -691,6 +733,12 @@ public class CommerceChannelModelImpl
 		_discountsTargetNetPrice = discountsTargetNetPrice;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(CommerceChannel.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -749,6 +797,7 @@ public class CommerceChannelModelImpl
 
 		commerceChannelImpl.setMvccVersion(getMvccVersion());
 		commerceChannelImpl.setCtCollectionId(getCtCollectionId());
+		commerceChannelImpl.setUuid(getUuid());
 		commerceChannelImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceChannelImpl.setCommerceChannelId(getCommerceChannelId());
@@ -779,6 +828,8 @@ public class CommerceChannelModelImpl
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		commerceChannelImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		commerceChannelImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
 		commerceChannelImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		commerceChannelImpl.setCommerceChannelId(
@@ -889,6 +940,14 @@ public class CommerceChannelModelImpl
 		commerceChannelCacheModel.mvccVersion = getMvccVersion();
 
 		commerceChannelCacheModel.ctCollectionId = getCtCollectionId();
+
+		commerceChannelCacheModel.uuid = getUuid();
+
+		String uuid = commerceChannelCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			commerceChannelCacheModel.uuid = null;
+		}
 
 		commerceChannelCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1077,6 +1136,7 @@ public class CommerceChannelModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
+	private String _uuid;
 	private String _externalReferenceCode;
 	private long _commerceChannelId;
 	private long _companyId;
@@ -1124,6 +1184,7 @@ public class CommerceChannelModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
+		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("commerceChannelId", _commerceChannelId);
@@ -1148,6 +1209,7 @@ public class CommerceChannelModelImpl
 	static {
 		Map<String, String> attributeNames = new HashMap<>();
 
+		attributeNames.put("uuid_", "uuid");
 		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
@@ -1168,33 +1230,35 @@ public class CommerceChannelModelImpl
 
 		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("externalReferenceCode", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("commerceChannelId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("commerceChannelId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("siteGroupId", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("name", 1024L);
+		columnBitmasks.put("siteGroupId", 1024L);
 
-		columnBitmasks.put("type_", 2048L);
+		columnBitmasks.put("name", 2048L);
 
-		columnBitmasks.put("typeSettings", 4096L);
+		columnBitmasks.put("type_", 4096L);
 
-		columnBitmasks.put("commerceCurrencyCode", 8192L);
+		columnBitmasks.put("typeSettings", 8192L);
 
-		columnBitmasks.put("priceDisplayType", 16384L);
+		columnBitmasks.put("commerceCurrencyCode", 16384L);
 
-		columnBitmasks.put("discountsTargetNetPrice", 32768L);
+		columnBitmasks.put("priceDisplayType", 32768L);
+
+		columnBitmasks.put("discountsTargetNetPrice", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

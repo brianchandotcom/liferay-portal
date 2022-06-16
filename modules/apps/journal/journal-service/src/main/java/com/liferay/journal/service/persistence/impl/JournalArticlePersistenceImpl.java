@@ -34270,15 +34270,14 @@ public class JournalArticlePersistenceImpl
 		JournalArticleModelImpl journalArticleModelImpl =
 			(JournalArticleModelImpl)journalArticle;
 
-		if (Validator.isNull(journalArticle.getExternalReferenceCode())) {
-			journalArticle.setExternalReferenceCode(
-				String.valueOf(journalArticle.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(journalArticle.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			journalArticle.setUuid(uuid);
+		}
+
+		if (Validator.isNull(journalArticle.getExternalReferenceCode())) {
+			journalArticle.setExternalReferenceCode(journalArticle.getUuid());
 		}
 
 		ServiceContext serviceContext =

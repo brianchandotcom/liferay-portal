@@ -273,6 +273,20 @@ public class CPTaxCategoryLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the cp tax category with the matching UUID and company.
+	 *
+	 * @param uuid the cp tax category's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
+	 */
+	public static CPTaxCategory fetchCPTaxCategoryByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().fetchCPTaxCategoryByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static List<CPTaxCategory> findCPTaxCategoriesByCompanyId(
 		long companyId, String keyword, int start, int end) {
 
@@ -353,6 +367,29 @@ public class CPTaxCategoryLocalServiceUtil {
 
 		return getService().getCPTaxCategoryByExternalReferenceCode(
 			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the cp tax category with the matching UUID and company.
+	 *
+	 * @param uuid the cp tax category's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching cp tax category
+	 * @throws PortalException if a matching cp tax category could not be found
+	 */
+	public static CPTaxCategory getCPTaxCategoryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getCPTaxCategoryByUuidAndCompanyId(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static

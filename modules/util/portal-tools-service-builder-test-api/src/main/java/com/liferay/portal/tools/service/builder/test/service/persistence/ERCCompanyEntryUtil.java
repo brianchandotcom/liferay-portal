@@ -120,6 +120,362 @@ public class ERCCompanyEntryUtil {
 	}
 
 	/**
+	 * Returns all the erc company entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching erc company entries
+	 */
+	public static List<ERCCompanyEntry> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the erc company entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCCompanyEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of erc company entries
+	 * @param end the upper bound of the range of erc company entries (not inclusive)
+	 * @return the range of matching erc company entries
+	 */
+	public static List<ERCCompanyEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the erc company entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCCompanyEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of erc company entries
+	 * @param end the upper bound of the range of erc company entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching erc company entries
+	 */
+	public static List<ERCCompanyEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<ERCCompanyEntry> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the erc company entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCCompanyEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of erc company entries
+	 * @param end the upper bound of the range of erc company entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching erc company entries
+	 */
+	public static List<ERCCompanyEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<ERCCompanyEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first erc company entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching erc company entry
+	 * @throws NoSuchERCCompanyEntryException if a matching erc company entry could not be found
+	 */
+	public static ERCCompanyEntry findByUuid_First(
+			String uuid, OrderByComparator<ERCCompanyEntry> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.
+			NoSuchERCCompanyEntryException {
+
+		return getPersistence().findByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the first erc company entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching erc company entry, or <code>null</code> if a matching erc company entry could not be found
+	 */
+	public static ERCCompanyEntry fetchByUuid_First(
+		String uuid, OrderByComparator<ERCCompanyEntry> orderByComparator) {
+
+		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last erc company entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching erc company entry
+	 * @throws NoSuchERCCompanyEntryException if a matching erc company entry could not be found
+	 */
+	public static ERCCompanyEntry findByUuid_Last(
+			String uuid, OrderByComparator<ERCCompanyEntry> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.
+			NoSuchERCCompanyEntryException {
+
+		return getPersistence().findByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last erc company entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching erc company entry, or <code>null</code> if a matching erc company entry could not be found
+	 */
+	public static ERCCompanyEntry fetchByUuid_Last(
+		String uuid, OrderByComparator<ERCCompanyEntry> orderByComparator) {
+
+		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the erc company entries before and after the current erc company entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param ercCompanyEntryId the primary key of the current erc company entry
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next erc company entry
+	 * @throws NoSuchERCCompanyEntryException if a erc company entry with the primary key could not be found
+	 */
+	public static ERCCompanyEntry[] findByUuid_PrevAndNext(
+			long ercCompanyEntryId, String uuid,
+			OrderByComparator<ERCCompanyEntry> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.
+			NoSuchERCCompanyEntryException {
+
+		return getPersistence().findByUuid_PrevAndNext(
+			ercCompanyEntryId, uuid, orderByComparator);
+	}
+
+	/**
+	 * Removes all the erc company entries where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	public static void removeByUuid(String uuid) {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	 * Returns the number of erc company entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching erc company entries
+	 */
+	public static int countByUuid(String uuid) {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
+	 * Returns all the erc company entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching erc company entries
+	 */
+	public static List<ERCCompanyEntry> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the erc company entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCCompanyEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of erc company entries
+	 * @param end the upper bound of the range of erc company entries (not inclusive)
+	 * @return the range of matching erc company entries
+	 */
+	public static List<ERCCompanyEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the erc company entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCCompanyEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of erc company entries
+	 * @param end the upper bound of the range of erc company entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching erc company entries
+	 */
+	public static List<ERCCompanyEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ERCCompanyEntry> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the erc company entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCCompanyEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of erc company entries
+	 * @param end the upper bound of the range of erc company entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching erc company entries
+	 */
+	public static List<ERCCompanyEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ERCCompanyEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first erc company entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching erc company entry
+	 * @throws NoSuchERCCompanyEntryException if a matching erc company entry could not be found
+	 */
+	public static ERCCompanyEntry findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<ERCCompanyEntry> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.
+			NoSuchERCCompanyEntryException {
+
+		return getPersistence().findByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first erc company entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching erc company entry, or <code>null</code> if a matching erc company entry could not be found
+	 */
+	public static ERCCompanyEntry fetchByUuid_C_First(
+		String uuid, long companyId,
+		OrderByComparator<ERCCompanyEntry> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last erc company entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching erc company entry
+	 * @throws NoSuchERCCompanyEntryException if a matching erc company entry could not be found
+	 */
+	public static ERCCompanyEntry findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<ERCCompanyEntry> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.
+			NoSuchERCCompanyEntryException {
+
+		return getPersistence().findByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last erc company entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching erc company entry, or <code>null</code> if a matching erc company entry could not be found
+	 */
+	public static ERCCompanyEntry fetchByUuid_C_Last(
+		String uuid, long companyId,
+		OrderByComparator<ERCCompanyEntry> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the erc company entries before and after the current erc company entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param ercCompanyEntryId the primary key of the current erc company entry
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next erc company entry
+	 * @throws NoSuchERCCompanyEntryException if a erc company entry with the primary key could not be found
+	 */
+	public static ERCCompanyEntry[] findByUuid_C_PrevAndNext(
+			long ercCompanyEntryId, String uuid, long companyId,
+			OrderByComparator<ERCCompanyEntry> orderByComparator)
+		throws com.liferay.portal.tools.service.builder.test.exception.
+			NoSuchERCCompanyEntryException {
+
+		return getPersistence().findByUuid_C_PrevAndNext(
+			ercCompanyEntryId, uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the erc company entries where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	public static void removeByUuid_C(String uuid, long companyId) {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns the number of erc company entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching erc company entries
+	 */
+	public static int countByUuid_C(String uuid, long companyId) {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
 	 * Returns the erc company entry where companyId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchERCCompanyEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID

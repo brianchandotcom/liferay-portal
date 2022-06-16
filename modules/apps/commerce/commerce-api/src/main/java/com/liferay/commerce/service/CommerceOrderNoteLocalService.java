@@ -15,9 +15,11 @@
 package com.liferay.commerce.service;
 
 import com.liferay.commerce.model.CommerceOrderNote;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -244,6 +246,17 @@ public interface CommerceOrderNoteLocalService
 	public CommerceOrderNote fetchCommerceOrderNoteByReferenceCode(
 		long companyId, String externalReferenceCode);
 
+	/**
+	 * Returns the commerce order note matching the UUID and group.
+	 *
+	 * @param uuid the commerce order note's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderNote fetchCommerceOrderNoteByUuidAndGroupId(
+		String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -272,6 +285,19 @@ public interface CommerceOrderNoteLocalService
 		throws PortalException;
 
 	/**
+	 * Returns the commerce order note matching the UUID and group.
+	 *
+	 * @param uuid the commerce order note's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching commerce order note
+	 * @throws PortalException if a matching commerce order note could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderNote getCommerceOrderNoteByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException;
+
+	/**
 	 * Returns a range of all the commerce order notes.
 	 *
 	 * <p>
@@ -294,6 +320,32 @@ public interface CommerceOrderNoteLocalService
 		long commerceOrderId, int start, int end);
 
 	/**
+	 * Returns all the commerce order notes matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the commerce order notes
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order notes, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderNote> getCommerceOrderNotesByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of commerce order notes matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the commerce order notes
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of commerce order notes
+	 * @param end the upper bound of the range of commerce order notes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching commerce order notes, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderNote> getCommerceOrderNotesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceOrderNote> orderByComparator);
+
+	/**
 	 * Returns the number of commerce order notes.
 	 *
 	 * @return the number of commerce order notes
@@ -307,6 +359,10 @@ public interface CommerceOrderNoteLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrderNotesCount(
 		long commerceOrderId, boolean restricted);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

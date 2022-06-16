@@ -78,12 +78,14 @@ public class CommerceChannelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", ctCollectionId=");
 		sb.append(ctCollectionId);
+		sb.append(", uuid=");
+		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
 		sb.append(", commerceChannelId=");
@@ -123,6 +125,13 @@ public class CommerceChannelCacheModel
 
 		commerceChannelImpl.setMvccVersion(mvccVersion);
 		commerceChannelImpl.setCtCollectionId(ctCollectionId);
+
+		if (uuid == null) {
+			commerceChannelImpl.setUuid("");
+		}
+		else {
+			commerceChannelImpl.setUuid(uuid);
+		}
 
 		if (externalReferenceCode == null) {
 			commerceChannelImpl.setExternalReferenceCode("");
@@ -205,6 +214,7 @@ public class CommerceChannelCacheModel
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
+		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
 		commerceChannelId = objectInput.readLong();
@@ -231,6 +241,13 @@ public class CommerceChannelCacheModel
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(ctCollectionId);
+
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
 
 		if (externalReferenceCode == null) {
 			objectOutput.writeUTF("");
@@ -297,6 +314,7 @@ public class CommerceChannelCacheModel
 
 	public long mvccVersion;
 	public long ctCollectionId;
+	public String uuid;
 	public String externalReferenceCode;
 	public long commerceChannelId;
 	public long companyId;

@@ -37,6 +37,7 @@ public class CommerceInventoryWarehouseFinderBaseImpl
 
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
+		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("commerceInventoryWarehouseId", "CIWarehouseId");
 		dbColumnNames.put("active", "active_");
 		dbColumnNames.put("type", "type_");

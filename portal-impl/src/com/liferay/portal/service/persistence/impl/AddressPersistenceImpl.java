@@ -6927,15 +6927,14 @@ public class AddressPersistenceImpl
 
 		AddressModelImpl addressModelImpl = (AddressModelImpl)address;
 
-		if (Validator.isNull(address.getExternalReferenceCode())) {
-			address.setExternalReferenceCode(
-				String.valueOf(address.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(address.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
 
 			address.setUuid(uuid);
+		}
+
+		if (Validator.isNull(address.getExternalReferenceCode())) {
+			address.setExternalReferenceCode(address.getUuid());
 		}
 
 		ServiceContext serviceContext =

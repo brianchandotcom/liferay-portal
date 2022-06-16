@@ -2810,17 +2810,17 @@ public class BatchEngineImportTaskPersistenceImpl
 		BatchEngineImportTaskModelImpl batchEngineImportTaskModelImpl =
 			(BatchEngineImportTaskModelImpl)batchEngineImportTask;
 
-		if (Validator.isNull(
-				batchEngineImportTask.getExternalReferenceCode())) {
-
-			batchEngineImportTask.setExternalReferenceCode(
-				String.valueOf(batchEngineImportTask.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(batchEngineImportTask.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			batchEngineImportTask.setUuid(uuid);
+		}
+
+		if (Validator.isNull(
+				batchEngineImportTask.getExternalReferenceCode())) {
+
+			batchEngineImportTask.setExternalReferenceCode(
+				batchEngineImportTask.getUuid());
 		}
 
 		ServiceContext serviceContext =

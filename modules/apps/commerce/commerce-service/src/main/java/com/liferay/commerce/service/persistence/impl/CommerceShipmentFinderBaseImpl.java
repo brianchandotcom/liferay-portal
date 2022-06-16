@@ -17,7 +17,13 @@ package com.liferay.commerce.service.persistence.impl;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Alessio Antonio Rendina
@@ -28,6 +34,17 @@ public class CommerceShipmentFinderBaseImpl
 
 	public CommerceShipmentFinderBaseImpl() {
 		setModelClass(CommerceShipment.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
+		setDBColumnNames(dbColumnNames);
+	}
+
+	@Override
+	public Set<String> getBadColumnNames() {
+		return getCommerceShipmentPersistence().getBadColumnNames();
 	}
 
 	/**
@@ -52,5 +69,8 @@ public class CommerceShipmentFinderBaseImpl
 
 	@BeanReference(type = CommerceShipmentPersistence.class)
 	protected CommerceShipmentPersistence commerceShipmentPersistence;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceShipmentFinderBaseImpl.class);
 
 }

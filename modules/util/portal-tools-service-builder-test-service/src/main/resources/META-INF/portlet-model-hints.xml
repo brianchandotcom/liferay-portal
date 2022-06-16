@@ -45,11 +45,13 @@
 		<field name="blob" type="Blob" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.ERCCompanyEntry">
+		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="ercCompanyEntryId" type="long" />
 		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.ERCGroupEntry">
+		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="ercGroupEntryId" type="long" />
 		<field name="groupId" type="long" />

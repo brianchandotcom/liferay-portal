@@ -133,6 +133,9 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 		newCommerceInventoryWarehouseItem.setMvccVersion(
 			RandomTestUtil.nextLong());
 
+		newCommerceInventoryWarehouseItem.setUuid(
+			RandomTestUtil.randomString());
+
 		newCommerceInventoryWarehouseItem.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -170,6 +173,9 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceInventoryWarehouseItem.getMvccVersion(),
 			newCommerceInventoryWarehouseItem.getMvccVersion());
+		Assert.assertEquals(
+			existingCommerceInventoryWarehouseItem.getUuid(),
+			newCommerceInventoryWarehouseItem.getUuid());
 		Assert.assertEquals(
 			existingCommerceInventoryWarehouseItem.getExternalReferenceCode(),
 			newCommerceInventoryWarehouseItem.getExternalReferenceCode());
@@ -211,6 +217,24 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceInventoryWarehouseItem.getReservedQuantity(),
 			newCommerceInventoryWarehouseItem.getReservedQuantity());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -286,11 +310,12 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CIWarehouseItem", "mvccVersion", true, "externalReferenceCode",
-			true, "commerceInventoryWarehouseItemId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commerceInventoryWarehouseId", true, "sku",
-			true, "quantity", true, "reservedQuantity", true);
+			"CIWarehouseItem", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "commerceInventoryWarehouseItemId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true,
+			"commerceInventoryWarehouseId", true, "sku", true, "quantity", true,
+			"reservedQuantity", true);
 	}
 
 	@Test
@@ -635,6 +660,8 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 
 		commerceInventoryWarehouseItem.setMvccVersion(
 			RandomTestUtil.nextLong());
+
+		commerceInventoryWarehouseItem.setUuid(RandomTestUtil.randomString());
 
 		commerceInventoryWarehouseItem.setExternalReferenceCode(
 			RandomTestUtil.randomString());

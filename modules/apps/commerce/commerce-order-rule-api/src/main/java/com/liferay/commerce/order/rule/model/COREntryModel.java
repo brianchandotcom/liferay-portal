@@ -15,10 +15,10 @@
 package com.liferay.commerce.order.rule.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 
 import java.util.Date;
@@ -38,7 +38,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface COREntryModel
-	extends AuditedModel, BaseModel<COREntry>, MVCCModel, ShardedModel,
+	extends BaseModel<COREntry>, MVCCModel, ShardedModel, StagedAuditedModel,
 			WorkflowedModel {
 
 	/*
@@ -76,6 +76,23 @@ public interface COREntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the uuid of this cor entry.
+	 *
+	 * @return the uuid of this cor entry
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this cor entry.
+	 *
+	 * @param uuid the uuid of this cor entry
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the external reference code of this cor entry.

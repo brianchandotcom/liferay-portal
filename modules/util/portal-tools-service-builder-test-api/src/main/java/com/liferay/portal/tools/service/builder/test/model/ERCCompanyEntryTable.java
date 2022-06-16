@@ -31,6 +31,8 @@ public class ERCCompanyEntryTable extends BaseTable<ERCCompanyEntryTable> {
 	public static final ERCCompanyEntryTable INSTANCE =
 		new ERCCompanyEntryTable();
 
+	public final Column<ERCCompanyEntryTable, String> uuid = createColumn(
+		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ERCCompanyEntryTable, String> externalReferenceCode =
 		createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,

@@ -127,6 +127,8 @@ public class COREntryPersistenceTest {
 
 		newCOREntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCOREntry.setUuid(RandomTestUtil.randomString());
+
 		newCOREntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		newCOREntry.setCompanyId(RandomTestUtil.nextLong());
@@ -172,6 +174,7 @@ public class COREntryPersistenceTest {
 
 		Assert.assertEquals(
 			existingCOREntry.getMvccVersion(), newCOREntry.getMvccVersion());
+		Assert.assertEquals(existingCOREntry.getUuid(), newCOREntry.getUuid());
 		Assert.assertEquals(
 			existingCOREntry.getExternalReferenceCode(),
 			newCOREntry.getExternalReferenceCode());
@@ -219,6 +222,24 @@ public class COREntryPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingCOREntry.getStatusDate()),
 			Time.getShortTimestamp(newCOREntry.getStatusDate()));
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -300,13 +321,14 @@ public class COREntryPersistenceTest {
 
 	protected OrderByComparator<COREntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"COREntry", "mvccVersion", true, "externalReferenceCode", true,
-			"COREntryId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "active", true,
-			"description", true, "displayDate", true, "expirationDate", true,
-			"name", true, "priority", true, "type", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"COREntry", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "COREntryId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "active", true, "description", true,
+			"displayDate", true, "expirationDate", true, "name", true,
+			"priority", true, "type", true, "lastPublishDate", true, "status",
+			true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -584,6 +606,8 @@ public class COREntryPersistenceTest {
 		COREntry corEntry = _persistence.create(pk);
 
 		corEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		corEntry.setUuid(RandomTestUtil.randomString());
 
 		corEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 

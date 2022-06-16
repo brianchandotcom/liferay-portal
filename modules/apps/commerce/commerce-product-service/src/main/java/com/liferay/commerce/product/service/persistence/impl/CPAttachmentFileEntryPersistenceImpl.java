@@ -6398,17 +6398,17 @@ public class CPAttachmentFileEntryPersistenceImpl
 		CPAttachmentFileEntryModelImpl cpAttachmentFileEntryModelImpl =
 			(CPAttachmentFileEntryModelImpl)cpAttachmentFileEntry;
 
-		if (Validator.isNull(
-				cpAttachmentFileEntry.getExternalReferenceCode())) {
-
-			cpAttachmentFileEntry.setExternalReferenceCode(
-				String.valueOf(cpAttachmentFileEntry.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(cpAttachmentFileEntry.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			cpAttachmentFileEntry.setUuid(uuid);
+		}
+
+		if (Validator.isNull(
+				cpAttachmentFileEntry.getExternalReferenceCode())) {
+
+			cpAttachmentFileEntry.setExternalReferenceCode(
+				cpAttachmentFileEntry.getUuid());
 		}
 
 		ServiceContext serviceContext =

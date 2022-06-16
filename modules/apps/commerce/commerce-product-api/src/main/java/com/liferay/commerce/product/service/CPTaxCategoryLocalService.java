@@ -15,11 +15,13 @@
 package com.liferay.commerce.product.service;
 
 import com.liferay.commerce.product.model.CPTaxCategory;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -252,6 +254,17 @@ public interface CPTaxCategoryLocalService
 	public CPTaxCategory fetchCPTaxCategoryByReferenceCode(
 		long companyId, String externalReferenceCode);
 
+	/**
+	 * Returns the cp tax category with the matching UUID and company.
+	 *
+	 * @param uuid the cp tax category's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPTaxCategory fetchCPTaxCategoryByUuidAndCompanyId(
+		String uuid, long companyId);
+
 	public List<CPTaxCategory> findCPTaxCategoriesByCompanyId(
 		long companyId, String keyword, int start, int end);
 
@@ -314,6 +327,23 @@ public interface CPTaxCategoryLocalService
 	public CPTaxCategory getCPTaxCategoryByExternalReferenceCode(
 			long companyId, String externalReferenceCode)
 		throws PortalException;
+
+	/**
+	 * Returns the cp tax category with the matching UUID and company.
+	 *
+	 * @param uuid the cp tax category's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching cp tax category
+	 * @throws PortalException if a matching cp tax category could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPTaxCategory getCPTaxCategoryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

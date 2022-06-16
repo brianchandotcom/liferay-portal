@@ -16,9 +16,11 @@ package com.liferay.commerce.term.service;
 
 import com.liferay.commerce.term.model.CTermEntryLocalization;
 import com.liferay.commerce.term.model.CommerceTermEntry;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -249,6 +251,17 @@ public interface CommerceTermEntryLocalService
 	public CommerceTermEntry fetchCommerceTermEntryByReferenceCode(
 		long companyId, String externalReferenceCode);
 
+	/**
+	 * Returns the commerce term entry with the matching UUID and company.
+	 *
+	 * @param uuid the commerce term entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceTermEntry fetchCommerceTermEntryByUuidAndCompanyId(
+		String uuid, long companyId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CTermEntryLocalization fetchCTermEntryLocalization(
 		long commerceTermEntryId, String languageId);
@@ -306,6 +319,19 @@ public interface CommerceTermEntryLocalService
 			long companyId, String externalReferenceCode)
 		throws PortalException;
 
+	/**
+	 * Returns the commerce term entry with the matching UUID and company.
+	 *
+	 * @param uuid the commerce term entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce term entry
+	 * @throws PortalException if a matching commerce term entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceTermEntry getCommerceTermEntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CTermEntryLocalization getCTermEntryLocalization(
 			long commerceTermEntryId, String languageId)
@@ -323,6 +349,10 @@ public interface CommerceTermEntryLocalService
 	public List<CommerceTermEntry> getDeliveryCommerceTermEntries(
 		long companyId, long commerceOrderTypeId,
 		long commerceShippingOptionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

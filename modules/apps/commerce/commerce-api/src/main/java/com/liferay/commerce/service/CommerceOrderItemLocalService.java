@@ -17,9 +17,11 @@ package com.liferay.commerce.service;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -277,6 +279,17 @@ public interface CommerceOrderItemLocalService
 	public CommerceOrderItem fetchCommerceOrderItemByReferenceCode(
 		long companyId, String externalReferenceCode);
 
+	/**
+	 * Returns the commerce order item matching the UUID and group.
+	 *
+	 * @param uuid the commerce order item's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderItem fetchCommerceOrderItemByUuidAndGroupId(
+		String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -318,6 +331,19 @@ public interface CommerceOrderItemLocalService
 		throws PortalException;
 
 	/**
+	 * Returns the commerce order item matching the UUID and group.
+	 *
+	 * @param uuid the commerce order item's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching commerce order item
+	 * @throws PortalException if a matching commerce order item could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderItem getCommerceOrderItemByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException;
+
+	/**
 	 * Returns a range of all the commerce order items.
 	 *
 	 * <p>
@@ -355,6 +381,32 @@ public interface CommerceOrderItemLocalService
 		int end);
 
 	/**
+	 * Returns all the commerce order items matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the commerce order items
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order items, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderItem> getCommerceOrderItemsByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of commerce order items matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the commerce order items
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of commerce order items
+	 * @param end the upper bound of the range of commerce order items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching commerce order items, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderItem> getCommerceOrderItemsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceOrderItem> orderByComparator);
+
+	/**
 	 * Returns the number of commerce order items.
 	 *
 	 * @return the number of commerce order items
@@ -375,6 +427,10 @@ public interface CommerceOrderItemLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrderItemsQuantity(long commerceOrderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

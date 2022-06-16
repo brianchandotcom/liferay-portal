@@ -398,6 +398,23 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 				companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the commerce inventory warehouse item with the matching UUID and company.
+	 *
+	 * @param uuid the commerce inventory warehouse item's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
+	 */
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+		fetchCommerceInventoryWarehouseItemByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return _commerceInventoryWarehouseItemLocalService.
+			fetchCommerceInventoryWarehouseItemByUuidAndCompanyId(
+				uuid, companyId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
@@ -468,6 +485,25 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 		return _commerceInventoryWarehouseItemLocalService.
 			getCommerceInventoryWarehouseItemByReferenceCode(
 				externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the commerce inventory warehouse item with the matching UUID and company.
+	 *
+	 * @param uuid the commerce inventory warehouse item's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce inventory warehouse item
+	 * @throws PortalException if a matching commerce inventory warehouse item could not be found
+	 */
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+			getCommerceInventoryWarehouseItemByUuidAndCompanyId(
+				String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseItemLocalService.
+			getCommerceInventoryWarehouseItemByUuidAndCompanyId(
+				uuid, companyId);
 	}
 
 	/**
@@ -588,6 +624,16 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 		return _commerceInventoryWarehouseItemLocalService.
 			getCommerceInventoryWarehouseItemsCountByModifiedDate(
 				companyId, startDate, endDate);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _commerceInventoryWarehouseItemLocalService.
+			getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override

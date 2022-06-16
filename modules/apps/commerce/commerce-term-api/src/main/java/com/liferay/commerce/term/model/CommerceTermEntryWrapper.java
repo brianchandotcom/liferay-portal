@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.term.model;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -43,6 +44,7 @@ public class CommerceTermEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("commerceTermEntryId", getCommerceTermEntryId());
@@ -73,6 +75,12 @@ public class CommerceTermEntryWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
 		}
 
 		String externalReferenceCode = (String)attributes.get(
@@ -498,6 +506,16 @@ public class CommerceTermEntryWrapper
 	}
 
 	/**
+	 * Returns the uuid of this commerce term entry.
+	 *
+	 * @return the uuid of this commerce term entry
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
+	/**
 	 * Returns <code>true</code> if this commerce term entry is active.
 	 *
 	 * @return <code>true</code> if this commerce term entry is active; <code>false</code> otherwise
@@ -838,6 +856,21 @@ public class CommerceTermEntryWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	/**
+	 * Sets the uuid of this commerce term entry.
+	 *
+	 * @param uuid the uuid of this commerce term entry
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return model.getStagedModelType();
 	}
 
 	@Override

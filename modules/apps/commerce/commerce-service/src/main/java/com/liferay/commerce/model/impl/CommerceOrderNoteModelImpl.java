@@ -18,6 +18,7 @@ import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.model.CommerceOrderNoteModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -72,7 +74,8 @@ public class CommerceOrderNoteModelImpl
 	public static final String TABLE_NAME = "CommerceOrderNote";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"commerceOrderNoteId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -85,6 +88,7 @@ public class CommerceOrderNoteModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceOrderNoteId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -99,7 +103,7 @@ public class CommerceOrderNoteModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrderNote (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceOrderNoteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,content STRING null,restricted BOOLEAN)";
+		"create table CommerceOrderNote (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderNoteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,content STRING null,restricted BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderNote";
 
@@ -155,14 +159,26 @@ public class CommerceOrderNoteModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long RESTRICTED_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long RESTRICTED_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.service.util.ServiceProps.get(
@@ -273,6 +289,10 @@ public class CommerceOrderNoteModelImpl
 			"mvccVersion",
 			(BiConsumer<CommerceOrderNote, Long>)
 				CommerceOrderNote::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CommerceOrderNote::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<CommerceOrderNote, String>)CommerceOrderNote::setUuid);
 		attributeGetterFunctions.put(
 			"externalReferenceCode",
 			CommerceOrderNote::getExternalReferenceCode);
@@ -359,6 +379,35 @@ public class CommerceOrderNoteModelImpl
 
 	@JSON
 	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCode == null) {
 			return "";
@@ -414,6 +463,15 @@ public class CommerceOrderNoteModelImpl
 		}
 
 		_groupId = groupId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalGroupId() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
 	@JSON
@@ -604,6 +662,12 @@ public class CommerceOrderNoteModelImpl
 			this.<Boolean>getColumnOriginalValue("restricted"));
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(CommerceOrderNote.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -662,6 +726,7 @@ public class CommerceOrderNoteModelImpl
 			new CommerceOrderNoteImpl();
 
 		commerceOrderNoteImpl.setMvccVersion(getMvccVersion());
+		commerceOrderNoteImpl.setUuid(getUuid());
 		commerceOrderNoteImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceOrderNoteImpl.setCommerceOrderNoteId(getCommerceOrderNoteId());
@@ -687,6 +752,8 @@ public class CommerceOrderNoteModelImpl
 
 		commerceOrderNoteImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		commerceOrderNoteImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
 		commerceOrderNoteImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		commerceOrderNoteImpl.setCommerceOrderNoteId(
@@ -789,6 +856,14 @@ public class CommerceOrderNoteModelImpl
 			new CommerceOrderNoteCacheModel();
 
 		commerceOrderNoteCacheModel.mvccVersion = getMvccVersion();
+
+		commerceOrderNoteCacheModel.uuid = getUuid();
+
+		String uuid = commerceOrderNoteCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			commerceOrderNoteCacheModel.uuid = null;
+		}
 
 		commerceOrderNoteCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -943,6 +1018,7 @@ public class CommerceOrderNoteModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _uuid;
 	private String _externalReferenceCode;
 	private long _commerceOrderNoteId;
 	private long _groupId;
@@ -957,6 +1033,8 @@ public class CommerceOrderNoteModelImpl
 	private boolean _restricted;
 
 	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
 		Function<CommerceOrderNote, Object> function =
 			_attributeGetterFunctions.get(columnName);
 
@@ -984,6 +1062,7 @@ public class CommerceOrderNoteModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("commerceOrderNoteId", _commerceOrderNoteId);
@@ -996,6 +1075,16 @@ public class CommerceOrderNoteModelImpl
 		_columnOriginalValues.put("commerceOrderId", _commerceOrderId);
 		_columnOriginalValues.put("content", _content);
 		_columnOriginalValues.put("restricted", _restricted);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -1011,27 +1100,29 @@ public class CommerceOrderNoteModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("externalReferenceCode", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("commerceOrderNoteId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("commerceOrderNoteId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("commerceOrderId", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("content", 1024L);
+		columnBitmasks.put("commerceOrderId", 1024L);
 
-		columnBitmasks.put("restricted", 2048L);
+		columnBitmasks.put("content", 2048L);
+
+		columnBitmasks.put("restricted", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

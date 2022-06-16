@@ -129,6 +129,8 @@ public class CommerceOrderTypeRelPersistenceTest {
 
 		newCommerceOrderTypeRel.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCommerceOrderTypeRel.setUuid(RandomTestUtil.randomString());
+
 		newCommerceOrderTypeRel.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -159,6 +161,9 @@ public class CommerceOrderTypeRelPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrderTypeRel.getMvccVersion(),
 			newCommerceOrderTypeRel.getMvccVersion());
+		Assert.assertEquals(
+			existingCommerceOrderTypeRel.getUuid(),
+			newCommerceOrderTypeRel.getUuid());
 		Assert.assertEquals(
 			existingCommerceOrderTypeRel.getExternalReferenceCode(),
 			newCommerceOrderTypeRel.getExternalReferenceCode());
@@ -191,6 +196,24 @@ public class CommerceOrderTypeRelPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrderTypeRel.getCommerceOrderTypeId(),
 			newCommerceOrderTypeRel.getCommerceOrderTypeId());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -254,7 +277,7 @@ public class CommerceOrderTypeRelPersistenceTest {
 
 	protected OrderByComparator<CommerceOrderTypeRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceOrderTypeRel", "mvccVersion", true,
+			"CommerceOrderTypeRel", "mvccVersion", true, "uuid", true,
 			"externalReferenceCode", true, "commerceOrderTypeRelId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
@@ -586,6 +609,8 @@ public class CommerceOrderTypeRelPersistenceTest {
 		CommerceOrderTypeRel commerceOrderTypeRel = _persistence.create(pk);
 
 		commerceOrderTypeRel.setMvccVersion(RandomTestUtil.nextLong());
+
+		commerceOrderTypeRel.setUuid(RandomTestUtil.randomString());
 
 		commerceOrderTypeRel.setExternalReferenceCode(
 			RandomTestUtil.randomString());

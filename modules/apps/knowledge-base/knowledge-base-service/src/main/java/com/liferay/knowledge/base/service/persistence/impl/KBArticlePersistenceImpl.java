@@ -35012,15 +35012,14 @@ public class KBArticlePersistenceImpl
 
 		KBArticleModelImpl kbArticleModelImpl = (KBArticleModelImpl)kbArticle;
 
-		if (Validator.isNull(kbArticle.getExternalReferenceCode())) {
-			kbArticle.setExternalReferenceCode(
-				String.valueOf(kbArticle.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(kbArticle.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			kbArticle.setUuid(uuid);
+		}
+
+		if (Validator.isNull(kbArticle.getExternalReferenceCode())) {
+			kbArticle.setExternalReferenceCode(kbArticle.getUuid());
 		}
 
 		ServiceContext serviceContext =

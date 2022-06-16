@@ -127,6 +127,8 @@ public class CommerceOrderTypePersistenceTest {
 
 		newCommerceOrderType.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCommerceOrderType.setUuid(RandomTestUtil.randomString());
+
 		newCommerceOrderType.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -170,6 +172,9 @@ public class CommerceOrderTypePersistenceTest {
 		Assert.assertEquals(
 			existingCommerceOrderType.getMvccVersion(),
 			newCommerceOrderType.getMvccVersion());
+		Assert.assertEquals(
+			existingCommerceOrderType.getUuid(),
+			newCommerceOrderType.getUuid());
 		Assert.assertEquals(
 			existingCommerceOrderType.getExternalReferenceCode(),
 			newCommerceOrderType.getExternalReferenceCode());
@@ -226,6 +231,24 @@ public class CommerceOrderTypePersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingCommerceOrderType.getStatusDate()),
 			Time.getShortTimestamp(newCommerceOrderType.getStatusDate()));
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -293,13 +316,14 @@ public class CommerceOrderTypePersistenceTest {
 
 	protected OrderByComparator<CommerceOrderType> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CommerceOrderType", "mvccVersion", true, "externalReferenceCode",
-			true, "commerceOrderTypeId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"name", true, "description", true, "active", true, "displayDate",
-			true, "displayOrder", true, "expirationDate", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"CommerceOrderType", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "commerceOrderTypeId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "description", true,
+			"active", true, "displayDate", true, "displayOrder", true,
+			"expirationDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -593,6 +617,8 @@ public class CommerceOrderTypePersistenceTest {
 		CommerceOrderType commerceOrderType = _persistence.create(pk);
 
 		commerceOrderType.setMvccVersion(RandomTestUtil.nextLong());
+
+		commerceOrderType.setUuid(RandomTestUtil.randomString());
 
 		commerceOrderType.setExternalReferenceCode(
 			RandomTestUtil.randomString());

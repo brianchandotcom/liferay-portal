@@ -21665,15 +21665,14 @@ public class MBMessagePersistenceImpl
 
 		MBMessageModelImpl mbMessageModelImpl = (MBMessageModelImpl)mbMessage;
 
-		if (Validator.isNull(mbMessage.getExternalReferenceCode())) {
-			mbMessage.setExternalReferenceCode(
-				String.valueOf(mbMessage.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(mbMessage.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			mbMessage.setUuid(uuid);
+		}
+
+		if (Validator.isNull(mbMessage.getExternalReferenceCode())) {
+			mbMessage.setExternalReferenceCode(mbMessage.getUuid());
 		}
 
 		ServiceContext serviceContext =

@@ -261,6 +261,20 @@ public class DispatchTriggerLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the dispatch trigger with the matching UUID and company.
+	 *
+	 * @param uuid the dispatch trigger's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	public static DispatchTrigger fetchDispatchTriggerByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().fetchDispatchTriggerByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static java.util.Date fetchNextFireDate(long dispatchTriggerId) {
 		return getService().fetchNextFireDate(dispatchTriggerId);
 	}
@@ -302,6 +316,22 @@ public class DispatchTriggerLocalServiceUtil {
 
 		return getService().getDispatchTriggerByExternalReferenceCode(
 			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the dispatch trigger with the matching UUID and company.
+	 *
+	 * @param uuid the dispatch trigger's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching dispatch trigger
+	 * @throws PortalException if a matching dispatch trigger could not be found
+	 */
+	public static DispatchTrigger getDispatchTriggerByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getDispatchTriggerByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	public static List<DispatchTrigger> getDispatchTriggers(
@@ -347,6 +377,14 @@ public class DispatchTriggerLocalServiceUtil {
 
 	public static int getDispatchTriggersCount(long companyId) {
 		return getService().getDispatchTriggersCount(companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static

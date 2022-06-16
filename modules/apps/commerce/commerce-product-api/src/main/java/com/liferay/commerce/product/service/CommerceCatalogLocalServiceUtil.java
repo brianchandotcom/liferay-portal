@@ -288,6 +288,20 @@ public class CommerceCatalogLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the commerce catalog with the matching UUID and company.
+	 *
+	 * @param uuid the commerce catalog's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
+	 */
+	public static CommerceCatalog fetchCommerceCatalogByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().fetchCommerceCatalogByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static CommerceCatalog forceDeleteCommerceCatalog(
 			CommerceCatalog commerceCatalog)
 		throws PortalException {
@@ -330,6 +344,22 @@ public class CommerceCatalogLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the commerce catalog with the matching UUID and company.
+	 *
+	 * @param uuid the commerce catalog's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce catalog
+	 * @throws PortalException if a matching commerce catalog could not be found
+	 */
+	public static CommerceCatalog getCommerceCatalogByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getCommerceCatalogByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.model.Group getCommerceCatalogGroup(
 			long commerceCatalogId)
 		throws PortalException {
@@ -367,6 +397,14 @@ public class CommerceCatalogLocalServiceUtil {
 	 */
 	public static int getCommerceCatalogsCount() {
 		return getService().getCommerceCatalogsCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static

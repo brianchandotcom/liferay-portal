@@ -78,10 +78,12 @@ public class CommerceOrderTypeCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", uuid=");
+		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
 		sb.append(", commerceOrderTypeId=");
@@ -129,6 +131,13 @@ public class CommerceOrderTypeCacheModel
 			new CommerceOrderTypeImpl();
 
 		commerceOrderTypeImpl.setMvccVersion(mvccVersion);
+
+		if (uuid == null) {
+			commerceOrderTypeImpl.setUuid("");
+		}
+		else {
+			commerceOrderTypeImpl.setUuid(uuid);
+		}
 
 		if (externalReferenceCode == null) {
 			commerceOrderTypeImpl.setExternalReferenceCode("");
@@ -227,6 +236,7 @@ public class CommerceOrderTypeCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 
 		commerceOrderTypeId = objectInput.readLong();
@@ -257,6 +267,13 @@ public class CommerceOrderTypeCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
 
 		if (externalReferenceCode == null) {
 			objectOutput.writeUTF("");
@@ -317,6 +334,7 @@ public class CommerceOrderTypeCacheModel
 	}
 
 	public long mvccVersion;
+	public String uuid;
 	public String externalReferenceCode;
 	public long commerceOrderTypeId;
 	public long companyId;

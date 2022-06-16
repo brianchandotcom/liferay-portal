@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.commerce.term.model.CommerceTermEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="commerceTermEntryId" type="long" />

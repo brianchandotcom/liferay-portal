@@ -8,8 +8,11 @@ create unique index IX_1CF99E19 on CacheDisabledEntry (name[$COLUMN_LENGTH:75$])
 create index IX_4F11FECA on CacheFieldEntry (groupId);
 
 create unique index IX_32F1A726 on ERCCompanyEntry (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_8342AF05 on ERCCompanyEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create unique index IX_DA61F9E2 on ERCGroupEntry (groupId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_7A2B38C3 on ERCGroupEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_17A11405 on ERCGroupEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_6E042099 on EagerBlobEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 

@@ -337,6 +337,21 @@ public class CommerceShipmentLocalServiceWrapper
 				companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the commerce shipment matching the UUID and group.
+	 *
+	 * @param uuid the commerce shipment's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
+	 */
+	@Override
+	public com.liferay.commerce.model.CommerceShipment
+		fetchCommerceShipmentByUuidAndGroupId(String uuid, long groupId) {
+
+		return _commerceShipmentLocalService.
+			fetchCommerceShipmentByUuidAndGroupId(uuid, groupId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
@@ -377,6 +392,23 @@ public class CommerceShipmentLocalServiceWrapper
 		return _commerceShipmentLocalService.
 			getCommerceShipmentByExternalReferenceCode(
 				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce shipment matching the UUID and group.
+	 *
+	 * @param uuid the commerce shipment's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching commerce shipment
+	 * @throws PortalException if a matching commerce shipment could not be found
+	 */
+	@Override
+	public com.liferay.commerce.model.CommerceShipment
+			getCommerceShipmentByUuidAndGroupId(String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentLocalService.
+			getCommerceShipmentByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -455,6 +487,44 @@ public class CommerceShipmentLocalServiceWrapper
 	}
 
 	/**
+	 * Returns all the commerce shipments matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the commerce shipments
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce shipments, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipment>
+		getCommerceShipmentsByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _commerceShipmentLocalService.
+			getCommerceShipmentsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of commerce shipments matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the commerce shipments
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of commerce shipments
+	 * @param end the upper bound of the range of commerce shipments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching commerce shipments, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipment>
+		getCommerceShipmentsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.commerce.model.CommerceShipment>
+					orderByComparator) {
+
+		return _commerceShipmentLocalService.
+			getCommerceShipmentsByUuidAndCompanyId(
+				uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns the number of commerce shipments.
 	 *
 	 * @return the number of commerce shipments
@@ -508,6 +578,16 @@ public class CommerceShipmentLocalServiceWrapper
 
 		return _commerceShipmentLocalService.
 			getCommerceShipmentStatusesByCommerceOrderId(commerceOrderId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _commerceShipmentLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override

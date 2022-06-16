@@ -6707,17 +6707,17 @@ public class CommercePriceModifierPersistenceImpl
 		CommercePriceModifierModelImpl commercePriceModifierModelImpl =
 			(CommercePriceModifierModelImpl)commercePriceModifier;
 
-		if (Validator.isNull(
-				commercePriceModifier.getExternalReferenceCode())) {
-
-			commercePriceModifier.setExternalReferenceCode(
-				String.valueOf(commercePriceModifier.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(commercePriceModifier.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			commercePriceModifier.setUuid(uuid);
+		}
+
+		if (Validator.isNull(
+				commercePriceModifier.getExternalReferenceCode())) {
+
+			commercePriceModifier.setExternalReferenceCode(
+				commercePriceModifier.getUuid());
 		}
 
 		ServiceContext serviceContext =

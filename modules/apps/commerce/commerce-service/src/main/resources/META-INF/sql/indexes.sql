@@ -38,9 +38,13 @@ create index IX_415AF3E3 on CommerceOrderItem (commerceOrderId, CPInstanceId);
 create index IX_15B37023 on CommerceOrderItem (commerceOrderId, subscription);
 create unique index IX_12257E21 on CommerceOrderItem (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_8E1472FB on CommerceOrderItem (parentCommerceOrderItemId);
+create index IX_F7C1DC00 on CommerceOrderItem (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_F0116282 on CommerceOrderItem (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_CEB86C22 on CommerceOrderNote (commerceOrderId, restricted);
 create unique index IX_EF4EEF80 on CommerceOrderNote (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_EDDFEB5F on CommerceOrderNote (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_76D9BDA1 on CommerceOrderNote (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_CF274005 on CommerceOrderPayment (commerceOrderId);
 
@@ -48,20 +52,26 @@ create index IX_72C90BD4 on CommerceOrderType (companyId, active_);
 create unique index IX_4EC1CAC8 on CommerceOrderType (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_CAB43113 on CommerceOrderType (displayDate, status);
 create index IX_56A0F58A on CommerceOrderType (expirationDate, status);
+create index IX_A1C256A7 on CommerceOrderType (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create unique index IX_CBAD3B91 on CommerceOrderTypeRel (classNameId, classPK, commerceOrderTypeId);
 create index IX_7813C75C on CommerceOrderTypeRel (classNameId, commerceOrderTypeId);
 create index IX_AA661546 on CommerceOrderTypeRel (commerceOrderTypeId);
 create unique index IX_22C116C7 on CommerceOrderTypeRel (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_1FF80A6 on CommerceOrderTypeRel (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create unique index IX_F5105190 on CommerceShipment (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_616BDD15 on CommerceShipment (groupId, commerceAddressId);
 create index IX_68FBA2B5 on CommerceShipment (groupId, status);
+create index IX_54476D6F on CommerceShipment (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_BA5A83B1 on CommerceShipment (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_3615B923 on CommerceShipmentItem (commerceOrderItemId);
 create unique index IX_4FAC36D0 on CommerceShipmentItem (commerceShipmentId, commerceOrderItemId, commerceInventoryWarehouseId);
 create unique index IX_41C840C3 on CommerceShipmentItem (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_DB0BB83C on CommerceShipmentItem (groupId);
+create index IX_893222A2 on CommerceShipmentItem (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_D8C6E9A4 on CommerceShipmentItem (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_42E5F6EF on CommerceShippingMethod (groupId, active_);
 create unique index IX_C4557F93 on CommerceShippingMethod (groupId, engineKey[$COLUMN_LENGTH:75$]);

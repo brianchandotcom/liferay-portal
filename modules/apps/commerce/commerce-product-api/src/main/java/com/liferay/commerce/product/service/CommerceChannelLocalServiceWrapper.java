@@ -319,6 +319,21 @@ public class CommerceChannelLocalServiceWrapper
 			siteGroupId);
 	}
 
+	/**
+	 * Returns the commerce channel with the matching UUID and company.
+	 *
+	 * @param uuid the commerce channel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce channel, or <code>null</code> if a matching commerce channel could not be found
+	 */
+	@Override
+	public CommerceChannel fetchCommerceChannelByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return _commerceChannelLocalService.
+			fetchCommerceChannelByUuidAndCompanyId(uuid, companyId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.model.Group fetchCommerceChannelGroup(
 			long commerceChannelId)
@@ -382,6 +397,23 @@ public class CommerceChannelLocalServiceWrapper
 
 		return _commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 			orderGroupId);
+	}
+
+	/**
+	 * Returns the commerce channel with the matching UUID and company.
+	 *
+	 * @param uuid the commerce channel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce channel
+	 * @throws PortalException if a matching commerce channel could not be found
+	 */
+	@Override
+	public CommerceChannel getCommerceChannelByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelLocalService.
+			getCommerceChannelByUuidAndCompanyId(uuid, companyId);
 	}
 
 	@Override
@@ -449,6 +481,16 @@ public class CommerceChannelLocalServiceWrapper
 
 		return _commerceChannelLocalService.getCommerceChannelsCount(
 			companyId, keywords);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _commerceChannelLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override

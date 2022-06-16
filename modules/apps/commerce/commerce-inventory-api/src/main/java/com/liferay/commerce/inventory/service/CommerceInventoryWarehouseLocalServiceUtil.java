@@ -297,6 +297,21 @@ public class CommerceInventoryWarehouseLocalServiceUtil {
 			externalReferenceCode, companyId);
 	}
 
+	/**
+	 * Returns the commerce inventory warehouse with the matching UUID and company.
+	 *
+	 * @param uuid the commerce inventory warehouse's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce inventory warehouse, or <code>null</code> if a matching commerce inventory warehouse could not be found
+	 */
+	public static CommerceInventoryWarehouse
+		fetchCommerceInventoryWarehouseByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return getService().fetchCommerceInventoryWarehouseByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static CommerceInventoryWarehouse
 			geolocateCommerceInventoryWarehouse(
 				long commerceInventoryWarehouseId, double latitude,
@@ -344,6 +359,23 @@ public class CommerceInventoryWarehouseLocalServiceUtil {
 		return getService().
 			getCommerceInventoryWarehouseByExternalReferenceCode(
 				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce inventory warehouse with the matching UUID and company.
+	 *
+	 * @param uuid the commerce inventory warehouse's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce inventory warehouse
+	 * @throws PortalException if a matching commerce inventory warehouse could not be found
+	 */
+	public static CommerceInventoryWarehouse
+			getCommerceInventoryWarehouseByUuidAndCompanyId(
+				String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getCommerceInventoryWarehouseByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	/**
@@ -437,6 +469,14 @@ public class CommerceInventoryWarehouseLocalServiceUtil {
 
 		return getService().getCommerceInventoryWarehousesCount(
 			companyId, active, commerceCountryCode);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static

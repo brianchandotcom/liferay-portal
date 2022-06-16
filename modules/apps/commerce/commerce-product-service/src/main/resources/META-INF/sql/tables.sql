@@ -372,6 +372,7 @@ create table CPSpecificationOption (
 create table CPTaxCategory (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	CPTaxCategoryId LONG not null,
 	companyId LONG,
@@ -404,6 +405,7 @@ create table CProduct (
 create table CommerceCatalog (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	commerceCatalogId LONG not null,
 	companyId LONG,
@@ -421,6 +423,7 @@ create table CommerceCatalog (
 create table CommerceChannel (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	commerceChannelId LONG not null,
 	companyId LONG,

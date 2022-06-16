@@ -15,9 +15,11 @@
 package com.liferay.commerce.service;
 
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -247,6 +249,17 @@ public interface CommerceOrderTypeLocalService
 	public CommerceOrderType fetchCommerceOrderTypeByReferenceCode(
 		long companyId, String externalReferenceCode);
 
+	/**
+	 * Returns the commerce order type with the matching UUID and company.
+	 *
+	 * @param uuid the commerce order type's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order type, or <code>null</code> if a matching commerce order type could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderType fetchCommerceOrderTypeByUuidAndCompanyId(
+		String uuid, long companyId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -272,6 +285,19 @@ public interface CommerceOrderTypeLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrderType getCommerceOrderTypeByExternalReferenceCode(
 			long companyId, String externalReferenceCode)
+		throws PortalException;
+
+	/**
+	 * Returns the commerce order type with the matching UUID and company.
+	 *
+	 * @param uuid the commerce order type's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order type
+	 * @throws PortalException if a matching commerce order type could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderType getCommerceOrderTypeByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws PortalException;
 
 	/**
@@ -309,6 +335,10 @@ public interface CommerceOrderTypeLocalService
 	public int getCommerceOrderTypesCount(
 			long companyId, String className, long classPK, boolean active)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

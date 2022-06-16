@@ -236,6 +236,19 @@ public class ERCGroupEntryLocalServiceUtil {
 			groupId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the erc group entry matching the UUID and group.
+	 *
+	 * @param uuid the erc group entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching erc group entry, or <code>null</code> if a matching erc group entry could not be found
+	 */
+	public static ERCGroupEntry fetchERCGroupEntryByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return getService().fetchERCGroupEntryByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -255,6 +268,38 @@ public class ERCGroupEntryLocalServiceUtil {
 	 */
 	public static List<ERCGroupEntry> getERCGroupEntries(int start, int end) {
 		return getService().getERCGroupEntries(start, end);
+	}
+
+	/**
+	 * Returns all the erc group entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the erc group entries
+	 * @param companyId the primary key of the company
+	 * @return the matching erc group entries, or an empty list if no matches were found
+	 */
+	public static List<ERCGroupEntry> getERCGroupEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().getERCGroupEntriesByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of erc group entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the erc group entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of erc group entries
+	 * @param end the upper bound of the range of erc group entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching erc group entries, or an empty list if no matches were found
+	 */
+	public static List<ERCGroupEntry> getERCGroupEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ERCGroupEntry> orderByComparator) {
+
+		return getService().getERCGroupEntriesByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -293,6 +338,21 @@ public class ERCGroupEntryLocalServiceUtil {
 
 		return getService().getERCGroupEntryByExternalReferenceCode(
 			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the erc group entry matching the UUID and group.
+	 *
+	 * @param uuid the erc group entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching erc group entry
+	 * @throws PortalException if a matching erc group entry could not be found
+	 */
+	public static ERCGroupEntry getERCGroupEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
+
+		return getService().getERCGroupEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	public static

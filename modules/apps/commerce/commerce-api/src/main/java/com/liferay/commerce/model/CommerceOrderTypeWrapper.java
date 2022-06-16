@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.model;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -43,6 +44,7 @@ public class CommerceOrderTypeWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceOrderTypeId", getCommerceOrderTypeId());
 		attributes.put("companyId", getCompanyId());
@@ -71,6 +73,12 @@ public class CommerceOrderTypeWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
 		}
 
 		String externalReferenceCode = (String)attributes.get(
@@ -551,6 +559,16 @@ public class CommerceOrderTypeWrapper
 	}
 
 	/**
+	 * Returns the uuid of this commerce order type.
+	 *
+	 * @return the uuid of this commerce order type
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
+	/**
 	 * Returns <code>true</code> if this commerce order type is active.
 	 *
 	 * @return <code>true</code> if this commerce order type is active; <code>false</code> otherwise
@@ -988,6 +1006,21 @@ public class CommerceOrderTypeWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	/**
+	 * Sets the uuid of this commerce order type.
+	 *
+	 * @param uuid the uuid of this commerce order type
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return model.getStagedModelType();
 	}
 
 	@Override

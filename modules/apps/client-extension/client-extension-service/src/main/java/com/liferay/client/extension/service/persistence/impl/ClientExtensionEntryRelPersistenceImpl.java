@@ -3020,17 +3020,17 @@ public class ClientExtensionEntryRelPersistenceImpl
 		ClientExtensionEntryRelModelImpl clientExtensionEntryRelModelImpl =
 			(ClientExtensionEntryRelModelImpl)clientExtensionEntryRel;
 
-		if (Validator.isNull(
-				clientExtensionEntryRel.getExternalReferenceCode())) {
-
-			clientExtensionEntryRel.setExternalReferenceCode(
-				String.valueOf(clientExtensionEntryRel.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(clientExtensionEntryRel.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			clientExtensionEntryRel.setUuid(uuid);
+		}
+
+		if (Validator.isNull(
+				clientExtensionEntryRel.getExternalReferenceCode())) {
+
+			clientExtensionEntryRel.setExternalReferenceCode(
+				clientExtensionEntryRel.getUuid());
 		}
 
 		ServiceContext serviceContext =

@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.commerce.order.rule.model.COREntry">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="COREntryId" type="long" />
 		<field name="companyId" type="long" />

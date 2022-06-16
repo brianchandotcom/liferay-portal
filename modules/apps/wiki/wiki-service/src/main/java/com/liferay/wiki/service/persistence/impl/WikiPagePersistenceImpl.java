@@ -23744,15 +23744,14 @@ public class WikiPagePersistenceImpl
 
 		WikiPageModelImpl wikiPageModelImpl = (WikiPageModelImpl)wikiPage;
 
-		if (Validator.isNull(wikiPage.getExternalReferenceCode())) {
-			wikiPage.setExternalReferenceCode(
-				String.valueOf(wikiPage.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(wikiPage.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			wikiPage.setUuid(uuid);
+		}
+
+		if (Validator.isNull(wikiPage.getExternalReferenceCode())) {
+			wikiPage.setExternalReferenceCode(wikiPage.getUuid());
 		}
 
 		ServiceContext serviceContext =

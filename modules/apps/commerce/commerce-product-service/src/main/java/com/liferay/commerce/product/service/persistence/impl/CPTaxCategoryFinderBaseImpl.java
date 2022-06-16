@@ -17,7 +17,13 @@ package com.liferay.commerce.product.service.persistence.impl;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.persistence.CPTaxCategoryPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Marco Leo
@@ -28,6 +34,17 @@ public class CPTaxCategoryFinderBaseImpl
 
 	public CPTaxCategoryFinderBaseImpl() {
 		setModelClass(CPTaxCategory.class);
+
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
+		setDBColumnNames(dbColumnNames);
+	}
+
+	@Override
+	public Set<String> getBadColumnNames() {
+		return getCPTaxCategoryPersistence().getBadColumnNames();
 	}
 
 	/**
@@ -52,5 +69,8 @@ public class CPTaxCategoryFinderBaseImpl
 
 	@BeanReference(type = CPTaxCategoryPersistence.class)
 	protected CPTaxCategoryPersistence cpTaxCategoryPersistence;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPTaxCategoryFinderBaseImpl.class);
 
 }

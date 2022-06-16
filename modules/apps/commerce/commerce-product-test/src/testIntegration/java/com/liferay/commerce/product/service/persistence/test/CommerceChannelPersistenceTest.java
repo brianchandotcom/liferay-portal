@@ -128,6 +128,8 @@ public class CommerceChannelPersistenceTest {
 
 		newCommerceChannel.setCtCollectionId(RandomTestUtil.nextLong());
 
+		newCommerceChannel.setUuid(RandomTestUtil.randomString());
+
 		newCommerceChannel.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -169,6 +171,8 @@ public class CommerceChannelPersistenceTest {
 			existingCommerceChannel.getCtCollectionId(),
 			newCommerceChannel.getCtCollectionId());
 		Assert.assertEquals(
+			existingCommerceChannel.getUuid(), newCommerceChannel.getUuid());
+		Assert.assertEquals(
 			existingCommerceChannel.getExternalReferenceCode(),
 			newCommerceChannel.getExternalReferenceCode());
 		Assert.assertEquals(
@@ -208,6 +212,24 @@ public class CommerceChannelPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceChannel.isDiscountsTargetNetPrice(),
 			newCommerceChannel.isDiscountsTargetNetPrice());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -259,11 +281,12 @@ public class CommerceChannelPersistenceTest {
 	protected OrderByComparator<CommerceChannel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"CommerceChannel", "mvccVersion", true, "ctCollectionId", true,
-			"externalReferenceCode", true, "commerceChannelId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "siteGroupId", true, "name", true,
-			"type", true, "typeSettings", true, "commerceCurrencyCode", true,
-			"priceDisplayType", true, "discountsTargetNetPrice", true);
+			"uuid", true, "externalReferenceCode", true, "commerceChannelId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "siteGroupId", true,
+			"name", true, "type", true, "typeSettings", true,
+			"commerceCurrencyCode", true, "priceDisplayType", true,
+			"discountsTargetNetPrice", true);
 	}
 
 	@Test
@@ -559,6 +582,8 @@ public class CommerceChannelPersistenceTest {
 		commerceChannel.setMvccVersion(RandomTestUtil.nextLong());
 
 		commerceChannel.setCtCollectionId(RandomTestUtil.nextLong());
+
+		commerceChannel.setUuid(RandomTestUtil.randomString());
 
 		commerceChannel.setExternalReferenceCode(RandomTestUtil.randomString());
 

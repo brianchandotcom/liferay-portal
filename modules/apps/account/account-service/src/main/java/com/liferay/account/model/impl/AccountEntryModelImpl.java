@@ -18,6 +18,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -71,7 +73,8 @@ public class AccountEntryModelImpl
 	public static final String TABLE_NAME = "AccountEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"accountEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -92,6 +95,7 @@ public class AccountEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("accountEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -117,7 +121,7 @@ public class AccountEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntry (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultBillingAddressId LONG,defaultCPaymentMethodKey VARCHAR(75) null,defaultDeliveryCTermEntryId LONG,defaultPaymentCTermEntryId LONG,defaultShippingAddressId LONG,parentAccountEntryId LONG,description STRING null,domains STRING null,emailAddress VARCHAR(254) null,logoId LONG,name VARCHAR(100) null,taxExemptionCode VARCHAR(75) null,taxIdNumber VARCHAR(75) null,type_ VARCHAR(75) null,status INTEGER)";
+		"create table AccountEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,defaultBillingAddressId LONG,defaultCPaymentMethodKey VARCHAR(75) null,defaultDeliveryCTermEntryId LONG,defaultPaymentCTermEntryId LONG,defaultShippingAddressId LONG,parentAccountEntryId LONG,description STRING null,domains STRING null,emailAddress VARCHAR(254) null,logoId LONG,name VARCHAR(100) null,taxExemptionCode VARCHAR(75) null,taxIdNumber VARCHAR(75) null,type_ VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountEntry";
 
@@ -163,11 +167,17 @@ public class AccountEntryModelImpl
 	public static final long USERID_COLUMN_BITMASK = 16L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 32L;
+	public static final long NAME_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -284,6 +294,9 @@ public class AccountEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<AccountEntry, Long>)AccountEntry::setMvccVersion);
+		attributeGetterFunctions.put("uuid", AccountEntry::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<AccountEntry, String>)AccountEntry::setUuid);
 		attributeGetterFunctions.put(
 			"externalReferenceCode", AccountEntry::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
@@ -414,6 +427,35 @@ public class AccountEntryModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -867,6 +909,12 @@ public class AccountEntryModelImpl
 			this.<Integer>getColumnOriginalValue("status"));
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(AccountEntry.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -924,6 +972,7 @@ public class AccountEntryModelImpl
 		AccountEntryImpl accountEntryImpl = new AccountEntryImpl();
 
 		accountEntryImpl.setMvccVersion(getMvccVersion());
+		accountEntryImpl.setUuid(getUuid());
 		accountEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		accountEntryImpl.setAccountEntryId(getAccountEntryId());
 		accountEntryImpl.setCompanyId(getCompanyId());
@@ -963,6 +1012,7 @@ public class AccountEntryModelImpl
 
 		accountEntryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		accountEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		accountEntryImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		accountEntryImpl.setAccountEntryId(
@@ -1080,6 +1130,14 @@ public class AccountEntryModelImpl
 			new AccountEntryCacheModel();
 
 		accountEntryCacheModel.mvccVersion = getMvccVersion();
+
+		accountEntryCacheModel.uuid = getUuid();
+
+		String uuid = accountEntryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			accountEntryCacheModel.uuid = null;
+		}
 
 		accountEntryCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1304,6 +1362,7 @@ public class AccountEntryModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _uuid;
 	private String _externalReferenceCode;
 	private long _accountEntryId;
 	private long _companyId;
@@ -1358,6 +1417,7 @@ public class AccountEntryModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("accountEntryId", _accountEntryId);
@@ -1394,6 +1454,7 @@ public class AccountEntryModelImpl
 	static {
 		Map<String, String> attributeNames = new HashMap<>();
 
+		attributeNames.put("uuid_", "uuid");
 		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
@@ -1412,49 +1473,51 @@ public class AccountEntryModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("externalReferenceCode", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("accountEntryId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("accountEntryId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("defaultBillingAddressId", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("defaultCPaymentMethodKey", 512L);
+		columnBitmasks.put("defaultBillingAddressId", 512L);
 
-		columnBitmasks.put("defaultDeliveryCTermEntryId", 1024L);
+		columnBitmasks.put("defaultCPaymentMethodKey", 1024L);
 
-		columnBitmasks.put("defaultPaymentCTermEntryId", 2048L);
+		columnBitmasks.put("defaultDeliveryCTermEntryId", 2048L);
 
-		columnBitmasks.put("defaultShippingAddressId", 4096L);
+		columnBitmasks.put("defaultPaymentCTermEntryId", 4096L);
 
-		columnBitmasks.put("parentAccountEntryId", 8192L);
+		columnBitmasks.put("defaultShippingAddressId", 8192L);
 
-		columnBitmasks.put("description", 16384L);
+		columnBitmasks.put("parentAccountEntryId", 16384L);
 
-		columnBitmasks.put("domains", 32768L);
+		columnBitmasks.put("description", 32768L);
 
-		columnBitmasks.put("emailAddress", 65536L);
+		columnBitmasks.put("domains", 65536L);
 
-		columnBitmasks.put("logoId", 131072L);
+		columnBitmasks.put("emailAddress", 131072L);
 
-		columnBitmasks.put("name", 262144L);
+		columnBitmasks.put("logoId", 262144L);
 
-		columnBitmasks.put("taxExemptionCode", 524288L);
+		columnBitmasks.put("name", 524288L);
 
-		columnBitmasks.put("taxIdNumber", 1048576L);
+		columnBitmasks.put("taxExemptionCode", 1048576L);
 
-		columnBitmasks.put("type_", 2097152L);
+		columnBitmasks.put("taxIdNumber", 2097152L);
 
-		columnBitmasks.put("status", 4194304L);
+		columnBitmasks.put("type_", 4194304L);
+
+		columnBitmasks.put("status", 8388608L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

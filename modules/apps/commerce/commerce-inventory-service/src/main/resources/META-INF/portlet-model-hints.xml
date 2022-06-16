@@ -44,6 +44,7 @@
 	</model>
 	<model name="com.liferay.commerce.inventory.model.CommerceInventoryWarehouse">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="commerceInventoryWarehouseId" type="long" />
 		<field name="companyId" type="long" />
@@ -67,6 +68,7 @@
 	</model>
 	<model name="com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="commerceInventoryWarehouseItemId" type="long" />
 		<field name="companyId" type="long" />

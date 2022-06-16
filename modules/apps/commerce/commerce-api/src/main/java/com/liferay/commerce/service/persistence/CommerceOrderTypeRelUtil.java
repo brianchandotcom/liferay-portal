@@ -123,6 +123,360 @@ public class CommerceOrderTypeRelUtil {
 	}
 
 	/**
+	 * Returns all the commerce order type rels where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce order type rels
+	 */
+	public static List<CommerceOrderTypeRel> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the commerce order type rels where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce order type rels
+	 * @param end the upper bound of the range of commerce order type rels (not inclusive)
+	 * @return the range of matching commerce order type rels
+	 */
+	public static List<CommerceOrderTypeRel> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order type rels where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce order type rels
+	 * @param end the upper bound of the range of commerce order type rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order type rels
+	 */
+	public static List<CommerceOrderTypeRel> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order type rels where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce order type rels
+	 * @param end the upper bound of the range of commerce order type rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce order type rels
+	 */
+	public static List<CommerceOrderTypeRel> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommerceOrderTypeRel> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce order type rel in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order type rel
+	 * @throws NoSuchOrderTypeRelException if a matching commerce order type rel could not be found
+	 */
+	public static CommerceOrderTypeRel findByUuid_First(
+			String uuid,
+			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderTypeRelException {
+
+		return getPersistence().findByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce order type rel in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
+	 */
+	public static CommerceOrderTypeRel fetchByUuid_First(
+		String uuid,
+		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
+
+		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce order type rel in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order type rel
+	 * @throws NoSuchOrderTypeRelException if a matching commerce order type rel could not be found
+	 */
+	public static CommerceOrderTypeRel findByUuid_Last(
+			String uuid,
+			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderTypeRelException {
+
+		return getPersistence().findByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce order type rel in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
+	 */
+	public static CommerceOrderTypeRel fetchByUuid_Last(
+		String uuid,
+		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
+
+		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce order type rels before and after the current commerce order type rel in the ordered set where uuid = &#63;.
+	 *
+	 * @param commerceOrderTypeRelId the primary key of the current commerce order type rel
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order type rel
+	 * @throws NoSuchOrderTypeRelException if a commerce order type rel with the primary key could not be found
+	 */
+	public static CommerceOrderTypeRel[] findByUuid_PrevAndNext(
+			long commerceOrderTypeRelId, String uuid,
+			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderTypeRelException {
+
+		return getPersistence().findByUuid_PrevAndNext(
+			commerceOrderTypeRelId, uuid, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce order type rels where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	public static void removeByUuid(String uuid) {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	 * Returns the number of commerce order type rels where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching commerce order type rels
+	 */
+	public static int countByUuid(String uuid) {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
+	 * Returns all the commerce order type rels where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce order type rels
+	 */
+	public static List<CommerceOrderTypeRel> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the commerce order type rels where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce order type rels
+	 * @param end the upper bound of the range of commerce order type rels (not inclusive)
+	 * @return the range of matching commerce order type rels
+	 */
+	public static List<CommerceOrderTypeRel> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order type rels where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce order type rels
+	 * @param end the upper bound of the range of commerce order type rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order type rels
+	 */
+	public static List<CommerceOrderTypeRel> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order type rels where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce order type rels
+	 * @param end the upper bound of the range of commerce order type rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce order type rels
+	 */
+	public static List<CommerceOrderTypeRel> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceOrderTypeRel> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce order type rel in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order type rel
+	 * @throws NoSuchOrderTypeRelException if a matching commerce order type rel could not be found
+	 */
+	public static CommerceOrderTypeRel findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderTypeRelException {
+
+		return getPersistence().findByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce order type rel in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
+	 */
+	public static CommerceOrderTypeRel fetchByUuid_C_First(
+		String uuid, long companyId,
+		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce order type rel in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order type rel
+	 * @throws NoSuchOrderTypeRelException if a matching commerce order type rel could not be found
+	 */
+	public static CommerceOrderTypeRel findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderTypeRelException {
+
+		return getPersistence().findByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce order type rel in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
+	 */
+	public static CommerceOrderTypeRel fetchByUuid_C_Last(
+		String uuid, long companyId,
+		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce order type rels before and after the current commerce order type rel in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param commerceOrderTypeRelId the primary key of the current commerce order type rel
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce order type rel
+	 * @throws NoSuchOrderTypeRelException if a commerce order type rel with the primary key could not be found
+	 */
+	public static CommerceOrderTypeRel[] findByUuid_C_PrevAndNext(
+			long commerceOrderTypeRelId, String uuid, long companyId,
+			OrderByComparator<CommerceOrderTypeRel> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchOrderTypeRelException {
+
+		return getPersistence().findByUuid_C_PrevAndNext(
+			commerceOrderTypeRelId, uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce order type rels where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	public static void removeByUuid_C(String uuid, long companyId) {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns the number of commerce order type rels where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching commerce order type rels
+	 */
+	public static int countByUuid_C(String uuid, long companyId) {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
 	 * Returns all the commerce order type rels where commerceOrderTypeId = &#63;.
 	 *
 	 * @param commerceOrderTypeId the commerce order type ID

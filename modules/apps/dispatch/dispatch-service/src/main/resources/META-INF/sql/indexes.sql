@@ -5,3 +5,4 @@ create index IX_1B108A04 on DispatchTrigger (companyId, dispatchTaskExecutorType
 create unique index IX_10690B19 on DispatchTrigger (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_D86DCE63 on DispatchTrigger (companyId, name[$COLUMN_LENGTH:75$]);
 create index IX_F6ABBDDE on DispatchTrigger (companyId, userId);
+create index IX_61EE58F8 on DispatchTrigger (uuid_[$COLUMN_LENGTH:75$], companyId);

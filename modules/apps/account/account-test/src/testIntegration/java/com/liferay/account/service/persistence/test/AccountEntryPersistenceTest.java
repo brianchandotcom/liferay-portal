@@ -126,6 +126,8 @@ public class AccountEntryPersistenceTest {
 
 		newAccountEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAccountEntry.setUuid(RandomTestUtil.randomString());
+
 		newAccountEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		newAccountEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -179,6 +181,8 @@ public class AccountEntryPersistenceTest {
 		Assert.assertEquals(
 			existingAccountEntry.getMvccVersion(),
 			newAccountEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingAccountEntry.getUuid(), newAccountEntry.getUuid());
 		Assert.assertEquals(
 			existingAccountEntry.getExternalReferenceCode(),
 			newAccountEntry.getExternalReferenceCode());
@@ -241,6 +245,24 @@ public class AccountEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
@@ -298,13 +320,14 @@ public class AccountEntryPersistenceTest {
 
 	protected OrderByComparator<AccountEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AccountEntry", "mvccVersion", true, "externalReferenceCode", true,
-			"accountEntryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"defaultBillingAddressId", true, "defaultCPaymentMethodKey", true,
-			"defaultDeliveryCTermEntryId", true, "defaultPaymentCTermEntryId",
-			true, "defaultShippingAddressId", true, "parentAccountEntryId",
-			true, "description", true, "domains", true, "emailAddress", true,
+			"AccountEntry", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "accountEntryId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "defaultBillingAddressId", true,
+			"defaultCPaymentMethodKey", true, "defaultDeliveryCTermEntryId",
+			true, "defaultPaymentCTermEntryId", true,
+			"defaultShippingAddressId", true, "parentAccountEntryId", true,
+			"description", true, "domains", true, "emailAddress", true,
 			"logoId", true, "name", true, "taxExemptionCode", true,
 			"taxIdNumber", true, "type", true, "status", true);
 	}
@@ -591,6 +614,8 @@ public class AccountEntryPersistenceTest {
 		AccountEntry accountEntry = _persistence.create(pk);
 
 		accountEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		accountEntry.setUuid(RandomTestUtil.randomString());
 
 		accountEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 

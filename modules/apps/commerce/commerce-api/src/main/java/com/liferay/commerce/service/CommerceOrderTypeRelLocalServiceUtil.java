@@ -268,6 +268,21 @@ public class CommerceOrderTypeRelLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the commerce order type rel with the matching UUID and company.
+	 *
+	 * @param uuid the commerce order type rel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
+	 */
+	public static CommerceOrderTypeRel
+		fetchCommerceOrderTypeRelByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return getService().fetchCommerceOrderTypeRelByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -323,6 +338,23 @@ public class CommerceOrderTypeRelLocalServiceUtil {
 	}
 
 	/**
+	 * Returns the commerce order type rel with the matching UUID and company.
+	 *
+	 * @param uuid the commerce order type rel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order type rel
+	 * @throws PortalException if a matching commerce order type rel could not be found
+	 */
+	public static CommerceOrderTypeRel
+			getCommerceOrderTypeRelByUuidAndCompanyId(
+				String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getCommerceOrderTypeRelByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
 	 * Returns a range of all the commerce order type rels.
 	 *
 	 * <p>
@@ -360,6 +392,14 @@ public class CommerceOrderTypeRelLocalServiceUtil {
 		String className, long classPK) {
 
 		return getService().getCommerceOrderTypeRelsCount(className, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static

@@ -306,6 +306,20 @@ public class AccountEntryLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the account entry with the matching UUID and company.
+	 *
+	 * @param uuid the account entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching account entry, or <code>null</code> if a matching account entry could not be found
+	 */
+	public static AccountEntry fetchAccountEntryByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().fetchAccountEntryByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	public static AccountEntry fetchPersonAccountEntry(long userId) {
 		return getService().fetchPersonAccountEntry(userId);
 	}
@@ -381,10 +395,33 @@ public class AccountEntryLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the account entry with the matching UUID and company.
+	 *
+	 * @param uuid the account entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching account entry
+	 * @throws PortalException if a matching account entry could not be found
+	 */
+	public static AccountEntry getAccountEntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getAccountEntryByUuidAndCompanyId(uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static AccountEntry getGuestAccountEntry(long companyId)

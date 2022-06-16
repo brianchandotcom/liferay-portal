@@ -243,6 +243,20 @@ public abstract class ERCGroupEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the erc group entry matching the UUID and group.
+	 *
+	 * @param uuid the erc group entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching erc group entry, or <code>null</code> if a matching erc group entry could not be found
+	 */
+	@Override
+	public ERCGroupEntry fetchERCGroupEntryByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return ercGroupEntryPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the erc group entry with the matching external reference code and group.
 	 *
 	 * @param groupId the primary key of the group
@@ -377,6 +391,55 @@ public abstract class ERCGroupEntryLocalServiceBaseImpl
 		throws PortalException {
 
 		return ercGroupEntryPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns all the erc group entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the erc group entries
+	 * @param companyId the primary key of the company
+	 * @return the matching erc group entries, or an empty list if no matches were found
+	 */
+	@Override
+	public List<ERCGroupEntry> getERCGroupEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return ercGroupEntryPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of erc group entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the erc group entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of erc group entries
+	 * @param end the upper bound of the range of erc group entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching erc group entries, or an empty list if no matches were found
+	 */
+	@Override
+	public List<ERCGroupEntry> getERCGroupEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ERCGroupEntry> orderByComparator) {
+
+		return ercGroupEntryPersistence.findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the erc group entry matching the UUID and group.
+	 *
+	 * @param uuid the erc group entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching erc group entry
+	 * @throws PortalException if a matching erc group entry could not be found
+	 */
+	@Override
+	public ERCGroupEntry getERCGroupEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
+
+		return ercGroupEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

@@ -9170,15 +9170,15 @@ public class CommercePriceListPersistenceImpl
 		CommercePriceListModelImpl commercePriceListModelImpl =
 			(CommercePriceListModelImpl)commercePriceList;
 
-		if (Validator.isNull(commercePriceList.getExternalReferenceCode())) {
-			commercePriceList.setExternalReferenceCode(
-				String.valueOf(commercePriceList.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(commercePriceList.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			commercePriceList.setUuid(uuid);
+		}
+
+		if (Validator.isNull(commercePriceList.getExternalReferenceCode())) {
+			commercePriceList.setExternalReferenceCode(
+				commercePriceList.getUuid());
 		}
 
 		ServiceContext serviceContext =

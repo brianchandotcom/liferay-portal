@@ -245,6 +245,21 @@ public abstract class ERCCompanyEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the erc company entry with the matching UUID and company.
+	 *
+	 * @param uuid the erc company entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching erc company entry, or <code>null</code> if a matching erc company entry could not be found
+	 */
+	@Override
+	public ERCCompanyEntry fetchERCCompanyEntryByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return ercCompanyEntryPersistence.fetchByUuid_C_First(
+			uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the erc company entry with the matching external reference code and company.
 	 *
 	 * @param companyId the primary key of the company
@@ -379,6 +394,23 @@ public abstract class ERCCompanyEntryLocalServiceBaseImpl
 		throws PortalException {
 
 		return ercCompanyEntryPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the erc company entry with the matching UUID and company.
+	 *
+	 * @param uuid the erc company entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching erc company entry
+	 * @throws PortalException if a matching erc company entry could not be found
+	 */
+	@Override
+	public ERCCompanyEntry getERCCompanyEntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return ercCompanyEntryPersistence.findByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	/**

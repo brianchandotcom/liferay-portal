@@ -78,10 +78,12 @@ public class CommerceTermEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", uuid=");
+		sb.append(uuid);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
 		sb.append(", defaultLanguageId=");
@@ -133,6 +135,13 @@ public class CommerceTermEntryCacheModel
 			new CommerceTermEntryImpl();
 
 		commerceTermEntryImpl.setMvccVersion(mvccVersion);
+
+		if (uuid == null) {
+			commerceTermEntryImpl.setUuid("");
+		}
+		else {
+			commerceTermEntryImpl.setUuid(uuid);
+		}
 
 		if (externalReferenceCode == null) {
 			commerceTermEntryImpl.setExternalReferenceCode("");
@@ -245,6 +254,7 @@ public class CommerceTermEntryCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+		uuid = objectInput.readUTF();
 		externalReferenceCode = objectInput.readUTF();
 		defaultLanguageId = objectInput.readUTF();
 
@@ -277,6 +287,13 @@ public class CommerceTermEntryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
 
 		if (externalReferenceCode == null) {
 			objectOutput.writeUTF("");
@@ -352,6 +369,7 @@ public class CommerceTermEntryCacheModel
 	}
 
 	public long mvccVersion;
+	public String uuid;
 	public String externalReferenceCode;
 	public String defaultLanguageId;
 	public long commerceTermEntryId;

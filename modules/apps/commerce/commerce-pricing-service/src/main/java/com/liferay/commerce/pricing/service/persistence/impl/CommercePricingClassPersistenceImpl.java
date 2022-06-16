@@ -3582,15 +3582,15 @@ public class CommercePricingClassPersistenceImpl
 		CommercePricingClassModelImpl commercePricingClassModelImpl =
 			(CommercePricingClassModelImpl)commercePricingClass;
 
-		if (Validator.isNull(commercePricingClass.getExternalReferenceCode())) {
-			commercePricingClass.setExternalReferenceCode(
-				String.valueOf(commercePricingClass.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(commercePricingClass.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			commercePricingClass.setUuid(uuid);
+		}
+
+		if (Validator.isNull(commercePricingClass.getExternalReferenceCode())) {
+			commercePricingClass.setExternalReferenceCode(
+				commercePricingClass.getUuid());
 		}
 
 		ServiceContext serviceContext =

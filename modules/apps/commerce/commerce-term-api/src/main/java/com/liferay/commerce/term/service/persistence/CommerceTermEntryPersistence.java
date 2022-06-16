@@ -44,6 +44,438 @@ public interface CommerceTermEntryPersistence
 	 */
 
 	/**
+	 * Returns all the commerce term entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce term entries
+	 */
+	public java.util.List<CommerceTermEntry> findByUuid(String uuid);
+
+	/**
+	 * Returns a range of all the commerce term entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries
+	 */
+	public java.util.List<CommerceTermEntry> findByUuid(
+		String uuid, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce term entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entries
+	 */
+	public java.util.List<CommerceTermEntry> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the commerce term entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce term entries
+	 */
+	public java.util.List<CommerceTermEntry> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first commerce term entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term entry
+	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry findByUuid_First(
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
+	 * Returns the first commerce term entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry fetchByUuid_First(
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last commerce term entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term entry
+	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry findByUuid_Last(
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
+	 * Returns the last commerce term entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry fetchByUuid_Last(
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param commerceTermEntryId the primary key of the current commerce term entry
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term entry
+	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
+	 */
+	public CommerceTermEntry[] findByUuid_PrevAndNext(
+			long commerceTermEntryId, String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
+	 * Returns all the commerce term entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByUuid(String uuid);
+
+	/**
+	 * Returns a range of all the commerce term entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByUuid(
+		String uuid, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce term entries that the user has permissions to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param commerceTermEntryId the primary key of the current commerce term entry
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term entry
+	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
+	 */
+	public CommerceTermEntry[] filterFindByUuid_PrevAndNext(
+			long commerceTermEntryId, String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
+	 * Removes all the commerce term entries where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	public void removeByUuid(String uuid);
+
+	/**
+	 * Returns the number of commerce term entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching commerce term entries
+	 */
+	public int countByUuid(String uuid);
+
+	/**
+	 * Returns the number of commerce term entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching commerce term entries that the user has permission to view
+	 */
+	public int filterCountByUuid(String uuid);
+
+	/**
+	 * Returns all the commerce term entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce term entries
+	 */
+	public java.util.List<CommerceTermEntry> findByUuid_C(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of all the commerce term entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries
+	 */
+	public java.util.List<CommerceTermEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce term entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entries
+	 */
+	public java.util.List<CommerceTermEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the commerce term entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce term entries
+	 */
+	public java.util.List<CommerceTermEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first commerce term entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term entry
+	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry findByUuid_C_First(
+			String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
+	 * Returns the first commerce term entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry fetchByUuid_C_First(
+		String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last commerce term entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term entry
+	 * @throws NoSuchTermEntryException if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry findByUuid_C_Last(
+			String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
+	 * Returns the last commerce term entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce term entry, or <code>null</code> if a matching commerce term entry could not be found
+	 */
+	public CommerceTermEntry fetchByUuid_C_Last(
+		String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param commerceTermEntryId the primary key of the current commerce term entry
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term entry
+	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
+	 */
+	public CommerceTermEntry[] findByUuid_C_PrevAndNext(
+			long commerceTermEntryId, String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
+	 * Returns all the commerce term entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByUuid_C(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of all the commerce term entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @return the range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce term entries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceTermEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce term entries
+	 * @param end the upper bound of the range of commerce term entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce term entries that the user has permission to view
+	 */
+	public java.util.List<CommerceTermEntry> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the commerce term entries before and after the current commerce term entry in the ordered set of commerce term entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param commerceTermEntryId the primary key of the current commerce term entry
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce term entry
+	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
+	 */
+	public CommerceTermEntry[] filterFindByUuid_C_PrevAndNext(
+			long commerceTermEntryId, String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<CommerceTermEntry>
+				orderByComparator)
+		throws NoSuchTermEntryException;
+
+	/**
+	 * Removes all the commerce term entries where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	public void removeByUuid_C(String uuid, long companyId);
+
+	/**
+	 * Returns the number of commerce term entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching commerce term entries
+	 */
+	public int countByUuid_C(String uuid, long companyId);
+
+	/**
+	 * Returns the number of commerce term entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching commerce term entries that the user has permission to view
+	 */
+	public int filterCountByUuid_C(String uuid, long companyId);
+
+	/**
 	 * Returns all the commerce term entries where companyId = &#63; and active = &#63;.
 	 *
 	 * @param companyId the company ID

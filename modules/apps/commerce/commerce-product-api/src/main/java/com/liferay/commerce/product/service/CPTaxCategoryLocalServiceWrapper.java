@@ -299,6 +299,21 @@ public class CPTaxCategoryLocalServiceWrapper
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the cp tax category with the matching UUID and company.
+	 *
+	 * @param uuid the cp tax category's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching cp tax category, or <code>null</code> if a matching cp tax category could not be found
+	 */
+	@Override
+	public CPTaxCategory fetchCPTaxCategoryByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return _cpTaxCategoryLocalService.fetchCPTaxCategoryByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	@Override
 	public java.util.List<CPTaxCategory> findCPTaxCategoriesByCompanyId(
 		long companyId, String keyword, int start, int end) {
@@ -392,6 +407,33 @@ public class CPTaxCategoryLocalServiceWrapper
 		return _cpTaxCategoryLocalService.
 			getCPTaxCategoryByExternalReferenceCode(
 				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the cp tax category with the matching UUID and company.
+	 *
+	 * @param uuid the cp tax category's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching cp tax category
+	 * @throws PortalException if a matching cp tax category could not be found
+	 */
+	@Override
+	public CPTaxCategory getCPTaxCategoryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpTaxCategoryLocalService.getCPTaxCategoryByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _cpTaxCategoryLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override

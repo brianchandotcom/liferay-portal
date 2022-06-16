@@ -18,6 +18,7 @@ import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.model.DispatchTriggerModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -72,7 +74,8 @@ public class DispatchTriggerModelImpl
 	public static final String TABLE_NAME = "DispatchTrigger";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"dispatchTriggerId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
@@ -89,6 +92,7 @@ public class DispatchTriggerModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("dispatchTriggerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -109,7 +113,7 @@ public class DispatchTriggerModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DispatchTrigger (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,dispatchTaskClusterMode INTEGER,dispatchTaskExecutorType VARCHAR(75) null,dispatchTaskSettings TEXT null,endDate DATE null,name VARCHAR(75) null,overlapAllowed BOOLEAN,startDate DATE null,system_ BOOLEAN)";
+		"create table DispatchTrigger (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,dispatchTaskClusterMode INTEGER,dispatchTaskExecutorType VARCHAR(75) null,dispatchTaskSettings TEXT null,endDate DATE null,name VARCHAR(75) null,overlapAllowed BOOLEAN,startDate DATE null,system_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table DispatchTrigger";
 
@@ -168,11 +172,17 @@ public class DispatchTriggerModelImpl
 	public static final long USERID_COLUMN_BITMASK = 64L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 128L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 128L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -290,6 +300,10 @@ public class DispatchTriggerModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<DispatchTrigger, Long>)DispatchTrigger::setMvccVersion);
+		attributeGetterFunctions.put("uuid", DispatchTrigger::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<DispatchTrigger, String>)DispatchTrigger::setUuid);
 		attributeGetterFunctions.put(
 			"externalReferenceCode", DispatchTrigger::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
@@ -399,6 +413,35 @@ public class DispatchTriggerModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -792,6 +835,12 @@ public class DispatchTriggerModelImpl
 		_system = system;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(DispatchTrigger.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -849,6 +898,7 @@ public class DispatchTriggerModelImpl
 		DispatchTriggerImpl dispatchTriggerImpl = new DispatchTriggerImpl();
 
 		dispatchTriggerImpl.setMvccVersion(getMvccVersion());
+		dispatchTriggerImpl.setUuid(getUuid());
 		dispatchTriggerImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		dispatchTriggerImpl.setDispatchTriggerId(getDispatchTriggerId());
@@ -881,6 +931,8 @@ public class DispatchTriggerModelImpl
 
 		dispatchTriggerImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		dispatchTriggerImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
 		dispatchTriggerImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		dispatchTriggerImpl.setDispatchTriggerId(
@@ -995,6 +1047,14 @@ public class DispatchTriggerModelImpl
 			new DispatchTriggerCacheModel();
 
 		dispatchTriggerCacheModel.mvccVersion = getMvccVersion();
+
+		dispatchTriggerCacheModel.uuid = getUuid();
+
+		String uuid = dispatchTriggerCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			dispatchTriggerCacheModel.uuid = null;
+		}
 
 		dispatchTriggerCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1200,6 +1260,7 @@ public class DispatchTriggerModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _uuid;
 	private String _externalReferenceCode;
 	private long _dispatchTriggerId;
 	private long _companyId;
@@ -1249,6 +1310,7 @@ public class DispatchTriggerModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("dispatchTriggerId", _dispatchTriggerId);
@@ -1277,6 +1339,7 @@ public class DispatchTriggerModelImpl
 	static {
 		Map<String, String> attributeNames = new HashMap<>();
 
+		attributeNames.put("uuid_", "uuid");
 		attributeNames.put("active_", "active");
 		attributeNames.put("system_", "system");
 
@@ -1296,39 +1359,41 @@ public class DispatchTriggerModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("externalReferenceCode", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("dispatchTriggerId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("dispatchTriggerId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("active_", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("cronExpression", 512L);
+		columnBitmasks.put("active_", 512L);
 
-		columnBitmasks.put("dispatchTaskClusterMode", 1024L);
+		columnBitmasks.put("cronExpression", 1024L);
 
-		columnBitmasks.put("dispatchTaskExecutorType", 2048L);
+		columnBitmasks.put("dispatchTaskClusterMode", 2048L);
 
-		columnBitmasks.put("dispatchTaskSettings", 4096L);
+		columnBitmasks.put("dispatchTaskExecutorType", 4096L);
 
-		columnBitmasks.put("endDate", 8192L);
+		columnBitmasks.put("dispatchTaskSettings", 8192L);
 
-		columnBitmasks.put("name", 16384L);
+		columnBitmasks.put("endDate", 16384L);
 
-		columnBitmasks.put("overlapAllowed", 32768L);
+		columnBitmasks.put("name", 32768L);
 
-		columnBitmasks.put("startDate", 65536L);
+		columnBitmasks.put("overlapAllowed", 65536L);
 
-		columnBitmasks.put("system_", 131072L);
+		columnBitmasks.put("startDate", 131072L);
+
+		columnBitmasks.put("system_", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -269,6 +269,21 @@ public class ERCGroupEntryLocalServiceWrapper
 			groupId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the erc group entry matching the UUID and group.
+	 *
+	 * @param uuid the erc group entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching erc group entry, or <code>null</code> if a matching erc group entry could not be found
+	 */
+	@Override
+	public com.liferay.portal.tools.service.builder.test.model.ERCGroupEntry
+		fetchERCGroupEntryByUuidAndGroupId(String uuid, long groupId) {
+
+		return _ercGroupEntryLocalService.fetchERCGroupEntryByUuidAndGroupId(
+			uuid, groupId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
@@ -293,6 +308,45 @@ public class ERCGroupEntryLocalServiceWrapper
 			getERCGroupEntries(int start, int end) {
 
 		return _ercGroupEntryLocalService.getERCGroupEntries(start, end);
+	}
+
+	/**
+	 * Returns all the erc group entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the erc group entries
+	 * @param companyId the primary key of the company
+	 * @return the matching erc group entries, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List
+		<com.liferay.portal.tools.service.builder.test.model.ERCGroupEntry>
+			getERCGroupEntriesByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _ercGroupEntryLocalService.getERCGroupEntriesByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of erc group entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the erc group entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of erc group entries
+	 * @param end the upper bound of the range of erc group entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching erc group entries, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List
+		<com.liferay.portal.tools.service.builder.test.model.ERCGroupEntry>
+			getERCGroupEntriesByUuidAndCompanyId(
+				String uuid, long companyId, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.tools.service.builder.test.model.
+						ERCGroupEntry> orderByComparator) {
+
+		return _ercGroupEntryLocalService.getERCGroupEntriesByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -337,6 +391,23 @@ public class ERCGroupEntryLocalServiceWrapper
 		return _ercGroupEntryLocalService.
 			getERCGroupEntryByExternalReferenceCode(
 				groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the erc group entry matching the UUID and group.
+	 *
+	 * @param uuid the erc group entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching erc group entry
+	 * @throws PortalException if a matching erc group entry could not be found
+	 */
+	@Override
+	public com.liferay.portal.tools.service.builder.test.model.ERCGroupEntry
+			getERCGroupEntryByUuidAndGroupId(String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ercGroupEntryLocalService.getERCGroupEntryByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override

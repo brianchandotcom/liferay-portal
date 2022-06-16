@@ -43,6 +43,436 @@ public interface COREntryPersistence extends BasePersistence<COREntry> {
 	 */
 
 	/**
+	 * Returns all the cor entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching cor entries
+	 */
+	public java.util.List<COREntry> findByUuid(String uuid);
+
+	/**
+	 * Returns a range of all the cor entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cor entries
+	 * @param end the upper bound of the range of cor entries (not inclusive)
+	 * @return the range of matching cor entries
+	 */
+	public java.util.List<COREntry> findByUuid(String uuid, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the cor entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cor entries
+	 * @param end the upper bound of the range of cor entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cor entries
+	 */
+	public java.util.List<COREntry> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the cor entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cor entries
+	 * @param end the upper bound of the range of cor entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cor entries
+	 */
+	public java.util.List<COREntry> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first cor entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cor entry
+	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
+	 */
+	public COREntry findByUuid_First(
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+				orderByComparator)
+		throws NoSuchCOREntryException;
+
+	/**
+	 * Returns the first cor entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cor entry, or <code>null</code> if a matching cor entry could not be found
+	 */
+	public COREntry fetchByUuid_First(
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last cor entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cor entry
+	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
+	 */
+	public COREntry findByUuid_Last(
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+				orderByComparator)
+		throws NoSuchCOREntryException;
+
+	/**
+	 * Returns the last cor entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
+	 */
+	public COREntry fetchByUuid_Last(
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+			orderByComparator);
+
+	/**
+	 * Returns the cor entries before and after the current cor entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param COREntryId the primary key of the current cor entry
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cor entry
+	 * @throws NoSuchCOREntryException if a cor entry with the primary key could not be found
+	 */
+	public COREntry[] findByUuid_PrevAndNext(
+			long COREntryId, String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+				orderByComparator)
+		throws NoSuchCOREntryException;
+
+	/**
+	 * Returns all the cor entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching cor entries that the user has permission to view
+	 */
+	public java.util.List<COREntry> filterFindByUuid(String uuid);
+
+	/**
+	 * Returns a range of all the cor entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cor entries
+	 * @param end the upper bound of the range of cor entries (not inclusive)
+	 * @return the range of matching cor entries that the user has permission to view
+	 */
+	public java.util.List<COREntry> filterFindByUuid(
+		String uuid, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the cor entries that the user has permissions to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cor entries
+	 * @param end the upper bound of the range of cor entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cor entries that the user has permission to view
+	 */
+	public java.util.List<COREntry> filterFindByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+			orderByComparator);
+
+	/**
+	 * Returns the cor entries before and after the current cor entry in the ordered set of cor entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param COREntryId the primary key of the current cor entry
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cor entry
+	 * @throws NoSuchCOREntryException if a cor entry with the primary key could not be found
+	 */
+	public COREntry[] filterFindByUuid_PrevAndNext(
+			long COREntryId, String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+				orderByComparator)
+		throws NoSuchCOREntryException;
+
+	/**
+	 * Removes all the cor entries where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	public void removeByUuid(String uuid);
+
+	/**
+	 * Returns the number of cor entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching cor entries
+	 */
+	public int countByUuid(String uuid);
+
+	/**
+	 * Returns the number of cor entries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching cor entries that the user has permission to view
+	 */
+	public int filterCountByUuid(String uuid);
+
+	/**
+	 * Returns all the cor entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching cor entries
+	 */
+	public java.util.List<COREntry> findByUuid_C(String uuid, long companyId);
+
+	/**
+	 * Returns a range of all the cor entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cor entries
+	 * @param end the upper bound of the range of cor entries (not inclusive)
+	 * @return the range of matching cor entries
+	 */
+	public java.util.List<COREntry> findByUuid_C(
+		String uuid, long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the cor entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cor entries
+	 * @param end the upper bound of the range of cor entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cor entries
+	 */
+	public java.util.List<COREntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the cor entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cor entries
+	 * @param end the upper bound of the range of cor entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cor entries
+	 */
+	public java.util.List<COREntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first cor entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cor entry
+	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
+	 */
+	public COREntry findByUuid_C_First(
+			String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+				orderByComparator)
+		throws NoSuchCOREntryException;
+
+	/**
+	 * Returns the first cor entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cor entry, or <code>null</code> if a matching cor entry could not be found
+	 */
+	public COREntry fetchByUuid_C_First(
+		String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last cor entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cor entry
+	 * @throws NoSuchCOREntryException if a matching cor entry could not be found
+	 */
+	public COREntry findByUuid_C_Last(
+			String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+				orderByComparator)
+		throws NoSuchCOREntryException;
+
+	/**
+	 * Returns the last cor entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cor entry, or <code>null</code> if a matching cor entry could not be found
+	 */
+	public COREntry fetchByUuid_C_Last(
+		String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+			orderByComparator);
+
+	/**
+	 * Returns the cor entries before and after the current cor entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param COREntryId the primary key of the current cor entry
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cor entry
+	 * @throws NoSuchCOREntryException if a cor entry with the primary key could not be found
+	 */
+	public COREntry[] findByUuid_C_PrevAndNext(
+			long COREntryId, String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+				orderByComparator)
+		throws NoSuchCOREntryException;
+
+	/**
+	 * Returns all the cor entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching cor entries that the user has permission to view
+	 */
+	public java.util.List<COREntry> filterFindByUuid_C(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of all the cor entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cor entries
+	 * @param end the upper bound of the range of cor entries (not inclusive)
+	 * @return the range of matching cor entries that the user has permission to view
+	 */
+	public java.util.List<COREntry> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the cor entries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>COREntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cor entries
+	 * @param end the upper bound of the range of cor entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cor entries that the user has permission to view
+	 */
+	public java.util.List<COREntry> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+			orderByComparator);
+
+	/**
+	 * Returns the cor entries before and after the current cor entry in the ordered set of cor entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param COREntryId the primary key of the current cor entry
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cor entry
+	 * @throws NoSuchCOREntryException if a cor entry with the primary key could not be found
+	 */
+	public COREntry[] filterFindByUuid_C_PrevAndNext(
+			long COREntryId, String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<COREntry>
+				orderByComparator)
+		throws NoSuchCOREntryException;
+
+	/**
+	 * Removes all the cor entries where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	public void removeByUuid_C(String uuid, long companyId);
+
+	/**
+	 * Returns the number of cor entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching cor entries
+	 */
+	public int countByUuid_C(String uuid, long companyId);
+
+	/**
+	 * Returns the number of cor entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching cor entries that the user has permission to view
+	 */
+	public int filterCountByUuid_C(String uuid, long companyId);
+
+	/**
 	 * Returns all the cor entries where companyId = &#63; and active = &#63;.
 	 *
 	 * @param companyId the company ID

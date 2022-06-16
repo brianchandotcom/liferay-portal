@@ -15,10 +15,10 @@
 package com.liferay.commerce.inventory.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 
 import java.util.Date;
 
@@ -37,8 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceInventoryWarehouseModel
-	extends AuditedModel, BaseModel<CommerceInventoryWarehouse>, MVCCModel,
-			ShardedModel {
+	extends BaseModel<CommerceInventoryWarehouse>, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -75,6 +75,23 @@ public interface CommerceInventoryWarehouseModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the uuid of this commerce inventory warehouse.
+	 *
+	 * @return the uuid of this commerce inventory warehouse
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this commerce inventory warehouse.
+	 *
+	 * @param uuid the uuid of this commerce inventory warehouse
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the external reference code of this commerce inventory warehouse.

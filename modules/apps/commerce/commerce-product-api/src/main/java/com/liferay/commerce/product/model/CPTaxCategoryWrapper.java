@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.model;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -46,6 +47,7 @@ public class CPTaxCategoryWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
+		attributes.put("uuid", getUuid());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("CPTaxCategoryId", getCPTaxCategoryId());
 		attributes.put("companyId", getCompanyId());
@@ -71,6 +73,12 @@ public class CPTaxCategoryWrapper
 
 		if (ctCollectionId != null) {
 			setCtCollectionId(ctCollectionId);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
 		}
 
 		String externalReferenceCode = (String)attributes.get(
@@ -406,6 +414,16 @@ public class CPTaxCategoryWrapper
 		return model.getUserUuid();
 	}
 
+	/**
+	 * Returns the uuid of this cp tax category.
+	 *
+	 * @return the uuid of this cp tax category
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -666,6 +684,16 @@ public class CPTaxCategoryWrapper
 		model.setUserUuid(userUuid);
 	}
 
+	/**
+	 * Sets the uuid of this cp tax category.
+	 *
+	 * @param uuid the uuid of this cp tax category
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
+	}
+
 	@Override
 	public Map<String, Function<CPTaxCategory, Object>>
 		getAttributeGetterFunctions() {
@@ -678,6 +706,11 @@ public class CPTaxCategoryWrapper
 		getAttributeSetterBiConsumers() {
 
 		return model.getAttributeSetterBiConsumers();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return model.getStagedModelType();
 	}
 
 	@Override

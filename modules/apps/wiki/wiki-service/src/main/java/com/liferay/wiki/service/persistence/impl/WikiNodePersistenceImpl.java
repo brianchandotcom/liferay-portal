@@ -5017,15 +5017,14 @@ public class WikiNodePersistenceImpl
 
 		WikiNodeModelImpl wikiNodeModelImpl = (WikiNodeModelImpl)wikiNode;
 
-		if (Validator.isNull(wikiNode.getExternalReferenceCode())) {
-			wikiNode.setExternalReferenceCode(
-				String.valueOf(wikiNode.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(wikiNode.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			wikiNode.setUuid(uuid);
+		}
+
+		if (Validator.isNull(wikiNode.getExternalReferenceCode())) {
+			wikiNode.setExternalReferenceCode(wikiNode.getUuid());
 		}
 
 		ServiceContext serviceContext =

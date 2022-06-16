@@ -3743,15 +3743,14 @@ public class CPOptionPersistenceImpl
 
 		CPOptionModelImpl cpOptionModelImpl = (CPOptionModelImpl)cpOption;
 
-		if (Validator.isNull(cpOption.getExternalReferenceCode())) {
-			cpOption.setExternalReferenceCode(
-				String.valueOf(cpOption.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(cpOption.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			cpOption.setUuid(uuid);
+		}
+
+		if (Validator.isNull(cpOption.getExternalReferenceCode())) {
+			cpOption.setExternalReferenceCode(cpOption.getUuid());
 		}
 
 		ServiceContext serviceContext =

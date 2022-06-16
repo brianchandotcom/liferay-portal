@@ -323,6 +323,21 @@ public class CommerceOrderNoteLocalServiceWrapper
 				companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the commerce order note matching the UUID and group.
+	 *
+	 * @param uuid the commerce order note's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching commerce order note, or <code>null</code> if a matching commerce order note could not be found
+	 */
+	@Override
+	public com.liferay.commerce.model.CommerceOrderNote
+		fetchCommerceOrderNoteByUuidAndGroupId(String uuid, long groupId) {
+
+		return _commerceOrderNoteLocalService.
+			fetchCommerceOrderNoteByUuidAndGroupId(uuid, groupId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
@@ -366,6 +381,23 @@ public class CommerceOrderNoteLocalServiceWrapper
 	}
 
 	/**
+	 * Returns the commerce order note matching the UUID and group.
+	 *
+	 * @param uuid the commerce order note's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching commerce order note
+	 * @throws PortalException if a matching commerce order note could not be found
+	 */
+	@Override
+	public com.liferay.commerce.model.CommerceOrderNote
+			getCommerceOrderNoteByUuidAndGroupId(String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderNoteLocalService.
+			getCommerceOrderNoteByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
 	 * Returns a range of all the commerce order notes.
 	 *
 	 * <p>
@@ -400,6 +432,44 @@ public class CommerceOrderNoteLocalServiceWrapper
 	}
 
 	/**
+	 * Returns all the commerce order notes matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the commerce order notes
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order notes, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderNote>
+		getCommerceOrderNotesByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _commerceOrderNoteLocalService.
+			getCommerceOrderNotesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of commerce order notes matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the commerce order notes
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of commerce order notes
+	 * @param end the upper bound of the range of commerce order notes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching commerce order notes, or an empty list if no matches were found
+	 */
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderNote>
+		getCommerceOrderNotesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.commerce.model.CommerceOrderNote>
+					orderByComparator) {
+
+		return _commerceOrderNoteLocalService.
+			getCommerceOrderNotesByUuidAndCompanyId(
+				uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns the number of commerce order notes.
 	 *
 	 * @return the number of commerce order notes
@@ -421,6 +491,16 @@ public class CommerceOrderNoteLocalServiceWrapper
 
 		return _commerceOrderNoteLocalService.getCommerceOrderNotesCount(
 			commerceOrderId, restricted);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _commerceOrderNoteLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override

@@ -135,6 +135,8 @@ create index IX_999EAE41 on CPSpecificationOption (uuid_[$COLUMN_LENGTH:75$], ct
 
 create index IX_ADBC7164 on CPTaxCategory (companyId, ctCollectionId);
 create unique index IX_79A007D5 on CPTaxCategory (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_BCEC33B4 on CPTaxCategory (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_1F41DF0 on CPTaxCategory (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 
 create unique index IX_10C033E5 on CProduct (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_BF7F9F56 on CProduct (groupId, ctCollectionId);
@@ -145,10 +147,14 @@ create unique index IX_F70CE3C6 on CProduct (uuid_[$COLUMN_LENGTH:75$], groupId,
 create index IX_7D2B5F22 on CommerceCatalog (companyId, ctCollectionId);
 create unique index IX_A8DE8457 on CommerceCatalog (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_B053A95A on CommerceCatalog (companyId, system_, ctCollectionId);
+create index IX_E567F436 on CommerceCatalog (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_570B9AAE on CommerceCatalog (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 
 create index IX_6A59A278 on CommerceChannel (companyId, ctCollectionId);
 create unique index IX_D8DAE041 on CommerceChannel (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_A12DD9F3 on CommerceChannel (siteGroupId, ctCollectionId);
+create index IX_3CDD6420 on CommerceChannel (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_A35CF904 on CommerceChannel (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 
 create unique index IX_4469A625 on CommerceChannelRel (classNameId, classPK, commerceChannelId, ctCollectionId);
 create index IX_CFD266EA on CommerceChannelRel (classNameId, classPK, ctCollectionId);

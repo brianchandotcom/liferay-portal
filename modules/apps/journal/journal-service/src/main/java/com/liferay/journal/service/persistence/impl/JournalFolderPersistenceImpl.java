@@ -8035,15 +8035,14 @@ public class JournalFolderPersistenceImpl
 		JournalFolderModelImpl journalFolderModelImpl =
 			(JournalFolderModelImpl)journalFolder;
 
-		if (Validator.isNull(journalFolder.getExternalReferenceCode())) {
-			journalFolder.setExternalReferenceCode(
-				String.valueOf(journalFolder.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(journalFolder.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			journalFolder.setUuid(uuid);
+		}
+
+		if (Validator.isNull(journalFolder.getExternalReferenceCode())) {
+			journalFolder.setExternalReferenceCode(journalFolder.getUuid());
 		}
 
 		ServiceContext serviceContext =

@@ -124,6 +124,8 @@ public class ERCCompanyEntryPersistenceTest {
 
 		ERCCompanyEntry newERCCompanyEntry = _persistence.create(pk);
 
+		newERCCompanyEntry.setUuid(RandomTestUtil.randomString());
+
 		newERCCompanyEntry.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -135,6 +137,8 @@ public class ERCCompanyEntryPersistenceTest {
 			newERCCompanyEntry.getPrimaryKey());
 
 		Assert.assertEquals(
+			existingERCCompanyEntry.getUuid(), newERCCompanyEntry.getUuid());
+		Assert.assertEquals(
 			existingERCCompanyEntry.getExternalReferenceCode(),
 			newERCCompanyEntry.getExternalReferenceCode());
 		Assert.assertEquals(
@@ -143,6 +147,24 @@ public class ERCCompanyEntryPersistenceTest {
 		Assert.assertEquals(
 			existingERCCompanyEntry.getCompanyId(),
 			newERCCompanyEntry.getCompanyId());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -179,7 +201,7 @@ public class ERCCompanyEntryPersistenceTest {
 
 	protected OrderByComparator<ERCCompanyEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"ERCCompanyEntry", "externalReferenceCode", true,
+			"ERCCompanyEntry", "uuid", true, "externalReferenceCode", true,
 			"ercCompanyEntryId", true, "companyId", true);
 	}
 
@@ -466,6 +488,8 @@ public class ERCCompanyEntryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		ERCCompanyEntry ercCompanyEntry = _persistence.create(pk);
+
+		ercCompanyEntry.setUuid(RandomTestUtil.randomString());
 
 		ercCompanyEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 

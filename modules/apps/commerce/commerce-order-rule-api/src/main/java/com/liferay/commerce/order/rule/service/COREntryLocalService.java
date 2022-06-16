@@ -15,9 +15,11 @@
 package com.liferay.commerce.order.rule.service;
 
 import com.liferay.commerce.order.rule.model.COREntry;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -237,6 +239,17 @@ public interface COREntryLocalService
 	public COREntry fetchCOREntryByReferenceCode(
 		long companyId, String externalReferenceCode);
 
+	/**
+	 * Returns the cor entry with the matching UUID and company.
+	 *
+	 * @param uuid the cor entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching cor entry, or <code>null</code> if a matching cor entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public COREntry fetchCOREntryByUuidAndCompanyId(
+		String uuid, long companyId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<COREntry>
 		getAccountEntryAndCommerceChannelAndCommerceOrderTypeCOREntries(
@@ -344,6 +357,22 @@ public interface COREntryLocalService
 	public COREntry getCOREntryByExternalReferenceCode(
 			long companyId, String externalReferenceCode)
 		throws PortalException;
+
+	/**
+	 * Returns the cor entry with the matching UUID and company.
+	 *
+	 * @param uuid the cor entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching cor entry
+	 * @throws PortalException if a matching cor entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public COREntry getCOREntryByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

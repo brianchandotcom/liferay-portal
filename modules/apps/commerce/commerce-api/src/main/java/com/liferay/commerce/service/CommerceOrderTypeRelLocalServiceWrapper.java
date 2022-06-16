@@ -307,6 +307,22 @@ public class CommerceOrderTypeRelLocalServiceWrapper
 				companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the commerce order type rel with the matching UUID and company.
+	 *
+	 * @param uuid the commerce order type rel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order type rel, or <code>null</code> if a matching commerce order type rel could not be found
+	 */
+	@Override
+	public com.liferay.commerce.model.CommerceOrderTypeRel
+		fetchCommerceOrderTypeRelByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return _commerceOrderTypeRelLocalService.
+			fetchCommerceOrderTypeRelByUuidAndCompanyId(uuid, companyId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
@@ -371,6 +387,24 @@ public class CommerceOrderTypeRelLocalServiceWrapper
 	}
 
 	/**
+	 * Returns the commerce order type rel with the matching UUID and company.
+	 *
+	 * @param uuid the commerce order type rel's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce order type rel
+	 * @throws PortalException if a matching commerce order type rel could not be found
+	 */
+	@Override
+	public com.liferay.commerce.model.CommerceOrderTypeRel
+			getCommerceOrderTypeRelByUuidAndCompanyId(
+				String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderTypeRelLocalService.
+			getCommerceOrderTypeRelByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	 * Returns a range of all the commerce order type rels.
 	 *
 	 * <p>
@@ -416,6 +450,16 @@ public class CommerceOrderTypeRelLocalServiceWrapper
 	public int getCommerceOrderTypeRelsCount(String className, long classPK) {
 		return _commerceOrderTypeRelLocalService.getCommerceOrderTypeRelsCount(
 			className, classPK);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _commerceOrderTypeRelLocalService.
+			getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override

@@ -350,6 +350,21 @@ public class AccountEntryLocalServiceWrapper
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the account entry with the matching UUID and company.
+	 *
+	 * @param uuid the account entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching account entry, or <code>null</code> if a matching account entry could not be found
+	 */
+	@Override
+	public com.liferay.account.model.AccountEntry
+		fetchAccountEntryByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _accountEntryLocalService.fetchAccountEntryByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	@Override
 	public com.liferay.account.model.AccountEntry fetchPersonAccountEntry(
 		long userId) {
@@ -443,11 +458,38 @@ public class AccountEntryLocalServiceWrapper
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the account entry with the matching UUID and company.
+	 *
+	 * @param uuid the account entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching account entry
+	 * @throws PortalException if a matching account entry could not be found
+	 */
+	@Override
+	public com.liferay.account.model.AccountEntry
+			getAccountEntryByUuidAndCompanyId(String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryLocalService.getAccountEntryByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return _accountEntryLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _accountEntryLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override

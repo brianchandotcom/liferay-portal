@@ -15,10 +15,10 @@
 package com.liferay.commerce.product.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
@@ -38,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceChannelModel
-	extends AuditedModel, BaseModel<CommerceChannel>, CTModel<CommerceChannel>,
-			MVCCModel, ShardedModel {
+	extends BaseModel<CommerceChannel>, CTModel<CommerceChannel>, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -94,6 +94,23 @@ public interface CommerceChannelModel
 	 */
 	@Override
 	public void setCtCollectionId(long ctCollectionId);
+
+	/**
+	 * Returns the uuid of this commerce channel.
+	 *
+	 * @return the uuid of this commerce channel
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this commerce channel.
+	 *
+	 * @param uuid the uuid of this commerce channel
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the external reference code of this commerce channel.

@@ -294,6 +294,21 @@ public class DispatchTriggerLocalServiceWrapper
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the dispatch trigger with the matching UUID and company.
+	 *
+	 * @param uuid the dispatch trigger's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching dispatch trigger, or <code>null</code> if a matching dispatch trigger could not be found
+	 */
+	@Override
+	public com.liferay.dispatch.model.DispatchTrigger
+		fetchDispatchTriggerByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _dispatchTriggerLocalService.
+			fetchDispatchTriggerByUuidAndCompanyId(uuid, companyId);
+	}
+
 	@Override
 	public java.util.Date fetchNextFireDate(long dispatchTriggerId) {
 		return _dispatchTriggerLocalService.fetchNextFireDate(
@@ -348,6 +363,23 @@ public class DispatchTriggerLocalServiceWrapper
 				companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the dispatch trigger with the matching UUID and company.
+	 *
+	 * @param uuid the dispatch trigger's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching dispatch trigger
+	 * @throws PortalException if a matching dispatch trigger could not be found
+	 */
+	@Override
+	public com.liferay.dispatch.model.DispatchTrigger
+			getDispatchTriggerByUuidAndCompanyId(String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dispatchTriggerLocalService.
+			getDispatchTriggerByUuidAndCompanyId(uuid, companyId);
+	}
+
 	@Override
 	public java.util.List<com.liferay.dispatch.model.DispatchTrigger>
 		getDispatchTriggers(
@@ -398,6 +430,16 @@ public class DispatchTriggerLocalServiceWrapper
 	@Override
 	public int getDispatchTriggersCount(long companyId) {
 		return _dispatchTriggerLocalService.getDispatchTriggersCount(companyId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _dispatchTriggerLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override

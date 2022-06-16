@@ -10,6 +10,7 @@ create table CTermEntryLocalization (
 
 create table CommerceTermEntry (
 	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,
 	defaultLanguageId VARCHAR(75) null,
 	commerceTermEntryId LONG not null primary key,

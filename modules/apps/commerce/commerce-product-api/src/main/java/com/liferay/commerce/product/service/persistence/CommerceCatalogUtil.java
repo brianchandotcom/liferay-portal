@@ -120,6 +120,517 @@ public class CommerceCatalogUtil {
 	}
 
 	/**
+	 * Returns all the commerce catalogs where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce catalogs
+	 */
+	public static List<CommerceCatalog> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the commerce catalogs where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @return the range of matching commerce catalogs
+	 */
+	public static List<CommerceCatalog> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce catalogs where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce catalogs
+	 */
+	public static List<CommerceCatalog> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommerceCatalog> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce catalogs where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce catalogs
+	 */
+	public static List<CommerceCatalog> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommerceCatalog> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUuid(
+			uuid, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce catalog in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce catalog
+	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
+	 */
+	public static CommerceCatalog findByUuid_First(
+			String uuid, OrderByComparator<CommerceCatalog> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
+
+		return getPersistence().findByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce catalog in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
+	 */
+	public static CommerceCatalog fetchByUuid_First(
+		String uuid, OrderByComparator<CommerceCatalog> orderByComparator) {
+
+		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce catalog in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce catalog
+	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
+	 */
+	public static CommerceCatalog findByUuid_Last(
+			String uuid, OrderByComparator<CommerceCatalog> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
+
+		return getPersistence().findByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce catalog in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
+	 */
+	public static CommerceCatalog fetchByUuid_Last(
+		String uuid, OrderByComparator<CommerceCatalog> orderByComparator) {
+
+		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set where uuid = &#63;.
+	 *
+	 * @param commerceCatalogId the primary key of the current commerce catalog
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce catalog
+	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
+	 */
+	public static CommerceCatalog[] findByUuid_PrevAndNext(
+			long commerceCatalogId, String uuid,
+			OrderByComparator<CommerceCatalog> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
+
+		return getPersistence().findByUuid_PrevAndNext(
+			commerceCatalogId, uuid, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce catalogs that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce catalogs that the user has permission to view
+	 */
+	public static List<CommerceCatalog> filterFindByUuid(String uuid) {
+		return getPersistence().filterFindByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the commerce catalogs that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @return the range of matching commerce catalogs that the user has permission to view
+	 */
+	public static List<CommerceCatalog> filterFindByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().filterFindByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce catalogs that the user has permissions to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce catalogs that the user has permission to view
+	 */
+	public static List<CommerceCatalog> filterFindByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommerceCatalog> orderByComparator) {
+
+		return getPersistence().filterFindByUuid(
+			uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set of commerce catalogs that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param commerceCatalogId the primary key of the current commerce catalog
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce catalog
+	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
+	 */
+	public static CommerceCatalog[] filterFindByUuid_PrevAndNext(
+			long commerceCatalogId, String uuid,
+			OrderByComparator<CommerceCatalog> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
+
+		return getPersistence().filterFindByUuid_PrevAndNext(
+			commerceCatalogId, uuid, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce catalogs where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	public static void removeByUuid(String uuid) {
+		getPersistence().removeByUuid(uuid);
+	}
+
+	/**
+	 * Returns the number of commerce catalogs where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching commerce catalogs
+	 */
+	public static int countByUuid(String uuid) {
+		return getPersistence().countByUuid(uuid);
+	}
+
+	/**
+	 * Returns the number of commerce catalogs that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching commerce catalogs that the user has permission to view
+	 */
+	public static int filterCountByUuid(String uuid) {
+		return getPersistence().filterCountByUuid(uuid);
+	}
+
+	/**
+	 * Returns all the commerce catalogs where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce catalogs
+	 */
+	public static List<CommerceCatalog> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the commerce catalogs where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @return the range of matching commerce catalogs
+	 */
+	public static List<CommerceCatalog> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce catalogs where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce catalogs
+	 */
+	public static List<CommerceCatalog> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceCatalog> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce catalogs where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce catalogs
+	 */
+	public static List<CommerceCatalog> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceCatalog> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first commerce catalog in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce catalog
+	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
+	 */
+	public static CommerceCatalog findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<CommerceCatalog> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
+
+		return getPersistence().findByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first commerce catalog in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
+	 */
+	public static CommerceCatalog fetchByUuid_C_First(
+		String uuid, long companyId,
+		OrderByComparator<CommerceCatalog> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce catalog in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce catalog
+	 * @throws NoSuchCatalogException if a matching commerce catalog could not be found
+	 */
+	public static CommerceCatalog findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<CommerceCatalog> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
+
+		return getPersistence().findByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last commerce catalog in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce catalog, or <code>null</code> if a matching commerce catalog could not be found
+	 */
+	public static CommerceCatalog fetchByUuid_C_Last(
+		String uuid, long companyId,
+		OrderByComparator<CommerceCatalog> orderByComparator) {
+
+		return getPersistence().fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param commerceCatalogId the primary key of the current commerce catalog
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce catalog
+	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
+	 */
+	public static CommerceCatalog[] findByUuid_C_PrevAndNext(
+			long commerceCatalogId, String uuid, long companyId,
+			OrderByComparator<CommerceCatalog> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
+
+		return getPersistence().findByUuid_C_PrevAndNext(
+			commerceCatalogId, uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce catalogs that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce catalogs that the user has permission to view
+	 */
+	public static List<CommerceCatalog> filterFindByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the commerce catalogs that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @return the range of matching commerce catalogs that the user has permission to view
+	 */
+	public static List<CommerceCatalog> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce catalogs that the user has permissions to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceCatalogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce catalogs
+	 * @param end the upper bound of the range of commerce catalogs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce catalogs that the user has permission to view
+	 */
+	public static List<CommerceCatalog> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceCatalog> orderByComparator) {
+
+		return getPersistence().filterFindByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the commerce catalogs before and after the current commerce catalog in the ordered set of commerce catalogs that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param commerceCatalogId the primary key of the current commerce catalog
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce catalog
+	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
+	 */
+	public static CommerceCatalog[] filterFindByUuid_C_PrevAndNext(
+			long commerceCatalogId, String uuid, long companyId,
+			OrderByComparator<CommerceCatalog> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCatalogException {
+
+		return getPersistence().filterFindByUuid_C_PrevAndNext(
+			commerceCatalogId, uuid, companyId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the commerce catalogs where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	public static void removeByUuid_C(String uuid, long companyId) {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns the number of commerce catalogs where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching commerce catalogs
+	 */
+	public static int countByUuid_C(String uuid, long companyId) {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns the number of commerce catalogs that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching commerce catalogs that the user has permission to view
+	 */
+	public static int filterCountByUuid_C(String uuid, long companyId) {
+		return getPersistence().filterCountByUuid_C(uuid, companyId);
+	}
+
+	/**
 	 * Returns all the commerce catalogs where companyId = &#63;.
 	 *
 	 * @param companyId the company ID

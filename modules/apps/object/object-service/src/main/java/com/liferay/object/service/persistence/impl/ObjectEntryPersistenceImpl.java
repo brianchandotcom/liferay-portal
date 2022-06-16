@@ -4715,15 +4715,14 @@ public class ObjectEntryPersistenceImpl
 		ObjectEntryModelImpl objectEntryModelImpl =
 			(ObjectEntryModelImpl)objectEntry;
 
-		if (Validator.isNull(objectEntry.getExternalReferenceCode())) {
-			objectEntry.setExternalReferenceCode(
-				String.valueOf(objectEntry.getPrimaryKey()));
-		}
-
 		if (Validator.isNull(objectEntry.getUuid())) {
 			String uuid = _portalUUID.generate();
 
 			objectEntry.setUuid(uuid);
+		}
+
+		if (Validator.isNull(objectEntry.getExternalReferenceCode())) {
+			objectEntry.setExternalReferenceCode(objectEntry.getUuid());
 		}
 
 		ServiceContext serviceContext =

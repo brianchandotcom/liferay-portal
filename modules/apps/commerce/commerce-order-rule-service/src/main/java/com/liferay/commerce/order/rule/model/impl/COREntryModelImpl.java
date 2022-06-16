@@ -18,6 +18,7 @@ import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.model.COREntryModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -72,17 +74,17 @@ public class COREntryModelImpl
 	public static final String TABLE_NAME = "COREntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
-		{"COREntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"active_", Types.BOOLEAN}, {"description", Types.VARCHAR},
-		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"priority", Types.INTEGER},
-		{"type_", Types.VARCHAR}, {"typeSettings", Types.CLOB},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR}, {"COREntryId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
+		{"description", Types.VARCHAR}, {"displayDate", Types.TIMESTAMP},
+		{"expirationDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"priority", Types.INTEGER}, {"type_", Types.VARCHAR},
+		{"typeSettings", Types.CLOB}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -90,6 +92,7 @@ public class COREntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("COREntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -113,7 +116,7 @@ public class COREntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table COREntry (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,COREntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,description VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,name VARCHAR(75) null,priority INTEGER,type_ VARCHAR(75) null,typeSettings TEXT null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table COREntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,COREntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,description VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,name VARCHAR(75) null,priority INTEGER,type_ VARCHAR(75) null,typeSettings TEXT null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table COREntry";
 
@@ -172,11 +175,17 @@ public class COREntryModelImpl
 	public static final long TYPE_COLUMN_BITMASK = 64L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 128L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIORITY_COLUMN_BITMASK = 128L;
+	public static final long PRIORITY_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -291,6 +300,9 @@ public class COREntryModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<COREntry, Long>)COREntry::setMvccVersion);
+		attributeGetterFunctions.put("uuid", COREntry::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid", (BiConsumer<COREntry, String>)COREntry::setUuid);
 		attributeGetterFunctions.put(
 			"externalReferenceCode", COREntry::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
@@ -385,6 +397,35 @@ public class COREntryModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -833,6 +874,12 @@ public class COREntryModelImpl
 	}
 
 	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(COREntry.class.getName()));
+	}
+
+	@Override
 	public boolean isApproved() {
 		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
 			return true;
@@ -969,6 +1016,7 @@ public class COREntryModelImpl
 		COREntryImpl corEntryImpl = new COREntryImpl();
 
 		corEntryImpl.setMvccVersion(getMvccVersion());
+		corEntryImpl.setUuid(getUuid());
 		corEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		corEntryImpl.setCOREntryId(getCOREntryId());
 		corEntryImpl.setCompanyId(getCompanyId());
@@ -1001,6 +1049,7 @@ public class COREntryModelImpl
 
 		corEntryImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		corEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
 		corEntryImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		corEntryImpl.setCOREntryId(
@@ -1122,6 +1171,14 @@ public class COREntryModelImpl
 		COREntryCacheModel corEntryCacheModel = new COREntryCacheModel();
 
 		corEntryCacheModel.mvccVersion = getMvccVersion();
+
+		corEntryCacheModel.uuid = getUuid();
+
+		String uuid = corEntryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			corEntryCacheModel.uuid = null;
+		}
 
 		corEntryCacheModel.externalReferenceCode = getExternalReferenceCode();
 
@@ -1342,6 +1399,7 @@ public class COREntryModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _uuid;
 	private String _externalReferenceCode;
 	private long _COREntryId;
 	private long _companyId;
@@ -1394,6 +1452,7 @@ public class COREntryModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("COREntryId", _COREntryId);
@@ -1422,6 +1481,7 @@ public class COREntryModelImpl
 	static {
 		Map<String, String> attributeNames = new HashMap<>();
 
+		attributeNames.put("uuid_", "uuid");
 		attributeNames.put("active_", "active");
 		attributeNames.put("type_", "type");
 
@@ -1441,45 +1501,47 @@ public class COREntryModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("externalReferenceCode", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("COREntryId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("companyId", 8L);
+		columnBitmasks.put("COREntryId", 8L);
 
-		columnBitmasks.put("userId", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("userName", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("createDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("modifiedDate", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("active_", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("description", 512L);
+		columnBitmasks.put("active_", 512L);
 
-		columnBitmasks.put("displayDate", 1024L);
+		columnBitmasks.put("description", 1024L);
 
-		columnBitmasks.put("expirationDate", 2048L);
+		columnBitmasks.put("displayDate", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("expirationDate", 4096L);
 
-		columnBitmasks.put("priority", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("type_", 16384L);
+		columnBitmasks.put("priority", 16384L);
 
-		columnBitmasks.put("typeSettings", 32768L);
+		columnBitmasks.put("type_", 32768L);
 
-		columnBitmasks.put("lastPublishDate", 65536L);
+		columnBitmasks.put("typeSettings", 65536L);
 
-		columnBitmasks.put("status", 131072L);
+		columnBitmasks.put("lastPublishDate", 131072L);
 
-		columnBitmasks.put("statusByUserId", 262144L);
+		columnBitmasks.put("status", 262144L);
 
-		columnBitmasks.put("statusByUserName", 524288L);
+		columnBitmasks.put("statusByUserId", 524288L);
 
-		columnBitmasks.put("statusDate", 1048576L);
+		columnBitmasks.put("statusByUserName", 1048576L);
+
+		columnBitmasks.put("statusDate", 2097152L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

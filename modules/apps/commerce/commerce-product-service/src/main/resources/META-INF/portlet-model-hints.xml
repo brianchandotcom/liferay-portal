@@ -4,6 +4,7 @@
 	<model name="com.liferay.commerce.product.model.CommerceCatalog">
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />
+		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="commerceCatalogId" type="long" />
 		<field name="companyId" type="long" />
@@ -19,6 +20,7 @@
 	<model name="com.liferay.commerce.product.model.CommerceChannel">
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />
+		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="commerceChannelId" type="long" />
 		<field name="companyId" type="long" />
@@ -521,6 +523,7 @@
 	<model name="com.liferay.commerce.product.model.CPTaxCategory">
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />
+		<field name="uuid" type="String" />
 		<field name="externalReferenceCode" type="String" />
 		<field name="CPTaxCategoryId" type="long" />
 		<field name="companyId" type="long" />

@@ -260,6 +260,19 @@ public class COREntryLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
+	/**
+	 * Returns the cor entry with the matching UUID and company.
+	 *
+	 * @param uuid the cor entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching cor entry, or <code>null</code> if a matching cor entry could not be found
+	 */
+	public static COREntry fetchCOREntryByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().fetchCOREntryByUuidAndCompanyId(uuid, companyId);
+	}
+
 	public static List<COREntry>
 		getAccountEntryAndCommerceChannelAndCommerceOrderTypeCOREntries(
 			long companyId, long accountEntryId, long commerceChannelId,
@@ -419,6 +432,29 @@ public class COREntryLocalServiceUtil {
 
 		return getService().getCOREntryByExternalReferenceCode(
 			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the cor entry with the matching UUID and company.
+	 *
+	 * @param uuid the cor entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching cor entry
+	 * @throws PortalException if a matching cor entry could not be found
+	 */
+	public static COREntry getCOREntryByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
+
+		return getService().getCOREntryByUuidAndCompanyId(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static

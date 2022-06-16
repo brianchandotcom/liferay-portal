@@ -18,6 +18,7 @@ import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.model.CommerceShipmentItemModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -73,7 +75,8 @@ public class CommerceShipmentItemModelImpl
 	public static final String TABLE_NAME = "CommerceShipmentItem";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
 		{"commerceShipmentItemId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -88,6 +91,7 @@ public class CommerceShipmentItemModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("commerceShipmentItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -103,7 +107,7 @@ public class CommerceShipmentItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceShipmentItem (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,commerceShipmentItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShipmentId LONG,commerceOrderItemId LONG,commerceInventoryWarehouseId LONG,quantity INTEGER)";
+		"create table CommerceShipmentItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceShipmentItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShipmentId LONG,commerceOrderItemId LONG,commerceInventoryWarehouseId LONG,quantity INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceShipmentItem";
@@ -175,11 +179,17 @@ public class CommerceShipmentItemModelImpl
 	public static final long GROUPID_COLUMN_BITMASK = 32L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 64L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 128L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.service.util.ServiceProps.get(
@@ -291,6 +301,11 @@ public class CommerceShipmentItemModelImpl
 			"mvccVersion",
 			(BiConsumer<CommerceShipmentItem, Long>)
 				CommerceShipmentItem::setMvccVersion);
+		attributeGetterFunctions.put("uuid", CommerceShipmentItem::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<CommerceShipmentItem, String>)
+				CommerceShipmentItem::setUuid);
 		attributeGetterFunctions.put(
 			"externalReferenceCode",
 			CommerceShipmentItem::getExternalReferenceCode);
@@ -386,6 +401,35 @@ public class CommerceShipmentItemModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
 	}
 
 	@JSON
@@ -660,6 +704,12 @@ public class CommerceShipmentItemModelImpl
 		_quantity = quantity;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(CommerceShipmentItem.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -719,6 +769,7 @@ public class CommerceShipmentItemModelImpl
 			new CommerceShipmentItemImpl();
 
 		commerceShipmentItemImpl.setMvccVersion(getMvccVersion());
+		commerceShipmentItemImpl.setUuid(getUuid());
 		commerceShipmentItemImpl.setExternalReferenceCode(
 			getExternalReferenceCode());
 		commerceShipmentItemImpl.setCommerceShipmentItemId(
@@ -748,6 +799,8 @@ public class CommerceShipmentItemModelImpl
 
 		commerceShipmentItemImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		commerceShipmentItemImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
 		commerceShipmentItemImpl.setExternalReferenceCode(
 			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		commerceShipmentItemImpl.setCommerceShipmentItemId(
@@ -853,6 +906,14 @@ public class CommerceShipmentItemModelImpl
 			new CommerceShipmentItemCacheModel();
 
 		commerceShipmentItemCacheModel.mvccVersion = getMvccVersion();
+
+		commerceShipmentItemCacheModel.uuid = getUuid();
+
+		String uuid = commerceShipmentItemCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			commerceShipmentItemCacheModel.uuid = null;
+		}
 
 		commerceShipmentItemCacheModel.externalReferenceCode =
 			getExternalReferenceCode();
@@ -1008,6 +1069,7 @@ public class CommerceShipmentItemModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _uuid;
 	private String _externalReferenceCode;
 	private long _commerceShipmentItemId;
 	private long _groupId;
@@ -1023,6 +1085,8 @@ public class CommerceShipmentItemModelImpl
 	private int _quantity;
 
 	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
 		Function<CommerceShipmentItem, Object> function =
 			_attributeGetterFunctions.get(columnName);
 
@@ -1050,6 +1114,7 @@ public class CommerceShipmentItemModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put(
@@ -1067,6 +1132,16 @@ public class CommerceShipmentItemModelImpl
 		_columnOriginalValues.put("quantity", _quantity);
 	}
 
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
+	}
+
 	private transient Map<String, Object> _columnOriginalValues;
 
 	public static long getColumnBitmask(String columnName) {
@@ -1080,29 +1155,31 @@ public class CommerceShipmentItemModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("externalReferenceCode", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("commerceShipmentItemId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("commerceShipmentItemId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("commerceShipmentId", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("commerceOrderItemId", 1024L);
+		columnBitmasks.put("commerceShipmentId", 1024L);
 
-		columnBitmasks.put("commerceInventoryWarehouseId", 2048L);
+		columnBitmasks.put("commerceOrderItemId", 2048L);
 
-		columnBitmasks.put("quantity", 4096L);
+		columnBitmasks.put("commerceInventoryWarehouseId", 4096L);
+
+		columnBitmasks.put("quantity", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

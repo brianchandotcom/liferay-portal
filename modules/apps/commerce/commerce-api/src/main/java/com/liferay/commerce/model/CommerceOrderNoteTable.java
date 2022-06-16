@@ -36,6 +36,8 @@ public class CommerceOrderNoteTable extends BaseTable<CommerceOrderNoteTable> {
 	public final Column<CommerceOrderNoteTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CommerceOrderNoteTable, String> uuid = createColumn(
+		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderNoteTable, String> externalReferenceCode =
 		createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,

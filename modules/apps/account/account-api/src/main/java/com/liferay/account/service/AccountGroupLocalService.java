@@ -15,9 +15,11 @@
 package com.liferay.account.service;
 
 import com.liferay.account.model.AccountGroup;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -235,6 +237,17 @@ public interface AccountGroupLocalService
 		long companyId, String externalReferenceCode);
 
 	/**
+	 * Returns the account group with the matching UUID and company.
+	 *
+	 * @param uuid the account group's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching account group, or <code>null</code> if a matching account group could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountGroup fetchAccountGroupByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
 	 * Returns the account group with the primary key.
 	 *
 	 * @param accountGroupId the primary key of the account group
@@ -256,6 +269,19 @@ public interface AccountGroupLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountGroup getAccountGroupByExternalReferenceCode(
 			long companyId, String externalReferenceCode)
+		throws PortalException;
+
+	/**
+	 * Returns the account group with the matching UUID and company.
+	 *
+	 * @param uuid the account group's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching account group
+	 * @throws PortalException if a matching account group could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountGroup getAccountGroupByUuidAndCompanyId(
+			String uuid, long companyId)
 		throws PortalException;
 
 	/**
@@ -297,6 +323,10 @@ public interface AccountGroupLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AccountGroup getDefaultAccountGroup(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

@@ -133,6 +133,8 @@ public class CommerceInventoryWarehousePersistenceTest {
 
 		newCommerceInventoryWarehouse.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCommerceInventoryWarehouse.setUuid(RandomTestUtil.randomString());
+
 		newCommerceInventoryWarehouse.setExternalReferenceCode(
 			RandomTestUtil.randomString());
 
@@ -187,6 +189,9 @@ public class CommerceInventoryWarehousePersistenceTest {
 		Assert.assertEquals(
 			existingCommerceInventoryWarehouse.getMvccVersion(),
 			newCommerceInventoryWarehouse.getMvccVersion());
+		Assert.assertEquals(
+			existingCommerceInventoryWarehouse.getUuid(),
+			newCommerceInventoryWarehouse.getUuid());
 		Assert.assertEquals(
 			existingCommerceInventoryWarehouse.getExternalReferenceCode(),
 			newCommerceInventoryWarehouse.getExternalReferenceCode());
@@ -252,6 +257,24 @@ public class CommerceInventoryWarehousePersistenceTest {
 		Assert.assertEquals(
 			existingCommerceInventoryWarehouse.getType(),
 			newCommerceInventoryWarehouse.getType());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -328,13 +351,14 @@ public class CommerceInventoryWarehousePersistenceTest {
 		getOrderByComparator() {
 
 		return OrderByComparatorFactoryUtil.create(
-			"CIWarehouse", "mvccVersion", true, "externalReferenceCode", true,
-			"commerceInventoryWarehouseId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"name", true, "description", true, "active", true, "street1", true,
-			"street2", true, "street3", true, "city", true, "zip", true,
-			"commerceRegionCode", true, "countryTwoLettersISOCode", true,
-			"latitude", true, "longitude", true, "type", true);
+			"CIWarehouse", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "commerceInventoryWarehouseId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "description", true,
+			"active", true, "street1", true, "street2", true, "street3", true,
+			"city", true, "zip", true, "commerceRegionCode", true,
+			"countryTwoLettersISOCode", true, "latitude", true, "longitude",
+			true, "type", true);
 	}
 
 	@Test
@@ -661,6 +685,8 @@ public class CommerceInventoryWarehousePersistenceTest {
 			_persistence.create(pk);
 
 		commerceInventoryWarehouse.setMvccVersion(RandomTestUtil.nextLong());
+
+		commerceInventoryWarehouse.setUuid(RandomTestUtil.randomString());
 
 		commerceInventoryWarehouse.setExternalReferenceCode(
 			RandomTestUtil.randomString());

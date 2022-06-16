@@ -269,16 +269,21 @@ definition {
 	@description = "Verify that the users are able to identify the past stages that the workflow instance has already passed by"
 	@priority = "3"
 	test CanIdentifyPastStagesOnWorkflow {
-		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetricsAllItemsList#CanIdentifyPastStagesOnWorkflow";
 
 		Workflow.openWorkflowListView();
 
-		Workflow.uploadDefinition(
-			workflowDefinitionFile = "multi-task-process-workflow-definition.xml",
-			workflowDefinitionTitle = "Multi Task Process");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
 
-		Navigator.gotoNavItem(navItem = "Configuration");
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "multi-task-process-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Configuration"); 
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Multi Task Process",
@@ -304,7 +309,7 @@ definition {
 
 		WorkflowMetrics.chooseTransitionPerStep(
 			taskName = "Task1",
-			transitionOption = "Join");
+			transitionOption = "task1_join_join");
 
 		WorkflowMetrics.goToKebabMenuOptions(dropdownItem = "Track Workflow");
 

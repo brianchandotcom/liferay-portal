@@ -14,6 +14,7 @@
 
 import React from 'react';
 interface ILayoutWrapperProps extends React.HTMLAttributes<HTMLElement> {
+	ffUseMetadataAsSystemFields: boolean;
 	isViewOnly: boolean;
 	objectFieldTypes: ObjectFieldType[];
 	objectLayoutId: string;

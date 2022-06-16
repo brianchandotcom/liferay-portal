@@ -27,8 +27,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -123,6 +125,9 @@ public class ObjectDefinitionsValidationsDisplayContext
 				"errorLabel",
 				LocalizationUtil.getLocalizationMap(
 					objectValidationRule.getErrorLabel())
+			).put(
+				"ffUseMetadataAsSystemFields",
+				GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-154872"))
 			).put(
 				"id", objectValidationRule.getObjectValidationRuleId()
 			).put(

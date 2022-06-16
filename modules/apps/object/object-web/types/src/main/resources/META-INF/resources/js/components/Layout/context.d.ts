@@ -15,6 +15,7 @@
 import React from 'react';
 import {TObjectField, TObjectLayout, TObjectRelationship} from './types';
 declare type TState = {
+	ffUseMetadataAsSystemFields: boolean;
 	isViewOnly: boolean;
 	objectFieldTypes: ObjectFieldType[];
 	objectFields: TObjectField[];
@@ -51,6 +52,7 @@ declare const initialState: TState;
 interface ILayoutContextProviderProps
 	extends React.HTMLAttributes<HTMLElement> {
 	value: {
+		ffUseMetadataAsSystemFields: boolean;
 		isViewOnly: boolean;
 		objectFieldTypes: ObjectFieldType[];
 		objectLayoutId: string;

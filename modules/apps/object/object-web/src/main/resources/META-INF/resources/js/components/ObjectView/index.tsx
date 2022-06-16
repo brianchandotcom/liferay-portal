@@ -258,12 +258,14 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	);
 };
 interface ICustomViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
+	ffUseMetadataAsSystemFields: boolean;
 	isViewOnly: boolean;
 	objectViewId: string;
 	workflowStatusJSONArray: TWorkflowStatus[];
 }
 
 const CustomViewWrapper: React.FC<ICustomViewWrapperProps> = ({
+	ffUseMetadataAsSystemFields,
 	isViewOnly,
 	objectViewId,
 	workflowStatusJSONArray,
@@ -271,6 +273,7 @@ const CustomViewWrapper: React.FC<ICustomViewWrapperProps> = ({
 	return (
 		<ViewContextProvider
 			value={{
+				ffUseMetadataAsSystemFields,
 				isViewOnly,
 				objectViewId,
 				workflowStatusJSONArray,

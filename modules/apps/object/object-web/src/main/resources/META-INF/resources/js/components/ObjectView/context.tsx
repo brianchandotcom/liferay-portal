@@ -350,6 +350,8 @@ const viewReducer = (state: TState, action: TAction) => {
 				objectViewSortColumns,
 			} = objectView;
 
+			const {ffUseMetadataAsSystemFields} = state;
+
 			const objectFieldsWithCheck = objectFields.map(
 				(field: TObjectField) => {
 					return {
@@ -362,7 +364,7 @@ const viewReducer = (state: TState, action: TAction) => {
 
 			const newObjectFields: TObjectField[] = [];
 
-			if (!Liferay.FeatureFlags['LPS-154872']) {
+			if (!ffUseMetadataAsSystemFields) {
 				METADATA.map((field) => {
 					newObjectFields.push(field);
 				});
@@ -767,6 +769,7 @@ const viewReducer = (state: TState, action: TAction) => {
 
 interface IViewContextProviderProps extends React.HTMLAttributes<HTMLElement> {
 	value: {
+		ffUseMetadataAsSystemFields: boolean;
 		isViewOnly: boolean;
 		objectViewId: string;
 		workflowStatusJSONArray: TWorkflowStatus[];

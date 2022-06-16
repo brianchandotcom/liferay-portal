@@ -133,6 +133,9 @@ export default function EditObjectValidation({
 										? errors
 										: errorMessage
 								}
+								ffUseMetadataAsSystemFields={
+									values.ffUseMetadataAsSystemFields as boolean
+								}
 								handleChange={handleChange}
 								locales={availableLocales}
 								objectValidationRuleElements={

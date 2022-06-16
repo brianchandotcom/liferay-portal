@@ -87,6 +87,7 @@ function Conditions({
 	defaultLocale,
 	disabled,
 	errors,
+	ffUseMetadataAsSystemFields,
 	locales,
 	objectValidationRuleElements,
 	setValues,
@@ -99,7 +100,10 @@ function Conditions({
 		}
 	);
 
-	const sidebarElements = useMetadata(objectValidationRuleElements);
+	const sidebarElements = useMetadata(
+		objectValidationRuleElements,
+		ffUseMetadataAsSystemFields
+	);
 
 	const engine = values.engine;
 	const ddmTooltip = {
@@ -196,6 +200,7 @@ interface IBasicInfo extends ITabs {
 }
 
 interface IConditions extends ITabs {
+	ffUseMetadataAsSystemFields: boolean;
 	objectValidationRuleElements: SidebarCategory[];
 }
 

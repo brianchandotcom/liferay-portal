@@ -17,7 +17,6 @@ package com.liferay.document.library.web.internal.info.item.provider;
 import com.liferay.info.item.capability.InfoItemCapability;
 import com.liferay.info.item.provider.InfoItemCapabilitiesProvider;
 import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
-import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
@@ -37,15 +36,11 @@ public class FileEntryInfoItemCapabilitiesProvider
 	@Override
 	public List<InfoItemCapability> getInfoItemCapabilities() {
 		return ListUtil.fromArray(
-			_displayPageInfoItemCapability, _editPageInfoItemCapability,
-			_templatePageInfoItemCapability);
+			_displayPageInfoItemCapability, _templatePageInfoItemCapability);
 	}
 
 	@Reference
 	private DisplayPageInfoItemCapability _displayPageInfoItemCapability;
-
-	@Reference
-	private EditPageInfoItemCapability _editPageInfoItemCapability;
 
 	@Reference
 	private TemplateInfoItemCapability _templatePageInfoItemCapability;

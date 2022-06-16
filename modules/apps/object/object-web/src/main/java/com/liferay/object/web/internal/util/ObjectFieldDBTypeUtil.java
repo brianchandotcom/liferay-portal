@@ -37,10 +37,11 @@ public class ObjectFieldDBTypeUtil {
 		InfoField.FinalStep finalStep, ObjectField objectField) {
 
 		if (Objects.equals(
-				objectField.getDBType(),
-				ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_DECIMAL) ||
 			Objects.equals(
-				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_DOUBLE)) {
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
 
 			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
 		}

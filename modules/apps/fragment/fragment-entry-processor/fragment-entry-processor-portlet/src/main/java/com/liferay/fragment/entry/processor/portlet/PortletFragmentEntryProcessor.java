@@ -28,6 +28,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.constants.LayoutStructureWebKeys;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -184,7 +185,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			}
 			else if (processedPortletIds.contains(portletName) ||
 					 _checkNoninstanceablePortletUsed(
-						 fragmentEntryLink, portletName)) {
+						 fragmentEntryLink, portletName,
+						 fragmentEntryProcessorContext.
+							 getHttpServletRequest())) {
 
 				throw new FragmentEntryContentException(
 					LanguageUtil.get(
@@ -247,7 +250,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private boolean _checkNoninstanceablePortletUsed(
 			FragmentEntryLink currentFragmentEntryLink,
-			String currentPortletName)
+			String currentPortletName, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		if ((currentFragmentEntryLink.getFragmentEntryLinkId() <= 0) ||
@@ -263,15 +266,21 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					currentFragmentEntryLink.getSegmentsExperienceId(),
 					currentFragmentEntryLink.getPlid());
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					currentFragmentEntryLink.getGroupId(),
-					currentFragmentEntryLink.getPlid(), true);
+		LayoutStructure layoutStructure =
+			(LayoutStructure)httpServletRequest.getAttribute(
+				LayoutStructureWebKeys.LAYOUT_STRUCTURE);
 
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(
-				currentFragmentEntryLink.getSegmentsExperienceId()));
+		if (layoutStructure == null) {
+			LayoutPageTemplateStructure layoutPageTemplateStructure =
+				_layoutPageTemplateStructureLocalService.
+					fetchLayoutPageTemplateStructure(
+						currentFragmentEntryLink.getGroupId(),
+						currentFragmentEntryLink.getPlid(), true);
+
+			layoutStructure = LayoutStructure.of(
+				layoutPageTemplateStructure.getData(
+					currentFragmentEntryLink.getSegmentsExperienceId()));
+		}
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			if (currentFragmentEntryLink.getFragmentEntryLinkId() ==

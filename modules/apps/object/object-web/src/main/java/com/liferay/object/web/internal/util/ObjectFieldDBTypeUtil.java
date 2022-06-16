@@ -89,7 +89,7 @@ public class ObjectFieldDBTypeUtil {
 			Objects.equals(
 				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_DOUBLE)) {
 
-			finalStep.attribute(NumberInfoFieldType.DECIMAL, Boolean.TRUE);
+			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
 		}
 	}
 

@@ -81,27 +81,11 @@ public class ObjectRelationshipServiceUtil {
 	}
 
 	public static List<ObjectRelationship> getObjectRelationships(
-			long objectDefinitionId1)
-		throws PortalException {
-
-		return getService().getObjectRelationships(objectDefinitionId1);
-	}
-
-	public static List<ObjectRelationship> getObjectRelationships(
 			long objectDefinitionId1, int start, int end)
 		throws PortalException {
 
 		return getService().getObjectRelationships(
 			objectDefinitionId1, start, end);
-	}
-
-	public static List<ObjectRelationship>
-			getObjectRelationshipsByObjectDefinitionId2(
-				long objectDefinitionId2)
-		throws PortalException {
-
-		return getService().getObjectRelationshipsByObjectDefinitionId2(
-			objectDefinitionId2);
 	}
 
 	/**

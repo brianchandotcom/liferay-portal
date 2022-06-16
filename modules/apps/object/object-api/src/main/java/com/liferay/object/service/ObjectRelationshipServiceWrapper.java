@@ -89,30 +89,11 @@ public class ObjectRelationshipServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.object.model.ObjectRelationship>
-			getObjectRelationships(long objectDefinitionId1)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _objectRelationshipService.getObjectRelationships(
-			objectDefinitionId1);
-	}
-
-	@Override
-	public java.util.List<com.liferay.object.model.ObjectRelationship>
 			getObjectRelationships(long objectDefinitionId1, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectRelationshipService.getObjectRelationships(
 			objectDefinitionId1, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.object.model.ObjectRelationship>
-			getObjectRelationshipsByObjectDefinitionId2(
-				long objectDefinitionId2)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _objectRelationshipService.
-			getObjectRelationshipsByObjectDefinitionId2(objectDefinitionId2);
 	}
 
 	/**

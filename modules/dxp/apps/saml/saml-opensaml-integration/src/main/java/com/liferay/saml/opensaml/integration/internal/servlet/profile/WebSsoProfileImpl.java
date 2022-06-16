@@ -1327,11 +1327,10 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				samlSsoRequestContext, assertionConsumerService,
 				issueInstantDateTime);
 
-		Conditions conditions = getSuccessConditions(
-			samlSsoRequestContext, issueInstantDateTime,
-			subjectConfirmationData.getNotOnOrAfter());
-
-		assertion.setConditions(conditions);
+		assertion.setConditions(
+			getSuccessConditions(
+				samlSsoRequestContext, issueInstantDateTime,
+				subjectConfirmationData.getNotOnOrAfter()));
 
 		assertion.setID(generateIdentifier(20));
 		assertion.setIssueInstant(issueInstantDateTime);

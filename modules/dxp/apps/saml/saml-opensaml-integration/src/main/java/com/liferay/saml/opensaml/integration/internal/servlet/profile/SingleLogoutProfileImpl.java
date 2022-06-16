@@ -1136,10 +1136,8 @@ public class SingleLogoutProfileImpl
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
 
-		Issuer issuer = OpenSamlUtil.buildIssuer(
-			samlSelfEntityContext.getEntityId());
-
-		logoutResponse.setIssuer(issuer);
+		logoutResponse.setIssuer(
+			OpenSamlUtil.buildIssuer(samlSelfEntityContext.getEntityId()));
 
 		StatusCode statusCode = OpenSamlUtil.buildStatusCode(statusCodeURI);
 
@@ -1220,10 +1218,8 @@ public class SingleLogoutProfileImpl
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
 
-		Issuer issuer = OpenSamlUtil.buildIssuer(
-			samlSelfEntityContext.getEntityId());
-
-		logoutRequest.setIssuer(issuer);
+		logoutRequest.setIssuer(
+			OpenSamlUtil.buildIssuer(samlSelfEntityContext.getEntityId()));
 
 		SAMLSubjectNameIdentifierContext samlSubjectNameIdentifierContext =
 			messageContext.getSubcontext(
@@ -1323,10 +1319,8 @@ public class SingleLogoutProfileImpl
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
 
-		Issuer issuer = OpenSamlUtil.buildIssuer(
-			samlSelfEntityContext.getEntityId());
-
-		logoutResponse.setIssuer(issuer);
+		logoutResponse.setIssuer(
+			OpenSamlUtil.buildIssuer(samlSelfEntityContext.getEntityId()));
 
 		StatusCode statusCode = OpenSamlUtil.buildStatusCode(statusCodeURI);
 
@@ -1392,10 +1386,8 @@ public class SingleLogoutProfileImpl
 		SAMLSelfEntityContext samlSelfEntityContext =
 			messageContext.getSubcontext(SAMLSelfEntityContext.class);
 
-		Issuer issuer = OpenSamlUtil.buildIssuer(
-			samlSelfEntityContext.getEntityId());
-
-		logoutRequest.setIssuer(issuer);
+		logoutRequest.setIssuer(
+			OpenSamlUtil.buildIssuer(samlSelfEntityContext.getEntityId()));
 
 		SAMLSubjectNameIdentifierContext samlSubjectNameIdentifierContext =
 			messageContext.getSubcontext(

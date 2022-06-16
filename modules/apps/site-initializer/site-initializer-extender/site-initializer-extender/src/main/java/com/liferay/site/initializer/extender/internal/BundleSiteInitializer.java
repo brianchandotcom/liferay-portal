@@ -2040,9 +2040,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getString("name"),
 					jsonObject.getString("objectActionExecutorKey"),
 					jsonObject.getString("objectActionTriggerKey"),
-					UnicodePropertiesBuilder.put(
-						"parameters", jsonObject.getString("parameters")
-					).build());
+					_toParametersUnicodeProperties(
+						jsonObject.getJSONObject("parameters")));
 			}
 		}
 
@@ -3419,6 +3418,26 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return t;
+	}
+
+	private UnicodeProperties _toParametersUnicodeProperties(
+		Map<String, ?> parameters) {
+
+		Map<String, String> map = new HashMap<>();
+
+		for (Map.Entry<String, ?> entry : parameters.entrySet()) {
+			Object value = entry.getValue();
+
+			if (value instanceof ArrayList) {
+				value = JSONFactoryUtil.looseSerialize(value);
+			}
+
+			map.put(entry.getKey(), value.toString());
+		}
+
+		return UnicodePropertiesBuilder.create(
+			map, true
+		).build();
 	}
 
 	private Layout _updateDraftLayout(

@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.account">
 	<namespace>Account</namespace>
-	<entity external-reference-code="true" local-service="true" name="AccountEntry" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="AccountEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -111,7 +111,7 @@
 			<finder-column name="accountUserId" />
 		</finder>
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="AccountGroup" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="AccountGroup" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

@@ -43,7 +43,7 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="DispatchTrigger" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="DispatchTrigger" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

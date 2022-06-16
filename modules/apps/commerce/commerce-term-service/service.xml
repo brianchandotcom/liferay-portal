@@ -4,7 +4,7 @@
 <service-builder auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.commerce.term">
 	<author>Luca Pellizzon</author>
 	<namespace>Commerce</namespace>
-	<entity external-reference-code="true" local-service="true" name="CommerceTermEntry" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="CommerceTermEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

@@ -4,7 +4,7 @@
 <service-builder auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.commerce.order.rule" short-no-such-exception-enabled="false">
 	<author>Luca Pellizzon</author>
 	<namespace>COR</namespace>
-	<entity external-reference-code="true" local-service="true" name="COREntry" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="COREntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

@@ -135,7 +135,7 @@
 
 		<column lazy="false" name="blob" type="Blob" />
 	</entity>
-	<entity external-reference-code="company" local-service="true" name="ERCCompanyEntry" remote-service="false">
+	<entity external-reference-code="company" local-service="true" name="ERCCompanyEntry" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
@@ -145,7 +145,7 @@
 
 		<column name="companyId" type="long" />
 	</entity>
-	<entity external-reference-code="group" local-service="true" name="ERCGroupEntry" remote-service="false">
+	<entity external-reference-code="group" local-service="true" name="ERCGroupEntry" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 

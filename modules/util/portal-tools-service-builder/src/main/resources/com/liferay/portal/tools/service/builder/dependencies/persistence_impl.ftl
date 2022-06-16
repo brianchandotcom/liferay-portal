@@ -40,7 +40,7 @@
 	<#assign useCache = "useFinderCache && productionMode" />
 </#if>
 
-<#if entity.hasUuid() && osgiModule && serviceBuilder.isVersionGTE_7_4_0()>
+<#if osgiModule && serviceBuilder.isVersionGTE_7_4_0() && entity.hasUuid()>
 	<#assign
 		portalUUID = "_portalUUID"
 	/>
@@ -812,17 +812,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			${entity.name}ModelImpl ${entity.variableName}ModelImpl = (${entity.name}ModelImpl)${entity.variableName};
 		</#if>
 
-		<#if entity.hasExternalReferenceCode() || entity.hasEntityColumn("externalReferenceCode")>
-			if (Validator.isNull(${entity.variableName}.getExternalReferenceCode())) {
-				${entity.variableName}.setExternalReferenceCode(String.valueOf(${entity.variableName}.getPrimaryKey()));
-			}
-		</#if>
-
 		<#if entity.hasUuid()>
 			if (Validator.isNull(${entity.variableName}.getUuid())) {
 				String uuid = ${portalUUID}.generate();
 
 				${entity.variableName}.setUuid(uuid);
+			}
+		</#if>
+
+		<#if entity.hasExternalReferenceCode() || entity.hasEntityColumn("externalReferenceCode")>
+			if (Validator.isNull(${entity.variableName}.getExternalReferenceCode())) {
+				<#if entity.hasUuid()>
+					${entity.variableName}.setExternalReferenceCode(${entity.variableName}.getUuid());
+				<#else>
+					${entity.variableName}.setExternalReferenceCode(String.valueOf(${entity.variableName}.getPrimaryKey()));
+				</#if>
 			}
 		</#if>
 

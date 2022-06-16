@@ -305,7 +305,7 @@
 			<finder-column name="orderStatus" />
 		</finder>
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="CommerceOrderItem" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="CommerceOrderItem" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -409,7 +409,7 @@
 			<finder-column name="subscription" />
 		</finder>
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="CommerceOrderNote" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="CommerceOrderNote" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -486,7 +486,7 @@
 			<finder-column name="commerceOrderId" />
 		</finder>
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="CommerceOrderType" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="CommerceOrderType" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -538,7 +538,7 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="CommerceOrderTypeRel" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="CommerceOrderTypeRel" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -579,7 +579,7 @@
 			<finder-column name="commerceOrderTypeId" />
 		</finder>
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="CommerceShipment" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="CommerceShipment" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -629,7 +629,7 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="CommerceShipmentItem" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="CommerceShipmentItem" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

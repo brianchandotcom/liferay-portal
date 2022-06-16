@@ -4,7 +4,7 @@
 <service-builder auto-namespace-tables="false" change-tracking-enabled="true" mvcc-enabled="true" package-path="com.liferay.commerce.product">
 	<author>Marco Leo</author>
 	<namespace>Commerce</namespace>
-	<entity external-reference-code="true" local-service="true" name="CommerceCatalog" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="CommerceCatalog" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -41,7 +41,7 @@
 			<finder-column name="system" />
 		</finder>
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="CommerceChannel" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="CommerceChannel" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -1006,7 +1006,7 @@
 			<finder-column name="key" />
 		</finder>
 	</entity>
-	<entity external-reference-code="true" local-service="true" name="CPTaxCategory" remote-service="true">
+	<entity external-reference-code="true" local-service="true" name="CPTaxCategory" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

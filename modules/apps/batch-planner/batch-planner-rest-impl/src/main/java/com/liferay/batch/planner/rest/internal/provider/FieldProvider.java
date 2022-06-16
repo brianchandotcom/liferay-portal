@@ -14,6 +14,9 @@
 
 package com.liferay.batch.planner.rest.internal.provider;
 
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.batch.engine.Field;
@@ -30,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -71,6 +75,21 @@ public class FieldProvider {
 		return new ArrayList<>(dtoEntityFields.values());
 	}
 
+	public List<Field> getObjectEntryFields(
+			long companyId, String objectDefinitionName, UriInfo uriInfo)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				companyId, objectDefinitionName);
+
+		Map<String, Field> objectEntryEntityFields =
+			_objectEntryOpenAPIResource.getObjectEntryEntityFields(
+				objectDefinition.getObjectDefinitionId(), uriInfo);
+
+		return new ArrayList<>(objectEntryEntityFields.values());
+	}
+
 	private OpenAPIYAML _getOpenAPIYAML(String internalClassName)
 		throws Exception {
 
@@ -91,6 +110,12 @@ public class FieldProvider {
 
 		return YAMLUtil.loadOpenAPIYAML((String)response.getEntity());
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
 
 	@Reference
 	private OpenAPIResource _openAPIResource;

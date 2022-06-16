@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Client Extension Type API
 Bundle-SymbolicName: com.liferay.client.extension.type.api
-Bundle-Version: 4.0.3
+Bundle-Version: 5.0.0
 Export-Package:\
 	com.liferay.client.extension.type,\
 	com.liferay.client.extension.type.configuration,\

@@ -318,14 +318,103 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "COMMERCE-8078. As a Developer, I want to verify if Shop By Diagram admin configuration with SVG images works on the storefront"
 	@priority = "4"
 	test AssertSVGTypeDiagramStoreFront {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8078 AssertSVGTypeDiagramStoreFront pending implementation
+		task ("Given a Diagram with the "Type" set to "SVG", an SVG image uploaded as "Diagram File".") {
+			CommerceProducts.openProductsAdmin();
 
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "sbd",
+				imageType = "svg",
+				productType = "Diagram");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			CommerceDiagram.changeSettingsType(settingsType = "SVG");
+		}
+
+		task ("And link them to some specific SKUs") {
+			CommerceDiagram.changePinInfo(
+				buttonType = "Save",
+				newPinNumber = "1",
+				pinNumber = "1",
+				quantity = "2",
+				selectType = "Linked to a SKU",
+				sku = "MIN93016A");
+
+			CommerceDiagram.changePinInfo(
+				buttonType = "Save",
+				newPinNumber = "32",
+				pinNumber = "32",
+				quantity = "2",
+				selectType = "Linked to a SKU",
+				sku = "MIN93015");
+
+			CommerceDiagram.changePinInfo(
+				buttonType = "Save",
+				newPinNumber = "2",
+				pinNumber = "2",
+				quantity = "2",
+				selectType = "Linked to a SKU",
+				sku = "MIN93017");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When a Developer goes into the product details of the diagram on Minium and clicks on the linked pins") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceNavigator.searchCatalog(productName = "Diagram Test");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
+		}
+
+		task ("Then the Developer will see a pop-up and verify if for all the pins will open a pop-up with the linked product inside") {
+			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+
+			CommerceDiagram.assertPinToolTipInfoInProduct(
+				productName = "Brake Fluid",
+				selectedType = "Linked to a SKU",
+				sku = "MIN93016A");
+
+			CommerceDiagram.viewPinInProduct(pinNumber = "32");
+
+			CommerceDiagram.assertPinToolTipInfoInProduct(
+				productName = "ABS Sensor",
+				selectedType = "Linked to a SKU",
+				sku = "MIN93015");
+
+			CommerceDiagram.viewPinInProduct(pinNumber = "2");
+
+			CommerceDiagram.assertPinToolTipInfoInProduct(
+				productName = "Premium Brake Fluid",
+				selectedType = "Linked to a SKU",
+				sku = "MIN93017");
+		}
+
+		task ("And vSerify if into the Mapped Product we have only 3 relations") {
+			for (var mappedProducts : list "MIN93016A,MIN93015,MIN93017") {
+				AssertElementPresent(
+					key_productName = "${mappedProducts}",
+					locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT");
+			}
+		}
 	}
 
 	@description = "COMMERCE-8129. Assert that a buyer can see the thumbnails for a diagram"

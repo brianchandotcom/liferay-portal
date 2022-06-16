@@ -20,6 +20,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.constants.LayoutStructureWebKeys;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
@@ -33,6 +34,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -97,6 +100,7 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		LayoutStructureItem layoutStructureItem = _getLayoutStructureItem(
+			fragmentEntryProcessorContext.getHttpServletRequest(),
 			fragmentEntryLink);
 
 		if (layoutStructureItem == null) {
@@ -158,25 +162,32 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private LayoutStructureItem _getLayoutStructureItem(
+		HttpServletRequest httpServletRequest,
 		FragmentEntryLink fragmentEntryLink) {
 
-		try {
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				_layoutPageTemplateStructureLocalService.
-					fetchLayoutPageTemplateStructure(
-						fragmentEntryLink.getGroupId(),
-						fragmentEntryLink.getPlid(), true);
+		LayoutStructure layoutStructure =
+			(LayoutStructure)httpServletRequest.getAttribute(
+				LayoutStructureWebKeys.LAYOUT_STRUCTURE);
 
-			LayoutStructure layoutStructure = LayoutStructure.of(
-				layoutPageTemplateStructure.getData(
-					fragmentEntryLink.getSegmentsExperienceId()));
+		if (layoutStructure == null) {
+			try {
+				LayoutPageTemplateStructure layoutPageTemplateStructure =
+					_layoutPageTemplateStructureLocalService.
+						fetchLayoutPageTemplateStructure(
+							fragmentEntryLink.getGroupId(),
+							fragmentEntryLink.getPlid(), true);
 
-			return layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-				fragmentEntryLink.getFragmentEntryLinkId());
+				layoutStructure = LayoutStructure.of(
+					layoutPageTemplateStructure.getData(
+						fragmentEntryLink.getSegmentsExperienceId()));
+			}
+			catch (Exception exception) {
+				return null;
+			}
 		}
-		catch (Exception exception) {
-			return null;
-		}
+
+		return layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+			fragmentEntryLink.getFragmentEntryLinkId());
 	}
 
 	@Reference

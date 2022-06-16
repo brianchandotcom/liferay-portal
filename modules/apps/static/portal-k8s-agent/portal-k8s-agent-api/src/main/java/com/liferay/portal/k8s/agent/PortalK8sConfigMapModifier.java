@@ -24,7 +24,21 @@ import java.util.function.Consumer;
 public interface PortalK8sConfigMapModifier {
 
 	public Result modifyConfigMap(
-		Consumer<Map<String, String>> configMapDataConsumer, String serviceId);
+		Consumer<PortalK8sConfigMapModifier.ConfigMapModel>
+			configMapModelConsumer,
+		String configMapName);
+
+	public interface ConfigMapModel {
+
+		public Map<String, String> annotations();
+
+		public Map<String, String> binaryData();
+
+		public Map<String, String> data();
+
+		public Map<String, String> labels();
+
+	}
 
 	public enum Result {
 

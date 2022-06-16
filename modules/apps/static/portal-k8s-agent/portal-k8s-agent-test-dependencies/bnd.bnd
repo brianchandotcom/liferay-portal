@@ -1,23 +1,38 @@
 Bundle-Name: Liferay Portal K8s Agent Test Dependencies
 Bundle-SymbolicName: com.liferay.portal.k8s.agent.test.dependencies
 Bundle-Version: 1.0.0
-Export-Package:\
-	io.fabric8.kubernetes.api.*;version=5.12.2,\
-	io.fabric8.kubernetes.client.*;version=5.12.2
 Import-Package:\
+	!io.fabric8.kubernetes.client.server.mock,\
+	!io.fabric8.mockwebserver.*,\
+	\
 	!javax.annotation.meta,\
+	\
+	!okhttp3.mockwebserver,\
 	\
 	!org.junit.jupiter.api.extension,\
 	\
+	com.fasterxml.jackson.*;usage=test;mandatory:=usage,\
+	\
+	io.fabric8.kubernetes.internal;usage=test;mandatory:=usage,\
+	io.fabric8.kubernetes.*;usage=test;mandatory:=usage,\
+	\
 	javax.*,\
+	\
+	okhttp3.*;usage=test;mandatory:=usage,\
+	\
+	okio;usage=test;mandatory:=usage,\
 	\
 	org.junit.*,\
 	\
 	org.slf4j.*,\
 	\
-	org.w3c.dom.*,\
-	\
 	org.xml.sax
+-exportcontents:\
+	io.fabric8.kubernetes.client.server.mock;usage=test;mandatory:=usage,\
+	io.fabric8.mockwebserver.*;usage=test;mandatory:=usage,\
+	\
+	okhttp3.mockwebserver;usage=test;mandatory:=usage
 -fixupmessages:\
 	Classes found in the wrong directory,\
-	Export
+	Export,\
+	Unknown directive

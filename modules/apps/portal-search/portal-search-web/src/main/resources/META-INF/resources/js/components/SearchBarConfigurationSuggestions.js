@@ -32,7 +32,7 @@ const CONTRIBUTORS = {
 
 const DEFAULT_ATTRIBUTES = {
 	fields: [],
-	includeAssetSummary: true,
+	includeAssetSearchSummary: true,
 	includeAssetURL: true,
 	sxpBlueprintId: '',
 };
@@ -271,8 +271,10 @@ function SXPBlueprintAttributes({onBlur, onChange, touched, value}) {
 						aria-label={Liferay.Language.get(
 							'include-asset-summary'
 						)}
-						onChange={_handleChangeAttribute('includeAssetSummary')}
-						value={value.attributes?.includeAssetSummary}
+						onChange={_handleChangeAttribute(
+							'includeAssetSearchSummary'
+						)}
+						value={value.attributes?.includeAssetSearchSummary}
 					>
 						<ClaySelect.Option
 							label={Liferay.Language.get('true')}

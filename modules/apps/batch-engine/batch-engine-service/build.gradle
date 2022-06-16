@@ -21,6 +21,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:batch-engine:batch-engine-api")
+	compileOnly project(":apps:object:object-rest-api")
 	compileOnly project(":apps:petra:petra-apache-http-components")
 	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":apps:portal:portal-aop-api")

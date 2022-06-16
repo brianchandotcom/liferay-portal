@@ -737,6 +737,15 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			LayoutStructureItemCSSUtil.getStyledLayoutStructureItemCssClasses(
 				containerStyledLayoutStructureItem));
 
+		String colorCssClasses =
+			renderLayoutStructureDisplayContext.getColorCssClasses(
+				containerStyledLayoutStructureItem);
+
+		if (Validator.isNotNull(colorCssClasses)) {
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(colorCssClasses);
+		}
+
 		if (Objects.equals(
 				containerStyledLayoutStructureItem.getWidthType(), "fixed")) {
 
@@ -1295,6 +1304,15 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				LayoutStructureItemCSSUtil.
 					getStyledLayoutStructureItemCssClasses(
 						fragmentStyledLayoutStructureItem));
+		}
+
+		String colorCssClasses =
+			renderLayoutStructureDisplayContext.getColorCssClasses(
+				fragmentStyledLayoutStructureItem);
+
+		if (Validator.isNotNull(colorCssClasses)) {
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(colorCssClasses);
 		}
 
 		jspWriter.write("\" style=\"");

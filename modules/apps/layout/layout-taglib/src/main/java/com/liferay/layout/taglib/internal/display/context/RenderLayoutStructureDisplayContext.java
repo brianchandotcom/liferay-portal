@@ -33,7 +33,6 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.type.WebImage;
-import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -53,6 +52,7 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -75,6 +76,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -95,6 +97,13 @@ public class RenderLayoutStructureDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		Theme theme = _themeDisplay.getTheme();
+
+		String colorPalette = theme.getSetting("color-palette");
+
+		_themeColorsCssClasses = SetUtil.fromArray(
+			StringUtil.split(colorPalette));
 	}
 
 	public String getAddInfoItemActionURL() {
@@ -121,6 +130,30 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		return collectionStyledLayoutStructureItemIds;
+	}
+
+	public String getColorCssClasses(
+		StyledLayoutStructureItem styledLayoutStructureItem) {
+
+		StringBundler cssClassSB = new StringBundler(4);
+
+		String backgroundColorCssClass =
+			styledLayoutStructureItem.getBackgroundColorCssClass();
+
+		if (_themeColorsCssClasses.contains(backgroundColorCssClass)) {
+			cssClassSB.append("bg-");
+			cssClassSB.append(backgroundColorCssClass);
+		}
+
+		String textColorCssClass =
+			styledLayoutStructureItem.getTextColorCssClass();
+
+		if (_themeColorsCssClasses.contains(textColorCssClass)) {
+			cssClassSB.append(" text-");
+			cssClassSB.append(textColorCssClass);
+		}
+
+		return cssClassSB.toString();
 	}
 
 	public String getContainerLinkHref(
@@ -302,186 +335,6 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		return linkJSONObject.getString("target");
-	}
-
-	public String getCssClass(
-			StyledLayoutStructureItem styledLayoutStructureItem)
-		throws Exception {
-
-		StringBundler cssClassSB = new StringBundler(35);
-
-		String align = styledLayoutStructureItem.getAlign();
-
-		if (Validator.isNotNull(align)) {
-			cssClassSB.append(" ");
-			cssClassSB.append(align);
-		}
-
-		String backgroundColorCssClass =
-			styledLayoutStructureItem.getBackgroundColorCssClass();
-
-		if (Validator.isNotNull(backgroundColorCssClass)) {
-			cssClassSB.append(" bg-");
-			cssClassSB.append(backgroundColorCssClass);
-		}
-
-		String borderColorCssClass =
-			styledLayoutStructureItem.getBorderColorCssClass();
-
-		if (Validator.isNotNull(borderColorCssClass)) {
-			cssClassSB.append(" border-");
-			cssClassSB.append(borderColorCssClass);
-		}
-
-		String display = styledLayoutStructureItem.getDisplay();
-
-		if (Objects.equals(display, "none")) {
-			cssClassSB.append(" d-lg-");
-			cssClassSB.append(display);
-		}
-		else if (Objects.equals(
-					styledLayoutStructureItem.getContentDisplay(),
-					"flex-column")) {
-
-			cssClassSB.append(" d-flex flex-column");
-		}
-		else if (Objects.equals(
-					styledLayoutStructureItem.getContentDisplay(),
-					"flex-row")) {
-
-			cssClassSB.append(" d-flex flex-row");
-		}
-		else if (Validator.isNotNull(display)) {
-			cssClassSB.append(" d-lg-");
-			cssClassSB.append(display);
-		}
-
-		String flexWrap = styledLayoutStructureItem.getFlexWrap();
-
-		if (Validator.isNotNull(flexWrap)) {
-			cssClassSB.append(" ");
-			cssClassSB.append(flexWrap);
-		}
-
-		String justify = styledLayoutStructureItem.getJustify();
-
-		if (Validator.isNotNull(justify)) {
-			cssClassSB.append(" ");
-			cssClassSB.append(justify);
-		}
-
-		boolean addHorizontalMargin = true;
-
-		if (styledLayoutStructureItem instanceof
-				ContainerStyledLayoutStructureItem) {
-
-			ContainerStyledLayoutStructureItem
-				containerStyledLayoutStructureItem =
-					(ContainerStyledLayoutStructureItem)
-						styledLayoutStructureItem;
-
-			if (Objects.equals(
-					containerStyledLayoutStructureItem.getWidthType(),
-					"fixed")) {
-
-				cssClassSB.append(" container-fluid container-fluid-max-xl");
-
-				addHorizontalMargin = false;
-			}
-		}
-
-		String marginBottom = styledLayoutStructureItem.getMarginBottom();
-
-		if (Validator.isNotNull(marginBottom)) {
-			cssClassSB.append(" mb-lg-");
-			cssClassSB.append(marginBottom);
-		}
-
-		if (addHorizontalMargin) {
-			String marginLeft = styledLayoutStructureItem.getMarginLeft();
-
-			if (Validator.isNotNull(marginLeft)) {
-				cssClassSB.append(" ml-lg-");
-				cssClassSB.append(marginLeft);
-			}
-
-			String marginRight = styledLayoutStructureItem.getMarginRight();
-
-			if (Validator.isNotNull(marginRight)) {
-				cssClassSB.append(" mr-lg-");
-				cssClassSB.append(marginRight);
-			}
-		}
-
-		String marginTop = styledLayoutStructureItem.getMarginTop();
-
-		if (Validator.isNotNull(marginTop)) {
-			cssClassSB.append(" mt-lg-");
-			cssClassSB.append(marginTop);
-		}
-
-		String paddingBottom = styledLayoutStructureItem.getPaddingBottom();
-
-		if (Validator.isNotNull(paddingBottom)) {
-			cssClassSB.append(" pb-lg-");
-			cssClassSB.append(paddingBottom);
-		}
-
-		String paddingLeft = styledLayoutStructureItem.getPaddingLeft();
-
-		if (Validator.isNotNull(paddingLeft)) {
-			cssClassSB.append(" pl-lg-");
-			cssClassSB.append(paddingLeft);
-		}
-
-		String paddingRight = styledLayoutStructureItem.getPaddingRight();
-
-		if (Validator.isNotNull(paddingRight)) {
-			cssClassSB.append(" pr-lg-");
-			cssClassSB.append(paddingRight);
-		}
-
-		String paddingTop = styledLayoutStructureItem.getPaddingTop();
-
-		if (Validator.isNotNull(paddingTop)) {
-			cssClassSB.append(" pt-lg-");
-			cssClassSB.append(paddingTop);
-		}
-
-		String textAlignCssClass =
-			styledLayoutStructureItem.getTextAlignCssClass();
-
-		if (Validator.isNotNull(textAlignCssClass) &&
-			!Objects.equals(textAlignCssClass, "none")) {
-
-			if (!StringUtil.startsWith(textAlignCssClass, "text-")) {
-				cssClassSB.append(" text-lg-");
-			}
-			else {
-				cssClassSB.append(StringPool.SPACE);
-			}
-
-			cssClassSB.append(textAlignCssClass);
-		}
-
-		String textColorCssClass =
-			styledLayoutStructureItem.getTextColorCssClass();
-
-		if (Validator.isNotNull(textColorCssClass)) {
-			cssClassSB.append(" text-");
-			cssClassSB.append(textColorCssClass);
-		}
-
-		String responsiveCssClassValues =
-			ResponsiveLayoutStructureUtil.getResponsiveCssClassValues(
-				styledLayoutStructureItem);
-
-		if (Validator.isNotNull(responsiveCssClassValues)) {
-			cssClassSB.append(StringPool.SPACE);
-			cssClassSB.append(responsiveCssClassValues);
-		}
-
-		return cssClassSB.toString();
 	}
 
 	public DefaultFragmentRendererContext getDefaultFragmentRendererContext(
@@ -1047,6 +900,7 @@ public class RenderLayoutStructureDisplayContext {
 	private String _previewVersion;
 	private long[] _segmentsEntryIds;
 	private final boolean _showPreview;
+	private final Set<String> _themeColorsCssClasses;
 	private final ThemeDisplay _themeDisplay;
 
 }

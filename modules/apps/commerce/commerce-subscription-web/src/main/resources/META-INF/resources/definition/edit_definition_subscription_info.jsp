@@ -112,7 +112,22 @@ if (deliveryMaxSubscriptionCycles > 0) {
 		<div id="<portlet:namespace />cycleLengthContainer">
 			<aui:input name="subscriptionLength" suffix="<%= defaultCPSubscriptionTypeLabel %>" value="<%= String.valueOf(subscriptionLength) %>">
 				<aui:validator name="digits" />
-				<aui:validator name="min">1</aui:validator>
+
+				<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-or-equal-to-x", 1) %>' name="custom">
+					function(val) {
+						var subscriptionEnabled = window.document.querySelector('#<portlet:namespace />subscriptionEnabled');
+
+						if (!subscriptionEnabled.checked) {
+							return true;
+						}
+
+						if (subscriptionEnabled.checked && parseInt(val, 10) > 0) {
+							return true;
+						}
+
+						return false;
+					}
+				</aui:validator>
 			</aui:input>
 		</div>
 
@@ -174,7 +189,22 @@ if (deliveryMaxSubscriptionCycles > 0) {
 		<div id="<portlet:namespace />deliveryCycleLengthContainer">
 			<aui:input label="subscription-length" name="deliverySubscriptionLength" suffix="<%= defaultDeliveryCPSubscriptionTypeLabel %>" value="<%= String.valueOf(deliverySubscriptionLength) %>">
 				<aui:validator name="digits" />
-				<aui:validator name="min">1</aui:validator>
+
+				<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-or-equal-to-x", 1) %>' name="custom">
+					function(val) {
+						var deliverySubscriptionEnabled = window.document.querySelector('#<portlet:namespace />deliverySubscriptionEnabled');
+
+						if (!deliverySubscriptionEnabled.checked) {
+							return true;
+						}
+
+						if (deliverySubscriptionEnabled.checked && parseInt(val, 10) > 0) {
+							return true;
+						}
+
+						return false;
+					}
+				</aui:validator>
 			</aui:input>
 		</div>
 

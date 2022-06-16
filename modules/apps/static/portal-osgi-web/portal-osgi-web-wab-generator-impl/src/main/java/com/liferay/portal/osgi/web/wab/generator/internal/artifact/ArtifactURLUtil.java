@@ -100,6 +100,6 @@ public class ArtifactURLUtil {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"(.*?)(-\\d+\\.\\d+\\.\\d+\\.\\d+)?");
+		"(.*?)(-[0-9\\.]+)");
 
 }

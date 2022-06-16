@@ -14,8 +14,10 @@
 
 package com.liferay.object.rest.internal.graphql.dto.v1_0;
 
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
@@ -23,7 +25,9 @@ import com.liferay.object.rest.internal.petra.sql.dsl.expression.PredicateUtil;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -67,6 +71,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		ObjectDefinition objectDefinition,
 		ObjectEntryManager objectEntryManager,
 		ObjectFieldLocalService objectFieldLocalService,
+		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectScopeProvider objectScopeProvider) {
 
 		List<GraphQLDTOProperty> graphQLDTOProperties = new ArrayList<>();
@@ -122,6 +127,35 @@ public class ObjectDefinitionGraphQLDTOContributor
 						_typedClasses.getOrDefault(
 							objectField.getDBType(), Object.class)));
 			}
+		}
+
+		List<ObjectRelationship> objectRelationships =
+			objectRelationshipLocalService.getObjectRelationships(
+				objectDefinition.getObjectDefinitionId());
+
+		Stream<ObjectRelationship> objectRelationshipsStream =
+			objectRelationships.stream();
+
+		List<ObjectRelationship> manyToManyRelationships =
+			objectRelationshipsStream.filter(
+				objectRelationship -> objectRelationship.getType(
+				).equals(
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY
+				)
+			).collect(
+				Collectors.toList()
+			);
+
+		for (ObjectRelationship manyToManyRelationship :
+				manyToManyRelationships) {
+
+			graphQLDTOProperties.add(
+				GraphQLDTOProperty.of(
+					manyToManyRelationship.getName(), Long.class));
+
+			relationshipGraphQLDTOProperties.add(
+				GraphQLDTOProperty.of(
+					manyToManyRelationship.getName(), Map.class));
 		}
 
 		return new ObjectDefinitionGraphQLDTOContributor(
@@ -256,8 +290,25 @@ public class ObjectDefinitionGraphQLDTOContributor
 			property -> property.contains(relationshipName)
 		).findFirst(
 		).orElse(
-			""
+			StringPool.BLANK
 		);
+
+		if (relationshipIdName.equals(StringPool.BLANK)) {
+			Page<ObjectEntry> objectEntryRelatedObjectEntriesPage =
+				_objectEntryManager.getObjectEntryRelatedObjectEntries(
+					dtoConverterContext, _objectDefinition, id,
+					relationshipName,
+					Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+
+			Collection<ObjectEntry> items =
+				objectEntryRelatedObjectEntriesPage.getItems();
+
+			List<Map<String, Object>> maps = new ArrayList<>();
+
+			items.forEach(objectEntry1 -> maps.add(_toMap(objectEntry1)));
+
+			return (T)maps;
+		}
 
 		Object relationshipId = properties.get(relationshipIdName);
 

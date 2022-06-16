@@ -1,0 +1,20 @@
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":sampleThemeCSS:buildClientExtension"
+	dependsOn ":sampleThemeFavicon:buildClientExtension"
+
+	doLast {
+		Project sampleThemeCSSProject = project(":sampleThemeCSS")
+
+		File distFile = new File(sampleThemeCSSProject.projectDir, "dist/sampleThemecSS.zip")
+
+		assert distFile.exists()
+
+		Project sampleThemeFaviconProject = project(":sampleThemeFavicon")
+
+		File sampleConfigFile = new File(sampleThemeFaviconProject.buildDir, "sampleThemeFavicon.client-extension-config.json")
+
+		assert sampleConfigFile.exists()
+	}
+}

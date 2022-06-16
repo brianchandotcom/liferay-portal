@@ -1,0 +1,5 @@
+sampleThemeCSS:
+    clayURL: "css/clay.css"
+    mainURL: "css/main.css"
+    name: "Sample ThemeCSS"
+    type: "themeCSS"

@@ -1,0 +1,11 @@
+{
+	"dependencies": {
+		"sassy-inputs": "1.0.6"
+	},
+	"liferayDesignPack": {
+		"baseTheme": "styled"
+	},
+	"main": "package.json",
+	"name": "@liferay/themecss",
+	"version": "1.0.0"
+}

@@ -12,8 +12,6 @@
  * details.
  */
 
-import Component from 'metal-component';
-
 import objectToFormData from './util/form/object_to_form_data.es';
 
 function toElementHelper(elementOrSelector) {
@@ -24,8 +22,24 @@ function toElementHelper(elementOrSelector) {
 	return elementOrSelector;
 }
 
-function isString(val) {
-	return typeof val === 'string';
+class LifeCycles {
+	constructor() {
+		this.created();
+
+		this.attached();
+	}
+	dispose() {
+		this.disposeInternal();
+
+		this.detached();
+
+		this.disposed();
+	}
+	attached() {}
+	created() {}
+	detached() {}
+	disposed() {}
+	disposeInternal() {}
 }
 
 /**
@@ -33,9 +47,14 @@ function isString(val) {
  * to a specific portlet.
  *
  * @abstract
- * @extends {Component}
  */
-class PortletBase extends Component {
+class PortletBase extends LifeCycles {
+	constructor({portletNamespace}) {
+		super();
+
+		this.portletNamespace = portletNamespace;
+		this.rootNode = document.getElementById(`p_p_id${portletNamespace}`);
+	}
 
 	/**
 	 * Returns a Node List containing all the matching element nodes within the
@@ -53,10 +72,7 @@ class PortletBase extends Component {
 		root = toElementHelper(root) || this.rootNode || document;
 
 		return root.querySelectorAll(
-			this.namespaceSelectors_(
-				this.portletNamespace || this.namespace,
-				selectors
-			)
+			this.namespaceSelectors_(this.portletNamespace, selectors)
 		);
 	}
 
@@ -128,7 +144,7 @@ class PortletBase extends Component {
 	 *         the portlet namespace or a namespaced string.
 	 */
 	ns(object) {
-		return Liferay.Util.ns(this.portletNamespace || this.namespace, object);
+		return Liferay.Util.ns(this.portletNamespace, object);
 	}
 
 	/**
@@ -146,10 +162,7 @@ class PortletBase extends Component {
 		root = toElementHelper(root) || this.rootNode || document;
 
 		return root.querySelector(
-			this.namespaceSelectors_(
-				this.portletNamespace || this.namespace,
-				selectors
-			)
+			this.namespaceSelectors_(this.portletNamespace, selectors)
 		);
 	}
 
@@ -161,55 +174,8 @@ class PortletBase extends Component {
 	 * @return {Element} The portlet's default root node element.
 	 */
 	rootNodeValueFn_() {
-		return document.getElementById(
-			`p_p_id${this.portletNamespace || this.namespace}`
-		);
+		return document.getElementById(`p_p_id${this.portletNamespace}`);
 	}
 }
-
-/**
- * State definition.
- *
- * @ignore
- * @static
- * @type {!Object}
- */
-PortletBase.STATE = {
-
-	/**
-	 * Portlet's namespace.
-	 *
-	 * @deprecated As of Judson (7.1.x)
-	 * @instance
-	 * @memberof PortletBase
-	 * @type {string}
-	 */
-	namespace: {
-		validator: isString,
-	},
-
-	/**
-	 * Portlet's namespace.
-	 *
-	 * @instance
-	 * @memberof PortletBase
-	 * @type {string}
-	 */
-	portletNamespace: {
-		validator: isString,
-	},
-
-	/**
-	 * Portlet's root node element.
-	 *
-	 * @instance
-	 * @memberof PortletBase
-	 * @type {Element}
-	 */
-	rootNode: {
-		setter: toElementHelper,
-		valueFn: 'rootNodeValueFn_',
-	},
-};
 
 export default PortletBase;

@@ -896,6 +896,30 @@ definition {
 		Click(locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_HEADER");
 	}
 
+	macro goToKebabMenuOptions {
+		Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+		var dropdownItem = "${dropdownItem}";
+
+		if ("${dropdownItem}" == "Reassign Task") {
+			Click(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
+		}
+
+		if ("${dropdownItem}" == "Transition") {
+			Click(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
+		}
+
+		if ("${dropdownItem}" == "Update Due Date") {
+			Click(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
+		}
+
+		if ("${dropdownItem}" == "Track Workflow") {
+			Click(
+				key_menuOption = "${dropdownItem}",
+				locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
+		}
+	}
+
 	macro goToReassignSelectTask {
 		Click(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
@@ -1613,6 +1637,12 @@ definition {
 			locator1 = "WorkflowAllItems#CURRENT_NODE_CIRCLE_ICON");
 	}
 
+	macro viewCurrentNodeDoneIcon {
+		AssertElementPresent(
+			key_currentNode = "${currentNode}",
+			locator1 = "WorkflowAllItems#CURRENT_NODE_DONE_ICON");
+	}
+
 	macro viewDateRangeErrorMessage {
 		var key_errorMessage = "${errorMessage}";
 
@@ -1950,37 +1980,6 @@ definition {
 		if (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}")) {
 			echo("timeout exceeded");
 		}
-	}
-
-	macro goToKebabMenuOptions {
-		Click(locator1 = "Icon#SVG_ELLIPSIS");
-
-		var dropdownItem = "${dropdownItem}";
-
-		if ("${dropdownItem}" == "Reassign Task") {
-			Click(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
-		}
-
-		if ("${dropdownItem}" == "Transition") {
-			Click(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
-		}
-
-		if ("${dropdownItem}" == "Update Due Date") {
-			Click(locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
-		}
-
-		if ("${dropdownItem}" == "Track Workflow") {
-			Click(
-				key_menuOption = "${dropdownItem}",
-				locator1 = "WorkflowAllItems#KEBAB_MENU_OPTIONS");
-		}
-
-	}
-
-	macro viewCurrentNodeDoneIcon {
-		AssertElementPresent(
-			key_currentNode = "${currentNode}",
-			locator1 = "WorkflowAllItems#CURRENT_NODE_DONE_ICON");
 	}
 
 }

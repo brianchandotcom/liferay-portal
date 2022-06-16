@@ -283,7 +283,7 @@ definition {
 
 		Navigator.gotoBack();
 
-		Navigator.gotoNavItem(navItem = "Configuration"); 
+		Navigator.gotoNavItem(navItem = "Configuration");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Multi Task Process",
@@ -320,7 +320,6 @@ definition {
 		WorkflowMetrics.viewCurrentNodeDoneIcon(currentNode = "fork");
 
 		WorkflowMetrics.viewCurrentNodeDoneIcon(currentNode = "task1");
-
 	}
 
 	@description = "LPS-92052 - Verify that the user is able to click on the table header Assignee to choose the items order (A-Z / Z-A)"

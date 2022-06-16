@@ -127,7 +127,6 @@ definition {
 		CalendarLookAndFeelConfiguration.viewCssValues(
 			cssElement = "font-weight",
 			cssValue = "bold");
-
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify background in the Background Style tab"
@@ -137,7 +136,7 @@ definition {
 
 		CalendarLookAndFeelConfiguration.selectTab(tabName = "Background Styles");
 
-		CalendarLookAndFeelConfiguration.chooseBackgroundColor(colorValue = "F8F2FF");	
+		CalendarLookAndFeelConfiguration.chooseBackgroundColor(colorValue = "F8F2FF");
 
 		Button.clickSave();
 
@@ -148,7 +147,6 @@ definition {
 		CalendarLookAndFeelConfiguration.viewCssValues(
 			cssElement = "background-color",
 			cssValue = "#f8f2ff");
-
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify border width, border style and border color in the border style tab"
@@ -159,20 +157,20 @@ definition {
 		CalendarLookAndFeelConfiguration.selectTab(tabName = "Border Styles");
 
 		CalendarLookAndFeelConfiguration.fillBorderWidthColumn(
-			fieldTextTop = "40",
-			optionTop = "px",
-			fieldTextRight = "60",
-			optionRight = "px",
 			fieldTextBottom = "40",
-			optionBottom = "px",
 			fieldTextLeft = "60",
-			optionLeft = "px");
+			fieldTextRight = "60",
+			fieldTextTop = "40",
+			optionBottom = "px",
+			optionLeft = "px",
+			optionRight = "px",
+			optionTop = "px");
 
 		CalendarLookAndFeelConfiguration.fillBorderColorColumn(
-			colorValueTop = "FF0D0D",
-			colorValueRight = "FF8A1C",
 			colorValueBottom = "7F26FF",
-			colorValueLeft = "FF21A0");
+			colorValueLeft = "FF21A0",
+			colorValueRight = "FF8A1C",
+			colorValueTop = "FF0D0D");
 
 		Button.clickSave();
 
@@ -228,12 +226,11 @@ definition {
 
 		CalendarLookAndFeelConfiguration.viewCssValues(
 			cssElement = "border-width",
-			cssValue = "40px");		
+			cssValue = "40px");
 
 		CalendarLookAndFeelConfiguration.viewCssValues(
 			cssElement = "border-color",
 			cssValue = "#ff0d0d");
-
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify margin and padding in the calendar widget"

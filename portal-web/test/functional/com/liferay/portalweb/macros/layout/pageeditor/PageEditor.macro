@@ -4127,16 +4127,6 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				AssertElementPresent(
 					key_position = "${position}",
 					locator1 = "PageEditor#CONTAINER_CONFIGURATION_FIXED_WIDTH");
-
-				AssertElementNotPresent(
-					key_marginLeft = "",
-					key_position = "${position}",
-					locator1 = "PageEditor#CONTAINER_CONFIGURATION_MARGIN_LEFT");
-
-				AssertElementNotPresent(
-					key_marginRight = "",
-					key_position = "${position}",
-					locator1 = "PageEditor#CONTAINER_CONFIGURATION_MARGIN_RIGHT");
 			}
 			else if ("${containerWidth}" == "Fluid") {
 				AssertElementNotPresent(

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.instance.lifecycle.internal;
 
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.instance.lifecycle.Clusterable;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
 import java.util.ArrayList;
@@ -40,9 +43,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = PortalInstanceLifecycleManager.class)
+@Component(immediate = true, service = AopService.class)
+@Transactional(propagation = Propagation.REQUIRED)
 public class PortalInstanceLifecycleListenerManagerImpl
-	implements PortalInstanceLifecycleManager {
+	implements AopService, PortalInstanceLifecycleManager {
 
 	@Override
 	public void preunregisterCompany(Company company) {

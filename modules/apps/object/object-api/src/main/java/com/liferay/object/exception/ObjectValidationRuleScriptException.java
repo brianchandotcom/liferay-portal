@@ -21,21 +21,14 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectValidationRuleScriptException extends PortalException {
 
-	public ObjectValidationRuleScriptException() {
+	public ObjectValidationRuleScriptException(String messageKey) {
+		_messageKey = messageKey;
 	}
 
-	public ObjectValidationRuleScriptException(String msg) {
-		super(msg);
+	public String getMessageKey() {
+		return _messageKey;
 	}
 
-	public ObjectValidationRuleScriptException(
-		String msg, Throwable throwable) {
-
-		super(msg, throwable);
-	}
-
-	public ObjectValidationRuleScriptException(Throwable throwable) {
-		super(throwable);
-	}
+	private final String _messageKey;
 
 }

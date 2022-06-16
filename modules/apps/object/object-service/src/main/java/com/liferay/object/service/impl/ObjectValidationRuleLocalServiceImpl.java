@@ -14,6 +14,9 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
+import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.exception.ObjectValidationRuleNameException;
 import com.liferay.object.exception.ObjectValidationRuleScriptException;
@@ -25,6 +28,8 @@ import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngineServicesTracker;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
@@ -37,11 +42,14 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import groovy.lang.GroovyShell;
+
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,7 +74,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		_validateEngine(engine);
 		_validateName(nameMap);
-		_validateScript(script);
+		_validateScript(engine, script);
 
 		ObjectValidationRule objectValidationRule =
 			objectValidationRulePersistence.create(
@@ -158,7 +166,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		_validateEngine(engine);
 		_validateName(nameMap);
-		_validateScript(script);
+		_validateScript(engine, script);
 
 		ObjectValidationRule objectValidationRule =
 			objectValidationRulePersistence.findByPrimaryKey(
@@ -249,11 +257,45 @@ public class ObjectValidationRuleLocalServiceImpl
 		}
 	}
 
-	private void _validateScript(String script) throws PortalException {
+	private void _validateScript(String engine, String script)
+		throws PortalException {
+
 		if (Validator.isNull(script)) {
-			throw new ObjectValidationRuleScriptException("Script is null");
+			throw new ObjectValidationRuleScriptException("required");
+		}
+
+		try {
+			if (Objects.equals(
+					engine, ObjectValidationRuleConstants.ENGINE_TYPE_DDM)) {
+
+				_ddmExpressionFactory.createExpression(
+					CreateExpressionRequest.Builder.newBuilder(
+						script
+					).build());
+			}
+			else if (Objects.equals(
+						engine,
+						ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY)) {
+
+				GroovyShell groovyShell = new GroovyShell();
+
+				groovyShell.parse(script);
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new ObjectValidationRuleScriptException("syntax-error");
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectValidationRuleLocalServiceImpl.class);
+
+	@Reference
+	private DDMExpressionFactory _ddmExpressionFactory;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

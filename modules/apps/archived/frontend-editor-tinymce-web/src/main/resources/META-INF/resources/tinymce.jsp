@@ -143,27 +143,23 @@ name = HtmlUtil.escapeJS(name);
 			var url = tinymce.activeEditor.settings[browseUrls[meta.filetype]];
 
 			if (url) {
-				var openItemSelectorDialog = function (itemSelectorDialog) {
-					itemSelectorDialog.eventName = '<%= name %>selectItem';
-					itemSelectorDialog.singleSelect = true;
-					itemSelectorDialog.url = url;
+				let zIndex;
 
-					var tinymceDialogContainer = document.querySelector(
-						'.tox-tinymce-aux'
-					);
+				var tinymceDialogContainer = document.querySelector(
+					'.tox-tinymce-aux'
+				);
 
-					if (tinymceDialogContainer) {
-						var zIndex = window.getComputedStyle(tinymceDialogContainer)
-							.zIndex;
+				if (tinymceDialogContainer) {
+					var containerZIndex = window.getComputedStyle(tinymceDialogContainer).zIndex;
 
-						itemSelectorDialog.zIndex = parseInt(zIndex) + 10;
-					}
+					zIndex = parseInt(containerZIndex) + 10
+				}
 
-					itemSelectorDialog.on('selectedItemChange', function (event) {
-						var selectedItem = event.selectedItem
-							? event.selectedItem
-							: value;
-
+				Liferay.Util.openSelectionModal({
+					eventName: '<%= name %>selectItem',
+					url,
+					zIndex,
+					onSelect: (selectedItem) => {
 						if (
 							selectedItem.returnType ===
 							'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
@@ -186,30 +182,9 @@ name = HtmlUtil.escapeJS(name);
 						}
 
 						callback(selectedItem);
-					});
+					}
 
-					itemSelectorDialog.open();
-				};
-
-				var itemSelectorDialog = window['<%= name %>']._itemSelectorDialog;
-
-				if (itemSelectorDialog) {
-					openItemSelectorDialog(itemSelectorDialog);
-				}
-				else {
-					Liferay.Loader.require(
-						'frontend-js-web/liferay/ItemSelectorDialog.es',
-						function (ItemSelectorDialog) {
-							var itemSelectorDialog = new ItemSelectorDialog.default();
-
-							window[
-								'<%= name %>'
-							]._itemSelectorDialog = itemSelectorDialog;
-
-							openItemSelectorDialog(itemSelectorDialog);
-						}
-					);
-				}
+				});
 			}
 		},
 

@@ -189,7 +189,7 @@ export function DefinitionOfTerms({baseResourceURL}: IProps) {
 			<ClayPanel.Body>
 				<AutoComplete
 					emptyStateMessage={Liferay.Language.get(
-						'there-are-no-objects'
+						'no-entities-were-found'
 					)}
 					items={objectDefinitons ?? []}
 					label={Liferay.Language.get('entity')}

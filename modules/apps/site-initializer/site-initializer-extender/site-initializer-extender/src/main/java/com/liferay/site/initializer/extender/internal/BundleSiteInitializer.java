@@ -3421,18 +3421,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private UnicodeProperties _toParametersUnicodeProperties(
-		Map<String, ?> parameters) {
+		JSONObject parametersJSONObject) {
 
 		Map<String, String> map = new HashMap<>();
 
-		for (Map.Entry<String, ?> entry : parameters.entrySet()) {
-			Object value = entry.getValue();
+		for (String key : parametersJSONObject.keySet()) {
+			Object value = parametersJSONObject.get(key);
 
-			if (value instanceof ArrayList) {
+			if (value instanceof JSONArray) {
 				value = JSONFactoryUtil.looseSerialize(value);
 			}
 
-			map.put(entry.getKey(), value.toString());
+			map.put(key, value.toString());
 		}
 
 		return UnicodePropertiesBuilder.create(

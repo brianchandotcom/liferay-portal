@@ -72,6 +72,50 @@ definition {
 		AssertElementPresent(locator1 = "AppManager#APP_RESULT_BOX");
 	}
 
+	macro purchaseApp {
+		var key_searchName = "${searchName}";
+
+		AssertElementPresent(
+			key_searchName = "${searchName}",
+			locator1 = "AppManager#APP_TITLE_TYPE");
+
+		AssertClick(
+			key_searchName = "${searchName}",
+			locator1 = "AppManager#APP_TITLE_TYPE",
+			value1 = "${searchName}");
+
+		AssertClick(
+			key_type = "${type}",
+			locator1 = "AppManager#APP_PURCHASE",
+			value1 = "${type}");
+
+		WaitForPageLoad();
+
+		Click(locator1 = "AppManager#APP_PURCHASE_USER_SELECT");
+
+		Click(locator1 = "AppManager#APP_PURCHASE_AGREE_CHECKBOX");
+
+		Click(locator1 = "AppManager#APP_SUBMIT");
+
+		WaitForPageLoad();
+
+		AssertElementPresent(locator1 = "AppManager#APP_PURCHASE_INFO");
+	}
+
+	macro searchApp {
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MARKETPLACE_STORE_PORTLET_IFRAME");
+
+		Type(
+			locator1 = "AppManager#APP_RESULT_BOX",
+			value1 = "${searchName}");
+
+		Click(locator1 = "AppManager#SEARCH_BUTTON");
+
+		AssertElementPresent(
+			key_searchName = "${searchName}",
+			locator1 = "AppManager#APP_TITLE_TYPE");
+	}
+
 	macro uninstallApp {
 		LexiconEntry.openEntryMenu(rowEntry = "${appName}");
 
@@ -135,6 +179,16 @@ definition {
 				locator1 = "AppManager#APP_STATUS",
 				value1 = "${appStatus}");
 		}
+	}
+
+	macro viewLogoutMarketplace {
+		AssertElementPresent(
+			locator1 = "AppManager#USER_SIGN_IN",
+			value1 = "Sign In");
+
+		AssertElementPresent(
+			locator1 = "AppManager#MARKETPLACE_DESCRIPTION",
+			value1 = "Liferay Marketplace is an integral part of the Liferay platform experience for all users. Enterprise subscribers also have exclusive access to Liferay Subscription Apps through the Liferay Marketplace. Log in with your Liferay account to browse hundreds of apps to help you build your business or technical solution.");
 	}
 
 }

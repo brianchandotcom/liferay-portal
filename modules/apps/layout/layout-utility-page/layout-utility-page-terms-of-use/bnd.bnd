@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Layout Utility Page Terms Of Use
+Bundle-SymbolicName: com.liferay.layout.utility.page.terms.of.use
+Bundle-Version: 1.0.0
+Web-ContextPath: /layout-utility-page-terms-of-use
+-dsannotations-options: inherit

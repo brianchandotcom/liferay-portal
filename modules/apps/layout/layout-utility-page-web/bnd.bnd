@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Layout Utility Page Web
-Bundle-SymbolicName: com.liferay.layout.utility.page.web
-Bundle-Version: 1.0.0
-Web-ContextPath: /layout-utility-page-web
--dsannotations-options: inherit

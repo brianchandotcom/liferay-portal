@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.utility.page.web.internal.struts;
+package com.liferay.layout.utility.page.terms.of.use.internal.struts;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -99,7 +99,7 @@ public class TermsOfUseStrutsAction implements StrutsAction {
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.utility.page.web)"
+		target = "(osgi.web.symbolicname=com.liferay.layout.utility.page.terms.of.use)"
 	)
 	private ServletContext _servletContext;
 

@@ -625,11 +625,10 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		DirectoryTree directoryTree = new DirectoryTree();
 
-		SearchBase searchBase = directoryTree.getSearchBase(
-			"Liferay", 0, new LinkedHashMap<String, Object>(), identifiers,
-			_organization, company);
-
-		Assert.assertNull(searchBase);
+		Assert.assertNull(
+			directoryTree.getSearchBase(
+				"Liferay", 0, new LinkedHashMap<String, Object>(), identifiers,
+				_organization, company));
 	}
 
 	@Test
@@ -775,12 +774,12 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 
 		DirectoryTree directoryTree = new DirectoryTree();
 
-		SearchBase searchBase = directoryTree.getSearchBase(
-			"Liferay", 0, new LinkedHashMap<String, Object>(),
-			Arrays.asList(new Identifier("cn", "testScreenName")),
-			_organization, company);
-
-		_assertUserSearchBase(searchBase, false);
+		_assertUserSearchBase(
+			directoryTree.getSearchBase(
+				"Liferay", 0, new LinkedHashMap<String, Object>(),
+				Arrays.asList(new Identifier("cn", "testScreenName")),
+				_organization, company),
+			false);
 	}
 
 	@Test

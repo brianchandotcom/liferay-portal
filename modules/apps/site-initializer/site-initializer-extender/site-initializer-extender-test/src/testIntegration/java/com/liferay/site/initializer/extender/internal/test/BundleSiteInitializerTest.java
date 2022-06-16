@@ -83,6 +83,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
@@ -896,12 +897,43 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("testlisttypeentry2", listTypeEntry2.getKey());
 	}
 
+	private void _assertObjectActionParameters(
+		List<ObjectAction> objectActions) {
+
+		for (ObjectAction objectAction : objectActions) {
+			String objectActionExecutorKey =
+				objectAction.getObjectActionExecutorKey();
+
+			UnicodeProperties parametersUnicodeProperties =
+				objectAction.getParametersUnicodeProperties();
+
+			if (objectActionExecutorKey.equals(
+					ObjectActionExecutorConstants.KEY_GROOVY)) {
+
+				String script = parametersUnicodeProperties.get("script");
+
+				Assert.assertNotNull(script);
+			}
+			else if (objectActionExecutorKey.equals(
+						ObjectActionExecutorConstants.KEY_WEBHOOK)) {
+
+				String secret = parametersUnicodeProperties.get("secret");
+				String url = parametersUnicodeProperties.get("url");
+
+				Assert.assertNotNull(secret);
+				Assert.assertNotNull(url);
+			}
+		}
+	}
+
 	private void _assertObjectActions(
 		int objectActionsCount, ObjectDefinition objectDefinition) {
 
 		List<ObjectAction> objectActions =
 			_objectActionLocalService.getObjectActions(
 				objectDefinition.getObjectDefinitionId());
+
+		_assertObjectActionParameters(objectActions);
 
 		Assert.assertEquals(
 			objectActions.toString(), objectActionsCount, objectActions.size());
@@ -919,7 +951,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		_assertObjectActions(1, objectDefinition1);
+		_assertObjectActions(2, objectDefinition1);
 		_assertObjectEntries(group.getGroupId(), objectDefinition1, 0);
 		_assertObjectRelationships(objectDefinition1, serviceContext);
 

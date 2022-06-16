@@ -64,7 +64,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
-			Pause(locator1 = "3000");
+			WaitForElementPresent(locator1 = "NavBar#APPLICATION_SEARCH_FIELD");
 
 			Type(
 				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
@@ -395,7 +395,7 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Widgets");
 
-			Pause(locator1 = "3000");
+			WaitForElementPresent(locator1 = "NavBar#APPLICATION_SEARCH_FIELD");
 
 			Type(
 				locator1 = "NavBar#APPLICATION_SEARCH_FIELD",

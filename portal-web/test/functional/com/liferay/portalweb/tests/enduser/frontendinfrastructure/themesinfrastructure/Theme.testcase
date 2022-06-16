@@ -223,7 +223,7 @@ definition {
 
 		FileInstall.deployFileOnServer(jarFile = "${appName}.war");
 
-		Pause(locator1 = "30000");
+		WaitForConsoleTextPresent(value1 = "STARTED ${appName}");
 
 		Navigator.openSitePage(
 			pageName = "Theme Test Page",

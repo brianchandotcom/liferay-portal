@@ -72,7 +72,7 @@ definition {
 
 		takeScreenshot();
 
-		Pause(locator1 = "5000");
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 
 		takeScreenshot();
 

@@ -52,7 +52,7 @@ definition {
 			navTab = "Blog Images",
 			uploadFileName = "Document_1.jpg");
 
-		Pause(locator1 = "1000");
+		WaitForElementPresent(locator1 = "Button#SAVE_AS_DRAFT");
 
 		BlogsEntry.saveAsDraft();
 
@@ -244,8 +244,6 @@ definition {
 			KeyPress(
 				locator1 = "//body",
 				value1 = "a");
-
-			Pause(locator1 = "1000");
 
 			KeyPress(
 				locator1 = "//body",

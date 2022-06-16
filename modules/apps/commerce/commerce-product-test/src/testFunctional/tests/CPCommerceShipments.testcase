@@ -656,10 +656,12 @@ definition {
 
 			Button.clickSubmitButton();
 
-			if (IsElementPresent(key_ercColumnValue = "${key_ercColumnValue}", locator1 = "CommerceOrders#SHIPMENT_ITEM_ERC_COLUMN")) {
-				AssertTextEquals(
-					locator1 = "CommerceOrders#SHIPMENT_ITEM_ERC_COLUMN",
-					value1 = "key_ercColumnValue");
+			var key_shipmentItemSku = "MIN55861";
+
+			if (IsElementPresent(locator1 = "CommerceOrders#SHIPMENT_ITEMS_TABLE_ERC")) {
+				AssertTextNotEquals(
+					locator1 = "CommerceOrders#SHIPMENT_ITEMS_TABLE_ERC",
+					value1 = "");
 			}
 
 			CommerceNavigator.gotoEntry(entryName = "MIN55861");
@@ -667,7 +669,8 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			Type(
-				locator1 = "CommerceOrders#SHIPMENT_ITEM_ERC_SIDEBAR_EDIT",
+				key_fieldLabel = "ERC",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "itemERC");
 
 			Type(
@@ -677,9 +680,10 @@ definition {
 
 			Button.clickSave();
 
-			AssertElementPresent(
-				key_itemErcValue = "itemERC",
-				locator1 = "CommerceOrders#SHIPMENT_ITEM_ERC_SIDEBAR_EDIT");
+			AssertTextEquals(
+				key_fieldLabel = "ERC",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "itemERC");
 
 			Click(locator1 = "Icon#CLOSE");
 
@@ -797,7 +801,8 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			Type(
-				locator1 = "CommerceOrders#SHIPMENT_ITEM_ERC_SIDEBAR_EDIT",
+				key_fieldLabel = "ERC",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "itemERC");
 
 			Type(
@@ -807,9 +812,10 @@ definition {
 
 			Button.clickSave();
 
-			AssertElementPresent(
-				key_itemErcValue = "itemERC",
-				locator1 = "CommerceOrders#SHIPMENT_ITEM_ERC_SIDEBAR_EDIT");
+			AssertTextEquals(
+				key_fieldLabel = "ERC",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "itemERC");
 
 			Click(locator1 = "Icon#CLOSE");
 
@@ -826,7 +832,8 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			Type(
-				locator1 = "CommerceOrders#SHIPMENT_ITEM_ERC_SIDEBAR_EDIT",
+				key_fieldLabel = "ERC",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "itemERC");
 
 			Type(

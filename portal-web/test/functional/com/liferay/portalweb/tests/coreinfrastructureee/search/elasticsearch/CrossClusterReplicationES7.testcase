@@ -477,6 +477,8 @@ definition {
 			key_synonyms = "banana, red apple, fruit",
 			locator1 = "SearchTuning#SYNONYMS_ENTRY");
 
+		SearchAdministration.executeReindex();
+
 		Navigator.openURL();
 
 		var searchTerms = "banana,red apple,fruit";

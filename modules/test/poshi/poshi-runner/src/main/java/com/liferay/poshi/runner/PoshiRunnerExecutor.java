@@ -903,11 +903,10 @@ public class PoshiRunnerExecutor {
 
 		Class<?> clazz = liferaySelenium.getClass();
 
-		Method method = clazz.getMethod(
-			selenium, parameterClasses.toArray(new Class<?>[0]));
-
 		_returnObject = invokeLiferaySeleniumMethod(
-			method, arguments.toArray(new String[0]));
+			clazz.getMethod(
+				selenium, parameterClasses.toArray(new Class<?>[0])),
+			arguments.toArray(new String[0]));
 	}
 
 	public void runTakeScreenshotElement(Element element) throws Exception {

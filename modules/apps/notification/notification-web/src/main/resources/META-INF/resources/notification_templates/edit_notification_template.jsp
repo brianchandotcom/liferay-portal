@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
+
 ViewNotificationTemplatesDisplayContext viewNotificationTemplatesDisplayContext = (ViewNotificationTemplatesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 NotificationTemplate notificationTemplate = viewNotificationTemplatesDisplayContext.getNotificationTemplate();
@@ -28,7 +30,9 @@ if (notificationTemplate != null) {
 }
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(LanguageUtil.get(request, "notification-template"));
 %>
 
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />

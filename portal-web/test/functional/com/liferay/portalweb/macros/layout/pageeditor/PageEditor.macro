@@ -4081,10 +4081,11 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		if (isSet(backgroundColor)) {
-			AssertElementPresent(
-				key_paletteItem = "${backgroundColor}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_BACKGROUND_COLOR");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "backgroundColor",
+				styleValue = "${backgroundColor}");
 		}
 
 		if (isSet(backgroundImage)) {
@@ -4095,31 +4096,35 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		if (isSet(borderColor)) {
-			AssertElementPresent(
-				key_paletteItem = "${borderColor}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_BORDER_COLOR");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "borderColor",
+				styleValue = "${borderColor}");
 		}
 
 		if (isSet(borderRadius)) {
-			AssertElementPresent(
-				key_borderRadius = "${borderRadius}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_BORDER_RADIUS");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "borderRadius",
+				styleValue = "${borderRadius}");
 		}
 
 		if (isSet(borderWidth)) {
-			AssertElementPresent(
-				key_borderWidth = "${borderWidth}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_BORDER_WIDTH");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "borderWidth",
+				styleValue = "${borderWidth}");
 		}
 
 		if (isSet(boxShadow)) {
-			AssertElementPresent(
-				key_boxShadow = "${boxShadow}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_BOX_SHADOW");
+			PageEditor.viewFragmentTopperStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "boxShadow",
+				styleValue = "${boxShadow}");
 		}
 
 		if (isSet(containerWidth)) {
@@ -4160,73 +4165,83 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		if (isSet(height)) {
-			AssertElementPresent(
-				key_height = "${height}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_HEIGHT");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "height",
+				styleValue = "${height}");
 		}
 
 		if (isSet(marginBottom)) {
-			AssertElementPresent(
-				key_marginBottom = "${marginBottom}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_MARGIN_BOTTOM");
+			PageEditor.viewFragmentTopperStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "marginBottom",
+				styleValue = "spacer-${marginBottom}");
 		}
 
 		if (isSet(marginLeft)) {
-			AssertElementPresent(
-				key_marginLeft = "${marginLeft}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_MARGIN_LEFT");
+			PageEditor.viewFragmentTopperStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "marginLeft",
+				styleValue = "spacer-${marginLeft}");
 		}
 
 		if (isSet(marginRight)) {
-			AssertElementPresent(
-				key_marginRight = "${marginRight}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_MARGIN_RIGHT");
+			PageEditor.viewFragmentTopperStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "marginRight",
+				styleValue = "spacer-${marginRight}");
 		}
 
 		if (isSet(marginTop)) {
-			AssertElementPresent(
-				key_marginTop = "${marginTop}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_MARGIN_TOP");
+			PageEditor.viewFragmentTopperStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "marginTop",
+				styleValue = "spacer-${marginTop}");
 		}
 
 		if (isSet(opacity)) {
-			AssertElementPresent(
-				key_opacity = "${opacity}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_OPACITY");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "opacity",
+				styleValue = "${opacity}");
 		}
 
 		if (isSet(paddingBottom)) {
-			AssertElementPresent(
-				key_paddingBottom = "${paddingBottom}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_BOTTOM");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "paddingBottom",
+				styleValue = "spacer-${paddingBottom}");
 		}
 
 		if (isSet(paddingLeft)) {
-			AssertElementPresent(
-				key_paddingLeft = "${paddingLeft}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_LEFT");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "paddingLeft",
+				styleValue = "spacer-${paddingLeft}");
 		}
 
 		if (isSet(paddingRight)) {
-			AssertElementPresent(
-				key_paddingRight = "${paddingRight}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_RIGHT");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "paddingRight",
+				styleValue = "spacer-${paddingRight}");
 		}
 
 		if (isSet(paddingTop)) {
-			AssertElementPresent(
-				key_paddingTop = "${paddingTop}",
-				key_position = "${position}",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_TOP");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				index = "${position}",
+				styleName = "paddingTop",
+				styleValue = "spacer-${paddingTop}");
 		}
 	}
 
@@ -4490,39 +4505,35 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		if (isSet(alignment)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_alignment = "${alignment}",
-				key_fragmentName = "${fragmentName}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_ALIGNMENT");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "textAlign",
+				styleValue = "${alignment}");
 		}
 
 		if (isSet(backgroundColor)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_paletteItem = "${backgroundColor}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BACKGROUND_COLOR");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "backgroundColor",
+				styleValue = "${backgroundColor}");
 		}
 
 		if (isSet(borderColor)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_paletteItem = "${borderColor}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_COLOR");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "borderColor",
+				styleValue = "${borderColor}");
 		}
 
 		if (isSet(borderRadius)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_borderRadius = "${borderRadius}",
-				key_fragmentName = "${fragmentName}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BORDER_RADIUS");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "borderRadius",
+				styleValue = "${borderRadius}");
 		}
 
 		if (isSet(bottomSpacing)) {
@@ -4532,19 +4543,16 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		if (isSet(boxShadow)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_boxShadow = "${boxShadow}",
-				key_fragmentName = "${fragmentName}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_BOX_SHADOW");
+			PageEditor.viewFragmentTopperStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "boxShadow",
+				styleValue = "${boxShadow}");
 		}
 
 		if (isSet(headingLevel)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
 			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
+				key_fragmentName = StringUtil.lowerCase("${fragmentName}"),
 				key_headingLevel = "${headingLevel}",
 				key_position = "${position}",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_HEADER");
@@ -4557,84 +4565,82 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		if (isSet(imageSize)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
 			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
+				key_fragmentName = StringUtil.lowerCase("${fragmentName}"),
 				key_imageSize = "${imageSize}",
 				locator1 = "Fragment#IMAGE_SIZE");
 		}
 
 		if (isSet(marginBottom)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_marginBottom = "${marginBottom}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_BOTTOM");
+			PageEditor.viewFragmentTopperStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "marginBottom",
+				styleValue = "spacer-${marginBottom}");
 		}
 
 		if (isSet(marginLeft)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_marginLeft = "${marginLeft}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_LEFT");
+			PageEditor.viewFragmentTopperStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "marginLeft",
+				styleValue = "spacer-${marginLeft}");
 		}
 
 		if (isSet(marginRight)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_marginRight = "${marginRight}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_RIGHT");
+			PageEditor.viewFragmentTopperStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "marginRight",
+				styleValue = "spacer-${marginRight}");
 		}
 
 		if (isSet(marginTop)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
+			PageEditor.viewFragmentTopperStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "marginTop",
+				styleValue = "spacer-${marginTop}");
+		}
 
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_marginTop = "${marginTop}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_MARGIN_TOP");
+		if (isSet(opacity)) {
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "opacity",
+				styleValue = "${opacity}");
 		}
 
 		if (isSet(paddingBottom)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_paddingBottom = "${paddingBottom}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_PADDING_BOTTOM");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "paddingBottom",
+				styleValue = "spacer-${paddingBottom}");
 		}
 
 		if (isSet(paddingLeft)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_paddingLeft = "${paddingLeft}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_PADDING_LEFT");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "paddingLeft",
+				styleValue = "spacer-${paddingLeft}");
 		}
 
 		if (isSet(paddingRight)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_paddingRight = "${paddingRight}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_PADDING_RIGHT");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "paddingRight",
+				styleValue = "spacer-${paddingRight}");
 		}
 
 		if (isSet(paddingTop)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_paddingTop = "${paddingTop}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_PADDING_TOP");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "paddingTop",
+				styleValue = "spacer-${paddingTop}");
 		}
 
 		if (isSet(separatorColor)) {
@@ -4644,29 +4650,23 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		if (isSet(size)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
 			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
+				key_fragmentName = StringUtil.lowerCase("${fragmentName}"),
 				key_size = "${size}",
 				locator1 = "Fragment#BUTTON_SIZE");
 		}
 
 		if (isSet(textColor)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
-			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
-				key_position = "${position}",
-				key_textColor = "${textColor}",
-				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TEXT_COLOR");
+			PageEditor.viewFragmentCommonStyle(
+				fragmentName = "${fragmentName}",
+				index = "${position}",
+				styleName = "color",
+				styleValue = "${textColor}");
 		}
 
 		if (isSet(type)) {
-			var fragmentName = StringUtil.lowerCase("${fragmentName}");
-
 			AssertElementPresent(
-				key_fragmentName = "${fragmentName}",
+				key_fragmentName = StringUtil.lowerCase("${fragmentName}"),
 				key_type = "${type}",
 				locator1 = "Fragment#FRAGMENT_CONFIGURATION_TYPE");
 		}

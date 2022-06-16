@@ -87,8 +87,6 @@ AUI.add(
 
 		var STR_FOLDER_ID = 'folderId';
 
-		var STR_HOST = 'host';
-
 		var STR_LABEL = 'label';
 
 		var STR_LIST = 'list';
@@ -196,11 +194,6 @@ AUI.add(
 				},
 
 				folderId: {
-					getter() {
-						var instance = this;
-
-						return instance.get(STR_HOST).getFolderId();
-					},
 					readonly: true,
 					setter: Lang.toInt,
 					validator: isNumber || isString,
@@ -238,7 +231,7 @@ AUI.add(
 					value: STR_BLANK,
 				},
 			},
-			EXTENDS: A.Plugin.Base,
+			EXTENDS: A.Base,
 
 			NAME: 'documentlibraryupload',
 
@@ -322,16 +315,8 @@ AUI.add(
 
 					var entriesContainer = instance._entriesContainer;
 
-					var host = instance.get(STR_HOST);
-
 					A.getWin()._node.onbeforeunload = A.bind(
 						'_confirmUnload',
-						instance
-					);
-
-					var onDataRequestHandle = Liferay.on(
-						host.ns('dataRequest'),
-						instance._onDataRequest,
 						instance
 					);
 
@@ -448,7 +433,6 @@ AUI.add(
 					);
 
 					instance._eventHandles = [
-						onDataRequestHandle,
 						onDragOverHandle,
 						onDropHandle,
 						entriesDragDelegateHandle,
@@ -536,7 +520,7 @@ AUI.add(
 							instance._invisibleDescriptiveEntry;
 
 						var hiddenCheckbox = sub(TPL_HIDDEN_CHECK_BOX, [
-							instance.get(STR_HOST).ns('rowIdsFileEntry'),
+							`${instance._documentLibraryNamespace}rowIdsFileEntry`,
 						]);
 
 						if (displayStyle === CSS_ICON) {
@@ -612,9 +596,7 @@ AUI.add(
 							}
 							else if (index === 0) {
 								value = sub(TPL_HIDDEN_CHECK_BOX, [
-									instance
-										.get(STR_HOST)
-										.ns('rowIdsFileEntry'),
+									`${instance._documentLibraryNamespace}rowIdsFileEntry`,
 								]);
 							}
 
@@ -944,9 +926,7 @@ AUI.add(
 								Liferay.Language.get('unexpected-error');
 						}
 						else {
-							message =
-								instance.get(STR_HOST).ns('fileEntryId=') +
-								responseData.fileEntryId;
+							message = `${instance._documentLibraryNamespace}fileEntryId=${responseData.fileEntryId}`;
 						}
 					}
 

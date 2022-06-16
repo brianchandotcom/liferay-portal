@@ -18,6 +18,7 @@ import com.liferay.document.library.display.context.DLDisplayContextFactory;
 import com.liferay.document.library.display.context.DLEditFileEntryDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.google.docs.internal.helper.GoogleDocsMetadataHelper;
+import com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -28,11 +29,17 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,6 +63,14 @@ public class GoogleDocsDLDisplayContextFactory
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
 		DLFileEntryType dlFileEntryType) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!_isEnabled(themeDisplay.getCompanyId())) {
+			return parentDLEditFileEntryDisplayContext;
+		}
 
 		DDMStructure googleDocsDDMStructure =
 			GoogleDocsMetadataHelper.getGoogleDocsDDMStructure(dlFileEntryType);
@@ -81,6 +96,14 @@ public class GoogleDocsDLDisplayContextFactory
 			return parentDLEditFileEntryDisplayContext;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!_isEnabled(themeDisplay.getCompanyId())) {
+			return parentDLEditFileEntryDisplayContext;
+		}
+
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
 			new GoogleDocsMetadataHelper(
 				_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
@@ -103,6 +126,14 @@ public class GoogleDocsDLDisplayContextFactory
 		HttpServletResponse httpServletResponse, FileShortcut fileShortcut) {
 
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			if (!_isEnabled(themeDisplay.getCompanyId())) {
+				return parentDLViewFileVersionDisplayContext;
+			}
+
 			long fileEntryId = fileShortcut.getToFileEntryId();
 
 			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
@@ -131,6 +162,14 @@ public class GoogleDocsDLDisplayContextFactory
 			return parentDLViewFileVersionDisplayContext;
 		}
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!_isEnabled(themeDisplay.getCompanyId())) {
+			return parentDLViewFileVersionDisplayContext;
+		}
+
 		GoogleDocsMetadataHelper googleDocsMetadataHelper =
 			new GoogleDocsMetadataHelper(
 				_ddmFormValuesToFieldsConverter, _ddmStructureLocalService,
@@ -145,6 +184,29 @@ public class GoogleDocsDLDisplayContextFactory
 
 		return parentDLViewFileVersionDisplayContext;
 	}
+
+	private boolean _isEnabled(long companyId) {
+		try {
+			DLGoogleDriveCompanyConfiguration
+				dlGoogleDriveCompanyConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						DLGoogleDriveCompanyConfiguration.class, companyId);
+
+			if (Validator.isNotNull(
+					dlGoogleDriveCompanyConfiguration.pickerAPIKey())) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (ConfigurationException configurationException) {
+			return ReflectionUtil.throwException(configurationException);
+		}
+	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;

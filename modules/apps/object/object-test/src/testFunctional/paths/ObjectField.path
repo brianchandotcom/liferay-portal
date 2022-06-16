@@ -147,6 +147,11 @@
 		<td>//label[contains(text(),'Maximum Number of Characters')]/..//input</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>HELP_TEXT</td>
+		<td>//div[contains(@class,'form-feedback-group') and contains(.,'${key_helpText}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

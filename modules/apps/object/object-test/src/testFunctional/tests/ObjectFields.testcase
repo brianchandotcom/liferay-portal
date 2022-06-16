@@ -819,12 +819,33 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if field called Storage Folder have help text"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test StorageFolderFieldHaveHelpText {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-153418 StorageFolderFieldHaveHelpText pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			enableShowFiles = "true",
+			fieldAttachment = "Upload Directly from the User's Computer",
+			fieldLabel = "Custom Attachment",
+			fieldType = "Attachment");
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
+
+		var helpText = "Input the path of the chosen folder in Documents and Media. An example of a valid path is: &quot;/myDocumentsAndMediaFolder&quot;.";
+
+		AssertElementPresent(
+			key_helpText = "${helpText}",
+			locator1 = "ObjectField#HELP_TEXT",
+			value1 = "${key_helpText}");
 	}
 
 	@description = "LPS-148112 - Verify if field called Storage Folder is required"

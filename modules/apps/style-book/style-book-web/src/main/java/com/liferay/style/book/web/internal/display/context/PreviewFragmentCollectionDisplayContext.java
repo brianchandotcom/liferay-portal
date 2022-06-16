@@ -85,8 +85,8 @@ public class PreviewFragmentCollectionDisplayContext {
 				getFragmentCollectionContributor(getFragmentCollectionKey());
 
 		if (fragmentCollectionContributor != null) {
-			fragmentEntries =
-				fragmentCollectionContributor.getFragmentEntries();
+			fragmentEntries = fragmentCollectionContributor.getFragmentEntries(
+				_httpServletRequest.getLocale());
 		}
 
 		for (FragmentEntry fragmentEntry : fragmentEntries) {

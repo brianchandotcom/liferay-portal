@@ -464,7 +464,7 @@ definition {
 		task ("View the Heading's style") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				headingLevel = "h2",
 				textColor = "success");
 		}
@@ -500,7 +500,7 @@ definition {
 		task ("View the Button's style") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "button",
+				fragmentName = "Button",
 				size = "lg",
 				type = "link");
 		}
@@ -537,7 +537,7 @@ definition {
 		task ("View the Heading's style") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				headingLevel = "h2",
 				textColor = "success");
 		}
@@ -545,7 +545,7 @@ definition {
 		task ("View the Button's style") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "button",
+				fragmentName = "Button",
 				size = "lg",
 				type = "link");
 		}
@@ -585,7 +585,7 @@ definition {
 		task ("View the Button's style in view mode") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "button",
+				fragmentName = "Button",
 				size = "lg",
 				type = "link");
 		}

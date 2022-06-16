@@ -79,7 +79,7 @@ definition {
 				position = "2");
 
 			PageEditor.viewFragmentStyle(
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				headingLevel = "h4",
 				position = "2",
 				textColor = "warning");

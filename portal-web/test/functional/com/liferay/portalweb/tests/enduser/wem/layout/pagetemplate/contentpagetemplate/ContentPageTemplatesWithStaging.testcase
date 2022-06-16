@@ -208,7 +208,7 @@ definition {
 
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "button");
+				fragmentName = "Button");
 		}
 
 		task ("Undo changes") {
@@ -216,12 +216,10 @@ definition {
 				key_text = "undo",
 				locator1 = "Icon#ANY");
 
-			AssertCssValue(
+			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "button",
-				index = "1",
-				locator1 = "Fragment#FRAGMENT_BODY",
-				locator2 = "text-align",
-				value1 = "left");
+				styleName = "textAlign",
+				styleValue = "left");
 
 			Click(
 				key_text = "undo",

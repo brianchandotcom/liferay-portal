@@ -243,7 +243,7 @@ definition {
 
 		PageEditor.viewFragmentStyle(
 			alignment = "center",
-			fragmentName = "heading");
+			fragmentName = "Heading");
 
 		Click(
 			key_text = "redo",

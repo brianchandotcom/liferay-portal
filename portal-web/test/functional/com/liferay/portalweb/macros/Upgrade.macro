@@ -4081,21 +4081,31 @@ definition {
 
 		task ("Assert styles of Container in view mode") {
 			var screenWidth = selenium.getElementWidth("//body");
-			var containerWidth = selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pb-3')][contains(@class,'pt-3')]");
+			var containerWidth = selenium.getElementWidth("(//div[contains(@class,'lfr-layout-structure-item-container')])[2]");
 
 			TestUtils.assertNotEquals(
 				actual = "${containerWidth}",
 				expected = "${screenWidth}");
 
-			AssertVisible(locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3')][contains(@class,'pt-3')]");
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				styleName = "backgroundColor",
+				styleValue = "rgb(46, 90, 172)");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				index = "2",
+				styleName = "paddingBottom",
+				styleValue = "3");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "Container",
+				index = "2",
+				styleName = "paddingTop",
+				styleValue = "3");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3')][contains(@class,'pt-3')]//parent::div",
-				locator2 = "background-color",
-				value1 = "rgba(46, 90, 172, 1)");
-
-			AssertCssValue(
-				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-3')][contains(@class,'pt-3')]",
+				locator1 = "(//div[contains(@class,'lfr-layout-structure-item-container')])[2]",
 				locator2 = "max-width",
 				value1 = "${containerWidth}px");
 		}
@@ -4180,8 +4190,6 @@ definition {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Fragment Content Page",
 				siteName = "Test Site Name");
-
-			WaitForPageLoad();
 		}
 
 		task ("Assert styles of Container in edit mode") {
@@ -4191,17 +4199,13 @@ definition {
 				paddingTop = "3",
 				position = "2");
 
-			AssertCssValue(
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONTAINER",
-				locator2 = "background-color",
-				value1 = "rgba(46, 90, 172, 1)");
+			PageEditor.viewContainerStyle(backgroundColor = "rgb(46, 90, 172)");
 		}
 
 		task ("Assert styles of Button in edit mode") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "button",
+				fragmentName = "Button",
 				marginBottom = "1",
 				size = "lg",
 				type = "link");
@@ -4220,7 +4224,7 @@ definition {
 		task ("Assert styles of Heading in edit mode") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				headingLevel = "h2",
 				marginBottom = "1",
 				textColor = "rgb(40, 125, 60)");
@@ -4235,7 +4239,7 @@ definition {
 		task ("Assert styles of Image in edit mode") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "image",
+				fragmentName = "Image",
 				imageSize = "0",
 				marginBottom = "1");
 		}
@@ -4243,7 +4247,7 @@ definition {
 		task ("Assert styles of Paragraph in edit mode") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "paragraph",
+				fragmentName = "Paragraph",
 				marginBottom = "1",
 				textColor = "rgb(185, 80, 0)");
 		}
@@ -4272,7 +4276,7 @@ definition {
 				locator1 = "Fragment#VIDEO_WIDTH");
 
 			PageEditor.viewFragmentStyle(
-				fragmentName = "video",
+				fragmentName = "Video",
 				marginBottom = "1");
 		}
 	}

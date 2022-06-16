@@ -358,12 +358,10 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-			AssertCssValue(
+			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "heading",
-				index = "1",
-				locator1 = "Fragment#FRAGMENT_BODY",
-				locator2 = "text-align",
-				value1 = "left");
+				styleName = "textAlign",
+				styleValue = "left");
 
 			SelectFrame(value1 = "relative=top");
 
@@ -373,12 +371,10 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-			AssertCssValue(
+			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "heading",
-				index = "1",
-				locator1 = "Fragment#FRAGMENT_BODY",
-				locator2 = "text-align",
-				value1 = "center");
+				styleName = "textAlign",
+				styleValue = "center");
 
 			SelectFrame(value1 = "relative=top");
 
@@ -388,12 +384,10 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-			AssertCssValue(
+			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "heading",
-				index = "1",
-				locator1 = "Fragment#FRAGMENT_BODY",
-				locator2 = "text-align",
-				value1 = "right");
+				styleName = "textAlign",
+				styleValue = "right");
 
 			SelectFrame(value1 = "relative=top");
 
@@ -403,12 +397,10 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-			AssertCssValue(
+			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "heading",
-				index = "1",
-				locator1 = "Fragment#FRAGMENT_BODY",
-				locator2 = "text-align",
-				value1 = "justify");
+				styleName = "textAlign",
+				styleValue = "justify");
 		}
 	}
 

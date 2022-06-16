@@ -75,7 +75,7 @@ definition {
 
 			PageEditor.viewFragmentStyle(
 				backgroundColor = "gray-300",
-				fragmentName = "button");
+				fragmentName = "Button");
 
 			Button.click(button = "Publish Master");
 
@@ -96,7 +96,7 @@ definition {
 				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
 
 			PageEditor.viewFragmentStyle(
-				fragmentName = "button",
+				fragmentName = "Button",
 				size = "lg",
 				type = "link");
 

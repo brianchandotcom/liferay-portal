@@ -130,10 +130,18 @@ definition {
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 
+			AssertElementPresent(
+				key_paddingLeft = "0",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_LEFT");
+
+			AssertElementPresent(
+				key_paddingRight = "0",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_RIGHT");
+
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fluid",
-				paddingLeft = "0",
-				paddingRight = "0",
 				position = "1");
 		}
 
@@ -184,27 +192,35 @@ definition {
 				siteName = "Test Site Name");
 
 			var screenWidth = selenium.getElementWidth("//body");
-			var containerWidth = selenium.getElementWidth("//div[contains(@class,'container')][contains(@class,'pb-4')][contains(@class,'pt-2')]");
+			var containerWidth = selenium.getElementWidth("//div[contains(@class,'lfr-layout-structure-item-container')]");
 
 			TestUtils.assertNotEquals(
 				actual = "${containerWidth}",
 				expected = "${screenWidth}");
 
-			AssertVisible(locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4')][contains(@class,'pt-2')]");
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "container",
+				styleName = "backgroundColor",
+				styleValue = "success");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "container",
+				styleName = "paddingBottom",
+				styleValue = "4");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "container",
+				styleName = "paddingTop",
+				styleValue = "2");
 
 			AssertCssValue(
-				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4')][contains(@class,'pt-2')]",
-				locator2 = "background-color",
-				value1 = "rgba(40, 125, 60, 1)");
-
-			AssertCssValue(
-				locator1 = "//div[contains(@class,'container')][contains(@class,'pb-4')][contains(@class,'pt-2')]",
+				locator1 = "//div[contains(@class,'lfr-layout-structure-item-container')]",
 				locator2 = "max-width",
 				value1 = "${containerWidth}px");
 
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'container')][contains(@class,'ml-0')]");
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@class,'ml-0')]");
 
-			AssertElementNotPresent(locator1 = "//div[contains(@class,'container')][contains(@class,'mr-0')]");
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@class,'mr-0')]");
 		}
 	}
 
@@ -1004,7 +1020,7 @@ definition {
 			PageEditor.configureFragment(textColor = "White");
 
 			PageEditor.viewFragmentStyle(
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				textColor = "white");
 		}
 

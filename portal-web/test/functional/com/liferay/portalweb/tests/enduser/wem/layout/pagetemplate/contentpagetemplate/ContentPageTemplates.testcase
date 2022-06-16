@@ -256,7 +256,7 @@ definition {
 		task ("View the fragment style") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				headingLevel = "h2",
 				textColor = "success");
 
@@ -275,7 +275,7 @@ definition {
 		task ("View the fragment style") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				headingLevel = "h2",
 				textColor = "success");
 		}
@@ -287,12 +287,17 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(locator1 = "//div[contains(@class,'text-center')][//h2[contains(@class,'component-heading')]]");
+			AssertVisible(locator1 = "//h2[contains(@class,'component-heading')]");
 
-			AssertCssValue(
-				locator1 = "//div[contains(@class,'text-center')][//h2[contains(@class,'component-heading')]]",
-				locator2 = "color",
-				value1 = "rgba(40, 125, 60, 1)");
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "heading",
+				styleName = "textAlign",
+				styleValue = "center");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "heading",
+				styleName = "color",
+				styleValue = "rgb(40, 125, 60)");
 		}
 	}
 

@@ -77,10 +77,7 @@ definition {
 		}
 
 		task ("View the background color of Container") {
-			AssertCssValue(
-				locator1 = "//div[@aria-label='Container']//div[contains(@class,'container')]",
-				locator2 = "background-color",
-				value1 = "rgba(0, 51, 204, 1)");
+			PageEditor.viewContainerStyle(backgroundColor = "rgb(0, 51, 204)");
 		}
 	}
 
@@ -156,13 +153,10 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertCssValue(
+			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "heading",
-				id = "element-text",
-				index = "1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
-				locator2 = "color",
-				value1 = "rgba(0, 204, 187, 1)");
+				styleName = "color",
+				styleValue = "rgb(0, 204, 187)");
 		}
 	}
 
@@ -321,13 +315,10 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertCssValue(
+			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "heading",
-				id = "element-text",
-				index = "1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
-				locator2 = "color",
-				value1 = "rgba(218, 20, 20, 1)");
+				styleName = "color",
+				styleValue = "rgb(218, 20, 20)");
 		}
 	}
 
@@ -419,7 +410,7 @@ definition {
 
 		task ("View the Text Color of Heading is Success") {
 			PageEditor.viewFragmentStyle(
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				textColor = "success");
 		}
 
@@ -433,13 +424,9 @@ definition {
 				locator1 = "TextInput#ANY",
 				value1 = "#287D3C");
 
-			AssertCssValue(
-				fragmentName = "heading",
-				id = "element-text",
-				index = "1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
-				locator2 = "color",
-				value1 = "rgba(40, 125, 60, 1)");
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Heading",
+				textColor = "rgb(40, 125, 60)");
 		}
 	}
 
@@ -489,10 +476,7 @@ definition {
 					locator1 = "TextInput#ANY",
 					value1 = "#2E5AAC");
 
-				AssertCssValue(
-					locator1 = "//div[@aria-label='Container']//div[contains(@class,'container')]",
-					locator2 = "background-color",
-					value1 = "rgba(46, 90, 172, 1)");
+				PageEditor.viewContainerStyle(backgroundColor = "rgb(46, 90, 172)");
 			}
 		}
 	}
@@ -523,7 +507,7 @@ definition {
 
 		task ("View the Text Color of Heading is Success") {
 			PageEditor.viewFragmentStyle(
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				textColor = "success");
 
 			PageEditor.publish();
@@ -569,16 +553,8 @@ definition {
 
 		task ("View the color reference of Text Color is #34f787") {
 			PageEditor.viewFragmentStyle(
-				fragmentName = "heading",
-				textColor = "success");
-
-			AssertCssValue(
-				fragmentName = "heading",
-				id = "element-text",
-				index = "1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
-				locator2 = "color",
-				value1 = "rgba(52, 247, 135, 1)");
+				fragmentName = "Heading",
+				textColor = "rgb(52, 247, 135)");
 		}
 	}
 

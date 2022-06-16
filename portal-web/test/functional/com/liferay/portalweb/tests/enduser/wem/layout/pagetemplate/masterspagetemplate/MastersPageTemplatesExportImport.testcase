@@ -212,7 +212,7 @@ definition {
 
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				headingLevel = "h2",
 				textColor = "danger");
 
@@ -250,7 +250,7 @@ definition {
 
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				headingLevel = "h2",
 				textColor = "danger");
 		}

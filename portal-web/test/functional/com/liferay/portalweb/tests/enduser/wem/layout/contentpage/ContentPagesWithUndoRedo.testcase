@@ -78,7 +78,7 @@ definition {
 
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "button");
+				fragmentName = "Button");
 
 			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
 				MenuItem.viewVisible(menuItem = "${menuItem}");
@@ -90,7 +90,7 @@ definition {
 
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "button");
+				fragmentName = "Button");
 
 			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
 				MenuItem.viewVisible(menuItem = "${menuItem}");
@@ -107,7 +107,7 @@ definition {
 
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "button");
+				fragmentName = "Button");
 
 			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
 				MenuItem.viewVisible(menuItem = "${menuItem}");
@@ -227,7 +227,7 @@ definition {
 
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "heading");
+				fragmentName = "Heading");
 
 			Click(
 				key_text = "redo",
@@ -912,7 +912,7 @@ definition {
 
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "heading");
+				fragmentName = "Heading");
 		}
 
 		task ("Refresh the page") {

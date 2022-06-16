@@ -411,7 +411,7 @@ definition {
 		task ("View the styles of Heading") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				headingLevel = "H2",
 				textColor = "danger");
 		}

@@ -194,7 +194,7 @@ definition {
 			PageEditor.configureFragment(headingLevel = "H5");
 
 			PageEditor.viewFragmentStyle(
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				headingLevel = "h5");
 		}
 
@@ -211,7 +211,7 @@ definition {
 			PageEditor.configureFragment(type = "Outline Secondary");
 
 			PageEditor.viewFragmentStyle(
-				fragmentName = "button",
+				fragmentName = "Button",
 				type = "outline-secondary");
 		}
 

@@ -80,7 +80,7 @@ definition {
 		task ("View the Button styles") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "button",
+				fragmentName = "Button",
 				size = "lg",
 				type = "link");
 		}
@@ -205,7 +205,7 @@ definition {
 				alignment = "center",
 				borderRadius = "border-radius-sm",
 				boxShadow = "box-shadow-lg",
-				fragmentName = "card",
+				fragmentName = "Card",
 				imageSize = "100",
 				marginBottom = "5");
 		}
@@ -269,7 +269,7 @@ definition {
 		task ("View the Heading styles in page editor") {
 			PageEditor.viewFragmentStyle(
 				alignment = "right",
-				fragmentName = "heading",
+				fragmentName = "Heading",
 				headingLevel = "h2",
 				marginBottom = "2",
 				marginLeft = "2",
@@ -289,12 +289,15 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(locator1 = "//div[contains(@class,'text-right')][//h2[contains(@class,'component-heading')]]");
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "heading",
+				styleName = "textAlign",
+				styleValue = "right");
 
-			AssertCssValue(
-				locator1 = "//div[contains(@class,'text-right')][//h2[contains(@class,'component-heading')]]",
-				locator2 = "color",
-				value1 = "rgba(107, 108, 126, 1)");
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "heading",
+				styleName = "color",
+				styleValue = "blockquote-small-color");
 		}
 
 		task ("Remove the Heading") {
@@ -351,7 +354,7 @@ definition {
 		task ("View the Image styles") {
 			PageEditor.viewFragmentStyle(
 				alignment = "center",
-				fragmentName = "image",
+				fragmentName = "Image",
 				imageSize = "0",
 				marginBottom = "2");
 		}
@@ -451,7 +454,7 @@ definition {
 		task ("View the Paragraph styles") {
 			PageEditor.viewFragmentStyle(
 				alignment = "right",
-				fragmentName = "paragraph",
+				fragmentName = "Paragraph",
 				textColor = "warning");
 		}
 
@@ -461,7 +464,7 @@ definition {
 
 		task ("View the Text Color of Paragraph") {
 			PageEditor.viewFragmentStyle(
-				fragmentName = "paragraph",
+				fragmentName = "Paragraph",
 				textColor = "success");
 		}
 
@@ -470,13 +473,9 @@ definition {
 		}
 
 		task ("View the Text Color of Paragraph") {
-			AssertCssValue(
-				fragmentName = "paragraph",
-				id = "element-text",
-				index = "1",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
-				locator2 = "color",
-				value1 = "rgba(39, 40, 51, 1)");
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Paragraph",
+				textColor = "rgb(39, 40, 51)");
 		}
 
 		task ("View the Default is shown in Text Color field") {
@@ -533,7 +532,7 @@ definition {
 			PageEditor.viewFragmentStyle(
 				borderColor = "gray-100",
 				bottomSpacing = "1",
-				fragmentName = "separator",
+				fragmentName = "Separator",
 				separatorColor = "danger");
 		}
 

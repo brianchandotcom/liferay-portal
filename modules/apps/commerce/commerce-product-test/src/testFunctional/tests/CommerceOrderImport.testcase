@@ -234,8 +234,6 @@ definition {
 
 			CommerceOrders.importFromOrder(orderId = "${activeOrderId}");
 
-			Alert.viewSuccessMessageText(successMessage = "1 row was imported successfully.");
-
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
 				productName = "U-Joint",
@@ -300,8 +298,6 @@ definition {
 			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
 
 			CommerceOrders.importFromOrder(orderId = "${activeOrderId}");
-
-			Alert.viewSuccessMessageText(successMessage = "1 row was imported successfully.");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
@@ -373,8 +369,6 @@ definition {
 
 		task ("Then they should be able to import the existing order") {
 			CommerceOrders.importFromOrder(orderId = "${activeOrderId}");
-
-			Alert.viewSuccessMessageText(successMessage = "1 row was imported successfully.");
 
 			CommerceAcceleratorsInitializer.reviewOrder(
 				orderAuthor = "Buyer User",
@@ -641,8 +635,6 @@ definition {
 		}
 
 		task ("Then only the other two products will be imported from the order") {
-			Alert.viewSuccessMessageText(successMessage = "2 rows were imported successfully.");
-
 			Refresh();
 
 			CommerceAcceleratorsInitializer.reviewOrder(

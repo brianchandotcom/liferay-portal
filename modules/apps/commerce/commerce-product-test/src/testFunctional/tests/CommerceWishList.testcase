@@ -117,8 +117,6 @@ definition {
 		}
 
 		task ("Then 2 products are imported successfully (U-Joint and Torque Converters") {
-			Alert.viewSuccessMessageText(successMessage = "2 rows were imported successfully.");
-
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
 				productName = "U-Joint",
@@ -292,8 +290,6 @@ definition {
 
 		task ("Then in order details only one product will be imported and displayed") {
 			SelectFrameTop();
-
-			Alert.viewSuccessMessageText(successMessage = "1 row was imported successfully.");
 
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "50.00",
@@ -546,8 +542,6 @@ definition {
 		}
 
 		task ("Then 2 products are imported successfully (U-Joint and Torque Converters") {
-			Alert.viewSuccessMessageText(successMessage = "2 rows were imported successfully.");
-
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "24.00",
 				productName = "U-Joint",
@@ -725,8 +719,6 @@ definition {
 			Button.click(button = "Import");
 
 			SelectFrameTop();
-
-			Alert.viewSuccessMessageText(successMessage = "3 rows were imported successfully.");
 		}
 
 		task ("Then all the order details are displayed, including discount") {

@@ -21,7 +21,6 @@ import com.liferay.gradle.plugins.theme.builder.BuildThemeTask;
 import com.liferay.gradle.plugins.theme.builder.ThemeBuilderPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
 
 import groovy.json.JsonSlurper;
 
@@ -60,10 +59,6 @@ public class ThemeCSSTypeConfigurer implements ClientExtensionTypeConfigurer {
 
 		_addDependenciesParentThemes(project);
 		_addDependenciesPortalCommonCSS(project);
-
-		Map<String, Object> packageJsonMap = _getPackageJsonMap(project);
-
-		_configureVersion(project, packageJsonMap);
 
 		_configureTaskBuildTheme(project);
 
@@ -238,16 +233,6 @@ public class ThemeCSSTypeConfigurer implements ClientExtensionTypeConfigurer {
 		return buildThemeTask;
 	}
 
-	private void _configureVersion(
-		Project project, Map<String, Object> packageJsonMap) {
-
-		String version = (String)packageJsonMap.get("version");
-
-		if (Validator.isNotNull(version)) {
-			project.setVersion(version);
-		}
-	}
-
 	@SuppressWarnings("unchecked")
 	private Map<String, Object> _getPackageJsonMap(File packageJsonFile) {
 		if (!packageJsonFile.exists()) {
@@ -257,19 +242,6 @@ public class ThemeCSSTypeConfigurer implements ClientExtensionTypeConfigurer {
 		JsonSlurper jsonSlurper = new JsonSlurper();
 
 		return (Map<String, Object>)jsonSlurper.parse(packageJsonFile);
-	}
-
-	@SuppressWarnings("unchecked")
-	private Map<String, Object> _getPackageJsonMap(Project project) {
-		File file = project.file("package.json");
-
-		if (!file.exists()) {
-			return Collections.emptyMap();
-		}
-
-		JsonSlurper jsonSlurper = new JsonSlurper();
-
-		return (Map<String, Object>)jsonSlurper.parse(file);
 	}
 
 }

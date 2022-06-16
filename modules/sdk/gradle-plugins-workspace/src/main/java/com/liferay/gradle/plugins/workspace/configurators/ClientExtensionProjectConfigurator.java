@@ -70,7 +70,6 @@ import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionAware;
-import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskProvider;
@@ -345,15 +344,12 @@ public class ClientExtensionProjectConfigurator
 				public void doCall(CopySpec copySpec) {
 					Project project = assembleTask.getProject();
 
-					Provider<Zip> zipProvider =
-						zipTaskProvider.forUseAtConfigurationTime();
-
 					ConfigurableFileCollection configurableFileCollection =
-						project.files(zipProvider);
+						project.files(zipTaskProvider);
 
 					configurableFileCollection.builtBy(assembleTask);
 
-					copySpec.from(zipProvider);
+					copySpec.from(zipTaskProvider);
 				}
 
 			});

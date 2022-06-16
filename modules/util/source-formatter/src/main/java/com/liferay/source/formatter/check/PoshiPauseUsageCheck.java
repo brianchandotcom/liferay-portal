@@ -74,10 +74,9 @@ public class PoshiPauseUsageCheck extends BaseFileCheck {
 				}
 
 				if (previousLine.startsWith("//")) {
-					String jiraTicketId = _getJIRATicketId(
-						previousLine, jiraProjectKeys);
+					if (Validator.isNull(
+							_getJIRATicketId(previousLine, jiraProjectKeys))) {
 
-					if (Validator.isNull(jiraTicketId)) {
 						addMessage(
 							fileName,
 							"Missing a required JIRA project in comment " +

@@ -223,12 +223,12 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 			Version fromSchemaVersion = new Version(
 				StringUtil.removeChar(parameterList.get(0), CharPool.QUOTE));
 
-			String expectedIncrementType = _getExpectedIncrementType(
-				absolutePath, parameterList.subList(2, parameterList.size()),
-				imports, upgradePackageName);
-
 			Version expectedSchemaVersion = _getExpectedSchemaVersion(
-				fromSchemaVersion, expectedIncrementType);
+				fromSchemaVersion,
+				_getExpectedIncrementType(
+					absolutePath,
+					parameterList.subList(2, parameterList.size()), imports,
+					upgradePackageName));
 
 			if (expectedSchemaVersion.compareTo(toSchemaVersion) > 0) {
 				addMessage(

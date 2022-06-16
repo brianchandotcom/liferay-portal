@@ -135,12 +135,12 @@ public class CheckstyleUtil {
 						_EXCLUDES_KEY, excludesJSONObject.toString());
 				}
 
-				JSONObject attributesJSONObject = _getAttributesJSONObject(
-					propertiesMap, checkSimpleName, checkConfiguration,
-					sourceFormatterArgs);
-
 				defaultConfiguration.addAttribute(
-					_ATTRIBUTES_KEY, attributesJSONObject.toString());
+					_ATTRIBUTES_KEY,
+					String.valueOf(
+						_getAttributesJSONObject(
+							propertiesMap, checkSimpleName, checkConfiguration,
+							sourceFormatterArgs)));
 			}
 			else {
 				for (String attributeName :

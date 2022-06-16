@@ -23,4 +23,5 @@ Export-Package:\
 	com.liferay.document.library.video.external.shortcut,\
 	com.liferay.document.library.video.external.shortcut.provider,\
 	com.liferay.document.library.video.external.shortcut.resolver,\
-	com.liferay.document.library.video.renderer
+	com.liferay.document.library.video.renderer,\
+	com.liferay.document.library.visibility.controller

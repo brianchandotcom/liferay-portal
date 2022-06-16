@@ -224,21 +224,6 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
-	public void testAddMessageWithoutExternalReferenceCode() throws Exception {
-		User user = TestPropsValues.getUser();
-
-		MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
-			user.getUserId(), user.getFullName(), _group.getGroupId(),
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(
-			String.valueOf(mbMessage.getMessageId()),
-			mbMessage.getExternalReferenceCode());
-	}
-
-	@Test
 	public void testAddXSSMessageWithInvalidFormat() throws Exception {
 		String subject = "<script>alert(1)</script>";
 		String body = "<script>alert(2)</script>";

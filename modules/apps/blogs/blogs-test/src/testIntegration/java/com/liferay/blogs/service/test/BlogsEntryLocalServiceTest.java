@@ -181,23 +181,6 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddBlogsEntryWithoutExternalReferenceCode()
-		throws Exception {
-
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
-			null, TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.nextDate(), false, false, new String[0],
-			RandomTestUtil.randomString(), null, null,
-			ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(
-			blogsEntry.getExternalReferenceCode(),
-			String.valueOf(blogsEntry.getEntryId()));
-	}
-
-	@Test
 	public void testAddCoverImageWithCoverImageURL() throws Exception {
 		BlogsEntry entry = addEntry(false);
 

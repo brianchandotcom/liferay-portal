@@ -436,7 +436,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, false, false, 1,
-				StringPool.BLANK, null, 0, false, 0, StringPool.BLANK, null, 0,
+				StringPool.BLANK, null, 0, false, 1, StringPool.BLANK, null, 0,
 				unspsc, discontinued, replacementCPInstanceUuid,
 				replacementCProductId, discontinuedDateMonth,
 				discontinuedDateDay, discontinuedDateYear, serviceContext);

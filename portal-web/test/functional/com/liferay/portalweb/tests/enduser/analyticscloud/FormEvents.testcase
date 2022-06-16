@@ -65,12 +65,12 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Bug: LRAC-7832 | Automation ID: LRAC-9867 | Test Summary: Check fieldBlurred and fieldFocused is triggered when interacting with form fields (Text, Date, Image, Rich Text, Upload and Color[by color picker and color field])"
+	@description = "Bug: LRAC-7832 | Automation ID: LRAC-9867 | Test Summary: Check fieldBlurred and fieldFocused is triggered when interacting with form fields (Text, Date, Date and Time, Image, Rich Text, Upload and Color[by color picker and color field])"
 	@priority = "4"
 	test CheckFieldBlurredAndFieldFocusedWhenInteractingWithFields {
 		property proxy.server.enabled = "true";
 
-		var fieldNameList = "Date,Image,Rich Text,Upload,Color";
+		var fieldNameList = "Date,Image,Rich Text,Upload,Color,Date and Time";
 
 		task ("Edit the form to add more fields") {
 			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
@@ -96,7 +96,13 @@ definition {
 				}
 
 				task ("Click to focus on form fields different than rich text") {
-					if ("${fieldName}" != "Rich Text") {
+					if ("${fieldName}" == "Date and Time") {
+						Click(
+							key_fieldName = "DateAndTime",
+							locator1 = "FormFields#GENERIC_INPUT_FIELD");
+					}
+
+					if (("${fieldName}" != "Rich Text") && ("${fieldName}" != "Date and Time")) {
 						Click(
 							key_fieldName = "${fieldName}",
 							locator1 = "FormFields#GENERIC_INPUT_FIELD");

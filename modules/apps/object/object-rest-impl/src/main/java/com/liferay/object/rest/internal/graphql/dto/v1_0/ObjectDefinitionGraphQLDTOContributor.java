@@ -52,6 +52,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -102,8 +103,8 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 				String objectFieldName = objectField.getName();
 
-				String relationshipIdName = objectFieldName.substring(
-					objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1);
+				String relationshipIdName =
+					objectFieldName.split(StringPool.UNDERLINE)[1];
 
 				graphQLDTOProperties.add(
 					GraphQLDTOProperty.of(relationshipIdName, Long.class));
@@ -247,7 +248,16 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		String relationshipIdName = relationshipName + "Id";
+		Set<String> propertiesKeySet = properties.keySet();
+
+		Stream<String> propertiesKeySetStream = propertiesKeySet.stream();
+
+		String relationshipIdName = propertiesKeySetStream.filter(
+			property -> property.contains(relationshipName)
+		).findFirst(
+		).orElse(
+			""
+		);
 
 		Object relationshipId = properties.get(relationshipIdName);
 

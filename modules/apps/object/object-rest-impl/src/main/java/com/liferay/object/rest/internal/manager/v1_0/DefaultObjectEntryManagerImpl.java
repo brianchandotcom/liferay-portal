@@ -217,6 +217,12 @@ public class DefaultObjectEntryManagerImpl
 			_objectEntryService.fetchObjectEntry(objectEntryId);
 
 		if (objectEntry != null) {
+			if (objectDefinition == null) {
+				objectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectEntry.getObjectDefinitionId());
+			}
+
 			return _toObjectEntry(
 				dtoConverterContext, objectDefinition, objectEntry);
 		}

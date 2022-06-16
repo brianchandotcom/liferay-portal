@@ -14,15 +14,23 @@
 
 import {buildFragment, openSelectionModal, sub} from 'frontend-js-web';
 
+const HTML5_UPLOAD =
+	window && window.File && window.FormData && window.XMLHttpRequest;
+
 export default function DocumentLibrary({
 	editEntryUrl,
 	namespace,
 	searchContainerId,
 	selectFolderURL,
+	...config
 }) {
 	let searchContainer;
 
 	const form = document[`${namespace}fm2`];
+
+	const entriesContainer = document.getElementById(
+		`${namespace}entriesContainer`
+	);
 
 	Liferay.componentReady(`${namespace}${searchContainerId}`).then(
 		(searchContainerComponent) => {
@@ -33,6 +41,19 @@ export default function DocumentLibrary({
 			searchContainer.on('rowToggled', _handleSearchContainerRowToggled);
 		}
 	);
+
+	if (
+		config.uploadable &&
+		HTML5_UPLOAD &&
+		themeDisplay.isSignedIn() &&
+		entriesContainer
+	) {
+		config.appViewEntryTemplates = document.getElementById(
+			`${namespace}appViewEntryTemplates`
+		);
+
+		document.addEventListener('dragenter', _plugUpload, {once: true});
+	}
 
 	function _handleSearchContainerRowToggled() {
 		const bulkSelection =
@@ -103,6 +124,12 @@ export default function DocumentLibrary({
 		}
 
 		submitForm(form, editEntryUrl, false);
+	}
+
+	function _plugUpload(event) {
+		console.log('plug upload');
+		// TODO
+
 	}
 
 	window[`${namespace}move`] = function (

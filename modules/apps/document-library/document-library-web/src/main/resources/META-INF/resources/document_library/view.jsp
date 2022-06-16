@@ -223,6 +223,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 							"searchContainerId", "entries"
 						).put(
 							"selectFolderURL", dlViewDisplayContext.getSelectFolderURL()
+						).put(
+							"uploadable", dlViewDisplayContext.isUploadable()
 						).build()
 					%>'
 					module="document_library/js/DocumentLibrary"

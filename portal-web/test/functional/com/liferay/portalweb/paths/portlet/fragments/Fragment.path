@@ -233,78 +233,8 @@
 <!--FRAGMENT_COMMON_STYLE-->
 
 <tr>
-	<td>FRAGMENT_CONFIGURATION_ALIGNMENT</td>
-	<td>//div[contains(@class,'text-${key_alignment}')][.//*[contains(@class,'${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_BACKGROUND_COLOR</td>
-	<td>//div[contains(@style,'background-color: var(--${key_paletteItem})')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_BORDER_COLOR</td>
-	<td>//div[contains(@style,'border-color: var(--${key_paletteItem})')][.//*[contains(@class,'${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_BORDER_RADIUS</td>
-	<td>//div[contains(@style,'border-radius: var(--${key_borderRadius})')][.//*[contains(@class,'${key_fragmentName}')]] | //div[contains(@style,'border-radius: ${key_borderRadius}')][.//*[contains(@class,'${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_BOX_SHADOW</td>
-	<td>//div[contains(@style,'box-shadow: var(--${key_boxShadow})')][.//*[contains(@class,'${key_fragmentName}')]] | //div[contains(@style,'box-shadow: ${key_boxShadow}')][.//*[contains(@class,'${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_MARGIN_BOTTOM</td>
-	<td>//div[contains(@class,'mb-${key_marginBottom}')][.//*[contains(@class,'${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_MARGIN_LEFT</td>
-	<td>//div[contains(@class,'ml-${key_marginLeft}')][.//*[contains(@class,'${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_MARGIN_RIGHT</td>
-	<td>//div[contains(@class,'mr-${key_marginRight}')][.//*[contains(@class,'${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_MARGIN_TOP</td>
-	<td>//div[contains(@class,'mt-${key_marginTop}')][.//*[contains(@class,'${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_PADDING_BOTTOM</td>
-	<td>//div[contains(@class,'pb-${key_paddingBottom}')][.//*[contains(@class,'${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_PADDING_LEFT</td>
-	<td>//div[contains(@class,'pl-${key_paddingLeft}')][.//*[contains(@class,'${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_PADDING_RIGHT</td>
-	<td>//div[contains(@class,'pr-${key_paddingRight}')][.//*[contains(@class,'${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_PADDING_TOP</td>
-	<td>//div[contains(@class,'pt-${key_paddingTop}')][.//*[contains(@class,'${key_fragmentName}')]]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT_CONFIGURATION_HEADER</td>
 	<td>xpath=(//${key_headingLevel}[contains(@class,'component-${key_fragmentName}')])[${key_position}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FRAGMENT_CONFIGURATION_TEXT_COLOR</td>
-	<td>xpath=(//div[contains(@style,'color: var(--${key_textColor})')][.//*[contains(@class,'${key_fragmentName}')]])[${key_position}] | (//div[contains(@style,'color: ${key_textColor}')][.//*[contains(@class,'${key_fragmentName}')]])[${key_position}]</td>
 	<td></td>
 </tr>
 <tr>

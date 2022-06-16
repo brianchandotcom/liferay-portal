@@ -473,19 +473,19 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Longer,WC Shorter");
 	}
 
-	test AssertCommerceItemsSearchable {
+	@description = "This is a use case for LPS-136868."
+	test AssertCommerceItemsSearchableViaPreview {
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
 
-		Blueprints.searchBlueprintsPreview(searchTerm = "brake pad");
+		Blueprints.searchBlueprintsPreview(searchTerm = "Brake Pads");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_SPECIFIC_RANKING",
-			resultRanking = "1",
-			value1 = "brake pad");
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "Brake Pads");
 	}
 
 	test AssertDisabledQueryElementNotAppliedToSearch {

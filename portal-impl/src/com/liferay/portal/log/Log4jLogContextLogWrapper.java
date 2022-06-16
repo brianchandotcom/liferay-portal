@@ -44,6 +44,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.debug(message);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -51,6 +53,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.debug(message, throwable);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -58,6 +62,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.debug(null, throwable);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -65,6 +71,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.error(message);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -72,6 +80,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.error(message, throwable);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -79,6 +89,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.error(null, throwable);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -86,6 +98,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.fatal(message);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -93,6 +107,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.fatal(message, throwable);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -100,6 +116,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.fatal(null, throwable);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -107,6 +125,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.info(message);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -114,6 +134,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.info(message, throwable);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -121,6 +143,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.info(null, throwable);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -128,6 +152,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.trace(message);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -135,6 +161,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.trace(message, throwable);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -142,6 +170,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.trace(null, throwable);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -149,6 +179,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.warn(message);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -156,6 +188,8 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.warn(message, throwable);
+
+		_cleanThreadContext();
 	}
 
 	@Override
@@ -163,6 +197,12 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		_populateThreadContext();
 
 		super.warn(null, throwable);
+
+		_cleanThreadContext();
+	}
+
+	private void _cleanThreadContext() {
+		ThreadContext.clearMap();
 	}
 
 	private void _populateThreadContext() {

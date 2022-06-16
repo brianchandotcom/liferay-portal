@@ -66,10 +66,16 @@ public class StagedExpandoColumnStagedModelRepository
 			StagedExpandoColumn stagedExpandoColumn)
 		throws PortalException {
 
+		long columnId = stagedExpandoColumn.getColumnId();
+
+		stagedExpandoColumn.setColumnId(0);
+
 		ExpandoColumn expandoColumn = _expandoColumnLocalService.addColumn(
 			stagedExpandoColumn.getTableId(), stagedExpandoColumn.getName(),
 			stagedExpandoColumn.getType(),
 			stagedExpandoColumn.getDefaultValue());
+
+		stagedExpandoColumn.setColumnId(columnId);
 
 		expandoColumn = _expandoColumnLocalService.updateTypeSettings(
 			expandoColumn.getColumnId(), stagedExpandoColumn.getTypeSettings());

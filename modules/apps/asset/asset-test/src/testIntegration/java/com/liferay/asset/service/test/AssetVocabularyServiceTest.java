@@ -149,28 +149,6 @@ public class AssetVocabularyServiceTest {
 	}
 
 	@Test
-	public void testAddVocabularyWithoutExternalReferenceCode()
-		throws Exception {
-
-		AssetVocabulary vocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
-
-		String externalReferenceCode = String.valueOf(
-			vocabulary.getVocabularyId());
-
-		Assert.assertEquals(
-			externalReferenceCode, vocabulary.getExternalReferenceCode());
-
-		vocabulary =
-			AssetVocabularyLocalServiceUtil.
-				getAssetVocabularyByExternalReferenceCode(
-					_group.getGroupId(), externalReferenceCode);
-
-		Assert.assertEquals(
-			externalReferenceCode, vocabulary.getExternalReferenceCode());
-	}
-
-	@Test
 	public void testDeleteVocabulary() throws Exception {
 		int initialAssetCategoriesCount = searchCount();
 		int initialResourceActionsCount =

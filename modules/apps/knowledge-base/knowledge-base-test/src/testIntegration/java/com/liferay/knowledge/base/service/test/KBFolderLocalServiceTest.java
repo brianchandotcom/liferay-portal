@@ -109,21 +109,6 @@ public class KBFolderLocalServiceTest {
 	}
 
 	@Test
-	public void testAddKBFolderWithoutExternalReferenceCode() throws Exception {
-		KBFolder kbFolder = KBFolderLocalServiceUtil.addKBFolder(
-			null, _user.getUserId(), _group.getGroupId(),
-			PortalUtil.getClassNameId(KBFolderConstants.getClassName()),
-			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
-
-		Assert.assertEquals(
-			kbFolder.getExternalReferenceCode(),
-			String.valueOf(kbFolder.getKbFolderId()));
-	}
-
-	@Test
 	public void testGetKBFoldersAndKBArticlesCountInKBFolder()
 		throws Exception {
 

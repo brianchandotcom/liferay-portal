@@ -119,29 +119,6 @@ public class AssetCategoryLocalServiceTest {
 			externalReferenceCode, assetCategory.getExternalReferenceCode());
 	}
 
-	@Test
-	public void testAddCategoryWithoutExternalReferenceCode() throws Exception {
-		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			_group.getGroupId());
-
-		AssetCategory assetCategory = AssetTestUtil.addCategory(
-			_group.getGroupId(), assetVocabulary.getVocabularyId());
-
-		String externalReferenceCode = String.valueOf(
-			assetCategory.getCategoryId());
-
-		Assert.assertEquals(
-			externalReferenceCode, assetCategory.getExternalReferenceCode());
-
-		assetCategory =
-			AssetCategoryLocalServiceUtil.
-				getAssetCategoryByExternalReferenceCode(
-					_group.getGroupId(), externalReferenceCode);
-
-		Assert.assertEquals(
-			externalReferenceCode, assetCategory.getExternalReferenceCode());
-	}
-
 	@Test(expected = DuplicateCategoryException.class)
 	public void testCannotAddCategoryWithDuplicateName() throws Exception {
 		Map<Locale, String> titleMap = HashMapBuilder.put(

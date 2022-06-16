@@ -196,18 +196,6 @@ public class WikiPageLocalServiceTest {
 		Assert.assertEquals("ChildPage 1", page.getTitle());
 	}
 
-	@Test
-	public void testAddPageWithoutExternalReferenceCode() throws Exception {
-		WikiPage wikiPage = WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), _node.getNodeId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Assert.assertEquals(
-			wikiPage.getExternalReferenceCode(),
-			String.valueOf(wikiPage.getPageId()));
-	}
-
 	@Test(expected = AssetCategoryTestException.class)
 	public void testAddPageWithoutRequiredCategory() throws Exception {
 		AssetVocabulary assetVocabulary = getRequiredAssetVocabulary();

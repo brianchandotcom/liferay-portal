@@ -184,17 +184,6 @@ public class JournalFolderServiceTest {
 	}
 
 	@Test
-	public void testAddJournalFolderWithoutExternalReferenceCode()
-		throws Exception {
-
-		JournalFolder folder = addJournalFolder(null);
-
-		Assert.assertEquals(
-			folder.getExternalReferenceCode(),
-			String.valueOf(folder.getFolderId()));
-	}
-
-	@Test
 	public void testAddRestrictionToParentWithRestrictedChildFolder()
 		throws Exception {
 

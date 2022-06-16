@@ -15,6 +15,7 @@
 package com.liferay.commerce.order.content.web.internal.frontend.data.set.util;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.context.CommerceGroupThreadLocal;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
@@ -25,7 +26,7 @@ import com.liferay.commerce.order.content.web.internal.importer.type.CommerceWis
 import com.liferay.commerce.order.content.web.internal.model.Order;
 import com.liferay.commerce.order.content.web.internal.model.WishList;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
-import com.liferay.commerce.service.CommerceOrderTypeLocalService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,8 +36,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -153,15 +153,16 @@ public class CommerceOrderFDSUtil {
 	}
 
 	public static List<Order> getOrders(
-			List<CommerceOrder> commerceOrders,
-			CommerceOrderTypeLocalService commerceOrderTypeLocalService,
-			ModelResourcePermission<CommerceOrderType>
-				commerceOrderTypeModelResourcePermission,
-			String priceDisplayType, boolean showCommerceOrderCreateTime,
-			ThemeDisplay themeDisplay)
+			long commerceChannelGroupId, List<CommerceOrder> commerceOrders,
+			CommerceOrderTypeService commerceOrderTypeService,
+			GroupLocalService groupLocalService, String priceDisplayType,
+			boolean showCommerceOrderCreateTime, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<Order> orders = new ArrayList<>();
+
+		CommerceGroupThreadLocal.set(
+			groupLocalService.fetchGroup(commerceChannelGroupId));
 
 		for (CommerceOrder commerceOrder : commerceOrders) {
 			String amount = StringPool.BLANK;
@@ -199,21 +200,13 @@ public class CommerceOrderFDSUtil {
 
 			String commerceOrderTypeName = StringPool.BLANK;
 
-			if ((commerceOrderTypeModelResourcePermission != null) &&
-				(commerceOrderTypeLocalService != null)) {
+			CommerceOrderType commerceOrderType =
+				commerceOrderTypeService.fetchCommerceOrderType(
+					commerceOrder.getCommerceOrderTypeId());
 
-				CommerceOrderType commerceOrderType =
-					commerceOrderTypeLocalService.fetchCommerceOrderType(
-						commerceOrder.getCommerceOrderTypeId());
-
-				if ((commerceOrderType != null) &&
-					commerceOrderTypeModelResourcePermission.contains(
-						themeDisplay.getPermissionChecker(), commerceOrderType,
-						ActionKeys.VIEW)) {
-
-					commerceOrderTypeName = commerceOrderType.getName(
-						themeDisplay.getLocale());
-				}
+			if (commerceOrderType != null) {
+				commerceOrderTypeName = commerceOrderType.getName(
+					themeDisplay.getLocale());
 			}
 
 			orders.add(

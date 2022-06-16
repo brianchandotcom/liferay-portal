@@ -15,7 +15,6 @@
 package com.liferay.commerce.order.content.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.content.web.internal.frontend.data.set.util.CommerceOrderFDSUtil;
 import com.liferay.commerce.order.content.web.internal.model.Order;
@@ -24,13 +23,13 @@ import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.service.CommerceOrderTypeLocalService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -95,8 +94,8 @@ public class PlacedCommerceOrderFDSDataProvider
 					CommerceOrderContentPortletInstanceConfiguration.class);
 
 		return CommerceOrderFDSUtil.getOrders(
-			commerceOrders, _commerceOrderTypeLocalService,
-			_commerceOrderTypeModelResourcePermission,
+			commerceChannel.getGroupId(), commerceOrders,
+			_commerceOrderTypeService, _groupLocalService,
 			commerceChannel.getPriceDisplayType(),
 			commerceOrderContentPortletInstanceConfiguration.
 				showCommerceOrderCreateTime(),
@@ -132,12 +131,9 @@ public class PlacedCommerceOrderFDSDataProvider
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
-	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
+	private CommerceOrderTypeService _commerceOrderTypeService;
 
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.model.CommerceOrderType)"
-	)
-	private ModelResourcePermission<CommerceOrderType>
-		_commerceOrderTypeModelResourcePermission;
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

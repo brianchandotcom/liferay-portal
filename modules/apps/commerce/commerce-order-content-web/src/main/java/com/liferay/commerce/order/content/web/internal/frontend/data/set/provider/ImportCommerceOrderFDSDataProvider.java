@@ -21,11 +21,13 @@ import com.liferay.commerce.order.content.web.internal.model.Order;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -84,8 +86,9 @@ public class ImportCommerceOrderFDSDataProvider
 		}
 
 		return CommerceOrderFDSUtil.getOrders(
-			commerceOrders, null, null, commerceChannel.getPriceDisplayType(),
-			true, themeDisplay);
+			commerceChannel.getGroupId(), commerceOrders,
+			_commerceOrderTypeService, _groupLocalService,
+			commerceChannel.getPriceDisplayType(), true, themeDisplay);
 	}
 
 	@Override
@@ -128,5 +131,11 @@ public class ImportCommerceOrderFDSDataProvider
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderTypeService _commerceOrderTypeService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

@@ -955,7 +955,7 @@ definition {
 				portlet = "Orders");
 		}
 
-		task ("And the admin edits Billing Address and can see the changes on the address") {
+		task ("Then the admin edits Billing and Shipping Address and can see the changes on the address") {
 			Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ORDER_ID");
 
 			for (var addressType : list "Billing,Shipping") {

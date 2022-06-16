@@ -625,6 +625,8 @@ definition {
 	}
 
 	macro viewOrderAddress {
+		WaitForPageLoad();
+
 		if ("${addressType}" == "Billing") {
 			AssertTextEquals.assertPartialText(
 				key_addressInfo = "${addressStreet1}",

@@ -3871,11 +3871,11 @@ definition {
 				pageName = "Experience Content Page",
 				siteName = "Test Site Name");
 
-			PageEditor.viewContainerStyle(backgroundImage = "Document_4.jpg");
+			PageEditor.viewContainerStyle(backgroundImage = "Document_4\.jpg");
 
 			PageEditor.changeExperience(newExperience = "New Experience");
 
-			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo.jpg");
+			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo\.jpg");
 		}
 	}
 

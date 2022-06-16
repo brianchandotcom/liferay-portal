@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -16,6 +15,13 @@ import {useEffect} from 'react';
 import i18n from '../../../../common/I18n';
 import ProjectCard from './components/ProjectCard';
 import useIntersectionObserver from './hooks/useIntersectionObserver';
+
+const THRESHOLD_COUNT = 4;
+
+const getLoadingCards = () =>
+	[...new Array(THRESHOLD_COUNT)].map((_, index) => (
+		<ProjectCard key={index} loading />
+	));
 
 const ProjectList = ({
 	fetching,
@@ -44,11 +50,6 @@ const ProjectList = ({
 			/>
 		));
 	};
-
-	const getLoadingCards = () =>
-		[...new Array(4)].map((_, index) => (
-			<ProjectCard key={index} loading />
-		));
 
 	const showResults = () => {
 		if (!koroneikiAccounts) {

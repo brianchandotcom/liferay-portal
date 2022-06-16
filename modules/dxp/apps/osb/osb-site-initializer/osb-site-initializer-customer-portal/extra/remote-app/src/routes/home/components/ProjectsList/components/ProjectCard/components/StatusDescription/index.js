@@ -14,13 +14,13 @@ import i18n from '../../../../../../../../common/I18n';
 import {SLA_STATUS_TYPES} from '../../../../../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../../../../../common/utils/getDateCustomFormat';
 
-const StatusDescription = ({compressed, slaCurrentEndDate, status}) => {
-	const statusReport = {
-		[SLA_STATUS_TYPES.active]: i18n.translate('ends-on'),
-		[SLA_STATUS_TYPES.future]: i18n.translate('starts-on'),
-		[SLA_STATUS_TYPES.expired]: i18n.translate('ended-on'),
-	};
+const statusReport = {
+	[SLA_STATUS_TYPES.active]: i18n.translate('ends-on'),
+	[SLA_STATUS_TYPES.future]: i18n.translate('starts-on'),
+	[SLA_STATUS_TYPES.expired]: i18n.translate('ended-on'),
+};
 
+const StatusDescription = ({compressed, slaCurrentEndDate, status}) => {
 	return (
 		<div
 			className={classNames('text-paragraph-sm', 'text-neutral-5', {

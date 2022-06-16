@@ -227,7 +227,7 @@ public class ObjectEntryInfoItemFormProvider
 						objectField.isRequired()
 					);
 
-					ObjectFieldDBTypeUtil.setAttribute(finalStep, objectField);
+					ObjectFieldDBTypeUtil.addAttributes(finalStep, objectField);
 
 					unsafeConsumer.accept(finalStep.build());
 				}

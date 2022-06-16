@@ -33,6 +33,19 @@ import java.util.Objects;
  */
 public class ObjectFieldDBTypeUtil {
 
+	public static void addAttributes(
+		InfoField.FinalStep finalStep, ObjectField objectField) {
+
+		if (Objects.equals(
+				objectField.getDBType(),
+				ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
+			Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_DOUBLE)) {
+
+			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
+		}
+	}
+
 	public static InfoFieldType getInfoFieldType(ObjectField objectField) {
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
 			return TextInfoFieldType.INSTANCE;
@@ -78,19 +91,6 @@ public class ObjectFieldDBTypeUtil {
 		}
 
 		return TextInfoFieldType.INSTANCE;
-	}
-
-	public static void setAttribute(
-		InfoField.FinalStep finalStep, ObjectField objectField) {
-
-		if (Objects.equals(
-				objectField.getDBType(),
-				ObjectFieldConstants.DB_TYPE_BIG_DECIMAL) ||
-			Objects.equals(
-				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_DOUBLE)) {
-
-			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
-		}
 	}
 
 }

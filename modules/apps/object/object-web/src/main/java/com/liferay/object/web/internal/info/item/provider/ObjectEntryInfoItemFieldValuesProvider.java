@@ -174,7 +174,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 								).build()
 							);
 
-						ObjectFieldDBTypeUtil.setAttribute(
+						ObjectFieldDBTypeUtil.addAttributes(
 							finalStep, objectField);
 
 						return new InfoFieldValue<>(

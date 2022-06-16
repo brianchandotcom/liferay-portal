@@ -448,7 +448,7 @@ public class FreeMarkerFragmentEntryProcessor
 			inputShowHelpText, inputShowLabel, type, "value");
 
 		if ((infoField != null) &&
-			(infoField.getInfoFieldType() == SelectInfoFieldType.INSTANCE)) {
+			(infoField.getInfoFieldType() instanceof SelectInfoFieldType)) {
 
 			Optional<List<SelectInfoFieldType.Option>> optionsOptional =
 				infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS);

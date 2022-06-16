@@ -25,10 +25,6 @@ public class SearchBarPortletDisplayContext {
 		return _currentSiteSearchScopeParameterString;
 	}
 
-	public String getDestination() {
-		return _destination;
-	}
-
 	public long getDisplayStyleGroupId() {
 		return _displayStyleGroupId;
 	}
@@ -130,10 +126,6 @@ public class SearchBarPortletDisplayContext {
 
 		_currentSiteSearchScopeParameterString =
 			searchScopeCurrentSiteParameterString;
-	}
-
-	public void setDestination(String destination) {
-		_destination = destination;
 	}
 
 	public void setDestinationUnreachable(boolean destinationUnreachable) {
@@ -245,7 +237,6 @@ public class SearchBarPortletDisplayContext {
 
 	private boolean _availableEverythingSearchScope;
 	private String _currentSiteSearchScopeParameterString;
-	private String _destination;
 	private boolean _destinationUnreachable;
 	private long _displayStyleGroupId;
 	private boolean _displayWarningIgnoredConfiguration;

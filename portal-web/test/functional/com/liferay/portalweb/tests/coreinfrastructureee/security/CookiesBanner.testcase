@@ -72,9 +72,17 @@ definition {
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
 				osgiConfigFileName = "com.liferay.cookies.configuration.CookiesConsentConfiguration.scoped~default.config");
 
-			CookieNavigator.gotoSiteSettings(
-				portlet = "Banner",
-				waitOSGIConfigDeploy = "true");
+			var siteId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Guest",
+				site = "true");
+
+			AntCommand(
+				locator1 = "build-test-cookies.xml",
+				value1 = "update-cookies-osgi-site-configuration -DsiteId=${siteId}");
+
+			User.logoutAndLoginPG();
+
+			CookieNavigator.gotoSiteSettings(portlet = "Banner");
 
 			CookieBannerAdmin.verifyAllConfigurationElementsAreConfigured(text = "CUSTOM");
 		}

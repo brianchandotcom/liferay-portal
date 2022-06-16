@@ -32,6 +32,8 @@ definition {
 	macro gotoSiteSettings {
 		Variables.assertDefined(parameterList = "${portlet}");
 
+		takeScreenshot();
+
 		var baseURL = "${baseURL}";
 
 		if (!(isSet(baseURL))) {
@@ -48,13 +50,6 @@ definition {
 
 		if ("${portlet}" == "Preference Handling") {
 			var portletId = "com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration";
-		}
-
-		if (isSet(waitOSGIConfigDeploy)) {
-
-			// Wait for CI only, takes some time to process OSGi config files. Needed for LPS-156012.
-
-			Pause(locator1 = "5000");
 		}
 
 		Open(locator1 = "${baseURL}/group/guest/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_factoryPid=${portletId}&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");

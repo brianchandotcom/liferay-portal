@@ -139,7 +139,7 @@ definition {
 		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
 
 		SystemSettings.viewInputText(
-			fieldLabel = "Maximum File Size",
+			fieldLabel = "File Max Size",
 			fieldValue = "51200");
 
 		DMDocument.updateMaximumFileSize(
@@ -151,7 +151,7 @@ definition {
 			siteURLKey = "guest");
 
 		SystemSettings.viewInputText(
-			fieldLabel = "Maximum File Size",
+			fieldLabel = "File Max Size",
 			fieldValue = "20480");
 
 		DMDocument.updateMaximumFileSize(

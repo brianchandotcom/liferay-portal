@@ -229,22 +229,6 @@ definition {
 		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
-	macro viewCopiedContent {
-		WebContentNavigator.openToAddBasicArticle(
-			groupName = "Guest",
-			siteURLKey = "guest");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
-
-		Click(locator1 = "CKEditor#BODY");
-
-		RobotType.robotTypeShortcut(locator1 = "Ctrl + v");
-
-		WaitForElementPresent(
-			key_text = "${text}",
-			locator1 = "CKEditor#BODY_TEXT");
-	}
-
 	macro viewDownloadedContent {
 		var tempDir = PropsUtil.get("output.dir.name");
 

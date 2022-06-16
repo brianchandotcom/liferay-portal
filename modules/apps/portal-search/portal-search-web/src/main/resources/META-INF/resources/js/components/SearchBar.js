@@ -25,7 +25,6 @@ import {navigate} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 export default function SearchBar({
-	destinationFriendlyURL,
 	emptySearchEnabled,
 	initialScope = '',
 	keywords = '',
@@ -35,7 +34,7 @@ export default function SearchBar({
 	scopeParameterName,
 	scopeParameterStringCurrentSite,
 	scopeParameterStringEverything,
-	searchURL = '/search',
+	searchURL,
 	suggestionsContributorConfiguration = '{}',
 	suggestionsDisplayThreshold = '2',
 	suggestionsURL = '/o/portal-search-rest/v1.0/suggestions',
@@ -81,7 +80,9 @@ export default function SearchBar({
 		},
 		variables: {
 			currentURL: window.location.href,
-			destinationFriendlyURL,
+			destinationFriendlyURL: !searchURL.trim().length
+				? searchURL
+				: '/search',
 			groupId: Liferay.ThemeDisplay.getScopeGroupId(),
 			plid: Liferay.ThemeDisplay.getPlid(),
 			scope,

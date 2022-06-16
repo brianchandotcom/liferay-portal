@@ -720,10 +720,9 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
-			PageEditor.viewFragmentCommonStyle(
+			PageEditor.viewFragmentStyle(
 				fragmentName = "Heading",
-				styleName = "color",
-				styleValue = "success");
+				textColor = "success");
 		}
 
 		task ("When the page creator changes the Text Color to Warning") {
@@ -733,10 +732,9 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
-			PageEditor.viewFragmentCommonStyle(
+			PageEditor.viewFragmentStyle(
 				fragmentName = "Heading",
-				styleName = "color",
-				styleValue = "warning");
+				textColor = "warning");
 		}
 
 		task ("Then the page creator could clear the color picker selection defined in Tablet viewport") {
@@ -751,10 +749,9 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
-			PageEditor.viewFragmentCommonStyle(
+			PageEditor.viewFragmentStyle(
 				fragmentName = "Heading",
-				styleName = "color",
-				styleValue = "success");
+				textColor = "success");
 		}
 	}
 

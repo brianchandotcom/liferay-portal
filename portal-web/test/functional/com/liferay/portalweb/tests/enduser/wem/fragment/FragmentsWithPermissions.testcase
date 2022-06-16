@@ -103,12 +103,9 @@ definition {
 					height = "600px",
 					panel = "General");
 
-				PageEditor.viewContainerStyle(containerWidth = "Fixed Width");
-
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "height",
-					styleValue = "600px");
+				PageEditor.viewContainerStyle(
+					containerWidth = "Fixed Width",
+					height = "600px");
 			}
 
 			task ("Access to the Styles panel of Container") {
@@ -117,15 +114,9 @@ definition {
 					borderWidth = "5",
 					panel = "Styles");
 
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "backgroundColor",
-					styleValue = "success");
-
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "borderWidth",
-					styleValue = "5px");
+				PageEditor.viewContainerStyle(
+					backgroundColor = "success",
+					borderWidth = "5px");
 
 				PageEditor.detachToken(fieldLabel = "Background Color");
 
@@ -138,10 +129,7 @@ definition {
 					key_sidebarButton = "Browser",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "backgroundColor",
-					styleValue = "rgb(51, 68, 85)");
+				PageEditor.viewContainerStyle(backgroundColor = "rgb(51, 68, 85)");
 			}
 
 			task ("Access to the Advanced panel of Container") {
@@ -229,15 +217,9 @@ definition {
 					borderWidth = "5",
 					panel = "Styles");
 
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "backgroundColor",
-					styleValue = "success");
-
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "borderWidth",
-					styleValue = "5px");
+				PageEditor.viewContainerStyle(
+					backgroundColor = "success",
+					borderWidth = "5px");
 
 				AssertElementNotPresent(
 					key_fieldLabel = "Background Color",
@@ -285,15 +267,10 @@ definition {
 					opacity = "50",
 					textColor = "Success");
 
-				PageEditor.viewFragmentCommonStyle(
+				PageEditor.viewFragmentStyle(
 					fragmentName = "Heading",
-					styleName = "color",
-					styleValue = "success");
-
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Heading",
-					styleName = "opacity",
-					styleValue = "0.5");
+					opacity = "0.5",
+					textColor = "success");
 
 				AssertElementNotPresent(
 					key_fieldLabel = "Text Color",
@@ -383,15 +360,9 @@ definition {
 					paddingTop = "4",
 					panel = "Styles");
 
-				PageEditor.viewFragmentTopperStyle(
-					fragmentName = "Container",
-					styleName = "marginBottom",
-					styleValue = "4");
-
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "paddingTop",
-					styleValue = "4");
+				PageEditor.viewContainerStyle(
+					marginBottom = "4",
+					paddingTop = "4");
 
 				for (var fieldSetLabel : list "Text,Background,Borders,Effects") {
 					AssertElementNotPresent(
@@ -528,12 +499,9 @@ definition {
 					height = "600px",
 					panel = "General");
 
-				PageEditor.viewContainerStyle(containerWidth = "Fixed Width");
-
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "height",
-					styleValue = "600px");
+				PageEditor.viewContainerStyle(
+					containerWidth = "Fixed Width",
+					height = "600px");
 			}
 
 			task ("Access to the Styles panel of Container") {
@@ -542,15 +510,9 @@ definition {
 					borderWidth = "5",
 					panel = "Styles");
 
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "backgroundColor",
-					styleValue = "success");
-
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "borderWidth",
-					styleValue = "5px");
+				PageEditor.viewContainerStyle(
+					backgroundColor = "success",
+					borderWidth = "5px");
 
 				PageEditor.detachToken(fieldLabel = "Background Color");
 
@@ -563,10 +525,7 @@ definition {
 					key_sidebarButton = "Browser",
 					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "backgroundColor",
-					styleValue = "rgb(51, 68, 85)");
+				PageEditor.viewContainerStyle(backgroundColor = "rgb(51, 68, 85)");
 			}
 
 			task ("Access to the Advanced panel of Container") {
@@ -670,15 +629,9 @@ definition {
 					borderWidth = "5",
 					panel = "Styles");
 
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "backgroundColor",
-					styleValue = "success");
-
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Container",
-					styleName = "borderWidth",
-					styleValue = "5px");
+				PageEditor.viewContainerStyle(
+					backgroundColor = "success",
+					borderWidth = "5px");
 
 				AssertElementNotPresent(
 					key_fieldLabel = "Background Color",
@@ -733,15 +686,10 @@ definition {
 					opacity = "50",
 					textColor = "Success");
 
-				PageEditor.viewFragmentCommonStyle(
+				PageEditor.viewFragmentStyle(
 					fragmentName = "Heading",
-					styleName = "color",
-					styleValue = "success");
-
-				PageEditor.viewFragmentCommonStyle(
-					fragmentName = "Heading",
-					styleName = "opacity",
-					styleValue = "0.5");
+					opacity = "0.5",
+					textColor = "success");
 
 				AssertElementNotPresent(
 					key_fieldLabel = "Text Color",

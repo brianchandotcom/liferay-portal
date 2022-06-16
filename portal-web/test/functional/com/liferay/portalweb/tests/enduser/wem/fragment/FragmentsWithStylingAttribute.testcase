@@ -92,10 +92,9 @@ definition {
 		}
 
 		task ("Then the common styles of new fragment shown in page editor") {
-			PageEditor.viewFragmentCommonStyle(
+			PageEditor.viewFragmentStyle(
 				fragmentName = "Fragment Name",
-				styleName = "color",
-				styleValue = "success");
+				textColor = "success");
 		}
 
 		task ("When the page creator opens the preview modal") {

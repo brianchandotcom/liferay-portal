@@ -26,7 +26,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -40,10 +39,7 @@ public class SynonymSetIndexCreatorImplTest extends BaseSynonymsWebTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_synonymSetIndexCreatorImpl = new SynonymSetIndexCreatorImpl();
 
 		ReflectionTestUtil.setFieldValue(
@@ -59,7 +55,7 @@ public class SynonymSetIndexCreatorImplTest extends BaseSynonymsWebTestCase {
 		Mockito.verify(
 			searchEngineAdapter, Mockito.times(1)
 		).execute(
-			Matchers.any(CreateIndexRequest.class)
+			Mockito.any(CreateIndexRequest.class)
 		);
 	}
 
@@ -71,7 +67,7 @@ public class SynonymSetIndexCreatorImplTest extends BaseSynonymsWebTestCase {
 		Mockito.verify(
 			searchEngineAdapter, Mockito.times(1)
 		).execute(
-			Matchers.any(DeleteIndexRequest.class)
+			Mockito.any(DeleteIndexRequest.class)
 		);
 	}
 

@@ -26,8 +26,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -42,10 +40,7 @@ public class SynonymSetIndexCreationCompanyModelListenerTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_synonymSetIndexCreationCompanyModelListener =
 			new SynonymSetIndexCreationCompanyModelListener();
 
@@ -70,7 +65,7 @@ public class SynonymSetIndexCreationCompanyModelListenerTest
 		Mockito.verify(
 			_synonymSetIndexCreator, Mockito.times(1)
 		).create(
-			Matchers.anyObject()
+			Mockito.any()
 		);
 	}
 
@@ -84,7 +79,7 @@ public class SynonymSetIndexCreationCompanyModelListenerTest
 		Mockito.verify(
 			_synonymSetIndexCreator, Mockito.never()
 		).create(
-			Matchers.anyObject()
+			Mockito.any()
 		);
 	}
 
@@ -98,7 +93,7 @@ public class SynonymSetIndexCreationCompanyModelListenerTest
 		Mockito.verify(
 			_synonymSetIndexCreator, Mockito.never()
 		).delete(
-			Matchers.anyObject()
+			Mockito.any()
 		);
 
 		setUpSynonymSetIndexReader(true);
@@ -114,17 +109,15 @@ public class SynonymSetIndexCreationCompanyModelListenerTest
 		Mockito.verify(
 			_synonymSetIndexCreator, Mockito.times(1)
 		).delete(
-			Matchers.anyObject()
+			Mockito.any()
 		);
 	}
 
 	private SynonymSetIndexCreationCompanyModelListener
 		_synonymSetIndexCreationCompanyModelListener;
-
-	@Mock
-	private SynonymSetIndexCreator _synonymSetIndexCreator;
-
-	@Mock
-	private SynonymSetIndexNameBuilder _synonymSetIndexNameBuilder;
+	private final SynonymSetIndexCreator _synonymSetIndexCreator = Mockito.mock(
+		SynonymSetIndexCreator.class);
+	private final SynonymSetIndexNameBuilder _synonymSetIndexNameBuilder =
+		Mockito.mock(SynonymSetIndexNameBuilder.class);
 
 }

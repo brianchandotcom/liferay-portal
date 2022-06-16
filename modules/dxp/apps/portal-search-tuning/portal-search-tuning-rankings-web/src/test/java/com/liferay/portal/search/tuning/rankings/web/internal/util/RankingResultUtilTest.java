@@ -39,7 +39,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -53,10 +52,7 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		ReflectionTestUtil.setFieldValue(
 			_rankingResultUtil, "_documentBuilderFactory",
 			_documentBuilderFactory);
@@ -80,7 +76,7 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		).when(
 			searchResultInterpreter
 		).getAssetRenderer(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		Mockito.doReturn(
@@ -112,8 +108,7 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		).when(
 			searchResultInterpreter
 		).getAssetURLViewInContext(
-			Mockito.anyObject(), Mockito.anyObject(), Mockito.anyObject(),
-			Mockito.anyString()
+			Mockito.any(), Mockito.any(), Mockito.any(), Mockito.anyString()
 		);
 
 		Assert.assertEquals(
@@ -137,8 +132,7 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		).when(
 			searchResultInterpreter
 		).getAssetURLViewInContext(
-			Mockito.anyObject(), Mockito.anyObject(), Mockito.anyObject(),
-			Mockito.anyString()
+			Mockito.any(), Mockito.any(), Mockito.any(), Mockito.anyString()
 		);
 
 		Assert.assertEquals(
@@ -189,7 +183,7 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		).when(
 			documentBuilder
 		).setString(
-			Mockito.anyObject(), Mockito.anyObject()
+			Mockito.any(), Mockito.any()
 		);
 
 		Mockito.doReturn(
@@ -197,7 +191,7 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		).when(
 			documentBuilder
 		).setLong(
-			Mockito.anyObject(), Mockito.anyObject()
+			Mockito.any(), Mockito.any()
 		);
 
 		Mockito.doReturn(
@@ -231,7 +225,7 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		).when(
 			searchResultInterpreter
 		).getAssetEntry(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		Mockito.doThrow(
@@ -239,8 +233,7 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		).when(
 			searchResultInterpreter
 		).getAssetURLViewInContext(
-			Mockito.anyObject(), Mockito.anyObject(), Mockito.anyObject(),
-			Mockito.anyString()
+			Mockito.any(), Mockito.any(), Mockito.any(), Mockito.anyString()
 		);
 
 		Mockito.doReturn(
@@ -267,7 +260,7 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 	private void _setUpPortalStripURLAnchor() {
 		Mockito.doAnswer(
 			invocation -> new String[] {
-				invocation.getArgumentAt(0, String.class), StringPool.BLANK
+				invocation.getArgument(0, String.class), StringPool.BLANK
 			}
 		).when(
 			portal
@@ -291,14 +284,14 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		).when(
 			portletURL
 		).setPortletMode(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		Mockito.doNothing(
 		).when(
 			portletURL
 		).setWindowState(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		return portletURL;
@@ -347,13 +340,12 @@ public class RankingResultUtilTest extends BaseRankingsWebTestCase {
 		return resourceResponse;
 	}
 
-	@Mock
-	private DocumentBuilderFactory _documentBuilderFactory;
-
+	private final DocumentBuilderFactory _documentBuilderFactory = Mockito.mock(
+		DocumentBuilderFactory.class);
 	private final RankingResultUtil _rankingResultUtil =
 		new RankingResultUtil();
-
-	@Mock
-	private SearchResultInterpreterProvider _searchResultInterpreterProvider;
+	private final SearchResultInterpreterProvider
+		_searchResultInterpreterProvider = Mockito.mock(
+			SearchResultInterpreterProvider.class);
 
 }

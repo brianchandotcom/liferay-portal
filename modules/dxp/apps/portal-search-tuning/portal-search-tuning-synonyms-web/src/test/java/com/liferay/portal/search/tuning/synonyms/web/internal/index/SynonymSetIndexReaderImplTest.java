@@ -44,10 +44,7 @@ public class SynonymSetIndexReaderImplTest extends BaseSynonymsWebTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_synonymSetIndexReaderImpl = new SynonymSetIndexReaderImpl();
 
 		ReflectionTestUtil.setFieldValue(

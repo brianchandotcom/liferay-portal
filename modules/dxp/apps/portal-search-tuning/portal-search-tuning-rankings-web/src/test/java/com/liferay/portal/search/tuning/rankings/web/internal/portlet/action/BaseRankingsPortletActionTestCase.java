@@ -31,8 +31,6 @@ import java.util.Optional;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -51,7 +49,7 @@ public abstract class BaseRankingsPortletActionTestCase
 		).when(
 			builder
 		).index(
-			Matchers.anyString()
+			Mockito.anyString()
 		);
 
 		Mockito.doReturn(
@@ -59,7 +57,7 @@ public abstract class BaseRankingsPortletActionTestCase
 		).when(
 			builder
 		).queryStrings(
-			Matchers.anyCollection()
+			Mockito.anyCollection()
 		);
 
 		Mockito.doReturn(
@@ -67,7 +65,7 @@ public abstract class BaseRankingsPortletActionTestCase
 		).when(
 			builder
 		).rankingIndexName(
-			Matchers.anyObject()
+			Mockito.any()
 		);
 
 		Mockito.doReturn(
@@ -75,7 +73,7 @@ public abstract class BaseRankingsPortletActionTestCase
 		).when(
 			builder
 		).unlessRankingDocumentId(
-			Matchers.anyString()
+			Mockito.anyString()
 		);
 
 		Mockito.doReturn(
@@ -95,7 +93,7 @@ public abstract class BaseRankingsPortletActionTestCase
 		).when(
 			duplicateQueryStringsDetector
 		).detect(
-			Matchers.anyObject()
+			Mockito.any()
 		);
 	}
 
@@ -105,7 +103,7 @@ public abstract class BaseRankingsPortletActionTestCase
 		).when(
 			indexNameBuilder
 		).getIndexName(
-			Matchers.anyLong()
+			Mockito.anyLong()
 		);
 	}
 
@@ -118,7 +116,7 @@ public abstract class BaseRankingsPortletActionTestCase
 		).when(
 			portletRequest
 		).getParameter(
-			Matchers.eq(paramName)
+			Mockito.eq(paramName)
 		);
 	}
 
@@ -152,7 +150,7 @@ public abstract class BaseRankingsPortletActionTestCase
 		).when(
 			rankingIndexReader
 		).fetchOptional(
-			Matchers.anyObject(), Matchers.anyString()
+			Mockito.any(), Mockito.anyString()
 		);
 	}
 
@@ -170,16 +168,13 @@ public abstract class BaseRankingsPortletActionTestCase
 		).createRenderURL();
 	}
 
-	@Mock
-	protected DuplicateQueryStringsDetector duplicateQueryStringsDetector;
-
-	@Mock
-	protected IndexNameBuilder indexNameBuilder;
-
-	@Mock
-	protected RankingIndexReader rankingIndexReader;
-
-	@Mock
-	protected RankingStorageAdapter rankingStorageAdapter;
+	protected DuplicateQueryStringsDetector duplicateQueryStringsDetector =
+		Mockito.mock(DuplicateQueryStringsDetector.class);
+	protected IndexNameBuilder indexNameBuilder = Mockito.mock(
+		IndexNameBuilder.class);
+	protected RankingIndexReader rankingIndexReader = Mockito.mock(
+		RankingIndexReader.class);
+	protected RankingStorageAdapter rankingStorageAdapter = Mockito.mock(
+		RankingStorageAdapter.class);
 
 }

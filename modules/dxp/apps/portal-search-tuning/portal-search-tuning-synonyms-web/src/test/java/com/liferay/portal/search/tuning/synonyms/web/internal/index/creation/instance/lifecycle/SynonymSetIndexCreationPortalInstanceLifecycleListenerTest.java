@@ -28,8 +28,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -44,10 +42,7 @@ public class SynonymSetIndexCreationPortalInstanceLifecycleListenerTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_synonymSetIndexCreationPortalInstanceLifecycleListener =
 			new SynonymSetIndexCreationPortalInstanceLifecycleListener();
 
@@ -78,12 +73,12 @@ public class SynonymSetIndexCreationPortalInstanceLifecycleListenerTest
 		Mockito.verify(
 			_synonymSetIndexCreator, Mockito.times(1)
 		).create(
-			Matchers.anyObject()
+			Mockito.any()
 		);
 		Mockito.verify(
 			_filterToIndexSynchronizer, Mockito.times(1)
 		).copyToIndex(
-			Matchers.anyString(), Matchers.anyObject()
+			Mockito.nullable(String.class), Mockito.any()
 		);
 	}
 
@@ -97,28 +92,24 @@ public class SynonymSetIndexCreationPortalInstanceLifecycleListenerTest
 		Mockito.verify(
 			_synonymSetIndexCreator, Mockito.never()
 		).create(
-			Matchers.anyObject()
+			Mockito.any()
 		);
 		Mockito.verify(
 			_filterToIndexSynchronizer, Mockito.never()
 		).copyToIndex(
-			Matchers.anyString(), Matchers.anyObject()
+			Mockito.anyString(), Mockito.any()
 		);
 	}
 
-	@Mock
-	private FilterToIndexSynchronizer _filterToIndexSynchronizer;
-
-	@Mock
-	private IndexNameBuilder _indexNameBuilder;
-
+	private final FilterToIndexSynchronizer _filterToIndexSynchronizer =
+		Mockito.mock(FilterToIndexSynchronizer.class);
+	private final IndexNameBuilder _indexNameBuilder = Mockito.mock(
+		IndexNameBuilder.class);
 	private SynonymSetIndexCreationPortalInstanceLifecycleListener
 		_synonymSetIndexCreationPortalInstanceLifecycleListener;
-
-	@Mock
-	private SynonymSetIndexCreator _synonymSetIndexCreator;
-
-	@Mock
-	private SynonymSetIndexNameBuilder _synonymSetIndexNameBuilder;
+	private final SynonymSetIndexCreator _synonymSetIndexCreator = Mockito.mock(
+		SynonymSetIndexCreator.class);
+	private final SynonymSetIndexNameBuilder _synonymSetIndexNameBuilder =
+		Mockito.mock(SynonymSetIndexNameBuilder.class);
 
 }

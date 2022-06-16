@@ -27,7 +27,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -42,10 +41,7 @@ public class EditResultsRankingsMVCRenderCommandTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_editResultsRankingsMVCRenderCommand =
 			new EditResultsRankingsMVCRenderCommand();
 
@@ -83,11 +79,9 @@ public class EditResultsRankingsMVCRenderCommandTest
 
 	private EditResultsRankingsMVCRenderCommand
 		_editResultsRankingsMVCRenderCommand;
-
-	@Mock
-	private RenderRequest _renderRequest;
-
-	@Mock
-	private RenderResponse _renderResponse;
+	private final RenderRequest _renderRequest = Mockito.mock(
+		RenderRequest.class);
+	private final RenderResponse _renderResponse = Mockito.mock(
+		RenderResponse.class);
 
 }

@@ -27,9 +27,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Wade Cao
@@ -43,8 +41,6 @@ public class SynonymsPanelAppTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_synonymsPanelApp = new SynonymsPanelApp();
 
 		ReflectionTestUtil.setFieldValue(
@@ -84,9 +80,8 @@ public class SynonymsPanelAppTest {
 		Assert.assertEquals(portlet, _synonymsPanelApp.getPortlet());
 	}
 
-	@Mock
-	private PortletLocalService _portletLocalService;
-
+	private final PortletLocalService _portletLocalService = Mockito.mock(
+		PortletLocalService.class);
 	private SynonymsPanelApp _synonymsPanelApp;
 
 }

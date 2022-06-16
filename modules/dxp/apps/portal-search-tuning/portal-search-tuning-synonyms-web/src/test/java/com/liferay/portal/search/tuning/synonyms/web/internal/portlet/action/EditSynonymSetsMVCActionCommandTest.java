@@ -36,7 +36,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -51,10 +50,7 @@ public class EditSynonymSetsMVCActionCommandTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_editSynonymSetsMVCActionCommand =
 			new EditSynonymSetsMVCActionCommand();
 
@@ -122,7 +118,7 @@ public class EditSynonymSetsMVCActionCommandTest
 		Mockito.verify(
 			_indexToFilterSynchronizer, Mockito.times(1)
 		).copyToFilter(
-			Mockito.anyObject(), Mockito.anyString(), Mockito.anyBoolean()
+			Mockito.any(), Mockito.nullable(String.class), Mockito.anyBoolean()
 		);
 	}
 
@@ -137,7 +133,7 @@ public class EditSynonymSetsMVCActionCommandTest
 		Mockito.verify(
 			synonymSetStorageAdapter, Mockito.times(1)
 		).create(
-			Mockito.anyObject(), Mockito.anyObject()
+			Mockito.any(), Mockito.any()
 		);
 
 		SynonymSet.SynonymSetBuilder synonymSetBuilder =
@@ -157,25 +153,20 @@ public class EditSynonymSetsMVCActionCommandTest
 		Mockito.verify(
 			synonymSetStorageAdapter, Mockito.times(1)
 		).update(
-			Mockito.anyObject(), Mockito.anyObject()
+			Mockito.any(), Mockito.any()
 		);
 	}
 
-	@Mock
-	private ActionRequest _actionRequest;
-
-	@Mock
-	private ActionResponse _actionResponse;
-
+	private final ActionRequest _actionRequest = Mockito.mock(
+		ActionRequest.class);
+	private final ActionResponse _actionResponse = Mockito.mock(
+		ActionResponse.class);
 	private EditSynonymSetsMVCActionCommand _editSynonymSetsMVCActionCommand;
-
-	@Mock
-	private HttpServletRequest _httpServletRequest;
-
-	@Mock
-	private IndexNameBuilder _indexNameBuilder;
-
-	@Mock
-	private IndexToFilterSynchronizer _indexToFilterSynchronizer;
+	private final HttpServletRequest _httpServletRequest = Mockito.mock(
+		HttpServletRequest.class);
+	private final IndexNameBuilder _indexNameBuilder = Mockito.mock(
+		IndexNameBuilder.class);
+	private final IndexToFilterSynchronizer _indexToFilterSynchronizer =
+		Mockito.mock(IndexToFilterSynchronizer.class);
 
 }

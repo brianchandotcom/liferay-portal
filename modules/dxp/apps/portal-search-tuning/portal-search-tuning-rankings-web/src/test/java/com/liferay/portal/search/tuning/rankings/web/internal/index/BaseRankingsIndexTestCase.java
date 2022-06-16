@@ -78,7 +78,7 @@ public abstract class BaseRankingsIndexTestCase
 		).when(
 			searchEngineAdapter
 		).execute(
-			(IndicesExistsIndexRequest)Mockito.anyObject()
+			(IndicesExistsIndexRequest)Mockito.any()
 		);
 	}
 

@@ -37,8 +37,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -53,10 +51,7 @@ public class EditRankingMVCActionCommandTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_editRankingMVCActionCommand = new EditRankingMVCActionCommand();
 
 		ReflectionTestUtil.setFieldValue(
@@ -92,7 +87,7 @@ public class EditRankingMVCActionCommandTest
 		Mockito.verify(
 			_actionRequest, Mockito.times(1)
 		).setAttribute(
-			Mockito.anyString(), Mockito.anyObject()
+			Mockito.anyString(), Mockito.any()
 		);
 	}
 
@@ -282,8 +277,8 @@ public class EditRankingMVCActionCommandTest
 		).when(
 			portletURLFactory
 		).create(
-			Matchers.any(PortletRequest.class), Matchers.anyString(),
-			Matchers.anyString()
+			Mockito.any(PortletRequest.class), Mockito.anyString(),
+			Mockito.anyString()
 		);
 
 		PortletURLFactoryUtil portletURLFactoryUtil =
@@ -292,12 +287,10 @@ public class EditRankingMVCActionCommandTest
 		portletURLFactoryUtil.setPortletURLFactory(portletURLFactory);
 	}
 
-	@Mock
-	private ActionRequest _actionRequest;
-
-	@Mock
-	private ActionResponse _actionResponse;
-
+	private final ActionRequest _actionRequest = Mockito.mock(
+		ActionRequest.class);
+	private final ActionResponse _actionResponse = Mockito.mock(
+		ActionResponse.class);
 	private EditRankingMVCActionCommand _editRankingMVCActionCommand;
 
 }

@@ -25,9 +25,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Wade Cao
@@ -41,8 +39,6 @@ public class RankingEntryDisplayContextBuilderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_rankingEntryDisplayContextBuilder =
 			new RankingEntryDisplayContextBuilder(_ranking);
 	}
@@ -114,9 +110,7 @@ public class RankingEntryDisplayContextBuilderTest {
 		Assert.assertFalse(rankingEntryDisplayContext.getInactive());
 	}
 
-	@Mock
-	private Ranking _ranking;
-
+	private final Ranking _ranking = Mockito.mock(Ranking.class);
 	private RankingEntryDisplayContextBuilder
 		_rankingEntryDisplayContextBuilder;
 

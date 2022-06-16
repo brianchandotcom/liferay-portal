@@ -28,7 +28,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -43,10 +42,7 @@ public class SynonymSetsDatabaseImporterImplTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_synonymSetsDatabaseImporterImpl =
 			new SynonymSetsDatabaseImporterImpl();
 		_documentToSynonymSetTranslator =
@@ -82,7 +78,7 @@ public class SynonymSetsDatabaseImporterImplTest
 		Mockito.verify(
 			_synonymSetIndexReindexer, Mockito.times(1)
 		).reindex(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 	}
 
@@ -93,21 +89,16 @@ public class SynonymSetsDatabaseImporterImplTest
 		Mockito.verify(
 			_synonymSetIndexReindexer, Mockito.never()
 		).reindex(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 	}
 
 	private DocumentToSynonymSetTranslator _documentToSynonymSetTranslator;
-
-	@Mock
-	private Queries _queries;
-
-	@Mock
-	private SynonymSetIndexReindexer _synonymSetIndexReindexer;
-
-	@Mock
-	private SynonymSetJSONStorageHelper _synonymSetJSONStorageHelper;
-
+	private final Queries _queries = Mockito.mock(Queries.class);
+	private final SynonymSetIndexReindexer _synonymSetIndexReindexer =
+		Mockito.mock(SynonymSetIndexReindexer.class);
+	private final SynonymSetJSONStorageHelper _synonymSetJSONStorageHelper =
+		Mockito.mock(SynonymSetJSONStorageHelper.class);
 	private SynonymSetsDatabaseImporterImpl _synonymSetsDatabaseImporterImpl;
 
 }

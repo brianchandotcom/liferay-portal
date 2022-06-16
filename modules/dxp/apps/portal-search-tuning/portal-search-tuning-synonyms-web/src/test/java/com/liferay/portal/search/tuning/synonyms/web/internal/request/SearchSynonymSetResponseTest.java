@@ -29,7 +29,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
+import org.mockito.Mockito;
 
 /**
  * @author Wade Cao
@@ -73,18 +73,12 @@ public class SearchSynonymSetResponseTest {
 		Assert.assertEquals(10, _searchSynonymSetResponse.getTotalHits());
 	}
 
-	@Mock
-	private List<Document> _documents;
-
-	@Mock
-	private SearchContainer<Document> _searchContainer;
-
-	@Mock
-	private SearchHits _searchHits;
-
-	@Mock
-	private SearchResponse _searchResponse;
-
+	private final List<Document> _documents = Mockito.mock(List.class);
+	private final SearchContainer<Document> _searchContainer = Mockito.mock(
+		SearchContainer.class);
+	private final SearchHits _searchHits = Mockito.mock(SearchHits.class);
+	private final SearchResponse _searchResponse = Mockito.mock(
+		SearchResponse.class);
 	private SearchSynonymSetResponse _searchSynonymSetResponse;
 
 }

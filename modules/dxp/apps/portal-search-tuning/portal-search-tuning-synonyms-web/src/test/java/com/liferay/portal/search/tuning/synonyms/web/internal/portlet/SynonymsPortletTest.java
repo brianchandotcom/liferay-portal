@@ -41,7 +41,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -55,10 +54,7 @@ public class SynonymsPortletTest extends BaseSynonymsWebTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		setUpPortletPreferencesFactoryUtil();
 
 		_synonymsPortlet = new SynonymsPortlet();
@@ -111,7 +107,7 @@ public class SynonymsPortletTest extends BaseSynonymsWebTestCase {
 		).when(
 			config
 		).getResourceBundle(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		ReflectionTestUtil.setFieldValue(_synonymsPortlet, "config", config);
@@ -158,27 +154,18 @@ public class SynonymsPortletTest extends BaseSynonymsWebTestCase {
 		};
 	}
 
-	@Mock
-	private DocumentToSynonymSetTranslator _documentToSynonymSetTranslator;
-
-	@Mock
-	private IndexNameBuilder _indexNameBuilder;
-
-	@Mock
-	private Language _language;
-
-	@Mock
-	private Queries _queries;
-
-	@Mock
-	private RenderRequest _renderRequest;
-
-	@Mock
-	private RenderResponse _renderResponse;
-
-	@Mock
-	private Sorts _sorts;
-
+	private final DocumentToSynonymSetTranslator
+		_documentToSynonymSetTranslator = Mockito.mock(
+			DocumentToSynonymSetTranslator.class);
+	private final IndexNameBuilder _indexNameBuilder = Mockito.mock(
+		IndexNameBuilder.class);
+	private final Language _language = Mockito.mock(Language.class);
+	private final Queries _queries = Mockito.mock(Queries.class);
+	private final RenderRequest _renderRequest = Mockito.mock(
+		RenderRequest.class);
+	private final RenderResponse _renderResponse = Mockito.mock(
+		RenderResponse.class);
+	private final Sorts _sorts = Mockito.mock(Sorts.class);
 	private SynonymsPortlet _synonymsPortlet;
 
 }

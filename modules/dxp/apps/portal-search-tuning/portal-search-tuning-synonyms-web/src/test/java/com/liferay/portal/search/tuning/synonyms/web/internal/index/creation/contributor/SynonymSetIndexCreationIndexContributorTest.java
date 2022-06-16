@@ -24,7 +24,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -39,10 +38,7 @@ public class SynonymSetIndexCreationIndexContributorTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_synonymSetIndexCreationIndexContributor =
 			new SynonymSetIndexCreationIndexContributor();
 
@@ -64,7 +60,7 @@ public class SynonymSetIndexCreationIndexContributorTest
 		Mockito.verify(
 			_indexToFilterSynchronizer, Mockito.times(1)
 		).copyToFilter(
-			Mockito.anyObject(), Mockito.anyString(), Mockito.anyBoolean()
+			Mockito.any(), Mockito.anyString(), Mockito.anyBoolean()
 		);
 	}
 
@@ -76,13 +72,12 @@ public class SynonymSetIndexCreationIndexContributorTest
 		Mockito.verify(
 			_indexToFilterSynchronizer, Mockito.never()
 		).copyToFilter(
-			Mockito.anyObject(), Mockito.anyString(), Mockito.anyBoolean()
+			Mockito.any(), Mockito.anyString(), Mockito.anyBoolean()
 		);
 	}
 
-	@Mock
-	private IndexToFilterSynchronizer _indexToFilterSynchronizer;
-
+	private final IndexToFilterSynchronizer _indexToFilterSynchronizer =
+		Mockito.mock(IndexToFilterSynchronizer.class);
 	private SynonymSetIndexCreationIndexContributor
 		_synonymSetIndexCreationIndexContributor;
 

@@ -31,7 +31,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -45,10 +44,7 @@ public class SearchSynonymSetRequestTest extends BaseSynonymsWebTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		setUpPortletPreferencesFactoryUtil();
 	}
 
@@ -110,21 +106,14 @@ public class SearchSynonymSetRequestTest extends BaseSynonymsWebTestCase {
 		).matchAll();
 	}
 
-	@Mock
-	private HttpServletRequest _httpServletRequest;
-
-	@Mock
-	private Queries _queries;
-
-	@Mock
-	private SearchContainer<SynonymSetDisplayContext> _searchContainer;
-
+	private final HttpServletRequest _httpServletRequest = Mockito.mock(
+		HttpServletRequest.class);
+	private final Queries _queries = Mockito.mock(Queries.class);
+	private final SearchContainer<SynonymSetDisplayContext> _searchContainer =
+		Mockito.mock(SearchContainer.class);
 	private SearchSynonymSetRequest _searchSynonymSetRequest;
-
-	@Mock
-	private Sorts _sorts;
-
-	@Mock
-	private SynonymSetIndexName _synonymSetIndexName;
+	private final Sorts _sorts = Mockito.mock(Sorts.class);
+	private final SynonymSetIndexName _synonymSetIndexName = Mockito.mock(
+		SynonymSetIndexName.class);
 
 }

@@ -28,10 +28,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Wade Cao
@@ -45,8 +42,6 @@ public class SynonymSetJSONStorageHelperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_synonymSetJSONStorageHelper = new SynonymSetJSONStorageHelper();
 
 		ReflectionTestUtil.setFieldValue(
@@ -78,7 +73,7 @@ public class SynonymSetJSONStorageHelperTest {
 		Mockito.verify(
 			_classNameLocalService, Mockito.times(1)
 		).getClassNameId(
-			Matchers.eq(SynonymSet.class)
+			Mockito.eq(SynonymSet.class)
 		);
 		Mockito.verify(
 			_jsonStorageEntryLocalService, Mockito.times(1)
@@ -97,7 +92,7 @@ public class SynonymSetJSONStorageHelperTest {
 		Mockito.verify(
 			_classNameLocalService, Mockito.times(2)
 		).getClassNameId(
-			Matchers.eq(SynonymSet.class)
+			Mockito.eq(SynonymSet.class)
 		);
 		Mockito.verify(
 			_jsonStorageEntryLocalService, Mockito.times(1)
@@ -125,15 +120,12 @@ public class SynonymSetJSONStorageHelperTest {
 		);
 	}
 
-	@Mock
-	private ClassNameLocalService _classNameLocalService;
-
-	@Mock
-	private CounterLocalService _counterLocalService;
-
-	@Mock
-	private JSONStorageEntryLocalService _jsonStorageEntryLocalService;
-
+	private final ClassNameLocalService _classNameLocalService = Mockito.mock(
+		ClassNameLocalService.class);
+	private final CounterLocalService _counterLocalService = Mockito.mock(
+		CounterLocalService.class);
+	private final JSONStorageEntryLocalService _jsonStorageEntryLocalService =
+		Mockito.mock(JSONStorageEntryLocalService.class);
 	private SynonymSetJSONStorageHelper _synonymSetJSONStorageHelper;
 
 }

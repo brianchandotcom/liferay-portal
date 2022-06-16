@@ -37,8 +37,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -52,10 +50,7 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		setUpPortletPreferencesFactoryUtil();
 
 		_rankingPortletDisplayBuilder = new RankingPortletDisplayBuilder(
@@ -118,27 +113,21 @@ public class RankingPortletDisplayBuilderTest extends BaseRankingsWebTestCase {
 		).when(
 			portal
 		).getHttpServletRequest(
-			Matchers.any(PortletRequest.class)
+			Mockito.any(PortletRequest.class)
 		);
 
 		return _httpServletRequest;
 	}
 
-	@Mock
-	private DocumentToRankingTranslator _documentToRankingTranslator;
-
-	@Mock
-	private HttpServletRequest _httpServletRequest;
-
+	private final DocumentToRankingTranslator _documentToRankingTranslator =
+		Mockito.mock(DocumentToRankingTranslator.class);
+	private final HttpServletRequest _httpServletRequest = Mockito.mock(
+		HttpServletRequest.class);
 	private RankingPortletDisplayBuilder _rankingPortletDisplayBuilder;
-
-	@Mock
-	private RenderRequest _renderRequest;
-
-	@Mock
-	private RenderResponse _renderResponse;
-
-	@Mock
-	private Sorts _sorts;
+	private final RenderRequest _renderRequest = Mockito.mock(
+		RenderRequest.class);
+	private final RenderResponse _renderResponse = Mockito.mock(
+		RenderResponse.class);
+	private final Sorts _sorts = Mockito.mock(Sorts.class);
 
 }

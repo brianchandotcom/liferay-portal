@@ -28,9 +28,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Wade Cao
@@ -44,8 +42,6 @@ public class ResultRankingsPanelAppTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_resultRankingsPanelApp = new ResultRankingsPanelApp();
 
 		ReflectionTestUtil.setFieldValue(
@@ -93,9 +89,8 @@ public class ResultRankingsPanelAppTest {
 		Assert.assertEquals(portlet, _resultRankingsPanelApp.getPortlet());
 	}
 
-	@Mock
-	private PortletLocalService _portletLocalService;
-
+	private final PortletLocalService _portletLocalService = Mockito.mock(
+		PortletLocalService.class);
 	private ResultRankingsPanelApp _resultRankingsPanelApp;
 
 }

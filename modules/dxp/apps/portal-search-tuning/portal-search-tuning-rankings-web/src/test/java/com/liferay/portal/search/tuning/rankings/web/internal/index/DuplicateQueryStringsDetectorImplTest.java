@@ -43,10 +43,7 @@ public class DuplicateQueryStringsDetectorImplTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_duplicateQueryStringsDetectorImpl =
 			new DuplicateQueryStringsDetectorImpl();
 

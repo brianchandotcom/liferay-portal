@@ -26,9 +26,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Wade Cao
@@ -42,8 +40,6 @@ public class RankingIndexCreationBackgroundTaskExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_rankingIndexCreationBackgroundTaskExecutor =
 			new RankingIndexCreationBackgroundTaskExecutor();
 
@@ -82,9 +78,8 @@ public class RankingIndexCreationBackgroundTaskExecutorTest {
 
 	private RankingIndexCreationBackgroundTaskExecutor
 		_rankingIndexCreationBackgroundTaskExecutor;
-
-	@Mock
-	private SingleIndexToMultipleIndexImporter
-		_singleIndexToMultipleIndexImporter;
+	private final SingleIndexToMultipleIndexImporter
+		_singleIndexToMultipleIndexImporter = Mockito.mock(
+			SingleIndexToMultipleIndexImporter.class);
 
 }

@@ -34,10 +34,7 @@ public class RankingJSONBuilderTest extends BaseRankingResultsBuilderTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		setUpResourceRequest();
 
 		_rankingJSONBuilder = new RankingJSONBuilder(

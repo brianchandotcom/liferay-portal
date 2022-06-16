@@ -39,10 +39,7 @@ public class RankingEditPortletProviderTest extends BaseRankingsWebTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_rankingEditPortletProvider = new RankingEditPortletProvider();
 	}
 

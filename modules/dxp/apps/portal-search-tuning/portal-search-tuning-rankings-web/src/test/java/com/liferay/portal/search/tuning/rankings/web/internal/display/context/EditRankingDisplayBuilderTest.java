@@ -30,7 +30,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -44,10 +43,7 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_setUpHttpServletRequest();
 
 		_editRankingDisplayBuilder = new EditRankingDisplayBuilder(
@@ -90,11 +86,9 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 		Assert.assertNotNull(editRankingDisplayContext.getData());
 	}
 
-	@Mock
-	protected HttpServletRequest httpServletRequest;
-
-	@Mock
-	protected ThemeDisplay themeDisplay;
+	protected HttpServletRequest httpServletRequest = Mockito.mock(
+		HttpServletRequest.class);
+	protected ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 	private void _setUpHttpServletRequest() {
 		Mockito.doReturn(
@@ -123,11 +117,9 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 	}
 
 	private EditRankingDisplayBuilder _editRankingDisplayBuilder;
-
-	@Mock
-	private RenderRequest _renderRequest;
-
-	@Mock
-	private RenderResponse _renderResponse;
+	private final RenderRequest _renderRequest = Mockito.mock(
+		RenderRequest.class);
+	private final RenderResponse _renderResponse = Mockito.mock(
+		RenderResponse.class);
 
 }

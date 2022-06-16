@@ -28,9 +28,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Wade Cao
@@ -44,8 +42,6 @@ public class SynonymSetStorageAdapterTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_synonymSetStorageAdapter = new SynonymSetStorageAdapter();
 
 		ReflectionTestUtil.setFieldValue(
@@ -63,7 +59,7 @@ public class SynonymSetStorageAdapterTest {
 		).when(
 			_synonymSetJSONStorageHelper
 		).addJSONStorageEntry(
-			Mockito.anyString(), Mockito.anyString()
+			Mockito.nullable(String.class), Mockito.nullable(String.class)
 		);
 
 		Assert.assertEquals(
@@ -75,7 +71,7 @@ public class SynonymSetStorageAdapterTest {
 		Mockito.verify(
 			_synonymSetIndexWriter, Mockito.times(1)
 		).create(
-			Mockito.anyObject(), Mockito.anyObject()
+			Mockito.any(), Mockito.any()
 		);
 	}
 
@@ -88,7 +84,7 @@ public class SynonymSetStorageAdapterTest {
 		Mockito.verify(
 			_synonymSetIndexWriter, Mockito.times(1)
 		).remove(
-			Mockito.anyObject(), Mockito.anyString()
+			Mockito.any(), Mockito.anyString()
 		);
 	}
 
@@ -115,7 +111,7 @@ public class SynonymSetStorageAdapterTest {
 		Mockito.verify(
 			_synonymSetIndexWriter, Mockito.times(1)
 		).update(
-			Mockito.anyObject(), Mockito.anyObject()
+			Mockito.any(), Mockito.any()
 		);
 	}
 
@@ -133,12 +129,10 @@ public class SynonymSetStorageAdapterTest {
 			Mockito.mock(SynonymSetIndexName.class), synonymSet);
 	}
 
-	@Mock
-	private SynonymSetIndexWriter _synonymSetIndexWriter;
-
-	@Mock
-	private SynonymSetJSONStorageHelper _synonymSetJSONStorageHelper;
-
+	private final SynonymSetIndexWriter _synonymSetIndexWriter = Mockito.mock(
+		SynonymSetIndexWriter.class);
+	private final SynonymSetJSONStorageHelper _synonymSetJSONStorageHelper =
+		Mockito.mock(SynonymSetJSONStorageHelper.class);
 	private SynonymSetStorageAdapter _synonymSetStorageAdapter;
 
 }

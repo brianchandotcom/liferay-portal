@@ -41,10 +41,7 @@ public class RankingSearchRequestHelperTest extends BaseRankingsWebTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		ReflectionTestUtil.setFieldValue(
 			_rankingSearchRequestHelper, "complexQueryPartBuilderFactory",
 			complexQueryPartBuilderFactory);
@@ -67,7 +64,7 @@ public class RankingSearchRequestHelperTest extends BaseRankingsWebTestCase {
 		).when(
 			searchRequestBuilder
 		).addComplexQueryPart(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		Ranking ranking = Mockito.mock(Ranking.class);
@@ -92,7 +89,7 @@ public class RankingSearchRequestHelperTest extends BaseRankingsWebTestCase {
 		Mockito.verify(
 			searchRequestBuilder, Mockito.times(3)
 		).addComplexQueryPart(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 	}
 

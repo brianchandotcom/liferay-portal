@@ -28,7 +28,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -43,10 +42,7 @@ public class RankingGetVisibleResultsBuilderTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_setUpRankingSearchRequestHelper();
 
 		_rankingGetVisibleResultsBuilder = new RankingGetVisibleResultsBuilder(
@@ -137,13 +133,12 @@ public class RankingGetVisibleResultsBuilderTest
 		).when(
 			_rankingSearchRequestHelper
 		).contribute(
-			Mockito.anyObject(), Mockito.anyObject()
+			Mockito.any(), Mockito.any()
 		);
 	}
 
 	private RankingGetVisibleResultsBuilder _rankingGetVisibleResultsBuilder;
-
-	@Mock
-	private RankingSearchRequestHelper _rankingSearchRequestHelper;
+	private final RankingSearchRequestHelper _rankingSearchRequestHelper =
+		Mockito.mock(RankingSearchRequestHelper.class);
 
 }

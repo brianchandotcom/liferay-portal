@@ -29,7 +29,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
+import org.mockito.Mockito;
 
 /**
  * @author Wade Cao
@@ -43,10 +43,7 @@ public class EditSynonymSetsMVCRenderCommandTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_editSynonymSetsMVCRenderCommand =
 			new EditSynonymSetsMVCRenderCommand();
 
@@ -68,14 +65,11 @@ public class EditSynonymSetsMVCRenderCommandTest
 	}
 
 	private EditSynonymSetsMVCRenderCommand _editSynonymSetsMVCRenderCommand;
-
-	@Mock
-	private HttpServletRequest _httpServletRequest;
-
-	@Mock
-	private RenderRequest _renderRequest;
-
-	@Mock
-	private RenderResponse _renderResponse;
+	private final HttpServletRequest _httpServletRequest = Mockito.mock(
+		HttpServletRequest.class);
+	private final RenderRequest _renderRequest = Mockito.mock(
+		RenderRequest.class);
+	private final RenderResponse _renderResponse = Mockito.mock(
+		RenderResponse.class);
 
 }

@@ -30,9 +30,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Wade Cao
@@ -46,8 +44,6 @@ public class SearchRankingResponseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_searchRankingResponse = new SearchRankingResponse();
 
 		_setUpSearchRankingResponse();
@@ -106,16 +102,11 @@ public class SearchRankingResponseTest {
 	private static final int _TOTAL_HITS = 10;
 
 	private List<Document> _documents;
-
-	@Mock
-	private SearchContainer<Document> _searchContainer;
-
-	@Mock
-	private SearchHits _searchHits;
-
+	private final SearchContainer<Document> _searchContainer = Mockito.mock(
+		SearchContainer.class);
+	private final SearchHits _searchHits = Mockito.mock(SearchHits.class);
 	private SearchRankingResponse _searchRankingResponse;
-
-	@Mock
-	private SearchResponse _searchResponse;
+	private final SearchResponse _searchResponse = Mockito.mock(
+		SearchResponse.class);
 
 }

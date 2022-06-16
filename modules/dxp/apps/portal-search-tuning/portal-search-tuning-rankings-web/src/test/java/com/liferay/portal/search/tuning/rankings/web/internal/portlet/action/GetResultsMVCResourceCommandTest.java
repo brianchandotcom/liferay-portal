@@ -26,7 +26,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -41,10 +40,7 @@ public class GetResultsMVCResourceCommandTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_getResultsMVCResourceCommand = new GetResultsMVCResourceCommand();
 
 		ReflectionTestUtil.setFieldValue(
@@ -153,11 +149,9 @@ public class GetResultsMVCResourceCommandTest
 	}
 
 	private GetResultsMVCResourceCommand _getResultsMVCResourceCommand;
-
-	@Mock
-	private RankingSearchRequestHelper _rankingSearchRequestHelper;
-
-	@Mock
-	private ResourceActions _resourceActions;
+	private final RankingSearchRequestHelper _rankingSearchRequestHelper =
+		Mockito.mock(RankingSearchRequestHelper.class);
+	private final ResourceActions _resourceActions = Mockito.mock(
+		ResourceActions.class);
 
 }

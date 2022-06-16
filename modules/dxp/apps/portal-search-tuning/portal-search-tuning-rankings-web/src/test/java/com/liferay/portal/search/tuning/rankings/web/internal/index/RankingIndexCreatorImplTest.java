@@ -39,10 +39,7 @@ public class RankingIndexCreatorImplTest extends BaseRankingsIndexTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_rankingIndexCreatorImpl = new RankingIndexCreatorImpl();
 
 		ReflectionTestUtil.setFieldValue(
@@ -59,7 +56,7 @@ public class RankingIndexCreatorImplTest extends BaseRankingsIndexTestCase {
 		Mockito.verify(
 			searchEngineAdapter, Mockito.times(1)
 		).execute(
-			(CreateIndexRequest)Mockito.anyObject()
+			(CreateIndexRequest)Mockito.any()
 		);
 	}
 
@@ -72,7 +69,7 @@ public class RankingIndexCreatorImplTest extends BaseRankingsIndexTestCase {
 		Mockito.verify(
 			searchEngineAdapter, Mockito.times(1)
 		).execute(
-			(DeleteIndexRequest)Mockito.anyObject()
+			(DeleteIndexRequest)Mockito.any()
 		);
 	}
 

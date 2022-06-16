@@ -56,19 +56,12 @@ import javax.portlet.RenderURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.mockito.AdditionalAnswers;
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Wade Cao
  */
 public abstract class BaseSynonymsWebTestCase {
-
-	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
 
 	protected Document setUpDocument(String synonyms) {
 		Document document = Mockito.mock(Document.class);
@@ -78,7 +71,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			document
 		).getString(
-			Matchers.eq(SynonymSetFields.SYNONYMS)
+			Mockito.eq(SynonymSetFields.SYNONYMS)
 		);
 
 		return document;
@@ -93,7 +86,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			httpServletRequest
 		).getAttribute(
-			Matchers.eq(paramName)
+			Mockito.eq(paramName)
 		);
 	}
 
@@ -105,7 +98,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			httpServletRequest
 		).getParameter(
-			Matchers.eq(paramName)
+			Mockito.eq(paramName)
 		);
 	}
 
@@ -118,7 +111,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			httpServletRequest
 		).getParameterValues(
-			Matchers.eq(paramName)
+			Mockito.eq(paramName)
 		);
 	}
 
@@ -203,7 +196,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			portletRequest
 		).getParameter(
-			Matchers.eq(paramName)
+			Mockito.eq(paramName)
 		);
 	}
 
@@ -242,7 +235,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			searchEngineAdapter
 		).execute(
-			(IndexRequest<IndexResponse>)Mockito.anyObject()
+			(IndexRequest<IndexResponse>)Mockito.any()
 		);
 	}
 
@@ -253,7 +246,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			searchEngineAdapter
 		).execute(
-			(DocumentRequest)Mockito.anyObject()
+			(DocumentRequest)Mockito.any()
 		);
 	}
 
@@ -278,7 +271,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			searchEngineAdapter
 		).execute(
-			(SearchSearchRequest)Mockito.anyObject()
+			(SearchSearchRequest)Mockito.any()
 		);
 
 		return searchHits;
@@ -346,7 +339,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			synonymSetIndexReader
 		).isExists(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 	}
 
@@ -364,7 +357,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			synonymSetIndexReader
 		).fetchOptional(
-			Mockito.anyObject(), Mockito.anyString()
+			Mockito.any(), Mockito.anyString()
 		);
 
 		Mockito.doReturn(
@@ -377,30 +370,23 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			synonymSetIndexReader
 		).search(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 	}
 
-	@Mock
-	protected Portal portal;
-
-	@Mock
-	protected SearchEngineAdapter searchEngineAdapter;
-
-	@Mock
-	protected SynonymSetFilterNameHolder synonymSetFilterNameHolder;
-
-	@Mock
-	protected SynonymSetFilterReader synonymSetFilterReader;
-
-	@Mock
-	protected SynonymSetIndexNameBuilder synonymSetIndexNameBuilder;
-
-	@Mock
-	protected SynonymSetIndexReader synonymSetIndexReader;
-
-	@Mock
-	protected SynonymSetStorageAdapter synonymSetStorageAdapter;
+	protected Portal portal = Mockito.mock(Portal.class);
+	protected SearchEngineAdapter searchEngineAdapter = Mockito.mock(
+		SearchEngineAdapter.class);
+	protected SynonymSetFilterNameHolder synonymSetFilterNameHolder =
+		Mockito.mock(SynonymSetFilterNameHolder.class);
+	protected SynonymSetFilterReader synonymSetFilterReader = Mockito.mock(
+		SynonymSetFilterReader.class);
+	protected SynonymSetIndexNameBuilder synonymSetIndexNameBuilder =
+		Mockito.mock(SynonymSetIndexNameBuilder.class);
+	protected SynonymSetIndexReader synonymSetIndexReader = Mockito.mock(
+		SynonymSetIndexReader.class);
+	protected SynonymSetStorageAdapter synonymSetStorageAdapter = Mockito.mock(
+		SynonymSetStorageAdapter.class);
 
 	private void _setUpLayoutIsTypeControlPanel(
 		Layout layout, boolean returnValue) {
@@ -430,7 +416,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			portal
 		).getCurrentURL(
-			Matchers.any(HttpServletRequest.class)
+			Mockito.any(HttpServletRequest.class)
 		);
 	}
 
@@ -442,7 +428,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			portal
 		).getHttpServletRequest(
-			Matchers.any(PortletRequest.class)
+			Mockito.any(PortletRequest.class)
 		);
 	}
 
@@ -452,7 +438,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			portal
 		).getLiferayPortletRequest(
-			Matchers.any(PortletRequest.class)
+			Mockito.any(PortletRequest.class)
 		);
 	}
 
@@ -464,7 +450,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			portal
 		).getOriginalServletRequest(
-			Matchers.any(HttpServletRequest.class)
+			Mockito.any(HttpServletRequest.class)
 		);
 	}
 
@@ -476,7 +462,7 @@ public abstract class BaseSynonymsWebTestCase {
 		).when(
 			portletRequest
 		).getAttribute(
-			Matchers.eq(keyValue)
+			Mockito.eq(keyValue)
 		);
 	}
 

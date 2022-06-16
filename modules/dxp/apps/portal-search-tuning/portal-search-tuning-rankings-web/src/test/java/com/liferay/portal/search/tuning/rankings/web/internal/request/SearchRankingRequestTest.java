@@ -33,7 +33,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -47,10 +46,7 @@ public class SearchRankingRequestTest extends BaseRankingsWebTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_setUpQuery();
 
 		setUpPortletPreferencesFactoryUtil();
@@ -106,12 +102,9 @@ public class SearchRankingRequestTest extends BaseRankingsWebTestCase {
 		).matchAll();
 	}
 
-	@Mock
-	private RankingIndexName _rankingIndexName;
-
+	private final RankingIndexName _rankingIndexName = Mockito.mock(
+		RankingIndexName.class);
 	private SearchRankingRequest _searchRankingRequest;
-
-	@Mock
-	private Sorts _sorts;
+	private final Sorts _sorts = Mockito.mock(Sorts.class);
 
 }

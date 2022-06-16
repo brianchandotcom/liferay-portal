@@ -32,7 +32,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -47,10 +46,7 @@ public class RankingSearchRequestContributorTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
-
 		ReflectionTestUtil.setFieldValue(
 			_rankingSearchRequestContributor, "rankingIndexNameBuilder",
 			rankingIndexNameBuilder);
@@ -86,14 +82,14 @@ public class RankingSearchRequestContributorTest
 		).when(
 			_rankingIndexReader
 		).fetchByQueryStringOptional(
-			Mockito.anyObject(), Mockito.anyString()
+			Mockito.any(), Mockito.anyString()
 		);
 
 		Mockito.doNothing(
 		).when(
 			_rankingSearchRequestHelper
 		).contribute(
-			Mockito.anyObject(), Mockito.anyObject()
+			Mockito.any(), Mockito.any()
 		);
 
 		SearchRequest searchRequest = Mockito.mock(SearchRequest.class);
@@ -132,20 +128,18 @@ public class RankingSearchRequestContributorTest
 		).when(
 			_rankingIndexReader
 		).isExists(
-			Mockito.anyObject()
+			Mockito.any()
 		);
 
 		return searchRequestBuilder;
 	}
 
-	@Mock
-	private RankingIndexReader _rankingIndexReader;
-
+	private final RankingIndexReader _rankingIndexReader = Mockito.mock(
+		RankingIndexReader.class);
 	private final RankingSearchRequestContributor
 		_rankingSearchRequestContributor =
 			new RankingSearchRequestContributor();
-
-	@Mock
-	private RankingSearchRequestHelper _rankingSearchRequestHelper;
+	private final RankingSearchRequestHelper _rankingSearchRequestHelper =
+		Mockito.mock(RankingSearchRequestHelper.class);
 
 }

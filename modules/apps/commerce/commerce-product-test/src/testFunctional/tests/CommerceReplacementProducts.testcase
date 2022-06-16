@@ -169,6 +169,10 @@ definition {
 		}
 
 		task ("And when the replacement product's button is hit") {
+			ScrollWebElementIntoView(
+				key_text = "Replacement Product",
+				locator1 = "Button#ANY");
+
 			Click(
 				key_text = "Replacement Product",
 				locator1 = "Button#ANY");

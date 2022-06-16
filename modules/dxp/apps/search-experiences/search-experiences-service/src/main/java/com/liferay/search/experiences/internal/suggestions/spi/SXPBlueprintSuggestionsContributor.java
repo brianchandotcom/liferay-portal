@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -219,7 +220,7 @@ public class SXPBlueprintSuggestionsContributor
 	}
 
 	private Map<String, Object> _getFieldValues(
-		Document document, String[] fieldNames, Locale locale) {
+		Document document, List<String> fieldNames, Locale locale) {
 
 		Map<String, Object> fieldValues = new HashMap<>();
 
@@ -284,7 +285,7 @@ public class SXPBlueprintSuggestionsContributor
 	}
 
 	private Suggestion _getSuggestion(
-		String[] fieldNames, boolean includeAssetSearchSummary,
+		List<String> fieldNames, boolean includeAssetSearchSummary,
 		boolean includeAssetURL, Layout layout,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
@@ -300,7 +301,7 @@ public class SXPBlueprintSuggestionsContributor
 
 		Document document = searchHit.getDocument();
 
-		if (fieldNames.length > 0) {
+		if (ListUtil.isNotEmpty(fieldNames)) {
 			suggestionBuilder.attribute(
 				"fields",
 				_getFieldValues(
@@ -361,8 +362,7 @@ public class SXPBlueprintSuggestionsContributor
 
 		List<Suggestion> suggestions = new ArrayList<>();
 
-		String[] fieldNames = GetterUtil.getStringValues(
-			attributes.get("fields"));
+		List<String> fieldNames = (List<String>)attributes.get("fields");
 		String fieldValueSeparator = MapUtil.getString(
 			attributes, "fieldValueSeparator");
 		boolean includeAssetSearchSummary = MapUtil.getBoolean(

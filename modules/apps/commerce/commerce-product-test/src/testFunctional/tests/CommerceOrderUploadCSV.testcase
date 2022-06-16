@@ -166,7 +166,7 @@ definition {
 		}
 
 		task ("And when the user try to import a pdf file") {
-			UploadDependencyFile.uploadFile(fileName = "Commerce_1.pdf");
+			UploadDependencyFile.uploadFile(fileName = "commerce.pdf");
 
 			Button.clickImport();
 		}
@@ -182,7 +182,7 @@ definition {
 		}
 
 		task ("And when the user try to import a text file") {
-			UploadDependencyFile.uploadFile(fileName = "Commerce_1.txt");
+			UploadDependencyFile.uploadFile(fileName = "commerce.txt");
 
 			Button.clickImport();
 		}
@@ -198,7 +198,7 @@ definition {
 		}
 
 		task ("And when the user try to import a image file") {
-			UploadDependencyFile.uploadFile(fileName = "Commerce_1.jpeg");
+			UploadDependencyFile.uploadFile(fileName = "commerce.jpeg");
 
 			Button.clickImport();
 		}

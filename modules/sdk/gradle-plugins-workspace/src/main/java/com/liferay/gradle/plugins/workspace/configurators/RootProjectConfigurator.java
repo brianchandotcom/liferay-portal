@@ -1908,7 +1908,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	private String _loadTemplate(String name) {
 		try (InputStream inputStream =
-				RootProjectConfigurator.class.getResourceAsStream(name)) {
+				RootProjectConfigurator.class.getResourceAsStream(
+					"dependencies/" + name)) {
 
 			return StringUtil.read(inputStream);
 		}

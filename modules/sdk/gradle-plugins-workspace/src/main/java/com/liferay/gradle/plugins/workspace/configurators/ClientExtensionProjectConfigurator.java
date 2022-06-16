@@ -448,7 +448,8 @@ public class ClientExtensionProjectConfigurator
 		String name, Map<String, String> substitutionMap) {
 
 		try (InputStream inputStream =
-				RootProjectConfigurator.class.getResourceAsStream(name)) {
+				RootProjectConfigurator.class.getResourceAsStream(
+					"dependencies/" + name)) {
 
 			Stream<Map.Entry<String, String>> substitutions =
 				substitutionMap.entrySet(

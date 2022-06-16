@@ -56,7 +56,6 @@ export {default as DefaultEventHandler} from './liferay/DefaultEventHandler.es';
 export {default as Disposable} from './liferay/events/Disposable';
 export {default as EventEmitter} from './liferay/events/EventEmitter';
 export {default as EventHandler} from './liferay/events/EventHandler';
-export {default as ItemSelectorDialog} from './liferay/ItemSelectorDialog.es';
 export {default as PortletBase} from './liferay/PortletBase.es';
 
 // Modal API

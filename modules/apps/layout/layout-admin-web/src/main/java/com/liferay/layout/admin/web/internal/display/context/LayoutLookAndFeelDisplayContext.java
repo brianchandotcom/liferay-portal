@@ -460,13 +460,14 @@ public class LayoutLookAndFeelDisplayContext {
 			jsonArray.put(
 				JSONUtil.put(
 					"cetExternalReferenceCode",
-					clientExtensionEntryRel.getExternalReferenceCode()
+					clientExtensionEntryRel.getCETExternalReferenceCode()
 				).put(
 					"name",
 					() -> {
 						CET cet = cetManager.getCET(
 							_themeDisplay.getCompanyId(),
-							clientExtensionEntryRel.getExternalReferenceCode());
+							clientExtensionEntryRel.
+								getCETExternalReferenceCode());
 
 						return cet.getName(_themeDisplay.getLocale());
 					}

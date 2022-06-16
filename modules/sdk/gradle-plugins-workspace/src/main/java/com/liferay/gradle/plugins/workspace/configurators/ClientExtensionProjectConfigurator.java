@@ -233,7 +233,6 @@ public class ClientExtensionProjectConfigurator
 		_configureConfigurationDefault(project);
 		_configureTaskClean(project);
 		_configureTaskDeploy(project);
-		_configureVersion(project);
 
 		TaskProvider<Zip> zipTaskProvider = GradleUtil.addTaskProvider(
 			project, BUILD_CLIENT_EXTENSION_TASK_NAME, Zip.class);
@@ -440,14 +439,9 @@ public class ClientExtensionProjectConfigurator
 		copy.from(_getZipFile(project));
 	}
 
-	private void _configureVersion(Project project) {
-		project.setVersion("1.0.0");
-	}
-
 	private File _getZipFile(Project project) {
 		return project.file(
-			"dist/" + GradleUtil.getArchivesBaseName(project) + "-" +
-				project.getVersion() + ".zip");
+			"dist/" + GradleUtil.getArchivesBaseName(project) + ".zip");
 	}
 
 	private String _loadTemplate(

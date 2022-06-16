@@ -1,4 +1,4 @@
 {
-	"frontendTokensValuesPath": "frontend-tokens-values.json",
-	"name": "Partner"
+	"name": "Partner Portal",
+	"frontendTokensValuesPath": "frontend-tokens-values.json"
 }

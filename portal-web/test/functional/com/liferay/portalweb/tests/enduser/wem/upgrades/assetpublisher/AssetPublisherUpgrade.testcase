@@ -74,18 +74,16 @@ definition {
 	test ViewAssetPublisherArchive7310 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
-		property portal.version = "7.2.10.1";
-
-		Upgrade.viewDefaultPage();
+		property portal.version = "7.3.10";
 
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
 	@priority = "5"
-	test ViewAssetPublisherArchive7421 {
+	test ViewAssetPublisherArchive7413 {
 		property data.archive.type = "data-archive-asset-publisher";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
-		property portal.version = "7.3.0";
+		property portal.version = "7.4.13";
 
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
@@ -126,8 +124,8 @@ definition {
 	@priority = "5"
 	test ViewAssetPublisherArchive74321 {
 		property data.archive.type = "data-archive-asset-publisher";
-		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
-		property portal.version = "7.3.10";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.4.3.21";
 
 		Upgrade.viewAssetPublisher(categoryName = "Category Name");
 	}

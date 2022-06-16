@@ -132,6 +132,10 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
+	macro clickOnCancelButton {
+		Click(locator1 = "CustomerPortalSite#CANCEL_BUTTON");
+	}
+
 	macro clickOnSkipForNowButton {
 		Click(locator1 = "CustomerPortalSite#SKIP_FOR_NOW_BUTTON");
 	}
@@ -142,10 +146,6 @@ definition {
 
 	macro clickOnSubmitButton {
 		Click(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
-	}
-
-	macro clickOnCancelButton {
-		Click(locator1 = "CustomerPortalSite#CANCEL_BUTTON");
 	}
 
 	macro createCPSite {

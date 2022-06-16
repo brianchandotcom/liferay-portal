@@ -15,10 +15,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro clickOnFinishActivationButton {
-		Click(locator1 = "CP2DXPCloudSetup#FINISH_ACTIVATION");
-	}
-
 	macro addCPDXPCloudObject {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
@@ -40,6 +36,13 @@ definition {
 		CustomerPortal.showCPObject(title = "Account Subscription");
 
 		CP2DXPCloudSetup.activeDisasterRecoveryDataCenter();
+	}
+
+	macro assertCardStatusChanged {
+		AssertTextEquals(
+			key_status = "${status}",
+			locator1 = "CP2DXPCloudSetup#STATUS_CARD",
+			value1 = "${value}");
 	}
 
 	macro clearActivationStatus {
@@ -71,6 +74,10 @@ definition {
 		Click(locator1 = "CP2DXPCloudSetup#ADD_ANOTHER_ADMIN");
 	}
 
+	macro clickOnFinishActivationButton {
+		Click(locator1 = "CP2DXPCloudSetup#FINISH_ACTIVATION");
+	}
+
 	macro clickOnRemoveThisAdminButton {
 		Click(locator1 = "CP2DXPCloudSetup#REMOVE_THIS_ADMIN_DXP_CLOUD");
 	}
@@ -79,13 +86,6 @@ definition {
 		CustomerPortal.showCPObject(title = "Account Subscription Group");
 
 		CP2DXPCloudSetup.addCPDXPCloudObject();
-	}
-
-	macro assertCardStatusChanged {
-		AssertTextEquals(
-			locator1 = "CP2DXPCloudSetup#STATUS_CARD",
-			key_status = "${status}",
-			value1 = "${value}");
 	}
 
 	macro deactivateDisasterRecoveryDataCenter {

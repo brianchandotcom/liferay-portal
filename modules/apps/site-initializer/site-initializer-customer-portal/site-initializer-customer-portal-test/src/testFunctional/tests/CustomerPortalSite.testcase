@@ -7,7 +7,6 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Customer Portal";
 
-
 	var testSiteName = "Customer Portal";
 	var testSiteURL = "customer-portal";
 

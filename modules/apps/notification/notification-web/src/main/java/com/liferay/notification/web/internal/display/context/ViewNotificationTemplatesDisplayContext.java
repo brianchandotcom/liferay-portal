@@ -123,8 +123,6 @@ public class ViewNotificationTemplatesDisplayContext {
 					"/notification_templates/edit_notification_template"
 				).setParameter(
 					"notificationTemplateId", "{id}"
-				).setWindowState(
-					LiferayWindowState.POP_UP
 				).buildString(),
 				"view", "view",
 				LanguageUtil.get(

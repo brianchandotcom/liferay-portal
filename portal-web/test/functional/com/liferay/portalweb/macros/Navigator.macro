@@ -334,6 +334,10 @@ definition {
 		}
 	}
 
+	macro openStoreURL {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_marketplace_store_web_portlet_MarketplaceStorePortlet");
+	}
+
 	macro openToGroupPagesPortlet {
 		var plid = JSONLayout.getPlid(
 			groupName = "${groupName}",

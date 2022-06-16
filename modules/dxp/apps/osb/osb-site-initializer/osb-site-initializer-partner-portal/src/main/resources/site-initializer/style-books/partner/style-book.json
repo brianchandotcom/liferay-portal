@@ -1,4 +1,5 @@
 {
+	"defaultStyleBookEntry": true,
 	"name": "Partner Portal",
 	"frontendTokensValuesPath": "frontend-tokens-values.json"
 }

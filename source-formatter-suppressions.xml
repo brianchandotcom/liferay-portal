@@ -208,7 +208,6 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/controlpanel/apps/appmanager/AppManagement\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/databasepartitioning/DatabasePartitioning\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/license/DXPLicense\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/search/searchportlet/Search\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/login/Login\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/login/SessionTimeout\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/OAuth2\.testcase" />

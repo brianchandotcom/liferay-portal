@@ -14,14 +14,14 @@ apply plugin: "com.liferay.css.builder"
 
 dependencies {
 #if (${framework.equals("portletmvc4spring")} && ${frameworkDependencies.equals("embedded")})
-	compile group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.framework", version: "5.2.0"
+	compile group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.framework", version: "5.3.2"
 #end
 #if (${framework.equals("portletmvc4spring")})
-	compile group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.security", version: "5.2.0"
+	compile group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.security", version: "5.3.2"
 #end
 #if (${framework.equals("portletmvc4spring")} && ${frameworkDependencies.equals("provided")})
 	compile group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.thin", version: "5.2.2", transitive: false
-	compileOnly group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.framework", version: "5.2.0"
+	compileOnly group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.framework", version: "5.3.2"
 #end
 #if (${framework.equals("springportletmvc")} && ${frameworkDependencies.equals("provided")})
 	compile group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.thin", version: "4.1.9", transitive: false
@@ -33,14 +33,14 @@ dependencies {
 		exclude group: "javax.validation", module: "validation-api"
 	}
 #if (${framework.equals("portletmvc4spring")})
-	compile (group: "org.springframework", name: "spring-aop", version: "5.2.2.RELEASE") {force = true}
-	compile (group: "org.springframework", name: "spring-beans", version: "5.2.2.RELEASE") {force = true}
-	compile (group: "org.springframework", name: "spring-context", version: "5.2.2.RELEASE") {force = true}
-	compile (group: "org.springframework", name: "spring-core", version: "5.2.2.RELEASE") {force = true}
-	compile (group: "org.springframework", name: "spring-expression", version: "5.2.2.RELEASE") {force = true}
-	compile (group: "org.springframework", name: "spring-jcl", version: "5.2.2.RELEASE") {force = true}
-	compile (group: "org.springframework", name: "spring-web", version: "5.2.2.RELEASE") {force = true}
-	compile (group: "org.springframework", name: "spring-webmvc", version: "5.2.2.RELEASE") {force = true}
+	compile (group: "org.springframework", name: "spring-aop", version: "5.3.18") {force = true}
+	compile (group: "org.springframework", name: "spring-beans", version: "5.3.18") {force = true}
+	compile (group: "org.springframework", name: "spring-context", version: "5.3.18") {force = true}
+	compile (group: "org.springframework", name: "spring-core", version: "5.3.18") {force = true}
+	compile (group: "org.springframework", name: "spring-expression", version: "5.3.18") {force = true}
+	compile (group: "org.springframework", name: "spring-jcl", version: "5.3.18") {force = true}
+	compile (group: "org.springframework", name: "spring-web", version: "5.3.18") {force = true}
+	compile (group: "org.springframework", name: "spring-webmvc", version: "5.3.18") {force = true}
 #elseif (${framework.equals("springportletmvc")})
 	compile (group: "org.springframework", name: "spring-aop", version: "4.1.9.RELEASE") {force = true}
 	compile (group: "org.springframework", name: "spring-beans", version: "4.1.9.RELEASE") {force = true}
@@ -52,9 +52,9 @@ dependencies {
 	compile (group: "org.springframework", name: "spring-webmvc-portlet", version: "4.1.9.RELEASE") {force = true}
 #end
 #if (${framework.equals("portletmvc4spring")})
-	compile (group: "org.springframework.security", name: "spring-security-config", version: "5.2.1.RELEASE") {force = true}
-	compile (group: "org.springframework.security", name: "spring-security-core", version: "5.2.1.RELEASE") {force = true}
-	compile (group: "org.springframework.security", name: "spring-security-web", version: "5.2.1.RELEASE") {force = true}
+	compile (group: "org.springframework.security", name: "spring-security-config", version: "5.5.1") {force = true}
+	compile (group: "org.springframework.security", name: "spring-security-core", version: "5.5.1") {force = true}
+	compile (group: "org.springframework.security", name: "spring-security-web", version: "5.5.1") {force = true}
 #end
 #if (${viewType.equals("thymeleaf")})
 	compile(group: "org.thymeleaf", name: "thymeleaf", version: "3.0.11.RELEASE") {

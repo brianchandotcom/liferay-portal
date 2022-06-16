@@ -27,8 +27,8 @@
 		<spring.scope>provided</spring.scope>
 #end
 #if (${framework.equals("portletmvc4spring")})
-		<spring.security.version>5.2.1</spring.security.version>
-		<spring.version>5.2.2</spring.version>
+		<spring.security.version>5.5.1</spring.security.version>
+		<spring.version>5.3.18</spring.version>
 #elseif (${framework.equals("springportletmvc")})
 		<spring.version>4.1.9</spring.version>
 #end
@@ -108,13 +108,13 @@
 		<dependency>
 			<groupId>com.liferay.portletmvc4spring</groupId>
 			<artifactId>com.liferay.portletmvc4spring.framework</artifactId>
-			<version>5.2.0</version>
+			<version>5.3.2</version>
 			<scope>${spring.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.liferay.portletmvc4spring</groupId>
 			<artifactId>com.liferay.portletmvc4spring.security</artifactId>
-			<version>5.2.0</version>
+			<version>5.3.2</version>
 		</dependency>
 #end
 		<dependency>
@@ -141,75 +141,75 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>${spring.version}.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>${spring.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>${spring.version}.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>${spring.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${spring.version}.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>${spring.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>${spring.version}.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>${spring.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-expression</artifactId>
-			<version>${spring.version}.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>${spring.scope}</scope>
 		</dependency>
 #if (${framework.equals("portletmvc4spring")})
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jcl</artifactId>
-			<version>${spring.version}.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>${spring.scope}</scope>
 		</dependency>
 #end
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${spring.version}.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>${spring.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>${spring.scope}</scope>
 		</dependency>
 #if (${framework.equals("springportletmvc")})
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc-portlet</artifactId>
-			<version>${spring.version}.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>${spring.scope}</scope>
 		</dependency>
 #elseif (${framework.equals("portletmvc4spring")})
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>${spring.security.version}.RELEASE</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>${spring.security.version}.RELEASE</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>${spring.security.version}.RELEASE</version>
+			<version>${spring.security.version}</version>
 		</dependency>
 #end
 #if (${viewType.equals("thymeleaf")})

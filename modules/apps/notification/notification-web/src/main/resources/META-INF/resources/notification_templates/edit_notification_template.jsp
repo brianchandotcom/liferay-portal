@@ -23,10 +23,10 @@ ViewNotificationTemplatesDisplayContext viewNotificationTemplatesDisplayContext 
 
 NotificationTemplate notificationTemplate = viewNotificationTemplatesDisplayContext.getNotificationTemplate();
 
-long editingNotificationTemplateId = 0;
+long notificationTemplateId = 0;
 
 if (notificationTemplate != null) {
-	editingNotificationTemplateId = notificationTemplate.getNotificationTemplateId();
+	notificationTemplateId = notificationTemplate.getNotificationTemplateId();
 }
 
 portletDisplay.setShowBackIcon(true);
@@ -43,9 +43,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "notification-template"));
 		HashMapBuilder.<String, Object>put(
 			"baseResourceURL", String.valueOf(baseResourceURL)
 		).put(
-			"editingNotificationTemplateId", editingNotificationTemplateId
-		).put(
 			"editorConfig", viewNotificationTemplatesDisplayContext.getEditorConfig("rich_text")
+		).put(
+			"notificationTemplateId", notificationTemplateId
 		).build()
 	%>'
 />

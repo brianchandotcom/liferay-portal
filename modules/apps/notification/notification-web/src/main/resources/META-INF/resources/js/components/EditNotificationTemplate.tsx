@@ -43,10 +43,10 @@ const HEADERS = new Headers({
 
 export default function EditNotificationTemplate({
 	baseResourceURL,
-	editingNotificationTemplateId,
 	editorConfig,
+	notificationTemplateId,
 }: IProps) {
-	editingNotificationTemplateId = Number(editingNotificationTemplateId);
+	notificationTemplateId = Number(notificationTemplateId);
 
 	const initialValues = {
 		bcc: '',
@@ -106,13 +106,13 @@ export default function EditNotificationTemplate({
 
 	const onSubmit = async (notification: TNotificationTemplate) => {
 		const response = await fetch(
-			editingNotificationTemplateId !== 0
-				? `/o/notification/v1.0/notification-templates/${editingNotificationTemplateId}`
+			notificationTemplateId !== 0
+				? `/o/notification/v1.0/notification-templates/${notificationTemplateId}`
 				: '/o/notification/v1.0/notification-templates',
 			{
 				body: JSON.stringify(notification),
 				headers: HEADERS,
-				method: editingNotificationTemplateId !== 0 ? 'PUT' : 'POST',
+				method: notificationTemplateId !== 0 ? 'PUT' : 'POST',
 			}
 		);
 
@@ -147,10 +147,10 @@ export default function EditNotificationTemplate({
 	});
 
 	useEffect(() => {
-		if (editingNotificationTemplateId !== 0) {
+		if (notificationTemplateId !== 0) {
 			const makeFetch = async () => {
 				const response = await fetch(
-					`/o/notification/v1.0/notification-templates/${editingNotificationTemplateId}`,
+					`/o/notification/v1.0/notification-templates/${notificationTemplateId}`,
 					{
 						headers: HEADERS,
 						method: 'GET',
@@ -186,7 +186,7 @@ export default function EditNotificationTemplate({
 			makeFetch();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [editingNotificationTemplateId]);
+	}, [notificationTemplateId]);
 
 	return (
 		<ClayForm onSubmit={handleSubmit}>
@@ -393,8 +393,8 @@ export default function EditNotificationTemplate({
 
 interface IProps {
 	baseResourceURL: string;
-	editingNotificationTemplateId: number;
 	editorConfig: string;
+	notificationTemplateId: number;
 }
 
 type TNotificationTemplate = {

@@ -17,12 +17,12 @@
 import './EditNotificationTemplate.scss';
 export default function EditNotificationTemplate({
 	baseResourceURL,
-	editingNotificationTemplateId,
 	editorConfig,
+	notificationTemplateId,
 }: IProps): JSX.Element;
 interface IProps {
 	baseResourceURL: string;
-	editingNotificationTemplateId: number;
 	editorConfig: string;
+	notificationTemplateId: number;
 }
 export {};

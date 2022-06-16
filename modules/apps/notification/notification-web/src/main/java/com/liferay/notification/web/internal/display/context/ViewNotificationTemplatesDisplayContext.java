@@ -79,7 +79,7 @@ public class ViewNotificationTemplatesDisplayContext {
 		return creationMenu.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
-					getPortletURL(), "mvcRenderCommandName",
+					_getPortletURL(), "mvcRenderCommandName",
 					"/notification_templates/edit_notification_template",
 					"backURL", _notificationRequestHelper.getCurrentURL());
 				dropdownItem.setLabel(
@@ -118,7 +118,7 @@ public class ViewNotificationTemplatesDisplayContext {
 		return Arrays.asList(
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
-					getPortletURL()
+					_getPortletURL()
 				).setMVCRenderCommandName(
 					"/notification_templates/edit_notification_template"
 				).setParameter(
@@ -148,14 +148,6 @@ public class ViewNotificationTemplatesDisplayContext {
 			NotificationWebKeys.NOTIFICATION_TEMPLATES);
 	}
 
-	public PortletURL getPortletURL() throws PortletException {
-		return PortletURLUtil.clone(
-			PortletURLUtil.getCurrent(
-				_notificationRequestHelper.getLiferayPortletRequest(),
-				_notificationRequestHelper.getLiferayPortletResponse()),
-			_notificationRequestHelper.getLiferayPortletResponse());
-	}
-
 	private String _getPermissionsURL() throws Exception {
 		PortletURL portletURL = PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
@@ -183,6 +175,14 @@ public class ViewNotificationTemplatesDisplayContext {
 		}
 
 		return portletURL.toString();
+	}
+
+	private PortletURL _getPortletURL() throws PortletException {
+		return PortletURLUtil.clone(
+			PortletURLUtil.getCurrent(
+				_notificationRequestHelper.getLiferayPortletRequest(),
+				_notificationRequestHelper.getLiferayPortletResponse()),
+			_notificationRequestHelper.getLiferayPortletResponse());
 	}
 
 	private boolean _hasAddNotificationTemplatePermission() {

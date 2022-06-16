@@ -92,10 +92,9 @@ public class ObjectActionUtil {
 
 			Object value = entry.getValue();
 
-			if (Objects.equals(entry.getKey(), "notificationTemplateId")) {
-				value = GetterUtil.getLong(value);
-			}
-			else if (Objects.equals(entry.getKey(), "objectDefinitionId")) {
+			if (Objects.equals(entry.getKey(), "notificationTemplateId") ||
+				Objects.equals(entry.getKey(), "objectDefinitionId")) {
+
 				value = GetterUtil.getLong(value);
 			}
 			else if (Objects.equals(entry.getKey(), "predefinedValues")) {

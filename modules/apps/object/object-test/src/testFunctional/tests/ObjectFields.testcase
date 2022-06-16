@@ -189,12 +189,32 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if turn off the 'Show files' option on field settings"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDisableShowFilesOptionOnFieldSettings {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-		// TODO LPS-153419 CanDisableShowFilesOptionOnFieldSettings pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			enableShowFiles = "true",
+			fieldAttachment = "Upload Directly from the User's Computer",
+			fieldLabel = "Custom Attachment",
+			fieldType = "Attachment");
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
+
+		Uncheck.uncheckNotVisible(
+			key_toggleSwitchLabel = "Show Files in Documents and Media",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		ObjectField.save();
 	}
 
 	@description = "LPS-148112 - Verify that admin can edit the Storage Folder path in Published objects"

@@ -4668,7 +4668,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			cssSelector = "#layout-common-styles",
 			styleName = "${styleName}");
 
-		if (contains("${topperStylesClass}", "${styleValue}")) {
+		if (contains("${actualStyleValue}", "${styleValue}")) {
 			echo("PASSED");
 		}
 		else {

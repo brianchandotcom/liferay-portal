@@ -2186,12 +2186,6 @@ log.sanitizer.enabled=false</echo>
 										<arg value="--tests" />
 										<arg value="*.LPKGDeployerCleanStartupTest" />
 									</gradle-execute>
-
-									<antcall inheritall="false" target="run-selenium-test">
-										<param name="test.batch.run.type" value="single" />
-										<param name="test.class" value="PortalSmoke#Smoke" />
-										<param name="test.skip.tear.down" value="false" />
-									</antcall>
 								</try>
 
 								<finally>
@@ -2228,12 +2222,6 @@ log.sanitizer.enabled=false</echo>
 										<arg value="*.LPKGVersionChangeLogAssertorTest" />
 										<arg value="-Dliferay.home=${liferay.home}" />
 									</gradle-execute>
-
-									<antcall inheritall="false" target="run-selenium-test">
-										<param name="test.batch.run.type" value="single" />
-										<param name="test.class" value="PortalSmoke#Smoke" />
-										<param name="test.skip.tear.down" value="false" />
-									</antcall>
 								</try>
 
 								<finally>
@@ -2270,12 +2258,6 @@ log.sanitizer.enabled=false</echo>
 										<arg value="*.LPKGVersionChangeLogAssertorTest" />
 										<arg value="-Dliferay.home=${liferay.home}" />
 									</gradle-execute>
-
-									<antcall inheritall="false" target="run-selenium-test">
-										<param name="test.batch.run.type" value="single" />
-										<param name="test.class" value="PortalSmoke#Smoke" />
-										<param name="test.skip.tear.down" value="false" />
-									</antcall>
 								</try>
 
 								<finally>

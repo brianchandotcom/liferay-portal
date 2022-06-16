@@ -140,6 +140,46 @@ definition {
 		}
 	}
 
+	@description = "LPS-154648. Assert final step can transition to hotspot mode."
+	@priority = "5"
+	test FinalStepCanTransitionToHotSpotMode {
+		task ("And Given popover mode") {
+			Walkthrough.enablePopoverMode();
+		}
+
+		task ("When on 1st step popover") {
+			VerifyElementPresent(
+				key_title = "Step 1 of 5: Title 1",
+				locator1 = "Walkthrough#POPOVER_TITLE");
+		}
+
+		task ("And When click on all next steps") {
+			Walkthrough.goToSpecificStep(key_step = "5");
+		}
+
+		task ("Then last step contains close button") {
+			AssertElementPresent(locator1 = "Button#CLOSE");
+		}
+
+		task ("When click on close button") {
+			Click(locator1 = "Button#CLOSE");
+		}
+
+		task ("Then transitions to hotspot mode") {
+			AssertElementPresent(locator1 = "Walkthrough#HOTSPOT");
+		}
+
+		task ("And Then hotspot is on final element") {
+			WalkthroughPopover.viewCoordinatePositionMatchesElementStep(
+				hotspotElementClass = "lfr-walkthrough-hotspot-inner",
+				stepElementId = "step5");
+		}
+
+		task ("And Then popover is not present") {
+			AssertElementNotPresent(locator1 = "Walkthrough#POPOVER");
+		}
+	}
+
 	@description = "LPS-154646. Assert 1st step popover does not contain a button to transition to previous step."
 	@priority = "5"
 	test FirstStepDoesNotHavePreviousStepButton {

@@ -50,8 +50,6 @@ export {default as BREAKPOINTS} from './liferay/breakpoints';
 export {default as STATUS_CODE} from './liferay/status_code';
 export {default as zIndex} from './liferay/zIndex';
 
-export {default as CompatibilityEventProxy} from './liferay/CompatibilityEventProxy.es';
-
 export {default as DefaultEventHandler} from './liferay/DefaultEventHandler.es';
 export {default as Disposable} from './liferay/events/Disposable';
 export {default as EventEmitter} from './liferay/events/EventEmitter';

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-security" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="update-cookies-osgi-site-configuration">
+		<replace
+			file="${liferay.home}/osgi/configs/com.liferay.cookies.configuration.CookiesBannerConfiguration.scoped~default.config"
+			token="groupId=L&quot;20122&quot;"
+			value="groupId=L&quot;${siteId}&quot;"
+		/>
+
+		<replace
+			file="${liferay.home}/osgi/configs/com.liferay.cookies.configuration.CookiesConsentConfiguration.scoped~default.config"
+			token="groupId=L&quot;20122&quot;"
+			value="groupId=L&quot;${siteId}&quot;"
+		/>
+
+		<replace
+			file="${liferay.home}/osgi/configs/com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration.scoped~default.config"
+			token="groupId=L&quot;20122&quot;"
+			value="groupId=L&quot;${siteId}&quot;"
+		/>
+	</target>
+</project>

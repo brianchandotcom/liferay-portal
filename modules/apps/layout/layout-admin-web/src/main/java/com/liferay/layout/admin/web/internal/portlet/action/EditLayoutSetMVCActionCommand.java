@@ -158,7 +158,8 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-				themeDisplay.getCompanyId(), layoutSet.getLayoutSetId(),
+				_portal.getClassNameId(LayoutSet.class),
+				layoutSet.getLayoutSetId(),
 				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 		}
 

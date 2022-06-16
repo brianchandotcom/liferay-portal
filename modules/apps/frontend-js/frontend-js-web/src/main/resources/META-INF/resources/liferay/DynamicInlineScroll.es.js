@@ -30,6 +30,21 @@ function isString(val) {
  * @extends {Component}
  */
 class DynamicInlineScroll extends PortletBase {
+	constructor(config) {
+		super();
+
+		this.cur = Number(config.cur);
+		this.curParam = config.curParam;
+		this.forcePost = config.forcePost;
+		this.formName = config.formName;
+		this.initialPages = Number(config.initialPages);
+		this.jsCall = config.jsCall;
+		this.namespace = config.namespace;
+		this.pages = Number(config.pages);
+		this.randomNamespace = config.randomNamespace;
+		this.url = config.url;
+		this.urlAnchor = config.urlAnchor;
+	}
 
 	/**
 	 * @inheritDoc
@@ -109,17 +124,6 @@ class DynamicInlineScroll extends PortletBase {
 	}
 
 	/**
-	 * Returns the numerical value of the parameter passed in.
-	 *
-	 * @param {string|!Object} val The string or object to be converted to a number.
-	 * @protected
-	 * @return {number} The parameter's numberical value.
-	 */
-	getNumber_(val) {
-		return Number(val);
-	}
-
-	/**
 	 * Handles the click event of the dynmaically added list item, preventing
 	 * the default behavior and submitting the search container form.
 	 *
@@ -156,13 +160,11 @@ class DynamicInlineScroll extends PortletBase {
 		const {cur, initialPages, pages} = this;
 		const {target} = event;
 
-		let pageIndex = this.getNumber_(target.dataset.pageIndex);
-		let pageIndexMax = this.getNumber_(target.dataset.maxIndex);
+		let pageIndex = Number(target.dataset.pageIndex);
+		let pageIndexMax = Number(target.dataset.maxIndex);
 
 		if (pageIndex === 0) {
-			const pageIndexCurrent = this.getNumber_(
-				target.dataset.currentIndex
-			);
+			const pageIndexCurrent = Number(target.dataset.currentIndex);
 
 			if (pageIndexCurrent === 0) {
 				pageIndex = initialPages;
@@ -186,140 +188,5 @@ class DynamicInlineScroll extends PortletBase {
 		}
 	}
 }
-
-/**
- * State definition.
- *
- * @ignore
- * @static
- * @type {!Object}
- */
-DynamicInlineScroll.STATE = {
-
-	/**
-	 * Current page index.
-	 *
-	 * @instance
-	 * @memberof DynamicInlineScroll
-	 * @type {string}
-	 */
-	cur: {
-		setter: 'getNumber_',
-		validator: isString,
-	},
-
-	/**
-	 * URL parameter of the current page.
-	 *
-	 * @instance
-	 * @memberof DynamicInlineScroll
-	 * @type {string}
-	 */
-	curParam: {
-		validator: isString,
-	},
-
-	/**
-	 * Forces a form post when a page on the dropdown menu is clicked.
-	 *
-	 * @instance
-	 * @memberof DynamicInlineScroll
-	 * @type {boolean}
-	 */
-	forcePost: {
-		validator: isBoolean,
-	},
-
-	/**
-	 * Form name.
-	 *
-	 * @instance
-	 * @memberof DynamicInlineScroll
-	 * @type {string}
-	 */
-	formName: {
-		validator: isString,
-	},
-
-	/**
-	 * Number of pages loaded to the inline-scroll dropdown menu for the first
-	 * page load.
-	 *
-	 * @instance
-	 * @memberof DynamicInlineScroll
-	 * @type {string}
-	 */
-	initialPages: {
-		setter: 'getNumber_',
-		validator: isString,
-	},
-
-	/**
-	 * JavaScript call.
-	 *
-	 * @instance
-	 * @memberof DynamicInlineScroll
-	 * @type {string}
-	 */
-	jsCall: {
-		validator: isString,
-	},
-
-	/**
-	 * Namespace.
-	 *
-	 * @instance
-	 * @memberof DynamicInlineScroll
-	 * @type {string}
-	 */
-	namespace: {
-		validator: isString,
-	},
-
-	/**
-	 * Total number of pages.
-	 *
-	 * @instance
-	 * @memberof DynamicInlineScroll
-	 * @type {string}
-	 */
-	pages: {
-		setter: 'getNumber_',
-		validator: isString,
-	},
-
-	/**
-	 * Random namespace.
-	 *
-	 * @instance
-	 * @memberof DynamicInlineScroll
-	 * @type {string}
-	 */
-	randomNamespace: {
-		validator: isString,
-	},
-
-	/**
-	 * URL.
-	 *
-	 * @instance
-	 * @memberof DynamicInlineScroll
-	 * @type {string}
-	 */
-	url: {
-		validator: isString,
-	},
-
-	/**
-	 * URL anchor.
-	 *
-	 * @instance
-	 * @memberof DynamicInlineScroll
-	 * @type {string}
-	 */
-	urlAnchor: {
-		validator: isString,
-	},
-};
 
 export default DynamicInlineScroll;

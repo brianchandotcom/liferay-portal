@@ -97,7 +97,7 @@ definition {
 			ContentPages.gotoPageEditor();
 		}
 
-		task ("And the content displays in collection display after upgrade") {
+		task ("Then the content displays in collection display after upgrade") {
 			AssertVisible(
 				key_colPosition = "1",
 				key_entryTitle = "Web Content Title",
@@ -106,7 +106,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		task ("Then the Filter on Tag should display in Collections after upgrade") {
+		task ("And the Filter on Tag should display in Collections after upgrade") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
@@ -134,7 +134,7 @@ definition {
 			ContentPages.gotoPageEditor();
 		}
 
-		task ("And the content displays in collection display after upgrade") {
+		task ("Then the content displays in collection display after upgrade") {
 			AssertVisible(
 				key_colPosition = "1",
 				key_entryTitle = "Web Content Title",
@@ -143,7 +143,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		task ("Then the Filter on Tag should display in Collections after upgrade") {
+		task ("And the Filter on Tag should display in Collections after upgrade") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
@@ -171,7 +171,7 @@ definition {
 			ContentPages.gotoPageEditor();
 		}
 
-		task ("And the content displays in collection display after upgrade") {
+		task ("Then the content displays in collection display after upgrade") {
 			AssertVisible(
 				key_colPosition = "1",
 				key_entryTitle = "Web Content Title",
@@ -180,7 +180,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		task ("Then the Filter on Tag should display in Collections after upgrade") {
+		task ("And the Filter on Tag should display in Collections after upgrade") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
@@ -208,7 +208,7 @@ definition {
 			ContentPages.gotoPageEditor();
 		}
 
-		task ("And the content displays in collection display after upgrade") {
+		task ("Then the content displays in collection display after upgrade") {
 			AssertVisible(
 				key_colPosition = "1",
 				key_entryTitle = "Web Content Title",
@@ -217,7 +217,7 @@ definition {
 				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 
-		task ("Then the Filter on Tag should display in Collections after upgrade") {
+		task ("And the Filter on Tag should display in Collections after upgrade") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");

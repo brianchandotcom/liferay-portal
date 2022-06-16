@@ -122,7 +122,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_text = "hits",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY");
+			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 	}
 
 	test ApplyBlueprintToContentPageViaBlueprintsOptions {

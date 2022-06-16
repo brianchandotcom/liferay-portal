@@ -202,11 +202,11 @@ definition {
 
 		AssertElementPresent(
 			key_text = "&quot;explain&quot;",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_REQUEST_QUERY");
+			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY");
 
 		AssertElementPresent(
 			key_text = "&quot;_explanation&quot;",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY");
+			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",
@@ -226,11 +226,11 @@ definition {
 
 		AssertElementPresent(
 			key_text = "&quot;explain&quot;",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_REQUEST_QUERY");
+			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY");
 
 		AssertElementNotPresent(
 			key_text = "&quot;_explanation&quot;",
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY");
+			locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY");
 	}
 
 	@priority = "5"

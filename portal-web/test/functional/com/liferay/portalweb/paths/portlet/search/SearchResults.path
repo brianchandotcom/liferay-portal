@@ -238,7 +238,7 @@
 	<td></td>
 </tr>
 
-<!--SEARCH_INSIGHTS_PORTLET-->
+<!--SEARCH_INSIGHTS_WIDGET-->
 
 <tr>
 	<td>SEARCH_INSIGHTS_WIDGET_REQUEST_COPY_BUTTON</td>
@@ -251,12 +251,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY</td>
+	<td>SEARCH_INSIGHTS_WIDGET_RESPONSE_QUERY</td>
 	<td>//div[contains(@id,'insightsResponsePanelContent')]//div[contains(@class,'CodeMirror cm-s-default')]//span[contains(@class,'cm-string')][normalize-space()='${key_text}']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_INSIGHTS_PORTLET_REQUEST_QUERY</td>
+	<td>SEARCH_INSIGHTS_WIDGET_REQUEST_QUERY</td>
 	<td>//div[contains(@id,'insightsRequestPanelContent')]//div[contains(@class,'CodeMirror cm-s-default')]//span[contains(@class,'cm-string')][normalize-space()='${key_text}']</td>
 	<td></td>
 </tr>

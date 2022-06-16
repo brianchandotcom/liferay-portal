@@ -434,6 +434,26 @@ public class ObjectFieldLocalServiceImpl
 		return objectField;
 	}
 
+	@Override
+	public ObjectField updateObjectField(
+			long objectFieldId, long listTypeDefinitionId, String businessType,
+			String dbType, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<Locale, String> labelMap, String name,
+			boolean required, boolean system,
+			List<ObjectFieldSetting> objectFieldSettings)
+		throws PortalException {
+
+		if (system) {
+			return objectFieldLocalService.updateSystemObjectField(
+				objectFieldId, labelMap);
+		}
+
+		return objectFieldLocalService.updateCustomObjectField(
+			objectFieldId, listTypeDefinitionId, businessType, dbType, indexed,
+			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+			objectFieldSettings);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField updateRequired(long objectFieldId, boolean required)

@@ -345,7 +345,7 @@ function getWebElement(locator) {
   return document.evaluate(locator, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 }
 
-return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item-')][contains(@class,'-${fragmentName}')])[${index}]").classList).filter(className => className.includes('lfr-layout-structure-item'))[0];
+return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item-')][contains(@class,'-${fragmentName}')])[${index}]").classList).filter(className => className.includes('lfr-layout-structure-item')).filter(className => !className.includes('-${fragmentName}'))[0];
 		''';
 
 		var commonStylesClass = selenium.getEval("${javascript}");

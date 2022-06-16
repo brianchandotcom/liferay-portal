@@ -18,7 +18,6 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.ImageInfoFieldType;
-import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
@@ -157,8 +156,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				TransformUtil.transform(
 					_objectFieldLocalService.getObjectFields(
 						objectEntry.getObjectDefinitionId()),
-					objectField -> {
-						InfoField.FinalStep<InfoFieldType> finalStep =
+					objectField -> new InfoFieldValue<>(
+						ObjectFieldDBTypeUtil.addAttributes(
 							InfoField.builder(
 							).infoFieldType(
 								ObjectFieldDBTypeUtil.getInfoFieldType(
@@ -172,14 +171,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 								).values(
 									objectField.getLabelMap()
 								).build()
-							);
-
-						ObjectFieldDBTypeUtil.addAttributes(
-							finalStep, objectField);
-
-						return new InfoFieldValue<>(
-							finalStep.build(), _getValue(objectField, values));
-					}));
+							),
+							objectField),
+						_getValue(objectField, values))));
 
 			return objectEntryFieldValues;
 		}

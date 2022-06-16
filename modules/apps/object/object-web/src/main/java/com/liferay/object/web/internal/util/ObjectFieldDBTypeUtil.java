@@ -33,7 +33,7 @@ import java.util.Objects;
  */
 public class ObjectFieldDBTypeUtil {
 
-	public static void addAttributes(
+	public static InfoField<?> addAttributes(
 		InfoField.FinalStep finalStep, ObjectField objectField) {
 
 		if (Objects.equals(
@@ -44,6 +44,8 @@ public class ObjectFieldDBTypeUtil {
 
 			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
 		}
+
+		return finalStep.build();
 	}
 
 	public static InfoFieldType getInfoFieldType(ObjectField objectField) {

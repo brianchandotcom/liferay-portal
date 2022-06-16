@@ -23,6 +23,8 @@ import useControlledState from '../../../core/hooks/useControlledState';
 import {useSelector} from '../../contexts/StoreContext';
 import {useId} from '../../utils/useId';
 
+const MAX_SUGGESTED_CLASSES = 20;
+
 export default function CSSClassSelectorField({
 	field,
 	onValueSelect,
@@ -193,10 +195,12 @@ function CSSClassSelectorDropDown({
 	});
 
 	const filteredCssClasses = useMemo(() => {
-		return availableCssClasses.filter(
-			(availableCssClass) =>
-				availableCssClass.indexOf(cssClass.trim()) !== -1
-		);
+		return availableCssClasses
+			.filter(
+				(availableCssClass) =>
+					availableCssClass.indexOf(cssClass.trim()) !== -1
+			)
+			.slice(0, MAX_SUGGESTED_CLASSES);
 	}, [availableCssClasses, cssClass]);
 
 	return (

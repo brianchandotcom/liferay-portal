@@ -20,10 +20,8 @@ import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.web.internal.constants.NotificationWebKeys;
 import com.liferay.notification.web.internal.display.context.ViewNotificationTemplatesDisplayContext;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -53,16 +51,10 @@ public class EditNotificationTemplateMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			renderRequest.setAttribute(
-				NotificationWebKeys.NOTIFICATION_TEMPLATES,
-				_notificationTemplateLocalService.getNotificationTemplate(
-					ParamUtil.getLong(
-						renderRequest, "notificationTemplateId")));
-		}
-		catch (PortalException portalException) {
-			SessionErrors.add(renderRequest, portalException.getClass());
-		}
+		renderRequest.setAttribute(
+			NotificationWebKeys.NOTIFICATION_TEMPLATES,
+			_notificationTemplateLocalService.fetchNotificationTemplate(
+				ParamUtil.getLong(renderRequest, "notificationTemplateId")));
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,

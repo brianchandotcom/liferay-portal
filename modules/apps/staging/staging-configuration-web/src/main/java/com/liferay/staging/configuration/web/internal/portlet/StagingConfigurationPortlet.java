@@ -46,7 +46,7 @@ import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import java.io.IOException;
 
-import java.util.Collections;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -55,13 +55,16 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Levente Hudák
  */
 @Component(
+	configurationPid = "com.liferay.change.tracking.configuration.CTSettingsConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -297,6 +300,13 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 		sendRedirect(actionRequest, actionResponse);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_defaultCTSettingsConfiguration = ConfigurableUtil.createConfigurable(
+			CTSettingsConfiguration.class, properties);
+	}
+
 	@Override
 	protected boolean isSessionErrorException(Throwable throwable) {
 		if (throwable instanceof LocaleException) {
@@ -334,19 +344,15 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 	}
 
 	private CTSettingsConfiguration _getConfiguration(long companyId) {
-		CTSettingsConfiguration configuration =
-			ConfigurableUtil.createConfigurable(
-				CTSettingsConfiguration.class, Collections.emptyMap());
-
 		try {
-			configuration = _configurationProvider.getCompanyConfiguration(
+			return _configurationProvider.getCompanyConfiguration(
 				CTSettingsConfiguration.class, companyId);
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(configurationException);
 		}
 
-		return configuration;
+		return _defaultCTSettingsConfiguration;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -358,6 +364,7 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
+	private volatile CTSettingsConfiguration _defaultCTSettingsConfiguration;
 	private GroupLocalService _groupLocalService;
 
 	@Reference

@@ -23,15 +23,20 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
-import java.util.Collections;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author David Truong
  */
-@Component(immediate = true, service = CTSettingsConfigurationHelper.class)
+@Component(
+	configurationPid = "com.liferay.change.tracking.configuration.CTSettingsConfiguration",
+	immediate = true, service = CTSettingsConfigurationHelper.class
+)
 public class CTSettingsConfigurationHelper {
 
 	public boolean enabled(long companyId) {
@@ -62,20 +67,23 @@ public class CTSettingsConfigurationHelper {
 			).build());
 	}
 
-	private CTSettingsConfiguration _getConfiguration(long companyId) {
-		CTSettingsConfiguration configuration =
-			ConfigurableUtil.createConfigurable(
-				CTSettingsConfiguration.class, Collections.emptyMap());
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_defaultCTSettingsConfiguration = ConfigurableUtil.createConfigurable(
+			CTSettingsConfiguration.class, properties);
+	}
 
+	private CTSettingsConfiguration _getConfiguration(long companyId) {
 		try {
-			configuration = _configurationProvider.getCompanyConfiguration(
+			return _configurationProvider.getCompanyConfiguration(
 				CTSettingsConfiguration.class, companyId);
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(configurationException);
 		}
 
-		return configuration;
+		return _defaultCTSettingsConfiguration;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -83,5 +91,7 @@ public class CTSettingsConfigurationHelper {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	private volatile CTSettingsConfiguration _defaultCTSettingsConfiguration;
 
 }

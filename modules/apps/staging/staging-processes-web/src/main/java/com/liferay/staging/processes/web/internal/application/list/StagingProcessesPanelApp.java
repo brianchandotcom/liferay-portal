@@ -30,14 +30,18 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import java.util.Collections;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Levente Hudák
  */
 @Component(
+	configurationPid = "com.liferay.change.tracking.configuration.CTSettingsConfiguration",
 	immediate = true,
 	property = {
 		"panel.app.order:Integer=100",
@@ -75,6 +79,13 @@ public class StagingProcessesPanelApp extends BasePanelApp {
 		super.setPortlet(portlet);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_defaultCTSettingsConfiguration = ConfigurableUtil.createConfigurable(
+			CTSettingsConfiguration.class, properties);
+	}
+
 	private CTSettingsConfiguration _getConfiguration(long companyId) {
 		CTSettingsConfiguration configuration =
 			ConfigurableUtil.createConfigurable(
@@ -96,5 +107,7 @@ public class StagingProcessesPanelApp extends BasePanelApp {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	private volatile CTSettingsConfiguration _defaultCTSettingsConfiguration;
 
 }

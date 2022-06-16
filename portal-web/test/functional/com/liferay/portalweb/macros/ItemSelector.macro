@@ -457,6 +457,8 @@ definition {
 		AssertClick(
 			locator1 = "ItemSelector#ADD_BUTTON",
 			value1 = "Add");
+
+		SelectFrameTop();
 	}
 
 	macro selectDMImage {
@@ -490,6 +492,8 @@ definition {
 		var key_imageFileName = StringUtil.replace("${imageFileName}", " ", "+");
 
 		LexiconCard.clickCard(card = "${imageFileName}");
+
+		SelectFrameTop();
 	}
 
 	macro selectRepositoryImage {
@@ -512,6 +516,8 @@ definition {
 		else {
 			Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 		}
+
+		SelectFrameTop();
 	}
 
 	macro selectSiteImage {
@@ -528,6 +534,8 @@ definition {
 		Click(
 			key_imageFileName = "${imageFileName}",
 			locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+
+		SelectFrameTop();
 	}
 
 	macro switchTab {
@@ -579,6 +587,8 @@ definition {
 			AssertClick(
 				locator1 = "ItemSelector#ADD_BUTTON",
 				value1 = "Add");
+
+			SelectFrameTop();
 		}
 	}
 
@@ -621,6 +631,8 @@ definition {
 				locator1 = "ItemSelector#ADD_BUTTON",
 				value1 = "Add");
 		}
+
+		SelectFrameTop();
 	}
 
 	macro viewBlogImageDetails {

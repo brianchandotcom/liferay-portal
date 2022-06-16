@@ -112,6 +112,27 @@ definition {
 		return "${objectDefinitionId}";
 	}
 
+	macro _createObjectEntryWithName {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${name}");
+
+		var en_US_plural_label_lowercase = StringUtil.lowerCase("${en_US_plural_label}");
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/${en_US_plural_label_lowercase} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+            -d
+					{	                 
+	"name": "${name}"
+	}
+		''';
+
+		var objectId = JSONCurlUtil.post("${curl}", "$.id");
+
+		return "${objectId}";
+	}
+
 	macro _createRelationship {
 		Variables.assertDefined(parameterList = "${deletionType},${en_US_label},${name},${objectDefinitionId1},${objectDefinitionId2},${type}");
 
@@ -211,6 +232,22 @@ definition {
 		return "${objectDefinitionStatus}";
 	}
 
+	macro _getObjectEntryNameById {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectId}");
+
+		var en_US_plural_label_lowercase = StringUtil.lowerCase("${en_US_plural_label}");
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+        	${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectId} \
+			-u test@liferay.com:test
+		''';
+
+		var objectName = JSONCurlUtil.get("${curl}", "$.name");
+
+		return "${objectName}";
+	}
+
 	macro _getObjectFirstnameById {
 		var objectFirstname = JSONUtil.getWithJSONPath("${responseToParse}", "$.items[?(@.id==${objectId})].firstname");
 
@@ -233,7 +270,7 @@ definition {
 	}
 
 	macro _getObjectsWithNestedField {
-		Variables.assertDefined(parameterList = "${nestedField}");
+		Variables.assertDefined(parameterList = "${nestedField}, ${objects}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -275,6 +312,22 @@ definition {
 		var json = JSONCurlUtil.post("${curl}");
 
 		return "${json}";
+	}
+
+	macro _relateObjectEntries {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntry1},${objectEntry2},${relationshipName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var en_US_plural_label_lowercase = StringUtil.lowerCase("${en_US_plural_label}");
+
+		var curl = '''
+        	${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectEntry1}/${relationshipName}/${objectEntry2} \
+			-u test@liferay.com:test
+		''';
+
+		var response = JSONCurlUtil.put("${curl}");
+
+		return "${response}";
 	}
 
 	macro _updateEmployee {
@@ -323,6 +376,16 @@ definition {
 
 	macro assertInFacetsWithCorrectValue {
 		var actualValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..facetValues[?(@.term=='${managerId}' && @.numberOfOccurrences==${expectedValue})].numberOfOccurrences");
+
+		TestUtils.assertEquals(
+			actual = "${actualValue}",
+			expected = "${expectedValue}");
+	}
+
+	macro assertNestedFieldDetail {
+		Variables.assertDefined(parameterList = "${getObjectsWithNestedFieldReponse},${nestedField},${objectField},${objectEntryId}, ${expectedValue}");
+
+		var actualValue = JSONUtil.getWithJSONPath("${getObjectsWithNestedFieldReponse}", "$.items[?(@.id==${objectEntryId})].${nestedField}[*].${objectField}");
 
 		TestUtils.assertEquals(
 			actual = "${actualValue}",
@@ -401,6 +464,22 @@ definition {
 		return "${managerId}";
 	}
 
+	macro createObjectEntryWithName {
+		var objectId = ObjectDefinitionAPI._createObjectEntryWithName(
+			en_US_plural_label = "${en_US_plural_label}",
+			name = "${name}");
+
+		var actualName = ObjectDefinitionAPI._getObjectEntryNameById(
+			en_US_plural_label = "${en_US_plural_label}",
+			objectId = "${objectId}");
+
+		TestUtils.assertEquals(
+			actual = "${actualName}",
+			expected = "${name}");
+
+		return "${objectId}";
+	}
+
 	macro createRelationship {
 		var relationshipId = ObjectDefinitionAPI._createRelationship(
 			deletionType = "${deletionType}",
@@ -433,11 +512,20 @@ definition {
 
 	macro getObjectsWithNestedField {
 		var getObjectsWithNestedFieldJSON = ObjectDefinitionAPI._getObjectsWithNestedField(
-			nestedField = "${nestedObject}",
-			objectId = "${objectId}",
+			nestedField = "${nestedField}",
 			objects = "${objects}");
 
 		return "${getObjectsWithNestedFieldJSON}";
+	}
+
+	macro relateObjectEntries {
+		var response = ObjectDefinitionAPI._relateObjectEntries(
+			en_US_plural_label = "${en_US_plural_label}",
+			objectEntry1 = "${objectEntry1}",
+			objectEntry2 = "${objectEntry2}",
+			relationshipName = "${relationshipName}");
+
+		return "${response}";
 	}
 
 	macro updateEmployee {

@@ -81,11 +81,14 @@ public class ClientExtensionTopHeadDynamicInclude implements DynamicInclude {
 	private List<ClientExtensionEntryRel> _getClientExtensionEntryRels(
 		Layout layout) {
 
+		LayoutSet layoutSet = layout.getLayoutSet();
+
 		List<ClientExtensionEntryRel> clientExtensionEntryRels =
 			new ArrayList<>(
 				_clientExtensionEntryRelLocalService.
 					getClientExtensionEntryRels(
-						_portal.getClassNameId(Layout.class), layout.getPlid(),
+						_portal.getClassNameId(LayoutSet.class),
+						layoutSet.getLayoutSetId(),
 						ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
@@ -102,12 +105,9 @@ public class ClientExtensionTopHeadDynamicInclude implements DynamicInclude {
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 		}
 
-		LayoutSet layoutSet = layout.getLayoutSet();
-
 		clientExtensionEntryRels.addAll(
 			_clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
-				_portal.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(),
+				_portal.getClassNameId(Layout.class), layout.getPlid(),
 				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 

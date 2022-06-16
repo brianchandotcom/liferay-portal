@@ -56,12 +56,12 @@
 </tr>
 <tr>
 	<td>COLLECTION_DISPLAY_COLUMN</td>
-	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]//div[contains(@class,'row')][${key_rowNumber}]//div[contains(@class,'col-')][${key_columnNumber}]</td>
+	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]//div[starts-with(@class,'row')][${key_rowNumber}]//div[contains(@class,'col-')][${key_columnNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COLLECTION_DISPLAY_COLUMNS_NO_GUTTER</td>
-	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]//div[contains(@class,'row') and contains(@class,'no-gutters')]</td>
+	<td>xpath=(//div[@aria-label='Collection Display'])[${key_position}]//div[starts-with(@class,'row') and contains(@class,'no-gutters')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,12 +76,12 @@
 </tr>
 <tr>
 	<td>COLLECTION_CELL_NESTED_ELEMENT</td>
-	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__collection')]/div[contains(@class,'row')][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]${key_element}</td>
+	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__collection')]/div[starts-with(@class,'row')][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]${key_element}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COLLECTION_ITEM</td>
-	<td>xpath=(//div[contains(@id,'main-content')]//div[contains(@class,'row')][not(.//label)])[${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]</td>
+	<td>xpath=(//div[contains(@id,'main-content')]//div[starts-with(@class,'row')][not(.//label)])[${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -141,7 +141,7 @@
 </tr>
 <tr>
 	<td>COLLECTION_ITEM_IMAGE</td>
-	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__collection')]/div[contains(@class,'row')][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@style,'${key_entryImage}')]</td>
+	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__collection')]/div[starts-with(@class,'row')][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@style,'${key_entryImage}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -171,7 +171,7 @@
 </tr>
 <tr>
 	<td>COLLECTION_ITEM_TITLE</td>
-	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__collection')]/div[contains(@class,'row')][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@class,'item__title') and contains(.,'${key_entryTitle}')]</td>
+	<td>//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__collection')]/div[starts-with(@class,'row')][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@class,'item__title') and contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -704,7 +704,7 @@
 </tr>
 <tr>
 	<td>GRID_COLUMN_NESTED_ELEMENT</td>
-	<td>xpath=(//div[contains(@class,'layout-content')]//div[contains(@class,'row')][not(contains(@class,'alert'))])[${key_position}]/div[contains(@class,'col')][${key_columnNumber}]${key_elementHeader}</td>
+	<td>xpath=(//div[contains(@class,'layout-content')]//div[starts-with(@class,'row')][not(contains(@class,'alert'))])[${key_position}]/div[contains(@class,'col')][${key_columnNumber}]${key_elementHeader}</td>
 	<td></td>
 </tr>
 <tr>

@@ -46,6 +46,7 @@ import com.liferay.layout.taglib.internal.display.context.RenderCollectionLayout
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
+import com.liferay.layout.util.constants.LayoutStructureWebKeys;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -175,9 +176,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 	protected static final String COLLECTION_ELEMENT_INDEX =
 		RenderLayoutStructureTag.class.getName() + "#COLLECTION_ELEMENT_INDEX";
-
-	protected static final String LAYOUT_STRUCTURE =
-		RenderLayoutStructureTag.class.getName() + "#LAYOUT_STRUCTURE";
 
 	private String _getErrorMessage(
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
@@ -1136,7 +1134,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		HttpServletRequest httpServletRequest = getRequest();
 
-		httpServletRequest.setAttribute(LAYOUT_STRUCTURE, _layoutStructure);
+		httpServletRequest.setAttribute(
+			LayoutStructureWebKeys.LAYOUT_STRUCTURE, _layoutStructure);
 
 		_renderLayoutStructure(
 			childrenItemIds,

@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ALERT</td>
+	<td>//div[contains(@id,'FrontendJSComponentsSampleWebPortlet')]//*[contains(@class,'alert-info') and contains(@id,'${id}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HOTSPOT</td>
 	<td>//*[@class='lfr-walkthrough-hotspot']</td>
 	<td></td>

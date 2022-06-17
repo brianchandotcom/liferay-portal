@@ -1434,7 +1434,6 @@ public class DataFactory {
 		// Other fields
 
 		commerceCurrencyModel.setCode("USD");
-
 		commerceCurrencyModel.setName(
 			StringBundler.concat(
 				"<?xml version=\"1.0\" encoding=\"UTF-8\"?><root available-",

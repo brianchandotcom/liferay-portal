@@ -1252,7 +1252,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		 */
 		@Override
 		public ${entity.name} fetchByPrimaryKey(Serializable primaryKey) {
-			if (${ctPersistenceHelper}.isProductionMode(${entity.name}.class)) {
+			<#if serviceBuilder.isVersionGTE_7_4_0()>
+				if (${ctPersistenceHelper}.isProductionMode(${entity.name}.class, primaryKey)) {
+			<#else>
+				if (${ctPersistenceHelper}.isProductionMode(${entity.name}.class)) {
+			</#if>
 				return super.fetchByPrimaryKey(primaryKey);
 			}
 

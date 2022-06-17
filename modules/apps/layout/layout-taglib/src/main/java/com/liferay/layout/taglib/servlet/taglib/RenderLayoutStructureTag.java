@@ -871,6 +871,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				renderLayoutStructureDisplayContext)
 		throws Exception {
 
+		if (infoForm == null) {
+			return;
+		}
+
 		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write("<form action=\"");

@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 import getKebabCase from '../../../../../common/utils/getKebabCase';
 import DeactivateKeysTable from '../../../containers/DeactivateKeysTable';
@@ -29,6 +30,8 @@ import ProductOutlet from './Outlets/ProductOutlet';
 const ProjectRoutes = () => (
 	<HashRouter>
 		<Routes>
+			<Route element={<ClayLoadingIndicator />} index />
+
 			<Route element={<Layout />} path="/:accountKey">
 				<Route element={<Overview />} index />
 

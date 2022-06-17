@@ -130,16 +130,6 @@ definition {
 				key_position = "1",
 				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
 
-			AssertElementPresent(
-				key_paddingLeft = "0",
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_LEFT");
-
-			AssertElementPresent(
-				key_paddingRight = "0",
-				key_position = "1",
-				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_RIGHT");
-
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fluid",
 				position = "1");

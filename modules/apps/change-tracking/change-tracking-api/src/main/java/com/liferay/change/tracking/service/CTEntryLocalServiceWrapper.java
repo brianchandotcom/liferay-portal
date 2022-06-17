@@ -382,6 +382,14 @@ public class CTEntryLocalServiceWrapper
 			ctCollectionId, modelClassNameId);
 	}
 
+	@Override
+	public boolean hasCTEntry(
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+
+		return _ctEntryLocalService.hasCTEntry(
+			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
 	/**
 	 * Updates the ct entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

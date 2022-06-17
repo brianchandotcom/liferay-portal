@@ -334,6 +334,13 @@ public class CTEntryLocalServiceUtil {
 		return getService().hasCTEntries(ctCollectionId, modelClassNameId);
 	}
 
+	public static boolean hasCTEntry(
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+
+		return getService().hasCTEntry(
+			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
 	/**
 	 * Updates the ct entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

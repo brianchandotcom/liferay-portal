@@ -288,6 +288,10 @@ public interface CTEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasCTEntries(long ctCollectionId, long modelClassNameId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCTEntry(
+		long ctCollectionId, long modelClassNameId, long modelClassPK);
+
 	/**
 	 * Updates the ct entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

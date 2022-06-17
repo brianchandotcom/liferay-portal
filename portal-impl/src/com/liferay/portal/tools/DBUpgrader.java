@@ -340,8 +340,6 @@ public class DBUpgrader {
 	}
 
 	private static void _upgradeModules(ApplicationContext applicationContext) {
-		_registerModuleServiceLifecycle("database.initialized");
-
 		if (applicationContext == null) {
 			InitUtil.registerContext();
 		}

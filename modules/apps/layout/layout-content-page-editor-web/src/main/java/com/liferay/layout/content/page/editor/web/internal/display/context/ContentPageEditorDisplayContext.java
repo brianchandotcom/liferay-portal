@@ -370,11 +370,6 @@ public class ContentPageEditorDisplayContext {
 						_getDefaultStyleBookEntry());
 				}
 			).put(
-				"getAvailableDisplayPageInfoItemFormProvidersURL",
-				_getResourceURL(
-					"/layout_content_page_editor" +
-						"/get_available_display_page_info_item_form_providers")
-			).put(
 				"getAvailableEditPageInfoItemFormProvidersURL",
 				_getResourceURL(
 					"/layout_content_page_editor" +

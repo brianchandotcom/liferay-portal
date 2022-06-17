@@ -1940,9 +1940,7 @@ definition {
 			connectorOut = "task",
 			key_direction = "bottom");
 
-		Button.click(button = "Update");
-
-		Alert.viewSuccessMessageText(successMessage = "Workflow updated successfully.");
+		Button.click(button = "Save");
 
 		ProcessBuilderKaleoDesignerReact.gotoInfoWorkflowDefinition();
 

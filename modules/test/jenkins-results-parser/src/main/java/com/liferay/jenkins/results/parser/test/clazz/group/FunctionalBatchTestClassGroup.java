@@ -442,7 +442,11 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		Properties propertyFile = JenkinsResultsParserUtil.getProperties(file);
 
 		String ignoreFlag = JenkinsResultsParserUtil.getProperty(
-			propertyFile, "ignore.parents");
+			propertyFile, "ignore.parents[" + getTestSuiteName() + "]");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(ignoreFlag)) {
+			return false;
+		}
 
 		return Boolean.parseBoolean(ignoreFlag);
 	}

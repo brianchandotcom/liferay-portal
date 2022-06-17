@@ -23,6 +23,8 @@ public interface CPMedia {
 
 	public long getId();
 
+	public long getSize();
+
 	public String getThumbnailURL();
 
 	public String getTitle();

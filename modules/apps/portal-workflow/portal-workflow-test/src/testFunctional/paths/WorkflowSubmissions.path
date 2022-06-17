@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>EMPTY_MESSAGE</td>
-	<td>//div[contains(@class,'sheet')]/div[contains(@class,'sheet-text') and contains(.,'${key_emptyMessaage}')]</td>
+	<td>//div[contains(text(),'${key_emptyMessaage}')]</td>
 	<td></td>
 </tr>
 </tbody>

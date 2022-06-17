@@ -330,6 +330,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_ENTRY_IMAGE</td>
+	<td>//img[@class='sticker-img'][contains(@src,'${key_src}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_IMAGE_SELECT_FILE</td>
 	<td>//div[contains(@class,'image-selector')]//button[contains(.,'Select File')]</td>
 	<td></td>

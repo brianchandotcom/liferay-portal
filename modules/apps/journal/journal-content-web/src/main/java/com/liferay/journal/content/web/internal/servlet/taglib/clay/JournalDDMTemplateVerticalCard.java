@@ -70,7 +70,7 @@ public class JournalDDMTemplateVerticalCard implements VerticalCard {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return HtmlUtil.escape(_ddmTemplate.getName(themeDisplay.getLocale()));
+		return _ddmTemplate.getName(themeDisplay.getLocale());
 	}
 
 	@Override

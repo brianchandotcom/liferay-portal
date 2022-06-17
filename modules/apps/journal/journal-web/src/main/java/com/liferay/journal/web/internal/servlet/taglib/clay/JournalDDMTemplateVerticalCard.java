@@ -129,7 +129,7 @@ public class JournalDDMTemplateVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getTitle() {
-		return HtmlUtil.escape(_ddmTemplate.getName(themeDisplay.getLocale()));
+		return _ddmTemplate.getName(themeDisplay.getLocale());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

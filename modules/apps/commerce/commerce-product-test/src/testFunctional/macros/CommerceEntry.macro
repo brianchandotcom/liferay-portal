@@ -684,15 +684,21 @@ definition {
 			locator1 = "CommerceEntry#ANY_MENU_ITEM");
 	}
 
+	macro clickEntryDropdownMenuItem {
+		Click(
+			key_value = "${entryName}",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		DropdownMenuItem.click(menuItem = "${menuItem}");
+	}
+
 	macro clickTableEntryEditButton {
 		WaitForPageLoad();
 
 		if (IsElementPresent(key_value = "${entryName}", locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS")) {
-			Click(
-				key_value = "${entryName}",
-				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-			DropdownMenuItem.click(menuItem = "Edit");
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "${entryName}",
+				menuItem = "Edit");
 		}
 		else {
 			Click(

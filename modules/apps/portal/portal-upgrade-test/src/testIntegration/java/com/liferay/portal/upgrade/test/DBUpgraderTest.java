@@ -63,7 +63,7 @@ public class DBUpgraderTest {
 			ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER,
 			ReleaseConstants.STATE_GOOD);
 
-		DBUpgrader.upgrade();
+		DBUpgrader.upgradePortal();
 	}
 
 	@Test
@@ -73,7 +73,7 @@ public class DBUpgraderTest {
 			ReleaseConstants.STATE_UPGRADE_FAILURE);
 
 		try {
-			DBUpgrader.upgrade();
+			DBUpgrader.upgradePortal();
 
 			Assert.fail();
 		}
@@ -87,7 +87,7 @@ public class DBUpgraderTest {
 			ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER,
 			ReleaseConstants.STATE_UPGRADE_FAILURE);
 
-		DBUpgrader.upgrade();
+		DBUpgrader.upgradePortal();
 	}
 
 	private static int _getReleaseColumnValue(String columnName) {

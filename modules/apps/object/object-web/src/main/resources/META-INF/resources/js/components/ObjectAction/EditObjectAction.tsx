@@ -23,7 +23,7 @@ export default function EditObjectAction({
 	objectActionExecutors,
 	objectActionTriggers,
 	readOnly,
-	validateExpressionBuilderContentURL,
+	validateExpressionURL,
 }: IProps) {
 	return (
 		<ObjectAction
@@ -40,9 +40,7 @@ export default function EditObjectAction({
 				'the-object-action-was-updated-successfully'
 			)}
 			title={Liferay.Language.get('action')}
-			validateExpressionBuilderContentURL={
-				validateExpressionBuilderContentURL
-			}
+			validateExpressionURL={validateExpressionURL}
 		/>
 	);
 }
@@ -53,5 +51,5 @@ interface IProps {
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
 	readOnly?: boolean;
-	validateExpressionBuilderContentURL: string;
+	validateExpressionURL: string;
 }

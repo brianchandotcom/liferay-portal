@@ -24,7 +24,7 @@ export default function Action({
 	readOnly,
 	requestParams: {method, url},
 	successMessage,
-	validateExpressionBuilderContentURL,
+	validateExpressionURL,
 }: IProps): JSX.Element;
 interface IProps {
 	ffNotificationTemplates: boolean;
@@ -38,6 +38,6 @@ interface IProps {
 	};
 	successMessage: string;
 	title: string;
-	validateExpressionBuilderContentURL: string;
+	validateExpressionURL: string;
 }
 export {};

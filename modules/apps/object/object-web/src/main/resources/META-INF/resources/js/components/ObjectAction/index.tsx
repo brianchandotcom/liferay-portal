@@ -45,7 +45,7 @@ export default function Action({
 	readOnly,
 	requestParams: {method, url},
 	successMessage,
-	validateExpressionBuilderContentURL,
+	validateExpressionURL,
 }: IProps) {
 	const onSubmit = async (objectAction: ObjectAction) => {
 		const response = await fetch(url, {
@@ -116,9 +116,7 @@ export default function Action({
 						objectActionExecutors={objectActionExecutors}
 						objectActionTriggers={objectActionTriggers}
 						setValues={setValues}
-						validateExpressionBuilderContentURL={
-							validateExpressionBuilderContentURL
-						}
+						validateExpressionURL={validateExpressionURL}
 						values={values}
 					/>
 				</ClayTabs.TabPane>
@@ -184,7 +182,7 @@ interface IProps {
 	};
 	successMessage: string;
 	title: string;
-	validateExpressionBuilderContentURL: string;
+	validateExpressionURL: string;
 }
 
 interface IUseObjectActionForm {

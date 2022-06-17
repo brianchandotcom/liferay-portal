@@ -33,7 +33,7 @@ export default function ActionBuilder({
 	objectActionExecutors,
 	objectActionTriggers,
 	setValues,
-	validateExpressionBuilderContentURL,
+	validateExpressionURL,
 	values,
 }: IProps) {
 	const [notificationTemplates, setNotificationTemplates] = useState<any[]>(
@@ -164,7 +164,7 @@ export default function ActionBuilder({
 									{
 										onSave: handleSave,
 										source: values.conditionExpression,
-										validateExpressionBuilderContentURL,
+										validateExpressionURL,
 									}
 								);
 							}}
@@ -283,7 +283,7 @@ interface IProps {
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
 	setValues: (values: Partial<ObjectAction>) => void;
-	validateExpressionBuilderContentURL: string;
+	validateExpressionURL: string;
 	values: Partial<ObjectAction>;
 }
 

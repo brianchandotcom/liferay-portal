@@ -82,20 +82,20 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 	const {observer, onOpenChange} = useModal();
 	const editorRef = useRef<CodeMirror.Editor>(null);
 	const [
-		{error, onSave, source, validateExpressionBuilderContentURL},
+		{error, onSave, source, validateExpressionURL},
 		setState,
 	] = useState<{
 		error?: string;
 		onSave?: Callback;
 		source?: string;
-		validateExpressionBuilderContentURL?: string;
+		validateExpressionURL?: string;
 	}>({});
 
 	useEffect(() => {
 		const openModal = (params: {
 			onSave: Callback;
 			source: string;
-			validateExpressionBuilderContentURL: string;
+			validateExpressionURL: string;
 		}) => {
 			setState(params);
 		};
@@ -128,10 +128,10 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 		}
 		else if (
 			Liferay.FeatureFlags['LPS-152735'] &&
-			validateExpressionBuilderContentURL
+			validateExpressionURL
 		) {
 			const response = await fetch(
-				createResourceURL(validateExpressionBuilderContentURL, {
+				createResourceURL(validateExpressionURL, {
 					expression: source,
 				}).href
 			);

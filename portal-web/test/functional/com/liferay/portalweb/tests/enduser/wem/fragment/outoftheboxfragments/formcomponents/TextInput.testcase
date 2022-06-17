@@ -45,6 +45,110 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-149725. The pages designer can map the Text Input fragment entities text fields."
+	@priority = "4"
+	test AddCustomTextInputFieldsOnContentPage {
+		property test.name.skip.portal.instance = "TextInput#AddCustomTextInputFieldsOnContentPage";
+
+		task ("Given a pages designer has a Text Input fragment inside a mapped Form Container") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Web Content Article",
+					panel = "General");
+			}
+
+			task ("Add a Text Input inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Text Input");
+			}
+		}
+
+		task ("When the pages designer adds a custom name in Text Input fields") {
+			PageEditor.editInput(
+				field = "Content",
+				fragmentName = "Text Input",
+				helpText = "Custom Help Text",
+				label = "Custom Content Field",
+				placeholder = "Custom Placeholder");
+		}
+
+		task ("Then the pages designer can see the custom fields at edit mode") {
+			PageEditor.viewInputStyle(
+				helpText = "Custom Help Text",
+				label = "Custom Content Field",
+				placeholder = "Custom Placeholder",
+				placeholderType = "text-input",
+				showHelpText = "true",
+				showLabel = "true");
+		}
+
+		task ("When the page designer navigates to published content page at view mode") {
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the pages designer can see the custom fields at view mode") {
+			PageEditor.viewInputStyle(
+				helpText = "Custom Help Text",
+				label = "Custom Content Field",
+				placeholder = "Custom Placeholder",
+				placeholderType = "text-input",
+				showHelpText = "true",
+				showLabel = "true");
+		}
+
+		task ("When the pages designer hides the label and help text fields") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.editInput(
+				fragmentName = "Text Input",
+				hideHelpText = "true",
+				hideLabel = "true");
+		}
+
+		task ("Then the pages designer cannot see hidden fields at edit mode") {
+			PageEditor.viewInputStyle(
+				helpText = "Custom Help Text",
+				label = "Custom Content Field",
+				showHelpText = "false",
+				showLabel = "false");
+		}
+
+		task ("When the page designer navigates to published content page at view mode") {
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the pages designer cannot see hidden fields at view mode") {
+			PageEditor.viewInputStyle(
+				helpText = "Custom Help Text",
+				label = "Custom Content Field",
+				showHelpText = "false",
+				showLabel = "false");
+		}
+	}
 	@description = "This is a test for LPS-150278. The sites designer cannot hide a Text Input fragment on content page."
 	@priority = "4"
 	test CannotHideTextInputFragmentOnContentPage {

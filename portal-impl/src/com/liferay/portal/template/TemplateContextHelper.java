@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -102,7 +101,6 @@ import java.net.URL;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
@@ -334,20 +332,6 @@ public class TemplateContextHelper {
 			}
 
 			contextObjects.put("user", user);
-
-			// Navigation items
-
-			if (layout != null) {
-				try {
-					List<NavItem> navItems = NavItem.fromLayouts(
-						httpServletRequest, themeDisplay, contextObjects);
-
-					contextObjects.put("navItems", navItems);
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
-			}
 
 			// Deprecated
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.permission.RolePermission;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
+import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -107,6 +108,20 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 			// Init
 
 			contextObjects.put("init", fullTemplatesPath + "/init.vm");
+
+			// Navigation items
+
+			if (themeDisplay.getLayout() != null) {
+				try {
+					List<NavItem> navItems = NavItem.fromLayouts(
+						httpServletRequest, themeDisplay, contextObjects);
+
+					contextObjects.put("navItems", navItems);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+			}
 		}
 
 		// Insert custom vm variables

@@ -1118,10 +1118,23 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			if (expandoBridge.getAttribute(jsonObject.getString("name")) ==
 					null) {
-
 				expandoBridge.addAttribute(
 					jsonObject.getString("name"),
 					jsonObject.getInt("dataType"));
+
+				if (jsonObject.has("properties")) {
+					UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+					JSONObject jsonObjectProperties = jsonObject.getJSONObject("properties");
+
+					for (Map.Entry<String, Object> entry :
+						jsonObjectProperties.toMap().entrySet()) {
+						unicodeProperties.setProperty(
+							entry.getKey(),
+							entry.getValue().toString());
+					}
+
+					expandoBridge.setAttributeProperties(jsonObject.getString("name"), unicodeProperties);
+				}
 			}
 		}
 	}

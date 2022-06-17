@@ -54,13 +54,13 @@ public class Log4jLogFactoryImpl implements LogFactory {
 			Class<?> clazz = Class.forName(
 				name, true, thread.getContextClassLoader());
 
-			for (Class<?> baseClazz : _BASE_CLASSES) {
+			for (Class<?> baseClazz : _BASE_UPGRADE_CLASSES) {
 				if (baseClazz.isAssignableFrom(clazz)) {
 					return true;
 				}
 			}
 
-			for (Class<?> staticClazz : _STATIC_CLASSES) {
+			for (Class<?> staticClazz : _STATIC_UPGRADE_CLASSES) {
 				if (name.equals(staticClazz)) {
 					return true;
 				}
@@ -73,12 +73,12 @@ public class Log4jLogFactoryImpl implements LogFactory {
 		return false;
 	}
 
-	private static final Class<?>[] _BASE_CLASSES = {
+	private static final Class<?>[] _BASE_UPGRADE_CLASSES = {
 		BaseDBProcess.class, BaseUpgradeCallable.class, LoggingTimer.class,
 		BaseDB.class
 	};
 
-	private static final Class<?>[] _STATIC_CLASSES = {
+	private static final Class<?>[] _STATIC_UPGRADE_CLASSES = {
 		DBUpgrader.class, VerifyProperties.class
 	};
 

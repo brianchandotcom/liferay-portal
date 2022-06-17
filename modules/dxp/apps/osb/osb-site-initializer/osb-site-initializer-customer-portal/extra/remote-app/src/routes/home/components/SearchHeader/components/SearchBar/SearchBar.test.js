@@ -9,27 +9,21 @@
  * distribution rights of the Software.
  */
 
-import {faker} from '@faker-js/faker';
-import {fireEvent, render} from '@testing-library/react';
-import i18n from '../../../../../../common/I18n';
+import {fireEvent, render, screen} from '@testing-library/react';
 import SearchBar from './';
 
-describe('render Search bar on Overview page', () => {
-	test('update onChange', () => {
-		const functionMock = jest.fn();
-		const fakerSearchOnChange = faker.name.firstName();
+describe('Home: SearchBar', () => {
+	const functionMock = jest.fn();
 
-		const {queryByPlaceholderText} = render(
-			<SearchBar onSearchSubmit={functionMock} />
-		);
+	it('updates input while typing value', () => {
+		const searchProjectName = 'Test Account 01';
 
-		const searchInput = queryByPlaceholderText(
-			i18n.translate('find-a-project')
-		);
+		render(<SearchBar onSearchSubmit={functionMock} />);
 
-		fireEvent.change(searchInput, {target: {value: fakerSearchOnChange}});
-		expect(searchInput.value).toBe(fakerSearchOnChange);
+		const searchInput = screen.getByPlaceholderText(/find a project/i);
 
+		fireEvent.change(searchInput, {target: {value: searchProjectName}});
+		expect(searchInput.value).toBe('Test Account 01');
 		expect(functionMock).toHaveBeenCalled();
 	});
 });

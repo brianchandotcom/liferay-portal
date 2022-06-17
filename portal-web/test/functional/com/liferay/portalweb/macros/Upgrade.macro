@@ -4111,53 +4111,107 @@ definition {
 		}
 
 		task ("Assert styles of Button in view mode") {
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "button",
+				styleName = "textAlign",
+				styleValue = "center");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "button",
+				styleName = "marginBottom",
+				styleValue = "1");
+
 			PageEditor.viewFragmentStyle(
-				alignment = "center",
 				fragmentName = "Button",
-				marginBottom = "1",
 				size = "lg",
 				type = "link");
 		}
 
 		task ("Assert styles of Card in view mode") {
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "card",
+				styleName = "textAlign",
+				styleValue = "center");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "card",
+				styleName = "borderRadius",
+				styleValue = "0.375rem");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "card",
+				styleName = "boxShadow",
+				styleValue = "rgba(0, 0, 0, 0.176) 0px 1rem 3rem");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "card",
+				styleName = "marginBottom",
+				styleValue = "1");
+
 			PageEditor.viewFragmentStyle(
-				alignment = "center",
-				borderRadius = "0.375rem",
-				boxShadow = "0 1rem 3rem rgba(0, 0, 0, .175)",
 				fragmentName = "Card",
-				imageSize = "0",
-				marginBottom = "1");
+				imageSize = "0");
 		}
 
 		task ("Assert styles of Heading in view mode") {
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "heading",
+				styleName = "textAlign",
+				styleValue = "center");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "heading",
+				styleName = "color",
+				styleValue = "rgb(40, 125, 60)");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "heading",
+				styleName = "marginBottom",
+				styleValue = "1");
+
 			PageEditor.viewFragmentStyle(
-				alignment = "center",
 				fragmentName = "Heading",
-				headingLevel = "h2",
-				marginBottom = "1",
-				textColor = "#287D3C");
+				headingLevel = "h2");
 		}
 
 		task ("Assert styles of HTML in view mode") {
-			PageEditor.viewFragmentStyle(
-				fragmentName = "HTML",
-				marginBottom = "1");
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "html",
+				styleName = "marginBottom",
+				styleValue = "1");
 		}
 
 		task ("Assert styles of Image in view mode") {
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "image",
+				styleName = "textAlign",
+				styleValue = "center");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "image",
+				styleName = "marginBottom",
+				styleValue = "1");
+
 			PageEditor.viewFragmentStyle(
-				alignment = "center",
 				fragmentName = "Image",
-				imageSize = "0",
-				marginBottom = "1");
+				imageSize = "0");
 		}
 
 		task ("Assert styles of Paragraph in view mode") {
-			PageEditor.viewFragmentStyle(
-				alignment = "center",
-				fragmentName = "Paragraph",
-				marginBottom = "1",
-				textColor = "#B95000");
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "image",
+				styleName = "textAlign",
+				styleValue = "center");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "image",
+				styleName = "marginBottom",
+				styleValue = "1");
+
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "paragraph",
+				styleName = "color",
+				styleValue = "rgb(185, 80, 0)");
 		}
 
 		task ("Assert styles of Separator in view mode") {
@@ -4183,7 +4237,10 @@ definition {
 				key_width = "300px",
 				locator1 = "Fragment#VIDEO_WIDTH");
 
-			AssertElementPresent(locator1 = "//div[contains(@class,'video')]/parent::div/parent::div/parent::div[contains(@class,'mb-1')]");
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "video",
+				styleName = "marginBottom",
+				styleValue = "1");
 		}
 
 		task ("Navigate to page in edit mode") {
@@ -4276,7 +4333,7 @@ definition {
 				locator1 = "Fragment#VIDEO_WIDTH");
 
 			PageEditor.viewFragmentStyle(
-				fragmentName = "Video",
+				fragmentName = "Video URL",
 				marginBottom = "1");
 		}
 	}

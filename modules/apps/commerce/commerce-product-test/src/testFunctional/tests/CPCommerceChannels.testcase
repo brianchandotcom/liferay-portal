@@ -570,8 +570,7 @@ definition {
 			CommerceEntry.setEntryEligibility(
 				deliveryTermsEligibility = "No Delivery Terms",
 				shippingMethod = "Flat Rate",
-				shippingOption = "Standard Delivery",
-				unpublish = "true");
+				shippingOption = "Standard Delivery");
 		}
 
 		task ("Then no delivery terms should be shown in the eligibility tab") {

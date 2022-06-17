@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.util.GroupUtil;
 
@@ -82,8 +83,7 @@ public class ObjectEntryInfoItemCreator
 
 				hashMapWrapper.put(
 					infoField.getName(),
-					(Serializable)infoFieldValue.getValue(
-						themeDisplay.getLocale()));
+					(Serializable)infoFieldValue.getValue());
 			}
 
 			return _objectEntryService.addObjectEntry(
@@ -109,22 +109,26 @@ public class ObjectEntryInfoItemCreator
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
-		if (objectScopeProvider.isGroupAware()) {
-			if (Objects.equals(
-					ObjectDefinitionConstants.SCOPE_SITE,
-					objectDefinition.getScope())) {
+		if (!objectScopeProvider.isGroupAware()) {
+			return 0;
+		}
 
-				return GroupUtil.getGroupId(
-					objectDefinition.getCompanyId(), scopeKey,
-					_groupLocalService);
-			}
+		Long groupId = 0L;
 
-			return GroupUtil.getDepotGroupId(
+		if (Objects.equals(
+				ObjectDefinitionConstants.SCOPE_SITE,
+				objectDefinition.getScope())) {
+
+			groupId = GroupUtil.getGroupId(
+				objectDefinition.getCompanyId(), scopeKey, _groupLocalService);
+		}
+		else {
+			groupId = GroupUtil.getDepotGroupId(
 				scopeKey, objectDefinition.getCompanyId(),
 				_depotEntryLocalService, _groupLocalService);
 		}
 
-		return 0;
+		return GetterUtil.getLong(groupId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

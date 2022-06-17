@@ -35,12 +35,14 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.pwd.PwdToolkitUtilThreadLocal;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.model.ActionForward;
@@ -97,6 +99,23 @@ public class UpdatePasswordAction implements Action {
 					SessionErrors.add(
 						httpServletRequest, userLockoutException.getClass(),
 						userLockoutException);
+				}
+			}
+
+			String remoteUser = httpServletRequest.getRemoteUser();
+
+			if (Validator.isNotNull(remoteUser)) {
+				User user = UserLocalServiceUtil.getUserById(
+					GetterUtil.getLong(remoteUser));
+
+				String reminderQueryAnswer = user.getReminderQueryAnswer();
+
+				if (Validator.isNotNull(reminderQueryAnswer) &&
+					reminderQueryAnswer.equals(
+						WorkflowConstants.LABEL_PENDING)) {
+
+					httpServletRequest.setAttribute(
+						WebKeys.TITLE_SET_PASSWORD, "set-password");
 				}
 			}
 

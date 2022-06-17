@@ -657,6 +657,8 @@ public interface WebKeys {
 
 	public static final String TITLE = "TITLE";
 
+	public static final String TITLE_SET_PASSWORD = "TITLE_SET_PASSWORD";
+
 	public static final String TRANSLATOR_TRANSLATION =
 		"TRANSLATOR_TRANSLATION";
 

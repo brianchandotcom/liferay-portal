@@ -15,7 +15,6 @@
 package com.liferay.change.tracking.web.internal.configuration.configuration.persistence.listener;
 
 import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
-import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.exception.CTStagingEnabledException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.GroupTable;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
@@ -96,10 +92,6 @@ public class CTSettingsConfigurationModelListener
 
 		if (enabled) {
 			try {
-				_portletPermission.check(
-					PermissionThreadLocal.getPermissionChecker(),
-					CTPortletKeys.PUBLICATIONS, ActionKeys.CONFIGURATION);
-
 				long companyId = GetterUtil.getLong(
 					properties.get("companyId"));
 
@@ -178,9 +170,6 @@ public class CTSettingsConfigurationModelListener
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

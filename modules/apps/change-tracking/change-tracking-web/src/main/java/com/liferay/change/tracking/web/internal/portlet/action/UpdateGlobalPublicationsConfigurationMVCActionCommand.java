@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -81,6 +84,10 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 			actionRequest, "enableSandboxOnly", configuration.sandboxEnabled());
 
 		try {
+			_portletPermission.check(
+				PermissionThreadLocal.getPermissionChecker(),
+				CTPortletKeys.PUBLICATIONS, ActionKeys.CONFIGURATION);
+
 			_ctSettingsConfigurationHelper.save(
 				companyId, enablePublications, enableSandboxOnly);
 		}
@@ -120,5 +127,8 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPermission _portletPermission;
 
 }

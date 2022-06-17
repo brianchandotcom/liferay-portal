@@ -12,7 +12,12 @@
  * details.
  */
 
-import {addParams, openConfirmModal, openSelectionModal} from 'frontend-js-web';
+import {
+	addParams,
+	navigate,
+	openConfirmModal,
+	openSelectionModal,
+} from 'frontend-js-web';
 
 export default function ({
 	currentURL,
@@ -144,7 +149,7 @@ export default function ({
 					'editing-the-current-template-deletes-all-unsaved-content'
 				),
 				onConfirm: (isConfirmed) =>
-					isConfirmed && Liferay.Util.navigate(editDDMTemplateURL),
+					isConfirmed && navigate(editDDMTemplateURL),
 			});
 		};
 

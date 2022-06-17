@@ -985,25 +985,29 @@ const ManageCollaborators = ({
 									<ClayButton
 										displayType="secondary"
 										onClick={() => {
-											openConfirmModal({
-												message: Liferay.Language.get(
-													'discard-unsaved-changes'
-												),
-												onConfirm: (isConfirmed) => {
-													if (
-														isConfirmed ||
-														(!Object.keys(
-															selectedItems
-														).length &&
-															!Object.keys(
-																updatedRoles
-															).length)
-													) {
-														onClose();
-														resetForm();
-													}
-												},
-											});
+											if (
+												Object.keys(selectedItems) ===
+													0 &&
+												Object.keys(updatedRoles) === 0
+											) {
+												onClose();
+												resetForm();
+											}
+											else {
+												openConfirmModal({
+													message: Liferay.Language.get(
+														'discard-unsaved-changes'
+													),
+													onConfirm: (
+														isConfirmed
+													) => {
+														if (isConfirmed) {
+															onClose();
+															resetForm();
+														}
+													},
+												});
+											}
 										}}
 									>
 										{Liferay.Language.get('cancel')}

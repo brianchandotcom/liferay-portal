@@ -455,7 +455,7 @@
 							'are-you-sure-you-want-to-remove-this-component'
 						),
 						onConfirm: (isConfirmed) => {
-							if (isConfirmed && portlet) {
+							if (isConfirmed) {
 								_removeComponent();
 							}
 						},

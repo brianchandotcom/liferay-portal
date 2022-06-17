@@ -101,6 +101,8 @@ public class SXPBlueprintSuggestionsContributor
 					"Attributes do not contain search experiences blueprint " +
 						"ID");
 			}
+
+			return null;
 		}
 
 		SearchResponse searchResponse = _searcher.search(

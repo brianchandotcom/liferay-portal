@@ -106,6 +106,10 @@ public class ConfigurationPersistenceManager
 		}
 
 		_visitConfigurationModelListeners(
+			"*",
+			configurationModelListener ->
+				configurationModelListener.onBeforeDelete(pid));
+		_visitConfigurationModelListeners(
 			pidKey,
 			configurationModelListener ->
 				configurationModelListener.onBeforeDelete(pid));
@@ -125,6 +129,10 @@ public class ConfigurationPersistenceManager
 			lock.unlock();
 		}
 
+		_visitConfigurationModelListeners(
+			"*",
+			configurationModelListener ->
+				configurationModelListener.onAfterDelete(pid));
 		_visitConfigurationModelListeners(
 			pidKey,
 			configurationModelListener ->
@@ -253,6 +261,10 @@ public class ConfigurationPersistenceManager
 		}
 
 		_visitConfigurationModelListeners(
+			"*",
+			configurationModelListener ->
+				configurationModelListener.onBeforeSave(pid, dictionary));
+		_visitConfigurationModelListeners(
 			pidKey,
 			configurationModelListener ->
 				configurationModelListener.onBeforeSave(pid, dictionary));
@@ -288,6 +300,10 @@ public class ConfigurationPersistenceManager
 			lock.unlock();
 		}
 
+		_visitConfigurationModelListeners(
+			"*",
+			configurationModelListener ->
+				configurationModelListener.onAfterSave(pid, dictionary));
 		_visitConfigurationModelListeners(
 			pidKey,
 			configurationModelListener ->

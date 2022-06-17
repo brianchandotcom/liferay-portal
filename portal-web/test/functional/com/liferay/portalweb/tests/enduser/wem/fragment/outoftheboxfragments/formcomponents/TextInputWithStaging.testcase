@@ -1,0 +1,199 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-150277=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Activate local live staging") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "false",
+				branchingPublic = "false",
+				groupName = "Test Site Name");
+		}
+
+		task ("Enable Inputs Fragment collection in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Disable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-149725. The pages designer can map the Text Input fragment entities text fields in staging site."
+	@priority = "4"
+	test AddCustomTextInputFieldsOnContentPageInStagingSite {
+		property test.name.skip.portal.instance = "TextInputWithStaging#AddCustomTextInputFieldsOnContentPageInStagingSite";
+
+		task ("Given a pages designer has a Text Input fragment inside a mapped Form Container in staging site") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name (Staging)",
+					layoutName = "Test Page Name",
+					site = "false",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name Staging");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Web Content Article",
+					panel = "General");
+			}
+
+			task ("Add a Text Input inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Text Input");
+			}
+		}
+
+		task ("When the pages designer adds a custom name in Text Input fields") {
+			PageEditor.editInput(
+				field = "Content",
+				fragmentName = "Text Input",
+				helpText = "Custom Help Text",
+				label = "Custom Content Field",
+				placeholder = "Custom Placeholder");
+		}
+
+		task ("Then the pages designer can see the custom fields at edit mode") {
+			PageEditor.viewInputStyle(
+				helpText = "Custom Help Text",
+				label = "Custom Content Field",
+				placeholder = "Custom Placeholder",
+				placeholderType = "text-input",
+				showHelpText = "true",
+				showLabel = "true");
+		}
+
+		task ("When the page designer navigates to published content page at view mode in staging site") {
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("Then the pages designer can see the custom fields in staging site") {
+			PageEditor.viewInputStyle(
+				helpText = "Custom Help Text",
+				label = "Custom Content Field",
+				placeholder = "Custom Placeholder",
+				placeholderType = "text-input",
+				showHelpText = "true",
+				showLabel = "true");
+		}
+
+		task ("When the page designer navigates to content page at view mode in live site") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the pages designer can see the custom fields in live site") {
+			PageEditor.viewInputStyle(
+				helpText = "Custom Help Text",
+				label = "Custom Content Field",
+				placeholder = "Custom Placeholder",
+				placeholderType = "text-input",
+				showHelpText = "true",
+				showLabel = "true");
+		}
+
+		task ("When the pages designer hides the label and help text fields in staging site") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.editInput(
+				fragmentName = "Text Input",
+				hideHelpText = "true",
+				hideLabel = "true");
+		}
+
+		task ("Then the pages designer cannot see hidden fields at edit mode") {
+			PageEditor.viewInputStyle(
+				helpText = "Custom Help Text",
+				label = "Custom Content Field",
+				showHelpText = "false",
+				showLabel = "false");
+		}
+
+		task ("When the page designer navigates to published content page at view mode in staging site") {
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+		}
+
+		task ("Then the pages designer cannot see hidden fields in staging site") {
+			PageEditor.viewInputStyle(
+				helpText = "Custom Help Text",
+				label = "Custom Content Field",
+				showHelpText = "false",
+				showLabel = "false");
+		}
+
+		task ("When the page designer navigates to content page at view mode in live site") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the pages designer cannot see hidden fields in live site") {
+			PageEditor.viewInputStyle(
+				helpText = "Custom Help Text",
+				label = "Custom Content Field",
+				showHelpText = "false",
+				showLabel = "false");
+		}
+	}
+
+}

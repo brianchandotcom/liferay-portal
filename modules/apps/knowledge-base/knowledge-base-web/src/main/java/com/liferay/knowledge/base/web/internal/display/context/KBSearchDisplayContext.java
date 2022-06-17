@@ -97,6 +97,14 @@ public class KBSearchDisplayContext {
 			return _searchContainer;
 		}
 
+		_searchContainer = new SearchContainer<>(
+			_portletRequest, _iteratorURL, null,
+			LanguageUtil.format(
+				_httpServletRequest,
+				"no-articles-were-found-that-matched-the-keywords-x",
+				"<strong>" + HtmlUtil.escape(getKeywords()) + "</strong>",
+				false));
+
 		SearchContext searchContext = SearchContextFactory.getInstance(
 			_httpServletRequest);
 
@@ -132,14 +140,6 @@ public class KBSearchDisplayContext {
 						document.getDate(Field.MODIFIED_DATE)
 					}));
 		}
-
-		_searchContainer = new SearchContainer<>(
-			_portletRequest, _iteratorURL, null,
-			LanguageUtil.format(
-				_httpServletRequest,
-				"no-articles-were-found-that-matched-the-keywords-x",
-				"<strong>" + HtmlUtil.escape(getKeywords()) + "</strong>",
-				false));
 
 		_searchContainer.setResultsAndTotal(() -> tuples, hits.getLength());
 

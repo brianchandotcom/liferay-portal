@@ -26,6 +26,7 @@ import com.liferay.fragment.util.comparator.FragmentEntryCreateDateComparator;
 import com.liferay.fragment.util.comparator.FragmentEntryNameComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -430,6 +431,35 @@ public class FragmentEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddInputFragmentEntry() throws Exception {
+		String fragmentEntryKey = RandomTestUtil.randomString();
+
+		String typeOptions = JSONUtil.put(
+			"fieldTypes", JSONUtil.put("string")
+		).toString();
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), fragmentEntryKey,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				false, "{fieldSets: []}", null, 0, FragmentConstants.TYPE_INPUT,
+				typeOptions, WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+		FragmentEntry persistedFragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				_group.getGroupId(), fragmentEntryKey);
+
+		Assert.assertEquals(fragmentEntry, persistedFragmentEntry);
+
+		Assert.assertEquals(
+			typeOptions, persistedFragmentEntry.getTypeOptions());
+	}
+
+	@Test
 	public void testCopyFragmentEntry() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -489,6 +519,41 @@ public class FragmentEntryLocalServiceTest {
 		Assert.assertEquals(
 			targetFragmentCollection.getFragmentCollectionId(),
 			copyFragmentEntry.getFragmentCollectionId());
+	}
+
+	@Test
+	public void testCopyInputFragmentEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		String typeOptions = JSONUtil.put(
+			"fieldTypes", JSONUtil.put("string")
+		).toString();
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
+				FragmentConstants.TYPE_INPUT, typeOptions,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		FragmentEntry copyFragmentEntry =
+			_fragmentEntryLocalService.copyFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				fragmentEntry.getFragmentEntryId(),
+				fragmentEntry.getFragmentCollectionId(), serviceContext);
+
+		_assertCopyFragmentEntry(fragmentEntry, copyFragmentEntry);
+
+		Assert.assertEquals(
+			fragmentEntry.getFragmentCollectionId(),
+			copyFragmentEntry.getFragmentCollectionId());
+
+		Assert.assertEquals(typeOptions, copyFragmentEntry.getTypeOptions());
 	}
 
 	@Test

@@ -51,7 +51,7 @@
 
 <tr>
 	<td>COLLECTION_DISPLAY_EMPTY_STATE</td>
-	<td>xpath=(//div[contains(@class,'block')])[${index}]//div[contains(@class,'empty-state')]</td>
+	<td>xpath=(//div[contains(@class,'lfr-layout-structure-item-collection')])[${index}]//div[contains(@class,'empty-state')]</td>
 	<td></td>
 </tr>
 <tr>

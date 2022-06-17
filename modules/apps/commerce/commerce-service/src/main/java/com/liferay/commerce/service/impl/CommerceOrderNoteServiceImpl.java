@@ -163,6 +163,25 @@ public class CommerceOrderNoteServiceImpl
 
 	@Override
 	public List<CommerceOrderNote> getCommerceOrderNotes(
+			long commerceOrderId, boolean restricted, int start, int end)
+		throws PortalException {
+
+		String actionId = ActionKeys.VIEW;
+
+		if (restricted) {
+			actionId =
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES;
+		}
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, actionId);
+
+		return commerceOrderNoteLocalService.getCommerceOrderNotes(
+			commerceOrderId, restricted, start, end);
+	}
+
+	@Override
+	public List<CommerceOrderNote> getCommerceOrderNotes(
 			long commerceOrderId, int start, int end)
 		throws PortalException {
 

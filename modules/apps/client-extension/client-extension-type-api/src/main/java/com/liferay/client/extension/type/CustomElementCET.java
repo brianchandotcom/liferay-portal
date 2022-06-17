@@ -26,7 +26,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CustomElementCET extends CET {
 
-	@CETProperty(defaultValue = "", name = "cssURLs", type = "list")
+	@CETProperty(
+		defaultValue = "", isURL = true, name = "cssURLs", type = "list"
+	)
 	public String getCSSURLs();
 
 	@CETProperty(
@@ -42,7 +44,7 @@ public interface CustomElementCET extends CET {
 	)
 	public String getPortletCategoryName();
 
-	@CETProperty(defaultValue = "", name = "urls", type = "list")
+	@CETProperty(defaultValue = "", isURL = true, name = "urls", type = "list")
 	public String getURLs();
 
 	@CETProperty(

@@ -36,7 +36,7 @@ public interface IFrameCET extends CET {
 	)
 	public String getPortletCategoryName();
 
-	@CETProperty(defaultValue = "", name = "url", type = "string")
+	@CETProperty(defaultValue = "", isURL = true, name = "url", type = "string")
 	public String getURL();
 
 	@CETProperty(

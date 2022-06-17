@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.client.extension.type.api
 Bundle-Version: 5.0.0
 Export-Package:\
 	com.liferay.client.extension.type,\
+	com.liferay.client.extension.type.annotation,\
 	com.liferay.client.extension.type.configuration,\
 	com.liferay.client.extension.type.deployer,\
 	com.liferay.client.extension.type.factory,\

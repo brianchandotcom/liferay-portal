@@ -458,43 +458,26 @@ AUI.add(
 						openDefinitionLinkNode
 					);
 
-					if (Liferay.FeatureFlags['LPS-148659']) {
-						Liferay.Util.openConfirmModal({
-							message: Liferay.Language.get(
-								'you-have-unsaved-changes-do-you-want-to-proceed-without-saving'
-							),
-							onConfirm: (isConfirmed) => {
-								if (isConfirmed) {
-									instance._doToggleDefinitionLinkEditionMode(
-										openDefinitionLinkNamespace
-									);
+					Liferay.Util.openConfirmModal({
+						message: Liferay.Language.get(
+							'you-have-unsaved-changes-do-you-want-to-proceed-without-saving'
+						),
+						onConfirm: (isConfirmed) => {
+							if (isConfirmed) {
+								instance._doToggleDefinitionLinkEditionMode(
+									openDefinitionLinkNamespace
+								);
 
-									instance._resetLastValue(
-										openDefinitionLinkNamespace
-									);
+								instance._resetLastValue(
+									openDefinitionLinkNamespace
+								);
 
-									instance._doToggleDefinitionLinkEditionMode(
-										namespace
-									);
-								}
-							},
-						});
-					}
-					else if (
-						confirm(
-							Liferay.Language.get(
-								'you-have-unsaved-changes-do-you-want-to-proceed-without-saving'
-							)
-						)
-					) {
-						instance._doToggleDefinitionLinkEditionMode(
-							openDefinitionLinkNamespace
-						);
-
-						instance._resetLastValue(openDefinitionLinkNamespace);
-
-						instance._doToggleDefinitionLinkEditionMode(namespace);
-					}
+								instance._doToggleDefinitionLinkEditionMode(
+									namespace
+								);
+							}
+						},
+					});
 				}
 			},
 		};

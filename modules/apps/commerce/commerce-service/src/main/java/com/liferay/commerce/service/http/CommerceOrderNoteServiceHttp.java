@@ -346,6 +346,49 @@ public class CommerceOrderNoteServiceHttp {
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrderNote>
 			getCommerceOrderNotes(
+				HttpPrincipal httpPrincipal, long commerceOrderId,
+				boolean restricted, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderNoteServiceUtil.class, "getCommerceOrderNotes",
+				_getCommerceOrderNotesParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceOrderId, restricted, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.model.CommerceOrderNote>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderNote>
+			getCommerceOrderNotes(
 				HttpPrincipal httpPrincipal, long commerceOrderId, int start,
 				int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -353,7 +396,7 @@ public class CommerceOrderNoteServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceOrderNoteServiceUtil.class, "getCommerceOrderNotes",
-				_getCommerceOrderNotesParameterTypes7);
+				_getCommerceOrderNotesParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderId, start, end);
@@ -395,7 +438,7 @@ public class CommerceOrderNoteServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceOrderNoteServiceUtil.class,
 				"getCommerceOrderNotesCount",
-				_getCommerceOrderNotesCountParameterTypes8);
+				_getCommerceOrderNotesCountParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderId);
@@ -437,7 +480,7 @@ public class CommerceOrderNoteServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceOrderNoteServiceUtil.class,
 				"getCommerceOrderNotesCount",
-				_getCommerceOrderNotesCountParameterTypes9);
+				_getCommerceOrderNotesCountParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderId, restricted);
@@ -479,7 +522,7 @@ public class CommerceOrderNoteServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceOrderNoteServiceUtil.class, "updateCommerceOrderNote",
-				_updateCommerceOrderNoteParameterTypes10);
+				_updateCommerceOrderNoteParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderNoteId, content, restricted);
@@ -538,12 +581,16 @@ public class CommerceOrderNoteServiceHttp {
 	private static final Class<?>[] _getCommerceOrderNotesParameterTypes6 =
 		new Class[] {long.class, boolean.class};
 	private static final Class<?>[] _getCommerceOrderNotesParameterTypes7 =
+		new Class[] {long.class, boolean.class, int.class, int.class};
+	private static final Class<?>[] _getCommerceOrderNotesParameterTypes8 =
 		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getCommerceOrderNotesCountParameterTypes8 =
-		new Class[] {long.class};
 	private static final Class<?>[] _getCommerceOrderNotesCountParameterTypes9 =
-		new Class[] {long.class, boolean.class};
-	private static final Class<?>[] _updateCommerceOrderNoteParameterTypes10 =
+		new Class[] {long.class};
+	private static final Class<?>[]
+		_getCommerceOrderNotesCountParameterTypes10 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _updateCommerceOrderNoteParameterTypes11 =
 		new Class[] {long.class, String.class, boolean.class};
 
 }

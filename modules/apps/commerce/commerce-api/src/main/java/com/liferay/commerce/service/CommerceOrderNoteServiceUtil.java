@@ -94,6 +94,14 @@ public class CommerceOrderNoteServiceUtil {
 	}
 
 	public static List<CommerceOrderNote> getCommerceOrderNotes(
+			long commerceOrderId, boolean restricted, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceOrderNotes(
+			commerceOrderId, restricted, start, end);
+	}
+
+	public static List<CommerceOrderNote> getCommerceOrderNotes(
 			long commerceOrderId, int start, int end)
 		throws PortalException {
 

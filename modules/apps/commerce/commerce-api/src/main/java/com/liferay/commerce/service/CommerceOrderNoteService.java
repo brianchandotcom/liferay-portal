@@ -94,6 +94,11 @@ public interface CommerceOrderNoteService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrderNote> getCommerceOrderNotes(
+			long commerceOrderId, boolean restricted, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderNote> getCommerceOrderNotes(
 			long commerceOrderId, int start, int end)
 		throws PortalException;
 

@@ -375,6 +375,13 @@ public class CommerceOrderNoteLocalServiceUtil {
 	}
 
 	public static List<CommerceOrderNote> getCommerceOrderNotes(
+		long commerceOrderId, boolean restricted, int start, int end) {
+
+		return getService().getCommerceOrderNotes(
+			commerceOrderId, restricted, start, end);
+	}
+
+	public static List<CommerceOrderNote> getCommerceOrderNotes(
 		long commerceOrderId, int start, int end) {
 
 		return getService().getCommerceOrderNotes(commerceOrderId, start, end);

@@ -548,6 +548,16 @@ definition {
 		}
 
 		task ("Then the delivery term should be shown under Delivery Terms in the eligibility tab") {
+			CommerceNavigator.gotoEntry(entryName = "Standard Delivery");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(
+				key_panel = "Details",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
 			AssertElementPresent(
 				key_entryName = "delivery-term-1",
 				key_table = "Delivery Terms",
@@ -565,6 +575,16 @@ definition {
 		}
 
 		task ("Then no delivery terms should be shown in the eligibility tab") {
+			CommerceNavigator.gotoEntry(entryName = "Standard Delivery");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(
+				key_panel = "Details",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
+
 			AssertElementNotPresent(
 				key_entryName = "",
 				key_table = "Delivery Terms",

@@ -34,12 +34,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.util.GroupUtil;
 
 import java.io.Serializable;
 
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -67,31 +67,29 @@ public class ObjectEntryInfoItemCreator
 		throws InfoFormException {
 
 		try {
-			Collection<InfoFieldValue<Object>> infoFieldValues =
-				infoItemFieldValues.getInfoFieldValues();
+			Map<String, Serializable> values = new HashMap<>();
 
-			HashMapBuilder.HashMapWrapper<String, Serializable> hashMapWrapper =
-				HashMapBuilder.create(infoFieldValues.size());
+			for (InfoFieldValue<Object> infoFieldValue :
+					infoItemFieldValues.getInfoFieldValues()) {
+
+				InfoField<?> infoField = infoFieldValue.getInfoField();
+
+				values.put(
+					infoField.getName(),
+					(Serializable)infoFieldValue.getValue());
+			}
 
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-			for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
-				InfoField<?> infoField = infoFieldValue.getInfoField();
-
-				hashMapWrapper.put(
-					infoField.getName(),
-					(Serializable)infoFieldValue.getValue());
-			}
-
 			return _objectEntryService.addObjectEntry(
 				_getGroupId(
 					_objectDefinition,
 					String.valueOf(themeDisplay.getScopeGroupId())),
-				_objectDefinition.getObjectDefinitionId(),
-				hashMapWrapper.build(), serviceContext);
+				_objectDefinition.getObjectDefinitionId(), values,
+				serviceContext);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

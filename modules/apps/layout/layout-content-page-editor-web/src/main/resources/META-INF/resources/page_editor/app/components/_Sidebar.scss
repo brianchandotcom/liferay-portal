@@ -20,58 +20,28 @@ html#{$cadmin-selector} {
 
 		.page-editor__sidebar {
 			&__buttons {
-				background-color: $cadmin-secondary-d1;
+				background-color: $cadmin-gray-200;
+				display: flex;
 				flex-direction: column;
-				padding-top: 16px;
+				font-size: 14px;
+				padding: 16px 5px;
 				width: $sidebarButtonWidth;
 				z-index: $zIndexButtons;
-
-				&.light {
-					background-color: $cadmin-gray-200;
-					font-size: 14px;
-					padding: 16px 5px;
-					width: 42px;
-
-					button {
-						color: $cadmin-secondary;
-						margin-bottom: 4px;
-
-						&.active,
-						&:active,
-						&:focus,
-						&:hover {
-							background-color: $cadmin-light-d1;
-							color: $cadmin-secondary-d2;
-						}
-					}
-
-					a {
-						color: $cadmin-secondary;
-						height: 32px;
-
-						&.active,
-						&:active,
-						&:focus,
-						&:hover {
-							background-color: $cadmin-light-d1;
-							color: $cadmin-secondary-d2;
-						}
-					}
-				}
 
 				a {
 					align-items: center;
 					border-radius: 4px;
-					color: $cadmin-secondary-l1;
+					color: $cadmin-secondary;
 					display: flex;
-					height: 2.5em;
+					height: 32px;
 					justify-content: center;
 
 					&.active,
 					&:active,
 					&:focus,
 					&:hover {
-						color: $cadmin-white;
+						background-color: $cadmin-light-d1;
+						color: $cadmin-secondary-d2;
 					}
 
 					&:focus {
@@ -83,13 +53,15 @@ html#{$cadmin-selector} {
 				}
 
 				button {
-					color: $cadmin-secondary-l1;
+					color: $cadmin-secondary;
+					margin-bottom: 4px;
 
 					&.active,
 					&:active,
 					&:focus,
 					&:hover {
-						color: $cadmin-white;
+						background-color: $cadmin-light-d1;
+						color: $cadmin-secondary-d2;
 					}
 				}
 

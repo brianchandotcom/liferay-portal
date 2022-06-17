@@ -15,6 +15,7 @@
 package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.configuration.admin.exportimport.ConfigurationExportImportProcessor;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContextFactory;
 import com.liferay.configuration.admin.web.internal.exporter.ConfigurationExporter;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -42,7 +44,6 @@ import java.io.Serializable;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -98,12 +99,12 @@ public class ExportConfigurationMVCResourceCommand
 		return false;
 	}
 
-	protected Properties getProperties(
+	protected Dictionary<String, Object> getProperties(
 			String languageId, String factoryPid, String pid, Scope scope,
 			Serializable scopePK)
 		throws Exception {
 
-		Properties properties = new Properties();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(
@@ -156,6 +157,9 @@ public class ExportConfigurationMVCResourceCommand
 
 		if (!Scope.SYSTEM.equals(scope)) {
 			properties.put(scope.getPropertyKey(), scopePK);
+
+			_configurationExportImportProcessor.prepareForExport(
+				pid, properties);
 		}
 
 		return properties;
@@ -337,6 +341,10 @@ public class ExportConfigurationMVCResourceCommand
 
 		return fileName + ".config";
 	}
+
+	@Reference
+	private ConfigurationExportImportProcessor
+		_configurationExportImportProcessor;
 
 	@Reference(target = "(filter.visibility=*)")
 	private ConfigurationModelRetriever _configurationModelRetriever;

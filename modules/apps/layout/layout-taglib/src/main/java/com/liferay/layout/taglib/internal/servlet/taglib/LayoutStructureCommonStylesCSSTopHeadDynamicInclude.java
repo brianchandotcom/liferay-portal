@@ -49,7 +49,8 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 			HttpServletResponse httpServletResponse, String dynamicIncludeKey)
 		throws IOException {
 
-		if (Objects.equals(
+		if (ParamUtil.getBoolean(httpServletRequest, "pageEditorPreview") ||
+			Objects.equals(
 				ParamUtil.getString(
 					httpServletRequest, "p_l_mode", Constants.VIEW),
 				Constants.EDIT)) {

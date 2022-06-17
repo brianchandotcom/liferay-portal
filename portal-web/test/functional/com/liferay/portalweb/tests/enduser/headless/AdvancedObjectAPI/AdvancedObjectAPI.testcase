@@ -190,7 +190,7 @@ definition {
 
 		task ("When calling for 'employees' with a 'manager' as nestedFields parameter") {
 			var getEmployeesWithManager = ObjectDefinitionAPI.getObjectsWithNestedField(
-				nestedObject = "manager",
+				nestedField = "manager",
 				objects = "employees");
 		}
 
@@ -231,7 +231,7 @@ definition {
 
 		task ("When calling for 'employees' with a 'manager' as nestedFields parameter") {
 			var responseToParse = ObjectDefinitionAPI.getObjectsWithNestedField(
-				nestedObject = "manager",
+				nestedField = "manager",
 				objects = "employees");
 		}
 
@@ -273,7 +273,7 @@ definition {
 
 		task ("When calling for 'employees' with a 'manager' as nestedFields parameter") {
 			var getEmployeesWithManager = ObjectDefinitionAPI.getObjectsWithNestedField(
-				nestedObject = "manager",
+				nestedField = "manager",
 				objects = "employees");
 		}
 

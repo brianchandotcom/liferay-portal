@@ -8,34 +8,23 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import {faker} from '@faker-js/faker';
 import {render, screen} from '@testing-library/react';
 import SearchHeader from '.';
 
-describe('render Search Header component', () => {
-	test('test if number of projects is working with one result', async () => {
-		const functionMock = jest.fn();
-		const countProject = 1;
+describe('Home: SearchHeader', () => {
+	const functionMock = jest.fn();
 
-		render(
-			<SearchHeader count={countProject} onSearchSubmit={functionMock} />
-		);
+	it('displays one project when there is just one result found', () => {
+		render(<SearchHeader count={1} onSearchSubmit={functionMock} />);
 
 		const projectsNumber = screen.queryByRole('heading');
-
-		expect(projectsNumber).toHaveTextContent(`${countProject} project`);
+		expect(projectsNumber).toHaveTextContent('1 project');
 	});
 
-	test('test if number of projects is working with more than one result', async () => {
-		const functionMock = jest.fn();
-		const countProject = faker.random.numeric(2);
-
-		render(
-			<SearchHeader count={countProject} onSearchSubmit={functionMock} />
-		);
+	it('displays the number of projects when there is more than one result found', () => {
+		render(<SearchHeader count={10} onSearchSubmit={functionMock} />);
 
 		const projectsNumber = screen.getByRole('heading');
-
-		expect(projectsNumber).toHaveTextContent(`${countProject} projects`);
+		expect(projectsNumber).toHaveTextContent('10 projects');
 	});
 });

@@ -216,15 +216,31 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 				<liferay-frontend:component
 					context='<%=
 						HashMapBuilder.<String, Object>put(
+							"columnNames", new String[] {dlViewDisplayContext.getColumnNames()}
+						).put(
+							"defaultParentFolderId", dlViewDisplayContext.getFolderId()
+						).put(
+							"displayStyle", HtmlUtil.escapeJS(dlAdminDisplayContext.getDisplayStyle())
+						).put(
 							"editEntryUrl", dlViewDisplayContext.getEditEntryURL()
 						).put(
+							"maxFileSize", DLValidatorUtil.getMaxAllowableSize(themeDisplay.getScopeGroupId(), null)
+						).put(
 							"namespace", "<portlet:namespace />"
+						).put(
+							"redirect", currentURL
+						).put(
+							"scopeGroupId", scopeGroupId
 						).put(
 							"searchContainerId", "entries"
 						).put(
 							"selectFolderURL", dlViewDisplayContext.getSelectFolderURL()
 						).put(
 							"uploadable", dlViewDisplayContext.isUploadable()
+						).put(
+							"uploadURL", dlViewDisplayContext.getUploadURL()
+						).put(
+							"viewFileEntryURL", dlViewDisplayContext.getViewFileEntryURL()
 						).build()
 					%>'
 					module="document_library/js/DocumentLibrary"

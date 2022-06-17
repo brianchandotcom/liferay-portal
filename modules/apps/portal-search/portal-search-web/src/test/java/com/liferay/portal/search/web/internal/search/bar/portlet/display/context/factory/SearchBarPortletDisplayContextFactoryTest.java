@@ -41,6 +41,7 @@ import com.liferay.portal.search.web.internal.search.bar.portlet.display.context
 import com.liferay.portal.search.web.internal.search.bar.portlet.helper.SearchBarPrecedenceHelper;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
+import com.liferay.portal.search.web.search.request.SearchSettings;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
 
@@ -222,8 +223,10 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		Assert.assertEquals(
 			SearchScope.EVERYTHING,
 			searchBarPortletDisplayContextFactory.getSearchScope(
-				SearchScopePreference.THIS_SITE,
-				searchBarPortletDisplayContext.getScopeParameterValue()));
+				_portletPreferencesLookup,
+				searchBarPortletDisplayContext.getScopeParameterValue(),
+				_searchBarPrecedenceHelper, SearchScopePreference.THIS_SITE,
+				_searchSettings, _themeDisplay));
 	}
 
 	protected HttpServletRequest getHttpServletRequest() {
@@ -432,6 +435,8 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		Mockito.mock(PortletSharedSearchRequest.class);
 	private final SearchBarPrecedenceHelper _searchBarPrecedenceHelper =
 		Mockito.mock(SearchBarPrecedenceHelper.class);
+	private final SearchSettings _searchSettings = Mockito.mock(
+		SearchSettings.class);
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

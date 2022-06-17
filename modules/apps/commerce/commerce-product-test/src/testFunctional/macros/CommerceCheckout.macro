@@ -194,6 +194,14 @@ definition {
 						locator1 = "CommerceEntry#RADIO_BUTTON");
 				}
 
+				if (isSet(eligiblePaymentMethods)) {
+					for (var eligiblePaymentMethod : list "${eligiblePaymentMethods}") {
+						AssertElementPresent(
+							key_radioOption = "${eligiblePaymentMethod}",
+							locator1 = "CommerceEntry#RADIO_BUTTON");
+					}
+				}
+
 				if (isSet(notEligiblePaymentMethods)) {
 					for (var notEligiblePaymentMethod : list "${notEligiblePaymentMethods}") {
 						AssertElementNotPresent(

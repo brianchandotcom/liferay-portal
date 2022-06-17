@@ -664,6 +664,14 @@ definition {
 		return "${localStorageItem}";
 	}
 
+	macro setLocalStorageValue {
+		var javaScript = '''
+		localStorage.setItem('${keyName}', '${keyValue}');
+		''';
+
+		var localStorageItem = selenium.getEval("${javaScript}");
+	}
+
 	macro getPageRefRequestPropertyValue {
 		var postDataText = ProxyUtil.getHarRecording("$..[?(@['pageref'] == '${pageRef}')].request[?(@.method == 'POST' && @.url contains '/${pageRef}')]..text");
 

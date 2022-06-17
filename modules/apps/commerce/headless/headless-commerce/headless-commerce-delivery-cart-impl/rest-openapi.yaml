@@ -526,8 +526,9 @@ paths:
                   style: simple
             responses:
                 204:
-                    description:
-                        No content
+                    content:
+                        application/json: {}
+                        application/xml: {}
                 401:
                     content:
                         application/json:

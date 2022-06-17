@@ -37,21 +37,19 @@ const BrowseImage = ({
 			}}
 		>
 			{itemSelectorEventName && itemSelectorURL ? (
-				Liferay.Browser.isMobile() ? (
-					SELECT_FILE_BUTTON
-				) : (
-					<span
-						className="pr-1"
-						dangerouslySetInnerHTML={{
-							__html: sub(
-								Liferay.Language.get(
-									'drag-and-drop-to-upload-or-x'
-								),
-								SELECT_FILE_BUTTON
-							),
-						}}
-					></span>
-				)
+				<span
+					className="pr-1"
+					dangerouslySetInnerHTML={{
+						__html: Liferay.Browser.isMobile()
+							? SELECT_FILE_BUTTON
+							: sub(
+									Liferay.Language.get(
+										'drag-and-drop-to-upload-or-x'
+									),
+									SELECT_FILE_BUTTON
+							  ),
+					}}
+				></span>
 			) : (
 				Liferay.Language.get('drag-and-drop-to-upload')
 			)}

@@ -2,22 +2,20 @@
 
 $tabsBottomMargin: 16px;
 
-html#{$cadmin-selector} {
-	.cadmin {
-		.page-editor__sidebar__browser {
-			&.first-tab--active {
-				height: calc(100% - #{$tabsBottomMargin});
+html#{$cadmin-selector} .cadmin .page-editor__sidebar__browser {
+	&.first-tab--active {
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
 
-				.page-editor__sidebar__browser__tab-content {
-					height: calc(100% - 96px);
-				}
-			}
-
-			&__tabs {
-				border-bottom: 1px solid $cadmin-gray-300;
-				font-size: 0.75rem;
-				margin: 0 $tabsBottomMargin $tabsBottomMargin;
-			}
+		.page-editor__sidebar__browser__tab-content {
+			flex-grow: 1;
 		}
+	}
+
+	&__tabs {
+		border-bottom: 1px solid $cadmin-gray-300;
+		font-size: 0.75rem;
+		margin: 0 $tabsBottomMargin $tabsBottomMargin;
 	}
 }

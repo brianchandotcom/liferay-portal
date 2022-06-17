@@ -69,6 +69,8 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 	&__content {
 		background-color: $cadmin-white;
 		border-left: 1px solid $cadmin-secondary-l3;
+		display: flex;
+		flex-direction: column;
 		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
 		overflow-x: hidden;
 		position: fixed;

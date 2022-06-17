@@ -180,25 +180,15 @@ public class ResourceOpenAPIParser {
 					sb.toString() + "})");
 		}
 
-		List<JavaMethodParameter> javaMethodParameters =
-			javaMethodSignature.getJavaMethodParameters();
-
 		StringBundler sb = new StringBundler("");
 
-		for (JavaMethodParameter javaMethodParameter : javaMethodParameters) {
-			String parameterName = javaMethodParameter.getParameterName();
+		for (Parameter parameter : operation.getParameters()) {
+			if (StringUtil.equals(parameter.getIn(), "header")) {
+				continue;
+			}
 
-			if (parameterName.equals("pagination")) {
-				sb.append(_addParameter(_findParameter(operation, "page")));
-				sb.append(_addParameter(_findParameter(operation, "pageSize")));
-			}
-			else if (parameterName.equals("sorts")) {
-				sb.append(_addParameter(_findParameter(operation, "sort")));
-			}
-			else {
-				sb.append(
-					_addParameter(_findParameter(operation, parameterName)));
-			}
+			sb.append(
+				_addParameter(_findParameter(operation, parameter.getName())));
 		}
 
 		if (sb.length() > 0) {
@@ -604,7 +594,9 @@ public class ResourceOpenAPIParser {
 
 			if (StringUtil.equals(parameterName, "Accept-Language") ||
 				StringUtil.equals(parameterName, "aggregationTerms") ||
+				StringUtil.equals(parameterName, "fields") ||
 				StringUtil.equals(parameterName, "filter") ||
+				StringUtil.equals(parameterName, "restrictedFields") ||
 				StringUtil.equals(parameterName, "sort")) {
 
 				continue;

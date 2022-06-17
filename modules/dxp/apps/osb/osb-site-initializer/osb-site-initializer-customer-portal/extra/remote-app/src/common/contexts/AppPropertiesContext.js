@@ -14,6 +14,7 @@ import {createContext, useContext} from 'react';
 export const AppPropertiesContext = createContext({
 	articleAccountSupportURL: '',
 	articleDeployingActivationKeysURL: '',
+	client: undefined,
 	gravatarAPI: '',
 	liferayWebDAV: '',
 	oktaSessionAPI: '',

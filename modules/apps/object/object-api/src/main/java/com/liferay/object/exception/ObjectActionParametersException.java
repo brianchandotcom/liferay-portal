@@ -16,24 +16,21 @@ package com.liferay.object.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Map;
+
 /**
  * @author Carolina Barbosa
  */
 public class ObjectActionParametersException extends PortalException {
 
-	public ObjectActionParametersException() {
+	public ObjectActionParametersException(Map<String, Object> messageKeys) {
+		_messageKeys = messageKeys;
 	}
 
-	public ObjectActionParametersException(String msg) {
-		super(msg);
+	public Map<String, Object> getMessageKeys() {
+		return _messageKeys;
 	}
 
-	public ObjectActionParametersException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public ObjectActionParametersException(Throwable throwable) {
-		super(throwable);
-	}
+	private final Map<String, Object> _messageKeys;
 
 }

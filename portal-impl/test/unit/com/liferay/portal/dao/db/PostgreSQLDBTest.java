@@ -72,7 +72,9 @@ public class PostgreSQLDBTest extends BaseDBTestCase {
 	@Test
 	public void testRewordRenameTable() throws Exception {
 		Assert.assertEquals(
-			"alter table a rename to b;\n", buildSQL(RENAME_TABLE_QUERY));
+			"alter table a rename to b;alter table b rename constraint " +
+			"a_pkey to b_pkey;\n",
+			buildSQL(RENAME_TABLE_QUERY));
 	}
 
 	@Override

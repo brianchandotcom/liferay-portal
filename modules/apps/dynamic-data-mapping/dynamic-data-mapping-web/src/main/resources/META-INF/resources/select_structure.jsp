@@ -74,7 +74,7 @@ SearchContainer<DDMStructure> structureSearch = ddmDisplayContext.getStructureSe
 						data.put("name", structure.getName(locale));
 						%>
 
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
 							<%= HtmlUtil.escape(structure.getUnambiguousName(structureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
 						</aui:a>
 					</c:when>

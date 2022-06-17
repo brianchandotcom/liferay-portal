@@ -662,7 +662,7 @@ AUI.add(
 							[
 								'<span class="countdown-timer">{0}</span>',
 								host.get('sessionLength') / 60000,
-								'<a class="alert-link" href="javascript:;">' +
+								'<a class="alert-link" href="javascript:void(0);">' +
 									Liferay.Language.get('extend') +
 									'</a>',
 							]

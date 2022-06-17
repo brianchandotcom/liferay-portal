@@ -22,7 +22,7 @@
 		linkCssClass="icon-monospaced"
 		markupView="lexicon"
 		message="go-to-other-site-or-library"
-		url="javascript:;"
+		url="javascript:void(0);"
 	/>
 </div>
 

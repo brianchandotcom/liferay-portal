@@ -27,7 +27,7 @@
 	</#if>
 
 	<#if hasFieldValue>
-		[ <a href="javascript:;" id="${portletNamespace}${namespacedFieldName}ToggleImage" onClick="${portletNamespace}${namespacedFieldName}ToggleImage();">${languageUtil.get(locale, "show")}</a> ]
+		[ <a href="javascript:void(0);" id="${portletNamespace}${namespacedFieldName}ToggleImage" onClick="${portletNamespace}${namespacedFieldName}ToggleImage();">${languageUtil.get(locale, "show")}</a> ]
 
 		<div class="hide wcm-image-preview" id="${portletNamespace}${namespacedFieldName}Container">
 			<#if validator.isNotNull(src)>

@@ -70,7 +70,7 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 									</span>
 								</c:when>
 								<c:otherwise>
-									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
 										<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 									</aui:a>
 								</c:otherwise>
@@ -101,7 +101,7 @@ long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay
 								</span>
 							</c:when>
 							<c:otherwise>
-								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
 									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 								</aui:a>
 							</c:otherwise>

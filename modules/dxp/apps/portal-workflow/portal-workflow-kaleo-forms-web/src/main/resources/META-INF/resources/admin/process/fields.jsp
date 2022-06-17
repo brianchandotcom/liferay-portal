@@ -29,7 +29,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 <aui:field-wrapper>
 	<liferay-ui:message key="selected-field-set" />:
 
-	<aui:a cssClass="badge badge-info kaleo-process-preview-definition" data-definition-id="<%= kaleoFormsAdminFieldsDisplayContext.getDDMStructureId() %>" href="javascript:;" id="ddmStructureDisplay" label="<%= HtmlUtil.escape(kaleoFormsAdminFieldsDisplayContext.getDDMStructureName()) %>" />
+	<aui:a cssClass="badge badge-info kaleo-process-preview-definition" data-definition-id="<%= kaleoFormsAdminFieldsDisplayContext.getDDMStructureId() %>" href="javascript:void(0);" id="ddmStructureDisplay" label="<%= HtmlUtil.escape(kaleoFormsAdminFieldsDisplayContext.getDDMStructureName()) %>" />
 
 	<aui:input name="ddmStructureId" type="hidden" value="<%= kaleoFormsAdminFieldsDisplayContext.getDDMStructureId() %>" />
 
@@ -87,7 +87,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 				));
 			%>
 
-			(<aui:a cssClass="kaleo-process-preview-definition" data-definition-id="<%= structure.getStructureId() %>" href="javascript:;" label="view-fields" />)
+			(<aui:a cssClass="kaleo-process-preview-definition" data-definition-id="<%= structure.getStructureId() %>" href="javascript:void(0);" label="view-fields" />)
 		</liferay-util:buffer>
 
 		<liferay-ui:search-container-column-text

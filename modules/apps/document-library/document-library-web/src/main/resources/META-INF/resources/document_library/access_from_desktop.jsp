@@ -23,7 +23,7 @@ DLAccessFromDesktopDisplayContext dlAccessFromDesktopDisplayContext = new DLAcce
 <liferay-ui:icon
 	cssClass='<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() + "-webdav-action" %>'
 	message="access-from-desktop"
-	url="javascript:;"
+	url="javascript:void(0);"
 />
 
 <div id="<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() %>webDav" style="display: none;">

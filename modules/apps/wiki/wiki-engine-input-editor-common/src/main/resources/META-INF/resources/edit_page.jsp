@@ -40,7 +40,7 @@ WikiPage wikiPage = BaseWikiEngine.getWikiPage(request);
 
 	<c:if test="<%= baseWikiEngine.isHelpPageDefined() %>">
 		<div align="right">
-			<a href="javascript:;" id="<portlet:namespace />toggle_id_wiki_editor_help"><liferay-ui:message key="show-syntax-help" /> &raquo;</a>
+			<a href="javascript:void(0);" id="<portlet:namespace />toggle_id_wiki_editor_help"><liferay-ui:message key="show-syntax-help" /> &raquo;</a>
 		</div>
 
 		<%

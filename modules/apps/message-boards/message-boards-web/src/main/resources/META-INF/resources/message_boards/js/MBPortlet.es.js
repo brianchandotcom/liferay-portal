@@ -313,7 +313,7 @@ class MBPortlet {
 												attachment.id
 											}" data-url="${
 												attachment.deleteURL
-											}" href="javascript:;">${Liferay.Language.get(
+											}" href="javascript:void(0);">${Liferay.Language.get(
 												'delete'
 											)}</a>`,
 										],

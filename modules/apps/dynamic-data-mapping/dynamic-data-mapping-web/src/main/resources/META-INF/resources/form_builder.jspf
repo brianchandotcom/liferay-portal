@@ -58,12 +58,12 @@ if (Validator.isNotNull(script)) {
 						<div class="tabbable-content">
 							<ul class="lfr-nav nav nav-underline">
 								<li class="nav-item">
-									<a class="active nav-link" href="javascript:;">
+									<a class="active nav-link" href="javascript:void(0);">
 										<liferay-ui:message key="fields" />
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="disabled nav-link" href="javascript:;">
+									<a class="disabled nav-link" href="javascript:void(0);">
 										<liferay-ui:message key="settings" />
 									</a>
 								</li>

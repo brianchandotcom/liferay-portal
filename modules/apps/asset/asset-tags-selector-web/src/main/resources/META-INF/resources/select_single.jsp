@@ -49,7 +49,7 @@ assetTagsSelectorDisplayContext = new AssetTagsSelectorDisplayContext(request, r
 							"entityname", tag.getName()
 						).build()
 					%>'
-					href="javascript:;"
+					href="javascript:void(0);"
 				>
 					<%= HtmlUtil.escape(tag.getName()) %>
 				</aui:a>

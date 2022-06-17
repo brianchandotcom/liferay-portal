@@ -30,7 +30,7 @@ String taglibOnClick = liferayPortletResponse.getNamespace() + "showProcessSumma
 <liferay-ui:icon
 	message="summary"
 	onClick="<%= taglibOnClick %>"
-	url="javascript:;"
+	url="javascript:void(0);"
 />
 
 <aui:script>

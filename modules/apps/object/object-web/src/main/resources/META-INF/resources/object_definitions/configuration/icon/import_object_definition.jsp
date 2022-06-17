@@ -20,7 +20,7 @@
 	id="importObjectDefinitionIcon"
 	message="import-object"
 	onClick='<%= liferayPortletResponse.getNamespace() + "openImportObjectDefinitionModal();" %>'
-	url="javascript:;"
+	url="javascript:void(0);"
 />
 
 <div>

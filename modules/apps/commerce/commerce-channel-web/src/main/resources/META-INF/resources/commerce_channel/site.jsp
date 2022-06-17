@@ -92,7 +92,7 @@ if (commerceChannel != null) {
 
 				<c:if test="<%= !viewOnly %>">
 					<liferay-ui:search-container-column-text>
-						<a class="float-right modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:;"><%= removeCommerceChannelSiteIcon %></a>
+						<a class="float-right modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:void(0);"><%= removeCommerceChannelSiteIcon %></a>
 					</liferay-ui:search-container-column-text>
 				</c:if>
 			</liferay-ui:search-container-row>

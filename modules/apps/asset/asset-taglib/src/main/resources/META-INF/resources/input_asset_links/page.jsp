@@ -34,7 +34,7 @@
 			data='<%= (Map<String, Object>)selectorEntry.get("data") %>'
 			id='<%= (String)selectorEntry.get("id") %>'
 			message='<%= HtmlUtil.escape((String)selectorEntry.get("message")) %>'
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 
 	<%
@@ -92,7 +92,7 @@
 		<liferay-ui:search-container-column-text
 			cssClass="text-right"
 		>
-			<a class="modify-link" data-rowId="<%= assetLinkEntry.getEntryId() %>" href="javascript:;"><%= removeLinkIcon %></a>
+			<a class="modify-link" data-rowId="<%= assetLinkEntry.getEntryId() %>" href="javascript:void(0);"><%= removeLinkIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
@@ -145,7 +145,7 @@
 									var entryLink =
 										'<div class="text-right"><a class="modify-link" data-rowId="' +
 										entityId +
-										'" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a></div>';
+										'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeLinkIcon) %></a></div>';
 
 									var entryHtml =
 										'<h4 class="list-group-title">' +

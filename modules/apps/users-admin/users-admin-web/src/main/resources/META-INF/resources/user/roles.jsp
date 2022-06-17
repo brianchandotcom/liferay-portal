@@ -84,7 +84,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						linkCssClass="btn btn-secondary btn-sm"
 						message="select"
 						method="get"
-						url="javascript:;"
+						url="javascript:void(0);"
 					/>
 				</span>
 			</clay:content-col>
@@ -124,7 +124,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= !portletName.equals(myAccountPortletId) && userDisplayContext.isAllowRemoveRole(role) %>">
-					<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
+					<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:void(0);"><%= removeRoleIcon %></a>
 				</c:if>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -259,7 +259,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						linkCssClass="btn btn-secondary btn-sm"
 						message="select"
 						method="get"
-						url="javascript:;"
+						url="javascript:void(0);"
 					/>
 				</span>
 			</clay:content-col>
@@ -325,7 +325,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 				<c:if test="<%= !portletName.equals(myAccountPortletId) && !membershipProtected %>">
 					<liferay-ui:search-container-column-text>
-						<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
+						<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:void(0);"><%= removeRoleIcon %></a>
 					</liferay-ui:search-container-column-text>
 				</c:if>
 			</liferay-ui:search-container-row>
@@ -499,7 +499,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 						linkCssClass="btn btn-secondary btn-sm"
 						message="select"
 						method="get"
-						url="javascript:;"
+						url="javascript:void(0);"
 					/>
 				</span>
 			</clay:content-col>
@@ -568,7 +568,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 				<c:if test="<%= !portletName.equals(myAccountPortletId) && !membershipProtected %>">
 					<liferay-ui:search-container-column-text>
-						<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
+						<a class="modify-link" data-groupId="<%= userGroupRole.getGroupId() %>" data-rowId="<%= userGroupRole.getRoleId() %>" href="javascript:void(0);"><%= removeRoleIcon %></a>
 					</liferay-ui:search-container-column-text>
 				</c:if>
 			</liferay-ui:search-container-row>
@@ -860,7 +860,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 							groupId +
 							'" data-rowId="' +
 							roleId +
-							'" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
+							'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
 					);
 
 					for (
@@ -901,7 +901,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					rowColumns.push(
 						'<a class="modify-link" data-rowId="' +
 							roleId +
-							'" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
+							'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
 					);
 
 					A.Array.removeItem(<portlet:namespace />deleteRoleIds, roleId);

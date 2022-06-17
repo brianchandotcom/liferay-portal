@@ -84,7 +84,7 @@ else {
 			label="<%= true %>"
 			message="compare-to"
 			onClick="<%= taglibOnClick %>"
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 	</liferay-ui:icon-menu>
 </c:if>

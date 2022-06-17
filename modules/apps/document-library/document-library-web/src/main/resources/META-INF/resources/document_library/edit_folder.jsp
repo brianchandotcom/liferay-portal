@@ -138,7 +138,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 									</c:if>
 
 									<liferay-ui:search-container-column-text>
-										<a class="modify-link" data-rowId="<%= dlFileEntryType.getFileEntryTypeId() %>" href="javascript:;"><%= removeFileEntryTypeIcon %></a>
+										<a class="modify-link" data-rowId="<%= dlFileEntryType.getFileEntryTypeId() %>" href="javascript:void(0);"><%= removeFileEntryTypeIcon %></a>
 									</liferay-ui:search-container-column-text>
 								</liferay-ui:search-container-row>
 
@@ -155,7 +155,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 								linkCssClass="btn btn-secondary"
 								markupView="lexicon"
 								message="select-document-type"
-								url="javascript:;"
+								url="javascript:void(0);"
 							/>
 
 							<aui:select cssClass='<%= ListUtil.isNotEmpty(dlEditFolderDisplayContext.getDLFileEntryTypes()) ? "default-document-type" : "default-document-type hide" %>' helpMessage="default-document-type-help" label="default-document-type" name="defaultFileEntryTypeId">
@@ -308,7 +308,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 		var fileEntryTypeLink =
 			'<a class="modify-link" data-rowId="' +
 			fileEntryTypeId +
-			'" href="javascript:;"><%= UnicodeFormatter.toString(removeFileEntryTypeIcon) %></a>';
+			'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeFileEntryTypeIcon) %></a>';
 
 		<c:choose>
 			<c:when test="<%= dlEditFolderDisplayContext.isWorkflowEnabled() %>">

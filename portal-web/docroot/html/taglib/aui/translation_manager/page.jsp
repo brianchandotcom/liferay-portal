@@ -48,7 +48,7 @@
 		</select>
 
 		<c:if test="<%= changeableDefaultLanguage %>">
-			<a class="label label-default label-lg lfr-translation-manager-change-default-locale" href="javascript:;"><liferay-ui:message key="change" /></a>
+			<a class="label label-default label-lg lfr-translation-manager-change-default-locale" href="javascript:void(0);"><liferay-ui:message key="change" /></a>
 		</c:if>
 
 		<c:if test="<%= !readOnly %>">
@@ -71,7 +71,7 @@
 						image='<%= "../language/" + LocaleUtil.toLanguageId(curLocale) %>'
 						lang="<%= LocaleUtil.toLanguageId(curLocale) %>"
 						message="<%= curLocale.getDisplayName(locale) %>"
-						url="javascript:;"
+						url="javascript:void(0);"
 					/>
 
 				<%

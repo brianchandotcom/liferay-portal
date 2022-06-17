@@ -63,7 +63,7 @@ JournalSelectDDMTemplateDisplayContext journalSelectDDMTemplateDisplayContext = 
 											"name", ddmTemplate.getName(locale)
 										).build()
 									%>'
-									href="javascript:;"
+									href="javascript:void(0);"
 								>
 									<%= HtmlUtil.escape(ddmTemplate.getName(locale)) %>
 								</aui:a>

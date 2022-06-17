@@ -19,5 +19,5 @@
 <liferay-ui:icon
 	message="export"
 	onClick='<%= "Liferay.fire('openExportFormModal', { exportFormURL:'" + ddmFormAdminDisplayContext.getExportFormURL(ParamUtil.getLong(request, liferayPortletResponse.getNamespace() + "formInstanceId")) + "'});" %>'
-	url="javascript:;"
+	url="javascript:void(0);"
 />

@@ -74,7 +74,7 @@ String kaleoNamespace = PortalUtil.getPortletNamespace(KaleoDesignerPortletKeys.
 		<liferay-ui:icon
 			id='<%= "duplicate" + kaleoDefinition.getKaleoDefinitionId() %>'
 			message="duplicate"
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 	</c:if>
 

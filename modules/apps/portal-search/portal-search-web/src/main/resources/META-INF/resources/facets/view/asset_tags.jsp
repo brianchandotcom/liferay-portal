@@ -48,7 +48,7 @@ AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext = assetTag
 
 					<ul class="<%= assetTagsSearchFacetDisplayContext.isCloudWithCount() ? "tag-cloud" : "tag-list" %> list-unstyled">
 						<li class="default facet-value">
-							<a class="<%= assetTagsSearchFacetDisplayContext.isNothingSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+							<a class="<%= assetTagsSearchFacetDisplayContext.isNothingSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="" href="javascript:void(0);"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 						</li>
 
 						<%
@@ -58,7 +58,7 @@ AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext = assetTag
 						%>
 
 							<li class="facet-value tag-popularity-<%= assetTagsSearchFacetTermDisplayContext.getPopularity() %>">
-								<a class="<%= assetTagsSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(assetTagsSearchFacetTermDisplayContext.getValue()) %>" href="javascript:;">
+								<a class="<%= assetTagsSearchFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>" data-value="<%= HtmlUtil.escapeAttribute(assetTagsSearchFacetTermDisplayContext.getValue()) %>" href="javascript:void(0);">
 									<%= HtmlUtil.escape(assetTagsSearchFacetTermDisplayContext.getDisplayName()) %>
 
 									<c:if test="<%= assetTagsSearchFacetTermDisplayContext.isFrequencyVisible() %>">

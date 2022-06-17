@@ -110,7 +110,7 @@ long organizationGroupId = organization.getGroupId();
 		<liferay-ui:icon
 			message="assign-users"
 			onClick="<%= taglibOnClick %>"
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 	</c:if>
 

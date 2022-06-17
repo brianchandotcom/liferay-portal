@@ -37,7 +37,7 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 			localizeMessage="<%= true %>"
 			markupView="lexicon"
 			message="refresh-captcha"
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 
 		<aui:input ignoreRequestValue="<%= true %>" label="text-verification" name="captchaText" size="10" type="text" value="">

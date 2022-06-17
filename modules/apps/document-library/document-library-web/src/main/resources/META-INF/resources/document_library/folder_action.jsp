@@ -131,7 +131,7 @@ FolderActionDisplayContext folderActionDisplayContext = new FolderActionDisplayC
 			<liferay-ui:icon
 				cssClass='<%= folderActionDisplayContext.getRandomNamespace() + "-slide-show" %>'
 				message="view-slide-show"
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 		</c:if>
 

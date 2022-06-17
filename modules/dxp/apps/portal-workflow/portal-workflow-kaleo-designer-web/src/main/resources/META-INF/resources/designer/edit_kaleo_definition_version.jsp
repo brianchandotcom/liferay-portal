@@ -147,7 +147,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 								<clay:container-fluid>
 									<ul class="tbar-nav">
 										<li class="tbar-item">
-											<aui:icon cssClass="component-action sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
+											<aui:icon cssClass="component-action sidenav-close" image="times" markupView="lexicon" url="javascript:void(0);" />
 										</li>
 									</ul>
 								</clay:container-fluid>
@@ -268,12 +268,12 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 											<div class="tabbable-content">
 												<ul class="nav nav-tabs">
 													<li class="active nav-item">
-														<a class="active nav-link" href="javascript:;">
+														<a class="active nav-link" href="javascript:void(0);">
 															<liferay-ui:message key="nodes" />
 														</a>
 													</li>
 													<li class="nav-item">
-														<a class="nav-link" href="javascript:;">
+														<a class="nav-link" href="javascript:void(0);">
 															<liferay-ui:message key="properties" />
 														</a>
 													</li>
@@ -292,12 +292,12 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 												<div class="main-tab tabbable-content">
 													<ul class="nav nav-tabs">
 														<li class="active nav-item">
-															<a class="active nav-link" href="javascript:;">
+															<a class="active nav-link" href="javascript:void(0);">
 																<liferay-ui:message key="diagram" />
 															</a>
 														</li>
 														<li class="nav-item">
-															<a class="nav-link" href="javascript:;">
+															<a class="nav-link" href="javascript:void(0);">
 																<liferay-ui:message key="source" />
 															</a>
 														</li>

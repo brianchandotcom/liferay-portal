@@ -45,7 +45,7 @@
 							</clay:content-col>
 
 							<clay:content-col>
-								<a class="remove-button" href="javascript:;">
+								<a class="remove-button" href="javascript:void(0);">
 									<aui:icon image="times-circle" markupView="lexicon" />
 								</a>
 							</clay:content-col>

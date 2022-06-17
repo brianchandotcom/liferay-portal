@@ -659,7 +659,7 @@ AUI.add(
 					if (count > options.end) {
 						buffer.push(
 							'<div class="more-results">' +
-								'<a href="javascript:;" data-end="' +
+								'<a href="javascript:void(0);" data-end="' +
 								options.end +
 								'" data-lastNameAnchor="' +
 								lastNameAnchor +

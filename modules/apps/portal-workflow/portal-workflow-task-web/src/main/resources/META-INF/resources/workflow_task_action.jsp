@@ -87,7 +87,7 @@ PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 				<liferay-ui:icon
 					message="assign-to-me"
 					onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "taskAssignToMe('" + assignToMeURL + "');" %>'
-					url="javascript:;"
+					url="javascript:void(0);"
 				/>
 			</c:otherwise>
 		</c:choose>
@@ -102,7 +102,7 @@ PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 		<liferay-ui:icon
 			message="assign-to-..."
 			onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "taskAssign('" + assignURL + "');" %>'
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 
 		<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="updateDueDateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -114,7 +114,7 @@ PortletURL redirectURL = PortletURLBuilder.createRenderURL(
 		<liferay-ui:icon
 			message="update-due-date"
 			onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "taskUpdate('" + updateDueDateURL + "');" %>'
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

@@ -78,7 +78,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 										"targetversion", curTargetVersion
 									).build()
 								%>'
-								href="javascript:;"
+								href="javascript:void(0);"
 							>
 								<%= String.valueOf(curWikiPage.getVersion()) %>
 							</aui:a>

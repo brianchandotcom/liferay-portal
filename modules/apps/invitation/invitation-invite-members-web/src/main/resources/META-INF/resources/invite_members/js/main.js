@@ -42,7 +42,7 @@ AUI.add(
 
 		var TPL_MORE_RESULTS =
 			'<div class="more-results">' +
-			'<a href="javascript:;" data-end="{end}">{message}</a>' +
+			'<a href="javascript:void(0);" data-end="{end}">{message}</a>' +
 			'</div>';
 
 		var TPL_NO_USERS_MESSAGE =

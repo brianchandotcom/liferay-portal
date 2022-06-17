@@ -109,7 +109,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 						label="<%= true %>"
 						linkCssClass="btn btn-secondary"
 						message="select"
-						url="javascript:;"
+						url="javascript:void(0);"
 					/>
 				</div>
 

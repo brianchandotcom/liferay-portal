@@ -29,7 +29,7 @@
 			</div>
 
 			<div>
-				<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="add-some-content-to-make-it-visible" /></aui:a>
+				<aui:a href="javascript:void(0);" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="add-some-content-to-make-it-visible" /></aui:a>
 			</div>
 		</div>
 	</c:when>

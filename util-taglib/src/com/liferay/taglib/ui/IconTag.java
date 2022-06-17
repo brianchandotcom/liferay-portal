@@ -327,7 +327,7 @@ public class IconTag extends IncludeTag {
 
 	protected String getProcessedUrl() {
 		if (isForcePost()) {
-			return "javascript:;";
+			return "javascript:void(0);";
 		}
 
 		return _url;

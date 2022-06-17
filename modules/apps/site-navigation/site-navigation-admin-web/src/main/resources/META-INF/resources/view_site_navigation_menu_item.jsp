@@ -58,7 +58,7 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 					>
 						<p class="card-title">
 							<span class="text-truncate">
-								<a href="javascript:;">
+								<a href="javascript:void(0);">
 									<%= HtmlUtil.escape(title) %>
 								</a>
 							</span>

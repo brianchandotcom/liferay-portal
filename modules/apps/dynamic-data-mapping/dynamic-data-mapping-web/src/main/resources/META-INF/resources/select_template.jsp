@@ -84,7 +84,7 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 							data.put("name", template.getName(locale));
 							%>
 
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
 								<%= HtmlUtil.escape(template.getName(locale)) %>
 							</aui:a>
 						</c:when>

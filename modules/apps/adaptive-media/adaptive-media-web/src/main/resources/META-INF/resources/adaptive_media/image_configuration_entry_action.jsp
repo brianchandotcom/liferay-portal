@@ -118,7 +118,7 @@ String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
 		id='<%= "icon-adapt-remaining" + entryUuid %>'
 		message="adapt-remaining"
 		onClick="<%= onClick %>"
-		url="javascript:;"
+		url="javascript:void(0);"
 	/>
 
 	<portlet:actionURL name="/adaptive_media/delete_image_configuration_entry" var="deleteImageConfigurationEntryURL">
@@ -131,7 +131,7 @@ String entryUuid = String.valueOf(amImageConfigurationEntry.getUUID());
 			<liferay-ui:icon
 				cssClass="disabled"
 				message="delete"
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 		</c:when>
 		<c:otherwise>

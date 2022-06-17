@@ -39,10 +39,10 @@ AUI.add(
 			'<nav class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">' +
 			'<div class="collapse navbar-collapse">' +
 			'<ul class="nav navbar-nav">' +
-			'<li class="public {publicLayoutClass}"><a href="javascript:;">' +
+			'<li class="public {publicLayoutClass}"><a href="javascript:void(0);">' +
 			Liferay.Language.get('public-pages') +
 			'</a></li>' +
-			'<li class="private {privateLayoutClass}"><a href="javascript:;">' +
+			'<li class="private {privateLayoutClass}"><a href="javascript:void(0);">' +
 			Liferay.Language.get('private-pages') +
 			'</a></li>' +
 			'</ul>' +
@@ -53,7 +53,7 @@ AUI.add(
 			'<nav class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">' +
 			'<div class="collapse navbar-collapse">' +
 			'<ul class="nav navbar-nav">' +
-			'<li class="public active"><a href="javascript:;">' +
+			'<li class="public active"><a href="javascript:void(0);">' +
 			Liferay.Language.get('pages') +
 			'</a></li>' +
 			'</ul>' +
@@ -65,7 +65,7 @@ AUI.add(
 		var TPL_PAGE =
 			'<li class="lfr-ddm-link" data-groupId="{groupId}" data-layoutId="{layoutId}" data-nodeType="{nodeType}" data-privateLayout="{privateLayout}">' +
 			'<input class="lfr-ddm-page-radio" {checked} name="lfr-ddm-page" type="radio" />' +
-			'<a class="collapsed collapse-icon lfr-ddm-page-label" href="javascript:;">{pageTitle}{icon}</a>' +
+			'<a class="collapsed collapse-icon lfr-ddm-page-label" href="javascript:void(0);">{pageTitle}{icon}</a>' +
 			'</li>';
 
 		var TPL_PAGES_BREADCRUMB =
@@ -80,7 +80,7 @@ AUI.add(
 			'<ul class="lfr-ddm-pages-container nav vertical-scrolling"></ul>';
 
 		var TPL_REPEATABLE_ADD =
-			'<a class="lfr-ddm-repeatable-add-button" href="javascript:;">' +
+			'<a class="lfr-ddm-repeatable-add-button" href="javascript:void(0);">' +
 			Liferay.Util.getLexiconIconTpl('plus') +
 			'</a>';
 
@@ -90,7 +90,7 @@ AUI.add(
 			'</div>';
 
 		var TPL_REPEATABLE_DELETE =
-			'<a class="hide lfr-ddm-repeatable-delete-button" href="javascript:;">' +
+			'<a class="hide lfr-ddm-repeatable-delete-button" href="javascript:void(0);">' +
 			Liferay.Util.getLexiconIconTpl('hr') +
 			'</a>';
 

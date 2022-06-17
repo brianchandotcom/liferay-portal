@@ -101,7 +101,7 @@
 								<h5>
 									<c:choose>
 										<c:when test="<%= !assetBrowserDisplayContext.isMultipleSelection() %>">
-											<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
+											<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:void(0);">
 												<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 											</aui:a>
 										</c:when>
@@ -151,7 +151,7 @@
 							>
 								<c:choose>
 									<c:when test="<%= !assetBrowserDisplayContext.isMultipleSelection() %>">
-										<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
+										<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:void(0);">
 											<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 										</aui:a>
 									</c:when>

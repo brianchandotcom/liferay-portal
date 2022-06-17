@@ -21,7 +21,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 %>
 
 <liferay-frontend:edit-form
-	action="javascript:;"
+	action="javascript:void(0);"
 	onSubmit='<%= liferayPortletResponse.getNamespace() + "addDomains();" %>'
 >
 	<div class="modal-body">

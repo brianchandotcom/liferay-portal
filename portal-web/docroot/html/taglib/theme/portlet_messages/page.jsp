@@ -84,7 +84,7 @@ else if (group.isStagingGroup()) {
 		<c:if test="<%= themeDisplay.isStatePopUp() && MultiSessionMessages.contains(renderRequest, portlet.getPortletId() + SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT) %>">
 
 			<%
-			String taglibMessage = "class=\"lfr-hide-dialog\" href=\"javascript:;\"";
+			String taglibMessage = "class=\"lfr-hide-dialog\" href=\"javascript:void(0);\"";
 			%>
 
 			<liferay-ui:message arguments="<%= taglibMessage %>" key="the-page-will-be-refreshed-when-you-close-this-dialog.alternatively-you-can-hide-this-dialog-x" translateArguments="<%= false %>" />

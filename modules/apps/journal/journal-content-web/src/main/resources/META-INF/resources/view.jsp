@@ -42,7 +42,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 
 					<c:if test="<%= journalContentDisplayContext.isShowSelectArticleLink() %>">
 						<div>
-							<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-web-content-to-make-it-visible" /></aui:a>
+							<aui:a href="javascript:void(0);" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-web-content-to-make-it-visible" /></aui:a>
 						</div>
 					</c:if>
 				</div>
@@ -70,7 +70,7 @@ if (journalContentDisplayContext.isShowArticle()) {
 						<liferay-util:buffer
 							var="selectJournalArticleLink"
 						>
-							<aui:a href="javascript:;" label="select-another" onClick="<%= portletDisplay.getURLConfigurationJS() %>" />
+							<aui:a href="javascript:void(0);" label="select-another" onClick="<%= portletDisplay.getURLConfigurationJS() %>" />
 						</liferay-util:buffer>
 
 						<div>

@@ -33,6 +33,6 @@ String portletNamespace = PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.
 		linkCssClass="btn btn-monospaced btn-sm control-menu-icon"
 		markupView="lexicon"
 		message="this-page-can-be-customized"
-		url="javascript:;"
+		url="javascript:void(0);"
 	/>
 </div>

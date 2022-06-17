@@ -266,19 +266,19 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 		<ul class="lfr-pagination-buttons pagination">
 			<c:if test='<%= type.equals("approximate") || type.equals("more") || type.equals("regular") %>'>
 				<li class="<%= (cur != 1) ? "" : "disabled" %> first page-item">
-					<a href="<%= (cur != 1) ? _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) : "javascript:;" %>" page-link onclick="<%= ((cur != 1) && forcePost) ? _getOnClick(namespace, curParam, 1) : "" %>" tabIndex="<%= (cur != 1) ? "0" : "-1" %>" target="<%= target %>">
+					<a href="<%= (cur != 1) ? _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) : "javascript:void(0);" %>" page-link onclick="<%= ((cur != 1) && forcePost) ? _getOnClick(namespace, curParam, 1) : "" %>" tabIndex="<%= (cur != 1) ? "0" : "-1" %>" target="<%= target %>">
 						<%= PortalUtil.isRightToLeft(request) ? "&rarr;" : "&larr;" %> <liferay-ui:message key="first" />
 					</a>
 				</li>
 			</c:if>
 
 			<li class="<%= (cur != 1) ? "" : "disabled" %> page-item">
-				<a href="<%= (cur != 1) ? _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) : "javascript:;" %>" page-link onclick="<%= ((cur != 1) && forcePost) ? _getOnClick(namespace, curParam, cur - 1) : "" %>" tabIndex="<%= (cur != 1) ? "0" : "-1" %>" target="<%= target %>">
+				<a href="<%= (cur != 1) ? _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) : "javascript:void(0);" %>" page-link onclick="<%= ((cur != 1) && forcePost) ? _getOnClick(namespace, curParam, cur - 1) : "" %>" tabIndex="<%= (cur != 1) ? "0" : "-1" %>" target="<%= target %>">
 					<liferay-ui:message key="previous" />
 				</a>
 			</li>
 			<li class="<%= (cur != pages) ? "" : "disabled" %> page-item">
-				<a href="<%= (cur != pages) ? _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) : "javascript:;" %>" page-link onclick="<%= ((cur != pages) && forcePost) ? _getOnClick(namespace, curParam, cur + 1) : "" %>" tabIndex="<%= (cur != pages) ? "0" : "-1" %>" target="<%= target %>">
+				<a href="<%= (cur != pages) ? _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) : "javascript:void(0);" %>" page-link onclick="<%= ((cur != pages) && forcePost) ? _getOnClick(namespace, curParam, cur + 1) : "" %>" tabIndex="<%= (cur != pages) ? "0" : "-1" %>" target="<%= target %>">
 					<c:choose>
 						<c:when test='<%= type.equals("approximate") || type.equals("more") %>'>
 							<liferay-ui:message key="more" />
@@ -292,7 +292,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 			<c:if test='<%= type.equals("regular") %>'>
 				<li class="<%= (cur != pages) ? "" : "disabled" %> last page-item">
-					<a href="<%= (cur != pages) ? _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) : "javascript:;" %>" page-link onclick="<%= ((cur != pages) && forcePost) ? _getOnClick(namespace, curParam, pages) : "" %>" tabIndex="<%= (cur != pages) ? "0" : "-1" %>" target="<%= target %>">
+					<a href="<%= (cur != pages) ? _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) : "javascript:void(0);" %>" page-link onclick="<%= ((cur != pages) && forcePost) ? _getOnClick(namespace, curParam, pages) : "" %>" tabIndex="<%= (cur != pages) ? "0" : "-1" %>" target="<%= target %>">
 						<liferay-ui:message key="last" /> <%= PortalUtil.isRightToLeft(request) ? "&larr;" : "&rarr;" %>
 					</a>
 				</li>

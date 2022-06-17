@@ -97,7 +97,7 @@ else {
 					<div class="attachments"></div>
 
 					<div>
-						<a class="add-attachment" href="javascript:;"><liferay-ui:message key="add-attachment" /></a>
+						<a class="add-attachment" href="javascript:void(0);"><liferay-ui:message key="add-attachment" /></a>
 					</div>
 				</aui:field-wrapper>
 			</div>

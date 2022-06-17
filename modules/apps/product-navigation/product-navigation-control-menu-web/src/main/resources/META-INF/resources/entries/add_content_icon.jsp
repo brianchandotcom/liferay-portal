@@ -43,7 +43,7 @@ String portletNamespace = PortalUtil.getPortletNamespace(ProductNavigationContro
 				LiferayWindowState.EXCLUSIVE
 			).buildString()
 		%>"
-		href="javascript:;"
+		href="javascript:void(0);"
 		id="<%= portletNamespace %>addToggleId"
 	>
 		<aui:icon cssClass="icon-monospaced" image="plus" markupView="lexicon" />

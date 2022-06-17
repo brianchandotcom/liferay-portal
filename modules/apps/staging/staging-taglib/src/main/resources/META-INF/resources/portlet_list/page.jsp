@@ -208,7 +208,7 @@
 									"portlettitle", portletTitle
 								).build()
 							%>'
-							href="javascript:;"
+							href="javascript:void(0);"
 							id='<%= "contentLink_" + portlet.getPortletId() %>'
 							label="change"
 							method="get"
@@ -244,7 +244,7 @@ html = html.trim();
 		<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 
 		<span <%= !disableInputs ? StringPool.BLANK : "class=\"hide\"" %>>
-			<aui:a cssClass="modify-link" href="javascript:;" id="contentOptionsLink" label="change" method="get" />
+			<aui:a cssClass="modify-link" href="javascript:void(0);" id="contentOptionsLink" label="change" method="get" />
 		</span>
 
 		<div class="hide" id="<portlet:namespace />contentOptions">

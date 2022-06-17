@@ -168,7 +168,7 @@ boolean ignoreRequestValue = index != formFieldsIndex;
 				<div class="validation">
 					<liferay-ui:error key='<%= "validationDefinitionInvalid" + index %>' message="please-enter-both-the-validation-code-and-the-error-message" />
 
-					<aui:a cssClass="validation-link" href="javascript:;"><liferay-ui:message key="validation" /> &raquo;</aui:a>
+					<aui:a cssClass="validation-link" href="javascript:void(0);"><liferay-ui:message key="validation" /> &raquo;</aui:a>
 
 					<div class="validation-input <%= Validator.isNull(fieldValidationScript) ? "hide" : "" %>">
 						<aui:col width="<%= 50 %>">

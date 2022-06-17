@@ -50,7 +50,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					label="<%= true %>"
 					linkCssClass="btn btn-secondary btn-sm"
 					message="select"
-					url="javascript:;"
+					url="javascript:void(0);"
 				/>
 			</span>
 		</clay:content-col>
@@ -119,7 +119,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && (selUser != null) && !SiteMembershipPolicyUtil.isMembershipRequired(selUser.getUserId(), group.getGroupId()) && !SiteMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), group.getGroupId()) %>">
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= group.isManualMembership() %>">
-					<a class="modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
+					<a class="modify-link" data-rowId="<%= group.getGroupId() %>" href="javascript:void(0);"><%= removeGroupIcon %></a>
 				</c:if>
 			</liferay-ui:search-container-column-text>
 		</c:if>
@@ -168,7 +168,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 							rowColumns.push(
 								'<a class="modify-link" data-rowId="' +
 									entityId +
-									'" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>'
+									'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>'
 							);
 
 							searchContainer.addRow(rowColumns, entityId);

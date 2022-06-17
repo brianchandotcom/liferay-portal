@@ -279,7 +279,7 @@ renderResponse.setTitle(title);
 									</c:if>
 
 									<liferay-ui:search-container-column-text>
-										<a class="modify-link" data-rowId="<%= ddmStructure.getStructureId() %>" href="javascript:;"><%= removeDDMStructureIcon %></a>
+										<a class="modify-link" data-rowId="<%= ddmStructure.getStructureId() %>" href="javascript:void(0);"><%= removeDDMStructureIcon %></a>
 									</liferay-ui:search-container-column-text>
 								</liferay-ui:search-container-row>
 
@@ -388,7 +388,7 @@ renderResponse.setTitle(title);
 					var ddmStructureLink =
 						'<a class="modify-link" data-rowId="' +
 						selectedItem.ddmstructureid +
-						'" href="javascript:;"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
+						'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
 
 					<c:choose>
 						<c:when test="<%= workflowEnabled %>">

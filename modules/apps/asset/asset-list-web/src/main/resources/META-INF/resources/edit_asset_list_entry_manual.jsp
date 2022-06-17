@@ -126,7 +126,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 											data="<%= entry.getValue() %>"
 											id="<%= themeDisplay.getScopeGroupId() + HtmlUtil.getAUICompatibleId(entry.getKey()) %>"
 											message="<%= HtmlUtil.escape(entry.getKey()) %>"
-											url="javascript:;"
+											url="javascript:void(0);"
 										/>
 
 									<%

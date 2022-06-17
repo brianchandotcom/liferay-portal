@@ -34,7 +34,7 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 			<liferay-frontend:add-menu-item
 				id="addCommerceProductDefinition"
 				title="add"
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>

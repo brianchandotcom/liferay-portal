@@ -166,7 +166,7 @@ AUI.add(
 						Liferay.Language.get('show');
 
 					var toggleButton = ANode.create(
-						'<a class="toggle-button" href="javascript:;"><span>' +
+						'<a class="toggle-button" href="javascript:void(0);"><span>' +
 							instance._hideText +
 							'</span></a>'
 					);

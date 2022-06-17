@@ -93,7 +93,7 @@ SegmentsEntry segmentsEntry = (SegmentsEntry)row.getObject();
 			%>'
 			linkCssClass="<%= linkCssClass %>"
 			message="assign-site-roles"
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 	</c:if>
 

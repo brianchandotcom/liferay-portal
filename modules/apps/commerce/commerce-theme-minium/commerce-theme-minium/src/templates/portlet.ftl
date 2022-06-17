@@ -50,7 +50,7 @@
 									icon="${portletConfigurationIcon.getIconCssClass()}"
 									markupView="lexicon"
 									onClick="${portletConfigurationIcon.getOnClick(renderRequest, renderResponse)}"
-									url="javascript:;"
+									url="javascript:void(0);"
 								/>
 							<#else>
 								<@liferay_portlet["icon-options"] portletConfigurationIcons=portlet_configuration_icons />

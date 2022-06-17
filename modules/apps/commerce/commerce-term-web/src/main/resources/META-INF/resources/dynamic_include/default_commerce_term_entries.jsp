@@ -78,7 +78,7 @@ CommerceAccountEntryDisplay commerceAccountEntryDisplay = CommerceAccountEntryDi
 					linkCssClass="btn btn-secondary btn-sm"
 					message='<%= (commerceAccountEntryDisplay.getDefaultPaymentCommerceTermEntry() == null) ? "set-default-payment-commerce-terms-entry" : "change" %>'
 					method="get"
-					url="javascript:;"
+					url="javascript:void(0);"
 				/>
 
 				<c:if test="<%= commerceAccountEntryDisplay.getDefaultPaymentCommerceTermEntry() != null %>">
@@ -143,7 +143,7 @@ CommerceAccountEntryDisplay commerceAccountEntryDisplay = CommerceAccountEntryDi
 					linkCssClass="btn btn-secondary btn-sm"
 					message='<%= (commerceAccountEntryDisplay.getDefaultDeliveryCommerceTermEntry() == null) ? "set-default-delivery-commerce-terms-entry" : "change" %>'
 					method="get"
-					url="javascript:;"
+					url="javascript:void(0);"
 				/>
 
 				<c:if test="<%= commerceAccountEntryDisplay.getDefaultDeliveryCommerceTermEntry() != null %>">

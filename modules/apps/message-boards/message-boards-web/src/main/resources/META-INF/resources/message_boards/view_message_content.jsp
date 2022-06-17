@@ -289,7 +289,7 @@ if (portletTitleBasedNavigation) {
 
 	<c:if test="<%= !thread.isInTrash() && moreMessagesPagination %>">
 		<div class="reply-to-main-thread-container">
-			<a class="btn btn-secondary" href="javascript:;" id="<portlet:namespace />moreMessages"><liferay-ui:message key="more-messages" /></a>
+			<a class="btn btn-secondary" href="javascript:void(0);" id="<portlet:namespace />moreMessages"><liferay-ui:message key="more-messages" /></a>
 		</div>
 
 		<aui:form name="fm">

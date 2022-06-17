@@ -62,7 +62,7 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 							"ddmStructureKey", ddmStructure.getStructureKey()
 						).build()
 					%>'
-					href="javascript:;"
+					href="javascript:void(0);"
 				>
 					<%= ddmStructure.getUnambiguousName(journalViewMoreMenuItemsDisplayContext.getDDMStructures(), themeDisplay.getScopeGroupId(), locale) %>
 				</aui:a>

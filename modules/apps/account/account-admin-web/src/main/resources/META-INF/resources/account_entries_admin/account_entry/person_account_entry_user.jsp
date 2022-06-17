@@ -23,7 +23,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 <liferay-util:buffer
 	var="removeUserIcon"
 >
-	<a class="float-right remove-user-link" href="javascript:;">
+	<a class="float-right remove-user-link" href="javascript:void(0);">
 		<liferay-ui:icon
 			icon="times-circle"
 			markupView="lexicon"
@@ -55,7 +55,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 					label="<%= true %>"
 					linkCssClass="btn btn-secondary btn-sm"
 					message="select"
-					url="javascript:;"
+					url="javascript:void(0);"
 				/>
 			</span>
 		</clay:content-col>

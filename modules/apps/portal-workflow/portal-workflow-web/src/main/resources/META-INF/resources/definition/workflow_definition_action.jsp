@@ -66,7 +66,7 @@ String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workf
 		<liferay-ui:icon
 			id='<%= "duplicate" + HtmlUtil.getAUICompatibleId(workflowDefinition.getName()) %>'
 			message="duplicate"
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 	</c:if>
 

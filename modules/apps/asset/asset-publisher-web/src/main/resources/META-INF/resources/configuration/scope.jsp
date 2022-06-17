@@ -117,7 +117,7 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 		id="selectManageableGroup"
 		message='<%= LanguageUtil.get(request, "other-site-or-asset-library") + StringPool.TRIPLE_PERIOD %>'
 		method="get"
-		url="javascript:;"
+		url="javascript:void(0);"
 	/>
 </liferay-ui:icon-menu>
 

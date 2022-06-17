@@ -374,7 +374,7 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			iconTag.setCssClass("sidenav-close text-secondary");
 			iconTag.setImage("times");
 			iconTag.setMarkupView("lexicon");
-			iconTag.setUrl("javascript:;");
+			iconTag.setUrl("javascript:void(0);");
 
 			sb.append(iconTag.doTagAsString(pageContext));
 

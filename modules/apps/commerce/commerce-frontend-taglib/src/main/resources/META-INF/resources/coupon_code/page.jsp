@@ -37,7 +37,7 @@ if (commerceOrder != null) {
 		<div class="coupon-code-body">
 			<h3 class="d-inline"><%= HtmlUtil.escape(couponCode) %></h3>
 
-			<a class="d-inline" href="javascript:;" id="<portlet:namespace />couponCodeIconRemove">
+			<a class="d-inline" href="javascript:void(0);" id="<portlet:namespace />couponCodeIconRemove">
 				<liferay-ui:icon
 					icon="times"
 					markupView="lexicon"

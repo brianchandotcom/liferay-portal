@@ -37,7 +37,7 @@ if (rssFeeds.isEmpty()) {
 
 			<c:if test="<%= rssDisplayContext.isShowConfigurationLink() %>">
 				<div>
-					<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-at-least-one-valid-rss-feed-to-make-it-visible" /></aui:a>
+					<aui:a href="javascript:void(0);" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-at-least-one-valid-rss-feed-to-make-it-visible" /></aui:a>
 				</div>
 			</c:if>
 		</div>

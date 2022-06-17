@@ -91,7 +91,7 @@ public class ImportPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return "javascript:;";
+		return "javascript:void(0);";
 	}
 
 	@Override

@@ -40,7 +40,7 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 				icon="angle-up"
 				markupView="lexicon"
 				message="ascending"
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 
 			<liferay-ui:icon
@@ -48,7 +48,7 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 				icon="angle-down"
 				markupView="lexicon"
 				message="descending"
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 
 			<aui:input cssClass="order-by-type-field" name="preferences--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
@@ -79,7 +79,7 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 				icon="angle-up"
 				markupView="lexicon"
 				message="ascending"
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 
 			<liferay-ui:icon
@@ -87,7 +87,7 @@ CPPublisherConfigurationDisplayContext cpPublisherConfigurationDisplayContext = 
 				icon="angle-down"
 				markupView="lexicon"
 				message="descending"
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 
 			<aui:input cssClass="order-by-type-field" name="preferences--orderByType2--" type="hidden" value="<%= orderByType2 %>" />

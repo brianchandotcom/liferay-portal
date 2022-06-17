@@ -51,7 +51,7 @@ AUI.add(
 						var instance = this;
 
 						return A.Node.create(
-							'<a href="javascript:;"><small>' +
+							'<a href="javascript:void(0);"><small>' +
 								instance.get('strings.dismissAll') ||
 								Liferay.Language.get(
 									'disable-this-note-for-all-portlets'

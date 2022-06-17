@@ -72,7 +72,7 @@ if (Validator.isNull(width)) {
 
 			item.action = '';
 			item.disabled = true;
-			item.href = 'javascript:;';
+			item.href = 'javascript:void(0);';
 			item.onsubmit = emptyFnFalse;
 		}
 	}

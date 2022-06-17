@@ -44,14 +44,14 @@ String backURL = (String)row.getParameter("backURL");
 		<liferay-ui:icon
 			message="edit"
 			onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "editWorkflow('" + editURL + "');" %>'
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 	</c:if>
 
 	<liferay-ui:icon
 		message="choose"
 		onClick='<%= "Liferay.fire('" + liferayPortletResponse.getNamespace() + "chooseWorkflow', {name: '" + HtmlUtil.escapeJS(workflowDefinition.getName()) + "', title: '" + HtmlUtil.escapeJS(workflowDefinition.getTitle(themeDisplay.getLanguageId())) + "', version: '" + workflowDefinition.getVersion() + "'});" %>'
-		url="javascript:;"
+		url="javascript:void(0);"
 	/>
 
 	<c:if test="<%= permissionChecker.isCompanyAdmin() %>">

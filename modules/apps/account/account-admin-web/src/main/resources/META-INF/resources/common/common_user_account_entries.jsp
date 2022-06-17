@@ -43,7 +43,7 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 				linkCssClass="btn btn-secondary btn-sm"
 				message="select"
 				method="get"
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 		</span>
 	</clay:content-col>
@@ -102,7 +102,7 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 
 			<liferay-ui:search-container-column-text>
 				<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.MANAGE_USERS) %>">
-					<a class="remove-link" data-entityId="<%= accountEntryDisplay.getAccountEntryId() %>" href="javascript:;"><%= removeAccountEntryIcon %></a>
+					<a class="remove-link" data-entityId="<%= accountEntryDisplay.getAccountEntryId() %>" href="javascript:void(0);"><%= removeAccountEntryIcon %></a>
 				</c:if>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
@@ -174,7 +174,7 @@ boolean singleSelect = ParamUtil.getBoolean(request, "singleSelect", true);
 									'',
 									'<a class="remove-link" data-entityId="' +
 										entityId +
-										'" href="javascript:;"><%= UnicodeFormatter.toString(removeAccountEntryIcon) %></a>',
+										'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeAccountEntryIcon) %></a>',
 								],
 								entityId
 							);

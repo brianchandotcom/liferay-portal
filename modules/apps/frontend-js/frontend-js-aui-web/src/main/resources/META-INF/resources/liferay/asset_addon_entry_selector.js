@@ -78,7 +78,7 @@ AUI.add(
 			'</section>' +
 			'</div>' +
 			'<div class="autofit-col">' +
-			'<a class="remove-button" href="javascript:;">' +
+			'<a class="remove-button" href="javascript:void(0);">' +
 			Liferay.Util.getLexiconIconTpl('times') +
 			'</a>' +
 			'</div>' +

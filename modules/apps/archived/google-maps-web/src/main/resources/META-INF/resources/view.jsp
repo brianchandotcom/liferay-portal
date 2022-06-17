@@ -79,7 +79,7 @@
 
 				<c:if test="<%= showGoogleMapsLink %>">
 					<div class="google-maps-link">
-						<aui:a href="javascript:;" id="openInGoogleMapsLink" label="open-in-google-maps" target="_blank" />
+						<aui:a href="javascript:void(0);" id="openInGoogleMapsLink" label="open-in-google-maps" target="_blank" />
 					</div>
 				</c:if>
 			</aui:fieldset>

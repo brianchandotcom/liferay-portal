@@ -23,7 +23,7 @@
 	markupView="lexicon"
 	message="import-structure"
 	onClick='<%= liferayPortletResponse.getNamespace() + "openImportDataDefinitionModal();" %>'
-	url="javascript:;"
+	url="javascript:void(0);"
 />
 
 <div>

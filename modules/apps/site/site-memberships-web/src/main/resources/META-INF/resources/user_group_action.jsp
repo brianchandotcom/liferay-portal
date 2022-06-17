@@ -47,7 +47,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			%>'
 			id='<%= row.getRowId() + "assignRoles" %>'
 			message="assign-roles"
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 
 		<portlet:renderURL var="unassignURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -68,7 +68,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			%>'
 			id='<%= row.getRowId() + "unassignRoles" %>'
 			message="unassign-roles"
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 	</c:if>
 

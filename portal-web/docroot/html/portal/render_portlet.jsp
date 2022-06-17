@@ -742,7 +742,7 @@ portletDisplay.setURLPrint(urlPrint.toString());
 
 // URL refresh
 
-String urlRefresh = "javascript:;";
+String urlRefresh = "javascript:void(0);";
 
 portletDisplay.setURLRefresh(urlRefresh);
 

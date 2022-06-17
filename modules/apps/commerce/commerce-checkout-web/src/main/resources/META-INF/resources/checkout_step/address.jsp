@@ -125,7 +125,7 @@ boolean hasManageAddressesPermission = baseAddressCheckoutStepDisplayContext.has
 			</c:when>
 			<c:otherwise>
 				<div class="add-street-link form-group-autofit">
-					<aui:a hidden="<%= (commerceAddressId > 0) || !hasManageAddressesPermission %>" href="javascript:;" label="+-add-address-line" onClick='<%= liferayPortletResponse.getNamespace() + "addStreetAddress();" %>' />
+					<aui:a hidden="<%= (commerceAddressId > 0) || !hasManageAddressesPermission %>" href="javascript:void(0);" label="+-add-address-line" onClick='<%= liferayPortletResponse.getNamespace() + "addStreetAddress();" %>' />
 				</div>
 
 				<div class="add-street-fields form-group-autofit hide">

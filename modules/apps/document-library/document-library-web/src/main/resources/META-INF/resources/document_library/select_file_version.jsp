@@ -64,7 +64,7 @@ if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentRe
 										"targetversion", fileVersion.getFileVersionId()
 									).build()
 								%>'
-								href="javascript:;"
+								href="javascript:void(0);"
 							>
 								<%= HtmlUtil.escape(curFileVersion.getTitle()) %>
 							</aui:a>

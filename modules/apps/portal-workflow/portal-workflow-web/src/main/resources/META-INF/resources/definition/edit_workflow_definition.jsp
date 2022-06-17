@@ -111,7 +111,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 						<clay:container-fluid>
 							<ul class="tbar-nav">
 								<li class="tbar-item">
-									<aui:icon cssClass="component-action sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
+									<aui:icon cssClass="component-action sidenav-close" image="times" markupView="lexicon" url="javascript:void(0);" />
 								</li>
 							</ul>
 						</clay:container-fluid>

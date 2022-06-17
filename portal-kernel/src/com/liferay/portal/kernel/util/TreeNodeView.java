@@ -116,7 +116,7 @@ public class TreeNodeView {
 
 	private List<TreeNodeView> _children = new ArrayList<>();
 	private int _depth;
-	private String _href = "javascript:;";
+	private String _href = "javascript:void(0);";
 	private long _id;
 	private String _img = StringPool.BLANK;
 	private boolean _leaf;

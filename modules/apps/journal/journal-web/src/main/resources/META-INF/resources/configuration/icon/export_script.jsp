@@ -22,7 +22,7 @@
 	id="exportScript"
 	markupView="lexicon"
 	message="export-script"
-	url="javascript:;"
+	url="javascript:void(0);"
 />
 
 <liferay-frontend:component

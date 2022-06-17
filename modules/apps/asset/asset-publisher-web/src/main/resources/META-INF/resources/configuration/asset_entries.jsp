@@ -164,7 +164,7 @@ for (long groupId : groupIds) {
 						data="<%= data %>"
 						id="<%= curGroupId + FriendlyURLNormalizerUtil.normalize(type) %>"
 						message="<%= HtmlUtil.escape(type) %>"
-						url="javascript:;"
+						url="javascript:void(0);"
 					/>
 				</c:when>
 				<c:otherwise>
@@ -193,7 +193,7 @@ for (long groupId : groupIds) {
 							data="<%= data %>"
 							id="<%= curGroupId + FriendlyURLNormalizerUtil.normalize(type) %>"
 							message="<%= HtmlUtil.escape(type) %>"
-							url="javascript:;"
+							url="javascript:void(0);"
 						/>
 
 					<%

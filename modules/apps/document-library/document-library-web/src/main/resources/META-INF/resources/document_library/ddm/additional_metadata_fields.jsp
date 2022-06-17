@@ -50,7 +50,7 @@ DLFileEntryAdditionalMetadataSetsDisplayContext dlFileEntryAdditionalMetadataSet
 		/>
 
 		<liferay-ui:search-container-column-text>
-			<a class="modify-link" data-rowId="<%= curDDMStructure.getStructureId() %>" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= removeStructureIcon %></a>
+			<a class="modify-link" data-rowId="<%= curDDMStructure.getStructureId() %>" href="javascript:void(0);" title="<%= LanguageUtil.get(request, "remove") %>"><%= removeStructureIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
@@ -85,7 +85,7 @@ DLFileEntryAdditionalMetadataSetsDisplayContext dlFileEntryAdditionalMetadataSet
 					var ddmStructureLink =
 						'<a class="modify-link" data-rowId="' +
 						selectedItem.ddmstructureid +
-						'" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
+						'" href="javascript:void(0);" title="<%= LanguageUtil.get(request, "remove") %>"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
 
 					searchContainer.addRow(
 						[

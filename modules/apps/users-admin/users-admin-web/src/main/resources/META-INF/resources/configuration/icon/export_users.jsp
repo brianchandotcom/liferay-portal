@@ -36,5 +36,5 @@ int status = GetterUtil.getInteger(request.getAttribute(UsersAdminWebKeys.STATUS
 	message="export-users"
 	method="get"
 	onClick="<%= onClickFn %>"
-	url="javascript:;"
+	url="javascript:void(0);"
 />

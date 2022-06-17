@@ -76,7 +76,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 				<div class="delete-attachment" data-rowid="<%= attachmentsFileEntry.getFileEntryId() %>" data-url="<%= deleteURL.toString() %>">
 					<liferay-ui:icon-delete
 						trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-						url="javascript:;"
+						url="javascript:void(0);"
 					/>
 				</div>
 			</c:if>

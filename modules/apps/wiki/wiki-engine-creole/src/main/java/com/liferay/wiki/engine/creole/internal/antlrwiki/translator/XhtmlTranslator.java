@@ -193,7 +193,8 @@ public class XhtmlTranslator extends XhtmlTranslationVisitor {
 		append(title);
 
 		append(StringPool.NBSP);
-		append("<a class=\"toc-trigger\" href=\"javascript:;\">[-]</a></h4>");
+		append("<a class=\"toc-trigger\" href=\"javascript:void(0);\">[-]");
+		append("</a></h4>");
 		append("<div class=\"toc-index\">");
 
 		_appendTableOfContents(tableOfContents, 1);

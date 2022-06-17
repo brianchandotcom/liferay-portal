@@ -27,7 +27,7 @@ ToolbarItem toolbarItem = (ToolbarItem)request.getAttribute("liferay-ui:toolbar-
 		JavaScriptToolbarItem javaScriptToolbarItem = (JavaScriptToolbarItem)toolbarItem;
 		%>
 
-		<aui:a cssClass="btn btn-secondary" href="javascript:;" onClick="<%= javaScriptToolbarItem.getOnClick() %>">
+		<aui:a cssClass="btn btn-secondary" href="javascript:void(0);" onClick="<%= javaScriptToolbarItem.getOnClick() %>">
 			<c:if test="<%= Validator.isNotNull(javaScriptToolbarItem.getIcon()) %>">
 				<aui:icon image="<%= javaScriptToolbarItem.getIcon() %>" markupView="lexicon" />
 			</c:if>

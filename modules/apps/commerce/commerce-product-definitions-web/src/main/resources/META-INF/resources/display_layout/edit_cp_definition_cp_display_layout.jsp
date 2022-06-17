@@ -97,7 +97,7 @@ String searchContainerId = "CPDefinitionsSearchContainer";
 						/>
 
 						<liferay-ui:search-container-column-text>
-							<a class="float-right modify-link" data-rowId="<%= cpDefinition.getCPDefinitionId() %>" href="javascript:;"><%= removeCPDefinitionIcon %></a>
+							<a class="float-right modify-link" data-rowId="<%= cpDefinition.getCPDefinitionId() %>" href="javascript:void(0);"><%= removeCPDefinitionIcon %></a>
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 

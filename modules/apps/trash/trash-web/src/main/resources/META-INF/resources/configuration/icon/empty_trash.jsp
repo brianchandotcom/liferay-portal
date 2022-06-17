@@ -32,5 +32,5 @@
 	id="emptyRecycleBinButton"
 	message="empty-the-recycle-bin"
 	onClick="<%= onClickFn %>"
-	url="javascript:;"
+	url="javascript:void(0);"
 />

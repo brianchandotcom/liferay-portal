@@ -273,7 +273,7 @@
 
 					item.action = '';
 					item.disabled = true;
-					item.href = 'javascript:;';
+					item.href = 'javascript:void(0);';
 					item.onsubmit = emptyFnFalse;
 				}
 			}
@@ -354,7 +354,7 @@
 
 				// LPS-127302
 
-				if (url === 'javascript:;') {
+				if (url === 'javascript:void(0);') {
 					return;
 				}
 

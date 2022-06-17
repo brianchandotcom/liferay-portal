@@ -102,7 +102,7 @@ export default function ({
 							rowColumns.push(selectedItem.groupdescriptivename);
 
 							rowColumns.push(
-								`<a class="modify-link" data-entityid="${selectedItem.entityid}" href="javascript:;">${removeDepotRoleIcon}</a>`
+								`<a class="modify-link" data-entityid="${selectedItem.entityid}" href="javascript:void(0);">${removeDepotRoleIcon}</a>`
 							);
 
 							searchContainer.addRow(

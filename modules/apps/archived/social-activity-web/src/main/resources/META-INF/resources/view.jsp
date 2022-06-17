@@ -51,7 +51,7 @@
 								<div class="social-activity-item-content">
 									<aui:input disabled="<%= !SocialActivityPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.CONFIGURATION) %>" inlineField="<%= true %>" label="" name='<%= className + ".enabled" %>' title="enabled" type="checkbox" value="<%= entry.getValue() %>" />
 
-									<a class="settings-label" href="javascript:;"><%= localizedClassName %></a>
+									<a class="settings-label" href="javascript:void(0);"><%= localizedClassName %></a>
 								</div>
 							</h4>
 

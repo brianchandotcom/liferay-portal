@@ -57,7 +57,7 @@ SearchContainer<com.liferay.dynamic.data.mapping.model.DDMStructure> ddmStructur
 									"name", ddmStructure.getName(locale)
 								).build()
 							%>'
-							href="javascript:;"
+							href="javascript:void(0);"
 						>
 							<%= HtmlUtil.escape(ddmStructure.getUnambiguousName(ddmStructureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
 						</aui:a>

@@ -67,7 +67,7 @@ renderResponse.setTitle(cpDefinition.getName(themeDisplay.getLanguageId()));
 			<liferay-frontend:add-menu-item
 				id="addDefinitionGroupedEntry"
 				title='<%= cpDefinitionGroupedEntriesDisplayContext.getLabel(locale, "add-grouped-entry") %>'
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>

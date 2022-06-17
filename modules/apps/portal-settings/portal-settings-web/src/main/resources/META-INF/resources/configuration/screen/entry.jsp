@@ -64,7 +64,7 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 							message="reset-values"
 							method="post"
 							onClick="<%= taglibOnClick %>"
-							url="javascript:;"
+							url="javascript:void(0);"
 						/>
 					</c:if>
 
@@ -73,7 +73,7 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 							message='<%= GetterUtil.getString(portalSettingsConfigurationScreenContributor.getTestButtonLabel(locale), LanguageUtil.get(request, "test")) %>'
 							method="post"
 							onClick="<%= portalSettingsConfigurationScreenContributor.getTestButtonOnClick(renderRequest, renderResponse) %>"
-							url="javascript:;"
+							url="javascript:void(0);"
 						/>
 					</c:if>
 				</liferay-ui:icon-menu>

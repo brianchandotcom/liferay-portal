@@ -42,7 +42,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 					linkCssClass="btn btn-secondary btn-sm"
 					message="select"
 					method="get"
-					url="javascript:;"
+					url="javascript:void(0);"
 				/>
 			</clay:content-col>
 		</span>
@@ -106,7 +106,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 
 		<c:if test="<%= depotAdminRolesDisplayContext.isDeletable() %>">
 			<liferay-ui:search-container-column-text>
-				<a class="modify-link" data-entityId="<%= userGroupRole.getGroupId() %>-<%= userGroupRole.getRoleId() %>" href="javascript:;"><%= removeDepotRoleIcon %></a>
+				<a class="modify-link" data-entityId="<%= userGroupRole.getGroupId() %>-<%= userGroupRole.getRoleId() %>" href="javascript:void(0);"><%= removeDepotRoleIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</c:if>
 	</liferay-ui:search-container-row>

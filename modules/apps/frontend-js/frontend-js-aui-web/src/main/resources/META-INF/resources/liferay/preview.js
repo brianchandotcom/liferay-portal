@@ -54,12 +54,12 @@ AUI.add(
 			'<div class="lfr-preview-file-loading-indicator hide">{0}&nbsp;</div>';
 
 		var TPL_MAX_ARROW_LEFT =
-			'<a href="javascript:;" class="image-viewer-control carousel-control carousel-control-prev left lfr-preview-file-arrow">' +
+			'<a href="javascript:void(0);" class="image-viewer-control carousel-control carousel-control-prev left lfr-preview-file-arrow">' +
 			Liferay.Util.getLexiconIconTpl('angle-left') +
 			'</a>';
 
 		var TPL_MAX_ARROW_RIGHT =
-			'<a href="javascript:;" class="image-viewer-control carousel-control carousel-control-next right lfr-preview-file-arrow">' +
+			'<a href="javascript:void(0);" class="image-viewer-control carousel-control carousel-control-next right lfr-preview-file-arrow">' +
 			Liferay.Util.getLexiconIconTpl('angle-right') +
 			'</a>';
 

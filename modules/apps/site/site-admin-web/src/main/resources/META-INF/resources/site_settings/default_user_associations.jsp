@@ -92,7 +92,7 @@ for (long defaultTeamId : defaultTeamIds) {
 		/>
 
 		<liferay-ui:search-container-column-text>
-			<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
+			<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:void(0);"><%= removeRoleIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
@@ -142,7 +142,7 @@ for (long defaultTeamId : defaultTeamIds) {
 		/>
 
 		<liferay-ui:search-container-column-text>
-			<a class="modify-link" data-rowId="<%= team.getTeamId() %>" href="javascript:;"><%= removeRoleIcon %></a>
+			<a class="modify-link" data-rowId="<%= team.getTeamId() %>" href="javascript:void(0);"><%= removeRoleIcon %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
@@ -198,7 +198,7 @@ for (long defaultTeamId : defaultTeamIds) {
 						A.Escape.html(event.entityname),
 						'<a class="modify-link" data-rowId="' +
 							entityId +
-							'" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>',
+							'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>',
 					];
 
 					searchContainer.addRow(rowColumns, entityId);

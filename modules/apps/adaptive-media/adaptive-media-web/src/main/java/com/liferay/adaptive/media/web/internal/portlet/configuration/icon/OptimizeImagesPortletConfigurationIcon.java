@@ -97,7 +97,7 @@ public class OptimizeImagesPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		if (_isDisabled(themeDisplay.getCompanyId())) {
-			return "javascript:;";
+			return "javascript:void(0);";
 		}
 
 		return PortletURLBuilder.create(

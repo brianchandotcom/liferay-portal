@@ -211,7 +211,7 @@
 								linkCssClass="<%= linkCssClass %>"
 								markupView="lexicon"
 								message="<%= linkContent %>"
-								url="javascript:;"
+								url="javascript:void(0);"
 							>
 							</liferay-ui:icon>
 

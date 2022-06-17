@@ -80,7 +80,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 					linkCssClass="btn btn-secondary btn-sm"
 					message='<%= (accountEntryDisplay.getDefaultBillingAddress() == null) ? "set-default-address" : "change" %>'
 					method="get"
-					url="javascript:;"
+					url="javascript:void(0);"
 				/>
 
 				<c:if test="<%= accountEntryDisplay.getDefaultBillingAddress() != null %>">
@@ -147,7 +147,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 					linkCssClass="btn btn-secondary btn-sm"
 					message='<%= (accountEntryDisplay.getDefaultShippingAddress() == null) ? "set-default-address" : "change" %>'
 					method="get"
-					url="javascript:;"
+					url="javascript:void(0);"
 				/>
 
 				<c:if test="<%= accountEntryDisplay.getDefaultShippingAddress() != null %>">

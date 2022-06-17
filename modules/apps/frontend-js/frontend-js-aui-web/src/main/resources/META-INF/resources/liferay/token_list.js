@@ -27,7 +27,7 @@ AUI().add(
 			'<span class="lfr-token" data-fieldValues="{fieldValues}" data-clearFields="{clearFields}">',
 			'<span class="align-middle d-inline-block">{text:this.getTokenText}</span>',
 
-			'<a class="align-middle c-ml-1 d-inline-block icon icon-remove lfr-token-close" href="javascript:;"></a>',
+			'<a class="align-middle c-ml-1 d-inline-block icon icon-remove lfr-token-close" href="javascript:void(0);"></a>',
 			'</span>',
 			'</tpl>',
 			{

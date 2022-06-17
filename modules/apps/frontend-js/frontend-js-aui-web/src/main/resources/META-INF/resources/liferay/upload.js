@@ -54,12 +54,12 @@ AUI.add(
 			'</span>',
 			'</div>',
 			'<div class="autofit-col delete-button-col">',
-			'<a class="delete-button lfr-button" href="javascript:;" id="{id}deleteButton" title="{[ this.strings.deleteFileText ]}">',
+			'<a class="delete-button lfr-button" href="javascript:void(0);" id="{id}deleteButton" title="{[ this.strings.deleteFileText ]}">',
 			Liferay.Util.getLexiconIconTpl('times'),
 			'</a>',
 			'</div>',
 
-			'<a class="cancel-button lfr-button" href="javascript:;" id="{id}cancelButton">',
+			'<a class="cancel-button lfr-button" href="javascript:void(0);" id="{id}cancelButton">',
 			Liferay.Util.getLexiconIconTpl('times'),
 			'<span class="cancel-button-text">{[ this.strings.cancelFileText ]}</span>',
 			'</a>',
@@ -162,8 +162,8 @@ AUI.add(
 			'</div>',
 			'</tpl>',
 
-			'<a class="cancel-uploads hide lfr-button" href="javascript:;">{[ this.cancelUploadsText ]}</a>',
-			'<a class="clear-uploads hide lfr-button" href="javascript:;">{[ this.strings.clearRecentUploadsText ]}</a>',
+			'<a class="cancel-uploads hide lfr-button" href="javascript:void(0);">{[ this.cancelUploadsText ]}</a>',
+			'<a class="clear-uploads hide lfr-button" href="javascript:void(0);">{[ this.strings.clearRecentUploadsText ]}</a>',
 			'</div>',
 
 			'<div class="upload-list" id="{$ns}fileList">',

@@ -57,7 +57,7 @@ SearchContainer<DDMStructure> ddmStructureSearch = journalSelectDDMStructureDisp
 									"name", HtmlUtil.escape(ddmStructure.getName(locale))
 								).build()
 							%>'
-							href="javascript:;"
+							href="javascript:void(0);"
 						>
 							<%= HtmlUtil.escape(ddmStructure.getUnambiguousName(ddmStructureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
 						</aui:a>

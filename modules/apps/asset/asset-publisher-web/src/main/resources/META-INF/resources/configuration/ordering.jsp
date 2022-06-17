@@ -50,7 +50,7 @@
 				linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 				markupView="lexicon"
 				message="descending"
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 
 			<liferay-ui:icon
@@ -59,7 +59,7 @@
 				linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 				markupView="lexicon"
 				message="ascending"
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 
 			<aui:input cssClass="order-by-type-field" name="preferences--orderByType1--" type="hidden" value="<%= orderByType1 %>" />
@@ -99,7 +99,7 @@
 				linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 				markupView="lexicon"
 				message="descending"
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 
 			<liferay-ui:icon
@@ -108,7 +108,7 @@
 				linkCssClass="btn btn-outline-borderless btn-outline-secondary"
 				markupView="lexicon"
 				message="ascending"
-				url="javascript:;"
+				url="javascript:void(0);"
 			/>
 
 			<aui:input cssClass="order-by-type-field" name="preferences--orderByType2--" type="hidden" value="<%= orderByType2 %>" />

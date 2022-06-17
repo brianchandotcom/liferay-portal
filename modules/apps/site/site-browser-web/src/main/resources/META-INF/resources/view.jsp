@@ -63,7 +63,7 @@
 						<h5>
 							<c:choose>
 								<c:when test="<%= siteBrowserDisplayContext.isShowLink(group) %>">
-									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
 										<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 									</aui:a>
 								</c:when>
@@ -92,7 +92,7 @@
 					>
 						<c:choose>
 							<c:when test="<%= siteBrowserDisplayContext.isShowLink(group) %>">
-								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
 									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 								</aui:a>
 							</c:when>

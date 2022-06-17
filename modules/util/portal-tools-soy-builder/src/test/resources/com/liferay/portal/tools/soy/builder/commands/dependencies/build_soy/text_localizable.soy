@@ -61,7 +61,7 @@
 			{if $tooltip}
 				<span class="input-group-addon">
 					<span class="input-group-addon-content">
-						<a class="help-icon help-icon-default icon-monospaced icon-question" data-original-title="{$tooltip}" href="javascript:;" title="{$tooltip}"></a>
+						<a class="help-icon help-icon-default icon-monospaced icon-question" data-original-title="{$tooltip}" href="javascript:void(0);" title="{$tooltip}"></a>
 					</span>
 				</span>
 			{/if}
@@ -103,7 +103,7 @@
  */
 {template .flag autoescape="deprecated-contextual"}
 	<li class="palette-item {if $index == 0}palette-item-selected lfr-input-localized-default{/if}" data-index="{$index}" data-title="{$label}" data-value="{$languageId}" role="menuitem" style="display: inline-block;">
-		<a class="palette-item-inner" data-languageid="{$languageId}" href="javascript:;">
+		<a class="palette-item-inner" data-languageid="{$languageId}" href="javascript:void(0);">
 			<span class="lfr-input-localized-flag">
 				<svg class="lexicon-icon">
 					<use xlink:href="{$icon}" />

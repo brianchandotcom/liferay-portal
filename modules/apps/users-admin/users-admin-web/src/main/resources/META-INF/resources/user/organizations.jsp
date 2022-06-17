@@ -53,7 +53,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					linkCssClass="btn btn-secondary btn-sm"
 					message="select"
 					method="get"
-					url="javascript:;"
+					url="javascript:void(0);"
 				/>
 			</span>
 		</clay:content-col>
@@ -122,7 +122,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && ((selUser == null) || !OrganizationMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), organization.getOrganizationId())) %>">
 			<liferay-ui:search-container-column-text>
-				<a class="modify-link" data-rowId="<%= organization.getOrganizationId() %>" href="javascript:;"><%= removeOrganizationIcon %></a>
+				<a class="modify-link" data-rowId="<%= organization.getOrganizationId() %>" href="javascript:void(0);"><%= removeOrganizationIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</c:if>
 	</liferay-ui:search-container-row>
@@ -211,7 +211,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 							rowColumns.push(
 								'<a class="modify-link" data-rowId="' +
 									entityId +
-									'" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>'
+									'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>'
 							);
 
 							searchContainer.addRow(rowColumns, entityId);

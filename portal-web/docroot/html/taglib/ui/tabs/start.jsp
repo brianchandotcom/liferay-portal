@@ -124,7 +124,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 					<ul class="nav navbar-nav">
 						<c:if test="<%= names.length > 1 %>">
 							<li class="active dropdown nav-item">
-								<a class="dropdown-toggle nav-link" data-toggle="liferay-dropdown" href="javascript:;">
+								<a class="dropdown-toggle nav-link" data-toggle="liferay-dropdown" href="javascript:void(0);">
 									<span class="navbar-text-truncate" id="<%= namespace + param + "dropdownTitle" %>"><%= LanguageUtil.get(resourceBundle, HtmlUtil.escape(name)) %></span>
 
 									<aui:icon image="caret-bottom" markupView="lexicon" />
@@ -188,7 +188,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 			}
 			else {
 				curOnClick = "Liferay.Portal.Tabs.show('" + namespace + param + "', " + namesJS + ", '" + UnicodeFormatter.toString(names[i]) + "', " + onClick + ");";
-				curURL = "javascript:;";
+				curURL = "javascript:void(0);";
 			}
 		}
 
@@ -202,7 +202,7 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 	%>
 
 		<li class="nav-item" data-tab-name="<%= names[i] %>" id="<%= namespace %><%= param %><%= StringUtil.toCharCode(values[i]) %>TabsId">
-			<a class="<%= linkCssClass %>" href="<%= Validator.isNotNull(curURL) ? HtmlUtil.escapeAttribute(curURL) : "javascript:;" %>" onClick="<%= Validator.isNotNull(curOnClick) ? curOnClick : StringPool.BLANK %>">
+			<a class="<%= linkCssClass %>" href="<%= Validator.isNotNull(curURL) ? HtmlUtil.escapeAttribute(curURL) : "javascript:void(0);" %>" onClick="<%= Validator.isNotNull(curOnClick) ? curOnClick : StringPool.BLANK %>">
 				<%= LanguageUtil.get(resourceBundle, HtmlUtil.escape(names[i])) %>
 			</a>
 		</li>

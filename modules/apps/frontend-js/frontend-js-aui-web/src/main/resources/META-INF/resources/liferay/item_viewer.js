@@ -618,7 +618,7 @@ AUI.add(
 					CSS_FOOTER_CONTROL_LEFT_BASE +
 					' ' +
 					CSS_FOOTER_CONTROL_LEFT +
-					'" href="javascript:;">' +
+					'" href="javascript:void(0);">' +
 					'<span class="' +
 					CSS_ICON_MONOSPACED +
 					'">' +
@@ -633,7 +633,7 @@ AUI.add(
 					CSS_FOOTER_CONTROL_RIGHT_BASE +
 					' ' +
 					CSS_FOOTER_CONTROL_RIGHT +
-					'" href="javascript:;">' +
+					'" href="javascript:void(0);">' +
 					'<span class="' +
 					CSS_ICON_MONOSPACED +
 					'">' +

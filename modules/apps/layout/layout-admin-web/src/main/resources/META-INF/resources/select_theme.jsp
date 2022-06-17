@@ -71,7 +71,7 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 						colspan="<%= 2 %>"
 					>
 						<h5>
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
 								<%= theme.getName() %>
 							</aui:a>
 						</h5>
@@ -100,7 +100,7 @@ SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayCont
 						name="name"
 						truncate="<%= true %>"
 					>
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
 							<%= theme.getName() %>
 						</aui:a>
 					</liferay-ui:search-container-column-text>

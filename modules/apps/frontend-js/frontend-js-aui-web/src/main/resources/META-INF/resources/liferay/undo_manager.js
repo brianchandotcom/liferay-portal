@@ -34,10 +34,14 @@ AUI.add(
 		var CSS_QUEUE_SINGLE = 'lfr-queue-single';
 
 		var TPL_ACTION_CLEAR =
-			'<a class="' + CSS_ACTION_CLEAR + '" href="javascript:;"></a>';
+			'<a class="' +
+			CSS_ACTION_CLEAR +
+			'" href="javascript:void(0);"></a>';
 
 		var TPL_ACTION_UNDO =
-			'<a class="' + CSS_ACTION_UNDO + '" href="javascript:;"></a>';
+			'<a class="' +
+			CSS_ACTION_UNDO +
+			'" href="javascript:void(0);"></a>';
 
 		var TPL_UNDO_TEXT = '<span class="' + CSS_ITEMS_LEFT + '">(0)</span>';
 

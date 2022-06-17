@@ -169,7 +169,7 @@ AUI.add(
 			'<tpl if="rows.length">',
 			'<div class="settings-field-buttons">',
 			'<tpl for="buttons">',
-			'<a class="settings-button settings-button-{type}" href="javascript:;" title="{title}">',
+			'<a class="settings-button settings-button-{type}" href="javascript:void(0);" title="{title}">',
 			'<span class="settings-icon settings-icon-{type} {cssClass}">{text}</span>',
 			'</a>',
 			'</tpl>',

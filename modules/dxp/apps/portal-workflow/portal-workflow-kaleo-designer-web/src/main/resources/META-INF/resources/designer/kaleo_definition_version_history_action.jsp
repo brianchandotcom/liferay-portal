@@ -52,7 +52,7 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 		<liferay-ui:icon
 			id='<%= "previewBeforeRevert" + kaleoDefinitionVersion.getVersion() %>'
 			message="preview"
-			url="javascript:;"
+			url="javascript:void(0);"
 		/>
 
 		<liferay-ui:icon

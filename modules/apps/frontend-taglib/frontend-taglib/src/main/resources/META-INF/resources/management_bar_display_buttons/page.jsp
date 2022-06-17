@@ -48,7 +48,7 @@ for (String displayStyle : defaultViews) {
 		active="<%= displayStyle.equals(selectedDisplayStyle) %>"
 		cssClass="<%= cssClass %>"
 		disabled="<%= disabled || !ArrayUtil.contains(displayViews, displayStyle) %>"
-		href='<%= (disabled || !ArrayUtil.contains(displayViews, displayStyle)) ? "javascript:;" : displayStyleURL.toString() %>'
+		href='<%= (disabled || !ArrayUtil.contains(displayViews, displayStyle)) ? "javascript:void(0);" : displayStyleURL.toString() %>'
 		icon="<%= icon %>"
 		label="<%= displayStyle %>"
 	/>

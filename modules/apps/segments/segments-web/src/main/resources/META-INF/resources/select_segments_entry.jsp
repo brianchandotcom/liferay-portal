@@ -59,7 +59,7 @@ SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSeg
 									"entityname", segmentsEntry.getName(locale)
 								).build()
 							%>'
-							href="javascript:;"
+							href="javascript:void(0);"
 						>
 							<%= HtmlUtil.escape(segmentsEntry.getName(locale)) %>
 						</aui:a>

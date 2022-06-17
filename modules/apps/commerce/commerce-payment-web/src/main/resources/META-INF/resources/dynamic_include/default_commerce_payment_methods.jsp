@@ -69,7 +69,7 @@ CommercePaymentMethodRegistry commercePaymentMethodRegistry = (CommercePaymentMe
 					linkCssClass="btn btn-secondary btn-sm"
 					message='<%= (Validator.isNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) || (commercePaymentMethodRegistry.getCommercePaymentMethod(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) == null)) ? "set-default-commerce-payment-method" : "change" %>'
 					method="get"
-					url="javascript:;"
+					url="javascript:void(0);"
 				/>
 
 				<c:if test="<%= Validator.isNotNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) && (commercePaymentMethodRegistry.getCommercePaymentMethod(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) != null) %>">

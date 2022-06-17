@@ -21,5 +21,5 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <liferay-theme:defineObjects />
 
 <div class="alert alert-info text-center">
-	<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="search-options-help" /></aui:a>
+	<aui:a href="javascript:void(0);" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="search-options-help" /></aui:a>
 </div>

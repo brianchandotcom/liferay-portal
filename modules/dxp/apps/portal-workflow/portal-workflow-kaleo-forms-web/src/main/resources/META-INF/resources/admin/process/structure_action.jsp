@@ -43,12 +43,12 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 	<liferay-ui:icon
 		message="edit"
 		onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "editStructure('" + LanguageUtil.format(request, "edit-x", LanguageUtil.get(request, "field-set"), false) + "','" + editURL + "');" %>'
-		url="javascript:;"
+		url="javascript:void(0);"
 	/>
 
 	<liferay-ui:icon
 		message="choose"
 		onClick='<%= "Liferay.fire('" + liferayPortletResponse.getNamespace() + "chooseDefinition', {ddmStructureId: " + ddmStructure.getStructureId() + ", name: '" + HtmlUtil.escapeJS(ddmStructure.getName(locale)) + "', node: this});" %>'
-		url="javascript:;"
+		url="javascript:void(0);"
 	/>
 </liferay-ui:icon-menu>

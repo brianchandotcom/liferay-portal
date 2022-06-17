@@ -29,7 +29,7 @@ AUI.add(
 			'<div class="progress-container">' +
 			'<div class="upload-details">' +
 			'<strong id="{0}itemName"></strong>' +
-			'<a href="javascript:;" id="{0}cancel">' +
+			'<a href="javascript:void(0);" id="{0}cancel">' +
 			Liferay.Language.get('cancel') +
 			'</a>' +
 			'</div>' +

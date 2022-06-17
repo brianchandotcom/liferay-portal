@@ -165,7 +165,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = (LayoutsTreeDisplayContext
 									<clay:content-row
 										containerElement="a"
 										cssClass="dropdown-item layout-action"
-										href="javascript:;"
+										href="javascript:void(0);"
 									>
 										<clay:content-col
 											containerElement="span"

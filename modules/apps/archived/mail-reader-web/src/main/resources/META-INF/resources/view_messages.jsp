@@ -99,7 +99,7 @@ MailManager mailManager = MailManager.getInstance(request);
 								}
 								%>
 
-								<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= MailConstants.ORDER_BY_ADDRESS %>" data-orderByType="<%= addressOrderByType %>" data-pageNumber="1" href="javascript:;" label="address" />
+								<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= MailConstants.ORDER_BY_ADDRESS %>" data-orderByType="<%= addressOrderByType %>" data-pageNumber="1" href="javascript:void(0);" label="address" />
 							</th>
 							<th class="subject">
 
@@ -111,7 +111,7 @@ MailManager mailManager = MailManager.getInstance(request);
 								}
 								%>
 
-								<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= MailConstants.ORDER_BY_SUBJECT %>" data-orderByType="<%= subjectOrderByType %>" data-pageNumber="1" href="javascript:;" label="subject" />
+								<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= MailConstants.ORDER_BY_SUBJECT %>" data-orderByType="<%= subjectOrderByType %>" data-pageNumber="1" href="javascript:void(0);" label="subject" />
 							</th>
 							<th class="attachments"></th>
 							<th class="date">
@@ -124,7 +124,7 @@ MailManager mailManager = MailManager.getInstance(request);
 								}
 								%>
 
-								<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= MailConstants.ORDER_BY_SENT_DATE %>" data-orderByType="<%= dateOrderByType %>" data-pageNumber="1" href="javascript:;" label="date" />
+								<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= MailConstants.ORDER_BY_SENT_DATE %>" data-orderByType="<%= dateOrderByType %>" data-pageNumber="1" href="javascript:void(0);" label="date" />
 							</th>
 						</tr>
 					</thead>
@@ -227,16 +227,16 @@ MailManager mailManager = MailManager.getInstance(request);
 
 			<ul class="message-pager pager pull-right">
 				<li class="<%= ((messagesDisplay.getPageNumber() > 2) ? StringPool.BLANK : "disabled ") + "previous" %>">
-					<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= orderByField %>" data-orderByType="<%= orderByType %>" data-pageNumber="1" href="javascript:;">&larr; <liferay-ui:message key="newest" /></aui:a>
+					<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= orderByField %>" data-orderByType="<%= orderByType %>" data-pageNumber="1" href="javascript:void(0);">&larr; <liferay-ui:message key="newest" /></aui:a>
 				</li>
 				<li class="<%= ((messagesDisplay.getPageNumber() > 1) ? StringPool.BLANK : "disabled ") + "previous" %>">
-					<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= orderByField %>" data-orderByType="<%= orderByType %>" data-pageNumber="<%= pageNumber - 1 %>" href="javascript:;"><liferay-ui:message key="newer" /></aui:a>
+					<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= orderByField %>" data-orderByType="<%= orderByType %>" data-pageNumber="<%= pageNumber - 1 %>" href="javascript:void(0);"><liferay-ui:message key="newer" /></aui:a>
 				</li>
 				<li class="message-count">
 					<liferay-ui:message arguments='<%= new Object[] {messagesDisplay.getStartMessageNumber() + " - " + messagesDisplay.getEndMessageNumber(), messagesDisplay.getMessageCount()} %>' key="x-of-x" translateArguments="<%= false %>" />
 				</li>
 				<li class="<%= ((messagesDisplay.getPageNumber() < messagesDisplay.getPageCount()) ? StringPool.BLANK : "disabled ") + "next" %>">
-					<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= orderByField %>" data-orderByType="<%= orderByType %>" data-pageNumber="<%= pageNumber + 1 %>" href="javascript:;"><liferay-ui:message key="older" /> &rarr;</aui:a>
+					<aui:a cssClass="messages-link" data-folderId="<%= folderId %>" data-keywords="<%= keywords %>" data-orderByField="<%= orderByField %>" data-orderByType="<%= orderByType %>" data-pageNumber="<%= pageNumber + 1 %>" href="javascript:void(0);"><liferay-ui:message key="older" /> &rarr;</aui:a>
 				</li>
 			</ul>
 		</c:otherwise>

@@ -106,7 +106,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 					%>
 
 					<li class="nav-item permission-navigation-section">
-						<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-expanded" href="javascript:;">
+						<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-expanded" href="javascript:void(0);">
 							<liferay-ui:message key="control-panel" />
 
 							<span class="collapse-icon-closed">
@@ -135,7 +135,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 
 								<c:if test="<%= !panelApps.isEmpty() %>">
 									<div class="permission-navigation-section">
-										<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
+										<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:void(0);">
 											<%= panelCategory.getLabel(locale) %>
 											<span class="collapse-icon-closed">
 												<aui:icon image="caret-right" markupView="lexicon" />
@@ -190,7 +190,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 						</div>
 					</li>
 					<li class="nav-item permission-navigation-section">
-						<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-expanded" href="javascript:;">
+						<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-expanded" href="javascript:void(0);">
 							<liferay-ui:message key="commerce" />
 
 							<span class="collapse-icon-closed">
@@ -210,7 +210,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 
 								<c:if test="<%= !panelApps.isEmpty() %>">
 									<div class="permission-navigation-section">
-										<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
+										<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:void(0);">
 											<%= panelCategory.getLabel(locale) %>
 											<span class="collapse-icon-closed">
 												<aui:icon image="caret-right" markupView="lexicon" />
@@ -265,7 +265,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 						</div>
 					</li>
 					<li class="nav-item permission-navigation-section">
-						<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-expanded" href="javascript:;">
+						<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-expanded" href="javascript:void(0);">
 							<liferay-ui:message key="applications-menu" />
 
 							<span class="collapse-icon-closed">
@@ -285,7 +285,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 
 								<c:if test="<%= !panelApps.isEmpty() %>">
 									<div class="permission-navigation-section">
-										<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
+										<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:void(0);">
 											<%= panelCategory.getLabel(locale) %>
 											<span class="collapse-icon-closed">
 												<aui:icon image="caret-right" markupView="lexicon" />
@@ -355,7 +355,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 
 					<c:if test="<%= !panelApps.isEmpty() %>">
 						<div class="permission-navigation-section">
-							<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
+							<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:void(0);">
 								<%= panelCategory.getLabel(locale) %>
 								<span class="collapse-icon-closed">
 									<aui:icon image="caret-right" markupView="lexicon" />
@@ -410,7 +410,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 			</c:if>
 
 			<li class="nav-item permission-navigation-section">
-				<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
+				<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:void(0);">
 					<liferay-ui:message key="site-and-asset-library-administration" />
 
 					<span class="collapse-icon-closed">
@@ -430,7 +430,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 
 						<c:if test="<%= !panelApps.isEmpty() %>">
 							<div class="permission-navigation-section">
-								<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
+								<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:void(0);">
 									<%= panelCategory.getLabel(locale) %>
 									<span class="collapse-icon-closed">
 										<aui:icon image="caret-right" markupView="lexicon" />
@@ -486,7 +486,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 					%>
 
 					<div class="permission-navigation-section">
-						<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
+						<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:void(0);">
 							<liferay-ui:message key="applications" />
 
 							<span class="collapse-icon-closed">
@@ -539,7 +539,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 
 			<c:if test="<%= role.getType() == RoleConstants.TYPE_REGULAR %>">
 				<li class="nav-item permission-navigation-section">
-					<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
+					<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:void(0);">
 						<liferay-ui:message key="user" />
 
 						<span class="collapse-icon-closed">
@@ -591,7 +591,7 @@ PersonalMenuEntryHelper personalMenuEntryHelper = (PersonalMenuEntryHelper)reque
 
 					<c:if test="<%= !ListUtil.isEmpty(panelAppRegistry.getPanelApps(panelCategory)) %>">
 						<li class="nav-item permission-navigation-section">
-							<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
+							<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:void(0);">
 								<liferay-ui:message key="<%= panelCategory.getLabel(locale) %>" />
 
 								<span class="collapse-icon-closed">

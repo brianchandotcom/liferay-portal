@@ -75,7 +75,7 @@
 			</c:if>
 
 			<c:if test="<%= searchResultSummaryDisplayContext.isDocumentFormVisible() %>">
-				<div class="expand-details text-default"><a href="javascript:;"><liferay-ui:message key="details" />...</a></div>
+				<div class="expand-details text-default"><a href="javascript:void(0);"><liferay-ui:message key="details" />...</a></div>
 
 				<div class="hide table-details table-responsive">
 					<table class="table">

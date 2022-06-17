@@ -87,7 +87,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 	<div class="pagination-bar" data-qa-id="paginator" id="<%= namespace + id %>">
 		<c:if test="<%= deltaConfigurable %>">
 			<div class="dropdown pagination-items-per-page">
-				<a class="dropdown-toggle page-link" data-toggle="liferay-dropdown" href="javascript:;">
+				<a class="dropdown-toggle page-link" data-toggle="liferay-dropdown" href="javascript:void(0);">
 					<liferay-ui:message arguments="<%= delta %>" key="x-entries" /><span class="sr-only"><%= StringPool.NBSP %><liferay-ui:message key="per-page" /></span>
 
 					<aui:icon image="caret-double-l" markupView="lexicon" />
@@ -177,7 +177,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 3, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, 3) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>3</a>
 					</li>
 					<li class="dropdown page-item">
-						<a class="dropdown-toggle page-link page-link" data-toggle="liferay-dropdown" href="javascript:;">
+						<a class="dropdown-toggle page-link page-link" data-toggle="liferay-dropdown" href="javascript:void(0);">
 							<span aria-hidden="true">...</span>
 
 							<span class="sr-only"><liferay-ui:message key="intermediate-pages" /></span>
@@ -213,7 +213,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						<a class="page-link" href="<%= _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) %>" onclick="<%= forcePost ? _getOnClick(namespace, curParam, 1) : "" %>"><span class="sr-only"><liferay-ui:message key="page" /><%= StringPool.NBSP %></span>1</a>
 					</li>
 					<li class="dropdown page-item">
-						<a class="dropdown-toggle page-link" data-toggle="liferay-dropdown" href="javascript:;">
+						<a class="dropdown-toggle page-link" data-toggle="liferay-dropdown" href="javascript:void(0);">
 							<span aria-hidden="true">...</span>
 
 							<span class="sr-only"><liferay-ui:message key="intermediate-pages" /></span>
@@ -254,7 +254,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 					<c:if test="<%= (cur - 3) > 1 %>">
 						<li class="dropdown page-item">
-							<a class="dropdown-toggle page-link" data-toggle="liferay-dropdown" href="javascript:;">
+							<a class="dropdown-toggle page-link" data-toggle="liferay-dropdown" href="javascript:void(0);">
 								<span aria-hidden="true">...</span>
 
 								<span class="sr-only"><liferay-ui:message key="intermediate-pages" /></span>
@@ -300,7 +300,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 					<c:if test="<%= (cur + 3) < pages %>">
 						<li class="dropdown page-item">
-							<a class="dropdown-toggle page-link" data-toggle="liferay-dropdown" href="javascript:;">
+							<a class="dropdown-toggle page-link" data-toggle="liferay-dropdown" href="javascript:void(0);">
 								<span aria-hidden="true">...</span>
 
 								<span class="sr-only"><liferay-ui:message key="intermediate-pages" /></span>

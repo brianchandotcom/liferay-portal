@@ -22,7 +22,7 @@
 	id="importScript"
 	markupView="lexicon"
 	message="import-script"
-	url="javascript:;"
+	url="javascript:void(0);"
 />
 
 <input class="d-none" id="<portlet:namespace />importScriptInput" type="file" />

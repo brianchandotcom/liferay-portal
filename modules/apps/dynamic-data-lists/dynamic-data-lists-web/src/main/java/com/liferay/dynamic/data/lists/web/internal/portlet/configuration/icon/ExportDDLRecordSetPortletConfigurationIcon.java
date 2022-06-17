@@ -65,7 +65,7 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return "javascript:;";
+		return "javascript:void(0);";
 	}
 
 	@Override

@@ -55,7 +55,7 @@ SelectRolesDisplayContext selectRolesDisplayContext = new SelectRolesDisplayCont
 						colspan="<%= 2 %>"
 					>
 						<h5>
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
 								<%= HtmlUtil.escape(role.getTitle(locale)) %>
 							</aui:a>
 						</h5>
@@ -75,7 +75,7 @@ SelectRolesDisplayContext selectRolesDisplayContext = new SelectRolesDisplayCont
 						name="title"
 						truncate="<%= true %>"
 					>
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:void(0);">
 							<%= HtmlUtil.escape(role.getTitle(locale)) %>
 						</aui:a>
 					</liferay-ui:search-container-column-text>

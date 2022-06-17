@@ -291,7 +291,7 @@ while (manageableCalendarsIterator.hasNext()) {
 				<aui:field-wrapper cssClass="calendar-portlet-recurrence-container" inlineField="<%= true %>" label="">
 					<aui:input checked="<%= recurring %>" name="repeat" type="checkbox" />
 
-					<a class="calendar-portlet-recurrence-summary" href="javascript:;" id="<portlet:namespace />summary"></a>
+					<a class="calendar-portlet-recurrence-summary" href="javascript:void(0);" id="<portlet:namespace />summary"></a>
 				</aui:field-wrapper>
 
 				<aui:input defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="description" />

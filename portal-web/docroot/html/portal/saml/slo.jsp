@@ -167,7 +167,7 @@ JSONArray samlSloRequestInfosJSONArray = samlSloContextJSONObject.getJSONArray("
 		'<tpl for="items">',
 			'<div class="saml-sp" id="samlSp{$i}">',
 				'<span class="portlet-msg-progress-label saml-sp-label">{name}</span>',
-				'<a class="hide saml-sp-retry" data-entityId="{entityId}" href="javascript:;"><%= UnicodeLanguageUtil.get(request, "retry") %></a>',
+				'<a class="hide saml-sp-retry" data-entityId="{entityId}" href="javascript:void(0);"><%= UnicodeLanguageUtil.get(request, "retry") %></a>',
 				'<iframe class="hide-accessible sr-only" src="?cmd=logout&entityId={entityId}"></iframe>',
 			'</div>',
 		'</tpl>'

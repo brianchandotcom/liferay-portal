@@ -239,7 +239,7 @@ public class SimulationProductNavigationControlMenuEntry
 			iconTag.setCssClass("close sidenav-close");
 			iconTag.setImage("times");
 			iconTag.setMarkupView("lexicon");
-			iconTag.setUrl("javascript:;");
+			iconTag.setUrl("javascript:void(0);");
 
 			values.put("sidebarIcon", iconTag.doTagAsString(pageContext));
 

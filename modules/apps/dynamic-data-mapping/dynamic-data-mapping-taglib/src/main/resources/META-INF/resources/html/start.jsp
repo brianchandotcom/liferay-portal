@@ -95,7 +95,7 @@
 									markupView="lexicon"
 									message="<%= StringUtil.replace(curLanguageId, '_', '-') %>"
 									onClick="event.preventDefault(); fireLocaleChanged(event);"
-									url="javascript:;"
+									url="javascript:void(0);"
 								>
 								</liferay-ui:icon>
 							</c:if>

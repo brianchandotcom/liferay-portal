@@ -57,7 +57,7 @@ export default function ({
 
 							rowColumns.push(selectedItem.name);
 							rowColumns.push(
-								`<a class="float-right modify-link" data-rowId="${selectedItem.id}" href="javascript:;">${removeCommerceChannelSiteIcon}</a>`
+								`<a class="float-right modify-link" data-rowId="${selectedItem.id}" href="javascript:void(0);">${removeCommerceChannelSiteIcon}</a>`
 							);
 
 							const siteGroupInput = document.getElementById(

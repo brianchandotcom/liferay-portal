@@ -34,7 +34,7 @@ boolean advancedSearch = displayTerms.isAdvancedSearch();
 			</div>
 		</div>
 
-		<a class="toggle-advanced" href="javascript:;" id="<%= id %>toggleAdvanced">
+		<a class="toggle-advanced" href="javascript:void(0);" id="<%= id %>toggleAdvanced">
 			<aui:icon image="search" markupView="lexicon" />
 			<aui:icon image="caret-bottom" markupView="lexicon" />
 		</a>

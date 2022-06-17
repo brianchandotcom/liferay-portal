@@ -23,7 +23,7 @@
 		[#assign notification_link =
 			themeDisplay.getPortalURL() + '/group' + themeDisplay.layout.getGroup().friendlyURL + '/manage?p_p_id=com_liferay_notifications_web_portlet_NotificationsPortlet&p_p_lifecycle=0' /]
 	[#else]
-		[#assign notification_link = "javascript:;" /]
+		[#assign notification_link = "javascript:void(0);" /]
 	[/#if]
 	<a href="${notification_link}">
 		<span class="notification-indicator">

@@ -100,7 +100,7 @@ public class ToggleControlsProductNavigationControlMenuEntry
 
 	@Override
 	public String getURL(HttpServletRequest httpServletRequest) {
-		return "javascript:;";
+		return "javascript:void(0);";
 	}
 
 	@Override

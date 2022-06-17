@@ -180,7 +180,7 @@ AUI.add(
 			var undoEvent = "'" + namespace + "undoDefinition'";
 
 			var undoLink =
-				'<a href="javascript:;" onclick=Liferay.fire(' +
+				'<a href="javascript:void(0);" onclick=Liferay.fire(' +
 				undoEvent +
 				'); class="alert-link">' +
 				undo +

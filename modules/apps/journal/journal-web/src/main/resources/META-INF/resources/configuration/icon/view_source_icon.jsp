@@ -19,7 +19,7 @@
 <liferay-ui:icon
 	id="viewResourcesButton"
 	message="view-source"
-	url="javascript:;"
+	url="javascript:void(0);"
 />
 
 <%

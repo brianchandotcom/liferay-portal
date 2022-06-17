@@ -70,7 +70,7 @@ AUI.add(
 		var TPL_LOADING = '<div class="loading-animation" />';
 
 		var TPL_SEARCH_FORM =
-			'<form action="javascript:;" class="form-search lfr-tag-selector-search">' +
+			'<form action="javascript:void(0);" class="form-search lfr-tag-selector-search">' +
 			'<input class="form-control lfr-tag-selector-input search-query" placeholder="{0}" type="text" />' +
 			'</form>';
 

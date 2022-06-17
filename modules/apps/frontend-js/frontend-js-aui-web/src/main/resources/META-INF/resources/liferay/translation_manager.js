@@ -101,7 +101,9 @@ AUI.add(
 			'</span>';
 
 		var TPL_CHANGE_DEFAULT_LOCALE =
-			'<a href="javascript:;">' + Liferay.Language.get('change') + '</a>';
+			'<a href="javascript:void(0);">' +
+			Liferay.Language.get('change') +
+			'</a>';
 
 		var TPL_DEFAULT_LOCALE_LABEL_NODE =
 			'<label>' + Liferay.Language.get('default-language') + ':</label>';
@@ -132,7 +134,7 @@ AUI.add(
 			'">' +
 			'<li class="lfr-trigger">' +
 			'<strong>' +
-			'<a class="text-nowrap" href="javascript:;">' +
+			'<a class="text-nowrap" href="javascript:void(0);">' +
 			'<img src="' +
 			themeDisplay.getPathThemeImages() +
 			'/common/add.png" />' +
@@ -149,7 +151,7 @@ AUI.add(
 			'<li class="' +
 			CSS_TRANSLATION_ITEM +
 			'">' +
-			'<a class="taglib-icon" href="javascript:;" lang="{0}">' +
+			'<a class="taglib-icon" href="javascript:void(0);" lang="{0}">' +
 			'<img class="icon" src="' +
 			themeDisplay.getPathThemeImages() +
 			'/language/{0}.png">{1}' +

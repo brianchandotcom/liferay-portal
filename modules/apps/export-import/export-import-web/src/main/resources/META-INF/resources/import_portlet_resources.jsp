@@ -140,7 +140,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 															"portletid", selPortlet.getRootPortletId()
 														).build()
 													%>'
-													href="javascript:;"
+													href="javascript:void(0);"
 													label="change"
 													method="get"
 												/>
@@ -260,7 +260,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 																"portletid", selPortlet.getRootPortletId()
 															).build()
 														%>'
-														href="javascript:;"
+														href="javascript:void(0);"
 														id='<%= "contentLink_" + selPortlet.getRootPortletId() %>'
 														label="change"
 														method="get"
@@ -282,7 +282,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 									<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types,-import-their">
 										<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 
-										<aui:a cssClass="modify-link" href="javascript:;" id="contentOptionsLink" label="change" method="get" />
+										<aui:a cssClass="modify-link" href="javascript:void(0);" id="contentOptionsLink" label="change" method="get" />
 
 										<div class="hide" id="<portlet:namespace />contentOptions">
 											<ul class="lfr-tree list-unstyled">

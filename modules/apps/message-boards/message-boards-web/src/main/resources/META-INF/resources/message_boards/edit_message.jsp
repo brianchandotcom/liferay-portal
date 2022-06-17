@@ -292,7 +292,7 @@ if (portletTitleBasedNavigation) {
 										<div class="delete-attachment" data-rowid="<%= fileEntry.getFileEntryId() %>" data-url="<%= deleteURL.toString() %>">
 											<liferay-ui:icon-delete
 												trash="<%= trashHelper.isTrashEnabled(scopeGroupId) %>"
-												url="javascript:;"
+												url="javascript:void(0);"
 											/>
 										</div>
 									</liferay-ui:icon-menu>

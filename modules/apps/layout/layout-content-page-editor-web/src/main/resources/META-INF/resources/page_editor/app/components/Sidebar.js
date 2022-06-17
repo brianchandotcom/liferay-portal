@@ -222,9 +222,9 @@ export default function Sidebar() {
 	};
 
 	return (
-		<ReactPortal>
+		<ReactPortal className="cadmin">
 			<div
-				className="cadmin page-editor__sidebar page-editor__theme-adapter-forms"
+				className="page-editor__sidebar page-editor__theme-adapter-forms"
 				ref={dropClearRef}
 			>
 				<div

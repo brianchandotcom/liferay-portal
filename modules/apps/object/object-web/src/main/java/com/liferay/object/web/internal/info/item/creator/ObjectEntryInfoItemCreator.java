@@ -20,6 +20,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.creator.InfoItemCreator;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -109,7 +110,10 @@ public class ObjectEntryInfoItemCreator
 				objectDefinition.getScope());
 
 		if (objectScopeProvider.isGroupAware()) {
-			if (Objects.equals("site", objectDefinition.getScope())) {
+			if (Objects.equals(
+					ObjectDefinitionConstants.SCOPE_SITE,
+					objectDefinition.getScope())) {
+
 				return GroupUtil.getGroupId(
 					objectDefinition.getCompanyId(), scopeKey,
 					_groupLocalService);

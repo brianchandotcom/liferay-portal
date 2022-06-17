@@ -15,7 +15,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a basic test for modern site building components such as Content Pages, Page Templates, Fragments, Display Page Templates, and Navigation Menus. After the upgrade is complete, all of those elements should still be present, and a user should still be able to perform basic modern site building functions. This is a use case for LPS-106776."
+	@description = "This is a test for LPS-106776 and LPS-156027. This is a basic test for modern site building components such as Content Pages, Page Templates, Fragments, Display Page Templates, and Navigation Menus. After the upgrade is complete, all of those elements should still be present, and a user should still be able to perform basic modern site building functions."
 	@priority = "5"
 	test ConfigurePageEditorAfterUpgrade721 {
 		property data.archive.type = "data-archive-page-editor";
@@ -27,6 +27,7 @@ definition {
 		Upgrade.configurePageEditor();
 	}
 
+	@description = "This is a test for LPS-106776 and LPS-156027. This is a basic test for modern site building components such as Content Pages, Page Templates, Fragments, Display Page Templates, and Navigation Menus. After the upgrade is complete, all of those elements should still be present, and a user should still be able to perform basic modern site building functions."
 	@priority = "5"
 	test ConfigurePageEditorAfterUpgrade72101 {
 		property data.archive.type = "data-archive-page-editor";

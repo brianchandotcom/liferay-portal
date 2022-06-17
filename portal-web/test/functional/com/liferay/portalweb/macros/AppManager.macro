@@ -41,6 +41,8 @@ definition {
 			locator1 = "AppManager#USER_SIGN_IN",
 			value1 = "Sign In");
 
+		WaitForPageLoad();
+
 		var marketplaceClientId = PropsUtil.get("marketplace.email.address.6");
 
 		Type(

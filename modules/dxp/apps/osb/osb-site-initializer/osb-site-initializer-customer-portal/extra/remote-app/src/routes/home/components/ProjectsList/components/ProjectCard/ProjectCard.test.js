@@ -9,74 +9,41 @@
  * distribution rights of the Software.
  */
 
-import {faker} from '@faker-js/faker';
 import {render, screen} from '@testing-library/react';
 import ProjectCard from '.';
-import getDateCustomFormat from '../../../../../../common/utils/getDateCustomFormat';
 
-describe('render Project Card component', () => {
-	const koroneikiAccount = {
-		accountKey: `KOR-${faker.random.numeric(5)}`,
-		code: faker.commerce.product().toUpperCase(),
-		name: faker.commerce.productName(),
-		region: faker.address.country(),
-		slaCurrentEndDate: faker.date.future(),
-		status: 'Active',
-	};
-
-	const FORMAT_DATE = {
-		day: '2-digit',
-		month: 'short',
-		year: 'numeric',
-	};
-
-	test('Test if the Project Card contains Project Name', () => {
-		render(<ProjectCard {...koroneikiAccount} />);
+describe('Project Card', () => {
+	it('contains Project Name', () => {
+		render(<ProjectCard name="Test Account 01" />);
 
 		const projectName = screen.queryByRole('heading');
-		expect(projectName).toHaveTextContent(koroneikiAccount.name);
+		expect(projectName).toHaveTextContent('Test Account 01');
 	});
 
-	test('Test if the Project Card contains Status', () => {
-		render(<ProjectCard {...koroneikiAccount} />);
+	it('contains Project Status', () => {
+		render(<ProjectCard status="Active" />);
 
-		const projectStatus = screen.getByText(koroneikiAccount.status);
-		expect(projectStatus).toHaveTextContent(koroneikiAccount.status);
+		const projectStatus = screen.getByText('Active');
+		expect(projectStatus).toHaveTextContent('Active');
 	});
 
-	test('Test if the Project Card contains Subscription End Date.', () => {
-		render(<ProjectCard {...koroneikiAccount} />);
+	it('contains Subscription End Date.', () => {
+		render(<ProjectCard slaCurrentEndDate="Dec 31, 2014" />);
 
-		const projectEndDate = screen.getByText(
-			getDateCustomFormat(
-				koroneikiAccount.slaCurrentEndDate,
-				FORMAT_DATE
-			),
-			{exact: false}
-		);
-		expect(projectEndDate).toHaveTextContent(
-			getDateCustomFormat(koroneikiAccount.slaCurrentEndDate, FORMAT_DATE)
-		);
+		const projectEndDate = screen.getByText('Dec 31, 2014');
+		expect(projectEndDate).toHaveTextContent('Dec 31, 2014');
 	});
 
-	test('Verify if the projects are displayed as cards if has less than 05 projects', () => {
-		const compressed = false;
-
-		const {container} = render(
-			<ProjectCard compressed={compressed} {...koroneikiAccount} />
-		);
+	it('displays projects as cards if has less than 05 projects', () => {
+		const {container} = render(<ProjectCard compressed={false} />);
 
 		expect(container.getElementsByClassName('cp-project-card').length).toBe(
 			1
 		);
 	});
 
-	test('Verify if the projects are displayed as a list if has more than 05 projects', () => {
-		const compressed = true;
-
-		const {container} = render(
-			<ProjectCard compressed={compressed} {...koroneikiAccount} />
-		);
+	it('displays projects as a list if has more than 05 projects', () => {
+		const {container} = render(<ProjectCard compressed />);
 
 		expect(
 			container.getElementsByClassName('cp-project-card-sm').length

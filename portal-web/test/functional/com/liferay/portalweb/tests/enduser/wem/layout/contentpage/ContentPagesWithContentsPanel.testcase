@@ -1358,7 +1358,7 @@ definition {
 
 			var backgroundImageOutlineStyle = Css.getPseudoElementCssValue(
 				attribute = "outline-style",
-				element = "//div[contains(@class,'page-editor__topper')][@draggable][.//div[contains(@style,'Document_1\.jpg')]]",
+				element = "//div[contains(@class,'page-editor__topper')][@draggable][.//div[contains(@style,'Document_1\\.jpg')]]",
 				pseudo = ":after");
 
 			TestUtils.assertEquals(

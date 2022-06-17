@@ -38,7 +38,7 @@
 
 <tr>
 	<td>FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS</td>
-	<td>//div[contains(@class,'fragment-content--master')]//*[contains(@class,'component-${key_fragmentName}')]</td>
+	<td>//div[contains(@class,'fragment-content--master')][contains(@class,'component-${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>

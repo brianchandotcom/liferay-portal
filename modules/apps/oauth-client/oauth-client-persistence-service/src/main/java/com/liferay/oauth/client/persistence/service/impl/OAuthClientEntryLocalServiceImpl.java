@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.client.ClientInformation;
+import com.nimbusds.oauth2.sdk.client.ClientMetadata;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.http.HTTPResponse;
 import com.nimbusds.oauth2.sdk.util.JSONObjectUtils;
@@ -43,6 +44,8 @@ import com.nimbusds.openid.connect.sdk.rp.OIDCClientInformation;
 import java.net.URL;
 
 import java.util.List;
+
+import net.minidev.json.JSONObject;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,6 +75,10 @@ public class OAuthClientEntryLocalServiceImpl
 		ClientInformation clientInformation = _parseClientInformation(
 			authServerWellKnownURI, infoJSON);
 
+		ClientMetadata clientMetadata = clientInformation.getMetadata();
+
+		clientMetadata.applyDefaults();
+
 		String clientId = String.valueOf(clientInformation.getID());
 
 		_validateClientId(
@@ -91,6 +98,9 @@ public class OAuthClientEntryLocalServiceImpl
 			_validateParametersJSON(tokenRequestParametersJSON);
 		}
 
+		JSONObject clientInformationJSONObject =
+			clientInformation.toJSONObject();
+
 		OAuthClientEntry oAuthClientEntry = oAuthClientEntryPersistence.create(
 			counterLocalService.increment());
 
@@ -101,7 +111,7 @@ public class OAuthClientEntryLocalServiceImpl
 			authRequestParametersJSON);
 		oAuthClientEntry.setAuthServerWellKnownURI(authServerWellKnownURI);
 		oAuthClientEntry.setClientId(clientId);
-		oAuthClientEntry.setInfoJSON(infoJSON);
+		oAuthClientEntry.setInfoJSON(clientInformationJSONObject.toString());
 		oAuthClientEntry.setTokenRequestParametersJSON(
 			tokenRequestParametersJSON);
 
@@ -217,6 +227,10 @@ public class OAuthClientEntryLocalServiceImpl
 		ClientInformation clientInformation = _parseClientInformation(
 			authServerWellKnownURI, infoJSON);
 
+		ClientMetadata clientMetadata = clientInformation.getMetadata();
+
+		clientMetadata.applyDefaults();
+
 		String clientId = String.valueOf(clientInformation.getID());
 
 		_validateClientId(
@@ -237,11 +251,14 @@ public class OAuthClientEntryLocalServiceImpl
 			_validateParametersJSON(tokenRequestParametersJSON);
 		}
 
+		JSONObject clientInformationJSONObject =
+			clientInformation.toJSONObject();
+
 		oAuthClientEntry.setAuthRequestParametersJSON(
 			authRequestParametersJSON);
 		oAuthClientEntry.setAuthServerWellKnownURI(authServerWellKnownURI);
 		oAuthClientEntry.setClientId(clientId);
-		oAuthClientEntry.setInfoJSON(infoJSON);
+		oAuthClientEntry.setInfoJSON(clientInformationJSONObject.toString());
 		oAuthClientEntry.setTokenRequestParametersJSON(
 			tokenRequestParametersJSON);
 

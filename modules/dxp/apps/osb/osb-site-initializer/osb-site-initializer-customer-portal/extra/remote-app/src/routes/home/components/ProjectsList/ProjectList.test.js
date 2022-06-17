@@ -9,86 +9,25 @@
  * distribution rights of the Software.
  */
 
-import {faker} from '@faker-js/faker';
 import {render, screen} from '@testing-library/react';
 import ProjectList from '.';
 
-describe('render Project List component', () => {
-	const koroneikiAccounts = {
-		items: [
-			{
-				accountKey: `KOR-${faker.random.numeric(5)}`,
-				code: faker.commerce.product().toUpperCase(),
-				name: faker.commerce.productName(),
-				region: faker.address.country(),
-				slaCurrentEndDate: faker.date.future(),
-				status: 'Active',
-			},
-			{
-				accountKey: `KOR-${faker.random.numeric(5)}`,
-				code: faker.commerce.product().toUpperCase(),
-				name: faker.commerce.productName(),
-				region: faker.address.country(),
-				slaCurrentEndDate: faker.date.future(),
-				status: 'Active',
-			},
-			{
-				accountKey: `KOR-${faker.random.numeric(5)}`,
-				code: faker.commerce.product().toUpperCase(),
-				name: faker.commerce.productName(),
-				region: faker.address.country(),
-				slaCurrentEndDate: faker.date.future(),
-				status: 'Active',
-			},
-			{
-				accountKey: `KOR-${faker.random.numeric(5)}`,
-				code: faker.commerce.product().toUpperCase(),
-				name: faker.commerce.productName(),
-				region: faker.address.country(),
-				slaCurrentEndDate: faker.date.future(),
-				status: 'Active',
-			},
-			{
-				accountKey: `KOR-${faker.random.numeric(5)}`,
-				code: faker.commerce.product().toUpperCase(),
-				name: faker.commerce.productName(),
-				region: faker.address.country(),
-				slaCurrentEndDate: faker.date.future(),
-				status: 'Active',
-			},
-			{
-				accountKey: `KOR-${faker.random.numeric(5)}`,
-				code: faker.commerce.product().toUpperCase(),
-				name: faker.commerce.productName(),
-				region: faker.address.country(),
-				slaCurrentEndDate: faker.date.future(),
-				status: 'Active',
-			},
-		],
-		totalCount: 6,
-	};
-
+describe('Project List', () => {
 	window.IntersectionObserver = jest.fn(() => ({
 		observer: jest.fn(),
 		unobserver: jest.fn(),
 	}));
 
-	test('Verify if the message "results not found" appears if there is no project to show', () => {
+	it('displays "results not found" message if there is no project to show', () => {
 		render(<ProjectList />);
 
 		const showNotFoundMessage = screen.getByText(/no results found/i);
 		expect(showNotFoundMessage).toBeInTheDocument();
 	});
 
-	test('Verify if the projects are displayed as cards if has less than 05 projects', () => {
-		const compressed = false;
-
+	it('displays projects as cards if has less than 05 projects', () => {
 		const {container} = render(
-			<ProjectList
-				hasManyProjects={compressed}
-				koroneikiAccounts={koroneikiAccounts}
-				totalCount={koroneikiAccounts.totalCount}
-			/>
+			<ProjectList hasManyProjects={false} totalCount={3} />
 		);
 
 		expect(
@@ -96,15 +35,9 @@ describe('render Project List component', () => {
 		).toBe(1);
 	});
 
-	test('Verify if the projects are displayed as a list if has more than 05 projects', () => {
-		const compressed = true;
-
+	it('displays projects as a list if has more than 05 projects', () => {
 		const {container} = render(
-			<ProjectList
-				hasManyProjects={compressed}
-				koroneikiAccounts={koroneikiAccounts}
-				totalCount={koroneikiAccounts.totalCount}
-			/>
+			<ProjectList hasManyProjects={true} totalCount={6} />
 		);
 
 		expect(

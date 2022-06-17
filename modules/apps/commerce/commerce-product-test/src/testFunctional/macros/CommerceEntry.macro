@@ -678,18 +678,18 @@ definition {
 		}
 	}
 
-	macro clickNoError {
-		ClickNoError(
-			key_menuItem = "${menuItem}",
-			locator1 = "CommerceEntry#ANY_MENU_ITEM");
-	}
-
 	macro clickEntryDropdownMenuItem {
 		Click(
 			key_value = "${entryName}",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		DropdownMenuItem.click(menuItem = "${menuItem}");
+	}
+
+	macro clickNoError {
+		ClickNoError(
+			key_menuItem = "${menuItem}",
+			locator1 = "CommerceEntry#ANY_MENU_ITEM");
 	}
 
 	macro clickTableEntryEditButton {

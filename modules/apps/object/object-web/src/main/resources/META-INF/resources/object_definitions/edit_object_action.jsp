@@ -39,6 +39,8 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 			"objectActionTriggers", objectDefinitionsActionsDisplayContext.getObjectActionTriggersJSONArray()
 		).put(
 			"readOnly", !objectDefinitionsActionsDisplayContext.hasUpdateObjectDefinitionPermission()
+		).put(
+			"validateExpressionURL", objectDefinitionsActionsDisplayContext.getValidateExpressionURL()
 		).build()
 	%>'
 />

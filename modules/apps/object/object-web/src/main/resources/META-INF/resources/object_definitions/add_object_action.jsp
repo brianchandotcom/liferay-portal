@@ -35,6 +35,8 @@ ObjectDefinitionsActionsDisplayContext objectDefinitionsActionsDisplayContext = 
 			"objectActionExecutors", objectDefinitionsActionsDisplayContext.getObjectActionExecutorsJSONArray()
 		).put(
 			"objectActionTriggers", objectDefinitionsActionsDisplayContext.getObjectActionTriggersJSONArray()
+		).put(
+			"validateExpressionURL", objectDefinitionsActionsDisplayContext.getValidateExpressionURL()
 		).build()
 	%>'
 />

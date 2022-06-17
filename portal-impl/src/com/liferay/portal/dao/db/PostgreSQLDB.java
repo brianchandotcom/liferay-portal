@@ -191,7 +191,10 @@ public class PostgreSQLDB extends BaseDB {
 					String[] template = buildTableNameTokens(line);
 
 					line = StringUtil.replace(
-						"alter table @old-table@ rename to @new-table@;",
+						StringBundler.concat(
+							"alter table @old-table@ rename to @new-table@;",
+							"alter table @new-table@ rename constraint ",
+							"@old-table@_pkey to @new-table@_pkey;"),
 						RENAME_TABLE_TEMPLATE, template);
 				}
 				else if (line.startsWith(CREATE_TABLE)) {

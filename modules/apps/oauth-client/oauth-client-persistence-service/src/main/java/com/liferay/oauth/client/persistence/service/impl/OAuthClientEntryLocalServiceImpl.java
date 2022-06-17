@@ -44,8 +44,6 @@ import java.net.URL;
 
 import java.util.List;
 
-import net.minidev.json.JSONObject;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -71,11 +69,10 @@ public class OAuthClientEntryLocalServiceImpl
 		_validateAuthServerWellKnownURI(
 			user.getCompanyId(), authServerWellKnownURI);
 
-		JSONObject infoJSONObject = _getInfoJSONObject(infoJSON);
+		ClientInformation clientInformation = _parseClientInformation(
+			authServerWellKnownURI, infoJSON);
 
-		_validateInfoJSON(authServerWellKnownURI, infoJSONObject);
-
-		String clientId = infoJSONObject.getAsString("client_id");
+		String clientId = String.valueOf(clientInformation.getID());
 
 		_validateClientId(
 			0, user.getCompanyId(), authServerWellKnownURI, clientId);
@@ -217,11 +214,10 @@ public class OAuthClientEntryLocalServiceImpl
 		_validateAuthServerWellKnownURI(
 			oAuthClientEntry.getCompanyId(), authServerWellKnownURI);
 
-		JSONObject infoJSONObject = _getInfoJSONObject(infoJSON);
+		ClientInformation clientInformation = _parseClientInformation(
+			authServerWellKnownURI, infoJSON);
 
-		_validateInfoJSON(authServerWellKnownURI, infoJSONObject);
-
-		String clientId = infoJSONObject.getAsString("client_id");
+		String clientId = String.valueOf(clientInformation.getID());
 
 		_validateClientId(
 			oAuthClientEntryId, oAuthClientEntry.getCompanyId(),
@@ -252,14 +248,26 @@ public class OAuthClientEntryLocalServiceImpl
 		return oAuthClientEntryPersistence.update(oAuthClientEntry);
 	}
 
-	private JSONObject _getInfoJSONObject(String infoJSON)
+	private ClientInformation _parseClientInformation(
+			String authServerWellKnownURI, String infoJSON)
 		throws PortalException {
 
-		try {
-			return JSONObjectUtils.parse(infoJSON);
+		if (authServerWellKnownURI.contains("openid-configuration")) {
+			try {
+				return OIDCClientInformation.parse(
+					JSONObjectUtils.parse(infoJSON));
+			}
+			catch (ParseException parseException) {
+				throw new OAuthClientEntryInfoJSONException(parseException);
+			}
 		}
-		catch (ParseException parseException) {
-			throw new PortalException(parseException);
+		else {
+			try {
+				return ClientInformation.parse(JSONObjectUtils.parse(infoJSON));
+			}
+			catch (ParseException parseException) {
+				throw new OAuthClientEntryInfoJSONException(parseException);
+			}
 		}
 	}
 
@@ -317,28 +325,6 @@ public class OAuthClientEntryLocalServiceImpl
 		if (oAuthClientEntry != null) {
 			throw new DuplicateOAuthClientEntryException(
 				"Client ID " + clientId);
-		}
-	}
-
-	private void _validateInfoJSON(
-			String authServerWellKnownURI, JSONObject infoJSONObject)
-		throws PortalException {
-
-		if (authServerWellKnownURI.contains("openid-configuration")) {
-			try {
-				OIDCClientInformation.parse(infoJSONObject);
-			}
-			catch (ParseException parseException) {
-				throw new OAuthClientEntryInfoJSONException(parseException);
-			}
-		}
-		else {
-			try {
-				ClientInformation.parse(infoJSONObject);
-			}
-			catch (ParseException parseException) {
-				throw new OAuthClientEntryInfoJSONException(parseException);
-			}
 		}
 	}
 

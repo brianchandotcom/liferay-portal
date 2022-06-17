@@ -78,7 +78,7 @@ public class ObjectFieldServiceWrapper
 	}
 
 	@Override
-	public com.liferay.object.model.ObjectField updateCustomObjectField(
+	public com.liferay.object.model.ObjectField updateObjectField(
 			long objectFieldId, String externalReferenceCode,
 			long listTypeDefinitionId, String businessType, String dbType,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
@@ -88,7 +88,7 @@ public class ObjectFieldServiceWrapper
 				objectFieldSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _objectFieldService.updateCustomObjectField(
+		return _objectFieldService.updateObjectField(
 			objectFieldId, externalReferenceCode, listTypeDefinitionId,
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId,
 			labelMap, name, required, objectFieldSettings);

@@ -72,6 +72,17 @@ public class ObjectFieldLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectField addOrUpdateSystemObjectField(
+			long userId,
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			com.liferay.object.model.ObjectField objectField)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldLocalService.addOrUpdateSystemObjectField(
+			userId, objectDefinition, objectField);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String businessType,
 			String dbColumnName, String dbTableName, String dbType,
@@ -493,6 +504,23 @@ public class ObjectFieldLocalServiceWrapper
 			labelMap, name, required, objectFieldSettings);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectField updateObjectField(
+			long objectFieldId, String externalReferenceCode,
+			long listTypeDefinitionId, String businessType, String dbType,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			java.util.Map<java.util.Locale, String> labelMap, String name,
+			boolean required, boolean system,
+			java.util.List<com.liferay.object.model.ObjectFieldSetting>
+				objectFieldSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldLocalService.updateObjectField(
+			objectFieldId, externalReferenceCode, listTypeDefinitionId,
+			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId,
+			labelMap, name, required, system, objectFieldSettings);
+	}
+
 	/**
 	 * Updates the object field in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -516,6 +544,16 @@ public class ObjectFieldLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.updateRequired(objectFieldId, required);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectField updateSystemObjectField(
+			long objectFieldId,
+			java.util.Map<java.util.Locale, String> labelMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldLocalService.updateSystemObjectField(
+			objectFieldId, labelMap);
 	}
 
 	@Override

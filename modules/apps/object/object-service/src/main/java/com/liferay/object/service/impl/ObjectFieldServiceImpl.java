@@ -120,7 +120,8 @@ public class ObjectFieldServiceImpl extends ObjectFieldServiceBaseImpl {
 		return objectFieldLocalService.updateObjectField(
 			objectFieldId, externalReferenceCode, listTypeDefinitionId,
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId,
-			labelMap, name, required, objectField.isSystem(), objectFieldSettings);
+			labelMap, name, required, objectField.isSystem(),
+			objectFieldSettings);
 	}
 
 	@Reference(

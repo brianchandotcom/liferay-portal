@@ -75,6 +75,16 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().addObjectField(objectField);
 	}
 
+	public static ObjectField addOrUpdateSystemObjectField(
+			long userId,
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			ObjectField objectField)
+		throws PortalException {
+
+		return getService().addOrUpdateSystemObjectField(
+			userId, objectDefinition, objectField);
+	}
+
 	public static ObjectField addSystemObjectField(
 			long userId, long objectDefinitionId, String businessType,
 			String dbColumnName, String dbTableName, String dbType,
@@ -428,6 +438,22 @@ public class ObjectFieldLocalServiceUtil {
 			labelMap, name, required, objectFieldSettings);
 	}
 
+	public static ObjectField updateObjectField(
+			long objectFieldId, String externalReferenceCode,
+			long listTypeDefinitionId, String businessType, String dbType,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			Map<java.util.Locale, String> labelMap, String name,
+			boolean required, boolean system,
+			List<com.liferay.object.model.ObjectFieldSetting>
+				objectFieldSettings)
+		throws PortalException {
+
+		return getService().updateObjectField(
+			objectFieldId, externalReferenceCode, listTypeDefinitionId,
+			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId,
+			labelMap, name, required, system, objectFieldSettings);
+	}
+
 	/**
 	 * Updates the object field in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -447,6 +473,13 @@ public class ObjectFieldLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateRequired(objectFieldId, required);
+	}
+
+	public static ObjectField updateSystemObjectField(
+			long objectFieldId, Map<java.util.Locale, String> labelMap)
+		throws PortalException {
+
+		return getService().updateSystemObjectField(objectFieldId, labelMap);
 	}
 
 	public static ObjectFieldLocalService getService() {

@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.petra.sql.dsl.Table;
@@ -90,6 +91,11 @@ public interface ObjectFieldLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField addObjectField(ObjectField objectField);
+
+	public ObjectField addOrUpdateSystemObjectField(
+			long userId, ObjectDefinition objectDefinition,
+			ObjectField objectField)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField addSystemObjectField(
@@ -358,6 +364,14 @@ public interface ObjectFieldLocalService
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException;
 
+	public ObjectField updateObjectField(
+			long objectFieldId, String externalReferenceCode,
+			long listTypeDefinitionId, String businessType, String dbType,
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			Map<Locale, String> labelMap, String name, boolean required,
+			boolean system, List<ObjectFieldSetting> objectFieldSettings)
+		throws PortalException;
+
 	/**
 	 * Updates the object field in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -373,6 +387,11 @@ public interface ObjectFieldLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectField updateRequired(long objectFieldId, boolean required)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectField updateSystemObjectField(
+			long objectFieldId, Map<Locale, String> labelMap)
 		throws PortalException;
 
 }

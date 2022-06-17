@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Layout API
 Bundle-SymbolicName: com.liferay.layout.api
-Bundle-Version: 16.3.1
+Bundle-Version: 16.4.0
 Export-Package:\
 	com.liferay.layout.adaptive.media,\
 	com.liferay.layout.configuration,\
@@ -19,4 +19,5 @@ Export-Package:\
 	com.liferay.layout.util.comparator,\
 	com.liferay.layout.util.constants,\
 	com.liferay.layout.util.structure,\
+	com.liferay.layout.util.structure.constants,\
 	com.liferay.layout.util.template

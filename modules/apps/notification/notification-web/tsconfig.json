@@ -1,5 +1,5 @@
 {
-	"@generated": "984c0b4e3e9210428e26946e5e442cd135e496c3",
+	"@generated": "cf6d69bd91d21e7955bfb61004d4f3225b130460",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -12,8 +12,6 @@
 		"module": "es6",
 		"moduleResolution": "node",
 		"outDir": "./types",
-		"paths": {
-		},
 		"sourceMap": false,
 		"strict": true,
 		"target": "es6",

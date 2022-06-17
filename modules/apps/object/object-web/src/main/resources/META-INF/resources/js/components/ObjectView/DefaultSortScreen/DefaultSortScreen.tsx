@@ -14,17 +14,18 @@
 
 import ClayAlert from '@clayui/alert';
 import {useModal} from '@clayui/modal';
+import {BuilderScreen} from '@liferay/object-js-components-web';
 import React, {useContext, useEffect, useState} from 'react';
 
-import {BuilderScreen} from '../BuilderScreen/BuilderScreen';
 import {ModalAddDefaultSortColumn} from '../ModalAddDefaultSortColumn/ModalAddDefaultSortColumn';
-import ViewContext from '../context';
+import ViewContext, {TYPES} from '../context';
 
 export function DefaultSortScreen() {
 	const [
 		{
 			objectView: {objectViewSortColumns},
 		},
+		dispatch,
 	] = useContext(ViewContext);
 
 	const [visibleModal, setVisibleModal] = useState(false);
@@ -38,6 +39,23 @@ export function DefaultSortScreen() {
 	useEffect(() => {
 		visibleModal === false && setIsEditingSort(false);
 	}, [visibleModal]);
+
+	const handleChangeColumnOrder = (
+		draggedIndex: number,
+		targetIndex: number
+	) => {
+		dispatch({
+			payload: {draggedIndex, targetIndex},
+			type: TYPES.CHANGE_OBJECT_VIEW_SORT_COLUMN_ORDER,
+		});
+	};
+
+	const handleDeleteColumn = (objectFieldName: string) => {
+		dispatch({
+			payload: {objectFieldName},
+			type: TYPES.DELETE_OBJECT_VIEW_SORT_COLUMN,
+		});
+	};
 
 	return (
 		<>
@@ -65,6 +83,8 @@ export function DefaultSortScreen() {
 				firstColumnHeader={Liferay.Language.get('name')}
 				hasDragAndDrop
 				objectColumns={objectViewSortColumns ?? []}
+				onChangeColumnOrder={handleChangeColumnOrder}
+				onDeleteColumn={handleDeleteColumn}
 				onEditing={setIsEditingSort}
 				onEditingObjectFieldName={setEditingObjectFieldName}
 				onVisibleEditModal={setVisibleModal}

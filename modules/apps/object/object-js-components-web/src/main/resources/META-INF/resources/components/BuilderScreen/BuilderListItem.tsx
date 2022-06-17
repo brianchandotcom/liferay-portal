@@ -17,22 +17,20 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
-import React, {useContext, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
-
-import ViewContext, {TYPES} from '../context';
 
 import './BuilderListItem.scss';
 
 interface IProps {
 	aliasColumnText?: string;
-	defaultSort?: boolean;
 	disableEdit?: boolean;
-	filter?: boolean;
 	hasDragAndDrop?: boolean;
 	index: number;
 	label?: string;
 	objectFieldName: string;
+	onChangeColumnOrder?: (draggedIndex: number, targetIndex: number) => void;
+	onDeleteColumn: (objectFieldName: string) => void;
 	onEditing?: (boolean: boolean) => void;
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
 	onVisibleEditModal?: (boolean: boolean) => void;
@@ -56,20 +54,19 @@ type TDraggedOffset = {
 
 const BuilderListItem: React.FC<IProps> = ({
 	aliasColumnText,
-	defaultSort,
 	disableEdit,
-	filter,
 	hasDragAndDrop,
 	index,
 	label,
 	objectFieldName,
+	onChangeColumnOrder,
+	onDeleteColumn,
 	onEditing,
 	onEditingObjectFieldName,
 	onVisibleEditModal,
 	thirdColumnValues,
 }) => {
 	const [active, setActive] = useState<boolean>(false);
-	const [_, dispatch] = useContext(ViewContext);
 
 	const ref = useRef<HTMLLIElement>(null);
 
@@ -86,7 +83,7 @@ const BuilderListItem: React.FC<IProps> = ({
 	const [, dropRef] = useDrop({
 		accept: 'FIELD',
 		hover(item: TItemHover, monitor) {
-			if (!ref.current) {
+			if (!ref.current || !onChangeColumnOrder) {
 				return;
 			}
 
@@ -115,46 +112,11 @@ const BuilderListItem: React.FC<IProps> = ({
 				return;
 			}
 
-			dispatch({
-				payload: {draggedIndex, targetIndex},
-				type: defaultSort
-					? TYPES.CHANGE_OBJECT_VIEW_SORT_COLUMN_ORDER
-					: TYPES.CHANGE_OBJECT_VIEW_COLUMN_ORDER,
-			});
+			onChangeColumnOrder(draggedIndex, targetIndex);
 
 			item.index = targetIndex;
 		},
 	});
-
-	const handleDeleteColumn = (
-		objectFieldName: string,
-		filter?: boolean,
-		defaultSort?: boolean
-	) => {
-		if (defaultSort) {
-			dispatch({
-				payload: {objectFieldName},
-				type: TYPES.DELETE_OBJECT_VIEW_SORT_COLUMN,
-			});
-		}
-		else if (filter) {
-			dispatch({
-				payload: {objectFieldName},
-				type: TYPES.DELETE_OBJECT_VIEW_FILTER_COLUMN,
-			});
-		}
-		else {
-			dispatch({
-				payload: {objectFieldName},
-				type: TYPES.DELETE_OBJECT_VIEW_COLUMN,
-			});
-
-			dispatch({
-				payload: {objectFieldName},
-				type: TYPES.DELETE_OBJECT_VIEW_SORT_COLUMN,
-			});
-		}
-	};
 
 	dragRef(dropRef(ref));
 
@@ -247,13 +209,7 @@ const BuilderListItem: React.FC<IProps> = ({
 					</ClayDropDown.Item>
 
 					<ClayDropDown.Item
-						onClick={() =>
-							handleDeleteColumn(
-								objectFieldName,
-								filter,
-								defaultSort
-							)
-						}
+						onClick={() => onDeleteColumn(objectFieldName)}
 					>
 						<ClayIcon
 							className="lfr-object__object-custom-view-builder-item-icon"

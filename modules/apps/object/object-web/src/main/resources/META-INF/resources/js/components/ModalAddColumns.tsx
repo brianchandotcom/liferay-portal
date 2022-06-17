@@ -17,10 +17,9 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayModal, {useModal} from '@clayui/modal';
+import {ManagementToolbarSearch} from '@liferay/object-js-components-web';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
-
-import {ManagementToolbarSearch} from './ObjectView/ManagementToolbarSearch/ManagementToolbarSearch';
 
 import './ModalAddColumns.scss';
 

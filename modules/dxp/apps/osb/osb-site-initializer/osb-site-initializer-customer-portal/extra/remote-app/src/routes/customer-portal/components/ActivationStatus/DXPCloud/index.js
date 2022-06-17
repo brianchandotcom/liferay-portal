@@ -15,10 +15,9 @@ import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
-import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../common/components';
-import SetupDXPCloud from '../../../../../common/containers/setup-forms/SetupDXPCloudForm';
+import SetupDXPCloudForm from '../../../../../common/containers/setup-forms/SetupDXPCloudForm';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {
 	getAccountSubscriptionGroups,
@@ -57,6 +56,7 @@ const SetupDXPCloudModal = ({
 	subscriptionGroupId,
 }) => {
 	const [formAlreadySubmitted, setFormAlreadySubmitted] = useState(false);
+	const {client} = useAppPropertiesContext();
 
 	return (
 		<ClayModal center observer={observer}>
@@ -66,7 +66,8 @@ const SetupDXPCloudModal = ({
 					submittedModalTexts={submittedModalTexts}
 				/>
 			) : (
-				<SetupDXPCloud
+				<SetupDXPCloudForm
+					client={client}
 					handlePage={onClose}
 					leftButton={i18n.translate('cancel')}
 					project={project}
@@ -90,7 +91,7 @@ const ActivationStatusDXPCloud = ({
 		setSubscriptionGroupActivationStatus,
 	] = useState(subscriptionGroupDXPCloud?.activationStatus);
 	const [, dispatch] = useCustomerPortal();
-	const {liferayWebDAV} = useAppPropertiesContext();
+	const {client, liferayWebDAV} = useAppPropertiesContext();
 	const [hasFinishedUpdate, setHasFinishedUpdate] = useState(false);
 	const [activationStatusDate, setActivationStatusDate] = useState('');
 	const [visibleSetup, setVisibleSetup] = useState(false);
@@ -228,7 +229,7 @@ const ActivationStatusDXPCloud = ({
 		};
 
 		getSubscriptionTerms();
-	}, [project]);
+	}, [client, project]);
 
 	return (
 		<>

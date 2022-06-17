@@ -12,8 +12,8 @@
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
-import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
+import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {getAccountSubscriptions} from '../../../../../common/services/liferay/graphql/queries';
 import CardSubscription from '../../../components/CardSubscription';
 import ProjectSupport from '../../../components/ProjectSupport';
@@ -28,6 +28,7 @@ import OverviewSkeleton from './Skeleton';
 const Overview = () => {
 	const [{project, subscriptionGroups}, dispatch] = useCustomerPortal();
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
+	const {client} = useAppPropertiesContext();
 
 	const [accountSubscriptions, setAccountSubscriptions] = useState([]);
 	const [selectedSubscriptionGroup, setSelectedSubscriptionGroup] = useState(
@@ -107,7 +108,7 @@ const Overview = () => {
 		if (subscriptionGroups && project) {
 			getAllSubscriptions(project.accountKey);
 		}
-	}, [project, subscriptionGroups]);
+	}, [client, project, subscriptionGroups]);
 
 	useEffect(() => {
 		if (project && subscriptionGroups) {

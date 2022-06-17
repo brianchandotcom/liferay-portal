@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import client from '../../apolloClient';
 import {getAccountFlags} from '../services/liferay/graphql/queries';
 import getLiferaySiteName from '../utils/getLiferaySiteName';
 import {API_BASE_URL, PAGE_ROUTER_TYPES, ROUTE_TYPES} from './constants';
@@ -25,7 +24,12 @@ const getOverviewLocation = (externalReferenceCode) => {
 	return PAGE_ROUTER_TYPES.project(externalReferenceCode);
 };
 
-const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
+const isValidPage = async (
+	client,
+	userAccount,
+	externalReferenceCode,
+	pageKey
+) => {
 	const validateExternalReferenceCode = (
 		accountBriefs,
 		externalReferenceCode
@@ -82,8 +86,7 @@ const isValidPage = async (userAccount, externalReferenceCode, pageKey) => {
 				window.location.href = getHomeLocation();
 
 				return false;
-			}
-			else if (!hasAccountFlags && isAccountAdministrator) {
+			} else if (!hasAccountFlags && isAccountAdministrator) {
 				window.location.href = getOnboardingLocation(
 					externalReferenceCode
 				);

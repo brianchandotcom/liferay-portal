@@ -10,7 +10,7 @@
  */
 
 import {useEffect, useState} from 'react';
-import client from '../../../../../apolloClient';
+import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {getAccountUserAccountsByExternalReferenceCode} from '../../../../../common/services/liferay/graphql/queries';
 
 const MAX_PAGE_SIZE = 9999;
@@ -19,6 +19,7 @@ export default function useGetAccountUserAccount(project) {
 	const [userAccounts, setUserAccounts] = useState([]);
 	const [isLoadingUserAccounts, setIsLoadingUserAccounts] = useState(false);
 	const [filterTerm, setFilterTerm] = useState('');
+	const {client} = useAppPropertiesContext();
 
 	useEffect(() => {
 		setIsLoadingUserAccounts(true);
@@ -60,7 +61,7 @@ export default function useGetAccountUserAccount(project) {
 			setIsLoadingUserAccounts(false);
 		};
 		getAccountUserAccounts();
-	}, [filterTerm, project.accountKey]);
+	}, [client, filterTerm, project.accountKey]);
 
 	return {
 		isLoadingUserAccounts,

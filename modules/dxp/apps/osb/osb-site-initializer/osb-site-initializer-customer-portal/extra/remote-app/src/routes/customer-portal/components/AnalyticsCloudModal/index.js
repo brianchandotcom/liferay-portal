@@ -11,8 +11,9 @@
 import ClayModal from '@clayui/modal';
 import {useMemo, useState} from 'react';
 import i18n from '../../../../common/I18n';
-import SetupAnalyticsCloud from '../../../../common/containers/setup-forms/SetupAnalyticsCloudForm';
+import SetupAnalyticsCloudForm from '../../../../common/containers/setup-forms/SetupAnalyticsCloudForm';
 import ConfirmationMessageModal from '../../../../common/containers/setup-forms/SetupAnalyticsCloudForm/ConfirmationMessageModal';
+import {useAppPropertiesContext} from '../../../../common/contexts/AppPropertiesContext';
 import {ANALYTICS_STEPS_TYPES} from '../../utils/constants';
 import AlreadySubmittedFormModal from '../ActivationStatus/AlreadySubmittedModal';
 
@@ -39,6 +40,7 @@ const AnalyticsCloudModal = ({
 		ANALYTICS_STEPS_TYPES.setupForm
 	);
 	const [formAlreadySubmitted, setFormAlreadySubmitted] = useState(false);
+	const {client} = useAppPropertiesContext();
 
 	const handleChangeForm = (isSuccess) => {
 		if (isSuccess) {
@@ -53,7 +55,8 @@ const AnalyticsCloudModal = ({
 				<ConfirmationMessageModal handlePage={onClose} />
 			),
 			[ANALYTICS_STEPS_TYPES.setupForm]: (
-				<SetupAnalyticsCloud
+				<SetupAnalyticsCloudForm
+					client={client}
 					handlePage={handleChangeForm}
 					leftButton={i18n.translate('cancel')}
 					project={project}

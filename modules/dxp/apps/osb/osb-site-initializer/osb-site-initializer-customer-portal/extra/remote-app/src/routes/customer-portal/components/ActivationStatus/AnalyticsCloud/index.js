@@ -14,7 +14,6 @@ import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
-import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
 import {Button, ButtonDropDown} from '../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
@@ -45,7 +44,7 @@ const ActivationStatusAnalyticsCloud = ({
 	userAccount,
 }) => {
 	const [, dispatch] = useCustomerPortal();
-	const {liferayWebDAV} = useAppPropertiesContext();
+	const {client, liferayWebDAV} = useAppPropertiesContext();
 	const [groupIdValue, setGroupIdValue] = useState('');
 	const [activationStatusDate, setActivationStatusDate] = useState('');
 	const [isVisible, setIsVisible] = useState(false);
@@ -190,7 +189,7 @@ const ActivationStatusAnalyticsCloud = ({
 		};
 
 		getSubscriptionTerms();
-	}, [project]);
+	}, [client, project]);
 
 	const updateAnalyticsCloudWorkspaceId = async () => {
 		const {data} = await client.query({

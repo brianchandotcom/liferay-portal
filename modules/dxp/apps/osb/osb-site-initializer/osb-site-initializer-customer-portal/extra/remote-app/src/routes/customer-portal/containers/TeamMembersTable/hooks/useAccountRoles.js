@@ -10,20 +10,22 @@
  */
 
 import {useEffect, useState} from 'react';
+import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import getProjectRoles from '../../../../../common/utils/getProjectRoles';
 
 const useAccountRoles = (project) => {
 	const [accountRoles, setAccountRoles] = useState([]);
+	const {client} = useAppPropertiesContext();
 
 	useEffect(() => {
 		const getRoles = async () => {
-			const roles = await getProjectRoles(project);
+			const roles = await getProjectRoles(client, project);
 			if (roles) {
 				setAccountRoles(roles);
 			}
 		};
 		getRoles();
-	}, [project]);
+	}, [client, project]);
 
 	return {accountRoles};
 };

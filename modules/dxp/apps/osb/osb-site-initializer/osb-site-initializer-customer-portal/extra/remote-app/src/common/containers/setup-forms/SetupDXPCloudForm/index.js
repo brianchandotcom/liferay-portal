@@ -14,7 +14,6 @@ import ClayForm from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
 
-import client from '../../../../apolloClient';
 import {
 	addAdminDXPCloud,
 	addDXPCloudEnvironment,
@@ -35,6 +34,7 @@ const INITIAL_SETUP_ADMIN_COUNT = 1;
 const MAXIMUM_NUMBER_OF_CHARACTERS = 77;
 
 const SetupDXPCloudPage = ({
+	client,
 	errors,
 	handlePage,
 	leftButton,

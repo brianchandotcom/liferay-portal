@@ -10,7 +10,6 @@
  */
 
 import {createContext, useContext, useEffect, useReducer} from 'react';
-import client from '../../../apolloClient';
 import {useAppPropertiesContext} from '../../../common/contexts/AppPropertiesContext';
 import {Liferay} from '../../../common/services/liferay';
 import {
@@ -34,7 +33,7 @@ const AppContext = createContext();
 const MAX_PAGE_SIZE = 9999;
 
 const AppContextProvider = ({children}) => {
-	const {oktaSessionAPI} = useAppPropertiesContext();
+	const {client, oktaSessionAPI} = useAppPropertiesContext();
 	const [state, dispatch] = useReducer(reducer, {
 		analyticsCloudActivationSubmittedStatus: undefined,
 		dxpCloudActivationSubmittedStatus: undefined,
@@ -237,6 +236,7 @@ const AppContextProvider = ({children}) => {
 			}
 
 			const isValid = await isValidPage(
+				client,
 				user,
 				projectExternalReferenceCode,
 				ROUTE_TYPES.onboarding
@@ -274,7 +274,7 @@ const AppContextProvider = ({children}) => {
 		};
 
 		fetchData();
-	}, [oktaSessionAPI]);
+	}, [client, oktaSessionAPI]);
 
 	return (
 		<AppContext.Provider value={[state, dispatch]}>

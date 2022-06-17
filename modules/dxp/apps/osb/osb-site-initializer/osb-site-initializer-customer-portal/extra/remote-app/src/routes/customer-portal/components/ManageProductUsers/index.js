@@ -10,8 +10,8 @@
  */
 
 import {useEffect, useState} from 'react';
-import client from '../../../../apolloClient';
 import i18n from '../../../../common/I18n';
+import {useAppPropertiesContext} from '../../../../common/contexts/AppPropertiesContext';
 import {
 	getAnalyticsCloudWorkspace,
 	getDXPCloudEnvironment,
@@ -23,6 +23,7 @@ import ManageProductButton from '../ManageProductButton';
 const ManageProductUser = ({project, subscriptionGroups}) => {
 	const [dxpCloudProjectId, setDxpCloudProjectId] = useState('');
 	const [analyctsCloudGroupId, setAnalyctsCloudGroupId] = useState('');
+	const {client} = useAppPropertiesContext();
 
 	const activatedLinkDXPC = `https://console.liferay.cloud/projects/${dxpCloudProjectId}/overview`;
 	const activatedLinkAC = `https://analytics.liferay.com/workspace/${analyctsCloudGroupId}/sites`;
@@ -62,7 +63,7 @@ const ManageProductUser = ({project, subscriptionGroups}) => {
 			}
 		};
 		getAnalyticsCloudWorkspaces();
-	}, [project.accountKey]);
+	}, [client, project.accountKey]);
 
 	const isActiveStatusDXPC =
 		subscriptionGroups.find(

@@ -9,11 +9,10 @@
  * distribution rights of the Software.
  */
 
-import client from '../../apolloClient';
 import {getAccountRoles} from '../services/liferay/graphql/queries';
 import {ROLE_TYPES, SLA_TYPES} from './constants';
 
-export default async function getProjectRoles(project) {
+export default async function getProjectRoles(client, project) {
 	const projectHasSLAGoldPlatinum =
 		project?.slaCurrent?.includes(SLA_TYPES.gold) ||
 		project?.slaCurrent?.includes(SLA_TYPES.platinum);

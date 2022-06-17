@@ -13,7 +13,6 @@ import ClayAlert from '@clayui/alert';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useEffect, useState} from 'react';
-import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
@@ -43,6 +42,7 @@ const DeveloperKeysInputs = ({
 }) => {
 	const {
 		articleDeployingActivationKeysURL,
+		client,
 		provisioningServerAPI,
 	} = useAppPropertiesContext();
 	const [dxpVersions, setDxpVersions] = useState([]);
@@ -75,7 +75,7 @@ const DeveloperKeysInputs = ({
 		};
 
 		fetchListTypeDefinitions();
-	}, [dxpVersion, listType]);
+	}, [client, dxpVersion, listType]);
 
 	const developerKeyDownload = async () => {
 		const [selectedVersionSplitted] = selectedVersion.split(' ');

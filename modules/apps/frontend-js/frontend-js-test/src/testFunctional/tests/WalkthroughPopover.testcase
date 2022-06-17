@@ -109,6 +109,26 @@ definition {
 		}
 	}
 
+	@description = "LPS-154644. Assert popover mode can display step number."
+	@priority = "4"
+	test CanDisplayStepNumber {
+		task ("And given click hotspot element") {
+			Click(locator1 = "Walkthrough#HOTSPOT");
+		}
+
+		task ("When click through all primary step buttons") {
+			for (var number : list "2,3,4,5") {
+				Click(locator1 = "Button#OK");
+
+				task ("Then step number is displayed consecutively") {
+					AssertElementPresent(
+						key_title = "Step ${number} of 5: Title ${number}",
+						locator1 = "Walkthrough#POPOVER_TITLE");
+				}
+			}
+		}
+	}
+
 	@description = "LPS-154642. Assert popover mode contains a title."
 	@priority = "5"
 	test CanDisplayTitle {
@@ -137,6 +157,28 @@ definition {
 				attribute1 = "fill",
 				locator1 = "Walkthrough#POPOVER_OVERLAY",
 				value1 = "#393a4a");
+		}
+	}
+
+	@description = "LPS-154640. Assert popover mode can have a shadow around element."
+	@priority = "2"
+	test CanHaveAShadowAroundElement {
+		task ("When click hotspot element until Step 4") {
+			Click(locator1 = "Walkthrough#HOTSPOT");
+
+			Click(locator1 = "Button#OK");
+
+			Click(locator1 = "Button#OK");
+
+			Click(locator1 = "Button#OK");
+		}
+
+		task ("Then element is outlined with a shadow") {
+			AssertCssValue(
+				id = "step4",
+				locator1 = "Walkthrough#ALERT",
+				locator2 = "box-shadow",
+				value1 = "rgba(11, 95, 255, 0.16) 0px 8px 16px 0px");
 		}
 	}
 

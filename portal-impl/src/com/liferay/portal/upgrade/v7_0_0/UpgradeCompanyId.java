@@ -174,58 +174,59 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 
 			// Company
 
-			String updateSQL = _getUpdateSQL(
-				"Company", "companyId", "ownerId",
-				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
-
-			runSQL(connection, updateSQL);
+			runSQL(
+				connection,
+				_getUpdateSQL(
+					"Company", "companyId", "ownerId",
+					PortletKeys.PREFS_OWNER_TYPE_COMPANY));
 
 			// Group
 
-			updateSQL = _getUpdateSQL(
-				"Group_", "groupId", "ownerId",
-				PortletKeys.PREFS_OWNER_TYPE_GROUP);
-
-			runSQL(connection, updateSQL);
+			runSQL(
+				connection,
+				_getUpdateSQL(
+					"Group_", "groupId", "ownerId",
+					PortletKeys.PREFS_OWNER_TYPE_GROUP));
 
 			// Layout
 
-			updateSQL = _getUpdateSQL(
-				"Layout", "plid", "plid", PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
-
-			runSQL(connection, updateSQL);
+			runSQL(
+				connection,
+				_getUpdateSQL(
+					"Layout", "plid", "plid",
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT));
 
 			// LayoutRevision
 
-			updateSQL = _getUpdateSQL(
-				"LayoutRevision", "layoutRevisionId", "plid",
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
-
-			runSQL(connection, updateSQL);
+			runSQL(
+				connection,
+				_getUpdateSQL(
+					"LayoutRevision", "layoutRevisionId", "plid",
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT));
 
 			// Organization
 
-			updateSQL = _getUpdateSQL(
-				"Organization_", "organizationId", "ownerId",
-				PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION);
-
-			runSQL(connection, updateSQL);
+			runSQL(
+				connection,
+				_getUpdateSQL(
+					"Organization_", "organizationId", "ownerId",
+					PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION));
 
 			// PortletItem
 
-			updateSQL = _getUpdateSQL(
-				"PortletItem", "portletItemId", "ownerId",
-				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED);
-
-			runSQL(connection, updateSQL);
+			runSQL(
+				connection,
+				_getUpdateSQL(
+					"PortletItem", "portletItemId", "ownerId",
+					PortletKeys.PREFS_OWNER_TYPE_ARCHIVED));
 
 			// User_
 
-			updateSQL = _getUpdateSQL(
-				"User_", "userId", "ownerId",
-				PortletKeys.PREFS_OWNER_TYPE_USER);
-
-			runSQL(connection, updateSQL);
+			runSQL(
+				connection,
+				_getUpdateSQL(
+					"User_", "userId", "ownerId",
+					PortletKeys.PREFS_OWNER_TYPE_USER));
 		}
 
 		private String _getSelectSQL(

@@ -347,7 +347,6 @@ definition {
 
 		task ("And link them to some specific SKUs") {
 			CommerceDiagram.changePinInfo(
-				buttonType = "Save",
 				newPinNumber = "1",
 				pinNumber = "1",
 				quantity = "2",
@@ -355,7 +354,6 @@ definition {
 				sku = "MIN93016A");
 
 			CommerceDiagram.changePinInfo(
-				buttonType = "Save",
 				newPinNumber = "32",
 				pinNumber = "32",
 				quantity = "2",
@@ -363,7 +361,6 @@ definition {
 				sku = "MIN93015");
 
 			CommerceDiagram.changePinInfo(
-				buttonType = "Save",
 				newPinNumber = "2",
 				pinNumber = "2",
 				quantity = "2",

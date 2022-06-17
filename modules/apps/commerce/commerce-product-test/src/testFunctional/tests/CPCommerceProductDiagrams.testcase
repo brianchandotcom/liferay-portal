@@ -629,7 +629,6 @@ definition {
 
 		task ("When I change the pin information") {
 			CommerceDiagram.changePinInfo(
-				buttonType = "Update",
 				newPinNumber = "2",
 				pinNumber = "1",
 				quantity = "2",

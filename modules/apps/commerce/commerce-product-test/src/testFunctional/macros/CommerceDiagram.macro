@@ -224,10 +224,10 @@ definition {
 				locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 		}
 
-		if ("${buttonType}" == "Update") {
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			Button.clickUpdate();
 		}
-		else if ("${buttonType}" == "Save") {
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
 			Button.clickSave();
 		}
 

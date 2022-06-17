@@ -78,7 +78,7 @@ public class CustomElementCETImplFactoryImpl
 		throws PortalException {
 
 		CustomElementCET newCustomElementCET = new CustomElementCETImpl(
-			newTypeSettingsUnicodeProperties);
+			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
 
 		String cssURLs = newCustomElementCET.getCSSURLs();
 
@@ -158,7 +158,7 @@ public class CustomElementCETImplFactoryImpl
 
 		if (oldTypeSettingsUnicodeProperties != null) {
 			CustomElementCET oldCustomElementCET = new CustomElementCETImpl(
-				oldTypeSettingsUnicodeProperties);
+				StringPool.NEW_LINE, oldTypeSettingsUnicodeProperties);
 
 			if (newCustomElementCET.isInstanceable() !=
 					oldCustomElementCET.isInstanceable()) {

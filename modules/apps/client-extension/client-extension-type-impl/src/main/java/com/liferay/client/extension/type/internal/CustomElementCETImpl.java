@@ -31,7 +31,7 @@ import javax.portlet.PortletRequest;
  * @author Brian Wing Shun Chan
  */
 public class CustomElementCETImpl
-	extends BaseCETImpl implements CustomElementCET {
+	extends BaseCETImpl<CustomElementCET> implements CustomElementCET {
 
 	public CustomElementCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		super(clientExtensionEntry);
@@ -39,6 +39,7 @@ public class CustomElementCETImpl
 
 	public CustomElementCETImpl(PortletRequest portletRequest) {
 		this(
+			StringPool.NEW_LINE,
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
@@ -79,9 +80,9 @@ public class CustomElementCETImpl
 	}
 
 	public CustomElementCETImpl(
-		UnicodeProperties typeSettingsUnicodeProperties) {
+		String baseURL, UnicodeProperties typeSettingsUnicodeProperties) {
 
-		super(typeSettingsUnicodeProperties);
+		super(baseURL, typeSettingsUnicodeProperties);
 	}
 
 	public String getCSSURLs() {
@@ -125,6 +126,11 @@ public class CustomElementCETImpl
 
 	public boolean isUseESM() {
 		return getBoolean("useESM");
+	}
+
+	@Override
+	protected Class<CustomElementCET> getCETClass() {
+		return CustomElementCET.class;
 	}
 
 }

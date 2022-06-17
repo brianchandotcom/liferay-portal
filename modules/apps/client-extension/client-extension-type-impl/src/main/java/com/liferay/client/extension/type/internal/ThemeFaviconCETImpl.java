@@ -17,6 +17,7 @@ package com.liferay.client.extension.type.internal;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.ThemeFaviconCET;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -29,7 +30,7 @@ import javax.portlet.PortletRequest;
  * @author Iván Zaera Avellón
  */
 public class ThemeFaviconCETImpl
-	extends BaseCETImpl implements ThemeFaviconCET {
+	extends BaseCETImpl<ThemeFaviconCET> implements ThemeFaviconCET {
 
 	public ThemeFaviconCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		super(clientExtensionEntry);
@@ -37,6 +38,7 @@ public class ThemeFaviconCETImpl
 
 	public ThemeFaviconCETImpl(PortletRequest portletRequest) {
 		this(
+			StringPool.NEW_LINE,
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
@@ -55,9 +57,9 @@ public class ThemeFaviconCETImpl
 	}
 
 	public ThemeFaviconCETImpl(
-		UnicodeProperties typeSettingsUnicodeProperties) {
+		String baseURL, UnicodeProperties typeSettingsUnicodeProperties) {
 
-		super(typeSettingsUnicodeProperties);
+		super(baseURL, typeSettingsUnicodeProperties);
 	}
 
 	@Override
@@ -78,6 +80,11 @@ public class ThemeFaviconCETImpl
 	@Override
 	public boolean hasProperties() {
 		return false;
+	}
+
+	@Override
+	protected Class<ThemeFaviconCET> getCETClass() {
+		return ThemeFaviconCET.class;
 	}
 
 }

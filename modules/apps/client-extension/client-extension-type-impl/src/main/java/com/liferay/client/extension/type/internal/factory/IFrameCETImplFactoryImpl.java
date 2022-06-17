@@ -20,6 +20,7 @@ import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.IFrameCET;
 import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.IFrameCETImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -74,7 +75,7 @@ public class IFrameCETImplFactoryImpl implements CETImplFactory<IFrameCET> {
 		throws PortalException {
 
 		IFrameCET newIFrameCET = new IFrameCETImpl(
-			newTypeSettingsUnicodeProperties);
+			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
 
 		Matcher matcher = _friendlyURLMappingPattern.matcher(
 			newIFrameCET.getFriendlyURLMapping());
@@ -91,7 +92,7 @@ public class IFrameCETImplFactoryImpl implements CETImplFactory<IFrameCET> {
 
 		if (oldTypeSettingsUnicodeProperties != null) {
 			IFrameCET oldIFrameCET = new IFrameCETImpl(
-				oldTypeSettingsUnicodeProperties);
+				StringPool.NEW_LINE, oldTypeSettingsUnicodeProperties);
 
 			if (newIFrameCET.isInstanceable() !=
 					oldIFrameCET.isInstanceable()) {

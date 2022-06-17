@@ -17,6 +17,7 @@ package com.liferay.client.extension.type.internal;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.ThemeJSCET;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -28,7 +29,8 @@ import javax.portlet.PortletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public class ThemeJSCETImpl extends BaseCETImpl implements ThemeJSCET {
+public class ThemeJSCETImpl
+	extends BaseCETImpl<ThemeJSCET> implements ThemeJSCET {
 
 	public ThemeJSCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		super(clientExtensionEntry);
@@ -36,6 +38,7 @@ public class ThemeJSCETImpl extends BaseCETImpl implements ThemeJSCET {
 
 	public ThemeJSCETImpl(PortletRequest portletRequest) {
 		this(
+			StringPool.NEW_LINE,
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
@@ -53,8 +56,10 @@ public class ThemeJSCETImpl extends BaseCETImpl implements ThemeJSCET {
 			properties, sourceCodeURL, typeSettingsUnicodeProperties);
 	}
 
-	public ThemeJSCETImpl(UnicodeProperties typeSettingsUnicodeProperties) {
-		super(typeSettingsUnicodeProperties);
+	public ThemeJSCETImpl(
+		String baseURL, UnicodeProperties typeSettingsUnicodeProperties) {
+
+		super(baseURL, typeSettingsUnicodeProperties);
 	}
 
 	@Override
@@ -75,6 +80,11 @@ public class ThemeJSCETImpl extends BaseCETImpl implements ThemeJSCET {
 	@Override
 	public boolean hasProperties() {
 		return false;
+	}
+
+	@Override
+	protected Class<ThemeJSCET> getCETClass() {
+		return ThemeJSCET.class;
 	}
 
 }

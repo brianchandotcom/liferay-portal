@@ -20,6 +20,7 @@ import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.GlobalCSSCET;
 import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.GlobalCSSCETImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,7 +74,7 @@ public class GlobalCSSCETImplFactoryImpl
 		throws PortalException {
 
 		GlobalCSSCET newGlobalCSSCET = new GlobalCSSCETImpl(
-			newTypeSettingsUnicodeProperties);
+			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
 
 		if (!Validator.isUrl(newGlobalCSSCET.getURL())) {
 			throw new ClientExtensionEntryTypeSettingsException(

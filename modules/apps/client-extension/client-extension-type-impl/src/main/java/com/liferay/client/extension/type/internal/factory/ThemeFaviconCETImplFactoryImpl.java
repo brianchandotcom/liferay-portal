@@ -20,6 +20,7 @@ import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.ThemeFaviconCET;
 import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.ThemeFaviconCETImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,7 +74,7 @@ public class ThemeFaviconCETImplFactoryImpl
 		throws PortalException {
 
 		ThemeFaviconCET newThemeFaviconCET = new ThemeFaviconCETImpl(
-			newTypeSettingsUnicodeProperties);
+			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
 
 		if (!Validator.isUrl(newThemeFaviconCET.getURL())) {
 			throw new ClientExtensionEntryTypeSettingsException(

@@ -20,6 +20,7 @@ import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.ThemeCSSCET;
 import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.ThemeCSSCETImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,7 +73,7 @@ public class ThemeCSSCETImplFactoryImpl implements CETImplFactory<ThemeCSSCET> {
 		throws PortalException {
 
 		ThemeCSSCET newThemeCSSCET = new ThemeCSSCETImpl(
-			newTypeSettingsUnicodeProperties);
+			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
 
 		String baseURL = newThemeCSSCET.getBaseURL();
 

@@ -16,23 +16,29 @@ package com.liferay.client.extension.type.internal;
 
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.CET;
+import com.liferay.client.extension.type.internal.util.URLFieldUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class BaseCETImpl implements CET {
+public abstract class BaseCETImpl<T extends CET> implements CET {
 
 	public BaseCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		_clientExtensionEntry = clientExtensionEntry;
@@ -71,9 +77,8 @@ public abstract class BaseCETImpl implements CET {
 		String externalReferenceCode, String name, Properties properties,
 		String sourceCodeURL, UnicodeProperties typeSettingsUnicodeProperties) {
 
-		this(typeSettingsUnicodeProperties);
+		this(baseURL, typeSettingsUnicodeProperties);
 
-		_baseURL = baseURL;
 		_companyId = companyId;
 		_description = description;
 		_externalReferenceCode = externalReferenceCode;
@@ -84,8 +89,12 @@ public abstract class BaseCETImpl implements CET {
 		_readOnly = true;
 	}
 
-	public BaseCETImpl(UnicodeProperties typeSettingsUnicodeProperties) {
-		_typeSettingsUnicodeProperties = typeSettingsUnicodeProperties;
+	public BaseCETImpl(
+		String baseURL, UnicodeProperties typeSettingsUnicodeProperties) {
+
+		_baseURL = baseURL;
+		_typeSettingsUnicodeProperties = _transform(
+			baseURL, typeSettingsUnicodeProperties);
 	}
 
 	@Override
@@ -152,9 +161,55 @@ public abstract class BaseCETImpl implements CET {
 			_typeSettingsUnicodeProperties.getProperty(key));
 	}
 
+	protected abstract Class<T> getCETClass();
+
 	protected String getString(String key) {
 		return GetterUtil.getString(
 			_typeSettingsUnicodeProperties.getProperty(key));
+	}
+
+	private UnicodeProperties _transform(
+		String baseURL, UnicodeProperties unicodeProperties) {
+
+		UnicodeProperties transformedUnicodeProperties =
+			new UnicodeProperties();
+
+		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
+			String name = entry.getKey();
+			String value = entry.getValue();
+
+			if (URLFieldUtil.isURLField(getCETClass(), name)) {
+				value = _transformURLField(baseURL, value);
+			}
+
+			transformedUnicodeProperties.put(name, value);
+		}
+
+		return transformedUnicodeProperties;
+	}
+
+	private String _transformURLField(String baseURL, String value) {
+		if (value.contains(StringPool.NEW_LINE)) {
+			List<String> values = new ArrayList<>();
+
+			for (String valueLine :
+					StringUtil.split(value, CharPool.NEW_LINE)) {
+
+				values.add(_transformURLField(baseURL, valueLine));
+			}
+
+			return StringUtil.merge(values, StringPool.NEW_LINE);
+		}
+
+		if (value.contains(StringPool.COLON)) {
+			return value;
+		}
+
+		if (!value.isEmpty() && !value.startsWith(StringPool.SLASH)) {
+			value = StringPool.SLASH + value;
+		}
+
+		return baseURL + value;
 	}
 
 	private String _baseURL = StringPool.BLANK;

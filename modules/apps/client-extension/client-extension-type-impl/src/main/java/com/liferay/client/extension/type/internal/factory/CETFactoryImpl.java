@@ -26,6 +26,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListene
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -37,6 +38,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import javax.portlet.PortletRequest;
 
@@ -44,6 +46,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -60,11 +63,22 @@ public class CETFactoryImpl implements CETFactory {
 		CETImplFactory cetImplFactory = _getCETImplFactory(
 			cetConfiguration.type());
 
+		String baseURL = cetConfiguration.baseURL();
+
+		// TODO: use AbsolutePortalURLBuilder to make up portalURL value
+
+		baseURL = baseURL.replaceAll(
+			Pattern.quote("${portalURL}"), _portal.getPathContext());
+
+		if (baseURL.endsWith(StringPool.SLASH)) {
+			baseURL = baseURL.substring(0, baseURL.length() - 1);
+		}
+
 		try {
 			return cetImplFactory.create(
-				cetConfiguration.baseURL(), companyId,
-				cetConfiguration.description(), externalReferenceCode,
-				cetConfiguration.name(), _loadProperties(cetConfiguration),
+				baseURL, companyId, cetConfiguration.description(),
+				externalReferenceCode, cetConfiguration.name(),
+				_loadProperties(cetConfiguration),
 				cetConfiguration.sourceCodeURL(),
 				_toTypeSettingsUnicodeProperties(cetConfiguration));
 		}
@@ -171,6 +185,9 @@ public class CETFactoryImpl implements CETFactory {
 
 		return typeSettingsUnicodeProperties;
 	}
+
+	@Reference
+	private Portal _portal;
 
 	private ServiceTrackerMap<String, CETImplFactory> _serviceTrackerMap;
 

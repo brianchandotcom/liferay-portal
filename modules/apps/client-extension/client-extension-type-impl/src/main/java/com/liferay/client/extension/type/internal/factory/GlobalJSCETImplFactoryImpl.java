@@ -20,6 +20,7 @@ import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.factory.CETImplFactory;
 import com.liferay.client.extension.type.internal.GlobalJSCETImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,7 +73,7 @@ public class GlobalJSCETImplFactoryImpl implements CETImplFactory<GlobalJSCET> {
 		throws PortalException {
 
 		GlobalJSCET newGlobalJSCET = new GlobalJSCETImpl(
-			newTypeSettingsUnicodeProperties);
+			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
 
 		if (!Validator.isUrl(newGlobalJSCET.getURL())) {
 			throw new ClientExtensionEntryTypeSettingsException(

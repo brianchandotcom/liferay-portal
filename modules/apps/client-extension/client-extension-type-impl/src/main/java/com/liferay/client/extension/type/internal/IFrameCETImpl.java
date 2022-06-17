@@ -17,6 +17,7 @@ package com.liferay.client.extension.type.internal;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.type.IFrameCET;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -28,7 +29,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
-public class IFrameCETImpl extends BaseCETImpl implements IFrameCET {
+public class IFrameCETImpl extends BaseCETImpl<IFrameCET> implements IFrameCET {
 
 	public IFrameCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		super(clientExtensionEntry);
@@ -36,6 +37,7 @@ public class IFrameCETImpl extends BaseCETImpl implements IFrameCET {
 
 	public IFrameCETImpl(PortletRequest portletRequest) {
 		this(
+			StringPool.NEW_LINE,
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
@@ -62,8 +64,10 @@ public class IFrameCETImpl extends BaseCETImpl implements IFrameCET {
 			properties, sourceCodeURL, typeSettingsUnicodeProperties);
 	}
 
-	public IFrameCETImpl(UnicodeProperties typeSettingsUnicodeProperties) {
-		super(typeSettingsUnicodeProperties);
+	public IFrameCETImpl(
+		String baseURL, UnicodeProperties typeSettingsUnicodeProperties) {
+
+		super(baseURL, typeSettingsUnicodeProperties);
 	}
 
 	@Override
@@ -95,6 +99,11 @@ public class IFrameCETImpl extends BaseCETImpl implements IFrameCET {
 
 	public boolean isInstanceable() {
 		return getBoolean("instanceable");
+	}
+
+	@Override
+	protected Class<IFrameCET> getCETClass() {
+		return IFrameCET.class;
 	}
 
 }

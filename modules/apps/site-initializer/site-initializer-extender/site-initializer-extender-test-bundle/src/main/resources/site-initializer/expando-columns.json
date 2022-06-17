@@ -8,5 +8,18 @@
 		"dataType": 15,
 		"modelResource": "com.liferay.account.model.AccountEntry",
 		"name": "Test Expando Column 2"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
+		"name": "Test Expando Column 3",
+		"properties": {
+			"hidden": false,
+			"visibleWithUpdatePermission": false,
+			"localizeFieldName": true,
+			"width": "0",
+			"secret": false,
+			"indexType": 2
+		}
 	}
 ]

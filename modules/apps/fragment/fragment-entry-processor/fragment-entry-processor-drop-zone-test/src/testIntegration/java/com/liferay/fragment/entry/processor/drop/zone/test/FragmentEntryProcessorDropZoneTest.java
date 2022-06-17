@@ -58,6 +58,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -127,7 +129,8 @@ public class FragmentEntryProcessorDropZoneTest {
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
 				new DefaultFragmentEntryProcessorContext(
-					null, null, FragmentEntryLinkConstants.EDIT,
+					new MockHttpServletRequest(), null,
+					FragmentEntryLinkConstants.EDIT,
 					LocaleUtil.getMostRelevantLocale())));
 	}
 

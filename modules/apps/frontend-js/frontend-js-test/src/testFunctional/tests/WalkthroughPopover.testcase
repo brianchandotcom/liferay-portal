@@ -160,6 +160,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-154640. Assert popover mode can have a shadow around element."
+	@priority = "2"
+	test CanHaveAShadowAroundElement {
+		task ("When click hotspot element until Step 4") {
+			Click(locator1 = "Walkthrough#HOTSPOT");
+
+			Click(locator1 = "Button#OK");
+
+			Click(locator1 = "Button#OK");
+
+			Click(locator1 = "Button#OK");
+		}
+
+		task ("Then element is outlined with a shadow") {
+			AssertCssValue(
+				id = "step4",
+				locator1 = "Walkthrough#ALERT",
+				locator2 = "box-shadow",
+				value1 = "rgba(11, 95, 255, 0.16) 0px 8px 16px 0px");
+		}
+	}
+
 	@description = "LPS-154648. Assert final step can transition to hotspot mode."
 	@priority = "5"
 	test FinalStepCanTransitionToHotSpotMode {

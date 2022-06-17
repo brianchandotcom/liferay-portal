@@ -326,19 +326,18 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		dynamicProxyCreator.clear();
 
-		try {
-			if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
-				DBUpgrader.upgrade(applicationContext);
+		if (PropsValues.UPGRADE_DATABASE_AUTO_RUN) {
+			StartupHelperUtil.setUpgrading(true);
 
-				StartupHelperUtil.setUpgrading(false);
+			try {
+				DBUpgrader.upgradePortal();
 			}
-			else {
-				ModuleFrameworkUtil.registerContext(applicationContext);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+
+		ModuleFrameworkUtil.registerContext(applicationContext);
 
 		CustomJspBagRegistryUtil.getCustomJspBags();
 	}

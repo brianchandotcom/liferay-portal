@@ -997,7 +997,11 @@ definition {
 				fragmentLocator = "//div[@class='fragment-title']/h1[@class='title']",
 				text = "LOREM IPSUM DOLOR SIT AMET");
 
-			PortletEntry.publish();
+			Button.clickPublish();
+
+			AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException:");
+
+			Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
 		}
 
 		task ("Assert could delete fragment upgrading from 7.2") {

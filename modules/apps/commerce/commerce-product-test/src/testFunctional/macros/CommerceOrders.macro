@@ -407,7 +407,23 @@ definition {
 			key_titleName = "Payment Method",
 			locator1 = "CommerceOrders#ORDER_DETAILS_EDIT_BUTTON");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(eligiblePaymentMethods)) {
+			for (var eligiblePaymentMethod : list "${eligiblePaymentMethods}") {
+				AssertElementPresent(
+					key_radioOption = "${eligiblePaymentMethod}",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+			}
+		}
+
+		if (isSet(notEligiblePaymentMethods)) {
+			for (var notEligiblePaymentMethod : list "${notEligiblePaymentMethods}") {
+				AssertElementNotPresent(
+					key_radioOption = "${notEligiblePaymentMethod}",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+			}
+		}
 
 		Click.clickAtNotVisible(
 			key_radioOption = "${paymentMethod}",

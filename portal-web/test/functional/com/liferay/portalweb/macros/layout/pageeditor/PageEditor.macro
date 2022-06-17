@@ -4755,6 +4755,51 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 	}
 
+	macro viewInputStyle {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
+		if ("${showLabel}" == "true") {
+			AssertTextEquals(
+				fieldLabel = "${label}",
+				index = "${position}",
+				locator1 = "Fragment#INPUT_LABEL",
+				type = "text-input",
+				value1 = "${label}");
+		}
+		else if ("${showLabel}" == "false") {
+			AssertElementPresent(
+				fieldLabel = "${label}",
+				index = "${position}",
+				locator1 = "Fragment#INPUT_LABEL_INVISIBLE",
+				type = "text-input");
+		}
+
+		if ("${showHelpText}" == "true") {
+			AssertTextEquals(
+				index = "${position}",
+				locator1 = "Fragment#INPUT_HELP_TEXT",
+				type = "input",
+				value1 = "${helpText}");
+		}
+		else if ("${showHelpText}" == "false") {
+			AssertElementNotPresent(
+				index = "${position}",
+				locator1 = "Fragment#INPUT_HELP_TEXT",
+				type = "input");
+		}
+
+		if (isSet(placeholder)) {
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				index = "${position}",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "${placeholderType}",
+				value1 = "${placeholder}");
+		}
+	}
+
 	macro viewItemSelectorText {
 		AssertTextEquals(
 			key_fieldLabel = "${fieldLabel}",

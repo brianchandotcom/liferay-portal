@@ -148,7 +148,7 @@ public class ImportFragmentEntriesStrutsActionTest {
 		FragmentCollection fragmentCollection = fragmentCollections.get(0);
 
 		Assert.assertEquals(
-			4,
+			5,
 			_fragmentEntryLocalService.getFragmentEntriesCount(
 				fragmentCollection.getFragmentCollectionId()));
 

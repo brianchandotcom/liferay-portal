@@ -680,27 +680,52 @@ public class ContentPageEditorDisplayContext {
 					themeDisplay.getPlid(), getSegmentsExperienceId())
 			).put(
 				"permissions",
-				HashMapBuilder.<String, Object>put(
-					ContentPageEditorActionKeys.UPDATE,
-					_hasPermissions(ActionKeys.UPDATE)
-				).put(
-					ContentPageEditorActionKeys.UPDATE_LAYOUT_ADVANCED_OPTIONS,
-					() -> _hasPermissions(
+				() -> {
+					boolean hasUpdatePermission = _hasPermissions(
+						ActionKeys.UPDATE);
+
+					return HashMapBuilder.<String, Object>put(
+						ContentPageEditorActionKeys.UPDATE, hasUpdatePermission
+					).put(
 						ContentPageEditorActionKeys.
-							UPDATE_LAYOUT_ADVANCED_OPTIONS)
-				).put(
-					ContentPageEditorActionKeys.UPDATE_LAYOUT_BASIC,
-					() -> _hasPermissions(
-						ContentPageEditorActionKeys.UPDATE_LAYOUT_BASIC)
-				).put(
-					ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT,
-					_hasPermissions(
-						ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT)
-				).put(
-					ContentPageEditorActionKeys.UPDATE_LAYOUT_LIMITED,
-					() -> _hasPermissions(
-						ContentPageEditorActionKeys.UPDATE_LAYOUT_LIMITED)
-				).build()
+							UPDATE_LAYOUT_ADVANCED_OPTIONS,
+						() -> {
+							if (!hasUpdatePermission) {
+								return _hasPermissions(
+									ContentPageEditorActionKeys.
+										UPDATE_LAYOUT_ADVANCED_OPTIONS);
+							}
+
+							return false;
+						}
+					).put(
+						ContentPageEditorActionKeys.UPDATE_LAYOUT_BASIC,
+						() -> {
+							if (!hasUpdatePermission) {
+								return _hasPermissions(
+									ContentPageEditorActionKeys.
+										UPDATE_LAYOUT_BASIC);
+							}
+
+							return false;
+						}
+					).put(
+						ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT,
+						() -> _hasPermissions(
+							ContentPageEditorActionKeys.UPDATE_LAYOUT_CONTENT)
+					).put(
+						ContentPageEditorActionKeys.UPDATE_LAYOUT_LIMITED,
+						() -> {
+							if (!hasUpdatePermission) {
+								return _hasPermissions(
+									ContentPageEditorActionKeys.
+										UPDATE_LAYOUT_LIMITED);
+							}
+
+							return false;
+						}
+					).build();
+				}
 			).put(
 				"segmentsExperienceId", getSegmentsExperienceId()
 			).build()

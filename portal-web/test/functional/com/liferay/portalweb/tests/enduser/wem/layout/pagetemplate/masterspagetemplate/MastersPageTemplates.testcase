@@ -100,9 +100,17 @@ definition {
 				size = "lg",
 				type = "link");
 
-			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-content--master')][contains(@class,'text-center')][//div[contains(@class,'component-button')]]");
+			AssertCssValue(
+				key_fragmentName = "button",
+				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS",
+				locator2 = "text-align",
+				value1 = "center");
 
-			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-content--master')][contains(@style,'color: var(--gray-300)')][//div[contains(@class,'component-button')]]");
+			AssertCssValue(
+				key_fragmentName = "button",
+				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS",
+				locator2 = "background-color",
+				value1 = "rgba(231, 231, 237, 1)");
 		}
 	}
 

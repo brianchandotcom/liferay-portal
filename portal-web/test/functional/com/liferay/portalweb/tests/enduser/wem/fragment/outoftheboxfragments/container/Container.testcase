@@ -1031,8 +1031,13 @@ definition {
 				backgroundColor = "success",
 				position = "2");
 
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Heading",
+				position = "2",
+				textColor = "white");
+
 			AssertElementPresent(
-				key_elementHeader = "//div[@aria-label='Heading']//div[contains(@class,'page-editor__topper__content')]//div[contains(@style,'color: var(--white)')]",
+				key_elementHeader = "//div[@aria-label='Heading']",
 				key_position = "2",
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}

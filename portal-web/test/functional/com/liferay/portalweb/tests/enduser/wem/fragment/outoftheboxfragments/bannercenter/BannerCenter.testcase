@@ -97,10 +97,10 @@ definition {
 				id = "link",
 				text = "Go Somewhere");
 
-			AssertVisible(
-				backgroundImageStyle = "background-color: var(--gray-500)",
-				locator1 = "Fragment#BACKGROUND_IMAGE_STYLE",
-				position = "1");
+			ContentPages.viewFragmentCommonStyle(
+				fragmentName = "container",
+				styleName = "backgroundColor",
+				styleValue = "gray-500");
 		}
 	}
 

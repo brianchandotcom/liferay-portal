@@ -492,9 +492,11 @@ export const getUserAccount = gql`
 			image
 			name
 			roleBriefs {
+				id
 				name
 			}
 			organizationBriefs {
+				id
 				name
 			}
 		}

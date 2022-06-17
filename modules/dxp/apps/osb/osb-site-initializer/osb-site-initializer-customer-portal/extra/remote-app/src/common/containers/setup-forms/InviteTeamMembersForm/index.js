@@ -47,6 +47,7 @@ const InviteTeamMembersPage = ({
 }) => {
 	const {
 		articleAccountSupportURL,
+		client,
 		provisioningServerAPI,
 	} = useAppPropertiesContext();
 
@@ -76,7 +77,7 @@ const InviteTeamMembersPage = ({
 
 	useEffect(() => {
 		const getRoles = async () => {
-			const roles = await getProjectRoles(project);
+			const roles = await getProjectRoles(client, project);
 
 			if (roles) {
 				const accountMember = roles?.find(
@@ -114,6 +115,7 @@ const InviteTeamMembersPage = ({
 		getRoles();
 	}, [
 		availableAdministratorAssets,
+		client,
 		project,
 		projectHasSLAGoldPlatinum,
 		setFieldValue,
@@ -155,8 +157,7 @@ const InviteTeamMembersPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 			setshowEmptyEmailError(false);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -211,8 +212,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

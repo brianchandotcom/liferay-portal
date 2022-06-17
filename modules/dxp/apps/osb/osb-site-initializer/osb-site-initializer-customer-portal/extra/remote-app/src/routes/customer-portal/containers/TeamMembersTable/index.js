@@ -11,8 +11,8 @@
 
 import ClayAlert from '@clayui/alert';
 import {useEffect, useMemo, useState} from 'react';
-import client from '../../../../apolloClient';
 import {Table} from '../../../../common/components';
+import {useAppPropertiesContext} from '../../../../common/contexts/AppPropertiesContext';
 import {Liferay} from '../../../../common/services/liferay';
 import {
 	associateUserAccountWithAccountAndAccountRole,
@@ -48,6 +48,7 @@ const ALERT_TIMEOUT = 3000;
 
 const TeamMembersTable = ({project, provisioningServerAPI, sessionId}) => {
 	const {accountRoles} = useAccountRoles(project);
+	const {client} = useAppPropertiesContext();
 
 	const {
 		isLoadingUserAccounts,
@@ -120,6 +121,7 @@ const TeamMembersTable = ({project, provisioningServerAPI, sessionId}) => {
 			);
 
 			deleteAllPreviousUserRoles(
+				client,
 				project.accountKey,
 				userAccount,
 				accountRolesOptions

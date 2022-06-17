@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-import client from '../../../../../apolloClient';
 import {deleteAccountUserRoles} from '../../../../../common/services/liferay/graphql/queries';
 
 export async function deleteAllPreviousUserRoles(
+	client,
 	accountKey,
 	userAccount,
 	accountRoles

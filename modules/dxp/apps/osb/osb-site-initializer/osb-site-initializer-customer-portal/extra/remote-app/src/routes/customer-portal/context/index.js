@@ -10,7 +10,6 @@
  */
 
 import {createContext, useContext, useEffect, useReducer} from 'react';
-import client from '../../../apolloClient';
 import {useAppPropertiesContext} from '../../../common/contexts/AppPropertiesContext';
 import {Liferay} from '../../../common/services/liferay';
 import {
@@ -29,13 +28,6 @@ import {CUSTOM_EVENT_TYPES} from '../utils/constants';
 import reducer, {actionTypes} from './reducer';
 
 const AppContext = createContext();
-
-const getCurrentPageName = () => {
-	const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
-	const pathSplit = pathname.split('/').filter(Boolean);
-
-	return pathSplit.length > 2 ? pathSplit[2] : '';
-};
 
 const EVENT_OPTION = {
 	async: true,
@@ -57,7 +49,7 @@ const eventKoroneikiAccounts = Liferay.publish(
 );
 
 const AppContextProvider = ({children}) => {
-	const {oktaSessionAPI} = useAppPropertiesContext();
+	const {client, oktaSessionAPI} = useAppPropertiesContext();
 	const [state, dispatch] = useReducer(reducer, {
 		isQuickLinksExpanded: true,
 		project: undefined,
@@ -233,8 +225,9 @@ const AppContextProvider = ({children}) => {
 
 			const user = await getUser(projectExternalReferenceCode);
 
-			if (user && getCurrentPageName() === ROUTE_TYPES.project) {
+			if (user) {
 				const isValid = await isValidPage(
+					client,
 					user,
 					projectExternalReferenceCode,
 					ROUTE_TYPES.project
@@ -259,8 +252,7 @@ const AppContextProvider = ({children}) => {
 							accountBrief =
 								dataAccount?.accountByExternalReferenceCode;
 						}
-					}
-					else {
+					} else {
 						accountBrief = user.accountBriefs?.find(
 							(accountBrief) =>
 								accountBrief.externalReferenceCode ===

@@ -11,8 +11,8 @@
 
 import {useEffect, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
-import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
+import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {Liferay} from '../../../../../common/services/liferay';
 import {getDXPCloudEnvironment} from '../../../../../common/services/liferay/graphql/queries';
 import ActivationStatus from '../../../components/ActivationStatus/index';
@@ -26,6 +26,7 @@ const DXPCloud = () => {
 	] = useCustomerPortal();
 	const {setHasQuickLinksPanel, setHasSideMenu} = useOutletContext();
 	const [dxpCloudEnvironment, setDxpCloudEnvironment] = useState();
+	const {client} = useAppPropertiesContext();
 
 	useEffect(() => {
 		setHasQuickLinksPanel(true);
@@ -52,7 +53,7 @@ const DXPCloud = () => {
 		};
 
 		getDxpCloudEnvironmentData();
-	}, [project, subscriptionGroups]);
+	}, [client, project, subscriptionGroups]);
 
 	return (
 		<div className="mr-4">

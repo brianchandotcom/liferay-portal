@@ -12,7 +12,6 @@
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useEffect, useMemo, useState} from 'react';
-import client from '../../../../../apolloClient';
 import i18n from '../../../../../common/I18n';
 import {Button} from '../../../../../common/components';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
@@ -38,6 +37,7 @@ const ActivationKeysInputs = ({
 	const [{project, userAccount}] = useCustomerPortal();
 
 	const {
+		client,
 		provisioningServerAPI,
 		submitSupportTicketURL,
 	} = useAppPropertiesContext();
@@ -75,7 +75,7 @@ const ActivationKeysInputs = ({
 		};
 
 		fetchAccountSubscriptions();
-	}, [accountKey, productKey]);
+	}, [accountKey, client, productKey]);
 
 	useEffect(() => {
 		const getSubscriptionTerms = async () => {
@@ -106,7 +106,7 @@ const ActivationKeysInputs = ({
 		if (selectedAccountSubscriptionName) {
 			getSubscriptionTerms();
 		}
-	}, [accountKey, productKey, selectedAccountSubscriptionName]);
+	}, [accountKey, client, productKey, selectedAccountSubscriptionName]);
 
 	useEffect(() => {
 		if (selectedAccountSubscriptionName && selectDateInterval) {

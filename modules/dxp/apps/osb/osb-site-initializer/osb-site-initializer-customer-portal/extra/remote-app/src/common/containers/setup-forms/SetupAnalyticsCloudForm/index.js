@@ -12,7 +12,6 @@ import {useQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
-import client from '../../../../apolloClient';
 import {
 	addAnalyticsCloudWorkspace,
 	addIncidentReportAnalyticsCloud,
@@ -41,6 +40,7 @@ const FETCH_DELAY_AFTER_TYPING = 500;
 const MAX_LENGTH = 255;
 
 const SetupAnalyticsCloudPage = ({
+	client,
 	errors,
 	handlePage,
 	leftButton,

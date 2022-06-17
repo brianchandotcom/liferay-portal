@@ -10,7 +10,7 @@
  */
 
 import {useEffect, useState} from 'react';
-import client from '../../../../../apolloClient';
+import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {Liferay} from '../../../../../common/services/liferay';
 import {getAnalyticsCloudWorkspace} from '../../../../../common/services/liferay/graphql/queries';
 import ActivationStatus from '../../../components/ActivationStatus/index';
@@ -20,6 +20,7 @@ import {PRODUCT_TYPES} from '../../../utils/constants';
 const AnalyticsCloud = () => {
 	const [analyticsCloudWorkspace, setAnalyticsCloudWorkspace] = useState();
 	const [{project, subscriptionGroups, userAccount}] = useCustomerPortal();
+	const {client} = useAppPropertiesContext();
 
 	useEffect(() => {
 		const getAnalyticsCloudData = async () => {
@@ -41,7 +42,7 @@ const AnalyticsCloud = () => {
 		};
 
 		getAnalyticsCloudData();
-	}, [project]);
+	}, [client, project]);
 
 	return (
 		<div className="mr-4">

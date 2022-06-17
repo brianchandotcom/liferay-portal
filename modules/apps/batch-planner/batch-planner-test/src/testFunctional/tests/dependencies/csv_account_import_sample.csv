@@ -1,2 +1,2 @@
-parentAccountId,organizationIds,numberOfUsers,name,description,domains,id,type,actions,accountUserAccounts,externalReferenceCode,status
-integer,array,integer,string,string,array,integer,string,object,array,string,integer
+description,domains,type,externalReferenceCode,parentAccountId,organizationIds,name,accountUserAccounts,status,description,domains,type
+string,array,string,string,integer,array,string,array,integer,string,array,string

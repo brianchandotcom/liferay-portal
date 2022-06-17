@@ -84,11 +84,15 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Performance");
 
+		var displayDateYear = DateUtil.getCurrentYear();
+
+		var futureYear = ${displayDateYear} + 1;
+
 		WorkflowMetrics.selectDateRange(
 			completionVelocityDateRange = "Custom Range",
 			dateRange = "Last 30 Days",
-			endDateRange = "06/14/2024",
-			startDateRange = "06/14/2023",
+			endDateRange = "06/14/${futureYear}",
+			startDateRange = "06/14/${futureYear}",
 			title = "Completion Velocity");
 
 		WorkflowMetrics.viewDateRangeErrorMessage(errorMessage = "Please enter a valid date.");

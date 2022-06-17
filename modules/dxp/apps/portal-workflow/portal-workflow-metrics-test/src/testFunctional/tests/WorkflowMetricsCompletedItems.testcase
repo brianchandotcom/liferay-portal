@@ -192,24 +192,15 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Performance");
 
-		WorkflowMetrics.selectDateRange(
-			completionVelocityDateRange = "Custom Range",
-			dateRange = "Last 30 Days",
-			endDateRange = "06/14/2021",
-			startDateRange = "06/14/2022",
-			title = "Completed Items");
+		var displayDateYear = DateUtil.getCurrentYear();
 
-		WorkflowMetrics.viewDateRangeErrorMessage(errorMessage = "The start date cannot be later than the end date.");
-
-		WorkflowMetrics.viewDateRangeErrorMessage(errorMessage = "The end date cannot be earlier than the start date.");
-
-		Refresh();
+		var futureYear = ${displayDateYear} + 1;
 
 		WorkflowMetrics.selectDateRange(
 			completionVelocityDateRange = "Custom Range",
 			dateRange = "Last 30 Days",
-			endDateRange = "06/14/2022",
-			startDateRange = "06/14/2021",
+			endDateRange = "06/14/${futureYear}",
+			startDateRange = "06/14/${futureYear}",
 			title = "Completed Items");
 
 		WorkflowMetrics.viewDateRangeErrorMessage(errorMessage = "Please enter a valid date.");

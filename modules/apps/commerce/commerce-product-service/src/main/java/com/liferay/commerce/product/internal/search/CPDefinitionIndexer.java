@@ -783,8 +783,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 					cpAttachmentFileEntryId, false, false, false));
 		}
 
-		if ((cpDefinition.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
-			(cpDefinition.getCPDefinitionId() !=
+		if ((cpDefinition.getCPDefinitionId() !=
 				cProduct.getPublishedCPDefinitionId()) &&
 			_cpDefinitionLocalService.isVersionable(
 				cpDefinition.getCPDefinitionId())) {

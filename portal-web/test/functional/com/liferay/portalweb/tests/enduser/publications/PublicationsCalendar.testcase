@@ -190,8 +190,6 @@ definition {
 
 		IFrame.closeFrame();
 
-		Pause(locator1 = "3000");
-
 		PublicationsChanges.discardChanges(
 			changeCategory = "Asset",
 			changeTitle = "Publication Calendar Event Title Edit",

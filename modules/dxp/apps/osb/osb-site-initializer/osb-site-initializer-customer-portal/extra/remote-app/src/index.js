@@ -45,6 +45,7 @@ const CustomerPortalApp = ({apis, route, ...properties}) => {
 				value={{
 					...properties,
 					...apis,
+					client,
 				}}
 			>
 				{AppRoutes[route]}

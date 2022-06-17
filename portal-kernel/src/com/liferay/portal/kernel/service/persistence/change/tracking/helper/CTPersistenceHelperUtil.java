@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.service.persistence.change.tracking.helper;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
+import java.io.Serializable;
+
 /**
  * @author Preston Crary
  */
@@ -42,6 +44,18 @@ public class CTPersistenceHelperUtil {
 		}
 
 		return ctPersistenceHelper.isProductionMode(ctModelClass);
+	}
+
+	public static <T extends CTModel<T>> boolean isProductionMode(
+		Class<T> ctModelClass, Serializable primaryKey) {
+
+		CTPersistenceHelper ctPersistenceHelper = _ctPersistenceHelper;
+
+		if (ctPersistenceHelper == null) {
+			return true;
+		}
+
+		return ctPersistenceHelper.isProductionMode(ctModelClass, primaryKey);
 	}
 
 	public static <T extends CTModel<T>> boolean isRemove(T ctModel) {

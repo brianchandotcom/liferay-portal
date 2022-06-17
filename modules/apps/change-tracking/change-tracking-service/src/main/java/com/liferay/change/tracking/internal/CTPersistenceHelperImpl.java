@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 
+import java.io.Serializable;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -87,6 +89,12 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 	public <T extends CTModel<T>> boolean isProductionMode(
 		Class<T> ctModelClass) {
 
+		return isProductionMode(ctModelClass, null);
+	}
+
+	public <T extends CTModel<T>> boolean isProductionMode(
+		Class<T> ctModelClass, Serializable primaryKey) {
+
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
 		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
@@ -95,6 +103,16 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 
 		long modelClassNameId = _classNameLocalService.getClassNameId(
 			ctModelClass);
+
+		if (primaryKey instanceof Long) {
+			if (_ctEntryLocalService.hasCTEntry(
+					ctCollectionId, modelClassNameId, (Long)primaryKey)) {
+
+				return false;
+			}
+
+			return true;
+		}
 
 		if (_ctEntryLocalService.hasCTEntries(
 				ctCollectionId, modelClassNameId)) {

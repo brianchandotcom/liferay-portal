@@ -227,6 +227,20 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public boolean hasCTEntry(
+		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+
+		int count = ctEntryPersistence.countByC_MCNI_MCPK(
+			ctCollectionId, modelClassNameId, modelClassPK);
+
+		if (count == 0) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public CTEntry updateCTEntry(CTEntry ctEntry) {
 		CTCollection ctCollection = _ctCollectionPersistence.fetchByPrimaryKey(
 			ctEntry.getCtCollectionId());

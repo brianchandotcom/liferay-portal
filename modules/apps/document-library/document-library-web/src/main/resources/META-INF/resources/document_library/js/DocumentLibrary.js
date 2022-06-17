@@ -126,10 +126,23 @@ export default function DocumentLibrary({
 		submitForm(form, editEntryUrl, false);
 	}
 
-	function _plugUpload(event) {
-		console.log('plug upload');
-		// TODO
-
+	function _plugUpload() {
+		AUI().use('document-library-upload-2', () => {
+			new Liferay.DocumentLibraryUpload2({
+				appViewEntryTemplates: config.appViewEntryTemplates,
+				columnNames: config.columnNames,
+				dimensions: config.folders.dimensions,
+				displayStyle: config.displayStyle,
+				documentLibraryNamespace: namespace,
+				entriesContainer,
+				folderId: config.folders.defaultParentFolderId,
+				maxFileSize: config.maxFileSize,
+				redirect: config.redirect,
+				scopeGroupId: config.scopeGroupId,
+				uploadURL: config.uploadURL,
+				viewFileEntryURL: config.viewFileEntryURL,
+			});
+		});
 	}
 
 	window[`${namespace}move`] = function (

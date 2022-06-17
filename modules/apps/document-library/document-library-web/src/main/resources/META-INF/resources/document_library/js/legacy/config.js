@@ -37,6 +37,23 @@
 							'uploader',
 						],
 					},
+					'document-library-upload-2': {
+						path: 'DocumentLibraryUpload.js',
+						requires: [
+							'aui-component',
+							'aui-data-set-deprecated',
+							'aui-overlay-manager-deprecated',
+							'aui-overlay-mask-deprecated',
+							'aui-parse-content',
+							'aui-progressbar',
+							'aui-template-deprecated',
+							'aui-tooltip',
+							'liferay-history-manager',
+							'liferay-search-container',
+							'querystring-parse-simple',
+							'uploader',
+						],
+					},
 					'liferay-document-library': {
 						path: 'main.js',
 						requires: [

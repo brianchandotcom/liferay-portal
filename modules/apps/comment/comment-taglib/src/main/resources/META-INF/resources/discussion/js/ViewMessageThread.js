@@ -12,7 +12,11 @@
  * details.
  */
 
-export default function ViewMessageThread({index, namespace, randomNamespace}) {
+export default function ViewMessageThread({
+	index,
+	portletNamespace: namespace,
+	randomNamespace,
+}) {
 	window[`${namespace}${randomNamespace}${index}EditOnChange`] = function (
 		html
 	) {

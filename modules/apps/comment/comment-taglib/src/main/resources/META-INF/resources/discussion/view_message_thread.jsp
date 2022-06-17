@@ -306,7 +306,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			HashMapBuilder.<String, Object>put(
 				"index", index
 			).put(
-				"namespace", namespace
+				"portletNamespace", namespace
 			).put(
 				"randomNamespace", randomNamespace
 			).build()

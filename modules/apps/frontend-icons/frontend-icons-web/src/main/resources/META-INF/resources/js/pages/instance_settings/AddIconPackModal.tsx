@@ -72,7 +72,10 @@ export default function AddIconPackModal({
 
 	const containsWhiteSpace = !!iconPackName.match(/\s/);
 
-	const hasError = nameTaken || containsWhiteSpace;
+	const hasError =
+		nameTaken ||
+		containsWhiteSpace ||
+		(!!Object.keys(selectedIcons).length && !iconPackName);
 
 	const handleUploadSpritemapSubmit = () => {
 		if (hasError) {
@@ -210,6 +213,10 @@ export default function AddIconPackModal({
 											: containsWhiteSpace
 											? Liferay.Language.get(
 													'name-of-icon-pack-cannot-contain-whitespace'
+											  )
+											: !iconPackName
+											? Liferay.Language.get(
+													'name-of-icon-pack-is-required'
 											  )
 											: ''
 									}`}

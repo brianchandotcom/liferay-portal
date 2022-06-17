@@ -15,9 +15,14 @@
 package com.liferay.document.library.video.internal.util;
 
 import com.liferay.document.library.display.context.DLUIItemKeys;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.UIItem;
+import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
 
 /**
  * @author Iván Zaera
@@ -25,33 +30,35 @@ import java.util.List;
  */
 public class DLVideoExternalShortcutUIItemsUtil {
 
+	public static void processDropdownItems(List<DropdownItem> dropdownItems) {
+		_removeItems(
+			dropdownItems, dropdownItem -> (String)dropdownItem.get("key"),
+			SetUtil.fromArray(
+				DLUIItemKeys.CANCEL_CHECKOUT, DLUIItemKeys.CHECKIN,
+				DLUIItemKeys.CHECKOUT, DLUIItemKeys.DOWNLOAD,
+				DLUIItemKeys.OPEN_IN_MS_OFFICE));
+	}
+
 	public static void processUIItems(List<? extends UIItem> uiItems) {
-		_removeUIItem(uiItems, DLUIItemKeys.CANCEL_CHECKOUT);
-		_removeUIItem(uiItems, DLUIItemKeys.CHECKIN);
-		_removeUIItem(uiItems, DLUIItemKeys.CHECKOUT);
-		_removeUIItem(uiItems, DLUIItemKeys.DOWNLOAD);
-		_removeUIItem(uiItems, DLUIItemKeys.OPEN_IN_MS_OFFICE);
+		_removeItems(
+			uiItems, UIItem::getKey,
+			SetUtil.fromArray(
+				DLUIItemKeys.CANCEL_CHECKOUT, DLUIItemKeys.CHECKIN,
+				DLUIItemKeys.CHECKOUT, DLUIItemKeys.DOWNLOAD,
+				DLUIItemKeys.OPEN_IN_MS_OFFICE));
 	}
 
-	private static int _getIndex(List<? extends UIItem> uiItems, String key) {
-		for (int i = 0; i < uiItems.size(); i++) {
-			UIItem uiItem = uiItems.get(i);
+	private static <T> void _removeItems(
+		List<T> items, Function<T, String> function, Set<String> keys) {
 
-			if (key.equals(uiItem.getKey())) {
-				return i;
+		Iterator<T> iterator = items.iterator();
+
+		while (iterator.hasNext()) {
+			T item = iterator.next();
+
+			if (keys.contains(function.apply(item))) {
+				iterator.remove();
 			}
-		}
-
-		return -1;
-	}
-
-	private static void _removeUIItem(
-		List<? extends UIItem> uiItems, String key) {
-
-		int index = _getIndex(uiItems, key);
-
-		if (index != -1) {
-			uiItems.remove(index);
 		}
 	}
 

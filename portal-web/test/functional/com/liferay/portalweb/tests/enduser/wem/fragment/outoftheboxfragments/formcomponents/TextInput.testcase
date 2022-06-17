@@ -151,6 +151,69 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-149725. The pages designer cannot type more than 280 characters in the text input field."
+	@priority = "4"
+	test CannotType281CharactersInTextInputField {
+		property test.name.skip.portal.instance = "TextInput#CannotType281CharactersInTextInputField";
+
+		var actualText = "The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters is 280.The number of characters";
+		var inputText = "The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characterss";
+		var modifiedText = "The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters is 281.The number of characters";
+
+		task ("Given a pages designer has a Text Input fragment within published content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Text Input");
+
+			PageEditor.publish();
+		}
+
+		task ("When the pages designer types 281 characters in the Input Fragment") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Type.sendKeys(
+				key_text = "Text Input",
+				locator1 = "TextInput#ANY",
+				value1 = "${inputText}");
+		}
+
+		task ("Then the pages designer can see just 280 characters in Text Input field") {
+			AssertTextEquals(
+				key_text = "Text Input",
+				locator1 = "TextInput#ANY",
+				value1 = "${modifiedText}");
+		}
+
+		task ("When the pages designer types 280 characters in the Input Fragment") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Type.sendKeys(
+				key_text = "Text Input",
+				locator1 = "TextInput#ANY",
+				value1 = "${actualText}");
+		}
+
+		task ("Then the pages designer can see 280 characters in Text Input field") {
+			AssertTextEquals(
+				key_text = "Text Input",
+				locator1 = "TextInput#ANY",
+				value1 = "${actualText}");
+		}
+	}
+
 	@description = "This is a test for LPS-150278. View warning modal when hiding and publishing a layout elements that contains a required Text Input fragment on content page."
 	@priority = "4"
 	test ViewWarningWhenHideRequiredTextInputOnContentPage {

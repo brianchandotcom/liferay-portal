@@ -264,6 +264,25 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryContainerCssClasses()
+		throws Exception {
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-147511", Boolean.TRUE.toString())) {
+
+			_addTextFragmentEntry();
+
+			File expectedFile = _generateZipFile(
+				"container/css_classes/expected", null, null);
+			File inputFile = _generateZipFile(
+				"container/css_classes/input", null, null);
+
+			_validateImportExport(expectedFile, inputFile);
+		}
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryContainerDefault()
 		throws Exception {
 
@@ -404,6 +423,25 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			"container/link_mapped_layout/plid/input", null, stringValuesMap);
 
 		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryFragmentCssClasses()
+		throws Exception {
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-147511", Boolean.TRUE.toString())) {
+
+			_addTextFragmentEntry();
+
+			File expectedFile = _generateZipFile(
+				"fragment/css_classes/expected", null, null);
+			File inputFile = _generateZipFile(
+				"fragment/css_classes/input", null, null);
+
+			_validateImportExport(expectedFile, inputFile);
+		}
 	}
 
 	@Test

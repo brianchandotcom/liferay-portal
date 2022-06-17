@@ -168,14 +168,14 @@ definition {
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Test Simple Product");
 		}
 
-		task ("And when the replacement product's button is hit") {
+		task ("And when the replacement product's is selected") {
 			ScrollWebElementIntoView(
-				key_text = "Replacement Product",
-				locator1 = "Button#ANY");
+				key_itemName = "SKU1001",
+				locator1 = "CommerceEntry#VIEW_ITEM_FROM_LIST");
 
 			Click(
-				key_text = "Replacement Product",
-				locator1 = "Button#ANY");
+				key_itemName = "SKU1001",
+				locator1 = "CommerceEntry#VIEW_ITEM_FROM_LIST");
 		}
 
 		task ("Then the user is redirected to the replacement's product details page") {

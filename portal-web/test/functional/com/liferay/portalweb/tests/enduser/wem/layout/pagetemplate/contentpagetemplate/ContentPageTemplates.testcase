@@ -299,7 +299,7 @@ definition {
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "heading",
 				styleName = "color",
-				styleValue = "rgb(40, 125, 60)");
+				styleValue = "success");
 		}
 	}
 

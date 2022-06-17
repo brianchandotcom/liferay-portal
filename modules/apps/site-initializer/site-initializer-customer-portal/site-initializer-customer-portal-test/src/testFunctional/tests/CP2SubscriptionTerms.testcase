@@ -7,8 +7,8 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Customer Portal";
 
-	var testSiteName = "Customer Portal";
-	var testSiteURL = "customer-portal";
+	var testSiteName = "Test Customer Portal Name";
+	var testSiteURL = "test-customer-portal-name";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -18,11 +18,11 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
-		}
+			Site.openSitesAdmin();
 
-		task ("Create CP2.0 objects") {
-			CustomerPortal.createCPSiteObjects();
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
 		}
 	}
 
@@ -35,23 +35,16 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 
-			CustomerPortal.customerPortalTearDown();
+			CustomerPortal.customerPortalApisTearDown();
 
 			User.logoutPG();
 		}
 	}
 
 	@description = "LPS-144449 - Verify if when the user clicks on a subscription card its a pop-up showing the detailed terms."
-	@ignore = "true"
 	@priority = "4"
 	test ClickingSubscriptionCardPopUpShows {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -67,16 +60,9 @@ definition {
 	}
 
 	@description = "LPS-144483 - Verify there if status Active shows up."
-	@ignore = "true"
 	@priority = "3"
 	test IfActiveStatusShowsUp {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -98,16 +84,9 @@ definition {
 	}
 
 	@description = "LPS-144484 - Verify there if status Expired shows up."
-	@ignore = "true"
 	@priority = "2"
 	test IfExpiredStatusShowsUp {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 02");
 
@@ -119,16 +98,9 @@ definition {
 	}
 
 	@description = "LPS-144485 - Verify there if status Future shows up."
-	@ignore = "true"
 	@priority = "2"
 	test IfFutureStatusShowsUp {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -150,16 +122,9 @@ definition {
 	}
 
 	@description = "LPS-144452 - Check if when the user clicks out of the modal it closes."
-	@ignore = "true"
 	@priority = "3"
 	test ModalCloseIfClickedOut {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -179,18 +144,11 @@ definition {
 	}
 
 	@description = "LPS-144464 - Verify that the Provisioned column appears for Commerce."
-	@ignore = "true"
 	@priority = "3"
 	test ProvisionedColumnAppearsForCommerce {
 		SetWindowSize(value1 = "1920,1080");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 04");
 
@@ -209,18 +167,11 @@ definition {
 	}
 
 	@description = "LPS-144466 - Verify that the Provisioned column appears for DXP."
-	@ignore = "true"
 	@priority = "3"
 	test ProvisionedColumnAppearsForDXP {
 		SetWindowSize(value1 = "1920,1080");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 02");
 
@@ -243,16 +194,9 @@ definition {
 	}
 
 	@description = "LPS-144470 - Verify that the Provisioned column does not appear for DXP Cloud"
-	@ignore = "true"
 	@priority = "3"
 	test ProvisionedColumnAppearsForDXPCloud {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -271,16 +215,9 @@ definition {
 	}
 
 	@description = "LPS-144454 - Verify there is value under the Start - End Date column."
-	@ignore = "true"
 	@priority = "4"
 	test ValueUnderColumnFields {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 

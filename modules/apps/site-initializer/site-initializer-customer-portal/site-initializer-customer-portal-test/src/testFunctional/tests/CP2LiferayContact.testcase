@@ -7,8 +7,8 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Customer Portal";
 
-	var testSiteName = "Customer Portal";
-	var testSiteURL = "customer-portal";
+	var testSiteName = "Test Customer Portal Name";
+	var testSiteURL = "test-customer-portal-name";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -18,11 +18,11 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
-		}
+			Site.openSitesAdmin();
 
-		task ("Create CP2.0 objects") {
-			CustomerPortal.createCPSiteObjects();
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
 		}
 	}
 
@@ -35,29 +35,19 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 
-			CustomerPortal.customerPortalTearDown();
-
-			User.logoutPG();
+			CustomerPortal.customerPortalApisTearDown();
 		}
 	}
 
 	@description = "LPS-143375 - Verify if Liferay Contact displays Liferay Contact's email."
 	@priority = "4"
 	test IsContactEmailDisplayed {
-		property portal.upstream = "quarantine";
-
-		ApplicationsMenu.gotoSite(site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		Click(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
 			status = "Active",
 			title = "Test Account 01");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
-
-		Refresh();
 
 		AssertTextEquals(
 			locator1 = "CP2LiferayContact#DISPLAY_CONTACT",
@@ -68,20 +58,12 @@ definition {
 	@description = "LPS-143373 - Verify if Liferay Contact displays Liferay Contact's name."
 	@priority = "4"
 	test IsContactNameDisplayed {
-		property portal.upstream = "quarantine";
-
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		Click(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
 			status = "Active",
 			title = "Test Account 01");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "CP2LiferayContact#CONTACT_NAME");
 	}
@@ -89,20 +71,12 @@ definition {
 	@description = "LPS-143374 - Verify if Liferay Contact displays Liferay Contact's role."
 	@priority = "3"
 	test IsContactRoleDisplayed {
-		property portal.upstream = "quarantine";
-
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		Click(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
 			status = "Active",
 			title = "Test Account 01");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
-
-		Refresh();
 
 		AssertTextEquals(
 			locator1 = "CP2LiferayContact#DISPLAY_CONTACT",

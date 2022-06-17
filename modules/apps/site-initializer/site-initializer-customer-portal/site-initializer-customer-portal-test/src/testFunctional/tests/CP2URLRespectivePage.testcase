@@ -7,8 +7,8 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Customer Portal";
 
-	var testSiteName = "Customer Portal";
-	var testSiteURL = "customer-portal";
+	var testSiteName = "Test Customer Portal Name";
+	var testSiteURL = "test-customer-portal-name";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -18,11 +18,11 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
-		}
+			Site.openSitesAdmin();
 
-		task ("Create CP2.0 objects") {
-			CustomerPortal.createCPSiteObjects();
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
 		}
 	}
 
@@ -35,16 +35,14 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 
-			CustomerPortal.customerPortalTearDown();
-
-			User.logoutPG();
+			CustomerPortal.customerPortalApisTearDown();
 		}
 	}
 
 	@description = "LPS-148483 - Verify if when the user choose the ERC-003 and clicks on the Analytics Cloud product the url follow the respective page."
 	@priority = "5"
 	test IfAnalyticsCloudUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-003/activation/analytics-cloud");
 
@@ -56,7 +54,7 @@ definition {
 	@description = "LPS-148477 - Verify if when the user choose the ERC-004 and clicks on the Commerce product the url follow the respective page."
 	@priority = "5"
 	test IfCommerceUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-004/activation/commerce");
 
@@ -68,7 +66,7 @@ definition {
 	@description = "LPS-148479 - Verify if when the user choose the ERC-001 and clicks on the DXP Cloud product the url follow the respective page."
 	@priority = "5"
 	test IfDXPCloudUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-001/activation/dxp-cloud");
 
@@ -80,7 +78,7 @@ definition {
 	@description = "LPS-148478 - Verify if when the user choose the ERC-007 and clicks on the DXP product the url follow the respective page."
 	@priority = "5"
 	test IfDXPUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-007/activation/dxp");
 
@@ -92,7 +90,7 @@ definition {
 	@description = "LPS-148481- Verify if when the user choose the Riyad Bank - Corporate Website and clicks on the Enterprise Search product the url follow the respective page."
 	@priority = "5"
 	test IfEnterpriseUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-009/activation/enterprise-search");
 
@@ -104,7 +102,7 @@ definition {
 	@description = "LPS-148480 - Verify if when the user choose the ERC-002 and clicks on the Partnership product the url follow the respective page."
 	@priority = "5"
 	test IfPartnershipUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-002/activation/partnership");
 
@@ -116,7 +114,7 @@ definition {
 	@description = "LPS-148482 - Verify if when the user choose the ERC-005 and clicks on the Portal product the url follow the respective page."
 	@priority = "5"
 	test IfPortalUrlFollowsRespectivePage {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-005/activation/portal");
 
@@ -129,7 +127,7 @@ definition {
 	@ignore = "true"
 	@priority = "4"
 	test IfProjectListingURLStillTheSame {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		Navigator.openURL(baseURL = "http://localhost:8080/group/customer-portal/project/#/ERC-007/activation/dxp");
 

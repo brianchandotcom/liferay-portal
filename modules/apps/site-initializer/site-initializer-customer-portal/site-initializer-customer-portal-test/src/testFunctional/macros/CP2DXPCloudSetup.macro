@@ -65,7 +65,7 @@ definition {
 	macro clearDXPCloudInfo {
 		CP2DXPCloudSetup.clearActivationStatus();
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CP2DXPCloudSetup.deleteEntryDXPCloudEnvironments(entry = "ERC-001");
 	}

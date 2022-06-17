@@ -7,8 +7,8 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Customer Portal";
 
-	var testSiteName = "Customer Portal";
-	var testSiteURL = "customer-portal";
+	var testSiteName = "Test Customer Portal Name";
+	var testSiteURL = "test-customer-portal-name";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -18,7 +18,11 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
+			Site.openSitesAdmin();
+
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
 		}
 
 		task ("Create CP2.0 objects") {
@@ -52,7 +56,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -80,7 +84,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -104,7 +108,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -126,7 +130,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -150,7 +154,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -176,7 +180,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -206,7 +210,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -238,7 +242,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -274,7 +278,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -306,7 +310,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -342,7 +346,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -378,7 +382,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -414,7 +418,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -450,7 +454,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -483,7 +487,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -505,6 +509,8 @@ definition {
 	@description = "LPS-146686 - Verify if the activation status of the card changes to (In Progress) after filling out the DXP Cloud Set up"
 	@priority = "4"
 	test SeeIfTheCardActivationStatusChanges {
+		CP2DXPCloudSetup.createDXPCloudObjects();
+
 		Accounts.openAccountsAdmin();
 
 		CustomerPortal.accountTableProject(title = "Test Account 01");
@@ -513,7 +519,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -538,6 +544,8 @@ definition {
 			value = "In Progress");
 
 		CP2DXPCloudSetup.clearDXPCloudInfo();
+
+		CP2DXPCloudSetup.deleteDXPCloudObject();
 	}
 
 }

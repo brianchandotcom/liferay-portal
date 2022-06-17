@@ -7,8 +7,8 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Customer Portal";
 
-	var testSiteName = "Customer Portal";
-	var testSiteURL = "customer-portal";
+	var testSiteName = "Test Customer Portal Name";
+	var testSiteURL = "test-customer-portal-name";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -18,11 +18,11 @@ definition {
 		}
 
 		task ("Create a new Customer Portal Site") {
-			CustomerPortal.addCustomerPortalSite(siteName = "${testSiteName}");
-		}
+			Site.openSitesAdmin();
 
-		task ("Create CP2.0 objects") {
-			CustomerPortal.createCPSiteObjects();
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
 		}
 	}
 
@@ -35,23 +35,14 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
 
-			CustomerPortal.customerPortalTearDown();
-
-			User.logoutPG();
+			CustomerPortal.customerPortalApisTearDown();
 		}
 	}
 
 	@description = "LPS-144412 - Verify if the user can open the drop-down filter and select Active Status"
-	@ignore = "true"
 	@priority = "4"
 	test CanUserSelectActiveStatus {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -65,16 +56,9 @@ definition {
 	}
 
 	@description = "LPS-144413 - Verify if the user can open the drop-down filter and select Expired Status"
-	@ignore = "true"
 	@priority = "4"
 	test CanUserSelectExpiredStatus {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -88,16 +72,9 @@ definition {
 	}
 
 	@description = "LPS-144414 - Verify if the user can open the drop-down filter and select Future Status"
-	@ignore = "true"
 	@priority = "4"
 	test CanUserSelectFutureStatus {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -111,16 +88,9 @@ definition {
 	}
 
 	@description = "LPS-144416 - Verify if the user can open the drop-down filter and select three statuses"
-	@ignore = "true"
 	@priority = "3"
 	test CanUserSelectThreeStatuses {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -134,16 +104,9 @@ definition {
 	}
 
 	@description = "LPS-144419 - Verify if the value of the filter when transitioning between subscription types is kept and only reset when the user leaves the page"
-	@ignore = "true"
 	@priority = "4"
 	test ValueIsKeptOnTransition {
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Home - Customer Portal - Liferay DXP");
-
-		Refresh();
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -157,7 +120,7 @@ definition {
 			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
 			title = "Active");
 
-		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 

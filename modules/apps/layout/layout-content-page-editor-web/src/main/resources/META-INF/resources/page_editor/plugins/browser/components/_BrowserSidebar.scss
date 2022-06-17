@@ -2,20 +2,32 @@
 
 $tabsBottomMargin: 16px;
 
-html#{$cadmin-selector} .cadmin .page-editor__sidebar__browser {
-	&.first-tab--active {
-		display: flex;
-		flex-direction: column;
-		flex-grow: 1;
+html#{$cadmin-selector}
+	.cadmin
+	.page-editor__sidebar__content--panel-id-browser {
+	overflow: hidden;
+}
 
-		.page-editor__sidebar__browser__tab-content {
-			flex-grow: 1;
-		}
-	}
+html#{$cadmin-selector} .cadmin .page-editor__sidebar__browser {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
 
 	&__tabs {
 		border-bottom: 1px solid $cadmin-gray-300;
+		flex-shrink: 0;
 		font-size: 0.75rem;
 		margin: 0 $tabsBottomMargin $tabsBottomMargin;
+	}
+
+	&__tab-content {
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		overflow: auto;
+
+		.tab-pane {
+			flex-grow: 1;
+		}
 	}
 }

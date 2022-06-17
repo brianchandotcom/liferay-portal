@@ -89,7 +89,6 @@ export default function BrowserSidebar({title}) {
 				{TABS.map((tab, index) => (
 					<ClayTabs.TabPane
 						aria-labelledby={getTabId(index)}
-						className="h-100"
 						id={getTabPanelId(index)}
 						key={index}
 					>

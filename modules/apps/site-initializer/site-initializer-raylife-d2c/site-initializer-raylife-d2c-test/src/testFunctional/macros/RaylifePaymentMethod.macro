@@ -6,6 +6,12 @@ definition {
 			panel = "Commerce",
 			portlet = "Channels");
 
+		while (IsElementNotPresent(key_entryName = "Raylife Channel", locator1 = "CommerceNavigation#ENTRY_NAME")) {
+			Refresh();
+
+			WaitForPageLoad();
+		}
+
 		CommerceNavigator.gotoEntry(entryName = "Raylife Channel");
 
 		CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
@@ -52,6 +58,12 @@ definition {
 			category = "Store Management",
 			panel = "Commerce",
 			portlet = "Channels");
+
+		while (IsElementNotPresent(key_entryName = "Raylife Channel", locator1 = "CommerceNavigation#ENTRY_NAME")) {
+			Refresh();
+
+			WaitForPageLoad();
+		}
 
 		CommerceNavigator.gotoEntry(entryName = "Raylife Channel");
 

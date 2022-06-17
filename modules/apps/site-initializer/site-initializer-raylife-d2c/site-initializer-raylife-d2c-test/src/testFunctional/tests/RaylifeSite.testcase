@@ -82,6 +82,12 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
+		while (IsElementNotPresent(productList = "General Liability,Professional Liability,Workers Compensation,Business Owners Policy", locator1 = "Raylife#PRODUCTS_NAME")) {
+			Refresh();
+
+			WaitForPageLoad();
+		}
+
 		Raylife.viewProductsList(productList = "General Liability,Professional Liability,Workers Compensation,Business Owners Policy");
 	}
 

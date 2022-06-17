@@ -58,7 +58,7 @@ public interface CartCommentResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Response deleteCartComment(Long cartCommentId) throws Exception;
+	public void deleteCartComment(Long cartCommentId) throws Exception;
 
 	public Response deleteCartCommentBatch(String callbackURL, Object object)
 		throws Exception;

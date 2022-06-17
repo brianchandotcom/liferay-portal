@@ -92,16 +92,12 @@ public abstract class BaseCartCommentResourceImpl
 	@javax.ws.rs.Path("/cart-comments/{cartCommentId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Response deleteCartComment(
+	public void deleteCartComment(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("cartCommentId")
 			Long cartCommentId)
 		throws Exception {
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	/**

@@ -168,15 +168,17 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteCartComment(
+	public boolean deleteCartComment(
 			@GraphQLName("cartCommentId") Long cartCommentId)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_cartCommentResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			cartCommentResource -> cartCommentResource.deleteCartComment(
 				cartCommentId));
+
+		return true;
 	}
 
 	@GraphQLField

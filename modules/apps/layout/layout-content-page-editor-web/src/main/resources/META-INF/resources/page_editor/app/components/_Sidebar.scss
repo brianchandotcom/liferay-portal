@@ -78,8 +78,8 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		width: $sidebarContentWidth;
 		z-index: $zIndexContent;
 
-		&--open.page-editor__sidebar__content {
-			transform: translateX(0%);
+		&--open {
+			transform: translateX(0);
 		}
 
 		@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {

@@ -186,6 +186,10 @@ export default function AddIconPackModal({
 					<ClayForm.Group className={hasError ? 'has-error' : ''}>
 						<label htmlFor={portletNamespace + 'name'}>
 							{Liferay.Language.get('icon-pack-name')}
+
+							<span className="ml-1 reference-mark text-warning">
+								<ClayIcon symbol="asterisk" />
+							</span>
 						</label>
 
 						<ClayInput
@@ -253,9 +257,23 @@ export default function AddIconPackModal({
 				last={
 					<ClayButton.Group spaced>
 						<ClayButton
-							disabled={loading || !iconPackName || hasError}
+							disabled={loading || hasError}
 							onClick={() => {
-								handleSubmit();
+								if (!iconPackName) {
+									openToast({
+										message: Liferay.Language.get(
+											'please-enter-an-icon-pack-name'
+										),
+										title: Liferay.Language.get('warning'),
+										toastProps: {
+											autoClose: 5000,
+										},
+										type: 'warning',
+									});
+								}
+								else {
+									handleSubmit();
+								}
 							}}
 							type="submit"
 						>

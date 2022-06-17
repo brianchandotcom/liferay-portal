@@ -50,6 +50,8 @@ public interface SearchSettings {
 
 	public QueryConfig getQueryConfig();
 
+	public Optional<String> getScope();
+
 	public Optional<String> getScopeParameterName();
 
 	public SearchContext getSearchContext();
@@ -69,6 +71,8 @@ public interface SearchSettings {
 
 	public void setPaginationStartParameterName(
 		String paginationStartParameterName);
+
+	public void setScope(String scope);
 
 	public void setScopeParameterName(String scopeParameterName);
 

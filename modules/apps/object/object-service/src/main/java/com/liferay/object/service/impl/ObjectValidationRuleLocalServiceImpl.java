@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import groovy.lang.GroovyShell;
@@ -262,6 +263,10 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		if (Validator.isNull(script)) {
 			throw new ObjectValidationRuleScriptException("required");
+		}
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152735"))) {
+			return;
 		}
 
 		try {

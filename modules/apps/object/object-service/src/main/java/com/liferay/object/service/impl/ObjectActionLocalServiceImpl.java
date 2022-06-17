@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -226,6 +227,10 @@ public class ObjectActionLocalServiceImpl
 			if (Validator.isNotNull(conditionExpression)) {
 				throw new ObjectActionConditionExpressionException();
 			}
+		}
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152735"))) {
+			return;
 		}
 
 		Map<String, Object> errorMessageKeys = new HashMap<>();

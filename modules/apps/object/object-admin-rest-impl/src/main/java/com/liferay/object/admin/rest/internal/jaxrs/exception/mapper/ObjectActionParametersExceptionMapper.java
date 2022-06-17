@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
@@ -64,6 +66,10 @@ public class ObjectActionParametersExceptionMapper
 	@Override
 	protected Problem getProblem(
 		ObjectActionParametersException objectActionParametersException) {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152735"))) {
+			return new Problem(Response.Status.BAD_REQUEST, null);
+		}
 
 		return new Problem(
 			String.valueOf(

@@ -91,10 +91,17 @@ public class UpgradeExternalReferenceCode extends UpgradeProcess {
 			return;
 		}
 
-		StringBundler selectSB = new StringBundler(6);
+		boolean hasUuid = hasColumn(tableName, "uuid_");
+
+		StringBundler selectSB = new StringBundler(7);
 
 		selectSB.append("select ");
 		selectSB.append(primKeyColumnName);
+
+		if (hasUuid) {
+			selectSB.append(", uuid_");
+		}
+
 		selectSB.append(" from ");
 		selectSB.append(tableName);
 		selectSB.append(" where externalReferenceCode is null or ");
@@ -118,7 +125,15 @@ public class UpgradeExternalReferenceCode extends UpgradeProcess {
 			while (resultSet.next()) {
 				long primKey = resultSet.getLong(1);
 
-				preparedStatement2.setString(1, String.valueOf(primKey));
+				if (hasUuid) {
+					String uuid = resultSet.getString(2);
+
+					preparedStatement2.setString(1, uuid);
+				}
+				else {
+					preparedStatement2.setString(1, String.valueOf(primKey));
+				}
+
 				preparedStatement2.setLong(2, primKey);
 
 				preparedStatement2.addBatch();

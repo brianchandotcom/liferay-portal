@@ -99,6 +99,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(new Version(14, 0, 2), new UpgradeCountryCode());
 
 		upgradeProcesses.put(new Version(15, 0, 0), new UpgradeOrgGroupRole());
+
+		upgradeProcesses.put(new Version(16, 0, 0), new UpgradeUuid());
 	}
 
 }

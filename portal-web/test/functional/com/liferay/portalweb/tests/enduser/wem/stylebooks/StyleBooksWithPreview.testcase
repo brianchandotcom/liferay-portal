@@ -1492,7 +1492,7 @@ definition {
 				value1 = "32px");
 
 			AssertCssValue(
-				locator1 = "(//div[contains(@class,'lfr-layout-structure-item-container')])[1]",
+				locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-container')])[1]",
 				locator2 = "background-color",
 				value1 = "rgba(11, 95, 255, 1)");
 

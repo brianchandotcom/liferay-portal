@@ -4081,7 +4081,7 @@ definition {
 
 		task ("Assert styles of Container in view mode") {
 			var screenWidth = selenium.getElementWidth("//body");
-			var containerWidth = selenium.getElementWidth("(//div[contains(@class,'lfr-layout-structure-item-container')])[2]");
+			var containerWidth = selenium.getElementWidth("xpath=(//div[contains(@class,'lfr-layout-structure-item-container')])[2]");
 
 			TestUtils.assertNotEquals(
 				actual = "${containerWidth}",
@@ -4105,7 +4105,7 @@ definition {
 				styleValue = "3");
 
 			AssertCssValue(
-				locator1 = "(//div[contains(@class,'lfr-layout-structure-item-container')])[2]",
+				locator1 = "xpath=(//div[contains(@class,'lfr-layout-structure-item-container')])[2]",
 				locator2 = "max-width",
 				value1 = "${containerWidth}px");
 		}

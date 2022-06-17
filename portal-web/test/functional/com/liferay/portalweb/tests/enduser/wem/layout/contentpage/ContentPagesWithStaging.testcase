@@ -1533,17 +1533,23 @@ definition {
 		}
 
 		task ("View the Text Color of Paragraph") {
-			ContentPages.viewFragmentCommonStyle(
+			AssertCssValue(
 				fragmentName = "paragraph",
-				styleName = "color",
-				styleValue = "rgb(255, 255, 255)");
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(255, 255, 255, 1)");
 		}
 
 		task ("View the Background Color of Paragraph") {
-			ContentPages.viewFragmentCommonStyle(
+			AssertCssValue(
 				fragmentName = "paragraph",
-				styleName = "backgroundColor",
-				styleValue = "rgb(255, 0, 0)");
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "background-color",
+				value1 = "rgba(255, 0, 0, 1)");
 		}
 
 		task ("Navigate to the content page at edit mode in staging site") {
@@ -1577,17 +1583,23 @@ definition {
 		}
 
 		task ("View the Text Color of Paragraph") {
-			ContentPages.viewFragmentCommonStyle(
+			AssertCssValue(
 				fragmentName = "paragraph",
-				styleName = "color",
-				styleValue = "rgb(0, 0, 0)");
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(0, 0, 0, 1)");
 		}
 
 		task ("View the Background Color of Paragraph") {
-			ContentPages.viewFragmentCommonStyle(
+			AssertCssValue(
 				fragmentName = "paragraph",
-				styleName = "backgroundColor",
-				styleValue = "rgb(0, 0, 255)");
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "background-color",
+				value1 = "rgba(0, 0, 255, 1)");
 		}
 	}
 

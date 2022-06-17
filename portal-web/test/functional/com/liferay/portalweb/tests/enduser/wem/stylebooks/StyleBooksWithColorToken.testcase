@@ -554,7 +554,15 @@ definition {
 		task ("View the color reference of Text Color is #34f787") {
 			PageEditor.viewFragmentStyle(
 				fragmentName = "Heading",
-				textColor = "rgb(52, 247, 135)");
+				textColor = "success");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "color",
+				value1 = "rgba(52, 247, 135, 1)");
 		}
 	}
 

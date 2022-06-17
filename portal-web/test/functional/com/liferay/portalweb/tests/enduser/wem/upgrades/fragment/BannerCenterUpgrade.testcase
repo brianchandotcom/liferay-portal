@@ -50,7 +50,7 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			ContentPages.viewFragmentBackgroundImage(image = "Document_1\.jpg");
+			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
 		}
 	}
 
@@ -147,7 +147,7 @@ definition {
 				var n = ${n} + 1;
 			}
 
-			ContentPages.viewFragmentBackgroundImage(image = "Document_1\.jpg");
+			ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpg");
 		}
 	}
 

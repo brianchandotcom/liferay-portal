@@ -276,9 +276,13 @@ definition {
 		}
 
 		task ("View the Text Align of Heading is left") {
-			PageEditor.viewFragmentStyle(
-				alignment = "left",
-				fragmentName = "Heading");
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "text-align",
+				value1 = "start");
 		}
 
 		task ("Change the Text Align of Heading in other viewports") {
@@ -310,9 +314,13 @@ definition {
 		task ("View the Text Align of Heading in different viewports") {
 			PageEditor.switchViewport(deviceType = "Desktop");
 
-			PageEditor.viewFragmentStyle(
-				alignment = "left",
-				fragmentName = "Heading");
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "text-align",
+				value1 = "start");
 
 			PageEditor.switchViewport(deviceType = "Tablet");
 
@@ -354,10 +362,12 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-			ContentPages.viewFragmentCommonStyle(
+			AssertCssValue(
 				fragmentName = "heading",
-				styleName = "textAlign",
-				styleValue = "left");
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				locator2 = "text-align",
+				value1 = "start");
 
 			SelectFrame(value1 = "relative=top");
 

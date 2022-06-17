@@ -287,7 +287,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(locator1 = "//h2[contains(@class,'component-heading')]");
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Heading",
+				headingLevel = "h2");
 
 			ContentPages.viewFragmentCommonStyle(
 				fragmentName = "heading",

@@ -216,10 +216,12 @@ definition {
 				key_text = "undo",
 				locator1 = "Icon#ANY");
 
-			ContentPages.viewFragmentCommonStyle(
+			AssertCssValue(
 				fragmentName = "button",
-				styleName = "textAlign",
-				styleValue = "left");
+				index = "1",
+				locator1 = "Fragment#FRAGMENT_BODY",
+				locator2 = "text-align",
+				value1 = "start");
 
 			Click(
 				key_text = "undo",

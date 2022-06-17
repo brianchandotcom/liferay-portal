@@ -12,30 +12,15 @@
  * details.
  */
 
-import React from 'react';
-import './ModalAddColumns.scss';
-declare function ModalAddColumns<T extends ModalItem>({
-	disableRequired,
-	getName,
-	items,
-	observer,
-	onClose,
-	onSave,
-	selected,
-}: IProps<T>): JSX.Element;
-export default ModalAddColumns;
-interface ModalItem {
-	id?: unknown;
-	label: LocalizedValue<string>;
-	required?: boolean;
+/// <reference types="react" />
+
+import './ManagementToolbarSearch.scss';
+interface IProps {
+	query: string;
+	setQuery: (value: string) => void;
 }
-interface IProps<T extends ModalItem>
-	extends React.HTMLAttributes<HTMLElement> {
-	disableRequired?: boolean;
-	getName: (label: T) => string;
-	items: T[];
-	observer: any;
-	onClose: () => void;
-	onSave: (selected: T[]) => void;
-	selected?: T[];
-}
+export declare function ManagementToolbarSearch({
+	query,
+	setQuery,
+}: IProps): JSX.Element;
+export {};

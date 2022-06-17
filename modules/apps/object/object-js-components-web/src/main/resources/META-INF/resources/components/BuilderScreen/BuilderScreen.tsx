@@ -15,40 +15,19 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayList from '@clayui/list';
-import {Card} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import {defaultLanguageId} from '../../../utils/locale';
-import {ManagementToolbarSearch} from '../ManagementToolbarSearch/ManagementToolbarSearch';
-import {TObjectColumn} from '../types';
+import {Card} from '../Card';
+import {ManagementToolbarSearch} from '../ManagementToolbarSearch';
 import BuilderListItem from './BuilderListItem';
 
 import './BuilderScreen.scss';
 
-interface IProps {
-	defaultSort?: boolean;
-	disableEdit?: (businessType: string) => boolean;
-	emptyState: {
-		buttonText: string;
-		description: string;
-		title: string;
-	};
-	filter?: boolean;
-	firstColumnHeader: string;
-	hasDragAndDrop?: boolean;
-	objectColumns: TObjectColumn[];
-	onEditing?: (boolean: boolean) => void;
-	onEditingObjectFieldName?: (objectFieldName: string) => void;
-	onVisibleEditModal: (boolean: boolean) => void;
-	openModal: () => void;
-	secondColumnHeader: string;
-	thirdColumnHeader?: string;
-	title: string;
-}
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId() as Locale;
 
 export function BuilderScreen({
 	defaultSort,
@@ -58,6 +37,8 @@ export function BuilderScreen({
 	firstColumnHeader,
 	hasDragAndDrop,
 	objectColumns,
+	onChangeColumnOrder,
+	onDeleteColumn,
 	onEditing,
 	onEditingObjectFieldName,
 	onVisibleEditModal,
@@ -165,18 +146,18 @@ export function BuilderScreen({
 													defaultLanguageId
 											  ]
 									}
-									defaultSort={defaultSort}
 									disableEdit={
 										disableEdit &&
 										disableEdit(
 											viewColumn.objectFieldBusinessType!
 										)
 									}
-									filter={filter}
 									hasDragAndDrop={hasDragAndDrop}
 									index={index}
 									label={viewColumn.fieldLabel}
 									objectFieldName={viewColumn.objectFieldName}
+									onChangeColumnOrder={onChangeColumnOrder}
+									onDeleteColumn={onDeleteColumn}
 									onEditing={onEditing}
 									onEditingObjectFieldName={
 										onEditingObjectFieldName
@@ -211,4 +192,50 @@ export function BuilderScreen({
 			)}
 		</Card>
 	);
+}
+
+type TName = {
+	[key: string]: string;
+};
+
+type TLabelValueObject = {
+	label: string;
+	value: string;
+};
+
+type TObjectColumn = {
+	defaultSort?: boolean;
+	fieldLabel?: string;
+	filterBy?: string;
+	label: TName;
+	objectFieldBusinessType?: string;
+	objectFieldName: string;
+	priority?: number;
+	sortOrder?: string;
+	type?: string;
+	value?: string;
+	valueList?: TLabelValueObject[];
+};
+
+interface IProps {
+	defaultSort?: boolean;
+	disableEdit?: (businessType: string) => boolean;
+	emptyState: {
+		buttonText: string;
+		description: string;
+		title: string;
+	};
+	filter?: boolean;
+	firstColumnHeader: string;
+	hasDragAndDrop?: boolean;
+	objectColumns: TObjectColumn[];
+	onChangeColumnOrder?: (draggedIndex: number, targetIndex: number) => void;
+	onDeleteColumn: (objectFieldName: string) => void;
+	onEditing?: (boolean: boolean) => void;
+	onEditingObjectFieldName?: (objectFieldName: string) => void;
+	onVisibleEditModal: (boolean: boolean) => void;
+	openModal: () => void;
+	secondColumnHeader: string;
+	thirdColumnHeader?: string;
+	title: string;
 }

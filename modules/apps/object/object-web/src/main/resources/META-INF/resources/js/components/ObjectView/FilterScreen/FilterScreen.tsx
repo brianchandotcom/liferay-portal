@@ -13,14 +13,14 @@
  */
 
 import {useModal} from '@clayui/modal';
+import {BuilderScreen} from '@liferay/object-js-components-web';
 import React, {useContext, useState} from 'react';
 
-import {BuilderScreen} from '../BuilderScreen/BuilderScreen';
 import {ModalAddFilterColumn} from '../ModalAddFilterColumn/ModalAddFilterColumn';
-import ViewContext from '../context';
+import ViewContext, {TYPES} from '../context';
 
 export function FilterScreen() {
-	const [{objectView}] = useContext(ViewContext);
+	const [{objectView}, dispatch] = useContext(ViewContext);
 
 	const {objectViewFilterColumns} = objectView;
 
@@ -35,6 +35,13 @@ export function FilterScreen() {
 			setVisibleModal(false);
 		},
 	});
+
+	const handleDeleteColumn = (objectFieldName: string) => {
+		dispatch({
+			payload: {objectFieldName},
+			type: TYPES.DELETE_OBJECT_VIEW_FILTER_COLUMN,
+		});
+	};
 
 	return (
 		<>
@@ -53,6 +60,7 @@ export function FilterScreen() {
 				filter
 				firstColumnHeader={Liferay.Language.get('filter-by')}
 				objectColumns={objectViewFilterColumns ?? []}
+				onDeleteColumn={handleDeleteColumn}
 				onEditing={setEditingFilter}
 				onEditingObjectFieldName={setEditingObjectFieldName}
 				onVisibleEditModal={setVisibleModal}

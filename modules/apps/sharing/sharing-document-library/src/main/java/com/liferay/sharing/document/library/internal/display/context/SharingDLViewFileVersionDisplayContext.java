@@ -181,7 +181,9 @@ public class SharingDLViewFileVersionDisplayContext
 					return dropdownItems;
 				}
 			}
-			else if (Objects.equals("download", dropdownItem.get("icon"))) {
+			else if (Objects.equals(
+						DLUIItemKeys.DOWNLOAD, dropdownItem.get("key"))) {
+
 				break;
 			}
 
@@ -215,7 +217,9 @@ public class SharingDLViewFileVersionDisplayContext
 					return true;
 				}
 			}
-			else if (Objects.equals("download", dropdownItem.get("icon"))) {
+			else if (Objects.equals(
+						DLUIItemKeys.DOWNLOAD, dropdownItem.get("key"))) {
+
 				break;
 			}
 

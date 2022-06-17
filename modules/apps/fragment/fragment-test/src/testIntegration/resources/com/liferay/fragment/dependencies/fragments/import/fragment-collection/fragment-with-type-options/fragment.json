@@ -1,0 +1,13 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "styles.css",
+	"htmlPath": "index.html",
+	"jsPath": "main.js",
+	"name": "Input Fragment With Type Options",
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"string"
+		]
+	}
+}

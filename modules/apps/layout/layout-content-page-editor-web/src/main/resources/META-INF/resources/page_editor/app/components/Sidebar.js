@@ -307,6 +307,7 @@ export default function Sidebar() {
 							Liferay.Language.direction[
 								themeDisplay?.getLanguageId()
 							] === 'rtl',
+						[`page-editor__sidebar__content--panel-id-${sidebarPanelId}`]: sidebarPanelId,
 					})}
 					onClick={deselectItem}
 				>

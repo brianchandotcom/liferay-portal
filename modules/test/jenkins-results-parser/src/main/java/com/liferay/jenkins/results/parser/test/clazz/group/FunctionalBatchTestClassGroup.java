@@ -335,7 +335,14 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			}
 		}
 
-		if (_ignoreParentFiles(testPropertiesFile)) {
+		Properties testProperties = JenkinsResultsParserUtil.getProperties(
+			testPropertiesFile);
+
+		boolean ignoreParents = Boolean.valueOf(
+			JenkinsResultsParserUtil.getProperty(
+				testProperties, "ignoreParents", false, getTestSuiteName()));
+
+		if (ignoreParents) {
 			return concatedPQL;
 		}
 
@@ -436,19 +443,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return testBatchRunPropertyQuery;
-	}
-
-	private boolean _ignoreParentFiles(File file) {
-		Properties propertyFile = JenkinsResultsParserUtil.getProperties(file);
-
-		String ignoreFlag = JenkinsResultsParserUtil.getProperty(
-			propertyFile, "ignore.parents[" + getTestSuiteName() + "]");
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(ignoreFlag)) {
-			return false;
-		}
-
-		return Boolean.parseBoolean(ignoreFlag);
 	}
 
 	private void _setTestBatchRunPropertyQueries() {

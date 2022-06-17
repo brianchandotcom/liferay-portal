@@ -78,7 +78,7 @@ public class ObjectEntryInfoItemCreator
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 			for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
-				InfoField infoField = infoFieldValue.getInfoField();
+				InfoField<?> infoField = infoFieldValue.getInfoField();
 
 				hashMapWrapper.put(
 					infoField.getName(),

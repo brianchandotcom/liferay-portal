@@ -19,6 +19,7 @@ import com.liferay.document.library.display.context.DLViewFileVersionDisplayCont
 import com.liferay.document.library.google.docs.internal.helper.GoogleDocsMetadataHelper;
 import com.liferay.document.library.google.docs.internal.util.constants.GoogleDocsConstants;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -60,6 +61,32 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 
 		_googleDocsUIItemsProcessor = new GoogleDocsUIItemsProcessor(
 			httpServletRequest, googleDocsMetadataHelper);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() throws PortalException {
+		List<DropdownItem> actionDropdownItems = super.getActionDropdownItems();
+
+		if (!isActionsVisible()) {
+			return actionDropdownItems;
+		}
+
+		// See LPS-79987
+
+		if (Validator.isNull(
+				_googleDocsMetadataHelper.getFieldValue(
+					GoogleDocsConstants.DDM_FIELD_NAME_URL))) {
+
+			return actionDropdownItems;
+		}
+
+		actionDropdownItems.removeIf(
+			dropdownItem -> Objects.equals(
+				dropdownItem.get("key"), "#edit-with-image-editor"));
+
+		_googleDocsUIItemsProcessor.processDropdownItems(actionDropdownItems);
+
+		return actionDropdownItems;
 	}
 
 	@Override

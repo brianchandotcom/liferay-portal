@@ -109,6 +109,26 @@ definition {
 		}
 	}
 
+	@description = "LPS-154644. Assert popover mode can display step number."
+	@priority = "4"
+	test CanDisplayStepNumber {
+		task ("And given click hotspot element") {
+			Click(locator1 = "Walkthrough#HOTSPOT");
+		}
+
+		task ("When click through all primary step buttons") {
+			for (var number : list "2,3,4,5") {
+				Click(locator1 = "Button#OK");
+
+				task ("Then step number is displayed consecutively") {
+					AssertElementPresent(
+						key_title = "Step ${number} of 5: Title ${number}",
+						locator1 = "Walkthrough#POPOVER_TITLE");
+				}
+			}
+		}
+	}
+
 	@description = "LPS-154642. Assert popover mode contains a title."
 	@priority = "5"
 	test CanDisplayTitle {

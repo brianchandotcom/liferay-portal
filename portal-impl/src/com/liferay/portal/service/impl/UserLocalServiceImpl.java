@@ -1109,11 +1109,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		FullNameGenerator fullNameGenerator =
 			FullNameGeneratorFactory.getInstance();
 
-		String fullName = fullNameGenerator.getFullName(
-			firstName, middleName, lastName);
-
 		String greeting = LanguageUtil.format(
-			locale, "welcome-x", fullName, false);
+			locale, "welcome-x",
+			fullNameGenerator.getFullName(firstName, middleName, lastName),
+			false);
 
 		User user = userPersistence.create(userId);
 
@@ -1738,11 +1737,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				password = regExpToolkit.generate(null);
 			}
 			else {
-				PasswordPolicy passwordPolicy =
+				password = PwdToolkitUtil.generate(
 					_passwordPolicyLocalService.getPasswordPolicy(
-						user.getCompanyId(), user.getOrganizationIds());
-
-				password = PwdToolkitUtil.generate(passwordPolicy);
+						user.getCompanyId(), user.getOrganizationIds()));
 			}
 
 			serviceContext.setAttribute("passwordUnencrypted", password);
@@ -4462,11 +4459,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			FullNameGenerator fullNameGenerator =
 				FullNameGeneratorFactory.getInstance();
 
-			String fullName = fullNameGenerator.getFullName(
-				firstName, middleName, lastName);
-
 			String greeting = LanguageUtil.format(
-				locale, "welcome-x", fullName, false);
+				locale, "welcome-x",
+				fullNameGenerator.getFullName(firstName, middleName, lastName),
+				false);
 
 			if (Validator.isNotNull(password1)) {
 				user.setPassword(PasswordEncryptorUtil.encrypt(password1));

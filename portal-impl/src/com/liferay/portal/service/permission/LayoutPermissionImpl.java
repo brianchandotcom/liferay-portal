@@ -213,10 +213,10 @@ public class LayoutPermissionImpl
 			boolean privateLayout, long layoutId, String actionId)
 		throws PortalException {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			groupId, privateLayout, layoutId);
-
-		return contains(permissionChecker, layout, actionId);
+		return contains(
+			permissionChecker,
+			LayoutLocalServiceUtil.getLayout(groupId, privateLayout, layoutId),
+			actionId);
 	}
 
 	@Override

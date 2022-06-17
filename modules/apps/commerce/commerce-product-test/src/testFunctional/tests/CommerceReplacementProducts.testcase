@@ -46,7 +46,7 @@ definition {
 
 		task ("Given a complete order with a discontinued product") {
 			FrontStore.addInitializerProductToCart(
-				productName = "ABS Sensor",
+				productName = "U-Joint",
 				productQuantity = "1");
 
 			var currentOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
@@ -59,9 +59,9 @@ definition {
 				newAddressCountry = "United States",
 				newAddressName = "Address Name",
 				newAddressZipCode = "Test Zip Code",
-				productName = "ABS Sensor",
+				productName = "U-Joint",
 				productQuantity = "1",
-				productUnitPrice = "50",
+				productUnitPrice = "24",
 				shippingMethod = "Standard");
 		}
 
@@ -75,13 +75,13 @@ definition {
 			CommerceEntry.editWarehousesQuantity(
 				italyQuantity = "0",
 				northeastQuantity = "0",
-				productName = "ABS Sensor",
-				productSku = "MIN93015",
+				productName = "U-Joint",
+				productSku = "MIN55861",
 				southwestQuantity = "0");
 
 			CommerceProducts.discontinueSKU();
 
-			CommerceProducts.setReplacementSKU(replacementSKU = "MIN55861");
+			CommerceProducts.setReplacementSKU(replacementSKU = "MIN93015");
 		}
 
 		task ("And given a Minium site with a buyer user") {
@@ -102,7 +102,7 @@ definition {
 
 			IFrame.selectModalFrame();
 
-			CommerceNavigator.gotoTableListEntry(entryName = "48379");
+			CommerceNavigator.gotoTableListEntry(entryName = "${currentOrderId}");
 
 			SelectFrameTop();
 
@@ -112,11 +112,11 @@ definition {
 		task ("Then the older product is replaced with the new one ") {
 			CommerceOrders.assertOrderImportPreviewEntry(
 				importStatus = "OK",
-				productName = "U-Joint",
+				productName = "ABS Sensor",
 				productQuantity = "1",
-				productSku = "MIN55861",
-				totalPrice = "24.00",
-				unitPrice = "24.00");
+				productSku = "MIN93015",
+				totalPrice = "50.00",
+				unitPrice = "50.00");
 		}
 
 		task ("And then after we click on 'Import' button verify if the product is actually replaced") {
@@ -125,11 +125,11 @@ definition {
 			SelectFrameTop();
 
 			CommerceOrders.viewOrdersDetails(
-				productListPrice = "24.00",
-				productName = "U-Joint",
+				productListPrice = "50.00",
+				productName = "ABS Sensor",
 				productQuantity = "1",
-				productSku = "MIN55861",
-				productTotalPrice = "24.00");
+				productSku = "MIN93015",
+				productTotalPrice = "50.00");
 		}
 	}
 

@@ -106,6 +106,10 @@ public class JournalItemSelectorViewDisplayContext {
 		return _journalItemSelectorCriterion;
 	}
 
+	public String getMimeTypeRestriction() {
+		return _journalItemSelectorCriterion.getMimeTypeRestriction();
+	}
+
 	public OrderByComparator<?> getOrderByComparator() {
 		return DLUtil.getRepositoryModelOrderByComparator(
 			RepositoryEntryBrowserTagUtil.getOrderByCol(

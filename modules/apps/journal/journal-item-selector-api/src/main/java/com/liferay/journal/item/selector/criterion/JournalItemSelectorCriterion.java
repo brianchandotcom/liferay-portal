@@ -15,6 +15,7 @@
 package com.liferay.journal.item.selector.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
+import com.liferay.item.selector.constants.ItemSelectorCriterionConstants;
 
 /**
  * @author Eduardo García
@@ -36,6 +37,11 @@ public class JournalItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public long getFolderId() {
 		return _folderId;
+	}
+
+	@Override
+	public String getMimeTypeRestriction() {
+		return ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE;
 	}
 
 	public long getResourcePrimKey() {

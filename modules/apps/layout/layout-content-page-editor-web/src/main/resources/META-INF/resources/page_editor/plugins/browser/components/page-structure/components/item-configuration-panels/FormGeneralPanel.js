@@ -71,7 +71,7 @@ function FormOptions({item, onValueSelect}) {
 function OtherTypeMapping({item, onValueSelect}) {
 	const itemTypes = useCache({
 		fetcher: () =>
-			InfoItemService.getAvailableDisplayPageInfoItemFormProviders(),
+			InfoItemService.getAvailableEditPageInfoItemFormProviders(),
 		key: [CACHE_KEYS.itemTypes],
 	});
 

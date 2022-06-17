@@ -60,6 +60,12 @@ public interface FreeMarkerEngineConfiguration {
 	)
 	public int resourceModificationCheck();
 
+	@Meta.AD(
+		deflt = "true", name = "include-nav-items-in-the-context",
+		required = false
+	)
+	public boolean includeNavItemsInTheContext();
+
 	@Meta.AD(name = "allowed-classes", required = false)
 	public String[] allowedClasses();
 

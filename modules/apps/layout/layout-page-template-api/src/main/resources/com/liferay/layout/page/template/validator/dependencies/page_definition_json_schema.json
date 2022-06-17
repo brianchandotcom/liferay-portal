@@ -1276,6 +1276,13 @@
 		"PageFormDefinition": {
 			"additionalProperties": false,
 			"properties": {
+				"cssClasses": {
+					"items": {
+						"type": "string"
+					},
+					"title": "The CSS Classes Schema",
+					"type": "array"
+				},
 				"formConfig": {
 					"properties": {
 						"formReference": {
@@ -1313,6 +1320,13 @@
 		"PageFragmentInstanceDefinition": {
 			"additionalProperties": false,
 			"properties": {
+				"cssClasses": {
+					"items": {
+						"type": "string"
+					},
+					"title": "The CSS Classes Schema",
+					"type": "array"
+				},
 				"fragment": {
 					"$ref": "#/definitions/Fragment"
 				},
@@ -1373,6 +1387,13 @@
 		"PageRowDefinition": {
 			"additionalProperties": false,
 			"properties": {
+				"cssClasses": {
+					"items": {
+						"type": "string"
+					},
+					"title": "The CSS Classes Schema",
+					"type": "array"
+				},
 				"fragmentStyle": {
 					"$ref": "#/definitions/FragmentStyle"
 				},
@@ -1522,6 +1543,13 @@
 					},
 					"title": "The backgroundImage Schema",
 					"type": "object"
+				},
+				"cssClasses": {
+					"items": {
+						"type": "string"
+					},
+					"title": "The CSS Classes Schema",
+					"type": "array"
 				},
 				"fragmentLink": {
 					"$ref": "#/definitions/FragmentLink",

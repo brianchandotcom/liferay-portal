@@ -82,7 +82,7 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
-		while (IsElementNotPresent(productList = "General Liability,Professional Liability,Workers Compensation,Business Owners Policy", locator1 = "Raylife#PRODUCTS_NAME")) {
+		while (IsElementNotPresent(locator1 = "Raylife#PRODUCTS_NAME", productList = "General Liability,Professional Liability,Workers Compensation,Business Owners Policy")) {
 			Refresh();
 
 			WaitForPageLoad();

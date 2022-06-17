@@ -2281,10 +2281,10 @@ definition {
 
 		Blueprints.createBlueprint(title = "Test Blueprint");
 
-		Blueprints.addElement(element = "Boost Contents in a Category for a User Segment");
+		Blueprints.addElement(element = "Boost Contents in a Category for User Segments");
 
 		Type(
-			elementName = "Boost Contents in a Category for a User Segment",
+			elementName = "Boost Contents in a Category for User Segments",
 			fieldLabel = "Asset Category ID",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "${categoryId}");
@@ -2292,13 +2292,13 @@ definition {
 		var segmentId = JSONSegmentsentry.getSegmentId(segmentName = "Test Segment");
 
 		Type(
-			elementName = "Boost Contents in a Category for a User Segment",
+			elementName = "Boost Contents in a Category for User Segments",
 			fieldLabel = "User Segment IDs",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "${segmentId}");
 
 		Type(
-			elementName = "Boost Contents in a Category for a User Segment",
+			elementName = "Boost Contents in a Category for User Segments",
 			fieldLabel = "Boost",
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "2000");

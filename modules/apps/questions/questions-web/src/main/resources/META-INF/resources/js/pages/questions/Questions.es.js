@@ -784,7 +784,8 @@ export default withRouter(
 											Boolean(
 												section.actions['add-thread']
 											)) ||
-										context.canCreateThread) && (
+										context.canCreateThread) &&
+									sectionTitle !== ALL_SECTIONS_ID && (
 										<ClayInput.GroupItem shrink>
 											<ClayButton
 												className="c-ml-3 d-none d-sm-block text-nowrap"

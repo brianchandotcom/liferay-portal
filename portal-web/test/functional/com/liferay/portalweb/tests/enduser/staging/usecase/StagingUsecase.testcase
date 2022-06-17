@@ -1954,6 +1954,8 @@ definition {
 	@description = "This is a use case for LPS-87280."
 	@priority = "4"
 	test ViewPublishedWCWithApostropheInImageField {
+		property name.skip.portal.instance = "StagingUsecase#ViewPublishedWCWithApostropheInImageField";
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 
 		NavItem.gotoStructures();
@@ -2031,6 +2033,8 @@ definition {
 	@description = "This is a use case for LPS-96664."
 	@priority = "3"
 	test ViewPublishTemplateDateRange {
+		property name.skip.portal.instance = "StagingUsecase#ViewPublishTemplateDateRange";
+
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.addPublishTemplate(

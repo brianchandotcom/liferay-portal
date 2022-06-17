@@ -38,6 +38,8 @@ definition {
 
 	@priority = "4"
 	test StagingDemoLocalLive1 {
+		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingDemoLocalLive1";
+
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		JSONRole.addSiteRole(
@@ -146,6 +148,8 @@ definition {
 
 	@priority = "4"
 	test StagingDemoLocalLive2 {
+		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingDemoLocalLive2";
+
 		JSONStaging.enableLocalStaging(
 			branchingPrivate = "true",
 			branchingPublic = "true",
@@ -211,6 +215,8 @@ definition {
 
 	@priority = "4"
 	test StagingDemoLocalLive3 {
+		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingDemoLocalLive4";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Wiki");
@@ -464,6 +470,8 @@ definition {
 	@description = "This is a use case for LPS-82564."
 	@priority = "4"
 	test StagingLocalLiveWebContent {
+		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingLocalLiveWebContent";
+
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");

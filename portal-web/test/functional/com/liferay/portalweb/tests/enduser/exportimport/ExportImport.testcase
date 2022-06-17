@@ -664,7 +664,7 @@ definition {
 
 		LAR.configureExportOptions(
 			checkContentNameList = "Web Content",
-			uncheckContentNameList = "Documents and Media,Pages");
+			uncheckContentNameList = "Documents and Media");
 
 		AssertClick(
 			key_text = "Export",

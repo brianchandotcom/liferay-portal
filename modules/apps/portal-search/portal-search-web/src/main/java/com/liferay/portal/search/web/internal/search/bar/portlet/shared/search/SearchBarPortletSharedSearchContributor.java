@@ -79,6 +79,8 @@ public class SearchBarPortletSharedSearchContributor
 			searchRequestBuilder, searchBarPortletPreferences,
 			portletSharedSearchSettings);
 
+		_setScope(searchBarPortletPreferences, portletSharedSearchSettings);
+
 		_setScopeParameterName(
 			searchBarPortletPreferences, portletSharedSearchSettings);
 
@@ -229,6 +231,17 @@ public class SearchBarPortletSharedSearchContributor
 			searchContext -> searchContext.setAttribute(
 				SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX,
 				Boolean.TRUE));
+	}
+
+	private void _setScope(
+		SearchBarPortletPreferences searchBarPortletPreferences,
+		PortletSharedSearchSettings portletSharedSearchSettings) {
+
+		SearchScopePreference searchScopePreference =
+			searchBarPortletPreferences.getSearchScopePreference();
+
+		portletSharedSearchSettings.setScope(
+			searchScopePreference.getPreferenceString());
 	}
 
 	private void _setScopeParameterName(

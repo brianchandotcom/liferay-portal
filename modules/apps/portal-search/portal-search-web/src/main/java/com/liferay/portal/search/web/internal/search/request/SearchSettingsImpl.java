@@ -101,6 +101,11 @@ public class SearchSettingsImpl implements SearchSettings {
 	}
 
 	@Override
+	public Optional<String> getScope() {
+		return Optional.ofNullable(_scope);
+	}
+
+	@Override
 	public Optional<String> getScopeParameterName() {
 		return Optional.ofNullable(_scopeParameterName);
 	}
@@ -150,6 +155,11 @@ public class SearchSettingsImpl implements SearchSettings {
 	}
 
 	@Override
+	public void setScope(String scope) {
+		_scope = scope;
+	}
+
+	@Override
 	public void setScopeParameterName(String scopeParameterName) {
 		_scopeParameterName = scopeParameterName;
 	}
@@ -170,6 +180,7 @@ public class SearchSettingsImpl implements SearchSettings {
 	private String _paginationDeltaParameterName;
 	private Integer _paginationStart;
 	private String _paginationStartParameterName;
+	private String _scope;
 	private String _scopeParameterName;
 	private final SearchContext _searchContext;
 	private final SearchRequestBuilder _searchRequestBuilder;

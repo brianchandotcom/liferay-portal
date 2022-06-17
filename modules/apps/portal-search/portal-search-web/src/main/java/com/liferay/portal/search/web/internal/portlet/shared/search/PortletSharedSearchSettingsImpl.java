@@ -147,6 +147,11 @@ public class PortletSharedSearchSettingsImpl
 	}
 
 	@Override
+	public Optional<String> getScope() {
+		return _searchSettings.getScope();
+	}
+
+	@Override
 	public Optional<String> getScopeParameterName() {
 		return _searchSettings.getScopeParameterName();
 	}
@@ -200,6 +205,11 @@ public class PortletSharedSearchSettingsImpl
 
 		_searchSettings.setPaginationStartParameterName(
 			paginationStartParameterName);
+	}
+
+	@Override
+	public void setScope(String scope) {
+		_searchSettings.setScope(scope);
 	}
 
 	@Override

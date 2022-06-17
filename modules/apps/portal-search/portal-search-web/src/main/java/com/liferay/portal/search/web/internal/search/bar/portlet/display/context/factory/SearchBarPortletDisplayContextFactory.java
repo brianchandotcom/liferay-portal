@@ -182,8 +182,10 @@ public class SearchBarPortletDisplayContextFactory {
 			searchBarPortletInstanceConfiguration);
 
 		_setSelectedSearchScope(
-			searchBarPortletDisplayContext, searchScopePreference,
-			scopeParameterValueOptional.orElse(null));
+			portletPreferencesLookup, scopeParameterValueOptional.orElse(null),
+			searchBarPortletDisplayContext, searchBarPrecedenceHelper,
+			searchScopePreference,
+			portletSharedSearchResponse.getSearchSettings(), themeDisplay);
 
 		if (searchBarPortletPreferences.isInvisible()) {
 			searchBarPortletDisplayContext.setRenderNothing(true);
@@ -284,8 +286,31 @@ public class SearchBarPortletDisplayContextFactory {
 	}
 
 	protected SearchScope getSearchScope(
+		PortletPreferencesLookup portletPreferencesLookup,
+		String scopeParameterValue,
+		SearchBarPrecedenceHelper searchBarPrecedenceHelper,
 		SearchScopePreference searchScopePreference,
-		String scopeParameterValue) {
+		SearchSettings searchSettings, ThemeDisplay themeDisplay) {
+
+		Portlet headerSearchBarPortlet =
+			searchBarPrecedenceHelper.findHeaderSearchBarPortlet(themeDisplay);
+
+		if (headerSearchBarPortlet != null) {
+			Optional<PortletPreferences> headerPortletPreferencesOptional =
+				portletPreferencesLookup.fetchPreferences(
+					headerSearchBarPortlet, themeDisplay);
+
+			if (headerPortletPreferencesOptional.isPresent() &&
+				SearchBarPortletDestinationUtil.isSameDestination(
+					headerPortletPreferencesOptional.get(), themeDisplay)) {
+
+				Optional<String> optional = searchSettings.getScope();
+
+				if (optional.isPresent()) {
+					return SearchScope.getSearchScope(optional.get());
+				}
+			}
+		}
 
 		if (scopeParameterValue != null) {
 			return SearchScope.getSearchScope(scopeParameterValue);
@@ -401,12 +426,17 @@ public class SearchBarPortletDisplayContextFactory {
 	}
 
 	private void _setSelectedSearchScope(
+		PortletPreferencesLookup portletPreferencesLookup,
+		String scopeParameterValue,
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext,
+		SearchBarPrecedenceHelper searchBarPrecedenceHelper,
 		SearchScopePreference searchScopePreference,
-		String scopeParameterValue) {
+		SearchSettings searchSettings, ThemeDisplay themeDisplay) {
 
 		SearchScope searchScope = getSearchScope(
-			searchScopePreference, scopeParameterValue);
+			portletPreferencesLookup, scopeParameterValue,
+			searchBarPrecedenceHelper, searchScopePreference, searchSettings,
+			themeDisplay);
 
 		if (searchScope == SearchScope.EVERYTHING) {
 			searchBarPortletDisplayContext.setSelectedEverythingSearchScope(

@@ -175,7 +175,6 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Portlet\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/PortletEntry\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/productnavigation/ProductMenu\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Publications\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/rss/RSS\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/rss/RSSPortlet\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/SAML\.macro" />

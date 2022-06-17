@@ -319,12 +319,14 @@ definition {
 	@description = "COMMERCE-7792 | Verify if when a subscription product is in the cart, nothing can be imported"
 	@priority = "3"
 	test AssertProductsCannotBeImportedIfASubscriptionProductIsInTheOrder {
-		task ("Given admin user enable subscription in one product") {
+		task ("Given admin user enable subscription in two products") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userLoginFullName = "Test Test");
 
 			CommerceEntry.activeProductPaymentSubscription(productName = "ABS Sensor");
+
+			CommerceEntry.activeProductPaymentSubscription(productName = "Mount");
 		}
 
 		task ("And given a Minium site with a buyer user") {
@@ -349,10 +351,8 @@ definition {
 		task ("And given the buyer adds subscription product (ABS Sensor) to a new order") {
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
-			CommerceProducts.searchProduct(search = "ABS Sensor");
-
 			FrontStore.addInitializerProductToCart(
-				productName = "ABS Sensor",
+				productName = "Mount",
 				productQuantity = "1");
 		}
 
@@ -416,11 +416,11 @@ definition {
 
 		task ("Then all the products in the wishlist are not imported") {
 			CommerceOrders.viewOrdersDetails(
-				productListPrice = "50.00",
-				productName = "ABS Sensor",
+				productListPrice = "3.00",
+				productName = "Mount",
 				productQuantity = "1",
-				productSku = "MIN93015",
-				productTotalPrice = "50.00");
+				productSku = "MIN55857",
+				productTotalPrice = "3.00");
 
 			AssertNotVisible(
 				key_productName = "U-Joint",
@@ -430,11 +430,15 @@ definition {
 				key_productName = "Torque Converters",
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
 
+			AssertNotVisible(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+
 			CommerceOrders.viewOrderPrices(
 				deliveryPrice = "0.00",
-				subTotalPrice = "50.00",
+				subTotalPrice = "3.00",
 				taxPrice = "0.00",
-				totalPrice = "50.00");
+				totalPrice = "3.00");
 		}
 	}
 

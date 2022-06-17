@@ -519,7 +519,7 @@ definition {
 		task ("Assert the orignal image is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/documents/",
-				element = "//div[contains(@class,'bg-gray500Color')][contains(@style,'high_resolution_photo.jpg')]",
+				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
 				type = "backgroundImage");
 		}
 
@@ -540,7 +540,7 @@ definition {
 		task ("Assert the Preview-1000x0 is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/Preview-1000x0/",
-				element = "//div[contains(@class,'bg-gray500Color')][contains(@style,'high_resolution_photo.jpg')]",
+				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
 				type = "backgroundImage");
 
 			IFrame.closeFrame();
@@ -565,7 +565,7 @@ definition {
 		task ("Assert the orignal image is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/documents/",
-				element = "//div[contains(@class,'bg-gray500Color')][contains(@style,'high_resolution_photo.jpg')]",
+				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
 				type = "backgroundImage");
 		}
 
@@ -590,7 +590,7 @@ definition {
 		task ("Assert the Preview-1000x0 is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/Preview-1000x0/",
-				element = "//div[contains(@class,'bg-gray500Color')][contains(@style,'high_resolution_photo.jpg')]",
+				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
 				type = "backgroundImage");
 		}
 	}

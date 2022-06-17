@@ -270,6 +270,8 @@ definition {
 
 		Button.click(button = "Submit");
 
+		WaitForElementPresent(locator1 = "CommerceEntry#DISCOUNT_AMOUNT");
+
 		Refresh();
 
 		Type(

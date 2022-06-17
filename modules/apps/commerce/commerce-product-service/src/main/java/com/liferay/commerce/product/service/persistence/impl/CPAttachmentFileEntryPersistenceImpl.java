@@ -6535,7 +6535,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public CPAttachmentFileEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CPAttachmentFileEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CPAttachmentFileEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

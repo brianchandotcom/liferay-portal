@@ -2766,7 +2766,9 @@ public class TranslationEntryPersistenceImpl
 	 */
 	@Override
 	public TranslationEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(TranslationEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				TranslationEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

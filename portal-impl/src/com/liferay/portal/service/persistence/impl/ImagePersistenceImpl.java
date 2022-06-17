@@ -906,7 +906,7 @@ public class ImagePersistenceImpl
 	 */
 	@Override
 	public Image fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(Image.class)) {
+		if (CTPersistenceHelperUtil.isProductionMode(Image.class, primaryKey)) {
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

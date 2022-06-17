@@ -3849,7 +3849,7 @@ public class DDMDataProviderInstancePersistenceImpl
 	@Override
 	public DDMDataProviderInstance fetchByPrimaryKey(Serializable primaryKey) {
 		if (ctPersistenceHelper.isProductionMode(
-				DDMDataProviderInstance.class)) {
+				DDMDataProviderInstance.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

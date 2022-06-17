@@ -6978,7 +6978,7 @@ public class ResourcePermissionPersistenceImpl
 	@Override
 	public ResourcePermission fetchByPrimaryKey(Serializable primaryKey) {
 		if (CTPersistenceHelperUtil.isProductionMode(
-				ResourcePermission.class)) {
+				ResourcePermission.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

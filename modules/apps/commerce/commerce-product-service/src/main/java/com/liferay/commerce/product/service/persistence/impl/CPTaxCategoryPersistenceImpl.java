@@ -2407,7 +2407,9 @@ public class CPTaxCategoryPersistenceImpl
 	 */
 	@Override
 	public CPTaxCategory fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CPTaxCategory.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CPTaxCategory.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

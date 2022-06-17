@@ -4184,7 +4184,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	@Override
 	public CPInstanceOptionValueRel fetchByPrimaryKey(Serializable primaryKey) {
 		if (ctPersistenceHelper.isProductionMode(
-				CPInstanceOptionValueRel.class)) {
+				CPInstanceOptionValueRel.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

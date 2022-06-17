@@ -2233,7 +2233,7 @@ public class JournalArticleLocalizationPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				JournalArticleLocalization.class)) {
+				JournalArticleLocalization.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

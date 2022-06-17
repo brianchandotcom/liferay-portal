@@ -2500,7 +2500,9 @@ public class FriendlyURLEntryPersistenceImpl
 	 */
 	@Override
 	public FriendlyURLEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(FriendlyURLEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				FriendlyURLEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

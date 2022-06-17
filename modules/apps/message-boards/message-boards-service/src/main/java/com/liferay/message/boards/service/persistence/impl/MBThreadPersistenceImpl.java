@@ -13641,7 +13641,7 @@ public class MBThreadPersistenceImpl
 	 */
 	@Override
 	public MBThread fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(MBThread.class)) {
+		if (ctPersistenceHelper.isProductionMode(MBThread.class, primaryKey)) {
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

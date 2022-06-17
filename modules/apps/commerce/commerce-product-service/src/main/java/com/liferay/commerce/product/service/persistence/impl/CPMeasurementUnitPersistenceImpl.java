@@ -4139,7 +4139,9 @@ public class CPMeasurementUnitPersistenceImpl
 	 */
 	@Override
 	public CPMeasurementUnit fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CPMeasurementUnit.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CPMeasurementUnit.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

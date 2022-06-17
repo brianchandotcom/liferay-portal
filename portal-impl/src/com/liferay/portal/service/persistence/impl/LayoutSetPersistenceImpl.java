@@ -2649,7 +2649,9 @@ public class LayoutSetPersistenceImpl
 	 */
 	@Override
 	public LayoutSet fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(LayoutSet.class)) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				LayoutSet.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

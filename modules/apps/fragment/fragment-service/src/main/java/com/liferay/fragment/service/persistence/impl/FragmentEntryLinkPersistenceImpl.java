@@ -9957,7 +9957,9 @@ public class FragmentEntryLinkPersistenceImpl
 	 */
 	@Override
 	public FragmentEntryLink fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(FragmentEntryLink.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				FragmentEntryLink.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

@@ -1311,7 +1311,7 @@ public class CPDefinitionLocalizationPersistenceImpl
 	@Override
 	public CPDefinitionLocalization fetchByPrimaryKey(Serializable primaryKey) {
 		if (ctPersistenceHelper.isProductionMode(
-				CPDefinitionLocalization.class)) {
+				CPDefinitionLocalization.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

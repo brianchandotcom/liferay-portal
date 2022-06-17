@@ -3900,7 +3900,9 @@ public class SocialActivitySetPersistenceImpl
 	 */
 	@Override
 	public SocialActivitySet fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(SocialActivitySet.class)) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				SocialActivitySet.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

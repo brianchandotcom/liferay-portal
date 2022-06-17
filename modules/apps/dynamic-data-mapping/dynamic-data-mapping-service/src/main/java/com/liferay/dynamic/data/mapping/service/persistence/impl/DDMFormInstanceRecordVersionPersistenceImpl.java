@@ -3776,7 +3776,7 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				DDMFormInstanceRecordVersion.class)) {
+				DDMFormInstanceRecordVersion.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

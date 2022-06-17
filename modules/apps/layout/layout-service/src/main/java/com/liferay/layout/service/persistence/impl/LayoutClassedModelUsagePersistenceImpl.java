@@ -5247,7 +5247,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 	@Override
 	public LayoutClassedModelUsage fetchByPrimaryKey(Serializable primaryKey) {
 		if (ctPersistenceHelper.isProductionMode(
-				LayoutClassedModelUsage.class)) {
+				LayoutClassedModelUsage.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

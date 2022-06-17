@@ -15471,7 +15471,9 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public FragmentEntryVersion fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(FragmentEntryVersion.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				FragmentEntryVersion.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

@@ -3281,7 +3281,9 @@ public class AssetDisplayPageEntryPersistenceImpl
 	 */
 	@Override
 	public AssetDisplayPageEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(AssetDisplayPageEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				AssetDisplayPageEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

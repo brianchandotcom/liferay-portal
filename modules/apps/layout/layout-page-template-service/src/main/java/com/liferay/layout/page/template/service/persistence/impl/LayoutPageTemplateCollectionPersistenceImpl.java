@@ -4537,7 +4537,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				LayoutPageTemplateCollection.class)) {
+				LayoutPageTemplateCollection.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

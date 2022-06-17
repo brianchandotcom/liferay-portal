@@ -4385,7 +4385,9 @@ public class CPDisplayLayoutPersistenceImpl
 	 */
 	@Override
 	public CPDisplayLayout fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CPDisplayLayout.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CPDisplayLayout.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

@@ -14513,7 +14513,9 @@ public class DLFolderPersistenceImpl
 	 */
 	@Override
 	public DLFolder fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(DLFolder.class)) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				DLFolder.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

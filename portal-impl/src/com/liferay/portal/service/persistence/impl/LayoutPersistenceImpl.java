@@ -19718,7 +19718,9 @@ public class LayoutPersistenceImpl
 	 */
 	@Override
 	public Layout fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(Layout.class)) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				Layout.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

@@ -2892,7 +2892,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				CalendarNotificationTemplate.class)) {
+				CalendarNotificationTemplate.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

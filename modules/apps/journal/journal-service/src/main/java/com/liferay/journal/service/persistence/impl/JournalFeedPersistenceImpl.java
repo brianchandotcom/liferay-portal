@@ -3038,7 +3038,9 @@ public class JournalFeedPersistenceImpl
 	 */
 	@Override
 	public JournalFeed fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(JournalFeed.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				JournalFeed.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

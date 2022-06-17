@@ -2714,7 +2714,9 @@ public class SystemEventPersistenceImpl
 	 */
 	@Override
 	public SystemEvent fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(SystemEvent.class)) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				SystemEvent.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

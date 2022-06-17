@@ -2180,7 +2180,9 @@ public class ReadingTimeEntryPersistenceImpl
 	 */
 	@Override
 	public ReadingTimeEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(ReadingTimeEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				ReadingTimeEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

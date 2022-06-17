@@ -386,7 +386,9 @@ public class CacheMissEntryPersistenceImpl
 	 */
 	@Override
 	public CacheMissEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CacheMissEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CacheMissEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

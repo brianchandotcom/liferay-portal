@@ -2178,7 +2178,9 @@ public class LayoutSEOEntryPersistenceImpl
 	 */
 	@Override
 	public LayoutSEOEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(LayoutSEOEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				LayoutSEOEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

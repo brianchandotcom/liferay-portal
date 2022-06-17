@@ -5929,7 +5929,9 @@ public class CPDefinitionPersistenceImpl
 	 */
 	@Override
 	public CPDefinition fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CPDefinition.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CPDefinition.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

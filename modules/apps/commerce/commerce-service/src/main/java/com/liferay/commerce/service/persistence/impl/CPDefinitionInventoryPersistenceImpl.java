@@ -2157,7 +2157,9 @@ public class CPDefinitionInventoryPersistenceImpl
 	 */
 	@Override
 	public CPDefinitionInventory fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CPDefinitionInventory.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CPDefinitionInventory.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

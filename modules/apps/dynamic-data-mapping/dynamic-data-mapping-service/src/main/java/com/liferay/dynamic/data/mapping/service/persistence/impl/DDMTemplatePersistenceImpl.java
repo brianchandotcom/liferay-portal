@@ -12548,7 +12548,9 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Override
 	public DDMTemplate fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(DDMTemplate.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				DDMTemplate.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

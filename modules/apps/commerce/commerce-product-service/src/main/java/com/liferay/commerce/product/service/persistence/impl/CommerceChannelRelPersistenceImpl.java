@@ -1821,7 +1821,9 @@ public class CommerceChannelRelPersistenceImpl
 	 */
 	@Override
 	public CommerceChannelRel fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CommerceChannelRel.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CommerceChannelRel.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

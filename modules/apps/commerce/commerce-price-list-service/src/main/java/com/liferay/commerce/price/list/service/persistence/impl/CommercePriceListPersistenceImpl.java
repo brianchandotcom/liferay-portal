@@ -9304,7 +9304,9 @@ public class CommercePriceListPersistenceImpl
 	 */
 	@Override
 	public CommercePriceList fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CommercePriceList.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CommercePriceList.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

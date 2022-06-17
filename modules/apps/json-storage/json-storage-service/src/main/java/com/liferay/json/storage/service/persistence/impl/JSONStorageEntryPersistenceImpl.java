@@ -2764,7 +2764,9 @@ public class JSONStorageEntryPersistenceImpl
 	 */
 	@Override
 	public JSONStorageEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(JSONStorageEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				JSONStorageEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

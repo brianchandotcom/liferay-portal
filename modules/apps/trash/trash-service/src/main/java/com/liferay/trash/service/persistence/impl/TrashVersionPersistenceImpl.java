@@ -1732,7 +1732,9 @@ public class TrashVersionPersistenceImpl
 	 */
 	@Override
 	public TrashVersion fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(TrashVersion.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				TrashVersion.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

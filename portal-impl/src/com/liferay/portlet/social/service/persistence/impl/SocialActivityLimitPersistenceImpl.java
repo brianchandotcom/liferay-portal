@@ -2413,7 +2413,7 @@ public class SocialActivityLimitPersistenceImpl
 	@Override
 	public SocialActivityLimit fetchByPrimaryKey(Serializable primaryKey) {
 		if (CTPersistenceHelperUtil.isProductionMode(
-				SocialActivityLimit.class)) {
+				SocialActivityLimit.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

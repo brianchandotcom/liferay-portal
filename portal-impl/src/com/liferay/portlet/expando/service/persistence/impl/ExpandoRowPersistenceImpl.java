@@ -1688,7 +1688,9 @@ public class ExpandoRowPersistenceImpl
 	 */
 	@Override
 	public ExpandoRow fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(ExpandoRow.class)) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				ExpandoRow.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

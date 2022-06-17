@@ -4752,7 +4752,9 @@ public class DDMStructureLayoutPersistenceImpl
 	 */
 	@Override
 	public DDMStructureLayout fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(DDMStructureLayout.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				DDMStructureLayout.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

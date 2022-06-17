@@ -2646,7 +2646,7 @@ public class CProductPersistenceImpl
 	 */
 	@Override
 	public CProduct fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CProduct.class)) {
+		if (ctPersistenceHelper.isProductionMode(CProduct.class, primaryKey)) {
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

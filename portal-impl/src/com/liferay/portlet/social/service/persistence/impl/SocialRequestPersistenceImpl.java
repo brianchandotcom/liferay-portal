@@ -6747,7 +6747,9 @@ public class SocialRequestPersistenceImpl
 	 */
 	@Override
 	public SocialRequest fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(SocialRequest.class)) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				SocialRequest.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

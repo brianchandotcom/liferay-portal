@@ -4278,7 +4278,7 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				AssetListEntryAssetEntryRel.class)) {
+				AssetListEntryAssetEntryRel.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

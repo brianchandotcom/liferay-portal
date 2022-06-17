@@ -6040,7 +6040,7 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				DEDataDefinitionFieldLink.class)) {
+				DEDataDefinitionFieldLink.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

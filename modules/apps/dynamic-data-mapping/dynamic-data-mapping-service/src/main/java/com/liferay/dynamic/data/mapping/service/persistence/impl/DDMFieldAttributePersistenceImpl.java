@@ -2547,7 +2547,9 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public DDMFieldAttribute fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(DDMFieldAttribute.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				DDMFieldAttribute.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

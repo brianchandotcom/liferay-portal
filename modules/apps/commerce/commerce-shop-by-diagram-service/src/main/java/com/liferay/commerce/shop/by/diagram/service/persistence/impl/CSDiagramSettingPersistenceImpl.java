@@ -1854,7 +1854,9 @@ public class CSDiagramSettingPersistenceImpl
 	 */
 	@Override
 	public CSDiagramSetting fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CSDiagramSetting.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CSDiagramSetting.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

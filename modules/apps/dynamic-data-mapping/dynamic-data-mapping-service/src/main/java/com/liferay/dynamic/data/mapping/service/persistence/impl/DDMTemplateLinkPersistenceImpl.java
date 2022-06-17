@@ -1194,7 +1194,9 @@ public class DDMTemplateLinkPersistenceImpl
 	 */
 	@Override
 	public DDMTemplateLink fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(DDMTemplateLink.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				DDMTemplateLink.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

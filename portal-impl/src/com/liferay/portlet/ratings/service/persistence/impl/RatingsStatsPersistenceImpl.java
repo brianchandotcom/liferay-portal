@@ -1052,7 +1052,9 @@ public class RatingsStatsPersistenceImpl
 	 */
 	@Override
 	public RatingsStats fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(RatingsStats.class)) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				RatingsStats.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

@@ -2478,7 +2478,7 @@ public class CommercePriceListAccountRelPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				CommercePriceListAccountRel.class)) {
+				CommercePriceListAccountRel.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

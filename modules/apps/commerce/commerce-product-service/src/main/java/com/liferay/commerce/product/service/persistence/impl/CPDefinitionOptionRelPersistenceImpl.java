@@ -5156,7 +5156,9 @@ public class CPDefinitionOptionRelPersistenceImpl
 	 */
 	@Override
 	public CPDefinitionOptionRel fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CPDefinitionOptionRel.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CPDefinitionOptionRel.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

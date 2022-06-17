@@ -6340,7 +6340,9 @@ public class SegmentsExperimentPersistenceImpl
 	 */
 	@Override
 	public SegmentsExperiment fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(SegmentsExperiment.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				SegmentsExperiment.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

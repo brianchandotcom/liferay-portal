@@ -3611,7 +3611,7 @@ public class SocialActivityAchievementPersistenceImpl
 		Serializable primaryKey) {
 
 		if (CTPersistenceHelperUtil.isProductionMode(
-				SocialActivityAchievement.class)) {
+				SocialActivityAchievement.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

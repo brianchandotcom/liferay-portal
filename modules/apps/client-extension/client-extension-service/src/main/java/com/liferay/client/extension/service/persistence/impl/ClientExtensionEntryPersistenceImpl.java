@@ -4812,7 +4812,9 @@ public class ClientExtensionEntryPersistenceImpl
 	 */
 	@Override
 	public ClientExtensionEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(ClientExtensionEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				ClientExtensionEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

@@ -3799,7 +3799,9 @@ public class DLFileEntryTypePersistenceImpl
 	 */
 	@Override
 	public DLFileEntryType fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(DLFileEntryType.class)) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				DLFileEntryType.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

@@ -3368,7 +3368,7 @@ public class UserGroupGroupRolePersistenceImpl
 	@Override
 	public UserGroupGroupRole fetchByPrimaryKey(Serializable primaryKey) {
 		if (CTPersistenceHelperUtil.isProductionMode(
-				UserGroupGroupRole.class)) {
+				UserGroupGroupRole.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

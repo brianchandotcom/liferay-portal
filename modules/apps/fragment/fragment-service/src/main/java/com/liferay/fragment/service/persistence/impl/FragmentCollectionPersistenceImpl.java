@@ -3890,7 +3890,9 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Override
 	public FragmentCollection fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(FragmentCollection.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				FragmentCollection.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

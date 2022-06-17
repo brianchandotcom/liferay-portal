@@ -2651,7 +2651,9 @@ public class MBMailingListPersistenceImpl
 	 */
 	@Override
 	public MBMailingList fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(MBMailingList.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				MBMailingList.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

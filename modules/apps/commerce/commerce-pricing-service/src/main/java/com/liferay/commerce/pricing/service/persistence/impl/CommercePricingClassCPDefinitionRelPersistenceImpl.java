@@ -1908,7 +1908,7 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				CommercePricingClassCPDefinitionRel.class)) {
+				CommercePricingClassCPDefinitionRel.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

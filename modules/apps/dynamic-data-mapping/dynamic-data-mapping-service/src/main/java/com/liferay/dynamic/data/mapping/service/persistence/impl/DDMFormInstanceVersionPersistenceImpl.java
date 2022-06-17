@@ -1851,7 +1851,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 	@Override
 	public DDMFormInstanceVersion fetchByPrimaryKey(Serializable primaryKey) {
 		if (ctPersistenceHelper.isProductionMode(
-				DDMFormInstanceVersion.class)) {
+				DDMFormInstanceVersion.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

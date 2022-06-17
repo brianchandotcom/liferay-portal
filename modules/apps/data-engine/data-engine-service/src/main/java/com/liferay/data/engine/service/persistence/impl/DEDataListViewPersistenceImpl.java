@@ -3018,7 +3018,9 @@ public class DEDataListViewPersistenceImpl
 	 */
 	@Override
 	public DEDataListView fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(DEDataListView.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				DEDataListView.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

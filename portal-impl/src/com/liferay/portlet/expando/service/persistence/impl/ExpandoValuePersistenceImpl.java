@@ -5307,7 +5307,9 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public ExpandoValue fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(ExpandoValue.class)) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				ExpandoValue.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

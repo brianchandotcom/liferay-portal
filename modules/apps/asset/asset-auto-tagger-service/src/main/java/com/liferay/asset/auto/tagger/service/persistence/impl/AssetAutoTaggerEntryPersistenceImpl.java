@@ -1772,7 +1772,9 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Override
 	public AssetAutoTaggerEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(AssetAutoTaggerEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				AssetAutoTaggerEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

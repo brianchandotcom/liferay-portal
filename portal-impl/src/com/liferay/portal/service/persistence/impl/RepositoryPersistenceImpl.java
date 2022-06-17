@@ -2706,7 +2706,9 @@ public class RepositoryPersistenceImpl
 	 */
 	@Override
 	public Repository fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(Repository.class)) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				Repository.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

@@ -6084,7 +6084,7 @@ public class PortletPreferencesPersistenceImpl
 	@Override
 	public PortletPreferences fetchByPrimaryKey(Serializable primaryKey) {
 		if (CTPersistenceHelperUtil.isProductionMode(
-				PortletPreferences.class)) {
+				PortletPreferences.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

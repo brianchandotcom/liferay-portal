@@ -2897,7 +2897,9 @@ public class DDMContentPersistenceImpl
 	 */
 	@Override
 	public DDMContent fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(DDMContent.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				DDMContent.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

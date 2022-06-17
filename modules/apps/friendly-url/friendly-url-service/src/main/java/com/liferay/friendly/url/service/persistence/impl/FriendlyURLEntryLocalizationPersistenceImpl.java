@@ -2332,7 +2332,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				FriendlyURLEntryLocalization.class)) {
+				FriendlyURLEntryLocalization.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

@@ -1753,7 +1753,9 @@ public class SegmentsEntryRolePersistenceImpl
 	 */
 	@Override
 	public SegmentsEntryRole fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(SegmentsEntryRole.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				SegmentsEntryRole.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

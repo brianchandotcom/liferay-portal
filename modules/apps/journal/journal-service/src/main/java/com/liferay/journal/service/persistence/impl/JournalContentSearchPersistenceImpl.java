@@ -5590,7 +5590,9 @@ public class JournalContentSearchPersistenceImpl
 	 */
 	@Override
 	public JournalContentSearch fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(JournalContentSearch.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				JournalContentSearch.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

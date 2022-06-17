@@ -2831,7 +2831,9 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Override
 	public TrashEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(TrashEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				TrashEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

@@ -4630,7 +4630,9 @@ public class CommerceCatalogPersistenceImpl
 	 */
 	@Override
 	public CommerceCatalog fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CommerceCatalog.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CommerceCatalog.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

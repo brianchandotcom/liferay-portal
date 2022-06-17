@@ -13942,7 +13942,9 @@ public class AssetListEntryPersistenceImpl
 	 */
 	@Override
 	public AssetListEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(AssetListEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				AssetListEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

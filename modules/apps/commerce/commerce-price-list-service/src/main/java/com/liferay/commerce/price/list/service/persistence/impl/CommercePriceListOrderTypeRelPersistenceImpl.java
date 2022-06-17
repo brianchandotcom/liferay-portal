@@ -2490,7 +2490,7 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				CommercePriceListOrderTypeRel.class)) {
+				CommercePriceListOrderTypeRel.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

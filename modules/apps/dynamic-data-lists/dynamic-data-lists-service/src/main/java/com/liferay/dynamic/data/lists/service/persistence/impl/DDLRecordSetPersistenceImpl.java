@@ -4317,7 +4317,9 @@ public class DDLRecordSetPersistenceImpl
 	 */
 	@Override
 	public DDLRecordSet fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(DDLRecordSet.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				DDLRecordSet.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

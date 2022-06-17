@@ -1825,7 +1825,9 @@ public class DDLRecordSetVersionPersistenceImpl
 	 */
 	@Override
 	public DDLRecordSetVersion fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(DDLRecordSetVersion.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				DDLRecordSetVersion.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

@@ -2906,7 +2906,7 @@ public class DLFileEntryMetadataPersistenceImpl
 	@Override
 	public DLFileEntryMetadata fetchByPrimaryKey(Serializable primaryKey) {
 		if (CTPersistenceHelperUtil.isProductionMode(
-				DLFileEntryMetadata.class)) {
+				DLFileEntryMetadata.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

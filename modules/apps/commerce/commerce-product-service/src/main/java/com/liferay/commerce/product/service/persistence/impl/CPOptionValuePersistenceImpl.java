@@ -3199,7 +3199,9 @@ public class CPOptionValuePersistenceImpl
 	 */
 	@Override
 	public CPOptionValue fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CPOptionValue.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CPOptionValue.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

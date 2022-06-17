@@ -4197,7 +4197,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				AssetListEntrySegmentsEntryRel.class)) {
+				AssetListEntrySegmentsEntryRel.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

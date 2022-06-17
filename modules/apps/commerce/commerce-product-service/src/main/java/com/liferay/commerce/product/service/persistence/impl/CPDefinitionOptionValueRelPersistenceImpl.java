@@ -5552,7 +5552,7 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				CPDefinitionOptionValueRel.class)) {
+				CPDefinitionOptionValueRel.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

@@ -2630,7 +2630,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				CommercePriceListCommerceAccountGroupRel.class)) {
+				CommercePriceListCommerceAccountGroupRel.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

@@ -3379,7 +3379,7 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 		Serializable primaryKey) {
 
 		if (ctPersistenceHelper.isProductionMode(
-				LayoutPageTemplateStructureRel.class)) {
+				LayoutPageTemplateStructureRel.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

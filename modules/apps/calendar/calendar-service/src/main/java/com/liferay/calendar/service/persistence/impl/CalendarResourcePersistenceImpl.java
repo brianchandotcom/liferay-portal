@@ -6761,7 +6761,9 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public CalendarResource fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CalendarResource.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CalendarResource.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

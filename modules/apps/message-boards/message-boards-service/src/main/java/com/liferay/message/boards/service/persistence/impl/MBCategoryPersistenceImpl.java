@@ -11954,7 +11954,9 @@ public class MBCategoryPersistenceImpl
 	 */
 	@Override
 	public MBCategory fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(MBCategory.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				MBCategory.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

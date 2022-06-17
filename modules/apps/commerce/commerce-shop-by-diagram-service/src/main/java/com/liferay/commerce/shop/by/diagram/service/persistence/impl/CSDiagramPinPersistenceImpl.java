@@ -963,7 +963,9 @@ public class CSDiagramPinPersistenceImpl
 	 */
 	@Override
 	public CSDiagramPin fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CSDiagramPin.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CSDiagramPin.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

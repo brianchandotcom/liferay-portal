@@ -4153,7 +4153,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public DDMFormInstanceRecord fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(DDMFormInstanceRecord.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				DDMFormInstanceRecord.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

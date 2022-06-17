@@ -708,7 +708,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	@Override
 	public FriendlyURLEntryMapping fetchByPrimaryKey(Serializable primaryKey) {
 		if (ctPersistenceHelper.isProductionMode(
-				FriendlyURLEntryMapping.class)) {
+				FriendlyURLEntryMapping.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

@@ -5580,7 +5580,7 @@ public class CommerceTierPriceEntryPersistenceImpl
 	@Override
 	public CommerceTierPriceEntry fetchByPrimaryKey(Serializable primaryKey) {
 		if (ctPersistenceHelper.isProductionMode(
-				CommerceTierPriceEntry.class)) {
+				CommerceTierPriceEntry.class, primaryKey)) {
 
 			return super.fetchByPrimaryKey(primaryKey);
 		}

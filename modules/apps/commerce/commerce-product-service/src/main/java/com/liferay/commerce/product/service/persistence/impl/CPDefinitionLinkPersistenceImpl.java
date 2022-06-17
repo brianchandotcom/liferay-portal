@@ -4443,7 +4443,9 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public CPDefinitionLink fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CPDefinitionLink.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CPDefinitionLink.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

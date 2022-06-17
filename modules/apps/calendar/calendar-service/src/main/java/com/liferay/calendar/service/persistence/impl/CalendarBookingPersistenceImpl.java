@@ -5961,7 +5961,9 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public CalendarBooking fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(CalendarBooking.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				CalendarBooking.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

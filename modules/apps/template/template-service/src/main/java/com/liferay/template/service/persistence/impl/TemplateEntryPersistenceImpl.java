@@ -4597,7 +4597,9 @@ public class TemplateEntryPersistenceImpl
 	 */
 	@Override
 	public TemplateEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(TemplateEntry.class)) {
+		if (ctPersistenceHelper.isProductionMode(
+				TemplateEntry.class, primaryKey)) {
+
 			return super.fetchByPrimaryKey(primaryKey);
 		}
 

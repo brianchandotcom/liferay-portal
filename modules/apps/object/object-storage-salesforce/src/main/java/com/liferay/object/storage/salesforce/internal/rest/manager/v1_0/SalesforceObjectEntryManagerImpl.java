@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -61,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Guilherme Camacho
  */
 @Component(
-	enabled = false, immediate = true,
+	immediate = true,
 	property = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE,
 	service = ObjectEntryManager.class
 )
@@ -127,6 +128,13 @@ public class SalesforceObjectEntryManagerImpl
 			String externalReferenceCode, long companyId,
 			ObjectDefinition objectDefinition, String scopeKey)
 		throws Exception {
+
+		_salesforceHttp.delete(
+			companyId, getGroupId(objectDefinition, scopeKey),
+			StringBundler.concat(
+				"sobjects/",
+				_getSalesforceObjectName(objectDefinition.getName()), "/",
+				externalReferenceCode));
 	}
 
 	@Override
@@ -313,7 +321,9 @@ public class SalesforceObjectEntryManagerImpl
 
 		ObjectEntry objectEntry = new ObjectEntry() {
 			{
-				actions = Collections.emptyMap();
+				actions = HashMapBuilder.put(
+					"delete", Collections.<String, String>emptyMap()
+				).build();
 				creator = CreatorUtil.toCreator(
 					_portal, Optional.empty(),
 					_userLocalService.fetchUserByExternalReferenceCode(

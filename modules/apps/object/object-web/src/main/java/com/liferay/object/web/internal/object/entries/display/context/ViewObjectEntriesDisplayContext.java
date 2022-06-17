@@ -85,30 +85,12 @@ public class ViewObjectEntriesDisplayContext {
 		_objectViewLocalService = objectViewLocalService;
 		_portletResourcePermission = portletResourcePermission;
 
-		_apiURL = "/o" + restContextPath;
+		_apiURL = _buildAPIURL(restContextPath);
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
 
 	public String getAPIURL() {
-		try {
-			long groupId = _objectScopeProvider.getGroupId(_httpServletRequest);
-
-			if (!_objectScopeProvider.isGroupAware() ||
-				!_objectScopeProvider.isValidGroupId(groupId)) {
-
-				return _apiURL + _getQueryString();
-			}
-
-			return StringBundler.concat(
-				_apiURL, "/scopes/", groupId, _getQueryString());
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return _apiURL;
-		}
+		return _apiURL + _getQueryString();
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {
@@ -162,7 +144,8 @@ public class ViewObjectEntriesDisplayContext {
 				LanguageUtil.get(
 					_objectRequestHelper.getRequest(),
 					"are-you-sure-you-want-to-delete-this-entry"),
-				_apiURL + "/{id}", "trash", "delete",
+				_apiURL + "/by-external-reference-code/{externalReferenceCode}",
+				"trash", "delete",
 				LanguageUtil.get(_objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", "async"),
 			new FDSActionDropdownItem(
@@ -244,6 +227,29 @@ public class ViewObjectEntriesDisplayContext {
 				_objectRequestHelper.getLiferayPortletRequest(),
 				_objectRequestHelper.getLiferayPortletResponse()),
 			_objectRequestHelper.getLiferayPortletResponse());
+	}
+
+	private String _buildAPIURL(String restContextPath) {
+		String apiURL = "/o" + restContextPath;
+
+		try {
+			long groupId = _objectScopeProvider.getGroupId(_httpServletRequest);
+
+			if (!_objectScopeProvider.isGroupAware() ||
+				!_objectScopeProvider.isValidGroupId(groupId)) {
+
+				return apiURL;
+			}
+
+			return StringBundler.concat(apiURL, "/scopes/", groupId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return apiURL;
+		}
 	}
 
 	private String _getNestedFieldsQueryString() {

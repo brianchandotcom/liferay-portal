@@ -17,6 +17,9 @@ package com.liferay.portal.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -95,6 +98,44 @@ public class FileImplTest {
 		Assert.assertEquals(
 			"/folder/test_rtl.css",
 			_fileImpl.appendSuffix("/folder/test.css", "_rtl"));
+	}
+
+	@Test
+	public void testDeltree() throws IOException {
+		File tempFile = File.createTempFile("tempFile", null);
+
+		_fileImpl.deltree(tempFile);
+
+		Assert.assertFalse(tempFile.exists());
+
+		File directory1 = new File(
+			System.getProperty("java.io.tmpdir"), "tempDir1");
+
+		directory1.mkdir();
+
+		File file1 = new File(directory1, "testFile1");
+
+		file1.createNewFile();
+
+		File file2 = new File(directory1, "testFile2");
+
+		file2.createNewFile();
+
+		File directory2 = new File(directory1, "tempDir2");
+
+		directory2.mkdir();
+
+		File file3 = new File(directory2, "testFile3");
+
+		file3.createNewFile();
+
+		File file4 = new File(directory2, "testFile4");
+
+		file4.createNewFile();
+
+		_fileImpl.deltree(directory1);
+
+		Assert.assertFalse(directory1.exists());
 	}
 
 	@Test

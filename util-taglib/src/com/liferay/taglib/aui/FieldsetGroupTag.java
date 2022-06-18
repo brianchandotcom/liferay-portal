@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.aui;
 
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseFieldsetGroupTag;
 
 import javax.servlet.jsp.JspWriter;
@@ -29,21 +28,11 @@ public class FieldsetGroupTag extends BaseFieldsetGroupTag {
 
 	@Override
 	protected String getEndPage() {
-		if (Validator.isNotNull(getMarkupView())) {
-			return "/html/taglib/aui/fieldset_group/" + getMarkupView() +
-				"/end.jsp";
-		}
-
 		return "/html/taglib/aui/fieldset_group/end.jsp";
 	}
 
 	@Override
 	protected String getStartPage() {
-		if (Validator.isNotNull(getMarkupView())) {
-			return "/html/taglib/aui/fieldset_group/" + getMarkupView() +
-				"/start.jsp";
-		}
-
 		return "/html/taglib/aui/fieldset_group/start.jsp";
 	}
 

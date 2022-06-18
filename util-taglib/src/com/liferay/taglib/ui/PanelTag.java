@@ -204,10 +204,6 @@ public class PanelTag extends IncludeTag {
 	@Override
 	protected String getEndPage() {
 		if (Validator.isNull(_endPage)) {
-			if (Validator.isNotNull(_markupView)) {
-				return "/html/taglib/ui/panel/" + _markupView + "/end.jsp";
-			}
-
 			return "/html/taglib/ui/panel/end.jsp";
 		}
 
@@ -217,10 +213,6 @@ public class PanelTag extends IncludeTag {
 	@Override
 	protected String getStartPage() {
 		if (Validator.isNull(_startPage)) {
-			if (Validator.isNotNull(_markupView)) {
-				return "/html/taglib/ui/panel/" + _markupView + "/start.jsp";
-			}
-
 			return "/html/taglib/ui/panel/start.jsp";
 		}
 

@@ -32,7 +32,7 @@ import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSTy
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeFaviconTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeJSTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
+import com.liferay.gradle.plugins.workspace.tasks.CreateClientExtensionConfigTask;
 import com.liferay.petra.string.StringBundler;
 
 import groovy.lang.Closure;
@@ -40,7 +40,6 @@ import groovy.lang.Closure;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -48,15 +47,12 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
@@ -70,6 +66,7 @@ import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionAware;
+import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskProvider;
@@ -83,6 +80,9 @@ public class ClientExtensionProjectConfigurator
 
 	public static final String BUILD_CLIENT_EXTENSION_TASK_NAME =
 		"buildClientExtension";
+
+	public static final String CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME =
+		"createClientExtensionConfig";
 
 	public ClientExtensionProjectConfigurator(Settings settings) {
 		super(settings);
@@ -108,8 +108,16 @@ public class ClientExtensionProjectConfigurator
 
 	@Override
 	public void apply(Project project) {
-		TaskProvider<Zip> zipTaskProvider =
-			_baseConfigureClientExtensionProject(project);
+		TaskProvider<CreateClientExtensionConfigTask>
+			createClientExtensionConfigProvider = GradleUtil.addTaskProvider(
+				project, CREATE_CLIENT_EXTENSION_CONFIG_TASK_NAME,
+				CreateClientExtensionConfigTask.class);
+
+		TaskProvider<Zip> zipTaskProvider = GradleUtil.addTaskProvider(
+			project, BUILD_CLIENT_EXTENSION_TASK_NAME, Zip.class);
+
+		_baseConfigureClientExtensionProject(
+			project, createClientExtensionConfigProvider, zipTaskProvider);
 
 		File clientExtensionFile = project.file(_CLIENT_EXTENSION_YAML);
 
@@ -134,8 +142,9 @@ public class ClientExtensionProjectConfigurator
 						clientExtension.id = id;
 						clientExtension.projectName = project.getName();
 
-						_baseConfigureClientExtensionType(
-							project, clientExtension);
+						createClientExtensionConfigProvider.configure(
+							config -> config.addClientExtension(
+								clientExtension));
 
 						ClientExtensionTypeConfigurer
 							clientExtensionTypeConfigurer =
@@ -210,7 +219,10 @@ public class ClientExtensionProjectConfigurator
 	protected static final String NAME = "client.extension";
 
 	private TaskProvider<Zip> _baseConfigureClientExtensionProject(
-		Project project) {
+		Project project,
+		TaskProvider<CreateClientExtensionConfigTask>
+			createClientExtensionConfigProvider,
+		TaskProvider<Zip> zipTaskProvider) {
 
 		if (isDefaultRepositoryEnabled()) {
 			GradleUtil.addDefaultRepositories(project);
@@ -233,10 +245,8 @@ public class ClientExtensionProjectConfigurator
 		_configureTaskClean(project);
 		_configureTaskDeploy(project);
 
-		TaskProvider<Zip> zipTaskProvider = GradleUtil.addTaskProvider(
-			project, BUILD_CLIENT_EXTENSION_TASK_NAME, Zip.class);
-
-		_configureTaskBuildClientExtension(project, zipTaskProvider);
+		_configureTaskBuildClientExtension(
+			project, createClientExtensionConfigProvider, zipTaskProvider);
 
 		addTaskDockerDeploy(
 			project, zipTaskProvider,
@@ -246,42 +256,6 @@ public class ClientExtensionProjectConfigurator
 		_configureRootTaskDistBundle(project, zipTaskProvider);
 
 		return zipTaskProvider;
-	}
-
-	private void _baseConfigureClientExtensionType(
-		Project project, ClientExtension clientExtension) {
-
-		TaskProvider<Zip> zipTaskProvider = GradleUtil.getTaskProvider(
-			project, BUILD_CLIENT_EXTENSION_TASK_NAME, Zip.class);
-
-		zipTaskProvider.configure(
-			zip -> {
-				File clientExtensionConfigFile = new File(
-					project.getBuildDir(),
-					clientExtension.id + _CLIENT_EXTENSION_CONFIG_FILE_NAME);
-
-				zip.doFirst(
-					task -> {
-						try {
-							File parentFile =
-								clientExtensionConfigFile.getParentFile();
-
-							parentFile.mkdirs();
-
-							String json = clientExtension.toJSON();
-
-							Files.write(
-								clientExtensionConfigFile.toPath(),
-								json.getBytes());
-						}
-						catch (Exception exception) {
-							throw new GradleException(
-								exception.getMessage(), exception);
-						}
-					});
-
-				zip.from(clientExtensionConfigFile);
-			});
 	}
 
 	private void _configureArtifacts(
@@ -356,7 +330,10 @@ public class ClientExtensionProjectConfigurator
 	}
 
 	private void _configureTaskBuildClientExtension(
-		Project project, TaskProvider<Zip> zipTaskProvider) {
+		Project project,
+		TaskProvider<CreateClientExtensionConfigTask>
+			createClientExtensionConfigProvider,
+		TaskProvider<Zip> zipTaskProvider) {
 
 		zipTaskProvider.configure(
 			zip -> {
@@ -366,56 +343,21 @@ public class ClientExtensionProjectConfigurator
 				destinationDirectoryProperty.set(
 					new File(project.getProjectDir(), "dist"));
 
-				File outputLcpJsonFile = new File(
-					project.getBuildDir(), "LCP.json");
-				File outputDockerfile = new File(
-					project.getBuildDir(), "Dockerfile");
+				Property<String> archiveBaseNameProperty =
+					zip.getArchiveBaseName();
 
-				zip.doFirst(
-					task -> {
-						try {
-							String dockerfileContent = _loadTemplate(
-								_CLIENT_EXTENSION_DOCKERFILE + ".tpl",
-								Collections.emptyMap());
+				archiveBaseNameProperty.set(
+					project.provider(
+						new Callable<String>() {
 
-							File projectDockerfile = project.file("Dockerfile");
-
-							if (projectDockerfile.exists()) {
-								dockerfileContent = new String(
-									Files.readAllBytes(
-										projectDockerfile.toPath()));
+							@Override
+							public String call() throws Exception {
+								return project.getName();
 							}
 
-							Files.write(
-								outputDockerfile.toPath(),
-								dockerfileContent.getBytes());
+						}));
 
-							String lcpJsonContent = _loadTemplate(
-								_CLIENT_EXTENSION_LCP_JSON + ".tpl",
-								Collections.singletonMap(
-									"__CLIENT_EXTENSION_ID__",
-									project.getName()));
-
-							File projectLcpJsonFile = project.file("LCP.json");
-
-							if (projectLcpJsonFile.exists()) {
-								lcpJsonContent = new String(
-									Files.readAllBytes(
-										projectLcpJsonFile.toPath()));
-							}
-
-							Files.write(
-								outputLcpJsonFile.toPath(),
-								lcpJsonContent.getBytes());
-						}
-						catch (IOException ioException) {
-							throw new GradleException(
-								ioException.getMessage(), ioException);
-						}
-					});
-
-				zip.from(outputLcpJsonFile);
-				zip.from(outputDockerfile);
+				zip.from(createClientExtensionConfigProvider);
 			});
 	}
 
@@ -439,43 +381,6 @@ public class ClientExtensionProjectConfigurator
 		return project.file(
 			"dist/" + GradleUtil.getArchivesBaseName(project) + ".zip");
 	}
-
-	private String _loadTemplate(
-		String name, Map<String, String> substitutionMap) {
-
-		try (InputStream inputStream =
-				RootProjectConfigurator.class.getResourceAsStream(
-					"dependencies/" + name)) {
-
-			Stream<Map.Entry<String, String>> substitutions =
-				substitutionMap.entrySet(
-				).stream();
-
-			return substitutions.map(
-				entry -> (Function<String, String>)s -> s.replace(
-					entry.getKey(), entry.getValue())
-			).reduce(
-				Function::andThen
-			).orElse(
-				Function.identity()
-			).apply(
-				StringUtil.read(inputStream)
-			);
-		}
-		catch (Exception exception) {
-			throw new GradleException(
-				"Unable to read template " + name, exception);
-		}
-	}
-
-	private static final String _CLIENT_EXTENSION_CONFIG_FILE_NAME =
-		".client-extension-config.json";
-
-	private static final String _CLIENT_EXTENSION_DOCKERFILE =
-		"client_extension_Dockerfile";
-
-	private static final String _CLIENT_EXTENSION_LCP_JSON =
-		"client_extension_LCP.json";
 
 	private static final String _CLIENT_EXTENSION_YAML =
 		"client-extension.yaml";

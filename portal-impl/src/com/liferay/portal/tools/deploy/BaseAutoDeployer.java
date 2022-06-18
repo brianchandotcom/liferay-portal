@@ -110,7 +110,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 			String displayName = specifiedContext;
 
-			boolean overwrite = false;
 			String preliminaryContext = specifiedContext;
 
 			// The order of priority of the context is: 1.) the specified
@@ -127,7 +126,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 				displayName = srcFileName.substring(
 					DEPLOY_TO_PREFIX.length(), srcFileName.length() - 4);
 
-				overwrite = true;
 				preliminaryContext = displayName;
 			}
 
@@ -204,8 +202,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 						return AutoDeployer.CODE_SKIP_NEWER_VERSION;
 					}
-
-					overwrite = true;
 				}
 
 				File mergeDirFile = new File(
@@ -214,12 +210,12 @@ public class BaseAutoDeployer implements AutoDeployer {
 				if (srcFile.isDirectory()) {
 					_deployDirectory(
 						srcFile, mergeDirFile, deployDirFile, displayName,
-						overwrite, pluginPackage);
+						pluginPackage);
 				}
 				else {
 					boolean deployed = _deployFile(
 						srcFile, mergeDirFile, deployDirFile, displayName,
-						overwrite, pluginPackage);
+						pluginPackage);
 
 					if (!deployed) {
 						String context = preliminaryContext;
@@ -288,12 +284,10 @@ public class BaseAutoDeployer implements AutoDeployer {
 	}
 
 	public void deployDirectory(
-			File srcFile, String displayName, boolean override,
-			PluginPackage pluginPackage)
+			File srcFile, String displayName, PluginPackage pluginPackage)
 		throws Exception {
 
-		_deployDirectory(
-			srcFile, null, null, displayName, override, pluginPackage);
+		_deployDirectory(srcFile, null, null, displayName, pluginPackage);
 	}
 
 	public String getExtraContent(
@@ -540,9 +534,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 	protected String uiTaglibDTD;
 	protected String utilTaglibDTD;
 
-	private void _copyDirectory(
-		File source, File destination, boolean overwrite) {
-
+	private void _copyDirectory(File source, File destination) {
 		Path sourcePath = source.toPath();
 
 		Path destinationPath = destination.toPath();
@@ -574,11 +566,9 @@ public class BaseAutoDeployer implements AutoDeployer {
 						Path destinationFile = destinationPath.resolve(
 							sourcePath.relativize(filePath));
 
-						if (Files.notExists(destinationFile) || overwrite) {
-							Files.copy(
-								filePath, destinationFile,
-								StandardCopyOption.REPLACE_EXISTING);
-						}
+						Files.copy(
+							filePath, destinationFile,
+							StandardCopyOption.REPLACE_EXISTING);
 
 						return FileVisitResult.CONTINUE;
 					}
@@ -806,7 +796,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 	private void _deployDirectory(
 			File srcFile, File mergeDir, File deployDir, String displayName,
-			boolean overwrite, PluginPackage pluginPackage)
+			PluginPackage pluginPackage)
 		throws Exception {
 
 		_rewriteFiles(srcFile);
@@ -831,12 +821,12 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 		updateDeployDirectory(srcFile);
 
-		_copyDirectory(srcFile, deployDir, overwrite);
+		_copyDirectory(srcFile, deployDir);
 	}
 
 	private boolean _deployFile(
 			File srcFile, File mergeDir, File deployDir, String displayName,
-			boolean overwrite, PluginPackage pluginPackage)
+			PluginPackage pluginPackage)
 		throws Exception {
 
 		Path tempDirPath = Files.createTempDirectory(
@@ -847,8 +837,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 		FileUtil.unzip(srcFile, tempDir);
 
 		_deployDirectory(
-			tempDir, mergeDir, deployDir, displayName, overwrite,
-			pluginPackage);
+			tempDir, mergeDir, deployDir, displayName, pluginPackage);
 
 		FileUtil.deltree(tempDir);
 
@@ -1093,7 +1082,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 			return;
 		}
 
-		_copyDirectory(mergeDir, targetDir, true);
+		_copyDirectory(mergeDir, targetDir);
 	}
 
 	private PluginPackage _readPluginPackage(File file) {

@@ -76,7 +76,7 @@ public class ThemeAutoDeployer
 				}
 
 				deployDirectory(
-					file, autoDeploymentContext.getContext(), false,
+					file, autoDeploymentContext.getContext(),
 					autoDeploymentContext.getPluginPackage());
 
 				if (_log.isInfoEnabled()) {

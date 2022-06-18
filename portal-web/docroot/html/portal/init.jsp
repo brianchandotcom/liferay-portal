@@ -32,7 +32,6 @@ page import="com.liferay.portal.kernel.exception.UserLockoutException" %><%@
 page import="com.liferay.portal.kernel.exception.UserPasswordException" %><%@
 page import="com.liferay.portal.kernel.exception.UserReminderQueryException" %><%@
 page import="com.liferay.portal.kernel.license.util.LicenseManagerUtil" %><%@
-page import="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletConfigurationLayoutUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.HttpHeaders" %><%@

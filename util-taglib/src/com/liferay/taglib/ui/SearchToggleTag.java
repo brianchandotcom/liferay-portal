@@ -15,7 +15,6 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,20 +77,11 @@ public class SearchToggleTag extends IncludeTag {
 
 	@Override
 	protected String getEndPage() {
-		if (Validator.isNotNull(_markupView)) {
-			return "/html/taglib/ui/search_toggle/" + _markupView + "/end.jsp";
-		}
-
 		return "/html/taglib/ui/search_toggle/end.jsp";
 	}
 
 	@Override
 	protected String getStartPage() {
-		if (Validator.isNotNull(_markupView)) {
-			return "/html/taglib/ui/search_toggle/" + _markupView +
-				"/start.jsp";
-		}
-
 		return "/html/taglib/ui/search_toggle/start.jsp";
 	}
 

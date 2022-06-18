@@ -15,7 +15,6 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,11 +58,6 @@ public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 
 	@Override
 	protected String getPage() {
-		if (Validator.isNotNull(_markupView)) {
-			return "/html/taglib/ui/search_paginator/" + _markupView +
-				"/page.jsp";
-		}
-
 		return "/html/taglib/ui/search_paginator/page.jsp";
 	}
 

@@ -16,7 +16,6 @@ package com.liferay.taglib.aui;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.IntegerWrapper;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseNavBarTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,12 +77,6 @@ public class NavBarTag extends BaseNavBarTag implements BodyTag {
 
 	@Override
 	protected String getPage() {
-		String markupView = getMarkupView();
-
-		if (Validator.isNotNull(markupView)) {
-			return "/html/taglib/aui/nav_bar/" + markupView + "/page.jsp";
-		}
-
 		return "/html/taglib/aui/nav_bar/page.jsp";
 	}
 

@@ -71,11 +71,6 @@ public class NavBarSearchTag extends BaseNavBarSearchTag {
 
 	@Override
 	protected String getEndPage() {
-		if (Validator.isNotNull(getMarkupView())) {
-			return "/html/taglib/aui/nav_bar_search/" + getMarkupView() +
-				"/end.jsp";
-		}
-
 		return "/html/taglib/aui/nav_bar_search/end.jsp";
 	}
 
@@ -94,11 +89,6 @@ public class NavBarSearchTag extends BaseNavBarSearchTag {
 
 	@Override
 	protected String getStartPage() {
-		if (Validator.isNotNull(getMarkupView())) {
-			return "/html/taglib/aui/nav_bar_search/" + getMarkupView() +
-				"/start.jsp";
-		}
-
 		return "/html/taglib/aui/nav_bar_search/start.jsp";
 	}
 

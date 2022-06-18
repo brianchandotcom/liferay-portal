@@ -55,8 +55,11 @@ import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Queue;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -307,22 +310,33 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public void deltree(File directory) {
-		if (directory.exists() && directory.isDirectory()) {
-			File[] fileArray = directory.listFiles();
+		if (directory.isDirectory()) {
+			Deque<File> deleteDeque = new LinkedList<>();
 
-			if (fileArray == null) {
-				return;
+			deleteDeque.push(directory);
+
+			Queue<File> visitQueue = new LinkedList<>();
+
+			visitQueue.add(directory);
+
+			File curDirectory;
+
+			while ((curDirectory = visitQueue.poll()) != null) {
+				for (File file : curDirectory.listFiles()) {
+					if (file.isFile()) {
+						file.delete();
+					}
+					else {
+						visitQueue.add(file);
+
+						deleteDeque.push(file);
+					}
+				}
 			}
 
-			for (File file : fileArray) {
-				if (file.isDirectory()) {
-					deltree(file);
-				}
-				else {
-					file.delete();
-				}
-			}
-
+			deleteDeque.forEach(File::delete);
+		}
+		else {
 			directory.delete();
 		}
 	}

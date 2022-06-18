@@ -294,24 +294,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	@Override
 	public boolean delete(File file) {
 		if (file != null) {
-			boolean exists = true;
-
-			try {
-				exists = file.exists();
-			}
-			catch (SecurityException securityException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(securityException);
-				}
-
-				// We may have the permission to delete a specific file without
-				// having the permission to check if the file exists
-
-			}
-
-			if (exists) {
-				return file.delete();
-			}
+			return file.delete();
 		}
 
 		return false;

@@ -82,6 +82,7 @@ definition {
 				field = "Content",
 				fragmentName = "Text Input",
 				helpText = "Custom Help Text",
+				hideHelpText = "false",
 				label = "Custom Content Field",
 				placeholder = "Custom Placeholder");
 		}
@@ -196,6 +197,7 @@ definition {
 				field = "Content",
 				fragmentName = "Text Input",
 				helpText = "Custom Help Text",
+				hideHelpText = "false",
 				label = "Custom Content Field",
 				placeholder = "Custom Placeholder");
 		}

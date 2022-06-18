@@ -263,20 +263,12 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			return _endPage;
 		}
 
-		if (Validator.isNotNull(_markupView)) {
-			return "/html/taglib/ui/icon_menu/" + _markupView + "/end.jsp";
-		}
-
 		return "/html/taglib/ui/icon_menu/end.jsp";
 	}
 
 	protected String getStartPage() {
 		if (Validator.isNotNull(_startPage)) {
 			return _startPage;
-		}
-
-		if (Validator.isNotNull(_markupView)) {
-			return "/html/taglib/ui/icon_menu/" + _markupView + "/start.jsp";
 		}
 
 		return "/html/taglib/ui/icon_menu/start.jsp";

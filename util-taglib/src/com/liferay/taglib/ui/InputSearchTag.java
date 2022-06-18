@@ -132,10 +132,6 @@ public class InputSearchTag extends BaseValidatorTagSupport {
 
 	@Override
 	protected String getPage() {
-		if (Validator.isNotNull(_markupView)) {
-			return "/html/taglib/ui/input_search/" + _markupView + "/page.jsp";
-		}
-
 		return "/html/taglib/ui/input_search/page.jsp";
 	}
 

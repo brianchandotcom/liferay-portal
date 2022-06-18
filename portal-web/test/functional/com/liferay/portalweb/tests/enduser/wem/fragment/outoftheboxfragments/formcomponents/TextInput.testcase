@@ -91,9 +91,9 @@ definition {
 				helpText = "Custom Help Text",
 				label = "Custom Content Field",
 				placeholder = "Custom Placeholder",
-				placeholderType = "text-input",
 				showHelpText = "true",
-				showLabel = "true");
+				showLabel = "true",
+				type = "text-input");
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
@@ -109,9 +109,9 @@ definition {
 				helpText = "Custom Help Text",
 				label = "Custom Content Field",
 				placeholder = "Custom Placeholder",
-				placeholderType = "text-input",
 				showHelpText = "true",
-				showLabel = "true");
+				showLabel = "true",
+				type = "text-input");
 		}
 
 		task ("When the pages designer hides the label and help text fields") {
@@ -130,7 +130,8 @@ definition {
 				helpText = "Custom Help Text",
 				label = "Custom Content Field",
 				showHelpText = "false",
-				showLabel = "false");
+				showLabel = "false",
+				type = "text-input");
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
@@ -146,7 +147,8 @@ definition {
 				helpText = "Custom Help Text",
 				label = "Custom Content Field",
 				showHelpText = "false",
-				showLabel = "false");
+				showLabel = "false",
+				type = "text-input");
 		}
 	}
 
@@ -203,9 +205,9 @@ definition {
 				helpText = "Custom Help Text",
 				label = "Custom Content Field",
 				placeholder = "Custom Placeholder",
-				placeholderType = "text-input",
 				showHelpText = "true",
-				showLabel = "true");
+				showLabel = "true",
+				type = "text-input");
 		}
 
 		task ("When the pages designer adds a Spanish translation in Text Input fields") {
@@ -225,9 +227,9 @@ definition {
 				helpText = "Texto de ayuda personalizado",
 				label = "Campo de contenido personalizado",
 				placeholder = "Marcador de posición personalizado",
-				placeholderType = "text-input",
 				showHelpText = "true",
-				showLabel = "true");
+				showLabel = "true",
+				type = "text-input");
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
@@ -243,9 +245,9 @@ definition {
 				helpText = "Custom Help Text",
 				label = "Custom Content Field",
 				placeholder = "Custom Placeholder",
-				placeholderType = "text-input",
 				showHelpText = "true",
-				showLabel = "true");
+				showLabel = "true",
+				type = "text-input");
 		}
 
 		task ("When the pages designer changes the user language to Spanish") {
@@ -259,9 +261,9 @@ definition {
 				helpText = "Texto de ayuda personalizado",
 				label = "Campo de contenido personalizado",
 				placeholder = "Marcador de posición personalizado",
-				placeholderType = "text-input",
 				showHelpText = "true",
-				showLabel = "true");
+				showLabel = "true",
+				type = "text-input");
 
 			LanguagePortlet.tearDownLanguagePG();
 		}

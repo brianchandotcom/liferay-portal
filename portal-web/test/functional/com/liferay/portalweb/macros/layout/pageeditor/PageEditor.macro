@@ -4765,7 +4765,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				fieldLabel = "${label}",
 				index = "${position}",
 				locator1 = "Fragment#INPUT_LABEL",
-				type = "text-input",
+				type = "${type}",
 				value1 = "${label}");
 		}
 		else if ("${showLabel}" == "false") {
@@ -4773,21 +4773,21 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				fieldLabel = "${label}",
 				index = "${position}",
 				locator1 = "Fragment#INPUT_LABEL_INVISIBLE",
-				type = "text-input");
+				type = "${type}");
 		}
 
 		if ("${showHelpText}" == "true") {
 			AssertTextEquals(
 				index = "${position}",
 				locator1 = "Fragment#INPUT_HELP_TEXT",
-				type = "input",
+				type = "${type}",
 				value1 = "${helpText}");
 		}
 		else if ("${showHelpText}" == "false") {
 			AssertElementNotPresent(
 				index = "${position}",
 				locator1 = "Fragment#INPUT_HELP_TEXT",
-				type = "input");
+				type = "${type}");
 		}
 
 		if (isSet(placeholder)) {
@@ -4795,7 +4795,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				attribute1 = "placeholder",
 				index = "${position}",
 				locator1 = "Fragment#INPUT_FIELD",
-				type = "${placeholderType}",
+				type = "${type}",
 				value1 = "${placeholder}");
 		}
 	}

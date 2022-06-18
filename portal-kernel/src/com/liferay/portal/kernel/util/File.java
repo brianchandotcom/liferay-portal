@@ -41,14 +41,7 @@ public interface File {
 	public void copyFile(java.io.File source, java.io.File destination)
 		throws IOException;
 
-	public void copyFile(
-			java.io.File source, java.io.File destination, boolean lazy)
-		throws IOException;
-
 	public void copyFile(String source, String destination) throws IOException;
-
-	public void copyFile(String source, String destination, boolean lazy)
-		throws IOException;
 
 	public java.io.File createTempFile();
 

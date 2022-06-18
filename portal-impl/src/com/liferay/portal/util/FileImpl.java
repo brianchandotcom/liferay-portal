@@ -154,64 +154,19 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public void copyFile(File source, File destination) throws IOException {
-		copyFile(source, destination, false);
-	}
-
-	@Override
-	public void copyFile(File source, File destination, boolean lazy)
-		throws IOException {
-
 		if (!source.exists()) {
 			return;
 		}
 
-		if (lazy) {
-			String oldContent = null;
+		mkdirsParentFile(destination);
 
-			try {
-				oldContent = read(source);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
-				return;
-			}
-
-			String newContent = null;
-
-			try {
-				newContent = read(destination);
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-
-			if ((oldContent == null) || !oldContent.equals(newContent)) {
-				copyFile(source, destination, false);
-			}
-		}
-		else {
-			mkdirsParentFile(destination);
-
-			StreamUtil.transfer(
-				new FileInputStream(source), new FileOutputStream(destination));
-		}
+		StreamUtil.transfer(
+			new FileInputStream(source), new FileOutputStream(destination));
 	}
 
 	@Override
 	public void copyFile(String source, String destination) throws IOException {
-		copyFile(source, destination, false);
-	}
-
-	@Override
-	public void copyFile(String source, String destination, boolean lazy)
-		throws IOException {
-
-		copyFile(new File(source), new File(destination), lazy);
+		copyFile(new File(source), new File(destination));
 	}
 
 	@Override

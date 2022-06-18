@@ -58,22 +58,10 @@ public class FileUtil {
 		_file.copyFile(source, destination);
 	}
 
-	public static void copyFile(File source, File destination, boolean lazy)
-		throws IOException {
-
-		_file.copyFile(source, destination, lazy);
-	}
-
 	public static void copyFile(String source, String destination)
 		throws IOException {
 
 		_file.copyFile(source, destination);
-	}
-
-	public static void copyFile(String source, String destination, boolean lazy)
-		throws IOException {
-
-		_file.copyFile(source, destination, lazy);
 	}
 
 	public static File createTempFile() {

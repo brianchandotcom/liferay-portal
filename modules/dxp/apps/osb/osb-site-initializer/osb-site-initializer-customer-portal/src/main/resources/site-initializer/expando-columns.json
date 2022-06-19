@@ -2,21 +2,33 @@
 	{
 		"dataType": 15,
 		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
-		"name": "accountSubscriptionERC"
+		"name": "accountSubscriptionERC",
+		"properties": {
+			"indexType": 2
+		}
 	},
 	{
 		"dataType": 15,
 		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
-		"name": "accountSubscriptionGroupERC"
+		"name": "accountSubscriptionGroupERC",
+		"properties": {
+			"indexType": 2
+		}
 	},
 	{
 		"dataType": 9,
 		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
-		"name": "provisionedCount"
+		"name": "provisionedCount",
+		"properties": {
+			"indexType": 2
+		}
 	},
 	{
 		"dataType": 15,
 		"modelResource": "com.liferay.commerce.model.CommerceOrderItem",
-		"name": "status"
+		"name": "status",
+		"properties": {
+			"indexType": 2
+		}
 	}
 ]

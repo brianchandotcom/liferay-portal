@@ -1092,6 +1092,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 	}
 
+	private String _getExpandoPropertyKey(String entryKey) {
+		String[] keyParts = entryKey.split("(?=\\p{Upper})");
+
+		return StringUtil.merge(keyParts, StringPool.DASH).toLowerCase();
+	}
+
 	private void _addExpandoColumns(ServiceContext serviceContext)
 		throws Exception {
 
@@ -1129,7 +1135,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					for (Map.Entry<String, Object> entry :
 						jsonObjectProperties.toMap().entrySet()) {
 						unicodeProperties.setProperty(
-							entry.getKey(),
+								_getExpandoPropertyKey(entry.getKey()),
 							entry.getValue().toString());
 					}
 

@@ -16,7 +16,6 @@ package com.liferay.portal.servlet.filters.validhostname;
 
 import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,10 +34,9 @@ public class ValidHostNameFilter extends BasePortalFilter implements TryFilter {
 
 		String serverName = httpServletRequest.getServerName();
 
-		String validPortalDomain = PortalUtil.getValidPortalDomain(
-			PortalUtil.getDefaultCompanyId(), serverName);
+		if (!PortalUtil.isValidPortalDomain(
+				PortalUtil.getDefaultCompanyId(), serverName)) {
 
-		if (!StringUtil.equalsIgnoreCase(serverName, validPortalDomain)) {
 			throw new RuntimeException("Invalid host name " + serverName);
 		}
 

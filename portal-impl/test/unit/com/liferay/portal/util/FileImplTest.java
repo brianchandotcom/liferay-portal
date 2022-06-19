@@ -101,6 +101,64 @@ public class FileImplTest {
 	}
 
 	@Test
+	public void testCopyDirectory() throws IOException {
+		File directory1 = new File(
+			System.getProperty("java.io.tmpdir"), "tempDir1");
+
+		directory1.mkdir();
+
+		File file1 = new File(directory1, "testFile1");
+
+		file1.createNewFile();
+
+		File file2 = new File(directory1, "testFile2");
+
+		file2.createNewFile();
+
+		File directory2 = new File(directory1, "tempDir2");
+
+		directory2.mkdir();
+
+		File file3 = new File(directory2, "testFile3");
+
+		file3.createNewFile();
+
+		File file4 = new File(directory2, "testFile4");
+
+		file4.createNewFile();
+
+		File newDirectory1 = new File(
+			System.getProperty("java.io.tmpdir"), "newTempDir1");
+
+		_fileImpl.copyDirectory(directory1, newDirectory1);
+
+		Assert.assertTrue(newDirectory1.exists());
+
+		File newFile1 = new File(newDirectory1, "testFile1");
+
+		Assert.assertTrue(newFile1.exists());
+
+		File newFile2 = new File(newDirectory1, "testFile2");
+
+		Assert.assertTrue(newFile2.exists());
+
+		File newDirectory2 = new File(newDirectory1, "tempDir2");
+
+		Assert.assertTrue(newDirectory2.exists());
+
+		File newFile3 = new File(newDirectory2, "testFile3");
+
+		Assert.assertTrue(newFile3.exists());
+
+		File newFile4 = new File(newDirectory2, "testFile4");
+
+		Assert.assertTrue(newFile4.exists());
+
+		_fileImpl.deltree(newDirectory1);
+		_fileImpl.deltree(directory1);
+	}
+
+	@Test
 	public void testDeltree() throws IOException {
 		File tempFile = File.createTempFile("tempFile", null);
 

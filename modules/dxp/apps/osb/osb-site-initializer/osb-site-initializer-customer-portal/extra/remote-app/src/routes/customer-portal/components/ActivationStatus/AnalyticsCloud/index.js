@@ -172,7 +172,7 @@ const ActivationStatusAnalyticsCloud = ({
 
 	useEffect(() => {
 		const fetchCommerceOrderItems = async () => {
-			const filterAccountSubscriptionERC = `customFields/name eq 'accountSubscriptionGroupERC' and customFields/customValue/data eq '${project.accountKey}_analytics-cloud'`;
+			const filterAccountSubscriptionERC = `customFields/accountSubscriptionGroupERC eq '${project.accountKey}_analytics-cloud'`;
 			const {data} = await client.query({
 				query: getCommerceOrderItems,
 				variables: {

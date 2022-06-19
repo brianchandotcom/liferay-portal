@@ -76,7 +76,7 @@ const ActivationKeysInputs = ({
 
 	useEffect(() => {
 		const getOrderItems = async () => {
-			const filterAccountSubscriptionERC = `customFields/name eq 'accountSubscriptionERC' and customFields/customValue/data eq '${accountKey}_${productKey}_${selectedAccountSubscriptionName.toLowerCase()}'`;
+			const filterAccountSubscriptionERC = `customFields/accountSubscriptionERC eq '${accountKey}_${productKey}_${selectedAccountSubscriptionName.toLowerCase()}'`;
 
 			const {data} = await client.query({
 				query: getCommerceOrderItems,

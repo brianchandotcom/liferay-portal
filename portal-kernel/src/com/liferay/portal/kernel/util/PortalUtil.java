@@ -1949,6 +1949,10 @@ public class PortalUtil {
 		return _portal.isSystemRole(roleName);
 	}
 
+	public static boolean isValidPortalDomain(long companyId, String domain) {
+		return _portal.isValidPortalDomain(companyId, domain);
+	}
+
 	public static boolean isValidResourceId(String resourceId) {
 		return _portal.isValidResourceId(resourceId);
 	}

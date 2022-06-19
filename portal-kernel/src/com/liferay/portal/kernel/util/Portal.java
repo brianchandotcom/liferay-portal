@@ -1184,6 +1184,8 @@ public interface Portal {
 
 	public boolean isSystemRole(String roleName);
 
+	public boolean isValidPortalDomain(long companyId, String domain);
+
 	public boolean isValidResourceId(String resourceId);
 
 	public boolean removePortalInetSocketAddressEventListener(

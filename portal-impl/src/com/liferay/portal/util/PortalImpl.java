@@ -6367,6 +6367,37 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public boolean isValidPortalDomain(long companyId, String domain) {
+		if (_validPortalDomainCheckDisabled) {
+			return true;
+		}
+
+		if (!Validator.isHostName(domain)) {
+			return false;
+		}
+
+		for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
+			if (StringUtil.equalsIgnoreCase(domain, virtualHost) ||
+				StringUtil.wildcardMatches(
+					domain, virtualHost, CharPool.QUESTION, CharPool.STAR,
+					CharPool.PERCENT, false)) {
+
+				return true;
+			}
+		}
+
+		if (StringUtil.equalsIgnoreCase(domain, PropsValues.WEB_SERVER_HOST) ||
+			isValidVirtualHostname(domain) ||
+			StringUtil.equalsIgnoreCase(domain, getCDNHostHttp(companyId)) ||
+			StringUtil.equalsIgnoreCase(domain, getCDNHostHttps(companyId))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isValidResourceId(String resourceId) {
 		if (Validator.isNull(resourceId)) {
 			return true;
@@ -7810,36 +7841,6 @@ public class PortalImpl implements Portal {
 			if (currentRequestClassName.startsWith(packageName)) {
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	protected boolean isValidPortalDomain(long companyId, String domain) {
-		if (_validPortalDomainCheckDisabled) {
-			return true;
-		}
-
-		if (!Validator.isHostName(domain)) {
-			return false;
-		}
-
-		for (String virtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
-			if (StringUtil.equalsIgnoreCase(domain, virtualHost) ||
-				StringUtil.wildcardMatches(
-					domain, virtualHost, CharPool.QUESTION, CharPool.STAR,
-					CharPool.PERCENT, false)) {
-
-				return true;
-			}
-		}
-
-		if (StringUtil.equalsIgnoreCase(domain, PropsValues.WEB_SERVER_HOST) ||
-			isValidVirtualHostname(domain) ||
-			StringUtil.equalsIgnoreCase(domain, getCDNHostHttp(companyId)) ||
-			StringUtil.equalsIgnoreCase(domain, getCDNHostHttps(companyId))) {
-
-			return true;
 		}
 
 		return false;

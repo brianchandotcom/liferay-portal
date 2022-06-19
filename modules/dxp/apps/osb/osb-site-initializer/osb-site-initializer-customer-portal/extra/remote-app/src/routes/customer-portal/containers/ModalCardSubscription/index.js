@@ -99,7 +99,7 @@ const ModalCardSubscription = ({
 
 	const {data: orderItems} = useQuery(getCommerceOrderItems, {
 		variables: {
-			filter: `customFields/name eq 'accountSubscriptionERC' and customFields/customValue/data eq '${accountSubscriptionERC}'`,
+			filter: `customFields/accountSubscriptionERC eq '${accountSubscriptionERC}'`,
 			page: activePage,
 			pageSize: 5,
 		},

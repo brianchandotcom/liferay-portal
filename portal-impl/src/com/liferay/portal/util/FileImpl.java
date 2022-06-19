@@ -121,26 +121,33 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 		mkdirs(destination);
 
-		File[] fileArray = source.listFiles();
+		Queue<File> queue = new LinkedList<>();
 
-		if (fileArray == null) {
-			return;
-		}
+		queue.add(source);
 
-		for (File file : fileArray) {
-			if (file.isDirectory()) {
-				copyDirectory(
-					file,
-					new File(
-						destination.getPath() + File.separator +
-							file.getName()));
-			}
-			else {
-				copyFile(
-					file,
-					new File(
-						destination.getPath() + File.separator +
-							file.getName()));
+		String basePath = source.getPath();
+
+		int prefixLength = basePath.length() + 1;
+
+		File directory;
+
+		while ((directory = queue.poll()) != null) {
+			for (File file : directory.listFiles()) {
+				String path = file.getPath();
+
+				File targetFile = new File(
+					destination, path.substring(prefixLength));
+
+				if (file.isFile()) {
+					StreamUtil.transfer(
+						new FileInputStream(file),
+						new FileOutputStream(targetFile));
+				}
+				else {
+					targetFile.mkdir();
+
+					queue.add(file);
+				}
 			}
 		}
 	}

@@ -51,6 +51,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -202,7 +203,9 @@ public class ClientExtensionProjectConfigurator
 					Path clientExtensionPath = dirPath.resolve(
 						_CLIENT_EXTENSION_YAML);
 
-					if (Files.exists(clientExtensionPath)) {
+					if (Files.exists(clientExtensionPath) &&
+						!Objects.equals(dirPath, rootDir.toPath())) {
+
 						projectDirs.add(dirPath.toFile());
 
 						return FileVisitResult.SKIP_SUBTREE;

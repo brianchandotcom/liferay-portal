@@ -17,12 +17,16 @@
 import './PredefinedValuesTable.scss';
 export default function PredefinedValuesTable({
 	currentObjectDefinitionFields,
+	errors,
 	objectFieldsMap,
 	setValues,
 	values,
 }: IProps): JSX.Element;
 interface IProps {
 	currentObjectDefinitionFields: ObjectField[];
+	errors: {
+		[key: string]: string;
+	};
 	objectFieldsMap: Map<string, ObjectField>;
 	predefinedValues?: PredefinedValue[];
 	setValues: (params: Partial<ObjectAction>) => void;

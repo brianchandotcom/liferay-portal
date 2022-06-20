@@ -22,9 +22,9 @@ import {
 	CustomItem,
 	ExpressionBuilder,
 	FormCustomSelect,
-	FormError,
 	Input,
 	SelectWithOption,
+	invalidateRequired,
 } from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -32,6 +32,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import PredefinedValuesTable from '../PredefinedValuesTable';
 
 import './ActionBuilder.scss';
+import {ActionError} from '../index';
 
 const HEADERS = new Headers({
 	'Accept': 'application/json',
@@ -268,6 +269,17 @@ export default function ActionBuilder({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	const hasEmptyValues = values.parameters?.predefinedValues?.some((item) =>
+		invalidateRequired(item.value)
+	);
+
+	const predefinedValuesAlertMessage =
+		!hasEmptyValues && Object.keys(errors).length > 1
+			? Liferay.Language.get('syntax-error')
+			: Liferay.Language.get(
+					'required-fields-must-have-predefined-values'
+			  );
+
 	return (
 		<>
 			{Liferay.FeatureFlags['LPS-152180'] && (
@@ -287,6 +299,17 @@ export default function ActionBuilder({
 					>
 						{Liferay.Language.get('click-here-for-documentation')}
 					</a>
+				</ClayAlert>
+			)}
+
+			{Object.keys(errors).length > 1 && (
+				<ClayAlert
+					className="lfr-objects__side-panel-content-container"
+					displayType="danger"
+					onClose={() => {}}
+					title={`${Liferay.Language.get('error')}:`}
+				>
+					{predefinedValuesAlertMessage}
 				</ClayAlert>
 			)}
 
@@ -475,6 +498,7 @@ export default function ActionBuilder({
 							currentObjectDefinitionFields={
 								currentObjectDefinitionFields
 							}
+							errors={errors as {[key: string]: string}}
 							objectFieldsMap={objectFieldsMap}
 							setValues={setValues}
 							values={values}
@@ -536,7 +560,7 @@ export default function ActionBuilder({
 }
 
 interface IProps {
-	errors: FormError<ObjectAction & ObjectActionParameters>;
+	errors: ActionError;
 	ffNotificationTemplates: boolean;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];

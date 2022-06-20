@@ -14,8 +14,9 @@
 
 /// <reference types="react" />
 
-import {CustomItem, FormError} from '@liferay/object-js-components-web';
+import {CustomItem} from '@liferay/object-js-components-web';
 import './ActionBuilder.scss';
+import {ActionError} from '../index';
 export default function ActionBuilder({
 	errors,
 	ffNotificationTemplates,
@@ -27,7 +28,7 @@ export default function ActionBuilder({
 	values,
 }: IProps): JSX.Element;
 interface IProps {
-	errors: FormError<ObjectAction & ObjectActionParameters>;
+	errors: ActionError;
 	ffNotificationTemplates: boolean;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];

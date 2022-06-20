@@ -29,12 +29,12 @@ import './PredefinedValuesTable.scss';
 
 export default function PredefinedValuesTable({
 	currentObjectDefinitionFields,
+	errors,
 	objectFieldsMap,
 	setValues,
 	values,
 }: IProps) {
 	const {predefinedValues = []} = values.parameters as ObjectActionParameters;
-
 	const getSelectedFields = () => {
 		const objectFields: ObjectField[] = [];
 
@@ -57,6 +57,7 @@ export default function PredefinedValuesTable({
 
 			return updatedPredefinedValues;
 		};
+
 		const rows = predefinedValues.map((item) => {
 			return (
 				<ClayTable.Row key={item.name}>
@@ -120,6 +121,8 @@ export default function PredefinedValuesTable({
 						<div className="lfr-object-web__predefined-values-table-new-value">
 							<ExpressionBuilder
 								buttonDisabled={item.inputAsValue}
+								error={errors[item.name]}
+								hideFeedback
 								onChange={({target: {value}}: any) => {
 									const {name} = item;
 									setValues({
@@ -212,7 +215,13 @@ export default function PredefinedValuesTable({
 		});
 
 		return rows;
-	}, [objectFieldsMap, predefinedValues, setValues, values.parameters]);
+	}, [
+		errors,
+		objectFieldsMap,
+		predefinedValues,
+		setValues,
+		values.parameters,
+	]);
 
 	const handleAddFields = () => {
 		const parentWindow = Liferay.Util.getOpener();
@@ -302,6 +311,7 @@ export default function PredefinedValuesTable({
 
 interface IProps {
 	currentObjectDefinitionFields: ObjectField[];
+	errors: {[key: string]: string};
 	objectFieldsMap: Map<string, ObjectField>;
 	predefinedValues?: PredefinedValue[];
 	setValues: (params: Partial<ObjectAction>) => void;

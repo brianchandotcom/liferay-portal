@@ -131,7 +131,10 @@ public class EntityFieldsProvider {
 				 (Objects.equals(ddmFormField.getIndexType(), "keyword") &&
 				  (Objects.equals(
 					  ddmFormField.getType(),
-					  DDMFormFieldTypeConstants.SELECT) ||
+					  DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
+				   Objects.equals(
+					   ddmFormField.getType(),
+					   DDMFormFieldTypeConstants.SELECT) ||
 				   Objects.equals(
 					   ddmFormField.getType(),
 					   DDMFormFieldTypeConstants.TEXT)))) {

@@ -116,6 +116,8 @@ definition {
 	@description = "Bug: LRAC-10257 | Automation ID: LRAC-10257 | Test Summary: Assert total amount of views in all cards"
 	@priority = "5"
 	test AssertTotalAmountOfViewsInAllCards {
+		property analytics.cloud.upstream = "false";
+
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Add a new user in DXP") {

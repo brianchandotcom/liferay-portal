@@ -54,6 +54,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8327 | Test Summary: Assert Sites Cohort Analysis sort Anonymous Visitors"
 	@priority = "3"
 	test AssertSitesCohortAnalysisSortAnonymousVisitors {
+		property analytics.cloud.upstream = "false";
+
 		task ("Logout from DXP") {
 			User.logoutPG();
 		}

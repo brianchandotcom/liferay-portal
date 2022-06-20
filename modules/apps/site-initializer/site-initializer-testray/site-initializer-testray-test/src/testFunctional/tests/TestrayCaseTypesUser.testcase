@@ -27,32 +27,26 @@ definition {
 		}
 	}
 
-	@description = "LPS-149615 - Verify that user can can go to the 'Manage Users' page."
+	@description = "This is a test for LPS-150326 - Verify that User can add new case types."
 	@priority = "5"
-	test CanAcessManageUser {
-		property portal.upstream = "quarantine";
+	test CanAddNewCaseTypes {
+		task ("Go to Testray") {
+			ApplicationsMenu.gotoSite(site = "Testray 2");
+		}
 
-		ApplicationsMenu.gotoSite(site = "Testray 2");
+		task ("Go to Case Types on Manage Sidebar") {
+			TestrayLayout.clickManageOnSidebar();
 
-		TestrayLayout.clickUserOnSidebar();
+			TestrayManage.selectOptionsManage(key_itemvalue = "Case Types");
+		}
 
-		Click(locator1 = "TestrayUser#MANAGE_ACCOUNT");
+		task ("Create a new Case Type and assert if it was created") {
+			Testray.clickOnModalNumber(pageNumber = "2");
 
-		AssertElementPresent(
-			key_projectName = "Project",
-			locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
-	}
+			TestrayManage.createNewCaseTypes(key_value = "Test Case Type");
 
-	@description = "LPS-149616 - Verify that user can Sign Out."
-	@priority = "5"
-	test CanSignOut {
-		ApplicationsMenu.gotoSite(site = "Testray 2");
-
-		Testray.signOutTestray();
-
-		IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		User.firstLoginPG();
+			TestrayManage.assertNameCaseTypes(key_value = "Test Case Type");
+		}
 	}
 
 }

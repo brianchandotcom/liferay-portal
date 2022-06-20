@@ -1056,9 +1056,6 @@ definition {
 	@description = "This test covers LPS-154410. It ensures that an external video with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = "5"
 	test CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
 		VideoShortcut.addCP(
@@ -1127,9 +1124,6 @@ definition {
 	@description = "This test covers LPS-154409.It ensures that an image with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = "5"
 	test CanViewImageInContentFieldAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
 			dmDocumentTitle = "Document_1.jpg",
@@ -1195,9 +1189,6 @@ definition {
 	@description = "This test covers LPS-154411. It ensures that a small image with a custom friendlyURL added in the Blog content field can be rendered properly on a site after its friendlyURL is edited."
 	@priority = "3"
 	test CanViewSmallImageAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Image Description",
 			dmDocumentTitle = "Document_1.jpg",

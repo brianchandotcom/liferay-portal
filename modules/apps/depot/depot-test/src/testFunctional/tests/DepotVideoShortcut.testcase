@@ -108,9 +108,6 @@ definition {
 	@description = "This ensures that a depot external video in an external video fragment can be rendered correctly on a connected site after moving it to a folder."
 	@priority = "4"
 	test CanViewExternalVideoViaFragmentAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Content Page Name",
@@ -169,9 +166,6 @@ definition {
 	@description = "This ensures that a depot external video in the Blogs content field can be rendered correctly on a connected site after moving it to a folder."
 	@priority = "4"
 	test CanViewInlineVideoAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(
@@ -280,9 +274,6 @@ definition {
 	@description = "This ensures that a depot external video in the KB content field can be rendered correctly on a connected site after moving it to a folder."
 	@priority = "4"
 	test CanViewVideoInKBAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(
@@ -335,9 +326,6 @@ definition {
 	@description = "This ensures that a depot external video in the WC content field can be rendered correctly on a connected site after moving it to a folder."
 	@priority = "4"
 	test CanViewVideoInWCAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		VideoShortcut.addCP(

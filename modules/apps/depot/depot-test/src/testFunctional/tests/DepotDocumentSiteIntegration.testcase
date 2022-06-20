@@ -355,9 +355,6 @@ definition {
 	@description = "This ensures that a depot image in the KB content field can be rendered correctly on a connected site after moving it to a folder."
 	@priority = "4"
 	test CanViewImageInKBAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1",
@@ -408,9 +405,6 @@ definition {
 	@description = "This ensures that a depot image in the MB content field can be rendered correctly on a connected site after moving it to a folder."
 	@priority = "4"
 	test CanViewImageInMBAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -517,9 +511,6 @@ definition {
 	@description = "This ensures that a depot image in the WC content field can be rendered correctly on a connected site after moving it to a folder."
 	@priority = "4"
 	test CanViewImageInWCAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -649,9 +640,6 @@ definition {
 	@description = "This ensures that a depot image in DM widget can be rendered correctly on a connected site after moving it to a folder."
 	@priority = "4"
 	test CanViewImageViaDMWidgetAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1",
@@ -704,9 +692,6 @@ definition {
 	@description = "This ensures that a depot image in an image fragment can be rendered correctly on a connect site after moving it to a folder."
 	@priority = "4"
 	test CanViewImageViaImageFragmentAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Content Page Name",
@@ -763,9 +748,6 @@ definition {
 	@description = "This ensures that a depot image in MG widget can be rendered correctly on a connected site after moving it to a folder."
 	@priority = "4"
 	test CanViewImageViaMGAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1",
@@ -824,9 +806,6 @@ definition {
 	@description = "This ensures that a depot image in the Blogs content field can be rendered correctly on a connected site after moving it to a folder."
 	@priority = "4"
 	test CanViewInlineImageAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -991,9 +970,6 @@ definition {
 	@description = "This ensures that a depot image in the Blogs small image can be rendered correctly on a connected site after moving it to a folder."
 	@priority = "4"
 	test CanViewSmallImageAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",

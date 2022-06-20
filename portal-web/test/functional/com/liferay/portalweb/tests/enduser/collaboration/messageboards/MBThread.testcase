@@ -692,9 +692,6 @@ definition {
 	@description = "This ensures that an image in the MB content field can be rendered correctly after it to a folder."
 	@priority = "4"
 	test CanViewImageInThreadAfterMovingToFolder {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",

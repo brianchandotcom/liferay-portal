@@ -600,9 +600,6 @@ definition {
 	@description = "This test covers LPS-154415. It checks that an external video displays properly in the Media Gallery widget after the friendlyURL has been edited and published on a site."
 	@priority = "4"
 	test CanViewExternalVideoInMGAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
@@ -690,9 +687,6 @@ definition {
 	@description = "This test covers LPS-154396."
 	@priority = "4"
 	test CanViewExternalVideoInMGAfterPublish {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video",
 			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
@@ -734,9 +728,6 @@ definition {
 	@description = "This test covers LPS-154417. It checks that an external video with a custom friendlyURL added to the Web content field displays properly after its friendlyURL is edited and published on a site" 
 	@priority = "4"
 	test CanViewExternalVideotInWCAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		VideoShortcut.addCP(
 			videoShortcutTitle = "Test YouTube Video",
 			videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
@@ -808,9 +799,6 @@ definition {
 	@description = "This test covers LPS-154413. It checks that an image with a custom friendlyURL added to a dynamic collection displayed in an Asset Publisher can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = "4"
 	test CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
@@ -900,9 +888,6 @@ definition {
 	@description = "This test covers LPS-154412. It checks that an image with a custom friendlyURL added to a manual collection displayed in an Asset Publisher can be rendered properly on a site after its friendlyURL is edited and republished."
 	@priority = "4"
 	test CanViewImageInManualCollectionViaAPAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
@@ -999,9 +984,6 @@ definition {
 	@description = "This test covers LPS-154414. It checks that an image displays properly in the Media Gallery widget after the friendlyURL has been edited and published on a site."
 	@priority = "4"
 	test CanViewImageInMGAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
@@ -1088,9 +1070,6 @@ definition {
 	@description = "This test covers LPS-154416. It checks that an image with a custom friendlyURL added to the Web content field displays properly after its friendlyURL is edited and published on a site."
 	@priority = "4"
 	test CanViewImageInWCAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",
@@ -1398,9 +1377,6 @@ definition {
 	@description = "This test covers LPS-155794. It ensures that an image that was published on a site can still be accessed after local staging is disabled."
 	@priority = "5"
 	test ImageIsStillAccessibleAfterDisablingStaging {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONDocument.addFileWithUploadedFile(

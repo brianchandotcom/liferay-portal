@@ -168,8 +168,6 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanPublishSmallImage";
 
 		Staging.remoteStagingSetUpViaJson(
@@ -320,8 +318,6 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewExternalVideoInContentFieldAfterFriendlyURLIsUpdated";
 
 		Staging.remoteStagingSetUpViaJson(
@@ -406,8 +402,6 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewExternalVideotInContentFieldAfterPublish";
 
 		Staging.remoteStagingSetUpViaJson(
@@ -475,8 +469,6 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewImageInContentFieldAfterFriendlyURLIsUpdated";
 
 		Staging.remoteStagingSetUpViaJson(
@@ -568,8 +560,6 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
 		property minimum.slave.ram = "24";
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "BlogsRemoteStaging#CanViewSmallImageAfterFriendlyURLIsUpdated";
 
 		Staging.remoteStagingSetUpViaJson(

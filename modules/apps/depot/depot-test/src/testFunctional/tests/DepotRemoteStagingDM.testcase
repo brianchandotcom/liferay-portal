@@ -4009,8 +4009,6 @@ definition {
 	@description = "This test covers LPS-154438. It ensures that an image with a custom friendlyURL can be correctly rendered in the Blogs cover image field on a site after its friendlyURL is edited and published from an asset library."
 	@priority = "5"
 	test CanViewBlogsCoverImageAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanViewBlogsCoverImageAfterFriendlyURLIsUpdated";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -4091,8 +4089,6 @@ definition {
 	@description = "This test covers LPS-154439. It ensures that an image with a custom friendlyURL can be correctly rendered in the Blogs small image field on a site after its friendlyURL is edited and published from an asset library."
 	@priority = "5"
 	test CanViewBlogsSmallImageAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanViewBlogsSmallImageAfterFriendlyURLIsUpdated";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -4172,8 +4168,6 @@ definition {
 	@description = "This test covers LPS-154437. It ensures that an external video with a custom friendlyURL can be correctly rendered in the Blog content field on a site after its friendlyURL is edited and published from an asset library."
 	@priority = "5"
 	test CanViewExternalVideoFromBlogsContentFieldAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanViewExternalVideoFromBlogsContentFieldAfterFriendlyURLIsUpdated";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -4288,8 +4282,6 @@ definition {
 	@description = "This test covers LPS-154436. It ensures that an image with a custom friendlyURL can be correctly rendered in the Blog content field on a site after its friendlyURL is edited and published from an asset library."
 	@priority = "5"
 	test CanViewImageFromBlogsContentFieldAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanViewImageFromBlogsContentFieldAfterFriendlyURLIsUpdated";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -4369,8 +4361,6 @@ definition {
 	@description = "This test covers LPS-154440. It ensures that an image with a custom friendlyURL added to a dynamic collection displayed in an Asset Publisher can be rendered properly on a site after its friendlyURL is edited and published from an asset library."
 	@priority = "4"
 	test CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#CanViewImageInDynamicCollectionViaAPAfterFriendlyURLIsUpdated";
 
 		JSONDocument.addFileWithUploadedFile(
@@ -4462,8 +4452,6 @@ definition {
 	@description = "This test covers LPS-155797. It ensures that an image that was published in a depot can still be accessed after remote staging is disabled."
 	@priority = "5"
 	test ImageIsStillAccessibleAfterDisablingStaging {
-		property osgi.module.configuration.file.names = "com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property test.name.skip.portal.instance = "DepotRemoteStagingDM#ImageIsStillAccessibleAfterDisablingStaging";
 
 		JSONDocument.addFileWithUploadedFile(

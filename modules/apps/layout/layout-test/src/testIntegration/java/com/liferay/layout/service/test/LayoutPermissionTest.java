@@ -81,13 +81,6 @@ public class LayoutPermissionTest {
 		Assert.assertFalse(
 			_layoutPermission.containsLayoutUpdatePermission(
 				permissionChecker, layout));
-
-		Assert.assertFalse(
-			_layoutPermission.containsLayoutRestrictedUpdatePermission(
-				permissionChecker, layout));
-		Assert.assertFalse(
-			_layoutPermission.containsLayoutUpdatePermission(
-				permissionChecker, layout));
 	}
 
 	@Test
@@ -107,13 +100,6 @@ public class LayoutPermissionTest {
 		Assert.assertTrue(
 			_layoutPermission.containsLayoutUpdatePermission(
 				permissionChecker, layout));
-
-		Assert.assertFalse(
-			_layoutPermission.containsLayoutRestrictedUpdatePermission(
-				permissionChecker, layout));
-		Assert.assertFalse(
-			_layoutPermission.containsLayoutUpdatePermission(
-				permissionChecker, layout));
 	}
 
 	@Test
@@ -128,13 +114,6 @@ public class LayoutPermissionTest {
 		Assert.assertTrue(
 			_layoutPermission.contains(
 				permissionChecker, layout, ActionKeys.UPDATE_LAYOUT_CONTENT));
-
-		Assert.assertFalse(
-			_layoutPermission.containsLayoutRestrictedUpdatePermission(
-				permissionChecker, layout));
-		Assert.assertTrue(
-			_layoutPermission.containsLayoutUpdatePermission(
-				permissionChecker, layout));
 
 		Assert.assertFalse(
 			_layoutPermission.containsLayoutRestrictedUpdatePermission(
@@ -163,13 +142,6 @@ public class LayoutPermissionTest {
 		Assert.assertTrue(
 			_layoutPermission.containsLayoutUpdatePermission(
 				permissionChecker, layout));
-
-		Assert.assertFalse(
-			_layoutPermission.containsLayoutRestrictedUpdatePermission(
-				permissionChecker, layout));
-		Assert.assertFalse(
-			_layoutPermission.containsLayoutUpdatePermission(
-				permissionChecker, layout));
 	}
 
 	@Test
@@ -182,13 +154,6 @@ public class LayoutPermissionTest {
 		Assert.assertTrue(
 			_layoutPermission.contains(
 				permissionChecker, layout, ActionKeys.UPDATE));
-
-		Assert.assertTrue(
-			_layoutPermission.containsLayoutRestrictedUpdatePermission(
-				permissionChecker, layout));
-		Assert.assertTrue(
-			_layoutPermission.containsLayoutUpdatePermission(
-				permissionChecker, layout));
 
 		Assert.assertTrue(
 			_layoutPermission.containsLayoutRestrictedUpdatePermission(

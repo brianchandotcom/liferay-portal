@@ -2,13 +2,12 @@
 
 html#{$cadmin-selector} .cadmin .page-editor__sidebar__panel-header {
 	flex-shrink: 0;
-	font-size: 18px;
 	font-weight: bold;
 	margin-bottom: $pageEditorSpacing * 4;
 	margin-top: $pageEditorSpacing * 2;
 
 	&.light {
-		font-size: 14px;
+		font-size: 0.875rem;
 		margin-bottom: $pageEditorSpacing * 3;
 	}
 }

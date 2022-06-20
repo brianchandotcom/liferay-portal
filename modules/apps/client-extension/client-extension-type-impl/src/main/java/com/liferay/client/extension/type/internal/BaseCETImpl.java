@@ -218,8 +218,8 @@ public abstract class BaseCETImpl<T extends CET> implements CET {
 	private UnicodeProperties _transform(
 		String baseURL, UnicodeProperties unicodeProperties) {
 
-		UnicodeProperties transformedUnicodeProperties =
-			new UnicodeProperties();
+		UnicodeProperties transformedUnicodeProperties = new UnicodeProperties(
+			true);
 
 		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
 			String name = entry.getKey();

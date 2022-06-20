@@ -385,7 +385,7 @@ public class PortalK8sAgentImplTest {
 
 			try (ConfigurationHolder configurationHolder2 =
 					new AwaitingConfigurationHolder(
-						_bundleContext, "test.pid", 5000,
+						_bundleContext, "test.pid", 10000,
 						TimeUnit.MILLISECONDS)) {
 
 				Dictionary<String, Object> properties =

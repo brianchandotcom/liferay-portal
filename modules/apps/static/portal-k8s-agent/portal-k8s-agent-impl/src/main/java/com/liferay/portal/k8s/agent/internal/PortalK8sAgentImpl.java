@@ -132,9 +132,14 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 		).get();
 
 		if (configMap != null) {
-			Map<String, String> binaryData = configMap.getBinaryData();
-			Map<String, String> data = configMap.getData();
-			ObjectMeta objectMeta = configMap.getMetadata();
+			Map<String, String> annotations = _getAnnotations(configMap);
+
+			Map<String, String> binaryData = _getBinaryData(configMap);
+
+			Map<String, String> data = _getData(configMap);
+
+			Map<String, String> labels = _getLabels(configMap);
+
 			ConfigMap originalConfigMap = new ConfigMapBuilder(
 				configMap
 			).build();
@@ -144,7 +149,7 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 
 					@Override
 					public Map<String, String> annotations() {
-						return objectMeta.getAnnotations();
+						return annotations;
 					}
 
 					@Override
@@ -159,7 +164,7 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 
 					@Override
 					public Map<String, String> labels() {
-						return objectMeta.getLabels();
+						return labels;
 					}
 
 				});
@@ -180,7 +185,7 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 						binaryData, originalConfigMap.getBinaryData()) ||
 					 !Objects.equals(data, originalConfigMap.getData())) {
 
-				_validateLabels(configMapName, objectMeta.getLabels());
+				_validateLabels(configMapName, _getLabels(configMap));
 
 				configMap = _kubernetesClient.configMaps(
 				).withName(
@@ -351,6 +356,28 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 		}
 	}
 
+	private Map<String, String> _getAnnotations(ConfigMap configMap) {
+		Map<String, String> annotations = Collections.emptyMap();
+
+		ObjectMeta objectMeta = configMap.getMetadata();
+
+		if (objectMeta != null) {
+			annotations = objectMeta.getAnnotations();
+		}
+
+		return annotations;
+	}
+
+	private Map<String, String> _getBinaryData(ConfigMap configMap) {
+		Map<String, String> binaryData = configMap.getBinaryData();
+
+		if (binaryData == null) {
+			binaryData = Collections.emptyMap();
+		}
+
+		return binaryData;
+	}
+
 	private Configuration _getConfiguration(
 			org.apache.felix.configurator.impl.model.Config config)
 		throws Exception {
@@ -381,6 +408,28 @@ public class PortalK8sAgentImpl implements PortalK8sConfigMapModifier {
 		}
 
 		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
+	}
+
+	private Map<String, String> _getData(ConfigMap configMap) {
+		Map<String, String> data = configMap.getData();
+
+		if (data == null) {
+			data = Collections.emptyMap();
+		}
+
+		return data;
+	}
+
+	private Map<String, String> _getLabels(ConfigMap configMap) {
+		Map<String, String> labels = Collections.emptyMap();
+
+		ObjectMeta objectMeta = configMap.getMetadata();
+
+		if (objectMeta != null) {
+			labels = objectMeta.getLabels();
+		}
+
+		return labels;
 	}
 
 	private void _processConfiguration(

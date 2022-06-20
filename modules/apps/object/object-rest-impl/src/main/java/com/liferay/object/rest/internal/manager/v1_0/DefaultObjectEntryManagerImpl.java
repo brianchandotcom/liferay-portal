@@ -769,7 +769,7 @@ public class DefaultObjectEntryManagerImpl
 
 			Object object = properties.get(name);
 
-			if (object == null) {
+			if ((object == null) && !objectField.isRequired()) {
 				continue;
 			}
 

@@ -2321,9 +2321,15 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
-		if (StringUtil.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+		if (Validator.isNull(values.get(objectField.getName())) &&
+			objectField.isRequired()) {
+
+			throw new ObjectEntryValuesException.Required(
+				objectField.getName());
+		}
+		else if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
 			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
 				GetterUtil.getLong(entry.getValue()));

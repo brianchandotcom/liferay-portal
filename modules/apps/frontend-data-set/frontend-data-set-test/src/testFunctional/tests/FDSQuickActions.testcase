@@ -30,9 +30,13 @@ definition {
 
 			Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
 
+			WaitForElementPresent(
+				key_itemName = "Sample1",
+				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
+
 			MouseOver(
-				key_title = "Sample1",
-				locator1 = "FrontendDataSet#ENTRY_TITLE");
+				key_itemName = "Sample1",
+				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
 		}
 	}
 

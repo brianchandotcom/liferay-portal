@@ -41,6 +41,43 @@ definition {
 	}
 
 	@priority = "4"
+	test CanViewBasicAndBlueprintsSuggestionsTogether {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "WC WebContent Description",
+			groupName = "Guest",
+			title = "Apple");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Empty Blueprint");
+
+		Navigator.openURL();
+
+		SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(
+			addContributor = "true",
+			suggestionContributor = "Blueprint",
+			suggestionContributorBlueprint = "Empty Blueprint",
+			suggestionContributorDisplayGroupName = "blueprint suggestions",
+			suggestionContributorOrder = "2",
+			suggestionContributorSize = "5");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Apple");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple",
+			suggestionContributorDisplayGroupName = "suggestions");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple",
+			suggestionContributorDisplayGroupName = "blueprint suggestions");
+	}
+
+	@priority = "4"
 	test CanViewSearchBarSuggestionsResultDetails {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -142,7 +179,7 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		SearchPortlets.configureEmbeddedSearchBar(characterThresholdForDisplayingSuggestions = "3");
+		SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(characterThresholdForDisplayingSuggestions = "3");
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",

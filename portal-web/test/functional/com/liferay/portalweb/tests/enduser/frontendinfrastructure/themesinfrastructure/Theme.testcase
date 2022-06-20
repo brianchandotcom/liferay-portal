@@ -197,7 +197,7 @@ definition {
 
 		AppManager.uninstallApp(appName = "${appName}");
 
-		AssertConsoleTextPresent(value1 = "Stopping blacklisted bundle test-theme_1.0.0");
+		WaitForConsoleTextPresent(value1 = "Stopping blacklisted bundle test-theme_1.0.0");
 
 		Navigator.openSitePage(
 			pageName = "Theme Test Page",

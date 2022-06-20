@@ -756,13 +756,13 @@ definition {
 
 		AppManager.uninstallApp(appName = "${appName}");
 
+		WaitForConsoleTextPresent(value1 = "STOPPED ${appName}");
+
 		Search.searchCP(searchTerm = "${appName}");
 
 		AssertElementNotPresent(
 			key_appName = "${appName}",
 			locator1 = "AppManager#APP_NAME");
-
-		AssertConsoleTextPresent(value1 = "STOPPED ${appName}");
 	}
 
 	@description = "This is a use case for LPS-99031."

@@ -295,4 +295,83 @@ definition {
 			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
 	}
 
+	@description = "Verify users without permission cannot add, edit, or delete catalogs."
+	@priority = "3"
+	test UserWithoutPermissionCannotAddEditOrDeleteCatalogs {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("And given the user has permission to view catalogs in the catalog section of the admin panel") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet",
+				roleTitle = "User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
+				roleTitle = "User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_COMMERCE_CATALOGS",
+				resourceName = "com.liferay.commerce.catalog",
+				roleTitle = "User");
+		}
+
+		task ("And given the user does not have permission to add, update, or delete catalogs") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "ADD_COMMERCE_CATALOG",
+				resourceName = "com.liferay.commerce.catalog",
+				roleTitle = "User");
+
+			Permissions.removePermissionViaAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
+				roleTitle = "User");
+
+			Permissions.removePermissionViaAPI(
+				resourceAction = "DELETE",
+				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
+				roleTitle = "User");
+		}
+
+		task ("When the user goes to the catalogs page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			CommerceCatalog.openCatalogsAdmin();
+		}
+
+		task ("Then the user cannot add a new catalog") {
+			AssertElementNotPresent(locator1 = "Button#PLUS");
+		}
+
+		task ("And the user cannot edit or delete  a catalog") {
+			AssertElementNotPresent(locator1 = "CommerceEntry#DROPDOWN");
+
+			AssertElementNotPresent(locator1 = "Button#EDIT");
+
+			AssertElementNotPresent(locator1 = "Button#DELETE");
+		}
+	}
+
 }

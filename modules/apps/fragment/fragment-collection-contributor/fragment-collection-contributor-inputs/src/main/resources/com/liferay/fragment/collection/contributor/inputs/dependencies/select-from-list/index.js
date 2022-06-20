@@ -10,7 +10,17 @@ const buttonLabel = button.querySelector('.forms-select-from-list-label');
 const dropdown = wrapper.querySelector('.dropdown-menu');
 const input = wrapper.querySelector('input');
 const listbox = wrapper.querySelector('.list-unstyled');
+const noResultsMessage = wrapper.querySelector(
+	'.forms-select-from-list-no-results'
+);
 const searchInput = wrapper.querySelector('.forms-select-from-list-search');
+
+const baseListboxItems = Array.from(listbox.children).map((child) => ({
+	label: child.textContent,
+	optionId: child.id,
+	trimmedLabel: child.textContent.toLowerCase().replaceAll(' ', ''),
+	value: child.dataset.optionValue,
+}));
 
 function repositionDropdown() {
 	if (document.body.contains(wrapper)) {
@@ -39,6 +49,10 @@ function showDropdown() {
 function hideDropdown() {
 	button.removeAttribute('aria-expanded');
 	dropdown.classList.remove('show');
+
+	if (searchInput) {
+		searchInput.value = '';
+	}
 }
 
 function getActiveDesdendant() {
@@ -202,12 +216,51 @@ function handleWindowResizeOrScroll() {
 	}
 }
 
+function handleSearchKeyup() {
+	const query = searchInput.value.toLowerCase().replaceAll(' ', '');
+
+	listbox.innerHTML = '';
+
+	baseListboxItems.forEach((item) => {
+		if (item.trimmedLabel.startsWith(query)) {
+			const element = document.createElement('li');
+
+			element.classList.add('dropdown-item');
+			element.dataset.optionValue = item.value;
+			element.id = item.optionId;
+			element.setAttribute('role', 'option');
+			element.textContent = item.label;
+
+			listbox.appendChild(element);
+		}
+	});
+
+	if (listbox.children.length) {
+		listbox.removeAttribute('aria-hidden');
+		listbox.classList.remove('d-none');
+		noResultsMessage.setAttribute('aria-hidden', 'true');
+		noResultsMessage.classList.add('d-none');
+		setActiveDescendant(listbox.firstElementChild);
+	}
+	else {
+		listbox.setAttribute('aria-hidden', 'true');
+		listbox.classList.add('d-none');
+		noResultsMessage.removeAttribute('aria-hidden');
+		noResultsMessage.classList.remove('d-none');
+	}
+}
+
 if (listbox.children.length) {
 	button.addEventListener('click', handleButtonClick);
 	button.addEventListener('keydown', handleKeydown);
 	listbox.addEventListener('keydown', handleKeydown);
 	listbox.addEventListener('click', handleListboxClick);
 	document.addEventListener('click', handleDocumentClick);
+
+	if (searchInput) {
+		searchInput.addEventListener('keydown', handleMovementKeys);
+		searchInput.addEventListener('keyup', handleSearchKeyup);
+	}
 
 	window.addEventListener('resize', handleWindowResizeOrScroll, {
 		passive: true,

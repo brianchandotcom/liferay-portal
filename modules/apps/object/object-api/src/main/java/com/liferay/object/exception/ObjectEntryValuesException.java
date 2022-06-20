@@ -23,9 +23,23 @@ public class ObjectEntryValuesException extends PortalException {
 
 	public static class ExceedsIntegerSize extends ObjectEntryValuesException {
 
-		public ExceedsIntegerSize() {
+		public ExceedsIntegerSize(int maxLength, String objectFieldName) {
 			super("Object entry value exceeds integer field allowed size");
+
+			_maxLength = maxLength;
+			_objectFieldName = objectFieldName;
 		}
+
+		public int getMaxLength() {
+			return _maxLength;
+		}
+
+		public String getObjectFieldName() {
+			return _objectFieldName;
+		}
+
+		private final int _maxLength;
+		private final String _objectFieldName;
 
 	}
 

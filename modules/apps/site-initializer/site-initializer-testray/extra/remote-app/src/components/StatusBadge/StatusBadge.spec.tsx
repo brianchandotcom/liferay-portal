@@ -12,6 +12,17 @@
  * details.
  */
 
+import {render} from '@testing-library/react';
+
 import StatusBadge from './StatusBadge';
 
-export default StatusBadge;
+describe('StatusBadge', () => {
+	it('renders StatusBadge with success', () => {
+		const {asFragment, queryByText} = render(
+			<StatusBadge type="blocked">Blocked</StatusBadge>
+		);
+
+		expect(asFragment()).toMatchSnapshot();
+		expect(queryByText('Blocked')).toBeTruthy();
+	});
+});

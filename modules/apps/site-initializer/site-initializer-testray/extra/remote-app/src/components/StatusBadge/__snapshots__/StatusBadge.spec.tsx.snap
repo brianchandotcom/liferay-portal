@@ -1,0 +1,11 @@
+// Vitest Snapshot v1
+
+exports[`StatusBadge > renders StatusBadge with success 1`] = `
+<DocumentFragment>
+  <span
+    class="label text-uppercase text-nowrap label-inverse-secondary"
+  >
+    Blocked
+  </span>
+</DocumentFragment>
+`;

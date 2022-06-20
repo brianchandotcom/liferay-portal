@@ -15,12 +15,15 @@
 import {useModal} from '@clayui/modal';
 import React, {useContext, useState} from 'react';
 
+import {ModalAddFilter} from '../../ModalAddFilter';
 import {BuilderScreen} from '../BuilderScreen/BuilderScreen';
-import {ModalAddFilterColumn} from '../ModalAddFilterColumn/ModalAddFilterColumn';
-import ViewContext from '../context';
+import ViewContext, {TYPES} from '../context';
 
 export function FilterScreen() {
-	const [{objectView}] = useContext(ViewContext);
+	const [
+		{objectFields, objectView, workflowStatusJSONArray},
+		dispatch,
+	] = useContext(ViewContext);
 
 	const {objectViewFilterColumns} = objectView;
 
@@ -35,6 +38,33 @@ export function FilterScreen() {
 			setVisibleModal(false);
 		},
 	});
+
+	const saveFilterColumn = (
+		filterType?: string,
+		objectFieldName?: string,
+		valueList?: IItem[]
+	) => {
+		if (editingFilter) {
+			dispatch({
+				payload: {
+					filterType,
+					objectFieldName,
+					valueList,
+				},
+				type: TYPES.EDIT_OBJECT_VIEW_FILTER_COLUMN,
+			});
+		}
+		else {
+			dispatch({
+				payload: {
+					filterType,
+					objectFieldName,
+					valueList,
+				},
+				type: TYPES.ADD_OBJECT_VIEW_FILTER_COLUMN,
+			});
+		}
+	};
 
 	return (
 		<>
@@ -63,14 +93,27 @@ export function FilterScreen() {
 			/>
 
 			{visibleModal && (
-				<ModalAddFilterColumn
+				<ModalAddFilter
+					currentFilters={objectViewFilterColumns}
 					editingFilter={editingFilter}
 					editingObjectFieldName={editingObjectFieldName}
 					header={Liferay.Language.get('new-filter')}
+					objectFields={objectFields}
 					observer={observer}
 					onClose={onClose}
+					onSave={saveFilterColumn}
+					workflowStatusJSONArray={workflowStatusJSONArray}
 				/>
 			)}
 		</>
 	);
 }
+
+interface IItem extends TLabelValueObject {
+	checked?: boolean;
+}
+
+type TLabelValueObject = {
+	label: string;
+	value: string;
+};

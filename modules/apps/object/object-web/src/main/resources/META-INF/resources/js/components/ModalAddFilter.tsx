@@ -22,21 +22,13 @@ import {fetch} from 'frontend-js-web';
 import React, {
 	FormEvent,
 	useCallback,
-	useContext,
 	useEffect,
 	useMemo,
 	useState,
 } from 'react';
 
-import {HEADERS} from '../../../utils/constants';
-import {defaultLanguageId, locale} from '../../../utils/locale';
-import ViewContext, {TYPES} from '../context';
-import {
-	TLabelValueObject,
-	TName,
-	TObjectField,
-	TWorkflowStatus,
-} from '../types';
+import {HEADERS} from '../utils/constants';
+import {defaultLanguageId, locale} from '../utils/locale';
 
 HEADERS.append('Accept-Language', locale!.symbol);
 
@@ -55,22 +47,17 @@ const PICKLIST_OPERATORS: TLabelValueObject[] = [
 	},
 ];
 
-export function ModalAddFilterColumn({
+export function ModalAddFilter({
+	currentFilters,
 	editingFilter,
 	editingObjectFieldName,
 	header,
+	objectFields,
 	observer,
 	onClose,
+	onSave,
+	workflowStatusJSONArray,
 }: IProps) {
-	const [
-		{
-			objectFields,
-			objectView: {objectViewFilterColumns},
-			workflowStatusJSONArray,
-		},
-		dispatch,
-	] = useContext(ViewContext);
-
 	const [availableFields, setAvailableFields] = useState(objectFields);
 
 	const [items, setItems] = useState<IItem[]>([]);
@@ -96,13 +83,11 @@ export function ModalAddFilterColumn({
 	): IItem[] => {
 		let newItemsValues: IItem[] = [];
 
-		const currentFilterColumn = objectViewFilterColumns.find(
-			(filterColumn) => {
-				if (filterColumn.objectFieldName === editingObjectFieldName) {
-					return filterColumn;
-				}
+		const currentFilterColumn = currentFilters.find((filterColumn) => {
+			if (filterColumn.objectFieldName === editingObjectFieldName) {
+				return filterColumn;
 			}
-		);
+		});
 
 		const definition = currentFilterColumn?.definition;
 		const filterType = currentFilterColumn?.filterType;
@@ -141,13 +126,11 @@ export function ModalAddFilterColumn({
 	const getCheckedPickListItems = (itemValues: TPickListValue[]): IItem[] => {
 		let newItemsValues: IItem[] = [];
 
-		const currentFilterColumn = objectViewFilterColumns.find(
-			(filterColumn) => {
-				if (filterColumn.objectFieldName === editingObjectFieldName) {
-					return filterColumn;
-				}
+		const currentFilterColumn = currentFilters.find((filterColumn) => {
+			if (filterColumn.objectFieldName === editingObjectFieldName) {
+				return filterColumn;
 			}
-		);
+		});
 
 		const definition = currentFilterColumn?.definition;
 		const filterType = currentFilterColumn?.filterType;
@@ -282,30 +265,24 @@ export function ModalAddFilterColumn({
 		workflowStatusJSONArray,
 	]);
 
-	const onSave = (event: FormEvent) => {
+	const handleSaveFilter = (event: FormEvent) => {
 		event.preventDefault();
 
 		const checkedItems = items.filter((item) => item.checked);
 
 		if (editingFilter) {
-			dispatch({
-				payload: {
-					filterType: selectedFilterType?.value,
-					objectFieldName: editingObjectFieldName,
-					valueList: checkedItems,
-				},
-				type: TYPES.EDIT_OBJECT_VIEW_FILTER_COLUMN,
-			});
+			onSave(
+				selectedFilterType?.value,
+				editingObjectFieldName,
+				checkedItems
+			);
 		}
 		else {
-			dispatch({
-				payload: {
-					filterType: selectedFilterType?.value,
-					objectFieldName: selectedFilterBy?.name,
-					valueList: checkedItems,
-				},
-				type: TYPES.ADD_OBJECT_VIEW_FILTER_COLUMN,
-			});
+			onSave(
+				selectedFilterType?.value,
+				selectedFilterBy?.name,
+				checkedItems
+			);
 		}
 
 		onClose();
@@ -375,7 +352,7 @@ export function ModalAddFilterColumn({
 						<ClayButton
 							disabled={!selectedFilterBy && !editingFilter}
 							displayType="primary"
-							onClick={onSave}
+							onClick={handleSaveFilter}
 						>
 							{Liferay.Language.get('save')}
 						</ClayButton>
@@ -387,12 +364,21 @@ export function ModalAddFilterColumn({
 }
 
 interface IProps {
+	currentFilters: TCurrentFilters[];
 	editingFilter: boolean;
 	editingObjectFieldName: string;
 	header: string;
+	objectFields: TObjectField[];
 	observer: any;
 	onClose: () => void;
+	onSave: (
+		filterType?: string,
+		objectFieldName?: string,
+		valueList?: IItem[]
+	) => void;
+	workflowStatusJSONArray: TWorkflowStatus[];
 }
+
 interface IItem extends TLabelValueObject {
 	checked?: boolean;
 }
@@ -404,5 +390,47 @@ type TPickListValue = {
 	key: string;
 	name: string;
 	name_i18n: TName;
+	type: string;
+};
+
+type TCurrentFilters = {
+	definition: {[key: string]: string[]} | null;
+	fieldLabel: string;
+	filterBy: string;
+	filterType: string | null;
+	label: TName;
+	objectFieldBusinessType?: string;
+	objectFieldName: string;
+	value?: string;
+	valueList?: TLabelValueObject[];
+};
+
+type TWorkflowStatus = {
+	label: string;
+	value: string;
+};
+
+type TLabelValueObject = {
+	label: string;
+	value: string;
+};
+
+type TName = {
+	[key: string]: string;
+};
+
+type TObjectField = {
+	businessType: string;
+	checked: boolean;
+	filtered?: boolean;
+	hasFilter?: boolean;
+	id: number;
+	indexed: boolean;
+	indexedAsKeyword: boolean;
+	indexedLanguageId: string;
+	label: TName;
+	listTypeDefinitionId: boolean;
+	name: string;
+	required: boolean;
 	type: string;
 };

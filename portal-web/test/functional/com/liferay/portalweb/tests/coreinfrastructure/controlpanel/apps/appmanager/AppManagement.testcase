@@ -735,6 +735,56 @@ definition {
 			value1 = "Error:Please upload a file with a valid extension (JAR, LPKG, or WAR File).");
 	}
 
+	@description = "This test check search apps in marketplace store and check sign in and sign out."
+	@priority = "3"
+	test SearchMarketplaceStore {
+		task ("Given user login marketplace store assert user login in Purchased page") {
+			Navigator.openStoreURL();
+
+			AppManager.loginMarketplaceStore();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Marketplace",
+				panel = "Control Panel",
+				portlet = "Purchased");
+
+			AssertElementPresent(
+				locator1 = "UserBar#USER_SIGN_OUT",
+				value1 = "Sign Out");
+		}
+
+		task ("When go to marketplace store and search apps and purchase") {
+			Navigator.openStoreURL();
+
+			WaitForPageLoad();
+
+			AppManager.searchApp(searchName = "No Robots");
+		}
+
+		task ("Then assert logout from marketplace store page also logout in Purchase page") {
+			Navigator.openURL();
+
+			Navigator.openStoreURL();
+
+			ScrollBy(value1 = "0, 2000");
+
+			AssertClick(
+				locator1 = "UserBar#USER_SIGN_OUT",
+				value1 = "Sign Out");
+
+			AppManager.viewLogoutMarketplace();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Marketplace",
+				panel = "Control Panel",
+				portlet = "Purchased");
+
+			AppManager.viewLogoutMarketplace();
+		}
+	}
+
 	@priority = "5"
 	test UninstallAppIsSuccessful {
 		property test.name.skip.portal.instance = "AppManagement#UninstallAppIsSuccessful";

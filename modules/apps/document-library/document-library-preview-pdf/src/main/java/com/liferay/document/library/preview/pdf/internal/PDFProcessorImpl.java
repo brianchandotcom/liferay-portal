@@ -24,7 +24,6 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.preview.pdf.internal.util.ProcessConfigUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessException;
@@ -43,12 +42,9 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.log.Log4jLogFactoryImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -67,6 +63,8 @@ import java.util.Vector;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
@@ -708,13 +706,6 @@ public class PDFProcessorImpl
 
 					ProcessCallable<String> processCallable =
 						new LiferayPDFBoxProcessCallable(
-							ServerDetector.getServerId(),
-							PropsUtil.get(PropsKeys.LIFERAY_HOME),
-							HashMapBuilder.putAll(
-								Log4JUtil.getCustomLogSettings()
-							).put(
-								PropsUtil.class.getName(), "WARN"
-							).build(),
 							decryptedFile, thumbnailFile, previewFiles,
 							getThumbnailType(fileVersion),
 							getPreviewType(fileVersion),
@@ -1075,11 +1066,13 @@ public class PDFProcessorImpl
 
 			SystemEnv.setProperties(systemProperties);
 
-			Class<?> clazz = getClass();
+			Logger logger = Logger.getLogger("org.apache.pdfbox");
 
-			Log4JUtil.initLog4J(
-				_serverId, _liferayHome, clazz.getClassLoader(),
-				new Log4jLogFactoryImpl(), _customLogSettings);
+			logger.setLevel(Level.SEVERE);
+
+			logger = Logger.getLogger(PropsUtil.class.getName());
+
+			logger.setLevel(Level.WARNING);
 
 			try (PDDocument pdDocument = PDDocument.load(_inputFile)) {
 				LiferayPDFBoxUtil.generateImagesPB(
@@ -1095,15 +1088,10 @@ public class PDFProcessorImpl
 		}
 
 		private LiferayPDFBoxProcessCallable(
-			String serverId, String liferayHome,
-			Map<String, String> customLogSettings, File inputFile,
-			File thumbnailFile, File[] previewFiles, String extension,
-			String thumbnailExtension, int dpi, int height, int width,
-			boolean generatePreview, boolean generateThumbnail) {
+			File inputFile, File thumbnailFile, File[] previewFiles,
+			String extension, String thumbnailExtension, int dpi, int height,
+			int width, boolean generatePreview, boolean generateThumbnail) {
 
-			_serverId = serverId;
-			_liferayHome = liferayHome;
-			_customLogSettings = customLogSettings;
 			_inputFile = inputFile;
 			_thumbnailFile = thumbnailFile;
 			_previewFiles = previewFiles;
@@ -1118,16 +1106,13 @@ public class PDFProcessorImpl
 
 		private static final long serialVersionUID = 1L;
 
-		private final Map<String, String> _customLogSettings;
 		private final int _dpi;
 		private final String _extension;
 		private final boolean _generatePreview;
 		private final boolean _generateThumbnail;
 		private final int _height;
 		private final File _inputFile;
-		private final String _liferayHome;
 		private final File[] _previewFiles;
-		private final String _serverId;
 		private final String _thumbnailExtension;
 		private final File _thumbnailFile;
 		private final int _width;

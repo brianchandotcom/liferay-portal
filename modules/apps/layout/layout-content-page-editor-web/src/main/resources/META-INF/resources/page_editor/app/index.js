@@ -12,12 +12,13 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import App from './components/App';
 import {initializeConfig} from './config/index';
+import {disposeCache, initializeCache} from './utils/cache';
 
 /**
  * Default application export.
@@ -27,6 +28,14 @@ import {initializeConfig} from './config/index';
  */
 export default function (data) {
 	initializeConfig(data.config);
+
+	initializeCache();
+
+	useEffect(() => {
+		return () => {
+			disposeCache();
+		};
+	}, []);
 
 	return (
 		<DndProvider backend={HTML5Backend}>

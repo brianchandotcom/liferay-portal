@@ -236,8 +236,7 @@ public class LayoutPermissionImpl
 			contains(
 				permissionChecker, layout, ActionKeys.UPDATE_LAYOUT_BASIC) ||
 			contains(
-				permissionChecker, layout, ActionKeys.UPDATE_LAYOUT_LIMITED) ||
-			contains(permissionChecker, layout, ActionKeys.UPDATE)) {
+				permissionChecker, layout, ActionKeys.UPDATE_LAYOUT_LIMITED)) {
 
 			return true;
 		}
@@ -265,10 +264,7 @@ public class LayoutPermissionImpl
 			contains(
 				permissionChecker, layout, ActionKeys.UPDATE_LAYOUT_CONTENT) ||
 			contains(
-				permissionChecker, layout, ActionKeys.UPDATE_LAYOUT_LIMITED) ||
-			contains(permissionChecker, layout, ActionKeys.UPDATE) ||
-			contains(
-				permissionChecker, layout, ActionKeys.UPDATE_LAYOUT_CONTENT)) {
+				permissionChecker, layout, ActionKeys.UPDATE_LAYOUT_LIMITED)) {
 
 			return true;
 		}

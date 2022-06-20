@@ -182,6 +182,26 @@ definition {
 		}
 	}
 
+	@description = "LPS-154649. Assert hotspot can transition back to previous step if next element doesn't exist on the page."
+	@priority = "3"
+	test CanReturnToPreviousStepIfElementDoesNotExist {
+		task ("Given JSON file includes an element that does not exist on the page/sample portlet") {
+			Navigator.gotoNavTab(navTab = "Test Walkable");
+		}
+
+		task ("When popover mode transistions to the step that has no element") {
+			Walkthrough.enablePopoverMode();
+
+			Click(locator1 = "Button#OK");
+		}
+
+		task ("Then hotspot returns to last element") {
+			WalkthroughPopover.viewCoordinatePositionMatchesElementStep(
+				hotspotElementClass = "lfr-walkthrough-hotspot-inner",
+				stepElementId = "teststep1");
+		}
+	}
+
 	@description = "LPS-154648. Assert final step can transition to hotspot mode."
 	@priority = "5"
 	test FinalStepCanTransitionToHotSpotMode {

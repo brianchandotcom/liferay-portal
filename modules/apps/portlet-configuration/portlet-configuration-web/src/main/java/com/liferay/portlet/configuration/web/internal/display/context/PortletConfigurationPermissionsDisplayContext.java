@@ -337,9 +337,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		String[] resourcePrimKeys = getResourcePrimKeys();
-
-		for (String resourcePrimKey : resourcePrimKeys) {
+		for (String resourcePrimKey : getResourcePrimKeys()) {
 			int count =
 				ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
 					themeDisplay.getCompanyId(), getSelResource(),
@@ -564,7 +562,7 @@ public class PortletConfigurationPermissionsDisplayContext {
 
 		_roleTypes = RoleConstants.TYPES_REGULAR_AND_SITE;
 
-		if (_group.isDepot()) {
+		if ((_group != null) && _group.isDepot()) {
 			_roleTypes = _TYPES_DEPOT_AND_REGULAR;
 		}
 
@@ -700,30 +698,55 @@ public class PortletConfigurationPermissionsDisplayContext {
 		).buildPortletURL();
 	}
 
-	public boolean isActionActive(
-		String action, Map<String, List<String>> resourceActionsMap) {
+	public boolean isChecked(
+		String action, List<String> currentIndividualActions,
+		List<String> currentGroupActions,
+		List<String> currentGroupTemplateActions,
+		List<String> currentCompanyActions,
+		Map<String, List<String>> resourceActionsMap) {
 
-		List<String> resourceActions = resourceActionsMap.get(action);
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
+			List<String> resourceActions = resourceActionsMap.get(action);
 
-		if (ListUtil.isNull(resourceActions)) {
-			return false;
+			if (ListUtil.isNull(resourceActions) ||
+				(resourceActions.size() < _resources.size())) {
+
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		if (currentIndividualActions.contains(action) ||
+			currentGroupActions.contains(action) ||
+			currentGroupTemplateActions.contains(action) ||
+			currentCompanyActions.contains(action)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
-	public boolean isActionCommonToAllResources(
-		String action, Map<String, List<String>> resourceActionsMap) {
+	public boolean isIndeterminate(
+		String action, boolean checked,
+		Map<String, List<String>> resourceActionsMap) {
 
-		List<String> resourceActions = resourceActionsMap.get(action);
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
+			List<String> resourceActions = resourceActionsMap.get(action);
 
-		if (ListUtil.isNull(resourceActions) ||
-			(resourceActions.size() < _resources.size())) {
+			if (ListUtil.isNull(resourceActions)) {
+				return false;
+			}
+
+			if ((_resources.size() > 1) && !checked) {
+				return true;
+			}
 
 			return false;
 		}
 
-		return true;
+		return false;
 	}
 
 	public Map<String, List<String>> populateResourcePermissionActionIds(
@@ -740,16 +763,20 @@ public class PortletConfigurationPermissionsDisplayContext {
 				groupId, role, resource, actions, individualActions,
 				groupActions, groupTemplateActions, companyActions);
 
-			List<String> availableResourcePermissionActionIds =
-				ResourcePermissionLocalServiceUtil.
-					getAvailableResourcePermissionActionIds(
-						resource.getCompanyId(), resource.getName(),
-						resource.getScope(), resource.getPrimKey(),
-						role.getRoleId(), actions);
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-87806"))) {
 
-			_populateResourceActionsMap(
-				availableResourcePermissionActionIds, resourceActionsMap,
-				resource.getPrimKey());
+				List<String> availableResourcePermissionActionIds =
+					ResourcePermissionLocalServiceUtil.
+						getAvailableResourcePermissionActionIds(
+							resource.getCompanyId(), resource.getName(),
+							resource.getScope(), resource.getPrimKey(),
+							role.getRoleId(), actions);
+
+				_populateResourceActionsMap(
+					availableResourcePermissionActionIds, resourceActionsMap,
+					resource.getPrimKey());
+			}
 		}
 
 		return resourceActionsMap;
@@ -827,11 +854,8 @@ public class PortletConfigurationPermissionsDisplayContext {
 		String resourcePrimKey) {
 
 		for (String actionId : actionIds) {
-			List<String> resourceActions = resourceActionsMap.get(actionId);
-
-			if (ListUtil.isNull(resourceActions)) {
-				resourceActions = new ArrayList<>();
-			}
+			List<String> resourceActions = resourceActionsMap.computeIfAbsent(
+				actionId, key -> new ArrayList<>());
 
 			if (!resourceActions.contains(resourcePrimKey)) {
 				resourceActions.add(resourcePrimKey);

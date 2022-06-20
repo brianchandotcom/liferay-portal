@@ -97,34 +97,16 @@ String resourceName = portletConfigurationPermissionsDisplayContext.getResourceN
 					List<String> currentGroupTemplateActions = new ArrayList<String>();
 					List<String> currentCompanyActions = new ArrayList<String>();
 
-					Map<String, List<String>> resourceActionsMap = new HashMap<>();
-
-					if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
-						resourceActionsMap = portletConfigurationPermissionsDisplayContext.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resources, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
-					}
-					else {
-						ResourcePermissionUtil.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resource, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
-					}
+					Map<String, List<String>> resourceActionsMap = portletConfigurationPermissionsDisplayContext.populateResourcePermissionActionIds(portletConfigurationPermissionsDisplayContext.getGroupId(), role, resources, portletConfigurationPermissionsDisplayContext.getActions(), currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
 
 					for (String action : portletConfigurationPermissionsDisplayContext.getActions()) {
 						if (action.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
 							continue;
 						}
 
-						boolean isActionActive = portletConfigurationPermissionsDisplayContext.isActionActive(action, resourceActionsMap);
-						boolean checked = false;
-						boolean indeterminate = false;
+						boolean checked = portletConfigurationPermissionsDisplayContext.isChecked(action, currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions, resourceActionsMap);
 
-						if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
-							checked = portletConfigurationPermissionsDisplayContext.isActionCommonToAllResources(action, resourceActionsMap);
-
-							indeterminate = (resources.size() > 1) && !checked && isActionActive;
-						}
-						else {
-							if (currentIndividualActions.contains(action) || currentGroupActions.contains(action) || currentGroupTemplateActions.contains(action) || currentCompanyActions.contains(action)) {
-								checked = true;
-							}
-						}
+						boolean indeterminate = portletConfigurationPermissionsDisplayContext.isIndeterminate(action, checked, resourceActionsMap);
 
 						String preselectedMsg = StringPool.BLANK;
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.util.Properties;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -30,7 +31,7 @@ import javax.portlet.PortletRequest;
  * @author Iván Zaera Avellón
  */
 public class ThemeFaviconCETImpl
-	extends BaseCETImpl<ThemeFaviconCET> implements ThemeFaviconCET {
+	extends BaseCETImpl implements ThemeFaviconCET {
 
 	public ThemeFaviconCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		super(clientExtensionEntry);
@@ -83,8 +84,11 @@ public class ThemeFaviconCETImpl
 	}
 
 	@Override
-	protected Class<ThemeFaviconCET> getCETClass() {
-		return ThemeFaviconCET.class;
+	protected boolean isURLCETPropertyName(String name) {
+		return _urlCETPropertyNames.contains(name);
 	}
+
+	private static final Set<String> _urlCETPropertyNames =
+		getURLCETPropertyNames(ThemeFaviconCET.class);
 
 }

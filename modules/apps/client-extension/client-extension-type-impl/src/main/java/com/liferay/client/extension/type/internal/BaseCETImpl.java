@@ -42,7 +42,7 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class BaseCETImpl<T extends CET> implements CET {
+public abstract class BaseCETImpl implements CET {
 
 	public BaseCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		_clientExtensionEntry = clientExtensionEntry;
@@ -160,38 +160,33 @@ public abstract class BaseCETImpl<T extends CET> implements CET {
 		return getTypeSettings();
 	}
 
+	protected static Set<String> getURLCETPropertyNames(
+		Class<? extends CET> cetClass) {
+
+		Set<String> urlCETPropertyNames = new HashSet<>();
+
+		for (Method method : cetClass.getDeclaredMethods()) {
+			CETProperty cetProperty = method.getAnnotation(CETProperty.class);
+
+			if (cetProperty.url()) {
+				urlCETPropertyNames.add(cetProperty.name());
+			}
+		}
+
+		return urlCETPropertyNames;
+	}
+
 	protected boolean getBoolean(String key) {
 		return GetterUtil.getBoolean(
 			_typeSettingsUnicodeProperties.getProperty(key));
 	}
-
-	protected abstract Class<T> getCETClass();
 
 	protected String getString(String key) {
 		return GetterUtil.getString(
 			_typeSettingsUnicodeProperties.getProperty(key));
 	}
 
-	private boolean _isURLCETPropertyName(String name) {
-		if (_urlCETPropertyNames == null) {
-			Set<String> urlCETPropertyNames = new HashSet<>();
-
-			Class<T> cetClass = getCETClass();
-
-			for (Method method : cetClass.getDeclaredMethods()) {
-				CETProperty cetProperty = method.getAnnotation(
-					CETProperty.class);
-
-				if (cetProperty.url()) {
-					urlCETPropertyNames.add(cetProperty.name());
-				}
-			}
-
-			_urlCETPropertyNames = urlCETPropertyNames;
-		}
-
-		return _urlCETPropertyNames.contains(name);
-	}
+	protected abstract boolean isURLCETPropertyName(String name);
 
 	private String _transform(String baseURL, String value) {
 		if (value.contains(StringPool.NEW_LINE)) {
@@ -225,7 +220,7 @@ public abstract class BaseCETImpl<T extends CET> implements CET {
 			String name = entry.getKey();
 			String value = entry.getValue();
 
-			if (_isURLCETPropertyName(name)) {
+			if (isURLCETPropertyName(name)) {
 				value = _transform(baseURL, value);
 			}
 
@@ -234,8 +229,6 @@ public abstract class BaseCETImpl<T extends CET> implements CET {
 
 		return transformedUnicodeProperties;
 	}
-
-	private static Set<String> _urlCETPropertyNames;
 
 	private String _baseURL = StringPool.BLANK;
 	private ClientExtensionEntry _clientExtensionEntry;

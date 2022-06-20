@@ -23,14 +23,14 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.util.Properties;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-public class GlobalJSCETImpl
-	extends BaseCETImpl<GlobalJSCET> implements GlobalJSCET {
+public class GlobalJSCETImpl extends BaseCETImpl implements GlobalJSCET {
 
 	public GlobalJSCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		super(clientExtensionEntry);
@@ -83,8 +83,11 @@ public class GlobalJSCETImpl
 	}
 
 	@Override
-	protected Class<GlobalJSCET> getCETClass() {
-		return GlobalJSCET.class;
+	protected boolean isURLCETPropertyName(String name) {
+		return _urlCETPropertyNames.contains(name);
 	}
+
+	private static final Set<String> _urlCETPropertyNames =
+		getURLCETPropertyNames(GlobalJSCET.class);
 
 }

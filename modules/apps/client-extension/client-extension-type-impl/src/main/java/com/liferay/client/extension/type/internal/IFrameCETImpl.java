@@ -23,13 +23,14 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.util.Properties;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class IFrameCETImpl extends BaseCETImpl<IFrameCET> implements IFrameCET {
+public class IFrameCETImpl extends BaseCETImpl implements IFrameCET {
 
 	public IFrameCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		super(clientExtensionEntry);
@@ -102,8 +103,11 @@ public class IFrameCETImpl extends BaseCETImpl<IFrameCET> implements IFrameCET {
 	}
 
 	@Override
-	protected Class<IFrameCET> getCETClass() {
-		return IFrameCET.class;
+	protected boolean isURLCETPropertyName(String name) {
+		return _urlCETPropertyNames.contains(name);
 	}
+
+	private static final Set<String> _urlCETPropertyNames =
+		getURLCETPropertyNames(IFrameCET.class);
 
 }

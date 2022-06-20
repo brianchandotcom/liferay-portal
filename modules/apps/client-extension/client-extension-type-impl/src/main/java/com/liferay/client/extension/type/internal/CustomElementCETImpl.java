@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.util.Properties;
+import java.util.Set;
 
 import javax.portlet.PortletRequest;
 
@@ -31,7 +32,7 @@ import javax.portlet.PortletRequest;
  * @author Brian Wing Shun Chan
  */
 public class CustomElementCETImpl
-	extends BaseCETImpl<CustomElementCET> implements CustomElementCET {
+	extends BaseCETImpl implements CustomElementCET {
 
 	public CustomElementCETImpl(ClientExtensionEntry clientExtensionEntry) {
 		super(clientExtensionEntry);
@@ -129,8 +130,11 @@ public class CustomElementCETImpl
 	}
 
 	@Override
-	protected Class<CustomElementCET> getCETClass() {
-		return CustomElementCET.class;
+	protected boolean isURLCETPropertyName(String name) {
+		return _urlCETPropertyNames.contains(name);
 	}
+
+	private static final Set<String> _urlCETPropertyNames =
+		getURLCETPropertyNames(CustomElementCET.class);
 
 }

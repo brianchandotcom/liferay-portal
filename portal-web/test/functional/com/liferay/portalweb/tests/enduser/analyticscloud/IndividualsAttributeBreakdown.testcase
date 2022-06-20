@@ -26,6 +26,10 @@ definition {
 			ACUtils.addSiteAndPage();
 		}
 
+		task ("Create Blog to Add to Page") {
+			ACUtils.createBlogsAndAddToPage();
+		}
+
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",
@@ -64,19 +68,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8657 | Test Summary: Add a new breakdown by an attribute and assert that correct results appear"
 	@priority = "5"
 	test AddNewBreakdownByAttributeAndAssertCorrectResultsAppear {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: Name of breakdown already exists causing test to fail
-		// Possible CSV load time issue as well
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
+		task ("View the blog page") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "ac@liferay.com",
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -115,9 +111,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8997 | Test Summary: Distribution page can be filtered by a specific string"
 	@priority = "5"
 	test BreakdownByAttributeOnDistributionPage {
-		task ("View the site page") {
+		task ("View the blog page") {
 			ACUtils.navigateToSitePageWithUser(
 				emailList = "ac@liferay.com",
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -152,14 +150,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8658 | Test Summary: Delete a new breakdown"
 	@priority = "5"
 	test DeleteNewBreakdown {
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
+		task ("View the blog page") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "ac@liferay.com",
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -206,19 +201,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9000 | Test Summary: As a Business User, I should be able to select different tabs in breakdown"
 	@priority = "3"
 	test SelectDifferentTabsInbreakdown {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: Name of breakdown already exists causing test to fail
-		// Possible CSV load time issue as well
-
-		task ("Sign in as new user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "ac@liferay.com",
-				userLoginFullName = "ac ac");
-		}
-
-		task ("View the site page") {
-			ACUtils.navigateToSitePage(
+		task ("View the blog page") {
+			ACUtils.navigateToSitePageWithUser(
+				emailList = "ac@liferay.com",
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

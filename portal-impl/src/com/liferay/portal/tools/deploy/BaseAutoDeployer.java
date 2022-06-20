@@ -57,13 +57,9 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -534,52 +530,6 @@ public class BaseAutoDeployer implements AutoDeployer {
 	protected String uiTaglibDTD;
 	protected String utilTaglibDTD;
 
-	private void _copyDirectory(File source, File destination) {
-		Path sourcePath = source.toPath();
-
-		Path destinationPath = destination.toPath();
-
-		try {
-			Files.walkFileTree(
-				sourcePath,
-				new SimpleFileVisitor<Path>() {
-
-					@Override
-					public FileVisitResult preVisitDirectory(
-							Path dirPath,
-							BasicFileAttributes basicFileAttributes)
-						throws IOException {
-
-						Files.createDirectories(
-							destinationPath.resolve(
-								sourcePath.relativize(dirPath)));
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult visitFile(
-							Path filePath,
-							BasicFileAttributes basicFileAttributes)
-						throws IOException {
-
-						Path destinationFile = destinationPath.resolve(
-							sourcePath.relativize(filePath));
-
-						Files.copy(
-							filePath, destinationFile,
-							StandardCopyOption.REPLACE_EXISTING);
-
-						return FileVisitResult.CONTINUE;
-					}
-
-				});
-		}
-		catch (IOException ioException) {
-			_log.error(ioException);
-		}
-	}
-
 	private void _copyJars(File srcFile) throws Exception {
 		for (String jar : _jars) {
 			String jarFullName = DeployUtil.getResourcePath(tempDirPaths, jar);
@@ -815,7 +765,7 @@ public class BaseAutoDeployer implements AutoDeployer {
 
 		updateDeployDirectory(srcFile);
 
-		_copyDirectory(srcFile, deployDir);
+		FileUtil.copyDirectory(srcFile, deployDir);
 	}
 
 	private boolean _deployFile(
@@ -1071,12 +1021,14 @@ public class BaseAutoDeployer implements AutoDeployer {
 		).build();
 	}
 
-	private void _mergeDirectory(File mergeDir, File targetDir) {
+	private void _mergeDirectory(File mergeDir, File targetDir)
+		throws Exception {
+
 		if ((mergeDir == null) || !mergeDir.exists()) {
 			return;
 		}
 
-		_copyDirectory(mergeDir, targetDir);
+		FileUtil.copyDirectory(mergeDir, targetDir);
 	}
 
 	private PluginPackage _readPluginPackage(File file) {

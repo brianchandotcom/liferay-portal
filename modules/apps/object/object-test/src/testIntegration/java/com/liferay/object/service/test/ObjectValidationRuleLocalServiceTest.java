@@ -130,8 +130,8 @@ public class ObjectValidationRuleLocalServiceTest {
 					objectValidationRuleScriptException) {
 
 			Assert.assertEquals(
-				"Script is null",
-				objectValidationRuleScriptException.getMessage());
+				"required",
+				objectValidationRuleScriptException.getMessageKey());
 		}
 
 		ObjectValidationRule objectValidationRule =

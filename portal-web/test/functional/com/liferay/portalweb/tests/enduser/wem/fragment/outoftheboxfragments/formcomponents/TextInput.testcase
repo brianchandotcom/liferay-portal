@@ -266,8 +266,6 @@ definition {
 				showHelpText = "true",
 				showLabel = "true",
 				type = "text-input");
-
-			LanguagePortlet.tearDownLanguagePG();
 		}
 	}
 

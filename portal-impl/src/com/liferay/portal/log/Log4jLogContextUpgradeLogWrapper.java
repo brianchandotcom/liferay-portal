@@ -17,6 +17,7 @@ package com.liferay.portal.log;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogWrapper;
+import com.liferay.portal.util.PropsValues;
 
 import org.apache.logging.log4j.ThreadContext;
 
@@ -200,8 +201,12 @@ public class Log4jLogContextUpgradeLogWrapper extends LogWrapper {
 
 	private void _populateThreadContext() {
 		if (StartupHelperUtil.isUpgrading()) {
-			ThreadContext.put("UpgradeLog", "UpgradeLog");
+			ThreadContext.put(
+				_UPGRADE_LOG_CONTEXT_NAME, _UPGRADE_LOG_CONTEXT_NAME);
 		}
 	}
+
+	private static final String _UPGRADE_LOG_CONTEXT_NAME =
+		PropsValues.UPGRADE_LOG_CONTEXT_NAME;
 
 }

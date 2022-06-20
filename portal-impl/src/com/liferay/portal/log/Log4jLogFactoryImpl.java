@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.tools.DBUpgrader;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.verify.VerifyProperties;
 
 import org.apache.logging.log4j.LogManager;
@@ -40,7 +41,7 @@ public class Log4jLogFactoryImpl implements LogFactory {
 		Log log = new Log4jLogContextLogWrapper(
 			new Log4jLogImpl(LogManager.getLogger(name)));
 
-		if (_isUpgradeClass(name)) {
+		if (_UPGRADE_LOG_CONTEXT_ENABLED && _isUpgradeClass(name)) {
 			log = new Log4jLogContextUpgradeLogWrapper(log);
 		}
 
@@ -67,7 +68,6 @@ public class Log4jLogFactoryImpl implements LogFactory {
 			}
 		}
 		catch (ClassNotFoundException classNotFoundException) {
-			System.out.println(classNotFoundException);
 		}
 
 		return false;
@@ -81,5 +81,8 @@ public class Log4jLogFactoryImpl implements LogFactory {
 	private static final Class<?>[] _STATIC_UPGRADE_CLASSES = {
 		DBUpgrader.class, VerifyProperties.class
 	};
+
+	private static final boolean _UPGRADE_LOG_CONTEXT_ENABLED =
+		PropsValues.UPGRADE_LOG_CONTEXT_ENABLED;
 
 }

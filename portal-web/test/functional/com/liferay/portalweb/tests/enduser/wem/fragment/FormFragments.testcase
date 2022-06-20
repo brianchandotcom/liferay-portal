@@ -1,0 +1,92 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-152938=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Enable Inputs Fragment collection in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Disable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-151157. The fragment admin could see the supported field types in read-only mode."
+	@priority = "4"
+	test ViewSupportedFieldTypesInReadOnlyMode {
+		property test.name.skip.portal.instance = "FormFragments#ViewSupportedFieldTypesInReadOnlyMode";
+
+		task ("Given a fragment admin has a read-only fragment with field type") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Form Components");
+		}
+
+		task ("When the fragment admin accesses to fragment in read-only mode") {
+			FragmentsAdminNavigator.gotoEntry(entry = "Checkbox");
+		}
+
+		task ("Then the fragment admin could see the field type of Checkbox") {
+			FragmentsEditor.gotoConfigurationTab();
+
+			AssertVisible(locator1 = "FragmentEditor#READ_ONLY_VIEW");
+
+			AssertTextEquals(
+				locator1 = "FragmentEditor#SUPPORTED_FIELD_TYPE",
+				value1 = "Boolean");
+		}
+
+		task ("Given a fragment admin has a read-only fragment without field type") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "form-fragments.zip");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Form Fragments");
+		}
+
+		task ("When the fragment admin accesses to fragment in read-only mode") {
+			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Example");
+		}
+
+		task ("Then the fragment admin sees No field type is defined for this fragment") {
+			FragmentsEditor.gotoConfigurationTab();
+
+			Alert.viewInfoMessageSpecific(infoMessage = "No field type is defined for this fragment.");
+		}
+	}
+
+}

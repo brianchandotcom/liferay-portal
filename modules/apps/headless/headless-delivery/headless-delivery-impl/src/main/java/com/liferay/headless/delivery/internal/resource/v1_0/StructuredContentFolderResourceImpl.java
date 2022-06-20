@@ -78,6 +78,19 @@ public class StructuredContentFolderResourceImpl
 	extends BaseStructuredContentFolderResourceImpl {
 
 	@Override
+	public void
+			deleteAssetLibraryStructuredContentFolderByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
+		throws Exception {
+
+		JournalFolder journalFolder =
+			_journalFolderService.getFolderByExternalReferenceCode(
+				assetLibraryId, externalReferenceCode);
+
+		_journalFolderService.deleteFolder(journalFolder.getFolderId());
+	}
+
+	@Override
 	public void deleteSiteStructuredContentFolderByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception {
@@ -94,6 +107,17 @@ public class StructuredContentFolderResourceImpl
 		throws Exception {
 
 		_journalFolderService.deleteFolder(structuredContentFolderId);
+	}
+
+	@Override
+	public StructuredContentFolder
+			getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
+		throws Exception {
+
+		return _toStructuredContentFolder(
+			_journalFolderService.getFolderByExternalReferenceCode(
+				assetLibraryId, externalReferenceCode));
 	}
 
 	@Override
@@ -124,11 +148,9 @@ public class StructuredContentFolderResourceImpl
 				Long siteId, String externalReferenceCode)
 		throws Exception {
 
-		JournalFolder journalFolder =
+		return _toStructuredContentFolder(
 			_journalFolderService.getFolderByExternalReferenceCode(
-				siteId, externalReferenceCode);
-
-		return _toStructuredContentFolder(journalFolder);
+				siteId, externalReferenceCode));
 	}
 
 	@Override
@@ -241,6 +263,30 @@ public class StructuredContentFolderResourceImpl
 		return _addStructuredContentFolder(
 			structuredContentFolder.getExternalReferenceCode(),
 			journalFolder.getGroupId(), parentStructuredContentFolderId,
+			structuredContentFolder);
+	}
+
+	@Override
+	public StructuredContentFolder
+			putAssetLibraryStructuredContentFolderByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode,
+				StructuredContentFolder structuredContentFolder)
+		throws Exception {
+
+		JournalFolder journalFolder =
+			_journalFolderLocalService.
+				fetchJournalFolderByExternalReferenceCode(
+					assetLibraryId, externalReferenceCode);
+
+		if (journalFolder != null) {
+			return _updateStructuredContentFolder(
+				assetLibraryId, journalFolder.getFolderId(),
+				journalFolder.getParentFolderId(), structuredContentFolder);
+		}
+
+		return _addStructuredContentFolder(
+			externalReferenceCode, assetLibraryId,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			structuredContentFolder);
 	}
 

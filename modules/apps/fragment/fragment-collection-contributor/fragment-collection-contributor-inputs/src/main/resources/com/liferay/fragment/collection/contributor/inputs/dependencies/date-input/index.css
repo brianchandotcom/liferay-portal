@@ -1,0 +1,15 @@
+.date-input .lexicon-icon-calendar {
+	color: #272833;
+	pointer-events: none;
+	position: absolute;
+	right: 16px;
+	top: 16px;
+}
+
+.date-input input:disabled + .lexicon-icon-calendar {
+	color: #a7a9bc;
+}
+
+.date-input input::-webkit-calendar-picker-indicator {
+	opacity: 0;
+}

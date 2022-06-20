@@ -63,12 +63,12 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	public PortalCache<K, V> getPortalCache(String portalCacheName)
 		throws PortalCacheException {
 
-		return getPortalCache(portalCacheName, false, false);
+		return getPortalCache(portalCacheName, false);
 	}
 
 	@Override
 	public PortalCache<K, V> getPortalCache(
-			String portalCacheName, boolean blocking, boolean mvcc)
+			String portalCacheName, boolean mvcc)
 		throws PortalCacheException {
 
 		PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);

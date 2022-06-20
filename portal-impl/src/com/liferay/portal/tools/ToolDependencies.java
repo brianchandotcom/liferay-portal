@@ -209,8 +209,7 @@ public class ToolDependencies {
 
 		@Override
 		public PortalCache<? extends Serializable, ? extends Serializable>
-			getPortalCache(
-				String portalCacheName, boolean blocking, boolean mvcc) {
+			getPortalCache(String portalCacheName, boolean mvcc) {
 
 			return getPortalCache(portalCacheName);
 		}
@@ -380,12 +379,12 @@ public class ToolDependencies {
 		public PortalCache<K, V> getPortalCache(String portalCacheName)
 			throws PortalCacheException {
 
-			return getPortalCache(portalCacheName, false, false);
+			return getPortalCache(portalCacheName, false);
 		}
 
 		@Override
 		public PortalCache<K, V> getPortalCache(
-				String portalCacheName, boolean blocking, boolean mvcc)
+				String portalCacheName, boolean mvcc)
 			throws PortalCacheException {
 
 			PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);

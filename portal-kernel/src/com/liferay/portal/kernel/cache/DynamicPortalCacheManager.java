@@ -70,18 +70,18 @@ public class DynamicPortalCacheManager<K extends Serializable, V>
 	public PortalCache<K, V> getPortalCache(String portalCacheName)
 		throws PortalCacheException {
 
-		return getPortalCache(portalCacheName, false, false);
+		return getPortalCache(portalCacheName, false);
 	}
 
 	@Override
 	public PortalCache<K, V> getPortalCache(
-			String portalCacheName, boolean blocking, boolean mvcc)
+			String portalCacheName, boolean mvcc)
 		throws PortalCacheException {
 
 		return _dynamicPortalCaches.computeIfAbsent(
 			portalCacheName,
 			key -> new DynamicPortalCache<>(
-				this, _portalCacheManager.getPortalCache(key, false, mvcc), key,
+				this, _portalCacheManager.getPortalCache(key, mvcc), key,
 				mvcc));
 	}
 
@@ -201,7 +201,7 @@ public class DynamicPortalCacheManager<K extends Serializable, V>
 
 			dynamicPortalCache.setPortalCache(
 				_portalCacheManager.getPortalCache(
-					dynamicPortalCache.getPortalCacheName(), false,
+					dynamicPortalCache.getPortalCacheName(),
 					dynamicPortalCache.isMVCC()));
 		}
 	}

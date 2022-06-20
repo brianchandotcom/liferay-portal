@@ -50,8 +50,8 @@ public class OpenIdConnectUserInfoProcessorImpl
 
 	@Override
 	public long processUserInfo(
-		UserInfo userInfo, long companyId, String mainPath,
-		String portalURL)
+			UserInfo userInfo, long companyId, String mainPath,
+			String portalURL)
 		throws PortalException {
 
 		return processUserInfo(userInfo, companyId, mainPath, portalURL, null);
@@ -59,8 +59,8 @@ public class OpenIdConnectUserInfoProcessorImpl
 
 	@Override
 	public long processUserInfo(
-		UserInfo userInfo, long companyId, String mainPath,
-		String portalURL, String issuer)
+			UserInfo userInfo, long companyId, String mainPath,
+			String portalURL, String issuer)
 		throws PortalException {
 
 		String emailAddress = userInfo.getEmailAddress();
@@ -108,7 +108,7 @@ public class OpenIdConnectUserInfoProcessorImpl
 		String jobTitle = StringPool.BLANK;
 		long[] groupIds = null;
 		long[] organizationIds = null;
-		long[] roleIds = null;
+		long[] roleIds = _getRoleIds(companyId, issuer);
 		long[] userGroupIds = null;
 		boolean sendEmail = false;
 
@@ -116,36 +116,6 @@ public class OpenIdConnectUserInfoProcessorImpl
 
 		serviceContext.setPathMain(mainPath);
 		serviceContext.setPortalURL(portalURL);
-
-		if (Validator.isNotNull(issuer)) {
-			String issuerDefined = _props.get(
-				"open.id.connect.user.info.processor.impl.issuer.defined");
-
-			if (issuer.equals(issuerDefined)) {
-				String roleName = _props.get(
-					"open.id.connect.user.info.processor.impl.regular.role");
-
-				if (Validator.isNotNull(roleName)) {
-					Role role = _roleLocalService.fetchRole(
-						company.getCompanyId(), roleName);
-
-					if (role != null) {
-						int roleType = role.getType();
-
-						if (roleType == RoleConstants.TYPE_REGULAR) {
-							roleIds = new long[] {role.getRoleId()};
-						}
-						else {
-							if (_log.isInfoEnabled()) {
-								_log.info(
-									"Role name is not a Regular role: " +
-									roleName);
-							}
-						}
-					}
-				}
-			}
-		}
 
 		user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
@@ -174,6 +144,42 @@ public class OpenIdConnectUserInfoProcessorImpl
 			throw new UserEmailAddressException.MustNotUseCompanyMx(
 				emailAddress);
 		}
+	}
+
+	private long[] _getRoleIds(long companyId, String issuer) {
+		if (Validator.isNull(issuer)) {
+			return null;
+		}
+
+		String issuerDefined = _props.get(
+			"open.id.connect.user.info.processor.impl.issuer.defined");
+
+		if (!issuer.equals(issuerDefined)) {
+			return null;
+		}
+
+		String roleName = _props.get(
+			"open.id.connect.user.info.processor.impl.regular.role");
+
+		if (Validator.isNull(roleName)) {
+			return null;
+		}
+
+		Role role = _roleLocalService.fetchRole(companyId, roleName);
+
+		if (role == null) {
+			return null;
+		}
+
+		if (role.getType() == RoleConstants.TYPE_REGULAR) {
+			return new long[] {role.getRoleId()};
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Role " + roleName + " is not a regular role");
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

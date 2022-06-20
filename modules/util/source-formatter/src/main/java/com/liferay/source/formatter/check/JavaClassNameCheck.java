@@ -16,6 +16,7 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
@@ -97,6 +98,16 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 
 		outerLoop:
 		for (String implementedClassName : enforceImplementedClassNames) {
+			String prefix = StringPool.BLANK;
+
+			String[] array = StringUtil.split(
+				implementedClassName, CharPool.COLON);
+
+			if (array.length == 2) {
+				implementedClassName = array[0];
+				prefix = array[1];
+			}
+
 			if (!implementedClassNames.contains(implementedClassName)) {
 				continue;
 			}
@@ -109,7 +120,7 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 				}
 			}
 
-			if (!className.endsWith(implementedClassName) &&
+			if (!className.endsWith(prefix + implementedClassName) &&
 				((implementedClassNames.size() == 1) ||
 				 implementedClassName.equals("ScreenNavigationCategory"))) {
 
@@ -117,7 +128,8 @@ public class JavaClassNameCheck extends BaseJavaTermCheck {
 					fileName,
 					StringBundler.concat(
 						"Name of class implementing '", implementedClassName,
-						"' should end with '", implementedClassName, "'"));
+						"' should end with '", prefix + implementedClassName,
+						"'"));
 			}
 		}
 

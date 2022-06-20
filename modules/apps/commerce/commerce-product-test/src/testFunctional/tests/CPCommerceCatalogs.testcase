@@ -260,6 +260,37 @@ definition {
 			locator1 = "Permissions#INLINE_PERMISSIONS_VIEW_CHECKBOX");
 	}
 
+	@description = "Verify that Master Catalog is created by default and cannot be deleted."
+	@priority = "3"
+	test MasterCatalogIsCreatedByDefaultAndCannotBeDeleted {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("When the admin goes to the catalogs page") {
+			CommerceCatalog.openCatalogsAdmin();
+		}
+
+		task ("Then Master catalog is present") {
+			AssertElementPresent(
+				key_entryName = "Master",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		task ("When the admin tries to delete the Master catalog") {
+			ClickNoError(
+				key_value = "Master",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			CommerceEntry.clickNoError(menuItem = "Delete");
+		}
+
+		task ("Then the Master catalog cannot be deleted") {
+			AssertElementPresent(
+				key_entryName = "Master",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6272. RemoveACatalog"
 	@priority = "3"
 	test RemoveACatalog {

@@ -149,8 +149,6 @@ definition {
 			osgiConfigFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config",
 			osgiConfigs = "articleCommentsEnabled=B&quot;false&quot;");
 
-		Pause(locator1 = "10000");
-
 		Navigator.gotoPage(pageName = "Web Content Page Test");
 
 		Comments.viewNoComments(entryComment = "WC WebContent Content Comment");

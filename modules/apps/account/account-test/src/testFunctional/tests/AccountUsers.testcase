@@ -479,8 +479,6 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			Pause(locator1 = "3000");
-
 			SelectFrame(locator1 = "IFrame#SELECT_ACCOUNT");
 		}
 

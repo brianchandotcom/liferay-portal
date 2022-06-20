@@ -775,8 +775,6 @@ definition {
 			panel = "Control Panel",
 			portlet = "License Manager");
 
-		Pause(locator1 = "3000");
-
 		LicenseManager.viewDefaultCP(tableTexts = "Server Info,Host Name,IP Addresses,Licenses Registered,Owner,Start Date");
 
 		AssertElementNotPresent(locator1 = "Portlet#HEADER_DUPLICATE");

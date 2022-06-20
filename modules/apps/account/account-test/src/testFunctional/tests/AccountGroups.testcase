@@ -343,8 +343,6 @@ definition {
 			task ("And assign the inactive account to account group") {
 				LexiconEntry.gotoAdd();
 
-				Pause(locator1 = "3000");
-
 				SelectFrame(
 					key_title = "Assign Accounts to AG Filter by Status",
 					locator1 = "IFrame#MODAL_ANY");

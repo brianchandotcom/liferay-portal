@@ -1846,11 +1846,7 @@ definition {
 
 		AssertVisible(locator1 = "Button#PLUS");
 
-		Pause(locator1 = "3000");
-
 		LexiconEntry.gotoAdd();
-
-		Pause(locator1 = "3000");
 
 		WebContent.viewWCViewableByPermissions();
 	}

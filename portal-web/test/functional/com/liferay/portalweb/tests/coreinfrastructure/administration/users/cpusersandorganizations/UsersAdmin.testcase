@@ -1811,8 +1811,6 @@ definition {
 			User.logoutPG();
 
 			User.forgotPasswordSendResetLink(userEmailAddress = "userea@liferay.com");
-
-			Pause(locator1 = "30000");
 		}
 
 		task ("And open link to reset password in email") {

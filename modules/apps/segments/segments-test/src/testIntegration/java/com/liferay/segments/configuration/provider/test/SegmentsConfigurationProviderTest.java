@@ -58,13 +58,27 @@ public class SegmentsConfigurationProviderTest {
 					).build())) {
 
 			Assert.assertTrue(
+				_segmentsConfigurationProvider.isRoleSegmentationEnabled());
+		}
+	}
+
+	@Test
+	public void testIsRoleSegmentationEnabledWithCompanyId() throws Exception {
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"roleSegmentationEnabled", true
+					).build())) {
+
+			Assert.assertTrue(
 				_segmentsConfigurationProvider.isRoleSegmentationEnabled(
 					TestPropsValues.getCompanyId()));
 		}
 	}
 
 	@Test
-	public void testIsRoleSegmentationEnabledWithCompanyConfigurationDisabled()
+	public void testIsRoleSegmentationEnabledWithCompanyIdAndCompanyConfigurationDisabled()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -107,7 +121,7 @@ public class SegmentsConfigurationProviderTest {
 	}
 
 	@Test
-	public void testIsRoleSegmentationEnabledWithCompanyConfigurationEnabled()
+	public void testIsRoleSegmentationEnabledWithCompanyIdAndCompanyConfigurationEnabled()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -135,7 +149,7 @@ public class SegmentsConfigurationProviderTest {
 	}
 
 	@Test
-	public void testIsRoleSegmentationEnabledWithRoleSegmentationDisabled()
+	public void testIsRoleSegmentationEnabledWithCompanyIdAndRoleSegmentationDisabled()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -152,7 +166,37 @@ public class SegmentsConfigurationProviderTest {
 	}
 
 	@Test
+	public void testIsRoleSegmentationEnabledWithConfigurationDisabled()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"roleSegmentationEnabled", false
+					).build())) {
+
+			Assert.assertFalse(
+				_segmentsConfigurationProvider.isRoleSegmentationEnabled());
+		}
+	}
+
+	@Test
 	public void testIsSegmentationEnabled() throws Exception {
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"segmentationEnabled", true
+					).build())) {
+
+			Assert.assertTrue(
+				_segmentsConfigurationProvider.isSegmentationEnabled());
+		}
+	}
+
+	@Test
+	public void testIsSegmentationEnabledWithCompanyId() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					SegmentsConfiguration.class.getName(),
@@ -167,7 +211,7 @@ public class SegmentsConfigurationProviderTest {
 	}
 
 	@Test
-	public void testIsSegmentationEnabledWithCompanyConfigurationDisabled()
+	public void testIsSegmentationEnabledWithCompanyIdAndCompanyConfigurationDisabled()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -210,7 +254,7 @@ public class SegmentsConfigurationProviderTest {
 	}
 
 	@Test
-	public void testIsSegmentationEnabledWithCompanyConfigurationEnabled()
+	public void testIsSegmentationEnabledWithCompanyIdAndCompanyConfigurationEnabled()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -238,7 +282,7 @@ public class SegmentsConfigurationProviderTest {
 	}
 
 	@Test
-	public void testIsSegmentationEnabledWithSegmentationDisabled()
+	public void testIsSegmentationEnabledWithCompanyIdAndSegmentationDisabled()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -251,6 +295,22 @@ public class SegmentsConfigurationProviderTest {
 			Assert.assertFalse(
 				_segmentsConfigurationProvider.isSegmentationEnabled(
 					TestPropsValues.getCompanyId()));
+		}
+	}
+
+	@Test
+	public void testIsSegmentationEnabledWithConfigurationDisabled()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"segmentationEnabled", false
+					).build())) {
+
+			Assert.assertFalse(
+				_segmentsConfigurationProvider.isSegmentationEnabled());
 		}
 	}
 

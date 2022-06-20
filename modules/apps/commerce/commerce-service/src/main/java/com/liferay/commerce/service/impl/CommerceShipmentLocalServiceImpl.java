@@ -58,7 +58,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -149,14 +148,17 @@ public class CommerceShipmentLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+
+		_validateExternalReferenceCode(
+			0, serviceContext.getCompanyId(), externalReferenceCode);
+
 		long commerceShipmentId = counterLocalService.increment();
 
 		CommerceShipment commerceShipment = commerceShipmentPersistence.create(
 			commerceShipmentId);
-
-		if (Validator.isBlank(externalReferenceCode)) {
-			externalReferenceCode = null;
-		}
 
 		commerceShipment.setExternalReferenceCode(externalReferenceCode);
 		commerceShipment.setGroupId(groupId);
@@ -534,7 +536,7 @@ public class CommerceShipmentLocalServiceImpl
 
 		int oldStatus = commerceShipment.getStatus();
 
-		validate(status, oldStatus);
+		_validateStatus(status, oldStatus);
 
 		Date shippingDate = PortalUtil.getDate(
 			shippingDateMonth, shippingDateDay, shippingDateYear,
@@ -592,20 +594,16 @@ public class CommerceShipmentLocalServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
-		if (StringUtil.equals(
+		if (Objects.equals(
 				commerceShipment.getExternalReferenceCode(),
 				externalReferenceCode)) {
 
 			return commerceShipment;
 		}
 
-		if (_isDuplicateERC(
-				commerceShipment.getCompanyId(), externalReferenceCode)) {
-
-			throw new DuplicateCommerceShipmentException(
-				"There is another commerce shipment with external reference " +
-					"code " + externalReferenceCode);
-		}
+		_validateExternalReferenceCode(
+			commerceShipmentId, commerceShipment.getCompanyId(),
+			externalReferenceCode);
 
 		commerceShipment.setExternalReferenceCode(externalReferenceCode);
 
@@ -810,29 +808,41 @@ public class CommerceShipmentLocalServiceImpl
 			serviceContext);
 	}
 
-	protected void validate(int status, int oldStatus) throws PortalException {
-		if (status < oldStatus) {
-			throw new CommerceShipmentStatusException();
-		}
-	}
-
 	protected int[] messageShipmentStatuses = {
 		CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED,
 		CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED
 	};
 
-	private boolean _isDuplicateERC(
-		long companyId, String externalReferenceCode) {
+	private void _validateExternalReferenceCode(
+			long commerceShipmentId, long companyId,
+			String externalReferenceCode)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
 
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.fetchByC_ERC(
 				companyId, externalReferenceCode);
 
-		if (commerceShipment != null) {
-			return true;
+		if (commerceShipment == null) {
+			return;
 		}
 
-		return false;
+		if (commerceShipment.getCommerceShipmentId() != commerceShipmentId) {
+			throw new DuplicateCommerceShipmentException(
+				"There is another commerce shipment with external reference " +
+					"code " + externalReferenceCode);
+		}
+	}
+
+	private void _validateStatus(int status, int oldStatus)
+		throws PortalException {
+
+		if (status < oldStatus) {
+			throw new CommerceShipmentStatusException();
+		}
 	}
 
 	@ServiceReference(type = DTOConverterRegistry.class)

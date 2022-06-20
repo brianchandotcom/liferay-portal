@@ -46,6 +46,11 @@ public class SegmentsConfigurationProviderImpl
 	implements SegmentsConfigurationProvider {
 
 	@Override
+	public boolean isRoleSegmentationEnabled() throws ConfigurationException {
+		return _segmentsConfiguration.roleSegmentationEnabled();
+	}
+
+	@Override
 	public boolean isRoleSegmentationEnabled(long companyId)
 		throws ConfigurationException {
 
@@ -66,6 +71,11 @@ public class SegmentsConfigurationProviderImpl
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean isSegmentationEnabled() throws ConfigurationException {
+		return _segmentsConfiguration.segmentationEnabled();
 	}
 
 	@Override

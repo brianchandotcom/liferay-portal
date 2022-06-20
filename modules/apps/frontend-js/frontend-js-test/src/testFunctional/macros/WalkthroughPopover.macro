@@ -4,7 +4,7 @@ definition {
 		WaitForSPARefresh();
 
 		var javascript = '''
-		let elem = document.querySelector('*.${elementClass}');
+		let elem = document.querySelectorAll('*.${elementClass}')[${childIndex}];
 
 		let elementCoordinates = elem.getBoundingClientRect();
 
@@ -24,7 +24,7 @@ definition {
 		WaitForSPARefresh();
 
 		var javascript = '''
-		let elem = document.querySelector('*.${elementClass}');
+		let elem = document.querySelectorAll('*.${elementClass}')[${childIndex}];
 
 		let elementCoordinates = elem.getBoundingClientRect();
 
@@ -79,8 +79,18 @@ definition {
 	macro viewCoordinatePositionMatchesElementStep {
 		var step_x = WalkthroughPopover.getElementRectanglePositionX(elementId = "${stepElementId}");
 		var step_y = WalkthroughPopover.getElementRectanglePositionY(elementId = "${stepElementId}");
-		var hotspot_x = WalkthroughPopover.getElementCirclePositionX(elementClass = "${hotspotElementClass}");
-		var hotspot_y = WalkthroughPopover.getElementCirclePositionY(elementClass = "${hotspotElementClass}");
+		var hotspotChildIndex = "0";
+
+		if (contains("${stepElementId}", "teststep")) {
+			var hotspotChildIndex = "1";
+		}
+
+		var hotspot_x = WalkthroughPopover.getElementCirclePositionX(
+			childIndex = "${hotspotChildIndex}",
+			elementClass = "${hotspotElementClass}");
+		var hotspot_y = WalkthroughPopover.getElementCirclePositionY(
+			childIndex = "${hotspotChildIndex}",
+			elementClass = "${hotspotElementClass}");
 
 		echo("position step (x,y): ${step_x},${step_y}");
 

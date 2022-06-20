@@ -22,11 +22,16 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogContext;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.log.LogWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.log.Log4jLogContextUpgradeLogWrapper;
+import com.liferay.portal.log.Log4jLogFactoryImpl;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -38,6 +43,7 @@ import java.nio.file.StandardOpenOption;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,6 +63,8 @@ import org.apache.logging.log4j.core.util.CloseShieldOutputStream;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -70,6 +78,11 @@ import org.osgi.framework.ServiceRegistration;
  */
 @RunWith(Arquillian.class)
 public class PortalLog4jTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -250,22 +263,48 @@ public class PortalLog4jTest {
 	}
 
 	@Test
-	public void testLogOutputWithLogContextUpgradeClassWhenNotUpgrading()
+	public void testLogOutputWithLogContextUpgradeEnabledClassWhenNotUpgrading()
 		throws Exception {
 
 		String logContextMessage =
 			StringPool.OPEN_CURLY_BRACE + StringPool.CLOSE_CURLY_BRACE;
 
-		_testOutputForUpgrades(false, logContextMessage);
+		_testOutputForUpgrades(logContextMessage, true, false);
 	}
 
 	@Test
-	public void testLogOutputWithLogContextUpgradeClassWhenUpgrading()
+	public void testLogOutputWithLogContextUpgradeEnabledClassWhenUpgrading()
 		throws Exception {
 
-		String logContextMessage = "{UpgradeLog=UpgradeLog}";
+		String contextValue = ReflectionTestUtil.getFieldValue(
+			Log4jLogContextUpgradeLogWrapper.class,
+			"_UPGRADE_LOG_CONTEXT_NAME");
 
-		_testOutputForUpgrades(true, logContextMessage);
+		String logContextMessage = StringBundler.concat(
+			StringPool.OPEN_CURLY_BRACE, contextValue, StringPool.EQUAL,
+			contextValue, StringPool.CLOSE_CURLY_BRACE);
+
+		_testOutputForUpgrades(logContextMessage, true, true);
+	}
+
+	@Test
+	public void testLogOutputWithLogContextUpgradeNotEnabledClassWhenNotUpgrading()
+		throws Exception {
+
+		String logContextMessage =
+			StringPool.OPEN_CURLY_BRACE + StringPool.CLOSE_CURLY_BRACE;
+
+		_testOutputForUpgrades(logContextMessage, false, false);
+	}
+
+	@Test
+	public void testLogOutputWithLogContextUpgradeNotEnabledClassWhenUpgrading()
+		throws Exception {
+
+		String logContextMessage =
+			StringPool.OPEN_CURLY_BRACE + StringPool.CLOSE_CURLY_BRACE;
+
+		_testOutputForUpgrades(logContextMessage, false, true);
 	}
 
 	protected void outputLog(
@@ -675,46 +714,65 @@ public class PortalLog4jTest {
 	}
 
 	private void _testOutputForUpgrades(
-			boolean upgrading, String logContextMessage)
+			String logContextMessage, boolean upgradeLogEnabled,
+			boolean upgrading)
 		throws Exception {
 
-		boolean currentIsUpgrading = StartupHelperUtil.isUpgrading();
+		boolean currentUpgradeLogEnabled =
+			ReflectionTestUtil.getAndSetFieldValue(
+				Log4jLogFactoryImpl.class, "_UPGRADE_LOG_CONTEXT_ENABLED",
+				upgradeLogEnabled);
+
+		boolean currentUpgrading = StartupHelperUtil.isUpgrading();
 
 		StartupHelperUtil.setUpgrading(upgrading);
 
-		PatternLayout.Builder builder = PatternLayout.newBuilder();
+		ConcurrentMap<String, LogWrapper> logWrappers =
+			ReflectionTestUtil.getFieldValue(
+				LogFactoryUtil.class, "_logWrappers");
 
-		builder.withPattern("%level - %m%n %X");
+		logWrappers.remove(TestUpgradeProcess.class.getName());
 
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+		try {
+			PatternLayout.Builder builder = PatternLayout.newBuilder();
 
-		Appender logContextWriterAppender = WriterAppender.createAppender(
-			builder.build(), null, unsyncStringWriter,
-			"logUpgradeContextWriterAppender", false, false);
+			builder.withPattern("%level - %m%n %X");
 
-		logContextWriterAppender.start();
+			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		Logger logger = (Logger)LogManager.getLogger(
-			TestUpgradeProcess.class.getName());
+			Appender logContextWriterAppender = WriterAppender.createAppender(
+				builder.build(), null, unsyncStringWriter,
+				"logUpgradeContextWriterAppender", false, false);
 
-		logger.addAppender(logContextWriterAppender);
+			logContextWriterAppender.start();
 
-		_testLogOutputUpgradeProcess(
-			"DEBUG", unsyncStringWriter, logContextMessage);
-		_testLogOutputUpgradeProcess(
-			"ERROR", unsyncStringWriter, logContextMessage);
-		_testLogOutputUpgradeProcess(
-			"FATAL", unsyncStringWriter, logContextMessage);
-		_testLogOutputUpgradeProcess(
-			"INFO", unsyncStringWriter, logContextMessage);
-		_testLogOutputUpgradeProcess(
-			"TRACE", unsyncStringWriter, logContextMessage);
-		_testLogOutputUpgradeProcess(
-			"WARN", unsyncStringWriter, logContextMessage);
+			Logger logger = (Logger)LogManager.getLogger(
+				TestUpgradeProcess.class.getName());
 
-		logger.removeAppender(logContextWriterAppender);
+			logger.addAppender(logContextWriterAppender);
 
-		StartupHelperUtil.setUpgrading(currentIsUpgrading);
+			_testLogOutputUpgradeProcess(
+				"DEBUG", unsyncStringWriter, logContextMessage);
+			_testLogOutputUpgradeProcess(
+				"ERROR", unsyncStringWriter, logContextMessage);
+			_testLogOutputUpgradeProcess(
+				"FATAL", unsyncStringWriter, logContextMessage);
+			_testLogOutputUpgradeProcess(
+				"INFO", unsyncStringWriter, logContextMessage);
+			_testLogOutputUpgradeProcess(
+				"TRACE", unsyncStringWriter, logContextMessage);
+			_testLogOutputUpgradeProcess(
+				"WARN", unsyncStringWriter, logContextMessage);
+
+			logger.removeAppender(logContextWriterAppender);
+		}
+		finally {
+			StartupHelperUtil.setUpgrading(currentUpgrading);
+
+			ReflectionTestUtil.setFieldValue(
+				Log4jLogFactoryImpl.class, "_UPGRADE_LOG_CONTEXT_ENABLED",
+				currentUpgradeLogEnabled);
+		}
 	}
 
 	private static final int _BUFFER_SIZE = 8192;

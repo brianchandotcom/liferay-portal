@@ -15,22 +15,17 @@
 export default function ViewMessageThread({
 	index,
 	portletNamespace: namespace,
-	randomNamespace,
 }) {
-	window[`${namespace}${randomNamespace}${index}EditOnChange`] = function (
-		html
-	) {
+	window[`${namespace}${index}EditOnChange`] = function (html) {
 		Liferay.Util.toggleDisabled(
-			`#${namespace}${randomNamespace}editReplyButton${index}`,
+			`#${namespace}editReplyButton${index}`,
 			html.trim() === ''
 		);
 	};
 
-	window[`${namespace}${randomNamespace}${index}ReplyOnChange`] = function (
-		html
-	) {
+	window[`${namespace}${index}ReplyOnChange`] = function (html) {
 		Liferay.Util.toggleDisabled(
-			`#${namespace}${randomNamespace}postReplyButton${index}`,
+			`#${namespace}postReplyButton${index}`,
 			html.trim() === ''
 		);
 	};

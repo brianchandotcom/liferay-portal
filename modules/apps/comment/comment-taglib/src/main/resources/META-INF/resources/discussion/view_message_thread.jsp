@@ -307,8 +307,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				"index", index
 			).put(
 				"portletNamespace", namespace
-			).put(
-				"randomNamespace", randomNamespace
 			).build()
 		%>'
 		module="discussion/js/ViewMessageThread"

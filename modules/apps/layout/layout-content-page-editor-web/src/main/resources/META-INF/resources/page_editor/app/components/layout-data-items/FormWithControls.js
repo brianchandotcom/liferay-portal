@@ -16,11 +16,22 @@ import classNames from 'classnames';
 import React from 'react';
 
 import {useSelectorCallback} from '../../contexts/StoreContext';
+import FormService from '../../services/FormService';
+import {CACHE_KEYS} from '../../utils/cache';
 import {formIsMapped} from '../../utils/formIsMapped';
 import isItemEmpty from '../../utils/isItemEmpty';
+import useCache from '../../utils/useCache';
 import ContainerWithControls from './ContainerWithControls';
 
 const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
+
+	// Ensure form types are loaded if this component is rendered
+
+	useCache({
+		fetcher: () => FormService.getAvailableEditPageInfoItemFormProviders(),
+		key: [CACHE_KEYS.formTypes],
+	});
+
 	const isMapped = formIsMapped(item);
 
 	const isEmpty = useSelectorCallback(

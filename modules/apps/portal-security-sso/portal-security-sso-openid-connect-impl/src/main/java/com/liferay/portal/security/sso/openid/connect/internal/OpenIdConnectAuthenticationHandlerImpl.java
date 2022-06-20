@@ -44,6 +44,7 @@ import com.nimbusds.oauth2.sdk.Scope;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.http.HTTPResponse;
 import com.nimbusds.oauth2.sdk.id.ClientID;
+import com.nimbusds.oauth2.sdk.id.Issuer;
 import com.nimbusds.oauth2.sdk.id.State;
 import com.nimbusds.oauth2.sdk.token.AccessToken;
 import com.nimbusds.oauth2.sdk.token.BearerAccessToken;
@@ -140,9 +141,18 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
+		Issuer issuer = null;
+		OIDCProviderMetadata providerMetadata =
+			openIdConnectProvider.getOIDCProviderMetadata();
+
+		if (providerMetadata != null) {
+			issuer = providerMetadata.getIssuer();
+		}
+
 		long userId = _openIdConnectUserInfoProcessor.processUserInfo(
 			userInfo, _portal.getCompanyId(httpServletRequest),
-			serviceContext.getPathMain(), serviceContext.getPortalURL());
+			serviceContext.getPathMain(), serviceContext.getPortalURL(),
+			issuer.getValue());
 
 		userIdUnsafeConsumer.accept(userId);
 

@@ -1,6 +1,10 @@
 Bundle-Name: Liferay Portal Security SSO OpenID Connect Implementation
 Bundle-SymbolicName: com.liferay.portal.security.sso.openid.connect.impl
+<<<<<<< Updated upstream
 Bundle-Version: 6.0.25
+=======
+Bundle-Version: 7.0.0
+>>>>>>> Stashed changes
 Import-Package:\
 	!com.google.crypto.tink.*,\
 	\

@@ -28,4 +28,9 @@ public interface OpenIdConnectUserInfoProcessor {
 			String portalURL)
 		throws PortalException;
 
+	public long processUserInfo(
+			UserInfo userInfo, long companyId, String mainPath,
+			String portalURL, String issuer)
+		throws PortalException;
+
 }

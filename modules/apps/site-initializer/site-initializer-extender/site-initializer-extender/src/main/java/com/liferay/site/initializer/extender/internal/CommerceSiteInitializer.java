@@ -28,15 +28,16 @@ import com.liferay.commerce.notification.service.CommerceNotificationTemplateLoc
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
+import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
-import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
@@ -45,7 +46,6 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionRe
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -74,7 +74,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.site.initializer.extender.internal.util.SiteInitializerUtil;
 
 import java.math.BigDecimal;
@@ -504,50 +504,19 @@ public class CommerceSiteInitializer {
 				serviceContext.fetchUser()
 			).build();
 
-		OptionResource.Builder optionResourceBuilder =
-			_optionResourceFactory.create();
-
-		OptionResource optionResource = optionResourceBuilder.user(
-			serviceContext.fetchUser()
-		).build();
-
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject subscriptionPropertiesJSONObject =
 				jsonArray.getJSONObject(i);
 
-			Page<Option> optionsPage = optionResource.getOptionsPage(
-				null,
-				optionResource.toFilter(
-					StringBundler.concat(
-						"name eq '",
-						StringUtil.toLowerCase(
-							subscriptionPropertiesJSONObject.getString(
-								"optionName")),
-						"'")),
-				null, null);
+			CPOption cpOption = _cpOptionLocalService.fetchCPOption(
+				serviceContext.getCompanyId(),
+				subscriptionPropertiesJSONObject.getString("optionKey"));
 
-			Option option = optionsPage.fetchFirstItem();
-
-			if (option == null) {
+			if (cpOption == null) {
 				continue;
 			}
-
-			ProductOption[] productOptions = new ProductOption[1];
-
-			productOptions[0] = new ProductOption() {
-				{
-					facetable = option.getFacetable();
-					fieldType = option.getFieldType(
-					).toString();
-					key = option.getKey();
-					name = option.getName();
-					optionId = option.getId();
-					required = option.getRequired();
-					skuContributor = option.getSkuContributor();
-				}
-			};
 
 			CPDefinition cpDefinition =
 				_cpDefinitionLocalService.
@@ -557,7 +526,21 @@ public class CommerceSiteInitializer {
 						serviceContext.getCompanyId());
 
 			productOptionResource.postProductIdProductOptionsPage(
-				cpDefinition.getCProductId(), productOptions);
+				cpDefinition.getCProductId(),
+				new ProductOption[] {
+					new ProductOption() {
+						{
+							facetable = cpOption.isFacetable();
+							fieldType = cpOption.getDDMFormFieldTypeName();
+							key = cpOption.getKey();
+							name = LocalizedMapUtil.getI18nMap(
+								cpOption.getNameMap());
+							optionId = cpOption.getCPOptionId();
+							required = cpOption.isRequired();
+							skuContributor = cpOption.isSkuContributor();
+						}
+					}
+				});
 
 			_cpInstanceLocalService.buildCPInstances(
 				cpDefinition.getCPDefinitionId(), serviceContext);
@@ -772,6 +755,9 @@ public class CommerceSiteInitializer {
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+
+	@Reference
+	private CPOptionLocalService _cpOptionLocalService;
 
 	@Reference
 	private CPOptionsImporter _cpOptionsImporter;

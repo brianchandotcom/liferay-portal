@@ -3223,25 +3223,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 						com.liferay.object.model.ObjectDefinition.class.
 							getName())) {
 
-					Page<ObjectDefinition> objectDefinitionsPage =
-						objectDefinitionResource.getObjectDefinitionsPage(
-							null, null,
-							objectDefinitionResource.toFilter(
-								StringBundler.concat(
-									"name eq '",
-									propertiesJSONObject.getString("assetName"),
-									"'")),
-							null, null);
-
-					ObjectDefinition objectDefinition =
-						objectDefinitionsPage.fetchFirstItem();
+					com.liferay.object.model.ObjectDefinition objectDefinition =
+						_objectDefinitionLocalService.fetchObjectDefinition(
+							serviceContext.getCompanyId(),
+							propertiesJSONObject.getString("assetName"));
 
 					if (objectDefinition == null) {
 						continue;
 					}
 
 					className = StringBundler.concat(
-						className, "#", objectDefinition.getId());
+						className, "#",
+						objectDefinition.getObjectDefinitionId());
 				}
 
 				long typePK = 0;

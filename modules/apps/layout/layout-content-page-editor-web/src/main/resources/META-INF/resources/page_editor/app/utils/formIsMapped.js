@@ -12,6 +12,28 @@
  * details.
  */
 
+import {CACHE_KEYS, getCacheItem, getCacheKey} from './cache';
+
 export function formIsMapped(item) {
-	return item.config.classNameId && item.config.classNameId !== '0';
+	const {classNameId, classTypeId} = item.config;
+
+	const formTypes = getCacheItem(getCacheKey([CACHE_KEYS.formTypes])).data;
+
+	if (!formTypes) {
+		return classNameId && classNameId !== '0' ? true : false;
+	}
+
+	const type = formTypes.find(({value}) => value === classNameId);
+
+	if (!type) {
+		return false;
+	}
+
+	const subtype = type.subtypes.find(({value}) => value === classTypeId);
+
+	if (subtype || classTypeId === '0') {
+		return true;
+	}
+
+	return false;
 }

@@ -48,8 +48,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -115,7 +113,9 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 			renderedPortlets);
 	}
 
-	private HttpServletRequest _getHttpServletRequest() throws Exception {
+	private void _processLayoutTemplate(String templateContent)
+		throws Exception {
+
 		MockHttpServletRequest httpServletRequest =
 			(MockHttpServletRequest)
 				PortletContainerTestUtil.getHttpServletRequest(group, layout);
@@ -146,14 +146,8 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 
-		return httpServletRequest;
-	}
-
-	private void _processLayoutTemplate(String templateContent)
-		throws Exception {
-
 		RuntimePageUtil.processTemplate(
-			_getHttpServletRequest(), new MockHttpServletResponse(), null,
+			httpServletRequest, new MockHttpServletResponse(), null,
 			new StringTemplateResource(_TEMPLATE_ID, templateContent),
 			TemplateConstants.LANG_TYPE_FTL);
 	}

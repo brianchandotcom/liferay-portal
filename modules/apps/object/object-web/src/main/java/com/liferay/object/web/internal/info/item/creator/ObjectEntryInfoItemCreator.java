@@ -93,6 +93,19 @@ public class ObjectEntryInfoItemCreator
 				_objectDefinition.getObjectDefinitionId(), values,
 				serviceContext);
 		}
+		catch (ObjectEntryValuesException.ExceedsTextMaxLength
+					objectEntryValuesException) {
+
+			String infoFieldUniqueId = _getInfoFieldUniqueId(
+				groupId, objectEntryValuesException.getObjectFieldName());
+
+			if (infoFieldUniqueId == null) {
+				throw new InfoFormException();
+			}
+
+			throw new InfoFormValidationException.ExceedsMaxLength(
+				infoFieldUniqueId, objectEntryValuesException.getMaxLength());
+		}
 		catch (ObjectEntryValuesException.Required objectEntryValuesException) {
 			String infoFieldUniqueId = _getInfoFieldUniqueId(
 				groupId, objectEntryValuesException.getObjectFieldName());

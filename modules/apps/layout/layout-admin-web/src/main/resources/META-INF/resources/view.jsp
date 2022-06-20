@@ -71,6 +71,7 @@ portletDisplay.setShowStagingIcon(false);
 		<c:otherwise>
 			<liferay-frontend:empty-result-message
 				actionDropdownItems="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() ? layoutsAdminDisplayContext.getAddLayoutDropdownItems() : null %>"
+				buttonCssClass="secondary"
 				description='<%= LanguageUtil.get(request, "fortunately-it-is-very-easy-to-add-new-ones") %>'
 				elementType='<%= LanguageUtil.get(request, "pages") %>'
 			/>

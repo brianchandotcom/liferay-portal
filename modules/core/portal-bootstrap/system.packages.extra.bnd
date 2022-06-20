@@ -40,6 +40,7 @@ Export-Package:\
 	!com.liferay.portal.service,\
 	!com.liferay.portal.sharepoint.*,\
 	!com.liferay.portal.spring.bean,\
+	!com.liferay.portal.spring.context,\
 	!com.liferay.portal.systemevent,\
 	!com.liferay.portal.tools.comparator,\
 	!com.liferay.portal.tools.javadocformatter,\

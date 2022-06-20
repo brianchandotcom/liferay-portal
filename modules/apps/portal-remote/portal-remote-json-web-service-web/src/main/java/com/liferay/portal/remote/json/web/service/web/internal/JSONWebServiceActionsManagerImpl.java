@@ -29,14 +29,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.reflect.Method;
@@ -229,7 +230,8 @@ public class JSONWebServiceActionsManagerImpl
 		String contextPath = servletContext.getContextPath();
 
 		if (contextPath.equals(
-				PortalContextLoaderListener.getPortalServletContextPath()) ||
+				ServletContextClassLoaderPool.getServletContextName(
+					PortalClassLoaderUtil.getClassLoader())) ||
 			contextPath.isEmpty()) {
 
 			beanLocator = PortalBeanLocatorUtil.getBeanLocator();

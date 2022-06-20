@@ -25,25 +25,25 @@ const States = {
 	 * When the filters or search results return zero results.
 	 */
 
-	EMPTY_SEARCH: 'https://clayui.com/images/empty_state.gif',
+	EMPTY_SEARCH: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.gif`,
 
 	/**
 	 * When there are no elements in the data set at a certain level
 	 */
 
-	EMPTY_STATE: `https://clayui.com/images/empty_state.gif`,
+	EMPTY_STATE: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.gif`,
 
 	/**
 	 * When there no permission to access the module
 	 */
 
-	NO_ACCESS: `${Liferay.ThemeDisplay.getPathThemeImages()}/app_builder/illustration_locker.svg`,
+	NO_ACCESS: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/app_builder/illustration_locker.svg`,
 
 	/**
 	 * The user has emptied the dataset for a good cause.
 	 * For example, all the notifications have been addressed, resulting in a clean state.
 	 */
-	SUCCESS: 'https://clayui.com/images/success_state.gif',
+	SUCCESS: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/success_state.gif`,
 };
 
 export type EmptyStateProps = {

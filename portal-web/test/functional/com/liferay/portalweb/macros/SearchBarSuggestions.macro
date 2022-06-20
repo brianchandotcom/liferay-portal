@@ -1,5 +1,66 @@
 definition {
 
+	macro configureEmbeddedSearchBarSuggestions {
+		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(characterThresholdForDisplayingSuggestions)) {
+			Type(
+				locator1 = "SearchBarSuggestions#CHARACTER_THRESHOLD_FOR_DISPLAYING_SUGGESTIONS",
+				value1 = "${characterThresholdForDisplayingSuggestions}");
+		}
+
+		if ("${addContributor}" == "true") {
+			Click.javaScriptClick(
+				key_text = "Add Contributor",
+				locator1 = "Button#ANY");
+		}
+
+		if (!(isSet(suggestionContributorOrder))) {
+			var suggestionContributorOrder = "1";
+		}
+
+		if (isSet(suggestionContributor)) {
+			Select(
+				key_suggestionContributorOrder = "${suggestionContributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR",
+				value1 = "${suggestionContributor}");
+		}
+
+		if (isSet(suggestionContributorBlueprint)) {
+			Click(
+				key_suggestionContributorOrder = "${suggestionContributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SELECT_BLUEPRINT");
+
+			Click(
+				blueprintTitle = "${suggestionContributorBlueprint}",
+				locator1 = "Blueprints#BLUEPRINTS_OPTION_WIDGET_SELECT_BLUEPRINT");
+
+			SelectFrameTop();
+
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+		}
+
+		if (isSet(suggestionContributorDisplayGroupName)) {
+			Type(
+				key_suggestionContributorOrder = "${suggestionContributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME",
+				value1 = "${suggestionContributorDisplayGroupName}");
+		}
+
+		if (isSet(suggestionContributorSize)) {
+			Type(
+				key_suggestionContributorOrder = "${suggestionContributorOrder}",
+				locator1 = "SearchBarSuggestions#SUGGESTION_CONTRIBUTOR_SIZE",
+				value1 = "${suggestionContributorSize}");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
 	macro gotoSuggestionResultDetails {
 		if (!(isSet(suggestionContributorDisplayGroupName))) {
 			var suggestionContributorDisplayGroupName = "suggestions";

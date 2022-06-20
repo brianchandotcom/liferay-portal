@@ -15,7 +15,7 @@
 /// <reference types="react" />
 
 import 'codemirror/mode/groovy/groovy';
-import {CustomItem} from '@liferay/object-js-components-web';
+import {CustomItem, FormError} from '@liferay/object-js-components-web';
 export default function Action({
 	objectAction: initialValues,
 	objectActionExecutors,
@@ -40,4 +40,11 @@ interface IProps {
 	title: string;
 	validateExpressionURL: string;
 }
+export declare type ActionError = FormError<
+	ObjectAction & ObjectActionParameters
+> & {
+	predefinedValues?: {
+		[key: string]: string;
+	};
+};
 export {};

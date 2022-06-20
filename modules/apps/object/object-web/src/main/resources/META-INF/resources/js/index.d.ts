@@ -29,6 +29,8 @@ interface ObjectAction {
 	objectActionTriggerKey: string;
 	objectDefinitionsRelationshipsURL: string;
 	parameters?: ObjectActionParameters;
+	predefinedValues: Map<string, string>[];
+	script?: string;
 }
 
 interface ObjectActionParameters {

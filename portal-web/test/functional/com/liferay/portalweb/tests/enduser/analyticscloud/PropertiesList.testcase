@@ -151,6 +151,58 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-11142 | Automation ID: LRAC-11162 | Test Summary: New property created when reconnect and old property remains"
+	@priority = "4"
+	test OnlyAvailablePropertiesAppearInDXP {
+		task ("Copy the token from AC") {
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.connectAnalyticsCloud();
+
+			Alert.viewSuccessMessage();
+
+			ACDXPSettings.navToSyncedSitesMenu();
+		}
+
+		task ("Disconnect DXP from AC") {
+			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+		}
+
+		task ("Launch AC and Connect new data source"){
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Connect DXP to AC"){
+			ACUtils.launchDXP();
+
+			ACDXPSettings.goToInstanceSettingsAC();
+
+			ACDXPSettings.connectAnalyticsCloud();
+		}
+
+		task ("Assert a new property is created along with old property"){
+			Alert.viewSuccessMessage();
+
+			ACDXPSettings.navToSyncedSitesMenu();
+
+			ACUtils.assertItemsName(itemList = "Liferay DXP");
+
+			ACUtils.assertItemsName(itemList = "Liferay DXP (1)");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: Property field is displayed in empty state when no property is available"
 	@priority = "3"
 	test ViewPropertyListDefault {

@@ -30,6 +30,25 @@
 	</div>
 </clay:sheet-section>
 
+<div id="<portlet:namespace />sandboxOnly">
+	<clay:sheet-section>
+		<h3 class="sheet-subtitle"><liferay-ui:message key="sandbox-only" /></h3>
+
+		<div class="sheet-text"><liferay-ui:message key="sandbox-only-help" /></div>
+
+		<div class="form-group">
+			<aui:input inlineLabel="right" label="" labelCssClass="simple-toggle-switch" name="enableSandboxOnly" type="toggle-switch" value="<%= publicationsConfigurationDisplayContext.isSandboxOnlyEnabled() %>" />
+		</div>
+	</clay:sheet-section>
+</div>
+
 <clay:sheet-footer>
 	<aui:button primary="<%= true %>" type="submit" value="save" />
 </clay:sheet-footer>
+
+<aui:script>
+	Liferay.Util.toggleBoxes(
+		'<portlet:namespace />enablePublications',
+		'<portlet:namespace />sandboxOnly'
+	);
+</aui:script>

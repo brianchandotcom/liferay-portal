@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
 
@@ -63,14 +62,12 @@ public class ObjectEntryInfoItemCreator
 
 	@Override
 	public ObjectEntry createFromInfoItemFieldValues(
-			InfoItemFieldValues infoItemFieldValues)
+			long groupId, InfoItemFieldValues infoItemFieldValues)
 		throws InfoFormException {
 
 		try {
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
-
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 			Map<String, Serializable> values = new HashMap<>();
 
@@ -85,9 +82,7 @@ public class ObjectEntryInfoItemCreator
 			}
 
 			return _objectEntryService.addObjectEntry(
-				_getGroupId(
-					_objectDefinition,
-					String.valueOf(themeDisplay.getScopeGroupId())),
+				_getGroupId(_objectDefinition, String.valueOf(groupId)),
 				_objectDefinition.getObjectDefinitionId(), values,
 				serviceContext);
 		}

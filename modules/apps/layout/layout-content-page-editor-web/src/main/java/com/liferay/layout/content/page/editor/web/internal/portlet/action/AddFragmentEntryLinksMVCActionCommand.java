@@ -142,18 +142,13 @@ public class AddFragmentEntryLinksMVCActionCommand
 			segmentsExperienceId);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			JSONObject editableValuesJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues());
-
 			fragmentEntryLinksJSONObject.put(
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 					fragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
-					layoutStructure,
-					editableValuesJSONObject.getString("portletId")));
+					layoutStructure));
 
 			List<FragmentEntryLinkListener> fragmentEntryLinkListeners =
 				_fragmentEntryLinkListenerTracker.

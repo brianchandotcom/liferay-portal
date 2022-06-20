@@ -21,7 +21,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -128,7 +127,7 @@ public class GetExperienceDataMVCResourceCommand
 					defaultFragmentRendererContext, fragmentEntryLink,
 					_portal.getHttpServletRequest(resourceRequest),
 					_portal.getHttpServletResponse(resourceResponse),
-					layoutStructure, StringPool.BLANK));
+					layoutStructure));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

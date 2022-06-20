@@ -104,17 +104,12 @@ public class ChangeMasterLayoutMVCActionCommand
 			JSONFactoryUtil.createJSONObject();
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			JSONObject editableValuesJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues());
-
 			JSONObject fragmentEntryLinkJSONObject =
 				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 					fragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
-					layoutStructure,
-					editableValuesJSONObject.getString("portletId"));
+					layoutStructure);
 
 			fragmentEntryLinkJSONObject.put("masterLayout", Boolean.TRUE);
 

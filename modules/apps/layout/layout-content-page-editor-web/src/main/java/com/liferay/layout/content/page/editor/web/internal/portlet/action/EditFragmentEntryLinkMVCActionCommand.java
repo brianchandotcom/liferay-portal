@@ -22,7 +22,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -92,8 +91,8 @@ public class EditFragmentEntryLinkMVCActionCommand
 			actionRequest, actionResponse,
 			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 				fragmentEntryLink, _portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse), layoutStructure,
-				StringPool.BLANK));
+				_portal.getHttpServletResponse(actionResponse),
+				layoutStructure));
 	}
 
 	@Reference

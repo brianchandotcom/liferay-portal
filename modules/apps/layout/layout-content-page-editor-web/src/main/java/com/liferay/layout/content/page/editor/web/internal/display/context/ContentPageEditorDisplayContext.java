@@ -1514,7 +1514,7 @@ public class ContentPageEditorDisplayContext {
 					defaultFragmentRendererContext, fragmentEntryLink,
 					httpServletRequest,
 					PortalUtil.getHttpServletResponse(_renderResponse),
-					layoutStructure, StringPool.BLANK);
+					layoutStructure);
 
 			jsonObject.put(
 				"error",

@@ -248,7 +248,7 @@ public class AddPortletMVCActionCommand
 			"fragmentEntryLink",
 			_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 				fragmentEntryLink, httpServletRequest, httpServletResponse,
-				layoutStructure, portletId));
+				layoutStructure));
 	}
 
 	@Reference

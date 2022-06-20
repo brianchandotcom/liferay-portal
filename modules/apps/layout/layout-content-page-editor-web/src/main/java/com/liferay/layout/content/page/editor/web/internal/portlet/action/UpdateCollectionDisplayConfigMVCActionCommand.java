@@ -152,7 +152,7 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 					fragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
-					layoutStructure, StringPool.BLANK));
+					layoutStructure));
 		}
 
 		try {

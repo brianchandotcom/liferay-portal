@@ -341,17 +341,12 @@ public class DuplicateItemMVCActionCommand
 				_fragmentEntryLinkLocalService.getFragmentEntryLink(
 					fragmentEntryLinkId);
 
-			JSONObject editableValuesJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues());
-
 			jsonArray.put(
 				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 					fragmentEntryLink,
 					_portal.getHttpServletRequest(actionRequest),
 					_portal.getHttpServletResponse(actionResponse),
-					layoutStructure,
-					editableValuesJSONObject.getString("portletId")));
+					layoutStructure));
 		}
 
 		return jsonArray;

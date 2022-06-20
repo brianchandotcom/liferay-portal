@@ -21,8 +21,12 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
  */
 public interface SegmentsConfigurationProvider {
 
+	public boolean isRoleSegmentationEnabled() throws ConfigurationException;
+
 	public boolean isRoleSegmentationEnabled(long companyId)
 		throws ConfigurationException;
+
+	public boolean isSegmentationEnabled() throws ConfigurationException;
 
 	public boolean isSegmentationEnabled(long companyId)
 		throws ConfigurationException;

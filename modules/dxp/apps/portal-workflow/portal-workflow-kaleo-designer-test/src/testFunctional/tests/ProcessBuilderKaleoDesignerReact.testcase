@@ -540,11 +540,25 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign the task node to a Role"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAssignTaskNodeToRole {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignTaskNodeToRole";
 
-		// TODO CanAssignTaskNodeToRole pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
+			
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+			assignmentType = "Role",
+			roleName = "Asset Library Member");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Role: Asset Library Member");
+
 
 	}
 

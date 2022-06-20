@@ -10,15 +10,28 @@ const buttonLabel = button.querySelector('.forms-select-from-list-label');
 const dropdown = wrapper.querySelector('.dropdown-menu');
 const input = wrapper.querySelector('input');
 const listbox = wrapper.querySelector('.list-unstyled');
+const loadingResultsMessage = wrapper.querySelector(
+	'.forms-select-from-list-loading-results'
+);
 const noResultsMessage = wrapper.querySelector(
 	'.forms-select-from-list-no-results'
 );
 const searchInput = wrapper.querySelector('.forms-select-from-list-search');
 
+// LPS-155167 This will be replaced with real input when feature is ready
+
+const mockInput = {
+	queryOptionsURL: `${location.origin}/o/headless-admin-list-type/v1.0/list-type-definitions/41166/list-type-entries`,
+};
+
+let currentSearch = {
+	abortController: new AbortController(),
+	query: '',
+};
+
 const baseListboxItems = Array.from(listbox.children).map((child) => ({
 	label: child.textContent,
 	optionId: child.id,
-	trimmedLabel: child.textContent.toLowerCase().replaceAll(' ', ''),
 	value: child.dataset.optionValue,
 }));
 
@@ -217,12 +230,21 @@ function handleWindowResizeOrScroll() {
 }
 
 function handleSearchKeyup() {
-	const query = searchInput.value.toLowerCase().replaceAll(' ', '');
+	if (searchInput.value === currentSearch.query) {
+		return;
+	}
 
-	listbox.innerHTML = '';
+	currentSearch.abortController.abort();
 
-	baseListboxItems.forEach((item) => {
-		if (item.trimmedLabel.startsWith(query)) {
+	currentSearch = {
+		abortController: new AbortController(),
+		query: searchInput.value,
+	};
+
+	const setListboxItems = (items) => {
+		listbox.innerHTML = '';
+
+		items.forEach((item) => {
 			const element = document.createElement('li');
 
 			element.classList.add('dropdown-item');
@@ -232,22 +254,63 @@ function handleSearchKeyup() {
 			element.textContent = item.label;
 
 			listbox.appendChild(element);
-		}
-	});
+		});
 
-	if (listbox.children.length) {
-		listbox.removeAttribute('aria-hidden');
-		listbox.classList.remove('d-none');
-		noResultsMessage.setAttribute('aria-hidden', 'true');
-		noResultsMessage.classList.add('d-none');
-		setActiveDescendant(listbox.firstElementChild);
+		if (items.length) {
+			setActiveDescendant(listbox.firstElementChild);
+		}
+	};
+
+	if (currentSearch.query) {
+		listbox.innerHTML = '';
 	}
 	else {
-		listbox.setAttribute('aria-hidden', 'true');
-		listbox.classList.add('d-none');
-		noResultsMessage.removeAttribute('aria-hidden');
-		noResultsMessage.classList.remove('d-none');
+		setListboxItems(baseListboxItems);
+
+		return;
 	}
+
+	loadingResultsMessage.classList.remove('d-none');
+	loadingResultsMessage.removeAttribute('aria-hidden');
+
+	const url = new URL(mockInput.queryOptionsURL);
+	url.searchParams.set('search', currentSearch.query);
+
+	Liferay.Util.fetch(url, {
+		headers: new Headers({
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		}),
+		method: 'GET',
+		signal: currentSearch.abortController.signal,
+	})
+		.then((response) => response.json())
+		.then((result) => {
+			setListboxItems(
+				result.items.map((entry) => ({
+					label: entry.name,
+					optionId: entry.key,
+					value: entry.key,
+				}))
+			);
+
+			if (listbox.children.length) {
+				listbox.removeAttribute('aria-hidden');
+				listbox.classList.remove('d-none');
+				noResultsMessage.setAttribute('aria-hidden', 'true');
+				noResultsMessage.classList.add('d-none');
+			}
+			else {
+				listbox.setAttribute('aria-hidden', 'true');
+				listbox.classList.add('d-none');
+				noResultsMessage.removeAttribute('aria-hidden');
+				noResultsMessage.classList.remove('d-none');
+			}
+		})
+		.finally(() => {
+			loadingResultsMessage.classList.add('d-none');
+			loadingResultsMessage.setAttribute('aria-hidden', 'true');
+		});
 }
 
 if (listbox.children.length) {

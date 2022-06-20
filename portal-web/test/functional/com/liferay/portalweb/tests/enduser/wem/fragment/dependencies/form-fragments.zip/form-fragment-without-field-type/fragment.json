@@ -1,0 +1,11 @@
+{
+  "configurationPath": "index.json",
+  "jsPath": "index.js",
+  "htmlPath": "index.html",
+  "cssPath": "index.css",
+  "icon": "forms",
+  "name": "Fragment Example",
+  "readOnly": "true",
+  "type": "input",
+  "typeOptions": {"fieldTypes": []}
+}

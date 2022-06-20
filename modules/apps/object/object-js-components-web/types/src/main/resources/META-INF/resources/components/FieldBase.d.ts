@@ -20,6 +20,7 @@ export declare function FieldBase({
 	disabled,
 	errorMessage,
 	helpMessage,
+	hideFeedback,
 	id,
 	label,
 	required,
@@ -32,6 +33,7 @@ interface IProps {
 	disabled?: boolean;
 	errorMessage?: string;
 	helpMessage?: string;
+	hideFeedback?: boolean;
 	id?: string;
 	label?: string;
 	required?: boolean;

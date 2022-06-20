@@ -1,3 +1,3 @@
-FROM liferay/lxc-static-resources:latest
+FROM liferay/caddy:latest
 
-COPY static/ /resources/
+COPY static/ /public_html/

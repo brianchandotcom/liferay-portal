@@ -15,12 +15,20 @@
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
+import useControlledState from '../../../core/hooks/useControlledState';
+import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {useId} from '../../utils/useId';
 
-export default function CustomCSSField() {
+export default function CustomCSSField({field, item, onValueSelect, value}) {
 	const id = useId();
+
+	const defaultValue = useMemo(() => {
+		return `.${getLayoutDataItemUniqueClassName(item.itemId)} {\n\n}`;
+	}, [item.itemId]);
+
+	const [customCSS, setCustomCSS] = useControlledState(value || defaultValue);
 
 	return (
 		<ClayForm.Group className="page-editor__custom-css-field" small>
@@ -28,7 +36,17 @@ export default function CustomCSSField() {
 				{Liferay.Language.get('custom-css')} <CustomCSSHelp />
 			</label>
 
-			<textarea className="form-control" id={id} />
+			<textarea
+				className="form-control text-3"
+				id={id}
+				onBlur={() => {
+					if (defaultValue.trim() !== customCSS?.trim()) {
+						onValueSelect(field.name, customCSS);
+					}
+				}}
+				onChange={(event) => setCustomCSS(event.target.value)}
+				value={customCSS}
+			/>
 		</ClayForm.Group>
 	);
 }

@@ -2,16 +2,11 @@
 	position: relative;
 }
 
-.forms-select-from-list .form-control::after {
-	background: inherit;
-	color: inherit;
-	content: '▼';
-	font-size: 0.875em;
-	opacity: 0.8;
-	padding: 1ch;
+.forms-select-from-list .form-control .lexicon-icon {
 	position: absolute;
-	right: 0;
-	top: 0;
+	right: 1ch;
+	top: 50%;
+	transform: translateY(-45%);
 }
 
 .forms-select-from-list .dropdown-item {

@@ -6,6 +6,7 @@ let rapidTextTime = Date.now();
 const wrapper = fragmentElement;
 
 const button = wrapper.querySelector('.form-control');
+const buttonLabel = button.querySelector('.forms-select-from-list-label');
 const dropdown = wrapper.querySelector('.dropdown-menu');
 const input = wrapper.querySelector('input');
 const listbox = wrapper.querySelector('.list-unstyled');
@@ -53,7 +54,7 @@ function setActiveDescendant(item) {
 		previousItem.removeAttribute('aria-selected');
 	}
 
-	button.textContent = item.textContent;
+	buttonLabel.textContent = item.textContent;
 	listbox.setAttribute('aria-activedescendant', item.id);
 	input.value = item.dataset.optionValue;
 

@@ -39,6 +39,7 @@ type RequirementsFormType = {
 	description: string;
 	descriptionType: string;
 	id: number;
+	key: string;
 	linkTitle: string;
 	linkURL: string;
 	summary: string;
@@ -89,6 +90,10 @@ const RequirementsForm: React.FC = () => {
 	const testrayComponents = testrayComponentsData?.c?.components.items || [];
 
 	const _onSubmit = (form: RequirementsFormType) => {
+		if (!form.id) {
+			form.key = `R-${Math.ceil(Math.random() * 1000)}`;
+		}
+
 		onSubmitAndSave(
 			{...form, projectId},
 			{

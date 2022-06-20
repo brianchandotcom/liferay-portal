@@ -15,6 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import {useOutletContext} from 'react-router-dom';
 
+import Button from '../../../components/Button';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {
@@ -22,8 +23,10 @@ import {
 	TestraySuite,
 	getRequirementCases,
 } from '../../../graphql/queries';
+import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {searchUtil} from '../../../util/search';
+import CaseRequirementLinkModal from './CaseRequirementLinkModal';
 
 const CaseRequirement = () => {
 	const {
@@ -31,10 +34,26 @@ const CaseRequirement = () => {
 		testrayCase,
 	}: {projectId: number; testrayCase: TestraySuite} = useOutletContext();
 
+	const {modal} = useFormModal();
+
 	return (
 		<Container>
+			<CaseRequirementLinkModal modal={modal} />
+
 			<ListView
-				managementToolbarProps={{title: i18n.translate('requirements')}}
+				managementToolbarProps={{
+					buttons: (
+						<Button
+							displayType="secondary"
+							onClick={() => modal.open()}
+							symbol="list-ul"
+							toolbar
+						>
+							{i18n.translate('link-requirements')}
+						</Button>
+					),
+					title: i18n.translate('requirements'),
+				}}
 				query={getRequirementCases}
 				tableProps={{
 					columns: [
@@ -45,7 +64,7 @@ const CaseRequirement = () => {
 								_,
 								requirementCase: TestrayRequirementCase
 							) => requirementCase.requirement.key,
-							value: 'Key',
+							value: i18n.translate('key'),
 						},
 						{
 							key: 'linkTitle',
@@ -66,7 +85,7 @@ const CaseRequirement = () => {
 									/>
 								</a>
 							),
-							value: 'Link',
+							value: i18n.translate('link'),
 						},
 						{
 							key: 'team',

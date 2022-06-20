@@ -219,7 +219,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 					<Input
 						error={errors.name}
 						id="objectRelationshipName"
-						label={Liferay.Language.get('relationship-name')}
+						label={Liferay.Language.get('name')}
 						name="name"
 						onChange={handleChange}
 						required

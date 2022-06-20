@@ -41,6 +41,31 @@ public class InfoFormValidationException extends InfoFormException {
 			locale, "x-an-error-occurred", fieldLabel, false);
 	}
 
+	public static class ExceedsMaxLength extends InvalidInfoFieldValue {
+
+		public ExceedsMaxLength(String infoFieldUniqueId, int maxLength) {
+			super(infoFieldUniqueId);
+
+			_maxLength = maxLength;
+		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.get(
+				locale, "value-exceeds-maximum-length-of-x");
+		}
+
+		@Override
+		public String getLocalizedMessage(String fieldLabel, Locale locale) {
+			return LanguageUtil.format(
+				locale, "value-exceeds-maximum-length-of-x-for-field-x",
+				new String[] {String.valueOf(_maxLength), fieldLabel}, false);
+		}
+
+		private final int _maxLength;
+
+	}
+
 	public static class FileSize extends InfoFormValidationException {
 
 		public FileSize(String infoFieldUniqueId, String maximumSizeAllowed) {

@@ -91,33 +91,102 @@ public class ObjectCodeEditorUtil {
 
 	private enum DDMExpressionFunction {
 
-		COMPARE_DATES("compareDates(field_name, parameter)", "compare-dates"),
-		CONCAT("concat(parameter1, parameter2, parameterN)", "concat"),
-		CONDITION("condition(condition, parameter1, parameter2)", "condition"),
-		CONTAINS("contains(field_name, parameter)", "contains"),
+		COMPARE_DATES(
+			"compareDates(field_name, parameter)",
+			"check-if-a-field-has-the-same-date-of-the-value", "compare-dates"),
+		CONCAT(
+			"concat(parameter1, parameter2, parameterN)",
+			"combine-multiple-strings-or-text-fields-and-return-a-single-" +
+				"string-that-can-be-used-with-other-validation-functions",
+			"concat"),
+		CONDITION(
+			"condition(condition, parameter1, parameter2)",
+			"provide-for-the-customer-the-possibility-of-condition-for-" +
+				"values-or-fields-and-determines-if-expressions-are-true-or-" +
+					"false",
+			"condition"),
+		CONTAINS(
+			"contains(field_name, parameter)",
+			"check-if-a-field-contains-a-specific-value-and-return-a-boolean",
+			"contains"),
 		DOES_NOT_CONTAIN(
-			"NOT(contains(field_name, parameter))", "does-not-contain"),
-		FUTURE_DATES("futureDates(field_name, parameter)", "future-dates"),
-		IS_A_URL("isURL(field_name)", "is-a-url"),
-		IS_AN_EMAIL("isEmailAddress(field_name)", "is-an-email"),
-		IS_DECIMAL("isDecimal(parameter)", "is-decimal"),
-		IS_EMPTY("isEmpty(parameter)", "is-empty"),
-		IS_EQUAL_TO("field_name == parameter", "is-equal-to"),
-		IS_GREATER_THAN("field_name > parameter", "is-greater-than"),
+			"NOT(contains(field_name, parameter))",
+			"check-if-a-field-contains-a-specific-value-and-return-a-boolean-" +
+				"if-the-field-does-contain-the-value-it-is-invalid",
+			"does-not-contain"),
+		FUTURE_DATES(
+			"futureDates(field_name, parameter)",
+			"check-if-a-date-fields-value-is-in-the-future-and-return-a-" +
+				"boolean",
+			"future-dates"),
+		IS_A_URL(
+			"isURL(field_name)",
+			"check-if-a-text-field-is-a-URL-and-return-a-boolean", "is-a-url"),
+		IS_AN_EMAIL(
+			"isEmailAddress(field_name)",
+			"check-if-a-text-field-is-an-email-and-return-a-boolean",
+			"is-an-email"),
+		IS_DECIMAL(
+			"isDecimal(parameter)",
+			"check-if-a-numeric-field-is-a-decimal-and-return-a-boolean",
+			"is-decimal"),
+		IS_EMPTY(
+			"isEmpty(parameter)",
+			"check-if-a-text-field-is-empty-and-return-a-boolean", "is-empty"),
+		IS_EQUAL_TO(
+			"field_name == parameter",
+			"check-if-a-field-is-equal-to-a-specific-value-and-return-a-" +
+				"boolean",
+			"is-equal-to"),
+		IS_GREATER_THAN(
+			"field_name > parameter",
+			"check-if-a-numeric-field-is-greater-than-a-specific-numeric-" +
+				"value-and-return-a-boolean",
+			"is-greater-than"),
 		IS_GREATER_THAN_OR_EQUAL_TO(
-			"field_name >= parameter", "is-greater-than-or-equal-to"),
-		IS_INTEGER("isInteger(parameter)", "is-integer"),
-		IS_LESS_THAN("field_name < parameter", "is-less-than"),
+			"field_name >= parameter",
+			"check-if-a-numeric-field-is-greater-than-or-equal-to-a-specific-" +
+				"numeric-value-and-return-a-boolean",
+			"is-greater-than-or-equal-to"),
+		IS_INTEGER(
+			"isInteger(parameter)",
+			"check-if-a-numeric-field-is-an-integer-and-return-a-boolean",
+			"is-integer"),
+		IS_LESS_THAN(
+			"field_name < parameter",
+			"check-if-a-numeric-field-is-less-than-a-specific-numeric-value-" +
+				"and-return-a-boolean",
+			"is-less-than"),
 		IS_LESS_THAN_OR_EQUAL_TO(
-			"field_name <= parameter", "is-less-than-or-equal-to"),
-		IS_NOT_EQUAL_TO("field_name != parameter", "is-not-equal-to"),
-		MATCH("match(field_name, parameter)", "match"),
-		PAST_DATES("pastDates(field_name, parameter)", "past-dates"),
+			"field_name <= parameter",
+			"check-if-a-numeric-field-is-less-than-or-equal-to-a-specific-" +
+				"numeric-value-and-return-a-boolean",
+			"is-less-than-or-equal-to"),
+		IS_NOT_EQUAL_TO(
+			"field_name != parameter",
+			"check-if-a-field-is-not-equal-to-a-specific-value-and-return-a-" +
+				"boolean",
+			"is-not-equal-to"),
+		MATCH(
+			"match(field_name, parameter)",
+			"check-if-a-text-field-matches-a-specific-string-value-or-regex-" +
+				"expression-and-return-a-boolean",
+			"match"),
+		PAST_DATES(
+			"pastDates(field_name, parameter)",
+			"check-if-a-date-fields-value-is-in-the-past-and-return-a-boolean",
+			"past-dates"),
 		RANGE(
 			"futureDates(field_name, parameter) AND pastDates(" +
 				"field_name, parameter)",
+			"check-if-a-date-range-begins-with-a-past-date-and-ends-with-a-" +
+				"future-date",
 			"range"),
-		SUM("sum(parameter1, parameter2, parameterN)", "sum");
+		SUM(
+			"sum(parameter1, parameter2, parameterN)",
+			"add-multiple-numeric-fields-together-and-return-a-single-number-" +
+				"that-can-be-used-with-other-validation-functions",
+			"sum");
 
 		public static List<HashMap<String, String>> getItems(Locale locale) {
 			List<HashMap<String, String>> values = new ArrayList<>();
@@ -137,8 +206,11 @@ public class ObjectCodeEditorUtil {
 			return values;
 		}
 
-		private DDMExpressionFunction(String content, String key) {
+		private DDMExpressionFunction(
+			String content, String helpTextKey, String key) {
+
 			_content = content;
+			_helpTextKey = helpTextKey;
 			_key = key;
 		}
 
@@ -149,10 +221,30 @@ public class ObjectCodeEditorUtil {
 
 	private enum DDMExpressionOperator {
 
-		AND("AND", "and"), DIVIDED_BY("field_name / field_name2", "divided-by"),
-		MINUS("field_name - field_name2", "minus"), OR("OR", "or"),
-		PLUS("field_name + field_name2", "plus"),
-		TIMES("field_name * field_name2", "times");
+		AND(
+			"AND",
+			"this-is-a-type-of-coordinating-conjunction-that-is-commonly-" +
+				"used-to-indicate-a-dependent-relationship",
+			"and"),
+		DIVIDED_BY(
+			"field_name / field_name2",
+			"divide-one-numeric-field-by-another-to-create-an-expression",
+			"divided-by"),
+		MINUS(
+			"field_name - field_name2",
+			"subtract-numeric-fields-from-one-another-to-create-an-expression",
+			"minus"),
+		OR(
+			"OR",
+			"this-is-a-type-of-coordinating-conjunction-that-indicates-an-" +
+				"independent-relationship",
+			"or"),
+		PLUS(
+			"field_name + field_name2",
+			"add-numeric-fields-to-create-an-expression", "plus"),
+		TIMES(
+			"field_name * field_name2",
+			"multiply-numeric-fields-to-create-an-expression", "times");
 
 		public static List<HashMap<String, String>> getItems(Locale locale) {
 			List<HashMap<String, String>> values = new ArrayList<>();
@@ -172,8 +264,11 @@ public class ObjectCodeEditorUtil {
 			return values;
 		}
 
-		private DDMExpressionOperator(String content, String key) {
+		private DDMExpressionOperator(
+			String content, String helpTextKey, String key) {
+
 			_content = content;
+			_helpTextKey = helpTextKey;
 			_key = key;
 		}
 

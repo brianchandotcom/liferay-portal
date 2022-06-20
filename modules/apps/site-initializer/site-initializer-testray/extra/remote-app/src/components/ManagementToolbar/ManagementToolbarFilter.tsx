@@ -54,6 +54,8 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 	const onChange = formActions.form.onChange({form, setForm});
 
 	const onClear = () => {
+		setForm(initialFilters);
+
 		dispatch({
 			payload: null,
 			type: ListViewTypes.SET_CLEAR,
@@ -118,6 +120,7 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 						<Form.Renderer
 							fields={filterFields}
 							filter={filter}
+							form={form}
 							onChange={onChange}
 						/>
 					</div>

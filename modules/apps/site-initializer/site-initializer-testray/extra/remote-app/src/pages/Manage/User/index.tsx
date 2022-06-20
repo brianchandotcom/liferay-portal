@@ -27,7 +27,6 @@ import useUserActions from './useUserActions';
 type UserListViewProps = {
 	actions?: any[];
 	formModal?: FormModal;
-	projectId?: number | string;
 	variables?: any;
 } & {listViewProps?: Partial<ListViewProps>; tableProps?: Partial<TableProps>};
 

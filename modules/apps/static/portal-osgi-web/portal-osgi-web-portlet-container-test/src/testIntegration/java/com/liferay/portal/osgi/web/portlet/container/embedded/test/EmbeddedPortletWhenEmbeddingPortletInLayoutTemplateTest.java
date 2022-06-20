@@ -42,7 +42,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.List;
 
 import javax.portlet.PortletException;
@@ -50,7 +49,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -75,16 +73,12 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 
 	@Test
 	public void testRenderEmbeddedPortlet() throws Exception {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
+		setUpPortlet(
+			testPortlet, new HashMapDictionary<>(), TEST_PORTLET_ID, false);
 
-		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID, false);
-
-		String templateId =
-			"themeId" + LayoutTemplateConstants.CUSTOM_SEPARATOR + "testId";
-		String templateContent =
-			"${processor.processPortlet(\"" + TEST_PORTLET_ID + "\")}";
-
-		_processLayoutTemplate(templateId, templateContent);
+		_processLayoutTemplate(
+			"themeId" + LayoutTemplateConstants.CUSTOM_SEPARATOR + "testId",
+			"${processor.processPortlet(\"" + TEST_PORTLET_ID + "\")}");
 
 		Assert.assertTrue(testPortlet.isCalledRender());
 	}
@@ -106,16 +100,14 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 		_setUpPortletWithRenderWeight(
 			renderedPortlets, "TEST_COLUMN-1_PORTLET_2", 5, true);
 
-		String templateId =
-			"themeId" + LayoutTemplateConstants.CUSTOM_SEPARATOR + "testId";
-		String templateContent = StringBundler.concat(
-			"${processor.processPortlet(\"TEST_EMBEDDED_PORTLET_3\")}",
-			"${processor.processPortlet(\"TEST_EMBEDDED_PORTLET_1\")}",
-			"${processor.processPortlet(\"TEST_EMBEDDED_PORTLET_2\")}",
-			"${processor.processColumn(\"column-1\"",
-			"\"portlet-column-content portlet-column-content-first\")}");
-
-		_processLayoutTemplate(templateId, templateContent);
+		_processLayoutTemplate(
+			"themeId" + LayoutTemplateConstants.CUSTOM_SEPARATOR + "testId",
+			StringBundler.concat(
+				"${processor.processPortlet(\"TEST_EMBEDDED_PORTLET_3\")}",
+				"${processor.processPortlet(\"TEST_EMBEDDED_PORTLET_1\")}",
+				"${processor.processPortlet(\"TEST_EMBEDDED_PORTLET_2\")}",
+				"${processor.processColumn(\"column-1\"",
+				"\"portlet-column-content portlet-column-content-first\")}"));
 
 		Assert.assertEquals(
 			Arrays.asList(
@@ -163,12 +155,8 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 			String templateId, String templateContent)
 		throws Exception {
 
-		HttpServletResponse httpServletResponse = new MockHttpServletResponse();
-
-		HttpServletRequest httpServletRequest = _getHttpServletRequest();
-
 		RuntimePageUtil.processTemplate(
-			httpServletRequest, httpServletResponse, null,
+			_getHttpServletRequest(), new MockHttpServletResponse(), null,
 			new StringTemplateResource(templateId, templateContent),
 			TemplateConstants.LANG_TYPE_FTL);
 	}

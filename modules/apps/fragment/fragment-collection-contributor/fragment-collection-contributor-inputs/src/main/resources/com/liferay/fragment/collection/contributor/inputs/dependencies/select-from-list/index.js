@@ -10,6 +10,7 @@ const buttonLabel = button.querySelector('.forms-select-from-list-label');
 const dropdown = wrapper.querySelector('.dropdown-menu');
 const input = wrapper.querySelector('input');
 const listbox = wrapper.querySelector('.list-unstyled');
+const searchInput = wrapper.querySelector('.forms-select-from-list-search');
 
 function repositionDropdown() {
 	if (document.body.contains(wrapper)) {
@@ -69,17 +70,31 @@ function setActiveDescendant(item) {
 function handleButtonClick() {
 	if (button.hasAttribute('aria-expanded')) {
 		hideDropdown();
+		button.focus();
 	}
 	else {
 		showDropdown();
+
+		if (searchInput) {
+			searchInput.focus();
+		}
+		else {
+			listbox.focus();
+		}
 	}
 }
 
-function handleButtonKeydown(event) {
+function handleKeydown(event) {
 	const currentActiveDescendant = getActiveDesdendant();
 
-	if (event.key === 'ArrowDown') {
+	if (event.key === 'Enter' && dropdown.classList.contains('show')) {
+		hideDropdown();
+		button.focus();
+		event.preventDefault();
+	}
+	else if (event.key === 'ArrowDown') {
 		showDropdown();
+		listbox.focus();
 
 		setActiveDescendant(
 			currentActiveDescendant.nextElementSibling ||
@@ -91,6 +106,7 @@ function handleButtonKeydown(event) {
 	}
 	else if (event.key === 'ArrowUp') {
 		showDropdown();
+		listbox.focus();
 
 		setActiveDescendant(
 			currentActiveDescendant.previousElementSibling ||
@@ -106,10 +122,14 @@ function handleButtonKeydown(event) {
 		event.preventDefault();
 	}
 	else if (event.key === 'Home') {
+		showDropdown();
+		listbox.focus();
 		setActiveDescendant(listbox.firstElementChild);
 		event.preventDefault();
 	}
 	else if (event.key === 'End') {
+		showDropdown();
+		listbox.focus();
 		setActiveDescendant(listbox.lastElementChild);
 		event.preventDefault();
 	}
@@ -130,6 +150,8 @@ function handleButtonKeydown(event) {
 		);
 
 		if (rapidItem) {
+			showDropdown();
+			listbox.focus();
 			setActiveDescendant(rapidItem);
 			event.preventDefault();
 		}
@@ -176,7 +198,8 @@ function handleWindowResizeOrScroll() {
 
 if (listbox.children.length) {
 	button.addEventListener('click', handleButtonClick);
-	button.addEventListener('keydown', handleButtonKeydown);
+	button.addEventListener('keydown', handleKeydown);
+	listbox.addEventListener('keydown', handleKeydown);
 	listbox.addEventListener('click', handleListboxClick);
 	document.addEventListener('click', handleDocumentClick);
 

@@ -2499,8 +2499,8 @@ definition {
 
 		if (isSet(helpText)) {
 			Type(
-				key_label = "Help Text",
-				locator1 = "TextArea#ANY_LABELED",
+				key_text = "Help Text",
+				locator1 = "TextInput#ANY",
 				value1 = "${helpText}");
 
 			Click(

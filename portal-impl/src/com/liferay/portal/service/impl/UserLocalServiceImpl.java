@@ -1344,8 +1344,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				PortalCacheMapSynchronizeUtil.synchronize(
 					PortalCacheHelperUtil.getPortalCache(
 						PortalCacheManagerNames.MULTI_VM,
-						portalCache.getPortalCacheName(), false,
-						portalCache.isMVCC()),
+						portalCache.getPortalCacheName(), portalCache.isMVCC()),
 					_defaultUsers, _synchronizer);
 			});
 

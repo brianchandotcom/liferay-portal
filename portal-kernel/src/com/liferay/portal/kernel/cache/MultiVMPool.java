@@ -31,7 +31,7 @@ public interface MultiVMPool {
 		getPortalCache(String portalCacheName);
 
 	public PortalCache<? extends Serializable, ? extends Serializable>
-		getPortalCache(String portalCacheName, boolean blocking, boolean mvcc);
+		getPortalCache(String portalCacheName, boolean mvcc);
 
 	public PortalCacheManager<? extends Serializable, ? extends Serializable>
 		getPortalCacheManager();

@@ -41,15 +41,14 @@ public class PortalCacheHelperUtil {
 	}
 
 	public static <K extends Serializable, V> PortalCache<K, V> getPortalCache(
-		String portalCacheManagerName, String portalCacheName, boolean blocking,
-		boolean mvcc) {
+		String portalCacheManagerName, String portalCacheName, boolean mvcc) {
 
 		PortalCacheManager<?, ?> portalCacheManager =
 			PortalCacheManagerProvider.getPortalCacheManager(
 				portalCacheManagerName);
 
 		return (PortalCache<K, V>)portalCacheManager.getPortalCache(
-			portalCacheName, blocking, mvcc);
+			portalCacheName, mvcc);
 	}
 
 	public static <K extends Serializable, V> void putWithoutReplicator(

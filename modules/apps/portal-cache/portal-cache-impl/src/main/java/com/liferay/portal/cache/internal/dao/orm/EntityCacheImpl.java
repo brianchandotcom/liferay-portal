@@ -121,7 +121,7 @@ public class EntityCacheImpl
 
 		portalCache =
 			(PortalCache<Serializable, Serializable>)
-				_multiVMPool.getPortalCache(groupKey, false, mvcc);
+				_multiVMPool.getPortalCache(groupKey, mvcc);
 
 		PortalCache<Serializable, Serializable> previousPortalCache =
 			_portalCaches.putIfAbsent(className, portalCache);

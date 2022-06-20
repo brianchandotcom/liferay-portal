@@ -75,6 +75,11 @@
 	<td>//span[contains(@class,'text-info')]//*[contains(.,'Read Only View')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUPPORTED_FIELD_TYPE</td>
+	<td>//h2[contains(@class,'sheet-subtitle')][normalize-space(text())='Field Types']//following-sibling::p</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

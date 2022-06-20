@@ -2443,6 +2443,13 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.UPGRADE_DATABASE_TRANSACTIONS_DISABLED));
 
+	public static final boolean UPGRADE_LOG_CONTEXT_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.UPGRADE_LOG_CONTEXT_ENABLED));
+
+	public static final String UPGRADE_LOG_CONTEXT_NAME = PropsUtil.get(
+		PropsKeys.UPGRADE_LOG_CONTEXT_NAME);
+
 	public static final boolean UPGRADE_REPORT_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.UPGRADE_REPORT_ENABLED));
 

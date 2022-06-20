@@ -141,7 +141,15 @@ public class ObjectEntryValuesException extends PortalException {
 				String.format(
 					"No value was provided for required object field \"%s\"",
 					objectFieldName));
+
+			_objectFieldName = objectFieldName;
 		}
+
+		public String getObjectFieldName() {
+			return _objectFieldName;
+		}
+
+		private String _objectFieldName;
 
 	}
 

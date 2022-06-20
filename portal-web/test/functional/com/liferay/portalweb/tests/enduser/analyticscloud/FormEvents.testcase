@@ -95,25 +95,21 @@ definition {
 					ProxyUtil.startHarRecording("fieldFocused");
 				}
 
-				task ("Click to focus on form fields different than rich text") {
+				task ("Click to focus on form fields") {
 					if ("${fieldName}" == "Date and Time") {
 						Click(
 							key_fieldName = "DateAndTime",
 							locator1 = "FormFields#GENERIC_INPUT_FIELD");
 					}
-
-					if (("${fieldName}" != "Rich Text") && ("${fieldName}" != "Date and Time")) {
-						Click(
-							key_fieldName = "${fieldName}",
-							locator1 = "FormFields#GENERIC_INPUT_FIELD");
-					}
-				}
-
-				task ("Click to focus on rich text writing field") {
-					if ("${fieldName}" == "Rich Text") {
+					else if ("${fieldName}" == "Rich Text") {
 						FormFields.addRichTextContent(
 							content = "",
 							fieldLabel = "Rich Text");
+					}
+					else if (("${fieldName}" != "Rich Text") && ("${fieldName}" != "Date and Time")) {
+						Click(
+							key_fieldName = "${fieldName}",
+							locator1 = "FormFields#GENERIC_INPUT_FIELD");
 					}
 				}
 

@@ -37,8 +37,7 @@
 	};
 
 	window.<portlet:namespace />editOfficeDocument = function (
-		formSubmitURL,
-		dialogTitle
+		formSubmitURL
 	) {
 		Liferay.componentReady('<portlet:namespace />DocumentLibraryOpener').then(
 			(openerOnedrive) => {

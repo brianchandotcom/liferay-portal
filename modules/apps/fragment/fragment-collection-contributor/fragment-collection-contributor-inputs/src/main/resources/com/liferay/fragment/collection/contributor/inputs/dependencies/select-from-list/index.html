@@ -15,7 +15,21 @@
 	[/#if]
 
 	<div class="dropdown-menu">
-		<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="list-unstyled" id="${fragmentEntryLinkNamespace}-listbox" role="listbox">
+		[#if configuration.includeSearch == true]
+		<div class="dropdown-section">
+			<div class="input-group input-group-sm">
+				<div class="input-group-item">
+					<input class="form-control forms-select-from-list-search input-group-inset input-group-inset-after" type="search" value="" />
+
+					<span class="input-group-inset-item input-group-inset-item-after">
+						[@clay["icon"] symbol="search" /]
+					</span>
+				</div>
+			</div>
+		</div>
+		[/#if]
+
+		<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="list-unstyled" id="${fragmentEntryLinkNamespace}-listbox" role="listbox" tabindex="0">
 
 		[#list input.options as option]
 			<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option?index}" role="option">

@@ -22,7 +22,7 @@ import {
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
-import InfoItemService from '../../../../../../app/services/InfoItemService';
+import FormService from '../../../../../../app/services/FormService';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {CACHE_KEYS} from '../../../../../../app/utils/cache';
 import useCache from '../../../../../../app/utils/useCache';
@@ -70,8 +70,7 @@ function FormOptions({item, onValueSelect}) {
 
 function OtherTypeMapping({item, onValueSelect}) {
 	const itemTypes = useCache({
-		fetcher: () =>
-			InfoItemService.getAvailableEditPageInfoItemFormProviders(),
+		fetcher: () => FormService.getAvailableEditPageInfoItemFormProviders(),
 		key: [CACHE_KEYS.itemTypes],
 	});
 

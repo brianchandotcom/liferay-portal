@@ -16,13 +16,6 @@ import {config} from '../config/index';
 import serviceFetch from './serviceFetch';
 
 export default {
-	getAvailableEditPageInfoItemFormProviders() {
-		return serviceFetch(
-			config.getAvailableEditPageInfoItemFormProvidersURL,
-			{},
-			() => {}
-		);
-	},
 
 	/**
 	 * Get available list item renderers for the list style

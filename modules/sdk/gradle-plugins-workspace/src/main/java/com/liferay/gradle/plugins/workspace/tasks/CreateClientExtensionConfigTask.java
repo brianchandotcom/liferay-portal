@@ -37,8 +37,8 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.ProjectLayout;
-import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Gregory Amerson
@@ -48,43 +48,49 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 	public CreateClientExtensionConfigTask() {
 		Project project = getProject();
 
-		ProjectLayout layout = project.getLayout();
+		ProjectLayout projectLayout = project.getLayout();
 
-		DirectoryProperty buildDirectory = layout.getBuildDirectory();
+		DirectoryProperty buildDirectoryProperty =
+			projectLayout.getBuildDirectory();
 
-		_dockerfile = buildDirectory.file("Dockerfile");
-		_lcpJsonFile = buildDirectory.file("LCP.json");
+		_dockerFile = buildDirectoryProperty.file("Dockerfile");
+		_lcpJsonFile = buildDirectoryProperty.file("LCP.json");
 	}
 
 	public void addClientExtension(ClientExtension clientExtension) {
 		_clientExtensions.add(clientExtension);
 
+		Project project = getProject();
+
 		File clientExtensionConfigFile = new File(
-			getProject().getBuildDir(),
+			project.getBuildDir(),
 			clientExtension.id + _CLIENT_EXTENSION_CONFIG_FILE_NAME);
 
-		getOutputs().file(clientExtensionConfigFile);
+		TaskOutputs taskOutputs = getOutputs();
+
+		taskOutputs.files(
+			clientExtensionConfigFile, getDockerFile(), getLcpJsonFile());
 	}
 
 	@TaskAction
 	public void createClientExtensionConfig() {
 		Project project = getProject();
 
-		File inputDockerfile = project.file("Dockerfile");
+		File inputDockerFile = project.file("Dockerfile");
 
-		File outputDockerfile = getDockerfile();
-
-		String dockerfileContent = _loadTemplate(
-			_CLIENT_EXTENSION_DOCKERFILE + ".tpl", Collections.emptyMap());
+		File outputDockerFile = getDockerFile();
 
 		try {
-			if (inputDockerfile.exists()) {
-				dockerfileContent = new String(
-					Files.readAllBytes(inputDockerfile.toPath()));
+			String dockerFileContent = _loadTemplate(
+				_CLIENT_EXTENSION_DOCKERFILE + ".tpl", Collections.emptyMap());
+
+			if (inputDockerFile.exists()) {
+				dockerFileContent = new String(
+					Files.readAllBytes(inputDockerFile.toPath()));
 			}
 
 			Files.write(
-				outputDockerfile.toPath(), dockerfileContent.getBytes());
+				outputDockerFile.toPath(), dockerFileContent.getBytes());
 		}
 		catch (IOException ioException) {
 			throw new GradleException(ioException.getMessage(), ioException);
@@ -93,13 +99,13 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		File inputLcpJsonFile = project.file("LCP.json");
 		File outputLcpJsonFile = getLcpJsonFile();
 
-		String lcpJsonContent = _loadTemplate(
-			_CLIENT_EXTENSION_LCP_JSON + ".tpl", Collections.emptyMap());
-
 		try {
+			String lcpJsonContent = _loadTemplate(
+				_CLIENT_EXTENSION_LCP_JSON + ".tpl", Collections.emptyMap());
+
 			if (inputLcpJsonFile.exists()) {
 				lcpJsonContent = new String(
-					Files.readAllBytes(inputDockerfile.toPath()));
+					Files.readAllBytes(inputDockerFile.toPath()));
 			}
 
 			Files.write(outputLcpJsonFile.toPath(), lcpJsonContent.getBytes());
@@ -135,18 +141,16 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		return _clientExtensions;
 	}
 
-	@OutputFile
-	public File getDockerfile() {
-		return GradleUtil.toFile(getProject(), _dockerfile);
+	public File getDockerFile() {
+		return GradleUtil.toFile(getProject(), _dockerFile);
 	}
 
-	@OutputFile
 	public File getLcpJsonFile() {
 		return GradleUtil.toFile(getProject(), _lcpJsonFile);
 	}
 
-	public void setDockerFile(Object dockerfile) {
-		_dockerfile = dockerfile;
+	public void setDockerFile(Object dockerFile) {
+		_dockerFile = dockerFile;
 	}
 
 	public void setLcpJsonFile(Object lcpJsonFile) {
@@ -193,7 +197,7 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 	private final Set<ClientExtension> _clientExtensions =
 		new LinkedHashSet<>();
-	private Object _dockerfile;
+	private Object _dockerFile;
 	private Object _lcpJsonFile;
 
 }

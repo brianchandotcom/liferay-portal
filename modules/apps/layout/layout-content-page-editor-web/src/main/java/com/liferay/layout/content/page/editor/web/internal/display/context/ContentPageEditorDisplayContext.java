@@ -30,6 +30,7 @@ import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentCompositionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
@@ -1534,19 +1535,26 @@ public class ContentPageEditorDisplayContext {
 				"masterLayout", masterLayout
 			);
 
-			String portletId = _getPortletId(jsonObject.getString("content"));
+			FragmentEntry fragmentEntry =
+				FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+					fragmentEntryLink.getFragmentEntryId());
 
-			PortletConfig portletConfig = PortletConfigFactoryUtil.get(
-				portletId);
+			if (fragmentEntry == null) {
+				String portletId = _getPortletId(
+					jsonObject.getString("content"));
 
-			if (portletConfig != null) {
-				jsonObject.put(
-					"name",
-					PortalUtil.getPortletTitle(
-						portletId, themeDisplay.getLocale())
-				).put(
-					"portletId", portletId
-				);
+				PortletConfig portletConfig = PortletConfigFactoryUtil.get(
+					portletId);
+
+				if (portletConfig != null) {
+					jsonObject.put(
+						"name",
+						PortalUtil.getPortletTitle(
+							portletId, themeDisplay.getLocale())
+					).put(
+						"portletId", portletId
+					);
+				}
 			}
 
 			fragmentEntryLinksMap.put(

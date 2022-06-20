@@ -18,7 +18,7 @@ import {useState} from 'react';
 type CheckboxProps = {
 	inline?: boolean;
 	label?: string;
-} & React.HTMLAttributes<HTMLInputElement>;
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
 const Checkbox: React.FC<CheckboxProps> = (props) => {
 	const [value, setValue] = useState(false);
@@ -31,5 +31,6 @@ const Checkbox: React.FC<CheckboxProps> = (props) => {
 		/>
 	);
 };
+
 
 export default Checkbox;

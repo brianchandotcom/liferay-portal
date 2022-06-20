@@ -184,6 +184,12 @@ definition {
 			value1 = "You must configure at least one identity provider connection for SAML to function.");
 	}
 
+	macro assertSAMLMetadataAlertMessage {
+		AssertTextEquals(
+			locator1 = "CPSAMLAdmin#METADATA_ALERT_MESSAGE",
+			value1 = "The connected provider is configured through an uploaded metadata file.");
+	}
+
 	macro assertSAMLRequestNotValid {
 		AssertClick(
 			locator1 = "UserBar#USER_SIGN_IN",
@@ -429,11 +435,21 @@ definition {
 
 		SAMLNavigation.gotoIdentityProviderConnections();
 
-		SAMLPortlet.editAttributeMappingOfSP(
-			idpAttributeMappingNew = "${idpAttributeMappingNew}",
-			idpAttributeMappingOld = "${idpAttributeMappingOld}",
-			idpAttributeMappingText = "${idpAttributeMappingText}",
-			idpEntityId = "${idpEntityId}");
+		if (isSet(metadata)) {
+			SAMLPortlet.editMetadataConfigurationsOfSP(
+				changeToURL = "${changeToURL}",
+				changeToXML = "${changeToXML}",
+				idpEntityId = "${idpEntityId}",
+				idpMetadataURL = "${idpMetadataURL}",
+				uploadMetadataXML = "${uploadMetadataXML}");
+		}
+		else {
+			SAMLPortlet.editAttributeMappingOfSP(
+				idpAttributeMappingNew = "${idpAttributeMappingNew}",
+				idpAttributeMappingOld = "${idpAttributeMappingOld}",
+				idpAttributeMappingText = "${idpAttributeMappingText}",
+				idpEntityId = "${idpEntityId}");
+		}
 
 		User.logoutPG(specificURL = "${spURL}");
 	}

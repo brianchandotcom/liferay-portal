@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METADATA_ALERT_MESSAGE</td>
+	<td>//div[@class='portlet-msg-alert']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>IMPORT_CERTIFICATE</td>
 	<td>//a[contains(.,'Import Certificate')]</td>
 	<td></td>
@@ -83,6 +88,11 @@
 <tr>
 	<td>SAML_UPLOAD_METADATA_XML</td>
 	<td>//label[contains(@for,'metadataDeliveryXml')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAML_UPLOAD_METADATA_URL</td>
+	<td>//label[contains(@for,'metadataDelivery_1')]/input[@type='radio']</td>
 	<td></td>
 </tr>
 <tr>

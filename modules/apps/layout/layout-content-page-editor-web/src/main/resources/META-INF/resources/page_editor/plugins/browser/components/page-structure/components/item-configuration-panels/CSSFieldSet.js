@@ -30,6 +30,11 @@ const FIELD_SET = {
 			name: 'cssClasses',
 			type: 'cssClassSelector',
 		},
+		{
+			label: Liferay.Language.get('custom-css'),
+			name: 'customCSS',
+			type: 'customCSS',
+		},
 	],
 	label: Liferay.Language.get('css'),
 };

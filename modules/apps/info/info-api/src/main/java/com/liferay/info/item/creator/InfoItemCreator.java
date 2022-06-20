@@ -23,7 +23,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 public interface InfoItemCreator<T> {
 
 	public T createFromInfoItemFieldValues(
-			InfoItemFieldValues infoItemFieldValues)
+			long groupId, InfoItemFieldValues infoItemFieldValues)
 		throws InfoFormException;
 
 }

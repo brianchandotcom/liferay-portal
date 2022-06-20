@@ -16,7 +16,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useGlobalContext} from '../contexts/GlobalContext';
 import {useSelectorRef} from '../contexts/StoreContext';
 import FormService from '../services/FormService';
-import {getCacheItem, getCacheKey} from './cache';
+import {CACHE_KEYS, getCacheItem, getCacheKey} from './cache';
 import hasRequiredInputChild from './hasRequiredInputChild';
 import hasSubmitChild from './hasSubmitChild';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
@@ -63,7 +63,7 @@ export default function useIsSomeFormIncomplete() {
 			};
 
 			const cacheKey = getCacheKey([
-				'formFields',
+				CACHE_KEYS.formFields,
 				classNameId,
 				classTypeId,
 			]);

@@ -29,7 +29,7 @@ const Container: React.FC<ContainerProps> = ({
 	collapsable = false,
 	title,
 }) => {
-	const ContainerTitle = () => <div>{title && <h5>{title}</h5>}</div>;
+	const containerTitle = <div>{title && <h5>{title}</h5>}</div>;
 
 	if (collapsable) {
 		return (
@@ -37,7 +37,7 @@ const Container: React.FC<ContainerProps> = ({
 				className="p-4"
 				collapsable
 				defaultExpanded
-				displayTitle={<ContainerTitle />}
+				displayTitle={containerTitle}
 				displayType="secondary"
 				showCollapseIcon
 			>
@@ -53,7 +53,7 @@ const Container: React.FC<ContainerProps> = ({
 				className
 			)}
 		>
-			<ContainerTitle />
+			{containerTitle}
 
 			{children}
 		</div>

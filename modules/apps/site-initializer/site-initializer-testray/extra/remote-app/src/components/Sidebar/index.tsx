@@ -29,20 +29,6 @@ const Sidebar = () => {
 	const {pathname} = useLocation();
 	const [expanded, setExpanded] = useLocalStorage('sidebar', true);
 
-	const popoverItem = (
-		<div className={classNames('cursor-pointer testray-sidebar-item')}>
-			<ClayIcon fontSize={20} symbol="drop" />
-
-			<span
-				className={classNames('ml-1 testray-sidebar-text', {
-					'testray-sidebar-text-expanded': expanded,
-				})}
-			>
-				{i18n.translate('compare-runs')}
-			</span>
-		</div>
-	);
-
 	const sidebarItems = [
 		{
 			icon: 'polls',
@@ -63,7 +49,26 @@ const Sidebar = () => {
 					disableScroll={true}
 					header="Compare Runs"
 					size="lg"
-					trigger={popoverItem}
+					trigger={
+						<div
+							className={classNames(
+								'cursor-pointer testray-sidebar-item'
+							)}
+						>
+							<ClayIcon fontSize={20} symbol="drop" />
+
+							<span
+								className={classNames(
+									'ml-1 testray-sidebar-text',
+									{
+										'testray-sidebar-text-expanded': expanded,
+									}
+								)}
+							>
+								{i18n.translate('compare-runs')}
+							</span>
+						</div>
+					}
 				>
 					<CompareRun />
 				</ClayPopover>

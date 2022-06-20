@@ -152,7 +152,12 @@ function handleDocumentClick(event) {
 		return;
 	}
 
-	if (event.target !== wrapper && !wrapper.contains(event.target)) {
+	if (
+		event.target !== wrapper &&
+		!wrapper.contains(event.target) &&
+		event.target !== dropdown &&
+		!dropdown.contains(event.target)
+	) {
 		hideDropdown();
 	}
 }

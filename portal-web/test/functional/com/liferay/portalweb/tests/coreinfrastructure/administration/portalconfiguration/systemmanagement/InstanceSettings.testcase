@@ -1403,6 +1403,72 @@ definition {
 		AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 	}
 
+	@description = "This is a use case for LPS-156105. The test assert the value of mail setting for new instance is inherited from server level."
+	@priority = "2"
+	test ViewInstanceMailSettingsValueIsInheritedFromServerLevel {
+		task ("Given change the server/company level mail setting value") {
+			ServerAdministration.openServerAdmin();
+
+			Navigator.gotoNavItem(navItem = "Mail");
+
+			FormFields.editText(
+				fieldName = "pop3Host",
+				fieldValue = "popserver");
+
+			PortletEntry.save();
+
+			PortalSettings.openInstanceSettingsAdmin();
+
+			Click(
+				key_itemName = "Email",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Click(
+				key_configurationName = "Mail Settings",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+			FormFields.editText(
+				fieldName = "pop3Host",
+				fieldValue = "popcompany");
+
+			PortletEntry.save();
+		}
+
+		task ("When a new instance is added") {
+			PortalInstances.openVirtualInstancesAdmin();
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+		}
+
+		task ("Then assert the value of mail setting for new instance is inherited from server level") {
+			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
+
+			Click(
+				key_itemName = "Email",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Click(
+				key_configurationName = "Mail Settings",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+			FormFields.viewTextValue(
+				fieldName = "pop3Host",
+				fieldValue = "popserver");
+		}
+	}
+
 	@description = "This test asserts that a user can update the password changed notification subject and body. The notification also send when set password via json."
 	@priority = "3"
 	test ViewPasswordChangedNotificationTemplateUpdated {

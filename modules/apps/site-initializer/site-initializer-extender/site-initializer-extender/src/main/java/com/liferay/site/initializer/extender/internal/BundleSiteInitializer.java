@@ -472,9 +472,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					siteNavigationMenuItemSettingsBuilder.build(),
 					taxonomyCategoryIdsStringUtilReplaceValues));
 
-			_invoke(
-				() -> _addWorkflowDefinitions(
-					objectDefinitionResource, serviceContext));
+			_invoke(() -> _addWorkflowDefinitions(serviceContext));
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -3150,9 +3148,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addWorkflowDefinitions(
-			ObjectDefinitionResource objectDefinitionResource,
-			ServiceContext serviceContext)
+	private void _addWorkflowDefinitions(ServiceContext serviceContext)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(

@@ -109,6 +109,10 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		return _cssClasses;
 	}
 
+	public String getCustomCSS() {
+		return _customCSS;
+	}
+
 	public String getDisplay() {
 		return _getStringStyleProperty("display");
 	}
@@ -137,6 +141,8 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = JSONUtil.put(
 			"cssClasses", JSONFactoryUtil.createJSONArray(_cssClasses)
+		).put(
+			"customCSS", _customCSS
 		).put(
 			"styles", stylesJSONObject
 		);
@@ -247,6 +253,10 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		_cssClasses = cssClasses;
 	}
 
+	public void setCustomCSS(String customCSS) {
+		_customCSS = customCSS;
+	}
+
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
 		if (itemConfigJSONObject.has("cssClasses")) {
@@ -256,6 +266,10 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 				cssClasses, itemConfigJSONObject.getJSONArray("cssClasses"));
 
 			setCssClasses(cssClasses);
+		}
+
+		if (itemConfigJSONObject.has("customCSS")) {
+			setCustomCSS(itemConfigJSONObject.getString("customCSS"));
 		}
 
 		try {
@@ -443,5 +457,6 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
 	private Set<String> _cssClasses;
+	private String _customCSS;
 
 }

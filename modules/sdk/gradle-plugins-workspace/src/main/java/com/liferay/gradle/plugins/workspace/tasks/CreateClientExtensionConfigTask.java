@@ -55,6 +55,10 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		_dockerFile = buildDirectoryProperty.file("Dockerfile");
 		_lcpJsonFile = buildDirectoryProperty.file("LCP.json");
+
+		TaskOutputs taskOutputs = getOutputs();
+
+		taskOutputs.files(_dockerFile, _lcpJsonFile);
 	}
 
 	public void addClientExtension(ClientExtension clientExtension) {
@@ -68,21 +72,20 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		TaskOutputs taskOutputs = getOutputs();
 
-		taskOutputs.files(
-			clientExtensionConfigFile, getDockerFile(), getLcpJsonFile());
+		taskOutputs.file(clientExtensionConfigFile);
 	}
 
 	@TaskAction
 	public void createClientExtensionConfig() {
 		Project project = getProject();
 
-		File inputDockerFile = project.file("Dockerfile");
-
 		File outputDockerFile = getDockerFile();
 
 		try {
 			String dockerFileContent = _loadTemplate(
 				_CLIENT_EXTENSION_DOCKERFILE + ".tpl", Collections.emptyMap());
+
+			File inputDockerFile = project.file("Dockerfile");
 
 			if (inputDockerFile.exists()) {
 				dockerFileContent = new String(
@@ -96,16 +99,21 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 			throw new GradleException(ioException.getMessage(), ioException);
 		}
 
-		File inputLcpJsonFile = project.file("LCP.json");
 		File outputLcpJsonFile = getLcpJsonFile();
 
 		try {
+			String projectName = project.getName();
+
 			String lcpJsonContent = _loadTemplate(
-				_CLIENT_EXTENSION_LCP_JSON + ".tpl", Collections.emptyMap());
+				_CLIENT_EXTENSION_LCP_JSON + ".tpl",
+				Collections.singletonMap(
+					"__CLIENT_EXTENSION_ID__", projectName.toLowerCase()));
+
+			File inputLcpJsonFile = project.file("LCP.json");
 
 			if (inputLcpJsonFile.exists()) {
 				lcpJsonContent = new String(
-					Files.readAllBytes(inputDockerFile.toPath()));
+					Files.readAllBytes(inputLcpJsonFile.toPath()));
 			}
 
 			Files.write(outputLcpJsonFile.toPath(), lcpJsonContent.getBytes());

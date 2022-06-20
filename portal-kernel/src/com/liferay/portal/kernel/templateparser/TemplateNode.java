@@ -225,7 +225,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 				return StringPool.BLANK;
 			}
 
-			return PortalUtil.getLayoutFriendlyURL(layout, _themeDisplay);
+			return PortalUtil.getLayoutRelativeURL(layout, _themeDisplay);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

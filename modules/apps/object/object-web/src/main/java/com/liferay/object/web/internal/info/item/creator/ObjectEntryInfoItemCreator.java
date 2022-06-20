@@ -93,7 +93,7 @@ public class ObjectEntryInfoItemCreator
 	}
 
 	private long _getGroupId(
-		ObjectDefinition objectDefinition, String scopeKey) {
+		ObjectDefinition objectDefinition, String siteKey) {
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
@@ -111,7 +111,7 @@ public class ObjectEntryInfoItemCreator
 
 			groupId = GetterUtil.getLong(
 				GroupUtil.getGroupId(
-					objectDefinition.getCompanyId(), scopeKey,
+					objectDefinition.getCompanyId(), siteKey,
 					_groupLocalService));
 		}
 

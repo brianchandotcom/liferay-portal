@@ -77,7 +77,6 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 			testPortlet, new HashMapDictionary<>(), TEST_PORTLET_ID, false);
 
 		_processLayoutTemplate(
-			"themeId" + LayoutTemplateConstants.CUSTOM_SEPARATOR + "testId",
 			"${processor.processPortlet(\"" + TEST_PORTLET_ID + "\")}");
 
 		Assert.assertTrue(testPortlet.isCalledRender());
@@ -101,7 +100,6 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 			renderedPortlets, "TEST_COLUMN-1_PORTLET_2", 5, true);
 
 		_processLayoutTemplate(
-			"themeId" + LayoutTemplateConstants.CUSTOM_SEPARATOR + "testId",
 			StringBundler.concat(
 				"${processor.processPortlet(\"TEST_EMBEDDED_PORTLET_3\")}",
 				"${processor.processPortlet(\"TEST_EMBEDDED_PORTLET_1\")}",
@@ -151,13 +149,12 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 		return httpServletRequest;
 	}
 
-	private void _processLayoutTemplate(
-			String templateId, String templateContent)
+	private void _processLayoutTemplate(String templateContent)
 		throws Exception {
 
 		RuntimePageUtil.processTemplate(
 			_getHttpServletRequest(), new MockHttpServletResponse(), null,
-			new StringTemplateResource(templateId, templateContent),
+			new StringTemplateResource(_TEMPLATE_ID, templateContent),
 			TemplateConstants.LANG_TYPE_FTL);
 	}
 
@@ -187,5 +184,8 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 			).build(),
 			portletName, addToLayout);
 	}
+
+	private static final String _TEMPLATE_ID =
+		"themeId" + LayoutTemplateConstants.CUSTOM_SEPARATOR + "testId";
 
 }

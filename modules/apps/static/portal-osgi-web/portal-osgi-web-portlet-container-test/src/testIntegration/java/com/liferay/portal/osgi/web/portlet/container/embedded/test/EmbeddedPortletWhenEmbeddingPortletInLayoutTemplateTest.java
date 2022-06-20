@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.portlet.container.embedded.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -34,14 +35,25 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.osgi.web.portlet.container.test.BasePortletContainerTestCase;
+import com.liferay.portal.osgi.web.portlet.container.test.TestPortlet;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Dictionary;
+import java.util.List;
+
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,6 +93,42 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 		_processLayoutTemplate(layout, templateId, templateContent);
 
 		Assert.assertTrue(testPortlet.isCalledRender());
+	}
+
+	@Test
+	public void testRenderEmbeddedPortletFollowsRenderWeights()
+		throws Exception {
+
+		List<String> renderedPortlets = new ArrayList<>();
+
+		_setUpPortletWithRenderWeight(
+			renderedPortlets, "TEST_EMBEDDED_PORTLET_1", 1, false);
+		_setUpPortletWithRenderWeight(
+			renderedPortlets, "TEST_EMBEDDED_PORTLET_2", 2, false);
+		_setUpPortletWithRenderWeight(
+			renderedPortlets, "TEST_EMBEDDED_PORTLET_3", 3, false);
+		_setUpPortletWithRenderWeight(
+			renderedPortlets, "TEST_COLUMN-1_PORTLET_1", 4, true);
+		_setUpPortletWithRenderWeight(
+			renderedPortlets, "TEST_COLUMN-1_PORTLET_2", 5, true);
+
+		String templateId =
+			"themeId" + LayoutTemplateConstants.CUSTOM_SEPARATOR + "testId";
+		String templateContent = StringBundler.concat(
+			"${processor.processPortlet(\"TEST_EMBEDDED_PORTLET_3\")}",
+			"${processor.processPortlet(\"TEST_EMBEDDED_PORTLET_1\")}",
+			"${processor.processPortlet(\"TEST_EMBEDDED_PORTLET_2\")}",
+			"${processor.processColumn(\"column-1\"",
+			"\"portlet-column-content portlet-column-content-first\")}");
+
+		_processLayoutTemplate(layout, templateId, templateContent);
+
+		Assert.assertEquals(
+			Arrays.asList(
+				"TEST_COLUMN-1_PORTLET_2", "TEST_COLUMN-1_PORTLET_1",
+				"TEST_EMBEDDED_PORTLET_3", "TEST_EMBEDDED_PORTLET_2",
+				"TEST_EMBEDDED_PORTLET_1"),
+			renderedPortlets);
 	}
 
 	private HttpServletRequest _getHttpServletRequest(
@@ -155,6 +203,33 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 			httpServletRequest, httpServletResponse, null,
 			new StringTemplateResource(templateId, templateContent),
 			TemplateConstants.LANG_TYPE_FTL);
+	}
+
+	private void _setUpPortletWithRenderWeight(
+			List<String> renderedPortlets, String portletName, int renderWeight,
+			boolean addToLayout)
+		throws Exception {
+
+		TestPortlet testPortlet = new TestPortlet() {
+
+			@Override
+			public void render(
+					RenderRequest renderRequest, RenderResponse renderResponse)
+				throws IOException, PortletException {
+
+				super.render(renderRequest, renderResponse);
+
+				renderedPortlets.add(portletName);
+			}
+
+		};
+
+		setUpPortlet(
+			testPortlet,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"com.liferay.portlet.render-weight", renderWeight
+			).build(),
+			portletName, addToLayout);
 	}
 
 	@Inject

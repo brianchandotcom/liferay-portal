@@ -75,7 +75,7 @@ public interface ObjectFieldService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	public ObjectField updateCustomObjectField(
+	public ObjectField updateObjectField(
 			long objectFieldId, String externalReferenceCode,
 			long listTypeDefinitionId, String businessType, String dbType,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,

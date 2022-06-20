@@ -76,7 +76,7 @@ public class ObjectFieldServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static ObjectField updateCustomObjectField(
+	public static ObjectField updateObjectField(
 			long objectFieldId, String externalReferenceCode,
 			long listTypeDefinitionId, String businessType, String dbType,
 			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
@@ -86,7 +86,7 @@ public class ObjectFieldServiceUtil {
 				objectFieldSettings)
 		throws PortalException {
 
-		return getService().updateCustomObjectField(
+		return getService().updateObjectField(
 			objectFieldId, externalReferenceCode, listTypeDefinitionId,
 			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId,
 			labelMap, name, required, objectFieldSettings);

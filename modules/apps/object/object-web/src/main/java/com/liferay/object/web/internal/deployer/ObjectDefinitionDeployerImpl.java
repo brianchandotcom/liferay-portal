@@ -146,8 +146,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoItemCreator.class,
 				new ObjectEntryInfoItemCreator(
-					_groupLocalService, objectDefinition, _objectEntryService,
-					_objectScopeProviderRegistry),
+					_groupLocalService, infoItemFormProvider, objectDefinition,
+					_objectEntryService, _objectScopeProviderRegistry),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.class.name", objectDefinition.getClassName()
 				).build()),

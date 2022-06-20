@@ -14,7 +14,6 @@
 
 package com.liferay.object.web.internal.info.item.creator;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
@@ -48,12 +47,10 @@ public class ObjectEntryInfoItemCreator
 	implements InfoItemCreator<ObjectEntry> {
 
 	public ObjectEntryInfoItemCreator(
-		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService, ObjectDefinition objectDefinition,
 		ObjectEntryService objectEntryService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
 
-		_depotEntryLocalService = depotEntryLocalService;
 		_groupLocalService = groupLocalService;
 		_objectDefinition = objectDefinition;
 		_objectEntryService = objectEntryService;
@@ -115,11 +112,6 @@ public class ObjectEntryInfoItemCreator
 			groupId = GroupUtil.getGroupId(
 				objectDefinition.getCompanyId(), scopeKey, _groupLocalService);
 		}
-		else {
-			groupId = GroupUtil.getDepotGroupId(
-				scopeKey, objectDefinition.getCompanyId(),
-				_depotEntryLocalService, _groupLocalService);
-		}
 
 		return GetterUtil.getLong(groupId);
 	}
@@ -127,7 +119,6 @@ public class ObjectEntryInfoItemCreator
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryInfoItemCreator.class);
 
-	private final DepotEntryLocalService _depotEntryLocalService;
 	private final GroupLocalService _groupLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryService _objectEntryService;

@@ -133,7 +133,7 @@ public class FragmentEntryLinkManager {
 			FragmentEntryLink fragmentEntryLink,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			LayoutStructure layoutStructure, String portletId)
+			LayoutStructure layoutStructure)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -164,6 +164,12 @@ public class FragmentEntryLinkManager {
 
 			String fragmentEntryKey = null;
 			String name = null;
+
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+
+			String portletId = editableValuesJSONObject.getString("portletId");
 
 			if (fragmentEntry != null) {
 				fragmentEntryKey = fragmentEntry.getFragmentEntryKey();
@@ -224,9 +230,7 @@ public class FragmentEntryLinkManager {
 				"editableTypes",
 				EditableFragmentEntryProcessorUtil.getEditableTypes(content)
 			).put(
-				"editableValues",
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues())
+				"editableValues", editableValuesJSONObject
 			).put(
 				"fragmentEntryId",
 				() -> {
@@ -279,13 +283,13 @@ public class FragmentEntryLinkManager {
 			FragmentEntryLink fragmentEntryLink,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			LayoutStructure layoutStructure, String portletId)
+			LayoutStructure layoutStructure)
 		throws PortalException {
 
 		return getFragmentEntryLinkJSONObject(
 			new DefaultFragmentRendererContext(fragmentEntryLink),
 			fragmentEntryLink, httpServletRequest, httpServletResponse,
-			layoutStructure, portletId);
+			layoutStructure);
 	}
 
 	private FragmentEntry _getFragmentEntry(

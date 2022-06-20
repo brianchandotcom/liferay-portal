@@ -365,9 +365,7 @@ definition {
 	@priority = "3"
 	test AssertOrderTypeInOpenCartsWidgetList {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "false";
 
 		task ("Given a buyer user connected to the Commerce Account") {
 			CommerceEntry.addAccountEntryUser(
@@ -421,9 +419,7 @@ definition {
 	@priority = "3"
 	test AssertOrderTypeInPlacedOrdersList {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "false";
 
 		task ("Given a buyer user connected to the Commerce Account") {
 			CommerceEntry.addAccountEntryUser(

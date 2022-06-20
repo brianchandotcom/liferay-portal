@@ -35,6 +35,15 @@ const baseListboxItems = Array.from(listbox.children).map((child) => ({
 	value: child.dataset.optionValue,
 }));
 
+function debounce(fn, delay) {
+	let debounceId = null;
+
+	return function (...args) {
+		clearTimeout(debounceId);
+		debounceId = setTimeout(() => fn(...args), delay);
+	};
+}
+
 function repositionDropdown() {
 	if (document.body.contains(wrapper)) {
 		if (wrapper.contains(dropdown)) {
@@ -322,7 +331,7 @@ if (listbox.children.length) {
 
 	if (searchInput) {
 		searchInput.addEventListener('keydown', handleMovementKeys);
-		searchInput.addEventListener('keyup', handleSearchKeyup);
+		searchInput.addEventListener('keyup', debounce(handleSearchKeyup, 500));
 	}
 
 	window.addEventListener('resize', handleWindowResizeOrScroll, {

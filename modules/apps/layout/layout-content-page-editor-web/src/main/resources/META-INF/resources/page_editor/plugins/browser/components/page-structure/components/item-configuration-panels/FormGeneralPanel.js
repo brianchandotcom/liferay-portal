@@ -88,8 +88,14 @@ function OtherTypeMapping({item, onValueSelect}) {
 		[formTypes]
 	);
 
+	const {classNameId, classTypeId} = item.config;
+
 	const selectedType = availableFormTypes.find(
-		({value}) => value === item.config.classNameId
+		({value}) => value === classNameId
+	);
+
+	const selectedSubtype = selectedType?.subtypes.find(
+		({value}) => value === classTypeId
 	);
 
 	return (
@@ -115,7 +121,7 @@ function OtherTypeMapping({item, onValueSelect}) {
 							formConfig: FORM_MAPPING_SOURCES.otherContentType,
 						});
 					}}
-					value={item.config.classNameId}
+					value={selectedType ? classNameId : ''}
 				/>
 			)}
 
@@ -126,7 +132,13 @@ function OtherTypeMapping({item, onValueSelect}) {
 						label: Liferay.Language.get('subtype'),
 						name: 'classTypeId',
 						typeOptions: {
-							validValues: selectedType.subtypes,
+							validValues: [
+								{
+									label: Liferay.Language.get('none'),
+									value: '',
+								},
+								...selectedType.subtypes,
+							],
 						},
 					}}
 					onValueSelect={(_name, classTypeId) =>
@@ -136,7 +148,7 @@ function OtherTypeMapping({item, onValueSelect}) {
 							formConfig: FORM_MAPPING_SOURCES.otherContentType,
 						})
 					}
-					value={item.config.classTypeId}
+					value={selectedSubtype ? classTypeId : ''}
 				/>
 			)}
 		</>

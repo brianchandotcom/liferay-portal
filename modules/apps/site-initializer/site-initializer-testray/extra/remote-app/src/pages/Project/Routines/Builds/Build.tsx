@@ -107,7 +107,7 @@ const Build = () => {
 								<StatusBadge
 									type={getStatusLabel(
 										dueStatus
-									)?.toLowerCase()}
+									)}
 								>
 									{getStatusLabel(dueStatus)}
 								</StatusBadge>

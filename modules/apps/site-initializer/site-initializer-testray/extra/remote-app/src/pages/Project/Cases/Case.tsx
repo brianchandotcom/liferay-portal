@@ -139,7 +139,7 @@ const Case = () => {
 										<StatusBadge
 											type={getStatusLabel(
 												dueStatus
-											)?.toLowerCase()}
+											)}
 										>
 											{getStatusLabel(dueStatus)}
 										</StatusBadge>

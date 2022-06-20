@@ -115,7 +115,7 @@ const CaseResult = () => {
 									<StatusBadge
 										type={getStatusLabel(
 											caseResult.dueStatus
-										)?.toLowerCase()}
+										)}
 									>
 										{getStatusLabel(caseResult.dueStatus)}
 									</StatusBadge>

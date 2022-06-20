@@ -12,6 +12,8 @@
  * details.
  */
 
+import {StatusBarOptions} from '../components/StatusBadge/StatusBadge';
+
 export const DATA_COLORS = {
 	'metrics.blocked': '#F8D72E',
 	'metrics.failed': '#E73A45',
@@ -66,8 +68,10 @@ export const TEST_STATUS_LABEL: any = {
 	7: 'Test Fix',
 };
 
-const getStatusLabel = (status: number): string =>
-	(TEST_STATUS_LABEL as any)[status];
+const getStatusLabel = (status: number): StatusBarOptions =>
+	String(
+		(TEST_STATUS_LABEL as any)[status]
+	)?.toLowerCase() as StatusBarOptions;
 
 export enum SUB_TASK_STATUS {
 	'ABANDONED' = 2,

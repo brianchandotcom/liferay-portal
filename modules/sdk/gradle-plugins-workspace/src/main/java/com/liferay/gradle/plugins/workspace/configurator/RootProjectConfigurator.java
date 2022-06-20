@@ -715,6 +715,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					List<Dockerfile.Instruction> originalInstructions =
 						new ArrayList<>(instructions.get());
 
+					String dockerLocalRegistryAddress =
+							workspaceExtension.
+								getDockerLocalRegistryAddress();
+					
 					if (Objects.nonNull(workspaceExtension.getProduct())) {
 						WorkspaceExtension.ProductInfo productInfo =
 							workspaceExtension.getProductInfo();
@@ -734,10 +738,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 									workspaceExtension.getDockerImageLiferay();
 							}
 
-							String dockerLocalRegistryAddress =
-								workspaceExtension.
-									getDockerLocalRegistryAddress();
-
 							if (Objects.nonNull(dockerLocalRegistryAddress)) {
 								dockerImageLiferay = dockerImageLiferay.replace(
 									"liferay", dockerLocalRegistryAddress);
@@ -751,11 +751,17 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						}
 					}
 					else {
+						String dockerImageLiferay = workspaceExtension.
+								getDockerImageLiferay();
+						
+						if (Objects.nonNull(dockerLocalRegistryAddress)) {
+							dockerImageLiferay = dockerImageLiferay.replace(
+								"liferay", dockerLocalRegistryAddress);
+						}
+						
 						Dockerfile.FromInstruction baseImage =
 							new Dockerfile.FromInstruction(
-								new Dockerfile.From(
-									workspaceExtension.
-										getDockerImageLiferay()));
+								new Dockerfile.From(dockerImageLiferay));
 
 						originalInstructions.add(0, baseImage);
 					}
@@ -980,9 +986,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		else if (Objects.nonNull(dockerUserName)) {
 			repositoryProperty.set(
 				dockerUserName + "/" + workspaceExtension.getDockerImageId());
-		}
-		else {
-			repositoryProperty.set(workspaceExtension.getDockerImageId());
 		}
 
 		Property<String> tagProperty = dockerTagImage.getTag();

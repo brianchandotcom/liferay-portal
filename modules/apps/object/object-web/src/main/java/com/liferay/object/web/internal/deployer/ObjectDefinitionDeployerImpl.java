@@ -17,7 +17,6 @@ package com.liferay.object.web.internal.deployer;
 import com.liferay.application.list.PanelApp;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.info.item.creator.InfoItemCreator;
@@ -139,8 +138,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoItemCreator.class,
 				new ObjectEntryInfoItemCreator(
-					_depotEntryLocalService, _groupLocalService,
-					objectDefinition, _objectEntryService,
+					_groupLocalService, objectDefinition, _objectEntryService,
 					_objectScopeProviderRegistry),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"item.class.name", objectDefinition.getClassName()
@@ -365,9 +363,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private AttachmentUploadResponseHandler _attachmentUploadResponseHandler;
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private DisplayPageInfoItemCapability _displayPageInfoItemCapability;

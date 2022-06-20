@@ -3665,6 +3665,49 @@ public class Mutation {
 						Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
+	@GraphQLField(
+		description = "Deletes the asset library's structured content folder by external reference code."
+	)
+	public boolean
+			deleteAssetLibraryStructuredContentFolderByExternalReferenceCode(
+				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					deleteAssetLibraryStructuredContentFolderByExternalReferenceCode(
+						Long.valueOf(assetLibraryId), externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Updates the asset library's structured content folder with the given external reference code, or creates it if it not exists."
+	)
+	public StructuredContentFolder
+			updateAssetLibraryStructuredContentFolderByExternalReferenceCode(
+				@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("structuredContentFolder") StructuredContentFolder
+					structuredContentFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentFolderResource ->
+				structuredContentFolderResource.
+					putAssetLibraryStructuredContentFolderByExternalReferenceCode(
+						Long.valueOf(assetLibraryId), externalReferenceCode,
+						structuredContentFolder));
+	}
+
 	@GraphQLField
 	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
 			updateAssetLibraryStructuredContentFolderPermissionsPage(

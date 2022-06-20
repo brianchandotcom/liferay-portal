@@ -674,6 +674,243 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContentFolder structuredContentFolder =
+			testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentFolderResource.
+				deleteAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					structuredContentFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					structuredContentFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCodeHttpResponse(
+					testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					structuredContentFolder.getExternalReferenceCode()));
+	}
+
+	protected Long
+			testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected StructuredContentFolder
+			testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testGetAssetLibraryStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		StructuredContentFolder postStructuredContentFolder =
+			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		StructuredContentFolder getStructuredContentFolder =
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					postStructuredContentFolder.getExternalReferenceCode());
+
+		assertEquals(postStructuredContentFolder, getStructuredContentFolder);
+		assertValid(getStructuredContentFolder);
+	}
+
+	protected Long
+			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected StructuredContentFolder
+			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		StructuredContentFolder structuredContentFolder =
+			testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		Assert.assertTrue(
+			equals(
+				structuredContentFolder,
+				StructuredContentFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"assetLibraryStructuredContentFolderByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"assetLibraryId",
+											"\"" +
+												testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId() +
+													"\"");
+										put(
+											"externalReferenceCode",
+											"\"" +
+												structuredContentFolder.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/assetLibraryStructuredContentFolderByExternalReferenceCode"))));
+	}
+
+	protected Long
+			testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"assetLibraryStructuredContentFolderByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected StructuredContentFolder
+			testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
+	}
+
+	@Test
+	public void testPutAssetLibraryStructuredContentFolderByExternalReferenceCode()
+		throws Exception {
+
+		StructuredContentFolder postStructuredContentFolder =
+			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+
+		StructuredContentFolder randomStructuredContentFolder =
+			randomStructuredContentFolder();
+
+		StructuredContentFolder putStructuredContentFolder =
+			structuredContentFolderResource.
+				putAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					postStructuredContentFolder.getExternalReferenceCode(),
+					randomStructuredContentFolder);
+
+		assertEquals(randomStructuredContentFolder, putStructuredContentFolder);
+		assertValid(putStructuredContentFolder);
+
+		StructuredContentFolder getStructuredContentFolder =
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					putStructuredContentFolder.getExternalReferenceCode());
+
+		assertEquals(randomStructuredContentFolder, getStructuredContentFolder);
+		assertValid(getStructuredContentFolder);
+
+		StructuredContentFolder newStructuredContentFolder =
+			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_createStructuredContentFolder();
+
+		putStructuredContentFolder =
+			structuredContentFolderResource.
+				putAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					newStructuredContentFolder.getExternalReferenceCode(),
+					newStructuredContentFolder);
+
+		assertEquals(newStructuredContentFolder, putStructuredContentFolder);
+		assertValid(putStructuredContentFolder);
+
+		getStructuredContentFolder =
+			structuredContentFolderResource.
+				getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+					testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId(),
+					putStructuredContentFolder.getExternalReferenceCode());
+
+		assertEquals(newStructuredContentFolder, getStructuredContentFolder);
+
+		Assert.assertEquals(
+			newStructuredContentFolder.getExternalReferenceCode(),
+			putStructuredContentFolder.getExternalReferenceCode());
+	}
+
+	protected Long
+			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected StructuredContentFolder
+			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_createStructuredContentFolder()
+		throws Exception {
+
+		return randomStructuredContentFolder();
+	}
+
+	protected StructuredContentFolder
+			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return structuredContentFolderResource.postSiteStructuredContentFolder(
+			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
+	@Test
 	public void testGetAssetLibraryStructuredContentFolderPermissionsPage()
 		throws Exception {
 

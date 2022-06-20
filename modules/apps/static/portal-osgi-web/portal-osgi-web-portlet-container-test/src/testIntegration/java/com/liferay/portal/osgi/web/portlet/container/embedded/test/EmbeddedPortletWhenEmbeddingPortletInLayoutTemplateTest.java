@@ -18,13 +18,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -153,8 +151,6 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 
 		themeDisplay.setCompany(company);
 
-		Group group = _groupLocalService.getGroup(layout.getGroupId());
-
 		themeDisplay.setLanguageId(group.getDefaultLanguageId());
 
 		themeDisplay.setLayout(layout);
@@ -233,8 +229,5 @@ public class EmbeddedPortletWhenEmbeddingPortletInLayoutTemplateTest
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
 
 }

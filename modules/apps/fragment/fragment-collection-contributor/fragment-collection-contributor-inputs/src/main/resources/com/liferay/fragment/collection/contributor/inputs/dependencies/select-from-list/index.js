@@ -84,7 +84,7 @@ function handleButtonClick() {
 	}
 }
 
-function handleKeydown(event) {
+function handleMovementKeys(event) {
 	const currentActiveDescendant = getActiveDesdendant();
 
 	if (event.key === 'Enter' && dropdown.classList.contains('show')) {
@@ -133,7 +133,10 @@ function handleKeydown(event) {
 		setActiveDescendant(listbox.lastElementChild);
 		event.preventDefault();
 	}
-	else if (event.key.length === 1) {
+}
+
+function handleKeydown(event) {
+	if (event.key.length === 1) {
 		const now = Date.now();
 
 		if (now - rapidTextTime > RAPID_TEXT_DELAY) {
@@ -155,6 +158,9 @@ function handleKeydown(event) {
 			setActiveDescendant(rapidItem);
 			event.preventDefault();
 		}
+	}
+	else {
+		handleMovementKeys(event);
 	}
 }
 

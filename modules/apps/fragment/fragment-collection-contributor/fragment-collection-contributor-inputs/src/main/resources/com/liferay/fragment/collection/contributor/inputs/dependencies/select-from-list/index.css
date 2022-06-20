@@ -1,8 +1,8 @@
-.forms-picklist .form-control {
+.forms-select-from-list .form-control {
 	position: relative;
 }
 
-.forms-picklist .form-control::after {
+.forms-select-from-list .form-control::after {
 	background: inherit;
 	color: inherit;
 	content: '▼';
@@ -14,6 +14,6 @@
 	top: 0;
 }
 
-.forms-picklist .dropdown-item {
+.forms-select-from-list .dropdown-item {
 	cursor: pointer;
 }

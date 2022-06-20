@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_MENU</td>
+	<td>//div[@class='dropdown-menu show']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN_MENU_SHOW_ITEM_EDIT_ICON</td>
 	<td>//div[contains(@class,'dropdown-menu show')]//*[*[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
 	<td></td>
@@ -28,6 +33,11 @@
 <tr>
 	<td>ENTRY_CHECKBOX</td>
 	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']/preceding-sibling::div//input[contains(@type,'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TITLE</td>
+	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']</td>
 	<td></td>
 </tr>
 <tr>

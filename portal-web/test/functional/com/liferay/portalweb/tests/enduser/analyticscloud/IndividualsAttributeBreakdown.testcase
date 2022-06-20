@@ -70,9 +70,9 @@ definition {
 	test AddNewBreakdownByAttributeAndAssertCorrectResultsAppear {
 		task ("View the blog page") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "ac@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "ac@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -113,9 +113,9 @@ definition {
 	test BreakdownByAttributeOnDistributionPage {
 		task ("View the blog page") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "ac@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "ac@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -152,9 +152,9 @@ definition {
 	test DeleteNewBreakdown {
 		task ("View the blog page") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "ac@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "ac@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
@@ -203,9 +203,9 @@ definition {
 	test SelectDifferentTabsInbreakdown {
 		task ("View the blog page") {
 			ACUtils.navigateToSitePageWithUser(
-				emailList = "ac@liferay.com",
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",
+				emailList = "ac@liferay.com",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

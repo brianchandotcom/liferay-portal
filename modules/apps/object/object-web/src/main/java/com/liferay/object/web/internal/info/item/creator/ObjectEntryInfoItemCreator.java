@@ -15,11 +15,16 @@
 package com.liferay.object.web.internal.info.item.creator;
 
 import com.liferay.info.exception.InfoFormException;
+import com.liferay.info.exception.InfoFormValidationException;
+import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.creator.InfoItemCreator;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -37,8 +42,10 @@ import com.liferay.portal.vulcan.util.GroupUtil;
 import java.io.Serializable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Rubén Pulido
@@ -47,11 +54,14 @@ public class ObjectEntryInfoItemCreator
 	implements InfoItemCreator<ObjectEntry> {
 
 	public ObjectEntryInfoItemCreator(
-		GroupLocalService groupLocalService, ObjectDefinition objectDefinition,
+		GroupLocalService groupLocalService,
+		InfoItemFormProvider<ObjectEntry> infoItemFormProvider,
+		ObjectDefinition objectDefinition,
 		ObjectEntryService objectEntryService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
 
 		_groupLocalService = groupLocalService;
+		_infoItemFormProvider = infoItemFormProvider;
 		_objectDefinition = objectDefinition;
 		_objectEntryService = objectEntryService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
@@ -82,6 +92,17 @@ public class ObjectEntryInfoItemCreator
 				_getGroupId(_objectDefinition, String.valueOf(groupId)),
 				_objectDefinition.getObjectDefinitionId(), values,
 				serviceContext);
+		}
+		catch (ObjectEntryValuesException.Required objectEntryValuesException) {
+			String infoFieldUniqueId = _getInfoFieldUniqueId(
+				groupId, objectEntryValuesException.getObjectFieldName());
+
+			if (infoFieldUniqueId == null) {
+				throw new InfoFormException();
+			}
+
+			throw new InfoFormValidationException.RequiredInfoField(
+				infoFieldUniqueId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -118,10 +139,43 @@ public class ObjectEntryInfoItemCreator
 		return groupId;
 	}
 
+	private String _getInfoFieldUniqueId(long groupId, String objectFieldName) {
+		InfoForm infoForm = null;
+
+		try {
+			infoForm = _infoItemFormProvider.getInfoForm(
+				String.valueOf(_objectDefinition.getObjectDefinitionId()),
+				groupId);
+		}
+		catch (NoSuchFormVariationException noSuchFormVariationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFormVariationException);
+			}
+
+			return null;
+		}
+
+		List<InfoField> infoFields = infoForm.getAllInfoFields();
+
+		Optional<InfoField> infoFieldOptional = infoFields.stream(
+		).filter(
+			infoField -> Objects.equals(infoField.getName(), objectFieldName)
+		).findFirst();
+
+		if (!infoFieldOptional.isPresent()) {
+			return null;
+		}
+
+		InfoField<?> infoField = infoFieldOptional.get();
+
+		return infoField.getUniqueId();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryInfoItemCreator.class);
 
 	private final GroupLocalService _groupLocalService;
+	private final InfoItemFormProvider<ObjectEntry> _infoItemFormProvider;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryService _objectEntryService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;

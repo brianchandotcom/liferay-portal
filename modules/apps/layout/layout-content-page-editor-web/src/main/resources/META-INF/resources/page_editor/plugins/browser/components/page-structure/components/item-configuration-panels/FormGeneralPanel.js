@@ -69,43 +69,43 @@ function FormOptions({item, onValueSelect}) {
 }
 
 function OtherTypeMapping({item, onValueSelect}) {
-	const itemTypes = useCache({
+	const formTypes = useCache({
 		fetcher: () => FormService.getAvailableEditPageInfoItemFormProviders(),
-		key: [CACHE_KEYS.itemTypes],
+		key: [CACHE_KEYS.formTypes],
 	});
 
-	const availableItemTypes = useMemo(
+	const availableFormTypes = useMemo(
 		() =>
-			itemTypes
+			formTypes
 				? [
 						{
 							label: Liferay.Language.get('none'),
 							value: '',
 						},
-						...itemTypes,
+						...formTypes,
 				  ]
 				: [],
-		[itemTypes]
+		[formTypes]
 	);
 
-	const selectedItemType = availableItemTypes.find(
+	const selectedType = availableFormTypes.find(
 		({value}) => value === item.config.classNameId
 	);
 
 	return (
 		<>
-			{availableItemTypes.length > 0 && (
+			{availableFormTypes.length > 0 && (
 				<SelectField
-					disabled={availableItemTypes.length === 0}
+					disabled={availableFormTypes.length === 0}
 					field={{
 						label: Liferay.Language.get('content-type'),
 						name: 'classNameId',
 						typeOptions: {
-							validValues: availableItemTypes,
+							validValues: availableFormTypes,
 						},
 					}}
 					onValueSelect={(_name, classNameId) => {
-						const type = availableItemTypes.find(
+						const type = availableFormTypes.find(
 							({value}) => value === classNameId
 						);
 
@@ -119,14 +119,14 @@ function OtherTypeMapping({item, onValueSelect}) {
 				/>
 			)}
 
-			{selectedItemType?.subtypes?.length > 0 && (
+			{selectedType?.subtypes?.length > 0 && (
 				<SelectField
-					disabled={availableItemTypes.length === 0}
+					disabled={availableFormTypes.length === 0}
 					field={{
 						label: Liferay.Language.get('subtype'),
 						name: 'classTypeId',
 						typeOptions: {
-							validValues: selectedItemType.subtypes,
+							validValues: selectedType.subtypes,
 						},
 					}}
 					onValueSelect={(_name, classTypeId) =>

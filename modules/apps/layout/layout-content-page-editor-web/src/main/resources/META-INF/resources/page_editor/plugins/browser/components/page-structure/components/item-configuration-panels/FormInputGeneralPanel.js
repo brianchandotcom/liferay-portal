@@ -346,14 +346,14 @@ export function FormInputGeneralPanel({item}) {
 function FormInputMappingOptions({configurationValues, form, onValueSelect}) {
 	const {classNameId, classTypeId, fields} = form;
 
-	const itemTypes = useCache({
+	const formTypes = useCache({
 		fetcher: () => FormService.getAvailableEditPageInfoItemFormProviders(),
-		key: [CACHE_KEYS.itemTypes],
+		key: [CACHE_KEYS.formTypes],
 	});
 
 	const {subtype, type} = useMemo(
-		() => getTypeLabels(itemTypes, classNameId, classTypeId),
-		[itemTypes, classNameId, classTypeId]
+		() => getTypeLabels(formTypes, classNameId, classTypeId),
+		[formTypes, classNameId, classTypeId]
 	);
 
 	if (!classNameId || !classTypeId) {

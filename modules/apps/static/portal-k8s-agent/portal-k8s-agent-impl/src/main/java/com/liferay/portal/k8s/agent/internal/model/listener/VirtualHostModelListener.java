@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.VirtualHost;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.util.PropsValues;
 
@@ -30,16 +31,26 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
  */
-@Component(enabled = false, service = ModelListener.class)
-public class CompanyModelListener extends BaseModelListener<Company> {
+@Component(
+	configurationPid = "com.liferay.portal.k8s.agent.configuration.v1.PortalK8sAgentConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = ModelListener.class
+)
+public class VirtualHostModelListener extends BaseModelListener<VirtualHost> {
 
 	@Override
-	public void onAfterCreate(Company company) throws ModelListenerException {
+	public void onAfterCreate(VirtualHost virtualHost)
+		throws ModelListenerException {
+
+		Company company = _companyLocalService.fetchCompanyById(
+			virtualHost.getCompanyId());
+
 		String webId = company.getWebId();
 
 		if (Objects.equals(webId, PropsValues.COMPANY_DEFAULT_WEB_ID)) {
@@ -48,11 +59,11 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 		List<String> virtualHostNames = new ArrayList<>();
 
-		for (VirtualHost virtualHost :
+		for (VirtualHost curVirtualHost :
 				_virtualHostLocalService.getVirtualHosts(
 					company.getCompanyId())) {
 
-			virtualHostNames.add(virtualHost.getHostname());
+			virtualHostNames.add(curVirtualHost.getHostname());
 		}
 
 		_portalK8sConfigMapModifier.modifyConfigMap(
@@ -75,8 +86,17 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	}
 
 	@Override
-	public void onAfterRemove(Company company) throws ModelListenerException {
+	public void onAfterRemove(VirtualHost virtualHost)
+		throws ModelListenerException {
+
+		Company company = _companyLocalService.fetchCompanyById(
+			virtualHost.getCompanyId());
+
 		String webId = company.getWebId();
+
+		if (Objects.equals(webId, PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+			return;
+		}
 
 		_portalK8sConfigMapModifier.modifyConfigMap(
 			model -> {
@@ -92,11 +112,15 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	}
 
 	@Override
-	public void onAfterUpdate(Company originalCompany, Company company)
+	public void onAfterUpdate(
+			VirtualHost originalVirtualHost, VirtualHost virtualHost)
 		throws ModelListenerException {
 
-		onAfterCreate(company);
+		onAfterCreate(virtualHost);
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private PortalK8sConfigMapModifier _portalK8sConfigMapModifier;

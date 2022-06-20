@@ -21,11 +21,14 @@ import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
 import com.liferay.portal.k8s.agent.configuration.v1.PortalK8sAgentConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -208,6 +211,70 @@ public class PortalK8sAgentImplTest {
 			Assert.assertEquals(
 				TestPropsValues.COMPANY_WEB_ID,
 				labels.get("dxp.lxc.liferay.com/virtualInstanceId"));
+			Assert.assertEquals(
+				"dxp", labels.get("lxc.liferay.com/metadataType"));
+		}
+	}
+
+	@Test
+	public void testCreateDXPMetadataFromCompany() throws Exception {
+		try (ConfigurationHolder configurationHolder =
+				new CreatingConfigurationHolder(
+					PortalK8sAgentConfiguration.class.getName());
+			PortalK8sConfigMapModifierClosableHolder
+				portalK8sConfigMapModifierHolder =
+					new PortalK8sConfigMapModifierClosableHolder(
+						_bundleContext)) {
+
+			configurationHolder.update(
+				HashMapDictionaryBuilder.<String, Object>put(
+					"apiServerHost", _kubernetesMockServer.getHostName()
+				).put(
+					"apiServerPort", _kubernetesMockServer.getPort()
+				).put(
+					"apiServerSSL", Boolean.FALSE
+				).put(
+					"caCertData",
+					StringUtil.read(
+						PortalK8sAgentImplTest.class, "dependencies/ca.crt")
+				).put(
+					"namespace", "test"
+				).put(
+					"saToken", "saToken"
+				).build());
+
+			PortalK8sConfigMapModifier portalK8sConfigMapModifier =
+				portalK8sConfigMapModifierHolder.waitForService(2000);
+
+			Assert.assertNotNull(portalK8sConfigMapModifier);
+
+			String webId = "foo-prd.lxc.com";
+
+			_companyLocalService.addCompany(
+				null, webId, webId, webId, false, 0, true);
+
+			String configMapName = webId.concat("-lxc-dxp-metadata");
+
+			ConfigMap configMap = _kubernetesMockClient.configMaps(
+			).withName(
+				configMapName
+			).get();
+
+			Assert.assertNotNull(configMap);
+
+			ObjectMeta objectMeta = configMap.getMetadata();
+
+			Map<String, String> data = configMap.getData();
+
+			Assert.assertEquals(
+				webId, data.get("com.liferay.lxc.dxp.domains"));
+			Assert.assertEquals(
+				webId, data.get("com.liferay.lxc.dxp.mainDomain"));
+
+			Map<String, String> labels = objectMeta.getLabels();
+
+			Assert.assertEquals(
+				webId, labels.get("dxp.lxc.liferay.com/virtualInstanceId"));
 			Assert.assertEquals(
 				"dxp", labels.get("lxc.liferay.com/metadataType"));
 		}
@@ -479,6 +546,9 @@ public class PortalK8sAgentImplTest {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalK8sAgentImplTest.class);
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;

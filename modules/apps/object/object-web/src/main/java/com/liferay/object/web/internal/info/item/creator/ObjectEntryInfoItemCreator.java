@@ -109,11 +109,13 @@ public class ObjectEntryInfoItemCreator
 				ObjectDefinitionConstants.SCOPE_SITE,
 				objectDefinition.getScope())) {
 
-			groupId = GroupUtil.getGroupId(
-				objectDefinition.getCompanyId(), scopeKey, _groupLocalService);
+			groupId = GetterUtil.getLong(
+				GroupUtil.getGroupId(
+					objectDefinition.getCompanyId(), scopeKey,
+					_groupLocalService));
 		}
 
-		return GetterUtil.getLong(groupId);
+		return groupId;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

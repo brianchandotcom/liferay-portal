@@ -59,16 +59,6 @@ export function FormGeneralPanel({item}) {
 }
 
 function FormOptions({item, onValueSelect}) {
-	return (
-		<div className="mb-3">
-			<Collapse label={Liferay.Language.get('form-options')} open>
-				<OtherTypeMapping item={item} onValueSelect={onValueSelect} />
-			</Collapse>
-		</div>
-	);
-}
-
-function OtherTypeMapping({item, onValueSelect}) {
 	const formTypes = useCache({
 		fetcher: () => FormService.getAvailableEditPageInfoItemFormProviders(),
 		key: [CACHE_KEYS.formTypes],
@@ -99,58 +89,62 @@ function OtherTypeMapping({item, onValueSelect}) {
 	);
 
 	return (
-		<>
-			{availableFormTypes.length > 0 && (
-				<SelectField
-					disabled={availableFormTypes.length === 0}
-					field={{
-						label: Liferay.Language.get('content-type'),
-						name: 'classNameId',
-						typeOptions: {
-							validValues: availableFormTypes,
-						},
-					}}
-					onValueSelect={(_name, classNameId) => {
-						const type = availableFormTypes.find(
-							({value}) => value === classNameId
-						);
+		<div className="mb-3">
+			<Collapse label={Liferay.Language.get('form-options')} open>
+				{availableFormTypes.length > 0 && (
+					<SelectField
+						disabled={availableFormTypes.length === 0}
+						field={{
+							label: Liferay.Language.get('content-type'),
+							name: 'classNameId',
+							typeOptions: {
+								validValues: availableFormTypes,
+							},
+						}}
+						onValueSelect={(_name, classNameId) => {
+							const type = availableFormTypes.find(
+								({value}) => value === classNameId
+							);
 
-						return onValueSelect({
-							classNameId,
-							classTypeId: type?.subtypes?.[0]?.value || '0',
-							formConfig: FORM_MAPPING_SOURCES.otherContentType,
-						});
-					}}
-					value={selectedType ? classNameId : ''}
-				/>
-			)}
+							return onValueSelect({
+								classNameId,
+								classTypeId: type?.subtypes?.[0]?.value || '0',
+								formConfig:
+									FORM_MAPPING_SOURCES.otherContentType,
+							});
+						}}
+						value={selectedType ? classNameId : ''}
+					/>
+				)}
 
-			{selectedType?.subtypes?.length > 0 && (
-				<SelectField
-					disabled={availableFormTypes.length === 0}
-					field={{
-						label: Liferay.Language.get('subtype'),
-						name: 'classTypeId',
-						typeOptions: {
-							validValues: [
-								{
-									label: Liferay.Language.get('none'),
-									value: '',
-								},
-								...selectedType.subtypes,
-							],
-						},
-					}}
-					onValueSelect={(_name, classTypeId) =>
-						onValueSelect({
-							classNameId: item.config.classNameId,
-							classTypeId,
-							formConfig: FORM_MAPPING_SOURCES.otherContentType,
-						})
-					}
-					value={selectedSubtype ? classTypeId : ''}
-				/>
-			)}
-		</>
+				{selectedType?.subtypes?.length > 0 && (
+					<SelectField
+						disabled={availableFormTypes.length === 0}
+						field={{
+							label: Liferay.Language.get('subtype'),
+							name: 'classTypeId',
+							typeOptions: {
+								validValues: [
+									{
+										label: Liferay.Language.get('none'),
+										value: '',
+									},
+									...selectedType.subtypes,
+								],
+							},
+						}}
+						onValueSelect={(_name, classTypeId) =>
+							onValueSelect({
+								classNameId: item.config.classNameId,
+								classTypeId,
+								formConfig:
+									FORM_MAPPING_SOURCES.otherContentType,
+							})
+						}
+						value={selectedSubtype ? classTypeId : ''}
+					/>
+				)}
+			</Collapse>
+		</div>
 	);
 }

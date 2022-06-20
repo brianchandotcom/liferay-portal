@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.soy.tasks;
+package com.liferay.gradle.plugins.soy.task;
 
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.portal.tools.soy.builder.commands.WrapSoyAlloyTemplateCommand;

@@ -6,7 +6,7 @@ Export-Package:\
 	com.liferay.gradle.plugins.js.module.config.generator,\
 	com.liferay.gradle.plugins.js.transpiler,\
 	com.liferay.gradle.plugins.soy,\
-	com.liferay.gradle.plugins.soy.tasks,\
+	com.liferay.gradle.plugins.soy.task,\
 	com.liferay.gradle.plugins.workspace,\
 	com.liferay.gradle.plugins.workspace.configurator,\
 	com.liferay.gradle.plugins.workspace.task

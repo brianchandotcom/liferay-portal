@@ -15,7 +15,7 @@
 package com.liferay.gradle.plugins.soy;
 
 import com.liferay.gradle.plugins.soy.internal.SoyPluginConstants;
-import com.liferay.gradle.plugins.soy.tasks.ReplaceSoyTranslationTask;
+import com.liferay.gradle.plugins.soy.task.ReplaceSoyTranslationTask;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 
 import java.io.File;

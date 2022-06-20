@@ -115,6 +115,16 @@ const ACTIONS = {
 		});
 	},
 
+	editOfficeDocument({editURL}, portletNamespace) {
+		Liferay.componentReady(`${portletNamespace}DocumentLibraryOpener`).then(
+			(openerOnedrive) => {
+				openerOnedrive.edit({
+					formSubmitURL: editURL,
+				});
+			}
+		);
+	},
+
 	move({parameterName, parameterValue}, portletNamespace) {
 		window[`${portletNamespace}move`](1, parameterName, parameterValue);
 	},

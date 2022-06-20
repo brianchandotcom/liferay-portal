@@ -1,6 +1,6 @@
 <div class="text-input">
 	<div class="form-group mb-0">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-text-input">${input.label}${input.required?then('*', '')}</label>
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-text-input">${input.label}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 
 		<input aria-describedby="${fragmentEntryLinkNamespace}-text-input-help-text" class="form-control" id="${fragmentEntryLinkNamespace}-text-input" maxlength="280" name="${input.name}" placeholder="${configuration.placeholder}" ${input.required?then('required', '')} type="text" />
 

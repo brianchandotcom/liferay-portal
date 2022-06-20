@@ -537,12 +537,23 @@ definition {
 	}
 
 	@description = "Verify that the user is able to assign the task node to a Resource Action"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAssignTaskNodeToResourceActions {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignTaskNodeToResourceActions";
 
-		// TODO CanAssignTaskNodeToResourceActions pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+			assignmentType = "Resource Actions",
+			resourceActionsText = "Test");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Resource Actions: Test");
 	}
 
 	@description = "Verify that the user is able to assign the task node to a Role"

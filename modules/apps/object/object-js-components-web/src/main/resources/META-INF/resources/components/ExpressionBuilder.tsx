@@ -30,6 +30,7 @@ export function ExpressionBuilder({
 	disabled,
 	error,
 	feedbackMessage,
+	hideFeedback,
 	id,
 	label,
 	name,
@@ -47,6 +48,7 @@ export function ExpressionBuilder({
 			disabled={disabled}
 			errorMessage={error}
 			helpMessage={feedbackMessage}
+			hideFeedback={hideFeedback}
 			id={id}
 			label={label}
 			required={required}
@@ -206,6 +208,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	disabled?: boolean;
 	error?: string;
 	feedbackMessage?: string;
+	hideFeedback?: boolean;
 	id?: string;
 	label?: string;
 	name?: string;

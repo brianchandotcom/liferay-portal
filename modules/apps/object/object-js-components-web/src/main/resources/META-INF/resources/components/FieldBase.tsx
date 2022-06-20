@@ -42,6 +42,7 @@ export function FieldBase({
 	disabled,
 	errorMessage,
 	helpMessage,
+	hideFeedback,
 	id,
 	label,
 	required,
@@ -79,11 +80,13 @@ export function FieldBase({
 
 			{children}
 
-			<FieldFeedback
-				errorMessage={errorMessage}
-				helpMessage={helpMessage}
-				warningMessage={warningMessage}
-			/>
+			{!hideFeedback && (
+				<FieldFeedback
+					errorMessage={errorMessage}
+					helpMessage={helpMessage}
+					warningMessage={warningMessage}
+				/>
+			)}
 		</ClayForm.Group>
 	);
 }
@@ -94,6 +97,7 @@ interface IProps {
 	disabled?: boolean;
 	errorMessage?: string;
 	helpMessage?: string;
+	hideFeedback?: boolean;
 	id?: string;
 	label?: string;
 	required?: boolean;

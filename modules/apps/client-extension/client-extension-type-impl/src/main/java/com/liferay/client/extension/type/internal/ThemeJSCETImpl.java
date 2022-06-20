@@ -38,7 +38,7 @@ public class ThemeJSCETImpl
 
 	public ThemeJSCETImpl(PortletRequest portletRequest) {
 		this(
-			StringPool.NEW_LINE,
+			StringPool.BLANK,
 			UnicodePropertiesBuilder.create(
 				true
 			).put(

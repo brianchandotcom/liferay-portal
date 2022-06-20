@@ -38,7 +38,7 @@ public class GlobalCSSCETImpl
 
 	public GlobalCSSCETImpl(PortletRequest portletRequest) {
 		this(
-			StringPool.NEW_LINE,
+			StringPool.BLANK,
 			UnicodePropertiesBuilder.create(
 				true
 			).put(

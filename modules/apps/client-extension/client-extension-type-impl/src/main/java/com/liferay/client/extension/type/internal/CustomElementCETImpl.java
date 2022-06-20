@@ -39,7 +39,7 @@ public class CustomElementCETImpl
 
 	public CustomElementCETImpl(PortletRequest portletRequest) {
 		this(
-			StringPool.NEW_LINE,
+			StringPool.BLANK,
 			UnicodePropertiesBuilder.create(
 				true
 			).put(

@@ -24,8 +24,8 @@ function repositionDropdown() {
 	const buttonRect = button.getBoundingClientRect();
 
 	dropdown.style.transform = `
-		translateX(${buttonRect.left}px)
-		translateY(${buttonRect.bottom}px)
+		translateX(${buttonRect.left + window.scrollX}px)
+		translateY(${buttonRect.bottom + window.scrollY}px)
 	`;
 }
 

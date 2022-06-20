@@ -246,6 +246,16 @@ definition {
 		RemoteApps.viewEmptyRemoteTable();
 	}
 
+	macro tearDownConfig {
+		RemoteApps.goToRemoteAppsPortlet();
+
+		while (IsElementNotPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE")) {
+			RemoteApps.deleteRemoteAppAPI();
+		}
+
+		RemoteApps.viewEmptyRemoteTable();
+	}
+
 	macro viewEmptyRemoteTable {
 		AssertElementPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE");
 	}

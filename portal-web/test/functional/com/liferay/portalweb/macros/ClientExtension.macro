@@ -1,0 +1,60 @@
+definition {
+
+	macro addPortletToWidgetPage {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "${widgetPageName}");
+
+		Navigator.gotoPage(pageName = "${widgetPageName}");
+
+		Click(locator1 = "ControlMenu#ADD");
+
+		Type(
+			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
+			value1 = "${portletName}");
+
+		Portlet._clickAddPortlet(portletName = "${portletName}");
+
+		WaitForElementPresent(locator1 = "Message#SUCCESS");
+	}
+
+	macro checkConfigFileCreatedProperly {
+		var configFileIsCreated = ClientExtension.configFileCreated();
+
+		if ("${configFileIsCreated}" == "true") {
+			echo("Config file created successfully.");
+		}
+		else {
+			fail("FAIL! There's no config file created!");
+		}
+	}
+
+	macro configFileCreated {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var booleanValue = FileUtil.exists("${liferayHome}/osgi/configs/com.liferay.client.extension.type.configuration.CETConfiguration~${staticExtensionType}.config");
+
+		return "${booleanValue}";
+	}
+
+	macro createGlobalVariableClientExtensionType {
+		static var staticExtensionType = "${type}";
+
+		return "${staticExtensionType}";
+	}
+
+	macro tearDownConfig {
+		Variables.assertDefined(parameterList = "${staticExtensionType}");
+
+		RemoteApps.goToRemoteAppsPortlet();
+
+		while (IsElementNotPresent(locator1 = "RemoteApps#EMPTY_REMOTE_TABLE_MESSAGE")) {
+			FileInstall.deleteConfigFile(configFile = "com.liferay.client.extension.type.configuration.CETConfiguration~${staticExtensionType}.config");
+
+			Refresh();
+		}
+
+		RemoteApps.viewEmptyRemoteTable();
+	}
+
+}

@@ -1,0 +1,95 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Home");
+
+			while (IsElementPresent(locator1 = "Navigation#ANY_SITE_NAV_BUT_HOME")) {
+				var layoutName = selenium.getText("Navigation#ANY_SITE_NAV_BUT_HOME");
+
+				JSONLayout.deletePublicLayout(
+					groupName = "Guest",
+					layoutName = "${layoutName}");
+
+				Navigator.gotoPage(pageName = "Home");
+
+				PortalInstances.tearDownCP();
+			}
+
+			ClientExtension.tearDownConfig();
+		}
+	}
+
+	@priority = "5"
+	test CanUseOsgiClientExtensionCustomElementAsPortlet {
+		property custom.element.client.extension.created = "true";
+		property test.name.skip.portal.instance = "ClientExtension#CanUseOsgiClientExtensionCustomElementAsPortlet";
+
+		task ("Given config file for client extension of type custom element created") {
+			ClientExtension.createGlobalVariableClientExtensionType(type = "customElement");
+
+			ClientExtension.checkConfigFileCreatedProperly();
+		}
+
+		task ("When adding created portlet to a widget page") {
+			ClientExtension.addPortletToWidgetPage(
+				portletName = "Vanilla Counter",
+				widgetPageName = "My Widget Page");
+		}
+
+		task ("Then My Pretty IFrame is displayed correctly") {
+			Navigator.gotoPage(pageName = "My Widget Page");
+
+			AssertElementPresent(locator1 = "//vanilla-counter[@test-data-user='QAuser']");
+
+			Refresh();
+
+			AssertAttributeValue(
+				attribute1 = "src",
+				locator1 = "RemoteAppsEntry#CUSTOM_ELEMENT_MODULE_SCRIPT",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+		}
+	}
+
+	@priority = "5"
+	test CanUseOsgiClientExtensionIframeAsPortlet {
+		property iframe.client.extension.created = "true";
+		property test.name.skip.portal.instance = "ClientExtension#CanUseOsgiClientExtensionIframeAsPortlet";
+
+		task ("Given config file for client extension of type iframe created") {
+			ClientExtension.createGlobalVariableClientExtensionType(type = "iframe");
+
+			ClientExtension.checkConfigFileCreatedProperly();
+		}
+
+		task ("When adding created portlet to a widget page") {
+			ClientExtension.addPortletToWidgetPage(
+				portletName = "My Pretty IFrame",
+				widgetPageName = "My Widget Page");
+		}
+
+		task ("Then My Pretty IFrame is displayed correctly") {
+			Navigator.gotoPage(pageName = "My Widget Page");
+
+			AssertElementPresent(locator1 = "//iframe[contains(@src,'https://liferay.github.io/liferay-frontend-projects/index.html?b=2&a=1')]");
+		}
+	}
+
+}

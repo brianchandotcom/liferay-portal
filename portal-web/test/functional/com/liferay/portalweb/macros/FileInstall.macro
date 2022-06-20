@@ -1,5 +1,13 @@
 definition {
 
+	macro deleteConfigFile {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "delete-dependency-file  -Dliferay.dependency.config=${configFile} -Dliferay.home=${liferayHome}");
+	}
+
 	macro deleteJarOffline {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 

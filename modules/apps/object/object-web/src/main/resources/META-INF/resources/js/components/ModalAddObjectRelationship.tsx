@@ -148,13 +148,22 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 				({id}: TObjectDefinition) => Number(objectDefinitionId) === id
 			);
 
-			const objectDefinitions = items.map(
-				({id, name, system}: TObjectDefinition) => ({
-					id,
-					name,
-					system,
-				})
-			);
+			const objectDefinitions = Liferay.FeatureFlags['LPS-135430']
+				? items
+						.filter(
+							({storageType}: TObjectDefinition) =>
+								storageType === 'default'
+						)
+						.map(({id, name, system}: TObjectDefinition) => ({
+							id,
+							name,
+							system,
+						}))
+				: items.map(({id, name, system}: TObjectDefinition) => ({
+						id,
+						name,
+						system,
+				  }));
 
 			let manyToManyObjectDefinitions = objectDefinitions.filter(
 				(objectDefinition) =>
@@ -285,6 +294,7 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 type TObjectDefinition = {
 	id: number;
 	name: string;
+	storageType?: string;
 	system: boolean;
 };
 

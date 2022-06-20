@@ -511,4 +511,59 @@ definition {
 			fieldName = "Text");
 	}
 
+	@description = "Check if Text Field details can be seen."
+	@priority = "4"
+	test ViewTextFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Text Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		DEBuilder.openField(
+			fieldLabel = "Text",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Text",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Text");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Text");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Text Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Text",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Text",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Text");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Text");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Text");
+	}
+
 }

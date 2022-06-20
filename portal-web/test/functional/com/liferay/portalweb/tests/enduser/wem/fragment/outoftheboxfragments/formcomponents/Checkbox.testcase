@@ -101,10 +101,9 @@ definition {
 					fragmentName = "Checkbox",
 					label = "Are you a fun of Stephen Curry?");
 
-				AssertVisible(
-					fieldLabel = "Are you a fun of Stephen Curry?",
-					index = "1",
-					locator1 = "Fragment#INPUT_LABEL",
+				PageEditor.viewInputStyle(
+					label = "Are you a fun of Stephen Curry?",
+					showLabel = "true",
 					type = "checkbox");
 			}
 
@@ -113,52 +112,36 @@ definition {
 					fragmentName = "Checkbox",
 					hideLabel = "true");
 
-				AssertElementPresent(
-					fieldLabel = "Are you a fun of Stephen Curry?",
-					index = "1",
-					locator1 = "Fragment#INPUT_LABEL_INVISIBLE",
+				PageEditor.viewInputStyle(
+					label = "Are you a fun of Stephen Curry?",
+					showLabel = "false",
 					type = "checkbox");
 			}
 
-			task ("View the placeholder of Help Text field") {
-				AssertAttributeValue(
-					attribute1 = "placeholder",
-					key_label = "Help Text",
-					locator1 = "TextArea#ANY_LABELED",
-					value1 = "Guide your users to fill in the field by adding help text here.");
-			}
-
-			task ("Change the Help Text to a space") {
-				PageEditor.editInput(
-					fragmentName = "Checkbox",
-					helpText = " ");
-
-				AssertElementNotPresent(
-					index = "1",
-					locator1 = "Fragment#INPUT_HELP_TEXT",
+			task ("View the Help Text is disabled by default") {
+				PageEditor.viewInputStyle(
+					showHelpText = "false",
 					type = "checkbox");
 			}
 
-			task ("Change the Help Text to a sentence") {
+			task ("Show the Help Text") {
 				PageEditor.editInput(
 					fragmentName = "Checkbox",
-					helpText = "This is a Help Text.");
+					hideHelpText = "false");
 
-				AssertTextEquals(
-					index = "1",
-					locator1 = "Fragment#INPUT_HELP_TEXT",
-					type = "checkbox",
-					value1 = "This is a Help Text.");
+				PageEditor.viewInputStyle(
+					helpText = "Add your help text here.",
+					showHelpText = "true",
+					type = "checkbox");
 			}
 
-			task ("Hide the Help Text") {
+			task ("Clear the Help Text") {
 				PageEditor.editInput(
 					fragmentName = "Checkbox",
-					hideHelpText = "true");
+					helpText = "");
 
-				AssertElementNotPresent(
-					index = "1",
-					locator1 = "Fragment#INPUT_HELP_TEXT",
+				PageEditor.viewInputStyle(
+					showHelpText = "false",
 					type = "checkbox");
 			}
 		}

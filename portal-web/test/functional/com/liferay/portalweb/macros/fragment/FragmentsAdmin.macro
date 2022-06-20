@@ -17,9 +17,45 @@ definition {
 			locator1 = "Modal#HEADER",
 			value1 = "Add Fragment");
 
-		PortletEntry.inputName(name = "${fragmentName}");
+		if (!(isSet(fragmentType))) {
+			var fragmentType = "Basic Fragment";
+		}
 
-		Button.clickSave();
+		if ((IsElementPresent(locator1 = "Message#SUBTITLE")) && (IsTextEqual(locator1 = "Message#SUBTITLE", value1 = "Select Fragment Type:"))) {
+			LexiconCard.clickCardTitle(card = "${fragmentType}");
+
+			Click(
+				key_text = "Next",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			if ("${fragmentType}" == "Basic Fragment") {
+				PortletEntry.inputName(name = "${fragmentName}");
+
+				Click(
+					key_text = "Add",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+			}
+			else if ("${fragmentType}" == "Form Fragment") {
+				PortletEntry.inputName(name = "${fragmentName}");
+
+				if (isSet(supportedFieldTypes)) {
+					for (var supportedFieldType : list "${supportedFieldTypes}") {
+						Check.checkNotVisible(
+							checkboxName = "${supportedFieldType}",
+							locator1 = "Checkbox#ANY_CHECKBOX");
+					}
+				}
+
+				Click(
+					key_text = "Add",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+			}
+		}
+		else {
+			PortletEntry.inputName(name = "${fragmentName}");
+
+			Button.clickSave();
+		}
 	}
 
 	macro addResource {

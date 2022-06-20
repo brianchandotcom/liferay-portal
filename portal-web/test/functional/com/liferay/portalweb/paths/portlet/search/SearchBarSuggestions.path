@@ -12,12 +12,32 @@
 <tbody>
 <tr>
 	<td>RESULTS_LIST_ITEM_DESCRIPTION</td>
-	<td>//div[contains(@class,'search-bar-suggestions-dropdown-menu')]//ul[contains(.,'key_suggestionContributorDisplayGroupName')]//div[contains(@class,'suggestion-item-title') and text()='${key_searchAssetTitle}']/following-sibling::div[contains(@class,'suggestion-item-description') and contains(.,'${key_searchAssetDescription}')]</td>
+	<td>//div[contains(@class,'search-bar-suggestions-dropdown-menu')]//ul[contains(.,'${key_suggestionContributorDisplayGroupName}')]//div[contains(@class,'suggestion-item-title') and text()='${key_searchAssetTitle}']/following-sibling::div[contains(@class,'suggestion-item-description') and contains(.,'${key_searchAssetDescription}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RESULTS_LIST_ITEM_TITLE</td>
-	<td>//div[contains(@class,'search-bar-suggestions-dropdown-menu')]//ul[contains(.,'key_suggestionContributorDisplayGroupName')]//div[contains(@class,'suggestion-item-title') and text()='${key_searchAssetTitle}']</td>
+	<td>//div[contains(@class,'search-bar-suggestions-dropdown-menu')]//ul[contains(.,'${key_suggestionContributorDisplayGroupName}')]//div[contains(@class,'suggestion-item-title') and text()='${key_searchAssetTitle}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_CONTRIBUTOR</td>
+	<td>//div[contains(@class,'field-list')]/div[${key_suggestionContributorOrder}]//select[contains(@aria-label,'Suggestion Contributor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_CONTRIBUTOR_DISPLAY_GROUP_NAME</td>
+	<td>//div[contains(@class,'field-list')]/div[${key_suggestionContributorOrder}]//label[contains(.,'Display Group Name')]/following-sibling::input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_CONTRIBUTOR_SELECT_BLUEPRINT</td>
+	<td>//div[contains(@class,'field-list')]/div[${key_suggestionContributorOrder}]//button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUGGESTION_CONTRIBUTOR_SIZE</td>
+	<td>//div[contains(@class,'field-list')]/div[${key_suggestionContributorOrder}]//input[contains(@aria-label,'Size')]</td>
 	<td></td>
 </tr>
 </tbody>

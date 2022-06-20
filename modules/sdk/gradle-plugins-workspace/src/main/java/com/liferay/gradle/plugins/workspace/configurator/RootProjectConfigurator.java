@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.workspace.configurators;
+package com.liferay.gradle.plugins.workspace.configurator;
 
 import com.bmuschko.gradle.docker.DockerRemoteApiPlugin;
 import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer;
@@ -31,13 +31,13 @@ import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.workspace.LiferayWorkspaceYarnPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
-import com.liferay.gradle.plugins.workspace.internal.configurators.TargetPlatformRootProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.internal.configurator.TargetPlatformRootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
-import com.liferay.gradle.plugins.workspace.tasks.CreateTokenTask;
-import com.liferay.gradle.plugins.workspace.tasks.InitBundleTask;
-import com.liferay.gradle.plugins.workspace.tasks.VerifyProductTask;
+import com.liferay.gradle.plugins.workspace.task.CreateTokenTask;
+import com.liferay.gradle.plugins.workspace.task.InitBundleTask;
+import com.liferay.gradle.plugins.workspace.task.VerifyProductTask;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;

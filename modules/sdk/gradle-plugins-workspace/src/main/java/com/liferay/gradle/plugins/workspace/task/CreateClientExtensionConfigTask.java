@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.workspace.tasks;
+package com.liferay.gradle.plugins.workspace.task;
 
-import com.liferay.gradle.plugins.workspace.configurators.RootProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.configurator.RootProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;

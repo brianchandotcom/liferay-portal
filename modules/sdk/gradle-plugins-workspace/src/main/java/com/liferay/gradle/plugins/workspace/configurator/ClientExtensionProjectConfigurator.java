@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.workspace.configurators;
+package com.liferay.gradle.plugins.workspace.configurator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -32,7 +32,7 @@ import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeCSSTy
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeFaviconTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ThemeJSTypeConfigurer;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.workspace.tasks.CreateClientExtensionConfigTask;
+import com.liferay.gradle.plugins.workspace.task.CreateClientExtensionConfigTask;
 import com.liferay.petra.string.StringBundler;
 
 import groovy.lang.Closure;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.workspace.configurators;
+package com.liferay.gradle.plugins.workspace.configurator;
 
 import com.liferay.gradle.plugins.LiferayThemePlugin;
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;

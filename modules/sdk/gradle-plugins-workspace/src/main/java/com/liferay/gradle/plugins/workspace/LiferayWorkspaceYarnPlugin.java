@@ -20,7 +20,7 @@ import com.liferay.gradle.plugins.node.YarnPlugin;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.YarnInstallTask;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.workspace.tasks.SetUpYarnTask;
+import com.liferay.gradle.plugins.workspace.task.SetUpYarnTask;
 
 import java.io.File;
 import java.io.IOException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.workspace.configurators;
+package com.liferay.gradle.plugins.workspace.configurator;
 
 import com.liferay.ant.bnd.metatype.MetatypePlugin;
 import com.liferay.gradle.plugins.JspCDefaultsPlugin;

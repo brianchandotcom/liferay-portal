@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.workspace.tasks;
+package com.liferay.gradle.plugins.workspace.task;
 
 import java.util.Objects;
 

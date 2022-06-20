@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.workspace.configurators;
+package com.liferay.gradle.plugins.workspace.configurator;
 
 import com.liferay.gradle.plugins.workspace.ProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.workspace.tasks.UpdatePropertiesTask;
+import com.liferay.gradle.plugins.workspace.task.UpdatePropertiesTask;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;

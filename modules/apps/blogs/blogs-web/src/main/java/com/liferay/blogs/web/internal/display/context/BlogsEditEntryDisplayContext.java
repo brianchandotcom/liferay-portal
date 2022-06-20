@@ -153,11 +153,6 @@ public class BlogsEditEntryDisplayContext {
 			getRedirect()
 		).setPortletResource(
 			ParamUtil.getString(_httpServletRequest, "portletResource")
-		).setParameter(
-			"entryId", getEntryId()
-		).setParameter(
-			"referringPortletResource",
-			ParamUtil.getString(_httpServletRequest, "referringPortletResource")
 		).buildString();
 	}
 
@@ -198,6 +193,11 @@ public class BlogsEditEntryDisplayContext {
 		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		return _redirect;
+	}
+
+	public String getReferringPortletResource() {
+		return ParamUtil.getString(
+			_httpServletRequest, "referringPortletResource");
 	}
 
 	public long getSmallImageFileEntryId() {

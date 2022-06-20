@@ -46,15 +46,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		for (var columnOption : list "Author,Creation Date") {
-			Click.clickAtNotVisible(
-				key_columnOption = "${columnOption}",
-				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-		}
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date");
 
 		for (var columnOption : list "Author,Creation Date") {
 			ObjectCustomViews.assertColumnPresent(columnName = "${columnOption}");
@@ -83,9 +75,7 @@ definition {
 
 		var listMetaData = "Author,Creation Date,Modified Date,Workflow Status,ID";
 
-		for (var columnName : list "${listMetaData}") {
-			ObjectCustomViews.addColumnsViaUI(columnOption = "${columnName}");
-		}
+		ObjectCustomViews.addColumnsViaUI(addColumns = "${listMetaData}");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
@@ -146,7 +136,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(columnOption = "Custom Field");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
@@ -219,9 +209,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(
-			columnOption = "Author",
-			viewLabel = "Custom Views");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		ObjectCustomViews.editSpecificColumn(columnName = "Author");
 
@@ -277,7 +265,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(columnOption = "Author");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
@@ -333,23 +321,11 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		Click.clickAtNotVisible(
-			key_columnOption = "Author",
-			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		ObjectCustomViews.assertColumnPresent(columnName = "Author");
 
-		LexiconEntry.gotoAdd();
-
-		Click.clickAtNotVisible(
-			key_columnOption = "Author",
-			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		ObjectCustomViews.assertColumnNotPresent(columnName = "Author");
 
@@ -380,13 +356,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		Click.clickAtNotVisible(
-			key_columnOption = "Author",
-			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		ObjectCustomViews.deleteSpecificColumn(columnName = "Author");
 
@@ -530,15 +500,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		for (var selectColumns : list "Author,Creation Date,Modified Date") {
-			Click.clickAtNotVisible(
-				key_columnOption = "${selectColumns}",
-				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-		}
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date,Modified Date");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
 			columnName = "Author",
@@ -664,9 +626,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(
-			columnOption = "Workflow Status",
-			viewLabel = "Custom Views A");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Workflow Status");
 
 		Button.clickSave();
 
@@ -680,9 +640,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(
-			columnOption = "Author",
-			viewLabel = "Custom Views B");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		Button.clickSave();
 
@@ -713,9 +671,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		for (var columnName : list "${listColumns}") {
-			ObjectCustomViews.addColumnsViaUI(columnOption = "${columnName}");
-		}
+		ObjectCustomViews.addColumnsViaUI(addColumns = "${listColumns}");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
@@ -847,7 +803,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(columnOption = "Author");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
@@ -878,9 +834,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		for (var columnName : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
-			ObjectCustomViews.addColumnsViaUI(columnOption = "${columnName}");
-		}
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date,Modified Date,Workflow Status,ID");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
@@ -1016,7 +970,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(columnOption = "Custom Field");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
@@ -1071,9 +1025,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(
-			columnOption = "Custom Field 152070",
-			viewLabel = "Custom Views");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field 152070");
 
 		ObjectCustomViews.editSpecificColumn(columnName = "Custom Field 152070");
 
@@ -1119,9 +1071,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(
-			columnOption = "Author",
-			viewLabel = "Custom Views");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		ObjectCustomViews.editSpecificColumn(columnName = "Author");
 
@@ -1171,7 +1121,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(columnOption = "Custom Field");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
@@ -1409,11 +1359,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		for (var letter : list "A,B") {
-			ObjectCustomViews.addColumnsViaUI(
-				columnOption = "Relationship ${letter}",
-				viewLabel = "Custom Views");
-		}
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Relationship A,Relationship B");
 
 		Button.clickSave();
 
@@ -1456,13 +1402,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		Click.clickAtNotVisible(
-			key_columnOption = "Custom Field",
-			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field");
 
 		Button.clickSave();
 
@@ -1519,7 +1459,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(columnOption = "Custom Field");
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
@@ -1581,15 +1521,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		for (var columnOption : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
-			Click.clickAtNotVisible(
-				key_columnOption = "${columnOption}",
-				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-		}
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date,Modified Date,Workflow Status,ID");
 
 		Button.clickSave();
 
@@ -1632,15 +1564,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		for (var columnOption : list "Author,Creation Date,Custom Field") {
-			Click.clickAtNotVisible(
-				key_columnOption = "${columnOption}",
-				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-		}
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date,Custom Field");
 
 		Button.clickSave();
 
@@ -1696,15 +1620,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		for (var columnOption : list "Author,Creation Date,ID") {
-			Click.clickAtNotVisible(
-				key_columnOption = "${columnOption}",
-				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-		}
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date,ID");
 
 		DragAndDrop.javaScriptDragAndDropToUp(
 			key_columnName = "Creation Date",

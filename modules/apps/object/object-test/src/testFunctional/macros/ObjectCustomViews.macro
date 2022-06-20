@@ -3,13 +3,15 @@ definition {
 	macro addColumnsViaUI {
 		LexiconEntry.gotoAdd();
 
-		Click.clickAtNotVisible(
-			key_columnOption = "${columnOption}",
-			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_ADD_COLUMNS");
 
-		Click(
-			key_tab = "Save",
-			locator1 = "Button#TAB_SUBMIT_BTN");
+		for (var columnsOptions : list "${addColumns}") {
+			Click.clickAtNotVisible(
+				key_columnOption = "${columnsOptions}",
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+		}
+
+		ObjectCustomViews.saveColumnsModal();
 	}
 
 	macro addDefaultSort {
@@ -95,6 +97,8 @@ definition {
 	}
 
 	macro assertColumnVisibleOnAddColumnModal {
+		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_ADD_COLUMNS");
+
 		AssertVisible(
 			key_columnName = "${columnOption}",
 			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");

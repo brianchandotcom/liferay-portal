@@ -215,6 +215,11 @@
 		<td>//div[contains(@class,'dropdown-menu show')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_MODAL_ADD_COLUMNS</td>
+		<td>//div[contains(@class,'modal-content')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

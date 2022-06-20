@@ -91,34 +91,24 @@ definition {
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task ("Add a CSV Data Source") {
-			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Data Source",
-				sourceFileName = "jobTitle.csv");
-		}
-
-		task ("Exit Settings") {
-			ACNavigation.exitSettings();
-		}
-
 		task ("Navigate to the Individuals dashboard") {
 			ACNavigation.goToIndividuals();
 		}
 
 		task ("Add a new breakdown") {
 			ACSegments.addBreakdownByAttribute(
-				attribute = "jobTitle",
+				attribute = "email",
 				breakdownName = "Breakdown by Job Title");
 		}
 
 		task ("View the data in new breakdown") {
 			ACIndividualsDashboard.viewBreakdownRecharts(
 				fillColor = "#4B9BFF",
-				tick = "farmer");
+				tick = "ac@liferay.com");
 		}
 
 		task ("Remove the breakdown") {
-			ACIndividualsDashboard.deleteBreakdown(breakdownName = "Breakdown by Job Title");
+			ACIndividualsDashboard.deleteBreakdown(breakdownName = "Breakdown by Email");
 		}
 	}
 
@@ -142,16 +132,6 @@ definition {
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task ("Add a CSV Data Source") {
-			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Data Source",
-				sourceFileName = "jobTitle.csv");
-		}
-
-		task ("Exit Settings") {
-			ACNavigation.exitSettings();
-		}
-
 		task ("Navigate to the Distribution tab of Individuals dashboard") {
 			ACNavigation.goToIndividuals();
 
@@ -159,13 +139,13 @@ definition {
 		}
 
 		task ("Select the country in Breakdown by field") {
-			ACSegments.selectDistributionByAttribute(attribute = "jobTitle");
+			ACSegments.selectDistributionByAttribute(attribute = "email");
 		}
 
 		task ("View the individual in chart") {
 			ACIndividualsDashboard.viewBreakdownRecharts(
 				fillColor = "#4B9BFF",
-				tick = "farmer - 100.0%");
+				tick = "ac@liferay.com- 100.0%");
 		}
 	}
 
@@ -253,24 +233,14 @@ definition {
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task ("Add a CSV Data Source") {
-			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Data Source",
-				sourceFileName = "jobTitle.csv");
-		}
-
-		task ("Exit Settings") {
-			ACNavigation.exitSettings();
-		}
-
 		task ("Navigate to the Individuals dashboard") {
 			ACNavigation.goToIndividuals();
 		}
 
 		task ("Add the first breakdown") {
 			ACSegments.addBreakdownByAttribute(
-				attribute = "jobTitle",
-				breakdownName = "Breakdown by Job Title");
+				attribute = "email",
+				breakdownName = "Breakdown by Email");
 		}
 
 		task ("Add the second breakdown") {
@@ -280,11 +250,11 @@ definition {
 		}
 
 		task ("Switch to the first breakdown") {
-			ACIndividualsDashboard.clickBreakdownTab(breakdownName = "Breakdown by Job Title");
+			ACIndividualsDashboard.clickBreakdownTab(breakdownName = "Breakdown by Email");
 
 			ACIndividualsDashboard.viewBreakdownRecharts(
 				fillColor = "#4B9BFF",
-				tick = "farmer");
+				tick = "ac@liferay.com");
 		}
 
 		task ("Switch to the second breakdown") {
@@ -296,9 +266,9 @@ definition {
 		}
 
 		task ("Remove the breakdown") {
-			ACIndividualsDashboard.deleteBreakdown(breakdownName = "Breakdown by Job Title");
-
 			ACIndividualsDashboard.deleteBreakdown(breakdownName = "Breakdown by Family Name");
+
+			ACIndividualsDashboard.deleteBreakdown(breakdownName = "Breakdown by Email");
 		}
 	}
 

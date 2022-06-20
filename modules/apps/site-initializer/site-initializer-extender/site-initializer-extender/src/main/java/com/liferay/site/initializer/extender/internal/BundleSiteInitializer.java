@@ -125,7 +125,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -473,14 +472,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 					siteNavigationMenuItemSettingsBuilder.build(),
 					taxonomyCategoryIdsStringUtilReplaceValues));
 
-			TransactionCommitCallbackUtil.registerCallback(
-				() -> {
-					_invoke(
-						() -> _addWorkflowDefinitions(
-							objectDefinitionResource, serviceContext));
-
-					return null;
-				});
+			_invoke(
+				() -> _addWorkflowDefinitions(
+					objectDefinitionResource, serviceContext));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

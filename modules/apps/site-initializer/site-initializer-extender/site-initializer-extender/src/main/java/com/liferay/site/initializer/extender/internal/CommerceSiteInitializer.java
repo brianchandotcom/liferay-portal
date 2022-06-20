@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -222,16 +221,11 @@ public class CommerceSiteInitializer {
 					resourcePath, ".json", ".products.specifications.json"),
 				serviceContext, servletContext);
 
-			TransactionCommitCallbackUtil.registerCallback(
-				() -> {
-					_addCPInstanceSubscriptions(
-						StringUtil.replaceLast(
-							resourcePath, ".json",
-							".products.subscriptions.properties.json"),
-						serviceContext, servletContext);
-
-					return null;
-				});
+			_addCPInstanceSubscriptions(
+				StringUtil.replaceLast(
+					resourcePath, ".json",
+					".products.subscriptions.properties.json"),
+				serviceContext, servletContext);
 		}
 	}
 

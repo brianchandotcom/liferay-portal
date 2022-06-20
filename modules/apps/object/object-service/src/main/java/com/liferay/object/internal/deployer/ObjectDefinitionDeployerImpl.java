@@ -159,17 +159,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
 			_bundleContext.registerService(
-				InfoCollectionProvider.class,
-				new ObjectEntrySingleFormVariationInfoCollectionProvider(
-					_assetCategoryLocalService, _assetTagLocalService,
-					_assetVocabularyLocalService, _groupLocalService,
-					_listTypeEntryLocalService, objectDefinition,
-					_objectEntryLocalService, _objectFieldLocalService,
-					_objectLayoutLocalService, _objectScopeProviderRegistry),
-				HashMapDictionaryBuilder.<String, Object>put(
-					"item.class.name", objectDefinition.getClassName()
-				).build()),
-			_bundleContext.registerService(
 				KeywordQueryContributor.class,
 				new ObjectEntryKeywordQueryContributor(
 					_objectFieldLocalService, _objectViewLocalService),
@@ -285,6 +274,20 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					modelSearchDefinition.setModelSummaryContributor(
 						objectEntryModelSummaryContributor);
 				}));
+
+		if (objectDefinition.isDefaultStorageType()) {
+			_bundleContext.registerService(
+				InfoCollectionProvider.class,
+				new ObjectEntrySingleFormVariationInfoCollectionProvider(
+					_assetCategoryLocalService, _assetTagLocalService,
+					_assetVocabularyLocalService, _groupLocalService,
+					_listTypeEntryLocalService, objectDefinition,
+					_objectEntryLocalService, _objectFieldLocalService,
+					_objectLayoutLocalService, _objectScopeProviderRegistry),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"item.class.name", objectDefinition.getClassName()
+				).build());
+		}
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			serviceRegistrations.add(

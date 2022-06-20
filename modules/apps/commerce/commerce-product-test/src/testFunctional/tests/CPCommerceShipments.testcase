@@ -534,15 +534,6 @@ definition {
 			Refresh();
 		}
 
-		task ("And verifies that the Shipment ERC is the same value as the Shipment ID when first created") {
-			var idValue = selenium.getText("CommerceOrders#ORDER_AND_SHIPMENT_ID_VALUE");
-			var ercValue = selenium.getText("CommerceOrders#ORDER_AND_SHIPMENT_ERC_VALUE");
-
-			TestUtils.assertEquals(
-				actual = "${idValue}",
-				expected = "${ercValue}");
-		}
-
 		task ("And edits the ERC of the shipment") {
 			CommerceOrders.editAndCheckOrderAndShipmentERC(
 				keyReferenceCode = "testERC",

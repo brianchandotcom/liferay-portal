@@ -119,6 +119,19 @@ public class ObjectEntryInfoItemCreator
 			throw new InfoFormValidationException.ExceedsMaxValue(
 				infoFieldUniqueId, objectEntryValuesException.getMaxValue());
 		}
+		catch (ObjectEntryValuesException.ExceedsLongMinSize
+					objectEntryValuesException) {
+
+			String infoFieldUniqueId = _getInfoFieldUniqueId(
+				groupId, objectEntryValuesException.getObjectFieldName());
+
+			if (infoFieldUniqueId == null) {
+				throw new InfoFormException();
+			}
+
+			throw new InfoFormValidationException.ExceedsMinValue(
+				infoFieldUniqueId, objectEntryValuesException.getMinValue());
+		}
 		catch (ObjectEntryValuesException.ExceedsLongSize
 					objectEntryValuesException) {
 

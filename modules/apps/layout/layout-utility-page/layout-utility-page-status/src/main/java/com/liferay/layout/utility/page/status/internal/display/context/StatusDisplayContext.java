@@ -89,7 +89,7 @@ public class StatusDisplayContext {
 			if (value instanceof Exception) {
 				Exception exception = (Exception)value;
 
-				_log.error(exception);
+				_log.error("Error: " + exception.getMessage());
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(exception);

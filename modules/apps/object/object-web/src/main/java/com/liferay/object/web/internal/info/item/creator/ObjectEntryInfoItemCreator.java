@@ -145,6 +145,20 @@ public class ObjectEntryInfoItemCreator
 			throw new InfoFormValidationException.ExceedsMaxLength(
 				infoFieldUniqueId, objectEntryValuesException.getMaxLength());
 		}
+		catch (ObjectEntryValuesException.ExceedsMaxFileSize
+					objectEntryValuesException) {
+
+			String infoFieldUniqueId = _getInfoFieldUniqueId(
+				groupId, objectEntryValuesException.getObjectFieldName());
+
+			if (infoFieldUniqueId == null) {
+				throw new InfoFormException();
+			}
+
+			throw new InfoFormValidationException.FileSize(
+				infoFieldUniqueId,
+				objectEntryValuesException.getMaxFileSizeInMB() + " MB");
+		}
 		catch (ObjectEntryValuesException.ExceedsTextMaxLength
 					objectEntryValuesException) {
 

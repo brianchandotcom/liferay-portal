@@ -33,6 +33,7 @@ export declare function Select({
 	options,
 	required,
 	tooltip,
+	value,
 	...otherProps
 }: ISelectProps): JSX.Element;
 export {};

@@ -38,6 +38,7 @@ export function Select({
 	options,
 	required,
 	tooltip,
+	value,
 	...otherProps
 }: ISelectProps) {
 	return (
@@ -58,13 +59,16 @@ export function Select({
 				onChange={onChange}
 			>
 				<ClaySelect.Option
+					disabled
 					label={Liferay.Language.get('choose-an-option')}
+					selected={!value}
 				/>
 
 				{options?.map((label, index) => (
 					<ClaySelect.Option
 						key={index}
 						label={label}
+						selected={value === label}
 						value={index}
 					/>
 				))}

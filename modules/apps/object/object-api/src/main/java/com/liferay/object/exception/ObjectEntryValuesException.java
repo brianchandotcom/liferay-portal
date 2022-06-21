@@ -160,7 +160,22 @@ public class ObjectEntryValuesException extends PortalException {
 				String.format(
 					"The file extension %s is invalid for object field \"%s\"",
 					fileExtension, objectFieldName));
+
+			_fileExtension = fileExtension;
+			_objectFieldName = objectFieldName;
 		}
+
+		public String getFileExtension() {
+			return _fileExtension;
+		}
+
+		public String getObjectFieldName() {
+			return _objectFieldName;
+		}
+
+		private final String _fileExtension;
+		private final String _objectFieldName;
+
 
 	}
 

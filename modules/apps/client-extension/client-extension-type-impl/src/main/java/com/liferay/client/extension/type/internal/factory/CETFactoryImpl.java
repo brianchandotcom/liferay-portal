@@ -20,9 +20,6 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.configuration.CETConfiguration;
 import com.liferay.client.extension.type.factory.CETFactory;
 import com.liferay.client.extension.type.factory.CETImplFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,25 +30,19 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = CETFactory.class)
+@Component(service = CETFactory.class)
 public class CETFactoryImpl implements CETFactory {
 
 	@Override
@@ -108,7 +99,7 @@ public class CETFactoryImpl implements CETFactory {
 
 	@Override
 	public Collection<String> getTypes() {
-		return Collections.unmodifiableCollection(_types);
+		return _cetImplFactoryRegistry.getTypes();
 	}
 
 	@Override
@@ -123,33 +114,10 @@ public class CETFactoryImpl implements CETFactory {
 			newTypeSettingsUnicodeProperties, oldTypeSettingsUnicodeProperties);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, CETImplFactory.class, "type",
-			_serviceTrackerMapListener);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_serviceTrackerMap != null) {
-			_serviceTrackerMap.close();
-		}
-
-		_serviceTrackerMap = null;
-	}
-
 	private CETImplFactory _getCETImplFactory(String type)
 		throws ClientExtensionEntryTypeException {
 
-		CETImplFactory cetImplFactory = _serviceTrackerMap.getService(type);
-
-		if (cetImplFactory == null) {
-			throw new ClientExtensionEntryTypeException(
-				"No CET implementation factory registered for type " + type);
-		}
-
-		return cetImplFactory;
+		return _cetImplFactoryRegistry.getCETImplFactory(type);
 	}
 
 	private Properties _loadProperties(CETConfiguration cetConfiguration)
@@ -187,41 +155,9 @@ public class CETFactoryImpl implements CETFactory {
 	}
 
 	@Reference
+	private CETImplFactoryRegistry _cetImplFactoryRegistry;
+
+	@Reference
 	private Portal _portal;
-
-	private ServiceTrackerMap<String, CETImplFactory> _serviceTrackerMap;
-
-	private final ServiceTrackerMapListener
-		<String, CETImplFactory, CETImplFactory> _serviceTrackerMapListener =
-			new ServiceTrackerMapListener
-				<String, CETImplFactory, CETImplFactory>() {
-
-				@Override
-				public void keyEmitted(
-					ServiceTrackerMap<String, CETImplFactory> serviceTrackerMap,
-					String key, CETImplFactory serviceCETImplFactory,
-					CETImplFactory contentCETImplFactory) {
-
-					synchronized (_types) {
-						_types.add(key);
-
-						Collections.sort(_types);
-					}
-				}
-
-				@Override
-				public void keyRemoved(
-					ServiceTrackerMap<String, CETImplFactory> serviceTrackerMap,
-					String key, CETImplFactory serviceCETImplFactory,
-					CETImplFactory contentCETImplFactory) {
-
-					synchronized (_types) {
-						_types.remove(key);
-					}
-				}
-
-			};
-
-	private final List<String> _types = new ArrayList<>();
 
 }

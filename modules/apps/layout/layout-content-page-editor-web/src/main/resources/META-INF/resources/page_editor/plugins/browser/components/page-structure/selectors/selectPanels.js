@@ -249,18 +249,14 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
 		panelsIds = {
-			[PANEL_IDS.containerAdvanced]:
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
-				canUpdateItemAdvancedConfiguration,
+			[PANEL_IDS.containerAdvanced]: canUpdateItemAdvancedConfiguration,
 			[PANEL_IDS.containerGeneral]: true,
 			[PANEL_IDS.containerStyles]: true,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
 		panelsIds = {
-			[PANEL_IDS.formAdvancedPanel]:
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
-				canUpdateItemAdvancedConfiguration,
+			[PANEL_IDS.formAdvancedPanel]: canUpdateItemAdvancedConfiguration,
 			[PANEL_IDS.formGeneral]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.containerStyles]: haveAtLeastLimitedPermission,
@@ -272,9 +268,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 		];
 
 		panelsIds = {
-			[PANEL_IDS.fragmentAdvanced]:
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
-				canUpdateItemAdvancedConfiguration,
+			[PANEL_IDS.fragmentAdvanced]: canUpdateItemAdvancedConfiguration,
 			[PANEL_IDS.fragmentStyles]: haveAtLeastLimitedPermission,
 			[PANEL_IDS.fragmentGeneral]:
 				fragmentEntryType !== FRAGMENT_ENTRY_TYPES.input &&
@@ -295,9 +289,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 		panelsIds = {
 			[PANEL_IDS.rowStyles]: true,
 			[PANEL_IDS.rowGeneral]: true,
-			[PANEL_IDS.rowAdvanced]:
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
-				canUpdateItemAdvancedConfiguration,
+			[PANEL_IDS.rowAdvanced]: canUpdateItemAdvancedConfiguration,
 		};
 	}
 

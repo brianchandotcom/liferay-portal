@@ -91,13 +91,13 @@ public class JournalArticleItemSelectorVerticalCard implements VerticalCard {
 		String title = _article.getTitle(_themeDisplay.getLocale());
 
 		if (Validator.isNotNull(title)) {
-			return HtmlUtil.escape(title);
+			return title;
 		}
 
 		Locale defaultLanguage = LocaleUtil.fromLanguageId(
 			_article.getDefaultLanguageId());
 
-		return HtmlUtil.escape(_article.getTitle(defaultLanguage));
+		return _article.getTitle(defaultLanguage);
 	}
 
 	@Override

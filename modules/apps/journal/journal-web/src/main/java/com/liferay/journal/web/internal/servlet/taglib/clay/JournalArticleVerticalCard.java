@@ -234,13 +234,13 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 		String title = _article.getTitle(themeDisplay.getLocale());
 
 		if (Validator.isNotNull(title)) {
-			return HtmlUtil.escape(title);
+			return title;
 		}
 
 		Locale defaultLanguage = LocaleUtil.fromLanguageId(
 			_article.getDefaultLanguageId());
 
-		return HtmlUtil.escape(_article.getTitle(defaultLanguage));
+		return _article.getTitle(defaultLanguage);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -62,6 +62,7 @@ export default function EditObjectField({
 	isApproved,
 	isDefaultStorageType,
 	isSystemObject,
+	objectDefinitionId,
 	objectField: initialValues,
 	objectFieldTypes,
 	objectName,
@@ -169,6 +170,7 @@ export default function EditObjectField({
 					disabled={disabled}
 					errors={errors}
 					handleChange={handleChange}
+					objectDefinitionId={objectDefinitionId}
 					objectField={values}
 					objectFieldTypes={objectFieldTypes}
 					objectName={objectName}
@@ -502,6 +504,7 @@ interface IProps {
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
 	isSystemObject: boolean;
+	objectDefinitionId: number;
 	objectField: ObjectField;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;

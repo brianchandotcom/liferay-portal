@@ -243,11 +243,10 @@ export function ModalAddFilterColumn({
 	useEffect(() => {
 		const filteredPickListFields = objectFields.filter((objectField) => {
 			if (
-				(objectField.businessType === 'Picklist' ||
-					objectField.name === 'dateCreated' ||
-					objectField.name === 'dateModified' ||
-					objectField.name === 'status') &&
-				!objectField.hasFilter
+				objectField.businessType === 'Picklist' ||
+				objectField.name === 'dateCreated' ||
+				objectField.name === 'dateModified' ||
+				(objectField.name === 'status' && !objectField.hasFilter)
 			) {
 				return objectField;
 			}

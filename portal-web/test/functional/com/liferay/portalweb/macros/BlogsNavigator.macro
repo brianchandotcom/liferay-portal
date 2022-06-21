@@ -120,7 +120,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE",
 			value1 = "${entryTitle}");
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "BlogsEntry#CONTENT",
 			value1 = "${entryContent}");
 

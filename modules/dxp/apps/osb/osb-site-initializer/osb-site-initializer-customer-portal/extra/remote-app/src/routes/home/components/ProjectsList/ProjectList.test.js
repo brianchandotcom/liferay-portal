@@ -26,9 +26,7 @@ describe('Project List', () => {
 	});
 
 	it('displays projects as cards if has less than 05 projects', () => {
-		const {container} = render(
-			<ProjectList hasManyProjects={false} totalCount={3} />
-		);
+		const {container} = render(<ProjectList hasManyProjects={false} />);
 
 		expect(
 			container.getElementsByClassName('cp-home-projects').length
@@ -36,9 +34,7 @@ describe('Project List', () => {
 	});
 
 	it('displays projects as a list if has more than 05 projects', () => {
-		const {container} = render(
-			<ProjectList hasManyProjects={true} totalCount={6} />
-		);
+		const {container} = render(<ProjectList hasManyProjects />);
 
 		expect(
 			container.getElementsByClassName('cp-home-projects-sm').length

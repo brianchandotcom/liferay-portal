@@ -28,7 +28,7 @@ describe('Project Card', () => {
 	});
 
 	it('contains Subscription End Date.', () => {
-		render(<ProjectCard slaCurrentEndDate="Dec 31, 2014" />);
+		render(<ProjectCard slaCurrentEndDate="2014-12-31T00:00:00-05:00" />);
 
 		const projectEndDate = screen.getByText('Dec 31, 2014');
 		expect(projectEndDate).toHaveTextContent('Dec 31, 2014');

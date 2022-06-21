@@ -44,7 +44,7 @@ const QuoteComparison = () => {
 	}, []);
 
 	const onClickPurchase = ({id}) => {
-		Storage.setItem(STORAGE_KEYS.PRODUCT_ID, id);
+		Storage.setItem(STORAGE_KEYS.QUOTE_ID, id);
 
 		redirectTo(RAYLIFE_PAGES.SELECTED_QUOTE);
 	};

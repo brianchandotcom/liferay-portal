@@ -14,7 +14,7 @@
  */
 
 const applicationId = localStorage.getItem('raylife-application-id');
-const productId = localStorage.getItem('raylife-product-id');
+const quoteId = localStorage.getItem('raylife-quote-id');
 const raylifeApplicationForm = JSON.parse(
 	localStorage.getItem('raylife-application-form')
 );
@@ -40,7 +40,7 @@ const addPolicyEntryData = async ({firstName, lastName, price, product}) => {
 		body: JSON.stringify({
 			monthlyPremium: price,
 			name: `${firstName} ${lastName}`,
-			policyNumber: productId,
+			policyNumber: quoteId,
 			product,
 			r_applicationToPolicies_c_raylifeApplicationId: applicationId,
 		}),
@@ -88,7 +88,6 @@ const updateObjectPolicySent = async () => {
 				key: 'bound',
 				name: 'Bound',
 			},
-			policySent: true,
 		}),
 		method: 'PATCH',
 	});
@@ -142,12 +141,12 @@ const buildList = (items = []) => {
 const main = async () => {
 	const [application, quoteComparison, orderItem] = await Promise.all([
 		fetchHeadless(`o/c/raylifeapplications/${applicationId}`),
-		fetchHeadless(`o/c/quotecomparisons/${productId}`),
+		fetchHeadless(`o/c/quotecomparisons/${quoteId}`),
 		fetchHeadless(`o/headless-commerce-admin-order/v1.0/orders/${orderId}`),
 	]);
 
-	const quoteDate = application.dateCreated
-		? new Date(application.dateCreated)
+	const quoteDate = application.applicationCreateDate
+		? new Date(application.applicationCreateDate)
 		: new Date();
 
 	const quoteDateNextYear = new Date(
@@ -217,7 +216,7 @@ const main = async () => {
 		},
 	]);
 
-	if (!application.policySent) {
+	if (application.applicationStatus.key !== 'bound') {
 		addPolicyEntryData({...application, ...quoteComparison});
 		sendDigitalSignaturePolicy(application);
 		updateObjectPolicySent();

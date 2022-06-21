@@ -20,7 +20,7 @@ import {getSku} from '../services/Product';
 
 export const SelectedQuoteContext = createContext();
 
-const productId = Storage.getItem(STORAGE_KEYS.PRODUCT_ID);
+const quoteId = Storage.getItem(STORAGE_KEYS.QUOTE_ID);
 
 export const ACTIONS = {
 	SET_ACCOUNT_ID: 'SET_ACCOUNT_ID',
@@ -169,13 +169,13 @@ const SelectedQuoteContextProvider = ({children}) => {
 
 	const getInitialData = async () => {
 		const {
-			basics: {productQuote},
+			basics: {productId},
 		} = JSON.parse(Storage.getItem(STORAGE_KEYS.APPLICATION_FORM));
 
 		const [channel, sku, product] = await Promise.allSettled([
 			getChannel(),
-			getSku(productQuote),
-			getQuoteComparisonById(productId),
+			getSku(productId),
+			getQuoteComparisonById(quoteId),
 		]);
 
 		dispatch({

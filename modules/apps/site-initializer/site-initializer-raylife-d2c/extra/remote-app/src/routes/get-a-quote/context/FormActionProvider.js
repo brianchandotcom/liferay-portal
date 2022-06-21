@@ -46,7 +46,7 @@ const FormActionProvider = ({children, form}) => {
 		?.email;
 
 	const email = getValues('basics.businessInformation.business.email');
-	const productQuote = getValues('basics.productQuoteName');
+	const productQuote = getValues('basics.productName');
 
 	const {onNext, onPrevious, onSave} = useFormActions({
 		form,

@@ -57,6 +57,9 @@ const useFormActions = ({
 		if (applicationId) {
 			setValue('basics.applicationId', applicationId);
 
+			const createDate = new Date().toISOString().split('T')[0];
+			setValue('basics.applicationCreateDate', createDate);
+
 			Storage.setItem(STORAGE_KEYS.APPLICATION_ID, applicationId);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

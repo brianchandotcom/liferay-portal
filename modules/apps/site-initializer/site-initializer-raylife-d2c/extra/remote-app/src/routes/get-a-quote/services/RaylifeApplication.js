@@ -22,16 +22,16 @@ export function getRaylifeApplicationById(raylifeApplicationId) {
 }
 
 /**
- * @param {DataForm}  data Basics form object
+ * @param {DataForm}  form Basics form object
  * @returns {Promise<any>}  Status code
  */
 
-export function createOrUpdateRaylifeApplication(data, status) {
-	const payload = LiferayAdapt.adaptToFormApplicationRequest(data, status);
+export function createOrUpdateRaylifeApplication(form, status) {
+	const payload = LiferayAdapt.adaptToFormApplicationRequest(form, status);
 
-	if (data?.basics?.applicationId) {
+	if (form?.basics?.applicationId) {
 		return axios.patch(
-			`${RaylifeApplicationAPI}/${data.basics.applicationId}`,
+			`${RaylifeApplicationAPI}/${form.basics.applicationId}`,
 			payload
 		);
 	}

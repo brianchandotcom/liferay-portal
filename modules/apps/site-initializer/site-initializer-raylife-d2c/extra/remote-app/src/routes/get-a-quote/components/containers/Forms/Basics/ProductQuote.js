@@ -26,7 +26,7 @@ import {useTriggerContext} from '../../../../hooks/useTriggerContext';
 export function FormBasicProductQuote({form}) {
 	const {productQuotes} = useProductQuotes();
 	const {control, setValue} = useFormContext();
-	const productQuoteId = form?.basics?.productQuote;
+	const productQuoteId = form?.basics?.productId;
 	const {
 		state: {
 			dimensions: {
@@ -40,13 +40,13 @@ export function FormBasicProductQuote({form}) {
 			const productQuote = productQuotes.find(
 				({id}) => id === productQuoteId
 			);
-			setValue('basics.productQuoteName', productQuote.title);
+			setValue('basics.productName', productQuote.title);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [productQuoteId, productQuotes]);
 
 	const forceValidation = useCallback(() => {
-		setValue('basics.productQuote', productQuoteId, {
+		setValue('basics.productId', productQuoteId, {
 			shouldValidate: true,
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -83,8 +83,8 @@ export function FormBasicProductQuote({form}) {
 				>
 					<Controller
 						control={control}
-						defaultValue={form?.basics?.productQuote}
-						name="basics.productQuote"
+						defaultValue={form?.basics?.productId}
+						name="basics.productId"
 						render={({field}) =>
 							productQuotes.map((quote) => (
 								<Radio
@@ -110,7 +110,7 @@ export function FormBasicProductQuote({form}) {
 										)
 									}
 									selected={
-										quote.id === form?.basics?.productQuote
+										quote.id === form?.basics?.productId
 									}
 									sideLabel={quote.period}
 									value={quote.id}

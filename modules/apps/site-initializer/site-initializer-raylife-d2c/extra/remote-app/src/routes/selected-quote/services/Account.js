@@ -23,7 +23,7 @@ export function createAccount(
 	password,
 	captcha
 ) {
-	const payload = {
+	const userPayload = {
 		alternateName: `${emailAddress.split('@')[0]}`,
 		emailAddress,
 		familyName: lastName,
@@ -31,8 +31,16 @@ export function createAccount(
 		password,
 	};
 
-	return axios.post(
+	const accountPayload = {
+		name: `${firstName} ${lastName}`,
+		status: 0,
+		type: 'business',
+	};
+
+	axios.post(
 		`${DeliveryAPI}/v1.0/user-accounts?captchaText=${captcha}`,
-		payload
+		userPayload
 	);
+
+	return axios.post(`${DeliveryAPI}/v1.0/accounts`, accountPayload);
 }

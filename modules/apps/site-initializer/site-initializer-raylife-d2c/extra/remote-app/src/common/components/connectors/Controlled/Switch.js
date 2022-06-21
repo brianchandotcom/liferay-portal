@@ -41,7 +41,9 @@ export function ControlledSwitch({
 					onChange={(value) => {
 						field.onChange(value);
 
-						onSelect();
+						if (typeof onSelect === 'function') {
+							onSelect();
+						}
 					}}
 					renderActions={
 						moreInfoProps && <MoreInfoButton {...moreInfoProps} />

@@ -94,7 +94,6 @@ export function BusinessTypeSearch({
 			setValue('basics.properties.businessClassCode', '');
 			setValue('basics.properties.naics', '');
 			setValue('basics.properties.segment', '');
-			setValue('basics.product', '');
 		}
 
 		await _getTaxonomyCategories(searchTerm);

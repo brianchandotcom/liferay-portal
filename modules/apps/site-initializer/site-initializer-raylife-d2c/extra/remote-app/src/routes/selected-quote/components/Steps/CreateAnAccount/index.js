@@ -217,7 +217,7 @@ export function CreateAnAccount() {
 			<div className="align-items-center d-flex justify-content-center justify-content-md-end">
 				<ClayButton
 					className="align-items-center d-flex"
-					disabled={!matchAllRules || loading}
+					disabled={!matchAllRules || loading || !captcha}
 					displayType="primary"
 					onClick={onCreateAccount}
 				>

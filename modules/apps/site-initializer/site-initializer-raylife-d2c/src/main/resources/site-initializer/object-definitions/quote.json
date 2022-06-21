@@ -45,18 +45,6 @@
 		},
 		{
 			"DBType": "String",
-			"businessType": "Text",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Quote Group ID"
-			},
-			"name": "quoteGroupId",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
 			"businessType": "Picklist",
 			"indexed": true,
 			"indexedAsKeyword": false,

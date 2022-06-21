@@ -1,52 +1,40 @@
 {
 	"object-entries": [
 		{
-			"applicationId": "123456",
+			"applicationCreateDate": "2022-03-09",
 			"applicationStatus": "incomplete",
-			"dateFiled": "2022-03-09",
 			"externalReferenceCode": "RAYAPP-001",
-			"policySent": false,
-			"product": "Home"
+			"productName": "Home"
 		},
 		{
-			"applicationId": "123567",
+			"applicationCreateDate": "2022-02-16",
 			"applicationStatus": "quoted",
-			"dateFiled": "2022-02-16",
 			"externalReferenceCode": "RAYAPP-002",
-			"policySent": false,
-			"product": "Auto"
+			"productName": "Auto"
 		},
 		{
-			"applicationId": "123734",
+			"applicationCreateDate": "2022-02-10",
 			"applicationStatus": "reviewed",
-			"dateFiled": "2022-02-10",
 			"externalReferenceCode": "RAYAPP-005",
-			"policySent": false,
-			"product": "Life"
+			"productName": "Life"
 		},
 		{
-			"applicationId": "123784",
+			"applicationCreateDate": "2022-02-16",
 			"applicationStatus": "incomplete",
-			"dateFiled": "2022-02-16",
 			"externalReferenceCode": "RAYAPP-003",
-			"policySent": false,
-			"product": "Auto"
+			"productName": "Auto"
 		},
 		{
-			"applicationId": "123789",
+			"applicationCreateDate": "2022-02-16",
 			"applicationStatus": "quoted",
-			"dateFiled": "2022-02-16",
 			"externalReferenceCode": "RAYAPP-004",
-			"policySent": false,
-			"product": "Home"
+			"productName": "Home"
 		},
 		{
-			"applicationId": "437852",
+			"applicationCreateDate": "2022-03-04",
 			"applicationStatus": "reviewed",
-			"dateFiled": "2022-03-04",
 			"externalReferenceCode": "RAYAPP-006",
-			"policySent": false,
-			"product": "Home"
+			"productName": "Home"
 		}
 	],
 	"objectDefinitionName": "RaylifeApplication"

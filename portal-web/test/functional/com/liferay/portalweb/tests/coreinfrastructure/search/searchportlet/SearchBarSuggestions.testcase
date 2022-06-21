@@ -230,7 +230,7 @@ definition {
 	}
 
 	@priority = "5"
-	test ShowBasicSuggestionsAcrossDifferentScopes {
+	test ViewBasicSuggestionsAcrossDifferentScopes {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			description = "WC WebContent Description",

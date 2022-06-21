@@ -59,12 +59,7 @@ public class FileSystemStore implements Store {
 
 		_rootDir = rootDir;
 
-		try {
-			FileUtil.mkdirs(_rootDir);
-		}
-		catch (IOException ioException) {
-			throw new SystemException(ioException);
-		}
+		_rootDir.mkdirs();
 	}
 
 	@Override

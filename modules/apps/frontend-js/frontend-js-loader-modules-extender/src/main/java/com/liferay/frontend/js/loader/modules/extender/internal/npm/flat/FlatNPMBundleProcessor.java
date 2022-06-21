@@ -29,18 +29,18 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 import java.net.URL;
 
 import java.nio.ByteBuffer;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -225,12 +225,10 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		File cacheFile = bundleContext.getDataFile("cache_json_objects");
 
-		Path cacheFilePath = cacheFile.toPath();
-
-		if (Files.exists(cacheFilePath)) {
+		if (cacheFile.exists()) {
 			try {
 				Deserializer deserializer = new Deserializer(
-					ByteBuffer.wrap(Files.readAllBytes(cacheFilePath)));
+					ByteBuffer.wrap(FileUtil.getBytes(cacheFile)));
 
 				if (deserializer.readLong() == bundle.getLastModified()) {
 					return deserializer.readObject();
@@ -294,7 +292,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		serializer.writeLong(bundle.getLastModified());
 
-		try (OutputStream outputStream = Files.newOutputStream(cacheFilePath)) {
+		try (OutputStream outputStream = new FileOutputStream(cacheFile)) {
 			serializer.writeObject(jsonObjects);
 
 			serializer.writeTo(outputStream);
@@ -315,12 +313,10 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		File cacheFile = bundleContext.getDataFile("cache_model_dependencies");
 
-		Path cacheFilePath = cacheFile.toPath();
-
-		if (Files.exists(cacheFilePath)) {
+		if (cacheFile.exists()) {
 			try {
 				Deserializer deserializer = new Deserializer(
-					ByteBuffer.wrap(Files.readAllBytes(cacheFilePath)));
+					ByteBuffer.wrap(FileUtil.getBytes(cacheFile)));
 
 				if (deserializer.readLong() == bundle.getLastModified()) {
 					return deserializer.readObject();
@@ -372,7 +368,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		serializer.writeLong(bundle.getLastModified());
 
-		try (OutputStream outputStream = Files.newOutputStream(cacheFilePath)) {
+		try (OutputStream outputStream = new FileOutputStream(cacheFile)) {
 			serializer.writeObject(moduleDependenciesMap);
 
 			serializer.writeTo(outputStream);

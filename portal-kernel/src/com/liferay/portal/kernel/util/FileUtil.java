@@ -228,7 +228,7 @@ public class FileUtil {
 		return _file.listFiles(fileName);
 	}
 
-	public static void mkdirs(File file) throws IOException {
+	public static void mkdirs(File file) {
 		_file.mkdirs(file);
 	}
 

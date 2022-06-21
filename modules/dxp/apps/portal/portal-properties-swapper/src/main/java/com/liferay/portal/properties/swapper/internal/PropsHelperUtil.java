@@ -20,13 +20,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.util.PropsUtil;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
-import java.nio.file.Paths;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -72,9 +71,11 @@ public class PropsHelperUtil {
 			String propertiesLocation = propertiesLocations[i];
 
 			try {
-				if (Files.exists(Paths.get(propertiesLocation))) {
+				File propertiesFile = new File(propertiesLocation);
+
+				if (propertiesFile.exists()) {
 					try (InputStream inputStream = new FileInputStream(
-							propertiesLocation)) {
+							propertiesFile)) {
 
 						Properties properties = new Properties();
 

@@ -51,7 +51,6 @@ import java.io.Writer;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -536,8 +535,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
-	public void mkdirs(File file) throws IOException {
-		Files.createDirectories(file.toPath());
+	public void mkdirs(File file) {
+		file.mkdirs();
 	}
 
 	@Override
@@ -552,12 +551,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			return;
 		}
 
-		try {
-			mkdirs(file);
-		}
-		catch (IOException ioException) {
-			ReflectionUtil.throwException(ioException);
-		}
+		mkdirs(file);
 	}
 
 	@Override

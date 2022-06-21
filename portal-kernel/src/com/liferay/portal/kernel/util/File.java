@@ -117,7 +117,7 @@ public interface File {
 
 	public String[] listFiles(String fileName);
 
-	public void mkdirs(java.io.File file) throws IOException;
+	public void mkdirs(java.io.File file);
 
 	public void mkdirs(String pathName);
 

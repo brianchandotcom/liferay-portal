@@ -417,11 +417,9 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		deploymentDir = deploymentDir.getCanonicalFile();
 
-		Path deploymentDirPath = deploymentDir.toPath();
+		deploymentDir.mkdirs();
 
-		Files.createDirectories(deploymentDirPath);
-
-		return deploymentDirPath;
+		return deploymentDir.toPath();
 	}
 
 	private void _installLPKGs(

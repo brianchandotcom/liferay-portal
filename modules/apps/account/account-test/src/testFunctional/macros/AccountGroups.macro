@@ -3,8 +3,6 @@ definition {
 	macro addAssignee {
 		LexiconEntry.gotoAdd();
 
-		Pause(locator1 = "3000");
-
 		SelectFrame(
 			key_title = "Assign Accounts to ${accountGroupName}",
 			locator1 = "IFrame#MODAL_ANY");

@@ -21,7 +21,7 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 %>
 
 <liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/vocabularies_selection.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/vocabularies_selection.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <liferay-frontend:edit-form

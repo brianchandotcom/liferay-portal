@@ -27,7 +27,7 @@ definition {
 	@description = "LPS-135394 - Verify it is possible to add a column for the View"
 	@priority = "5"
 	test CanAddColumn {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147765",
@@ -302,7 +302,7 @@ definition {
 	@description = "LPS-135394 - Verify it is possible to delete a column for the View by unselecting it"
 	@priority = "5"
 	test CanDeleteColumnByUnselect {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147768",
@@ -335,7 +335,7 @@ definition {
 	@description = "LPS-135394 - Verify it is possible to delete a column for the View through the delete button"
 	@priority = "5"
 	test CanDeleteColumnThroughDeleteButton {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147767",
@@ -481,7 +481,7 @@ definition {
 	@description = "LPS-135394 - Verify it is possible to drag the columns"
 	@priority = "5"
 	test CanDragColumns {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147769",
@@ -1052,7 +1052,7 @@ definition {
 	@description = "LPS-147792 - Verify it is possible to see the column label as the alias on the view builder column list"
 	@priority = "5"
 	test CanSeeRenamedColumnOnViewBuilder {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 152068",
@@ -1373,7 +1373,7 @@ definition {
 	@description = "LPS-144902 - Verify if the entries from an object in a table view defined as default are presented correctly"
 	@priority = "5"
 	test CanViewEntries {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147770",
@@ -1485,7 +1485,7 @@ definition {
 	@description = "LPS-143190 - Verify that the metadata values are correctly displayed on a Custom View"
 	@priority = "5"
 	test CanViewMetadataValues {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 149239",
@@ -1535,7 +1535,7 @@ definition {
 	@description = "LPS-144902 - Verify if selected Columns on custom view are presented correctly during visualization"
 	@priority = "5"
 	test CanViewOnlySelectedColumns {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147771",
@@ -1591,7 +1591,7 @@ definition {
 	@description = "LPS-144902 - Verify if the Columns on the custom view are presented following the predefined order during visualization"
 	@priority = "5"
 	test ColumnsAreOrdered {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147772",
@@ -1884,7 +1884,7 @@ definition {
 	@description = "LPS-135394 - Verify the Author, Creation Date, Modified Date, Workflow Status, ID columns (Metadata columns) are displayed to be selected"
 	@priority = "5"
 	test MetadataColumnsDisplayed {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147764",

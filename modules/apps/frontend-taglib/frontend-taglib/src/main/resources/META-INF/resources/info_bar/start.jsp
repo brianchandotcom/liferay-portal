@@ -17,7 +17,7 @@
 <%@ include file="/info_bar/init.jsp" %>
 
 <liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/info_bar.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/info_bar.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div class="info-bar-container">

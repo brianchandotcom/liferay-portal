@@ -19,7 +19,7 @@
 <liferay-util:html-top
 	outputKey="social_bookmarks_css"
 >
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div class="taglib-social-bookmarks" id="<%= PortalUtil.generateRandomKey(request, "taglib_ui_social_bookmarks_page") + StringPool.UNDERLINE %>socialBookmarks">

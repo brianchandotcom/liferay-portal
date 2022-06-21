@@ -542,9 +542,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.report.impl.jar!commons-codec.jar</file-name>
-				<version>1.12</version>
+				<version>1.15</version>
 				<project-name>Apache Commons Codec</project-name>
-				<project-url>http://commons.apache.org/proper/commons-codec/</project-url>
+				<project-url>https://commons.apache.org/proper/commons-codec/</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
@@ -2811,13 +2811,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.json.web.service.client.jar!commons-codec.jar</file-name>
-				<version>1.7</version>
-				<project-name>Commons Codec</project-name>
-				<project-url>http://commons.apache.org/codec/</project-url>
+				<version>1.15</version>
+				<project-name>Apache Commons Codec</project-name>
+				<project-url>https://commons.apache.org/proper/commons-codec/</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3486,9 +3486,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!commons-codec.jar</file-name>
-				<version>1.11</version>
+				<version>1.15</version>
 				<project-name>Apache Commons Codec</project-name>
-				<project-url>http://commons.apache.org/proper/commons-codec/</project-url>
+				<project-url>https://commons.apache.org/proper/commons-codec/</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
@@ -4251,7 +4251,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!commons-codec.jar</file-name>
-				<version>1.13</version>
+				<version>1.15</version>
 				<project-name>Apache Commons Codec</project-name>
 				<project-url>https://commons.apache.org/proper/commons-codec/</project-url>
 				<licenses>
@@ -4675,13 +4675,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!commons-codec.jar</file-name>
-				<version>1.6</version>
-				<project-name>Commons Codec</project-name>
-				<project-url>http://commons.apache.org/codec/</project-url>
+				<version>1.15</version>
+				<project-name>Apache Commons Codec</project-name>
+				<project-url>https://commons.apache.org/proper/commons-codec/</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -5243,13 +5243,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.vulcan.impl.jar!commons-codec.jar</file-name>
-				<version>1.10</version>
+				<version>1.15</version>
 				<project-name>Apache Commons Codec</project-name>
-				<project-url>http://commons.apache.org/proper/commons-codec/</project-url>
+				<project-url>https://commons.apache.org/proper/commons-codec/</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -5761,7 +5761,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-codec.jar</file-name>
-				<version>1.13</version>
+				<version>1.15</version>
 				<project-name>Apache Commons Codec</project-name>
 				<project-url>https://commons.apache.org/proper/commons-codec/</project-url>
 				<licenses>
@@ -6249,6 +6249,18 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.translation.translator.aws.jar!commons-codec.jar</file-name>
+				<version>1.15</version>
+				<project-name>Apache Commons Codec</project-name>
+				<project-url>https://commons.apache.org/proper/commons-codec/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

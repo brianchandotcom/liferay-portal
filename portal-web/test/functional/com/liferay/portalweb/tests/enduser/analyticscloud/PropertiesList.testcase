@@ -172,6 +172,8 @@ definition {
 			Alert.viewSuccessMessage();
 
 			ACDXPSettings.navToSyncedSitesMenu();
+
+			ACUtils.assertItemsName(itemList = "Liferay DXP");
 		}
 
 		task ("Disconnect DXP from AC") {

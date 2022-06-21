@@ -102,7 +102,7 @@ public class SegmentsConfigurationProviderImpl
 			return false;
 		}
 
-		if (!_isSegmentsCompanyConfigurationDefined(companyId)) {
+		if (!isSegmentsCompanyConfigurationDefined(companyId)) {
 			return _segmentsConfiguration.roleSegmentationEnabled();
 		}
 
@@ -130,7 +130,7 @@ public class SegmentsConfigurationProviderImpl
 			return false;
 		}
 
-		if (!_isSegmentsCompanyConfigurationDefined(companyId)) {
+		if (!isSegmentsCompanyConfigurationDefined(companyId)) {
 			return _segmentsConfiguration.segmentationEnabled();
 		}
 
@@ -143,6 +143,16 @@ public class SegmentsConfigurationProviderImpl
 		}
 
 		return true;
+	}
+
+	public boolean isSegmentsCompanyConfigurationDefined(long companyId)
+		throws ConfigurationException {
+
+		if (_getSegmentsCompanyConfiguration(companyId) != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -218,16 +228,6 @@ public class SegmentsConfigurationProviderImpl
 		catch (InvalidSyntaxException | IOException exception) {
 			throw new ConfigurationException(exception);
 		}
-	}
-
-	private boolean _isSegmentsCompanyConfigurationDefined(long companyId)
-		throws ConfigurationException {
-
-		if (_getSegmentsCompanyConfiguration(companyId) != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Reference

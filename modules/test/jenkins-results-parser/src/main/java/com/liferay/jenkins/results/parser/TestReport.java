@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.net.URL;
-
 /**
  * @author Michael Hashimoto
  */

@@ -108,7 +108,8 @@ public class ArtifactURLUtilTest {
 
 	@Test
 	public void testWarURLContainsExpectedSymbolicName() throws Exception {
-		String uriString = _getURIString("/classic-theme.autodeployed.war");
+		String uriString = _getURIString(
+			"dependencies/classic-theme.autodeployed.war");
 
 		URI uri = new URI(uriString);
 

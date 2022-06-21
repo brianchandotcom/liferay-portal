@@ -95,7 +95,7 @@ public class WabProcessorTest {
 
 	@Test
 	public void testClassicThemeWab() throws Exception {
-		File file = getFile("/classic-theme.autodeployed.war");
+		File file = getFile("dependencies/classic-theme.autodeployed.war");
 
 		try (Jar jar = new Jar(file)) {
 			Assert.assertNull(jar.getBsn());
@@ -207,7 +207,7 @@ public class WabProcessorTest {
 	@Test
 	public void testFatCDIWabOptsOutOfOSGiCDIIntegration() throws Exception {
 		WabProcessor wabProcessor = new TestWabProcessor(
-			getFile("/jsf.cdi.applicant.portlet.war"),
+			getFile("dependencies/jsf.cdi.applicant.portlet.war"),
 			Collections.singletonMap(
 				"Web-ContextPath",
 				new String[] {"/jsf-cdi-applicant-portlet"}));
@@ -292,7 +292,7 @@ public class WabProcessorTest {
 	@Test
 	public void testSkinnyCDIWabGainsOSGiCDIIntegration() throws Exception {
 		WabProcessor wabProcessor = new TestWabProcessor(
-			getFile("/PortletV3AnnotatedDemo.war"),
+			getFile("dependencies/PortletV3AnnotatedDemo.war"),
 			Collections.singletonMap(
 				"Web-ContextPath",
 				new String[] {"/portlet-V3-annotated-demo"}));
@@ -404,7 +404,7 @@ public class WabProcessorTest {
 	@Test
 	public void testThatEmbeddedLibsAreHandledProperly() throws Exception {
 		WabProcessor wabProcessor = new TestWabProcessor(
-			getFile("/tck-V3URLTests.wab.war"),
+			getFile("dependencies/tck-V3URLTests.wab.war"),
 			Collections.singletonMap(
 				"Web-ContextPath",
 				new String[] {"/portlet-V3-annotated-demo"}));

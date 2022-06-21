@@ -102,7 +102,8 @@ public class WabURLConnectionTest {
 	public void testWabURLConnectionRequiredParamsCompatibilityMode()
 		throws Exception {
 
-		String uriString = _getURIString("/classic-theme.autodeployed.war");
+		String uriString = _getURIString(
+			"dependencies/classic-theme.autodeployed.war");
 
 		WabURLConnection wabURLConnection = new WabURLConnection(
 			null, null,

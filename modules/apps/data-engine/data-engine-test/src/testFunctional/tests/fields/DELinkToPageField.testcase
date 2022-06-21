@@ -470,4 +470,59 @@ definition {
 			fieldName = "Link to Page");
 	}
 
+	@description = ""
+	@priority = "4"
+	test ViewLinkToPageFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Link to Page Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Link to Page",
+			fieldName = "Link to Page");
+
+		DEBuilder.openField(
+			fieldLabel = "Link to Page",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Link to Page",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Link to Page");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Link to Page");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Link to Page");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Link to Page Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Link to Page",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Link to Page",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Link to Page");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Link to Page");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Link to Page");
+	}
+
 }

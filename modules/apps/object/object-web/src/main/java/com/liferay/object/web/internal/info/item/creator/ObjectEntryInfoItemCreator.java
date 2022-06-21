@@ -186,6 +186,19 @@ public class ObjectEntryInfoItemCreator
 				infoFieldUniqueId,
 				objectEntryValuesException.getFileExtension());
 		}
+		catch (ObjectEntryValuesException.ListTypeEntry
+					objectEntryValuesException) {
+
+			String infoFieldUniqueId = _getInfoFieldUniqueId(
+				groupId, objectEntryValuesException.getObjectFieldName());
+
+			if (infoFieldUniqueId == null) {
+				throw new InfoFormException();
+			}
+
+			throw new InfoFormValidationException.InvalidInfoFieldValue(
+				infoFieldUniqueId);
+		}
 		catch (ObjectEntryValuesException.Required objectEntryValuesException) {
 			String infoFieldUniqueId = _getInfoFieldUniqueId(
 				groupId, objectEntryValuesException.getObjectFieldName());

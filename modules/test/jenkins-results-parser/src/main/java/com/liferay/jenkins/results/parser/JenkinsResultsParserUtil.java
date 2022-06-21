@@ -1394,11 +1394,11 @@ public class JenkinsResultsParserUtil {
 		return Arrays.asList(propertyContent.split(","));
 	}
 
-	public static Map<String, JSONObject> getBuildResultJSONObjects(
+	public static Map<URL, JSONObject> getBuildResultJSONObjects(
 		List<String> buildResultJsonURLs) {
 
-		final Map<String, JSONObject> buildResultJSONObjects =
-			Collections.synchronizedMap(new HashMap<String, JSONObject>());
+		final Map<URL, JSONObject> buildResultJSONObjects =
+			Collections.synchronizedMap(new TreeMap<URL, JSONObject>());
 
 		List<Callable<Void>> callables = new ArrayList<>();
 
@@ -1417,8 +1417,13 @@ public class JenkinsResultsParserUtil {
 					}
 
 					if (jsonObject != null) {
-						buildResultJSONObjects.put(
-							buildResultJsonURL, jsonObject);
+						try {
+							buildResultJSONObjects.put(
+								new URL(buildResultJsonURL), jsonObject);
+						}
+						catch (MalformedURLException malformedURLException) {
+							throw new RuntimeException(malformedURLException);
+						}
 					}
 
 					return null;

@@ -24,6 +24,8 @@ import com.liferay.jenkins.results.parser.testray.TestrayServer;
 
 import java.io.IOException;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -105,13 +107,54 @@ public class TestHistoryMap
 			JenkinsResultsParserUtil.getBuildResultJsonURLs(
 				jenkinsJobURL, maxBuildCount);
 
-		Map<String, JSONObject> buildResultJSONObjects =
+		Map<URL, JSONObject> buildResultJSONObjects =
 			JenkinsResultsParserUtil.getBuildResultJSONObjects(
 				buildResultJsonURLs);
 
-		for (String buildResultJsonURL : buildResultJsonURLs) {
-			if (buildResultJSONObjects.containsKey(buildResultJsonURL)) {
-				populate(buildResultJSONObjects.get(buildResultJsonURL));
+		for (Map.Entry<URL, JSONObject> entry :
+				buildResultJSONObjects.entrySet()) {
+
+			JSONObject buildResultJSONObject = entry.getValue();
+
+			JSONArray batchResultsJSONArray =
+				buildResultJSONObject.getJSONArray("batchResults");
+
+			for (int i = 0; i < batchResultsJSONArray.length(); i++) {
+				JSONObject batchResultJSONObject =
+					batchResultsJSONArray.getJSONObject(i);
+
+				String batchName = batchResultJSONObject.getString(
+					"jobVariant");
+
+				batchName = batchName.replaceAll("(.*)/.*", "$1");
+
+				JSONArray testResultsJSONArray =
+					batchResultJSONObject.getJSONArray("testResults");
+
+				for (int j = 0; j < testResultsJSONArray.length(); j++) {
+					JSONObject testResultJSONObject =
+						testResultsJSONArray.getJSONObject(j);
+
+					String name = testResultJSONObject.optString("name");
+
+					String status = testResultJSONObject.optString("status");
+
+					status = status.replace("REGRESSION", "FAILED");
+					status = status.replace("FIXED", "PASSED");
+
+					if (name.startsWith("PortalLogAssertorTest") ||
+						name.startsWith("JenkinsLogAsserterTest") ||
+						status.equals("SKIPPED")) {
+
+						continue;
+					}
+
+					put(
+						name, batchName,
+						testResultJSONObject.optString("buildURL"),
+						testResultJSONObject.optLong("duration"),
+						testResultJSONObject.optString("errorDetails"), status);
+				}
 			}
 		}
 

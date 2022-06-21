@@ -16,6 +16,8 @@ package com.liferay.layout.utility.page.status.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -79,6 +81,25 @@ public class StatusDisplayContext {
 
 		return false;
 	}
+
+	public void logSessionErrors() {
+		for (String key : SessionErrors.keySet(_httpServletRequest)) {
+			Object value = SessionErrors.get(_httpServletRequest, key);
+
+			if (value instanceof Exception) {
+				Exception e = (Exception)value;
+
+				_log.error(e.getMessage());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(e);
+				}
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StatusDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 

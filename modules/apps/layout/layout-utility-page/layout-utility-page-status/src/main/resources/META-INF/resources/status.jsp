@@ -93,19 +93,7 @@ if (status > 0) {
 		<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
 
 		<%
-		for (String key : SessionErrors.keySet(request)) {
-			Object value = SessionErrors.get(request, key);
-
-			if (value instanceof Exception) {
-				Exception e = (Exception)value;
-
-				_log.error(e.getMessage());
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(e);
-				}
-			}
-		}
+		statusDisplayContext.logSessionErrors();
 		%>
 
 	</c:otherwise>
@@ -114,7 +102,3 @@ if (status > 0) {
 <hr class="separator" />
 
 <a href="javascript:history.go(-1);">&laquo; <liferay-ui:message key="back" /></a>
-
-<%!
-private static final Log _log = LogFactoryUtil.getLog("portal_web.docroot.html.portal.status_jsp");
-%>

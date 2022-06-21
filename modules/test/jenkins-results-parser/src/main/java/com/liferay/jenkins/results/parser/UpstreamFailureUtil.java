@@ -17,8 +17,9 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.URL;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
@@ -368,23 +369,19 @@ public class UpstreamFailureUtil {
 				topLevelBuild.getBranchName(), (File)null,
 				baseGitRepositoryName);
 
-		List<String> buildResultJSONURLs =
-			JenkinsResultsParserUtil.getBuildResultJsonURLs(
-				topLevelBuild.getAcceptanceUpstreamJobURL(), 20);
+		JobReport jobReport = JobReport.getInstance(
+			topLevelBuild.getAcceptanceUpstreamJobURL());
 
-		Collections.reverse(buildResultJSONURLs);
+		List<TopLevelBuildReport> topLevelBuildReports =
+			jobReport.getTopLevelBuildReports(20);
 
-		for (String buildResultJSONURL : buildResultJSONURLs) {
+		for (TopLevelBuildReport topLevelBuildReport : topLevelBuildReports) {
+			URL testResultsJSONUserContentURL =
+				topLevelBuildReport.getTestResultsJSONUserContentURL();
+
 			try {
-				buildResultJSONURL = buildResultJSONURL.replace(
-					"test-1-1/userContent/jobs/",
-					"test-1-0/userContent/testResults/");
-
-				buildResultJSONURL = buildResultJSONURL.replace(
-					"build-result.json", "test.results.json");
-
 				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-					buildResultJSONURL);
+					testResultsJSONUserContentURL.toString());
 
 				String sha = jsonObject.getString("SHA");
 
@@ -398,7 +395,7 @@ public class UpstreamFailureUtil {
 				if (failureBatchesJSONArray.length() > 0) {
 					System.out.println(
 						"Downloading upstream test results from " +
-							buildResultJSONURL);
+							testResultsJSONUserContentURL);
 
 					return jsonObject;
 				}

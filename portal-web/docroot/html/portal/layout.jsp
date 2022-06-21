@@ -19,7 +19,25 @@
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(request.getAttribute(NoSuchLayoutException.class.getName())) %>">
 		<div class="container pb-3 pt-3">
-			<%@ include file="/html/portal/status.jsp" %>
+			<h3 class="alert alert-danger">
+				<liferay-ui:message key="not-found" />
+			</h3>
+
+			<liferay-ui:message key="the-requested-resource-could-not-be-found" />
+
+			<br /><br />
+
+			<%
+			String url = ParamUtil.getString(request, "previousURL");
+
+			if (Validator.isNull(url)) {
+				url = PortalUtil.getCurrentURL(request);
+			}
+
+			url = HttpComponentsUtil.decodeURL(themeDisplay.getPortalURL() + url);
+			%>
+
+			<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
 		</div>
 	</c:when>
 	<c:otherwise>

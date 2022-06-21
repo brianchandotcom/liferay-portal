@@ -40,6 +40,7 @@ import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerServicesTracker;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -114,7 +115,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			new ObjectEntryInfoItemFormProvider(
 				objectDefinition, _infoItemFieldReaderFieldSetProvider,
 				_objectDefinitionLocalService, _objectFieldLocalService,
-				_objectRelationshipLocalService,
+				_objectRelationshipLocalService, _objectScopeProviderRegistry,
+				_restContextPathResolverRegistry,
 				_templateInfoItemFieldSetProvider);
 
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
@@ -434,6 +436,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RESTContextPathResolverRegistry _restContextPathResolverRegistry;
 
 	private ServiceTrackerMap<String, PortletResourcePermission>
 		_serviceTrackerMap;

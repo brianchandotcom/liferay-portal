@@ -35,6 +35,10 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.rest.context.path.RESTContextPathResolver;
+import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
@@ -44,7 +48,12 @@ import com.liferay.object.web.internal.util.ObjectFieldDBTypeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
@@ -53,6 +62,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Jorge Ferrer
@@ -67,6 +78,8 @@ public class ObjectEntryInfoItemFormProvider
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
+		ObjectScopeProviderRegistry objectScopeProviderRegistry,
+		RESTContextPathResolverRegistry restContextPathResolverRegistry,
 		TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider) {
 
 		_objectDefinition = objectDefinition;
@@ -75,6 +88,8 @@ public class ObjectEntryInfoItemFormProvider
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
+		_objectScopeProviderRegistry = objectScopeProviderRegistry;
+		_restContextPathResolverRegistry = restContextPathResolverRegistry;
 		_templateInfoItemFieldSetProvider = templateInfoItemFieldSetProvider;
 	}
 
@@ -204,6 +219,13 @@ public class ObjectEntryInfoItemFormProvider
 						BUSINESS_TYPE_PRECISION_DECIMAL_VALUE_MIN)
 			);
 		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+			finalStep.attribute(
+				SelectInfoFieldType.OPTIONS_URL, _getOptionsURL(objectField));
+		}
 
 		return finalStep.build();
 	}
@@ -273,6 +295,26 @@ public class ObjectEntryInfoItemFormProvider
 		}
 
 		return null;
+	}
+
+	private long _getGroupId(
+		HttpServletRequest httpServletRequest,
+		ObjectDefinition objectDefinition) {
+
+		try {
+			ObjectScopeProvider objectScopeProvider =
+				_objectScopeProviderRegistry.getObjectScopeProvider(
+					objectDefinition.getScope());
+
+			return objectScopeProvider.getGroupId(httpServletRequest);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return 0L;
+		}
 	}
 
 	private InfoForm _getInfoForm(long objectDefinitionId)
@@ -415,6 +457,41 @@ public class ObjectEntryInfoItemFormProvider
 		return options;
 	}
 
+	private String _getOptionsURL(ObjectField objectField) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return StringPool.BLANK;
+		}
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByObjectFieldId2(
+					objectField.getObjectFieldId());
+
+		ObjectDefinition relatedObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+
+		if (relatedObjectDefinition == null) {
+			return StringPool.BLANK;
+		}
+
+		RESTContextPathResolver restContextPathResolver =
+			_restContextPathResolverRegistry.getRESTContextPathResolver(
+				relatedObjectDefinition.getClassName());
+
+		String restContextPath = restContextPathResolver.getRESTContextPath(
+			_getGroupId(serviceContext.getRequest(), relatedObjectDefinition));
+
+		return PortalUtil.getPortalURL(serviceContext.getRequest()) +
+			restContextPath;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryInfoItemFormProvider.class);
+
 	private final InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
 	private final ObjectDefinition _objectDefinition;
@@ -422,6 +499,9 @@ public class ObjectEntryInfoItemFormProvider
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
+	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+	private final RESTContextPathResolverRegistry
+		_restContextPathResolverRegistry;
 	private final TemplateInfoItemFieldSetProvider
 		_templateInfoItemFieldSetProvider;
 

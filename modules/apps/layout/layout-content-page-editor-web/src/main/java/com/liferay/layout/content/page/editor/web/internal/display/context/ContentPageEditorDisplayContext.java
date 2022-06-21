@@ -448,7 +448,7 @@ public class ContentPageEditorDisplayContext {
 						layoutURL, "p_l_mode", Constants.PREVIEW);
 
 					return HttpComponentsUtil.addParameter(
-						layoutURL, "pageEditorPreview", Boolean.TRUE);
+						layoutURL, "disableCommonStyles", Boolean.TRUE);
 				}
 			).put(
 				"getInfoItemFieldValueURL",

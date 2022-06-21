@@ -595,7 +595,7 @@ definition {
 		}
 
 		task ("Then the navigation menu admin could view a warning message on menu") {
-			NavigationMenusAdmin.viewItemWarningMessage(warningMessage = "No categories inside");
+			NavigationMenusAdmin.viewItemWarningMessage(warningMessage = "No Categories inside");
 		}
 	}
 

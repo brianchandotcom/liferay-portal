@@ -226,85 +226,87 @@ public abstract class BaseLayoutStructureItemImporter {
 	protected JSONObject toFragmentViewportStylesJSONObject(
 		Map<String, Object> fragmentViewport) {
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		if (MapUtil.isEmpty(fragmentViewport)) {
-			return jsonObject;
+			return JSONFactoryUtil.createJSONObject();
 		}
 
 		Map<String, Object> fragmentViewportStyle =
 			(Map<String, Object>)fragmentViewport.get("fragmentViewportStyle");
 
 		if (MapUtil.isEmpty(fragmentViewportStyle)) {
-			return jsonObject;
+			return JSONFactoryUtil.createJSONObject();
 		}
 
-		Object hidden = fragmentViewportStyle.get("hidden");
+		return JSONUtil.put(
+			"styles",
+			JSONUtil.put(
+				"backgroundColor", fragmentViewportStyle.get("backgroundColor")
+			).put(
+				"borderColor", fragmentViewportStyle.get("borderColor")
+			).put(
+				"borderRadius", fragmentViewportStyle.get("borderRadius")
+			).put(
+				"borderWidth", fragmentViewportStyle.get("borderWidth")
+			).put(
+				"display",
+				() -> {
+					Object hidden = fragmentViewportStyle.get("hidden");
 
-		if (hidden != null) {
-			if (GetterUtil.getBoolean(hidden)) {
-				jsonObject.put("display", "none");
-			}
-			else {
-				jsonObject.put("display", "block");
-			}
-		}
+					if (hidden != null) {
+						if (GetterUtil.getBoolean(hidden)) {
+							return "none";
+						}
 
-		jsonObject.put(
-			"backgroundColor", fragmentViewportStyle.get("backgroundColor")
-		).put(
-			"borderColor", fragmentViewportStyle.get("borderColor")
-		).put(
-			"borderRadius", fragmentViewportStyle.get("borderRadius")
-		).put(
-			"borderWidth", fragmentViewportStyle.get("borderWidth")
-		).put(
-			"fontFamily", fragmentViewportStyle.get("fontFamily")
-		).put(
-			"fontSize", fragmentViewportStyle.get("fontSize")
-		).put(
-			"fontWeight", fragmentViewportStyle.get("fontWeight")
-		).put(
-			"height", fragmentViewportStyle.get("height")
-		).put(
-			"marginBottom", fragmentViewportStyle.get("marginBottom")
-		).put(
-			"marginLeft", fragmentViewportStyle.get("marginLeft")
-		).put(
-			"marginRight", fragmentViewportStyle.get("marginRight")
-		).put(
-			"marginTop", fragmentViewportStyle.get("marginTop")
-		).put(
-			"maxHeight", fragmentViewportStyle.get("maxHeight")
-		).put(
-			"maxWidth", fragmentViewportStyle.get("maxWidth")
-		).put(
-			"minHeight", fragmentViewportStyle.get("minHeight")
-		).put(
-			"minWidth", fragmentViewportStyle.get("minWidth")
-		).put(
-			"opacity", fragmentViewportStyle.get("opacity")
-		).put(
-			"overflow", fragmentViewportStyle.get("overflow")
-		).put(
-			"paddingBottom", fragmentViewportStyle.get("paddingBottom")
-		).put(
-			"paddingLeft", fragmentViewportStyle.get("paddingLeft")
-		).put(
-			"paddingRight", fragmentViewportStyle.get("paddingRight")
-		).put(
-			"paddingTop", fragmentViewportStyle.get("paddingTop")
-		).put(
-			"shadow", fragmentViewportStyle.get("shadow")
-		).put(
-			"textAlign", fragmentViewportStyle.get("textAlign")
-		).put(
-			"textColor", fragmentViewportStyle.get("textColor")
-		).put(
-			"width", fragmentViewportStyle.get("width")
-		);
+						return "block";
+					}
 
-		return JSONUtil.put("styles", jsonObject);
+					return null;
+				}
+			).put(
+				"fontFamily", fragmentViewportStyle.get("fontFamily")
+			).put(
+				"fontSize", fragmentViewportStyle.get("fontSize")
+			).put(
+				"fontWeight", fragmentViewportStyle.get("fontWeight")
+			).put(
+				"height", fragmentViewportStyle.get("height")
+			).put(
+				"marginBottom", fragmentViewportStyle.get("marginBottom")
+			).put(
+				"marginLeft", fragmentViewportStyle.get("marginLeft")
+			).put(
+				"marginRight", fragmentViewportStyle.get("marginRight")
+			).put(
+				"marginTop", fragmentViewportStyle.get("marginTop")
+			).put(
+				"maxHeight", fragmentViewportStyle.get("maxHeight")
+			).put(
+				"maxWidth", fragmentViewportStyle.get("maxWidth")
+			).put(
+				"minHeight", fragmentViewportStyle.get("minHeight")
+			).put(
+				"minWidth", fragmentViewportStyle.get("minWidth")
+			).put(
+				"opacity", fragmentViewportStyle.get("opacity")
+			).put(
+				"overflow", fragmentViewportStyle.get("overflow")
+			).put(
+				"paddingBottom", fragmentViewportStyle.get("paddingBottom")
+			).put(
+				"paddingLeft", fragmentViewportStyle.get("paddingLeft")
+			).put(
+				"paddingRight", fragmentViewportStyle.get("paddingRight")
+			).put(
+				"paddingTop", fragmentViewportStyle.get("paddingTop")
+			).put(
+				"shadow", fragmentViewportStyle.get("shadow")
+			).put(
+				"textAlign", fragmentViewportStyle.get("textAlign")
+			).put(
+				"textColor", fragmentViewportStyle.get("textColor")
+			).put(
+				"width", fragmentViewportStyle.get("width")
+			));
 	}
 
 	protected JSONObject toStylesJSONObject(

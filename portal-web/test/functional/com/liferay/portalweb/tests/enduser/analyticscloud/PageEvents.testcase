@@ -863,6 +863,18 @@ definition {
 			Open.openInTheNewTab(locator1 = "https://www.bbc.com");
 		}
 
+		task ("Switch to the DXP tab") {
+			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+		}
+
+		task ("Hard refresh the page to clear the network") {
+			TestUtils.hardRefresh();
+		}
+
+		task ("Switch to the BCC tab") {
+			SelectWindow(locator1 = "title=BBC - Homepage");
+		}
+
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("tabFocused");
 		}

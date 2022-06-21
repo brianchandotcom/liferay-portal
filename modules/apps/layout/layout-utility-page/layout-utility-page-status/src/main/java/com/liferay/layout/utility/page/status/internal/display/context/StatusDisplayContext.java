@@ -48,9 +48,6 @@ public class StatusDisplayContext {
 	}
 
 	public boolean isNoSuchResourceException() {
-		String exception = ParamUtil.getString(
-			_httpServletRequest, "exception");
-
 		for (String key : SessionErrors.keySet(_httpServletRequest)) {
 			key = key.substring(key.lastIndexOf(StringPool.PERIOD) + 1);
 
@@ -65,7 +62,11 @@ public class StatusDisplayContext {
 
 			return true;
 		}
-		else if (Validator.isNotNull(exception)) {
+
+		String exception = ParamUtil.getString(
+			_httpServletRequest, "exception");
+
+		if (Validator.isNotNull(exception)) {
 			exception = exception.substring(
 				exception.lastIndexOf(StringPool.PERIOD) + 1);
 

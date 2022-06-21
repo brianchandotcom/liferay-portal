@@ -180,9 +180,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		RenderLayoutStructureTag.class.getName() + "#LAYOUT_STRUCTURE";
 
 	private String _getErrorMessage(
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			InfoForm infoForm)
-		throws Exception {
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		InfoForm infoForm) {
 
 		HttpServletRequest httpServletRequest = getRequest();
 

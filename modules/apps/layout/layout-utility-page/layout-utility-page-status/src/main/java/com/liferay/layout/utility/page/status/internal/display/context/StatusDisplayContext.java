@@ -51,13 +51,11 @@ public class StatusDisplayContext {
 		String exception = ParamUtil.getString(
 			_httpServletRequest, "exception");
 
-		boolean noSuchResourceException = false;
-
 		for (String key : SessionErrors.keySet(_httpServletRequest)) {
 			key = key.substring(key.lastIndexOf(StringPool.PERIOD) + 1);
 
 			if (key.startsWith("NoSuch") && key.endsWith("Exception")) {
-				noSuchResourceException = true;
+				return true;
 			}
 		}
 
@@ -65,7 +63,7 @@ public class StatusDisplayContext {
 				_httpServletRequest.getAttribute(
 					NoSuchLayoutException.class.getName()))) {
 
-			noSuchResourceException = true;
+			return true;
 		}
 		else if (Validator.isNotNull(exception)) {
 			exception = exception.substring(
@@ -74,11 +72,11 @@ public class StatusDisplayContext {
 			if (exception.startsWith("NoSuch") &&
 				exception.endsWith("Exception")) {
 
-				noSuchResourceException = true;
+				return true;
 			}
 		}
 
-		return noSuchResourceException;
+		return false;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

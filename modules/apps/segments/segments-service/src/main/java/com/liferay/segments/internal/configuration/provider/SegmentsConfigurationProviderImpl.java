@@ -18,12 +18,14 @@ import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 import com.liferay.segments.configuration.SegmentsConfiguration;
@@ -31,6 +33,7 @@ import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider
 
 import java.io.IOException;
 
+import java.util.Dictionary;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -142,6 +145,51 @@ public class SegmentsConfigurationProviderImpl
 		return true;
 	}
 
+	@Override
+	public void updateSegmentsCompanyConfiguration(
+			long companyId,
+			SegmentsCompanyConfiguration segmentsCompanyConfiguration)
+		throws ConfigurationException {
+
+		Dictionary<String, Object> properties = null;
+
+		Configuration configuration = _getSegmentsCompanyConfiguration(
+			companyId);
+
+		if (configuration == null) {
+			try {
+				configuration = _configurationAdmin.createFactoryConfiguration(
+					SegmentsCompanyConfiguration.class.getName() + ".scoped",
+					StringPool.QUESTION);
+			}
+			catch (IOException ioException) {
+				throw new ConfigurationException(ioException);
+			}
+
+			properties = HashMapDictionaryBuilder.<String, Object>put(
+				ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey(),
+				companyId
+			).build();
+		}
+		else {
+			properties = configuration.getProperties();
+		}
+
+		properties.put(
+			"roleSegmentationEnabled",
+			segmentsCompanyConfiguration.roleSegmentationEnabled());
+		properties.put(
+			"segmentationEnabled",
+			segmentsCompanyConfiguration.segmentationEnabled());
+
+		try {
+			configuration.update(properties);
+		}
+		catch (IOException ioException) {
+			throw new ConfigurationException(ioException);
+		}
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
@@ -149,7 +197,7 @@ public class SegmentsConfigurationProviderImpl
 			SegmentsConfiguration.class, properties);
 	}
 
-	private boolean _isSegmentsCompanyConfigurationDefined(long companyId)
+	private Configuration _getSegmentsCompanyConfiguration(long companyId)
 		throws ConfigurationException {
 
 		try {
@@ -162,14 +210,24 @@ public class SegmentsConfigurationProviderImpl
 				_configurationAdmin.listConfigurations(filterString);
 
 			if (configuration != null) {
-				return true;
+				return configuration[0];
 			}
 
-			return false;
+			return null;
 		}
 		catch (InvalidSyntaxException | IOException exception) {
 			throw new ConfigurationException(exception);
 		}
+	}
+
+	private boolean _isSegmentsCompanyConfigurationDefined(long companyId)
+		throws ConfigurationException {
+
+		if (_getSegmentsCompanyConfiguration(companyId) != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

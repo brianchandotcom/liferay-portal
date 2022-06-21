@@ -14,6 +14,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.exception.FragmentCompositionDescriptionException;
+import com.liferay.fragment.exception.FragmentCompositionNameException;
 import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -85,6 +87,12 @@ public abstract class BaseContentPageEditorTransactionalMVCActionCommand
 		ActionRequest actionRequest, Exception exception) {
 
 		String errorMessage = "an-unexpected-error-occurred";
+
+		if (exception instanceof FragmentCompositionDescriptionException ||
+			exception instanceof FragmentCompositionNameException) {
+
+			errorMessage = exception.getMessage();
+		}
 
 		if (exception instanceof PortletIdException) {
 			errorMessage =

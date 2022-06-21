@@ -3244,11 +3244,22 @@ definition {
 	}
 
 	@description = "Verify that the Task Node comes with Asset Creator Assignment as default"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test TaskNodeComesWithAssetCreatorAssignmentAsDefault {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TaskNodeComesWithAssetCreatorAssignmentAsDefault";
 
-		// TODO TaskNodeComesWithAssetCreatorAssignmentAsDefault pending implementation
+        Workflow.openWorkflowListView();
+
+        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		
+
+        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+            nodeLabel = "Task",
+            nodePosition = "0,0");
+
+
+        ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Asset Creator");
+
 
 	}
 

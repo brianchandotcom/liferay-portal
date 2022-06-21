@@ -90,6 +90,30 @@ public class InfoFormValidationException extends InfoFormException {
 
 	}
 
+	public static class ExceedsMinValue extends InvalidInfoFieldValue {
+
+		public ExceedsMinValue(String infoFieldUniqueId, long minValue) {
+			super(infoFieldUniqueId);
+
+			_minValue = minValue;
+		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.get(locale, "value-exceeds-minimum-value-of-x");
+		}
+
+		@Override
+		public String getLocalizedMessage(String fieldLabel, Locale locale) {
+			return LanguageUtil.format(
+				locale, "value-exceeds-minimum-value-of-x-for-field-x",
+				new String[] {String.valueOf(_minValue), fieldLabel}, false);
+		}
+
+		private final long _minValue;
+
+	}
+
 	public static class FileSize extends InfoFormValidationException {
 
 		public FileSize(String infoFieldUniqueId, String maximumSizeAllowed) {

@@ -10,35 +10,11 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "FinishDate"
+				"en_US": "Bound Date"
 			},
-			"name": "finishDate",
+			"name": "boundDate",
 			"required": false,
 			"type": "Date"
-		},
-		{
-			"DBType": "Date",
-			"businessType": "Date",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "StartDate"
-			},
-			"name": "startDate",
-			"required": false,
-			"type": "Date"
-		},
-		{
-			"DBType": "Integer",
-			"businessType": "Integer",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Renewal Due"
-			},
-			"name": "renewalDue",
-			"required": false,
-			"type": "Integer"
 		},
 		{
 			"DBType": "BigDecimal",
@@ -53,52 +29,137 @@
 			"type": "BigDecimal"
 		},
 		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Policy Create Date"
+			},
+			"name": "policyCreateDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Currency Type"
+			},
+			"name": "currencyType",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Clob",
+			"businessType": "LongText",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Data JSON"
+			},
+			"name": "dataJSON",
+			"required": false,
+			"type": "Clob"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "End Date"
+			},
+			"name": "endDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Last Payment Date"
+			},
+			"name": "lastPaymentDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Payment Due Date"
+			},
+			"name": "paymentDueDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Policy Owner Email"
+			},
+			"name": "policyOwnerEmail",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Policy Owner Name"
+			},
+			"name": "policyOwnerName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Policy Status"
+			},
+			"listTypeDefinitionId": "[$LIST_TYPE_DEFINITION_ID:PolicyStatus$]",
+			"name": "policyStatus",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Start Date"
+			},
+			"name": "startDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
 			"DBType": "BigDecimal",
 			"businessType": "PrecisionDecimal",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Monthly Premium"
+				"en_US": "Term Premium"
 			},
-			"name": "monthlyPremium",
+			"name": "termPremium",
 			"required": false,
 			"type": "BigDecimal"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Name"
-			},
-			"name": "name",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Policy Number"
-			},
-			"name": "policyNumber",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Product"
-			},
-			"name": "product",
-			"required": false,
-			"type": "String"
 		}
 	],
 	"panelAppOrder": "100",

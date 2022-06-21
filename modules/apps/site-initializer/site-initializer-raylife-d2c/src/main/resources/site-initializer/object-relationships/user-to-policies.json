@@ -1,0 +1,11 @@
+{
+	"deletionType": "prevent",
+	"label": {
+		"en_US": "User"
+	},
+	"name": "userToPolicies",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:RaylifePolicy$]",
+	"objectDefinitionName2": "RaylifePolicy",
+	"type": "oneToMany"
+}

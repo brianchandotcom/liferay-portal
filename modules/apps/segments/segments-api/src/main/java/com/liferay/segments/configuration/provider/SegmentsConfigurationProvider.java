@@ -38,6 +38,9 @@ public interface SegmentsConfigurationProvider {
 	public boolean isSegmentationEnabled(long companyId)
 		throws ConfigurationException;
 
+	public boolean isSegmentsCompanyConfigurationDefined(long companyId)
+		throws ConfigurationException;
+
 	public void updateSegmentsCompanyConfiguration(
 			long companyId,
 			SegmentsCompanyConfiguration segmentsCompanyConfiguration)

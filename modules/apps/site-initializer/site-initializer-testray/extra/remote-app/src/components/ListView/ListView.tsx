@@ -30,6 +30,7 @@ import ListViewContextProvider, {
 	ListViewTypes,
 } from '../../context/ListViewContext';
 import i18n from '../../i18n';
+import {SortDirection} from '../../types';
 import {PAGINATION} from '../../util/constants';
 import {SearchBuilder} from '../../util/search';
 import EmptyState from '../EmptyState';
@@ -54,12 +55,13 @@ export type ListViewProps<T = any> = {
 		ManagementToolbarProps,
 		'tableProps' | 'totalItems' | 'onSelectAllRows' | 'rowSelectable'
 	>;
+
 	onContextChange?: (context: ListViewContextState) => void;
 	pagination?: {
 		displayTop?: boolean;
 	};
 	query: TypedDocumentNode;
-	tableProps: Omit<TableProps, 'items' | 'onSelectAllRows'>;
+	tableProps: Omit<TableProps, 'items' | 'onSelectAllRows' | 'onSort'>;
 	transformData: (data: T) => LiferayQueryResponse<T>;
 	variables?: any;
 };
@@ -95,7 +97,7 @@ const ListView: React.FC<ListViewProps> = ({
 					filters.filter,
 					_variables?.filter
 				) || '',
-			sort,
+			sort: sort.key ? `${sort.key}:${sort.direction.toLowerCase()}` : '',
 		};
 	}, [_variables, sort, filters]);
 
@@ -131,6 +133,16 @@ const ListView: React.FC<ListViewProps> = ({
 	const onSelectRow = useCallback(
 		(row: any) => {
 			dispatch({payload: row?.id, type: ListViewTypes.SET_CHECKED_ROW});
+		},
+		[dispatch]
+	);
+
+	const onSort = useCallback(
+		(key: string, direction: SortDirection) => {
+			dispatch({
+				payload: {direction, key},
+				type: ListViewTypes.SET_SORT,
+			});
 		},
 		[dispatch]
 	);
@@ -203,7 +215,9 @@ const ListView: React.FC<ListViewProps> = ({
 						items={items}
 						onSelectAllRows={onSelectAllRows}
 						onSelectRow={onSelectRow}
+						onSort={onSort}
 						selectedRows={selectedRows}
+						sort={sort}
 					/>
 
 					{Pagination}

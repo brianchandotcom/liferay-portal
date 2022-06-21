@@ -30,7 +30,7 @@ export type ManagementToolbarProps = {
 		columns?: boolean;
 	};
 	filterFields?: RendererFields[];
-	tableProps: Omit<TableProps, 'items' | 'onSelectAllRows'>;
+	tableProps: Omit<TableProps, 'items' | 'onSelectAllRows' | 'onSort'>;
 	title?: string;
 	totalItems: number;
 };

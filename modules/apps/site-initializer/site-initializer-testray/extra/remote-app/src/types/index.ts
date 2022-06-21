@@ -36,9 +36,11 @@ export enum DescriptionType {
 }
 
 export enum SortOption {
-	ASC = 'asc',
-	DESC = 'desc',
+	ASC = 'ASC',
+	DESC = 'DESC',
 }
+
+export type SortDirection = keyof typeof SortOption;
 
 export type Action<T = any> = {
 	action?: (item: T) => void;

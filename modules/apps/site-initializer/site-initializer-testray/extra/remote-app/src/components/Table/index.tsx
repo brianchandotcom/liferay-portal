@@ -13,11 +13,14 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
+import {Sort} from '../../context/ListViewContext';
+import {SortDirection, SortOption} from '../../types';
 import DropDown from '../DropDown/DropDown';
 
 const {Body, Cell, Head, Row} = ClayTable;
@@ -38,8 +41,10 @@ export type TableProps<T = any> = {
 	navigateTo?: (item: T) => string;
 	onSelectAllRows: () => void;
 	onSelectRow?: (row: any) => void;
+	onSort: (columnTable: string, direction: SortDirection) => void;
 	rowSelectable?: boolean;
 	selectedRows?: number[];
+	sort?: Sort;
 };
 
 const Table: React.FC<TableProps> = ({
@@ -49,11 +54,15 @@ const Table: React.FC<TableProps> = ({
 	navigateTo,
 	onSelectRow,
 	onSelectAllRows,
-	selectedRows = [],
+	onSort,
 	rowSelectable = false,
+	selectedRows = [],
+	sort,
 }) => {
-	const [checked, setChecked] = useState(false);
 	const [activeRow, setActiveRow] = useState<number | undefined>();
+	const [checked, setChecked] = useState(false);
+	const [sorted, setSorted] = useState<SortDirection>(SortOption.ASC);
+
 	const displayActionColumn = !!actions?.length;
 
 	const navigate = useNavigate();
@@ -68,6 +77,27 @@ const Table: React.FC<TableProps> = ({
 		if (displayActionColumn) {
 			setActiveRow(rowIndex);
 		}
+	};
+
+	function changeSort(key: string) {
+		onSort(key, sorted);
+		setSorted(
+			sorted === SortOption.DESC ? SortOption.ASC : SortOption.DESC
+		);
+	}
+
+	const getSortSymbol = (key: string) => {
+		if (!sort) {
+			return '';
+		}
+
+		if (sort.key === key) {
+			return sort.direction === SortOption.ASC
+				? 'caret-top-l'
+				: 'caret-bottom-l';
+		}
+
+		return 'caret-double-l';
 	};
 
 	return (
@@ -87,8 +117,22 @@ const Table: React.FC<TableProps> = ({
 					)}
 
 					{columns.map((column, index) => (
-						<Cell headingTitle key={index}>
-							{column.value}
+						<Cell
+							className="align-items-center text-nowrap"
+							headingTitle
+							key={index}
+						>
+							<>
+								{column.value}
+
+								{column.sorteable && (
+									<ClayIcon
+										className="cursor-pointer ml-1"
+										onClick={() => changeSort(column.key)}
+										symbol={getSortSymbol(column.key)}
+									/>
+								)}
+							</>
 						</Cell>
 					))}
 
@@ -99,7 +143,7 @@ const Table: React.FC<TableProps> = ({
 			<Body>
 				{items.map((item, rowIndex) => (
 					<Row
-						className="table-row"
+						className="table-row text-nowrap"
 						key={rowIndex}
 						onMouseLeave={onMouseLeaveRow}
 						onMouseOver={() => onMouseOverRow(rowIndex)}

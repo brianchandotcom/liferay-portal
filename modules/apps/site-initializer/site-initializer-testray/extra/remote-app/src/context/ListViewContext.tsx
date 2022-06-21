@@ -15,10 +15,10 @@
 
 import {ReactNode, createContext, useReducer} from 'react';
 
-import {ActionMap, SortOption} from '../types';
+import {ActionMap, SortDirection, SortOption} from '../types';
 
 export type Sort = {
-	direction: SortOption;
+	direction: SortDirection;
 	key: string;
 };
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.entry.processor.freemarker.internal.templateparser;
+package com.liferay.fragment.input.templateparser;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

@@ -63,11 +63,6 @@
 		<put name="content" value="/portal/setup_wizard.jsp" />
 	</definition>
 
-	<definition extends="portal" name="portal.status">
-		<put name="title" value="status" />
-		<put name="content" value="/portal/status.jsp" />
-	</definition>
-
 	<definition extends="portal" name="portal.test">
 		<put name="title" value="test" />
 		<put name="content" value="/portal/test.jsp" />

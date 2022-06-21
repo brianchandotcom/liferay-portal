@@ -15,7 +15,6 @@
 		<forward name="/portal/portlet_access_denied" path="portal.portlet_access_denied" />
 		<forward name="/portal/portlet_inactive" path="portal.portlet_inactive" />
 		<forward name="/portal/portlet_not_setup" path="portal.portlet_not_setup" />
-		<forward name="/portal/status" path="portal.status" />
 	</global-forwards>
 
 	<!-- Action Mappings -->

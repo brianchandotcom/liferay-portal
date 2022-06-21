@@ -152,13 +152,24 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 				continue;
 			}
 
+			JSONObject viewportJSONObject = JSONFactoryUtil.createJSONObject();
+
+			if (_viewportCustomCSS.get(viewportSize.getViewportSizeId()) !=
+					null) {
+
+				viewportJSONObject.put(
+					"customCSS",
+					_viewportCustomCSS.get(viewportSize.getViewportSizeId()));
+			}
+
+			viewportJSONObject.put(
+				"styles",
+				viewportStyleJSONObjects.getOrDefault(
+					viewportSize.getViewportSizeId(),
+					JSONFactoryUtil.createJSONObject()));
+
 			jsonObject.put(
-				viewportSize.getViewportSizeId(),
-				JSONUtil.put(
-					"styles",
-					viewportStyleJSONObjects.getOrDefault(
-						viewportSize.getViewportSizeId(),
-						JSONFactoryUtil.createJSONObject())));
+				viewportSize.getViewportSizeId(), viewportJSONObject);
 		}
 
 		return jsonObject;
@@ -286,6 +297,9 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 				if (viewportSize.equals(ViewportSize.DESKTOP)) {
 					continue;
 				}
+
+				_updateViewportCustomCSSJSONObjects(
+					itemConfigJSONObject, viewportSize);
 
 				_updateViewportStyleJSONObjects(
 					itemConfigJSONObject, viewportSize);
@@ -420,6 +434,24 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		}
 	}
 
+	private void _updateViewportCustomCSSJSONObjects(
+		JSONObject itemConfigJSONObject, ViewportSize viewportSize) {
+
+		if (itemConfigJSONObject.has(viewportSize.getViewportSizeId())) {
+			JSONObject viewportItemConfigJSONObject =
+				itemConfigJSONObject.getJSONObject(
+					viewportSize.getViewportSizeId());
+
+			if ((viewportItemConfigJSONObject != null) &&
+				viewportItemConfigJSONObject.has("customCSS")) {
+
+				_viewportCustomCSS.put(
+					viewportSize.getViewportSizeId(),
+					viewportItemConfigJSONObject.getString("customCSS"));
+			}
+		}
+	}
+
 	private void _updateViewportStyleJSONObjects(
 		JSONObject itemConfigJSONObject, ViewportSize viewportSize) {
 
@@ -454,6 +486,7 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		viewportStyleJSONObjects.put(
 			viewportSize.getViewportSizeId(), currentViewportStyleJSONObject);
 	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		StyledLayoutStructureItem.class);
 
@@ -461,5 +494,6 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 
 	private Set<String> _cssClasses;
 	private String _customCSS;
+	private final Map<String, String> _viewportCustomCSS = new HashMap<>();
 
 }

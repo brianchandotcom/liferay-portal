@@ -19,8 +19,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -57,8 +59,16 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		put("options", _options);
 	}
 
+	public void addAttribute(String name, Object object) {
+		_attributes.put(name, object);
+	}
+
 	public void addOption(String label, String value) {
 		_options.add(new Option(label, value));
+	}
+
+	public Map<String, Object> getAttributes() {
+		return _attributes;
 	}
 
 	public String getDataType() {
@@ -107,6 +117,18 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	public JSONObject toJSONObject() {
 		return JSONUtil.put(
+			"attributes",
+			() -> {
+				JSONObject attributesJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
+					attributesJSONObject.put(entry.getKey(), entry.getValue());
+				}
+
+				return attributesJSONObject;
+			}
+		).put(
 			"dataType", _dataType
 		).put(
 			"errorMessage", _errorMessage
@@ -161,6 +183,7 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	}
 
+	private final Map<String, Object> _attributes = new HashMap<>();
 	private final String _dataType;
 	private final String _errorMessage;
 	private final String _helpText;

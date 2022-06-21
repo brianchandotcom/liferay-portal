@@ -73,7 +73,7 @@ public class ThemeCSSCETImplFactoryImpl implements CETImplFactory<ThemeCSSCET> {
 		throws PortalException {
 
 		ThemeCSSCET newThemeCSSCET = new ThemeCSSCETImpl(
-			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
+			StringPool.BLANK, newTypeSettingsUnicodeProperties);
 
 		String baseURL = newThemeCSSCET.getBaseURL();
 

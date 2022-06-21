@@ -79,10 +79,10 @@ definition {
 	macro viewCoordinatePositionMatchesElementStep {
 		var step_x = WalkthroughPopover.getElementRectanglePositionX(elementId = "${stepElementId}");
 		var step_y = WalkthroughPopover.getElementRectanglePositionY(elementId = "${stepElementId}");
-		var hotspotChildIndex = "0";
+		var hotspotChildIndex = "1";
 
 		if (contains("${stepElementId}", "teststep")) {
-			var hotspotChildIndex = "1";
+			var hotspotChildIndex = "0";
 		}
 
 		var hotspot_x = WalkthroughPopover.getElementCirclePositionX(

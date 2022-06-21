@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentFolder;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -40,6 +41,31 @@ public class StructuredContentFolderResourceTest
 
 	@Override
 	protected Long
+			testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Override
+	protected StructuredContentFolder
+			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
+			randomStructuredContentFolder());
+	}
+
+	@Override
+	protected Long
+			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Override
+	protected Long
 			testGetStructuredContentFolderStructuredContentFoldersPage_getIrrelevantParentStructuredContentFolderId()
 		throws Exception {
 
@@ -58,6 +84,30 @@ public class StructuredContentFolderResourceTest
 			testGroup.getGroupId(), RandomTestUtil.randomString());
 
 		return journalFolder.getFolderId();
+	}
+
+	@Override
+	protected StructuredContentFolder
+			testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
+		throws Exception {
+
+		return testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder();
+	}
+
+	@Override
+	protected Long
+			testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	@Override
+	protected Long
+			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
 	}
 
 }

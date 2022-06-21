@@ -87,12 +87,12 @@ public class StatusDisplayContext {
 			Object value = SessionErrors.get(_httpServletRequest, key);
 
 			if (value instanceof Exception) {
-				Exception e = (Exception)value;
+				Exception exception = (Exception)value;
 
-				_log.error(e.getMessage());
+				_log.error(exception.getMessage());
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(e);
+					_log.debug(exception);
 				}
 			}
 		}

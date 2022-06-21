@@ -250,6 +250,8 @@ public class SecurePrintStream extends PrintStream {
 	public void println(Object object) {
 		if (object == null) {
 			_printStream.println("null");
+
+			return;
 		}
 
 		String redactedString = _redact(object.toString());

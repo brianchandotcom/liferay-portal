@@ -37,7 +37,6 @@ const renderContainer = (config) => {
 					itemId: 'containerId',
 					type: LAYOUT_DATA_ITEM_TYPES.container,
 				}}
-				withinTopper={false}
 			>
 				Container
 			</Container>

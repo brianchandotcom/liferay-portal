@@ -224,7 +224,7 @@ const ColumnContext = ({
 };
 
 const Collection = React.memo(
-	React.forwardRef(({children, item, withinTopper = false}, ref) => {
+	React.forwardRef(({children, item}, ref) => {
 		const child = React.Children.toArray(children)[0];
 		const collectionConfig = item.config;
 		const emptyCollection = useMemo(
@@ -377,14 +377,6 @@ const Collection = React.memo(
 			selectedViewportSize
 		);
 
-		const {display} = responsiveConfig.styles;
-
-		const style = {};
-
-		if (!withinTopper) {
-			style.display = display;
-		}
-
 		const showEmptyMessage =
 			collectionConfig.listStyle !== '' && collection.fakeCollection;
 
@@ -396,7 +388,6 @@ const Collection = React.memo(
 					getLayoutDataItemClassName(item.type)
 				)}
 				ref={ref}
-				style={style}
 			>
 				{loading ? (
 					<ClayLoadingIndicator />

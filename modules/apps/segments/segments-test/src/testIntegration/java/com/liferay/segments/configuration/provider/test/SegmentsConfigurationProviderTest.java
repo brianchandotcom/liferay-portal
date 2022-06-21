@@ -374,6 +374,40 @@ public class SegmentsConfigurationProviderTest {
 		}
 	}
 
+	@Test
+	public void testUpdateSegmentsCompanyConfiguration() throws Exception {
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"roleSegmentationEnabled", true
+					).put(
+						"segmentationEnabled", false
+					).build())) {
+
+			_segmentsConfigurationProvider.updateSegmentsCompanyConfiguration(
+				TestPropsValues.getCompanyId(),
+				new SegmentsCompanyConfiguration() {
+
+					@Override
+					public boolean roleSegmentationEnabled() {
+						return true;
+					}
+
+					@Override
+					public boolean segmentationEnabled() {
+						return false;
+					}
+
+				});
+
+			Assert.assertTrue(
+				_segmentsConfigurationProvider.isRoleSegmentationEnabled());
+			Assert.assertFalse(
+				_segmentsConfigurationProvider.isSegmentationEnabled());
+		}
+	}
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 

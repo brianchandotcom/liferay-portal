@@ -85,6 +85,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TimeZone;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -3639,7 +3640,37 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String read(File file) throws IOException {
-		return new String(Files.readAllBytes(Paths.get(file.toURI())));
+		String fileName = file.getName();
+
+		if (!fileName.endsWith(".gz")) {
+			return new String(Files.readAllBytes(Paths.get(file.toURI())));
+		}
+
+		String timeStamp = getDistinctTimeStamp();
+
+		File tempFile = new File(System.getenv("WORKSPACE"), timeStamp);
+		File tempGzipFile = new File(
+			System.getenv("WORKSPACE"), timeStamp + ".gz");
+
+		try {
+			copy(file, tempGzipFile);
+
+			unGzip(tempGzipFile, tempFile);
+
+			return read(tempFile);
+		}
+		catch (Exception exception) {
+			return null;
+		}
+		finally {
+			if (tempFile.exists()) {
+				delete(tempFile);
+			}
+
+			if (tempGzipFile.exists()) {
+				delete(tempGzipFile);
+			}
+		}
 	}
 
 	public static String readInputStream(InputStream inputStream)

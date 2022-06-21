@@ -24,29 +24,6 @@ int status = ParamUtil.getInteger(request, "status");
 if (status > 0) {
 	response.setStatus(status);
 }
-
-String exception = ParamUtil.getString(request, "exception");
-
-boolean noSuchResourceException = false;
-
-for (String key : SessionErrors.keySet(request)) {
-	key = key.substring(key.lastIndexOf(StringPool.PERIOD) + 1);
-
-	if (key.startsWith("NoSuch") && key.endsWith("Exception")) {
-		noSuchResourceException = true;
-	}
-}
-
-if (GetterUtil.getBoolean(request.getAttribute(NoSuchLayoutException.class.getName()))) {
-	noSuchResourceException = true;
-}
-else if (Validator.isNotNull(exception)) {
-	exception = exception.substring(exception.lastIndexOf(StringPool.PERIOD) + 1);
-
-	if (exception.startsWith("NoSuch") && exception.endsWith("Exception")) {
-		noSuchResourceException = true;
-	}
-}
 %>
 
 <c:choose>
@@ -93,7 +70,7 @@ else if (Validator.isNotNull(exception)) {
 			<%= StringUtil.replace(HtmlUtil.escape(te.getMessage()), '\n', "<br />\n") %>
 		</div>
 	</c:when>
-	<c:when test="<%= noSuchResourceException %>">
+	<c:when test="<%= statusDisplayContext.isNoSuchResourceException() %>">
 		<h3 class="alert alert-danger">
 			<liferay-ui:message key="not-found" />
 		</h3>

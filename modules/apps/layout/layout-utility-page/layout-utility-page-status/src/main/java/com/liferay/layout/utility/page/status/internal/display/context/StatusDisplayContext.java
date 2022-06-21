@@ -14,7 +14,11 @@
 
 package com.liferay.layout.utility.page.status.internal.display.context;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -41,6 +45,40 @@ public class StatusDisplayContext {
 
 		return HtmlUtil.escape(
 			HttpComponentsUtil.decodeURL(themeDisplay.getPortalURL() + url));
+	}
+
+	public boolean isNoSuchResourceException() {
+		String exception = ParamUtil.getString(
+			_httpServletRequest, "exception");
+
+		boolean noSuchResourceException = false;
+
+		for (String key : SessionErrors.keySet(_httpServletRequest)) {
+			key = key.substring(key.lastIndexOf(StringPool.PERIOD) + 1);
+
+			if (key.startsWith("NoSuch") && key.endsWith("Exception")) {
+				noSuchResourceException = true;
+			}
+		}
+
+		if (GetterUtil.getBoolean(
+				_httpServletRequest.getAttribute(
+					NoSuchLayoutException.class.getName()))) {
+
+			noSuchResourceException = true;
+		}
+		else if (Validator.isNotNull(exception)) {
+			exception = exception.substring(
+				exception.lastIndexOf(StringPool.PERIOD) + 1);
+
+			if (exception.startsWith("NoSuch") &&
+				exception.endsWith("Exception")) {
+
+				noSuchResourceException = true;
+			}
+		}
+
+		return noSuchResourceException;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

@@ -28,6 +28,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.util.ObjectFieldUtil;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -242,6 +243,8 @@ public class ObjectActionLocalServiceTest {
 		Assert.assertEquals("onafterupdate", options.getHeader("x-api-key"));
 		Assert.assertEquals("https://onafterupdate.com", options.getLocation());
 
+		CentralizedThreadLocal.clearShortLivedThreadLocals();
+
 		// Update object entry
 
 		Assert.assertEquals(0, _argumentsList.size());
@@ -348,6 +351,8 @@ public class ObjectActionLocalServiceTest {
 		Assert.assertEquals("onafterdelete", options.getHeader("x-api-key"));
 		Assert.assertEquals("https://onafterdelete.com", options.getLocation());
 
+		CentralizedThreadLocal.clearShortLivedThreadLocals();
+
 		// Delete object actions
 
 		_objectActionLocalService.deleteObjectAction(objectAction1);
@@ -407,6 +412,8 @@ public class ObjectActionLocalServiceTest {
 			arguments[0]);
 		Assert.assertEquals(Collections.emptySet(), arguments[1]);
 		Assert.assertEquals("println \"Hello World\"", arguments[2]);
+
+		CentralizedThreadLocal.clearShortLivedThreadLocals();
 
 		_objectActionLocalService.deleteObjectAction(objectAction);
 	}

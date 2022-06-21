@@ -26,6 +26,7 @@ import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,8 +35,9 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -112,21 +114,25 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 			"userId", userId
 		);
 
+		Set<Long> objectActionIds = _objectActionIdsThreadLocal.get();
 		Map<String, Object> variables = ObjectActionVariablesUtil.toVariables(
 			_dtoConverterRegistry, objectDefinition, payloadJSONObject);
 
-		List<ObjectAction> objectActions =
-			_objectActionLocalService.getObjectActions(
-				objectDefinition.getObjectDefinitionId(),
-				objectActionTriggerKey);
+		for (ObjectAction objectAction :
+				_objectActionLocalService.getObjectActions(
+					objectDefinition.getObjectDefinitionId(),
+					objectActionTriggerKey)) {
 
-		for (ObjectAction objectAction : objectActions) {
 			try {
-				if (!_evaluateConditionExpression(
+				if (objectActionIds.contains(
+						objectAction.getObjectActionId()) ||
+					!_evaluateConditionExpression(
 						objectAction.getConditionExpression(), variables)) {
 
 					continue;
 				}
+
+				objectActionIds.add(objectAction.getObjectActionId());
 
 				ObjectActionExecutor objectActionExecutor =
 					_objectActionExecutorRegistry.getObjectActionExecutor(
@@ -152,6 +158,12 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectActionEngineImpl.class);
+
+	private static final ThreadLocal<Set<Long>> _objectActionIdsThreadLocal =
+		new CentralizedThreadLocal<>(
+			ObjectActionEngineImpl.class.getName() +
+				"._objectActionIdsThreadLocal",
+			HashSet::new);
 
 	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;

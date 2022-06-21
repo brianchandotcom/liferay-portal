@@ -164,6 +164,8 @@ public interface Build {
 
 	public Map<String, String> getStopPropertiesTempMap();
 
+	public StopWatchRecordsGroup getStopWatchRecordsGroup();
+
 	public TestClassResult getTestClassResult(String testClassName);
 
 	public List<TestClassResult> getTestClassResults();

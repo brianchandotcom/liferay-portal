@@ -1386,6 +1386,67 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public StopWatchRecordsGroup getStopWatchRecordsGroup() {
+		StopWatchRecordsGroup stopWatchRecordsGroup =
+			new StopWatchRecordsGroup();
+
+		String consoleText = getConsoleText();
+
+		for (String line : consoleText.split("\n")) {
+			Matcher matcher = stopWatchStartTimestampPattern.matcher(line);
+
+			if (matcher.matches()) {
+				Date timestamp = null;
+
+				try {
+					timestamp = stopWatchTimestampSimpleDateFormat.parse(
+						matcher.group("timestamp"));
+				}
+				catch (ParseException parseException) {
+					throw new RuntimeException(
+						"Unable to parse timestamp in " + line, parseException);
+				}
+
+				String stopWatchName = matcher.group("name");
+
+				stopWatchRecordsGroup.add(
+					new StopWatchRecord(stopWatchName, timestamp.getTime()));
+
+				continue;
+			}
+
+			matcher = stopWatchPattern.matcher(line);
+
+			if (matcher.matches()) {
+				long duration = Long.parseLong(matcher.group("milliseconds"));
+
+				String seconds = matcher.group("seconds");
+
+				if (seconds != null) {
+					duration += Long.parseLong(seconds) * 1000L;
+				}
+
+				String minutes = matcher.group("minutes");
+
+				if (minutes != null) {
+					duration += Long.parseLong(minutes) * 60L * 1000L;
+				}
+
+				String stopWatchName = matcher.group("name");
+
+				StopWatchRecord stopWatchRecord = stopWatchRecordsGroup.get(
+					stopWatchName);
+
+				if (stopWatchRecord != null) {
+					stopWatchRecord.setDuration(duration);
+				}
+			}
+		}
+
+		return stopWatchRecordsGroup;
+	}
+
+	@Override
 	public TestClassResult getTestClassResult(String testClassName) {
 		if (!isCompleted()) {
 			return null;
@@ -3149,66 +3210,6 @@ public abstract class BaseBuild implements Build {
 			"font-family: monospace, monospace; text-decoration: none");
 
 		return stopWatchRecordsExpanderAnchorElement;
-	}
-
-	protected StopWatchRecordsGroup getStopWatchRecordsGroup() {
-		StopWatchRecordsGroup stopWatchRecordsGroup =
-			new StopWatchRecordsGroup();
-
-		String consoleText = getConsoleText();
-
-		for (String line : consoleText.split("\n")) {
-			Matcher matcher = stopWatchStartTimestampPattern.matcher(line);
-
-			if (matcher.matches()) {
-				Date timestamp = null;
-
-				try {
-					timestamp = stopWatchTimestampSimpleDateFormat.parse(
-						matcher.group("timestamp"));
-				}
-				catch (ParseException parseException) {
-					throw new RuntimeException(
-						"Unable to parse timestamp in " + line, parseException);
-				}
-
-				String stopWatchName = matcher.group("name");
-
-				stopWatchRecordsGroup.add(
-					new StopWatchRecord(stopWatchName, timestamp.getTime()));
-
-				continue;
-			}
-
-			matcher = stopWatchPattern.matcher(line);
-
-			if (matcher.matches()) {
-				long duration = Long.parseLong(matcher.group("milliseconds"));
-
-				String seconds = matcher.group("seconds");
-
-				if (seconds != null) {
-					duration += Long.parseLong(seconds) * 1000L;
-				}
-
-				String minutes = matcher.group("minutes");
-
-				if (minutes != null) {
-					duration += Long.parseLong(minutes) * 60L * 1000L;
-				}
-
-				String stopWatchName = matcher.group("name");
-
-				StopWatchRecord stopWatchRecord = stopWatchRecordsGroup.get(
-					stopWatchName);
-
-				if (stopWatchRecord != null) {
-					stopWatchRecord.setDuration(duration);
-				}
-			}
-		}
-
-		return stopWatchRecordsGroup;
 	}
 
 	protected Map<String, String> getTempMap(String tempMapName) {

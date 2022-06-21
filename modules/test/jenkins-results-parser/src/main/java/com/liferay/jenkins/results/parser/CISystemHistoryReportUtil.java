@@ -86,10 +86,10 @@ public class CISystemHistoryReportUtil {
 	}
 
 	protected static void writeDateDurationsJavaScriptFile(
-			String jobName, String testSuiteName, String dateString)
+			String jobName, final String testSuiteName, String dateString)
 		throws IOException {
 
-		List<DurationReport> durationReports = _getDurationReports();
+		final List<DurationReport> durationReports = _getDurationReports();
 
 		List<File> jenkinsConsoleGzFiles = _getJenkinsConsoleGzFiles(
 			jobName, dateString);

@@ -361,6 +361,8 @@ definition {
 				customMaxAge = "1 minute",
 				deleteUser = "Test Test");
 
+			// We need this pause to check issue due trash.entry.check.interval=1
+
 			Pause(locator1 = "120000");
 		}
 

@@ -863,10 +863,9 @@ public class PoshiRunnerExecutor {
 	}
 
 	public void runSeleniumElement(Element executeElement) throws Exception {
-		String namespace = PoshiContext.getTestCaseNamespacedClassCommandName();
-
 		Properties properties =
-			PoshiContext.getNamespacedClassCommandNameProperties(namespace);
+			PoshiContext.getNamespacedClassCommandNameProperties(
+				PoshiContext.getTestCaseNamespacedClassCommandName());
 
 		if (GetterUtil.getBoolean(
 				properties.getProperty("disable-webdriver"))) {

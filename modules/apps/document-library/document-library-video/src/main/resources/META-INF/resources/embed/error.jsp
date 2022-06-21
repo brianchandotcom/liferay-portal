@@ -19,7 +19,7 @@
 <liferay-util:html-top
 	outputKey="document_library_video_embed_css"
 >
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/embed.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/embed.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div class="video-embed-placeholder">

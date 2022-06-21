@@ -19,7 +19,7 @@
 <liferay-util:html-top
 	outputKey="collaborators_css"
 >
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/collaborators/css/main.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/collaborators/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
 <div class="collaborators" id="<portlet:namespace />collaborators-root">

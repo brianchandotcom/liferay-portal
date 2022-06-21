@@ -31,5 +31,5 @@ String url = (String)request.getAttribute("liferay-frontend:card:url");
 %>
 
 <liferay-util:html-top>
-	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/card.css") %>" rel="stylesheet" type="text/css" />
+	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/card.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

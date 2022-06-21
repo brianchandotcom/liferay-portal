@@ -45,9 +45,23 @@ public class ObjectEntryValuesException extends PortalException {
 
 	public static class ExceedsLongMaxSize extends ObjectEntryValuesException {
 
-		public ExceedsLongMaxSize() {
+		public ExceedsLongMaxSize(long maxValue, String objectFieldName) {
 			super("Object entry value exceeds maximum long field allowed size");
+
+			_maxValue = maxValue;
+			_objectFieldName = objectFieldName;
 		}
+
+		public long getMaxValue() {
+			return _maxValue;
+		}
+
+		public String getObjectFieldName() {
+			return _objectFieldName;
+		}
+
+		private final long _maxValue;
+		private final String _objectFieldName;
 
 	}
 

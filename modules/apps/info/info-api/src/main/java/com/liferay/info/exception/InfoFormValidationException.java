@@ -66,6 +66,30 @@ public class InfoFormValidationException extends InfoFormException {
 
 	}
 
+	public static class ExceedsMaxValue extends InvalidInfoFieldValue {
+
+		public ExceedsMaxValue(String infoFieldUniqueId, long maxValue) {
+			super(infoFieldUniqueId);
+
+			_maxValue = maxValue;
+		}
+
+		@Override
+		public String getLocalizedMessage(Locale locale) {
+			return LanguageUtil.get(locale, "value-exceeds-maximum-value-of-x");
+		}
+
+		@Override
+		public String getLocalizedMessage(String fieldLabel, Locale locale) {
+			return LanguageUtil.format(
+				locale, "value-exceeds-maximum-value-of-x-for-field-x",
+				new String[] {String.valueOf(_maxValue), fieldLabel}, false);
+		}
+
+		private final long _maxValue;
+
+	}
+
 	public static class FileSize extends InfoFormValidationException {
 
 		public FileSize(String infoFieldUniqueId, String maximumSizeAllowed) {

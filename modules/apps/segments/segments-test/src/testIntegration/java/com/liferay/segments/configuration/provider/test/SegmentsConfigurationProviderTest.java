@@ -264,9 +264,20 @@ public class SegmentsConfigurationProviderTest {
 						"segmentationEnabled", true
 					).build())) {
 
-			Assert.assertTrue(
-				_segmentsConfigurationProvider.isSegmentationEnabled(
-					TestPropsValues.getCompanyId()));
+			try (CompanyConfigurationTemporarySwapper
+					companyConfigurationTemporarySwapper =
+						new CompanyConfigurationTemporarySwapper(
+							TestPropsValues.getCompanyId(),
+							SegmentsCompanyConfiguration.class.getName(),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"segmentationEnabled", true
+							).build(),
+							SettingsFactoryUtil.getSettingsFactory())) {
+
+				Assert.assertTrue(
+					_segmentsConfigurationProvider.isSegmentationEnabled(
+						TestPropsValues.getCompanyId()));
+			}
 		}
 	}
 
@@ -371,6 +382,31 @@ public class SegmentsConfigurationProviderTest {
 
 			Assert.assertFalse(
 				_segmentsConfigurationProvider.isSegmentationEnabled());
+		}
+	}
+
+	@Test
+	public void testIsSegmentsCompanyConfigurationDefined() throws Exception {
+		Configuration configuration =
+			_configurationAdmin.createFactoryConfiguration(
+				SegmentsCompanyConfiguration.class.getName() + ".scoped",
+				StringPool.QUESTION);
+
+		try {
+			configuration.update(
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", TestPropsValues.getCompanyId()
+				).put(
+					"roleSegmentationEnabled", false
+				).build());
+
+			Assert.assertTrue(
+				_segmentsConfigurationProvider.
+					isSegmentsCompanyConfigurationDefined(
+						TestPropsValues.getCompanyId()));
+		}
+		finally {
+			configuration.delete();
 		}
 	}
 

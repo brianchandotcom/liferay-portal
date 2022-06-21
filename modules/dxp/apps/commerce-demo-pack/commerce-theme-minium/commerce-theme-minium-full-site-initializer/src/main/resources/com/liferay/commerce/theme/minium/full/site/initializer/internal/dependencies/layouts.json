@@ -210,7 +210,7 @@
 			{
 				"layoutColumnId": "column-1",
 				"layoutColumnPos": 0,
-				"portletName": "com_liferay_knowledge_base_web_portlet_DisplayPortlet_INSTANCE_minium"
+				"portletName": "com_liferay_knowledge_base_web_portlet_DisplayPortlet"
 			}
 		],
 		"privateLayout": true

@@ -114,8 +114,6 @@ definition {
 
 		AssertVisible(locator1 = "CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_NAME");
 
-		Pause(locator1 = "3000");
-
 		LexiconEntry.openEntryMenu(rowEntry = "${customFieldName}");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -137,8 +135,6 @@ definition {
 		var key_customFieldName = "${customFieldName}";
 
 		AssertVisible(locator1 = "CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_NAME");
-
-		Pause(locator1 = "3000");
 
 		LexiconEntry.openEntryMenu(rowEntry = "${customFieldName}");
 

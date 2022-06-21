@@ -2398,11 +2398,13 @@ public class ObjectEntryLocalServiceImpl
 					throw new ObjectEntryValuesException.ExceedsLongSize(
 						16, objectField.getName());
 				}
-				else if (value > 9007199254740991L) {
-					throw new ObjectEntryValuesException.ExceedsLongMaxSize();
+				else if (value > _MAX_SAFE_LONG) {
+					throw new ObjectEntryValuesException.ExceedsLongMaxSize(
+						_MAX_SAFE_LONG, objectField.getName());
 				}
-				else if (value < -9007199254740991L) {
-					throw new ObjectEntryValuesException.ExceedsLongMinSize();
+				else if (value < _MIN_SAFE_LONG) {
+					throw new ObjectEntryValuesException.ExceedsLongMinSize(
+						_MIN_SAFE_LONG, objectField.getName());
 				}
 			}
 		}
@@ -2435,6 +2437,10 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 	}
+
+	private static final long _MAX_SAFE_LONG = 9007199254740991L;
+
+	private static final long _MIN_SAFE_LONG = -9007199254740991L;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryLocalServiceImpl.class);

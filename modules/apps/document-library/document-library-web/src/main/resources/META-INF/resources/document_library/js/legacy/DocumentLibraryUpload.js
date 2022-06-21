@@ -481,7 +481,7 @@ AUI.add(
 
 					var entryNode;
 
-					var entriesContainer = instance.get('entriesContainer');
+					var entriesContainer = instance._entriesContainer;
 
 					var searchContainer = entriesContainer.one(
 						SELECTOR_SEARCH_CONTAINER
@@ -860,7 +860,7 @@ AUI.add(
 							}
 						};
 
-						var entriesContainer = instance.get('entriesContainer');
+						var entriesContainer = instance._entriesContainer;
 
 						createNavigationOverlay(
 							entriesContainer.one(
@@ -1236,7 +1236,7 @@ AUI.add(
 					var instance = this;
 
 					var searchContainer = instance._getSearchContainer();
-					var entriesContainer = instance.get('entriesContainer');
+					var entriesContainer = instance._entriesContainer;
 
 					if (
 						searchContainer.getSize() ||
@@ -1586,8 +1586,8 @@ AUI.add(
 				initializer() {
 					var instance = this;
 
-					var appViewEntryTemplates = instance.get(
-						'appViewEntryTemplates'
+					var appViewEntryTemplates = A.one(
+						instance.get('appViewEntryTemplates')
 					);
 
 					instance._columnNames = instance.get('columnNames');
@@ -1596,8 +1596,8 @@ AUI.add(
 					instance._documentLibraryNamespace = instance.get(
 						'documentLibraryNamespace'
 					);
-					instance._entriesContainer = instance.get(
-						'entriesContainer'
+					instance._entriesContainer = A.one(
+						instance.get('entriesContainer')
 					);
 					instance._maxFileSize = instance.get('maxFileSize');
 					instance._scopeGroupId = instance.get('scopeGroupId');

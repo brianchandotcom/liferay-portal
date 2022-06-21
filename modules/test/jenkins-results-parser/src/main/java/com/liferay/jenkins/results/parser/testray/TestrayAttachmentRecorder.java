@@ -18,6 +18,7 @@ import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
+import com.liferay.jenkins.results.parser.BuildReportFactory;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.DownstreamBuild;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
@@ -27,6 +28,7 @@ import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.TestClassResult;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,7 +64,7 @@ public class TestrayAttachmentRecorder {
 			_recordJenkinsConsole();
 
 			if (_build instanceof TopLevelBuild) {
-				_recordBuildResult();
+				_recordBuildReport();
 				_recordJobSummary();
 				_recordJenkinsReport();
 			}
@@ -341,26 +343,25 @@ public class TestrayAttachmentRecorder {
 		return new File(getRecordedFilesBaseDir(), getRelativeBuildDirPath());
 	}
 
-	private void _recordBuildResult() {
+	private void _recordBuildReport() {
 		if (!(_build instanceof TopLevelBuild)) {
 			return;
 		}
 
 		TopLevelBuild topLevelBuild = (TopLevelBuild)_build;
 
-		JSONObject jsonObject = topLevelBuild.getBuildResultsJSONObject(
-			null, null,
-			new String[] {
-				"buildResults", "buildURL", "duration", "errorDetails", "name",
-				"stopWatchRecords", "status"
-			});
+		TopLevelBuildReport topLevelBuildReport =
+			BuildReportFactory.newTopLevelBuildReport(topLevelBuild);
 
-		File buildResultsJSONObjectFile = new File(
-			_getRecordedFilesBuildDir(), "build-result.json");
+		JSONObject buildReportJSONObject =
+			topLevelBuildReport.getBuildReportJSONObject();
+
+		File buildReportJSONObjectFile = new File(
+			_getRecordedFilesBuildDir(), "build-report.json");
 
 		try {
 			JenkinsResultsParserUtil.write(
-				buildResultsJSONObjectFile, jsonObject.toString());
+				buildReportJSONObjectFile, buildReportJSONObject.toString());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

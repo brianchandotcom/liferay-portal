@@ -19,7 +19,7 @@ String friendlyURLChangedMessage = GetterUtil.getString(MultiSessionMessages.get
 %>
 
 <c:if test="<%= Validator.isNotNull(friendlyURLChangedMessage) %>">
-	<aui:script>
+	<script>
 		Liferay.Util.openToast({
 			message: '<%= friendlyURLChangedMessage %>',
 			toastProps: {
@@ -27,5 +27,5 @@ String friendlyURLChangedMessage = GetterUtil.getString(MultiSessionMessages.get
 			},
 			type: 'warning',
 		});
-	</aui:script>
+	</script>
 </c:if>

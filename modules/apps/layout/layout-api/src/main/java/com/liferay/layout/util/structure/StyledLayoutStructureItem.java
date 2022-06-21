@@ -287,39 +287,8 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 					continue;
 				}
 
-				JSONObject currentViewportStyleJSONObject =
-					viewportStyleJSONObjects.getOrDefault(
-						viewportSize.getViewportSizeId(),
-						JSONFactoryUtil.createJSONObject());
-
-				if (itemConfigJSONObject.has(
-						viewportSize.getViewportSizeId())) {
-
-					JSONObject viewportItemConfigJSONObject =
-						itemConfigJSONObject.getJSONObject(
-							viewportSize.getViewportSizeId());
-
-					JSONObject newStylesJSONObject =
-						viewportItemConfigJSONObject.getJSONObject("styles");
-
-					if (newStylesJSONObject == null) {
-						continue;
-					}
-
-					List<String> availableStyleNames =
-						CommonStylesUtil.getAvailableStyleNames();
-
-					for (String styleName : availableStyleNames) {
-						if (newStylesJSONObject.has(styleName)) {
-							currentViewportStyleJSONObject.put(
-								styleName, newStylesJSONObject.get(styleName));
-						}
-					}
-				}
-
-				viewportStyleJSONObjects.put(
-					viewportSize.getViewportSizeId(),
-					currentViewportStyleJSONObject);
+				_updateViewportStyleJSONObjects(
+					itemConfigJSONObject, viewportSize);
 			}
 		}
 		catch (Exception exception) {
@@ -451,6 +420,40 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		}
 	}
 
+	private void _updateViewportStyleJSONObjects(
+		JSONObject itemConfigJSONObject, ViewportSize viewportSize) {
+
+		JSONObject currentViewportStyleJSONObject =
+			viewportStyleJSONObjects.getOrDefault(
+				viewportSize.getViewportSizeId(),
+				JSONFactoryUtil.createJSONObject());
+
+		if (itemConfigJSONObject.has(viewportSize.getViewportSizeId())) {
+			JSONObject viewportItemConfigJSONObject =
+				itemConfigJSONObject.getJSONObject(
+					viewportSize.getViewportSizeId());
+
+			JSONObject newStylesJSONObject =
+				viewportItemConfigJSONObject.getJSONObject("styles");
+
+			if (newStylesJSONObject == null) {
+				return;
+			}
+
+			List<String> availableStyleNames =
+				CommonStylesUtil.getAvailableStyleNames();
+
+			for (String styleName : availableStyleNames) {
+				if (newStylesJSONObject.has(styleName)) {
+					currentViewportStyleJSONObject.put(
+						styleName, newStylesJSONObject.get(styleName));
+				}
+			}
+		}
+
+		viewportStyleJSONObjects.put(
+			viewportSize.getViewportSizeId(), currentViewportStyleJSONObject);
+	}
 	private static final Log _log = LogFactoryUtil.getLog(
 		StyledLayoutStructureItem.class);
 

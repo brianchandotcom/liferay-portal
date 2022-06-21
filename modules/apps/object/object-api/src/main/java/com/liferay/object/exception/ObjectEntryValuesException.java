@@ -202,7 +202,15 @@ public class ObjectEntryValuesException extends PortalException {
 					"Object field name \"%s\" is not mapped to a valid list " +
 						"type entry",
 					objectFieldName));
+
+			_objectFieldName = objectFieldName;
 		}
+
+		public String getObjectFieldName() {
+			return _objectFieldName;
+		}
+
+		private final String _objectFieldName;
 
 	}
 

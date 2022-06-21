@@ -47,11 +47,11 @@ import getAllEditables from './getAllEditables';
 
 const FragmentContent = ({
 	className,
+	computeEditables,
 	elementRef,
 	fragmentEntryLinkId,
 	getPortals,
 	item,
-	withinTopper = false,
 }) => {
 	const dispatch = useDispatch();
 	const isMounted = useIsMounted();
@@ -72,6 +72,10 @@ const FragmentContent = ({
 	 */
 	const onRender = useCallback(
 		(fragmentElement) => {
+			if (!computeEditables) {
+				return;
+			}
+
 			let nextEditables = [];
 
 			if (isMounted()) {
@@ -89,7 +93,7 @@ const FragmentContent = ({
 
 			return nextEditables;
 		},
-		[isMounted, fragmentEntryLinkId, item]
+		[isMounted, fragmentEntryLinkId, item, computeEditables]
 	);
 
 	const fragmentEntryLink = useSelectorCallback(
@@ -263,7 +267,7 @@ const FragmentContent = ({
 					globalContext={globalContext}
 					id={elementId}
 					markup={content}
-					onRender={withinTopper ? onRender : () => {}}
+					onRender={onRender}
 					style={style}
 				/>
 
@@ -285,7 +289,6 @@ FragmentContent.propTypes = {
 	fragmentEntryLinkId: PropTypes.string.isRequired,
 	getPortals: PropTypes.func.isRequired,
 	item: PropTypes.object.isRequired,
-	withinTopper: PropTypes.bool,
 };
 
 export default React.memo(FragmentContent);

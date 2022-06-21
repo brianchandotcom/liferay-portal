@@ -60,6 +60,7 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 				itemElement={itemElement}
 			>
 				<FragmentContent
+					computeEditables
 					elementRef={setRef}
 					fragmentEntryLinkId={item.config.fragmentEntryLinkId}
 					getPortals={getPortals}

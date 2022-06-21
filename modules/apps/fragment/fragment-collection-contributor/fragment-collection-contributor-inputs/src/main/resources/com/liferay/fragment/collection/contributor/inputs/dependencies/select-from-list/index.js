@@ -18,10 +18,8 @@ const noResultsMessage = wrapper.querySelector(
 );
 const searchInput = wrapper.querySelector('.forms-select-from-list-search');
 
-// LPS-155167 This will be replaced with real input when feature is ready
-
 const mockInput = {
-	queryOptionsURL: `${location.origin}/o/headless-admin-list-type/v1.0/list-type-definitions/41166/list-type-entries`,
+	queryOptionsURL: input.attributes.autocompleteURL,
 };
 
 let currentSearch = {

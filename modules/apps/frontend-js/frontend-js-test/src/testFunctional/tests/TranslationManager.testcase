@@ -24,6 +24,8 @@ definition {
 				widgetName = "JS Components Sample");
 
 			Navigator.gotoPage(pageName = "JS Components Sample Page");
+
+			Navigator.gotoNavTab(navTab = "Translation Manager");
 		}
 	}
 

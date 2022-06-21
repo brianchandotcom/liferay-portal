@@ -91,7 +91,6 @@ export function AddItemDropDown({trigger}) {
 		<>
 			<ClayDropDown
 				active={active}
-				className="mr-3"
 				onActiveChange={setActive}
 				trigger={trigger}
 			>

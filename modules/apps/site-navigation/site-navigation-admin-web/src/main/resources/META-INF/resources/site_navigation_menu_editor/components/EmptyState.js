@@ -35,7 +35,7 @@ export function EmptyState() {
 			<div className="taglib-empty-result-message-actionDropdownItems">
 				<AddItemDropDown
 					trigger={
-						<ClayButton displayType="secondary" small>
+						<ClayButton displayType="secondary">
 							{Liferay.Language.get('new')}
 						</ClayButton>
 					}

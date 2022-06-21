@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+StatusDisplayContext statusDisplayContext = new StatusDisplayContext(request);
+
 int status = ParamUtil.getInteger(request, "status");
 
 if (status > 0) {

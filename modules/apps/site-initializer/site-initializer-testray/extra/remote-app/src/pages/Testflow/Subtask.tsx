@@ -164,9 +164,7 @@ const Subtasks = () => {
 								render: (dueStatus) => {
 									return (
 										<StatusBadge
-											type={getStatusLabel(
-												dueStatus
-											)}
+											type={getStatusLabel(dueStatus)}
 										>
 											{getStatusLabel(dueStatus)}
 										</StatusBadge>

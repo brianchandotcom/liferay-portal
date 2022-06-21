@@ -104,11 +104,7 @@ const Build = () => {
 						{
 							key: 'dueStatus',
 							render: (dueStatus: any) => (
-								<StatusBadge
-									type={getStatusLabel(
-										dueStatus
-									)}
-								>
+								<StatusBadge type={getStatusLabel(dueStatus)}>
 									{getStatusLabel(dueStatus)}
 								</StatusBadge>
 							),

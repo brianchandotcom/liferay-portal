@@ -26,7 +26,7 @@ const statusBarClassNames = {
 	untested: 'label-inverse-secondary',
 };
 
-export type StatusBarOptions = keyof typeof statusBarClassNames
+export type StatusBarOptions = keyof typeof statusBarClassNames;
 
 export type StatusBadgeProps = {
 	children: ReactNode;

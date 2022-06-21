@@ -28,7 +28,6 @@ import com.liferay.object.exception.ObjectActionTriggerKeyException;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectActionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
@@ -255,7 +254,7 @@ public class ObjectActionLocalServiceImpl
 				parametersUnicodeProperties.get("objectDefinitionId"));
 
 			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
+				_objectDefinitionPersistence.fetchByPrimaryKey(
 					objectDefinitionId);
 
 			if ((objectDefinition == null) || !objectDefinition.isActive() ||
@@ -376,9 +375,6 @@ public class ObjectActionLocalServiceImpl
 
 	@Reference
 	private ObjectActionExecutorRegistry _objectActionExecutorRegistry;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;

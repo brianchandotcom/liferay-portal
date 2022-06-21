@@ -754,6 +754,14 @@ definition {
 			value1 = "You do not have the roles required to access this portlet.");
 	}
 
+	macro viewNoPortletOptions {
+		MouseOver.mouseOverNotVisible(locator1 = "Portlet#OPTIONS_ICON");
+
+		Click(locator1 = "Portlet#OPTIONS_ICON");
+
+		MenuItem.viewNotPresent(menuItem = "${menuItem}");
+	}
+
 	macro viewNoPortletsPresentCP {
 		ApplicationsMenuHelper.openApplicationsMenu();
 

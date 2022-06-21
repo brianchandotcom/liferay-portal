@@ -151,6 +151,24 @@ describe('TextField', () => {
 		expect(onValueSelect).toBeCalledWith(INPUT_NAME, 'something');
 	});
 
+	it('calls the onValueSelect callback when Enter key is pressed', async () => {
+		const onValueSelect = jest.fn();
+		const {getByLabelText} = renderTextField({}, onValueSelect);
+
+		const input = getByLabelText(INPUT_NAME);
+
+		await userEvent.type(input, 'something');
+
+		fireEvent.keyDown(input, {
+			key: 'Enter',
+			target: {
+				checkValidity: () => true,
+			},
+		});
+
+		expect(onValueSelect).toBeCalledWith(INPUT_NAME, 'something');
+	});
+
 	it('does not call the onValueSelect callback when the input is not valid', () => {
 		const onValueSelect = jest.fn();
 		const {getByLabelText} = renderTextField(

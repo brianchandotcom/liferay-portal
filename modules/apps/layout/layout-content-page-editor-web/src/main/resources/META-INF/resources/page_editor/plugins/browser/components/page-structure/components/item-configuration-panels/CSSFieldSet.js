@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {
 	useDispatch,
 	useSelector,
@@ -21,8 +22,8 @@ import {
 import selectCanUpdateCSSAdvancedOptions from '../../../../../../app/selectors/selectCanUpdateCSSAdvancedOptions';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
+import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
 import {FieldSet} from './FieldSet';
-
 const FIELD_SET = {
 	fields: [
 		{
@@ -33,6 +34,7 @@ const FIELD_SET = {
 		{
 			label: Liferay.Language.get('custom-css'),
 			name: 'customCSS',
+			responsive: true,
 			type: 'customCSS',
 		},
 	],
@@ -45,13 +47,22 @@ export default function CSSFieldSet({item}) {
 	);
 	const languageId = useSelector((state) => state.languageId);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 	const dispatch = useDispatch();
 
+	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
+
 	const onValueSelect = (name, value) => {
-		const nextConfig = {
-			...item.config,
-			[name]: value,
-		};
+		let nextConfig = {[name]: value};
+
+		if (
+			selectedViewportSize !== VIEWPORT_SIZES.desktop &&
+			name !== 'cssClasses'
+		) {
+			nextConfig = {[selectedViewportSize]: {[name]: value}};
+		}
 
 		dispatch(
 			updateItemConfig({
@@ -70,7 +81,7 @@ export default function CSSFieldSet({item}) {
 				label={FIELD_SET.label}
 				languageId={languageId}
 				onValueSelect={onValueSelect}
-				values={item.config}
+				values={itemConfig}
 			/>
 		</div>
 	) : null;

@@ -247,13 +247,10 @@ public class MillerColumnsDisplayContext {
 				).setParameter(
 					"selPlid", layout.getPlid()
 				).buildString()
+			).put(
+				"viewUrl",
+				_layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout)
 			);
-
-			if (_layoutsAdminDisplayContext.isShowViewLayoutAction(layout)) {
-				layoutJSONObject.put(
-					"viewUrl",
-					_layoutsAdminDisplayContext.getEditOrViewLayoutURL(layout));
-			}
 
 			layoutsJSONArray.put(layoutJSONObject);
 		}

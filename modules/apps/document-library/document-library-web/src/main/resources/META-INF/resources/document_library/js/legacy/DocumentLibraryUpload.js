@@ -173,10 +173,6 @@ AUI.add(
 					value: [],
 				},
 
-				dimensions: {
-					value: {},
-				},
-
 				displayStyle: {
 					validator: isString,
 					value: STR_BLANK,
@@ -1591,7 +1587,6 @@ AUI.add(
 					);
 
 					instance._columnNames = instance.get('columnNames');
-					instance._dimensions = instance.get('dimensions');
 					instance._displayStyle = instance.get('displayStyle');
 					instance._documentLibraryNamespace = instance.get(
 						'documentLibraryNamespace'

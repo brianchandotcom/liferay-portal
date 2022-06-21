@@ -17,6 +17,7 @@ package com.liferay.fragment.internal.renderer;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.input.templateparser.InputTemplateNode;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
@@ -141,6 +142,14 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		return fragmentEntryLink;
 	}
 
+	private JSONObject _getInputJSONObject() {
+		InputTemplateNode inputTemplateNode = new InputTemplateNode(
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, "name", false, false, false, "type", "value");
+
+		return inputTemplateNode.toJSONObject();
+	}
+
 	private boolean _isCacheable(
 		FragmentEntryLink fragmentEntryLink,
 		FragmentRendererContext fragmentRendererContext) {
@@ -194,11 +203,12 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _renderFragmentEntry(
-		long fragmentEntryId, String css, String html, String js,
-		String configuration, String namespace, String fragmentElementId,
-		String mode, HttpServletRequest httpServletRequest) {
+		String configuration, String css, String fragmentElementId,
+		long fragmentEntryId, String html,
+		HttpServletRequest httpServletRequest, String js, String mode,
+		String namespace) {
 
-		StringBundler sb = new StringBundler(20);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<div id=\"");
 
@@ -257,6 +267,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			sb.append(fragmentElementId);
 			sb.append("'); var fragmentNamespace = '");
 			sb.append(namespace);
+			sb.append("'); var input = '");
+			sb.append(_getInputJSONObject());
 			sb.append("'; var layoutMode = '");
 			sb.append(
 				ParamUtil.getString(
@@ -373,11 +385,11 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		}
 
 		content = _renderFragmentEntry(
-			fragmentEntryLink.getFragmentEntryId(), css, html,
-			fragmentEntryLink.getJs(), configurationJSONObject.toString(),
-			fragmentEntryLink.getNamespace(),
+			configurationJSONObject.toString(), css,
 			fragmentRendererContext.getFragmentElementId(),
-			fragmentRendererContext.getMode(), httpServletRequest);
+			fragmentEntryLink.getFragmentEntryId(), html, httpServletRequest,
+			fragmentEntryLink.getJs(), fragmentRendererContext.getMode(),
+			fragmentEntryLink.getNamespace());
 
 		if (_isCacheable(fragmentEntryLink, fragmentRendererContext)) {
 			portalCache.put(cacheKeySB.toString(), content);

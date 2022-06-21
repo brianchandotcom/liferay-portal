@@ -519,6 +519,10 @@ public class CommerceSiteInitializer {
 							"cpDefinitionExternalReferenceCode"),
 						serviceContext.getCompanyId());
 
+			if (cpDefinition == null) {
+				continue;
+			}
+
 			productOptionResource.postProductIdProductOptionsPage(
 				cpDefinition.getCProductId(),
 				new ProductOption[] {

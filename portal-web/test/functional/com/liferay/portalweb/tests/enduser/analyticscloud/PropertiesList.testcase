@@ -180,13 +180,13 @@ definition {
 			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 		}
 
-		task ("Launch AC and Connect new data source"){
+		task ("Launch AC and Connect new data source") {
 			ACUtils.launchAC();
 
 			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
-		task ("Connect DXP to AC"){
+		task ("Connect DXP to AC") {
 			ACUtils.launchDXP();
 
 			ACDXPSettings.goToInstanceSettingsAC();
@@ -194,7 +194,7 @@ definition {
 			ACDXPSettings.connectAnalyticsCloud();
 		}
 
-		task ("Assert a new property is created along with old property"){
+		task ("Assert a new property is created along with old property") {
 			Alert.viewSuccessMessage();
 
 			ACDXPSettings.navToSyncedSitesMenu();

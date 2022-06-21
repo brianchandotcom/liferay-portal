@@ -17,6 +17,23 @@ definition {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
+		task ("Add a company Object with a Boolean field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Boolean",
+				fieldLabelName = "I accept the terms of use and Privacy Policy",
+				fieldName = "iAcceptTheTermsOfUseAndPrivacyPolicy",
+				fieldType = "Boolean",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+		}
+
 		task ("Enable Inputs Fragment collection in Gogo Shell") {
 			GogoShell.openGogoShellAdmin();
 
@@ -42,6 +59,8 @@ definition {
 			}
 
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
 		}
 	}
 
@@ -51,20 +70,6 @@ definition {
 		property test.name.skip.portal.instance = "Checkbox#ConfigureCheckbox";
 
 		task ("Given a page creator has a Form Container mapped to an entity with boolean field") {
-			task ("Add a web content structure with a Boolean field") {
-				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-				NavItem.gotoStructures();
-
-				WebContentStructures.addCP(structureName = "WC Structure Name");
-
-				DataEngine.addField(
-					fieldFieldLabel = "Boolean",
-					fieldName = "Boolean");
-
-				WebContentStructures.saveCP();
-			}
-
 			task ("Add a Form Container framgment to content page") {
 				JSONLayout.addPublicLayout(
 					groupName = "Test Site Name",
@@ -80,11 +85,10 @@ definition {
 					fragmentName = "Form Container");
 			}
 
-			task ("Map the Form Container to new structure") {
+			task ("Map the Form Container to new Object") {
 				PageEditor.editFormContainer(
-					contentType = "Web Content Article",
-					panel = "General",
-					subtype = "WC Structure Name");
+					contentType = "Purchase Order",
+					panel = "General");
 			}
 		}
 
@@ -97,7 +101,7 @@ definition {
 		task ("Then the page creator could configure the Checkbox fragment") {
 			task ("Rename the label") {
 				PageEditor.editInput(
-					field = "Boolean",
+					field = "I accept the terms of use and Privacy Policy",
 					fragmentName = "Checkbox",
 					label = "Are you a fun of Stephen Curry?");
 

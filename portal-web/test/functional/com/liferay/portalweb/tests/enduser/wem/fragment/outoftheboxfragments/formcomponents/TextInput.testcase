@@ -17,6 +17,23 @@ definition {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
+		task ("Add a company Object with a Text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+		}
+
 		task ("Enable Inputs Fragment collection in Gogo Shell") {
 			GogoShell.openGogoShellAdmin();
 
@@ -42,6 +59,8 @@ definition {
 			}
 
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
 		}
 	}
 
@@ -66,7 +85,7 @@ definition {
 					fragmentName = "Form Container");
 
 				PageEditor.editFormContainer(
-					contentType = "Web Content Article",
+					contentType = "Purchase Order",
 					panel = "General");
 			}
 
@@ -79,7 +98,7 @@ definition {
 
 		task ("When the pages designer adds a custom name in Text Input fields") {
 			PageEditor.editInput(
-				field = "Content",
+				field = "Region",
 				fragmentName = "Text Input",
 				helpText = "Custom Help Text",
 				hideHelpText = "false",
@@ -174,7 +193,7 @@ definition {
 					fragmentName = "Form Container");
 
 				PageEditor.editFormContainer(
-					contentType = "Web Content Article",
+					contentType = "Purchase Order",
 					panel = "General");
 			}
 
@@ -194,7 +213,7 @@ definition {
 
 		task ("When the pages designer adds a custom name in Text Input fields") {
 			PageEditor.editInput(
-				field = "Content",
+				field = "Region",
 				fragmentName = "Text Input",
 				helpText = "Custom Help Text",
 				hideHelpText = "false",
@@ -459,7 +478,7 @@ definition {
 					fragmentName = "Form Container");
 
 				PageEditor.editFormContainer(
-					contentType = "Web Content Article",
+					contentType = "Purchase Order",
 					panel = "General");
 			}
 
@@ -476,7 +495,7 @@ definition {
 					navTab = "Fragments");
 
 				PageEditor.editInput(
-					field = "Content",
+					field = "Region",
 					fragmentName = "Text Input",
 					markAsRequired = "true");
 			}
@@ -531,7 +550,7 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertNotVisible(
-				key_text = "Content*",
+				key_text = "Region*",
 				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
 		}
 	}
@@ -559,7 +578,7 @@ definition {
 					fragmentName = "Form Container");
 
 				PageEditor.editFormContainer(
-					contentType = "Web Content Article",
+					contentType = "Purchase Order",
 					panel = "General");
 			}
 
@@ -577,7 +596,7 @@ definition {
 					navTab = "Fragments");
 
 				PageEditor.editInput(
-					field = "Content",
+					field = "Region",
 					fragmentName = "Text Input",
 					markAsRequired = "true");
 			}
@@ -641,7 +660,7 @@ definition {
 			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
 
 			AssertNotVisible(
-				key_text = "Content*",
+				key_text = "Region*",
 				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
 		}
 	}

@@ -16,6 +16,23 @@ definition {
 		task ("Add a new site") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
+
+		task ("Add a company Object with a Text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+		}
 	}
 
 	tearDown {
@@ -26,6 +43,8 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
 		}
 	}
 
@@ -78,7 +97,7 @@ definition {
 
 		task ("When the page creator tries to add a Heading fragment into Form Container after mapping entity") {
 			PageEditor.editFormContainer(
-				contentType = "Web Content Article",
+				contentType = "Purchase Order",
 				panel = "General");
 
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");
@@ -137,14 +156,14 @@ definition {
 			Select(
 				key_fieldLabel = "Content Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Web Content Article");
+				value1 = "Purchase Order");
 
 			PageEditor.waitForAutoSave();
 
 			AssertSelectedLabel(
-				key_fieldLabel = "Subtype",
+				key_fieldLabel = "Content Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Basic Web Content");
+				value1 = "Purchase Order");
 		}
 	}
 
@@ -192,14 +211,14 @@ definition {
 			Select(
 				key_fieldLabel = "Content Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Web Content Article");
+				value1 = "Purchase Order");
 
 			PageEditor.waitForAutoSave();
 
 			AssertSelectedLabel(
-				key_fieldLabel = "Subtype",
+				key_fieldLabel = "Content Type",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "Basic Web Content");
+				value1 = "Purchase Order");
 		}
 	}
 

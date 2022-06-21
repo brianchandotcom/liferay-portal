@@ -58,7 +58,9 @@ public class StopWatchRecordsGroup implements Iterable<StopWatchRecord> {
 			JSONObject childStopWatchRecordJSONObject =
 				stopWatchRecordsJSONArray.getJSONObject(i);
 
-			childStopWatchRecordJSONObject.put(
+			_startTimestamp += 1000;
+
+			long startTimestamp = childStopWatchRecordJSONObject.optLong(
 				"startTimestamp", _startTimestamp);
 
 			if (!childStopWatchRecordJSONObject.has("duration") ||
@@ -67,7 +69,8 @@ public class StopWatchRecordsGroup implements Iterable<StopWatchRecord> {
 				continue;
 			}
 
-			_startTimestamp += 1000;
+			childStopWatchRecordJSONObject.put(
+				"startTimestamp", startTimestamp);
 
 			StopWatchRecord childStopWatchRecord = new StopWatchRecord(
 				childStopWatchRecordJSONObject);

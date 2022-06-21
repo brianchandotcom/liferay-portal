@@ -1,5 +1,6 @@
 definition {
 
+	@disable-webdriver = "true"
 	test TestAssertStatusCode {
 		HttpRequester.getGoogleResponse();
 	}

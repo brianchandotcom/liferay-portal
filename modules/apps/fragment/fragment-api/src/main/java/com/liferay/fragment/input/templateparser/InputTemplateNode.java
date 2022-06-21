@@ -14,6 +14,10 @@
 
 package com.liferay.fragment.input.templateparser;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -99,6 +103,42 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	public boolean isShowLabel() {
 		return _showLabel;
+	}
+
+	public JSONObject toJSONObject() {
+		return JSONUtil.put(
+			"dataType", _dataType
+		).put(
+			"errorMessage", _errorMessage
+		).put(
+			"helpText", _helpText
+		).put(
+			"label", _label
+		).put(
+			"name", _name
+		).put(
+			"options",
+			() -> {
+				JSONObject optionsJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				for (Option option : _options) {
+					optionsJSONObject.put(option.getLabel(), option.getValue());
+				}
+
+				return optionsJSONObject;
+			}
+		).put(
+			"required", _required
+		).put(
+			"showHelpText", _showHelpText
+		).put(
+			"showLabel", _showLabel
+		).put(
+			"type", _type
+		).put(
+			"value", _value
+		);
 	}
 
 	public static class Option {

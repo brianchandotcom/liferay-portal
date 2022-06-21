@@ -712,29 +712,21 @@ definition {
 		}
 
 		task ("Add comments for both blogs entries via Blogs widget") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page",
-				siteName = "Site Name");
+			for (var i : list "1,2") {
+				Navigator.gotoSitePage(
+					pageName = "Test Page",
+					siteName = "Site Name");
 
-			BlogsNavigator.gotoEntryPG(
-				entryContent = "Blogs Entry Content 1",
-				entryTitle = "Blogs Entry Title 1");
+				BlogsNavigator.gotoEntryPG(
+					entryContent = "Blogs Entry Content ${i}",
+					entryTitle = "Blogs Entry Title ${i}");
 
-			Pause(locator1 = "3000");
+				WaitForElementPresent(
+					key_label = "Type your comment here.",
+					locator1 = "TextArea#ANY_LABELED");
 
-			Comments.addPG(entryComment = "Blogs Entry Comment");
-
-			Navigator.gotoSitePage(
-				pageName = "Test Page",
-				siteName = "Site Name");
-
-			BlogsNavigator.gotoEntryPG(
-				entryContent = "Blogs Entry Content 2",
-				entryTitle = "Blogs Entry Title 2");
-
-			Pause(locator1 = "3000");
-
-			Comments.addPG(entryComment = "Blogs Entry Comment");
+				Comments.addPG(entryComment = "Blogs Entry Comment");
+			}
 		}
 
 		task ("Search by comments in Blogs admin") {

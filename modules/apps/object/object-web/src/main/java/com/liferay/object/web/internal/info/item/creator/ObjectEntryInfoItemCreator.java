@@ -158,6 +158,20 @@ public class ObjectEntryInfoItemCreator
 			throw new InfoFormValidationException.ExceedsMaxLength(
 				infoFieldUniqueId, objectEntryValuesException.getMaxLength());
 		}
+		catch (ObjectEntryValuesException.InvalidFileExtension
+					objectEntryValuesException) {
+
+			String infoFieldUniqueId = _getInfoFieldUniqueId(
+				groupId, objectEntryValuesException.getObjectFieldName());
+
+			if (infoFieldUniqueId == null) {
+				throw new InfoFormException();
+			}
+
+			throw new InfoFormValidationException.InvalidFileExtension(
+				infoFieldUniqueId,
+				objectEntryValuesException.getFileExtension());
+		}
 		catch (ObjectEntryValuesException.Required objectEntryValuesException) {
 			String infoFieldUniqueId = _getInfoFieldUniqueId(
 				groupId, objectEntryValuesException.getObjectFieldName());

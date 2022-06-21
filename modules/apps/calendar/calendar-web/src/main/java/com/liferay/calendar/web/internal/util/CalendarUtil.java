@@ -25,6 +25,7 @@ import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RecurrenceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -78,12 +80,16 @@ public class CalendarUtil {
 				calendarBooking.getStartTime(), startTime);
 
 			java.util.Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(
-				maxStartTime, timeZone);
+				maxStartTime,
+				calendarBooking.isAllDay() ?
+					TimeZoneUtil.getTimeZone(StringPool.UTC) : timeZone);
 
 			long minEndTime = Math.min(calendarBooking.getEndTime(), endTime);
 
 			java.util.Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(
-				minEndTime, timeZone);
+				minEndTime,
+				calendarBooking.isAllDay() ?
+					TimeZoneUtil.getTimeZone(StringPool.UTC) : timeZone);
 
 			long days = JCalendarUtil.getDaysBetween(
 				startTimeJCalendar, endTimeJCalendar);
@@ -288,7 +294,9 @@ public class CalendarUtil {
 			}
 
 			JSONObject jsonObject = toCalendarBookingJSONObject(
-				themeDisplay, calendarBooking, timeZone);
+				themeDisplay, calendarBooking,
+				calendarBooking.isAllDay() ?
+					TimeZoneUtil.getTimeZone(StringPool.UTC) : timeZone);
 
 			jsonArray.put(jsonObject);
 		}

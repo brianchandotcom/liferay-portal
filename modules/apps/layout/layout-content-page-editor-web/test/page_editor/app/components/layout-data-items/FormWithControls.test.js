@@ -29,6 +29,11 @@ jest.mock(
 		))
 );
 
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useCache',
+	() => jest.fn(() => {})
+);
+
 describe('FormWithControls', () => {
 	it('renders a container inside a form', () => {
 		const {container} = render(

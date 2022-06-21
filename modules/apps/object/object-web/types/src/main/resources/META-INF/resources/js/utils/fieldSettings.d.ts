@@ -15,6 +15,7 @@
 export declare function normalizeFieldSettings(
 	objectFieldSettings: ObjectFieldSetting[] | undefined
 ): {
+	function?: string | number | boolean | undefined;
 	maxLength?: string | number | boolean | undefined;
 	acceptedFileExtensions?: string | number | boolean | undefined;
 	fileSource?: string | number | boolean | undefined;
@@ -22,6 +23,8 @@ export declare function normalizeFieldSettings(
 	showCounter?: string | number | boolean | undefined;
 	showFilesInDocumentsAndMedia?: string | number | boolean | undefined;
 	storageDLFolderPath?: string | number | boolean | undefined;
+	relatedObject?: string | number | boolean | undefined;
+	summarizeField?: string | number | boolean | undefined;
 };
 export declare function updateFieldSettings(
 	objectFieldSettings: ObjectFieldSetting[] | undefined,

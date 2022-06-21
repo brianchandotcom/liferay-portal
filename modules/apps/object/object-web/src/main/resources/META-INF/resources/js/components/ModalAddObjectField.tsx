@@ -28,6 +28,7 @@ import ObjectFieldFormBase, {useObjectFieldForm} from './ObjectFieldFormBase';
 
 function ModalAddObjectField({
 	apiURL,
+	objectDefinitionId,
 	objectFieldTypes,
 	objectName,
 	observer,
@@ -109,6 +110,7 @@ function ModalAddObjectField({
 					<ObjectFieldFormBase
 						errors={errors}
 						handleChange={handleChange}
+						objectDefinitionId={objectDefinitionId}
 						objectField={values}
 						objectFieldTypes={objectFieldTypes}
 						objectName={objectName}
@@ -139,6 +141,7 @@ function ModalAddObjectField({
 
 export default function ModalWithProvider({
 	apiURL,
+	objectDefinitionId,
 	objectFieldTypes,
 	objectName,
 }: IProps) {
@@ -156,7 +159,16 @@ export default function ModalWithProvider({
 			{isVisible && (
 				<ModalAddObjectField
 					apiURL={apiURL}
-					objectFieldTypes={objectFieldTypes}
+					objectDefinitionId={objectDefinitionId}
+					objectFieldTypes={
+						!Liferay.FeatureFlags['LPS-149625']
+							? objectFieldTypes.filter(
+									(filterType) =>
+										filterType.businessType !==
+										'Aggregation'
+							  )
+							: objectFieldTypes
+					}
 					objectName={objectName}
 					observer={observer}
 					onClose={onClose}
@@ -173,6 +185,7 @@ interface IModal extends IProps {
 
 interface IProps {
 	apiURL: string;
+	objectDefinitionId: number;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 }

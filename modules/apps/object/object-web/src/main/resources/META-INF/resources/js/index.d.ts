@@ -46,7 +46,12 @@ type ObjectFieldBusinessType =
 	| 'LongText'
 	| 'Picklist'
 	| 'Relationship'
-	| 'Text';
+	| 'Text'
+	| 'Aggregation'
+	| 'LongInteger'
+	| 'Integer'
+	| 'Decimal'
+	| 'PrecisionDecimal';
 interface ObjectFieldType {
 	businessType: ObjectFieldBusinessType;
 	dbType: string;
@@ -108,7 +113,10 @@ type ObjectFieldSettingName =
 	| 'maxLength'
 	| 'showCounter'
 	| 'showFilesInDocumentsAndMedia'
-	| 'storageDLFolderPath';
+	| 'storageDLFolderPath'
+	| 'relatedObject'
+	| 'function'
+	| 'summarizeField';
 
 interface ObjectValidation {
 	active: boolean;

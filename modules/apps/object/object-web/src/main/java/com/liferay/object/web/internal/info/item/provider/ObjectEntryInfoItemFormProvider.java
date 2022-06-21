@@ -91,7 +91,13 @@ public class ObjectEntryInfoItemFormProvider
 	public InfoForm getInfoForm(String formVariationKey)
 		throws NoSuchFormVariationException {
 
-		return _getInfoForm(GetterUtil.getLong(formVariationKey));
+		long objectDefinitionId = GetterUtil.getLong(formVariationKey);
+
+		if (objectDefinitionId == 0) {
+			objectDefinitionId = _objectDefinition.getObjectDefinitionId();
+		}
+
+		return _getInfoForm(objectDefinitionId);
 	}
 
 	@Override

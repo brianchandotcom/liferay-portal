@@ -21,6 +21,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -221,7 +222,7 @@ public abstract class BaseCETImpl implements CET {
 			String value = entry.getValue();
 
 			if (isURLCETPropertyName(name)) {
-				value = _transform(baseURL, value);
+				value = HtmlUtil.escapeHREF(_transform(baseURL, value));
 			}
 
 			transformedUnicodeProperties.put(name, value);

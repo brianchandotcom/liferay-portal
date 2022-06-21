@@ -44,8 +44,6 @@ String resourceName = portletConfigurationPermissionsDisplayContext.getResourceN
 		/>
 
 		<aui:form action="<%= portletConfigurationPermissionsDisplayContext.getUpdateRolePermissionsURL() %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
-			<aui:input name="resourceId" type="hidden" value="<%= resource.getResourceId() %>" />
-
 			<liferay-ui:search-container
 				searchContainer="<%= roleSearchContainer %>"
 			>

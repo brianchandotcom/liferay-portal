@@ -37,46 +37,43 @@
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(actionDropdownItems) %>">
-		<div class="c-mt-3">
-			<c:choose>
-				<c:when test="<%= actionDropdownItems.size() > 1 %>">
-					<clay:dropdown-menu
-						additionalProps="<%= additionalProps %>"
-						displayType="<%= buttonCssClass %>"
-						dropdownItems="<%= actionDropdownItems %>"
-						label="new"
-						propsTransformer="<%= propsTransformer %>"
-						propsTransformerServletContext="<%= propsTransformerServletContext %>"
-						small="<%= true %>"
-					/>
-				</c:when>
-				<c:otherwise>
+		<c:choose>
+			<c:when test="<%= actionDropdownItems.size() > 1 %>">
+				<clay:dropdown-menu
+					additionalProps="<%= additionalProps %>"
+					displayType="<%= buttonCssClass %>"
+					dropdownItems="<%= actionDropdownItems %>"
+					label="new"
+					propsTransformer="<%= propsTransformer %>"
+					propsTransformerServletContext="<%= propsTransformerServletContext %>"
+				/>
+			</c:when>
+			<c:otherwise>
 
-					<%
-					DropdownItem actionDropdownItem = actionDropdownItems.get(0);
-					%>
+				<%
+				DropdownItem actionDropdownItem = actionDropdownItems.get(0);
+				%>
 
-					<c:choose>
-						<c:when test='<%= Validator.isNotNull(actionDropdownItem.get("href")) %>'>
-							<clay:link
-								displayType="<%= buttonCssClass %>"
-								href='<%= String.valueOf(actionDropdownItem.get("href")) %>'
-								label='<%= String.valueOf(actionDropdownItem.get("label")) %>'
-								type="button"
-							/>
-						</c:when>
-						<c:otherwise>
-							<clay:button
-								additionalProps='<%= (HashMap)actionDropdownItem.get("data") %>'
-								displayType="<%= buttonCssClass %>"
-								label='<%= String.valueOf(actionDropdownItem.get("label")) %>'
-								propsTransformer="<%= buttonPropsTransformer %>"
-								propsTransformerServletContext="<%= propsTransformerServletContext %>"
-							/>
-						</c:otherwise>
-					</c:choose>
-				</c:otherwise>
-			</c:choose>
-		</div>
+				<c:choose>
+					<c:when test='<%= Validator.isNotNull(actionDropdownItem.get("href")) %>'>
+						<clay:link
+							displayType="<%= buttonCssClass %>"
+							href='<%= String.valueOf(actionDropdownItem.get("href")) %>'
+							label='<%= String.valueOf(actionDropdownItem.get("label")) %>'
+							type="button"
+						/>
+					</c:when>
+					<c:otherwise>
+						<clay:button
+							additionalProps='<%= (HashMap)actionDropdownItem.get("data") %>'
+							displayType="<%= buttonCssClass %>"
+							label='<%= String.valueOf(actionDropdownItem.get("label")) %>'
+							propsTransformer="<%= buttonPropsTransformer %>"
+							propsTransformerServletContext="<%= propsTransformerServletContext %>"
+						/>
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 </div>

@@ -722,6 +722,68 @@ definition {
 		}
 	}
 
+	@description = "This test asserts an account member can search accounts they belong to"
+	@priority = "3"
+	test AccountMemberCanSearchForAnAccount {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given a new account is created and a new account user is assigned to two accounts") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Test",
+				accountEntryType = "Business");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Test",
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "user1@liferay.com");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.assignUsers(
+				accountName = "Account Name",
+				assigneeName = "user1");
+		}
+
+		task ("When the new account member signs in and views the accounts they are a part of through the Account Management widget") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "user1@liferay.com",
+				userLoginFullName = "user1 user1");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+		}
+
+		task ("Then the member can use the search bar to filter out the accounts they belong to") {
+			Search.searchPG(
+				portletName = "Account Management",
+				searchTerm = "Test");
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Test");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Account Name");
+
+			Search.searchPG(
+				portletName = "Account Management",
+				searchTerm = "Name");
+
+			LexiconEntry.viewEntryName(rowEntry = "Account Name");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Account Test");
+		}
+	}
+
 	@description = "This test asserts that account users can be ordered by First Name, Last Name, Email."
 	@priority = "4"
 	test AdminCanOrderUsers {

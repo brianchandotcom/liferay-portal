@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
@@ -37,8 +38,15 @@ function getHiddenAncestorId(layoutData, item) {
 export function HideFromSearchField({item}) {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+	const selectedViewportSize = useSelector(
+		(state) => state.selectedViewportSize
+	);
 	const layoutData = useSelector((state) => state.layoutData);
 	const selectItem = useSelectItem();
+
+	if (selectedViewportSize !== VIEWPORT_SIZES.desktop) {
+		return null;
+	}
 
 	const hiddenAncestorId = getHiddenAncestorId(layoutData, item);
 

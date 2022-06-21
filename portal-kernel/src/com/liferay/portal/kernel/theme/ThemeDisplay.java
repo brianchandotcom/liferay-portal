@@ -552,7 +552,7 @@ public class ThemeDisplay
 	}
 
 	public String getMainJSURL() {
-		if (Validator.isNotNull(_mainCSSURL)) {
+		if (Validator.isNotNull(_mainJSURL)) {
 			return _mainJSURL;
 		}
 

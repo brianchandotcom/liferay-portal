@@ -52,15 +52,7 @@ public class MockFile implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
-	public void copyFile(File source, File destination, boolean lazy) {
-	}
-
-	@Override
 	public void copyFile(String source, String destination) {
-	}
-
-	@Override
-	public void copyFile(String source, String destination, boolean lazy) {
 	}
 
 	@Override

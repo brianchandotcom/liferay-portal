@@ -39,6 +39,28 @@ public abstract class BaseDownstreamBuildReport
 	}
 
 	@Override
+	public List<TestReport> getTestReports() {
+		List<TestReport> testReports = new ArrayList<>();
+
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		JSONArray testResultsJSONArray = buildReportJSONObject.optJSONArray(
+			"testResults");
+
+		if (testResultsJSONArray == null) {
+			return testReports;
+		}
+
+		for (int i = 0; i < testResultsJSONArray.length(); i++) {
+			testReports.add(
+				TestReportFactory.newTestReport(
+					this, testResultsJSONArray.getJSONObject(i)));
+		}
+
+		return testReports;
+	}
+
+	@Override
 	public TopLevelBuildReport getTopLevelBuildReport() {
 		return _topLevelBuildReport;
 	}

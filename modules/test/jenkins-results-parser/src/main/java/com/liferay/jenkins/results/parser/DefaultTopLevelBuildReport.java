@@ -170,7 +170,42 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 				"stopWatchRecords", stopWatchRecordsGroup.getJSONArray());
 		}
 
+		JSONArray testResultsJSONArray = new JSONArray();
+
+		for (TestResult testResult : build.getTestResults(null)) {
+			testResultsJSONArray.put(_getTestResultJSONObject(testResult));
+		}
+
+		downstreamBuildJSONObject.put("testResults", testResultsJSONArray);
+
 		return downstreamBuildJSONObject;
+	}
+
+	private JSONObject _getTestResultJSONObject(TestResult testResult) {
+		JSONObject testResultJSONObject = new JSONObject();
+
+		testResultJSONObject.put("duration", testResult.getDuration());
+
+		String errorDetails = testResult.getErrorDetails();
+
+		if (errorDetails != null) {
+			if (errorDetails.contains("\n")) {
+				int index = errorDetails.indexOf("\n");
+
+				errorDetails = errorDetails.substring(0, index);
+			}
+
+			if (errorDetails.length() > 200) {
+				errorDetails = errorDetails.substring(0, 200);
+			}
+
+			testResultJSONObject.put("errorDetails", errorDetails);
+		}
+
+		testResultJSONObject.put("name", testResult.getDisplayName());
+		testResultJSONObject.put("status", testResult.getStatus());
+
+		return testResultJSONObject;
 	}
 
 	private final File _jenkinsConsoleLocalFile;

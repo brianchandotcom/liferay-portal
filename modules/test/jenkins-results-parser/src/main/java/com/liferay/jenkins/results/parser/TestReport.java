@@ -14,19 +14,21 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.List;
+import java.net.URL;
 
 /**
  * @author Michael Hashimoto
  */
-public interface DownstreamBuildReport extends BuildReport {
+public interface TestReport {
 
-	public String getAxisName();
+	public DownstreamBuildReport getDownstreamBuildReport();
 
-	public String getBatchName();
+	public long getDuration();
 
-	public List<TestReport> getTestReports();
+	public String getErrorDetails();
 
-	public TopLevelBuildReport getTopLevelBuildReport();
+	public String getName();
+
+	public String getStatus();
 
 }

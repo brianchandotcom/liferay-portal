@@ -14,19 +14,17 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.List;
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public interface DownstreamBuildReport extends BuildReport {
+public class TestReportFactory {
 
-	public String getAxisName();
+	public static TestReport newTestReport(
+		DownstreamBuildReport downstreamBuildReport, JSONObject jsonObject) {
 
-	public String getBatchName();
-
-	public List<TestReport> getTestReports();
-
-	public TopLevelBuildReport getTopLevelBuildReport();
+		return new DefaultTestReport(downstreamBuildReport, jsonObject);
+	}
 
 }

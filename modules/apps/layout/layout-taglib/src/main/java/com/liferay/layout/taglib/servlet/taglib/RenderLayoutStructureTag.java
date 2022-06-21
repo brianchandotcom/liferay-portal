@@ -217,7 +217,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				formInputLabel, themeDisplay.getLocale());
 		}
 
-		InfoField infoField = infoForm.getInfoField(
+		InfoField<?> infoField = infoForm.getInfoField(
 			infoFormValidationException.getInfoFieldUniqueId());
 
 		formInputLabel = infoField.getLabel(themeDisplay.getLocale());

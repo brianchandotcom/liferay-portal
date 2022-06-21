@@ -85,6 +85,60 @@ public class JobReport {
 		return _jobURL;
 	}
 
+	public List<TopLevelBuildReport> getTopLevelBuildReports(
+		int maxBuildCount) {
+
+		if (_topLevelBuildReports != null) {
+			return _topLevelBuildReports;
+		}
+
+		_topLevelBuildReports = new ArrayList<>();
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.combine(
+					String.valueOf(getJobURL()), "/api/json?tree=",
+					"builds[actions[parameters[name,value]],*]"));
+
+			if (jsonObject == null) {
+				return _topLevelBuildReports;
+			}
+
+			JSONArray buildsJSONArray = jsonObject.optJSONArray("builds");
+
+			if (buildsJSONArray == JSONObject.NULL) {
+				return _topLevelBuildReports;
+			}
+
+			for (int i = 0; i < buildsJSONArray.length(); i++) {
+				if (_topLevelBuildReports.size() >= maxBuildCount) {
+					break;
+				}
+
+				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
+
+				if (buildJSONObject == JSONObject.NULL) {
+					continue;
+				}
+
+				Object result = buildJSONObject.opt("result");
+
+				if (result == JSONObject.NULL) {
+					continue;
+				}
+
+				_topLevelBuildReports.add(
+					BuildReportFactory.newTopLevelBuildReport(
+						buildJSONObject, this));
+			}
+
+			return _topLevelBuildReports;
+		}
+		catch (IOException ioException) {
+			return _topLevelBuildReports;
+		}
+	}
+
 	private JobReport(URL jobURL) {
 		Matcher matcher = _jobURLPattern.matcher(String.valueOf(jobURL));
 
@@ -110,5 +164,6 @@ public class JobReport {
 
 	private JenkinsMaster _jenkinsMaster;
 	private final URL _jobURL;
+	private List<TopLevelBuildReport> _topLevelBuildReports;
 
 }

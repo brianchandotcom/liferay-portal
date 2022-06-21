@@ -16,6 +16,7 @@ package com.liferay.segments.configuration.provider;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +36,11 @@ public interface SegmentsConfigurationProvider {
 	public boolean isSegmentationEnabled() throws ConfigurationException;
 
 	public boolean isSegmentationEnabled(long companyId)
+		throws ConfigurationException;
+
+	public void updateSegmentsCompanyConfiguration(
+			long companyId,
+			SegmentsCompanyConfiguration segmentsCompanyConfiguration)
 		throws ConfigurationException;
 
 }

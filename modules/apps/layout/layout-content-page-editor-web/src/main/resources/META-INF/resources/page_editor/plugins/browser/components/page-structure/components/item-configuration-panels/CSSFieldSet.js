@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React from 'react';
 
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
@@ -74,7 +75,11 @@ export default function CSSFieldSet({item}) {
 	};
 
 	return Liferay.FeatureFlags['LPS-147511'] && canUpdateCSSAdvancedOptions ? (
-		<div className="mt-3">
+		<div
+			className={classNames({
+				'mt-3': selectedViewportSize === VIEWPORT_SIZES.desktop,
+			})}
+		>
 			<FieldSet
 				fields={FIELD_SET.fields}
 				item={item}

@@ -41,7 +41,36 @@ definition {
 	}
 
 	@priority = "4"
-	test CanViewBasicAndBlueprintsSuggestionsTogether {
+	test CanConfigureSearchContributorSize {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "WC WebContent Description",
+			groupName = "Guest",
+			title = "Apple");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "WC WebContent Description",
+			groupName = "Guest",
+			title = "Apple Pie");
+
+		SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(
+			suggestionContributorOrder = "1",
+			suggestionContributorSize = "1");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Apple");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple");
+
+		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Pie");
+	}
+
+	@priority = "4"
+	test CanViewBasicAndBlueprintSuggestionsTogether {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			description = "WC WebContent Description",

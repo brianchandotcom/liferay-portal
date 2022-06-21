@@ -27,14 +27,6 @@ if (status > 0) {
 
 String exception = ParamUtil.getString(request, "exception");
 
-String url = ParamUtil.getString(request, "previousURL");
-
-if (Validator.isNull(url)) {
-	url = PortalUtil.getCurrentURL(request);
-}
-
-url = HttpComponentsUtil.decodeURL(themeDisplay.getPortalURL() + url);
-
 boolean noSuchResourceException = false;
 
 for (String key : SessionErrors.keySet(request)) {
@@ -67,7 +59,7 @@ else if (Validator.isNotNull(exception)) {
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+		<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
 	</c:when>
 	<c:when test="<%= SessionErrors.contains(request, PortalException.class.getName()) || SessionErrors.contains(request, SystemException.class.getName()) %>">
 		<h3 class="alert alert-danger">
@@ -78,7 +70,7 @@ else if (Validator.isNotNull(exception)) {
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+		<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
 	</c:when>
 	<c:when test="<%= SessionErrors.contains(request, TransformException.class.getName()) %>">
 		<h3 class="alert alert-danger">
@@ -89,7 +81,7 @@ else if (Validator.isNotNull(exception)) {
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+		<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
 
 		<br /><br />
 
@@ -110,7 +102,7 @@ else if (Validator.isNotNull(exception)) {
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+		<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
 	</c:when>
 	<c:otherwise>
 		<h3 class="alert alert-danger">
@@ -121,7 +113,7 @@ else if (Validator.isNotNull(exception)) {
 
 		<br /><br />
 
-		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+		<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
 
 		<%
 		for (String key : SessionErrors.keySet(request)) {

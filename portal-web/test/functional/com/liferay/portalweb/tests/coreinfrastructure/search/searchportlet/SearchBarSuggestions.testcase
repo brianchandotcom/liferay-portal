@@ -275,4 +275,95 @@ definition {
 			searchAssetTitle = "Apple Pie");*/
 	}
 
+	@priority = "5"
+	test ViewBlueprintSuggestionsAcrossDifferentScopes {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "WC WebContent Description",
+			groupName = "Guest",
+			title = "Apple Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Apple Pie Guest",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			description = "WC WebContent Description",
+			groupName = "Site Name",
+			title = "Apple Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Apple Pie Site Name",
+			groupName = "Site Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Navigator.gotoNavNested(navNested = "Query Settings");
+
+		Check.checkNotVisible(
+			locator1 = "Radio#ANY",
+			radioLabel = "Selected Types");
+
+		Button.click(button = "Select Asset Types");
+
+		Check.checkNotVisible(
+			assetType = "Web Content Article",
+			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
+
+		Button.clickDone();
+
+		PortletEntry.save();
+
+		Navigator.openURL();
+
+		SearchBarSuggestions.configureEmbeddedSearchBarSuggestions(
+			suggestionContributor = "Blueprint",
+			suggestionContributorBlueprint = "Test Blueprint");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Apple");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple Guest");
+
+		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Pie Guest");
+
+		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Site Name");
+
+		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Pie Site Name");
+
+		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Apple");
+
+		SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple Guest");
+
+		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Pie Guest");
+
+		// Workaround for LPS-155753
+
+		/*SearchBarSuggestions.viewSuggestions(
+			searchAssetDescription = "WC WebContent Description",
+			searchAssetTitle = "Apple Site Name");*/
+
+		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Pie Site Name");
+	}
+
 }

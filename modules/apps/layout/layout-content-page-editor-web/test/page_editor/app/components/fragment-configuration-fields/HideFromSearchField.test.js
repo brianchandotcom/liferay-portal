@@ -17,6 +17,7 @@ import {act, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import {HideFromSearchField} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/fragment-configuration-fields/HideFromSearchField';
+import {VIEWPORT_SIZES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {useSelectItem} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateItemConfig from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
@@ -67,6 +68,7 @@ const renderComponent = ({
 			dispatch={() => {}}
 			getState={() => ({
 				layoutData,
+				selectedViewportSize: VIEWPORT_SIZES.desktop,
 			})}
 		>
 			<HideFromSearchField item={item} layoutData={layoutData} />

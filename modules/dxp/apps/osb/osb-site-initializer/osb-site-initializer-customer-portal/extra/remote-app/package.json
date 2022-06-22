@@ -48,7 +48,6 @@
 		"yarn": "^1.22.18"
 	},
 	"devDependencies": {
-		"@faker-js/faker": "^7.1.0",
 		"@testing-library/jest-dom": "^5.16.4",
 		"@testing-library/react": "^12.1.5",
 		"@testing-library/user-event": "^14.2.0"

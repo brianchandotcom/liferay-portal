@@ -51,6 +51,12 @@ public class DLFileEntryModelSummaryContributor
 		if (Validator.isNull(content)) {
 			content = document.get(
 				locale, prefix + Field.DESCRIPTION, Field.DESCRIPTION);
+
+			if (Validator.isNull(content) && !locale.equals(defaultLocale)) {
+				content = document.get(
+					defaultLocale, prefix + Field.DESCRIPTION,
+					Field.DESCRIPTION);
+			}
 		}
 
 		String title = document.get(locale, prefix + Field.TITLE, Field.TITLE);

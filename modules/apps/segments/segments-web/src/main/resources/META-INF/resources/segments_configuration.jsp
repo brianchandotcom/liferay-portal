@@ -17,6 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+if (Validator.isNull(redirect)) {
+	redirect = portletURL.toString();
+}
+
 SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayContext = (SegmentsCompanyConfigurationDisplayContext)request.getAttribute(SegmentsCompanyConfigurationDisplayContext.class.getName());
 %>
 
@@ -105,7 +113,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 				<div class="btn-group-item">
 					<clay:link
 						displayType="secondary"
-						href="#1"
+						href="<%= redirect %>"
 						id='<%= liferayPortletResponse.getNamespace() + "cancel" %>'
 						label='<%= LanguageUtil.get(request, "cancel") %>'
 						type="button"

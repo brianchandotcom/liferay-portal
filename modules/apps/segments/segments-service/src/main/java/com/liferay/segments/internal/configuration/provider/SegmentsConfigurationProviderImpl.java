@@ -155,6 +155,24 @@ public class SegmentsConfigurationProviderImpl
 		return false;
 	}
 
+	public void resetSegmentsCompanyConfiguration(long companyId)
+		throws ConfigurationException {
+
+		Configuration configuration = _getSegmentsCompanyConfiguration(
+			companyId);
+
+		while (configuration != null) {
+			try {
+				configuration.delete();
+			}
+			catch (IOException ioException) {
+				throw new ConfigurationException(ioException);
+			}
+
+			configuration = _getSegmentsCompanyConfiguration(companyId);
+		}
+	}
+
 	@Override
 	public void updateSegmentsCompanyConfiguration(
 			long companyId,

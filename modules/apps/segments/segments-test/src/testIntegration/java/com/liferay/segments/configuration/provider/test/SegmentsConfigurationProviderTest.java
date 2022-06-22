@@ -411,6 +411,37 @@ public class SegmentsConfigurationProviderTest {
 	}
 
 	@Test
+	public void testResetSegmentsCompanyConfiguration() throws Exception {
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"segmentationEnabled", false
+					).build())) {
+
+			Configuration configuration =
+				_configurationAdmin.createFactoryConfiguration(
+					SegmentsCompanyConfiguration.class.getName() + ".scoped",
+					StringPool.QUESTION);
+
+			configuration.update(
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", TestPropsValues.getCompanyId()
+				).put(
+					"segmentationEnabled", true
+				).build());
+
+			_segmentsConfigurationProvider.resetSegmentsCompanyConfiguration(
+				TestPropsValues.getCompanyId());
+
+			Assert.assertFalse(
+				_segmentsConfigurationProvider.
+					isSegmentsCompanyConfigurationDefined(
+						TestPropsValues.getCompanyId()));
+		}
+	}
+
+	@Test
 	public void testUpdateSegmentsCompanyConfiguration() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(

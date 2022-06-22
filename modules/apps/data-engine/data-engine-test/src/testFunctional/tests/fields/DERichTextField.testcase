@@ -460,4 +460,59 @@ definition {
 			fieldName = "Rich Text");
 	}
 
+	@description = "Check if Rich Text Field details can be seen."
+	@priority = "4"
+	test ViewRichTextFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Rich Text Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		DEBuilder.openField(
+			fieldLabel = "Rich Text",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Rich Text",
+			searchableType = "Text");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Rich Text");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Rich Text");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Rich Text");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Rich Text Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Rich Text",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Rich Text",
+			searchableType = "Text");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Rich Text");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Rich Text");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Rich Text");
+	}
+
 }

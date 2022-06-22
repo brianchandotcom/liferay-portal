@@ -962,8 +962,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewTimerNotPresentSidebar(
 			propertyName = "Timer",
 			propertyValue = "Duration: 1 minute");
-
-			
 	}
 
 	@description = "Verify that the user can delete A Timer clicking on trash icon in sidebar Timer Card"

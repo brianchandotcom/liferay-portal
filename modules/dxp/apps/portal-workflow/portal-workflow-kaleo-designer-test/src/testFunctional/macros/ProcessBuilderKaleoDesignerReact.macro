@@ -310,8 +310,6 @@ definition {
 		Click(
 			key_propertyName = "${sidebarPropertyName}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_SIDEBAR_PROPERTY");
-			
-
 	}
 
 	macro viewAndFillActions {
@@ -1190,8 +1188,6 @@ definition {
 			key_propertyName = "${propertyName}",
 			key_propertyValue = "${propertyValue}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
-
-
 	}
 
 	macro viewTimersInfo {

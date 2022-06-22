@@ -20,15 +20,22 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {"key": "BASIC_COMPONENT-heading"},
-							"fragmentConfig": {"headingLevel": "h1"},
+							"fragment": {
+								"key": "BASIC_COMPONENT-heading"
+							},
+							"fragmentConfig": {
+								"headingLevel": "h1"
+							},
 							"fragmentFields": [
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
-											"value_i18n": {"en_US": "Home"}
+											"value_i18n": {
+												"en_US": "Home"
+											}
 										}
 									}
 								}

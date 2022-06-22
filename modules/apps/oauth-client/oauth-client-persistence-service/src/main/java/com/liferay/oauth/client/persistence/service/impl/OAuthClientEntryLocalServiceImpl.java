@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.nimbusds.oauth2.sdk.ParseException;
+import com.nimbusds.oauth2.sdk.ResponseType;
+import com.nimbusds.oauth2.sdk.Scope;
 import com.nimbusds.oauth2.sdk.client.ClientInformation;
 import com.nimbusds.oauth2.sdk.client.ClientMetadata;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
@@ -41,10 +43,12 @@ import com.nimbusds.oauth2.sdk.http.HTTPResponse;
 import com.nimbusds.oauth2.sdk.util.JSONObjectUtils;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientInformation;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.util.List;
 
+import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 
 import org.osgi.service.component.annotations.Component;
@@ -88,14 +92,14 @@ public class OAuthClientEntryLocalServiceImpl
 			authRequestParametersJSON = "{}";
 		}
 		else {
-			_validateParametersJSON(authRequestParametersJSON);
+			_validateRequestParametersJSON(authRequestParametersJSON);
 		}
 
 		if (Validator.isNull(tokenRequestParametersJSON)) {
 			tokenRequestParametersJSON = "{}";
 		}
 		else {
-			_validateParametersJSON(tokenRequestParametersJSON);
+			_validateRequestParametersJSON(tokenRequestParametersJSON);
 		}
 
 		JSONObject clientInformationJSONObject =
@@ -241,14 +245,14 @@ public class OAuthClientEntryLocalServiceImpl
 			authRequestParametersJSON = "{}";
 		}
 		else {
-			_validateParametersJSON(authRequestParametersJSON);
+			_validateRequestParametersJSON(authRequestParametersJSON);
 		}
 
 		if (Validator.isNull(tokenRequestParametersJSON)) {
 			tokenRequestParametersJSON = "{}";
 		}
 		else {
-			_validateParametersJSON(tokenRequestParametersJSON);
+			_validateRequestParametersJSON(tokenRequestParametersJSON);
 		}
 
 		JSONObject clientInformationJSONObject =
@@ -345,14 +349,81 @@ public class OAuthClientEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateParametersJSON(String parametersJSON)
+	private void _validateCustomRequestParameters(
+			JSONObject requestParametersJSONObject)
+		throws ParseException {
+
+		if (requestParametersJSONObject.containsKey(
+				"custom_request_parameters")) {
+
+			JSONObject customRequestParametersJSONObject =
+				JSONObjectUtils.getJSONObject(
+					requestParametersJSONObject, "custom_request_parameters");
+
+			for (String key : customRequestParametersJSONObject.keySet()) {
+				JSONArray valueJSONArray = JSONObjectUtils.getJSONArray(
+					customRequestParametersJSONObject, key);
+
+				for (Object value : valueJSONArray) {
+					if (!(value instanceof String)) {
+						throw new ParseException(
+							"Each custom parameter value must be a String");
+					}
+				}
+			}
+		}
+	}
+
+	private void _validateRequestParametersJSON(String requestParametersJSON)
 		throws PortalException {
 
 		try {
-			JSONObjectUtils.parse(parametersJSON);
+			JSONObject requestParametersJSONObject = JSONObjectUtils.parse(
+				requestParametersJSON);
+
+			_validateSpecsRequestParameters(requestParametersJSONObject);
+
+			_validateCustomRequestParameters(requestParametersJSONObject);
 		}
 		catch (ParseException parseException) {
 			throw new OAuthClientEntryParametersJSONException(parseException);
+		}
+	}
+
+	private void _validateSpecsRequestParameters(
+			JSONObject requestParametersJSONObject)
+		throws ParseException {
+
+		if (requestParametersJSONObject.containsKey("redirect_uri")) {
+			URI.create(
+				JSONObjectUtils.getString(
+					requestParametersJSONObject, "redirect_uri"));
+		}
+
+		if (requestParametersJSONObject.containsKey("resource")) {
+			for (Object uriObject :
+					JSONObjectUtils.getJSONArray(
+						requestParametersJSONObject, "resource")) {
+
+				if (!(uriObject instanceof String)) {
+					throw new ParseException(
+						"Resource must be a JSON array of Strings");
+				}
+
+				URI.create((String)uriObject);
+			}
+		}
+
+		if (requestParametersJSONObject.containsKey("response_type")) {
+			ResponseType.parse(
+				JSONObjectUtils.getString(
+					requestParametersJSONObject, "response_type"));
+		}
+
+		if (requestParametersJSONObject.containsKey("scope")) {
+			Scope.parse(
+				JSONObjectUtils.getString(
+					requestParametersJSONObject, "scope"));
 		}
 	}
 

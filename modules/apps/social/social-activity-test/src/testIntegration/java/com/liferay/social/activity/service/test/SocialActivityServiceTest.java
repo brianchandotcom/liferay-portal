@@ -26,11 +26,9 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -88,6 +86,8 @@ public class SocialActivityServiceTest {
 			ActionKeys.VIEW);
 
 		SocialActivityHierarchyEntryThreadLocal.clear();
+
+		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@Test
@@ -110,8 +110,6 @@ public class SocialActivityServiceTest {
 			_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(activities.toString(), 0, activities.size());
-
-		UserTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@Test
@@ -129,43 +127,38 @@ public class SocialActivityServiceTest {
 
 		UserTestUtil.setUser(_user);
 
-		try {
-			Assert.assertEquals(
-				8,
-				SocialActivityServiceUtil.getGroupActivitiesCount(
-					_group.getGroupId()));
+		Assert.assertEquals(
+			8,
+			SocialActivityServiceUtil.getGroupActivitiesCount(
+				_group.getGroupId()));
 
-			List<SocialActivity> activities =
-				SocialActivityServiceUtil.getGroupActivities(
-					_group.getGroupId(), 0, 2);
+		List<SocialActivity> activities =
+			SocialActivityServiceUtil.getGroupActivities(
+				_group.getGroupId(), 0, 2);
 
-			Assert.assertEquals(activities.toString(), 2, activities.size());
+		Assert.assertEquals(activities.toString(), 2, activities.size());
 
-			int index = 3;
+		int index = 3;
 
-			for (SocialActivity activity : activities) {
-				String title = String.valueOf(index);
+		for (SocialActivity activity : activities) {
+			String title = String.valueOf(index);
 
-				Assert.assertEquals(title, activity.getExtraDataValue("title"));
+			Assert.assertEquals(title, activity.getExtraDataValue("title"));
 
-				index--;
-			}
-
-			activities = SocialActivityServiceUtil.getGroupActivities(
-				_group.getGroupId(), 2, 4);
-
-			Assert.assertEquals(activities.toString(), 2, activities.size());
-
-			for (SocialActivity activity : activities) {
-				String title = String.valueOf(index);
-
-				Assert.assertEquals(title, activity.getExtraDataValue("title"));
-
-				index--;
-			}
+			index--;
 		}
-		finally {
-			UserTestUtil.setUser(TestPropsValues.getUser());
+
+		activities = SocialActivityServiceUtil.getGroupActivities(
+			_group.getGroupId(), 2, 4);
+
+		Assert.assertEquals(activities.toString(), 2, activities.size());
+
+		for (SocialActivity activity : activities) {
+			String title = String.valueOf(index);
+
+			Assert.assertEquals(title, activity.getExtraDataValue("title"));
+
+			index--;
 		}
 	}
 

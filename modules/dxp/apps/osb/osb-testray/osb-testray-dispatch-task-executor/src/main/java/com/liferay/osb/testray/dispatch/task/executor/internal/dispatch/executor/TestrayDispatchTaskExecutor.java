@@ -442,13 +442,13 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 		Map<String, Object> recipientCaseResultCompositeMap =
 			recipientTestrayCaseResultComposite.getProperties();
+
 		Map<String, Object> sourceCaseResultCompositeMap =
 			sourceTestrayCaseResultComposite.getProperties();
 
 		recipientCaseResultCompositeMap.put(
 			"r_userToCaseResults_userId",
 			sourceCaseResultCompositeMap.get("r_userToCaseResults_userId"));
-
 		recipientCaseResultCompositeMap.put(
 			"dueStatus", sourceCaseResultCompositeMap.get("dueStatus"));
 
@@ -460,8 +460,9 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			recipientTestrayCaseResultComposite.getId(),
 			recipientTestrayCaseResultComposite);
 
-		for (ObjectEntry issue : sourceIssueItems) {
-			Map<String, Object> issueIdsPropertiesMap = issue.getProperties();
+		for (ObjectEntry issueObjectEntry : sourceIssueItems) {
+			Map<String, Object> issueIdsPropertiesMap =
+				issueObjectEntry.getProperties();
 
 			String testrayIssueName = String.valueOf(
 				issueIdsPropertiesMap.get(

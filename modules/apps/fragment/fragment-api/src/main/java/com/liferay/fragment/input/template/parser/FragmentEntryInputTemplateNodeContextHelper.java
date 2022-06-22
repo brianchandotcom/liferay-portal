@@ -198,6 +198,12 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				minValue -> inputTemplateNode.addAttribute("min", minValue));
 		}
 		else if (infoField.getInfoFieldType() instanceof SelectInfoFieldType) {
+			Optional<String> autocompleteURLOptional =
+				infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS_URL);
+
+			inputTemplateNode.addAttribute(
+				"optionsURL", autocompleteURLOptional.orElse(null));
+
 			List<InputTemplateNode.Option> options = new ArrayList<>();
 
 			Optional<List<SelectInfoFieldType.Option>> optionsOptional =

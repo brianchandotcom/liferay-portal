@@ -11,6 +11,6 @@ Import-Package:\
 	!org.codehaus.*,\
 	\
 	*
-Liferay-Require-SchemaVersion: 4.2.0
+Liferay-Require-SchemaVersion: 4.2.1
 Liferay-Service: true
 -dsannotations-options: inherit

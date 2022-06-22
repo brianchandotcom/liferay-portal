@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.info.item.provider;
 
+import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.context.CommerceContextThreadLocal;
@@ -32,6 +33,8 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -44,6 +47,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  * @author Marco Leo
  * @author Alec Sloan
+ * @author Allen Ziegenfus
  */
 @Component(
 	enabled = false, immediate = true,
@@ -71,16 +76,33 @@ public class CPDefinitionInfoItemFieldValuesProvider
 	public InfoItemFieldValues getInfoItemFieldValues(
 		CPDefinition cpDefinition) {
 
-		return InfoItemFieldValues.builder(
-		).infoFieldValues(
-			_getCPDefinitionInfoFieldValues(cpDefinition)
-		).infoFieldValues(
-			_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
-				CPDefinition.class.getName(), cpDefinition)
-		).infoItemReference(
-			new InfoItemReference(
-				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId())
-		).build();
+		try {
+			return InfoItemFieldValues.builder(
+			).infoFieldValues(
+				_getCPDefinitionInfoFieldValues(cpDefinition)
+			).infoFieldValues(
+				_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(
+					CPDefinition.class.getName(),
+					cpDefinition.getCPDefinitionId())
+			).infoFieldValues(
+				_expandoInfoItemFieldSetProvider.getInfoFieldValues(
+					CPDefinition.class.getName(), cpDefinition)
+			).infoFieldValues(
+				_templateInfoItemFieldSetProvider.getInfoFieldValues(
+					CPDefinition.class.getName(), cpDefinition)
+			).infoFieldValues(
+				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
+					CPDefinition.class.getName(), cpDefinition)
+			).infoItemReference(
+				new InfoItemReference(
+					CPDefinition.class.getName(),
+					cpDefinition.getCPDefinitionId())
+			).build();
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			throw new RuntimeException(
+				"Caught unexpected exception", noSuchInfoItemException);
+		}
 	}
 
 	private String _getAvailabilityStatus(
@@ -570,6 +592,10 @@ public class CPDefinitionInfoItemFieldValuesProvider
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
+	private AssetEntryInfoItemFieldSetProvider
+		_assetEntryInfoItemFieldSetProvider;
+
+	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
@@ -596,7 +622,13 @@ public class CPDefinitionInfoItemFieldValuesProvider
 	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
+	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;
+
+	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
+
+	@Reference
+	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;
 
 }

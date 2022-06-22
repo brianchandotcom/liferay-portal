@@ -262,4 +262,126 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-151754. View warning message when publish content page with hidden Submit Button."
+	@priority = "4"
+	test ViewWarningMessageWhenPublishContentPageWithHiddenSubmitButton {
+		property test.name.skip.portal.instance = "SubmitButton#ViewWarningMessageWhenPublishContentPageWithHiddenSubmitButton";
+
+		task ("Given a page designer has a Form Container with hidden Submit Button") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add a Submit Button fragment inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button");
+			}
+
+			task ("Hide the Submit Button") {
+				PageEditor.hideFragmentViaPageStyles(fragmentName = "Submit Button");
+
+				PageEditor.viewFragmentNotPresent(fragmentName = "Submit Button");
+			}
+		}
+
+		task ("When the page designer publishes the page") {
+			Button.click(button = "Publish");
+		}
+
+		task ("Then the page designer sees warning message") {
+			Modal.publish(warningMessage = "This page contains one or several forms with missing or hidden form components. Are you sure you want to publish it?");
+		}
+
+		task ("When the page designer accesses to content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer cannot see the Submit Button") {
+			AssertNotVisible(
+				fragmentName = "button",
+				id = "text",
+				index = "1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
+		}
+
+		task ("When the page designer publishes the page after unhiding the Submit Button") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoTab(tabName = "Browser");
+
+			Click(
+				key_nodeName = "Form Container",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
+
+			Click(
+				key_nodeName = "Submit Button",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+
+			PageEditor.configureFragment(hideFragment = "false");
+
+			PageEditor.viewFragmentEditableText(
+				className = "button",
+				editableText = "Submit",
+				fragmentName = "Submit Button",
+				id = "text");
+
+			Button.click(button = "Publish");
+		}
+
+		task ("Then the page designer cannot see warning message") {
+			AssertElementNotPresent(locator1 = "Modal#BODY");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When the page designer accesses to content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer sees the Submit Button") {
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "text",
+				text = "Submit");
+		}
+
+		task ("When the page designer deletes the Submit Button in page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.removeFragment(fragmentName = "Submit Button");
+		}
+
+		task ("Then the page designer sees the Form Container is empty") {
+			AssertVisible(
+				key_fragmentName = "Form Container",
+				key_messageInfo = "Place fragments here.",
+				key_position = "1",
+				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+		}
+	}
+
 }

@@ -14,10 +14,16 @@
 
 package com.liferay.segments.web.internal.display.context;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
+
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,11 +33,23 @@ import javax.servlet.http.HttpServletRequest;
 public class SegmentsCompanyConfigurationDisplayContext {
 
 	public SegmentsCompanyConfigurationDisplayContext(
-		HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest, Portal portal,
 		SegmentsConfigurationProvider segmentsConfigurationProvider) {
 
 		_httpServletRequest = httpServletRequest;
+		_portal = portal;
 		_segmentsConfigurationProvider = segmentsConfigurationProvider;
+	}
+
+	public String getBindConfigurationActionURL() {
+		return PortletURLBuilder.createActionURL(
+			_portal.getLiferayPortletResponse(
+				(PortletResponse)_httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE)),
+			ConfigurationAdminPortletKeys.INSTANCE_SETTINGS
+		).setActionName(
+			"/instance_settings/bind_segments_company_configuration"
+		).buildString();
 	}
 
 	public boolean isRoleSegmentationChecked() throws ConfigurationException {
@@ -61,6 +79,7 @@ public class SegmentsCompanyConfigurationDisplayContext {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final Portal _portal;
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
 
 }

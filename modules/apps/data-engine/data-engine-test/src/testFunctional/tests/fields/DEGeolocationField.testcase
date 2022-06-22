@@ -278,4 +278,59 @@ definition {
 			fieldName = "Geolocation");
 	}
 
+	@description = "Check if Geolocation Field details can be seen."
+	@priority = "4"
+	test ViewGeolocationFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Geolocation Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Geolocation",
+			fieldName = "Geolocation");
+
+		DEBuilder.openField(
+			fieldLabel = "Geolocation",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Geolocation",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Geolocation");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Geolocation");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Geolocation");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Geolocation Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Geolocation",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Geolocation",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Geolocation");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Geolocation");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Geolocation");
+	}
+
 }

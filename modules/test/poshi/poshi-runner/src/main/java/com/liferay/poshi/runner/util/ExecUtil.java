@@ -35,13 +35,19 @@ public class ExecUtil {
 	public static String executeCommand(String command)
 		throws IOException, TimeoutException {
 
+		boolean whitelistedExecutable = false;
+
 		for (String executableName : _whitelistedExecutableNames) {
-			if (!command.startsWith(executableName)) {
-				throw new RuntimeException(
-					"Unable to run command: " + command +
-						"\nPlease use a whitelisted executable: " +
-							_whitelistedExecutableNames);
+			if (command.startsWith(executableName)) {
+				whitelistedExecutable = true;
 			}
+		}
+
+		if (!whitelistedExecutable) {
+			throw new RuntimeException(
+				"Unable to run command: " + command +
+					"\nPlease use a whitelisted executable: " +
+						_whitelistedExecutableNames);
 		}
 
 		Process process = executeCommands(

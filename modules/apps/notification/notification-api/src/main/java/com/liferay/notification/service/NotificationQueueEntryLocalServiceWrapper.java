@@ -356,6 +356,15 @@ public class NotificationQueueEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.notification.model.NotificationQueueEntry
+			resendNotificationQueueEntry(long notificationQueueEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationQueueEntryLocalService.resendNotificationQueueEntry(
+			notificationQueueEntryId);
+	}
+
+	@Override
 	public void sendNotificationQueueEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
 

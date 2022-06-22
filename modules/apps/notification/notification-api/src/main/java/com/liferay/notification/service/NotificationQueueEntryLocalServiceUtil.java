@@ -312,6 +312,14 @@ public class NotificationQueueEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static NotificationQueueEntry resendNotificationQueueEntry(
+			long notificationQueueEntryId)
+		throws PortalException {
+
+		return getService().resendNotificationQueueEntry(
+			notificationQueueEntryId);
+	}
+
 	public static void sendNotificationQueueEntries() throws PortalException {
 		getService().sendNotificationQueueEntries();
 	}

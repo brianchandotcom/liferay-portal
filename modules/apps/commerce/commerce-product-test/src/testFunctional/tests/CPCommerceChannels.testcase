@@ -2689,6 +2689,36 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-8300. The store admin can upload a custom jasper print template"
+	@priority = "3"
+	test UploadCustomJasperPrintTemplate {
+		property portal.acceptance = "false";
+
+		task ("When the sales channel detail page is reached") {
+			CommerceNavigator.gotoPortlet(
+				category = "Store Management",
+				portlet = "Channels");
+		}
+
+		task ("And the "Select File" in the Orders box is clicked and the jasper template is chosen for being uploaded") {
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.uploadPrintOrderTemplate(uploadFileName = "commerce_order.jrxml");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Store Management",
+				portlet = "Channels");
+		}
+
+		task ("Then the file name is shown next to the "Select File" button") {
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			AssertTextEquals(
+				locator1 = "CommerceOrders#PRINT_ORDER_TEMPLATE_FILE_NAME",
+				value1 = "commerce_order.jrxml");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-6267. UsePunchOut"
 	@ignore = "true"
 	@priority = "3"
@@ -2885,6 +2915,90 @@ definition {
 				key_rowNumber = "2",
 				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_NUMBER",
 				value1 = "Expedited Delivery");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-8300. The store admin can view and download the jasper template"
+	@priority = "3"
+	test ViewAndDownloadCustomJasperPrintTemplate {
+		property portal.acceptance = "false";
+
+		task ("When the sales channel detail page is reached") {
+			CommerceNavigator.gotoPortlet(
+				category = "Store Management",
+				portlet = "Channels");
+		}
+
+		task ("And the "Select File" in the Orders box is clicked, the jasper template is chosen for being uploaded, the file name is clicked, and the preview template is shown") {
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.uploadPrintOrderTemplate(uploadFileName = "commerce_order.jrxml");
+		}
+
+		task ("Then the jasper template is chosen for being uploaded, the file name is clicked, and the preview template is shown, and the store admin can download the template") {
+			AssertTextEquals(
+				locator1 = "CommerceOrders#PRINT_ORDER_TEMPLATE_FILE_NAME",
+				value1 = "commerce_order.jrxml");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-8300. The buyer can view the order preview with the uploaded template"
+	@priority = "3"
+	test ViewOrderPreviewWithJasperTemplate {
+		property portal.acceptance = "false";
+
+		task ("Given a channel with a Print Order Template jasper file ") {
+			CommerceNavigator.gotoPortlet(
+				category = "Store Management",
+				portlet = "Channels");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.uploadPrintOrderTemplate(uploadFileName = "commerce_order.jrxml");
+		}
+
+		task ("And a buyer user is logged in") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+
+			User.logoutPG();
+		}
+
+		task ("When an order is placed") {
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/placed-orders");
+		}
+
+		task ("Then the buyer user should be able to view and print the order") {
+			CommerceOrders.viewJasperTemplateFromPlacedOrders();
 		}
 	}
 

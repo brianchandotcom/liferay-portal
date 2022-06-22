@@ -470,6 +470,13 @@ public class ObjectRelationshipLocalServiceImpl
 
 			objectRelationshipLocalService.updateObjectRelationship(
 				reverseObjectRelationship);
+
+			if (_objectDefinitionLocalService != null) {
+				_objectDefinitionLocalService.deployObjectDefinition(
+					objectDefinition1);
+				_objectDefinitionLocalService.deployObjectDefinition(
+					objectDefinition2);
+			}
 		}
 
 		return objectRelationshipLocalService.updateObjectRelationship(

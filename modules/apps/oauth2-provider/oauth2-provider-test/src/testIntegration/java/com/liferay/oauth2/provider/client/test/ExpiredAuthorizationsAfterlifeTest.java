@@ -82,7 +82,8 @@ public class ExpiredAuthorizationsAfterlifeTest extends BaseClientTestCase {
 		protected void prepareTest() throws Exception {
 			updateOAuth2ProviderConfiguration(
 				MapUtil.singletonDictionary(
-					"oauth2.expired.authorizations.afterlife.duration", 43200));
+					"oauth2.expired.authorizations.afterlife.duration",
+					Time.HOUR * 12 / Time.SECOND));
 
 			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
 

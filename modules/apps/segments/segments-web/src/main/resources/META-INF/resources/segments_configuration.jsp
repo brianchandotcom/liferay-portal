@@ -27,7 +27,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 		<liferay-ui:message key="segments-service-company-configuration-name" />
 	</h2>
 
-	<aui:form action="" method="post" name="fm">
+	<aui:form action="<%= segmentsCompanyConfigurationDisplayContext.getBindConfigurationActionURL() %>" method="post" name="fm">
 		<div class="form-group">
 			<c:choose>
 				<c:when test="<%= segmentsCompanyConfigurationDisplayContext.isSegmentationChecked() || !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>">

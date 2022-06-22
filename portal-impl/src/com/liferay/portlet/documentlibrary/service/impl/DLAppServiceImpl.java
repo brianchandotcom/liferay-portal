@@ -343,10 +343,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
 
 			if (size == 0) {
-				String extension = DLAppUtil.getExtension(
-					title, sourceFileName);
-
-				mimeType = MimeTypesUtil.getExtensionContentType(extension);
+				mimeType = MimeTypesUtil.getExtensionContentType(
+					DLAppUtil.getExtension(title, sourceFileName));
 			}
 			else {
 				File file = null;

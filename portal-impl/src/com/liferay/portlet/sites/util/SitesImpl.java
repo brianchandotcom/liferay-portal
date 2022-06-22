@@ -1622,11 +1622,10 @@ public class SitesImpl implements Sites {
 				null, false, true, null);
 		}
 
-		String portletTitle = PortalUtil.getPortletTitle(
-			PortletIdCodec.decodePortletName(sourcePortletId), languageId);
-
 		String newPortletTitle = PortalUtil.getNewPortletTitle(
-			portletTitle, String.valueOf(sourceLayout.getLayoutId()),
+			PortalUtil.getPortletTitle(
+				PortletIdCodec.decodePortletName(sourcePortletId), languageId),
+			String.valueOf(sourceLayout.getLayoutId()),
 			targetLayout.getName(languageId));
 
 		targetPreferences.setValue(

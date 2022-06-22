@@ -2992,10 +2992,8 @@ public class PortalImpl implements Portal {
 			virtualHostname = company.getVirtualHostname();
 		}
 
-		String portalURL = getPortalURL(
-			virtualHostname, getPortalServerPort(secure), secure);
-
-		sb.append(portalURL);
+		sb.append(
+			getPortalURL(virtualHostname, getPortalServerPort(secure), secure));
 
 		if (layout.isPrivateLayout()) {
 			if (group.isUser()) {
@@ -4287,10 +4285,8 @@ public class PortalImpl implements Portal {
 			}
 		}
 		else {
-			long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(
-				groupId, privateLayout);
-
-			layout = LayoutLocalServiceUtil.getLayout(defaultPlid);
+			layout = LayoutLocalServiceUtil.getLayout(
+				LayoutLocalServiceUtil.getDefaultPlid(groupId, privateLayout));
 		}
 
 		layoutQueryStringComposite.setLayout(layout);
@@ -7230,16 +7226,16 @@ public class PortalImpl implements Portal {
 				groupId = scopeLayout.getGroupId();
 			}
 
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				groupId, privateLayout,
-				new String[] {
-					LayoutConstants.TYPE_CONTENT,
-					LayoutConstants.TYPE_COLLECTION,
-					LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-					LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET
-				});
-
-			return getPlidFromPortletId(layouts, portletId, scopeGroupId);
+			return getPlidFromPortletId(
+				LayoutLocalServiceUtil.getLayouts(
+					groupId, privateLayout,
+					new String[] {
+						LayoutConstants.TYPE_CONTENT,
+						LayoutConstants.TYPE_COLLECTION,
+						LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
+						LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET
+					}),
+				portletId, scopeGroupId);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -7382,10 +7378,9 @@ public class PortalImpl implements Portal {
 			return browsableChildLayout;
 		}
 
-		long defaultPlid = LayoutLocalServiceUtil.getDefaultPlid(
-			layout.getGroupId(), layout.isPrivateLayout());
-
-		return LayoutLocalServiceUtil.fetchLayout(defaultPlid);
+		return LayoutLocalServiceUtil.fetchLayout(
+			LayoutLocalServiceUtil.getDefaultPlid(
+				layout.getGroupId(), layout.isPrivateLayout()));
 	}
 
 	protected String getCanonicalDomain(

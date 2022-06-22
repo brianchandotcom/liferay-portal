@@ -70,11 +70,10 @@ public class RenderStateUtil {
 			themeDisplay.getLayoutTypePortlet();
 
 		if (layoutTypePortlet != null) {
-			JSONObject pageStateJSONObject = _getPageStateJSONObject(
-				httpServletRequest, themeDisplay, layoutTypePortlet,
-				renderDataMap);
-
-			return pageStateJSONObject.toString();
+			return String.valueOf(
+				_getPageStateJSONObject(
+					httpServletRequest, themeDisplay, layoutTypePortlet,
+					renderDataMap));
 		}
 
 		return StringPool.BLANK;

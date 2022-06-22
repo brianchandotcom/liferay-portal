@@ -109,11 +109,10 @@ public class SocialActivitySettingLocalServiceImpl
 		for (SocialActivityDefinition defaultActivityDefinition :
 				defaultActivityDefinitions) {
 
-			SocialActivityDefinition activityDefinition = getActivityDefinition(
-				groupId, className,
-				defaultActivityDefinition.getActivityType());
-
-			activityDefinitions.add(activityDefinition);
+			activityDefinitions.add(
+				getActivityDefinition(
+					groupId, className,
+					defaultActivityDefinition.getActivityType()));
 		}
 
 		return activityDefinitions;

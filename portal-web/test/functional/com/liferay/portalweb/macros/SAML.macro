@@ -451,6 +451,10 @@ definition {
 				idpEntityId = "${idpEntityId}");
 		}
 
+		if (isSet(viewMetadata)) {
+			SAMLPortlet.viewMetadataConfigurationsOfSP(idpEntityId = "${idpEntityId}");
+		}
+
 		User.logoutPG(specificURL = "${spURL}");
 	}
 

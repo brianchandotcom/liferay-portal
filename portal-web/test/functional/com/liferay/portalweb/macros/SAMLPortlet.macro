@@ -461,4 +461,18 @@ definition {
 		PortletEntry.save();
 	}
 
+	@description = "View metadata configurations of SP, in Identity Provider Configurations"
+	macro viewMetadataConfigurationsOfSP {
+		AssertClick(
+			idpEntityId = "${idpEntityId}",
+			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_NAME",
+			value1 = "${idpEntityId}");
+
+		SAML.assertSAMLMetadataAlertMessage();
+
+		AssertElementNotPresent(locator1 = "TextInput#SAML_METADATA_URL_FIELD");
+
+		PortletEntry.save();
+	}
+
 }

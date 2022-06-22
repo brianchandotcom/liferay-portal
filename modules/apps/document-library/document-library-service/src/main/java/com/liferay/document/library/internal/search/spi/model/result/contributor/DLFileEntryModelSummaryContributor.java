@@ -41,7 +41,7 @@ public class DLFileEntryModelSummaryContributor
 		Document document, Locale locale, String snippet) {
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			document.get("defaultLanguageId"));
+			document.get(Field.DEFAULT_LANGUAGE_ID));
 
 		String prefix = Field.SNIPPET + StringPool.UNDERLINE;
 

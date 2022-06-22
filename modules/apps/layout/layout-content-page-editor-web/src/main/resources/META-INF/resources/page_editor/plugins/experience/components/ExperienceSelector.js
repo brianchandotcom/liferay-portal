@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
 import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
@@ -470,7 +471,17 @@ const ExperiencesSelectorHeader = ({
 						)}
 					</strong>
 
-					{Liferay.Language.get('to-enable,-go-to-instance-settings')}
+					{config.segmentsConfigurationURL ? (
+						<ClayLink href={config.segmentsConfigurationURL}>
+							{Liferay.Language.get(
+								'to-enable,-go-to-instance-settings'
+							)}
+						</ClayLink>
+					) : (
+						Liferay.Language.get(
+							'to-enable,-go-to-instance-settings'
+						)
+					)}
 				</ClayAlert>
 			) : (
 				<ClayAlert

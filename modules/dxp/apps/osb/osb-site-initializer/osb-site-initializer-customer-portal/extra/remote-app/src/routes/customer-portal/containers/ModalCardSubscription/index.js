@@ -15,9 +15,9 @@ import React, {useState} from 'react';
 import i18n from '../../../../common/I18n';
 import {Button, StatusTag, Table} from '../../../../common/components';
 import {getCommerceOrderItems} from '../../../../common/services/liferay/graphql/queries';
+import {SLA_STATUS_TYPES} from '../../../../common/utils/constants';
 import getDateCustomFormat from '../../../../common/utils/getDateCustomFormat';
 import getKebabCase from '../../../../common/utils/getKebabCase';
-import {STATUS_TAG_TYPES} from '../../utils/constants';
 
 const dateFormat = {
 	day: '2-digit',
@@ -139,7 +139,7 @@ const ModalCardSubscription = ({
 					(fields.status && (
 						<StatusTag
 							currentStatus={i18n.translate(
-								STATUS_TAG_TYPES[
+								SLA_STATUS_TYPES[
 									`${fields.status.toLowerCase()}`
 								]
 							)}

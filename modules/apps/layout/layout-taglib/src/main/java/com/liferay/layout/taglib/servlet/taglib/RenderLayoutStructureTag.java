@@ -761,6 +761,27 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 				jspWriter.write(" d-flex flex-row");
 			}
+
+			String align = containerStyledLayoutStructureItem.getAlign();
+
+			if (Validator.isNotNull(align)) {
+				jspWriter.append(StringPool.SPACE);
+				jspWriter.append(align);
+			}
+
+			String flexWrap = containerStyledLayoutStructureItem.getFlexWrap();
+
+			if (Validator.isNotNull(flexWrap)) {
+				jspWriter.append(StringPool.SPACE);
+				jspWriter.append(flexWrap);
+			}
+
+			String justify = containerStyledLayoutStructureItem.getJustify();
+
+			if (Validator.isNotNull(justify)) {
+				jspWriter.append(StringPool.SPACE);
+				jspWriter.append(justify);
+			}
 		}
 
 		jspWriter.write("\" style=\"");

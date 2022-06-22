@@ -272,8 +272,6 @@ public class FieldDisplayContext {
 
 	private static final Map<String, String> _contactFieldNames =
 		TreeMapBuilder.put(
-			"accountId", "Long"
-		).put(
 			"birthday", "Date"
 		).put(
 			"classNameId", "Long"

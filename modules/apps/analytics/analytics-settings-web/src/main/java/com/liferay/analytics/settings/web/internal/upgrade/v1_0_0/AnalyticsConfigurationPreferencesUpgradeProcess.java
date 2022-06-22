@@ -96,12 +96,12 @@ public class AnalyticsConfigurationPreferencesUpgradeProcess
 	}
 
 	private static final String[] _CONTACT_FIELD_NAMES = {
-		"accountId", "birthday", "classNameId", "classPK", "companyId",
-		"contactId", "createDate", "emailAddress", "employeeNumber",
-		"employeeStatusId", "facebookSn", "firstName", "hoursOfOperation",
-		"jabberSn", "jobClass", "jobTitle", "lastName", "male", "middleName",
-		"modifiedDate", "parentContactId", "prefixId", "skypeSn", "smsSn",
-		"suffixId", "twitterSn", "userId", "userName"
+		"birthday", "classNameId", "classPK", "companyId", "contactId",
+		"createDate", "emailAddress", "employeeNumber", "employeeStatusId",
+		"facebookSn", "firstName", "hoursOfOperation", "jabberSn", "jobClass",
+		"jobTitle", "lastName", "male", "middleName", "modifiedDate",
+		"parentContactId", "prefixId", "skypeSn", "smsSn", "suffixId",
+		"twitterSn", "userId", "userName"
 	};
 
 	private static final String[] _USER_FIELD_NAMES = {

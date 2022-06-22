@@ -192,7 +192,6 @@ AUI.add(
 				folderId: {
 					readonly: true,
 					setter: Lang.toInt,
-					validator: isNumber || isString,
 					value: null,
 				},
 
@@ -211,7 +210,7 @@ AUI.add(
 				},
 
 				scopeGroupId: {
-					validator: isNumber,
+					setter: Lang.toInt,
 					value: null,
 				},
 

@@ -138,13 +138,12 @@ public class BatchEngineExportTaskExecutorTest
 
 		_exportBlogPostings("CSV", fieldNames, _parameters);
 
-		BatchEngineExportTask batchEngineExportTask =
-			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
-				_batchEngineExportTask.getBatchEngineExportTaskId());
-
 		_assertExportedValues(
 			Collections.singletonList(blogsEntries.get(1)), fieldNames,
-			_readRowValuesList(_csvFilterFunction, batchEngineExportTask));
+			_readRowValuesList(
+				_csvFilterFunction,
+				_batchEngineExportTaskLocalService.getBatchEngineExportTask(
+					_batchEngineExportTask.getBatchEngineExportTaskId())));
 	}
 
 	@Test

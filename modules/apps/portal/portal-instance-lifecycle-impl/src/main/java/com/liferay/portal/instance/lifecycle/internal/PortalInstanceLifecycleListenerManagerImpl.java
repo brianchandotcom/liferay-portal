@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
@@ -85,7 +87,8 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addPortalInstanceLifecycleListener(
-		PortalInstanceLifecycleListener portalInstanceLifecycleListener) {
+			PortalInstanceLifecycleListener portalInstanceLifecycleListener)
+		throws Throwable {
 
 		_portalInstanceLifecycleListeners.add(portalInstanceLifecycleListener);
 
@@ -98,17 +101,37 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		while (iterator.hasNext()) {
 			Company company = iterator.next();
 
-			if (_companyLocalService.fetchCompanyById(company.getCompanyId()) ==
-					null) {
+			Company fetchedCompany = _companyLocalService.fetchCompanyById(
+				company.getCompanyId());
 
-				unregisterCompany(company);
+			if (fetchedCompany == null) {
+				TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					() -> {
+						unregisterCompany(company);
+
+						return null;
+					});
 			}
 		}
 
 		_companyLocalService.forEachCompany(
-			company -> registerCompany(
-				portalInstanceLifecycleListener, company),
-			new ArrayList<Company>(_companies));
+			company -> {
+				try {
+					TransactionInvokerUtil.invoke(
+						_transactionConfig,
+						() -> {
+							registerCompany(
+								portalInstanceLifecycleListener, company);
+
+							return null;
+						});
+				}
+				catch (Throwable throwable) {
+					throw new Exception(throwable);
+				}
+			},
+			new ArrayList<>(_companies));
 	}
 
 	protected void preunregisterCompany(
@@ -221,6 +244,10 @@ public class PortalInstanceLifecycleListenerManagerImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstanceLifecycleListenerManagerImpl.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	private final Set<Company> _companies = new CopyOnWriteArraySet<>();
 

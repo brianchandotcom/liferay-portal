@@ -1358,17 +1358,55 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-5864. As a buyer, I want to view the product price"
+	@description = "COMMERCE-5864. Verify buyers can view a product's price on the product card."
 	@priority = "3"
 	test ViewProductCardPrice {
 		property portal.acceptance = "false";
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		AssertTextEquals.assertPartialText(
-			key_productName = "U-Joint",
-			locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
-			value1 = "$ 24.00");
+		task ("And given a product's price is set in the Minium catalog") {
+			CommerceProducts.openProductsAdmin();
+
+			Search.searchCP(searchTerm = "U-Joint");
+
+			CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			var productPrice = TestUtils.getElementTextContent(element = "//div[contains(@class,'dnd-tbody')]//div[@class='dnd-td'][3]");
+		}
+
+		task ("When the buyer logs in and views the product card") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the product's price is shown on the product card") {
+			AssertTextEquals(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "${productPrice}");
+		}
 	}
 
 	@description = "COMMERCE-6158. As a buyer, I want to see the barred list price and a discount price of a product, if set"

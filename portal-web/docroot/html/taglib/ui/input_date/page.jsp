@@ -164,7 +164,7 @@ else {
 			if (checkbox) {
 				checkbox.addEventListener(
 					'click',
-					function(event) {
+					function() {
 						var checked = checkbox.checked;
 
 						if (!form) {
@@ -223,10 +223,33 @@ else {
 		function() {
 			var keysPressed = {};
 
+			var onKeyDown = function (domEvent) {
+				if (domEvent.keyCode === 16) {
+					keysPressed[domEvent.keyCode] = true;
+				}
+			};
+
+			var onKeyUp = function (domEvent) {
+				if (domEvent.keyCode === 16) {
+					delete keysPressed[domEvent.keyCode];
+				}
+			};
+
+			var closePopoverOnKeyboardNavigation = function (instance) {
+				instance.hide();
+
+				keysPressed = {};
+
+				var trigger = A.one('#<%= nameId %>');
+
+				if (trigger) {
+					Liferay.Util.focusFormField(trigger);
+				}
+			}
+
 			var datePicker = new A.DatePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>(
 				{
 					calendar: {
-
 						<%
 						String calendarOptions = String.format("headerRenderer: '%s'", LanguageUtil.get(resourceBundle, "b-y"));
 
@@ -248,6 +271,10 @@ else {
 					container: '#<%= randomNamespace %>displayDate',
 					mask: '<%= mask %>',
 					on: {
+						destroy: function () {
+							document.removeEventListener('keydown', onKeyDown);
+							document.removeEventListener('keyup', onKeyUp);
+						},
 						disabledChange: function(event) {
 							var instance = this;
 
@@ -260,7 +287,7 @@ else {
 							container.one('#<%= nameId %>').attr('disabled', newVal);
 							container.one('#<%= yearParamId %>').attr('disabled', newVal);
 						},
-						enterKey: function(event) {
+						enterKey: function() {
 							var instance = this;
 
 							var inputVal = instance.get('activeInput').val();
@@ -288,6 +315,10 @@ else {
 
 								countInterval++;
 							}, 100);
+						},
+						init: function () {
+							document.addEventListener('keydown', onKeyDown);
+							document.addEventListener('keyup', onKeyUp);
 						},
 						selectionChange: function(event) {
 							var newSelection = event.newSelection[0];
@@ -319,21 +350,37 @@ else {
 
 								keysPressed[domEvent.keyCode] = true;
 
-								if ((domEvent.keyCode === 9 && !keysPressed[16] && (domEvent.target.hasClass('yui3-calendar-grid') || domEvent.target.hasClass('yui3-calendar-day'))) ||
-									(domEvent.keyCode === 9 && keysPressed[16] && domEvent.target.hasClass('yui3-calendar-focused')) || domEvent.keyCode === 27) {
-									instance.hide();
+								var isTabPressed = domEvent.keyCode === 9 || keysPressed[9];
 
-									keysPressed = {};
+								var isShiftPressed = domEvent.keyCode === 16 || keysPressed[16];
 
-									var trigger = A.one('#<%= nameId %>');
+								var isForwardNavigation = isTabPressed && !isShiftPressed;
 
-									if (trigger) {
-										Liferay.Util.focusFormField(trigger);
-									}
+								var isEscapePressed = domEvent.keyCode === 27 || keysPressed[27];
+
+								var hasClassName = domEvent.target.hasClass('yui3-calendar-grid') ||
+								domEvent.target.hasClass('yui3-calendar-day');
+
+								if ((isForwardNavigation && hasClassName) || isEscapePressed) {
+									closePopoverOnKeyboardNavigation(instance);
 								}
 							},
 							keyup: function(event) {
+								var instance = this;
+
 								var domEvent = event.domEvent;
+
+								var isTabPressed = domEvent.keyCode === 9 || keysPressed[9];
+
+								var isShiftPressed = domEvent.keyCode === 16 || keysPressed[16];
+
+								var isBackwardNavigation = isTabPressed && isShiftPressed;
+
+								var hasClassName = domEvent.target.hasClass('yui3-calendar-focused');
+
+								if (isBackwardNavigation && hasClassName) {
+									closePopoverOnKeyboardNavigation(instance);
+								}
 
 								delete keysPressed[domEvent.keyCode];
 							}
@@ -374,7 +421,7 @@ else {
 
 			datePicker.after(
 				'selectionChange',
-				function(event) {
+				function() {
 					var input = A.one('#<%= nameId %>');
 
 					if (input) {

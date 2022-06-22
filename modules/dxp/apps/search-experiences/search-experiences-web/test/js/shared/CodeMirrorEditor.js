@@ -28,6 +28,10 @@ const availableLanguages = {
 	fr_FR: 'French (France)',
 };
 
+// Prevents `TypeError: document.body.createTextRange is not a function`
+// error, since CodeMirror expects to be running in a browser.
+// See https://github.com/neo4j-contrib/cypher-editor/issues/19
+
 global.document.body.createTextRange = () => {
 	return {
 		getBoundingClientRect: () => {},
@@ -53,7 +57,7 @@ function createCodeMirrorEditor(props) {
 }
 
 describe('CodeMirrorEditor', () => {
-	it('gets the correct hints', () => {
+	it('gets hints at the root level of an object', () => {
 		const codeMirror = createCodeMirrorEditor({value: '{"'});
 
 		const {list} = getCodeMirrorHints(

@@ -172,7 +172,7 @@ definition {
 	}
 
 	macro waitForAutoSave {
-		Pause(locator1 = "1000");
+		WaitForElementNotPresent(locator1 = "StyleBookEditor#DRAFT_SAVING_MESSAGE");
 
 		AssertVisible(locator1 = "StyleBookEditor#DRAFT_SAVED_MESSAGE");
 	}

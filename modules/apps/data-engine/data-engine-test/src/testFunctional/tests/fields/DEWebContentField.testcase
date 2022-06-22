@@ -439,4 +439,59 @@ definition {
 			fieldName = "Web Content");
 	}
 
+	@description = "Check if Web Content Field details can be seen."
+	@priority = "4"
+	test ViewWebContentFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Web Content Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		DEBuilder.openField(
+			fieldLabel = "Web Content",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Web Content",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Web Content");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Web Content");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Web Content");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Web Content Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Web Content",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Web Content",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Web Content");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Web Content");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Web Content");
+	}
+
 }

@@ -268,9 +268,10 @@ public class OAuth2AuthorizationLocalServiceImpl
 			ConfigurableUtil.createConfigurable(
 				OAuth2ProviderConfiguration.class, properties);
 
-		int expiredAuthorizationsAfterlifeDuration =
+		int expiredAuthorizationsAfterlifeDuration = Math.max(
 			oAuth2ProviderConfiguration.
-				expiredAuthorizationsAfterlifeDuration();
+				expiredAuthorizationsAfterlifeDuration(),
+			0);
 
 		_expiredAuthorizationsAfterlifeDurationMillis =
 			expiredAuthorizationsAfterlifeDuration * Time.SECOND;

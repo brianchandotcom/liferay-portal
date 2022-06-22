@@ -215,6 +215,26 @@
 	<td>//a[contains(@href,'${currentOrderId}') and contains(.,'View')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PRINT_ORDER_TEMPLATE</td>
+	<td>//span[@class='lfr-btn-label' and contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRINT_ORDER_TEMPLATE_SELECT_FILE</td>
+	<td>//label[@class='btn btn-secondary' and contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRINT_ORDER_TEMPLATE_FILE_NAME</td>
+	<td>//span[@id='_com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet_fileEntryNameInput' and contains(.,'${value1}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PLACED_ORDERS_ID</td>
+	<td>//div[@class='table-list-title']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

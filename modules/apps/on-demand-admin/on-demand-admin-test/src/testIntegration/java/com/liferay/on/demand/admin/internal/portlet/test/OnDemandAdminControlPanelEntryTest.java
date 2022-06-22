@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -46,6 +47,11 @@ public class OnDemandAdminControlPanelEntryTest {
 
 	@Test
 	public void testHasAccessPermission() throws Exception {
+		Assert.assertTrue(
+			_onDemandAdminControlPanelEntry.hasAccessPermission(
+				_permissionCheckerFactory.create(TestPropsValues.getUser()),
+				null, _onDemandAdminPortlet));
+
 		Company company = CompanyTestUtil.addCompany();
 
 		User companyAdminUser = UserTestUtil.addCompanyAdminUser(company);

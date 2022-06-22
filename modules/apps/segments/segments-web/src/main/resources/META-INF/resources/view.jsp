@@ -48,7 +48,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 	>
 		<strong class="lead"><%= LanguageUtil.get(request, "segmentation-is-disabled") %></strong>
 
-		<span><%= LanguageUtil.get(request, "to-enable-segmentation-go-to-system-settings-segments-segments-service") %></span>
+		<span><%= LanguageUtil.get(request, "to-enable,-go-to-instance-settings") %></span>
 	</clay:stripe>
 </c:if>
 

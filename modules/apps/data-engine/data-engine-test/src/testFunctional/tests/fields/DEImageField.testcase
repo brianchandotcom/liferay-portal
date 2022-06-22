@@ -517,4 +517,59 @@ definition {
 			index = "2");
 	}
 
+	@description = "Check if Image Field details can be seen."
+	@priority = "4"
+	test ViewImageFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Image Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Image",
+			fieldName = "Image");
+
+		DEBuilder.openField(
+			fieldLabel = "Image",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Image",
+			searchableType = "Text");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Image");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Image");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Image");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Image Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Image",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Image",
+			searchableType = "Text");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Image");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Image");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Image");
+	}
+
 }

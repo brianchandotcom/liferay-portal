@@ -720,7 +720,7 @@ public class PortalLog4jTest {
 
 		boolean currentUpgradeLogEnabled =
 			ReflectionTestUtil.getAndSetFieldValue(
-				Log4jLogFactoryImpl.class, "_UPGRADE_LOG_CONTEXT_ENABLED",
+				Log4jLogFactoryImpl.class, "_upgradeLogContextEnabled",
 				upgradeLogEnabled);
 
 		boolean currentUpgrading = StartupHelperUtil.isUpgrading();
@@ -770,7 +770,7 @@ public class PortalLog4jTest {
 			StartupHelperUtil.setUpgrading(currentUpgrading);
 
 			ReflectionTestUtil.setFieldValue(
-				Log4jLogFactoryImpl.class, "_UPGRADE_LOG_CONTEXT_ENABLED",
+				Log4jLogFactoryImpl.class, "_upgradeLogContextEnabled",
 				currentUpgradeLogEnabled);
 		}
 	}

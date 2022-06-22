@@ -41,7 +41,7 @@ public class Log4jLogFactoryImpl implements LogFactory {
 		Log log = new Log4jLogContextLogWrapper(
 			new Log4jLogImpl(LogManager.getLogger(name)));
 
-		if (_UPGRADE_LOG_CONTEXT_ENABLED && _isUpgradeClass(name)) {
+		if (_upgradeLogContextEnabled && _isUpgradeClass(name)) {
 			log = new Log4jLogContextUpgradeLogWrapper(log);
 		}
 
@@ -82,7 +82,7 @@ public class Log4jLogFactoryImpl implements LogFactory {
 		DBUpgrader.class, VerifyProperties.class
 	};
 
-	private static final boolean _UPGRADE_LOG_CONTEXT_ENABLED =
+	private static volatile boolean _upgradeLogContextEnabled =
 		PropsValues.UPGRADE_LOG_CONTEXT_ENABLED;
 
 }

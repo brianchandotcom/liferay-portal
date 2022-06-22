@@ -11,5 +11,13 @@
 		margin-bottom: 0;
 		padding: 1.5rem;
 		width: 100%;
+
+		&--no-sidebar {
+			padding: 0;
+		}
+	}
+
+	&--no-sidebar {
+		height: unset;
 	}
 }

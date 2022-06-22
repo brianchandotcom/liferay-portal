@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -66,11 +64,10 @@ public class BlogsItemSelectorHelper {
 		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new DownloadFileEntryItemSelectorReturnType());
 
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, itemSelectedEventName,
-			blogsItemSelectorCriterion, imageItemSelectorCriterion);
-
-		return itemSelectorURL.toString();
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, itemSelectedEventName,
+				blogsItemSelectorCriterion, imageItemSelectorCriterion));
 	}
 
 	@Activate

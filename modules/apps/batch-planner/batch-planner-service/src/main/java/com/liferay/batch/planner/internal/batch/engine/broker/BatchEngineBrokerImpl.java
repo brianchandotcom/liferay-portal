@@ -181,19 +181,16 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		_exportTaskResource.setContextUser(
 			_userLocalService.getUser(batchPlannerPlan.getUserId()));
 
-		List<BatchPlannerMapping> batchPlannerMappings =
-			_batchPlannerMappingLocalService.getBatchPlannerMappings(
-				batchPlannerPlan.getBatchPlannerPlanId());
-
-		String[] headerNames = _getHeaderNames(
-			batchPlannerMappings,
-			BatchPlannerMappingModel::getInternalFieldName);
-
 		_exportTaskResource.postExportTask(
 			batchPlannerPlan.getInternalClassName(),
 			batchPlannerPlan.getExternalType(), null,
 			String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()),
-			StringUtil.merge(headerNames, StringPool.COMMA),
+			StringUtil.merge(
+				_getHeaderNames(
+					_batchPlannerMappingLocalService.getBatchPlannerMappings(
+						batchPlannerPlan.getBatchPlannerPlanId()),
+					BatchPlannerMappingModel::getInternalFieldName),
+				StringPool.COMMA),
 			batchPlannerPlan.getTaskItemDelegateName());
 	}
 

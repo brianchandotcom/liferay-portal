@@ -32,43 +32,54 @@ definition {
 			value1 = "U-Joint");
 	}
 
-	@description = "COMMERCE-5859. As a buyer, I want to view the product price with the default channel currency"
+	@description = "COMMERCE-5859. Verify the default channel currency is applied to product cards."
 	@priority = "3"
 	test AssertDefaultChannelCurrencyIsAppliedToProductCard {
 		property portal.acceptance = "false";
 
-		var currencyName = "US Dollar";
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Channels");
+		task ("And given the default currency for the Minium channel is USD") {
+			CommerceChannels.openChannelsAdmin();
 
-		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
 
-		AssertSelectedLabel(
-			key_title = "Currency",
-			locator1 = "CommerceEntry#CATALOGS_FORM",
-			value1 = "${currencyName}");
+			AssertSelectedLabel(
+				key_title = "Currency",
+				locator1 = "CommerceEntry#CATALOGS_FORM",
+				value1 = "US Dollar");
+		}
 
-		Button.clickSave();
+		task ("When the buyer logs in and views a product card") {
+			User.logoutPG();
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Catalogs");
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
 
-		CommerceNavigator.gotoEntry(entryName = "Minium");
+			WaitForPageLoad();
+		}
 
-		AssertSelectedLabel(
-			key_title = "Currency",
-			locator1 = "CommerceEntry#CATALOGS_FORM",
-			value1 = "${currencyName}");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		AssertTextEquals.assertPartialText(
-			key_productName = "U-Joint",
-			locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
-			value1 = "$");
+		task ("Then the price currency shown on the product card is USD") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "$");
+		}
 	}
 
 	@description = "COMMERCE-6657. As a buyer, I want to be unable to add a bundled product(Price Type Dynamic) to cart directly"

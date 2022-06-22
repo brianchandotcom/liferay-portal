@@ -282,6 +282,34 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private void _addClientExtensionEntryRel(
+			String cetExternalReferenceCode, Layout layout, String type,
+			long userId)
+		throws PortalException {
+
+		if (Validator.isNotNull(cetExternalReferenceCode)) {
+			ClientExtensionEntryRel clientExtensionEntryRel =
+				_clientExtensionEntryRelLocalService.
+					fetchClientExtensionEntryRelByExternalReferenceCode(
+						layout.getCompanyId(), cetExternalReferenceCode);
+
+			if (clientExtensionEntryRel == null) {
+				_clientExtensionEntryRelLocalService.
+					deleteClientExtensionEntryRels(
+						_portal.getClassNameId(Layout.class), layout.getPlid(),
+						type);
+
+				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+					userId, _portal.getClassNameId(Layout.class),
+					layout.getPlid(), cetExternalReferenceCode, type);
+			}
+		}
+		else {
+			_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
+				_portal.getClassNameId(Layout.class), layout.getPlid(), type);
+		}
+	}
+
 	private void _updateClientExtensions(
 			ActionRequest actionRequest, Layout layout, long userId)
 		throws PortalException {
@@ -289,30 +317,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 		String themeFaviconCETExternalReferenceCode = ParamUtil.getString(
 			actionRequest, "themeFaviconCETExternalReferenceCode");
 
-		if (Validator.isNotNull(themeFaviconCETExternalReferenceCode)) {
-			ClientExtensionEntryRel clientExtensionEntryRel =
-				_clientExtensionEntryRelLocalService.
-					fetchClientExtensionEntryRelByExternalReferenceCode(
-						layout.getCompanyId(),
-						themeFaviconCETExternalReferenceCode);
-
-			if (clientExtensionEntryRel == null) {
-				_clientExtensionEntryRelLocalService.
-					deleteClientExtensionEntryRels(
-						_portal.getClassNameId(Layout.class), layout.getPlid(),
-						ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-
-				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-					userId, _portal.getClassNameId(Layout.class),
-					layout.getPlid(), themeFaviconCETExternalReferenceCode,
-					ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-			}
-		}
-		else {
-			_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-				_portal.getClassNameId(Layout.class), layout.getPlid(),
-				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
-		}
+		_addClientExtensionEntryRel(
+			themeFaviconCETExternalReferenceCode, layout,
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, userId);
 
 		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
 			_portal.getClassNameId(Layout.class), layout.getPlid(),

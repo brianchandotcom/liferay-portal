@@ -69,7 +69,7 @@ public abstract class BasePermissionTestCase {
 	protected void addPortletModelViewPermission() throws Exception {
 		RoleTestUtil.addResourcePermission(
 			getRoleName(), getResourceName(), ResourceConstants.SCOPE_GROUP,
-			getPrimKey(), ActionKeys.VIEW);
+			String.valueOf(group.getGroupId()), ActionKeys.VIEW);
 
 		Role role = RoleLocalServiceUtil.getRole(
 			TestPropsValues.getCompanyId(), getRoleName());
@@ -95,7 +95,7 @@ public abstract class BasePermissionTestCase {
 	protected void removePortletModelViewPermission() throws Exception {
 		RoleTestUtil.removeResourcePermission(
 			getRoleName(), getResourceName(), ResourceConstants.SCOPE_GROUP,
-			getPrimKey(), ActionKeys.VIEW);
+			String.valueOf(group.getGroupId()), ActionKeys.VIEW);
 
 		RoleTestUtil.removeResourcePermission(
 			getRoleName(), getResourceName(),

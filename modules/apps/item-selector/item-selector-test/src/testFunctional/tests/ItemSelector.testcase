@@ -1293,10 +1293,9 @@ definition {
 		Pagination.viewResults(results = "Showing 21 to 30 of 30 entries.");
 	}
 
-	@description = "This is a test for LPS-136945. It checks that only 'File Upload,' 'Folder,' 'Google Drive Shortcut' and 'External Video Shortcut' options appear when adding a document."
+	@description = "This is a test for LPS-136945. It checks that only 'File Upload', 'Folder', and 'External Video Shortcut' options appear when adding a document."
 	@priority = "3"
 	test OnlyRelevantSelectionsAppearWhenAddingDocuments {
-		property osgi.app.includes = "document-library-google-docs";
 		property portal.acceptance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");

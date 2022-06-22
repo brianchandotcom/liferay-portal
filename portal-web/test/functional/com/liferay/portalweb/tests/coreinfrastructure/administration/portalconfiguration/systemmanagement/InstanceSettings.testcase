@@ -1406,6 +1406,8 @@ definition {
 	@description = "This is a use case for LPS-156105. The test assert the value of mail setting for new instance is inherited from server level."
 	@priority = "2"
 	test ViewInstanceMailSettingsValueIsInheritedFromServerLevel {
+		property test.name.skip.portal.instance = "InstanceSettings#ViewInstanceMailSettingsValueIsInheritedFromServerLevel";
+
 		task ("Given change the server/company level mail setting value") {
 			ServerAdministration.openServerAdmin();
 

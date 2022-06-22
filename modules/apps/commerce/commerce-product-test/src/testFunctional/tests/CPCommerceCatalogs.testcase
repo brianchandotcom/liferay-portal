@@ -454,4 +454,124 @@ definition {
 		}
 	}
 
+	@description = "Verify users with the permission to edit catalog permissions can edit the permissions on a catalog."
+	@priority = "3"
+	test UserWithPermissionCanEditAPermissionOnACatalog {
+		property portal.acceptance = "false";
+
+		task ("Given a user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("And given a catalog") {
+			CommerceJSONCatalogsAPI._addCatalog(catalogName = "Test Catalog");
+		}
+
+		task ("And given the user has permission to view catalogs in the catalog section of the admin panel") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet",
+				roleTitle = "User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
+				roleTitle = "User");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_COMMERCE_CATALOGS",
+				resourceName = "com.liferay.commerce.catalog",
+				roleTitle = "User");
+		}
+
+		task ("And given the user has permission to edit catalog permissions") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "PERMISSIONS",
+				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
+				roleTitle = "User");
+		}
+
+		task ("When the user logs in and edits the catalog permissions") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			CommerceCatalog.openCatalogsAdmin();
+
+			Click(
+				key_indexNumber = "2",
+				key_text = "Permissions",
+				locator1 = "Button#ANY_N");
+
+			IFrame.selectPermissionsFrame();
+
+			Check.checkToggleSwitch(
+				key_roleTitle = "site-member",
+				locator1 = "Permissions#INLINE_PERMISSIONS_VIEW_CHECKBOX");
+
+			Check.checkToggleSwitch(
+				key_roleTitle = "site-member",
+				locator1 = "Permissions#INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX");
+
+			Check.checkToggleSwitch(
+				key_roleTitle = "site-member",
+				locator1 = "Permissions#INLINE_PERMISSIONS_DELETE_CHECKBOX");
+
+			Check.checkToggleSwitch(
+				key_roleTitle = "site-member",
+				locator1 = "Permissions#INLINE_PERMISSIONS_UPDATE_CHECKBOX");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			SelectFrameTop();
+
+			ClickNoError(
+				key_modalTitle = "Permissions",
+				locator1 = "Button#CLOSE_MODAL");
+		}
+
+		task ("Then those permissions should be saved on the catalog") {
+			Refresh();
+
+			Click(
+				key_indexNumber = "2",
+				key_text = "Permissions",
+				locator1 = "Button#ANY_N");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertChecked(
+				key_roleTitle = "site-member",
+				locator1 = "Permissions#INLINE_PERMISSIONS_UPDATE_CHECKBOX");
+
+			AssertChecked(
+				key_roleTitle = "site-member",
+				locator1 = "Permissions#INLINE_PERMISSIONS_DELETE_CHECKBOX");
+
+			AssertChecked(
+				key_roleTitle = "site-member",
+				locator1 = "Permissions#INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX");
+
+			AssertChecked(
+				key_roleTitle = "site-member",
+				locator1 = "Permissions#INLINE_PERMISSIONS_VIEW_CHECKBOX");
+		}
+	}
+
 }

@@ -111,10 +111,10 @@ public class JSONWebServiceServiceActionTest
 		MockHttpServletRequest mockHttpServletRequest =
 			createInvokerHttpServletRequest(json);
 
-		json = _jsonWebServiceServiceAction.getJSON(
-			mockHttpServletRequest, new MockHttpServletResponse());
-
-		Assert.assertEquals("{}", json);
+		Assert.assertEquals(
+			"{}",
+			_jsonWebServiceServiceAction.getJSON(
+				mockHttpServletRequest, new MockHttpServletResponse()));
 	}
 
 	@Test
@@ -135,10 +135,10 @@ public class JSONWebServiceServiceActionTest
 		MockHttpServletRequest mockHttpServletRequest =
 			createInvokerHttpServletRequest(json);
 
-		json = _jsonWebServiceServiceAction.getJSON(
-			mockHttpServletRequest, new MockHttpServletResponse());
-
-		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
+		Assert.assertEquals(
+			"\"Welcome 173 to Jupiter\"",
+			_jsonWebServiceServiceAction.getJSON(
+				mockHttpServletRequest, new MockHttpServletResponse()));
 	}
 
 	@Test
@@ -268,10 +268,10 @@ public class JSONWebServiceServiceActionTest
 			setServletContext(mockHttpServletRequest, contextName);
 		}
 
-		json = _jsonWebServiceServiceAction.getJSON(
-			mockHttpServletRequest, new MockHttpServletResponse());
-
-		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
+		Assert.assertEquals(
+			"\"Welcome 173 to Jupiter\"",
+			_jsonWebServiceServiceAction.getJSON(
+				mockHttpServletRequest, new MockHttpServletResponse()));
 	}
 
 	protected void testServletContextRequestParams(
@@ -292,10 +292,10 @@ public class JSONWebServiceServiceActionTest
 			setServletContext(mockHttpServletRequest, contextName);
 		}
 
-		String json = _jsonWebServiceServiceAction.getJSON(
-			mockHttpServletRequest, new MockHttpServletResponse());
-
-		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
+		Assert.assertEquals(
+			"\"Welcome 173 to Jupiter\"",
+			_jsonWebServiceServiceAction.getJSON(
+				mockHttpServletRequest, new MockHttpServletResponse()));
 	}
 
 	protected void testServletContextURL(
@@ -313,10 +313,10 @@ public class JSONWebServiceServiceActionTest
 			setServletContext(mockHttpServletRequest, contextName);
 		}
 
-		String json = _jsonWebServiceServiceAction.getJSON(
-			mockHttpServletRequest, new MockHttpServletResponse());
-
-		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
+		Assert.assertEquals(
+			"\"Welcome 173 to Jupiter\"",
+			_jsonWebServiceServiceAction.getJSON(
+				mockHttpServletRequest, new MockHttpServletResponse()));
 	}
 
 	private FileItem _createFileItem(String content) throws Exception {

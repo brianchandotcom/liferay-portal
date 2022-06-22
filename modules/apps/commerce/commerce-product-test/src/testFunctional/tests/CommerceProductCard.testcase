@@ -636,36 +636,68 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-5857. As a buyer, I want to view the product's own image if set"
+	@description = "COMMERCE-5857. Verify buyers can view the custom image that has been set for a product in the product card."
 	@priority = "3"
 	test AssertProductCardShowsCustomImageIfSet {
 		property portal.acceptance = "false";
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Minium",
-			productName = "Blue T-Shirt",
-			productType = "Simple");
+		task ("And given a new product") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Blue T-Shirt",
+				productType = "Simple");
+		}
 
-		CommerceEntry.gotoMenuTab(menuTab = "Media");
+		task ("And given the product has a custom image") {
+			CommerceProducts.openProductsAdmin();
 
-		CommerceProductImages.addProductImages(
-			imageTitles = "Blue",
-			validationImage = "true");
+			CommerceNavigator.searchEntry(entryName = "Blue T-Shirt");
 
-		CommerceNavigator.gotoEntry(entryName = "Commerce_Blue.jpg");
+			CommerceNavigator.gotoEntry(entryName = "Blue T-Shirt");
 
-		var fileEntryId = CommerceEntry.getFileEntryIDFromProductMedia();
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+			CommerceProductImages.addProductImages(
+				imageTitles = "Blue",
+				validationImage = "true");
 
-		AssertElementPresent(
-			key_fileEntryId = "${fileEntryId}",
-			key_itemName = "Blue T-Shirt",
-			locator1 = "CommerceEntry#PRODUCT_CARD_CUSTOM_IMAGE");
+			CommerceNavigator.gotoEntry(entryName = "Commerce_Blue.jpg");
+
+			var fileEntryId = CommerceEntry.getFileEntryIDFromProductMedia();
+		}
+
+		task ("When the buyer logs in and views the product card") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the product card contains the custom image") {
+			AssertElementPresent(
+				key_fileEntryId = "${fileEntryId}",
+				key_itemName = "Blue T-Shirt",
+				locator1 = "CommerceEntry#PRODUCT_CARD_CUSTOM_IMAGE");
+		}
 	}
 
 	@description = "COMMERCE-5872. As a buyer, I want to view the availability of the product, if set and configured admin-side(product available)"

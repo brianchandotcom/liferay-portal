@@ -2451,11 +2451,53 @@ definition {
 	}
 
 	@description = "Verify that a Success alert appears when the user restore a definition version (Example: Success:Restored to Revision 'X')"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewRestoreVersionSuccessAlert {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewRestoreVersionSuccessAlert";
 
-		// TODO CanViewRestoreVersionSuccessAlert pending implementation
+        Workflow.openWorkflowListView();
+
+        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+        ProcessBuilderKaleoDesignerReact.addConnector(
+            connectorIn = "end",
+            connectorLabel = "Start-End Connector",
+            connectorOut = "start",
+            key_direction = "bottom");
+
+        PortletEntry.publish();
+
+        Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+        ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Transition");
+
+        ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+            nodeLabel = "Task",
+            nodePosition = "0,0");
+
+        ProcessBuilderKaleoDesignerReact.addConnector(
+            connectorIn = "task",
+            connectorLabel = "Start-Task Connector",
+            connectorOut = "start",
+            key_direction = "bottom");
+
+        ProcessBuilderKaleoDesignerReact.addConnector(
+            connectorIn = "end",
+            connectorLabel = "Task-End Connector",
+            connectorOut = "task",
+            key_direction = "bottom");
+
+        Button.click(button = "Update");
+
+        Alert.viewSuccessMessageText(successMessage = "Workflow updated successfully.");
+
+        ProcessBuilderKaleoDesignerReact.gotoInfoWorkflowDefinition();
+
+        Navigator.gotoNavTab(navTab = "Revision History");
+
+        ProcessBuilderKaleoDesignerReact.restorePreviousVersion(number = "1");
+
+        Alert.viewSuccessMessageText(successMessage = "Success:Restored to Revision 1");
 
 	}
 

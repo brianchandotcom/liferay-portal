@@ -23,6 +23,8 @@ import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes'
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemAdvancedConfiguration from '../../../../../app/selectors/selectCanUpdateItemAdvancedConfiguration';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
+import getFragmentItem from '../../../../../app/utils/getFragmentItem';
+import hasSubmitChild from '../../../../../app/utils/hasSubmitChild';
 import {CollectionAppliedFiltersGeneralPanel} from '../components/item-configuration-panels/CollectionAppliedFiltersGeneralPanel';
 import {CollectionFilterGeneralPanel} from '../components/item-configuration-panels/CollectionFilterGeneralPanel';
 import ContainerAdvancedPanel from '../components/item-configuration-panels/ContainerAdvancedPanel';
@@ -201,6 +203,8 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			editableValueNamespace: EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			fragmentEntryLinkId,
 			itemId: activeItemId,
+			parentId: getFragmentItem(state.layoutData, fragmentEntryLinkId)
+				.itemId,
 			type:
 				state.fragmentEntryLinks[fragmentEntryLinkId].editableTypes[
 					editableId
@@ -229,6 +233,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 					EDITABLE_TYPES.image,
 					EDITABLE_TYPES.link,
 				].includes(activeItem.type) &&
+				!hasSubmitChild(activeItem.parentId) &&
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.imageSource]:
 				activeItem.type === EDITABLE_TYPES.image ||

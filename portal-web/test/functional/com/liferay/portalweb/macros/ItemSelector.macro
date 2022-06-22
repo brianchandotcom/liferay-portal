@@ -983,7 +983,7 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			for (var menuItem : list "File Upload,Folder,Google Drive Shortcut,External Video Shortcut") {
+			for (var menuItem : list "File Upload,Folder,External Video Shortcut") {
 				MenuItem.viewPresent(menuItem = "${menuItem}");
 			}
 		}

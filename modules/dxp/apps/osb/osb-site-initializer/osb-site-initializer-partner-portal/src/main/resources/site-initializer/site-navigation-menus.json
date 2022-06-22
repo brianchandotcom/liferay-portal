@@ -3,22 +3,22 @@
 		"menuItems": [
 			{
 				"friendlyURL": "/Home",
-				"privateLayout": true,
+				"privateLayout": false,
 				"type": "layout"
 			},
 			{
 				"friendlyURL": "/Marketing",
-				"privateLayout": true,
+				"privateLayout": false,
 				"type": "layout"
 			},
 			{
 				"friendlyURL": "/Sales",
-				"privateLayout": true,
+				"privateLayout": false,
 				"type": "layout"
 			},
 			{
 				"friendlyURL": "/Enablement",
-				"privateLayout": true,
+				"privateLayout": false,
 				"type": "layout"
 			}
 		],

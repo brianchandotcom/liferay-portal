@@ -531,20 +531,50 @@ definition {
 			value1 = "€");
 	}
 
-	@description = "COMMERCE-5856. As a buyer, I want to view the product image container in the top area and I want to be able to click on the product image to navigate to the product detail page"
+	@description = "COMMERCE-5856. Verify buyers are redirected to the product details page when they click on a product card image."
 	@priority = "3"
 	test AssertProductCardImageRedirectsToProductDetailsPage {
 		property portal.acceptance = "Intern Test";
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		Click(
-			key_productName = "u-joint",
-			locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		task ("When the buyer logs in and clicks on a product card") {
+			User.logoutPG();
 
-		AssertTextEquals(
-			locator1 = "Publications#MANAGE_PUBLICATIONS_PAGE_TITLE",
-			value1 = "Product Detail");
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			WaitForPageLoad();
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then the buyer is redirected to the product details page for that product") {
+			AssertLocation.assertPartialLocation(value1 = "group/minium/p/u-joint");
+
+			FrontStore.assertProductDetails(
+				productImage = "Minium_ProductImage_64.png",
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productSKU = "MIN55861");
+		}
 	}
 
 	@description = "COMMERCE-5858. Verify the product card for a new product shows the default catalog image if it is set."

@@ -135,8 +135,12 @@ definition {
 				value1 = "${productListPrice}");
 		}
 
+		if (!(isSet(productImage))) {
+			var productImage = "";
+		}
+
 		AssertElementPresent(
-			key_fsProductImage = "",
+			key_fsProductImage = "${productImage}",
 			locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
 	}
 

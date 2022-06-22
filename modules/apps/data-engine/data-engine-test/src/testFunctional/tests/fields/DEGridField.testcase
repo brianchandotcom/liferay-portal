@@ -347,4 +347,47 @@ definition {
 			optionLabelList = "Option 1,Option 2,Option 3");
 	}
 
+	@description = "Check if Grid Field details can be seen."
+	@priority = "4"
+	test ViewGridFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Grid Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Grid",
+			fieldName = "Grid");
+
+		DEBuilder.openField(
+			fieldLabel = "Grid",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Grid");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Grid");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Grid Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Grid",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Grid");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Grid");
+	}
+
 }

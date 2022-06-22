@@ -104,13 +104,7 @@ public class ObjectEntryInfoItemFormProvider
 	public InfoForm getInfoForm(String formVariationKey, long groupId)
 		throws NoSuchFormVariationException {
 
-		long objectDefinitionId = GetterUtil.getLong(formVariationKey);
-
-		if (objectDefinitionId == 0) {
-			objectDefinitionId = _objectDefinition.getObjectDefinitionId();
-		}
-
-		return _getInfoForm(objectDefinitionId);
+		return getInfoForm(formVariationKey);
 	}
 
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {

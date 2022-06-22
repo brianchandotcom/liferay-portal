@@ -179,7 +179,11 @@ function EditSXPElementForm({
 			predefinedVariables.map((variable) => {
 				const category = variable.templateVariable.match(/\w+/g)[0];
 
-				if (variable.description.toLowerCase().includes(value)) {
+				if (
+					variable.description
+						.toLowerCase()
+						.includes(value.toLowerCase())
+				) {
 					filteredCategories[category] = [
 						...(filteredCategories[category] || []),
 						variable,

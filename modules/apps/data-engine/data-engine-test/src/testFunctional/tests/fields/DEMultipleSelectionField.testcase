@@ -588,4 +588,63 @@ definition {
 			optionValue = "Option 1");
 	}
 
+	@description = "Check if Multiple Selection Field details can be seen."
+	@priority = "4"
+	test ViewMultipleSelectionFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Multiple Selection Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		DEBuilder.openField(
+			fieldLabel = "Multiple Selection",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Multiple Selection",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Multiple Selection");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Multiple Selection");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Multiple Selection");
+
+		DataEngine.assertInlineField(fieldFieldLabel = "Multiple Selection");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Multiple Selection Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Multiple Selection",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Multiple Selection",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Multiple Selection");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Multiple Selection");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Multiple Selection");
+
+		DataEngine.assertInlineField(fieldFieldLabel = "Multiple Selection");
+	}
+
 }

@@ -127,8 +127,6 @@ public class SocialActivityServiceTest {
 			deleteGuestPermission(fileEntry);
 		}
 
-		long userId = PrincipalThreadLocal.getUserId();
-
 		UserTestUtil.setUser(_user);
 
 		try {
@@ -167,7 +165,7 @@ public class SocialActivityServiceTest {
 			}
 		}
 		finally {
-			UserTestUtil.setUser(UserLocalServiceUtil.getUser(userId));
+			UserTestUtil.setUser(TestPropsValues.getUser());
 		}
 	}
 

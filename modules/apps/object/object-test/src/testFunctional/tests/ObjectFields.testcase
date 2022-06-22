@@ -306,12 +306,43 @@ definition {
 	}
 
 	@description = "LPS-148112 - Verify if on the side panel the 'Show files' path can be edited"
-	@ignore = "Test Stub"
 	@priority = "4"
-	test CanUpdateShowFilesOption {
+	test CanUpdateShowFilesOptionBeforePublished {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 153420",
+			objectName = "CustomObject153420",
+			pluralLabelName = "Custom Objects 153420");
 
-		// TODO LPS-153420 CanUpdateShowFilesOption pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153420");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldAttachment = "Upload Directly from the User's Computer",
+			fieldLabel = "Custom Attachment",
+			fieldType = "Attachment");
+
+		Refresh();
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
+
+		ObjectField.viewToogleOnSidePanelShowFilesInDM(isDisabled = "No");
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153420");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 153420");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.goToFieldsDetails(label = "Custom Attachment");
+
+		ObjectField.viewToogleOnSidePanelShowFilesInDM(isDisabled = "Yes");
 	}
 
 	@description = "LPS-148112 - Verify if on the side panel that only valid paths can be used on the 'Show files' settings"

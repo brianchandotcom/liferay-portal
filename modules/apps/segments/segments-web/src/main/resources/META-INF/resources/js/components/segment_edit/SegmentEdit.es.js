@@ -15,6 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import {FieldArray, withFormik} from 'formik';
 import {debounce, fetch, openModal} from 'frontend-js-web';
@@ -61,6 +62,7 @@ class SegmentEdit extends Component {
 		propertyGroups: PropTypes.array,
 		redirect: PropTypes.string.isRequired,
 		requestMembersCountURL: PropTypes.string,
+		segmentsConfigurationURL: PropTypes.string,
 		setFieldValue: PropTypes.func,
 		setValues: PropTypes.func,
 		showInEditMode: PropTypes.bool,
@@ -564,8 +566,18 @@ class SegmentEdit extends Component {
 								)}
 							</strong>
 
-							{Liferay.Language.get(
-								'to-enable,-go-to-instance-settings'
+							{this.props.segmentsConfigurationURL ? (
+								<ClayLink
+									href={this.props.segmentsConfigurationURL}
+								>
+									{Liferay.Language.get(
+										'to-enable,-go-to-instance-settings'
+									)}
+								</ClayLink>
+							) : (
+								Liferay.Language.get(
+									'to-enable,-go-to-instance-settings'
+								)
 							)}
 						</ClayAlert>
 					)}

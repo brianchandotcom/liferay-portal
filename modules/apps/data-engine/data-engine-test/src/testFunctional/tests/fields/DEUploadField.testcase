@@ -430,4 +430,59 @@ definition {
 			fieldName = "Upload");
 	}
 
+	@description = "Check if Upload Field details can be seen."
+	@priority = "4"
+	test ViewUploadFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Upload Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Upload",
+			fieldName = "Upload");
+
+		DEBuilder.openField(
+			fieldLabel = "Upload",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Upload",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Upload");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Upload");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Upload");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Upload Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Upload",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Upload",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Upload");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Upload");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Upload");
+	}
+
 }

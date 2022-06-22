@@ -489,7 +489,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 	}
 
-	private ObjectEntry _fetchLatestMachingTestrayRun(
+	private ObjectEntry _fetchLatestTestrayRun(
 			long companyId, String environmentHash, long testrayRoutineId,
 			long testrayRunId)
 		throws Exception {
@@ -1471,7 +1471,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 			Map<String, Object> runProperties = currentRun.getProperties();
 
-			ObjectEntry latestMachingTestrayRun = _fetchLatestMachingTestrayRun(
+			ObjectEntry latestMachingTestrayRun = _fetchLatestTestrayRun(
 				companyId, (String)runProperties.get("environmentHash"),
 				testrayRoutine.getId(), testrayRunId);
 

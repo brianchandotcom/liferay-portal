@@ -437,12 +437,24 @@ definition {
 	}
 
 	@description = "Verify that is possible to select Account role type for role assignments"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAssignAccountRole {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAssignAccountRole";
 
-		// TODO CanAssignAccountRole pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+			assignmentType = "Role Type",
+			roleTypeName = "Account",
+			roleTypeRoleName = "Account Member");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Role Type: Account Member");
 	}
 
 	@description = "Verify that the user is able to assign the task node to multiple Role Types"
@@ -738,7 +750,6 @@ definition {
 			resourceActionsText = "Test");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Resource Actions: Test");
-
 	}
 
 	@description = "Verify that the user can delete action with the trash icon at the bottom right corner"
@@ -1916,11 +1927,8 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewPropertyNotPresentOnSideBar(
 			propertyName = "Assignment",
 			propertyValue = "Asset Creator");
-		
-		
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
-
 
 		ProcessBuilderKaleoDesignerReact.viewPropertyNotPresentOnSideBar(
 			propertyName = "Assignment",

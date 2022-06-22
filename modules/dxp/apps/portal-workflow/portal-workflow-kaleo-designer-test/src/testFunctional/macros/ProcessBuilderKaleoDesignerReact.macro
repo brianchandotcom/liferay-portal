@@ -1405,6 +1405,20 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#PANEL_NODE");
 	}
 
+	macro viewPropertyNotPresentOnSideBar {
+		AssertElementNotPresent(
+			key_propertyName = "${propertyName}",
+			key_propertyValue = "${propertyValue}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
+	}
+
+	macro viewPropertyPresentOnSideBar {
+		AssertElementPresent(
+			key_propertyName = "${propertyName}",
+			key_propertyValue = "${propertyValue}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
+	}
+
 	macro viewPropertyValue {
 		AssertTextEquals(
 			key_propertyName = "${propertyName}",
@@ -1680,20 +1694,6 @@ definition {
 			key_line = "${lineY}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_METADATA_ELEMENT",
 			value1 = "${coordinateY}");
-	}
-
-	macro viewPropertyNotPresentOnSideBar {
-		AssertElementNotPresent(
-			key_propertyName = "${propertyName}",
-			key_propertyValue = "${propertyValue}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
-	}
-
-	macro viewPropertyPresentOnSideBar {
-		AssertElementPresent(
-			key_propertyName = "${propertyName}",
-			key_propertyValue = "${propertyValue}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
 	}
 
 }

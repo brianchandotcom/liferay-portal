@@ -147,8 +147,6 @@ public class SXPBlueprintPersistenceTest {
 
 		newSXPBlueprint.setElementInstancesJSON(RandomTestUtil.randomString());
 
-		newSXPBlueprint.setKey(RandomTestUtil.randomString());
-
 		newSXPBlueprint.setSchemaVersion(RandomTestUtil.randomString());
 
 		newSXPBlueprint.setTitle(RandomTestUtil.randomString());
@@ -201,8 +199,6 @@ public class SXPBlueprintPersistenceTest {
 		Assert.assertEquals(
 			existingSXPBlueprint.getElementInstancesJSON(),
 			newSXPBlueprint.getElementInstancesJSON());
-		Assert.assertEquals(
-			existingSXPBlueprint.getKey(), newSXPBlueprint.getKey());
 		Assert.assertEquals(
 			existingSXPBlueprint.getSchemaVersion(),
 			newSXPBlueprint.getSchemaVersion());
@@ -285,10 +281,9 @@ public class SXPBlueprintPersistenceTest {
 			"SXPBlueprint", "mvccVersion", true, "uuid", true,
 			"externalReferenceCode", true, "sxpBlueprintId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "description", true, "key", true,
-			"schemaVersion", true, "title", true, "version", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"modifiedDate", true, "description", true, "schemaVersion", true,
+			"title", true, "version", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -593,8 +588,6 @@ public class SXPBlueprintPersistenceTest {
 		sxpBlueprint.setDescription(RandomTestUtil.randomString());
 
 		sxpBlueprint.setElementInstancesJSON(RandomTestUtil.randomString());
-
-		sxpBlueprint.setKey(RandomTestUtil.randomString());
 
 		sxpBlueprint.setSchemaVersion(RandomTestUtil.randomString());
 

@@ -77,7 +77,7 @@ public class SXPBlueprintCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -103,8 +103,6 @@ public class SXPBlueprintCacheModel
 		sb.append(description);
 		sb.append(", elementInstancesJSON=");
 		sb.append(elementInstancesJSON);
-		sb.append(", key=");
-		sb.append(key);
 		sb.append(", schemaVersion=");
 		sb.append(schemaVersion);
 		sb.append(", title=");
@@ -190,13 +188,6 @@ public class SXPBlueprintCacheModel
 			sxpBlueprintImpl.setElementInstancesJSON(elementInstancesJSON);
 		}
 
-		if (key == null) {
-			sxpBlueprintImpl.setKey("");
-		}
-		else {
-			sxpBlueprintImpl.setKey(key);
-		}
-
 		if (schemaVersion == null) {
 			sxpBlueprintImpl.setSchemaVersion("");
 		}
@@ -259,7 +250,6 @@ public class SXPBlueprintCacheModel
 		configurationJSON = (String)objectInput.readObject();
 		description = objectInput.readUTF();
 		elementInstancesJSON = (String)objectInput.readObject();
-		key = objectInput.readUTF();
 		schemaVersion = objectInput.readUTF();
 		title = objectInput.readUTF();
 		version = objectInput.readUTF();
@@ -326,13 +316,6 @@ public class SXPBlueprintCacheModel
 			objectOutput.writeObject(elementInstancesJSON);
 		}
 
-		if (key == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(key);
-		}
-
 		if (schemaVersion == null) {
 			objectOutput.writeUTF("");
 		}
@@ -380,7 +363,6 @@ public class SXPBlueprintCacheModel
 	public String configurationJSON;
 	public String description;
 	public String elementInstancesJSON;
-	public String key;
 	public String schemaVersion;
 	public String title;
 	public String version;

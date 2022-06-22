@@ -61,8 +61,6 @@ public class SXPElementTable extends BaseTable<SXPElementTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<SXPElementTable, Boolean> hidden = createColumn(
 		"hidden_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<SXPElementTable, String> key = createColumn(
-		"key_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SXPElementTable, Boolean> readOnly = createColumn(
 		"readOnly", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<SXPElementTable, String> schemaVersion = createColumn(

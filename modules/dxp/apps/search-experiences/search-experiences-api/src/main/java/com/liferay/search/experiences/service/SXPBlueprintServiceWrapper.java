@@ -75,6 +75,16 @@ public class SXPBlueprintServiceWrapper
 	}
 
 	@Override
+	public com.liferay.search.experiences.model.SXPBlueprint
+			getSXPBlueprintByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpBlueprintService.getSXPBlueprintByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
 	public com.liferay.search.experiences.model.SXPBlueprint updateSXPBlueprint(
 			long sxpBlueprintId, String configurationJSON,
 			java.util.Map<java.util.Locale, String> descriptionMap,

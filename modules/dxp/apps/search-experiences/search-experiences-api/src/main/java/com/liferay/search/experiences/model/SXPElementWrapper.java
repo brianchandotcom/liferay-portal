@@ -55,7 +55,6 @@ public class SXPElementWrapper
 		attributes.put("description", getDescription());
 		attributes.put("elementDefinitionJSON", getElementDefinitionJSON());
 		attributes.put("hidden", isHidden());
-		attributes.put("key", getKey());
 		attributes.put("readOnly", isReadOnly());
 		attributes.put("schemaVersion", getSchemaVersion());
 		attributes.put("title", getTitle());
@@ -140,12 +139,6 @@ public class SXPElementWrapper
 
 		if (hidden != null) {
 			setHidden(hidden);
-		}
-
-		String key = (String)attributes.get("key");
-
-		if (key != null) {
-			setKey(key);
 		}
 
 		Boolean readOnly = (Boolean)attributes.get("readOnly");
@@ -324,16 +317,6 @@ public class SXPElementWrapper
 	@Override
 	public boolean getHidden() {
 		return model.getHidden();
-	}
-
-	/**
-	 * Returns the key of this sxp element.
-	 *
-	 * @return the key of this sxp element
-	 */
-	@Override
-	public String getKey() {
-		return model.getKey();
 	}
 
 	/**
@@ -697,16 +680,6 @@ public class SXPElementWrapper
 	@Override
 	public void setHidden(boolean hidden) {
 		model.setHidden(hidden);
-	}
-
-	/**
-	 * Sets the key of this sxp element.
-	 *
-	 * @param key the key of this sxp element
-	 */
-	@Override
-	public void setKey(String key) {
-		model.setKey(key);
 	}
 
 	/**

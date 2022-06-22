@@ -55,7 +55,6 @@ public class SXPBlueprintWrapper
 		attributes.put("configurationJSON", getConfigurationJSON());
 		attributes.put("description", getDescription());
 		attributes.put("elementInstancesJSON", getElementInstancesJSON());
-		attributes.put("key", getKey());
 		attributes.put("schemaVersion", getSchemaVersion());
 		attributes.put("title", getTitle());
 		attributes.put("version", getVersion());
@@ -141,12 +140,6 @@ public class SXPBlueprintWrapper
 
 		if (elementInstancesJSON != null) {
 			setElementInstancesJSON(elementInstancesJSON);
-		}
-
-		String key = (String)attributes.get("key");
-
-		if (key != null) {
-			setKey(key);
 		}
 
 		String schemaVersion = (String)attributes.get("schemaVersion");
@@ -331,16 +324,6 @@ public class SXPBlueprintWrapper
 	@Override
 	public String getExternalReferenceCode() {
 		return model.getExternalReferenceCode();
-	}
-
-	/**
-	 * Returns the key of this sxp blueprint.
-	 *
-	 * @return the key of this sxp blueprint
-	 */
-	@Override
-	public String getKey() {
-		return model.getKey();
 	}
 
 	/**
@@ -784,16 +767,6 @@ public class SXPBlueprintWrapper
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		model.setExternalReferenceCode(externalReferenceCode);
-	}
-
-	/**
-	 * Sets the key of this sxp blueprint.
-	 *
-	 * @param key the key of this sxp blueprint
-	 */
-	@Override
-	public void setKey(String key) {
-		model.setKey(key);
 	}
 
 	/**

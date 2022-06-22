@@ -72,6 +72,14 @@ public class SXPBlueprintServiceUtil {
 		return getService().getSXPBlueprint(sxpBlueprintId);
 	}
 
+	public static SXPBlueprint getSXPBlueprintByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getSXPBlueprintByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
 	public static SXPBlueprint updateSXPBlueprint(
 			long sxpBlueprintId, String configurationJSON,
 			Map<java.util.Locale, String> descriptionMap,

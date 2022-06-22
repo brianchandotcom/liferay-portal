@@ -14,14 +14,28 @@
 
 import getLayoutDataItemUniqueClassName from './getLayoutDataItemUniqueClassName';
 
-export default function hasSubmitChild(itemId) {
+function isVisible(element, globalContext) {
+	const computedStyle = globalContext.window.getComputedStyle(element);
+	const {parentElement} = element;
+
+	return (
+		computedStyle.display !== 'none' &&
+		computedStyle.visibility !== 'collapse' &&
+		computedStyle.visibility !== 'hidden' &&
+		!element.hasAttribute('hidden') &&
+		!element.hasAttribute('aria-hidden') &&
+		(!parentElement || isVisible(parentElement, globalContext))
+	);
+}
+
+export default function hasVisibleSubmitChild(itemId, globalContext) {
 	const element = document.querySelector(
 		`.${getLayoutDataItemUniqueClassName(itemId)}`
 	);
 
-	return Boolean(
+	return Array.from(
 		element.querySelectorAll(
 			'input[type=submit], button[type=submit], button:not([type])'
-		).length
-	);
+		)
+	).some((buttonElement) => isVisible(buttonElement, globalContext));
 }

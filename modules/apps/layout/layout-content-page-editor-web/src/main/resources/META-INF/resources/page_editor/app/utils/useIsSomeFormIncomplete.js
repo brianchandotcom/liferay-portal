@@ -18,7 +18,7 @@ import {useSelectorRef} from '../contexts/StoreContext';
 import FormService from '../services/FormService';
 import {CACHE_KEYS, getCacheItem, getCacheKey} from './cache';
 import hasRequiredInputChild from './hasRequiredInputChild';
-import hasSubmitChild from './hasSubmitChild';
+import hasVisibleSubmitChild from './hasVisibleSubmitChild';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
 
 function getFormItems(layoutData) {
@@ -47,7 +47,11 @@ export default function useIsSomeFormIncomplete() {
 			return Promise.resolve(false);
 		}
 
-		if (forms.some((form) => !hasSubmitChild(form.itemId, globalContext))) {
+		if (
+			forms.some(
+				(form) => !hasVisibleSubmitChild(form.itemId, globalContext)
+			)
+		) {
 			return Promise.resolve(true);
 		}
 

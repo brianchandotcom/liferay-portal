@@ -20,7 +20,7 @@ import selectFormConfiguration from '../selectors/selectFormConfiguration';
 import FormService from '../services/FormService';
 import {CACHE_KEYS} from './cache';
 import hasRequiredInputChild from './hasRequiredInputChild';
-import hasSubmitChild from './hasSubmitChild';
+import hasVisibleSubmitChild from './hasVisibleSubmitChild';
 import useCache from './useCache';
 
 export default function useHasRequiredChild(itemId) {
@@ -53,7 +53,7 @@ export default function useHasRequiredChild(itemId) {
 		}
 
 		return (
-			hasSubmitChild(itemId, globalContext) ||
+			hasVisibleSubmitChild(itemId, globalContext) ||
 			hasRequiredInputChild({
 				formFields,
 				fragmentEntryLinks: fragmentEntryLinksRef.current,

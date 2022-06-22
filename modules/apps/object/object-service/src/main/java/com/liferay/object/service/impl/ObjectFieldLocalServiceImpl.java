@@ -113,7 +113,11 @@ public class ObjectFieldLocalServiceImpl
 			indexedAsKeyword, indexedLanguageId, labelMap, name, required,
 			false);
 
-		if (objectDefinition.isApproved()) {
+		if (objectDefinition.isApproved() &&
+			!Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
 			runSQL(
 				DynamicObjectDefinitionTable.getAlterTableAddColumnSQL(
 					dbTableName, objectField.getDBColumnName(), dbType));

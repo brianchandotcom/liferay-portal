@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -98,6 +99,13 @@ public class NotificationQueueEntryLocalServiceImpl
 					notificationQueueEntry.getNotificationQueueEntryId());
 		}
 
+		_resourceLocalService.addResources(
+			notificationQueueEntry.getCompanyId(), 0,
+			notificationQueueEntry.getUserId(),
+			NotificationQueueEntry.class.getName(),
+			notificationQueueEntry.getNotificationQueueEntryId(), false, true,
+			true);
+
 		return notificationQueueEntry;
 	}
 
@@ -143,6 +151,15 @@ public class NotificationQueueEntryLocalServiceImpl
 				notificationQueueEntry.getNotificationQueueEntryId());
 
 		return notificationQueueEntry;
+	}
+
+	@Override
+	public NotificationQueueEntry resendNotificationQueueEntry(
+			long notificationQueueEntryId)
+		throws PortalException {
+
+		return notificationQueueEntryLocalService.updateSent(
+			notificationQueueEntryId, false);
 	}
 
 	@Override
@@ -262,6 +279,9 @@ public class NotificationQueueEntryLocalServiceImpl
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

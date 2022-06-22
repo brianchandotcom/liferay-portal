@@ -55,6 +55,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DRAFT_SAVING_MESSAGE</td>
+	<td>//div[contains(@class,'toolbar')]//span[contains(@class,'editor__status')][normalize-space(text())='Saving...']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_CONTROL_SELECT_BUTTON</td>
 	<td>//div[contains(@class,'sidebar')]//button[contains(@class,'form-control-select')]</td>
 	<td></td>

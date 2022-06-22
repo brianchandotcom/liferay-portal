@@ -83,12 +83,18 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			"formConfig", _formConfig
 		).put(
 			"indexed", _indexed
+		).put(
+			"successMessage", _successMessageJSONObject
 		);
 	}
 
 	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_FORM;
+	}
+
+	public JSONObject getSuccessMessageJSONObject() {
+		return _successMessageJSONObject;
 	}
 
 	@Override
@@ -116,6 +122,12 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		_indexed = indexed;
 	}
 
+	public void setSuccessMessageJSONObject(
+		JSONObject successMessageJSONObject) {
+
+		_successMessageJSONObject = successMessageJSONObject;
+	}
+
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
 		super.updateItemConfig(itemConfigJSONObject);
@@ -135,11 +147,17 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		if (itemConfigJSONObject.has("indexed")) {
 			setIndexed(itemConfigJSONObject.getBoolean("indexed"));
 		}
+
+		if (itemConfigJSONObject.has("successMessage")) {
+			setSuccessMessageJSONObject(
+				itemConfigJSONObject.getJSONObject("successMessage"));
+		}
 	}
 
 	private long _classNameId;
 	private long _classTypeId;
 	private int _formConfig;
 	private boolean _indexed = true;
+	private JSONObject _successMessageJSONObject;
 
 }

@@ -516,4 +516,67 @@ definition {
 			optionLabelList = "Option 1,Option 2,Option 3");
 	}
 
+	@description = "Check if Select from List Field details can be seen."
+	@priority = "4"
+	test ViewSelectFromListFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Select from List Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		DEBuilder.openField(
+			fieldLabel = "Select from List",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Select from List",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Select from List");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Select from List");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Select from List");
+
+		DataEngine.assertAllowMultipleSelectionsField(fieldFieldLabel = "Select from List");
+
+		DataEngine.assertOrderOptionsAlphabeticallyField(fieldFieldLabel = "Select from List");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Select from List Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Select from List",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Select from List",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Select from List");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Select from List");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Select from List");
+
+		DataEngine.assertAllowMultipleSelectionsField(fieldFieldLabel = "Select from List");
+
+		DataEngine.assertOrderOptionsAlphabeticallyField(fieldFieldLabel = "Select from List");
+	}
+
 }

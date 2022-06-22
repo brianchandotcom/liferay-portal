@@ -14,6 +14,21 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.failure.message.generator.CIFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.CompileFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.FailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.GenericFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.GradleTaskFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.IntegrationTestTimeoutFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.LocalGitMirrorFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.ModulesCompilationFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.PMDFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.PluginFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.PluginGitIDFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.SemanticVersioningFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.SourceFormatFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.failure.message.generator.StartupFailureMessageGenerator;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -283,6 +298,11 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	@Override
+	protected FailureMessageGenerator[] getFailureMessageGenerators() {
+		return _FAILURE_MESSAGE_GENERATORS;
+	}
+
+	@Override
 	protected Element getGitHubMessageJobResultsElement() {
 		return null;
 	}
@@ -298,5 +318,25 @@ public class DownstreamBuild extends BaseBuild {
 
 		return testResultGitHubElements;
 	}
+
+	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =
+	{
+		new ModulesCompilationFailureMessageGenerator(),
+		//
+		new CompileFailureMessageGenerator(),
+		new IntegrationTestTimeoutFailureMessageGenerator(),
+		new LocalGitMirrorFailureMessageGenerator(),
+		new PMDFailureMessageGenerator(),
+		new PluginFailureMessageGenerator(),
+		new PluginGitIDFailureMessageGenerator(),
+		new SemanticVersioningFailureMessageGenerator(),
+		new SourceFormatFailureMessageGenerator(),
+		new StartupFailureMessageGenerator(),
+		//
+		new GradleTaskFailureMessageGenerator(),
+		//
+		new CIFailureMessageGenerator(),
+		new GenericFailureMessageGenerator()
+	};
 
 }

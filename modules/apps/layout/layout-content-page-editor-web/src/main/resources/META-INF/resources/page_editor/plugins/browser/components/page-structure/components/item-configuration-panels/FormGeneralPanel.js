@@ -12,8 +12,10 @@
  * details.
  */
 
-import React, {useCallback, useMemo} from 'react';
+import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
+import React, {useCallback, useEffect, useMemo} from 'react';
 
+import updateItemLocalConfig from '../../../../../../app/actions/updateItemLocalConfig';
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {FORM_MAPPING_SOURCES} from '../../../../../../app/config/constants/formMappingSources';
@@ -21,12 +23,19 @@ import {
 	useDispatch,
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
+import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import FormService from '../../../../../../app/services/FormService';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {CACHE_KEYS} from '../../../../../../app/utils/cache';
+import {formIsMapped} from '../../../../../../app/utils/formIsMapped';
+import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import useCache from '../../../../../../app/utils/useCache';
+import {useId} from '../../../../../../app/utils/useId';
 import Collapse from '../../../../../../common/components/Collapse';
+import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
+import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
+import useControlledState from '../../../../../../core/hooks/useControlledState';
 import {CommonStyles} from './CommonStyles';
 
 export function FormGeneralPanel({item}) {
@@ -144,7 +153,224 @@ function FormOptions({item, onValueSelect}) {
 						value={selectedSubtype ? classTypeId : ''}
 					/>
 				)}
+
+				{formIsMapped(item) && (
+					<SuccessMessageOptions
+						item={item}
+						onValueSelect={onValueSelect}
+					/>
+				)}
 			</Collapse>
 		</div>
 	);
+}
+
+const EMBEDDED_OPTION = 'embedded';
+const LAYOUT_OPTION = 'fromLayout';
+const URL_OPTION = 'url';
+
+const SUCCESS_MESSAGE_OPTIONS = [
+	{
+		label: Liferay.Language.get('embedded'),
+		value: EMBEDDED_OPTION,
+	},
+	{
+		label: Liferay.Language.get('page'),
+		value: LAYOUT_OPTION,
+	},
+	{
+		label: Liferay.Language.get('url'),
+		value: URL_OPTION,
+	},
+];
+
+function SuccessMessageOptions({item, onValueSelect}) {
+	const {successMessage: successMessageConfig = {}} = item.config;
+
+	const languageId = useSelector(selectLanguageId);
+	const dispatch = useDispatch();
+
+	const [selectedSource, setSelectedSource] = useControlledState(
+		getSelectedOption(successMessageConfig)
+	);
+	const [successMessage, setSuccessMessage] = useControlledState(
+		getEditableLocalizedValue(
+			successMessageConfig.message,
+			languageId,
+			Liferay.Language.get(
+				'thank-you.-your-information-was-successfully-received'
+			)
+		)
+	);
+	const [url, setUrl] = useControlledState(
+		getEditableLocalizedValue(successMessageConfig.message, languageId)
+	);
+	const [showMessagePreview, setShowMessagePreview] = useControlledState(
+		Boolean(item.config.showMessagePreview)
+	);
+
+	const urlId = useId();
+	const successTextId = useId();
+
+	useEffect(() => {
+		return () => {
+			dispatch(
+				updateItemLocalConfig({
+					itemConfig: {
+						showMessagePreview: false,
+					},
+					itemId: item.itemId,
+				})
+			);
+		};
+	}, [item.itemId, dispatch]);
+
+	return (
+		<>
+			<SelectField
+				field={{
+					label: Liferay.Language.get('success-message'),
+					name: 'source',
+					typeOptions: {
+						validValues: SUCCESS_MESSAGE_OPTIONS,
+					},
+				}}
+				onValueSelect={(_name, type) => {
+					setSelectedSource(type);
+
+					onValueSelect({
+						successMessage: {},
+					});
+				}}
+				value={selectedSource}
+			/>
+
+			{selectedSource === LAYOUT_OPTION && (
+				<LayoutSelector
+					mappedLayout={successMessageConfig}
+					onLayoutSelect={(layout) =>
+						onValueSelect({
+							successMessage: {...layout},
+						})
+					}
+				/>
+			)}
+
+			{selectedSource === EMBEDDED_OPTION && (
+				<>
+					<ClayForm.Group small>
+						<label htmlFor={successTextId}>
+							{Liferay.Language.get('success-text')}
+						</label>
+
+						<ClayInput.Group small>
+							<ClayInput.GroupItem>
+								<ClayInput
+									id={successTextId}
+									onBlur={() =>
+										onValueSelect({
+											successMessage: {
+												message: {
+													...(successMessageConfig?.message ||
+														{}),
+													[languageId]: successMessage,
+												},
+											},
+										})
+									}
+									onChange={(event) =>
+										setSuccessMessage(event.target.value)
+									}
+									onKeyDown={(event) => {
+										if (event.key === 'Enter') {
+											onValueSelect({
+												successMessage: {
+													message: {
+														...(successMessageConfig?.message ||
+															{}),
+														[languageId]: successMessage,
+													},
+												},
+											});
+										}
+									}}
+									type="text"
+									value={successMessage || ''}
+								/>
+							</ClayInput.GroupItem>
+
+							<ClayInput.GroupItem shrink>
+								<CurrentLanguageFlag />
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
+					</ClayForm.Group>
+
+					<ClayToggle
+						label={Liferay.Language.get('preview-in-edit-mode')}
+						onToggle={(checked) => {
+							setShowMessagePreview(checked);
+
+							dispatch(
+								updateItemLocalConfig({
+									itemConfig: {
+										showMessagePreview: checked,
+									},
+									itemId: item.itemId,
+								})
+							);
+						}}
+						toggled={showMessagePreview}
+					/>
+				</>
+			)}
+
+			{selectedSource === URL_OPTION && (
+				<ClayForm.Group small>
+					<label htmlFor={urlId}>{Liferay.Language.get('url')}</label>
+
+					<ClayInput.Group small>
+						<ClayInput.GroupItem>
+							<ClayInput
+								id={urlId}
+								onBlur={() =>
+									onValueSelect({
+										successMessage: {
+											url: {
+												...(successMessageConfig?.url ||
+													{}),
+												[languageId]: url,
+											},
+										},
+									})
+								}
+								onChange={(event) => setUrl(event.target.value)}
+								type="text"
+								value={url || ''}
+							/>
+						</ClayInput.GroupItem>
+
+						<ClayInput.GroupItem shrink>
+							<CurrentLanguageFlag />
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</ClayForm.Group>
+			)}
+		</>
+	);
+}
+
+function getSelectedOption(successMessageConfig) {
+	if (successMessageConfig.url) {
+		return URL_OPTION;
+	}
+
+	if (successMessageConfig.message) {
+		return EMBEDDED_OPTION;
+	}
+
+	if (successMessageConfig.layoutUuid) {
+		return LAYOUT_OPTION;
+	}
+
+	return EMBEDDED_OPTION;
 }

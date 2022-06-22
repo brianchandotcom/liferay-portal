@@ -70,15 +70,9 @@ export default function Action({
 			detail,
 		}: {detail: string; title: string} = await response.json();
 
-		const backendErrors: any = {};
+		const backendErrors: {[key: string]: string | void} = {};
 
 		const details = JSON.parse(detail);
-
-		type ErrorMessage = {
-			fieldName: keyof ObjectAction;
-			message?: string;
-			messages?: ErrorMessage[];
-		};
 
 		const parseError = (details: ErrorMessage[]) => {
 			details.forEach((detail) => {
@@ -224,6 +218,12 @@ interface IProps {
 	title: string;
 	validateExpressionURL: string;
 }
+
+type ErrorMessage = {
+	fieldName: keyof ObjectAction;
+	message?: string;
+	messages?: ErrorMessage[];
+};
 
 interface IUseObjectActionForm {
 	initialValues: Partial<ObjectAction>;

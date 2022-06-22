@@ -28,7 +28,6 @@ export default function ActionBuilder({
 }: IProps): JSX.Element;
 interface IProps {
 	errors: ActionError;
-	ffNotificationTemplates: boolean;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
 	objectDefinitionsRelationshipsURL: string;

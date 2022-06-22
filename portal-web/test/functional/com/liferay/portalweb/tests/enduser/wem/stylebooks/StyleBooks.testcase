@@ -380,8 +380,6 @@ definition {
 
 			StyleBooks.waitForAutoSave();
 
-			Pause(locator1 = "3000");
-
 			StyleBooks.expandSection(sectionName = "Button Secondary");
 
 			Type(

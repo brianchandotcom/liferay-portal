@@ -203,13 +203,10 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		String themeCSSCETExternalReferenceCode = ParamUtil.getString(
 			actionRequest, "themeCSSCETExternalReferenceCode");
 
-		if (Validator.isNotNull(themeCSSCETExternalReferenceCode)) {
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				themeDisplay.getUserId(),
-				_portal.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(), themeCSSCETExternalReferenceCode,
-				ClientExtensionEntryConstants.TYPE_THEME_CSS);
-		}
+		_addClientExtensionEntryRel(
+			themeCSSCETExternalReferenceCode, layoutSet,
+			ClientExtensionEntryConstants.TYPE_THEME_CSS,
+			themeDisplay.getUserId());
 	}
 
 	private void _updateLogo(

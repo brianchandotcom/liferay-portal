@@ -356,12 +356,9 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 		String themeCSSCETExternalReferenceCode = ParamUtil.getString(
 			actionRequest, "themeCSSCETExternalReferenceCode");
 
-		if (Validator.isNotNull(themeCSSCETExternalReferenceCode)) {
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				userId, _portal.getClassNameId(Layout.class), layout.getPlid(),
-				themeCSSCETExternalReferenceCode,
-				ClientExtensionEntryConstants.TYPE_THEME_CSS);
-		}
+		_addClientExtensionEntryRel(
+			themeCSSCETExternalReferenceCode, layout,
+			ClientExtensionEntryConstants.TYPE_THEME_CSS, userId);
 	}
 
 	@Reference

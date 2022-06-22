@@ -39,8 +39,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.powermock.api.mockito.PowerMockito;
-
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockServletContext;
@@ -49,7 +47,7 @@ import org.springframework.mock.web.MockServletContext;
  * @author Igor Spasic
  * @author Raymond Augé
  */
-public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
+public abstract class BaseJSONWebServiceTestCase {
 
 	protected static void initPortalServices() {
 		PropsUtil.setProps(new PropsImpl());

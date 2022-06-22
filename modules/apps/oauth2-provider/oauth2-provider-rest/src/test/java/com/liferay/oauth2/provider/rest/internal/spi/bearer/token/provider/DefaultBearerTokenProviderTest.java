@@ -18,25 +18,30 @@ import com.liferay.oauth2.provider.rest.spi.bearer.token.provider.BearerTokenPro
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
 
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 /**
  * @author Tomas Polesovsky
  */
-@PrepareForTest(SecureRandomUtil.class)
-@RunWith(PowerMockRunner.class)
-public class DefaultBearerTokenProviderTest extends PowerMockito {
+public class DefaultBearerTokenProviderTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -56,13 +61,16 @@ public class DefaultBearerTokenProviderTest extends PowerMockito {
 
 		_defaultBearerTokenProvider.activate(properties);
 
-		mockStatic(SecureRandomUtil.class);
-
-		when(
+		Mockito.when(
 			SecureRandomUtil.nextLong()
 		).thenReturn(
 			_TOKEN_KEY_LONG
 		);
+	}
+
+	@After
+	public void tearDown() {
+		_secureRandomUtilMockedStatic.close();
 	}
 
 	@Test
@@ -188,5 +196,7 @@ public class DefaultBearerTokenProviderTest extends PowerMockito {
 		"decadefeededbabedecadefeededbabedecadefeededbabedecadefeededbabe";
 
 	private DefaultBearerTokenProvider _defaultBearerTokenProvider;
+	private final MockedStatic<SecureRandomUtil> _secureRandomUtilMockedStatic =
+		Mockito.mockStatic(SecureRandomUtil.class);
 
 }

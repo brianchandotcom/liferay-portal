@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -34,23 +35,28 @@ import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Igor Spasic
  */
-@PrepareForTest(ServiceContextFactory.class)
-@RunWith(PowerMockRunner.class)
 public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -88,15 +94,17 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		Method method = method(
-			ServiceContextFactory.class, "getInstance",
-			HttpServletRequest.class);
-
-		stub(
-			method
-		).toReturn(
+		Mockito.when(
+			ServiceContextFactory.getInstance(
+				Mockito.any(HttpServletRequest.class))
+		).thenReturn(
 			new ServiceContext()
 		);
+	}
+
+	@After
+	public void tearDown() {
+		_serviceContextFactoryMockedStatic.close();
 	}
 
 	@Test
@@ -600,5 +608,9 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceTest.class);
+
+	private final MockedStatic<ServiceContextFactory>
+		_serviceContextFactoryMockedStatic = Mockito.mockStatic(
+			ServiceContextFactory.class);
 
 }

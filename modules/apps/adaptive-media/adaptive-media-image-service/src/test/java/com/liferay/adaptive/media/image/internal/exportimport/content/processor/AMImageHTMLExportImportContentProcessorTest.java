@@ -26,24 +26,27 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Adolfo Pérez
  */
-@PrepareForTest(ExportImportPathUtil.class)
-@RunWith(PowerMockRunner.class)
 public class AMImageHTMLExportImportContentProcessorTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -74,12 +77,15 @@ public class AMImageHTMLExportImportContentProcessorTest {
 			Mockito.anyLong()
 		);
 
-		PowerMockito.mockStatic(ExportImportPathUtil.class);
-
 		_setUpFileEntryToExport(_FILE_ENTRY_ID_1, _fileEntry1);
 		_setUpFileEntryToImport(_FILE_ENTRY_ID_1, _fileEntry1);
 		_setUpFileEntryToExport(_FILE_ENTRY_ID_2, _fileEntry2);
 		_setUpFileEntryToImport(_FILE_ENTRY_ID_2, _fileEntry2);
+	}
+
+	@After
+	public void tearDown() {
+		_exportImportPathUtilMockedStatic.close();
 	}
 
 	@Test
@@ -455,7 +461,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 				Mockito.anyString(), Mockito.eq(fileEntry))
 		).thenAnswer(
 			invocation -> {
-				String imgTag = invocation.getArgumentAt(0, String.class);
+				String imgTag = invocation.getArgument(0, String.class);
 
 				return "<picture><source/>" + imgTag + "</picture>";
 			}
@@ -477,6 +483,9 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		AMImageHTMLTagFactory.class);
 	private final DLAppLocalService _dlAppLocalService = Mockito.mock(
 		DLAppLocalService.class);
+	private final MockedStatic<ExportImportPathUtil>
+		_exportImportPathUtilMockedStatic = Mockito.mockStatic(
+			ExportImportPathUtil.class);
 	private final FileEntry _fileEntry1 = Mockito.mock(FileEntry.class);
 	private final FileEntry _fileEntry2 = Mockito.mock(FileEntry.class);
 	private final PortletDataContext _portletDataContext = Mockito.mock(

@@ -180,6 +180,7 @@ definition {
 	@description = "This ensures that the permanent redirection can be performed when accessing the old friendly URL of a page."
 	@priority = "4"
 	test PermanentRedirectionCanBePerformedWhenAccessingPageOldFriendlyURL {
+		property custom.properties = "locale.prepend.friendly.url.style=0";
 		property test.name.skip.portal.instance = "FriendlyURLService#PermanentRedirectionCanBePerformedWhenAccessingPageOldFriendlyURL";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -405,6 +406,7 @@ definition {
 	@description = "This ensures that the temporary redirection can be performed when accessing the old friendly URL of a page."
 	@priority = "4"
 	test TemporaryRedirectionCanBePerformedWhenAccessingPageOldFriendlyURL {
+		property custom.properties = "locale.prepend.friendly.url.style=0";
 		property test.name.skip.portal.instance = "FriendlyURLService#TemporaryRedirectionCanBePerformedWhenAccessingPageOldFriendlyURL";
 
 		var portalURL = PropsUtil.get("portal.url");

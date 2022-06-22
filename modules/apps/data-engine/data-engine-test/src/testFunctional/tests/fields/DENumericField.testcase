@@ -577,4 +577,59 @@ definition {
 			fieldName = "Numeric");
 	}
 
+	@description = "Check if Numeric Field details can be seen."
+	@priority = "4"
+	test ViewNumericFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Numeric Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		DEBuilder.openField(
+			fieldLabel = "Numeric",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Numeric",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Numeric");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Numeric");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Numeric");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Numeric Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Numeric",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Numeric",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Numeric");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Numeric");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Numeric");
+	}
+
 }

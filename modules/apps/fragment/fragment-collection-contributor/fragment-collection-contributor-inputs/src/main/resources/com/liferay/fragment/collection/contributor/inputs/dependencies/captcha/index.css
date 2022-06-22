@@ -1,6 +1,7 @@
 .form-input-captcha {
 	border: none;
 	padding: 0;
+	position: relative;
 }
 
 .form-input-captcha:disabled {
@@ -10,7 +11,8 @@
 .form-input-captcha .taglib-captcha {
 	display: flex;
 	flex-wrap: wrap;
-	max-width: 30ch;
+	max-width: 190px;
+	padding-top: 8px;
 }
 
 .form-input-captcha .taglib-captcha .captcha {
@@ -18,9 +20,30 @@
 }
 
 .form-input-captcha .taglib-captcha .input-text-wrapper {
-	width: 100%;
+	margin-top: 8px;
+	position: inherit;
+	width: calc(100% - 40px);
+}
+
+.form-input-captcha .taglib-captcha .input-text-wrapper label.control-label {
+	color: #272833;
+	left: 0;
+	position: absolute;
+	top: 0;
 }
 
 .form-input-captcha .taglib-captcha .refresh {
-	margin-left: 1ch;
+	background: #FFFFFF;
+	border: 1px solid #CDCED9;
+	border-radius: 4px;
+	font-size: 16px;
+	height: 32px;
+	margin-left: 8px;
+	padding-top: 2px;
+	text-align: center;
+	width: 32px;
+}
+
+.form-input-captcha .taglib-captcha .refresh svg {
+	fill: #6B6C7E;
 }

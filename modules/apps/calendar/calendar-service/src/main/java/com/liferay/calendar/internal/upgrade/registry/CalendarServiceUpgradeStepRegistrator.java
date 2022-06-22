@@ -28,6 +28,7 @@ import com.liferay.calendar.internal.upgrade.v4_0_0.util.CalendarBookingTable;
 import com.liferay.calendar.internal.upgrade.v4_0_0.util.CalendarNotificationTemplateTable;
 import com.liferay.calendar.internal.upgrade.v4_0_0.util.CalendarResourceTable;
 import com.liferay.calendar.internal.upgrade.v4_0_0.util.CalendarTable;
+import com.liferay.calendar.internal.upgrade.v4_2_1.CalendarBookingUpgradeProcess;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.comment.upgrade.UpgradeDiscussionSubscriptionClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -153,6 +154,10 @@ public class CalendarServiceUpgradeStepRegistrator
 			new CTModelUpgradeProcess(
 				"Calendar", "CalendarBooking", "CalendarNotificationTemplate",
 				"CalendarResource"));
+
+		registry.register(
+			"4.2.0", "4.2.1",
+			new CalendarBookingUpgradeProcess(_userLocalService));
 	}
 
 	@Reference

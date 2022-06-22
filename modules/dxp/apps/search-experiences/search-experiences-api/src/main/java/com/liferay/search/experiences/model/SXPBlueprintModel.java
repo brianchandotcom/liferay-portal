@@ -356,21 +356,6 @@ public interface SXPBlueprintModel
 	public void setElementInstancesJSON(String elementInstancesJSON);
 
 	/**
-	 * Returns the key of this sxp blueprint.
-	 *
-	 * @return the key of this sxp blueprint
-	 */
-	@AutoEscape
-	public String getKey();
-
-	/**
-	 * Sets the key of this sxp blueprint.
-	 *
-	 * @param key the key of this sxp blueprint
-	 */
-	public void setKey(String key);
-
-	/**
 	 * Returns the schema version of this sxp blueprint.
 	 *
 	 * @return the schema version of this sxp blueprint

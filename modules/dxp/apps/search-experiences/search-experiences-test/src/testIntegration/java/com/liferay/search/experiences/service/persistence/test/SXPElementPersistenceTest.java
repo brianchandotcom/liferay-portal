@@ -147,8 +147,6 @@ public class SXPElementPersistenceTest {
 
 		newSXPElement.setHidden(RandomTestUtil.randomBoolean());
 
-		newSXPElement.setKey(RandomTestUtil.randomString());
-
 		newSXPElement.setReadOnly(RandomTestUtil.randomBoolean());
 
 		newSXPElement.setSchemaVersion(RandomTestUtil.randomString());
@@ -197,8 +195,6 @@ public class SXPElementPersistenceTest {
 			newSXPElement.getElementDefinitionJSON());
 		Assert.assertEquals(
 			existingSXPElement.isHidden(), newSXPElement.isHidden());
-		Assert.assertEquals(
-			existingSXPElement.getKey(), newSXPElement.getKey());
 		Assert.assertEquals(
 			existingSXPElement.isReadOnly(), newSXPElement.isReadOnly());
 		Assert.assertEquals(
@@ -301,9 +297,9 @@ public class SXPElementPersistenceTest {
 			"SXPElement", "mvccVersion", true, "uuid", true,
 			"externalReferenceCode", true, "sxpElementId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "description", true, "hidden", true, "key",
-			true, "readOnly", true, "schemaVersion", true, "title", true,
-			"type", true, "version", true, "status", true);
+			"modifiedDate", true, "description", true, "hidden", true,
+			"readOnly", true, "schemaVersion", true, "title", true, "type",
+			true, "version", true, "status", true);
 	}
 
 	@Test
@@ -604,8 +600,6 @@ public class SXPElementPersistenceTest {
 		sxpElement.setElementDefinitionJSON(RandomTestUtil.randomString());
 
 		sxpElement.setHidden(RandomTestUtil.randomBoolean());
-
-		sxpElement.setKey(RandomTestUtil.randomString());
 
 		sxpElement.setReadOnly(RandomTestUtil.randomBoolean());
 

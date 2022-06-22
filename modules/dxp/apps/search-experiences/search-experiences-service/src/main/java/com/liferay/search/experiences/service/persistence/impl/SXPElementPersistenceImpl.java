@@ -6035,7 +6035,6 @@ public class SXPElementPersistenceImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put("hidden", "hidden_");
-		dbColumnNames.put("key", "key_");
 		dbColumnNames.put("type", "type_");
 
 		setDBColumnNames(dbColumnNames);
@@ -6874,7 +6873,7 @@ public class SXPElementPersistenceImpl
 		SXPElementPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid", "hidden", "key", "type"});
+		new String[] {"uuid", "hidden", "type"});
 
 	@Override
 	protected FinderCache getFinderCache() {

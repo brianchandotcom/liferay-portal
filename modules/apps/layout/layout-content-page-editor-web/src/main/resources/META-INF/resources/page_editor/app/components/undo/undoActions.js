@@ -26,6 +26,7 @@ import {
 	UPDATE_EDITABLE_VALUES,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_ITEM_CONFIG,
+	UPDATE_ITEM_LOCAL_CONFIG,
 	UPDATE_LANGUAGE_ID,
 	UPDATE_ROW_COLUMNS,
 } from '../../actions/types';
@@ -43,6 +44,7 @@ import * as undoUpdateCollectionDisplayCollection from './undoUpdateCollectionDi
 import * as undoUpdateEditableValuesAction from './undoUpdateEditableValuesAction';
 import * as undoUpdateFragmentConfiguration from './undoUpdateFragmentConfiguration';
 import * as undoUpdateItemConfig from './undoUpdateItemConfig';
+import * as undoUpdateItemLocalConfig from './undoUpdateItemLocalConfig';
 import * as undoUpdateLanguage from './undoUpdateLanguage';
 import * as undoUpdateRowColumns from './undoUpdateRowColumns';
 
@@ -60,6 +62,7 @@ const UNDO_ACTIONS = {
 	[UPDATE_EDITABLE_VALUES]: undoUpdateEditableValuesAction,
 	[UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION]: undoUpdateFragmentConfiguration,
 	[UPDATE_ITEM_CONFIG]: undoUpdateItemConfig,
+	[UPDATE_ITEM_LOCAL_CONFIG]: undoUpdateItemLocalConfig,
 	[UPDATE_LANGUAGE_ID]: undoUpdateLanguage,
 	[UPDATE_ROW_COLUMNS]: undoUpdateRowColumns,
 };

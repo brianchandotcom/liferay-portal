@@ -12,17 +12,31 @@
  * details.
  */
 
-import {UPDATE_ITEM_LOCAL_CONFIG} from './types';
+import updateItemLocalConfig from '../../actions/updateItemLocalConfig';
 
-export default function updateItemLocalConfig({
-	itemConfig,
-	itemId,
-	overridePreviousConfig = false,
-}) {
+function undoAction({action}) {
+	const {config, itemId} = action;
+
+	return (dispatch) =>
+		dispatch(
+			updateItemLocalConfig({
+				itemConfig: config,
+				itemId,
+				overridePreviousConfig: true,
+			})
+		);
+}
+
+function getDerivedStateForUndo({action, state}) {
+	const {itemId} = action;
+	const {layoutData} = state;
+
+	const item = layoutData.items[itemId];
+
 	return {
-		itemConfig,
+		config: item.config,
 		itemId,
-		overridePreviousConfig,
-		type: UPDATE_ITEM_LOCAL_CONFIG,
 	};
 }
+
+export {undoAction, getDerivedStateForUndo};

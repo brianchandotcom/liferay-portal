@@ -80,7 +80,9 @@ export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 					[itemId]: {
 						...item,
 						config: {
-							...item.config,
+							...(action.overridePreviousConfig
+								? {}
+								: item.config),
 							...itemConfig,
 						},
 					},

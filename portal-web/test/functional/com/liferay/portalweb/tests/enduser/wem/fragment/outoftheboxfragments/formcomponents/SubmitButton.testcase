@@ -1,0 +1,164 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-150277=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a company Object with a Text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+		}
+
+		task ("Enable Inputs Fragment collection in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Disable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
+		}
+	}
+
+	@description = "This is a test for LPS-151754. The page designer can configure and map the Submit Button on content page."
+	@priority = "4"
+	test ConfigureSubmitButtonOnContentPage {
+		property test.name.skip.portal.instance = "SubmitButton#ConfigureSubmitButtonOnContentPage";
+
+		task ("Given a page designer has a Form Container mapped to an entity with text field") {
+			task ("Add a web content") {
+				JSONWebcontent.addWebContent(
+					content = "Continue",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Map the Form Container to new Object") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+		}
+
+		task ("When the page designer adds a Submit Button fragment into the Form Container") {
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Submit Button");
+		}
+
+		task ("Then the page designer could configure the Submit Button fragment") {
+			task ("Change the Type of Submit Button to Secondary") {
+				PageEditor.gotoConfiguration(fragmentName = "Submit Button");
+
+				PageEditor.configureFragment(type = "Secondary");
+
+				PageEditor.viewFragmentStyle(
+					fragmentName = "Button",
+					type = "secondary");
+			}
+
+			task ("Change the Size of Submit Button to Small") {
+				PageEditor.configureFragment(size = "Small");
+
+				PageEditor.viewFragmentStyle(
+					fragmentName = "Button",
+					size = "sm");
+			}
+
+			task ("Edit the inline text of Submit Button") {
+				PageEditor.editFragmentText(
+					className = "button",
+					fragmentName = "Submit Button",
+					id = "text",
+					text = "Invoke");
+
+				PageEditor.viewFragmentEditableText(
+					className = "button",
+					editableText = "Invoke",
+					fragmentName = "Submit Button",
+					id = "text");
+			}
+
+			task ("Map the Submit Button to the Content field") {
+				PageEditorMapping.gotoEditableFieldMapping(
+					className = "button",
+					fragmentName = "Submit Button",
+					id = "text");
+
+				PageEditorMapping.mapEditableFieldToAsset(
+					entryTitle = "Web Content Title",
+					navItem = "Web Content");
+
+				Select(
+					locator1 = "PageEditorEditableLink#FIELD",
+					value1 = "Content");
+
+				PageEditor.viewFragmentEditableText(
+					className = "button",
+					editableText = "Continue",
+					fragmentName = "Submit Button",
+					id = "text");
+			}
+		}
+	}
+
+}

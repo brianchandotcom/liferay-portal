@@ -183,7 +183,7 @@
 </tr>
 <tr>
 	<td>BUTTON_SIZE</td>
-	<td>//div[contains(@class,'component-${key_fragmentName}')]/a[contains(@class,'btn-${key_size}')]</td>
+	<td>//div[contains(@class,'component-${key_fragmentName}')]/*[self::a or self::button][contains(@class,'btn-${key_size}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -239,7 +239,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONFIGURATION_TYPE</td>
-	<td>//div[contains(@class,'component-${key_fragmentName}')]//a[contains(@class,'-${key_type}')]</td>
+	<td>//div[contains(@class,'component-${key_fragmentName}')]//*[self::a or self::button][contains(@class,'-${key_type}')]</td>
 	<td></td>
 </tr>
 

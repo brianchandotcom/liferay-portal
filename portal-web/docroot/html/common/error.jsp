@@ -21,34 +21,36 @@
 <%
 String message = null;
 
-if (exception instanceof PrincipalException) {
-	_log.warn("User ID " + request.getRemoteUser());
-	_log.warn("Current URL " + PortalUtil.getCurrentURL(request));
-	_log.warn("Referer " + request.getHeader("Referer"));
-	_log.warn("Remote address " + request.getRemoteAddr());
+StringBundler sb = new StringBundler(9);
 
+sb.append("User ID ");
+sb.append(request.getRemoteUser());
+sb.append(", Current URL ");
+sb.append(PortalUtil.getCurrentURL(request));
+sb.append(", Referer ");
+sb.append(request.getHeader("Referer"));
+sb.append(", Remote address ");
+sb.append(request.getRemoteAddr());
+sb.append(", Exception is null");
+
+if (exception != null) {
+	message = exception.getMessage();
+}
+
+if (exception instanceof PrincipalException) {
 	if (exception != null) {
 		_log.warn(exception, exception);
-
-		message = exception.getMessage();
 	}
 	else {
-		_log.warn("Exception is null");
+		_log.warn(sb.toString());
 	}
 }
 else {
-	_log.error("User ID " + request.getRemoteUser());
-	_log.error("Current URL " + PortalUtil.getCurrentURL(request));
-	_log.error("Referer " + request.getHeader("Referer"));
-	_log.error("Remote address " + request.getRemoteAddr());
-
 	if (exception != null) {
 		_log.error(exception, exception);
-
-		message = exception.getMessage();
 	}
 	else {
-		_log.error("Exception is null");
+		_log.error(sb.toString());
 	}
 }
 %>

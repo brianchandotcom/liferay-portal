@@ -117,10 +117,8 @@
 											"fragment": {
 												"key": "guest-container"
 											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-											],
+											"fragmentConfig": {},
+											"fragmentFields": [],
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -250,8 +248,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Welcome!"
@@ -281,8 +278,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Sign in to Partner Portal with your Liferay account."
@@ -399,8 +395,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Need Help?"
@@ -429,8 +424,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Contact your Channel Account Manager or"
@@ -543,8 +537,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Interested in the Liferay Partner Program?"
@@ -573,8 +566,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "There are more benefits of becoming a Liferay partner."
@@ -597,14 +589,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>"
@@ -738,8 +728,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Welcome!"
@@ -769,8 +758,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Sign in to Partner Portal with your Liferay account."
@@ -887,8 +875,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Need Help?"
@@ -917,8 +904,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Contact your Channel Account Manager or"
@@ -1031,8 +1017,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Interested in the Liferay Partner Program?"
@@ -1061,8 +1046,7 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "There are more benefits of becoming a Liferay partner."
@@ -1085,14 +1069,12 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {
-																			},
+																			"fragmentConfig": {},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {
-																						},
+																						"fragmentLink": {},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>"
@@ -1176,8 +1158,7 @@
 																}
 															}
 														},
-														"fragmentLink": {
-														}
+														"fragmentLink": {}
 													}
 												}
 											],
@@ -1215,10 +1196,8 @@
 											"fragment": {
 												"key": "guest-background-container"
 											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-											],
+											"fragmentConfig": {},
+											"fragmentFields": [],
 											"fragmentStyle": {
 												"hidden": true,
 												"textAlign": ""
@@ -1286,8 +1265,7 @@
 																						}
 																					}
 																				},
-																				"fragmentLink": {
-																				}
+																				"fragmentLink": {}
 																			}
 																		}
 																	],
@@ -1335,8 +1313,7 @@
 																}
 															}
 														},
-														"fragmentLink": {
-														}
+														"fragmentLink": {}
 													}
 												}
 											],
@@ -1386,8 +1363,7 @@
 	"settings": {
 		"masterPage": {
 			"key": "guest-template"
-		},
-		"themeName": "Dialect"
+		}
 	},
 	"version": 1.1
 }

@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ActionRequest;
@@ -509,10 +508,8 @@ public class LiferayPortlet extends GenericPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ResourceBundle resourceBundle = getResourceBundle(
-			themeDisplay.getLocale());
-
-		return LanguageUtil.get(resourceBundle, key);
+		return LanguageUtil.get(
+			getResourceBundle(themeDisplay.getLocale()), key);
 	}
 
 	protected String translate(
@@ -521,10 +518,8 @@ public class LiferayPortlet extends GenericPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ResourceBundle resourceBundle = getResourceBundle(
-			themeDisplay.getLocale());
-
-		return LanguageUtil.format(resourceBundle, key, arguments);
+		return LanguageUtil.format(
+			getResourceBundle(themeDisplay.getLocale()), key, arguments);
 	}
 
 	protected void writeJSON(

@@ -29,7 +29,6 @@ import java.util.Map;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -82,12 +81,8 @@ public class SearchContainerColumnUserTag<R> extends SearchContainerColumnTag {
 				(HttpServletRequest)pageContext.getRequest());
 			userSearchEntry.setResponse(
 				(HttpServletResponse)pageContext.getResponse());
-
-			ServletContext servletContext = ServletContextPool.get(
-				PortalUtil.getServletContextName());
-
-			userSearchEntry.setServletContext(servletContext);
-
+			userSearchEntry.setServletContext(
+				ServletContextPool.get(PortalUtil.getServletContextName()));
 			userSearchEntry.setShowDetails(isShowDetails());
 			userSearchEntry.setUserId(_userId);
 			userSearchEntry.setValign(getValign());

@@ -30,8 +30,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -84,12 +82,10 @@ public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 		CompanyThreadLocal.setCompanyId(companyId);
 
 		try {
-			Map<Locale, String> localizationMap =
-				ResourceBundleUtil.getLocalizationMap(
-					resourceBundleLoader, localizationMapKey);
-
 			return LocalizationUtil.updateLocalization(
-				localizationMap, "", localizationXMLKey,
+				ResourceBundleUtil.getLocalizationMap(
+					resourceBundleLoader, localizationMapKey),
+				"", localizationXMLKey,
 				UpgradeProcessUtil.getDefaultLanguageId(companyId));
 		}
 		finally {

@@ -2,9 +2,9 @@
 definition {
 
 	property osgi.modules.includes = "frontend-data-set-sample-web";
-	property portal.acceptance = "true";
-	property portal.release = "true";
-	property portal.upstream = "true";
+	property portal.acceptance = "false";
+	property portal.release = "false";
+	property portal.upstream = "quarantine";
 	property testray.component.names = "Frontend Dataset";
 	property testray.main.component.name = "Frontend Dataset";
 
@@ -53,13 +53,11 @@ definition {
 		}
 	}
 
-	@description = "LPS-155457. Assert that over mouse off of the table body quick action menu is not visible."
+	@description = "LPS-155457. Assert that hover over mouse off of the table body quick action menu is not visible."
 	@priority = "5"
 	test CanDisappearWhenNotHovered {
 		task ("When hover mouse off of the table body") {
-			MouseOver(
-				key_portletTitleName = "FDSSamplePortlet",
-				locator1 = "Home#PORTLET_HEADER");
+			MouseOver(locator1 = "FrontendDataSet#TABLE_BODY");
 		}
 
 		task ("Then quick action menu is not visible") {

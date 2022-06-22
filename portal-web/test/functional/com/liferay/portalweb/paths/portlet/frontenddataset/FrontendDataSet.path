@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_BODY</td>
+	<td>//*[contains(@class,'fds')]//*[@class='dnd-tbody']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ITEM_ROW</td>
 	<td>//*[normalize-space(text())='${key_itemName}']/parent::*[contains(@class,'dnd-tr')]</td>
 	<td></td>

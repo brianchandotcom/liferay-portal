@@ -639,41 +639,50 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				_fragmentCompositionService.fetchFragmentComposition(
 					groupId, entry.getKey());
 
-			if (fragmentComposition == null) {
-				fragmentComposition =
-					_fragmentCompositionService.addFragmentComposition(
-						groupId, fragmentCollectionId, entry.getKey(), name,
-						description, definitionData, 0L,
-						WorkflowConstants.STATUS_APPROVED,
-						ServiceContextThreadLocal.getServiceContext());
-			}
-			else if (!overwrite) {
-				throw new DuplicateFragmentCompositionKeyException();
-			}
-			else {
-				fragmentComposition =
+			try {
+				if (fragmentComposition == null) {
+					fragmentComposition =
+						_fragmentCompositionService.addFragmentComposition(
+							groupId, fragmentCollectionId, entry.getKey(), name,
+							description, definitionData, 0L,
+							WorkflowConstants.STATUS_APPROVED,
+							ServiceContextThreadLocal.getServiceContext());
+				}
+				else if (!overwrite) {
+					throw new DuplicateFragmentCompositionKeyException();
+				}
+				else {
+					fragmentComposition =
+						_fragmentCompositionService.updateFragmentComposition(
+							fragmentComposition.getFragmentCompositionId(),
+							fragmentCollectionId, name, description,
+							definitionData,
+							fragmentComposition.getPreviewFileEntryId(),
+							fragmentComposition.getStatus());
+				}
+
+				if (fragmentComposition.getPreviewFileEntryId() > 0) {
+					PortletFileRepositoryUtil.deletePortletFileEntry(
+						fragmentComposition.getPreviewFileEntryId());
+				}
+
+				String thumbnailPath = jsonObject.getString("thumbnailPath");
+
+				if (Validator.isNotNull(thumbnailPath)) {
 					_fragmentCompositionService.updateFragmentComposition(
 						fragmentComposition.getFragmentCompositionId(),
-						fragmentCollectionId, name, description, definitionData,
-						fragmentComposition.getPreviewFileEntryId(),
-						fragmentComposition.getStatus());
+						_getPreviewFileEntryId(
+							userId, groupId, zipFile,
+							FragmentComposition.class.getName(),
+							fragmentComposition.getFragmentCompositionId(),
+							entry.getValue(), thumbnailPath));
+				}
 			}
-
-			if (fragmentComposition.getPreviewFileEntryId() > 0) {
-				PortletFileRepositoryUtil.deletePortletFileEntry(
-					fragmentComposition.getPreviewFileEntryId());
-			}
-
-			String thumbnailPath = jsonObject.getString("thumbnailPath");
-
-			if (Validator.isNotNull(thumbnailPath)) {
-				_fragmentCompositionService.updateFragmentComposition(
-					fragmentComposition.getFragmentCompositionId(),
-					_getPreviewFileEntryId(
-						userId, groupId, zipFile,
-						FragmentComposition.class.getName(),
-						fragmentComposition.getFragmentCompositionId(),
-						entry.getValue(), thumbnailPath));
+			catch (PortalException portalException) {
+				_fragmentsImporterResultEntries.add(
+					new FragmentsImporterResultEntry(
+						name, FragmentsImporterResultEntry.Status.INVALID,
+						portalException.getMessage()));
 			}
 		}
 	}

@@ -35,15 +35,7 @@ public class ExecUtil {
 	public static String executeCommand(String command)
 		throws IOException, TimeoutException {
 
-		boolean whitelistedExecutable = false;
-
-		for (String executableName : _whitelistedExecutableNames) {
-			if (command.startsWith(executableName)) {
-				whitelistedExecutable = true;
-			}
-		}
-
-		if (!whitelistedExecutable) {
+		if (!_isWhitelistedExecutable(command)) {
 			throw new RuntimeException(
 				"Unable to run command: " + command +
 					"\nPlease use a whitelisted executable: " +
@@ -245,6 +237,16 @@ public class ExecUtil {
 		catch (InterruptedException interruptedException) {
 			throw new RuntimeException(interruptedException);
 		}
+	}
+
+	private static boolean _isWhitelistedExecutable(String command) {
+		for (String executableName : _whitelistedExecutableNames) {
+			if (command.startsWith(executableName)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final long _BASH_COMMAND_TIMEOUT_DEFAULT = 1000 * 60 * 60;

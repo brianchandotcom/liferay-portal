@@ -547,43 +547,63 @@ definition {
 			value1 = "Product Detail");
 	}
 
-	@description = "COMMERCE-5858. As a buyer, I want to view the catalog default product image if set"
+	@description = "COMMERCE-5858. Verify the product card for a new product shows the default catalog image if it is set."
 	@priority = "3"
 	test AssertProductCardShowsCatalogDefaultImage {
 		property portal.acceptance = "false";
 
-		var productName = "Simple T-Shirt";
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Catalogs");
+		task ("And given a default image is set for the Minium catalog") {
+			CommerceCatalog.openCatalogsAdmin();
 
-		CommerceNavigator.gotoEntry(entryName = "Minium");
+			CommerceNavigator.gotoEntry(entryName = "Minium");
 
-		var catalog_default_img = "//img[@class='current-image']";
+			var catalog_default_img = "//img[@class='current-image']";
 
-		var catalog_default_img_src = selenium.getAttribute("${catalog_default_img}@src");
+			var catalog_default_img_src = selenium.getAttribute("${catalog_default_img}@src");
+		}
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		task ("And given a new product") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+		}
 
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Minium",
-			productName = "${productName}",
-			productType = "Simple");
+		task ("When the buyer logs in and views the product") {
+			User.logoutPG();
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
 
-		WaitForPageLoad();
+			WaitForPageLoad();
+		}
 
-		var minium_catalog_default_img = "//a[contains(@href,'simple-t-shirt')]//img[contains(@class,'card-picture')]";
+		task ("Then the product card shows the default Minium catalog image") {
+			var minium_catalog_default_img = "//a[contains(@href,'simple-t-shirt')]//img[contains(@class,'card-picture')]";
 
-		var minium_catalog_default_img_src = selenium.getAttribute("${minium_catalog_default_img}@src");
+			var minium_catalog_default_img_src = selenium.getAttribute("${minium_catalog_default_img}@src");
 
-		TestUtils.assertEquals(
-			actual = "${minium_catalog_default_img_src}",
-			expected = "${catalog_default_img_src}");
+			TestUtils.assertEquals(
+				actual = "${minium_catalog_default_img_src}",
+				expected = "${catalog_default_img_src}");
+		}
 	}
 
 	@description = "COMMERCE-5857. As a buyer, I want to view the product's own image if set"

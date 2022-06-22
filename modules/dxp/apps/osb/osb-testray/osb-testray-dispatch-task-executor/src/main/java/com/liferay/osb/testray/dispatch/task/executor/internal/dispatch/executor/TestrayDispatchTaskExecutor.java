@@ -515,7 +515,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 		List<ObjectEntry> runs = (List<ObjectEntry>)runsEntriesPage.getItems();
 
-		return _getBuildInRun(builds, runs);
+		return _getRunByBuild(builds, runs);
 	}
 
 	private String _getAttributeValue(String attributeName, Node node) {
@@ -532,25 +532,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 
 		return attributeNode.getTextContent();
-	}
-
-	private ObjectEntry _getBuildInRun(
-		List<ObjectEntry> builds, List<ObjectEntry> runs) {
-
-		String buildsString = builds.toString();
-
-		for (ObjectEntry run : runs) {
-			Map<String, Object> properties = run.getProperties();
-
-			if (buildsString.contains(
-					String.valueOf(
-						properties.get("r_buildToRuns_c_buildId")))) {
-
-				return run;
-			}
-		}
-
-		return null;
 	}
 
 	private ObjectDefinition _getObjectDefinition(
@@ -634,6 +615,25 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 
 		return map;
+	}
+
+	private ObjectEntry _getRunByBuild(
+		List<ObjectEntry> builds, List<ObjectEntry> runs) {
+
+		String buildsString = builds.toString();
+
+		for (ObjectEntry run : runs) {
+			Map<String, Object> properties = run.getProperties();
+
+			if (buildsString.contains(
+					String.valueOf(
+						properties.get("r_buildToRuns_c_buildId")))) {
+
+				return run;
+			}
+		}
+
+		return null;
 	}
 
 	private String _getTestrayBuildDescription(
@@ -1469,15 +1469,17 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				_defaultDTOConverterContext, _objectDefinitions.get("Run"),
 				testrayRunId);
 
-			Map<String, Object> runProperties = currentRun.getProperties();
+			Map<String, Object> currentRunProperties =
+				currentRun.getProperties();
 
 			ObjectEntry latestMachingTestrayRun = _fetchLatestTestrayRun(
-				companyId, (String)runProperties.get("environmentHash"),
+				companyId, (String)currentRunProperties.get("environmentHash"),
 				testrayRoutine.getId(), testrayRunId);
 
 			if (latestMachingTestrayRun != null) {
 				Map<Long, ObjectEntry> testrayCaseIdCompositeMapA =
 					_getTestrayCaseIdCompositeMap(companyId, currentRun);
+					
 				Map<Long, ObjectEntry> testrayCaseIdCompositeMapB =
 					_getTestrayCaseIdCompositeMap(
 						companyId, latestMachingTestrayRun);

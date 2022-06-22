@@ -56,10 +56,6 @@ export default function propsTransformer({
 	const exportTranslation = () => {
 		const url = new URL(exportTranslationURL);
 
-		const urlSearchParams = new URLSearchParams(url.search);
-
-		const paramName = `_${urlSearchParams.get('p_p_id')}_key`;
-
 		const searchContainer = Liferay.SearchContainer.get(
 			`${portletNamespace}articles`
 		);
@@ -68,11 +64,14 @@ export default function propsTransformer({
 			.getAllSelectedElements()
 			.get('value');
 
-		for (const key of keys) {
-			url.searchParams.append(paramName, key);
-		}
-
-		navigate(url.toString());
+		navigate(
+			addParams(
+				{
+					[`_${url.searchParams.get('p_p_id')}_key`]: keys.join(','),
+				},
+				exportTranslationURL
+			)
+		);
 	};
 
 	const moveEntries = () => {

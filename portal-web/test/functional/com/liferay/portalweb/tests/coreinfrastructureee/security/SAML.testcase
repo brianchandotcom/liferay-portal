@@ -3059,7 +3059,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-147809. TC2: Metadata source is changed after changed from XML File To URL."
-	@priority = "4"
+	@priority = "3"
 	test MetadataSourceIsChangedAfterChangedFromXMLFileToURL {
 		property app.server.bundles.size = "0";
 		property keystore.enabled = "true";
@@ -3122,6 +3122,113 @@ definition {
 				metadata = "true",
 				spURL = "www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Enable SP roles and add SP configurations to IdP") {
+			SAML.enableSPRoles(
+				samlEntityId = "samlsp",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			SAML.addSPConfigurationsToIdentityProvider(
+				idpURL = "http://localhost:8080",
+				nameIdentifierFormat = "Email Address",
+				spAttributes = '''emailAddress
+				firstName
+				lastName
+				screenName
+				uuid''',
+				spEntityId = "samlsp",
+				spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
+				spURL = "http://www.able.com:8080",
+				uploadMetadataXML = "sp-metadata.xml",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Add and sync new user") {
+			SAML.addAndSyncNewUser(
+				creatorEmailAddress = "test@liferay.com",
+				creatorPassword = "test",
+				newUserEmailAddress = "tester@localhost.com",
+				newUserFirstName = "first",
+				newUserLastName = "tester",
+				newUserPortalURL = "http://localhost:8080",
+				newUserScreenName = "tester",
+				portalInstanceName = "localhost",
+				spURL = "www.able.com:8080");
+		}
+
+		task ("Open portal and assert logged in") {
+			Navigator.openURL();
+
+			User.viewLoggedInPG();
+		}
+	}
+
+	@description = "This is a use case for LPS-147809. TC3: SAML Metadata URL is no longer shown after change metadata source from URL to file."
+	@priority = "3"
+	test MetadataURLDisappearsAfterChangedFromURLToXMLFile {
+		property app.server.bundles.size = "0";
+		property keystore.enabled = "true";
+		property test.name.skip.portal.instance = "SAML#MetadataURLDisappearsAfterChangedFromURLToXMLFile";
+
+		task ("Add SAML configuration files") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
+				osgiConfigFileName = "com.liferay.saml.runtime.configuration.SamlKeyStoreManagerConfiguration.config");
+
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
+				osgiConfigFileName = "com.liferay.saml.runtime.configuration.SamlProviderConfiguration.config");
+		}
+
+		task ("Add virtual instance able.com") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.logoutPG();
+
+			User.viewLoggedOutPG();
+		}
+
+		task ("Setup IdP and SP") {
+			SAML.setupIDP(
+				idpURL = "http://localhost:8080",
+				keystoreEnabled = "true",
+				samlEntityId = "samlidp",
+				userEmailAddress = "test@liferay.com");
+
+			SAML.setupSP(
+				keystoreEnabled = "true",
+				samlEntityId = "samlsp",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+
+		task ("Add IdP configurations to service provider") {
+			SAML.addIDPConfigurationsToServiceProvider(
+				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
+				idpEntityId = "samlidp",
+				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
+				idpURL = "http://localhost:8080",
+				nameIdentifierFormat = "Email Address",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com",
+				userMatchingAttributeIndex = "4",
+				userResolution = "attribute");
+		}
+
+		task ("Edit IdP connection and replace metadata URL with metadata XML file") {
+			SAML.editIdentityProviderConnection(
+				changeToXML = "true",
+				idpEntityId = "samlidp",
+				metadata = "true",
+				spURL = "www.able.com:8080",
+				uploadMetadataXML = "idp-metadata.xml",
+				userEmailAddress = "test@www.able.com",
+				viewMetadata = "true");
 		}
 
 		task ("Enable SP roles and add SP configurations to IdP") {

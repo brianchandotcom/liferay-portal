@@ -499,4 +499,59 @@ definition {
 			fieldName = "Date");
 	}
 
+	@description = "Check if Date Field details can be seen."
+	@priority = "4"
+	test ViewDateFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Date Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Date",
+			fieldName = "Date");
+
+		DEBuilder.openField(
+			fieldLabel = "Date",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Date",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Date");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Date");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Date");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Date Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Date",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Date",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Date");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Date");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Date");
+	}
+
 }

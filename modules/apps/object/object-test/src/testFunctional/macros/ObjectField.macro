@@ -184,4 +184,13 @@ definition {
 			value1 = "${newValue}");
 	}
 
+	macro viewToogleOnSidePanelShowFilesInDM {
+		if ("${isDisabled}" == "Yes") {
+			AssertElementPresent(locator1 = "ObjectField#SHOW_FILES_IN_DM_SIDE_PANEL_DISABLED");
+		}
+		else if ("${isDisabled}" == "No") {
+			AssertElementPresent(locator1 = "ObjectField#SHOW_FILES_IN_DM_SIDE_PANEL_NOT_DISABLED");
+		}
+	}
+
 }

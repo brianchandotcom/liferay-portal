@@ -152,6 +152,16 @@
 		<td>//div[contains(@class,'form-feedback-group') and contains(.,'${key_helpText}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>SHOW_FILES_IN_DM_SIDE_PANEL_DISABLED</td>
+		<td>//input[@name='showFilesInDocumentsAndMedia' and (@disabled)]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SHOW_FILES_IN_DM_SIDE_PANEL_NOT_DISABLED</td>
+		<td>//input[@name='showFilesInDocumentsAndMedia' and not(@disabled)]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

@@ -48,7 +48,25 @@ request.setAttribute("view.jsp-eventName", eventName);
 	>
 		<strong class="lead"><%= LanguageUtil.get(request, "segmentation-is-disabled") %></strong>
 
-		<span><%= LanguageUtil.get(request, "to-enable,-go-to-instance-settings") %></span>
+		<%
+		String segmentsConfigurationURL = segmentsDisplayContext.getSegmentsConfigurationURL(request);
+		%>
+
+		<c:choose>
+			<c:when test="<%= segmentsConfigurationURL != null %>">
+				<clay:link
+					href="<%= segmentsConfigurationURL %>"
+					label='<%=
+						LanguageUtil.get(request, "to-enable,-go-to-instance-settings")
+%>'
+				/>
+			</c:when>
+			<c:otherwise>
+				<span><%=
+				LanguageUtil.get(
+					request, "to-enable,-go-to-instance-settings") %></span>
+			</c:otherwise>
+		</c:choose>
 	</clay:stripe>
 </c:if>
 

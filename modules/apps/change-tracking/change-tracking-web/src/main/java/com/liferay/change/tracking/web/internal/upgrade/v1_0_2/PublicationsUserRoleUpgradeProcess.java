@@ -64,12 +64,9 @@ public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 					companyId, RoleConstants.PUBLICATIONS_USER);
 
 				if (role == null) {
-					long defaultUserId = _userLocalService.getDefaultUserId(
-						companyId);
-
 					role = _roleLocalService.addRole(
-						defaultUserId, null, 0, RoleConstants.PUBLICATIONS_USER,
-						null,
+						_userLocalService.getDefaultUserId(companyId), null, 0,
+						RoleConstants.PUBLICATIONS_USER, null,
 						HashMapBuilder.put(
 							LocaleUtil.fromLanguageId(
 								UpgradeProcessUtil.getDefaultLanguageId(

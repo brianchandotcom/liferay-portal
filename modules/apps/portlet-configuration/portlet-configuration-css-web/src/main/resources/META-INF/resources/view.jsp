@@ -56,15 +56,17 @@
 				(event) => {
 					var toggle = event.delegateTarget;
 
-					var disableOnChecked = toggle.dataset.disableonchecked;
+					var disableOnChecked =
+						toggle.dataset.disableonchecked === undefined ||
+						toggle.dataset.disableonchecked === 'true';
 					var inputs = document.querySelectorAll(toggle.dataset.inputselector);
 
 					for (var i = 0; i < inputs.length; i++) {
 						var input = inputs[i];
 
 						input.disabled = disableOnChecked
-							? !toggle.checked
-							: toggle.checked;
+							? toggle.checked
+							: !toggle.checked;
 
 						if (!input.disabled) {
 							input.classList.remove('disabled');

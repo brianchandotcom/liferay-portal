@@ -15,10 +15,12 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import {useSelectorCallback} from '../../contexts/StoreContext';
+import {useSelector, useSelectorCallback} from '../../contexts/StoreContext';
+import selectLanguageId from '../../selectors/selectLanguageId';
 import FormService from '../../services/FormService';
 import {CACHE_KEYS} from '../../utils/cache';
 import {formIsMapped} from '../../utils/formIsMapped';
+import {getEditableLocalizedValue} from '../../utils/getEditableLocalizedValue';
 import isItemEmpty from '../../utils/isItemEmpty';
 import useCache from '../../utils/useCache';
 import ContainerWithControls from './ContainerWithControls';
@@ -40,6 +42,8 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 		[item]
 	);
 
+	const showMessagePreview = item.config?.showMessagePreview;
+
 	return (
 		<form
 			className="page-editor__form"
@@ -47,7 +51,9 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 			ref={ref}
 		>
 			<ContainerWithControls {...rest} item={item}>
-				{isEmpty || !isMapped ? (
+				{showMessagePreview ? (
+					<FormSuccessMessage item={item} />
+				) : isEmpty || !isMapped ? (
 					<FormEmptyState isMapped={isMapped} />
 				) : (
 					children
@@ -73,6 +79,24 @@ function FormEmptyState({isMapped}) {
 							'select-a-content-type-to-start-creating-the-form'
 					  )}
 			</div>
+		</div>
+	);
+}
+
+function FormSuccessMessage({item}) {
+	const languageId = useSelector(selectLanguageId);
+
+	return (
+		<div className="align-items-center d-flex justify-content-center p-5 page-editor__form__success-message">
+			<span className="font-weight-semi-bold text-secondary">
+				{getEditableLocalizedValue(
+					item.config?.successMessage?.message,
+					languageId,
+					Liferay.Language.get(
+						'thank-you.-your-information-was-successfully-received'
+					)
+				)}
+			</span>
 		</div>
 	);
 }

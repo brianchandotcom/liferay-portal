@@ -1,6 +1,13 @@
-.page-editor__form {
-	button:disabled,
-	input:disabled {
-		pointer-events: none;
+html#{$cadmin-selector} .page-editor {
+	.page-editor__form {
+		button:disabled,
+		input:disabled {
+			pointer-events: none;
+		}
+
+		&__success-message,
+		& .empty {
+			min-height: 0;
+		}
 	}
 }

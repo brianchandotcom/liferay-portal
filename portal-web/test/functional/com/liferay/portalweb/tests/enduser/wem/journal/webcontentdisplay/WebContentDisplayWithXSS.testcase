@@ -34,7 +34,6 @@ definition {
 	test SelectWebContentBasedOnTemplateNameWithXSS {
 		task ("Add a web content template with a XSS name") {
 			var actualScript = '''<script>alert(123);</script>''';
-			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -49,10 +48,8 @@ definition {
 			AssertAlertNotPresent();
 		}
 
-		task ("View the XSS is escaped") {
-			LexiconCard.viewCardNotPresent(card = "${actualScript}");
-
-			WebContentTemplates.viewCardsEntryCP(templateName = "${escapedScript}");
+		task ("View the XSS is not escaped") {
+			WebContentTemplates.viewCardsEntryCP(templateName = "${actualScript}");
 		}
 
 		task ("Add a web content based on new template") {
@@ -66,7 +63,7 @@ definition {
 
 			WebContent.selectTemplateCP(
 				structureName = "Basic Web Content",
-				templateName = "${escapedScript}");
+				templateName = "${actualScript}");
 
 			PortletEntry.publish();
 		}

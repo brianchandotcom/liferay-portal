@@ -3383,8 +3383,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return ArrayUtil.toLongArray(assetCategoryIds);
 	}
 
-	private String _getExpandoPropertyKey(String entryKey) {
-		String[] keyParts = entryKey.split("(?=\\p{Upper})");
+	private String _getExpandoPropertyKey(String string) {
+		String[] keyParts = string.split("(?=\\p{Upper})");
 
 		String mergedString = StringUtil.merge(keyParts, StringPool.DASH);
 

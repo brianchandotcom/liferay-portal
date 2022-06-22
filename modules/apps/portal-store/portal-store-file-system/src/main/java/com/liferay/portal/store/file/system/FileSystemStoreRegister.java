@@ -17,10 +17,13 @@ package com.liferay.portal.store.file.system;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.convert.documentlibrary.FileSystemStoreRootDirException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.file.system.configuration.FileSystemStoreConfiguration;
+import com.liferay.portal.store.file.system.lenient.LenientStore;
 import com.liferay.portal.store.file.system.safe.file.name.SafeFileNameStore;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.Map;
 
@@ -57,7 +60,7 @@ public class FileSystemStoreRegister {
 			fileSystemStoreConfiguration);
 
 		_serviceRegistration = bundleContext.registerService(
-			Store.class, new SafeFileNameStore(fileSystemStore),
+			Store.class, _wrapStore(fileSystemStore),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"rootDir", fileSystemStore.getRootDir()
 			).put(
@@ -68,6 +71,16 @@ public class FileSystemStoreRegister {
 	@Deactivate
 	protected void deactivate() {
 		_serviceRegistration.unregister();
+	}
+
+	private Store _wrapStore(Store store) {
+		if (!GetterUtil.getBoolean(
+				PropsUtil.get("dl.store.file.system.lenient"))) {
+
+			return new SafeFileNameStore(store);
+		}
+
+		return new LenientStore(new SafeFileNameStore(store));
 	}
 
 	private ServiceRegistration<Store> _serviceRegistration;

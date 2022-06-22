@@ -459,4 +459,59 @@ definition {
 			fieldName = "Color");
 	}
 
+	@description = "Check if Select from Color Field details can be seen."
+	@priority = "4"
+	test ViewColorFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Color Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Color",
+			fieldName = "Color");
+
+		DEBuilder.openField(
+			fieldLabel = "Color",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Color",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Color");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Color");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Color");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Color Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Color",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Color",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Color");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Color");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Color");
+	}
+
 }

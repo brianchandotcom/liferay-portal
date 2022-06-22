@@ -847,7 +847,7 @@ definition {
 
 	macro viewPortletPresentPG {
 		AssertTextEquals.assertPartialText(
-			locator1 = "Portlet#PORTLET_CONTENT",
+			locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
 			value1 = "${portletContent}");
 	}
 

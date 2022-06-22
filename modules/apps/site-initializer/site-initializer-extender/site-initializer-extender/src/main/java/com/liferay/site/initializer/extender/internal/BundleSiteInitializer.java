@@ -1134,10 +1134,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 							propertiesJSONObject.toMap(
 							).entrySet()) {
 
+						Object entryValue = entry.getValue();
+
 						unicodeProperties.setProperty(
 							_getExpandoPropertyKey(entry.getKey()),
-							entry.getValue(
-							).toString());
+							entryValue.toString());
 					}
 
 					expandoBridge.setAttributeProperties(
@@ -3385,9 +3386,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private String _getExpandoPropertyKey(String entryKey) {
 		String[] keyParts = entryKey.split("(?=\\p{Upper})");
 
-		return StringUtil.merge(
-			keyParts, StringPool.DASH
-		).toLowerCase();
+		String mergedString = StringUtil.merge(keyParts, StringPool.DASH);
+
+		return StringUtil.toLowerCase(mergedString);
 	}
 
 	private Map<String, String> _getReleaseInfoStringUtilReplaceValues() {

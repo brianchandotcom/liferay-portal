@@ -20,6 +20,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
@@ -170,8 +171,8 @@ public class LayoutAdaptiveMediaProcessorTest {
 			_fragmentEntryLink.getEditableValues());
 
 		JSONObject processorJSONObject = editableValuesJSONObject.getJSONObject(
-			"com.liferay.fragment.entry.processor.editable." +
-				"EditableFragmentEntryProcessor");
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		JSONObject imageJSONObject = processorJSONObject.getJSONObject(
 			"image-square");
@@ -246,8 +247,8 @@ public class LayoutAdaptiveMediaProcessorTest {
 			_serviceContext);
 
 		JSONObject editableValuesJSONObject = JSONUtil.put(
-			"com.liferay.fragment.entry.processor.editable." +
-				"EditableFragmentEntryProcessor",
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			JSONUtil.put(
 				"image-square",
 				JSONUtil.put(

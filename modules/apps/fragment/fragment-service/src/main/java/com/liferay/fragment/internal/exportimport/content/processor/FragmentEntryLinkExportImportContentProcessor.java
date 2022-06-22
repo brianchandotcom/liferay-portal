@@ -16,6 +16,7 @@ package com.liferay.fragment.internal.exportimport.content.processor;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -152,12 +153,10 @@ public class FragmentEntryLinkExportImportContentProcessor
 	}
 
 	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
-		"com.liferay.fragment.entry.processor.background.image." +
-			"BackgroundImageFragmentEntryProcessor",
-		"com.liferay.fragment.entry.processor.editable." +
-			"EditableFragmentEntryProcessor",
-		"com.liferay.fragment.entry.processor.freemarker." +
-			"FreeMarkerFragmentEntryProcessor"
+		FragmentEntryProcessorConstants.
+			KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+		FragmentEntryProcessorConstants.KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+		FragmentEntryProcessorConstants.KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 	};
 
 	@Reference(target = "(content.processor.type=DLReferences)")

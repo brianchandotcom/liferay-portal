@@ -16,6 +16,7 @@ package com.liferay.layout.page.template.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
@@ -894,8 +895,8 @@ public class LayoutPageTemplatesImporterTest {
 
 		JSONObject editableFragmentEntryProcessorJSONObject =
 			jsonObject.getJSONObject(
-				"com.liferay.fragment.entry.processor.editable." +
-					"EditableFragmentEntryProcessor");
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		Assert.assertNotNull(editableFragmentEntryProcessorJSONObject);
 
@@ -920,8 +921,8 @@ public class LayoutPageTemplatesImporterTest {
 
 		JSONObject editableFragmentEntryProcessorJSONObject =
 			jsonObject.getJSONObject(
-				"com.liferay.fragment.entry.processor.editable." +
-					"EditableFragmentEntryProcessor");
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		Assert.assertNotNull(editableFragmentEntryProcessorJSONObject);
 
@@ -942,8 +943,8 @@ public class LayoutPageTemplatesImporterTest {
 
 		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
 			jsonObject.getJSONObject(
-				"com.liferay.fragment.entry.processor.freemarker." +
-					"FreeMarkerFragmentEntryProcessor");
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 		Assert.assertNotNull(freeMarkerFragmentEntryProcessorJSONObject);
 
@@ -968,8 +969,8 @@ public class LayoutPageTemplatesImporterTest {
 
 		JSONObject editableFragmentEntryProcessorJSONObject =
 			jsonObject.getJSONObject(
-				"com.liferay.fragment.entry.processor.editable." +
-					"EditableFragmentEntryProcessor");
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		Assert.assertNotNull(editableFragmentEntryProcessorJSONObject);
 
@@ -999,8 +1000,8 @@ public class LayoutPageTemplatesImporterTest {
 
 		JSONObject editableFragmentEntryProcessorJSONObject =
 			jsonObject.getJSONObject(
-				"com.liferay.fragment.entry.processor.editable." +
-					"EditableFragmentEntryProcessor");
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		Assert.assertNotNull(editableFragmentEntryProcessorJSONObject);
 
@@ -1023,8 +1024,8 @@ public class LayoutPageTemplatesImporterTest {
 
 		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
 			jsonObject.getJSONObject(
-				"com.liferay.fragment.entry.processor.freemarker." +
-					"FreeMarkerFragmentEntryProcessor");
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 		Assert.assertNotNull(freeMarkerFragmentEntryProcessorJSONObject);
 

@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -208,7 +209,8 @@ public class FragmentEntryLinkLocalServiceTest {
 			fragmentEntryLink.getEditableValues());
 
 		JSONObject editableJSONObject = jsonObject.getJSONObject(
-			_EDITABLE_PROCESSOR_KEY);
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		Assert.assertEquals(1, editableJSONObject.length());
 	}
@@ -238,7 +240,8 @@ public class FragmentEntryLinkLocalServiceTest {
 			fragmentEntryLink.getEditableValues());
 
 		JSONObject editableJSONObject = jsonObject.getJSONObject(
-			_EDITABLE_PROCESSOR_KEY);
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		Assert.assertEquals(3, editableJSONObject.length());
 	}
@@ -266,7 +269,8 @@ public class FragmentEntryLinkLocalServiceTest {
 			fragmentEntryLink.getEditableValues());
 
 		JSONObject editableJSONObject = jsonObject.getJSONObject(
-			_EDITABLE_PROCESSOR_KEY);
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		Assert.assertEquals(3, editableJSONObject.length());
 	}
@@ -294,7 +298,8 @@ public class FragmentEntryLinkLocalServiceTest {
 			fragmentEntryLink.getEditableValues());
 
 		JSONObject editableJSONObject = jsonObject.getJSONObject(
-			_EDITABLE_PROCESSOR_KEY);
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		Assert.assertEquals(3, editableJSONObject.length());
 	}
@@ -867,10 +872,6 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		Thread.sleep(200);
 	}
-
-	private static final String _EDITABLE_PROCESSOR_KEY =
-		"com.liferay.fragment.entry.processor.editable." +
-			"EditableFragmentEntryProcessor";
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

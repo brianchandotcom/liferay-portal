@@ -16,6 +16,7 @@ package com.liferay.layout.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
@@ -184,8 +185,8 @@ public class LayoutPublishedSearchTest {
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		JSONObject inlineValueJSONObject = JSONUtil.put(
-			"com.liferay.fragment.entry.processor.editable." +
-				"EditableFragmentEntryProcessor",
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			JSONUtil.put(
 				"element-text",
 				JSONUtil.put(

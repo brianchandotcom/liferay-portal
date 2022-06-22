@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
@@ -53,7 +54,8 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 
 		JSONObject editableProcessorJSONObject =
 			editableValuesJSONObject.getJSONObject(
-				_KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (editableProcessorJSONObject == null) {
 			return editableValuesJSONObject;
@@ -89,7 +91,8 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 
 		JSONObject editableProcessorJSONObject =
 			editableValuesJSONObject.getJSONObject(
-				_KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (editableProcessorJSONObject == null) {
 			return editableValuesJSONObject;
@@ -187,10 +190,6 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 			"privateLayout", layout.isPrivateLayout()
 		);
 	}
-
-	private static final String _KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR =
-		"com.liferay.fragment.entry.processor.editable." +
-			"EditableFragmentEntryProcessor";
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

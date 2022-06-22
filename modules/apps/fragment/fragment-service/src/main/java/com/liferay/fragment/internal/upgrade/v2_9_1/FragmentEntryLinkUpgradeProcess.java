@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.internal.upgrade.v2_9_1;
 
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -90,12 +91,10 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 	}
 
 	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
-		"com.liferay.fragment.entry.processor.background.image." +
-			"BackgroundImageFragmentEntryProcessor",
-		"com.liferay.fragment.entry.processor.editable." +
-			"EditableFragmentEntryProcessor",
-		"com.liferay.fragment.entry.processor.freemarker." +
-			"FreeMarkerFragmentEntryProcessor"
+		FragmentEntryProcessorConstants.
+			KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+		FragmentEntryProcessorConstants.KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+		FragmentEntryProcessorConstants.KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

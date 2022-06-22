@@ -16,6 +16,7 @@ package com.liferay.fragment.service.impl;
 
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
 import com.liferay.fragment.model.FragmentCollection;
@@ -732,8 +733,7 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
-		"com.liferay.fragment.entry.processor.editable." +
-			"EditableFragmentEntryProcessor"
+		FragmentEntryProcessorConstants.KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

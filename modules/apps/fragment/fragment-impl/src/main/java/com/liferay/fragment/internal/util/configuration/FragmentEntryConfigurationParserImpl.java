@@ -15,6 +15,7 @@
 package com.liferay.fragment.internal.util.configuration;
 
 import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.token.definition.FrontendToken;
@@ -101,7 +102,8 @@ public class FragmentEntryConfigurationParserImpl
 
 			JSONObject configurationValuesJSONObject =
 				editableValuesJSONObject.getJSONObject(
-					_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 			if (configurationValuesJSONObject == null) {
 				return null;
@@ -139,7 +141,8 @@ public class FragmentEntryConfigurationParserImpl
 
 		JSONObject configurationValuesJSONObject =
 			editableValuesJSONObject.getJSONObject(
-				_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (configurationValuesJSONObject == null) {
 			return configurationDefaultValuesJSONObject;
@@ -314,7 +317,8 @@ public class FragmentEntryConfigurationParserImpl
 
 			JSONObject configurationValuesJSONObject =
 				editableValuesJSONObject.getJSONObject(
-					_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 			if (configurationValuesJSONObject == null) {
 				return fragmentConfigurationField.getDefaultValue();
@@ -351,7 +355,8 @@ public class FragmentEntryConfigurationParserImpl
 
 		JSONObject configurationValuesJSONObject =
 			editableValuesJSONObject.getJSONObject(
-				_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (configurationValuesJSONObject == null) {
 			return null;
@@ -781,10 +786,6 @@ public class FragmentEntryConfigurationParserImpl
 	private static final String _CONTEXT_OBJECT_LIST_SUFFIX = "ObjectList";
 
 	private static final String _CONTEXT_OBJECT_SUFFIX = "Object";
-
-	private static final String _KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR =
-		"com.liferay.fragment.entry.processor.freemarker." +
-			"FreeMarkerFragmentEntryProcessor";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryConfigurationParserImpl.class);

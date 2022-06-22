@@ -17,6 +17,7 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -287,8 +288,8 @@ public class FragmentLayoutStructureItemImporter
 			EditableFragmentEntryProcessorUtil.getEditableTypes(html);
 
 		JSONObject fragmentEntryProcessorValuesJSONObject = JSONUtil.put(
-			"com.liferay.fragment.entry.processor.background.image." +
-				"BackgroundImageFragmentEntryProcessor",
+			FragmentEntryProcessorConstants.
+				KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
 			() -> {
 				JSONObject backgroundImageFragmentEntryProcessorJSONObject =
 					_toBackgroundImageFragmentEntryProcessorJSONObject(
@@ -304,8 +305,8 @@ public class FragmentLayoutStructureItemImporter
 				return null;
 			}
 		).put(
-			"com.liferay.fragment.entry.processor.editable." +
-				"EditableFragmentEntryProcessor",
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 			() -> {
 				JSONObject editableFragmentEntryProcessorJSONObject =
 					_toEditableFragmentEntryProcessorJSONObject(
@@ -331,8 +332,8 @@ public class FragmentLayoutStructureItemImporter
 
 		if (freeMarkerFragmentEntryProcessorJSONObject.length() > 0) {
 			fragmentEntryProcessorValuesJSONObject.put(
-				"com.liferay.fragment.entry.processor.freemarker." +
-					"FreeMarkerFragmentEntryProcessor",
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 				freeMarkerFragmentEntryProcessorJSONObject);
 		}
 

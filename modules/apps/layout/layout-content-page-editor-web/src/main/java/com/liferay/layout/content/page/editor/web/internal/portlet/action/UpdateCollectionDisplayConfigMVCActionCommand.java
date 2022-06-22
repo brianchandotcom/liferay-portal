@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
@@ -103,7 +104,8 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 					fragmentEntryLink.getEditableValues());
 
 			String configuration = editableValuesJSONObject.getString(
-				_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 			if ((configuration == null) || !JSONUtil.isValid(configuration)) {
 				continue;
@@ -111,7 +113,8 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 
 			JSONObject configurationJSONObject =
 				editableValuesJSONObject.getJSONObject(
-					_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 			if (!configurationJSONObject.has("targetCollections")) {
 				continue;
@@ -137,7 +140,8 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 			}
 
 			editableValuesJSONObject.put(
-				_KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 				configurationJSONObject);
 
 			long fragmentEntryLinkId =
@@ -196,10 +200,6 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 	private static final String _KEY_COLLECTION_FILTER_FRAGMENT_RENDERER =
 		"com.liferay.fragment.renderer.collection.filter.internal." +
 			"CollectionFilterFragmentRenderer";
-
-	private static final String _KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR =
-		"com.liferay.fragment.entry.processor.freemarker." +
-			"FreeMarkerFragmentEntryProcessor";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateCollectionDisplayConfigMVCActionCommand.class);

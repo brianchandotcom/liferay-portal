@@ -14,6 +14,7 @@
 
 package com.liferay.layout.util.structure;
 
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
@@ -110,8 +111,8 @@ public class FragmentStyledLayoutStructureItem
 
 				_fragmentConfigurationJSONObject =
 					editablesJSONObject.getJSONObject(
-						"com.liferay.fragment.entry.processor.freemarker." +
-							"FreeMarkerFragmentEntryProcessor");
+						FragmentEntryProcessorConstants.
+							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 				if (_fragmentConfigurationJSONObject == null) {
 					_fragmentConfigurationJSONObject =

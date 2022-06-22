@@ -20,6 +20,7 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
@@ -273,8 +274,8 @@ public class GetPageContentMVCResourceCommandTest {
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			_layout, defaultSegmentsExperienceId,
 			JSONUtil.put(
-				"com.liferay.fragment.entry.processor.editable." +
-					"EditableFragmentEntryProcessor",
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				JSONUtil.put(
 					"test",
 					JSONUtil.put(
@@ -316,8 +317,8 @@ public class GetPageContentMVCResourceCommandTest {
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			_layout, defaultSegmentsExperienceId,
 			JSONUtil.put(
-				"com.liferay.fragment.entry.processor.editable." +
-					"EditableFragmentEntryProcessor",
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				JSONUtil.put(
 					"test",
 					JSONUtil.put(
@@ -344,8 +345,8 @@ public class GetPageContentMVCResourceCommandTest {
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 			_layout, segmentsExperience.getSegmentsExperienceId(),
 			JSONUtil.put(
-				"com.liferay.fragment.entry.processor.editable." +
-					"EditableFragmentEntryProcessor",
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				JSONUtil.put(
 					"test",
 					JSONUtil.put(

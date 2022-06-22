@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v3_4_2;
 
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,8 +49,8 @@ public class FragmentEntryLinkEditableValuesUpgradeProcess
 
 				JSONObject configurationJSONObject =
 					editablesJSONObject.getJSONObject(
-						"com.liferay.fragment.entry.processor.freemarker." +
-							"FreeMarkerFragmentEntryProcessor");
+						FragmentEntryProcessorConstants.
+							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 				if (configurationJSONObject == null) {
 					continue;

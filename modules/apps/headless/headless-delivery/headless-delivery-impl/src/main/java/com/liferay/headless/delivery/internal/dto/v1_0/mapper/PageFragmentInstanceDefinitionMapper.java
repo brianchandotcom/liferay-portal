@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -188,8 +189,8 @@ public class PageFragmentInstanceDefinitionMapper {
 
 			JSONObject configJSONObject =
 				editableValuesJSONObject.getJSONObject(
-					"com.liferay.fragment.entry.processor.freemarker." +
-						"FreeMarkerFragmentEntryProcessor");
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 			if (configJSONObject == null) {
 				configJSONObject =
@@ -293,13 +294,13 @@ public class PageFragmentInstanceDefinitionMapper {
 		List<FragmentField> fragmentFields = new ArrayList<>(
 			_getBackgroundImageFragmentFields(
 				editableValuesJSONObject.getJSONObject(
-					"com.liferay.fragment.entry.processor.background.image." +
-						"BackgroundImageFragmentEntryProcessor"),
+					FragmentEntryProcessorConstants.
+						KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR),
 				saveMapping));
 
 		JSONObject jsonObject = editableValuesJSONObject.getJSONObject(
-			"com.liferay.fragment.entry.processor.editable." +
-				"EditableFragmentEntryProcessor");
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (jsonObject != null) {
 			fragmentFields.addAll(

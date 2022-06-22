@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.info.item.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -164,10 +165,9 @@ public class LayoutInfoItemLanguagesProviderTest {
 	}
 
 	private static final String[] _TRANSLATABLE_FRAGMENTS = {
-		"com.liferay.fragment.entry.processor.background.image." +
-			"BackgroundImageFragmentEntryProcessor",
-		"com.liferay.fragment.entry.processor.editable." +
-			"EditableFragmentEntryProcessor"
+		FragmentEntryProcessorConstants.
+			KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+		FragmentEntryProcessorConstants.KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 	};
 
 	@Inject

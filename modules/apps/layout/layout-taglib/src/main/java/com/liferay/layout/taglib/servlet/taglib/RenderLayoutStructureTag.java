@@ -16,6 +16,7 @@ package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.constants.FragmentWebKeys;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
@@ -339,7 +340,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			fragmentEntryLink.getEditableValues());
 
 		JSONObject stylesFragmentEntryEntryProcessorJSONObject =
-			jsonObject.getJSONObject(_KEY_STYLES_FRAGMENT_ENTRY_PROCESSOR);
+			jsonObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_STYLES_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (stylesFragmentEntryEntryProcessorJSONObject == null) {
 			return false;
@@ -1316,10 +1319,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				fragmentStyledLayoutStructureItem));
 		jspWriter.write("\">");
 	}
-
-	private static final String _KEY_STYLES_FRAGMENT_ENTRY_PROCESSOR =
-		"com.liferay.fragment.entry.processor.styles." +
-			"StylesFragmentEntryProcessor";
 
 	private static final String _PAGE = "/render_layout_structure/page.jsp";
 

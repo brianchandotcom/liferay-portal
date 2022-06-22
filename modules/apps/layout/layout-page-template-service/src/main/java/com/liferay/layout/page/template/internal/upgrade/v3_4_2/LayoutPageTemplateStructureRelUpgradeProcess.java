@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v3_4_2;
 
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -246,8 +247,8 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 
 				JSONObject fragmentConfigValuesJSONObject =
 					editableValuesJSONObject.getJSONObject(
-						"com.liferay.fragment.entry.processor.freemarker." +
-							"FreeMarkerFragmentEntryProcessor");
+						FragmentEntryProcessorConstants.
+							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 				if (fragmentConfigValuesJSONObject == null) {
 					continue;

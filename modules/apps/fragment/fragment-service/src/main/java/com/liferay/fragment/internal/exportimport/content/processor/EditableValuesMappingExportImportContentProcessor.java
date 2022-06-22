@@ -27,6 +27,7 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -67,7 +68,8 @@ public class EditableValuesMappingExportImportContentProcessor
 
 		JSONObject editableProcessorJSONObject =
 			editableValuesJSONObject.getJSONObject(
-				_KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		_replaceAllEditableExportContentReferences(
 			editableProcessorJSONObject, exportReferencedContent,
@@ -84,7 +86,8 @@ public class EditableValuesMappingExportImportContentProcessor
 
 		JSONObject editableProcessorJSONObject =
 			editableValuesJSONObject.getJSONObject(
-				_KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		_replaceAllEditableImportContentReferences(
 			editableProcessorJSONObject, portletDataContext);
@@ -343,10 +346,6 @@ public class EditableValuesMappingExportImportContentProcessor
 	}
 
 	private static final String _DDM_TEMPLATE = "ddmTemplate_";
-
-	private static final String _KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR =
-		"com.liferay.fragment.entry.processor.editable." +
-			"EditableFragmentEntryProcessor";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditableValuesMappingExportImportContentProcessor.class);

@@ -1088,12 +1088,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).build();
 	}
 
-	private String _getExpandoPropertyKey(String entryKey) {
-		String[] keyParts = entryKey.split("(?=\\p{Upper})");
-
-		return StringUtil.merge(keyParts, StringPool.DASH).toLowerCase();
-	}
-
 	private void _addExpandoColumns(ServiceContext serviceContext)
 		throws Exception {
 
@@ -1120,22 +1114,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			if (expandoBridge.getAttribute(jsonObject.getString("name")) ==
 					null) {
+
 				expandoBridge.addAttribute(
 					jsonObject.getString("name"),
 					jsonObject.getInt("dataType"));
 
 				if (jsonObject.has("properties")) {
-					UnicodeProperties unicodeProperties = new UnicodeProperties(true);
-					JSONObject jsonObjectProperties = jsonObject.getJSONObject("properties");
+					UnicodeProperties unicodeProperties = new UnicodeProperties(
+						true);
+					JSONObject propertiesJSONObject = jsonObject.getJSONObject(
+						"properties");
 
 					for (Map.Entry<String, Object> entry :
-						jsonObjectProperties.toMap().entrySet()) {
+							propertiesJSONObject.toMap(
+							).entrySet()) {
+
 						unicodeProperties.setProperty(
-								_getExpandoPropertyKey(entry.getKey()),
-							entry.getValue().toString());
+							_getExpandoPropertyKey(entry.getKey()),
+							entry.getValue(
+							).toString());
 					}
 
-					expandoBridge.setAttributeProperties(jsonObject.getString("name"), unicodeProperties);
+					expandoBridge.setAttributeProperties(
+						jsonObject.getString("name"), unicodeProperties);
 				}
 			}
 		}
@@ -3354,6 +3355,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return ArrayUtil.toLongArray(assetCategoryIds);
+	}
+
+	private String _getExpandoPropertyKey(String entryKey) {
+		String[] keyParts = entryKey.split("(?=\\p{Upper})");
+
+		return StringUtil.merge(
+			keyParts, StringPool.DASH
+		).toLowerCase();
 	}
 
 	private Map<String, String> _getReleaseInfoStringUtilReplaceValues() {

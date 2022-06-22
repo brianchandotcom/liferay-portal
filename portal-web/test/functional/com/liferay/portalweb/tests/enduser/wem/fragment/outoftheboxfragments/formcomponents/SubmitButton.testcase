@@ -161,4 +161,105 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-151754. The page designer can configure and map the Submit Button on display page template."
+	@priority = "4"
+	test ConfigureSubmitButtonOnDisplayPageTemplate {
+		property test.name.skip.portal.instance = "SubmitButton#ConfigureSubmitButtonOnContentPage";
+		property testray.component.names = "Display Pages,Fragments";
+
+		task ("Given a page designer has a Form Container mapped to an entity with text field") {
+			task ("Add a web content") {
+				JSONWebcontent.addWebContent(
+					content = "Continue",
+					groupName = "Test Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Add a Form Container framgment to display page template for Web Content Article and Basic Web Content") {
+				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Web Content Article",
+					displayPageTemplateEntryName = "Display Page Name",
+					groupName = "Test Site Name",
+					subType = "Basic Web Content");
+
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Map the Form Container to new Object") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+		}
+
+		task ("When the page designer adds a Submit Button fragment into the Form Container") {
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Submit Button");
+		}
+
+		task ("Then the page designer could configure the Submit Button fragment") {
+			task ("Change the Type of Submit Button to Secondary") {
+				PageEditor.gotoConfiguration(fragmentName = "Submit Button");
+
+				PageEditor.configureFragment(type = "Secondary");
+
+				PageEditor.viewFragmentStyle(
+					fragmentName = "Button",
+					type = "secondary");
+			}
+
+			task ("Change the Size of Submit Button to Small") {
+				PageEditor.configureFragment(size = "Small");
+
+				PageEditor.viewFragmentStyle(
+					fragmentName = "Button",
+					size = "sm");
+			}
+
+			task ("Edit the inline text of Submit Button") {
+				PageEditor.editFragmentText(
+					className = "button",
+					fragmentName = "Submit Button",
+					id = "text",
+					text = "Invoke");
+
+				PageEditor.viewFragmentEditableText(
+					className = "button",
+					editableText = "Invoke",
+					fragmentName = "Submit Button",
+					id = "text");
+			}
+
+			task ("Map the Submit Button to the Content field") {
+				PageEditorMapping.mapEditableTextToField(
+					className = "button",
+					field = "Content",
+					fragmentName = "Submit Button",
+					id = "text");
+
+				PageEditor.publish();
+
+				DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentNavigator.gotoEntryMenuItem(
+					entry = "Web Content Title",
+					menuItem = "View Content");
+
+				ContentPages.viewFragmentText(
+					fragmentName = "button",
+					id = "text",
+					text = "Continue");
+			}
+		}
+	}
+
 }

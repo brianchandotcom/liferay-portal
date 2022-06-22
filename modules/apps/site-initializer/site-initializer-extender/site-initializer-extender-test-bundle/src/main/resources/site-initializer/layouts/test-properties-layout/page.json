@@ -1,11 +1,9 @@
 {
-	"friendlyURL_i18n": {
-		"en_US": "[$PORTAL_PROPERTY:default.guest.public.layout.friendly.url$]"
-	},
+	"friendlyURL": "[$PORTAL_PROPERTY:default.guest.public.layout.friendly.url$]",
 	"hidden": false,
 	"layoutTemplateId": "[$PORTAL_PROPERTY:default.guest.public.layout.template.id$]",
+	"name": "[$PORTAL_PROPERTY:default.guest.public.layout.name$]",
 	"name_i18n": {
-		"en_US": "[$PORTAL_PROPERTY:default.guest.public.layout.name$]",
 		"es_ES": "[$PORTAL_PROPERTY:default.user.private.layout.name$]"
 	},
 	"priority": "1",

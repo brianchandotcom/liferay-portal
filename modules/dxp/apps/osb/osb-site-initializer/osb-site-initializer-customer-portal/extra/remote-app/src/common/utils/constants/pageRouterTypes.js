@@ -12,13 +12,16 @@
 import {Liferay} from '../../services/liferay';
 import {ROUTE_TYPES} from './routeTypes';
 
+const siteURL = Liferay.ThemeDisplay.getLayoutRelativeURL();
+
+const LiferayURL = `${Liferay.ThemeDisplay.getPortalURL()}${siteURL.substring(
+	0,
+	siteURL.lastIndexOf('/')
+)}`;
+
 export const PAGE_ROUTER_TYPES = {
 	onboarding: (externalReferenceCode) =>
-		`${Liferay.ThemeDisplay.getCanonicalURL()}/${
-			ROUTE_TYPES.onboarding
-		}/#/${externalReferenceCode}`,
+		`${LiferayURL}/${ROUTE_TYPES.onboarding}/#/${externalReferenceCode}`,
 	project: (externalReferenceCode) =>
-		`${Liferay.ThemeDisplay.getCanonicalURL()}/${
-			ROUTE_TYPES.project
-		}/#/${externalReferenceCode}`,
+		`${LiferayURL}/${ROUTE_TYPES.project}/#/${externalReferenceCode}`,
 };

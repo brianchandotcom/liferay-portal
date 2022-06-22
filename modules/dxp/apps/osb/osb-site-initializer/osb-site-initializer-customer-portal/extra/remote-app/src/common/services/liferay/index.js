@@ -19,6 +19,7 @@ export const Liferay = window.Liferay || {
 		getCanonicalURL: () => window.location.href,
 		getCompanyGroupId: () => 0,
 		getLanguageId: () => 'en_US',
+		getLayoutRelativeURL: () => '',
 		getPathThemeImages: () => null,
 		getPortalURL: () => window.location.origin,
 		getScopeGroupId: () => 0,

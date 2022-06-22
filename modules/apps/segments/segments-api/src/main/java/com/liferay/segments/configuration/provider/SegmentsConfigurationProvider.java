@@ -41,6 +41,9 @@ public interface SegmentsConfigurationProvider {
 	public boolean isSegmentsCompanyConfigurationDefined(long companyId)
 		throws ConfigurationException;
 
+	public void resetSegmentsCompanyConfiguration(long companyId)
+		throws ConfigurationException;
+
 	public void updateSegmentsCompanyConfiguration(
 			long companyId,
 			SegmentsCompanyConfiguration segmentsCompanyConfiguration)

@@ -1,0 +1,154 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-150277=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a company Object with a Boolean field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Purchase Date",
+				fieldName = "purchaseDate",
+				fieldType = "Date",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+		}
+
+		task ("Enable Inputs Fragment collection in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Disable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
+		}
+	}
+
+	@description = "This is a test for LPS-151158. The page creator could configure the Date fragment."
+	@priority = "5"
+	test ConfigureDate {
+		property test.name.skip.portal.instance = "Date#ConfigureDate";
+
+		task ("Given a page creator has a Form Container mapped to an entity with date field") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Map the Form Container to new Object") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+		}
+
+		task ("When the page creator adds a Date fragment into the Form Container") {
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Date");
+		}
+
+		task ("Then the page creator could configure the Date fragment") {
+			task ("Rename the label") {
+				PageEditor.editInput(
+					field = "Purchase Date",
+					fragmentName = "Date",
+					label = "Are you a fun of Stephen Curry?");
+
+				PageEditor.viewInputStyle(
+					label = "Are you a fun of Stephen Curry?",
+					showLabel = "true",
+					type = "date-input");
+			}
+
+			task ("Hide the label") {
+				PageEditor.editInput(
+					fragmentName = "Date",
+					hideLabel = "true");
+
+				PageEditor.viewInputStyle(
+					label = "Are you a fun of Stephen Curry?",
+					showLabel = "false",
+					type = "date-input");
+			}
+
+			task ("View the Help Text is disabled by default") {
+				PageEditor.viewInputStyle(
+					showHelpText = "false",
+					type = "date-input");
+			}
+
+			task ("Show the Help Text") {
+				PageEditor.editInput(
+					fragmentName = "Date",
+					hideHelpText = "false");
+
+				PageEditor.viewInputStyle(
+					helpText = "Add your help text here.",
+					showHelpText = "true",
+					type = "date-input");
+			}
+
+			task ("Clear the Help Text") {
+				PageEditor.editInput(
+					fragmentName = "Date",
+					helpText = "");
+
+				PageEditor.viewInputStyle(
+					showHelpText = "false",
+					type = "date-input");
+			}
+		}
+	}
+
+}

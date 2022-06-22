@@ -301,6 +301,19 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_NODE");
 	}
 
+	macro viewAndDeleteBySidebarProperty {
+		AssertElementPresent(
+			key_propertyName = "${sidebarPropertyName}",
+			key_propertyValue = "${propertyValue}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
+
+		Click(
+			key_propertyName = "${sidebarPropertyName}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_SIDEBAR_PROPERTY");
+			
+
+	}
+
 	macro viewAndFillActions {
 		Click(
 			key_propertyName = "Actions",
@@ -1170,6 +1183,15 @@ definition {
 			key_nodeType = "${nodeType}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL_SPECIFIC",
 			value1 = "${nodeLabel}");
+	}
+
+	macro viewTimerNotPresentSidebar {
+		AssertElementNotPresent(
+			key_propertyName = "${propertyName}",
+			key_propertyValue = "${propertyValue}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
+
+
 	}
 
 	macro viewTimersInfo {

@@ -933,12 +933,37 @@ definition {
 	}
 
 	@description = "Verify that the user can delete the Timers"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteTimers {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteTimers";
 
-		// TODO CanDeleteTimers pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			actionName = "Liferay Timer",
+			actionsTemplateValue = "Liferay Timer Template",
+			durationValue = "1",
+			newTimer = "true",
+			scaleTypeOption = "Minute",
+			singleTimer = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewAndDeleteBySidebarProperty(
+			propertyValue = "Duration: 1 minute",
+			sidebarPropertyName = "Timers");
+
+		ProcessBuilderKaleoDesignerReact.viewTimerNotPresentSidebar(
+			propertyName = "Timer",
+			propertyValue = "Duration: 1 minute");
+
+			
 	}
 
 	@description = "Verify that the user can delete A Timer clicking on trash icon in sidebar Timer Card"

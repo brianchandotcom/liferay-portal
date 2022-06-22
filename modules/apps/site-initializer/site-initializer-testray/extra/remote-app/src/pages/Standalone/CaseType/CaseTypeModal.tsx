@@ -34,6 +34,7 @@ const CaseTypeModal = () => {
 					columns: [
 						{
 							key: 'name',
+							sorteable: true,
 							value: i18n.translate('name'),
 						},
 					],

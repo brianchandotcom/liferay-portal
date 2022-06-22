@@ -33,6 +33,7 @@ const FactorCategoryModal = () => {
 					columns: [
 						{
 							key: 'name',
+							sorteable: true,
 							value: 'Name',
 						},
 					],

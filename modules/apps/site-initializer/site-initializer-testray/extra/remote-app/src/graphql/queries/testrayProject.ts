@@ -29,9 +29,19 @@ export type TestrayProject = {
 export const getProjects = gql`
 	${testrayProjectFragment}
 
-	query getProjects($filter: String, $page: Int = 1, $pageSize: Int = 20) {
+	query getProjects(
+		$filter: String
+		$page: Int = 1
+		$pageSize: Int = 20
+		$sort: String
+	) {
 		c {
-			projects(filter: $filter, page: $page, pageSize: $pageSize) {
+			projects(
+				filter: $filter
+				page: $page
+				pageSize: $pageSize
+				sort: $sort
+			) {
 				items {
 					...ProjectFragment
 				}

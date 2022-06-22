@@ -75,6 +75,7 @@ const Projects: React.FC<ProjectsProps & SecurityPermissions> = ({
 							{
 								clickable: true,
 								key: 'name',
+								sorteable: true,
 								value: i18n.translate('project'),
 							},
 							{

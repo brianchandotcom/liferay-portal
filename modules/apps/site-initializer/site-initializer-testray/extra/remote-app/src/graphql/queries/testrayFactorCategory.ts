@@ -44,12 +44,14 @@ export const getFactorCategories = gql`
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
+		$sort: String
 	) {
 		c {
 			factorCategories(
 				filter: $filter
 				page: $page
 				pageSize: $pageSize
+				sort: $sort
 			) {
 				items {
 					...FactorCategoryFragment

@@ -47,6 +47,7 @@ const Routines = () => {
 						{
 							clickable: true,
 							key: 'name',
+							sorteable: true,
 							value: i18n.translate('routine'),
 						},
 						{

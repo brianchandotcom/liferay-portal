@@ -25,9 +25,19 @@ export type TestrayRoutine = {
 export const getRoutines = gql`
 	${testrayRoutineFragment}
 
-	query getRoutines($filter: String, $page: Int = 1, $pageSize: Int = 20) {
+	query getRoutines(
+		$filter: String
+		$page: Int = 1
+		$pageSize: Int = 20
+		$sort: String
+	) {
 		c {
-			routines(filter: $filter, page: $page, pageSize: $pageSize) {
+			routines(
+				filter: $filter
+				page: $page
+				pageSize: $pageSize
+				sort: $sort
+			) {
 				items {
 					...RoutineFragment
 				}

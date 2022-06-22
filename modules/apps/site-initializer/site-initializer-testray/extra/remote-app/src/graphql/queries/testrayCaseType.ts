@@ -40,9 +40,19 @@ export const getCaseType = gql`
 export const getCaseTypes = gql`
 	${testrayCaseTypeFragment}
 
-	query getCaseTypes($filter: String, $page: Int = 1, $pageSize: Int = 20) {
+	query getCaseTypes(
+		$filter: String
+		$page: Int = 1
+		$pageSize: Int = 20
+		$sort: String
+	) {
 		c {
-			caseTypes(filter: $filter, page: $page, pageSize: $pageSize) {
+			caseTypes(
+				filter: $filter
+				page: $page
+				pageSize: $pageSize
+				sort: $sort
+			) {
 				items {
 					...CaseTypeFragment
 				}

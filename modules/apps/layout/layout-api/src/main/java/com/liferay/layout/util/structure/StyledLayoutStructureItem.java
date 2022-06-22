@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
@@ -152,24 +153,17 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 				continue;
 			}
 
-			JSONObject viewportJSONObject = JSONFactoryUtil.createJSONObject();
-
-			if (_viewportCustomCSS.get(viewportSize.getViewportSizeId()) !=
-					null) {
-
-				viewportJSONObject.put(
-					"customCSS",
-					_viewportCustomCSS.get(viewportSize.getViewportSizeId()));
-			}
-
-			viewportJSONObject.put(
-				"styles",
-				viewportStyleJSONObjects.getOrDefault(
-					viewportSize.getViewportSizeId(),
-					JSONFactoryUtil.createJSONObject()));
-
 			jsonObject.put(
-				viewportSize.getViewportSizeId(), viewportJSONObject);
+				viewportSize.getViewportSizeId(),
+				JSONUtil.put(
+					"customCSS",
+					_viewportCustomCSS.get(viewportSize.getViewportSizeId())
+				).put(
+					"styles",
+					viewportStyleJSONObjects.getOrDefault(
+						viewportSize.getViewportSizeId(),
+						JSONFactoryUtil.createJSONObject())
+				));
 		}
 
 		return jsonObject;
@@ -437,49 +431,53 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	private void _updateViewportCustomCSSJSONObjects(
 		JSONObject itemConfigJSONObject, ViewportSize viewportSize) {
 
-		if (itemConfigJSONObject.has(viewportSize.getViewportSizeId())) {
-			JSONObject viewportItemConfigJSONObject =
-				itemConfigJSONObject.getJSONObject(
-					viewportSize.getViewportSizeId());
+		JSONObject viewportItemConfigJSONObject =
+			itemConfigJSONObject.getJSONObject(
+				viewportSize.getViewportSizeId());
 
-			if ((viewportItemConfigJSONObject != null) &&
-				viewportItemConfigJSONObject.has("customCSS")) {
+		if ((viewportItemConfigJSONObject != null) &&
+			viewportItemConfigJSONObject.has("customCSS")) {
 
-				_viewportCustomCSS.put(
-					viewportSize.getViewportSizeId(),
-					viewportItemConfigJSONObject.getString("customCSS"));
-			}
+			_viewportCustomCSS.put(
+				viewportSize.getViewportSizeId(),
+				viewportItemConfigJSONObject.getString("customCSS"));
 		}
 	}
 
 	private void _updateViewportStyleJSONObjects(
 		JSONObject itemConfigJSONObject, ViewportSize viewportSize) {
 
+		List<String> availableStyleNames =
+			CommonStylesUtil.getAvailableStyleNames();
+
+		JSONObject viewportItemConfigJSONObject =
+			itemConfigJSONObject.getJSONObject(
+				viewportSize.getViewportSizeId());
+
+		if (ListUtil.isEmpty(availableStyleNames) ||
+			(viewportItemConfigJSONObject == null)) {
+
+			return;
+		}
+
+		JSONObject newStylesJSONObject =
+			viewportItemConfigJSONObject.getJSONObject("styles");
+
+		if ((newStylesJSONObject == null) ||
+			(newStylesJSONObject.length() == 0)) {
+
+			return;
+		}
+
 		JSONObject currentViewportStyleJSONObject =
 			viewportStyleJSONObjects.getOrDefault(
 				viewportSize.getViewportSizeId(),
 				JSONFactoryUtil.createJSONObject());
 
-		if (itemConfigJSONObject.has(viewportSize.getViewportSizeId())) {
-			JSONObject viewportItemConfigJSONObject =
-				itemConfigJSONObject.getJSONObject(
-					viewportSize.getViewportSizeId());
-
-			JSONObject newStylesJSONObject =
-				viewportItemConfigJSONObject.getJSONObject("styles");
-
-			if (newStylesJSONObject == null) {
-				return;
-			}
-
-			List<String> availableStyleNames =
-				CommonStylesUtil.getAvailableStyleNames();
-
-			for (String styleName : availableStyleNames) {
-				if (newStylesJSONObject.has(styleName)) {
-					currentViewportStyleJSONObject.put(
-						styleName, newStylesJSONObject.get(styleName));
-				}
+		for (String styleName : availableStyleNames) {
+			if (newStylesJSONObject.has(styleName)) {
+				currentViewportStyleJSONObject.put(
+					styleName, newStylesJSONObject.get(styleName));
 			}
 		}
 

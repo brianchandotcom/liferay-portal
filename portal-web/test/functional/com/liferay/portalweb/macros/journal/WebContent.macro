@@ -1771,10 +1771,6 @@ definition {
 
 		Panel.expandPanel(panel = "Default Template");
 
-		var templateName = StringUtil.replace("${templateName}", "&lt;", "<");
-
-		var templateName = StringUtil.replace("${templateName}", "&gt;", ">");
-
 		AssertTextEquals(
 			inputFieldId = "ddmTemplateName",
 			locator1 = "TextInput#INPUT_ID",

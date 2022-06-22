@@ -889,15 +889,6 @@ definition {
 			value1 = "An unexpected error occurred while uploading your file.");
 	}
 
-	@description = "LPS-148112 - Verify that Path/Folder is working fine when using the Show File option"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test PathOrFolderWorkingOnShowFileOption {
-
-		// TODO LPS-153422 PathOrFolderWorkingOnShowFileOption pending implementation
-
-	}
-
 	@description = "LPS-143065 - Verify that the Request Files option is a required field"
 	@priority = "4"
 	test RequestFilesIsRequired {

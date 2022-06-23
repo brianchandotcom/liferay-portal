@@ -679,10 +679,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(productLayoutUuid);
 
-		List<Layout> publicLayouts = _layoutLocalService.getLayouts(
-			group.getGroupId(), false);
-
-		Layout publicLayout = publicLayouts.get(0);
+		Layout publicLayout = _layoutLocalService.getLayoutByFriendlyURL(
+			group.getGroupId(), false, "/test-public-layout");
 
 		Assert.assertEquals(productLayoutUuid, publicLayout.getUuid());
 	}
@@ -1133,7 +1131,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertTrue(publicLayouts.size() == 3);
 
-		Layout publicLayout = publicLayouts.get(0);
+		Layout publicLayout = _layoutLocalService.getLayoutByFriendlyURL(
+			group.getGroupId(), false, "/test-public-layout");
 
 		Assert.assertFalse(publicLayout.isHidden());
 		Assert.assertEquals(
@@ -1151,7 +1150,8 @@ public class BundleSiteInitializerTest {
 			"Test Public Child Layout",
 			publicChildLayout.getName(LocaleUtil.getSiteDefault()));
 
-		publicLayout = publicLayouts.get(1);
+		publicLayout = _layoutLocalService.getLayoutByFriendlyURL(
+			group.getGroupId(), false, "/home");
 
 		Assert.assertEquals(
 			PropsUtil.get("default.guest.public.layout.name"),

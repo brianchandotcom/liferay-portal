@@ -17,6 +17,7 @@ package com.liferay.journal.internal.exportimport.data.handler;
 import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
 import com.liferay.changeset.service.ChangesetEntryLocalService;
+import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -404,6 +405,28 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			for (Element ddmStructureElement : ddmStructureElements) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, ddmStructureElement);
+			}
+
+			for (Element ddmStructureElement : ddmStructureElements) {
+				List<Element> deDataDefinitionFieldLinkElements =
+					portletDataContext.getReferenceDataElements(
+						ddmStructureElement, DEDataDefinitionFieldLink.class,
+						null);
+
+				for (Element deDataDefinitionFieldLinkElement :
+						deDataDefinitionFieldLinkElements) {
+
+					String path =
+						deDataDefinitionFieldLinkElement.attributeValue("path");
+
+					DEDataDefinitionFieldLink deDataDefinitionFieldLink =
+						(DEDataDefinitionFieldLink)
+							portletDataContext.getZipEntryAsObject(
+								deDataDefinitionFieldLinkElement, path);
+
+					StagedModelDataHandlerUtil.importStagedModel(
+						portletDataContext, deDataDefinitionFieldLink);
+				}
 			}
 
 			// Importing DDM structure default values

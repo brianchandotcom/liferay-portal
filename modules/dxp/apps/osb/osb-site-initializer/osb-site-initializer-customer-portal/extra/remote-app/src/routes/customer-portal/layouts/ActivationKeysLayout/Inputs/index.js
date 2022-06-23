@@ -86,7 +86,7 @@ const ActivationKeysInputs = ({
 			});
 
 			if (data) {
-				const orderItems = data.orderItems?.items || [];
+				const orderItems = data?.orderItems?.items || [];
 
 				if (orderItems.length) {
 					const dateIntervals = getYearlyTerms(

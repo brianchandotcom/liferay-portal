@@ -105,9 +105,9 @@ const ModalCardSubscription = ({
 		},
 	});
 
-	const dataOrderItems = data.orderItems?.items || [];
+	const dataOrderItems = data?.orderItems?.items || [];
 
-	const totalCount = data.orderItems?.totalCount;
+	const totalCount = data?.orderItems?.totalCount;
 
 	const columnsWithoutProvisioned = () => {
 		const customColumns = [...columns];

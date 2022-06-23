@@ -182,7 +182,7 @@ const ActivationStatusAnalyticsCloud = ({
 
 			if (data) {
 				const activationStatusDateRange = getActivationStatusDateRange(
-					data.orderItems?.items
+					data?.orderItems?.items
 				);
 				setActivationStatusDate(activationStatusDateRange);
 			}

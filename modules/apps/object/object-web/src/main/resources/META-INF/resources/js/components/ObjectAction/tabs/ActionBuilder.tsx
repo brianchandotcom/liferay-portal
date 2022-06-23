@@ -231,7 +231,11 @@ export default function ActionBuilder({
 
 		const allFields: ObjectField[] = [];
 
-		items.forEach((field) => {
+		const filteredFields = items.filter(
+			(objectField) => objectField.businessType !== 'Aggregation'
+		);
+
+		filteredFields.forEach((field) => {
 			if (field.businessType !== 'Relationship' && !field.system) {
 				allFields.push(field);
 

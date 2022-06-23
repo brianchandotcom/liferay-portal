@@ -67,4 +67,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-152105. The page creator could add multiple CSS classes to fragment."
+	@priority = "5"
+	test AddMultipleCSSClassesToFragment {
+		task ("Given a page creator has a content page with a Heading fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page creator accesses to the Advanced panel of Heading") {
+			PageEditor.gotoAdvanced(fragmentName = "Heading");
+		}
+
+		task ("Then the page creator could use a comma, line break, or space to add multiple CSS Classes to Heading") {
+			PageEditor.configureFragment(
+				cssClasses = "background-color",
+				key = "\ENTER");
+
+			PageEditor.configureFragment(
+				cssClasses = "border-color",
+				key = "\SPACE");
+
+			PageEditor.configureFragment(
+				cssClasses = "box-shadow",
+				key = ",");
+
+			for (var itemName : list "background-color,border-color,box-shadow") {
+				AssertElementPresent(
+					fieldLabel = "CSS Classes",
+					itemName = "background-color",
+					locator1 = "PageEditor#LABEL_ITEM");
+			}
+
+			for (var cssClass : list "background-color,border-color,box-shadow") {
+				TestUtils.assertPartialAttributeValue(
+					attribute = "class",
+					element = "//div[@aria-label='Heading']//div[contains(@class,'page-editor__fragment-content')]",
+					value = "${cssClass}");
+			}
+		}
+	}
+
 }

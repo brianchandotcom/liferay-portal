@@ -21,6 +21,13 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -66,6 +73,8 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 					new JSONObject(buildResultTestrayS3Object.getValue()));
 			}
 		}
+
+		_addTestResultsFromBuildResults();
 
 		return buildReportJSONObject;
 	}
@@ -122,6 +131,67 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 		return _jenkinsConsoleLocalFile;
 	}
 
+	private void _addTestResultsFromBuildResults() {
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		if (buildReportJSONObject == null) {
+			return;
+		}
+
+		Map<String, List<JSONObject>> testResultsJSONObjectsMap =
+			_getTestResultsJSONObjectsMap();
+
+		if (testResultsJSONObjectsMap.isEmpty()) {
+			return;
+		}
+
+		JSONArray batchesJSONArray = buildReportJSONObject.getJSONArray(
+			"batches");
+
+		for (int i = 0; i < batchesJSONArray.length(); i++) {
+			JSONObject batchJSONObject = batchesJSONArray.getJSONObject(i);
+
+			List<JSONObject> testResultsJSONObjects =
+				testResultsJSONObjectsMap.get(
+					batchJSONObject.getString("batchName"));
+
+			JSONArray buildsJSONArray = batchJSONObject.getJSONArray("builds");
+
+			for (int j = 0; j < buildsJSONArray.length(); j++) {
+				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(j);
+
+				for (JSONObject testResultJSONObject : testResultsJSONObjects) {
+					if (!Objects.equals(
+							buildJSONObject.getString("buildURL"),
+							testResultJSONObject.getString("buildURL"))) {
+
+						continue;
+					}
+
+					JSONArray testResultsJSONArray =
+						buildJSONObject.getJSONArray("testResults");
+
+					if (testResultsJSONArray == null) {
+						testResultsJSONArray = new JSONArray();
+					}
+
+					JSONObject jsonObject = new JSONObject();
+
+					jsonObject.put(
+						"duration", testResultJSONObject.get("duration"));
+					jsonObject.put(
+						"errorDetails",
+						testResultJSONObject.opt("errorDetails"));
+					jsonObject.put("name", testResultJSONObject.get("name"));
+					jsonObject.put(
+						"status", testResultJSONObject.get("status"));
+
+					testResultsJSONArray.put(jsonObject);
+				}
+			}
+		}
+	}
+
 	private JSONObject _getJSONObjectFromURL(URL url) {
 		if (!JenkinsResultsParserUtil.exists(url)) {
 			return null;
@@ -161,6 +231,49 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 				JenkinsResultsParserUtil.delete(file);
 			}
 		}
+	}
+
+	private Map<String, List<JSONObject>> _getTestResultsJSONObjectsMap() {
+		Map<String, List<JSONObject>> testResultsJSONObjectsMap =
+			new HashMap<>();
+
+		JSONObject buildResultJSONObject = _getJSONObjectFromURL(
+			getBuildResultJSONUserContentURL());
+
+		if (buildResultJSONObject == null) {
+			return testResultsJSONObjectsMap;
+		}
+
+		JSONArray batchResultsJSONArray = buildResultJSONObject.getJSONArray(
+			"batchResults");
+
+		for (int i = 0; i < batchResultsJSONArray.length(); i++) {
+			JSONObject batchResultJSONObject =
+				batchResultsJSONArray.getJSONObject(i);
+
+			String batchName = batchResultJSONObject.getString("jobVariant");
+
+			batchName = batchName.replaceAll("([^/]+)/.*", "$1");
+
+			List<JSONObject> testResultsJSONObjects =
+				testResultsJSONObjectsMap.get(batchName);
+
+			if (testResultsJSONObjects == null) {
+				testResultsJSONObjects = new ArrayList<>();
+			}
+
+			JSONArray testResultsJSONArray = batchResultJSONObject.getJSONArray(
+				"testResults");
+
+			for (int j = 0; j < testResultsJSONArray.length(); j++) {
+				testResultsJSONObjects.add(
+					testResultsJSONArray.getJSONObject(j));
+			}
+
+			testResultsJSONObjectsMap.put(batchName, testResultsJSONObjects);
+		}
+
+		return testResultsJSONObjectsMap;
 	}
 
 	private File _jenkinsConsoleLocalFile;

@@ -1,0 +1,6 @@
+sampleIFrame:
+    description:
+        "This adds a remote app loads as an iframe"
+    name: Sample IFrame
+    type: iframe
+    url: https://example.com

@@ -2061,14 +2061,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 			() -> _addObjectRelationships(
 				objectDefinitionIdsStringUtilReplaceValues, serviceContext));
 
-		_invoke(
+		Map<String, String> objectEntryIdsStringUtilReplaceValues = _invoke(
 			() -> _addObjectEntries(
 				serviceContext, siteNavigationMenuItemSettingsBuilder));
 
-		return objectDefinitionIdsStringUtilReplaceValues;
+		return HashMapBuilder.putAll(
+			objectDefinitionIdsStringUtilReplaceValues
+		).putAll(
+			objectEntryIdsStringUtilReplaceValues
+		).build();
 	}
 
-	private void _addObjectEntries(
+	private Map<String, String> _addObjectEntries(
 			ServiceContext serviceContext,
 			SiteNavigationMenuItemSettingsBuilder
 				siteNavigationMenuItemSettingsBuilder)
@@ -2078,7 +2082,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			"/site-initializer/object-entries");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
-			return;
+			return null;
 		}
 
 		Set<String> sortedResourcePaths = new TreeSet<>(
@@ -2173,6 +2177,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					});
 			}
 		}
+
+		return objectEntryIdsStringUtilReplaceValues;
 	}
 
 	private void _addObjectRelationships(

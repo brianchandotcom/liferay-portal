@@ -14,18 +14,101 @@
 
 package com.liferay.fragment.internal.upgrade.v2_9_4;
 
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Eudaldo Alonso
  */
 public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 
+	public FragmentEntryLinkUpgradeProcess(
+		FragmentCollectionContributorTracker
+			fragmentCollectionContributorTracker) {
+
+		_fragmentCollectionContributorTracker =
+			fragmentCollectionContributorTracker;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasColumn("FragmentEntryLink", "type_")) {
 			alterTableAddColumn("FragmentEntryLink", "type_", "INTEGER");
 		}
+
+		_updateFragmentEntryType();
 	}
+
+	private int _getFragmentEntryType(long fragmentEntryId) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select type_ from FragmentEntry where fragmentEntryId = ? ")) {
+
+			preparedStatement.setLong(1, fragmentEntryId);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				return resultSet.getInt("type_");
+			}
+		}
+
+		return FragmentConstants.TYPE_COMPONENT;
+	}
+
+	private int _getFragmentEntryType(long fragmentEntryId, String rendererKey)
+		throws Exception {
+
+		if (Validator.isNotNull(rendererKey)) {
+			FragmentEntry fragmentEntry =
+				_fragmentCollectionContributorTracker.getFragmentEntry(
+					rendererKey);
+
+			if (fragmentEntry != null) {
+				return fragmentEntry.getType();
+			}
+		}
+
+		return _getFragmentEntryType(fragmentEntryId);
+	}
+
+	private void _updateFragmentEntryType() throws Exception {
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select fragmentEntryLinkId, fragmentEntryId, rendererKey " +
+					"from FragmentEntryLink");
+			ResultSet resultSet1 = preparedStatement1.executeQuery();
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update FragmentEntryLink set type_ = ? where " +
+						"fragmentEntryLinkId = ?")) {
+
+			while (resultSet1.next()) {
+				long fragmentEntryLinkId = resultSet1.getLong(
+					"fragmentEntryLinkId");
+
+				long fragmentEntryId = resultSet1.getLong("fragmentEntryId");
+				String rendererKey = resultSet1.getString("rendererKey");
+
+				preparedStatement2.setInt(
+					1, _getFragmentEntryType(fragmentEntryId, rendererKey));
+
+				preparedStatement2.setLong(2, fragmentEntryLinkId);
+
+				preparedStatement2.addBatch();
+			}
+
+			preparedStatement2.executeBatch();
+		}
+	}
+
+	private final FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
 
 }

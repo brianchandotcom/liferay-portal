@@ -1559,6 +1559,76 @@ definition {
 		}
 	}
 
+	@description = "LPS-155288: Given categories filter using treeview component
+	And there is any category's checkbox selected
+	When user clicks 'Clear All' button
+	Then the results bar disappears "
+	@priority = "3"
+	test ClearButtonCategoryAtTreeviewComponent {
+		property portal.acceptance = "false";
+
+		task ("Adding vocabulary and category") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Test",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Adding Web Content") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Open filter modal at Content Dashboard and filtering category") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.openFilterModal(filterOption = "Categories");
+
+			Portlet.expandTree();
+
+			Click(
+				key_nodeName = "Test",
+				locator1 = "Treeview#NODE_ITEM");
+		}
+
+		task ("Checking if the results bar appears") {
+			AssertTextPresent(
+				locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE",
+				value1 = "1 ");
+
+			AssertTextPresent(
+				locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE",
+				value1 = "Item Selected");
+		}
+
+		task ("Assert 'Clear All' disapears after clicking it") {
+			ClickNoError(
+				key_text = "Clear All",
+				locator1 = "Button#ANY");
+
+			AssertElementNotPresent(
+				key_text = "Clear All",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Checking if the results bar not appears") {
+			AssertTextNotPresent(
+				locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE",
+				value1 = "1 ");
+
+			AssertTextNotPresent(
+				locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE",
+				value1 = "Item Selected");
+		}
+	}
+
 	@description = "LPS-121658 When a user with no edit permissions clicks on the title of a content in status Approved with associated DPT, the user is led to the page view"
 	@priority = "4"
 	@uitest

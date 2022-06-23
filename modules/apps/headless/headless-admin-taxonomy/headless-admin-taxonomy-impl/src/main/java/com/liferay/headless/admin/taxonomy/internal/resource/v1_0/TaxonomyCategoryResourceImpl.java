@@ -55,7 +55,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -265,18 +264,9 @@ public class TaxonomyCategoryResourceImpl
 		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
 			taxonomyVocabularyId);
 
-		AssetCategory assetCategory =
-			_assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
-				assetVocabulary.getGroupId(), externalReferenceCode);
-
-		PermissionUtil.checkPermission(
-			ActionKeys.VIEW, groupLocalService,
-			getPermissionCheckerResourceName(assetCategory.getCategoryId()),
-			getPermissionCheckerResourceId(assetCategory.getCategoryId()),
-			getPermissionCheckerGroupId(
-				String.valueOf(assetCategory.getCategoryId())));
-
-		return _toTaxonomyCategory(assetCategory);
+		return _toTaxonomyCategory(
+			_assetCategoryService.getAssetCategoryByExternalReferenceCode(
+				assetVocabulary.getGroupId(), externalReferenceCode));
 	}
 
 	@Override

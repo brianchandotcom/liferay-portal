@@ -576,7 +576,7 @@ class SegmentEdit extends Component {
 								</ClayLink>
 							) : (
 								Liferay.Language.get(
-									'to-enable,-go-to-instance-settings'
+									'to-enable-segmentation-contact-your-system-administrator'
 								)
 							)}
 						</ClayAlert>

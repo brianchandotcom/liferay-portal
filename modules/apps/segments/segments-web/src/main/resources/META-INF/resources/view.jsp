@@ -64,7 +64,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 			<c:otherwise>
 				<span><%=
 				LanguageUtil.get(
-					request, "to-enable,-go-to-instance-settings") %></span>
+					request, "to-enable-segmentation-contact-your-system-administrator") %></span>
 			</c:otherwise>
 		</c:choose>
 	</clay:stripe>

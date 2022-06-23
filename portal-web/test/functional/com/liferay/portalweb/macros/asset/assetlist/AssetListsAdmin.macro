@@ -629,7 +629,7 @@ definition {
 		}
 
 		if (isSet(personalizedVariation)) {
-			Navigator.gotoNavTab(navTab = "${personalizedVariation}");
+			Navigator.gotoNavItem(navItem = "${personalizedVariation}");
 		}
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -658,7 +658,7 @@ definition {
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
 		if (isSet(personalizedVariation)) {
-			Navigator.gotoNavTab(navTab = "${personalizedVariation}");
+			Navigator.gotoNavItem(navItem = "${personalizedVariation}");
 		}
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -723,7 +723,7 @@ definition {
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
 		if (isSet(personalizedVariation)) {
-			Navigator.gotoNavTab(navTab = "${personalizedVariation}");
+			Navigator.gotoNavItem(navItem = "${personalizedVariation}");
 		}
 
 		WaitForLiferayEvent.initializeLiferayEventLog();

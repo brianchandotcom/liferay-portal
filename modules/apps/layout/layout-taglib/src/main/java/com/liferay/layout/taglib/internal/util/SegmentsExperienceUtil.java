@@ -14,10 +14,33 @@
 
 package com.liferay.layout.taglib.internal.util;
 
+import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.segments.manager.SegmentsExperienceManager;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Lourdes Fernández Besada
  */
 public class SegmentsExperienceUtil {
+
+	public static long getSegmentsExperienceId(
+		HttpServletRequest httpServletRequest) {
+
+		long selectedSegmentsExperienceId = ParamUtil.getLong(
+			httpServletRequest, "segmentsExperienceId", -1);
+
+		if (selectedSegmentsExperienceId != -1) {
+			return selectedSegmentsExperienceId;
+		}
+
+		SegmentsExperienceManager segmentsExperienceManager =
+			new SegmentsExperienceManager(
+				ServletContextUtil.getSegmentsExperienceLocalService());
+
+		return segmentsExperienceManager.getSegmentsExperienceId(
+			httpServletRequest);
+	}
+
 }
-
-

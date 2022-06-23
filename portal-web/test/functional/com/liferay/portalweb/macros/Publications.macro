@@ -137,10 +137,10 @@ definition {
 	}
 
 	macro getSandboxedPublicationName {
-		var sandboxTime = DateUtil.getFormattedCurrentDate("hh:mm");
-		var sandboxDate = DateUtil.getFormattedCurrentDate("M/d/yy");
+		var sandboxTime = DateUtil.getFormattedCurrentDate("h:m", "UTC");
+		var sandboxDate = DateUtil.getFormattedCurrentDate("M/d/yy", "UTC");
 
-		var sandboxedPublicationName = "${userFirstName} ${userLastName} - ${sandboxDate} ${sandboxTime}";
+		var sandboxedPublicationName = "${userScreenName} - ${sandboxDate} ${sandboxTime}";
 
 		return "${sandboxedPublicationName}";
 	}

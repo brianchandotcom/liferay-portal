@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>PUBLICATION_NAME_IN_ONGOING</td>
-	<td>div[contains(@class,'publication-name') and contains(.,'${key_publicationName}')]</td>
+	<td>//div[contains(@class,'publication-name') and contains(.,'${key_publicationName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>PUBLICATIONS_INDICATOR_TITLE</td>
-	<td>//button[contains(@class,'change-tracking-indicator-title') and contains(.,'${key_publicationName}')]</td>
+	<td>//span[contains(@class,'change-tracking-indicator-title') and contains(.,'${key_publicationName}')]</td>
 	<td></td>
 </tr>
 <tr>

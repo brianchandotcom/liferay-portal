@@ -1124,12 +1124,10 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertPublicLayouts(Group group) {
-		List<Layout> publicLayouts = _layoutLocalService.getLayouts(
-			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new LayoutPriorityComparator());
+		int publicLayoutsCount = _layoutLocalService.getLayoutsCount(
+			group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-		Assert.assertTrue(publicLayouts.size() == 3);
+		Assert.assertTrue(publicLayoutsCount == 3);
 
 		Layout publicLayout = _layoutLocalService.getLayoutByFriendlyURL(
 			group.getGroupId(), false, "/test-public-layout");

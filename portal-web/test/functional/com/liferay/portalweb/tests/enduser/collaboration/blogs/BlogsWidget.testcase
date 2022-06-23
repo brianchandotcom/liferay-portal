@@ -379,6 +379,8 @@ definition {
 
 		BlogsEntry.viewNoEntryViaBlogsAggregatorPG();
 
+		// We need to wait for the system time to pass by 2 minutes in order for a scheduled blog entry to be published. There is currently no easy way to manipulate the system time in CI for automation. 2 minutes is the shortest value we can set while ensuring the stability of the test.
+
 		Pause(locator1 = "120000");
 
 		Navigator.gotoPage(pageName = "Blogs Aggregator Page");

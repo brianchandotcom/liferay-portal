@@ -1135,6 +1135,34 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if (isSet(cssClasses)) {
+			if (!(isSet(key))) {
+				Type.sendKeys(
+					key_text = "CSS Classes",
+					locator1 = "TextInput#ANY",
+					value1 = "${cssClasses}");
+
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+			}
+			else {
+				for (var cssClass : list "${cssClasses}") {
+					Type.sendKeys(
+						key_text = "CSS Classes",
+						locator1 = "TextInput#ANY",
+						value1 = "${cssClass}");
+
+					KeyPress(
+						key_text = "CSS Classes",
+						locator1 = "TextInput#ANY",
+						value1 = "${key}");
+				}
+			}
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(headingLevel)) {
 			Select(
 				key_fieldLabel = "Heading Level",

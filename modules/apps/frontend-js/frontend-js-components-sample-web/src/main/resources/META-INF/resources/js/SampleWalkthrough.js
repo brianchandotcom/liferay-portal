@@ -19,13 +19,10 @@ const WALKTHROUGH_CONFIG = {
 	closeOnClickOutside: false,
 	closeable: true,
 	pages: {
-		[location.pathname + location.search + location.hash]: [
-			'step-1',
-			'step-2',
-			'step-3',
-			'step-4',
-			'step-5',
-		],
+		[themeDisplay.getPathContext() +
+		location.pathname +
+		location.search +
+		location.hash]: ['step-1', 'step-2', 'step-3', 'step-4', 'step-5'],
 	},
 	skippable: true,
 	steps: [

@@ -122,7 +122,11 @@ const Step = ({
 		title,
 	} = steps[currentStep];
 
-	const path = location.pathname + location.search + location.hash;
+	const path =
+		themeDisplay.getPathContext() +
+		location.pathname +
+		location.search +
+		location.hash;
 
 	const [currentAlignment, setCurrentAlignment] = useState(
 		defaultPositioning

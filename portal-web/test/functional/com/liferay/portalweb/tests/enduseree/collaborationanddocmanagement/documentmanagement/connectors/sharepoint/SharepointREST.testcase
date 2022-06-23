@@ -296,8 +296,6 @@ definition {
 			dmDocumentFile = "Document_3.txt",
 			dmDocumentTitle = "Document_3.txt");
 
-		Pause(locator1 = "5000");
-
 		DMDocument.checkoutCP(
 			dmDocumentTitle = "Document_3.txt",
 			dmRepositoryName = "true");
@@ -309,8 +307,6 @@ definition {
 		DMDocument.viewIconLockedCP(dmDocumentTitle = "Document_3.txt");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.txt");
-
-		Pause(locator1 = "5000");
 
 		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
 

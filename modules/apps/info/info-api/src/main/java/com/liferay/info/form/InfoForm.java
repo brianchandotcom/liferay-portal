@@ -67,22 +67,7 @@ public class InfoForm {
 	}
 
 	public List<InfoField> getAllInfoFields() {
-		List<InfoField> allInfoFields = new ArrayList<>();
-
-		for (InfoFieldSetEntry infoFieldSetEntry :
-				_builder._infoFieldSetEntriesByName.values()) {
-
-			if (infoFieldSetEntry instanceof InfoField) {
-				allInfoFields.add((InfoField)infoFieldSetEntry);
-			}
-			else if (infoFieldSetEntry instanceof InfoFieldSet) {
-				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
-
-				allInfoFields.addAll(infoFieldSet.getAllInfoFields());
-			}
-		}
-
-		return allInfoFields;
+		return new ArrayList(_builder._allInfoFieldsByName.values());
 	}
 
 	public InfoLocalizedValue<String> getDescriptionInfoLocalizedValue() {

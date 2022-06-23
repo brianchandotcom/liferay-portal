@@ -38,18 +38,43 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
+		JSONRole.addRegularRole(
+			roleKey = "Regrole Name",
+			roleTitle = "Regrole Name");
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_change_tracking_web_portlet_PublicationsPortlet",
+				roleTitle = "Regrole Name");
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Regrole Name");
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+				roleTitle = "Regrole Name");
+		}
+
+		for (var resourceActionIndex : list "ADD_ARTICLE,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com.liferay.journal",
+				roleTitle = "Regrole Name");
+		}
+
 		JSONRole.assignRoleToUser(
-			roleTitle = "Publications User",
+			roleTitle = "Regrole Name",
 			userEmailAddress = "userea@liferay.com");
 
 		Publications.enablePublications(enableSandboxOnly = "true");
 
 		Publications.createNewPublication(publicationName = "Publication Name");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Guest",
-			title = "WC WebContent Title");
 
 		SignOut.signOut();
 
@@ -57,9 +82,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		var sandboxedPublicationName1 = Publications.getSandboxedPublicationName(
-			userFirstName = "userfn",
-			userLastName = "userln");
+		var sandboxedPublicationName1 = Publications.getSandboxedPublicationName(userScreenName = "usersn");
 
 		Publications.viewSandboxedPublication(
 			sandboxedPublicationName = "${sandboxedPublicationName1}",
@@ -67,21 +90,25 @@ definition {
 
 		Publications.deletePublication(publicationName = "${sandboxedPublicationName1}");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test");
+		var sandboxedPublicationName2 = Publications.getSandboxedPublicationName(userScreenName = "usersn");
 
-		Publications.viewSandboxedPublication(sandboxedPublicationName = "${sandboxedPublicationName1}");
+		Publications.viewSandboxedPublication(
+			sandboxedPublicationName = "${sandboxedPublicationName2}",
+			sandboxedUser = "true");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title",
+			userEmailAddress = "userea@liferay.com");
 
 		PublicationsNavigator.gotoPublish(
 			gotoPublicationsAdmin = "true",
-			publicationName = "Publication Name");
+			publicationName = "${sandboxedPublicationName2}");
 
-		Publications.publishPublication(publicationName = "Publication Name");
+		Publications.publishPublication(publicationName = "${sandboxedPublicationName2}");
 
-		var sandboxedPublicationName2 = Publications.getSandboxedPublicationName(
-			userFirstName = "test",
-			userLastName = "test");
+		var sandboxedPublicationName3 = Publications.getSandboxedPublicationName(userScreenName = "usersn");
 
 		Publications.viewSandboxedPublication(
 			sandboxedPublicationName = "${sandboxedPublicationName2}",

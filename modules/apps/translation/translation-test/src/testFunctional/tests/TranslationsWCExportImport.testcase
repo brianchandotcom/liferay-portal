@@ -26,8 +26,6 @@ definition {
 	@description = "This ensures that user can change and remove translation files during import"
 	@priority = "3"
 	test CanChangeFilesDuringImport {
-		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config:com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;:enabled=B&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -50,9 +48,6 @@ definition {
 	@description = "This ensures that a translated zip file contains multiple web contents with multiple available languages can be exported."
 	@priority = "5"
 	test CanExportMultipleWCsWithMultipleLanguages {
-		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
-
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content${i}",
@@ -167,8 +162,6 @@ definition {
 	@description = "This ensures that the translation files(zip and xlf files) contians multiple web contents can be imported from a zip."
 	@priority = "5"
 	test CanImportMultipleFiles {
-		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config:com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;:enabled=B&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		for (var i : list "1,2") {
@@ -276,8 +269,6 @@ definition {
 	@description = "This ensures that the translation files contians multiple web contents can be imported from a zip."
 	@priority = "5"
 	test CanImportMultipleWCs {
-		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		for (var i : list "1,2,3") {
@@ -559,9 +550,6 @@ definition {
 	@description = "This is a test for LPS-136979. It checks that a user can import translation with long inputs."
 	@priority = "4"
 	test CanImportWithLongInputs {
-		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
-
 		JSONWebcontent.addWebContent(
 			content = "WebContentContent",
 			description = "Description",
@@ -653,8 +641,6 @@ definition {
 	@description = "This ensures that only the valid translation files can be imported from zip and xlf files."
 	@priority = "5"
 	test CanPartiallyImportMultipleFiles {
-		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config:com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;:enabled=B&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		for (var i : list "1,2") {
@@ -799,8 +785,6 @@ definition {
 	@description = "This ensures that user can upload another translation file after publishing translation."
 	@priority = "3"
 	test CanUploadAnotherFileAfterPublishing {
-		property osgi.module.configuration.file.names = "com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration.config:com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;:enabled=B&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		JSONWebcontent.addWebContent(
@@ -877,8 +861,6 @@ definition {
 	@description = "This ensures that users can view the info of the unsuccessfully imported web content translations in the downloaded CSV report."
 	@priority = "5"
 	test CanViewUnsuccessfullyImportedTranslationsInfoInDownloadedCSVReport {
-		property osgi.module.configuration.file.names = "com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		JSONWebcontent.addWebContent(

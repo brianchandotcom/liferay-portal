@@ -28,8 +28,6 @@ definition {
 	@description = "This ensures that the user can export an available language for multiple experiences."
 	@priority = "5"
 	test CanExportAnAvailableLanguageForMultipleExperiences {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		JSONLayout.addPublicLayout(
@@ -158,8 +156,6 @@ definition {
 	@priority = "5"
 	test CanExportMultiplePagesAllWithNewExperiences {
 		property custom.properties = "feature.flag.LPS-142736=true";
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		for (var i : list "1,2") {
@@ -205,8 +201,6 @@ definition {
 	@priority = "5"
 	test CanExportMultiplePagesNotAllWithNewExperiences {
 		property custom.properties = "feature.flag.LPS-142736=true";
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		for (var i : list "1,2") {
@@ -258,8 +252,6 @@ definition {
 	@priority = "5"
 	test CanExportMultiplePagesWithDefaultExperiences {
 		property custom.properties = "feature.flag.LPS-142736=true";
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		for (var i : list "1,2") {
@@ -305,8 +297,6 @@ definition {
 	@priority = "5"
 	test CanExportMultiplePagesWithMultipleLanguages {
 		property custom.properties = "feature.flag.LPS-142736=true";
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		for (var i : list "1,2,3") {
@@ -658,8 +648,6 @@ definition {
 	@description = "This ensures that the translation files contains multiple content pages can be imported from a zip."
 	@priority = "5"
 	test CanImportMultiplePages {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		for (var i : list "1,2") {
@@ -786,8 +774,6 @@ definition {
 	@description = "This ensures that user can select multiple Xlf files when importing translations for multiple content pages."
 	@priority = "5"
 	test CanImportMultipleXlfFiles {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config:com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;:enabled=B&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		for (var i : list "1,2") {
@@ -901,8 +887,6 @@ definition {
 	@description = "This ensures that user can select multiple zip files when importing translations for multiple content pages with different experience."
 	@priority = "5"
 	test CanImportMultipleZipFilesWithExperiences {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config:com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;:enabled=B&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		for (var i : list "1,2") {
@@ -1113,8 +1097,6 @@ definition {
 	@description = "This ensures that only the valid translation files can be imported from xlf and zip files."
 	@priority = "5"
 	test CanPartiallyImportMultipleFiles {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config:com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;:enabled=B&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		for (var i : list "1,2,3") {
@@ -1538,8 +1520,6 @@ definition {
 	@description = "This ensures that users can view the info of the unsuccessfully imported content page translations in the downloaded CSV report."
 	@priority = "5"
 	test CanViewUnsuccessfullyImportedTranslationsInfoInDownloadedCSVReport {
-		property osgi.module.configuration.file.names = "com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		JSONLayout.addPublicLayout(
@@ -1614,8 +1594,6 @@ definition {
 	@description = "This ensures that only the default experiences are exported when exporting multiple content pages for translation."
 	@priority = "4"
 	test OnlyDefaultExperiencesExportedWhenExportingMultiplePages {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFBulkTranslationConfiguration.config";
-		property osgi.module.configurations = "bulkTranslationEnabled=&quot;true&quot;";
 		property portal.acceptance = "false";
 
 		for (var i : list "1,2") {

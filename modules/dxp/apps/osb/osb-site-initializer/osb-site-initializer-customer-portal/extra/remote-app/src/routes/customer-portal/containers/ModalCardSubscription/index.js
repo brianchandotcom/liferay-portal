@@ -97,7 +97,7 @@ const ModalCardSubscription = ({
 }) => {
 	const [activePage, setActivePage] = useState(1);
 
-	const {data: orderItems} = useQuery(getCommerceOrderItems, {
+	const {data} = useQuery(getCommerceOrderItems, {
 		variables: {
 			filter: `customFields/accountSubscriptionERC eq '${accountSubscriptionERC}'`,
 			page: activePage,
@@ -105,9 +105,9 @@ const ModalCardSubscription = ({
 		},
 	});
 
-	const dataOrderItems = orderItems?.items || [];
+	const dataOrderItems = data.orderItems?.items || [];
 
-	const totalCount = orderItems?.totalCount;
+	const totalCount = data.orderItems?.totalCount;
 
 	const columnsWithoutProvisioned = () => {
 		const customColumns = [...columns];

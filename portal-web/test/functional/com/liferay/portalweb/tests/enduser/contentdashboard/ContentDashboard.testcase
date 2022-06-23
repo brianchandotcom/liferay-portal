@@ -819,6 +819,96 @@ definition {
 	}
 
 	@description = "LPS-155288: Given categories filter using treeview component
+	And there is any category's checkbox selected
+	When user clicks 'Clear All' button
+	Then all checkboxes turns deselected"
+	@priority = "4"
+	test CheckAllCheckboxesTurnsDeselectedWithClearButtonAtTreeviewComponent {
+		property portal.acceptance = "true";
+
+		task ("Adding vocabulary and categories") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Test 1",
+				vocabularyName = "Vocabulary Name");
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Test 2",
+				vocabularyName = "Vocabulary Name");
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Test 3",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Adding Web Content") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Open filter modal at Content Dashboard and filtering category") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.openFilterModal(filterOption = "Categories");
+
+			Portlet.expandTree();
+
+			Click(
+				key_nodeName = "Test 1",
+				locator1 = "Treeview#NODE_ITEM");
+
+			Click(
+				key_nodeName = "Test 2",
+				locator1 = "Treeview#NODE_ITEM");
+
+			Click(
+				key_nodeName = "Test 3",
+				locator1 = "Treeview#NODE_ITEM");
+		}
+
+		task ("Checking if the results bar appears") {
+			AssertTextPresent(
+				locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE",
+				value1 = "3 ");
+
+			AssertTextPresent(
+				locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE",
+				value1 = "Items Selected");
+		}
+
+		task ("Assert 'Clear All' disapears after clicking it") {
+			ClickNoError(
+				key_text = "Clear All",
+				locator1 = "Button#ANY");
+
+			AssertElementNotPresent(
+				key_text = "Clear All",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Asserting that all checkboxes turns deselected") {
+			AssertNotChecked(
+				key_nodeName = "Test 1",
+				locator1 = "Treeview#NODE_ITEM");
+
+			AssertNotChecked(
+				key_nodeName = "Test 2",
+				locator1 = "Treeview#NODE_ITEM");
+
+			AssertNotChecked(
+				key_nodeName = "Test 3",
+				locator1 = "Treeview#NODE_ITEM");
+		}
+	}
+
+	@description = "LPS-155288: Given categories filter using treeview component
 	When user selects any category's checkbox
 	Then a the amount of items selected appears at results bar"
 	@priority = "3"
@@ -936,7 +1026,7 @@ definition {
 	Then a results bar appears"
 	@priority = "4"
 	test CheckCategoriesResultsBarAtTreeviewComponent {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Adding vocabulary and category") {
 			JSONCategory.addVocabulary(
@@ -985,6 +1075,8 @@ definition {
 	Then a 'Clear All' button appears at results bar"
 	@priority = "4"
 	test CheckClearButtonCategoryResultsBarAtTreeviewComponent {
+		property portal.acceptance = "true";
+
 		task ("Adding vocabulary and category") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

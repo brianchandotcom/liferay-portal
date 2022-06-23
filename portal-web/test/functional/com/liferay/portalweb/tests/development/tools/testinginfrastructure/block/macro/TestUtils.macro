@@ -26,6 +26,17 @@ definition {
 		}
 	}
 
+	macro assertPartialAttributeValue {
+		var attributeValue = selenium.getAttribute("${element}@${attribute}");
+
+		if (contains("${attributeValue}", "${value}")) {
+			echo("PASSED");
+		}
+		else {
+			TestUtils.fail(message = "FAILED: Expected text '${value}' does not match actual text '${attributeValue}'");
+		}
+	}
+
 	macro assertTruncatedText {
 		WaitForSPARefresh();
 

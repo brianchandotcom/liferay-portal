@@ -460,6 +460,20 @@ public interface FragmentEntryLinkModel
 	public void setRendererKey(String rendererKey);
 
 	/**
+	 * Returns the type of this fragment entry link.
+	 *
+	 * @return the type of this fragment entry link
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this fragment entry link.
+	 *
+	 * @param type the type of this fragment entry link
+	 */
+	public void setType(int type);
+
+	/**
 	 * Returns the last propagation date of this fragment entry link.
 	 *
 	 * @return the last propagation date of this fragment entry link

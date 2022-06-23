@@ -86,7 +86,7 @@ public class FragmentEntryLinkModelImpl
 		{"html", Types.CLOB}, {"js", Types.CLOB}, {"configuration", Types.CLOB},
 		{"editableValues", Types.CLOB}, {"namespace", Types.VARCHAR},
 		{"position", Types.INTEGER}, {"rendererKey", Types.VARCHAR},
-		{"lastPropagationDate", Types.TIMESTAMP},
+		{"type_", Types.INTEGER}, {"lastPropagationDate", Types.TIMESTAMP},
 		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
@@ -118,12 +118,13 @@ public class FragmentEntryLinkModelImpl
 		TABLE_COLUMNS_MAP.put("namespace", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("position", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("rendererKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPropagationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntryLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,segmentsExperienceId LONG,classNameId LONG,classPK LONG,plid LONG,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,lastPropagationDate DATE null,lastPublishDate DATE null,primary key (fragmentEntryLinkId, ctCollectionId))";
+		"create table FragmentEntryLink (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,segmentsExperienceId LONG,classNameId LONG,classPK LONG,plid LONG,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,type_ INTEGER,lastPropagationDate DATE null,lastPublishDate DATE null,primary key (fragmentEntryLinkId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
 
@@ -448,6 +449,10 @@ public class FragmentEntryLinkModelImpl
 			"rendererKey",
 			(BiConsumer<FragmentEntryLink, String>)
 				FragmentEntryLink::setRendererKey);
+		attributeGetterFunctions.put("type", FragmentEntryLink::getType);
+		attributeSetterBiConsumers.put(
+			"type",
+			(BiConsumer<FragmentEntryLink, Integer>)FragmentEntryLink::setType);
 		attributeGetterFunctions.put(
 			"lastPropagationDate", FragmentEntryLink::getLastPropagationDate);
 		attributeSetterBiConsumers.put(
@@ -1013,6 +1018,21 @@ public class FragmentEntryLinkModelImpl
 
 	@JSON
 	@Override
+	public int getType() {
+		return _type;
+	}
+
+	@Override
+	public void setType(int type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPropagationDate() {
 		return _lastPropagationDate;
 	}
@@ -1131,6 +1151,7 @@ public class FragmentEntryLinkModelImpl
 		fragmentEntryLinkImpl.setNamespace(getNamespace());
 		fragmentEntryLinkImpl.setPosition(getPosition());
 		fragmentEntryLinkImpl.setRendererKey(getRendererKey());
+		fragmentEntryLinkImpl.setType(getType());
 		fragmentEntryLinkImpl.setLastPropagationDate(getLastPropagationDate());
 		fragmentEntryLinkImpl.setLastPublishDate(getLastPublishDate());
 
@@ -1191,6 +1212,8 @@ public class FragmentEntryLinkModelImpl
 			this.<Integer>getColumnOriginalValue("position"));
 		fragmentEntryLinkImpl.setRendererKey(
 			this.<String>getColumnOriginalValue("rendererKey"));
+		fragmentEntryLinkImpl.setType(
+			this.<Integer>getColumnOriginalValue("type_"));
 		fragmentEntryLinkImpl.setLastPropagationDate(
 			this.<Date>getColumnOriginalValue("lastPropagationDate"));
 		fragmentEntryLinkImpl.setLastPublishDate(
@@ -1426,6 +1449,8 @@ public class FragmentEntryLinkModelImpl
 			fragmentEntryLinkCacheModel.rendererKey = null;
 		}
 
+		fragmentEntryLinkCacheModel.type = getType();
+
 		Date lastPropagationDate = getLastPropagationDate();
 
 		if (lastPropagationDate != null) {
@@ -1564,6 +1589,7 @@ public class FragmentEntryLinkModelImpl
 	private String _namespace;
 	private int _position;
 	private String _rendererKey;
+	private int _type;
 	private Date _lastPropagationDate;
 	private Date _lastPublishDate;
 
@@ -1622,6 +1648,7 @@ public class FragmentEntryLinkModelImpl
 		_columnOriginalValues.put("namespace", _namespace);
 		_columnOriginalValues.put("position", _position);
 		_columnOriginalValues.put("rendererKey", _rendererKey);
+		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("lastPropagationDate", _lastPropagationDate);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 	}
@@ -1632,6 +1659,7 @@ public class FragmentEntryLinkModelImpl
 		Map<String, String> attributeNames = new HashMap<>();
 
 		attributeNames.put("uuid_", "uuid");
+		attributeNames.put("type_", "type");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1695,9 +1723,11 @@ public class FragmentEntryLinkModelImpl
 
 		columnBitmasks.put("rendererKey", 8388608L);
 
-		columnBitmasks.put("lastPropagationDate", 16777216L);
+		columnBitmasks.put("type_", 16777216L);
 
-		columnBitmasks.put("lastPublishDate", 33554432L);
+		columnBitmasks.put("lastPropagationDate", 33554432L);
+
+		columnBitmasks.put("lastPublishDate", 67108864L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

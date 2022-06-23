@@ -68,4 +68,14 @@ public interface FragmentEntryLink
 	public boolean isSystem()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public boolean isTypeComponent();
+
+	public boolean isTypeInput();
+
+	public boolean isTypePortlet();
+
+	public boolean isTypeReact();
+
+	public boolean isTypeSection();
+
 }

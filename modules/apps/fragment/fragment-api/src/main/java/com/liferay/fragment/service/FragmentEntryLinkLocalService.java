@@ -92,7 +92,7 @@ public interface FragmentEntryLinkLocalService
 			long fragmentEntryId, long segmentsExperienceId, long plid,
 			String css, String html, String js, String configuration,
 			String editableValues, String namespace, int position,
-			String rendererKey, ServiceContext serviceContext)
+			String rendererKey, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -462,7 +462,7 @@ public interface FragmentEntryLinkLocalService
 			long userId, long fragmentEntryLinkId,
 			long originalFragmentEntryLinkId, long fragmentEntryId, long plid,
 			String css, String html, String js, String configuration,
-			String editableValues, String namespace, int position,
+			String editableValues, String namespace, int position, int type,
 			ServiceContext serviceContext)
 		throws PortalException;
 

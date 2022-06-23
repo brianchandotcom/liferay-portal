@@ -714,6 +714,26 @@ public class FragmentEntryWrapper
 	}
 
 	@Override
+	public boolean isTypeComponent() {
+		return model.isTypeComponent();
+	}
+
+	@Override
+	public boolean isTypeInput() {
+		return model.isTypeInput();
+	}
+
+	@Override
+	public boolean isTypeReact() {
+		return model.isTypeReact();
+	}
+
+	@Override
+	public boolean isTypeSection() {
+		return model.isTypeSection();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

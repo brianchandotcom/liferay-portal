@@ -267,7 +267,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			sb.append(fragmentElementId);
 			sb.append("'); var fragmentNamespace = '");
 			sb.append(namespace);
-			sb.append("'); var input = '");
+			sb.append("'; var input = '");
 			sb.append(_getInputJSONObject());
 			sb.append("'; var layoutMode = '");
 			sb.append(

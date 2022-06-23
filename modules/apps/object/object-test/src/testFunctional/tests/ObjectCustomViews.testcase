@@ -385,13 +385,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		Click.clickAtNotVisible(
-			key_columnOption = "Author",
-			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		Button.clickSave();
 
@@ -735,17 +729,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		Click.clickAtNotVisible(
-			key_columnOption = "Author",
-			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-
-		Click.clickAtNotVisible(
-			key_columnOption = "Creation Date",
-			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date");
 
 		ObjectCustomViews.searchOnViewBuilder(columnName = "Author");
 
@@ -780,7 +764,7 @@ definition {
 
 		ObjectCustomViews.assertColumnVisibleOnAddColumnModal(columnOption = "Author");
 
-		ObjectCustomViews.assertColumnNotVisibleOnAddColumnModal(columnOption = "Creation Date");
+		ObjectCustomViews.assertColumnNotPresentOnAddColumnModal(columnOption = "Creation Date");
 	}
 
 	@description = "LPS-144472 - Verify it is possible to search columns to a New Default Sort modal"
@@ -898,17 +882,9 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
 		var listColumns = "Author,Creation Date,Modified Date";
 
-		for (var columnName : list "${listColumns}") {
-			Click.clickAtNotVisible(
-				key_columnOption = "${columnName}",
-				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-		}
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "${listColumns}");
 
 		ObjectCustomViews.goToDefaultSortTab();
 
@@ -1241,13 +1217,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		Click.clickAtNotVisible(
-			key_columnOption = "Author",
-			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		ObjectCustomViews.assertColumnPresent(columnName = "Author");
 
@@ -1659,7 +1629,6 @@ definition {
 	}
 
 	@description = "LPS-146028 - Verify that the columns present at the View Builder are ordered correctly"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DuplicatedObjectViewColumnsAreCorrectlyOrdered {
 		ObjectAdmin.addObjectViaAPI(
@@ -1681,15 +1650,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		for (var columnOption : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
-			Click.clickAtNotVisible(
-				key_columnOption = "${columnOption}",
-				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-		}
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author,Creation Date,Modified Date,Workflow Status,ID");
 
 		Button.clickSave();
 
@@ -1760,15 +1721,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		for (var columnOption : list "Custom Field A,Custom Field B") {
-			Click.clickAtNotVisible(
-				key_columnOption = "${columnOption}",
-				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-		}
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Custom Field A,Custom Field B");
 
 		Button.clickSave();
 
@@ -1952,13 +1905,7 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		LexiconEntry.gotoAdd();
-
-		Click.clickAtNotVisible(
-			key_columnOption = "Author",
-			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
-
-		ObjectCustomViews.saveColumnsModal();
+		ObjectCustomViews.addColumnsViaUI(addColumns = "Author");
 
 		ObjectCustomViews.searchOnViewBuilder(columnName = "Teste");
 

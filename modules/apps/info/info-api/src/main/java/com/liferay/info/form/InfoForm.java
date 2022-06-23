@@ -205,12 +205,16 @@ public class InfoForm {
 					infoFieldSet.getName(), infoFieldSet);
 			}
 
+			_addToAllInfoFields(infoFieldSet);
+
 			return this;
 		}
 
 		public Builder infoFieldSetEntry(InfoFieldSetEntry infoFieldSetEntry) {
 			_infoFieldSetEntriesByName.put(
 				infoFieldSetEntry.getName(), infoFieldSetEntry);
+
+			_addToAllInfoFields(infoFieldSetEntry);
 
 			return this;
 		}

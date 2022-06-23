@@ -377,6 +377,7 @@ public abstract class BaseTopLevelBuildReport
 
 				JSONObject buildJSONObject = new JSONObject();
 
+				buildJSONObject.put("axisName", jsonObject.opt("axisName"));
 				buildJSONObject.put("buildURL", jsonObject.get("buildURL"));
 				buildJSONObject.put("duration", jsonObject.get("duration"));
 				buildJSONObject.put("result", jsonObject.get("result"));
@@ -389,6 +390,11 @@ public abstract class BaseTopLevelBuildReport
 
 					StopWatchRecord stopWatchRecord = stopWatchRecordsGroup.get(
 						"start.current.job");
+
+					if (stopWatchRecord == null) {
+						stopWatchRecord = stopWatchRecordsGroup.get(
+							"run.current.job");
+					}
 
 					if (stopWatchRecord == null) {
 						continue;

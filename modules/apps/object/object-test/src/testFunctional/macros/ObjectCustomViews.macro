@@ -3,15 +3,16 @@ definition {
 	macro addColumnsViaUI {
 		LexiconEntry.gotoAdd();
 
-		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_ADD_COLUMNS");
+		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_ADD_COLUMNS");
 
 		for (var columnsOptions : list "${addColumns}") {
 			Click.clickAtNotVisible(
 				key_columnOption = "${columnsOptions}",
 				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 		}
+		Button.clickSave();
 
-		ObjectCustomViews.saveColumnsModal();
+		SelectFrame(locator1 = "IFrame#IFRAME");
 	}
 
 	macro addDefaultSort {
@@ -73,8 +74,8 @@ definition {
 			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT");
 	}
 
-	macro assertColumnNotVisibleOnAddColumnModal {
-		AssertNotVisible(
+	macro assertColumnNotPresentOnAddColumnModal {
+		AssertElementNotPresent(
 			key_columnName = "${columnOption}",
 			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");
 	}
@@ -251,6 +252,8 @@ definition {
 	}
 
 	macro searchOnAddColumnModal {
+		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_ADD_COLUMNS");
+
 		Click(locator1 = "ObjectCustomViews#ADD_COLUMNS_SEARCH_BAR");
 
 		Type(

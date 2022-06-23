@@ -16,8 +16,8 @@
 			<input accept="*" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" class="d-none" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" name="${input.name}" ${input.required?then('required', '' )} type="${(input.attributes.selectFromDocumentLibrary?? && input.attributes.selectFromDocumentLibrary)?then('text', 'file')}" />
 		</div>
 
-		[#if input.showHelpText && input.helpText?has_content]
-			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-file-upload-help-text">${input.helpText}</p>
+		[#if (input.showHelpText && input.helpText?has_content) || (configuration.showSupportedFileInfo && input.attributes.acceptedFileExtensions?? && input.attributes.maximumFileSize??)]
+			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-file-upload-help-text">${configuration.showSupportedFileInfo?then(languageUtil.format(locale, "upload-a-x-no-larger-than-x-mb", [input.attributes.acceptedFileExtensions!"", input.attributes.maximumFileSize!""]), '' )} ${input.showHelpText?then(input.helpText, '' )}</p>
 		[/#if]
 	</div>
 </div>

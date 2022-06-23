@@ -40,6 +40,8 @@ renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(requ
 		).put(
 			"displayNames", LocaleUtil.toDisplayNames(LanguageUtil.getAvailableLocales(), locale)
 		).put(
+			"isView", Objects.equals((String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE), "view")
+		).put(
 			"languageIds", LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales())
 		).put(
 			"title", (kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : kaleoDefinitionVersion.getTitle(locale)

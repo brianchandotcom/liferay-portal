@@ -15,11 +15,11 @@
 		"name": "Test Expando Column 3",
 		"properties": {
 			"hidden": false,
-			"visibleWithUpdatePermission": false,
+			"indexType": 2,
 			"localizeFieldName": true,
-			"width": "0",
 			"secret": false,
-			"indexType": 2
+			"visibleWithUpdatePermission": false,
+			"width": "0"
 		}
 	}
 ]

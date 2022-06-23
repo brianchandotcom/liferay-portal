@@ -1682,4 +1682,18 @@ definition {
 			value1 = "${coordinateY}");
 	}
 
+	macro viewPropertyNotPresentOnSideBar {
+		AssertElementNotPresent(
+			key_propertyName = "${propertyName}",
+			key_propertyValue = "${propertyValue}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
+	}
+
+	macro viewPropertyPresentOnSideBar {
+		AssertElementPresent(
+			key_propertyName = "${propertyName}",
+			key_propertyValue = "${propertyValue}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
+	}
+
 }

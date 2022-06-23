@@ -1866,12 +1866,36 @@ definition {
 	}
 
 	@description = "Verify that only the task node thas Assignments property"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanOnlyViewAssignmentsAtTaskNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanOnlyViewAssignmentsAtTaskNode";
 
-		// TODO CanOnlyViewAssignmentsAtTaskNode pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "0,0");
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyPresentOnSideBar(
+			propertyName = "Assignment",
+			propertyValue = "Asset Creator");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyNotPresentOnSideBar(
+			propertyName = "Assignment",
+			propertyValue = "Asset Creator");
+		
+		
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
+
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyNotPresentOnSideBar(
+			propertyName = "Assignment",
+			propertyValue = "Asset Creator");
 	}
 
 	@description = "LPS-139388 - Verify that, when all the parallel reviews are complete, the Join node will allow the instance to progress to the next step"

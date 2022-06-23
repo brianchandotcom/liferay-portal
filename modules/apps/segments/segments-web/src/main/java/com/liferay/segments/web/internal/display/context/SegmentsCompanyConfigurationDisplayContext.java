@@ -52,6 +52,17 @@ public class SegmentsCompanyConfigurationDisplayContext {
 		).buildString();
 	}
 
+	public String getDeleteConfigurationActionURL() {
+		return PortletURLBuilder.createActionURL(
+			_portal.getLiferayPortletResponse(
+				(PortletResponse)_httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE)),
+			ConfigurationAdminPortletKeys.INSTANCE_SETTINGS
+		).setActionName(
+			"/instance_settings/delete_segments_company_configuration"
+		).buildString();
+	}
+
 	public boolean isRoleSegmentationChecked() throws ConfigurationException {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(

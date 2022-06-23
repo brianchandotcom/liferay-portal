@@ -11,10 +11,16 @@
 
 import {Liferay} from '../services/liferay';
 
-import en_US from './en_US.json';
+import en_US from './Language.json';
+import es_ES from './Language_es.json';
+import ja_JP from './Language_ja.json';
+import pt_BR from './Language_pt_BR.json';
 
 export const languages = {
 	en_US,
+	es_ES,
+	ja_JP,
+	pt_BR,
 };
 
 const translate = (word, languageId = Liferay.ThemeDisplay.getLanguageId()) => {

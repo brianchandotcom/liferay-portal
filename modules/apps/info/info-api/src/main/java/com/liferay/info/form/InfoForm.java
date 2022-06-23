@@ -239,6 +239,10 @@ public class InfoForm {
 			return this;
 		}
 
+		private final Map<String, InfoField<?>> _allInfoFieldsByName =
+			new LinkedHashMap<>();
+		private final Map<String, InfoField<?>> _allInfoFieldsByUniqueId =
+			new LinkedHashMap<>();
 		private InfoLocalizedValue<String> _descriptionInfoLocalizedValue;
 		private final Map<String, InfoFieldSetEntry>
 			_infoFieldSetEntriesByName = new LinkedHashMap<>();

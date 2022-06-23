@@ -260,6 +260,9 @@ const AppContextProvider = ({children}) => {
 					getTotalAdministratorAccounts(projectExternalReferenceCode);
 
 					client.mutate({
+						context: {
+							displaySuccess: false,
+						},
 						mutation: addAccountFlag,
 						variables: {
 							accountFlag: {

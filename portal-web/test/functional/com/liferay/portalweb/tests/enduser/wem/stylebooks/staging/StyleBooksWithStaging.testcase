@@ -791,7 +791,7 @@ definition {
 				item = "Edit",
 				styleBookName = "Test Style Book Name");
 
-			Pause(locator1 = "3000");
+			WaitForPageLoad();
 
 			StyleBooks.selectForm(formName = "Buttons");
 

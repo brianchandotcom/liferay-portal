@@ -620,16 +620,17 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	private ObjectEntry _getRunByBuild(
 		List<ObjectEntry> builds, List<ObjectEntry> runs) {
 
-		String buildsString = builds.toString();
-
 		for (ObjectEntry run : runs) {
 			Map<String, Object> properties = run.getProperties();
 
-			if (buildsString.contains(
-					String.valueOf(
-						properties.get("r_buildToRuns_c_buildId")))) {
+			for (ObjectEntry build : builds) {
+				Long buildId = build.getId();
 
-				return run;
+				if (buildId.equals(
+						(Long)properties.get("r_buildToRuns_c_buildId"))) {
+
+					return run;
+				}
 			}
 		}
 
@@ -1479,7 +1480,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			if (latestMachingTestrayRun != null) {
 				Map<Long, ObjectEntry> testrayCaseIdCompositeMapA =
 					_getTestrayCaseIdCompositeMap(companyId, currentRun);
-					
+
 				Map<Long, ObjectEntry> testrayCaseIdCompositeMapB =
 					_getTestrayCaseIdCompositeMap(
 						companyId, latestMachingTestrayRun);

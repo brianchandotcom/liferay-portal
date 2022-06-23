@@ -980,6 +980,59 @@ definition {
 		}
 	}
 
+	@description = "LPS-155288: Given categories filter using treeview component
+	When user selects any category's checkbox
+	Then a 'Clear All' button appears at results bar"
+	@priority = "4"
+	test CheckClearButtonCategoryResultsBarAtTreeviewComponent {
+		task ("Adding vocabulary and category") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Test",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Adding Web Content") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Open filter modal at Content Dashboard and filtering category") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.openFilterModal(filterOption = "Categories");
+
+			Portlet.expandTree();
+
+			Click(
+				key_nodeName = "Test",
+				locator1 = "Treeview#NODE_ITEM");
+		}
+
+		task ("Checking if the results bar appears") {
+			AssertTextPresent(
+				locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE",
+				value1 = "1 ");
+
+			AssertTextPresent(
+				locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE",
+				value1 = "Item Selected");
+		}
+
+		task ("Assert 'Clear All' button appears at results bar") {
+			AssertElementPresent(
+				key_text = "Clear All",
+				locator1 = "Button#ANY");
+		}
+	}
+
 	@description = "LPS-132597 When a web content is associated to a Display Page and its status is Approved, a display page icon is displayed"
 	@priority = "5"
 	test CheckDisplayPageIconofApprovedWebContent {

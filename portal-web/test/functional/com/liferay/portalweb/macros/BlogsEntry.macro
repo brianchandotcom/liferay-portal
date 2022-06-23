@@ -1007,9 +1007,6 @@ definition {
 		var key_entryContent = "${entryContent}";
 		var key_entrySubtitle = "${entrySubtitle}";
 		var key_entryTitle = "${entryTitle}";
-
-		Pause(locator1 = "3000");
-
 		var browserType = PropsUtil.get("browser.type");
 
 		if ("${browserType}" == "safari") {

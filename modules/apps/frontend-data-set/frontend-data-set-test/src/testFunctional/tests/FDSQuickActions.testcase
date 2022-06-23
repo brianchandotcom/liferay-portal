@@ -111,4 +111,24 @@ definition {
 		}
 	}
 
+	@description = "LPS-155467. Assert the quick action is not visible when the row checkbox is checked."
+	@priority = "3"
+	test IsNotVisibleOnCheckedRow {
+		task ("When mark a row checkbox as checked") {
+			Check.checkToggleSwitch(
+				key_title = "Sample1",
+				locator1 = "FrontendDataSet#ENTRY_CHECKBOX");
+		}
+
+		task ("And when hover mouse over checked row") {
+			MouseOver(
+				key_itemName = "Sample1",
+				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
+		}
+
+		task ("Then the quick action icons are not visible") {
+			FDSQuickActions.viewQuickActionMenuNotPresent(title = "Sample1");
+		}
+	}
+
 }

@@ -35,6 +35,7 @@ definition {
 	@description = "COMMERCE-5859. Verify the default channel currency is applied to product cards."
 	@priority = "3"
 	test AssertDefaultChannelCurrencyIsAppliedToProductCard {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a Commerce account with a buyer user") {
@@ -545,6 +546,7 @@ definition {
 	@description = "COMMERCE-5856. Verify buyers are redirected to the product details page when they click on a product card image."
 	@priority = "3"
 	test AssertProductCardImageRedirectsToProductDetailsPage {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "Intern Test";
 
 		task ("Given a Commerce account with a buyer user") {
@@ -591,6 +593,7 @@ definition {
 	@description = "COMMERCE-5858. Verify the product card for a new product shows the default catalog image if it is set."
 	@priority = "3"
 	test AssertProductCardShowsCatalogDefaultImage {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a Commerce account with a buyer user") {
@@ -650,6 +653,7 @@ definition {
 	@description = "COMMERCE-5857. Verify buyers can view the custom image that has been set for a product in the product card."
 	@priority = "3"
 	test AssertProductCardShowsCustomImageIfSet {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a Commerce account with a buyer user") {
@@ -1119,6 +1123,7 @@ definition {
 	@description = "Verify buyers cannot change the currency of a channel."
 	@priority = "3"
 	test BuyersCannotEditChannelCurrency {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a Commerce account with a buyer user") {
@@ -1439,6 +1444,7 @@ definition {
 	@description = "COMMERCE-5864. Verify buyers can view a product's price on the product card."
 	@priority = "3"
 	test ViewProductCardPrice {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a Commerce account with a buyer user") {
@@ -1531,6 +1537,7 @@ definition {
 	@description = "COMMERCE-6157. Verify buyers can see the barred list price and a sale price of a product if a promotion is set."
 	@priority = "3"
 	test ViewProductCardPriceWithPromotion {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		// TODO Review
@@ -1610,6 +1617,7 @@ definition {
 	@description = "COMMERCE-5865. Verify buyers can view the starting price on a product card when the product has different SKUs with different prices"
 	@priority = "3"
 	test ViewProductCardStartingPrice {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "true";
 
 		task ("Given a Commerce account with a buyer user") {

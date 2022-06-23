@@ -457,6 +457,7 @@ definition {
 	@description = "Verify users with the permission to edit catalog permissions can edit the permissions on a catalog."
 	@priority = "3"
 	test UserWithPermissionCanEditAPermissionOnACatalog {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		task ("Given a user") {

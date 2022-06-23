@@ -238,17 +238,16 @@ export default function propsTransformer({
 
 		const url = new URL(permissionsURL);
 
-		const urlSearchParams = new URLSearchParams(url.search);
-
-		const paramName = `_${urlSearchParams.get('p_p_id')}_resourcePrimKey`;
-
-		for (const key of keys) {
-			url.searchParams.append(paramName, key);
-		}
-
 		openSelectionModal({
 			title: Liferay.Language.get('permissions'),
-			url: url.toString(),
+			url: addParams(
+				{
+					[`_${url.searchParams.get(
+						'p_p_id'
+					)}_resourcePrimKey`]: keys.join(','),
+				},
+				permissionsURL
+			),
 		});
 	};
 

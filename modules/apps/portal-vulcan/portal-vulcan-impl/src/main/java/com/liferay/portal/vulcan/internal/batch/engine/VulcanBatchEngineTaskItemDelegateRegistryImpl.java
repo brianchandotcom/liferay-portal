@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.batch.engine;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateRegistry;
 
@@ -52,6 +53,16 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 		return _vulcanBatchEngineTaskItemDelegateMap.get(entityClassName);
 	}
 
+	@Override
+	public boolean isBatchPlannerExportEnabled(String entityClassName) {
+		return _batchPlannerExportEnabledMap.get(entityClassName);
+	}
+
+	@Override
+	public boolean isBatchPlannerImportEnabled(String entityClassName) {
+		return _batchPlannerImportEnabledMap.get(entityClassName);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
@@ -72,6 +83,10 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 		_serviceTracker.close();
 	}
 
+	private final Map<String, Boolean> _batchPlannerExportEnabledMap =
+		new HashMap<>();
+	private final Map<String, Boolean> _batchPlannerImportEnabledMap =
+		new HashMap<>();
 	private ServiceTracker<?, ?> _serviceTracker;
 	private final Map<String, VulcanBatchEngineTaskItemDelegate<?>>
 		_vulcanBatchEngineTaskItemDelegateMap = new HashMap<>();
@@ -90,10 +105,23 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 				vulcanBatchEngineTaskItemDelegate = _bundleContext.getService(
 					serviceReference);
 
+			String entityClassName = (String)serviceReference.getProperty(
+				"batch.engine.entity.class.name");
+
+			_batchPlannerExportEnabledMap.put(
+				entityClassName,
+				GetterUtil.getBoolean(
+					serviceReference.getProperty(
+						"batch.planner.export.enabled")));
+
+			_batchPlannerImportEnabledMap.put(
+				entityClassName,
+				GetterUtil.getBoolean(
+					serviceReference.getProperty(
+						"batch.planner.import.enabled")));
+
 			_vulcanBatchEngineTaskItemDelegateMap.put(
-				(String)serviceReference.getProperty(
-					"batch.engine.entity.class.name"),
-				vulcanBatchEngineTaskItemDelegate);
+				entityClassName, vulcanBatchEngineTaskItemDelegate);
 
 			return vulcanBatchEngineTaskItemDelegate;
 		}
@@ -113,9 +141,14 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 			VulcanBatchEngineTaskItemDelegate<?>
 				vulcanBatchEngineTaskItemDelegate) {
 
-			_vulcanBatchEngineTaskItemDelegateMap.remove(
-				(String)serviceReference.getProperty(
-					"batch.engine.entity.class.name"));
+			String entityClassName = (String)serviceReference.getProperty(
+				"batch.engine.entity.class.name");
+
+			_batchPlannerExportEnabledMap.remove(entityClassName);
+
+			_batchPlannerImportEnabledMap.remove(entityClassName);
+
+			_vulcanBatchEngineTaskItemDelegateMap.remove(entityClassName);
 		}
 
 		private VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer(

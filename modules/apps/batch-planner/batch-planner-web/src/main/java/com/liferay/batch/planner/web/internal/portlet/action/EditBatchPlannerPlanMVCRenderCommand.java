@@ -76,12 +76,18 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 		return "/view.jsp";
 	}
 
-	private Map<String, String> _getInternalClassNameCategories() {
+	private Map<String, String> _getInternalClassNameCategories(
+		boolean export) {
+
 		Map<String, String> internalClassNameCategories = new HashMap<>();
 
 		for (String entityClassName :
 				_vulcanBatchEngineTaskItemDelegateRegistry.
 					getEntityClassNames()) {
+
+			if (!_isBatchPlannerEnabled(export, entityClassName)) {
+				continue;
+			}
 
 			VulcanBatchEngineTaskItemDelegate
 				vulcanBatchEngineTaskItemDelegate =
@@ -109,6 +115,18 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 			0, bundleName.lastIndexOf(StringPool.SPACE));
 	}
 
+	private boolean _isBatchPlannerEnabled(
+		boolean export, String entityClassName) {
+
+		if (export) {
+			return _vulcanBatchEngineTaskItemDelegateRegistry.
+				isBatchPlannerExportEnabled(entityClassName);
+		}
+
+		return _vulcanBatchEngineTaskItemDelegateRegistry.
+			isBatchPlannerImportEnabled(entityClassName);
+	}
+
 	private boolean _isExport(String value) {
 		if (value.equals("export")) {
 			return true;
@@ -118,14 +136,17 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private String _render(RenderRequest renderRequest) throws PortalException {
+		boolean export = _isExport(
+			ParamUtil.getString(renderRequest, "navigation"));
+
 		Map<String, String> internalClassNameCategories =
-			_getInternalClassNameCategories();
+			_getInternalClassNameCategories(export);
 
 		long batchPlannerPlanId = ParamUtil.getLong(
 			renderRequest, "batchPlannerPlanId");
 
 		if (batchPlannerPlanId == 0) {
-			if (_isExport(ParamUtil.getString(renderRequest, "navigation"))) {
+			if (export) {
 				renderRequest.setAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT,
 					new EditBatchPlannerPlanDisplayContext(

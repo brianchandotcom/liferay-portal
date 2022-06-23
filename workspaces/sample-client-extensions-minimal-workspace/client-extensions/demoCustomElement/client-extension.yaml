@@ -1,0 +1,14 @@
+demoCustomElement:
+  cssURLs:
+    - style.css
+  description: "This adds a remote app loaded as a Custom Element Web Component"
+  friendlyURLMapping: vanilla-counter
+  htmlElementName: vanilla-counter
+  instanceable: false
+  name: Demo Custom Element
+  portletCategoryName: category.remote-apps
+  sourceCodeURL: https://www.liferay.com
+  type: customElement
+  urls:
+    - index.js
+  useESM: false

@@ -39,7 +39,6 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
-import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.helper.CollectionPaginationHelper;
@@ -47,6 +46,7 @@ import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.display.context.RenderCollectionLayoutStructureItemDisplayContext;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
@@ -178,9 +178,13 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	protected static final String COLLECTION_ELEMENT_INDEX =
 		RenderLayoutStructureTag.class.getName() + "#COLLECTION_ELEMENT_INDEX";
 
+	protected static final String LAYOUT_STRUCTURE =
+		RenderLayoutStructureTag.class.getName() + "#LAYOUT_STRUCTURE";
+
 	private String _getErrorMessage(
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-		InfoForm infoForm) {
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			InfoForm infoForm)
+		throws Exception {
 
 		HttpServletRequest httpServletRequest = getRequest();
 
@@ -216,7 +220,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				formInputLabel, themeDisplay.getLocale());
 		}
 
-		InfoField<?> infoField = infoForm.getInfoField(
+		InfoField infoField = infoForm.getInfoField(
 			infoFormValidationException.getInfoFieldUniqueId());
 
 		formInputLabel = infoField.getLabel(themeDisplay.getLocale());
@@ -388,6 +392,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					httpServletResponse);
 
 		jspWriter.write("<div class=\"");
+
 		jspWriter.write(
 			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
 				collectionStyledLayoutStructureItem));
@@ -395,6 +400,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write(
 			LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
 				layoutStructureItem));
+
 		jspWriter.write("\" style=\"");
 		jspWriter.write(
 			renderLayoutStructureDisplayContext.getStyle(
@@ -892,30 +898,28 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				renderLayoutStructureDisplayContext)
 		throws Exception {
 
-		if (infoForm == null) {
-			return;
-		}
-
 		JspWriter jspWriter = pageContext.getOut();
-
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-			(FormStyledLayoutStructureItem)layoutStructureItem;
 
 		jspWriter.write("<form action=\"");
 		jspWriter.write(
 			renderLayoutStructureDisplayContext.getAddInfoItemActionURL());
 		jspWriter.write("\" class=\"");
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)layoutStructureItem;
+
 		jspWriter.write(
 			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
-				formStyledLayoutStructureItem));
+				layoutStructureItem));
 		jspWriter.write(StringPool.SPACE);
 		jspWriter.write(
 			LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
-				formStyledLayoutStructureItem));
+				layoutStructureItem));
 		jspWriter.write(StringPool.SPACE);
 		jspWriter.write(
 			LayoutStructureItemCSSUtil.getStyledLayoutStructureItemCssClasses(
 				formStyledLayoutStructureItem));
+
 		jspWriter.write("\" method=\"POST=\" style=\"");
 		jspWriter.write(
 			renderLayoutStructureDisplayContext.getStyle(
@@ -934,6 +938,22 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		jspWriter.write("<input name=\"formItemId\" type=\"hidden\" value=\"");
 		jspWriter.write(formStyledLayoutStructureItem.getItemId());
+		jspWriter.write("\">");
+
+		jspWriter.write("<input name=\"plid\" type=\"hidden\" value=\"");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)getRequest().getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		jspWriter.write(String.valueOf(themeDisplay.getPlid()));
+
+		jspWriter.write("\">");
+
+		jspWriter.write(
+			"<input name=\"segmentsExperienceId\" type=\"hidden\" value=\"");
+		jspWriter.write(
+			String.valueOf(
+				SegmentsExperienceUtil.getSegmentsExperienceId(getRequest())));
 		jspWriter.write("\">");
 
 		if (SessionErrors.contains(
@@ -1140,8 +1160,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		HttpServletRequest httpServletRequest = getRequest();
 
-		httpServletRequest.setAttribute(
-			LayoutWebKeys.LAYOUT_STRUCTURE, _layoutStructure);
+		httpServletRequest.setAttribute(LAYOUT_STRUCTURE, _layoutStructure);
 
 		_renderLayoutStructure(
 			childrenItemIds,

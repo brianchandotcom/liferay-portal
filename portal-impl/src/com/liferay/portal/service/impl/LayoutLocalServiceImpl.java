@@ -3377,6 +3377,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Layout layout = layoutLocalService.getLayout(plid);
 
+		layout.setModifiedDate(new Date());
 		layout.setStatus(status);
 
 		User user = _userLocalService.getUser(userId);

@@ -108,7 +108,7 @@ definition {
 			Navigator.openSpecificURL(url = "${currentURL}admin");
 		}
 
-		task("Go to control panel > Users > Users and Organizations") {
+		task ("Go to control panel > Users > Users and Organizations") {
 			ProductMenuHelper.expandPanel(panel = "control panel");
 
 			ProductMenuHelper.expandCategory(category = "Users");
@@ -116,7 +116,7 @@ definition {
 			ProductMenuHelper.gotoPortlet(portlet = "Users and Organizations");
 		}
 
-		task("Create a new user") {
+		task ("Create a new user") {
 			LexiconEntry.gotoAdd();
 
 			Type(
@@ -138,7 +138,7 @@ definition {
 			AssertClick(
 				locator1 = "Button#SUBMIT",
 				value1 = "Save");
-			
+
 			UserNavigator.gotoUser(userScreenName = "${userScreenName}");
 
 			UserNavigator.gotoPassword();
@@ -146,28 +146,184 @@ definition {
 			User.resetPassword();
 		}
 
-		task("Log out the current user and login with the new user") {
+		task ("Log out the current user and login with the new user") {
 			ProductMenuHelper.expandPanel(panel = "user");
-		
-			Click(
-				locator1 = "ProductMenu#USER_SIGNOUT");
+
+			Click(locator1 = "ProductMenu#USER_SIGNOUT");
 
 			Navigator.openSpecificURL(url = "${currentURL}admin");
 
-			ACLogin.loginAs(emailAddress = "${userEmailAddress}", password = "test");
+			ACLogin.loginAs(
+				emailAddress = "${userEmailAddress}",
+				password = "test");
 
 			Navigator.openSpecificURL(url = "${currentURL}admin");
 		}
 
 		task ("Redefine the password of the new user") {
-			User.resetPassword(
-				newPassword = "test1");
+			User.resetPassword(newPassword = "test1");
 		}
 
-		task("Assert that the user does not have permission to access the admin page") {
+		task ("Assert that the user does not have permission to access the admin page") {
 			AssertTextEquals(
 				locator1 = "Portlet#ERROR",
 				value1 = "You do not have the roles required to access this portlet.");
+		}
+	}
+
+	@description = "Bug: LRAC-11339 | Automation ID: LRAC-11365 | Test Summary: A new user created in the admin page can be invited to the workspace and see the data, the same user, now with admin permission, also can see the data"
+	@priority = "5"
+	test NewUserIndependentOfRoleCanSeeDataInTheWorkspace {
+		var userFirstName = "ac";
+		var userLastName = "ac";
+		var userScreenName = "ac";
+		var userEmailAddress = "ac@liferay.com";
+		var currentURL = Navigator.getCurrentURL();
+
+		task ("Connect AC and DXP and generate some events") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+
+			ACUtils.launchDXP();
+
+			ACUtils.addSiteAndPage();
+
+			ACUtils.createFormAndAddToPage();
+
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+			ACUtils.navigateToSitePage(
+				actionType = "Submit Form",
+				pageName = "AC Page",
+				siteName = "Site Name",
+				submitText = "Testing");
+
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Navigate to the AC Admin page") {
+			ACUtils.launchAC();
+
+			Navigator.openSpecificURL(url = "${currentURL}admin");
+		}
+
+		task ("Go to control panel > Users > Users and Organizations") {
+			ProductMenuHelper.expandPanel(panel = "control panel");
+
+			ProductMenuHelper.expandCategory(category = "Users");
+
+			ProductMenuHelper.gotoPortlet(portlet = "Users and Organizations");
+		}
+
+		task ("Create a new user") {
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+				value1 = "${userScreenName}");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+				value1 = "${userEmailAddress}");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+				value1 = "${userFirstName}");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+				value1 = "${userLastName}");
+
+			AssertClick(
+				locator1 = "Button#SUBMIT",
+				value1 = "Save");
+
+			UserNavigator.gotoUser(userScreenName = "${userScreenName}");
+
+			UserNavigator.gotoPassword();
+
+			User.resetPassword();
+		}
+
+		task ("Go to AC with Test Test > Settings > User Management > Invite the new user to the workspace") {
+			ACUtils.launchAC();
+
+			ACNavigation.goToSettings();
+
+			ACSettings.goToUserManagement();
+
+			ACSettings.addUser(userInvite = "${userEmailAddress}");
+		}
+
+		task ("Go to AC with the new user and assert that the user can see the data") {
+			ACWorkspace.signOut();
+
+			ACLogin.loginAs(
+				emailAddress = "${userEmailAddress}",
+				password = "test");
+
+			Navigator.openSpecificURL(url = "${currentURL}");
+
+			ACWorkspace.openWorkspace();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToSites();
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Unique Visitors",
+				metricValue = "1");
+		}
+
+		task ("Go to admin with Test Test and give administrator permission to the new user") {
+			ACWorkspace.signOut();
+
+			ACLogin.loginAs(
+				emailAddress = "test@liferay.com",
+				password = "test");
+
+			Navigator.openSpecificURL(url = "${currentURL}admin");
+
+			ProductMenuHelper.expandPanel(panel = "control panel");
+
+			ProductMenuHelper.expandCategory(category = "Users");
+
+			ProductMenuHelper.gotoPortlet(portlet = "Users and Organizations");
+
+			User.assignRegularRoleCP(
+				roleTitle = "Administrator",
+				userScreenName = "${userScreenName}");
+		}
+
+		task ("Go to AC with the new user and assert that user can see the data") {
+			ProductMenuHelper.expandPanel(panel = "user");
+
+			Click(locator1 = "ProductMenu#USER_SIGNOUT");
+
+			ACLogin.loginAs(
+				emailAddress = "${userEmailAddress}",
+				password = "test");
+
+			Navigator.openSpecificURL(url = "${currentURL}");
+
+			ACWorkspace.openWorkspace();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToSites();
+
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Unique Visitors",
+				metricValue = "1");
 		}
 	}
 

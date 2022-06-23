@@ -1528,24 +1528,70 @@ definition {
 			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_VALUE_FINAL");
 	}
 
-	@description = "COMMERCE-6157. As a buyer, I want to see the barred list price and a sale price of a product, if a promotion is set"
+	@description = "COMMERCE-6157. Verify buyers can see the barred list price and a sale price of a product if a promotion is set."
 	@priority = "3"
 	test ViewProductCardPriceWithPromotion {
 		property portal.acceptance = "false";
 
 		// TODO Review
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+		task ("And given a product with a promotion") {
+			CommercePromotions.openPromotionsAdmin();
 
-		AssertElementPresent(
-			key_productName = "Brake Pads",
-			locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_PROMO_PRICE");
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
 
-		AssertElementPresent(
-			key_productName = "Brake Pads",
-			locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_INACTIVE_PRICE");
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			var promoPrice = TestUtils.getElementTextContent(element = "//div[@class='dnd-td' and contains(.,'MIN93018')]/following-sibling::div[3]");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Brake Pads");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			var basePrice = TestUtils.getElementTextContent(element = "//div[@class='dnd-tr']//div[@class='dnd-td'][3]");
+		}
+
+		task ("When the buyer logs in and views the product card") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			WaitForPageLoad();
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+		}
+
+		task ("Then the barred list price and promotion price is shown on the product card") {
+			AssertTextEquals(
+				key_productName = "Brake Pads",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_PROMO_PRICE",
+				value1 = "${promoPrice}");
+
+			AssertTextEquals(
+				key_productName = "Brake Pads",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_INACTIVE_PRICE",
+				value1 = "${basePrice}");
+		}
 	}
 
 	@description = "COMMERCE-5862. As a buyer, I want to view the product SKU, if set(single SKU)"

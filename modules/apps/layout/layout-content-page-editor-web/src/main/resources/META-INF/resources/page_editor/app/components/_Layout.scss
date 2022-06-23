@@ -126,23 +126,21 @@ html#{$cadmin-selector} {
 		}
 
 		&__container.empty,
-		&__row {
-			&.empty {
-				min-height: $emptyItemMinHeight;
+		&__row.empty {
+			min-height: $emptyItemMinHeight;
 
-				&.flex-column-reverse {
-					.page-editor__col {
-						flex: 1;
+			&.flex-column-reverse {
+				.page-editor__col {
+					flex: 1;
 
-						&__border {
-							min-height: $emptyItemMinHeight / 2;
-						}
+					&__border {
+						min-height: $emptyItemMinHeight / 2;
 					}
 				}
+			}
 
-				.page-editor__col {
-					min-height: $emptyItemMinHeight / 2;
-				}
+			.page-editor__col {
+				min-height: $emptyItemMinHeight / 2;
 			}
 		}
 

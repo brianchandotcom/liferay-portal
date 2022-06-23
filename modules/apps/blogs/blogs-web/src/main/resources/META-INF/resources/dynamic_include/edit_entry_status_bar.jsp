@@ -17,7 +17,9 @@
 <%@ include file="/dynamic_include/init.jsp" %>
 
 <%
-BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
+BlogsEditEntryDisplayContext blogsEditEntryDisplayContext = (BlogsEditEntryDisplayContext)request.getAttribute(BlogsEditEntryDisplayContext.class.getName());
+
+BlogsEntry entry = blogsEditEntryDisplayContext.getBlogsEntry();
 
 BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortletInstanceConfigurationUtil.getBlogsPortletInstanceConfiguration(themeDisplay);
 %>

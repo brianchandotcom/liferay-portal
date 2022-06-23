@@ -32,6 +32,7 @@ page import="com.liferay.blogs.constants.BlogsPortletKeys" %><%@
 page import="com.liferay.blogs.model.BlogsEntry" %><%@
 page import="com.liferay.blogs.settings.BlogsGroupServiceSettings" %><%@
 page import="com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration" %><%@
+page import="com.liferay.blogs.web.internal.display.context.BlogsEditEntryDisplayContext" %><%@
 page import="com.liferay.blogs.web.internal.security.permission.resource.BlogsPermission" %><%@
 page import="com.liferay.blogs.web.internal.util.BlogsPortletInstanceConfigurationUtil" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
@@ -45,7 +46,6 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.rss.util.RSSUtil" %><%@
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %>
 

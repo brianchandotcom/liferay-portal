@@ -15,7 +15,7 @@
 	[/#if]
 
 	<div class="dropdown-menu">
-		[#if configuration.includeSearch == true]
+		[#if configuration.includeSearch == true && input.attributes.autocompleteURL?has_content]
 			<div class="dropdown-section">
 				<div class="input-group input-group-sm">
 					<div class="input-group-item">

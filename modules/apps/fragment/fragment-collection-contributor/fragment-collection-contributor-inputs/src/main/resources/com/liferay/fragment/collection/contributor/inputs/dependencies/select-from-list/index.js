@@ -8,7 +8,7 @@ const wrapper = fragmentElement;
 const button = wrapper.querySelector('.form-control');
 const buttonLabel = button.querySelector('.forms-select-from-list-label');
 const dropdown = wrapper.querySelector('.dropdown-menu');
-const input = wrapper.querySelector('input');
+const inputElement = wrapper.querySelector('input');
 const listbox = wrapper.querySelector('.list-unstyled');
 const loadingResultsMessage = wrapper.querySelector(
 	'.forms-select-from-list-loading-results'
@@ -17,10 +17,6 @@ const noResultsMessage = wrapper.querySelector(
 	'.forms-select-from-list-no-results'
 );
 const searchInput = wrapper.querySelector('.forms-select-from-list-search');
-
-const mockInput = {
-	queryOptionsURL: input.attributes.autocompleteURL,
-};
 
 let currentSearch = {
 	abortController: new AbortController(),
@@ -91,7 +87,7 @@ function setActiveDescendant(item) {
 
 	buttonLabel.textContent = item.textContent;
 	listbox.setAttribute('aria-activedescendant', item.id);
-	input.value = item.dataset.optionValue;
+	inputElement.value = item.dataset.optionValue;
 
 	item.classList.add('active');
 	item.setAttribute('aria-selected', 'true');
@@ -280,7 +276,7 @@ function handleSearchKeyup() {
 	loadingResultsMessage.classList.remove('d-none');
 	loadingResultsMessage.removeAttribute('aria-hidden');
 
-	const url = new URL(mockInput.queryOptionsURL);
+	const url = new URL(input.attributes.autocompleteURL);
 	url.searchParams.set('search', currentSearch.query);
 
 	Liferay.Util.fetch(url, {

@@ -1,0 +1,8 @@
+sampleThemeCSS:
+    clayURL: css/clay.css
+    description:
+        "This can replace the clay.css or main.css of a configured page"
+    mainURL: css/main.css
+    name: Sample Theme CSS
+    sourceCodeURL: https://www.liferay.com
+    type: themeCSS

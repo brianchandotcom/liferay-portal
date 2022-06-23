@@ -1,0 +1,6 @@
+sampleGlobalCSS:
+    description:
+        "This CSS file can be loaded as an additional stylesheet for a configured page"
+    name: Sample Global CSS
+    type: globalCSS
+    url: global.css

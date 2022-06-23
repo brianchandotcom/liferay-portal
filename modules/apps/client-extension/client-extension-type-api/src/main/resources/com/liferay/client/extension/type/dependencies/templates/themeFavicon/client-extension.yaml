@@ -1,0 +1,7 @@
+sampleThemeFavicon:
+    description:
+        "This will replace the favicon for a configured page"
+    name: Sample Theme Favicon
+    sourceCodeURL: https://www.liferay.com
+    type: themeFavicon
+    url: favicon.ico

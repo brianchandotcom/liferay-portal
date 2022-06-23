@@ -1,0 +1,6 @@
+sampleGlobalJS:
+    description:
+        "This JS file can be loaded as an additional script for a configured page"
+    name: Sample Global JavaScript
+    type: globalJS
+    url: global.js

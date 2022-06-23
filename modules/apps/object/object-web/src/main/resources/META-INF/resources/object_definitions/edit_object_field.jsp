@@ -38,6 +38,8 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		).put(
 			"isSystemObject", objectDefinition.isSystem()
 		).put(
+			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+		).put(
 			"objectField", objectDefinitionsFieldsDisplayContext.getObjectFieldJSONObject(objectField)
 		).put(
 			"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(Validator.isNotNull(objectField.getRelationshipType()), locale)

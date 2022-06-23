@@ -20,8 +20,10 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.web.internal.configuration.activator.FFOneToOneRelationshipConfigurationActivator;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
+import com.liferay.object.web.internal.object.definitions.metadata.tracker.SystemObjectDefinitionMetadataTracker;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,7 +51,9 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
-		ObjectDefinitionService objectDefinitionService) {
+		ObjectDefinitionService objectDefinitionService,
+		SystemObjectDefinitionMetadataTracker
+			systemObjectDefinitionMetadataTracker) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
@@ -60,6 +64,9 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		_objectDefinitionService = objectDefinitionService;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
+
+		_systemObjectDefinitionMetadataTracker =
+			systemObjectDefinitionMetadataTracker;
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
@@ -83,6 +90,45 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 				null, "trash", "deleteObjectRelationship",
 				LanguageUtil.get(objectRequestHelper.getRequest(), "delete"),
 				"delete", "delete", null));
+	}
+
+	public JSONObject getObjectDefinitionJSONObject(
+		ObjectDefinition objectDefinition) {
+
+		return JSONUtil.put(
+			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+		).put(
+			"parameterRequired",
+			() -> {
+				String restContextPath;
+
+				if (!objectDefinition.isSystem()) {
+					restContextPath = objectDefinition.getRESTContextPath();
+				}
+				else {
+					SystemObjectDefinitionMetadata
+						systemObjectDefinitionMetadata =
+							_systemObjectDefinitionMetadataTracker.
+								getSystemObjectDefinitionMetadata(
+									objectDefinition.getName());
+
+					if (systemObjectDefinitionMetadata == null) {
+						return false;
+					}
+
+					restContextPath =
+						systemObjectDefinitionMetadata.getRESTContextPath();
+				}
+
+				if (restContextPath.matches("/\\{\\w+}/")) {
+					return true;
+				}
+
+				return false;
+			}
+		).put(
+			"system", objectDefinition.isSystem()
+		);
 	}
 
 	public JSONArray getObjectRelationshipDeletionTypesJSONArray() {
@@ -172,5 +218,7 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		_objectDefinitionModelResourcePermission;
 	private final ObjectDefinitionService _objectDefinitionService;
 	private final ObjectRequestHelper _objectRequestHelper;
+	private final SystemObjectDefinitionMetadataTracker
+		_systemObjectDefinitionMetadataTracker;
 
 }

@@ -23,4 +23,6 @@ public class CTActionKeys {
 
 	public static final String PUBLISH = "PUBLISH";
 
+	public static final String WORK_ON_PRODUCTION = "WORK_ON_PRODUCTION";
+
 }

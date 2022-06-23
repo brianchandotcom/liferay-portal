@@ -9,6 +9,7 @@
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>WORK_ON_PRODUCTION</action-key>
 			</supports>
 			<site-member-defaults>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
@@ -18,6 +19,7 @@
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>WORK_ON_PRODUCTION</action-key>
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>

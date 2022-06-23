@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -165,6 +164,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				new ComponentDescriptor(module, componentId),
 				_getReactData(
 					httpServletRequest, ctCollection, ctPreferences,
+					_ctSettingsConfigurationHelper.isSandboxEnabled(
+						themeDisplay.getCompanyId()),
 					themeDisplay),
 				httpServletRequest, writer);
 
@@ -183,7 +184,8 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	private Map<String, Object> _getReactData(
 			HttpServletRequest httpServletRequest, CTCollection ctCollection,
-			CTPreferences ctPreferences, ThemeDisplay themeDisplay)
+			CTPreferences ctPreferences, boolean sandboxOnlyEnabled,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		PortletURL checkoutURL = PortletURLBuilder.create(
@@ -289,27 +291,36 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				}
 			}
 			else {
-				checkoutURL.setParameter(
-					"ctCollectionId",
-					String.valueOf(CTConstants.CT_COLLECTION_ID_PRODUCTION));
+				if (!sandboxOnlyEnabled ||
+					_portletPermission.contains(
+						themeDisplay.getPermissionChecker(),
+						CTPortletKeys.PUBLICATIONS,
+						CTActionKeys.WORK_ON_PRODUCTION)) {
 
-				data.put(
-					"checkoutDropdownItem",
-					JSONUtil.put(
-						"confirmationMessage",
-						_language.get(
-							themeDisplay.getLocale(),
-							"any-changes-made-in-production-will-immediately-" +
-								"be-live.-continue-to-production")
-					).put(
-						"href", checkoutURL.toString()
-					).put(
-						"label",
-						_language.get(
-							themeDisplay.getLocale(), "work-on-production")
-					).put(
-						"symbolLeft", "simple-circle"
-					));
+					checkoutURL.setParameter(
+						"ctCollectionId",
+						String.valueOf(
+							CTConstants.CT_COLLECTION_ID_PRODUCTION));
+
+					data.put(
+						"checkoutDropdownItem",
+						JSONUtil.put(
+							"confirmationMessage",
+							_language.get(
+								themeDisplay.getLocale(),
+								"any-changes-made-in-production-will-" +
+									"immediately-be-live.-continue-to-" +
+										"production")
+						).put(
+							"href", checkoutURL.toString()
+						).put(
+							"label",
+							_language.get(
+								themeDisplay.getLocale(), "work-on-production")
+						).put(
+							"symbolLeft", "simple-circle"
+						));
+				}
 			}
 		}
 
@@ -376,12 +387,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.change.tracking.model.CTCollection)"
-	)
-	private ModelResourcePermission<CTCollection>
-		_ctCollectionModelResourcePermission;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;

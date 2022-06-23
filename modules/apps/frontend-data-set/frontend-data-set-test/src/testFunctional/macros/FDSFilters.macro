@@ -16,7 +16,7 @@ definition {
 					key_status = "Draft",
 					locator1 = "FrontendDataSet#STATUS_FILTER_CHECKBOX");
 			}
-			else if ("${status}" == "Pending"){
+			else if ("${status}" == "Pending") {
 				Check.checkNotVisibleNoErrors(
 					key_status = "Pending",
 					locator1 = "FrontendDataSet#STATUS_FILTER_CHECKBOX");

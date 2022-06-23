@@ -1,0 +1,4 @@
+com.fasterxml.*
+io.fabric8.*
+okhttp3.*
+okio.*

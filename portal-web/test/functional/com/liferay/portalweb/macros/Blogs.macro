@@ -108,29 +108,6 @@ definition {
 		Button.clickPublish();
 	}
 
-	macro addEntryWithCoverImageFromDMFolders {
-		BlogsNavigator.gotoAddEntry();
-
-		BlogsEntry.addTitle(entryTitle = "${entryTitle}");
-
-		BlogsEntry.addEntryContent(
-			entryContent = "${entryContent}",
-			entrySubtitle = "${entrySubtitle}",
-			entryTitle = "${entryTitle}");
-
-		BlogsNavigator.gotoSelectFile();
-
-		ItemSelector.selectDMImage(
-			dmFolderName = "${dmFolderName}",
-			dmSubFolderName = "${dmSubFolderName}",
-			imageFileName = "${imageFileName}",
-			navTab = "${navTab}");
-
-		Pause(locator1 = "1000");
-
-		Button.clickPublish();
-	}
-
 	macro addEntryWithCustomURL {
 		if (isSet(siteURLKey)) {
 			BlogsNavigator.openToAddEntry(siteURLKey = "${siteURLKey}");

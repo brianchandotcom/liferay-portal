@@ -2,6 +2,7 @@
 	"dependencies": {
 		"frontend-js-web": "*"
 	},
+	"main": "index.ts",
 	"name": "frontend-js-collapse-support-web",
 	"private": true,
 	"scripts": {

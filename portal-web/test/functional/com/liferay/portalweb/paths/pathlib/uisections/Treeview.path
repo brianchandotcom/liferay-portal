@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>FILTER_BY_RESULTS_BAR_MESSAGE</td>
+	<td>//div[@class='align-items-center container-fluid d-flex justify-content-between p-0']//p[text()='resultMessage']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NODE_CHECKBOX</td>
 	<td>//div[contains(@class,'component-text')][normalize-space(text())='${key_nodeName}']/parent::div//preceding-sibling::div//input[@type='checkbox']</td>
 	<td></td>

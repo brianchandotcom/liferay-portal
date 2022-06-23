@@ -85,6 +85,11 @@ public interface AssetCategoryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetCategory fetchCategory(long categoryId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetCategory getAssetCategoryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException;
+
 	/**
 	 * Returns a range of assetCategories related to an AssetEntry with the
 	 * given "classNameId-classPK".

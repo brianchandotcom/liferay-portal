@@ -558,11 +558,11 @@ public class SourceFormatter {
 				dependentFileNames = _addDependentFileName(
 					dependentFileNames, recentChangesFileName, "bnd.bnd");
 			}
-			else if (recentChangesFileName.endsWith(".java") &&
+			else if (recentChangesFileName.endsWith("CET.java") &&
 					 recentChangesFileName.contains(
 						 "/modules/apps/client-extension/client-extension-" +
 							 "type-api/src/main/java/com/liferay/client" +
-								 "/extension/type/CET")) {
+								 "/extension/type/")) {
 
 				dependentFileNames.addAll(
 					SourceFormatterUtil.filterFileNames(
@@ -570,7 +570,7 @@ public class SourceFormatter {
 						new String[] {
 							"**/modules/apps/client-extension/client-" +
 								"extension-type-api/src/main/java/com/liferay" +
-									"/client/extension/type/CET*.java"
+									"/client/extension/type/*CET.java"
 						},
 						_sourceFormatterExcludes, false));
 			}

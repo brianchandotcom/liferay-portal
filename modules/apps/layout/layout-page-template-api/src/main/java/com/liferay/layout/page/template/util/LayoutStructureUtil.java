@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.taglib.internal.util;
+package com.liferay.layout.page.template.util;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;

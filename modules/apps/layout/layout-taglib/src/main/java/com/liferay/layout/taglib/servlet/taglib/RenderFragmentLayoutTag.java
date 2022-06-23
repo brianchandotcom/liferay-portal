@@ -16,8 +16,8 @@ package com.liferay.layout.taglib.servlet.taglib;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.layout.constants.LayoutWebKeys;
+import com.liferay.layout.page.template.util.LayoutStructureUtil;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.layout.taglib.internal.util.LayoutStructureUtil;
 import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

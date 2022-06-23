@@ -16,18 +16,18 @@ import {useCallback, useState} from 'react';
 
 export function useLocalStorage(key, initialValue) {
 	const [storedValue, setStoredValue] = useState(() => {
-		if (typeof window === 'undefined') {
-			return initialValue;
-		}
+		const value =
+			typeof initialValue === 'function' ? initialValue() : initialValue;
+
 		try {
 			const item = window.localStorage.getItem(key);
 
-			return item ? JSON.parse(item) : initialValue;
+			return item ? JSON.parse(item) : value;
 		}
 		catch (error) {
 			console.error(error);
 
-			return initialValue;
+			return value;
 		}
 	});
 

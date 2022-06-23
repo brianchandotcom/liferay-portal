@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/frontend-js-walkthrough-web": "*"
 	},
 	"name": "@liferay/frontend-js-components-sample-web",
 	"scripts": {

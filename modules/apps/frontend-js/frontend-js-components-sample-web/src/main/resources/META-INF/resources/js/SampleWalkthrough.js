@@ -12,7 +12,7 @@
  * details.
  */
 
-import {Walkthrough} from 'frontend-js-components-web';
+import Walkthrough from '@liferay/frontend-js-walkthrough-web/Walkthrough';
 import React from 'react';
 
 const WALKTHROUGH_CONFIG = {
@@ -59,6 +59,6 @@ const WALKTHROUGH_CONFIG = {
 	],
 };
 
-export default function SampleWalkthrough(...props) {
-	return <Walkthrough {...WALKTHROUGH_CONFIG} {...props} />;
+export default function SampleWalkthrough() {
+	return <Walkthrough {...WALKTHROUGH_CONFIG} />;
 }

@@ -15,53 +15,19 @@
 import './Walkthrough.scss';
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import {OverlayMask} from '@clayui/core';
 import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayPopover from '@clayui/popover';
 import {ReactPortal, usePrevious} from '@liferay/frontend-js-react-web';
 import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {
-	forwardRef,
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
+import {Hotspot} from './Hotspot';
+import {Overlay} from './Overlay';
 import {doAlign} from './doAlign';
 import {useLocalStorage} from './useLocalStorage';
 import {useObserveRect} from './useObserveRect';
-
-const Hotspot = forwardRef(({onHotspotClick, trigger}, ref) => {
-	const align = useCallback(() => {
-		if (trigger && ref?.current) {
-			doAlign({
-				points: ['cc', 'tl'],
-				sourceElement: ref.current,
-				targetElement: trigger,
-			});
-		}
-	}, [ref, trigger]);
-
-	useEffect(() => {
-		align();
-	}, [align]);
-
-	useObserveRect(align, trigger);
-
-	return (
-		<div
-			className="lfr-walkthrough-hotspot"
-			onClick={onHotspotClick}
-			ref={ref}
-		>
-			<div className="lfr-walkthrough-hotspot-inner" />
-		</div>
-	);
-});
 
 /**
  * This map humanize tuples received from dom-align
@@ -128,61 +94,15 @@ const ALIGNMENTS_GUESS_MAP = {
 	trbr: 'top',
 };
 
-const WalkthroughOverlay = ({popoverVisible, trigger}) => {
-	const [overlayBounds, setOverlayBounds] = useState({
-		height: 0,
-		width: 0,
-		x: 0,
-		y: 0,
-	});
-
-	const updateOverlayBounds = useCallback(
-		(overlayBounds) => {
-			overlayBounds = overlayBounds
-				? overlayBounds
-				: trigger.getBoundingClientRect();
-
-			setOverlayBounds({
-				height: overlayBounds.height,
-				width: overlayBounds.width,
-				x: overlayBounds.x,
-				y: overlayBounds.y,
-			});
-		},
-		[trigger]
-	);
-
-	useEffect(() => {
-		if (trigger) {
-			updateOverlayBounds();
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [updateOverlayBounds]);
-
-	useObserveRect(updateOverlayBounds, trigger);
-
-	return (
-		<OverlayMask
-			bounds={overlayBounds}
-			onBoundsChange={setOverlayBounds}
-			visible={popoverVisible}
-		/>
-	);
-};
-
-const Walkthrough = ({
+const Step = ({
 	closeOnClickOutside,
 	closeable,
+	currentStep,
+	onCurrentStep,
 	pages,
 	skippable,
 	steps,
 }) => {
-	const [currentStepIndex, setCurrentStepIndex] = useLocalStorage(
-		'walkthrough-current-step',
-		0
-	);
-
 	const popoverRef = useRef(null);
 
 	const hotspotRef = useRef(null);
@@ -200,7 +120,7 @@ const Walkthrough = ({
 		positioning: defaultPositioning = 'right-top',
 		previous,
 		title,
-	} = steps[currentStepIndex];
+	} = steps[currentStep];
 
 	const path = location.pathname + location.search + location.hash;
 
@@ -209,12 +129,12 @@ const Walkthrough = ({
 	);
 
 	const memoizedTrigger = useMemo(() => {
-		const currentNode = steps[currentStepIndex].nodeToHighlight;
+		const currentNode = steps[currentStep].nodeToHighlight;
 
 		if (currentNode) {
 			return document.querySelector(currentNode);
 		}
-	}, [steps, currentStepIndex]);
+	}, [steps, currentStep]);
 
 	const previousTrigger = usePrevious(memoizedTrigger);
 
@@ -228,14 +148,14 @@ const Walkthrough = ({
 				hasElement ||
 				(action && pages[action].includes(steps[index].id))
 			) {
-				setCurrentStepIndex(index);
+				onCurrentStep(index);
 			}
 			else {
 				console.error(
 					`Walkthrough Exception: ${steps[index].nodeToHighlight} element for highlight does not exist in DOM`
 				);
 
-				setCurrentStepIndex(
+				onCurrentStep(
 					index === steps.length - 1
 						? index - 1
 						: isNext
@@ -245,29 +165,29 @@ const Walkthrough = ({
 				setPopoverVisible(false);
 			}
 		},
-		[pages, steps, setCurrentStepIndex, setPopoverVisible]
+		[pages, steps, onCurrentStep, setPopoverVisible]
 	);
 
 	const onNext = useCallback(
 		(action) => {
-			const maybeNextIndex = currentStepIndex + 1;
+			const maybeNextIndex = currentStep + 1;
 
 			if (steps[maybeNextIndex]) {
 				changeStep(action, true, maybeNextIndex);
 			}
 		},
-		[changeStep, currentStepIndex, steps]
+		[changeStep, currentStep, steps]
 	);
 
 	const onPrevious = useCallback(
 		(action) => {
-			const maybePreviousIndex = currentStepIndex - 1;
+			const maybePreviousIndex = currentStep - 1;
 
 			if (steps[maybePreviousIndex]) {
 				changeStep(action, false, maybePreviousIndex);
 			}
 		},
-		[changeStep, currentStepIndex, steps]
+		[changeStep, currentStep, steps]
 	);
 
 	/**
@@ -347,7 +267,7 @@ const Walkthrough = ({
 			)}
 
 			{darkbg && (
-				<WalkthroughOverlay
+				<Overlay
 					popoverVisible={popoverVisible}
 					trigger={memoizedTrigger}
 				/>
@@ -365,7 +285,7 @@ const Walkthrough = ({
 								verticalAlign="center"
 							>
 								<ClayLayout.ContentCol expand>
-									<span>{`Step ${currentStepIndex + 1} of ${
+									<span>{`Step ${currentStep + 1} of ${
 										steps.length
 									}: ${title}`}</span>
 								</ClayLayout.ContentCol>
@@ -412,7 +332,7 @@ const Walkthrough = ({
 
 							<ClayLayout.ContentCol>
 								<ClayButton.Group spaced>
-									{currentStepIndex > 0 && (
+									{currentStep > 0 && (
 										<ClayButton
 											displayType="secondary"
 											onClick={() => {
@@ -428,7 +348,7 @@ const Walkthrough = ({
 										</ClayButton>
 									)}
 
-									{currentStepIndex + 1 !== steps.length ? (
+									{currentStep + 1 !== steps.length ? (
 										<ClayButton
 											onClick={() => {
 												onNext(next);
@@ -443,9 +363,10 @@ const Walkthrough = ({
 										</ClayButton>
 									) : (
 										<ClayButton
-											onClick={() =>
-												setPopoverVisible(false)
-											}
+											onClick={() => {
+												setPopoverVisible(false);
+												onCurrentStep(null);
+											}}
 											small
 										>
 											{Liferay.Language.get('close')}
@@ -458,6 +379,37 @@ const Walkthrough = ({
 				</ReactPortal>
 			)}
 		</>
+	);
+};
+
+const Walkthrough = ({
+	closeOnClickOutside,
+	closeable,
+	pages,
+	skippable,
+	steps,
+}) => {
+	const [
+		currentStepIndex,
+		setCurrentStepIndex,
+	] = useLocalStorage('walkthrough-current-step', () =>
+		steps.length === 0 ? null : 0
+	);
+
+	if (currentStepIndex === null) {
+		return null;
+	}
+
+	return (
+		<Step
+			closeOnClickOutside={closeOnClickOutside}
+			closeable={closeable}
+			currentStep={currentStepIndex}
+			onCurrentStep={setCurrentStepIndex}
+			pages={pages}
+			skippable={skippable}
+			steps={steps}
+		/>
 	);
 };
 

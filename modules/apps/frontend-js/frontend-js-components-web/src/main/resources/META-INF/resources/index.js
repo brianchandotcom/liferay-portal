@@ -23,4 +23,3 @@ export {
 
 export {default as TranslationAdminModal} from './translation_manager/TranslationAdminModal';
 export {default as TranslationAdminSelector} from './translation_manager/TranslationAdminSelector';
-export {default as Walkthrough} from './walkthrough/Walkthrough';

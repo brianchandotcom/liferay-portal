@@ -818,6 +818,54 @@ definition {
 		}
 	}
 
+	@description = "LPS-155288: Given user has selected categories checkboxes
+	And clicked 'Select'
+	When returns to 'Select Categories'
+	Then the results bar is present"
+	@priority = "3"
+	test CheckCategoriesKeepResultsBarAtTreeviewComponent {
+		property portal.acceptance = "false";
+
+		task ("Adding vocabulary and category") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Test",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Adding Web Content") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Open filter modal at Content Dashboard and filtering category") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.filterByCategory(
+				categoryNameList = "Test",
+				filterOption = "Categories");
+		}
+
+		task ("Returns to 'Select Categories' and checking if the results bar is present") {
+			ContentDashboard.openFilterModal(filterOption = "Categories");
+
+			AssertTextPresent(
+				locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE",
+				value1 = "1 ");
+
+			AssertTextPresent(
+				locator1 = "Treeview#FILTER_BY_RESULTS_BAR_MESSAGE",
+				value1 = "Item Selected");
+		}
+	}
+
 	@description = "LPS-155288: Given categories filter using treeview component
 	When user selects any category's checkbox
 	Then a results bar appears"

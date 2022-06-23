@@ -14,7 +14,7 @@
 
 package com.liferay.layout.taglib.internal.servlet.taglib;
 
-import com.liferay.layout.taglib.internal.util.LayoutStructureUtil;
+import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -77,7 +77,7 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 		printWriter.print(layout.getPlid());
 		printWriter.print("&segmentsExperienceId=");
 		printWriter.print(
-			LayoutStructureUtil.getSegmentsExperienceId(httpServletRequest));
+			SegmentsExperienceUtil.getSegmentsExperienceId(httpServletRequest));
 		printWriter.print("&t=");
 
 		Date modifiedDate = layout.getModifiedDate();

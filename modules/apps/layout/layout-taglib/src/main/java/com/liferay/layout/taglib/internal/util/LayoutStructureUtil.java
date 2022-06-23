@@ -47,7 +47,8 @@ public class LayoutStructureUtil {
 						layout.getGroupId(), layout.getPlid(), true);
 
 			String data = layoutPageTemplateStructure.getData(
-				getSegmentsExperienceId(httpServletRequest));
+				SegmentsExperienceUtil.getSegmentsExperienceId(
+					httpServletRequest));
 
 			if (Validator.isNull(data)) {
 				return null;

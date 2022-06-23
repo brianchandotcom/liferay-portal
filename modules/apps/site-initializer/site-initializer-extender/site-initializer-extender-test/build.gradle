@@ -8,6 +8,7 @@ dependencies {
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:fragment:fragment-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-list-type:headless-admin-list-type-api")
+	testIntegrationCompile project(":apps:headless:headless-delivery:headless-delivery-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-workflow:headless-admin-workflow-api")
 	testIntegrationCompile project(":apps:journal:journal-api")

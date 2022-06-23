@@ -68,6 +68,8 @@ import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
+import com.liferay.headless.delivery.dto.v1_0.SitePage;
+import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -164,6 +166,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -229,7 +232,7 @@ public class BundleSiteInitializerTest {
 			_assertJournalArticles(group);
 			_assertKBArticles(group);
 			_assertLayoutPageTemplateEntry(group);
-			_assertLayouts(group);
+			_assertLayouts(group, serviceContext);
 			_assertLayoutSets(group);
 			_assertListTypeDefinitions(serviceContext);
 			_assertObjectDefinitions(group, serviceContext);
@@ -808,9 +811,11 @@ public class BundleSiteInitializerTest {
 			"Test Master Page", layoutPageTemplateEntry.getName());
 	}
 
-	private void _assertLayouts(Group group) throws Exception {
+	private void _assertLayouts(Group group, ServiceContext serviceContext)
+		throws Exception {
+
 		_assertPrivateLayouts(group);
-		_assertPublicLayouts(group);
+		_assertPublicLayouts(group, serviceContext);
 	}
 
 	private void _assertLayoutSets(Group group) throws Exception {
@@ -1122,7 +1127,10 @@ public class BundleSiteInitializerTest {
 			privateChildLayout.getName(LocaleUtil.getSiteDefault()));
 	}
 
-	private void _assertPublicLayouts(Group group) {
+	private void _assertPublicLayouts(
+			Group group, ServiceContext serviceContext)
+		throws Exception {
+
 		int publicLayoutsCount = _layoutLocalService.getLayoutsCount(
 			group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
@@ -1160,6 +1168,31 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			PropsUtil.get("default.guest.public.layout.friendly.url"),
 			publicLayout.getFriendlyURL(LocaleUtil.getSiteDefault()));
+
+		SitePageResource.Builder sitePageResourceBuilder =
+			_sitePageResourceFactory.create();
+
+		SitePageResource sitePageResource =
+			sitePageResourceBuilder.httpServletRequest(
+				serviceContext.getRequest()
+			).httpServletResponse(
+				new MockHttpServletResponse()
+			).user(
+				serviceContext.fetchUser()
+			).build();
+
+		SitePage sitePage = sitePageResource.getSiteSitePage(
+			group.getGroupId(), "test-objects-layout");
+
+		String pageDefinitionString = String.valueOf(
+			sitePage.getPageDefinition());
+
+		Assert.assertFalse(
+			pageDefinitionString.contains(
+				"[$TestObjectDefinition3#Test_Object_Entry_1$]"));
+		Assert.assertFalse(
+			pageDefinitionString.contains(
+				"[$OBJECT_DEFINITION_ID:TestObjectDefinition3$]"));
 	}
 
 	private void _assertResourcePermission(Group group) throws Exception {
@@ -1577,6 +1610,9 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
+
+	@Inject
+	private SitePageResource.Factory _sitePageResourceFactory;
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

@@ -1,6 +1,7 @@
 {
 	"object-entries": [
 		{
+			"externalReferenceCode": "TEST_OBJECT_ENTRY_1",
 			"field1": "Test Object Entry 1",
 			"objectEntrySiteInitializerKey": "objectEntrySiteInitializerKey-1"
 		},

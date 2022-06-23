@@ -363,9 +363,7 @@ definition {
 		else {
 			Button.clickPublish();
 
-			while (IsElementPresent(key_text = "Publish", locator1 = "Button#ANY_DISABLED")) {
-				Pause(locator1 = "1000");
-			}
+			WaitForVisible(locator1 = "Button#TRANSLATIONS_DONE");
 
 			if (isSet(successFileName)) {
 				Translations.viewImportResult(
@@ -891,7 +889,7 @@ definition {
 		}
 
 		if (isSet(webContentContent)) {
-			Pause(locator1 = "3000");
+			AssertElementPresent.assertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
@@ -903,7 +901,7 @@ definition {
 		}
 
 		if (isSet(webContentDescription)) {
-			Pause(locator1 = "3000");
+			AssertElementPresent.assertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

@@ -29,7 +29,7 @@ dependencies {
 #else
 	compileOnly group: "com.liferay.portal", name: "release.${product}.api"
 #if (${liferayVersion.startsWith("7.3")})
-	restBuilder (group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: 1.0.2342") {force = true}
+	restBuilder (group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.234") {force = true}
 #else
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
 

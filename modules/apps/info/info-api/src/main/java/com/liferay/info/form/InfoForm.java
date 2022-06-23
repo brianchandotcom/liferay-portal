@@ -239,6 +239,31 @@ public class InfoForm {
 			return this;
 		}
 
+		private void _addToAllInfoFields(InfoFieldSetEntry infoFieldSetEntry) {
+			if (infoFieldSetEntry == null) {
+				return;
+			}
+
+			if (infoFieldSetEntry instanceof InfoField) {
+				_allInfoFieldsByName.put(
+					infoFieldSetEntry.getName(),
+					(InfoField<?>)infoFieldSetEntry);
+				_allInfoFieldsByUniqueId.put(
+					infoFieldSetEntry.getUniqueId(),
+					(InfoField<?>)infoFieldSetEntry);
+
+				return;
+			}
+
+			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+
+			for (InfoFieldSetEntry childInfoFieldSetEntry :
+					infoFieldSet.getInfoFieldSetEntries()) {
+
+				_addToAllInfoFields(childInfoFieldSetEntry);
+			}
+		}
+
 		private final Map<String, InfoField<?>> _allInfoFieldsByName =
 			new LinkedHashMap<>();
 		private final Map<String, InfoField<?>> _allInfoFieldsByUniqueId =

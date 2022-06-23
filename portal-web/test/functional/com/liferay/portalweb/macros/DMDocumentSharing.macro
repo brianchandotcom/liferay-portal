@@ -10,22 +10,6 @@ definition {
 			value1 = "Manage Collaborators");
 	}
 
-	macro addDocumentWithOnlyOwnerPermissions {
-		DMDocument.addPG(
-			dmDocumentDescription = "${dmDocumentDescription}",
-			dmDocumentFile = "${dmDocumentFile}",
-			dmDocumentTitle = "${dmDocumentTitle}",
-			viewableBy = "Owner");
-
-		PermissionsInline.gotoDocumentsAndMediaDocumentPG(dmDocumentTitle = "${dmDocumentTitle}");
-
-		Role.removePermissionPG(
-			permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX",
-			roleTitle = "Guest");
-
-		Pause(locator1 = "3000");
-	}
-
 	macro changePermission {
 		if (isSet(depotName)) {
 			DMDocument.viewCP(dmDocumentTitle = "${dmDocumentTitle}");

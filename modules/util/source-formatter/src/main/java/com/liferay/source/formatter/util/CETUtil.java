@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
@@ -169,7 +170,13 @@ public class CETUtil {
 		List<CET> cets = new ArrayList<>();
 
 		for (JavaClass cetJavaClass : cetJavaClasses) {
-			cets.add(_getCET(defaultCETProperties, cetJavaClass));
+			CET cet = _getCET(defaultCETProperties, cetJavaClass);
+
+			if (Validator.isNull(cet.getName())) {
+				continue;
+			}
+
+			cets.add(cet);
 		}
 
 		Collections.sort(

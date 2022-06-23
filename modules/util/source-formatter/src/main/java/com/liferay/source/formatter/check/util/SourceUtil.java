@@ -91,7 +91,8 @@ public class SourceUtil {
 		Matcher matcher = _annotationMemberValuePairPattern.matcher(annotation);
 
 		while (matcher.find()) {
-			annotationMemberValuePair.put(matcher.group(1), matcher.group(2));
+			annotationMemberValuePair.put(
+				matcher.group(1), StringUtil.unquote(matcher.group(2)));
 		}
 
 		return annotationMemberValuePair;
@@ -445,7 +446,7 @@ public class SourceUtil {
 	private static final Log _log = LogFactoryUtil.getLog(SourceUtil.class);
 
 	private static final Pattern _annotationMemberValuePairPattern =
-		Pattern.compile("(\\w+) = \"(.*?)\"");
+		Pattern.compile("(\\w+) = (\".*?\"|.*(?=[,\\)\\s]))");
 	private static final Pattern _modifierPattern = Pattern.compile(
 		"[^\n]\n(\t*)(public|protected|private)");
 

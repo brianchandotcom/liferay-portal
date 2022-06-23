@@ -558,22 +558,6 @@ public class SourceFormatter {
 				dependentFileNames = _addDependentFileName(
 					dependentFileNames, recentChangesFileName, "bnd.bnd");
 			}
-			else if (recentChangesFileName.endsWith(".java") &&
-					 recentChangesFileName.contains(
-						 "/modules/apps/client-extension/client-extension-" +
-							 "type-api/src/main/java/com/liferay/client" +
-								 "/extension/type/CET")) {
-
-				dependentFileNames.addAll(
-					SourceFormatterUtil.filterFileNames(
-						_allFileNames, new String[0],
-						new String[] {
-							"**/modules/apps/client-extension/client-" +
-								"extension-type-api/src/main/java/com/liferay" +
-									"/client/extension/type/CET*.java"
-						},
-						_sourceFormatterExcludes, false));
-			}
 			else if (recentChangesFileName.endsWith("ServiceImpl.java")) {
 				dependentFileNames = _addDependentFileName(
 					dependentFileNames, recentChangesFileName, "service.xml");

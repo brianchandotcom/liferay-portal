@@ -1,0 +1,23 @@
+<div class="file-upload">
+	<div class="form-group mb-0">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-file-upload">${input.label}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
+
+		<div class="align-items-center d-flex">
+			<label class="btn btn-secondary" for="${fragmentEntryLinkNamespace}-file-upload">[@clay["icon"] symbol="upload" /] ${languageUtil.get(locale, "select-file")}</label>
+
+			<small class="inline-item inline-item-after">
+				<strong class="forms-file-upload-file-name"></strong>
+			</small>
+
+			<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary d-none ml-1" type="button">
+				[@clay["icon"] symbol="times-circle-full" /]
+			</button>
+
+			<input accept="*" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" class="d-none" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" name="${input.name}" ${input.required?then('required', '' )} type="file" />
+		</div>
+
+		[#if input.showHelpText && input.helpText?has_content]
+			<p class="mb-0 mt-1 text-secondary" id="${fragmentEntryLinkNamespace}-file-upload-help-text">${input.helpText}</p>
+		[/#if]
+	</div>
+</div>

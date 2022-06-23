@@ -1,0 +1,12 @@
+{
+	"cacheable": false,
+	"fragmentEntryKey": "file-upload",
+	"icon": "upload",
+	"name": "file-upload",
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"image"
+		]
+	}
+}

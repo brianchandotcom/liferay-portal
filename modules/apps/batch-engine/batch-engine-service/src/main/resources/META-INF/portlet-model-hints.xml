@@ -21,7 +21,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="fieldNames" type="String">
-			<hint name="max-length">1000</hint>
+			<hint name="max-length">4000</hint>
 		</field>
 		<field name="executeStatus" type="String" />
 		<field name="parameters" type="Map" />

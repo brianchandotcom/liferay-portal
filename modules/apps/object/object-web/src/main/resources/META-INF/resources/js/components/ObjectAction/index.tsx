@@ -38,7 +38,6 @@ const TABS = [
 ];
 
 export default function Action({
-	ffNotificationTemplates,
 	objectAction: initialValues,
 	objectActionExecutors,
 	objectActionTriggers,
@@ -113,7 +112,6 @@ export default function Action({
 				<ClayTabs.TabPane>
 					<ActionBuilder
 						errors={errors}
-						ffNotificationTemplates={ffNotificationTemplates}
 						objectActionExecutors={objectActionExecutors}
 						objectActionTriggers={objectActionTriggers}
 						objectDefinitionsRelationshipsURL={
@@ -181,7 +179,6 @@ function useObjectActionForm({initialValues, onSubmit}: IUseObjectActionForm) {
 }
 
 interface IProps {
-	ffNotificationTemplates: boolean;
 	objectAction: Partial<ObjectAction>;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];

@@ -18,7 +18,6 @@ import {CustomItem, FormError} from '@liferay/object-js-components-web';
 import './ActionBuilder.scss';
 export default function ActionBuilder({
 	errors,
-	ffNotificationTemplates,
 	objectActionExecutors,
 	objectActionTriggers,
 	objectDefinitionsRelationshipsURL,
@@ -28,7 +27,6 @@ export default function ActionBuilder({
 }: IProps): JSX.Element;
 interface IProps {
 	errors: FormError<ObjectAction & ObjectActionParameters>;
-	ffNotificationTemplates: boolean;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
 	objectDefinitionsRelationshipsURL: string;

@@ -16,12 +16,8 @@ package com.liferay.object.internal.action.executor;
 
 import com.liferay.object.action.executor.ObjectActionExecutor;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
-import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -93,15 +89,6 @@ public class ObjectActionExecutorRegistryImpl
 			(serviceReference, emitter) -> {
 				ObjectActionExecutor objectActionExecutor =
 					bundleContext.getService(serviceReference);
-
-				if (StringUtil.equals(
-						objectActionExecutor.getKey(),
-						ObjectActionExecutorConstants.KEY_NOTIFICATION) &&
-					!GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-149050"))) {
-
-					return;
-				}
 
 				emitter.emit(objectActionExecutor.getKey());
 			});

@@ -26,8 +26,6 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 	module="js/components/ObjectAction/EditObjectAction"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"ffNotificationTemplates", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149050"))
-		).put(
 			"objectAction", objectDefinitionsActionsDisplayContext.getObjectActionJSONObject(objectAction)
 		).put(
 			"objectActionCodeEditorElements", objectDefinitionsActionsDisplayContext.getObjectActionCodeEditorElements()

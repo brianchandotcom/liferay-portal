@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,10 +47,6 @@ public class NotificationTemplatesPanelApp extends BasePanelApp {
 	@Override
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149050"))) {
-			return false;
-		}
 
 		return super.isShow(permissionChecker, group);
 	}

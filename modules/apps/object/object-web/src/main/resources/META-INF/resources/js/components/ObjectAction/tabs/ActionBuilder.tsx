@@ -50,7 +50,6 @@ let objectsOptionsList: Array<
 
 export default function ActionBuilder({
 	errors,
-	ffNotificationTemplates,
 	objectActionExecutors,
 	objectActionTriggers,
 	objectDefinitionsRelationshipsURL,
@@ -446,26 +445,24 @@ export default function ActionBuilder({
 							</>
 						)}
 
-						{ffNotificationTemplates &&
-							values.objectActionExecutorKey ===
-								'notification' && (
-								<FormCustomSelect
-									className="lfr-object__action-builder-notification-then"
-									error={errors.objectActionExecutorKey}
-									label={Liferay.Language.get('notification')}
-									onChange={({value}) => {
-										setValues({
-											parameters: {
-												...values.parameters,
-												notificationTemplateId: value,
-											},
-										});
-									}}
-									options={notificationTemplates}
-									required
-									value={notificationTemplateId}
-								/>
-							)}
+						{values.objectActionExecutorKey === 'notification' && (
+							<FormCustomSelect
+								className="lfr-object__action-builder-notification-then"
+								error={errors.objectActionExecutorKey}
+								label={Liferay.Language.get('notification')}
+								onChange={({value}) => {
+									setValues({
+										parameters: {
+											...values.parameters,
+											notificationTemplateId: value,
+										},
+									});
+								}}
+								options={notificationTemplates}
+								required
+								value={notificationTemplateId}
+							/>
+						)}
 					</div>
 				</Card>
 
@@ -537,7 +534,6 @@ export default function ActionBuilder({
 
 interface IProps {
 	errors: FormError<ObjectAction & ObjectActionParameters>;
-	ffNotificationTemplates: boolean;
 	objectActionExecutors: CustomItem[];
 	objectActionTriggers: CustomItem[];
 	objectDefinitionsRelationshipsURL: string;

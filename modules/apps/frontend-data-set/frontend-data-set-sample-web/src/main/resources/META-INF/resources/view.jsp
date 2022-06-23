@@ -28,7 +28,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 
 <clay:container-fluid>
 	<liferay-ui:tabs
-		names="customized,minimum,classic,React"
+		names="customized,minimum,classic,react"
 		url="<%= portletURL.toString() %>"
 	>
 		<liferay-ui:section>
@@ -50,7 +50,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<c:if test='<%= tabs1.equals("React") %>'>
+			<c:if test='<%= tabs1.equals("react") %>'>
 				<liferay-util:include page="/partials/react.jsp" servletContext="<%= pageContext.getServletContext() %>" />
 			</c:if>
 		</liferay-ui:section>

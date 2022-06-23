@@ -321,6 +321,10 @@ definition {
 			ACUtils.closeModal();
 		}
 
+		task ("Click on different setting tabs") {
+			ACSettings.goToUsage();
+		}
+
 		task ("View only one information banner shown") {
 			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC+08:00 China Time");
 

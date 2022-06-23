@@ -92,4 +92,83 @@ definition {
 		}
 	}
 
+	@description = "Bug: LRAC-11339 | Automation ID: LRAC-11364 | Test Summary: A new user created in the admin page can not access that page but the user Test Test can"
+	@priority = "5"
+	test NewUserCanNotAccessAdminPage {
+		var userFirstName = "ac";
+		var userLastName = "ac";
+		var userScreenName = "ac";
+		var userEmailAddress = "ac@liferay.com";
+
+		task ("Get the URL link") {
+			var currentURL = Navigator.getCurrentURL();
+		}
+
+		task ("Navigate to the AC Admin page") {
+			Navigator.openSpecificURL(url = "${currentURL}admin");
+		}
+
+		task("Go to control panel > Users > Users and Organizations") {
+			ProductMenuHelper.expandPanel(panel = "control panel");
+
+			ProductMenuHelper.expandCategory(category = "Users");
+
+			ProductMenuHelper.gotoPortlet(portlet = "Users and Organizations");
+		}
+
+		task("Create a new user") {
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+				value1 = "${userScreenName}");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+				value1 = "${userEmailAddress}");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+				value1 = "${userFirstName}");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+				value1 = "${userLastName}");
+
+			AssertClick(
+				locator1 = "Button#SUBMIT",
+				value1 = "Save");
+			
+			UserNavigator.gotoUser(userScreenName = "${userScreenName}");
+
+			UserNavigator.gotoPassword();
+
+			User.resetPassword();
+		}
+
+		task("Log out the current user and login with the new user") {
+			ProductMenuHelper.expandPanel(panel = "user");
+		
+			Click(
+				locator1 = "ProductMenu#USER_SIGNOUT");
+
+			Navigator.openSpecificURL(url = "${currentURL}admin");
+
+			ACLogin.loginAs(emailAddress = "${userEmailAddress}", password = "test");
+
+			Navigator.openSpecificURL(url = "${currentURL}admin");
+		}
+
+		task ("Redefine the password of the new user") {
+			User.resetPassword(
+				newPassword = "test1");
+		}
+
+		task("Assert that the user does not have permission to access the admin page") {
+			AssertTextEquals(
+				locator1 = "Portlet#ERROR",
+				value1 = "You do not have the roles required to access this portlet.");
+		}
+	}
+
 }

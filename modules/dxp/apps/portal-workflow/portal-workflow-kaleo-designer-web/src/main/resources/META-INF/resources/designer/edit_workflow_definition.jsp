@@ -27,7 +27,19 @@ portletDisplay.setURLBack(
 		"/view.jsp"
 	).buildString());
 
-renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow-definition") : LanguageUtil.get(request, "edit-workflow-definition"));
+boolean isView = Objects.equals((String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE), "view");
+
+String titleKey = "new-workflow-definition";
+
+if (kaleoDefinitionVersion != null) {
+	titleKey = "edit-workflow-definition";
+
+	if (isView) {
+		titleKey = "view-workflow-definition";
+	}
+}
+
+renderResponse.setTitle(LanguageUtil.get(request, titleKey));
 %>
 
 <react:component
@@ -40,7 +52,7 @@ renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(requ
 		).put(
 			"displayNames", LocaleUtil.toDisplayNames(LanguageUtil.getAvailableLocales(), locale)
 		).put(
-			"isView", Objects.equals((String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE), "view")
+			"isView", isView
 		).put(
 			"languageIds", LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales())
 		).put(

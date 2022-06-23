@@ -24,7 +24,12 @@
 		"emailAddress": "test.user1@liferay.com",
 		"familyName": "User 1",
 		"givenName": "Test",
-		"name": "Test User 1"
+		"name": "Test User 1",
+		"organizationBriefs": [
+			{
+				"name": "Liferay Staff"
+			}
+		]
 	},
 	{
 		"accountBriefs": [

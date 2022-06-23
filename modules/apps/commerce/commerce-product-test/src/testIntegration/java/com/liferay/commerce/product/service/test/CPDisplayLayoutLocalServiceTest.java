@@ -157,7 +157,7 @@ public class CPDisplayLayoutLocalServiceTest {
 
 		Assert.assertEquals(
 			2, _cpDisplayLayoutLocalService.getCPDisplayLayoutsCount());
-		AssetCategoryLocalServiceUtil.deleteAssetCategory(assetCategory);
+		AssetCategoryLocalServiceUtil.deleteCategory(assetCategory);
 		Assert.assertEquals(
 			0, _cpDisplayLayoutLocalService.getCPDisplayLayoutsCount());
 	}

@@ -212,7 +212,7 @@ public class CPDefinitionHelperTest {
 		Assert.assertTrue(
 			actualCPDefinitionIds.containsAll(cpDefinitionIdsList));
 
-		AssetCategoryLocalServiceUtil.deleteAssetCategory(
+		AssetCategoryLocalServiceUtil.deleteCategory(
 			assetCategory.getCategoryId());
 	}
 

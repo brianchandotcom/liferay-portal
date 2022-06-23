@@ -1131,7 +1131,7 @@ public class BundleSiteInitializerTest {
 			false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new LayoutPriorityComparator());
 
-		Assert.assertTrue(publicLayouts.size() == 2);
+		Assert.assertTrue(publicLayouts.size() == 3);
 
 		Layout publicLayout = publicLayouts.get(0);
 

@@ -53,6 +53,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-155465. Assert that clicking quick action is equivalent to clicking the ellipsis dropdown menu."
+	@priority = "5"
+	test BehaviorIsEqualToEllipsisDropdownEquivalentAction {
+		var portalURL = PropsUtil.get("portal.url");
+
+		task ("When click on Pencil Icon") {
+			ClickNoError(
+				key_title = "Sample1",
+				locator1 = "FrontendDataSet#EDIT_ACTION_BUTTON");
+		}
+
+		task ("And when copy the browser URL (#test-pencil is appended)") {
+			AssertLocation(value1 = "${portalURL}/frontend-data-set-test-page#test-pencil");
+		}
+
+		task ("And when click on ellipsis of 1st row item in FDS table") {
+			Click(
+				key_title = "Sample1",
+				locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("And when click on Pencil Icon") {
+			Click(locator1 = "FrontendDataSet#DROPDOWN_MENU_SHOW_ITEM_EDIT_ICON");
+		}
+
+		task ("Then browser URL matches copied URL (#test-pencil)") {
+			AssertLocation(value1 = "${portalURL}/frontend-data-set-test-page#test-pencil");
+		}
+	}
+
 	@description = "LPS-155457. Assert that hover over mouse off of the table body quick action menu is not visible."
 	@priority = "5"
 	test CanDisappearWhenNotHovered {

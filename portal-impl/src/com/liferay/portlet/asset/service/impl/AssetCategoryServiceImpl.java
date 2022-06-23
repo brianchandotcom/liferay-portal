@@ -133,6 +133,21 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		return category;
 	}
 
+	@Override
+	public AssetCategory getAssetCategoryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		AssetCategory category =
+			assetCategoryLocalService.getAssetCategoryByExternalReferenceCode(
+				groupId, externalReferenceCode);
+
+		AssetCategoryPermission.check(
+			getPermissionChecker(), category.getCategoryId(), ActionKeys.VIEW);
+
+		return category;
+	}
+
 	/**
 	 * Returns a range of assetCategories related to an AssetEntry with the
 	 * given "classNameId-classPK".

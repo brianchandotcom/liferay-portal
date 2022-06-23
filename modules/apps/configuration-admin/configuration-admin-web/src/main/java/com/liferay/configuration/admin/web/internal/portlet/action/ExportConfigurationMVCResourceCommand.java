@@ -16,6 +16,7 @@ package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.exportimport.ConfigurationExportImportProcessor;
+import com.liferay.configuration.admin.web.internal.configuration.FFConfigurationPortabilityConfiguration;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContextFactory;
 import com.liferay.configuration.admin.web.internal.exporter.ConfigurationExporter;
@@ -25,8 +26,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -158,8 +162,10 @@ public class ExportConfigurationMVCResourceCommand
 		if (!Scope.SYSTEM.equals(scope)) {
 			properties.put(scope.getPropertyKey(), scopePK);
 
-			_configurationExportImportProcessor.prepareForExport(
-				pid, properties);
+			if (_isExportProcessingEnabled(scope, scopePK)) {
+				_configurationExportImportProcessor.prepareForExport(
+					pid, properties);
+			}
 		}
 
 		return properties;
@@ -342,12 +348,43 @@ public class ExportConfigurationMVCResourceCommand
 		return fileName + ".config";
 	}
 
+	private boolean _isExportProcessingEnabled(
+			Scope scope, Serializable scopeKey)
+		throws Exception {
+
+		long companyId = 0L;
+
+		if (scope.equals(Scope.COMPANY)) {
+			companyId = (long)scopeKey;
+		}
+
+		if (scope.equals(Scope.GROUP)) {
+			Group group = _groupLocalService.getGroup((long)scopeKey);
+
+			companyId = group.getCompanyId();
+		}
+
+		FFConfigurationPortabilityConfiguration
+			ffConfigurationPortabilityConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					FFConfigurationPortabilityConfiguration.class, companyId);
+
+		if (ffConfigurationPortabilityConfiguration.enabled()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	private ConfigurationExportImportProcessor
 		_configurationExportImportProcessor;
 
 	@Reference(target = "(filter.visibility=*)")
 	private ConfigurationModelRetriever _configurationModelRetriever;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ZipWriterFactory _zipWriterFactory;

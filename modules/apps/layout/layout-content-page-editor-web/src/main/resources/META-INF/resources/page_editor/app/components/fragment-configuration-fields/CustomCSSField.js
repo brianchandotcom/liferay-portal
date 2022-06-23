@@ -12,15 +12,17 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayModal, {useModal} from '@clayui/modal';
 import ClayPopover from '@clayui/popover';
 import React, {useMemo, useState} from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {useId} from '../../utils/useId';
+import CodeMirrorEditor from '../CodeMirrorEditor';
 
 export default function CustomCSSField({field, item, onValueSelect, value}) {
 	const id = useId();
@@ -30,35 +32,54 @@ export default function CustomCSSField({field, item, onValueSelect, value}) {
 	}, [item.itemId]);
 
 	const [customCSS, setCustomCSS] = useControlledState(value || defaultValue);
+	const [editorModalOpen, setEditorModalOpen] = useState(false);
 
 	return (
-		<ClayForm.Group className="page-editor__custom-css-field" small>
-			<div className="align-items-end d-flex justify-content-between">
-				<label htmlFor={id}>
-					{Liferay.Language.get('custom-css')} <CustomCSSHelp />
-				</label>
+		<>
+			<ClayForm.Group className="page-editor__custom-css-field" small>
+				<div className="align-items-end d-flex justify-content-between">
+					<label htmlFor={id}>
+						{Liferay.Language.get('custom-css')} <CustomCSSHelp />
+					</label>
 
-				<ClayButtonWithIcon
-					className="mb-2 p-0 page-editor__custom-css-field__expand-button"
-					displayType="unstyled"
-					monospaced
-					small
-					symbol="expand"
+					<ClayButtonWithIcon
+						className="mb-2 p-0 page-editor__custom-css-field__expand-button text-secondary"
+						displayType="unstyled"
+						monospaced
+						onClick={() => setEditorModalOpen(true)}
+						small
+						symbol="expand"
+					/>
+				</div>
+
+				<textarea
+					className="form-control text-3"
+					id={id}
+					onBlur={() => {
+						if (defaultValue.trim() !== customCSS?.trim()) {
+							onValueSelect(field.name, customCSS);
+						}
+					}}
+					onChange={(event) => setCustomCSS(event.target.value)}
+					value={customCSS}
 				/>
-			</div>
+			</ClayForm.Group>
 
-			<textarea
-				className="form-control text-3"
-				id={id}
-				onBlur={() => {
-					if (defaultValue.trim() !== customCSS?.trim()) {
+			<CustomCSSEditorModal
+				customCSS={customCSS}
+				onClose={() => {
+					setEditorModalOpen(false);
+				}}
+				onSave={(content) => {
+					setCustomCSS(content);
+
+					if (defaultValue.trim() !== content?.trim()) {
 						onValueSelect(field.name, customCSS);
 					}
 				}}
-				onChange={(event) => setCustomCSS(event.target.value)}
-				value={customCSS}
+				visible={editorModalOpen}
 			/>
-		</ClayForm.Group>
+		</>
 	);
 }
 
@@ -88,5 +109,63 @@ function CustomCSSHelp() {
 				'you-can-add-your-own-css-and-include-variables-to-use-existing-tokens'
 			)}
 		</ClayPopover>
+	);
+}
+
+function CustomCSSEditorModal({
+	customCSS,
+	onClose: onCloseCallback,
+	onSave,
+	visible,
+}) {
+	const [content, setContent] = useControlledState(customCSS);
+
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			onCloseCallback();
+		},
+	});
+
+	return (
+		visible && (
+			<ClayModal observer={observer} size="full-screen">
+				<ClayModal.Header>
+					{Liferay.Language.get('edit-content')}
+				</ClayModal.Header>
+
+				<ClayModal.Body>
+					<CodeMirrorEditor
+						className="page-editor__custom-css-field__editor-modal"
+						initialContent={content}
+						mode="css"
+						onChange={setContent}
+					/>
+				</ClayModal.Body>
+
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={() => {
+									onClose();
+								}}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+
+							<ClayButton
+								onClick={() => {
+									onSave(content);
+									onClose();
+								}}
+							>
+								{Liferay.Language.get('add')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
+				/>
+			</ClayModal>
+		)
 	);
 }

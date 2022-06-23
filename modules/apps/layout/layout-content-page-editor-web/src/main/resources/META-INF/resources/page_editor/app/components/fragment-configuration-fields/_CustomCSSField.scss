@@ -8,3 +8,12 @@ html#{$cadmin-selector} .cadmin .page-editor__custom-css-field {
 		width: 16px;
 	}
 }
+
+.page-editor__custom-css-field__editor-modal {
+	border: 1px solid $light-l1;
+	border-radius: 4px;
+}
+
+.CodeMirror-hints {
+	z-index: 1051;
+}

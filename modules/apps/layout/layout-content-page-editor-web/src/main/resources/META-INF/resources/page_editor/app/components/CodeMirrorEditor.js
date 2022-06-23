@@ -14,9 +14,23 @@
 
 import 'codemirror/addon/display/autorefresh';
 
+import 'codemirror/addon/edit/closebrackets';
+
+import 'codemirror/addon/edit/closetag';
+
+import 'codemirror/addon/edit/matchbrackets';
+
+import 'codemirror/addon/fold/brace-fold';
+
+import 'codemirror/addon/fold/comment-fold';
+
+import 'codemirror/addon/fold/foldcode';
+
 import 'codemirror/addon/fold/foldgutter.css';
 
 import 'codemirror/addon/fold/foldgutter';
+
+import 'codemirror/addon/fold/indent-fold';
 
 import 'codemirror/addon/fold/xml-fold';
 
@@ -31,6 +45,8 @@ import 'codemirror/addon/hint/show-hint';
 import 'codemirror/addon/hint/xml-hint';
 
 import 'codemirror/lib/codemirror.css';
+
+import 'codemirror/mode/css/css';
 
 import 'codemirror/mode/htmlmixed/htmlmixed';
 

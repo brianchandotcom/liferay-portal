@@ -129,6 +129,8 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 			Navigator.openSpecificURL(url = '''${portalURL}/c/portal/update_layout?cmd=add&p_p_col_id=column-1&p_p_col_pos=0&p_p_id=com_liferay_marketplace_store_web_portlet_MarketplacePurchasedPortlet&p_auth=${authToken}&p_l_id=${plid}''');
 
+			Navigator.openURL();
+
 			UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 
 			Portlet.viewPortletBodyNotPresent(portletName = "Purchased");

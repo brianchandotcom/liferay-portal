@@ -242,6 +242,7 @@
 		<column name="namespace" type="String" />
 		<column name="position" type="int" />
 		<column name="rendererKey" type="String" />
+		<column name="type" type="int" />
 		<column name="lastPropagationDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
 

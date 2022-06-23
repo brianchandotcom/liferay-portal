@@ -1676,7 +1676,7 @@ definition {
 			locator1 = "BlogsEntry#TITLE_LINK",
 			value1 = "${entryTitle}");
 
-		Pause(locator1 = "3000");
+		WaitForVisible(locator1 = "BlogsEntry#TITLE");
 
 		AssertTextEquals(
 			locator1 = "BlogsEntry#TITLE",

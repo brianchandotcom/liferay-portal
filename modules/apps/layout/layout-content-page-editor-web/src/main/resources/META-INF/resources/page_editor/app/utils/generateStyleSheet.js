@@ -57,11 +57,11 @@ const TOPPER_STYLES = [
 export default function generateStyleSheet(styles, {itemsWithTopper} = {}) {
 	let css = '';
 
-	Object.entries(styles).forEach(([itemId, itemStyles]) => {
+	Object.entries(styles).forEach(([itemId, {customCSS, styles}]) => {
 		let itemCSS = '';
 		let topperCSS = '';
 
-		Object.entries(itemStyles).forEach(([styleName, styleValue]) => {
+		Object.entries(styles).forEach(([styleName, styleValue]) => {
 			if (!config.commonStylesFields[styleName]) {
 				return;
 			}
@@ -95,6 +95,10 @@ export default function generateStyleSheet(styles, {itemsWithTopper} = {}) {
 			css += `.${getLayoutDataItemTopperUniqueClassName(
 				itemId
 			)} {\n${topperCSS}}\n`;
+		}
+
+		if (customCSS) {
+			css += customCSS;
 		}
 	});
 

@@ -183,16 +183,26 @@ function calculateStyles({
 
 	items.forEach((item) => {
 		if (hasCommonStyles(item)) {
+			const customCSS = getResponsiveConfig(
+				item.config,
+				selectedViewportSize
+			)?.customCSS;
+
 			const styles = getResponsiveConfig(
 				item.config,
 				selectedViewportSize
 			)?.styles;
 
-			nextStyles[item.itemId] = filterStyles({
+			const filteredStyles = filterStyles({
 				item,
 				selectedViewportSize,
 				styles,
 			});
+
+			nextStyles[item.itemId] = {
+				customCSS,
+				styles: filteredStyles,
+			};
 
 			if (!isMaster) {
 				return;

@@ -40,6 +40,49 @@
 	<td>//*[normalize-space(text())='${key_itemName}']/parent::*[contains(@class,'dnd-tr')]</td>
 	<td></td>
 </tr>
+
+<!--FILTERS-->
+
+<tr>
+	<td>EDIT_FILTER_BUTTON</td>
+	<td>//div[@class='dropdown-menu show']//*[@type="button" and contains(.,'Edit Filter')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMPTY_FDS_TABLE_MESSAGE</td>
+	<td>//div[contains(@class,'empty-state-text') and contains(.,'Sorry, no results were found.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXCLUDE_TOGGLE</td>
+	<td>//div[@class='dropdown-menu show']//*[@type="checkbox" and @id='autocomplete-exclude-status']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_BUTTON</td>
+	<td>//*[contains(@class,'fds')]//*[contains(@class,'filters-dropdown-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_DROPDOWN</td>
+	<td>//*[@class='dropdown-menu show' and contains(.,'Filters')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_OPTION</td>
+	<td>//div[@class='dropdown-menu show']//*[@class='dropdown-item' and contains(.,'${key_filter}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_SUMMARY_LABEL</td>
+	<td>//*[@class='tbar-section']//*[@class='label-section' and contains(.,'${key_filter}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS_FILTER_CHECKBOX</td>
+	<td>//div[@class='dropdown-menu show']//*[@type="checkbox" and @aria-label='${key_status}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

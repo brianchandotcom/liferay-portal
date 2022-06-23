@@ -16,19 +16,30 @@ package com.liferay.object.internal.field.business.type;
 
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.exception.ObjectFieldSettingNameException;
+import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,8 +59,7 @@ public class AggregationObjectFieldBusinessType
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
-		return SetUtil.fromArray(
-			"function", "relatedObjectEntry", "summarizeField");
+		return SetUtil.fromArray("function", "relationship", "summarizeField");
 	}
 
 	@Override
@@ -103,7 +113,63 @@ public class AggregationObjectFieldBusinessType
 
 	@Override
 	public Set<String> getRequiredObjectFieldSettingsNames() {
-		return SetUtil.fromArray("function", "relatedObject", "summarizeField");
+		return SetUtil.fromArray("function", "relationship", "summarizeField");
+	}
+
+	@Override
+	public void validateObjectFieldSettings(
+			String objectFieldName,
+			List<ObjectFieldSetting> objectFieldSettings)
+		throws PortalException {
+
+		Set<String> missingRequiredObjectFieldSettingsNames = new HashSet<>();
+
+		Stream<ObjectFieldSetting> stream = objectFieldSettings.stream();
+
+		Map<String, String> objectFieldSettingsValuesMap = stream.collect(
+			Collectors.toMap(
+				ObjectFieldSetting::getName, ObjectFieldSetting::getValue));
+
+		Set<String> requiredObjectFieldSettingsNames =
+			getRequiredObjectFieldSettingsNames();
+
+		if (Objects.equals(
+				GetterUtil.getString(
+					objectFieldSettingsValuesMap.get("function")),
+				"COUNT")) {
+
+			requiredObjectFieldSettingsNames.remove("summarizeField");
+		}
+
+		for (String requiredObjectFieldSettingName :
+				requiredObjectFieldSettingsNames) {
+
+			if (Validator.isNull(
+					objectFieldSettingsValuesMap.get(
+						requiredObjectFieldSettingName))) {
+
+				missingRequiredObjectFieldSettingsNames.add(
+					requiredObjectFieldSettingName);
+			}
+		}
+
+		if (!missingRequiredObjectFieldSettingsNames.isEmpty()) {
+			throw new ObjectFieldSettingValueException.MissingRequiredValues(
+				objectFieldName, missingRequiredObjectFieldSettingsNames);
+		}
+
+		Set<String> notAllowedObjectFieldSettingsNames = new HashSet<>(
+			objectFieldSettingsValuesMap.keySet());
+
+		notAllowedObjectFieldSettingsNames.removeAll(
+			getAllowedObjectFieldSettingsNames());
+		notAllowedObjectFieldSettingsNames.removeAll(
+			requiredObjectFieldSettingsNames);
+
+		if (!notAllowedObjectFieldSettingsNames.isEmpty()) {
+			throw new ObjectFieldSettingNameException.NotAllowedNames(
+				objectFieldName, notAllowedObjectFieldSettingsNames);
+		}
 	}
 
 	@Reference

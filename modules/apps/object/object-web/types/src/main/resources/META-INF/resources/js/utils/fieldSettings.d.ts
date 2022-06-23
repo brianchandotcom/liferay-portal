@@ -23,7 +23,7 @@ export declare function normalizeFieldSettings(
 	showCounter?: string | number | boolean | undefined;
 	showFilesInDocumentsAndMedia?: string | number | boolean | undefined;
 	storageDLFolderPath?: string | number | boolean | undefined;
-	relatedObject?: string | number | boolean | undefined;
+	relationship?: string | number | boolean | undefined;
 	summarizeField?: string | number | boolean | undefined;
 };
 export declare function updateFieldSettings(

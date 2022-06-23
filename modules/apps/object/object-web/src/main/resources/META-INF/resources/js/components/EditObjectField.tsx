@@ -168,6 +168,7 @@ export default function EditObjectField({
 
 				<ObjectFieldFormBase
 					disabled={disabled}
+					editingField
 					errors={errors}
 					handleChange={handleChange}
 					objectDefinitionId={objectDefinitionId}
@@ -243,7 +244,8 @@ function SearchableContainer({
 		objectField.indexed &&
 		(objectField.DBType === 'Clob' ||
 			objectField.DBType === 'String' ||
-			objectField.businessType === 'Attachment');
+			objectField.businessType === 'Attachment') &&
+		objectField.businessType !== 'Aggregation';
 
 	const selectedLanguage = useMemo(() => {
 		const selectedLabel =

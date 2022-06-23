@@ -16,6 +16,7 @@ package com.liferay.document.library.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -31,6 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CacheControlConfiguration {
 
+	@ExtendedAttributeDefinition(requiredInput = true)
 	@Meta.AD(
 		deflt = "private", description = "cache-control-description",
 		name = "cache-control", optionLabels = {"private", "public"},

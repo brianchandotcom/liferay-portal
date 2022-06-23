@@ -465,7 +465,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addLayoutsContent(
 					assetListEntryIdsStringUtilReplaceValues,
 					clientExtensionEntryIdsStringUtilReplaceValues,
-					documentsStringUtilReplaceValues, layouts, serviceContext,
+					documentsStringUtilReplaceValues, layouts,
+					objectsStringUtilReplaceValues, serviceContext,
 					siteNavigationMenuItemSettingsBuilder.build(),
 					taxonomyCategoryIdsStringUtilReplaceValues));
 
@@ -1551,6 +1552,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
 			Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues,
 			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> objectsStringUtilReplaceValues,
 			Map<String, String> releaseInfoStringUtilReplaceValues,
 			Layout layout, String resourcePath, ServiceContext serviceContext,
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
@@ -1575,6 +1577,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				clientExtensionEntryIdsStringUtilReplaceValues
 			).putAll(
 				documentsStringUtilReplaceValues
+			).putAll(
+				objectsStringUtilReplaceValues
 			).putAll(
 				releaseInfoStringUtilReplaceValues
 			).putAll(
@@ -1795,7 +1799,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
 			Map<String, String> clientExtensionEntryIdsStringUtilReplaceValues,
 			Map<String, String> documentsStringUtilReplaceValues,
-			Map<String, Layout> layouts, ServiceContext serviceContext,
+			Map<String, Layout> layouts,
+			Map<String, String> objectsStringUtilReplaceValues,
+			ServiceContext serviceContext,
 			Map<String, SiteNavigationMenuItemSetting>
 				siteNavigationMenuItemSettings,
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues)
@@ -1809,6 +1815,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				assetListEntryIdsStringUtilReplaceValues,
 				clientExtensionEntryIdsStringUtilReplaceValues,
 				documentsStringUtilReplaceValues,
+				objectsStringUtilReplaceValues,
 				releaseInfoStringUtilReplaceValues, entry.getValue(),
 				entry.getKey(), serviceContext,
 				taxonomyCategoryIdsStringUtilReplaceValues);

@@ -10,6 +10,7 @@ definition {
 				key_columnOption = "${columnsOptions}",
 				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 		}
+
 		Button.clickSave();
 
 		SelectFrame(locator1 = "IFrame#IFRAME");
@@ -68,16 +69,16 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 	}
 
-	macro assertColumnNotPresentOnDefaultSort {
-		AssertElementNotPresent(
-			key_columnName = "${columnName}",
-			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT");
-	}
-
 	macro assertColumnNotPresentOnAddColumnModal {
 		AssertElementNotPresent(
 			key_columnName = "${columnOption}",
 			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");
+	}
+
+	macro assertColumnNotPresentOnDefaultSort {
+		AssertElementNotPresent(
+			key_columnName = "${columnName}",
+			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT");
 	}
 
 	macro assertColumnPresent {

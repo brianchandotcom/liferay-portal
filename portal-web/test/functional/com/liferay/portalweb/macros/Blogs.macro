@@ -283,9 +283,9 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
-		Pause(locator1 = "5000");
-
 		var key_assetTitle = "${entryTitle}";
+
+		WaitForVisible(locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
 		AssertTextEquals(
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
@@ -311,9 +311,9 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
-		Pause(locator1 = "5000");
-
 		var key_assetTitle = "${entryTitle}";
+
+		WaitForVisible(locator1 = "AP#ASSET_ABSTRACT_TITLE");
 
 		AssertTextEquals(
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",

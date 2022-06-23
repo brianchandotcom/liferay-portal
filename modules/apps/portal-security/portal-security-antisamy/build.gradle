@@ -145,8 +145,8 @@ private String _filterBlogsSanitizer(String line) {
 
 	if (line.contains('<literal value="hr"/>')) {
 		line = """\
-			|	${line}
-			|	<literal value="iframe"/>""".stripMargin()
+			|${line}
+			|				<literal value="iframe"/>""".stripMargin()
 	}
 	else if (line.contains('<tag name="iframe" action="remove"/>')) {
 		line = """\
@@ -409,8 +409,8 @@ private String _filterKnowledgeBaseSanitizer(String line) {
 
 	if (line.contains('<literal value="hr"/>')) {
 		line = """\
-			|	${line}
-			|	<literal value="iframe"/>""".stripMargin()
+			|${line}
+			|				<literal value="iframe"/>""".stripMargin()
 	}
 	else if (line.contains('<tag name="iframe" action="remove"/>')) {
 		line = """\
@@ -463,6 +463,27 @@ private String _filterKnowledgeBaseSanitizer(String line) {
 		|		</attribute>
 		|		<attribute name="width"/>
 		|	</tag>""".stripMargin()
+	}
+
+	if (line.contains('<regexp name="systemColor" value="(activeborder|activecaption')) {
+		line = """\
+			|${line}\n
+			|		<!-- Used for onclick attribute on a tag -->
+			|		<regexp name="onclick-window" value="(^window\\.open\\(this\\.href, \\'.*\\', \\'resizable=(yes|no),status=(yes|no),location=(yes|no),toolbar=(yes|no),menubar=(yes|no),fullscreen=(yes|no),scrollbars=(yes|no),dependent=(yes|no)(,width=(\\d)+(px|cm|mm|in|pt|pc|\\%){0,1}){0,1}(,left=(\\d)+(px|cm|mm|in|pt|pc|\\%){0,1}){0,1}(,height=(\\d)+(px|cm|mm|in|pt|pc|\\%){0,1}){0,1}(,top=(\\d)+(px|cm|mm|in|pt|pc|\\%){0,1}){0,1}\\'\\); return false;)"/>""".stripMargin()
+	}
+
+	if(line.contains('<tag name="a" action="validate">')) {
+		line = """\
+			|${line}\n
+			|			<attribute name="onClick"/>""".stripMargin()
+	}
+
+	if (line.contains('<attribute name="onClick" description="The \'onClick\' event is executed when the control associated with the tag is clicked">')) {
+		line = """\
+			|${line}
+			|			<regexp-list>
+			|				<regexp name="onclick-window"/>
+			|			</regexp-list>""".stripMargin()
 	}
 
 	return line

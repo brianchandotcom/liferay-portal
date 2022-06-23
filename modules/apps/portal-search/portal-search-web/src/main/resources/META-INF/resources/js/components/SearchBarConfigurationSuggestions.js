@@ -388,7 +388,8 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 
 				<ClayInput.GroupItem
 					className={getCN('size-input', {
-						'has-error': !value.size && touched.size,
+						'has-error':
+							(!value.size || value.size < 0) && touched.size,
 					})}
 				>
 					<label>
@@ -401,12 +402,26 @@ function Inputs({onChange, onReplace, contributorOptions, value = {}}) {
 
 					<ClayInput
 						aria-label={Liferay.Language.get('size')}
+						min="0"
 						onBlur={_handleBlur('size')}
 						onChange={_handleChange('size')}
 						required
 						type="number"
 						value={value.size || ''}
 					/>
+
+					{value.size < 0 && touched.size && (
+						<div className="form-feedback-group">
+							<div className="form-feedback-item">
+								{Liferay.Util.sub(
+									Liferay.Language.get(
+										'please-enter-a-value-greater-than-or-equal-to-x'
+									),
+									'0'
+								)}
+							</div>
+						</div>
+					)}
 				</ClayInput.GroupItem>
 			</div>
 

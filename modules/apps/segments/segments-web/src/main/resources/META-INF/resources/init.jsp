@@ -56,6 +56,7 @@ page import="com.liferay.segments.source.provider.SegmentsSourceDetailsProvider"
 page import="com.liferay.segments.web.internal.constants.SegmentsWebKeys" %><%@
 page import="com.liferay.segments.web.internal.display.context.EditSegmentsEntryDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.PreviewSegmentsEntryUsersDisplayContext" %><%@
+page import="com.liferay.segments.web.internal.display.context.SegmentsCompanyConfigurationDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SegmentsDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SegmentsExperienceSelectorDisplayContext" %><%@
 page import="com.liferay.segments.web.internal.display.context.SelectSegmentsEntryDisplayContext" %><%@

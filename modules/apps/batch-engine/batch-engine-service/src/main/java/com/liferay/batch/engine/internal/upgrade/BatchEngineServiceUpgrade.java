@@ -80,6 +80,11 @@ public class BatchEngineServiceUpgrade implements UpgradeStepRegistrator {
 			new BatchEngineTaskConfigurationUpgradeProcess(
 				_companyLocalService, _configurationAdmin,
 				_configurationProvider));
+
+		registry.register(
+			"4.6.1", "4.6.2",
+			new com.liferay.batch.engine.internal.upgrade.v4_6_2.
+				BatchEngineExportTaskUpgradeProcess());
 	}
 
 	@Reference

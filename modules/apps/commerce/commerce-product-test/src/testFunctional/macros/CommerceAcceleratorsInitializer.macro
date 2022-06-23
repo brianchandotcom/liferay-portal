@@ -160,6 +160,8 @@ definition {
 		Click(
 			key_menuItem = "${sortingType}",
 			locator1 = "CommerceEntry#ANY_MENU_ITEM");
+
+		WaitForPageLoad();
 	}
 
 	macro createNewAccountViaFront {

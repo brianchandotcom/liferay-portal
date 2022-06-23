@@ -280,11 +280,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "Submit");
-
-		Pause(locator1 = "3000");
+		CommerceCheckout.gotoCheckoutViaMiniCart();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -676,13 +672,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "2");
 
-		Pause(locator1 = "5000");
-
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "Submit");
-
-		Pause(locator1 = "3000");
+		CommerceCheckout.gotoCheckoutViaMiniCart();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -983,15 +973,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "2");
 
-		Pause(locator1 = "5000");
-
-		Refresh();
-
-		CommerceNavigator.gotoMiniCart();
-
-		Button.click(button = "Submit");
-
-		Pause(locator1 = "3000");
+		CommerceCheckout.gotoCheckoutViaMiniCart();
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",

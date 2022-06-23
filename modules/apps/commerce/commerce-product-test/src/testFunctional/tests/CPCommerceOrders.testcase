@@ -1628,11 +1628,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "2");
 
-		Pause(locator1 = "5000");
-
 		CommerceCheckout.gotoCheckout();
-
-		Pause(locator1 = "3000");
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -1702,11 +1698,7 @@ definition {
 			productName = "ABS Sensor",
 			productQuantity = "2");
 
-		Pause(locator1 = "5000");
-
 		CommerceCheckout.gotoCheckout();
-
-		Pause(locator1 = "3000");
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -1811,11 +1803,7 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		Refresh();
-
 		CommerceCheckout.gotoCheckout();
-
-		Pause(locator1 = "5000");
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
@@ -2448,8 +2436,6 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "2");
 
-		Pause(locator1 = "5000");
-
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account 2");
@@ -2461,8 +2447,6 @@ definition {
 		FrontStore.addInitializerProductToCart(
 			productName = "Transmission Cooler Line Assembly",
 			productQuantity = "3");
-
-		Pause(locator1 = "5000");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Order Management",
@@ -2517,11 +2501,7 @@ definition {
 
 		var orderId = selenium.getText("CommerceAccelerators#ACCOUNT_SELECTOR_ORDER_ID");
 
-		Pause(locator1 = "5000");
-
 		CommerceCheckout.gotoCheckout();
-
-		Pause(locator1 = "3000");
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",

@@ -1448,39 +1448,6 @@ definition {
 			value1 = "${assetTitle}");
 	}
 
-	macro viewRSS {
-		var key_text = "RSS";
-
-		AssertClick(
-			locator1 = "Button#ANY",
-			value1 = "RSS");
-
-		Pause(locator1 = "3000");
-
-		SelectWindow.selectPopUp(locator1 = "null");
-
-		AssertLocation.assertPartialLocation(value1 = "blogs/rss");
-
-		AssertTextEquals(
-			locator1 = "RSS#FEED_TITLE",
-			value1 = "${siteName}");
-
-		AssertTextEquals(
-			locator1 = "RSS#FEED_SUBTITLE",
-			value1 = "${siteName}");
-
-		var key_entryContent = "${entryContent}";
-		var key_entryTitle = "${entryTitle}";
-
-		AssertTextEquals(
-			locator1 = "RSS#ENTRY_TITLE",
-			value1 = "${entryTitle}");
-
-		AssertTextEquals(
-			locator1 = "RSS#ENTRY_CONTENT",
-			value1 = "${entryContent}");
-	}
-
 	macro viewSharedAsset {
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",

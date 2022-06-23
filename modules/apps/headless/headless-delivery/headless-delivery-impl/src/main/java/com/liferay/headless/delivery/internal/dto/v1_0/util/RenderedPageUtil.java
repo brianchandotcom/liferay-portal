@@ -103,11 +103,11 @@ public class RenderedPageUtil {
 		Optional<UriInfo> uriInfoOptional =
 			dtoConverterContext.getUriInfoOptional();
 
-		UriInfo uriInfo = uriInfoOptional.get();
-
-		if (uriInfo == null) {
+		if (!uriInfoOptional.isPresent()) {
 			return null;
 		}
+
+		UriInfo uriInfo = uriInfoOptional.get();
 
 		List<Object> arguments = new ArrayList<>();
 

@@ -902,6 +902,11 @@
 	<td>//div[contains(@class,'page-structure')]//button[contains(@class,'nav-link')][normalize-space()='${key_navItem}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LABEL_ITEM</td>
+	<td>//div[label[normalize-space(text())='${fieldLabel}']]//span[contains(@class,'label-item')][normalize-space()='${itemName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

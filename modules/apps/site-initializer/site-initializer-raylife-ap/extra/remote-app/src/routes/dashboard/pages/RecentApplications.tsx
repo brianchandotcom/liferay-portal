@@ -126,8 +126,9 @@ const RecentApplications = () => {
 					className="btn btn-outline-primary text-paragraph text-uppercase"
 					onClick={handleAddApplication}
 				>
-					<ClayIcon className="mr-2" symbol="plus" />
-					Application
+					<ClayIcon className="mr-md-2" symbol="plus" />
+
+					<span className="d-md-inline d-none">Application</span>
 				</button>
 			</Header>
 

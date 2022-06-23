@@ -2,42 +2,40 @@
 	.ray-header-container {
 		button svg {
 			width: 10px;
+
+			@media screen and (max-width: $breakpoint-phone) {
+				width: 16px;
+			}
 		}
 	}
 
-	.ray-table {
-		tbody {
-			tr {
-				td {
-					.bound {
-						background-color: #d9e4fe;
-					}
+	.ray-table tbody tr td {
+		.bound {
+			background-color: #d9e4fe;
+		}
 
-					.underwriting {
-						background-color: #b5cdfe;
-					}
+		.underwriting {
+			background-color: #b5cdfe;
+		}
 
-					.quoted {
-						background-color: #81a8ff;
-					}
+		.quoted {
+			background-color: #81a8ff;
+		}
 
-					.reviewed {
-						background-color: #4c84ff;
-					}
+		.reviewed {
+			background-color: #4c84ff;
+		}
 
-					.incomplete {
-						background-color: #1f77d4;
-					}
+		.incomplete {
+			background-color: #1f77d4;
+		}
 
-					.rejected {
-						background-color: #191970;
-					}
+		.rejected {
+			background-color: #191970;
+		}
 
-					.open {
-						background-color: #ff7f0e;
-					}
-				}
-			}
+		.open {
+			background-color: #ff7f0e;
 		}
 	}
 }

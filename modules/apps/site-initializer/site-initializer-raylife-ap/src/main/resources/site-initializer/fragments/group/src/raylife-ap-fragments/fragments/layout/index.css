@@ -128,6 +128,7 @@
 
 .page-header-container .header-content {
 	height: 72px;
+	max-width: 1500px;
 	top: 0;
 }
 
@@ -178,10 +179,6 @@
 @media screen and (max-width: 992px) {
 	.layout-container .search-icon {
 		display: none !important;
-	}
-
-	.layout-container .page-header-container {
-		padding: 0 16px;
 	}
 }
 

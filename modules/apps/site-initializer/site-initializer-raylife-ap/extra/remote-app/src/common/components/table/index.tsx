@@ -36,7 +36,7 @@ type TableHeaders = {
 
 const Table: React.FC<TableProps> = ({data, headers, actions = []}) => {
 	return (
-		<table className="border-0 ray-table show-quick-actions-on-hover table table-autofit table-list">
+		<table className="border-0 ray-table show-quick-actions-on-hover table table-autofit table-list table-responsive">
 			<Head>
 				<Row>
 					{headers.map((header, index) => (

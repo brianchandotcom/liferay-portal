@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
@@ -32,9 +33,19 @@ export default function CustomCSSField({field, item, onValueSelect, value}) {
 
 	return (
 		<ClayForm.Group className="page-editor__custom-css-field" small>
-			<label htmlFor={id}>
-				{Liferay.Language.get('custom-css')} <CustomCSSHelp />
-			</label>
+			<div className="align-items-end d-flex justify-content-between">
+				<label htmlFor={id}>
+					{Liferay.Language.get('custom-css')} <CustomCSSHelp />
+				</label>
+
+				<ClayButtonWithIcon
+					className="mb-2 p-0 page-editor__custom-css-field__expand-button"
+					displayType="unstyled"
+					monospaced
+					small
+					symbol="expand"
+				/>
+			</div>
 
 			<textarea
 				className="form-control text-3"

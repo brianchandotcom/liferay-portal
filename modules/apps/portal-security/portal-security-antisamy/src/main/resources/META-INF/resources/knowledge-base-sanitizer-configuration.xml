@@ -115,6 +115,9 @@ http://www.w3.org/TR/html401/struct/global.html
 		<!-- CSS2 Allowed System Color Values -->
 		<regexp name="systemColor" value="(activeborder|activecaption|appworkspace|background|buttonface|buttonhighlight|buttonshadow|buttontext|captiontext|graytext|highlight|highlighttext|inactiveborder|inactivecaption|inactivecaptiontext|infobackground|infotext|menu|menutext|scrollbar|threeddarkshadow|threedface|threedhighlight|threedlightshadow|threedshadow|window|windowframe|windowtext)"/>
 
+		<!-- Used for onclick attribute on a tag -->
+		<regexp name="onclick-window" value="(^window\.open\(this\.href, \'.*\', \'resizable=(yes|no),status=(yes|no),location=(yes|no),toolbar=(yes|no),menubar=(yes|no),fullscreen=(yes|no),scrollbars=(yes|no),dependent=(yes|no)(,width=(\d)+(px|cm|mm|in|pt|pc|\%){0,1}){0,1}(,left=(\d)+(px|cm|mm|in|pt|pc|\%){0,1}){0,1}(,height=(\d)+(px|cm|mm|in|pt|pc|\%){0,1}){0,1}(,top=(\d)+(px|cm|mm|in|pt|pc|\%){0,1}){0,1}\'\); return false;)"/>
+
 	</common-regexps>
 
 	<!--
@@ -368,6 +371,9 @@ http://www.w3.org/TR/html401/struct/global.html
 		</attribute>
 
 		 <attribute name="onClick" description="The 'onClick' event is executed when the control associated with the tag is clicked">
+			<regexp-list>
+				<regexp name="onclick-window"/>
+			</regexp-list>
 			<literal-list>
 				<literal value="javascript:void(0)"/>
 				<literal value="javascript:history.go(-1)"/>
@@ -742,6 +748,8 @@ http://www.w3.org/TR/html401/struct/global.html
 		<!-- Anchor and anchor related tags -->
 
 		<tag name="a" action="validate">
+
+			<attribute name="onClick"/>
 			<attribute name="target">
 				<regexp-list>
 					<regexp name="htmlId"/>

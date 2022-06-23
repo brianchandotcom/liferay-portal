@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.internal.upgrade;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.internal.upgrade.v1_1_0.PortletPreferencesUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentCollectionTable;
 import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentEntryLinkTable;
@@ -165,8 +166,13 @@ public class FragmentServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"2.9.3", "2.9.4",
 			new com.liferay.fragment.internal.upgrade.v2_9_4.
-				FragmentEntryLinkUpgradeProcess());
+				FragmentEntryLinkUpgradeProcess(
+					_fragmentCollectionContributorTracker));
 	}
+
+	@Reference
+	private FragmentCollectionContributorTracker
+		_fragmentCollectionContributorTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

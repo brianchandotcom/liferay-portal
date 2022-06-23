@@ -3065,7 +3065,7 @@ definition {
 		property keystore.enabled = "true";
 		property test.name.skip.portal.instance = "SAML#MetadataSourceIsChangedAfterChangedFromXMLFileToURL";
 
-		task ("Add SAML configuration files") {
+		task ("Given: Add SAML configuration files") {
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
 				osgiConfigFileName = "com.liferay.saml.runtime.configuration.SamlKeyStoreManagerConfiguration.config");
@@ -3075,7 +3075,7 @@ definition {
 				osgiConfigFileName = "com.liferay.saml.runtime.configuration.SamlProviderConfiguration.config");
 		}
 
-		task ("Add virtual instance able.com") {
+		task ("And: Add virtual instance able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
@@ -3086,7 +3086,7 @@ definition {
 			User.viewLoggedOutPG();
 		}
 
-		task ("Setup IdP and SP") {
+		task ("When: User configures SP and IdP connection") {
 			SAML.setupIDP(
 				idpURL = "http://localhost:8080",
 				keystoreEnabled = "true",
@@ -3098,9 +3098,7 @@ definition {
 				samlEntityId = "samlsp",
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
-		}
 
-		task ("Add IdP configurations to service provider") {
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
 				idpEntityId = "samlidp",
@@ -3114,7 +3112,7 @@ definition {
 				userResolution = "attribute");
 		}
 
-		task ("Edit IdP connection and change to a metadata URL instead of uploading the metadata XML file") {
+		task ("And: Edit IdP connection and change to a metadata URL instead of uploading the metadata XML file") {
 			SAML.editIdentityProviderConnection(
 				changeToURL = "true",
 				idpEntityId = "samlidp",
@@ -3124,44 +3122,10 @@ definition {
 				userEmailAddress = "test@www.able.com");
 		}
 
-		task ("Enable SP roles and add SP configurations to IdP") {
-			SAML.enableSPRoles(
-				samlEntityId = "samlsp",
-				spURL = "http://www.able.com:8080",
-				userEmailAddress = "test@www.able.com");
-
-			SAML.addSPConfigurationsToIdentityProvider(
-				idpURL = "http://localhost:8080",
-				nameIdentifierFormat = "Email Address",
-				spAttributes = '''emailAddress
-				firstName
-				lastName
-				screenName
-				uuid''',
-				spEntityId = "samlsp",
-				spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
-				spURL = "http://www.able.com:8080",
-				uploadMetadataXML = "sp-metadata.xml",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("Add and sync new user") {
-			SAML.addAndSyncNewUser(
-				creatorEmailAddress = "test@liferay.com",
-				creatorPassword = "test",
-				newUserEmailAddress = "tester@localhost.com",
-				newUserFirstName = "first",
-				newUserLastName = "tester",
-				newUserPortalURL = "http://localhost:8080",
-				newUserScreenName = "tester",
-				portalInstanceName = "localhost",
-				spURL = "www.able.com:8080");
-		}
-
-		task ("Open portal and assert logged in") {
-			Navigator.openURL();
-
-			User.viewLoggedInPG();
+		task ("Then: Metadata URL is changed as requested") {
+			SAMLPortlet.viewMetadataConfigurationsOfSP(
+				idpEntityId = "samlidp",
+				metadataURL = "true");
 		}
 	}
 
@@ -3172,7 +3136,7 @@ definition {
 		property keystore.enabled = "true";
 		property test.name.skip.portal.instance = "SAML#MetadataURLDisappearsAfterChangedFromURLToXMLFile";
 
-		task ("Add SAML configuration files") {
+		task ("Given: Add SAML configuration files") {
 			OSGiConfig.copyOSGiConfigFile(
 				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructureee/security/dependencies",
 				osgiConfigFileName = "com.liferay.saml.runtime.configuration.SamlKeyStoreManagerConfiguration.config");
@@ -3182,7 +3146,7 @@ definition {
 				osgiConfigFileName = "com.liferay.saml.runtime.configuration.SamlProviderConfiguration.config");
 		}
 
-		task ("Add virtual instance able.com") {
+		task ("And: Add virtual instance able.com") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
@@ -3193,7 +3157,7 @@ definition {
 			User.viewLoggedOutPG();
 		}
 
-		task ("Setup IdP and SP") {
+		task ("When: User configures SP and IdP connection") {
 			SAML.setupIDP(
 				idpURL = "http://localhost:8080",
 				keystoreEnabled = "true",
@@ -3205,9 +3169,7 @@ definition {
 				samlEntityId = "samlsp",
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
-		}
 
-		task ("Add IdP configurations to service provider") {
 			SAML.addIDPConfigurationsToServiceProvider(
 				idpAttributeMapping = "UUID,emailAddress,firstName,lastName,screenName",
 				idpEntityId = "samlidp",
@@ -3220,7 +3182,7 @@ definition {
 				userResolution = "attribute");
 		}
 
-		task ("Edit IdP connection and replace metadata URL with metadata XML file") {
+		task ("And: Edit IdP connection and replace metadata URL with metadata XML file") {
 			SAML.editIdentityProviderConnection(
 				changeToXML = "true",
 				idpEntityId = "samlidp",
@@ -3231,44 +3193,10 @@ definition {
 				viewMetadata = "true");
 		}
 
-		task ("Enable SP roles and add SP configurations to IdP") {
-			SAML.enableSPRoles(
-				samlEntityId = "samlsp",
-				spURL = "http://www.able.com:8080",
-				userEmailAddress = "test@www.able.com");
-
-			SAML.addSPConfigurationsToIdentityProvider(
-				idpURL = "http://localhost:8080",
-				nameIdentifierFormat = "Email Address",
-				spAttributes = '''emailAddress
-				firstName
-				lastName
-				screenName
-				uuid''',
-				spEntityId = "samlsp",
-				spKeepAliveURL = "http://www.able.com:8080/c/portal/saml/keep_alive",
-				spURL = "http://www.able.com:8080",
-				uploadMetadataXML = "sp-metadata.xml",
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("Add and sync new user") {
-			SAML.addAndSyncNewUser(
-				creatorEmailAddress = "test@liferay.com",
-				creatorPassword = "test",
-				newUserEmailAddress = "tester@localhost.com",
-				newUserFirstName = "first",
-				newUserLastName = "tester",
-				newUserPortalURL = "http://localhost:8080",
-				newUserScreenName = "tester",
-				portalInstanceName = "localhost",
-				spURL = "www.able.com:8080");
-		}
-
-		task ("Open portal and assert logged in") {
-			Navigator.openURL();
-
-			User.viewLoggedInPG();
+		task ("Then: Metadata URL is changed as requested") {
+			SAMLPortlet.viewMetadataConfigurationsOfSP(
+				idpEntityId = "samlidp",
+				metadataXML = "true");
 		}
 	}
 
@@ -3361,6 +3289,8 @@ definition {
 				idpEntityId = "${identityProviderEntityId}",
 				spURL = "www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
+
+			User.logoutPG(specificURL = "www.able.com:8080");
 		}
 
 		task ("Update user and execute Sp initiated SSO") {

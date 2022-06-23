@@ -35,12 +35,14 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/htmlmixed/htmlmixed';
 
 import 'codemirror/mode/xml/xml';
+import classNames from 'classnames';
 import CodeMirror from 'codemirror';
 import React, {useEffect, useRef} from 'react';
 
 const noop = () => {};
 
 const CodeMirrorEditor = ({
+	className,
 	initialContent = '',
 	mode = 'text/html',
 	onChange = noop,
@@ -76,7 +78,7 @@ const CodeMirrorEditor = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return <div className="h-100" ref={ref} />;
+	return <div className={classNames(className, 'h-100')} ref={ref} />;
 };
 
 export default CodeMirrorEditor;

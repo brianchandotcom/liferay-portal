@@ -17,8 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,72 +44,56 @@ public class TestHistoryMap
 			jobReport.getTopLevelBuildReports(maxBuildCount);
 
 		for (TopLevelBuildReport topLevelBuildReport : topLevelBuildReports) {
-			if (JenkinsResultsParserUtil.exists(
-					topLevelBuildReport.getBuildReportJSONUserContentURL())) {
+			for (DownstreamBuildReport downstreamBuildReport :
+					topLevelBuildReport.getDownstreamBuildReports()) {
 
-				put(topLevelBuildReport);
-			}
+				for (TestReport testReport :
+						downstreamBuildReport.getTestReports()) {
 
-			URL buildResultJSONUserContentURL =
-				topLevelBuildReport.getBuildResultJSONUserContentURL();
+					String status = testReport.getStatus();
 
-			if (!JenkinsResultsParserUtil.exists(
-					buildResultJSONUserContentURL)) {
+					status = status.replace("REGRESSION", "FAILED");
+					status = status.replace("FIXED", "PASSED");
 
-				continue;
-			}
+					String testName = testReport.getName();
 
-			try {
-				JSONObject buildResultJSONObject =
-					JenkinsResultsParserUtil.toJSONObject(
-						buildResultJSONUserContentURL.toString());
+					if (status.equals("SKIPPED") ||
+						testName.startsWith("PortalLogAssertorTest") ||
+						testName.startsWith("JenkinsLogAsserterTest")) {
 
-				JSONArray batchResultsJSONArray =
-					buildResultJSONObject.getJSONArray("batchResults");
-
-				for (int i = 0; i < batchResultsJSONArray.length(); i++) {
-					JSONObject batchResultJSONObject =
-						batchResultsJSONArray.getJSONObject(i);
-
-					String batchName = batchResultJSONObject.getString(
-						"jobVariant");
-
-					batchName = batchName.replaceAll("(.*)/.*", "$1");
-
-					JSONArray testResultsJSONArray =
-						batchResultJSONObject.getJSONArray("testResults");
-
-					for (int j = 0; j < testResultsJSONArray.length(); j++) {
-						JSONObject testResultJSONObject =
-							testResultsJSONArray.getJSONObject(j);
-
-						String status = testResultJSONObject.optString(
-							"status");
-
-						status = status.replace("REGRESSION", "FAILED");
-						status = status.replace("FIXED", "PASSED");
-
-						String testName = testResultJSONObject.optString(
-							"name");
-
-						if (status.equals("SKIPPED") ||
-							testName.startsWith("PortalLogAssertorTest") ||
-							testName.startsWith("JenkinsLogAsserterTest")) {
-
-							continue;
-						}
-
-						put(
-							testName, batchName,
-							testResultJSONObject.optString("buildURL"),
-							testResultJSONObject.optLong("duration"),
-							testResultJSONObject.optString("errorDetails"),
-							status);
+						continue;
 					}
+
+					boolean excludeTest = false;
+
+					for (String excludedTestNameRegex :
+							_excludedTestNameRegexes) {
+
+						if (testName.matches(
+								".*" + excludedTestNameRegex + ".*")) {
+
+							excludeTest = true;
+						}
+					}
+
+					if (excludeTest) {
+						continue;
+					}
+
+					Map<String, String> key = Collections.singletonMap(
+						downstreamBuildReport.getBatchName(), testName);
+
+					TestHistory testHistory = get(key);
+
+					if (testHistory == null) {
+						testHistory = new TestHistory(
+							downstreamBuildReport.getBatchName(), testName);
+
+						put(key, testHistory);
+					}
+
+					testHistory.addTestReport(testReport);
 				}
-			}
-			catch (IOException ioException) {
-				ioException.printStackTrace();
 			}
 		}
 
@@ -121,72 +103,6 @@ public class TestHistoryMap
 			JenkinsResultsParserUtil.combine(
 				"Test history map populated in ",
 				JenkinsResultsParserUtil.toDurationString(duration)));
-	}
-
-	public void put(
-		String testName, String batchName, String buildURL, long duration,
-		String errorSnippet, String status) {
-
-		for (String excludedTestNameRegex : _excludedTestNameRegexes) {
-			if (testName.matches(".*" + excludedTestNameRegex + ".*")) {
-				return;
-			}
-		}
-
-		Map<String, String> key = Collections.singletonMap(testName, batchName);
-
-		if (containsKey(key)) {
-			TestHistory testHistory = get(key);
-
-			testHistory.add(buildURL, duration, errorSnippet, status);
-
-			return;
-		}
-
-		put(
-			key,
-			new TestHistory(
-				testName, batchName, buildURL, duration, errorSnippet, status));
-	}
-
-	public void put(TopLevelBuildReport topLevelBuildReport) {
-		for (DownstreamBuildReport downstreamBuildReport :
-				topLevelBuildReport.getDownstreamBuildReports()) {
-
-			for (TestReport testReport :
-					downstreamBuildReport.getTestReports()) {
-
-				String testName = testReport.getName();
-
-				for (String excludedTestNameRegex : _excludedTestNameRegexes) {
-					if (testName.matches(".*" + excludedTestNameRegex + ".*")) {
-						return;
-					}
-				}
-
-				Map<String, String> key = Collections.singletonMap(
-					testName, downstreamBuildReport.getBatchName());
-
-				if (containsKey(key)) {
-					TestHistory testHistory = get(key);
-
-					testHistory.add(
-						String.valueOf(downstreamBuildReport.getBuildURL()),
-						testReport.getDuration(), testReport.getErrorDetails(),
-						testReport.getStatus());
-
-					return;
-				}
-
-				put(
-					key,
-					new TestHistory(
-						testName, downstreamBuildReport.getBatchName(),
-						String.valueOf(downstreamBuildReport.getBuildURL()),
-						testReport.getDuration(), testReport.getErrorDetails(),
-						testReport.getStatus()));
-			}
-		}
 	}
 
 	public void setMinimumStatusChanges(int minimumStatusChanges) {
@@ -200,19 +116,20 @@ public class TestHistoryMap
 	public void writeAverageDurationJSONObjectFile(String filePath)
 		throws IOException {
 
-		JSONObject jsonObject = new JSONObject();
+		Map<String, List<JSONObject>> batchJSONObjectsMap = new HashMap<>();
 
 		for (TestHistory testHistory : values()) {
 			String batchName = testHistory.getBatchName();
 
-			JSONObject batchJSONObject = new JSONObject();
+			List<JSONObject> batchJSONObjects = batchJSONObjectsMap.get(
+				batchName);
 
-			if (jsonObject.has(batchName)) {
-				batchJSONObject = jsonObject.getJSONObject(batchName);
+			if (batchJSONObjects == null) {
+				batchJSONObjects = new ArrayList<>();
 			}
 
 			long averageDuration = testHistory.getAverageDuration();
-			String testName = testHistory.getName();
+			String testName = testHistory.getTestName();
 
 			if (averageDuration < 0) {
 				averageDuration = 0L;
@@ -229,15 +146,58 @@ public class TestHistoryMap
 					testName = matcher.group("testClassName");
 				}
 
-				if (batchJSONObject.has(testName)) {
-					averageDuration += batchJSONObject.optLong(testName, 0L);
+				boolean found = false;
+
+				for (JSONObject batchJSONObject : batchJSONObjects) {
+					if (!testName.equals(
+							batchJSONObject.optString("testName"))) {
+
+						continue;
+					}
+
+					averageDuration += batchJSONObject.optLong(
+						"averageDuration", 0L);
+
+					batchJSONObject.put("averageDuration", averageDuration);
+
+					found = true;
+
+					break;
+				}
+
+				if (found) {
+					continue;
 				}
 			}
 
-			batchJSONObject.put(testName, averageDuration);
+			JSONObject batchJSONObject = new JSONObject();
 
-			jsonObject.put(batchName, batchJSONObject);
+			batchJSONObject.put("averageDuration", averageDuration);
+			batchJSONObject.put(
+				"statusChanges", testHistory.getStatusChanges());
+			batchJSONObject.put("testName", testName);
+
+			batchJSONObjects.add(batchJSONObject);
+
+			batchJSONObjectsMap.put(batchName, batchJSONObjects);
 		}
+
+		JSONObject averageDurationJSONObject = new JSONObject();
+
+		JSONArray batchesJSONArray = new JSONArray();
+
+		for (Map.Entry<String, List<JSONObject>> entry :
+				batchJSONObjectsMap.entrySet()) {
+
+			JSONObject batchJSONObject = new JSONObject();
+
+			batchJSONObject.put("batchName", entry.getKey());
+			batchJSONObject.put("tests", entry.getValue());
+
+			batchesJSONArray.put(batchJSONObject);
+		}
+
+		averageDurationJSONObject.put("batches", batchesJSONArray);
 
 		File file = new File(filePath);
 
@@ -246,7 +206,8 @@ public class TestHistoryMap
 			JenkinsResultsParserUtil.getDistinctTimeStamp());
 
 		try {
-			JenkinsResultsParserUtil.write(tempFile, jsonObject.toString());
+			JenkinsResultsParserUtil.write(
+				tempFile, averageDurationJSONObject.toString());
 
 			JenkinsResultsParserUtil.gzip(tempFile, file);
 		}
@@ -316,30 +277,21 @@ public class TestHistoryMap
 
 	public class TestHistory {
 
-		public TestHistory(
-			String name, String batchName, String buildURL, long duration,
-			String errorSnippet, String status) {
-
-			_name = name;
+		public TestHistory(String batchName, String testName) {
 			_batchName = batchName;
-
-			add(buildURL, duration, errorSnippet, status);
+			_testName = testName;
 		}
 
-		public void add(
-			String buildURL, long duration, String errorSnippet,
-			String status) {
-
-			_testHistoryEntries.add(
-				new TestHistoryEntry(buildURL, duration, errorSnippet, status));
+		public void addTestReport(TestReport testReport) {
+			_testReports.add(testReport);
 		}
 
 		public long getAverageDuration() {
 			long count = 0;
 			long totalDuration = 0;
 
-			for (TestHistoryEntry testHistoryEntry : _testHistoryEntries) {
-				long duration = testHistoryEntry.getDuration();
+			for (TestReport testReport : _testReports) {
+				long duration = testReport.getDuration();
 
 				if (duration > _MAXIMUM_TEST_DURATION) {
 					continue;
@@ -360,25 +312,13 @@ public class TestHistoryMap
 			return _batchName;
 		}
 
-		public String getName() {
-			return _name;
-		}
+		public int getStatusChanges() {
+			int statusChanges = 0;
 
-		public List<String> getStatuses() {
-			List<String> statuses = new ArrayList<>();
-
-			for (TestHistoryEntry testHistoryEntry : _testHistoryEntries) {
-				statuses.add(testHistoryEntry.getStatus());
-			}
-
-			return statuses;
-		}
-
-		public boolean isFlaky() {
 			String lastStatus = null;
 
-			for (TestHistoryEntry testHistoryEntry : _testHistoryEntries) {
-				String status = testHistoryEntry.getStatus();
+			for (TestReport testReport : _testReports) {
+				String status = testReport.getStatus();
 
 				if (lastStatus == null) {
 					lastStatus = status;
@@ -389,11 +329,29 @@ public class TestHistoryMap
 				if (!lastStatus.equals(status)) {
 					lastStatus = status;
 
-					_statusChanges++;
+					statusChanges++;
 				}
 			}
 
-			if (_statusChanges >= _minimumStatusChanges) {
+			return statusChanges;
+		}
+
+		public List<String> getStatuses() {
+			List<String> statuses = new ArrayList<>();
+
+			for (TestReport testReport : _testReports) {
+				statuses.add(testReport.getStatus());
+			}
+
+			return statuses;
+		}
+
+		public String getTestName() {
+			return _testName;
+		}
+
+		public boolean isFlaky() {
+			if (getStatusChanges() >= _minimumStatusChanges) {
 				return true;
 			}
 
@@ -403,7 +361,8 @@ public class TestHistoryMap
 		public JSONArray toDurationJSONArray() {
 			JSONArray jsonArray = new JSONArray();
 
-			jsonArray.put(getName());
+			jsonArray.put(getTestName());
+
 			jsonArray.put(getBatchName());
 
 			JSONArray durationJSONArray = new JSONArray();
@@ -411,8 +370,8 @@ public class TestHistoryMap
 
 			long totalDuration = 0;
 
-			for (TestHistoryEntry testHistoryEntry : _testHistoryEntries) {
-				long duration = testHistoryEntry.getDuration();
+			for (TestReport testReport : _testReports) {
+				long duration = testReport.getDuration();
 
 				if (duration > _MAXIMUM_TEST_DURATION) {
 					continue;
@@ -424,14 +383,20 @@ public class TestHistoryMap
 
 				JSONArray statusJSONArray = new JSONArray();
 
-				statusJSONArray.put(testHistoryEntry.getStatus());
-				statusJSONArray.put(testHistoryEntry.getBuildURL());
+				statusJSONArray.put(testReport.getStatus());
+
+				DownstreamBuildReport downstreamBuildReport =
+					testReport.getDownstreamBuildReport();
+
+				statusJSONArray.put(downstreamBuildReport.getBuildURL());
 
 				statusesJSONArray.put(statusJSONArray);
 			}
 
 			jsonArray.put(statusesJSONArray);
+
 			jsonArray.put(durationJSONArray);
+
 			jsonArray.put(getAverageDuration());
 
 			return jsonArray;
@@ -440,66 +405,35 @@ public class TestHistoryMap
 		public JSONArray toStatusJSONArray() {
 			JSONArray jsonArray = new JSONArray();
 
-			jsonArray.put(getName());
+			jsonArray.put(getTestName());
+
 			jsonArray.put(getBatchName());
 
 			JSONArray statusesJSONArray = new JSONArray();
 
-			for (TestHistoryEntry testHistoryEntry : _testHistoryEntries) {
+			for (TestReport testReport : _testReports) {
 				JSONArray statusJSONArray = new JSONArray();
 
-				statusJSONArray.put(testHistoryEntry.getStatus());
-				statusJSONArray.put(testHistoryEntry.getBuildURL());
+				statusJSONArray.put(testReport.getStatus());
+
+				DownstreamBuildReport downstreamBuildReport =
+					testReport.getDownstreamBuildReport();
+
+				statusJSONArray.put(downstreamBuildReport.getBuildURL());
 
 				statusesJSONArray.put(statusJSONArray);
 			}
 
 			jsonArray.put(statusesJSONArray);
-			jsonArray.put(_statusChanges);
+
+			jsonArray.put(getStatusChanges());
 
 			return jsonArray;
 		}
 
 		private final String _batchName;
-		private final String _name;
-		private int _statusChanges;
-		private final List<TestHistoryEntry> _testHistoryEntries =
-			new ArrayList<>();
-
-		private class TestHistoryEntry {
-
-			public TestHistoryEntry(
-				String buildURL, long duration, String errorSnippet,
-				String status) {
-
-				_buildURL = buildURL;
-				_duration = duration;
-				_errorSnippet = errorSnippet;
-				_status = status;
-			}
-
-			public String getBuildURL() {
-				return _buildURL;
-			}
-
-			public long getDuration() {
-				return _duration;
-			}
-
-			public String getErrorSnippet() {
-				return _errorSnippet;
-			}
-
-			public String getStatus() {
-				return _status;
-			}
-
-			private final String _buildURL;
-			private final long _duration;
-			private final String _errorSnippet;
-			private final String _status;
-
-		}
+		private final String _testName;
+		private final List<TestReport> _testReports = new ArrayList<>();
 
 	}
 

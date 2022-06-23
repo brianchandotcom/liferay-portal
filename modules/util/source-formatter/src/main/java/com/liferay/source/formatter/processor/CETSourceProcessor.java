@@ -14,8 +14,10 @@
 
 package com.liferay.source.formatter.processor;
 
+import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.util.CETUtil;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,8 +59,13 @@ public class CETSourceProcessor extends BaseSourceProcessor {
 				"/resources/com/liferay/client/extension/type/dependencies/" +
 					shortFileName);
 
-		String newContent = CETUtil.getJSONContent(fileNames);
 		String oldContent = FileUtil.read(jsonFile);
+
+		List<String> cetFileNames = SourceFormatterUtil.scanForFiles(
+			getPortalDir() + _CET_DIR_LOCATION, new String[0],
+			new String[] {"**/*CET.java"}, new SourceFormatterExcludes(), true);
+
+		String newContent = CETUtil.getJSONContent(cetFileNames);
 
 		if (!oldContent.equals(newContent)) {
 			FileUtil.write(jsonFile, newContent);
@@ -66,6 +73,10 @@ public class CETSourceProcessor extends BaseSourceProcessor {
 			System.out.println("Updated '" + shortFileName + "'");
 		}
 	}
+
+	private static final String _CET_DIR_LOCATION =
+		"/modules/apps/client-extension/client-extension-type-api/src/main" +
+			"/java/com/liferay/client/extension/type";
 
 	private static final String[] _INCLUDES = {
 		"**/client-extension-type-api/src/main/java/com/liferay/client" +

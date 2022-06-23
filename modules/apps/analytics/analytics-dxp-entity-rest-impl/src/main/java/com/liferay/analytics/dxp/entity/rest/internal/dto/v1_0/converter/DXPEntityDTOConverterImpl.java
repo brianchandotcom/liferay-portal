@@ -252,7 +252,7 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				{
 					columnId = expandoColumn.getColumnId();
 					name = key;
-					value = String.valueOf(entry.getValue());
+					value = _parseValue(entry.getValue());
 				}
 			};
 
@@ -365,6 +365,20 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		}
 
 		return false;
+	}
+
+	private String _parseValue(Object value) {
+		if (value != null) {
+			Class<?> clazz = value.getClass();
+
+			if (!clazz.isArray()) {
+				return String.valueOf(value);
+			}
+
+			return "[" + StringUtil.merge((String[])value, ",") + "]";
+		}
+
+		return null;
 	}
 
 	private DXPEntity _toDXPEntity(

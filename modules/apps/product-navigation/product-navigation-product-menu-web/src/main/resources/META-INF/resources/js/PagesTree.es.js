@@ -12,7 +12,7 @@
  * details.
  */
 
-import {delegate} from 'frontend-js-web';
+import {delegate, openModal} from 'frontend-js-web';
 
 const KEY_ENTER = 13;
 
@@ -60,7 +60,7 @@ export default function ({namespace}) {
 	eventDelegates.push(linkActionKeyupHandler);
 
 	const viewCollectionItemsActionOptionQuery = (event) => {
-		Liferay.Util.openModal({
+		openModal({
 			id: `${namespace}viewCollectionItemsDialog`,
 			title: Liferay.Language.get('collection-items'),
 			url: event.delegateTarget.dataset.viewCollectionItemsUrl,

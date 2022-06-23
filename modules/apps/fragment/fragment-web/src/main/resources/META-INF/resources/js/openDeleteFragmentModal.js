@@ -12,10 +12,10 @@
  * details.
  */
 
-import {sub} from 'frontend-js-web';
+import {openModal, sub} from 'frontend-js-web';
 
 export default function openDeleteFragmentModal({multiple = false, onDelete}) {
-	Liferay.Util.openModal({
+	openModal({
 		bodyHTML: Liferay.Language.get(
 			'deleting-a-fragment-is-an-action-impossible-to-revert'
 		),

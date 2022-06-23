@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import {openModal} from 'frontend-js-web';
+
 let copySaved = '';
 
 const starterkitList = document.getElementsByClassName('liferay-online-item');
@@ -65,7 +67,7 @@ function openItem(
 	redirectURL,
 	siteInitializerKey
 ) {
-	Liferay.Util.openModal({
+	openModal({
 		bodyHTML: `<div class="form-group" id="snGroup">
 				 <label for="siteName">Site name
 					 <small> (more than 4 characters)</small>

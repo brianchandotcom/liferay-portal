@@ -14,6 +14,7 @@
 
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {openModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -23,7 +24,7 @@ const Component = ({iconClass, iconName, items, title}) => {
 			return {
 				...item,
 				onClick() {
-					Liferay.Util.openModal({
+					openModal({
 						title: item.label,
 						url: item.publishURL,
 					});

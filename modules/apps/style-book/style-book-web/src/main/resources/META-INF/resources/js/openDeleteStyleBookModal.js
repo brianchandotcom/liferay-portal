@@ -12,10 +12,10 @@
  * details.
  */
 
-import {sub} from 'frontend-js-web';
+import {openModal, sub} from 'frontend-js-web';
 
 export default function openDeleteStyleBookModal({multiple = false, onDelete}) {
-	Liferay.Util.openModal({
+	openModal({
 		bodyHTML: Liferay.Language.get(
 			'deleting-a-style-book-is-an-action-impossible-to-revert'
 		),

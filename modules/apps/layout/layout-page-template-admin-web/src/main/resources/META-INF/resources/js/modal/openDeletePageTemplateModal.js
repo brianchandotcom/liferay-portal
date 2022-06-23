@@ -12,14 +12,14 @@
  * details.
  */
 
-import {sub} from 'frontend-js-web';
+import {openModal, sub} from 'frontend-js-web';
 
 export default function openDeletePageTemplateModal({
 	message,
 	onDelete,
 	title,
 }) {
-	Liferay.Util.openModal({
+	openModal({
 		bodyHTML:
 			message ||
 			Liferay.Language.get('are-you-sure-you-want-to-delete-this'),

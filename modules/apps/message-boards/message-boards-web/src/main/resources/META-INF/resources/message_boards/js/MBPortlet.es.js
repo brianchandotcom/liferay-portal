@@ -12,7 +12,7 @@
  * details.
  */
 
-import {fetch, sub} from 'frontend-js-web';
+import {fetch, openModal, sub} from 'frontend-js-web';
 
 const RECENTLY_REMOVED_ATTACHMENTS = {
 	multiple: Liferay.Language.get('x-recently-removed-attachments'),
@@ -125,7 +125,7 @@ class MBPortlet {
 
 		if (viewRemovedAttachmentsLink) {
 			this._addEventListener(viewRemovedAttachmentsLink, 'click', () => {
-				Liferay.Util.openModal({
+				openModal({
 					id: this._namespace + 'openRemovedPageAttachments',
 					onClose: this._updateRemovedAttachments.bind(this),
 					title: Liferay.Language.get('removed-attachments'),

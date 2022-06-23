@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openModal} from 'frontend-js-web';
+
 import {
 	acceptAllCookies,
 	declineAllCookies,
@@ -70,7 +72,7 @@ export default function ({
 		});
 
 		configurationButton.addEventListener('click', () => {
-			Liferay.Util.openModal({
+			openModal({
 				buttons: [
 					{
 						displayType: 'secondary',

@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openModal} from 'frontend-js-web';
+
 export default function ({commerceOrderImporterTypeKey, title, url}) {
 	const commerceOrderImporterTypeKeySelector = document.querySelector(
 		`.${commerceOrderImporterTypeKey}`
@@ -20,7 +22,7 @@ export default function ({commerceOrderImporterTypeKey, title, url}) {
 	commerceOrderImporterTypeKeySelector.addEventListener('click', (event) => {
 		event.preventDefault();
 
-		Liferay.Util.openModal({
+		openModal({
 			id: commerceOrderImporterTypeKey,
 			iframeBodyCssClass: '',
 			title,

@@ -12,13 +12,15 @@
  * details.
  */
 
+import {openModal} from 'frontend-js-web';
+
 export default function openWarningModal({
 	action,
 	actionLabel,
 	message,
 	title,
 }) {
-	Liferay.Util.openModal({
+	openModal({
 		bodyHTML: `<p class="text-secondary">${message}</p>`,
 		buttons: [
 			{

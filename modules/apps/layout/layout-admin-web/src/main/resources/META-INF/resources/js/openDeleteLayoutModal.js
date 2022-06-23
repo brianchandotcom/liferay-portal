@@ -12,14 +12,14 @@
  * details.
  */
 
-import {sub} from 'frontend-js-web';
+import {openModal, sub} from 'frontend-js-web';
 
 export default function openDeleteLayoutModal({
 	message,
 	multiple = false,
 	onDelete,
 }) {
-	Liferay.Util.openModal({
+	openModal({
 		bodyHTML: message,
 		buttons: [
 			{

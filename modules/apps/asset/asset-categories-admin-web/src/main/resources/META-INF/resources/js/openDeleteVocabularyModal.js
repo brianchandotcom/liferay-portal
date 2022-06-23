@@ -12,13 +12,13 @@
  * details.
  */
 
-import {sub} from 'frontend-js-web';
+import {openModal, sub} from 'frontend-js-web';
 
 export default function openDeleteVocabularyModal({
 	multiple = false,
 	onDelete,
 }) {
-	Liferay.Util.openModal({
+	openModal({
 		bodyHTML: Liferay.Language.get('are-you-sure-you-want-to-delete-this'),
 		buttons: [
 			{

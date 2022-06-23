@@ -12,8 +12,10 @@
  * details.
  */
 
+import {openModal} from 'frontend-js-web';
+
 export default function openDeleteArticleModal({onDelete}) {
-	Liferay.Util.openModal({
+	openModal({
 		bodyHTML: Liferay.Language.get('are-you-sure-you-want-to-delete-this'),
 		buttons: [
 			{

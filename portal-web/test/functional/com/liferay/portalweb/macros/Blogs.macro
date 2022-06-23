@@ -425,8 +425,6 @@ definition {
 			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
 			value1 = "Submit for Publication");
 
-		Pause(locator1 = "5000");
-
 		SelectFrame(value1 = "relative=top");
 	}
 

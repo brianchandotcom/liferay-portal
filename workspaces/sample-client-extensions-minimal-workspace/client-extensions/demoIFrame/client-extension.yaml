@@ -1,0 +1,5 @@
+demoIFrame:
+  description: "This adds a remote app loads as an iframe"
+  name: Demo IFrame
+  type: iframe
+  url: https://arnab-datta.github.io/counter-app/

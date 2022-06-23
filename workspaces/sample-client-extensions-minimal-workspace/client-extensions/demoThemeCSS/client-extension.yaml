@@ -1,0 +1,7 @@
+demoThemeCSS:
+  description: "This extension replaces the main.css and clay.css for a configured page"
+  clayURL: css/clay.css
+  mainURL: css/main.css
+  name: Demo Theme CSS
+  sourceCodeURL: https://www.liferay.com
+  type: themeCSS

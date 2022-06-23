@@ -1,0 +1,5 @@
+demoGlobalCSS:
+  description: "This CSS file can be loads as a stylesheet for a configured page"
+  name: Demo Global CSS
+  type: globalCSS
+  url: global.css

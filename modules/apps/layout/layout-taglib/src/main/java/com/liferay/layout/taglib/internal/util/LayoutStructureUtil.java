@@ -28,15 +28,13 @@ import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Víctor Galán
  */
 public class LayoutStructureUtil {
 
 	public static LayoutStructure getLayoutStructure(
-		HttpServletRequest httpServletRequest, long plid) {
+		long plid, long segmentsExperienceId) {
 
 		try {
 			Layout layout = _getLayout(plid);
@@ -47,8 +45,7 @@ public class LayoutStructureUtil {
 						layout.getGroupId(), layout.getPlid(), true);
 
 			String data = layoutPageTemplateStructure.getData(
-				SegmentsExperienceUtil.getSegmentsExperienceId(
-					httpServletRequest));
+				segmentsExperienceId);
 
 			if (Validator.isNull(data)) {
 				return null;

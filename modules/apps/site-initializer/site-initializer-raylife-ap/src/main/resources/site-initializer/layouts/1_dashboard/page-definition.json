@@ -68,7 +68,9 @@
 											},
 											"indexed": true,
 											"layout": {
+												"align": "Center",
 												"borderWidth": 0,
+												"contentDisplay": "FlexColumn",
 												"marginBottom": 0,
 												"marginLeft": 0,
 												"marginRight": 0,
@@ -77,7 +79,7 @@
 												"paddingLeft": 0,
 												"paddingRight": 0,
 												"paddingTop": 2,
-												"widthType": "Fixed"
+												"widthType": "Fluid"
 											}
 										},
 										"pageElements": [
@@ -85,7 +87,9 @@
 												"definition": {
 													"fragmentStyle": {
 														"borderWidth": "0",
-														"textAlign": ""
+														"maxWidth": "1500px",
+														"textAlign": "",
+														"width": "100%"
 													},
 													"indexed": true,
 													"layout": {
@@ -623,7 +627,9 @@
 													"fragmentStyle": {
 														"borderWidth": "0",
 														"marginTop": "4",
-														"textAlign": ""
+														"maxWidth": "1500px",
+														"textAlign": "",
+														"width": "100%"
 													},
 													"fragmentViewports": [
 														{
@@ -710,6 +716,14 @@
 																			},
 																			"fragmentFields": [
 																			],
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"marginBottom": "4"
+																					},
+																					"id": "tablet"
+																				}
+																			],
 																			"indexed": true
 																		},
 																		"pageElements": [
@@ -780,7 +794,7 @@
 																							},
 																							"fragmentConfig": {
 																								"fakeContentId": "fake content",
-																								"height": "499px"
+																								"height": "257px"
 																							},
 																							"fragmentFields": [
 																							],

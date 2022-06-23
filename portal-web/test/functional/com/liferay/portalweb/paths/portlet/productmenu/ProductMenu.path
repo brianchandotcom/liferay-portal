@@ -116,6 +116,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_SIGNOUT</td>
+	<td>//div[contains(@class,'list-group')]//a[contains(.,'Sign Out')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -130,12 +130,10 @@ definition {
 		while (IsElementPresent(locator1 = "DocumentsAndMedia#FILTER_REPOSITORY_GENERIC")) {
 			Click(locator1 = "DocumentsAndMedia#FILTER_REPOSITORY_GENERIC");
 
-			Pause(locator1 = "1000");
-
 			if (IsElementPresent(locator1 = "DocumentsAndMedia#ICON_DOCUMENT_GENERIC")) {
 				Click.clickNoMouseOverNoWaitForVisible(locator1 = "DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX");
 
-				Pause(locator1 = "1000");
+				AssertElementPresent.assertVisible(locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS");
 
 				Click(locator1 = "DocumentsAndMedia#TOOLBAR_ACTIONS");
 

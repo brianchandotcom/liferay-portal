@@ -256,7 +256,7 @@ function Rule({
 	);
 }
 
-function AutoField({
+function AssetListFilter({
 	categorySelectorURL,
 	disabled,
 	groupIds,
@@ -359,7 +359,7 @@ function AutoField({
 	);
 }
 
-AutoField.propTypes = {
+AssetListFilter.propTypes = {
 	categorySelectorURL: PropTypes.string,
 	groupIds: PropTypes.arrayOf(PropTypes.string),
 	namespace: PropTypes.string,
@@ -387,4 +387,4 @@ AutoField.propTypes = {
 	vocabularyIds: PropTypes.arrayOf(PropTypes.string),
 };
 
-export default AutoField;
+export default AssetListFilter;

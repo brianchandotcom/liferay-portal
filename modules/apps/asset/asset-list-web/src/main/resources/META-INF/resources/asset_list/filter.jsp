@@ -52,7 +52,7 @@
 
 		<div>
 			<react:component
-				module="auto_field/index"
+				module="js/components/AssetListFilter/index"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
 						"categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL()

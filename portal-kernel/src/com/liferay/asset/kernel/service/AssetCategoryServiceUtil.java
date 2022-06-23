@@ -91,6 +91,14 @@ public class AssetCategoryServiceUtil {
 		return getService().fetchCategory(categoryId);
 	}
 
+	public static AssetCategory getAssetCategoryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getAssetCategoryByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
 	/**
 	 * Returns a range of assetCategories related to an AssetEntry with the
 	 * given "classNameId-classPK".

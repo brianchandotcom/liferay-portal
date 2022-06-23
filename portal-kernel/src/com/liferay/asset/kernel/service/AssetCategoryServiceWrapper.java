@@ -96,6 +96,15 @@ public class AssetCategoryServiceWrapper
 		return _assetCategoryService.fetchCategory(categoryId);
 	}
 
+	@Override
+	public AssetCategory getAssetCategoryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetCategoryService.getAssetCategoryByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
 	/**
 	 * Returns a range of assetCategories related to an AssetEntry with the
 	 * given "classNameId-classPK".

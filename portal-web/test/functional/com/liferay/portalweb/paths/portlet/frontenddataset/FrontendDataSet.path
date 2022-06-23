@@ -16,8 +16,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_MENU_SHOW_ITEM_EDIT_ICON</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//*[*[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_ACTION_BUTTON</td>
 	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']//..//*[*[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_VERTICAL_ELLIPSIS</td>
+	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']/..//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
 	<td></td>
 </tr>
 <tr>

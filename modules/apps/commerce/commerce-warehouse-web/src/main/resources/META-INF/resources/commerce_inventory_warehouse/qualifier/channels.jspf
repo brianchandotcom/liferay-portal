@@ -1,0 +1,52 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<c:if test="<%= hasPermission %>">
+	<div id="item-finder-root-channel"></div>
+
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"commerceInventoryWarehouseId", commerceInventoryWarehouseId
+			).put(
+				"datasetId", CommerceInventoryWarehouseFDSNames.COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_CHANNELS
+			).put(
+				"rootPortletId", portletDisplay.getRootPortletId()
+			).put(
+				"spritemap", themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+			).put(
+				"warehouseExternalReferenceCode", HtmlUtil.escapeJS(commerceInventoryWarehouse.getExternalReferenceCode())
+			).build()
+		%>'
+		module="js/channels"
+	/>
+
+	<commerce-ui:panel
+		bodyClasses="p-0"
+		title='<%= LanguageUtil.get(request, "channels") %>'
+	>
+		<frontend-data-set:headless-display
+			apiURL="<%= cIWarehouseQualifiersDisplayContext.getWarehouseChannelsAPIURL() %>"
+			fdsActionDropdownItems="<%= cIWarehouseQualifiersDisplayContext.getWarehouseChannelFDSActionDropdownItems() %>"
+			formName="fm"
+			id="<%= CommerceInventoryWarehouseFDSNames.COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_CHANNELS %>"
+			itemsPerPage="<%= 10 %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= portletCommerceInventoryWarehouseURL %>"
+		/>
+	</commerce-ui:panel>
+</c:if>

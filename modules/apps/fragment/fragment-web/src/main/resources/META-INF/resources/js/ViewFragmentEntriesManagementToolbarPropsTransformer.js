@@ -213,7 +213,7 @@ export default function propsTransformer({
 			}
 		},
 		onCreateButtonClick(event, {item}) {
-			if (Liferay.FeatureFlags['LPS-152938']) {
+			if (Liferay.FeatureFlags['LPS-149720']) {
 				render(
 					AddFragmentModal,
 					{

@@ -733,7 +733,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				typeLabel = jsonObject.getString("type");
 
 				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-152938"))) {
+						PropsUtil.get("feature.flag.LPS-149720"))) {
 
 					typeOptions = jsonObject.getString("typeOptions");
 				}

@@ -630,7 +630,7 @@ public class EditFragmentEntryDisplayContext {
 	}
 
 	private boolean _showFieldTypes() {
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152938"))) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149720"))) {
 			return false;
 		}
 

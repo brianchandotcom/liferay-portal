@@ -388,7 +388,7 @@ public class FragmentsImporterTest {
 	public void testImportInputFragmentWithTypeOptions() throws Exception {
 		try (PropsTemporarySwapper propsTemporarySwapper =
 				new PropsTemporarySwapper(
-					"feature.flag.LPS-152938", Boolean.TRUE.toString())) {
+					"feature.flag.LPS-149720", Boolean.TRUE.toString())) {
 
 			List<FragmentCollection> fragmentCollections =
 				_fragmentCollectionLocalService.getFragmentCollections(

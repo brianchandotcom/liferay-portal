@@ -186,7 +186,7 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 		String typeOptions = getTypeOptions();
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152938")) &&
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149720")) &&
 			Validator.isNotNull(typeOptions)) {
 
 			jsonObject.put(

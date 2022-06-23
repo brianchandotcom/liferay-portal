@@ -61,8 +61,6 @@ definition {
 		}
 
 		if (isSet(viewVideoHelpMessage)) {
-			Pause(locator1 = "3000");
-
 			Click.clickNoMouseOverNoWaitForVisible(locator1 = "BlogsEntry#VIDEO_EMBED_HELP_MESSAGE");
 
 			AssertTextEquals.assertPartialText(

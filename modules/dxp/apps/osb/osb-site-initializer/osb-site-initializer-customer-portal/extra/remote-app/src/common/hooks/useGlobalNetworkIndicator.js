@@ -60,8 +60,8 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 
 			if (isValidMutation || displaySuccess) {
 				Liferay.Util.openToast({
-					message: displaySuccess.message || DEFAULT_SUCCESS.message,
-					type: displaySuccess.type || DEFAULT_SUCCESS.type,
+					message: displaySuccess?.message || DEFAULT_SUCCESS.message,
+					type: displaySuccess?.type || DEFAULT_SUCCESS.type,
 				});
 			}
 		}

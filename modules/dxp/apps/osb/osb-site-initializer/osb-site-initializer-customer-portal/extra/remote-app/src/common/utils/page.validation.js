@@ -43,6 +43,7 @@ const isValidPage = async (
 	};
 
 	const {data} = await client.query({
+		fetchPolicy: 'network-only',
 		query: getAccountFlags,
 		variables: {
 			filter: `accountKey eq '${externalReferenceCode}' and name eq '${ROUTE_TYPES.onboarding}' and finished eq true`,

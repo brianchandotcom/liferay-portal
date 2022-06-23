@@ -44,14 +44,15 @@ public class FragmentEntryLinkServiceWrapper
 			long fragmentEntryId, long segmentsExperienceId, long plid,
 			String css, String html, String js, String configuration,
 			String editableValues, String namespace, int position,
-			String rendererKey,
+			String rendererKey, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _fragmentEntryLinkService.addFragmentEntryLink(
 			groupId, originalFragmentEntryLinkId, fragmentEntryId,
 			segmentsExperienceId, plid, css, html, js, configuration,
-			editableValues, namespace, position, rendererKey, serviceContext);
+			editableValues, namespace, position, rendererKey, type,
+			serviceContext);
 	}
 
 	@Override

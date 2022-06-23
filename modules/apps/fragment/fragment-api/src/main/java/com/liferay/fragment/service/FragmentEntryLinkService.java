@@ -56,7 +56,7 @@ public interface FragmentEntryLinkService extends BaseService {
 			long fragmentEntryId, long segmentsExperienceId, long plid,
 			String css, String html, String js, String configuration,
 			String editableValues, String namespace, int position,
-			String rendererKey, ServiceContext serviceContext)
+			String rendererKey, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentEntryLink deleteFragmentEntryLink(long fragmentEntryLinkId)

@@ -70,6 +70,7 @@ public class FragmentEntryLinkWrapper
 		attributes.put("namespace", getNamespace());
 		attributes.put("position", getPosition());
 		attributes.put("rendererKey", getRendererKey());
+		attributes.put("type", getType());
 		attributes.put("lastPropagationDate", getLastPropagationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
@@ -222,6 +223,12 @@ public class FragmentEntryLinkWrapper
 
 		if (rendererKey != null) {
 			setRendererKey(rendererKey);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		Date lastPropagationDate = (Date)attributes.get("lastPropagationDate");
@@ -493,6 +500,16 @@ public class FragmentEntryLinkWrapper
 	}
 
 	/**
+	 * Returns the type of this fragment entry link.
+	 *
+	 * @return the type of this fragment entry link
+	 */
+	@Override
+	public int getType() {
+		return model.getType();
+	}
+
+	/**
 	 * Returns the user ID of this fragment entry link.
 	 *
 	 * @return the user ID of this fragment entry link
@@ -549,6 +566,31 @@ public class FragmentEntryLinkWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.isSystem();
+	}
+
+	@Override
+	public boolean isTypeComponent() {
+		return model.isTypeComponent();
+	}
+
+	@Override
+	public boolean isTypeInput() {
+		return model.isTypeInput();
+	}
+
+	@Override
+	public boolean isTypePortlet() {
+		return model.isTypePortlet();
+	}
+
+	@Override
+	public boolean isTypeReact() {
+		return model.isTypeReact();
+	}
+
+	@Override
+	public boolean isTypeSection() {
+		return model.isTypeSection();
 	}
 
 	@Override
@@ -801,6 +843,16 @@ public class FragmentEntryLinkWrapper
 	@Override
 	public void setSegmentsExperienceId(long segmentsExperienceId) {
 		model.setSegmentsExperienceId(segmentsExperienceId);
+	}
+
+	/**
+	 * Sets the type of this fragment entry link.
+	 *
+	 * @param type the type of this fragment entry link
+	 */
+	@Override
+	public void setType(int type) {
+		model.setType(type);
 	}
 
 	/**

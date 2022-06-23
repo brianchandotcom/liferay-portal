@@ -1,7 +1,8 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property osgi.modules.includes = "frontend-css-cadmin-sample-web,frontend-css-cadmin-web";
+	property osgi.modules.includes = "frontend-css-cadmin-sample-web";
+	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Cadmin";
@@ -44,8 +45,6 @@ definition {
 	@description = "LPS-146034. Verifies admin component displays it's default theme after applying a theme"
 	@priority = "5"
 	test CanDisplayDefaultTheme {
-		property portal.acceptance = "true";
-
 		task ("Assert classic theme background color") {
 			AssertCssValue(
 				key_class = "test",
@@ -104,8 +103,6 @@ definition {
 	@description = "LPS-146450. Verifies admin component CSS can be overridden"
 	@priority = "4"
 	test CssCanBeOverridden {
-		property portal.acceptance = "true";
-
 		task ("Assert cadmin default theme is applied to a component") {
 			AssertCssValue(
 				key_class = "cadmin",

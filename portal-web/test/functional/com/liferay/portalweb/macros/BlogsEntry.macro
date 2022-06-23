@@ -101,7 +101,7 @@ definition {
 					videoShortcutTitle = "${videoShortcutTitle}");
 
 				if (isSet(viewInternalVideoPreview)) {
-					Pause(locator1 = "5000");
+					WaitForElementPresent(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
 
 					DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
 				}

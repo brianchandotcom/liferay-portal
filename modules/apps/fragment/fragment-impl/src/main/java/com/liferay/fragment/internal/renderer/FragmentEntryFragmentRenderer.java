@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -267,9 +268,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			sb.append(fragmentElementId);
 			sb.append("'); var fragmentNamespace = '");
 			sb.append(namespace);
-			sb.append("'; var input = '");
-			sb.append(_getInputJSONObject());
-			sb.append("'; var layoutMode = '");
+			sb.append("'; var input = ");
+			sb.append(JSONUtil.toString(_getInputJSONObject()));
+			sb.append("; var layoutMode = '");
 			sb.append(
 				ParamUtil.getString(
 					_portal.getOriginalServletRequest(httpServletRequest),

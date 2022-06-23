@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -247,7 +246,7 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 			if (assetRenderer != null) {
 				suggestionBuilder.attribute(
 					"assetSearchSummary",
-					HtmlUtil.stripHtml(assetRenderer.getSearchSummary(locale)));
+					assetRenderer.getSearchSummary(locale));
 				suggestionBuilder.attribute(
 					"assetURL",
 					_getAssetURL(

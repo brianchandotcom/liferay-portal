@@ -164,7 +164,7 @@ definition {
 	@description = "This is a test for LPS-151754. The page designer can configure and map the Submit Button on display page template."
 	@priority = "4"
 	test ConfigureSubmitButtonOnDisplayPageTemplate {
-		property test.name.skip.portal.instance = "SubmitButton#ConfigureSubmitButtonOnContentPage";
+		property test.name.skip.portal.instance = "SubmitButton#ConfigureSubmitButtonOnDisplayPageTemplate";
 		property testray.component.names = "Display Pages,Fragments";
 
 		task ("Given a page designer has a Form Container mapped to an entity with text field") {

@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -132,10 +133,11 @@ public class SiteInitializerExtender
 				_listTypeEntryResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectRelationshipResourceFactory, _objectEntryLocalService,
-				_organizationResourceFactory, _portal,
-				_resourceActionLocalService, _resourcePermissionLocalService,
-				_roleLocalService, _sapEntryLocalService, null,
-				_settingsFactory, _siteNavigationMenuItemLocalService,
+				_organizationLocalService, _organizationResourceFactory,
+				_portal, _resourceActionLocalService,
+				_resourcePermissionLocalService, _roleLocalService,
+				_sapEntryLocalService, null, _settingsFactory,
+				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,
@@ -238,9 +240,10 @@ public class SiteInitializerExtender
 				_listTypeEntryResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectRelationshipResourceFactory, _objectEntryLocalService,
-				_organizationResourceFactory, _portal,
-				_resourceActionLocalService, _resourcePermissionLocalService,
-				_roleLocalService, _sapEntryLocalService,
+				_organizationLocalService, _organizationResourceFactory,
+				_portal, _resourceActionLocalService,
+				_resourcePermissionLocalService, _roleLocalService,
+				_sapEntryLocalService,
 				ProxyUtil.newDelegateProxyInstance(
 					ServletContext.class.getClassLoader(), ServletContext.class,
 					new FileBackedServletContextDelegate(
@@ -372,6 +375,9 @@ public class SiteInitializerExtender
 	@Reference
 	private ObjectRelationshipResource.Factory
 		_objectRelationshipResourceFactory;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private OrganizationResource.Factory _organizationResourceFactory;

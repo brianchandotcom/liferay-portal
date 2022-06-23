@@ -115,6 +115,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -227,6 +228,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService,
+		OrganizationLocalService organizationLocalService,
 		OrganizationResource.Factory organizationResourceFactory, Portal portal,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
@@ -285,6 +287,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_objectRelationshipResourceFactory = objectRelationshipResourceFactory;
 		_objectEntryLocalService = objectEntryLocalService;
+		_organizationLocalService = organizationLocalService;
 		_organizationResourceFactory = organizationResourceFactory;
 		_portal = portal;
 		_resourceActionLocalService = resourceActionLocalService;
@@ -2334,35 +2337,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		OrganizationResource.Builder organizationResourceBuilder =
-			_organizationResourceFactory.create();
-
-		OrganizationResource organizationResource =
-			organizationResourceBuilder.user(
-				serviceContext.fetchUser()
-			).httpServletRequest(
-				serviceContext.getRequest()
-			).build();
-
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			Page<Organization> organizationsPage =
-				organizationResource.getOrganizationsPage(
-					null, null,
-					organizationResource.toFilter(
-						StringBundler.concat(
-							"name eq '", jsonObject.getString("name"), "'")),
-					null, null);
+			Long organizationId = _organizationLocalService.getOrganizationId(
+				serviceContext.getCompanyId(), jsonObject.getString("name"));
 
-			Organization organization = organizationsPage.fetchFirstItem();
-
-			if (organization == null) {
+			if (organizationId <= 0) {
 				continue;
 			}
 
-			_userLocalService.addOrganizationUser(
-				GetterUtil.getLong(organization.getId()), userId);
+			_userLocalService.addOrganizationUser(organizationId, userId);
 		}
 	}
 
@@ -3665,6 +3650,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectRelationshipResource.Factory
 		_objectRelationshipResourceFactory;
+	private final OrganizationLocalService _organizationLocalService;
 	private final OrganizationResource.Factory _organizationResourceFactory;
 	private final Portal _portal;
 	private final ResourceActionLocalService _resourceActionLocalService;

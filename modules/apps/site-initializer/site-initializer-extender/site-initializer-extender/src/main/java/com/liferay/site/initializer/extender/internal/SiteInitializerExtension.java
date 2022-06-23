@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -116,6 +117,7 @@ public class SiteInitializerExtension {
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService,
+		OrganizationLocalService organizationLocalService,
 		OrganizationResource.Factory organizationResourceFactory, Portal portal,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
@@ -157,9 +159,10 @@ public class SiteInitializerExtension {
 			listTypeEntryResource, listTypeEntryResourceFactory,
 			objectActionLocalService, objectDefinitionLocalService,
 			objectDefinitionResourceFactory, objectRelationshipResourceFactory,
-			objectEntryLocalService, organizationResourceFactory, portal,
-			resourceActionLocalService, resourcePermissionLocalService,
-			roleLocalService, sapEntryLocalService, settingsFactory,
+			objectEntryLocalService, organizationLocalService,
+			organizationResourceFactory, portal, resourceActionLocalService,
+			resourcePermissionLocalService, roleLocalService,
+			sapEntryLocalService, settingsFactory,
 			siteNavigationMenuItemLocalService,
 			siteNavigationMenuItemTypeRegistry, siteNavigationMenuLocalService,
 			structuredContentFolderResourceFactory, styleBookEntryZipProcessor,

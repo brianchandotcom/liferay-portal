@@ -75,28 +75,13 @@ public class InfoForm {
 	}
 
 	public InfoField getInfoField(String name) {
-		for (InfoFieldSetEntry infoFieldSetEntry :
-				_builder._infoFieldSetEntriesByName.values()) {
+		InfoField infoField = _builder._allInfoFieldsByUniqueId.get(name);
 
-			InfoField infoField = null;
-
-			if (infoFieldSetEntry instanceof InfoField) {
-				infoField = (InfoField)infoFieldSetEntry;
-			}
-			else if (infoFieldSetEntry instanceof InfoFieldSet) {
-				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
-
-				infoField = infoFieldSet.getInfoField(name);
-			}
-
-			if ((infoField != null) &&
-				Objects.equals(infoField.getUniqueId(), name)) {
-
-				return infoField;
-			}
+		if (infoField != null) {
+			return infoField;
 		}
 
-		return null;
+		return _builder._allInfoFieldsByName.get(name);
 	}
 
 	public List<InfoFieldSetEntry> getInfoFieldSetEntries() {

@@ -611,12 +611,14 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
+		AssertElementPresent.assertVisible(
+			key_dmFolderName = "Collaboration Test Application",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE");
+
 		AssertClick(
 			key_dmFolderName = "Collaboration Test Application",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_FOLDER_TITLE",
 			value1 = "Collaboration Test Application");
-
-		Pause(locator1 = "3000");
 
 		AssertElementNotPresent(
 			key_dmDocumentTitle = "Document_1.doc",

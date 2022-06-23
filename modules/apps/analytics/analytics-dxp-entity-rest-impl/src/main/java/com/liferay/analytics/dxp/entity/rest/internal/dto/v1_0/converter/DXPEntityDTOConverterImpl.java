@@ -30,6 +30,7 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.User;
@@ -321,6 +322,20 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 			Organization organization = (Organization)baseModel;
 
 			field.setValue(organization.getParentOrganizationName());
+
+			fields.add(field);
+		}
+
+		if (StringUtil.equals(
+				baseModel.getModelClassName(), Group.class.getName())) {
+
+			Field field = new Field();
+
+			field.setName("name");
+
+			Group group = (Group)baseModel;
+
+			field.setValue(group.getNameCurrentValue());
 
 			fields.add(field);
 		}

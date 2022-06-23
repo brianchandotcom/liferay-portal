@@ -450,12 +450,6 @@ definition {
 				idpAttributeMappingText = "${idpAttributeMappingText}",
 				idpEntityId = "${idpEntityId}");
 		}
-
-		if (isSet(viewMetadata)) {
-			SAMLPortlet.viewMetadataConfigurationsOfSP(idpEntityId = "${idpEntityId}");
-		}
-
-		User.logoutPG(specificURL = "${spURL}");
 	}
 
 	@description = "Edit Service Provider Configurations of IdP"

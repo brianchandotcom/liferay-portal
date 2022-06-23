@@ -468,9 +468,19 @@ definition {
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_NAME",
 			value1 = "${idpEntityId}");
 
-		SAML.assertSAMLMetadataAlertMessage();
+		if (isSet(metadataURL)) {
+			AssertTextNotPresent(
+				locator1 = "CPSAMLAdmin#METADATA_ALERT_MESSAGE",
+				value1 = "The connected provider is configured through an uploaded metadata file.");
 
-		AssertElementNotPresent(locator1 = "TextInput#SAML_METADATA_URL_FIELD");
+			AssertNotVisible(locator1 = "CPSAMLAdmin#SAML_CHOOSE_METADATA_XML_FILE");
+		}
+
+		if (isSet(metadataXML)) {
+			SAML.assertSAMLMetadataAlertMessage();
+
+			AssertNotVisible(locator1 = "TextInput#SAML_METADATA_URL_FIELD");
+		}
 
 		PortletEntry.save();
 	}

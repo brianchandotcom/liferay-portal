@@ -181,9 +181,17 @@ public class ReleaseManagerImpl implements ReleaseManager {
 				List<UpgradeInfo> upgradeSteps = _serviceTrackerMap.getService(
 					bundleSymbolicName);
 
-				_upgradeExecutor.execute(
-					bundleSymbolicName, upgradeSteps,
-					OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
+				try {
+					_upgradeExecutor.execute(
+						bundleSymbolicName, upgradeSteps,
+						OutputStreamContainerConstants.FACTORY_NAME_DUMMY);
+				}
+				catch (Throwable throwable) {
+					_log.error(
+						"Failed upgrade process for module ".concat(
+							bundleSymbolicName),
+						throwable);
+				}
 			}
 
 			bundleSymbolicNames = _serviceTrackerMap.keySet();

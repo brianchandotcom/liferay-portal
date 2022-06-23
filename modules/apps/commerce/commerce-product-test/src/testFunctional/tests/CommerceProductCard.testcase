@@ -1561,19 +1561,73 @@ definition {
 			locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
 	}
 
-	@description = "COMMERCE-5865. As a buyer, I want to view starting price on product card when product has different SKUs with different prices"
+	@description = "COMMERCE-5865. Verify buyers can view the starting price on a product card when the product has different SKUs with different prices"
 	@priority = "3"
 	test ViewProductCardStartingPrice {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+		task ("And given a product with multiple SKUs which have different prices") {
+			CommerceProducts.openProductsAdmin();
 
-		AssertTextEquals.assertPartialText(
-			key_productName = "Brake Fluid",
-			locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
-			value1 = "From $ 80.00");
+			CommerceNavigator.gotoEntry(entryName = "Brake Fluid");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			for (var product : list "MIN93016A:20,MIN93016B:40,MIN93016C:60") {
+				var productSku = StringUtil.extractFirst("${product}", ":");
+				var basePrice = StringUtil.extractLast("${product}", ":");
+
+				CommerceNavigator.gotoEntry(entryName = "${productSku}");
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				Type(
+					key_text = "Base Price",
+					locator1 = "TextInput#ANY",
+					value1 = "${basePrice}");
+
+				Button.clickPublish();
+
+				Refresh();
+			}
+
+			Button.clickPublish();
+		}
+
+		task ("When the buyer logs in and views the product card") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			WaitForPageLoad();
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+		}
+
+		task ("Then the product price is shown as the starting price") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "Brake Fluid",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "From $ 20.00");
+		}
 	}
 
 }

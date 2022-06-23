@@ -33,7 +33,7 @@ import {
 } from '../../../util/fetchUtil';
 import {isObjectEmpty} from '../../../util/utils';
 
-export default function UpperToolbar({displayNames, languageIds}) {
+export default function UpperToolbar({displayNames, isView, languageIds}) {
 	const {
 		active,
 		alertMessage,
@@ -281,6 +281,7 @@ export default function UpperToolbar({displayNames, languageIds}) {
 							<ClayInput
 								autoComplete="off"
 								className="form-control-inline"
+								disabled={isView}
 								id="definition-title"
 								onBlur={() => onInputBlur()}
 								onChange={({target: {value}}) => {
@@ -323,6 +324,7 @@ export default function UpperToolbar({displayNames, languageIds}) {
 						{definitionNotPublished && (
 							<ClayToolbar.Item>
 								<ClayButton
+									disabled={isView}
 									displayType="secondary"
 									onClick={saveDefinition}
 								>
@@ -333,6 +335,7 @@ export default function UpperToolbar({displayNames, languageIds}) {
 
 						<ClayToolbar.Item>
 							<ClayButton
+								disabled={isView}
 								displayType="primary"
 								onClick={publishDefinition}
 							>

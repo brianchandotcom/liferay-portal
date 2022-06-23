@@ -244,9 +244,9 @@ export function ModalAddFilterColumn({
 		const filteredPickListFields = objectFields.filter((objectField) => {
 			if (
 				(objectField.businessType === 'Picklist' ||
+					objectField.name === 'status' ||
 					objectField.name === 'dateCreated' ||
-					objectField.name === 'dateModified') ||
-					objectField.name === 'status' &&
+					objectField.name === 'dateModified') &&
 				!objectField.hasFilter
 			) {
 				return objectField;

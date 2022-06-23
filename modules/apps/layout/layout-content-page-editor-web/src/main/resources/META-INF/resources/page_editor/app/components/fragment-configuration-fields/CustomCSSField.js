@@ -34,6 +34,12 @@ export default function CustomCSSField({field, item, onValueSelect, value}) {
 	const [customCSS, setCustomCSS] = useControlledState(value || defaultValue);
 	const [editorModalOpen, setEditorModalOpen] = useState(false);
 
+	const onSelect = (content) => {
+		if (defaultValue.trim() !== customCSS?.trim() && value !== content) {
+			onValueSelect(field.name, content);
+		}
+	};
+
 	return (
 		<>
 			<ClayForm.Group className="page-editor__custom-css-field" small>
@@ -56,9 +62,7 @@ export default function CustomCSSField({field, item, onValueSelect, value}) {
 					className="form-control text-3"
 					id={id}
 					onBlur={() => {
-						if (defaultValue.trim() !== customCSS?.trim()) {
-							onValueSelect(field.name, customCSS);
-						}
+						onSelect(customCSS);
 					}}
 					onChange={(event) => setCustomCSS(event.target.value)}
 					value={customCSS}
@@ -72,10 +76,7 @@ export default function CustomCSSField({field, item, onValueSelect, value}) {
 				}}
 				onSave={(content) => {
 					setCustomCSS(content);
-
-					if (defaultValue.trim() !== content?.trim()) {
-						onValueSelect(field.name, customCSS);
-					}
+					onSelect(content);
 				}}
 				visible={editorModalOpen}
 			/>

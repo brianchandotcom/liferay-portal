@@ -1,0 +1,70 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-152105. The page creator could add CSS class to fragment."
+	@priority = "5"
+	test AddCSSClassToFragment {
+		task ("Given a page creator has a content page with a Heading fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page creator accesses to the Advanced panel of Heading") {
+			PageEditor.gotoAdvanced(fragmentName = "Heading");
+		}
+
+		task ("Then the page creator could add CSS Class to Heading") {
+			PageEditor.configureFragment(cssClasses = "background-color");
+
+			AssertElementPresent(
+				fieldLabel = "CSS Classes",
+				itemName = "background-color",
+				locator1 = "PageEditor#LABEL_ITEM");
+
+			TestUtils.assertPartialAttributeValue(
+				attribute = "class",
+				element = "//div[@aria-label='Heading']//div[contains(@class,'page-editor__fragment-content')]",
+				value = "background-color");
+		}
+	}
+
+}

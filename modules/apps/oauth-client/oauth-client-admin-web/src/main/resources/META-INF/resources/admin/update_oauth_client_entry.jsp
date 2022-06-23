@@ -44,13 +44,13 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 			<aui:fieldset>
 				<aui:input helpMessage="oauth-client-as-well-known-uri-help" label="oauth-client-as-well-known-uri" name="authServerWellKnownURI" type="text" />
 
-				<aui:input helpMessage="oauth-client-info-json-help" label="oauth-client-info-json" name="infoJSON" style="min-height: 600px;" type="textarea" value='{"client_id":"","client_secret":"","token_endpoint_auth_method":"client_secret_basic","redirect_uris":["",""],"client_name":"example_client","grant_types":["authorization_code"],"scope":"openid email profile","subject_type":"public","id_token_signed_response_alg":"RS256"}' />
+				<aui:input helpMessage="oauth-client-info-json-help" label="oauth-client-info-json" name="infoJSON" style="min-height: 600px;" type="textarea" value='{"client_id":"","client_secret":"","redirect_uris":[""],"client_name":"example_client","scope":"openid email profile","subject_type":"public"}' />
 
 				<aui:input name="oAuthClientEntryId" type="hidden" value="<%= (oAuthClientEntry != null) ? oAuthClientEntry.getOAuthClientEntryId() : 0 %>" />
 
-				<aui:input helpMessage='<%= LanguageUtil.format(request, "oauth-client-default-auth-request-parameters-json-help", "https://www.iana.org/assignments/oauth-parameters", false) %>' label="oauth-client-default-auth-request-parameters-json" name="authRequestParametersJSON" style="min-height: 200px;" type="textarea" value='{"redirect_uri":"","resource":[]}' />
+				<aui:input helpMessage='<%= LanguageUtil.format(request, "oauth-client-default-auth-request-parameters-json-help", "https://www.iana.org/assignments/oauth-parameters", false) %>' label="oauth-client-default-auth-request-parameters-json" name="authRequestParametersJSON" style="min-height: 200px;" type="textarea" value='{"response_type":"code","resource":[],"scope":"","custom_request_parameters":{"example_key":["example_value"]}}' />
 
-				<aui:input helpMessage='<%= LanguageUtil.format(request, "oauth-client-default-token-request-parameters-json-help", "https://www.iana.org/assignments/oauth-parameters", false) %>' label="oauth-client-default-token-request-parameters-json" name="tokenRequestParametersJSON" style="min-height: 200px;" type="textarea" value='{"grant_type":"authorization_code","resource":[]}' />
+				<aui:input helpMessage='<%= LanguageUtil.format(request, "oauth-client-default-token-request-parameters-json-help", "https://www.iana.org/assignments/oauth-parameters", false) %>' label="oauth-client-default-token-request-parameters-json" name="tokenRequestParametersJSON" style="min-height: 200px;" type="textarea" value='{"resource":[],"custom_request_parameters":{"example_key":["example_value"]}}' />
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />

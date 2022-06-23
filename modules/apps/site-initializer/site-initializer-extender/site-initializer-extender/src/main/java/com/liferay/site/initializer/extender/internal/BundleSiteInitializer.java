@@ -440,22 +440,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.fetchUser()
 				).build();
 
-			Map<String, String> objectDefinitionIdsStringUtilReplaceValues =
-				_invoke(
-					() -> _addObjectDefinitions(
-						listTypeDefinitionIdsStringUtilReplaceValues,
-						objectDefinitionResource, serviceContext,
-						siteNavigationMenuItemSettingsBuilder));
+			Map<String, String> objectsStringUtilReplaceValues = _invoke(
+				() -> _addObjectDefinitions(
+					listTypeDefinitionIdsStringUtilReplaceValues,
+					objectDefinitionResource, serviceContext,
+					siteNavigationMenuItemSettingsBuilder));
 
 			_invoke(
 				() -> _addCPDefinitions(
 					documentsStringUtilReplaceValues,
-					objectDefinitionIdsStringUtilReplaceValues,
-					serviceContext));
+					objectsStringUtilReplaceValues, serviceContext));
 			_invoke(
 				() -> _addPermissions(
-					objectDefinitionIdsStringUtilReplaceValues,
-					serviceContext));
+					objectsStringUtilReplaceValues, serviceContext));
 
 			// TODO Review order/dependency
 
@@ -727,7 +724,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private void _addCPDefinitions(
 			Map<String, String> documentsStringUtilReplaceValues,
-			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
+			Map<String, String> objectsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -740,8 +737,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_commerceSiteInitializer.addCPDefinitions(
 			_bundle, documentsStringUtilReplaceValues,
-			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
-			_servletContext);
+			objectsStringUtilReplaceValues, serviceContext, _servletContext);
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)
@@ -2333,11 +2329,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addPermissions(
-			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
+			Map<String, String> objectsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		_addRoles(objectDefinitionIdsStringUtilReplaceValues, serviceContext);
+		_addRoles(objectsStringUtilReplaceValues, serviceContext);
 
 		_addUserAccounts(serviceContext);
 
@@ -2359,7 +2355,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addResourcePermissions(
-			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
+			Map<String, String> objectsStringUtilReplaceValues,
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
 
@@ -2371,7 +2367,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			StringUtil.replace(
-				json, "[$", "$]", objectDefinitionIdsStringUtilReplaceValues));
+				json, "[$", "$]", objectsStringUtilReplaceValues));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -2497,7 +2493,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addRoles(
-			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
+			Map<String, String> objectsStringUtilReplaceValues,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -2515,7 +2511,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		_addResourcePermissions(
-			objectDefinitionIdsStringUtilReplaceValues,
+			objectsStringUtilReplaceValues,
 			"/site-initializer/resource-permissions.json", serviceContext);
 	}
 

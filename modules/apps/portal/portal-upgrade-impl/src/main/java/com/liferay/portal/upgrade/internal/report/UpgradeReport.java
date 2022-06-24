@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.release.osgi.commands.ReleaseManagerOSGiCommands;
 import com.liferay.portal.util.PropsValues;
@@ -63,6 +64,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.time.StopWatch;
 import org.apache.felix.cm.PersistenceManager;
 
 /**
@@ -74,6 +76,7 @@ public class UpgradeReport {
 		_initialBuildNumber = _getBuildNumber();
 		_initialSchemaVersion = _getSchemaVersion();
 		_initialTableCounts = _getTableCounts();
+		_stopWatch.start();
 	}
 
 	public void addErrorMessage(String loggerName, String message) {
@@ -111,6 +114,8 @@ public class UpgradeReport {
 
 		_persistenceManager = persistenceManager;
 
+		_stopWatch.stop();
+
 		try {
 			FileUtil.write(
 				_getReportFile(),
@@ -119,7 +124,8 @@ public class UpgradeReport {
 						_getDateInfo(), _getPortalVersionsInfo(),
 						_getDialectInfo(), _getPropertiesInfo(),
 						_getDLStorageInfo(), _getDatabaseTablesInfo(),
-						_getUpgradeProcessesInfo(), _getLogEventsInfo("errors"),
+						_getTotalUpgradeTimeInfo(), _getUpgradeProcessesInfo(),
+						_getLogEventsInfo("errors"),
 						_getLogEventsInfo("warnings"),
 						releaseManagerOSGiCommands.check()
 					},
@@ -543,6 +549,12 @@ public class UpgradeReport {
 		}
 	}
 
+	private String _getTotalUpgradeTimeInfo() {
+		return String.format(
+			"Liferay core upgrade process completed in %s seconds",
+			_stopWatch.getTime() / Time.SECOND);
+	}
+
 	private String _getUpgradeProcessesInfo() {
 		List<String> messages = _eventMessages.get(
 			UpgradeProcess.class.getName());
@@ -646,6 +658,7 @@ public class UpgradeReport {
 	private final Map<String, Integer> _initialTableCounts;
 	private PersistenceManager _persistenceManager;
 	private String _rootDir;
+	private final StopWatch _stopWatch = new StopWatch();
 	private final Map<String, Map<String, Integer>> _warningMessages =
 		new ConcurrentHashMap<>();
 

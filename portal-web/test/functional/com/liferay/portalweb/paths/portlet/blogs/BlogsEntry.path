@@ -126,6 +126,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_HTML_CITE</td>
+	<td>//div[contains(@class,'widget-mode-detail-text')]/cite</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_HTML_H2</td>
 	<td>//div[contains(@class,'widget-mode-detail-text')]/h2</td>
 	<td></td>

@@ -67,7 +67,7 @@ public class InfoForm {
 	}
 
 	public List<InfoField<?>> getAllInfoFields() {
-		return new ArrayList<>(_builder._infoFieldsByName.values());
+		return new ArrayList<>(_builder._infoFieldsByUniqueId.values());
 	}
 
 	public InfoLocalizedValue<String> getDescriptionInfoLocalizedValue() {

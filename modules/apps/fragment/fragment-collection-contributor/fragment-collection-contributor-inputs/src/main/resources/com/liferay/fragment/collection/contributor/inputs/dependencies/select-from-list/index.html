@@ -15,7 +15,7 @@
 	[/#if]
 
 	<div class="dropdown-menu">
-		[#if configuration.includeSearch == true && input.attributes.autocompleteURL?has_content]
+		[#if input.options?size == 10 && input.attributes.autocompleteURL?has_content]
 			<div class="dropdown-section">
 				<div class="input-group input-group-sm">
 					<div class="input-group-item">
@@ -39,7 +39,7 @@
 
 		</ul>
 
-		[#if configuration.includeSearch == true]
+		[#if input.options?size == 10]
 			<p aria-hidden="true" class="d-none forms-select-from-list-loading-results mt-3 mx-4">
 				<span class="sr-only">Loading results</span>
 				<span aria-hidden="true" class="loading-animation"></span>

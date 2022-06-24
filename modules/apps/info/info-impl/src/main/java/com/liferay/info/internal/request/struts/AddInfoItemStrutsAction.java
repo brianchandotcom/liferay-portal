@@ -23,6 +23,10 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.creator.InfoItemCreator;
+import com.liferay.layout.page.template.util.LayoutStructureUtil;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -156,6 +160,46 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			new InfoRequestFieldValuesProviderHelper(_infoItemServiceTracker);
 	}
 
+	private FormStyledLayoutStructureItem _getFormStyledLayoutStructureItem(
+			String formItemId, LayoutStructure layoutStructure)
+		throws Exception {
+
+		LayoutStructureItem formLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(formItemId);
+
+		if ((formLayoutStructureItem == null) ||
+			!(formLayoutStructureItem instanceof
+				FormStyledLayoutStructureItem)) {
+
+			throw new InfoFormException();
+		}
+
+		return (FormStyledLayoutStructureItem)formLayoutStructureItem;
+	}
+
+	private LayoutStructure _getLayoutStructure(
+			HttpServletRequest httpServletRequest)
+		throws InfoFormException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				ParamUtil.getLong(
+					httpServletRequest, "plid", themeDisplay.getPlid()),
+				ParamUtil.getLong(
+					httpServletRequest, "segmentsExperienceId",
+					themeDisplay.getPlid()));
+
+		if (layoutStructure == null) {
+			throw new InfoFormException();
+		}
+
+		return layoutStructure;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddInfoItemStrutsAction.class);
 
@@ -164,6 +208,9 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 
 	private volatile InfoRequestFieldValuesProviderHelper
 		_infoRequestFieldValuesProviderHelper;
+
+	@Reference
+	private LayoutService _layoutService;
 
 	@Reference
 	private Portal _portal;

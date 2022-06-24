@@ -24,35 +24,32 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 ).setTabs1(
 	tabs1
 ).buildPortletURL();
+
+String tabs1Names = "classic,customized,minimum,react";
 %>
 
 <clay:container-fluid>
 	<liferay-ui:tabs
-		names="customized,minimum,classic,react"
+		names="<%= tabs1Names %>"
 		url="<%= portletURL.toString() %>"
+		value="<%= tabs1 %>"
 	>
-		<liferay-ui:section>
-			<c:if test='<%= tabs1.equals("customized") %>'>
-				<liferay-util:include page="/partials/customized.jsp" servletContext="<%= pageContext.getServletContext() %>" />
-			</c:if>
-		</liferay-ui:section>
 
-		<liferay-ui:section>
-			<c:if test='<%= tabs1.equals("minimum") %>'>
-				<liferay-util:include page="/partials/minimum.jsp" servletContext="<%= pageContext.getServletContext() %>" />
-			</c:if>
-		</liferay-ui:section>
+		<%
+		String[] sections = tabs1Names.split(StringPool.COMMA);
 
-		<liferay-ui:section>
-			<c:if test='<%= tabs1.equals("classic") %>'>
-				<liferay-util:include page="/partials/classic.jsp" servletContext="<%= pageContext.getServletContext() %>" />
-			</c:if>
-		</liferay-ui:section>
+		for (int i = 0; i < sections.length; i++) {
+		%>
 
-		<liferay-ui:section>
-			<c:if test='<%= tabs1.equals("react") %>'>
-				<liferay-util:include page="/partials/react.jsp" servletContext="<%= pageContext.getServletContext() %>" />
-			</c:if>
-		</liferay-ui:section>
+			<liferay-ui:section>
+				<c:if test="<%= tabs1.equals(sections[i]) %>">
+					<liferay-util:include page='<%= "/partials/" + tabs1 + ".jsp" %>' servletContext="<%= pageContext.getServletContext() %>" />
+				</c:if>
+			</liferay-ui:section>
+
+		<%
+		}
+		%>
+
 	</liferay-ui:tabs>
 </clay:container-fluid>

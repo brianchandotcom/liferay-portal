@@ -1,5 +1,19 @@
 definition {
 
+	macro disableStatusFilters {
+		if (IsElementPresent(key_filter = "Status", locator1 = "FrontendDataSet#FILTER_OPTION")) {
+			Click(
+				key_filter = "Status",
+				locator1 = "FrontendDataSet#FILTER_OPTION");
+		}
+
+		for (var status : list "${key_status}") {
+			Uncheck.uncheckNotVisible(
+				key_status = "${status}",
+				locator1 = "FrontendDataSet#STATUS_FILTER_CHECKBOX");
+		}
+	}
+
 	macro enableStatusFilters {
 		if (IsElementPresent(key_filter = "Status", locator1 = "FrontendDataSet#FILTER_OPTION")) {
 			Click(

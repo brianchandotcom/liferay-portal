@@ -32,7 +32,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -177,6 +179,25 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		}
 
 		return (FormStyledLayoutStructureItem)formLayoutStructureItem;
+	}
+
+	private String _getLayoutRedirect(
+			JSONObject successMessageJSONObject, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		long groupId = successMessageJSONObject.getLong("groupId");
+		boolean privateLayout = successMessageJSONObject.getBoolean(
+			"privateLayout");
+		long layoutId = successMessageJSONObject.getLong("layoutId");
+
+		Layout layout = _layoutService.fetchLayout(
+			groupId, privateLayout, layoutId);
+
+		if (layout != null) {
+			return _portal.getLayoutURL(layout, themeDisplay);
+		}
+
+		return null;
 	}
 
 	private LayoutStructure _getLayoutStructure(

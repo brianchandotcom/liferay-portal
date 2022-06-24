@@ -231,10 +231,9 @@ public class InfoForm {
 
 			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
-			for (InfoFieldSetEntry childInfoFieldSetEntry :
-					infoFieldSet.getInfoFieldSetEntries()) {
-
-				_addToAllInfoFields(childInfoFieldSetEntry);
+			for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
+				_infoFieldsByName.put(infoField.getName(), infoField);
+				_infoFieldsByUniqueId.put(infoField.getUniqueId(), infoField);
 			}
 		}
 

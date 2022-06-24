@@ -61,7 +61,7 @@ public class MappingContentUtil {
 	}
 
 	private static JSONObject _getInfoFieldJSONObject(
-		InfoField infoField, Locale locale) {
+		InfoField<?> infoField, Locale locale) {
 
 		return JSONUtil.put(
 			"key", infoField.getUniqueId()
@@ -123,7 +123,7 @@ public class MappingContentUtil {
 				infoForm.getInfoFieldSetEntries()) {
 
 			if (infoFieldSetEntry instanceof InfoField) {
-				InfoField infoField = (InfoField)infoFieldSetEntry;
+				InfoField<?> infoField = (InfoField<?>)infoFieldSetEntry;
 
 				if (!includeEditableInfoFields || infoField.isEditable()) {
 					defaultFieldSetFieldsJSONArray.put(
@@ -136,7 +136,7 @@ public class MappingContentUtil {
 
 				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
-				for (InfoField infoField : infoFieldSet.getAllInfoFields()) {
+				for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
 					if (!includeEditableInfoFields || infoField.isEditable()) {
 						fieldSetFieldsJSONArray.put(
 							_getInfoFieldJSONObject(infoField, locale));

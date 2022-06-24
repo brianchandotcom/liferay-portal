@@ -101,7 +101,7 @@ public class JournalArticleInfoItemFormProviderTest {
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(
 			_getJournalArticle());
 
-		List<InfoField> infoFields = infoForm.getAllInfoFields();
+		List<InfoField<?>> infoFields = infoForm.getAllInfoFields();
 
 		infoFields.sort(
 			Comparator.comparing(
@@ -109,7 +109,7 @@ public class JournalArticleInfoItemFormProviderTest {
 
 		Assert.assertEquals(infoFields.toString(), 20, infoFields.size());
 
-		Iterator<InfoField> iterator = infoFields.iterator();
+		Iterator<InfoField<?>> iterator = infoFields.iterator();
 
 		InfoField infoField = iterator.next();
 

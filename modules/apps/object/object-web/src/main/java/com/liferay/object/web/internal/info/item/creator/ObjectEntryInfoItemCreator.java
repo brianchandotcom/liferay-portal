@@ -261,9 +261,9 @@ public class ObjectEntryInfoItemCreator
 			return null;
 		}
 
-		List<InfoField> infoFields = infoForm.getAllInfoFields();
+		List<InfoField<?>> infoFields = infoForm.getAllInfoFields();
 
-		Optional<InfoField> infoFieldOptional = infoFields.stream(
+		Optional<InfoField<?>> infoFieldOptional = infoFields.stream(
 		).filter(
 			infoField -> Objects.equals(infoField.getName(), objectFieldName)
 		).findFirst();

@@ -66,16 +66,16 @@ public class InfoForm {
 		return false;
 	}
 
-	public List<InfoField> getAllInfoFields() {
-		return new ArrayList(_builder._infoFieldsByName.values());
+	public List<InfoField<?>> getAllInfoFields() {
+		return new ArrayList<>(_builder._infoFieldsByName.values());
 	}
 
 	public InfoLocalizedValue<String> getDescriptionInfoLocalizedValue() {
 		return _builder._descriptionInfoLocalizedValue;
 	}
 
-	public InfoField getInfoField(String name) {
-		InfoField infoField = _builder._infoFieldsByUniqueId.get(name);
+	public InfoField<?> getInfoField(String name) {
+		InfoField<?> infoField = _builder._infoFieldsByUniqueId.get(name);
 
 		if (infoField != null) {
 			return infoField;

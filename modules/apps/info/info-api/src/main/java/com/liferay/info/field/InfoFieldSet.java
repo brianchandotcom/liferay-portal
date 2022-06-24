@@ -60,14 +60,14 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 		return false;
 	}
 
-	public List<InfoField> getAllInfoFields() {
-		List<InfoField> allInfoFields = new ArrayList<>();
+	public List<InfoField<?>> getAllInfoFields() {
+		List<InfoField<?>> allInfoFields = new ArrayList<>();
 
 		for (InfoFieldSetEntry infoFieldSetEntry :
 				_builder._infoFieldSetEntries.values()) {
 
 			if (infoFieldSetEntry instanceof InfoField) {
-				allInfoFields.add((InfoField)infoFieldSetEntry);
+				allInfoFields.add((InfoField<?>)infoFieldSetEntry);
 			}
 			else if (infoFieldSetEntry instanceof InfoFieldSet) {
 				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
@@ -79,14 +79,14 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 		return allInfoFields;
 	}
 
-	public InfoField getInfoField(String name) {
+	public InfoField<?> getInfoField(String name) {
 		for (InfoFieldSetEntry infoFieldSetEntry :
 				_builder._infoFieldSetEntries.values()) {
 
-			InfoField infoField = null;
+			InfoField<?> infoField = null;
 
 			if (infoFieldSetEntry instanceof InfoField) {
-				infoField = (InfoField)infoFieldSetEntry;
+				infoField = (InfoField<?>)infoFieldSetEntry;
 			}
 			else if (infoFieldSetEntry instanceof InfoFieldSet) {
 				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;

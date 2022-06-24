@@ -151,7 +151,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		return values;
 	}
 
-	private <T> List<InfoField> _getInfoFields(String className, T object) {
+	private <T> List<InfoField<?>> _getInfoFields(String className, T object) {
 		InfoItemFormProvider<T> infoItemFormProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormProvider.class, className);
@@ -172,7 +172,7 @@ public class UpdateTranslationMVCActionCommand extends BaseMVCActionCommand {
 		InfoItemFieldValues infoItemFieldValues = _getInfoItemFieldValues(
 			className, object);
 
-		for (InfoField infoField : _getInfoFields(className, object)) {
+		for (InfoField<?> infoField : _getInfoFields(className, object)) {
 			String[] infoFieldParameterValue = infoFieldParameterValues.get(
 				infoField.getUniqueId());
 

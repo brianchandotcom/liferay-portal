@@ -122,7 +122,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 				JournalArticle.class.getName(),
 				_journalArticle.getDDMStructureKey());
 
-		List<InfoField> infoFields = infoFieldSet.getAllInfoFields();
+		List<InfoField<?>> infoFields = infoFieldSet.getAllInfoFields();
 
 		Assert.assertTrue(infoFields.isEmpty());
 	}
@@ -144,11 +144,11 @@ public class TemplateInfoItemFieldSetProviderTest {
 				JournalArticle.class.getName(),
 				_journalArticle.getDDMStructureKey());
 
-		List<InfoField> infoFields = infoFieldSet.getAllInfoFields();
+		List<InfoField<?>> infoFields = infoFieldSet.getAllInfoFields();
 
 		Assert.assertEquals(infoFields.toString(), 1, infoFields.size());
 
-		InfoField infoField = infoFields.get(0);
+		InfoField<?> infoField = infoFields.get(0);
 
 		Assert.assertEquals(
 			infoFields.toString(),
@@ -163,7 +163,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
 				AssetCategory.class.getName());
 
-		List<InfoField> infoFields = infoFieldSet.getAllInfoFields();
+		List<InfoField<?>> infoFields = infoFieldSet.getAllInfoFields();
 
 		Assert.assertTrue(infoFields.isEmpty());
 	}
@@ -183,11 +183,11 @@ public class TemplateInfoItemFieldSetProviderTest {
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
 				AssetCategory.class.getName());
 
-		List<InfoField> infoFields = infoFieldSet.getAllInfoFields();
+		List<InfoField<?>> infoFields = infoFieldSet.getAllInfoFields();
 
 		Assert.assertEquals(infoFields.toString(), 1, infoFields.size());
 
-		InfoField infoField = infoFields.get(0);
+		InfoField<?> infoField = infoFields.get(0);
 
 		Assert.assertEquals(
 			infoFields.toString(),
@@ -245,7 +245,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
 
-		InfoField infoField = infoFieldValue.getInfoField();
+		InfoField<?> infoField = infoFieldValue.getInfoField();
 
 		Assert.assertEquals(
 			infoField.toString(),
@@ -291,7 +291,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
 
-		InfoField infoField = infoFieldValue.getInfoField();
+		InfoField<?> infoField = infoFieldValue.getInfoField();
 
 		Assert.assertEquals(
 			infoField.toString(),
@@ -355,7 +355,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
 
-		InfoField infoField = infoFieldValue.getInfoField();
+		InfoField<?> infoField = infoFieldValue.getInfoField();
 
 		Assert.assertEquals(
 			infoField.toString(),
@@ -405,7 +405,7 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		InfoFieldValue<Object> infoFieldValue = infoFieldValues.get(0);
 
-		InfoField infoField = infoFieldValue.getInfoField();
+		InfoField<?> infoField = infoFieldValue.getInfoField();
 
 		Assert.assertEquals(
 			infoField.toString(),

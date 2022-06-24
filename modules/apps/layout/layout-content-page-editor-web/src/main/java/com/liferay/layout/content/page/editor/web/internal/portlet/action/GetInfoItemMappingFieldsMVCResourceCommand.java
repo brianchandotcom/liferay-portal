@@ -138,7 +138,7 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 				infoForm.getInfoFieldSetEntries()) {
 
 			if (infoFieldSetEntry instanceof InfoField) {
-				InfoField infoField = (InfoField)infoFieldSetEntry;
+				InfoField<?> infoField = (InfoField<?>)infoFieldSetEntry;
 
 				InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
@@ -162,11 +162,11 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 
 				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
-				List<InfoField> infoFields = ListUtil.filter(
+				List<InfoField<?>> infoFields = ListUtil.filter(
 					infoFieldSet.getAllInfoFields(),
 					infoField -> _isFieldMappable(infoField, fieldType));
 
-				for (InfoField infoField : infoFields) {
+				for (InfoField<?> infoField : infoFields) {
 					fieldSetFieldsJSONArray.put(
 						JSONUtil.put(
 							"key", infoField.getUniqueId()
@@ -202,7 +202,7 @@ public class GetInfoItemMappingFieldsMVCResourceCommand
 			resourceRequest, resourceResponse, fieldSetsJSONArray);
 	}
 
-	private boolean _isFieldMappable(InfoField infoField, String fieldType) {
+	private boolean _isFieldMappable(InfoField<?> infoField, String fieldType) {
 		boolean imageInfoFieldType =
 			infoField.getInfoFieldType() instanceof ImageInfoFieldType;
 

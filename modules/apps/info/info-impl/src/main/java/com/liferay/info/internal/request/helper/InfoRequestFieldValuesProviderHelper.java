@@ -120,7 +120,7 @@ public class InfoRequestFieldValuesProviderHelper {
 		return null;
 	}
 
-	private <T> List<InfoField> _getInfoFields(
+	private <T> List<InfoField<?>> _getInfoFields(
 		String className, String formVariationKey, long groupId) {
 
 		InfoItemFormProvider<T> infoItemFormProvider =

@@ -21,12 +21,15 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+<%@ page import="com.liferay.oauth.client.persistence.model.OAuthClientEntry" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.json.JSONObject" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException" %><%@
 page import="com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys" %>
 
-<%@ page import="java.util.Collection" %>
+<%@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>
 

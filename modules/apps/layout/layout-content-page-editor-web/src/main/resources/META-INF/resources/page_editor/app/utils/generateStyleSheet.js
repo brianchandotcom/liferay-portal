@@ -97,7 +97,7 @@ export default function generateStyleSheet(styles, {itemsWithTopper} = {}) {
 			)} {\n${topperCSS}}\n`;
 		}
 
-		if (customCSS) {
+		if (customCSS && Liferay.FeatureFlags['LPS-147511']) {
 			css += customCSS;
 		}
 	});

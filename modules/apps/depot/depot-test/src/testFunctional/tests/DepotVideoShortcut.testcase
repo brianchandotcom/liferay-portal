@@ -594,7 +594,9 @@ definition {
 			key_relatedAssetTitle = "Test YouTube Video",
 			locator1 = "AssetRelatedAssets#ASSET_TITLE");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(
+			key_videoShortcutPreview = "https://www.youtube.com",
+			locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
 
 		AssertVisible(
 			key_videoShortcutPreview = "https://www.youtube.com",

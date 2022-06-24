@@ -132,9 +132,18 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 			for (LayoutStructureItem layoutStructureItem :
 					layoutStructureItems) {
 
+				if (!(layoutStructureItem instanceof
+						StyledLayoutStructureItem)) {
+
+					continue;
+				}
+
+				StyledLayoutStructureItem styledLayoutStructureItem =
+					(StyledLayoutStructureItem)layoutStructureItem;
+
 				cssSB.append(
 					_getLayoutStructureItemCSS(
-						frontendTokensJSONObject, layoutStructureItem,
+						frontendTokensJSONObject, styledLayoutStructureItem,
 						viewportSize));
 			}
 
@@ -243,14 +252,8 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 
 	private String _getLayoutStructureItemCSS(
 		JSONObject frontendTokensJSONObject,
-		LayoutStructureItem layoutStructureItem, ViewportSize viewportSize) {
-
-		if (!(layoutStructureItem instanceof StyledLayoutStructureItem)) {
-			return StringPool.BLANK;
-		}
-
-		StyledLayoutStructureItem styledLayoutStructureItem =
-			(StyledLayoutStructureItem)layoutStructureItem;
+		StyledLayoutStructureItem styledLayoutStructureItem,
+		ViewportSize viewportSize) {
 
 		JSONObject stylesJSONObject = _getStylesJSONObject(
 			styledLayoutStructureItem.getItemConfigJSONObject(), viewportSize);
@@ -273,7 +276,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 			(availableStyles.size() * 2) + 4);
 
 		cssSB.append(".lfr-layout-structure-item-");
-		cssSB.append(layoutStructureItem.getItemId());
+		cssSB.append(styledLayoutStructureItem.getItemId());
 		cssSB.append(" {\n");
 
 		for (String styleName : availableStyles) {

@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ACTIVE_NAV_ITEM_LINK</td>
-	<td>//div[contains(@class,'navbar')]//a[contains(@class,'active') and normalize-space()='${key_navItem}']</td>
+	<td>//div[contains(@class,'navbar')]//a[contains(@class,'active') and normalize-space()='${key_navItem}'] | //nav[contains(@role,'navigation')]//li[contains(@class,'active')][normalize-space()='${key_navItem}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>NAV_ITEM_LINK</td>
-	<td>//div[contains(@class,'navbar')]//a[normalize-space()='${key_navItem}']</td>
+	<td>//div[contains(@class,'navbar')]//a[normalize-space()='${key_navItem}'] | //nav[contains(@role,'navigation')]//li[normalize-space()='${key_navItem}']</td>
 	<td></td>
 </tr>
 <tr>

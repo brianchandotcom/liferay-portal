@@ -5,6 +5,7 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:oauth-client:oauth-client-persistence-api")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:portal-security-sso:portal-security-sso-openid-connect-api")
 	compileOnly project(":core:petra:petra-lang")

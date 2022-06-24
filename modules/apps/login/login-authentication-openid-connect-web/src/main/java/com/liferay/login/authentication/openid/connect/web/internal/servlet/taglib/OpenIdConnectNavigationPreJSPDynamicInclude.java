@@ -14,6 +14,8 @@
 
 package com.liferay.login.authentication.openid.connect.web.internal.servlet.taglib;
 
+import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
+import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
@@ -23,12 +25,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnect;
-import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegistry;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 
 import java.io.IOException;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -54,11 +55,13 @@ public class OpenIdConnectNavigationPreJSPDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		Collection<String> openIdConnectProviderNames =
-			_openIdConnectProviderRegistry.getOpenIdConnectProviderNames(
-				_portal.getCompanyId(httpServletRequest));
+		List<OAuthClientEntry> oAuthClientEntries =
+			_oAuthClientEntryLocalService.
+				getAuthServerWellKnownURISuffixOAuthClientEntries(
+					_portal.getCompanyId(httpServletRequest),
+					"openid-configuration");
 
-		if (openIdConnectProviderNames.isEmpty()) {
+		if (oAuthClientEntries.isEmpty()) {
 			return;
 		}
 
@@ -111,10 +114,10 @@ public class OpenIdConnectNavigationPreJSPDynamicInclude
 		OpenIdConnectNavigationPreJSPDynamicInclude.class);
 
 	@Reference
-	private OpenIdConnect _openIdConnect;
+	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;
 
 	@Reference
-	private OpenIdConnectProviderRegistry<?, ?> _openIdConnectProviderRegistry;
+	private OpenIdConnect _openIdConnect;
 
 	@Reference
 	private Portal _portal;

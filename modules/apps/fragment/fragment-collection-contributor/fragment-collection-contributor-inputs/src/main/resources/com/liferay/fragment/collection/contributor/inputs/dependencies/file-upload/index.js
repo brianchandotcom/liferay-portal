@@ -14,31 +14,54 @@
 
 const wrapper = fragmentElement;
 
-if (layoutMode === 'edit') {
-	const selectButton = wrapper.querySelector('.btn-secondary');
-
-	if (selectButton) {
-		selectButton.classList.add('disabled');
-	}
-}
-
-const input = document.getElementById(`${fragmentNamespace}-file-upload`);
+const fileInput = document.getElementById(`${fragmentNamespace}-file-upload`);
 const fileName = wrapper.querySelector('.forms-file-upload-file-name');
 const removeButton = wrapper.querySelector("[type='button']");
+const selectButton = wrapper.querySelector('.btn-secondary');
 
-function onInputChange() {
-	fileName.innerText = input.files[0].name;
-
+function showRemoveButton() {
 	removeButton.classList.remove('d-none');
 	removeButton.addEventListener('click', onRemoveFile);
 }
 
+function onInputChange() {
+	fileName.innerText = fileInput.files[0].name;
+
+	showRemoveButton();
+}
+
 function onRemoveFile() {
-	input.value = '';
+	fileInput.value = '';
 	fileName.innerText = '';
 
 	removeButton.classList.add('d-none');
 	removeButton.removeEventListener('click', onRemoveFile);
 }
 
-input.addEventListener('change', onInputChange);
+function onSelectFile(event) {
+	event.preventDefault();
+
+	Liferay.Util.openSelectionModal({
+		onSelect(selectedItem) {
+			const {fileEntryId, title} = JSON.parse(selectedItem.value);
+
+			fileInput.value = fileEntryId;
+			fileName.innerText = title;
+
+			showRemoveButton();
+		},
+		selectEventName: `${fragmentNamespace}selectFileEntry`,
+		url: input.attributes.selectFromDocumentLibraryURL,
+	});
+}
+
+if (layoutMode === 'edit') {
+	selectButton.classList.add('disabled');
+}
+else {
+	fileInput.addEventListener('change', onInputChange);
+
+	if (input.attributes.selectFromDocumentLibrary) {
+		selectButton.addEventListener('click', onSelectFile);
+	}
+}

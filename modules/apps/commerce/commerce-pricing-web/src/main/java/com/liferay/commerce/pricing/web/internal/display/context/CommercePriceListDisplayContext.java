@@ -315,10 +315,8 @@ public class CommercePriceListDisplayContext
 				StringPool.APOSTROPHE),
 			true);
 
-		return StringBundler.concat(
-			PortalUtil.getPortalURL(httpServletRequest),
-			"/o/headless-commerce-admin-pricing/v2.0/price-lists?filter=",
-			encodedFilter);
+		return "/o/headless-commerce-admin-pricing/v2.0/price-lists?filter=" +
+			encodedFilter;
 	}
 
 	public String getPriceModifierCategoriesApiUrl() throws PortalException {

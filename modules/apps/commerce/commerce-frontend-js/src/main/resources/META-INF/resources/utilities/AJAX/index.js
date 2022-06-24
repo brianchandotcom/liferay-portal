@@ -21,13 +21,16 @@ const BASE_OPTIONS = {
 };
 
 function _fetch(url, options = {}, params = {}) {
-	const formattedUrl = new URL(url, Liferay.ThemeDisplay.getPortalURL());
+	const formattedURL = new URL(url, Liferay.ThemeDisplay.getPortalURL());
 
 	Object.entries(params).map(([key, value]) => {
-		formattedUrl.searchParams.append(key, value);
+		formattedURL.searchParams.append(key, value);
 	});
 
-	return fetch(formattedUrl, {...BASE_OPTIONS, ...options})
+	return fetch(formattedURL.pathname + formattedURL.search, {
+		...BASE_OPTIONS,
+		...options,
+	})
 		.then((response) => {
 			if (!response.ok) {
 				return response

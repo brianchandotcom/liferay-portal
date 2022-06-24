@@ -611,6 +611,8 @@ public class EditAssetListDisplayContext {
 					"openSelectSegmentsEntryDialog";
 			}
 		).put(
+			"segmentsConfigurationURL", _getSegmentsConfigurationURL()
+		).put(
 			"segmentsEntriesAvailables",
 			() -> {
 				List<SegmentsEntry> segmentsEntriesAvailables =
@@ -1306,6 +1308,18 @@ public class EditAssetListDisplayContext {
 			"segmentsEntryId",
 			assetListEntrySegmentsEntryRel.getSegmentsEntryId()
 		).buildString();
+	}
+
+	private String _getSegmentsConfigurationURL() {
+		try {
+			return _segmentsConfigurationProvider.getConfigurationURL(
+				_httpServletRequest);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _getTypeSettings() {

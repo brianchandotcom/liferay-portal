@@ -36,7 +36,7 @@ function AccountsListView({
 	const accountsListRef = useRef();
 
 	const apiUrl = new URL(
-		ACCOUNTS_RESOURCE_ENDPOINT,
+		`${themeDisplay.getPathContext()}${ACCOUNTS_RESOURCE_ENDPOINT}`,
 		themeDisplay.getPortalURL()
 	);
 
@@ -93,7 +93,12 @@ function AccountsListView({
 									>
 										<Sticker
 											className="current-account-thumbnail mr-2"
-											{...account}
+											logoURL={
+												themeDisplay.getPathContext() +
+												account.logoURL
+											}
+											name={account.name}
+											size={account.size}
 										/>
 
 										<span className="ml-2 text-truncate-inline">

@@ -170,7 +170,8 @@ public class AccountSelectorTag extends IncludeTag {
 
 			String setCurrentAccountURL =
 				PortalUtil.getPortalURL(parentHttpServletRequest) +
-					"/o/commerce-ui/set-current-account";
+					PortalUtil.getPathContext() +
+						"/o/commerce-ui/set-current-account";
 
 			httpServletRequest.setAttribute(
 				"liferay-commerce:account-selector:setCurrentAccountURL",

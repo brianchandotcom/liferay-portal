@@ -25,7 +25,10 @@ export function getUsersByEmails(emails) {
 	const filterString = emails
 		.map((email) => `emailAddress eq '${email}'`)
 		.join(' or ');
-	const url = new URL(USERS_ROOT_ENDPOINT, themeDisplay.getPortalURL());
+	const url = new URL(
+		`${themeDisplay.getPathContext()}${USERS_ROOT_ENDPOINT}`,
+		themeDisplay.getPortalURL()
+	);
 
 	url.searchParams.append('filter', filterString);
 
@@ -33,7 +36,10 @@ export function getUsersByEmails(emails) {
 }
 
 export function getOrganizationRoles() {
-	const url = new URL(ROLES_ROOT_ENDPOINT, themeDisplay.getPortalURL());
+	const url = new URL(
+		`${themeDisplay.getPathContext()}${ROLES_ROOT_ENDPOINT}`,
+		themeDisplay.getPortalURL()
+	);
 
 	url.searchParams.append('pageSize', 100);
 	url.searchParams.append('types', ORGANIZATIONS_ROLE_TYPE_ID);
@@ -44,22 +50,19 @@ export function getOrganizationRoles() {
 }
 
 export function getAccountRoles(accountId) {
-	const genericRolesUrl = new URL(
-		ROLES_ROOT_ENDPOINT,
+	const genericRolesURL = new URL(
+		`${themeDisplay.getPathContext()}${ROLES_ROOT_ENDPOINT}`,
 		themeDisplay.getPortalURL()
 	);
 
-	genericRolesUrl.searchParams.append('pageSize', 100);
-	genericRolesUrl.searchParams.append('types', ACCOUNTS_ROLE_TYPE_ID);
+	genericRolesURL.searchParams.append('pageSize', 100);
+	genericRolesURL.searchParams.append('types', ACCOUNTS_ROLE_TYPE_ID);
 
-	const specificRolesUrl = new URL(
-		`${ACCOUNTS_ROOT_ENDPOINT}/${accountId}/account-roles`,
-		themeDisplay.getPortalURL()
-	);
+	const specificRolesURL = `${ACCOUNTS_ROOT_ENDPOINT}/${accountId}/account-roles`;
 
 	return Promise.allSettled([
-		fetchFromHeadless(genericRolesUrl),
-		fetchFromHeadless(specificRolesUrl),
+		fetchFromHeadless(genericRolesURL),
+		fetchFromHeadless(specificRolesURL),
 	]).then(([genericRolesResponse, specificRolesResponse]) => {
 		return [
 			...genericRolesResponse.value.items,
@@ -69,7 +72,10 @@ export function getAccountRoles(accountId) {
 }
 
 export function getUsers(query) {
-	const url = new URL(USERS_ROOT_ENDPOINT, themeDisplay.getPortalURL());
+	const url = new URL(
+		`${themeDisplay.getPathContext()}${USERS_ROOT_ENDPOINT}`,
+		themeDisplay.getPortalURL()
+	);
 
 	url.searchParams.append('search', query);
 	url.searchParams.append('pageSize', 20);
@@ -78,28 +84,26 @@ export function getUsers(query) {
 }
 
 export function deleteUser(id) {
-	const url = new URL(
+	return fetchFromHeadless(
 		`${USERS_ROOT_ENDPOINT}/${id}`,
-		themeDisplay.getPortalURL()
+		{method: 'DELETE'},
+		null,
+		true
 	);
-
-	return fetchFromHeadless(url, {method: 'DELETE'}, null, true);
 }
 
 export function removeUserFromOrganization(userEmail, organizationId) {
-	const url = new URL(
+	return fetchFromHeadless(
 		`${ORGANIZATIONS_ROOT_ENDPOINT}/${organizationId}/user-accounts/by-email-address/${userEmail}`,
-		themeDisplay.getPortalURL()
+		{
+			method: 'DELETE',
+		}
 	);
-
-	return fetchFromHeadless(url, {
-		method: 'DELETE',
-	});
 }
 
 export function addUserEmailsToAccount(accountId, roleIds, emails) {
 	const url = new URL(
-		`${ACCOUNTS_ROOT_ENDPOINT}/${accountId}/user-accounts/by-email-address`,
+		`${themeDisplay.getPathContext()}${ACCOUNTS_ROOT_ENDPOINT}/${accountId}/user-accounts/by-email-address`,
 		themeDisplay.getPortalURL()
 	);
 
@@ -115,7 +119,7 @@ export function addUserEmailsToAccount(accountId, roleIds, emails) {
 
 export function addUserEmailsToOrganization(organizationId, roleIds, emails) {
 	const url = new URL(
-		`${ORGANIZATIONS_ROOT_ENDPOINT}/${organizationId}/user-accounts/by-email-address`,
+		`${themeDisplay.getPathContext()}${ORGANIZATIONS_ROOT_ENDPOINT}/${organizationId}/user-accounts/by-email-address`,
 		themeDisplay.getPortalURL()
 	);
 
@@ -130,13 +134,11 @@ export function addUserEmailsToOrganization(organizationId, roleIds, emails) {
 }
 
 export function removeUserFromAccount(userEmail, accountId) {
-	const url = new URL(
+	return fetchFromHeadless(
 		`${ACCOUNTS_ROOT_ENDPOINT}/${accountId}/user-accounts/by-email-address`,
-		themeDisplay.getPortalURL()
+		{
+			body: JSON.stringify([userEmail]),
+			method: 'DELETE',
+		}
 	);
-
-	return fetchFromHeadless(url, {
-		body: JSON.stringify([userEmail]),
-		method: 'DELETE',
-	});
 }

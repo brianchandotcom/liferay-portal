@@ -17,7 +17,10 @@ const ACCOUNTS_MOVING_ENDPOINT =
 const ACCOUNTS_ROOT_ENDPOINT = '/o/headless-admin-user/v1.0/accounts';
 
 export function getAccounts(query, organizationIds = []) {
-	const url = new URL(ACCOUNTS_ROOT_ENDPOINT, themeDisplay.getPortalURL());
+	const url = new URL(
+		`${themeDisplay.getPathContext()}${ACCOUNTS_ROOT_ENDPOINT}`,
+		themeDisplay.getPortalURL()
+	);
 
 	if (query) {
 		url.searchParams.append('search', query);
@@ -36,56 +39,44 @@ export function getAccounts(query, organizationIds = []) {
 }
 
 export function deleteAccount(id) {
-	const url = new URL(
+	return fetchFromHeadless(
 		`${ACCOUNTS_ROOT_ENDPOINT}/${id}`,
-		themeDisplay.getPortalURL()
+		{method: 'DELETE'},
+		null,
+		true
 	);
-
-	return fetchFromHeadless(url, {method: 'DELETE'}, null, true);
 }
 
 export function changeOrganizationParent(accountId, source, target) {
-	const url = new URL(
+	return fetchFromHeadless(
 		`${ACCOUNTS_MOVING_ENDPOINT}/${source}/${target}`,
-		themeDisplay.getPortalURL()
+		{
+			body: JSON.stringify([accountId]),
+			method: 'PATCH',
+		}
 	);
-
-	return fetchFromHeadless(url, {
-		body: JSON.stringify([accountId]),
-		method: 'PATCH',
-	});
 }
 
 export function getAccount(id) {
-	const accountUrl = new URL(
-		`${ACCOUNTS_ROOT_ENDPOINT}/${id}`,
+	const url = new URL(
+		`${themeDisplay.getPathContext()}${ACCOUNTS_ROOT_ENDPOINT}/${id}`,
 		themeDisplay.getPortalURL()
 	);
 
-	accountUrl.searchParams.append(
-		'nestedFields',
-		USERS_PROPERTY_NAME_IN_ACCOUNT
-	);
+	url.searchParams.append('nestedFields', USERS_PROPERTY_NAME_IN_ACCOUNT);
 
-	return fetchFromHeadless(accountUrl);
+	return fetchFromHeadless(url);
 }
 
 export function updateAccount(id, details) {
-	const url = new URL(
-		`${ACCOUNTS_ROOT_ENDPOINT}/${id}`,
-		themeDisplay.getPortalURL()
-	);
-
-	return fetchFromHeadless(url, {
+	return fetchFromHeadless(`${ACCOUNTS_ROOT_ENDPOINT}/${id}`, {
 		body: JSON.stringify(details),
 		method: 'PATCH',
 	});
 }
 
 export function createAccount(name, organizationIds) {
-	const url = new URL(ACCOUNTS_ROOT_ENDPOINT, themeDisplay.getPortalURL());
-
-	return fetchFromHeadless(url, {
+	return fetchFromHeadless(ACCOUNTS_ROOT_ENDPOINT, {
 		body: JSON.stringify({
 			name,
 			organizationIds,

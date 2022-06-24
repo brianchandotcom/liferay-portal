@@ -34,7 +34,7 @@ function resolveCartsByAccountIdAndChannelIdPath(
 	searchParams
 ) {
 	const url = new URL(
-		`${resolveChannelsPath(
+		`${Liferay.ThemeDisplay.getPathContext()}${resolveChannelsPath(
 			basePath,
 			channelId
 		)}/account/${accountId}${CARTS_PATH}`,

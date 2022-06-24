@@ -24,12 +24,7 @@ export default function ({diagramId, namespace}) {
 	const typeInput = document.getElementById(`${namespace}type`);
 
 	const handleSelectChange = () => {
-		const url = new URL(
-			DIAGRAMS_ENDPOINT + diagramId,
-			themeDisplay.getPortalURL()
-		);
-
-		fetch(url, {
+		fetch(DIAGRAMS_ENDPOINT + diagramId, {
 			body: JSON.stringify({
 				type: typeInput.value,
 			}),

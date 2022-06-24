@@ -175,6 +175,23 @@ definition {
 		return "${response}";
 	}
 
+	macro _deleteObjectEntry {
+		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId}");
+
+		var en_US_plural_label_lowercase = StringUtil.lowerCase("${en_US_plural_label}");
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/${en_US_plural_label_lowercase}/${objectEntryId} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		var response = JSONCurlUtil.delete("${curl}");
+
+		return "${response}";
+	}
+
 	macro _getEmployeeFirstnameById {
 		Variables.assertDefined(parameterList = "${employeeId}");
 
@@ -400,6 +417,14 @@ definition {
 			expected = "${managerId2}");
 	}
 
+	macro assertResponseNotIncludeDetailsOfDeletedObject {
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..universitiesSubjects[?(@.id==${subjectId})].name");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "");
+	}
+
 	macro assertResponseNotIncludesDetailsOfDeletedEmployee {
 		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..items[?(@.id==${employeeId1} && @.r_supervisor_c_managerId==${managerId1})].r_supervisor_c_managerId");
 
@@ -500,6 +525,12 @@ definition {
 
 	macro deleteEmployee {
 		ObjectDefinitionAPI._deleteEmployee(employeeId = "${employeeId}");
+	}
+
+	macro deleteObjectEntry {
+		ObjectDefinitionAPI._deleteObjectEntry(
+			en_US_plural_label = "${en_US_plural_label}",
+			objectEntryId = "${objectEntryId}");
 	}
 
 	macro getObjectsWithAggregationTerms {

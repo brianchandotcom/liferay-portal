@@ -139,6 +139,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -1136,9 +1137,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 						Object entryValue = entry.getValue();
 
+						String entryKey = TextFormatter.format(
+							entry.getKey(), TextFormatter.K);
+
 						unicodeProperties.setProperty(
-							_getExpandoPropertyKey(entry.getKey()),
-							entryValue.toString());
+							entryKey, entryValue.toString());
 					}
 
 					expandoBridge.setAttributeProperties(
@@ -3381,14 +3384,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return ArrayUtil.toLongArray(assetCategoryIds);
-	}
-
-	private String _getExpandoPropertyKey(String string) {
-		String[] keyParts = string.split("(?=\\p{Upper})");
-
-		String mergedString = StringUtil.merge(keyParts, StringPool.DASH);
-
-		return StringUtil.toLowerCase(mergedString);
 	}
 
 	private Map<String, String> _getReleaseInfoStringUtilReplaceValues() {

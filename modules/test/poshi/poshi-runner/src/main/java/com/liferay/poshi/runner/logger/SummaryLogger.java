@@ -567,6 +567,9 @@ public final class SummaryLogger {
 					"macro-summary");
 				classType = "macro-summary";
 			}
+			else if (element.attributeValue("method") != null) {
+				return element.attributeValue("method");
+			}
 			else {
 				return null;
 			}
@@ -738,7 +741,8 @@ public final class SummaryLogger {
 
 		if (!Objects.equals(element.getName(), "condition") &&
 			!Objects.equals(element.getName(), "execute") &&
-			!Objects.equals(element.getName(), "task")) {
+			!Objects.equals(element.getName(), "task") &&
+			!Objects.equals(element.getName(), "var")) {
 
 			return false;
 		}
@@ -747,7 +751,8 @@ public final class SummaryLogger {
 			Validator.isNull(element.attributeValue("function-summary")) &&
 			Validator.isNull(element.attributeValue("macro")) &&
 			Validator.isNull(element.attributeValue("macro-summary")) &&
-			Validator.isNull(element.attributeValue("summary"))) {
+			Validator.isNull(element.attributeValue("summary")) &&
+			Validator.isNull(element.attributeValue("method"))) {
 
 			return false;
 		}

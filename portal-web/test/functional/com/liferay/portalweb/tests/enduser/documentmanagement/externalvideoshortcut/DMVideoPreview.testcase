@@ -46,7 +46,7 @@ definition {
 	@refactorneeded
 	test AddBlogEntryWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VideoPreview#AddBlogEntryWithEmbeddedVideo";
+		property test.name.skip.portal.instance = "DMVideoPreview#AddBlogEntryWithEmbeddedVideo";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
 
@@ -76,7 +76,7 @@ definition {
 	@refactorneeded
 	test AddKBArticleWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VideoPreview#AddKBArticleWithEmbeddedVideo";
+		property test.name.skip.portal.instance = "DMVideoPreview#AddKBArticleWithEmbeddedVideo";
 
 		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
 
@@ -103,7 +103,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test AddWCWithEmbeddedVideo {
-		property test.name.skip.portal.instance = "VideoPreview#AddWCWithEmbeddedVideo";
+		property test.name.skip.portal.instance = "DMVideoPreview#AddWCWithEmbeddedVideo";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -184,7 +184,7 @@ definition {
 	@priority = "3"
 	@refactorneeded
 	test AssertNoVideoInItemSelectorAfterDisablingFFmpeg {
-		property test.name.skip.portal.instance = "VideoPreview#AssertNoVideoInItemSelectorAfterDisablingFFmpeg";
+		property test.name.skip.portal.instance = "DMVideoPreview#AssertNoVideoInItemSelectorAfterDisablingFFmpeg";
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 
@@ -214,7 +214,7 @@ definition {
 	test ConfigureFFmpegVideoPreviewSizePG {
 		property custom.properties = "dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0";
 		property test.assert.warning.exceptions = "false";
-		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#ConfigureFFmpegVideoPreviewSizePG";
+		property test.name.skip.portal.instance = "DMVideoPreview#ConfigureFFmpegVideoPreviewSizePG";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -285,7 +285,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ImportExportedBlogWithEmbeddedVideo {
-		property test.name.skip.portal.instance = "VideoPreview#ImportExportedBlogWithEmbeddedVideo";
+		property test.name.skip.portal.instance = "DMVideoPreview#ImportExportedBlogWithEmbeddedVideo";
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "Site Name");
 
@@ -327,7 +327,7 @@ definition {
 	@refactorneeded
 	test ImportExportedKBWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VideoPreview#ImportExportedKBWithEmbeddedVideo";
+		property test.name.skip.portal.instance = "DMVideoPreview#ImportExportedKBWithEmbeddedVideo";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -383,7 +383,7 @@ definition {
 	@refactorneeded
 	test ImportExportedWebContentWithEmbeddedVideo {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VideoPreview#ImportExportedWebContentWithEmbeddedVideo";
+		property test.name.skip.portal.instance = "DMVideoPreview#ImportExportedWebContentWithEmbeddedVideo";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -444,7 +444,7 @@ definition {
 	@priority = "4"
 	test PreviewRemainsAfterDisablingFFmpeg {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VideoPreview#PreviewRemainsAfterDisablingFFmpeg";
+		property test.name.skip.portal.instance = "DMVideoPreview#PreviewRemainsAfterDisablingFFmpeg";
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "DM Video Title In Site",
@@ -476,7 +476,7 @@ definition {
 	@refactorneeded
 	test ViewFromDisconnectedSite {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "VideoPreview#ViewFromDisconnectedSite";
+		property test.name.skip.portal.instance = "DMVideoPreview#ViewFromDisconnectedSite";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

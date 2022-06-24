@@ -41,6 +41,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -134,21 +137,15 @@ public class CompanyLogServlet extends HttpServlet {
 
 		String fileName = pathArray[1];
 
-		String path = StringBundler.concat(
-			logFilesDirPath, StringPool.SLASH, fileName);
+		Path path = Paths.get(logFilesDirPath, fileName);
 
-		File logFile = new File(path);
+		path = path.normalize();
 
-		String canonicalPath = logFile.getCanonicalPath();
-
-		if (File.separatorChar != CharPool.SLASH) {
-			canonicalPath = StringUtil.replace(
-				canonicalPath, File.separatorChar, CharPool.SLASH);
-		}
-
-		if (!path.equals(canonicalPath)) {
+		if (!path.startsWith(logFilesDirPath)) {
 			throw new PrincipalException("Unauthorized access");
 		}
+
+		File logFile = path.toFile();
 
 		if (logFile.exists()) {
 			ServletResponseUtil.sendFile(

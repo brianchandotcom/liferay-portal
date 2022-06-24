@@ -20,6 +20,7 @@ import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragment
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes';
+import {config} from '../../../../../app/config/index';
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemAdvancedConfiguration from '../../../../../app/selectors/selectCanUpdateItemAdvancedConfiguration';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
@@ -233,8 +234,9 @@ export function selectPanels(activeItemId, activeItemType, state) {
 					EDITABLE_TYPES.image,
 					EDITABLE_TYPES.link,
 				].includes(activeItem.type) &&
-				!hasSubmitChild(activeItem.parentId) &&
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
+				(!config.featureFlagLps150277 ||
+					!hasSubmitChild(activeItem.parentId)),
 			[PANEL_IDS.imageSource]:
 				activeItem.type === EDITABLE_TYPES.image ||
 				activeItem.type === EDITABLE_TYPES.backgroundImage,

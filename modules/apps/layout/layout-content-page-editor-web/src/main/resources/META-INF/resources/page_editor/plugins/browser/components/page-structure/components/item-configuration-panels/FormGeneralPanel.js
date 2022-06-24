@@ -13,7 +13,7 @@
  */
 
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
-import React, {useCallback, useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import updateItemLocalConfig from '../../../../../../app/actions/updateItemLocalConfig';
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
@@ -190,7 +190,7 @@ function SuccessMessageOptions({item, onValueSelect}) {
 	const languageId = useSelector(selectLanguageId);
 	const dispatch = useDispatch();
 
-	const [selectedSource, setSelectedSource] = useControlledState(
+	const [selectedSource, setSelectedSource] = useState(
 		getSelectedOption(successMessageConfig)
 	);
 	const [successMessage, setSuccessMessage] = useControlledState(
@@ -202,6 +202,15 @@ function SuccessMessageOptions({item, onValueSelect}) {
 			)
 		)
 	);
+
+	useEffect(() => {
+		if (Object.keys(successMessageConfig).length) {
+			const nextSelectedSource = getSelectedOption(successMessageConfig);
+
+			setSelectedSource(nextSelectedSource);
+		}
+	}, [successMessageConfig]);
+
 	const [url, setUrl] = useControlledState(
 		getEditableLocalizedValue(successMessageConfig.message, languageId)
 	);

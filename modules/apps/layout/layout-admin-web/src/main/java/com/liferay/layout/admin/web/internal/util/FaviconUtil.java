@@ -80,7 +80,7 @@ public class FaviconUtil {
 					ClientExtensionEntryRelLocalServiceUtil.
 						fetchClientExtensionEntryRel(
 							PortalUtil.getClassNameId(Layout.class),
-							layout.getPlid(),
+							masterLayout.getPlid(),
 							ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
 
 				if ((masterLayout.getFaviconFileEntryId() > 0) ||

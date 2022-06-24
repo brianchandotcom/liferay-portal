@@ -53,7 +53,7 @@ definition {
 		}
 
 		task ("And When adding an option from the status list filter") {
-			FDSFilters.enableStatusFilters(key_status = "Approved, Draft");
+			FDSFilters.enableStatusFilters(key_status = "Approved,Draft");
 		}
 
 		task ("And When the exclude option is active") {

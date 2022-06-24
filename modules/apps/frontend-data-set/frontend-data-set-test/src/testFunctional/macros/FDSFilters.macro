@@ -6,21 +6,9 @@ definition {
 			locator1 = "FrontendDataSet#FILTER_OPTION");
 
 		for (var status : list "${key_status}") {
-			if ("${status}" == "Approved") {
-				Check.checkNotVisibleNoErrors(
-					key_status = "Approved",
-					locator1 = "FrontendDataSet#STATUS_FILTER_CHECKBOX");
-			}
-			else if ("${status}" == "Draft") {
-				Check.checkNotVisibleNoErrors(
-					key_status = "Draft",
-					locator1 = "FrontendDataSet#STATUS_FILTER_CHECKBOX");
-			}
-			else if ("${status}" == "Pending") {
-				Check.checkNotVisibleNoErrors(
-					key_status = "Pending",
-					locator1 = "FrontendDataSet#STATUS_FILTER_CHECKBOX");
-			}
+			Check.checkNotVisibleNoErrors(
+				key_status = "${status}",
+				locator1 = "FrontendDataSet#STATUS_FILTER_CHECKBOX");
 		}
 	}
 

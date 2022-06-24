@@ -73,4 +73,38 @@ definition {
 		}
 	}
 
+	@description = "LPS-155306. Assert results can be correctly filtered by editing the filter summary boxes."
+	@priority = "5"
+	test FilterCanBeEdited {
+		task ("When there is a filter already established") {
+			AssertElementPresent(
+				key_filter = "Status: Approved, Draft",
+				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
+		}
+
+		task ("And clicking on the Filters Summary") {
+			ClickNoError(
+				key_filter = "Status: Approved, Draft",
+				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
+		}
+
+		task ("And the filter is edited") {
+			FDSFilters.disableStatusFilters(key_status = "Approved,Draft");
+
+			FDSFilters.enableStatusFilters(key_status = "Pending");
+
+			Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
+		}
+
+		task ("Then the results will be displayed updated accordingly to it") {
+			AssertElementPresent(locator1 = "FrontendDataSet#EMPTY_FDS_TABLE_MESSAGE");
+		}
+
+		task ("And the Filters Summary boxes will be updated accordingly to it") {
+			AssertElementPresent(
+				key_filter = "Status: Pending",
+				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
+		}
+	}
+
 }

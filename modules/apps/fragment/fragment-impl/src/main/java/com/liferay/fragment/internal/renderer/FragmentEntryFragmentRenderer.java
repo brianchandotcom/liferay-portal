@@ -156,7 +156,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		FragmentEntryLink fragmentEntryLink,
 		FragmentRendererContext fragmentRendererContext) {
 
-		if (!Objects.equals(
+		if ((fragmentEntryLink.getType() == FragmentConstants.TYPE_INPUT) ||
+			!Objects.equals(
 				fragmentRendererContext.getMode(),
 				FragmentEntryLinkConstants.VIEW) ||
 			(fragmentRendererContext.getPreviewClassPK() > 0) ||
@@ -189,12 +190,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		if (fragmentEntry == null) {
 			fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
 				fragmentEntryLink.getFragmentEntryId());
-		}
-
-		if ((fragmentEntry != null) &&
-			(fragmentEntry.getType() == FragmentConstants.TYPE_INPUT)) {
-
-			return false;
 		}
 
 		if (fragmentEntry == null) {

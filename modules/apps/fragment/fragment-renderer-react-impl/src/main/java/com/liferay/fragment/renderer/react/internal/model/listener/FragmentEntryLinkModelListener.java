@@ -15,7 +15,6 @@
 package com.liferay.fragment.renderer.react.internal.model.listener;
 
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.react.internal.util.FragmentEntryFragmentRendererReactUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -49,7 +48,7 @@ public class FragmentEntryLinkModelListener
 
 	@Override
 	public void onAfterCreate(FragmentEntryLink fragmentEntryLink) {
-		if (!_isReactFragmentEntry(fragmentEntryLink.getFragmentEntryId())) {
+		if (fragmentEntryLink.getType() != FragmentConstants.TYPE_REACT) {
 			return;
 		}
 
@@ -66,7 +65,7 @@ public class FragmentEntryLinkModelListener
 
 	@Override
 	public void onAfterRemove(FragmentEntryLink fragmentEntryLink) {
-		if (!_isReactFragmentEntry(fragmentEntryLink.getFragmentEntryId())) {
+		if (fragmentEntryLink.getType() != FragmentConstants.TYPE_REACT) {
 			return;
 		}
 
@@ -85,7 +84,7 @@ public class FragmentEntryLinkModelListener
 		FragmentEntryLink originalFragmentEntryLink,
 		FragmentEntryLink fragmentEntryLink) {
 
-		if (!_isReactFragmentEntry(fragmentEntryLink.getFragmentEntryId())) {
+		if (fragmentEntryLink.getType() != FragmentConstants.TYPE_REACT) {
 			return;
 		}
 
@@ -170,19 +169,6 @@ public class FragmentEntryLinkModelListener
 					StringPool.APOSTROPHE, _DEPENDENCY_PORTAL_REACT,
 					StringPool.APOSTROPHE)
 			});
-	}
-
-	private boolean _isReactFragmentEntry(long fragmentEntryId) {
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
-
-		if ((fragmentEntry != null) &&
-			(fragmentEntry.getType() == FragmentConstants.TYPE_REACT)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final String _DEPENDENCY_PORTAL_REACT =

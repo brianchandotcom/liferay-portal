@@ -229,9 +229,7 @@ public class LayoutClassedModelUsagesDisplayContext {
 				return StringPool.BLANK;
 			}
 
-			if (_getType(fragmentEntryLink) ==
-					FragmentConstants.TYPE_COMPONENT) {
-
+			if (fragmentEntryLink.getType() != FragmentConstants.TYPE_SECTION) {
 				return LanguageUtil.format(_resourceBundle, "x-element", name);
 			}
 
@@ -516,42 +514,6 @@ public class LayoutClassedModelUsagesDisplayContext {
 			_renderRequest, "orderByType", "asc");
 
 		return _orderByType;
-	}
-
-	private int _getType(FragmentEntryLink fragmentEntryLink) {
-		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.fetchFragmentEntry(
-				fragmentEntryLink.getFragmentEntryId());
-
-		if (fragmentEntry != null) {
-			return fragmentEntry.getType();
-		}
-
-		String rendererKey = fragmentEntryLink.getRendererKey();
-
-		if (Validator.isNull(rendererKey)) {
-			return 0;
-		}
-
-		Map<String, FragmentEntry> fragmentEntries =
-			_fragmentCollectionContributorTracker.getFragmentEntries();
-
-		FragmentEntry contributedFragmentEntry = fragmentEntries.get(
-			rendererKey);
-
-		if (contributedFragmentEntry != null) {
-			return contributedFragmentEntry.getType();
-		}
-
-		FragmentRenderer fragmentRenderer =
-			_fragmentRendererTracker.getFragmentRenderer(
-				fragmentEntryLink.getRendererKey());
-
-		if (fragmentRenderer != null) {
-			return fragmentRenderer.getType();
-		}
-
-		return 0;
 	}
 
 	private final String _className;

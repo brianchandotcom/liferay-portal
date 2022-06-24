@@ -190,6 +190,38 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This ensures that content can be added in code view using cite tag."
+	@priority = "3"
+	test CanAddContentWithCiteTag {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Page",
+			widgetName = "Blogs");
+
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		Blogs.addEntryWithHTML(
+			entryContent = '''<cite>Blogs Entry Content</cite>''',
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			skipNavigation = "true");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.viewEntryPG(
+			entryContentCite = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+	}
+
 	@description = "This is a test for LPS-136763. It checks that 400 characters can be added to the description."
 	@priority = "3"
 	test CanAddDescriptionWith400Characters {

@@ -529,6 +529,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		crc32.update(fileName.getBytes());
 
+		_calculateChecksum(file.canWrite() ? 1000L : -1000L, crc32);
 		_calculateChecksum(file.lastModified(), crc32);
 		_calculateChecksum(file.length(), crc32);
 

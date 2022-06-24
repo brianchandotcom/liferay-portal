@@ -81,10 +81,6 @@ public final class CompanyLogRoutingAppender extends AbstractAppender {
 	public String getCompanyLogDirectory(long companyId) {
 		Appender appender = _appenders.get(companyId);
 
-		if (appender == null) {
-			return null;
-		}
-
 		if (appender instanceof RollingFileAppender) {
 			RollingFileAppender rollingFileAppender =
 				(RollingFileAppender)appender;

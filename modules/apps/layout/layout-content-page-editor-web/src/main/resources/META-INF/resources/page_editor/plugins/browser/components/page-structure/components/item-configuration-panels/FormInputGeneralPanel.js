@@ -276,6 +276,15 @@ export function FormInputGeneralPanel({item}) {
 				[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, LABEL_CONFIGURATION_KEY],
 				getFieldLabel(value, formFields)
 			);
+
+			editableValues = setIn(
+				editableValues,
+				[
+					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					HELP_TEXT_CONFIGURATION_KEY,
+				],
+				null
+			);
 		}
 
 		dispatch(

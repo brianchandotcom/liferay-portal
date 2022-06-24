@@ -187,6 +187,8 @@ export function minimizePortlet(
 	options?: object
 ): void;
 
+export function openModal(props: Object): void;
+
 export function openSelectionModal<T>(init: {
 	buttonAddLabel?: string;
 	buttonCancelLabel?: string;

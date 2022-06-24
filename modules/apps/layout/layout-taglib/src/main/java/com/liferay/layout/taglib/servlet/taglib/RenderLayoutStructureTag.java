@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -975,6 +976,58 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write("</form>");
 	}
 
+	private void _renderFormStyledLayoutStructureItemSuccessMessage(
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String successMessage = null;
+
+		JSONObject successMessageJSONObject =
+			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
+
+		if ((successMessageJSONObject != null) &&
+			successMessageJSONObject.has("message")) {
+
+			JSONObject messageJSONObject =
+				successMessageJSONObject.getJSONObject("message");
+
+			if (messageJSONObject.has(themeDisplay.getLanguageId())) {
+				successMessage = messageJSONObject.getString(
+					themeDisplay.getLanguageId());
+			}
+			else {
+				String siteDefaultLanguageId = LanguageUtil.getLanguageId(
+					PortalUtil.getSiteDefaultLocale(
+						themeDisplay.getScopeGroupId()));
+
+				successMessage = messageJSONObject.getString(
+					siteDefaultLanguageId);
+			}
+		}
+
+		if (successMessage == null) {
+			successMessage = LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"thank-you.-your-information-was-successfully-received");
+		}
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("<div class=\"font-weight-semi-bold bg-white");
+		jspWriter.write("text-secondary text-center text-3 p-5\">");
+		jspWriter.write(successMessage);
+		jspWriter.write("</div>");
+
+		SessionMessages.remove(
+			getRequest(), formStyledLayoutStructureItem.getItemId());
+	}
+
 	private void _renderFragmentStyledLayoutStructureItem(
 			int collectionElementIndex, InfoForm infoForm,
 			LayoutStructureItem layoutStructureItem,
@@ -1105,10 +1158,20 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					continue;
 				}
 
-				_renderFormStyledLayoutStructureItem(
-					collectionElementIndex,
-					_getInfoForm(formStyledLayoutStructureItem),
-					layoutStructureItem, renderLayoutStructureDisplayContext);
+				if (SessionMessages.contains(
+						getRequest(),
+						formStyledLayoutStructureItem.getItemId())) {
+
+					_renderFormStyledLayoutStructureItemSuccessMessage(
+						formStyledLayoutStructureItem);
+				}
+				else {
+					_renderFormStyledLayoutStructureItem(
+						collectionElementIndex,
+						_getInfoForm(formStyledLayoutStructureItem),
+						layoutStructureItem,
+						renderLayoutStructureDisplayContext);
+				}
 			}
 			else if (layoutStructureItem instanceof
 						FragmentStyledLayoutStructureItem) {

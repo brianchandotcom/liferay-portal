@@ -113,9 +113,7 @@ public class ObjectEntryValuesException extends PortalException {
 
 	public static class ExceedsMaxFileSize extends ObjectEntryValuesException {
 
-		public ExceedsMaxFileSize(
-			long maxFileSize, String objectFieldName) {
-
+		public ExceedsMaxFileSize(long maxFileSize, String objectFieldName) {
 			super(
 				String.format(
 					"File exceeds the maximum permitted size of %s MB for " +

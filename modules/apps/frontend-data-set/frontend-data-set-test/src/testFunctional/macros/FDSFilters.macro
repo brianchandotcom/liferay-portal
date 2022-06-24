@@ -1,9 +1,11 @@
 definition {
 
 	macro enableStatusFilters {
-		Click(
-			key_filter = "Status",
-			locator1 = "FrontendDataSet#FILTER_OPTION");
+		if (IsElementPresent(key_filter = "Status", locator1 = "FrontendDataSet#FILTER_OPTION")) {
+			Click(
+				key_filter = "Status",
+				locator1 = "FrontendDataSet#FILTER_OPTION");
+		}
 
 		for (var status : list "${key_status}") {
 			Check.checkNotVisibleNoErrors(

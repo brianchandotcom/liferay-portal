@@ -42,10 +42,8 @@ import com.liferay.portal.vulcan.util.GroupUtil;
 import java.io.Serializable;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Rubén Pulido
@@ -246,35 +244,24 @@ public class ObjectEntryInfoItemCreator
 	}
 
 	private String _getInfoFieldUniqueId(long groupId, String objectFieldName) {
-		InfoForm infoForm = null;
-
 		try {
-			infoForm = _infoItemFormProvider.getInfoForm(
+			InfoForm infoForm = _infoItemFormProvider.getInfoForm(
 				String.valueOf(_objectDefinition.getObjectDefinitionId()),
 				groupId);
+
+			InfoField<?> infoField = infoForm.getInfoField(objectFieldName);
+
+			if (infoField != null) {
+				return infoField.getUniqueId();
+			}
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(noSuchFormVariationException);
 			}
-
-			return null;
 		}
 
-		List<InfoField<?>> infoFields = infoForm.getAllInfoFields();
-
-		Optional<InfoField<?>> infoFieldOptional = infoFields.stream(
-		).filter(
-			infoField -> Objects.equals(infoField.getName(), objectFieldName)
-		).findFirst();
-
-		if (!infoFieldOptional.isPresent()) {
-			return null;
-		}
-
-		InfoField<?> infoField = infoFieldOptional.get();
-
-		return infoField.getUniqueId();
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

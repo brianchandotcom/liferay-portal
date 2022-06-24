@@ -47,7 +47,7 @@
 </tr>
 <tr>
 	<td>FS_PRODUCT_SKU</td>
-	<td>//p/span[(normalize-space(text())='SKU')]/following::span[text()='${key_productSku}']</td>
+	<td>//p/span[(normalize-space(text())='SKU:')]/following::span[text()='${key_productSku}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>FS_PRODUCT_SPECIFICATIONS</td>
-	<td>//dl/dt[@class="specification-term"][contains(text(),'${key_specification}')]/following-sibling::dd</td>
+	<td>//tr/td[contains(@class, 'specification-term')][contains(text(),'${key_specification}')]/following-sibling::td</td>
 	<td></td>
 </tr>
 <tr>

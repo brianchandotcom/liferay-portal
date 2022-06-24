@@ -38,7 +38,7 @@ definition {
 		}
 
 		task ("And given a discontinued product with an End of Life date") {
-			var endOfLifeDate = DateUtil.getFormattedCurrentDate("MM dd, yyyy", "UTC");
+			var endOfLifeDate = DateUtil.getFormattedCurrentDate("MM/dd/yy", "UTC");
 
 			CommerceJSONProductsAPI._addCommerceProduct(
 				catalogName = "Master",
@@ -106,8 +106,12 @@ definition {
 				productSKU = "SKU1002");
 
 			Click(
-				key_productSku = "SKU1001",
-				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_REPLACEMENTS_SKU");
+				key_text = "Replacements",
+				locator1 = "Button#ANY");
+
+			Click(
+				key_itemName = "SKU1001",
+				locator1 = "CommerceEntry#VIEW_ITEM_FROM_LIST");
 		}
 
 		task ("Then the changes made should be visible on the SKU side panel") {

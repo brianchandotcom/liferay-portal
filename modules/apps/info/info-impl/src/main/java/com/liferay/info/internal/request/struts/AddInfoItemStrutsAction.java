@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -76,6 +77,8 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		String formItemId = ParamUtil.getString(
 			httpServletRequest, "formItemId");
 
+		String redirect = null;
+
 		try {
 			CaptchaUtil.check(httpServletRequest);
 
@@ -100,6 +103,17 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				).infoItemReference(
 					new InfoItemReference(className, 0)
 				).build());
+
+			LayoutStructure layoutStructure = _getLayoutStructure(
+				httpServletRequest);
+
+			redirect = _getRedirect(
+				_getFormStyledLayoutStructureItem(formItemId, layoutStructure),
+				themeDisplay);
+
+			if (redirect == null) {
+				SessionMessages.add(originalHttpServletRequest, formItemId);
+			}
 		}
 		catch (CaptchaException captchaException) {
 			if (_log.isDebugEnabled()) {
@@ -151,8 +165,11 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				originalHttpServletRequest, formItemId, infoFormException);
 		}
 
-		httpServletResponse.sendRedirect(
-			httpServletRequest.getHeader(HttpHeaders.REFERER));
+		if (redirect == null) {
+			redirect = httpServletRequest.getHeader(HttpHeaders.REFERER);
+		}
+
+		httpServletResponse.sendRedirect(redirect);
 
 		return null;
 	}
@@ -221,6 +238,31 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		}
 
 		return layoutStructure;
+	}
+
+	private String _getRedirect(
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		JSONObject successMessageJSONObject =
+			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
+
+		if (successMessageJSONObject == null) {
+			return null;
+		}
+
+		String redirect = null;
+
+		if (successMessageJSONObject.has("url")) {
+			redirect = _getURLRedirect(themeDisplay, successMessageJSONObject);
+		}
+		else if (successMessageJSONObject.has("layoutUuid")) {
+			redirect = _getLayoutRedirect(
+				successMessageJSONObject, themeDisplay);
+		}
+
+		return redirect;
 	}
 
 	private String _getURLRedirect(

@@ -102,6 +102,8 @@ public class RenderFragmentEntryLinkMVCResourceCommand
 				editableValuesJSONObject.toString());
 		}
 
+		fragmentEntryLink.setType(fragmentEntry.getType());
+
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
 

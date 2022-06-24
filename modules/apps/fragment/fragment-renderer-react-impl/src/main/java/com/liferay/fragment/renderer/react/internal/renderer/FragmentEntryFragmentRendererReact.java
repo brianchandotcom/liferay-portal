@@ -155,6 +155,7 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 			fragmentEntryLink.setCss(fragmentEntry.getCss());
 			fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 			fragmentEntryLink.setJs(fragmentEntry.getJs());
+			fragmentEntryLink.setType(fragmentEntry.getType());
 		}
 
 		return fragmentEntryLink;

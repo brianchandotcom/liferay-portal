@@ -15,17 +15,29 @@ definition {
 				key_text = "${localizedVideoURL}",
 				locator1 = "TextInput#ANY",
 				value1 = "${videoURL}");
+
+			AssertTextEquals(
+				key_text = "${localizedVideoURL}",
+				locator1 = "TextInput#ANY",
+				value1 = "${videoURL}");
 		}
 		else {
 			Type(
 				key_text = "Video URL",
 				locator1 = "TextInput#ANY",
 				value1 = "${videoURL}");
+
+			AssertTextEquals(
+				key_text = "Video URL",
+				locator1 = "TextInput#ANY",
+				value1 = "${videoURL}");
 		}
 
-		Pause(locator1 = "5000");
-
 		if (isSet(videoShortcutPreview)) {
+			WaitForElementPresent(
+				key_videoShortcutPreview = "${videoShortcutPreview}",
+				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
+
 			AssertVisible(
 				key_videoShortcutPreview = "${videoShortcutPreview}",
 				locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
@@ -88,7 +100,10 @@ definition {
 			locator1 = "TextInput#ANY",
 			value1 = "${videoURL}");
 
-		Pause(locator1 = "5000");
+		AssertTextEquals(
+			key_text = "Video URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${videoURL}");
 
 		if (isSet(videoShortcutPreview)) {
 			AssertVisible(
@@ -142,7 +157,10 @@ definition {
 			locator1 = "TextInput#ANY",
 			value1 = "${videoURLEdit}");
 
-		Pause(locator1 = "5000");
+		AssertTextEquals(
+			key_text = "Video URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${videoURLEdit}");
 
 		if (isSet(videoShortcutPreview)) {
 			AssertVisible(
@@ -167,7 +185,10 @@ definition {
 			locator1 = "TextInput#ANY",
 			value1 = "${invalidURL}");
 
-		Pause(locator1 = "5000");
+		AssertTextEquals(
+			key_text = "Video URL",
+			locator1 = "TextInput#ANY",
+			value1 = "${invalidURL}");
 
 		if (isSet(youtube)) {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
@@ -234,9 +255,9 @@ definition {
 	}
 
 	macro viewPlayedVideo {
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
+		WaitForElementPresent(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
-		Pause(locator1 = "5000");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 		if (IsElementPresent(locator1 = "Button#TWITCH_PLAY")) {
 			Click(locator1 = "Button#TWITCH_PLAY");

@@ -692,8 +692,10 @@ public final class CommandLogger {
 
 	private boolean _isCommand(Element element) {
 		if ((!Objects.equals(element.getName(), "condition") &&
-			 !Objects.equals(element.getName(), "execute")) ||
-			Validator.isNull(element.attributeValue("function"))) {
+			 !Objects.equals(element.getName(), "execute") &&
+			 !Objects.equals(element.getName(), "var")) ||
+			(Validator.isNull(element.attributeValue("function")) &&
+			 Validator.isNull(element.attributeValue("method")))) {
 
 			return false;
 		}

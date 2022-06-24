@@ -335,7 +335,7 @@ definition {
 
 		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
 
-		Pause(locator1 = "5000");
+		WaitForVisible(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -889,7 +889,9 @@ definition {
 
 		SearchPortlets.viewResultDetails(searchAssetTitle = "Test YouTube Video");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(
+			key_videoShortcutPreview = "https://www.youtube.com",
+			locator1 = "DocumentsAndMediaDocument#VIDEO_SHORTCUT_PREVIEW");
 
 		AssertVisible(
 			key_videoShortcutPreview = "https://www.youtube.com",

@@ -171,9 +171,9 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+		AssertElementPresent.assertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
-		Pause(locator1 = "5000");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 
@@ -193,7 +193,7 @@ definition {
 			liveSite = "true",
 			webContentTitle = "WC WebContent Title");
 
-		Pause(locator1 = "5000");
+		WaitForVisible(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -224,7 +224,7 @@ definition {
 			liveSite = "true",
 			webContentTitle = "WC WebContent Title");
 
-		Pause(locator1 = "5000");
+		WaitForVisible(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

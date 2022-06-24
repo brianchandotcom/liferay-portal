@@ -67,7 +67,7 @@ public class InfoForm {
 	}
 
 	public List<InfoField> getAllInfoFields() {
-		return new ArrayList(_builder._allInfoFieldsByName.values());
+		return new ArrayList(_builder._infoFieldsByName.values());
 	}
 
 	public InfoLocalizedValue<String> getDescriptionInfoLocalizedValue() {
@@ -75,13 +75,13 @@ public class InfoForm {
 	}
 
 	public InfoField getInfoField(String name) {
-		InfoField infoField = _builder._allInfoFieldsByUniqueId.get(name);
+		InfoField infoField = _builder._infoFieldsByUniqueId.get(name);
 
 		if (infoField != null) {
 			return infoField;
 		}
 
-		return _builder._allInfoFieldsByName.get(name);
+		return _builder._infoFieldsByName.get(name);
 	}
 
 	public List<InfoFieldSetEntry> getInfoFieldSetEntries() {
@@ -219,10 +219,10 @@ public class InfoForm {
 			}
 
 			if (infoFieldSetEntry instanceof InfoField) {
-				_allInfoFieldsByName.put(
+				_infoFieldsByName.put(
 					infoFieldSetEntry.getName(),
 					(InfoField<?>)infoFieldSetEntry);
-				_allInfoFieldsByUniqueId.put(
+				_infoFieldsByUniqueId.put(
 					infoFieldSetEntry.getUniqueId(),
 					(InfoField<?>)infoFieldSetEntry);
 
@@ -238,11 +238,11 @@ public class InfoForm {
 			}
 		}
 
-		private final Map<String, InfoField<?>> _allInfoFieldsByName =
-			new LinkedHashMap<>();
-		private final Map<String, InfoField<?>> _allInfoFieldsByUniqueId =
-			new LinkedHashMap<>();
 		private InfoLocalizedValue<String> _descriptionInfoLocalizedValue;
+		private final Map<String, InfoField<?>> _infoFieldsByName =
+			new LinkedHashMap<>();
+		private final Map<String, InfoField<?>> _infoFieldsByUniqueId =
+			new LinkedHashMap<>();
 		private final Map<String, InfoFieldSetEntry>
 			_infoFieldSetEntriesByName = new LinkedHashMap<>();
 		private InfoLocalizedValue<String> _labelInfoLocalizedValue;

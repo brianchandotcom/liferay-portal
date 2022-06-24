@@ -19,6 +19,8 @@ package com.liferay.portal.security.sso.openid.connect.constants;
  */
 public class OpenIdConnectWebKeys {
 
+	public static final String OAUTH_CLIENT_ENTRIES = "OAUTH_CLIENT_ENTRIES";
+
 	public static final String OPEN_ID_CONNECT_ACTION_URL =
 		"OPEN_ID_CONNECT_ACTION_URL";
 

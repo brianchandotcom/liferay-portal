@@ -35,8 +35,7 @@ public interface OpenIdConnectAuthenticationHandler {
 		throws Exception;
 
 	public void requestAuthentication(
-			String openIdConnectProviderName,
-			HttpServletRequest httpServletRequest,
+			long oAuthClientEntryId, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws PortalException;
 

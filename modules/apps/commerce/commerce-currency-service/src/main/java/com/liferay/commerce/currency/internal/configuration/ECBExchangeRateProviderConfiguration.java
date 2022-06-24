@@ -37,4 +37,11 @@ public interface ECBExchangeRateProviderConfiguration {
 	)
 	public String europeanCentralBankURL();
 
+	@Meta.AD(
+		deflt = "3600",
+		name = "european-central-bank-url-cache-expiration-time",
+		required = false
+	)
+	public long europeanCentralBankURLCacheExpirationTime();
+
 }

@@ -122,7 +122,7 @@ public class LayoutCrawlerTest {
 			defaultSegmentsExperienceId, _layout.getPlid(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
-			StringPool.BLANK, 0, null, serviceContext);
+			StringPool.BLANK, 0, null, fragmentEntry.getType(), serviceContext);
 
 		FragmentEntry contributedFragmentEntry =
 			_fragmentCollectionContributorTracker.getFragmentEntry(
@@ -151,7 +151,8 @@ public class LayoutCrawlerTest {
 				contributedFragmentEntry.getJs(),
 				contributedFragmentEntry.getConfiguration(),
 				inlineValueJSONObject.toString(), StringPool.BLANK, 0,
-				contributedFragmentEntry.getFragmentEntryKey(), serviceContext);
+				contributedFragmentEntry.getFragmentEntryKey(),
+				contributedFragmentEntry.getType(), serviceContext);
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -204,7 +205,8 @@ public class LayoutCrawlerTest {
 				contributedFragmentEntry.getJs(),
 				contributedFragmentEntry.getConfiguration(),
 				mappedValueJSONObject.toString(), StringPool.BLANK, 0,
-				contributedFragmentEntry.getFragmentEntryKey(), serviceContext);
+				contributedFragmentEntry.getFragmentEntryKey(),
+				contributedFragmentEntry.getType(), serviceContext);
 
 		layoutStructure.addFragmentStyledLayoutStructureItem(
 			mappedFragmentEntryLink.getFragmentEntryLinkId(),
@@ -224,7 +226,8 @@ public class LayoutCrawlerTest {
 				).put(
 					"portletId", AssetPublisherPortletKeys.RECENT_CONTENT
 				).toString(),
-				StringPool.BLANK, 0, StringPool.BLANK, serviceContext);
+				StringPool.BLANK, 0, StringPool.BLANK,
+				FragmentConstants.TYPE_COMPONENT, serviceContext);
 
 		layoutStructure.addFragmentStyledLayoutStructureItem(
 			widgetFragmentEntryLink.getFragmentEntryLinkId(),

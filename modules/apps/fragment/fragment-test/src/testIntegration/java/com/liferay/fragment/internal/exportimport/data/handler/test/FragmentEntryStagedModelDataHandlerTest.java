@@ -195,7 +195,8 @@ public class FragmentEntryStagedModelDataHandlerTest
 				stagingGroup.getDefaultPublicPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
 				fragmentEntry.getConfiguration(), StringPool.BLANK,
-				StringPool.BLANK, 0, StringPool.BLANK, serviceContext);
+				StringPool.BLANK, 0, StringPool.BLANK, fragmentEntry.getType(),
+				serviceContext);
 
 		stagedModel = _fragmentEntryLocalService.updateFragmentEntry(
 			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),

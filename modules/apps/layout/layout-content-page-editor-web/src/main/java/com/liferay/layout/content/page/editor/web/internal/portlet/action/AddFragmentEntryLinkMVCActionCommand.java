@@ -104,7 +104,8 @@ public class AddFragmentEntryLinkMVCActionCommand
 				serviceContext.getPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
 				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
-				contributedRendererKey, serviceContext);
+				contributedRendererKey, fragmentEntry.getType(),
+				serviceContext);
 		}
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
@@ -116,7 +117,7 @@ public class AddFragmentEntryLinkMVCActionCommand
 			StringPool.BLANK,
 			fragmentRenderer.getConfiguration(defaultFragmentRendererContext),
 			StringPool.BLANK, StringPool.BLANK, 0, fragmentEntryKey,
-			serviceContext);
+			fragmentRenderer.getType(), serviceContext);
 	}
 
 	@Override

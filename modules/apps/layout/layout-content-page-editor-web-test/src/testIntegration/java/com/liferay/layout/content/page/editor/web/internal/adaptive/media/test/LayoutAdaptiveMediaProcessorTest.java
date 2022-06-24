@@ -265,7 +265,7 @@ public class LayoutAdaptiveMediaProcessorTest {
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			editableValuesJSONObject.toString(), StringPool.BLANK, 0, null,
-			_serviceContext);
+			fragmentEntry.getType(), _serviceContext);
 
 		LayoutStructure layoutStructure = new LayoutStructure();
 

@@ -109,7 +109,8 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), "css value", "<div>HTML value</div>",
 				"js value", "{fieldSets: []}", StringPool.BLANK,
-				StringPool.BLANK, 0, null, serviceContext);
+				StringPool.BLANK, 0, null, _fragmentEntry.getType(),
+				serviceContext);
 
 		_fragmentEntry.setCss("new css value");
 		_fragmentEntry.setHtml("<div>new updated HTML value</div>");

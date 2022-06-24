@@ -168,7 +168,8 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 						fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
 						fragmentEntryLink.getConfiguration(),
 						fragmentEntryLink.getEditableValues(), StringPool.BLANK,
-						fragmentEntryLink.getPosition(), null, serviceContext);
+						fragmentEntryLink.getPosition(), null,
+						fragmentEntryLink.getType(), serviceContext);
 				}
 			}
 

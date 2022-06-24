@@ -204,7 +204,7 @@ public class FragmentEntryProcessorEditableTest {
 				_layout.getPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
-				serviceContext);
+				fragmentEntry.getType(), serviceContext);
 
 		List<PortletPreferences> portletPreferencesList =
 			_portletPreferencesLocalService.getPortletPreferences(
@@ -268,6 +268,7 @@ public class FragmentEntryProcessorEditableTest {
 				TestPropsValues.getPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
+				fragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext());
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -734,6 +735,7 @@ public class FragmentEntryProcessorEditableTest {
 				TestPropsValues.getPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
 				StringPool.BLANK, editableValues, StringPool.BLANK, 0, null,
+				fragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		String processedFragmentEntryLinkHTML =

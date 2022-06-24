@@ -189,7 +189,8 @@ public class GroupModelListenerTest {
 				plid),
 			plid, fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
-			StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
+			StringPool.BLANK, StringPool.BLANK, 0, null,
+			fragmentEntry.getType(), serviceContext);
 	}
 
 	private LayoutPageTemplateCollection _addLayoutPageTemplateCollection(

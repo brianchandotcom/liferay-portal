@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer;
 
 import com.liferay.document.library.util.DLURLHelperUtil;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
@@ -266,6 +267,7 @@ public class FragmentLayoutStructureItemImporter
 		String js = StringPool.BLANK;
 		String css = StringPool.BLANK;
 		String configuration = StringPool.BLANK;
+		int type = FragmentConstants.TYPE_COMPONENT;
 
 		JSONObject defaultEditableValuesJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -275,6 +277,7 @@ public class FragmentLayoutStructureItemImporter
 			js = fragmentEntry.getJs();
 			css = fragmentEntry.getCss();
 			configuration = fragmentEntry.getConfiguration();
+			type = fragmentEntry.getType();
 
 			FragmentCollection fragmentCollection =
 				_fragmentCollectionService.fetchFragmentCollection(
@@ -351,7 +354,7 @@ public class FragmentLayoutStructureItemImporter
 				layout.getUserId(), layout.getGroupId(), 0, fragmentEntryId,
 				segmentsExperienceId, layout.getPlid(), css, html, js,
 				configuration, jsonObject.toString(), StringUtil.randomId(),
-				position, fragmentKey,
+				position, fragmentKey, type,
 				ServiceContextThreadLocal.getServiceContext());
 
 		List<Object> widgetInstances = (List<Object>)definitionMap.get(

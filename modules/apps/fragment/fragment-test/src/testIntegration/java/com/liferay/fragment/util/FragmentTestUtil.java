@@ -103,7 +103,7 @@ public class FragmentTestUtil {
 			plid, fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			StringPool.BLANK, StringPool.BLANK, 1, StringPool.BLANK,
-			serviceContext);
+			fragmentEntry.getType(), serviceContext);
 	}
 
 	public static FragmentEntryLink addFragmentEntryLink(
@@ -126,7 +126,7 @@ public class FragmentTestUtil {
 			plid, fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			StringPool.BLANK, StringPool.BLANK, 1, StringPool.BLANK,
-			serviceContext);
+			fragmentEntry.getType(), serviceContext);
 	}
 
 	public static FragmentEntryLink fetchFragmentEntryLink(

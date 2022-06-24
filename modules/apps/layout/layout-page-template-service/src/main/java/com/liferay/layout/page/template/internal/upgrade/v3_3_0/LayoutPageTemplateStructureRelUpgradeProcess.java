@@ -206,7 +206,8 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 						editableValuesJSONObject.toString(),
 						segmentsExperienceId),
 					newNamespace, fragmentEntryLink.getPosition(),
-					fragmentEntryLink.getRendererKey(), new ServiceContext());
+					fragmentEntryLink.getRendererKey(),
+					fragmentEntryLink.getType(), new ServiceContext());
 
 			fragmentStyledLayoutStructureItem.setFragmentEntryLinkId(
 				newFragmentEntryLink.getFragmentEntryLinkId());

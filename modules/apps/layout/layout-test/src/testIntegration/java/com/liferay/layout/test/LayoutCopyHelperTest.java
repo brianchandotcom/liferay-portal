@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -160,7 +161,7 @@ public class LayoutCopyHelperTest {
 				defaultSegmentsExperienceId, sourceLayout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
-				_serviceContext);
+				FragmentConstants.TYPE_COMPONENT, _serviceContext);
 
 		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(),
@@ -171,7 +172,7 @@ public class LayoutCopyHelperTest {
 			defaultSegmentsExperienceId, sourceLayout.getPlid(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
-			_serviceContext);
+			FragmentConstants.TYPE_COMPONENT, _serviceContext);
 
 		layoutStructure.addFragmentStyledLayoutStructureItem(
 			fragmentEntryLink.getFragmentEntryLinkId(),
@@ -233,7 +234,8 @@ public class LayoutCopyHelperTest {
 				).put(
 					"portletId", LayoutPortletKeys.LAYOUT_TEST_PORTLET
 				).toString(),
-				StringPool.BLANK, 0, StringPool.BLANK, _serviceContext);
+				StringPool.BLANK, 0, StringPool.BLANK,
+				FragmentConstants.TYPE_COMPONENT, _serviceContext);
 
 		layoutStructure.addFragmentStyledLayoutStructureItem(
 			widgetFragmentEntryLink.getFragmentEntryLinkId(),

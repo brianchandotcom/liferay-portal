@@ -156,7 +156,8 @@ public class FragmentEntryProcessorStylesTest {
 			fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
 			_layout.getPlid(), fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
-			StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
+			StringPool.BLANK, StringPool.BLANK, 0, null,
+			fragmentEntry.getType(), _serviceContext);
 	}
 
 	private Document _getDocument(String html) {

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -202,6 +203,7 @@ public class WidgetLayoutStructureItemImporter
 			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK,
 			editableValueJSONObject.toString(), widgetInstanceId, 0, null,
+			FragmentConstants.TYPE_COMPONENT,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

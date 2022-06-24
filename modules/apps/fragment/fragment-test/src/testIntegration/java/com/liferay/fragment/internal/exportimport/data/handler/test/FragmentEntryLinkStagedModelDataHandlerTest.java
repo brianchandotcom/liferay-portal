@@ -96,7 +96,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 			"css", "html", "js", fragmentEntryLink.getConfiguration(),
 			fragmentEntryLink.getEditableValues(),
 			fragmentEntryLink.getNamespace(),
-			fragmentEntryLink.getPosition() + 1, serviceContext);
+			fragmentEntryLink.getPosition() + 1, fragmentEntryLink.getType(),
+			serviceContext);
 
 		try {
 			exportImportStagedModel(stagedModel);
@@ -125,6 +126,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, 0, StringPool.BLANK,
+				FragmentConstants.TYPE_COMPONENT,
 				ServiceContextTestUtil.getServiceContext(
 					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
@@ -208,7 +210,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 			group.getDefaultPublicPlid(), fragmentEntry.getCss(),
 			fragmentEntry.getHtml(), fragmentEntry.getJs(),
 			fragmentEntry.getConfiguration(), StringPool.BLANK,
-			StringPool.BLANK, 1, StringPool.BLANK, serviceContext);
+			StringPool.BLANK, 1, StringPool.BLANK, fragmentEntry.getType(),
+			serviceContext);
 	}
 
 	@Override

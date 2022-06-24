@@ -140,7 +140,8 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 				StringPool.BLANK,
 				_read("export_import_fragment_field_text_config.json"),
 				_read("export_import_fragment_field_text_editable_values.json"),
-				StringPool.BLANK, 0, null, _serviceContext1);
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext1);
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(

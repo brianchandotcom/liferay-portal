@@ -167,7 +167,8 @@ public class GetPagePreviewMVCResourceCommandTest {
 			defaultSegmentsExperienceId, layout.getPlid(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
-			StringPool.BLANK, 0, null, _serviceContext);
+			StringPool.BLANK, 0, null, fragmentEntry.getType(),
+			_serviceContext);
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.

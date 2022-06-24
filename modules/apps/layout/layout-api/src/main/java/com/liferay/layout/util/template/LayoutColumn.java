@@ -14,6 +14,7 @@
 
 package com.liferay.layout.util.template;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -115,7 +116,8 @@ public class LayoutColumn {
 				).put(
 					"portletId", PortletIdCodec.decodePortletName(portletId)
 				).toString(),
-				StringPool.BLANK, 0, null, serviceContext);
+				StringPool.BLANK, 0, null, FragmentConstants.TYPE_COMPONENT,
+				serviceContext);
 
 		_fragmentEntryLinkIds.add(fragmentEntryLink.getFragmentEntryLinkId());
 	}

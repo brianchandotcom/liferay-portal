@@ -117,7 +117,7 @@ public class ResponsiveLayoutStructureUtilTest {
 			_defaultSegmentsExperienceId, _layout.getPlid(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
-			StringPool.BLANK, 0, null, serviceContext);
+			StringPool.BLANK, 0, null, fragmentEntry.getType(), serviceContext);
 
 		_themeDisplay = new ThemeDisplay();
 

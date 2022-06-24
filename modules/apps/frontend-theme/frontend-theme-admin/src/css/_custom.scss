@@ -30,6 +30,10 @@ body {
 		.portlet-body .container-fluid-max-xl {
 			max-width: map-get($container-max-widths, xl);
 			position: relative;
+
+			.custom-control {
+				margin-bottom: 8px;
+			}
 		}
 	}
 

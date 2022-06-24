@@ -86,6 +86,7 @@ public class CustomElementCETImpl
 		super(baseURL, typeSettingsUnicodeProperties);
 	}
 
+	@Override
 	public String getCSSURLs() {
 		return getString("cssURLs");
 	}
@@ -95,14 +96,17 @@ public class CustomElementCETImpl
 		return "/admin/edit_custom_element.jsp";
 	}
 
+	@Override
 	public String getFriendlyURLMapping() {
 		return getString("friendlyURLMapping");
 	}
 
+	@Override
 	public String getHTMLElementName() {
 		return getString("htmlElementName");
 	}
 
+	@Override
 	public String getPortletCategoryName() {
 		return getString("portletCategoryName");
 	}
@@ -112,6 +116,7 @@ public class CustomElementCETImpl
 		return ClientExtensionEntryConstants.TYPE_CUSTOM_ELEMENT;
 	}
 
+	@Override
 	public String getURLs() {
 		return getString("urls");
 	}
@@ -121,10 +126,12 @@ public class CustomElementCETImpl
 		return true;
 	}
 
+	@Override
 	public boolean isInstanceable() {
 		return getBoolean("instanceable");
 	}
 
+	@Override
 	public boolean isUseESM() {
 		return getBoolean("useESM");
 	}

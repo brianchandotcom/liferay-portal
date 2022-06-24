@@ -76,10 +76,12 @@ public class IFrameCETImpl extends BaseCETImpl implements IFrameCET {
 		return "/admin/edit_iframe.jsp";
 	}
 
+	@Override
 	public String getFriendlyURLMapping() {
 		return getString("friendlyURLMapping");
 	}
 
+	@Override
 	public String getPortletCategoryName() {
 		return getString("portletCategoryName");
 	}
@@ -89,6 +91,7 @@ public class IFrameCETImpl extends BaseCETImpl implements IFrameCET {
 		return ClientExtensionEntryConstants.TYPE_IFRAME;
 	}
 
+	@Override
 	public String getURL() {
 		return getString("url");
 	}
@@ -98,6 +101,7 @@ public class IFrameCETImpl extends BaseCETImpl implements IFrameCET {
 		return true;
 	}
 
+	@Override
 	public boolean isInstanceable() {
 		return getBoolean("instanceable");
 	}

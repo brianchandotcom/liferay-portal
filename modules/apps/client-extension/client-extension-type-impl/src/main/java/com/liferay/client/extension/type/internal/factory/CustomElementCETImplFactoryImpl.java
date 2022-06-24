@@ -53,6 +53,7 @@ public class CustomElementCETImplFactoryImpl
 		return new CustomElementCETImpl(portletRequest);
 	}
 
+	@Override
 	public CustomElementCET create(
 			String baseURL, long companyId, String description,
 			String externalReferenceCode, String name, Properties properties,

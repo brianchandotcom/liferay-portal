@@ -416,16 +416,6 @@ definition {
 			status = "Approved",
 			title = "Translation of WC WebContent Title to es-ES");
 
-		Pause(locator1 = "60000");
-
-		Refresh();
-
-		Translations.viewTranslationEntry(
-			language = "es-ES",
-			modifiedDate = "Minute Ago",
-			status = "Approved",
-			title = "Translation of WC WebContent Title to es-ES");
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");

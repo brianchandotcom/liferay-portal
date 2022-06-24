@@ -175,7 +175,7 @@ public class InfoForm {
 					infoFieldSet.getName(), infoFieldSet);
 			}
 
-			_addToAllInfoFields(infoFieldSet);
+			_populateInfoFieldsMaps(infoFieldSet);
 
 			return this;
 		}
@@ -184,7 +184,7 @@ public class InfoForm {
 			_infoFieldSetEntriesByName.put(
 				infoFieldSetEntry.getName(), infoFieldSetEntry);
 
-			_addToAllInfoFields(infoFieldSetEntry);
+			_populateInfoFieldsMaps(infoFieldSetEntry);
 
 			return this;
 		}
@@ -213,7 +213,9 @@ public class InfoForm {
 			return this;
 		}
 
-		private void _addToAllInfoFields(InfoFieldSetEntry infoFieldSetEntry) {
+		private void _populateInfoFieldsMaps(
+			InfoFieldSetEntry infoFieldSetEntry) {
+
 			if (infoFieldSetEntry == null) {
 				return;
 			}

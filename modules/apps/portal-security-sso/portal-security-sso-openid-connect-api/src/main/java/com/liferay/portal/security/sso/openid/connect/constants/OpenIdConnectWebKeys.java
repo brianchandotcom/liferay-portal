@@ -25,6 +25,9 @@ public class OpenIdConnectWebKeys {
 	public static final String OPEN_ID_CONNECT_AUTHENTICATING_USER_ID =
 		"OPEN_ID_CONNECT_AUTHENTICATING_USER_ID";
 
+	public static final String OPEN_ID_CONNECT_CLIENTS =
+		"OPEN_ID_CONNECT_CLIENTS";
+
 	public static final String OPEN_ID_CONNECT_PROVIDER_NAME =
 		"OPEN_ID_CONNECT_PROVIDER_NAME";
 

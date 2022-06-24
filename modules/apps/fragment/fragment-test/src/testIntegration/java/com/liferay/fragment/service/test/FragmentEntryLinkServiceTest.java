@@ -96,7 +96,8 @@ public class FragmentEntryLinkServiceTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), css, html, js, configuration,
-				StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
+				StringPool.BLANK, StringPool.BLANK, 0, null,
+				_fragmentEntry.getType(), serviceContext);
 
 		FragmentEntryLink persistedFragmentEntryLink =
 			_fragmentEntryLinkPersistence.findByPrimaryKey(

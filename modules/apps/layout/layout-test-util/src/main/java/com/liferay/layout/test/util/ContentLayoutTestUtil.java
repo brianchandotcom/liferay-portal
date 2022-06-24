@@ -68,14 +68,14 @@ public class ContentLayoutTestUtil {
 	public static FragmentEntryLink addFragmentEntryLinkToLayout(
 			Layout layout, long fragmentEntryId, long segmentsExperienceId,
 			String css, String html, String js, String configuration,
-			String editableValues, String rendererKey)
+			String editableValues, String rendererKey, int type)
 		throws Exception {
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkServiceUtil.addFragmentEntryLink(
 				layout.getGroupId(), 0, fragmentEntryId, segmentsExperienceId,
 				layout.getPlid(), css, html, js, configuration, editableValues,
-				StringPool.BLANK, 0, rendererKey,
+				StringPool.BLANK, 0, rendererKey, type,
 				ServiceContextTestUtil.getServiceContext(
 					layout.getGroupId(), TestPropsValues.getUserId()));
 
@@ -118,7 +118,8 @@ public class ContentLayoutTestUtil {
 			layout, fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
-			editableValues, fragmentEntry.getFragmentEntryKey());
+			editableValues, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getType());
 	}
 
 	public static JSONObject addPortletToLayout(Layout layout, String portletId)

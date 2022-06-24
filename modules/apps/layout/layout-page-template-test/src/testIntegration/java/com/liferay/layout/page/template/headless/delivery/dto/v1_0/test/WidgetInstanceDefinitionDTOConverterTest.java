@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.headless.delivery.dto.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -144,7 +145,7 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 				layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK,
 				editableValueJSONObject.toString(), namespace, 0, null,
-				_serviceContext);
+				FragmentConstants.TYPE_COMPONENT, _serviceContext);
 
 		String testPortletId = PortletIdCodec.encode(
 			_testPortletName, instanceId);

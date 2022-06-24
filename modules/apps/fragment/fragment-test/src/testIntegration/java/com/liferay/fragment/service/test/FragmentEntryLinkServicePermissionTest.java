@@ -97,6 +97,7 @@ public class FragmentEntryLinkServicePermissionTest {
 			_defaultSegmentsExperienceId, _layout.getPlid(), StringPool.BLANK,
 			"<div>test</div>", StringPool.BLANK, "{fieldSets: []}",
 			StringPool.BLANK, StringPool.BLANK, 0, null,
+			_fragmentEntry.getType(),
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
 	}
@@ -113,7 +114,8 @@ public class FragmentEntryLinkServicePermissionTest {
 			_defaultSegmentsExperienceId, _layout.getPlid(),
 			_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
 			_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
-			StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
+			StringPool.BLANK, StringPool.BLANK, 0, null,
+			_fragmentEntry.getType(), serviceContext);
 	}
 
 	@Test

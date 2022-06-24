@@ -674,7 +674,7 @@ public class PageDefinitionDTOConverterTest {
 						_layoutPageTemplateEntry.getPlid()),
 				layout.getPlid(), StringPool.BLANK, html, StringPool.BLANK,
 				configuration, _read(editableValuesFileName), StringPool.BLANK,
-				0, null, _serviceContext);
+				0, null, fragmentEntry.getType(), _serviceContext);
 
 		PageDefinition pageDefinition = _getPageDefinition(
 			layout,

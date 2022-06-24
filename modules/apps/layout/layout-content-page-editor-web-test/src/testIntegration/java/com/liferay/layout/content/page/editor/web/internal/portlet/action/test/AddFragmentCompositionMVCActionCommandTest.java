@@ -308,7 +308,8 @@ public class AddFragmentCompositionMVCActionCommandTest {
 				fragmentEntry.getFragmentEntryId(), defaultSegmentsExperienceId,
 				_layout.getPlid(), StringPool.BLANK, html, StringPool.BLANK,
 				_read("fragment_configuration.json"), editableValues,
-				StringPool.BLANK, 0, null, _serviceContext);
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext);
 
 		LayoutStructure layoutStructure = new LayoutStructure();
 

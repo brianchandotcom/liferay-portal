@@ -332,7 +332,8 @@ public class DuplicateItemMVCActionCommand
 				fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
 				fragmentEntryLink.getConfiguration(),
 				editableValuesJSONObject.toString(), namespace, 0,
-				fragmentEntryLink.getRendererKey(), serviceContext);
+				fragmentEntryLink.getRendererKey(), fragmentEntryLink.getType(),
+				serviceContext);
 
 		return duplicatedFragmentEntryLink.getFragmentEntryLinkId();
 	}

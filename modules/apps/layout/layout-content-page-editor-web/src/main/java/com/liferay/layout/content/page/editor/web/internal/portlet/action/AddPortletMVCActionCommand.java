@@ -14,6 +14,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -185,7 +186,7 @@ public class AddPortletMVCActionCommand
 				0, segmentsExperienceId, themeDisplay.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, editableValueJSONObject.toString(), namespace,
-				0, null, serviceContext);
+				0, null, FragmentConstants.TYPE_COMPONENT, serviceContext);
 
 		JSONObject jsonObject = _addFragmentEntryLinkToLayoutData(
 			actionRequest, fragmentEntryLink.getFragmentEntryLinkId());

@@ -67,7 +67,8 @@ public class FragmentEntryLinkStagedModelRepository
 			fragmentEntryLink.getConfiguration(),
 			fragmentEntryLink.getEditableValues(),
 			fragmentEntryLink.getNamespace(), fragmentEntryLink.getPosition(),
-			fragmentEntryLink.getRendererKey(), serviceContext);
+			fragmentEntryLink.getRendererKey(), fragmentEntryLink.getType(),
+			serviceContext);
 	}
 
 	@Override
@@ -162,7 +163,7 @@ public class FragmentEntryLinkStagedModelRepository
 			fragmentEntryLink.getJs(), fragmentEntryLink.getConfiguration(),
 			fragmentEntryLink.getEditableValues(),
 			fragmentEntryLink.getNamespace(), fragmentEntryLink.getPosition(),
-			serviceContext);
+			fragmentEntryLink.getType(), serviceContext);
 	}
 
 	@Reference

@@ -208,6 +208,7 @@ public class LayoutPublishedSearchTest {
 				contributedFragmentEntry.getConfiguration(),
 				inlineValueJSONObject.toString(), StringPool.BLANK, 0,
 				contributedFragmentEntry.getFragmentEntryKey(),
+				contributedFragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =

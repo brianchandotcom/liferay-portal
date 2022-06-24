@@ -245,6 +245,10 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		return _getColorCssClass("textColor");
 	}
 
+	public Map<String, String> getViewportCustomCSS() {
+		return _viewportCustomCSS;
+	}
+
 	public String getWidth() {
 		return GetterUtil.getString(_getStyleProperty("width"));
 	}

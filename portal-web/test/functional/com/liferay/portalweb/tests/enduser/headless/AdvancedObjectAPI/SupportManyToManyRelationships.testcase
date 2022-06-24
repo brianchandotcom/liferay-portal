@@ -327,14 +327,14 @@ definition {
 				objectEntryId = "${subjectId}");
 		}
 
-		task ("Then the subject is not appear in any of the universities in universities GET endpoint with nestedFields=universitiesSubjects") {
+		task ("Then the subject does not appear in any of the universities in universities GET endpoint with nestedFields=universitiesSubjects") {
 			var responseToParse = ObjectDefinitionAPI.getObjectsWithNestedField(
 				nestedField = "universitiesSubjects",
 				objects = "universities");
 
 			ObjectDefinitionAPI.assertResponseNotIncludeDetailsOfDeletedObject(
-				responseToParse = "${responseToParse}",
-				subjectId = "${subjectId}");
+				expectedValue = "[],[],[]",
+				responseToParse = "${responseToParse}");
 		}
 	}
 

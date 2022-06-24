@@ -418,11 +418,11 @@ definition {
 	}
 
 	macro assertResponseNotIncludeDetailsOfDeletedObject {
-		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..universitiesSubjects[?(@.id==${subjectId})].name");
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..universitiesSubjects");
 
 		TestUtils.assertEquals(
 			actual = "${actual}",
-			expected = "");
+			expected = "${expectedValue}");
 	}
 
 	macro assertResponseNotIncludesDetailsOfDeletedEmployee {

@@ -4367,10 +4367,10 @@ clay-component@2.24.1, clay-component@^2.24.1:
     metal-dom "^2.16.0"
     metal-state "^2.16.0"
 
-clay-css@2.24.1, clay-css@^2.11.1, clay-css@^2.16.2:
-  version "2.24.1"
-  resolved "https://registry.yarnpkg.com/clay-css/-/clay-css-2.24.1.tgz#289a739143478e96142614fb932ff47a0f6c064f"
-  integrity sha512-3rqVIFsyItHtDiBOTkgnu/Me98UnzRLYWYU3ZWv3JUaUlVTluxWmvos8nDQnZ3U0k77f/ElIopF6NthorkR4Iw==
+clay-css@2.24.3, clay-css@^2.11.1, clay-css@^2.16.2:
+  version "2.24.3"
+  resolved "https://registry.yarnpkg.com/clay-css/-/clay-css-2.24.3.tgz#79967852a824f0d8e020aae0e71cdaa2c567339d"
+  integrity sha512-PPph3m3/6Hn6Y0A2N2WgO9Q11S+ZFVWz5ju7pxBHgwB7F7l7xoZdaiOw6b7K5BqplGETRqu56qEDyNtn9xpqIQ==
 
 clay-data-provider@2.24.1, clay-data-provider@^2.24.1:
   version "2.24.1"

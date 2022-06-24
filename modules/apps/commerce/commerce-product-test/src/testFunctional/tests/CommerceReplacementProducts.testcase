@@ -295,7 +295,7 @@ definition {
 		}
 
 		task ("Then all the warnings about the discontinued product are shown") {
-			var endOfLifeDate = DateUtil.getFormattedCurrentDate("MM dd, yyyy", "UTC");
+			var endOfLifeDate = DateUtil.getFormattedCurrentDate("MM/dd/yy", "UTC");
 
 			FrontStore.assertProductDetails(
 				endOfLifeDate = "${endOfLifeDate}",
@@ -303,6 +303,10 @@ definition {
 		}
 
 		task ("And then the replacement product's is shown") {
+			Click(
+				key_text = "Replacements",
+				locator1 = "Button#ANY");
+
 			AssertElementPresent(
 				key_itemName = "SKU1001",
 				locator1 = "CommerceEntry#VIEW_ITEM_FROM_LIST");

@@ -1190,14 +1190,18 @@ definition {
 		AssertElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_NAME");
 
 		AssertElementPresent(
-			key_detail = "SKU",
+			key_detail = "SKU:",
 			locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL");
 
 		AssertElementPresent(
-			key_detail = "MPN",
+			key_detail = "MPN:",
 			locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL");
 
 		AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE");
+
+		Click(
+			key_text = "Specifications",
+			locator1 = "Button#ANY");
 
 		for (var detail : list "Weight,Dimensions,Material,Quantity,Warranty") {
 			AssertElementPresent(

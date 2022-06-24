@@ -178,14 +178,14 @@ definition {
 
 		if (isSet(productSKU)) {
 			AssertElementPresent(
-				key_detail = "SKU",
+				key_detail = "SKU:",
 				locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL",
 				value1 = "${productSKU}");
 		}
 
 		if (isSet(productMPN)) {
 			AssertElementPresent(
-				key_detail = "MPN",
+				key_detail = "MPN:",
 				locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL",
 				value1 = "${productMPN}");
 		}

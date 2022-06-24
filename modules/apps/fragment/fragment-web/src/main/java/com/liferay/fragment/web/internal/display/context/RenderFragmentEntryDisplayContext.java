@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.web.internal.display.context;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
@@ -74,12 +75,15 @@ public class RenderFragmentEntryDisplayContext {
 		fragmentEntryLink.setConfiguration(configuration);
 
 		String rendererKey = null;
+		int type = FragmentConstants.TYPE_COMPONENT;
 
 		if ((fragmentEntry != null) && (fragmentEntryId == 0)) {
 			rendererKey = fragmentEntry.getFragmentEntryKey();
+			type = fragmentEntry.getType();
 		}
 
 		fragmentEntryLink.setRendererKey(rendererKey);
+		fragmentEntryLink.setType(type);
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);

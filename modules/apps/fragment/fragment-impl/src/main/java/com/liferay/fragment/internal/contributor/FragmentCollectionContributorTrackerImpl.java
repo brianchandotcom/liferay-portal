@@ -316,6 +316,12 @@ public class FragmentCollectionContributorTrackerImpl
 				modified = true;
 			}
 
+			if (fragmentEntryLink.getType() != fragmentEntry.getType()) {
+				fragmentEntryLink.setType(fragmentEntry.getType());
+
+				modified = true;
+			}
+
 			if (modified) {
 				_fragmentEntryLinkLocalService.updateFragmentEntryLink(
 					fragmentEntryLink);

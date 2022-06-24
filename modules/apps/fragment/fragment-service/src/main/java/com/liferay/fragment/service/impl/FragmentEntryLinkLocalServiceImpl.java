@@ -566,6 +566,7 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		fragmentEntryLink.setEditableValues(newEditableValues);
 
+		fragmentEntryLink.setType(fragmentEntry.getType());
 		fragmentEntryLink.setLastPropagationDate(new Date());
 
 		fragmentEntryLink = fragmentEntryLinkPersistence.update(

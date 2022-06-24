@@ -1181,6 +1181,12 @@ definition {
 				value1 = "${entryContentBold}");
 		}
 
+		if (isSet(entryContentCite)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "BlogsEntry#CONTENT_HTML_CITE",
+				value1 = "${entryContentCite}");
+		}
+
 		if (isSet(entryContentHtml)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "BlogsEntry#CONTENT_HTML_H2",

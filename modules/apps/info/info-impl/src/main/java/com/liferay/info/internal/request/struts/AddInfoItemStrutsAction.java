@@ -28,6 +28,8 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.captcha.CaptchaException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -198,6 +200,25 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		}
 
 		return layoutStructure;
+	}
+
+	private String _getURLRedirect(
+			ThemeDisplay themeDisplay, JSONObject successMessageJSONObject)
+		throws Exception {
+
+		JSONObject urlJSONObject = successMessageJSONObject.getJSONObject(
+			"url");
+
+		String redirect = urlJSONObject.getString(themeDisplay.getLanguageId());
+
+		if (Validator.isNull(redirect)) {
+			String siteDefaultLanguageId = LanguageUtil.getLanguageId(
+				_portal.getSiteDefaultLocale(themeDisplay.getScopeGroupId()));
+
+			redirect = urlJSONObject.getString(siteDefaultLanguageId);
+		}
+
+		return redirect;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -172,10 +172,9 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10152 | Test Summary: Blocked events are not shown on Segments"
+	@ignore = "true"
 	@priority = "5"
 	test CheckBlockedEventsNotShownOnSegments {
-		property analytics.cloud.upstream = "false";
-		property analytics.cloud.release = "false";
 		property test.name.skip.portal.instance = "CustomEventsBlockEvents#CheckBlockedEventsNotShownOnSegments";
 
 		task ("Fill fields and create custom event") {

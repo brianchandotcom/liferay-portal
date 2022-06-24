@@ -25,10 +25,10 @@ import java.io.Serializable;
 public class OpenIdConnectAuthenticationSession implements Serializable {
 
 	public OpenIdConnectAuthenticationSession(
-		Nonce nonce, String providerName, State state) {
+		Nonce nonce, long oAuthClientEntryId, State state) {
 
 		_nonce = nonce;
-		_providerName = providerName;
+		_oAuthClientEntryId = oAuthClientEntryId;
 		_state = state;
 	}
 
@@ -36,8 +36,8 @@ public class OpenIdConnectAuthenticationSession implements Serializable {
 		return _nonce;
 	}
 
-	public String getProviderName() {
-		return _providerName;
+	public long getOAuthClientEntryId() {
+		return _oAuthClientEntryId;
 	}
 
 	public State getState() {
@@ -45,7 +45,7 @@ public class OpenIdConnectAuthenticationSession implements Serializable {
 	}
 
 	private final Nonce _nonce;
-	private final String _providerName;
+	private final long _oAuthClientEntryId;
 	private final State _state;
 
 }

@@ -291,6 +291,48 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-146565. It asserts the translation filtered by 'Any Language' can be searched."
+	@priority = "3"
+	test CanSearchForTranslationFilterbyAnyLanguage {
+		task ("Given two new language keys are created with three language override translations") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "text-contains-error1",
+				translationOverrideList = "en-US,fr-FR,es-ES",
+				translationOverrideValueList = "Text contains error1,Le texte contient une erreur1,El texto contiene error1");
+
+			LanguageOverride.addLanguageKey(
+				languageKey = "text-contains-error2",
+				translationOverrideList = "en-US,fr-FR,es-ES",
+				translationOverrideValueList = "Text contains error2,Le texte contient une erreur2,El texto contiene error2");
+		}
+
+		task ("When the user filters by 'Any Language' and searches for the fr-FR translation") {
+			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
+
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "fr-FR");
+
+			Search.searchCP(searchTerm = "Le texte contient une erreur2");
+		}
+
+		task ("Then the key should appear and list all three languages it has translations for") {
+			AssertTextEquals(
+				key_languageKey = "text-contains-error2",
+				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY",
+				value1 = "text-contains-error2");
+
+			AssertTextEquals(
+				locator1 = "LanguageOverride#LANGUAGE_KEY_OVERRIDDEN_LABEL",
+				value1 = "Languages With Override: es_ES, fr_FR, en_US");
+
+			AssertTextNotPresent(
+				key_languageKey = "text-contains-error1",
+				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY",
+				value1 = "text-contains-error1");
+		}
+	}
+
 	@description = "This test asserts that searching for existing translations will yield accurate results."
 	@priority = "5"
 	test CanSearchForTranslations {

@@ -132,9 +132,9 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+		AssertElementPresent.assertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
-		Pause(locator1 = "10000");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 
@@ -144,7 +144,7 @@ definition {
 
 		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
 
-		Pause(locator1 = "3000");
+		WaitForVisible(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -161,9 +161,9 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title In Depot");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+		AssertElementPresent.assertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
-		Pause(locator1 = "3000");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 
@@ -173,7 +173,7 @@ definition {
 
 		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
 
-		Pause(locator1 = "3000");
+		WaitForVisible(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -237,13 +237,9 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		Pause(locator1 = "180000");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "Document_1.mp4");
 
-		Pause(locator1 = "30000");
+		WaitForVisible(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
@@ -252,8 +248,6 @@ definition {
 
 		while (("${videoGenerationTimeCounter}" != "${videoGenerationTimeMaxWaitTime}") && (IsElementPresent(locator1 = "Message#INFO"))) {
 			var videoGenerationTimeCounter = ${videoGenerationTimeCounter} + 1;
-
-			Pause(locator1 = "30000");
 
 			Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -266,7 +260,9 @@ definition {
 
 		Navigator.openSpecificURL(url = "${videoPreviewThumbnailLink}");
 
-		Pause(locator1 = "1000");
+		AssertElementPresent(
+			key_imageSourceURL = "Document_1.mp4",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 
 		AssertElementNotPresent(
 			key_videoGenerationThumbnailResolution = "640",
@@ -411,9 +407,9 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+		AssertElementPresent.assertVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
-		Pause(locator1 = "3000");
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 
@@ -437,7 +433,7 @@ definition {
 
 		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "WC WebContent Title");
 
-		Pause(locator1 = "3000");
+		WaitForVisible(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

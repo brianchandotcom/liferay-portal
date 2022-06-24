@@ -12,7 +12,7 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Folder");
 
-		Pause(locator1 = "1000");
+		AssertElementPresent.assertVisible(locator1 = "TextInput#NAME");
 
 		PortletEntry.inputName(name = "${dmFolderName}");
 
@@ -58,7 +58,7 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Folder");
 
-		Pause(locator1 = "1000");
+		AssertElementPresent.assertVisible(locator1 = "TextInput#NAME");
 
 		PortletEntry.inputName(name = "${dmFolderName}");
 
@@ -108,7 +108,7 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Folder");
 
-		Pause(locator1 = "1000");
+		AssertElementPresent.assertVisible(locator1 = "TextInput#NAME");
 
 		PortletEntry.inputName(name = "${mgFolderName}");
 

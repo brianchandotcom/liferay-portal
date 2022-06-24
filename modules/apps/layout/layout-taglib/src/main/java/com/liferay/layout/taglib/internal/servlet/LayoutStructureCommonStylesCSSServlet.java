@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
@@ -145,6 +146,17 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 					_getLayoutStructureItemCSS(
 						frontendTokensJSONObject, styledLayoutStructureItem,
 						viewportSize));
+
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-147511"))) {
+
+					String customCSS = _getCustomCSS(
+						styledLayoutStructureItem, viewportSize);
+
+					if (Validator.isNotNull(customCSS)) {
+						cssSB.append(customCSS);
+					}
+				}
 			}
 
 			if (cssSB.length() == 0) {
@@ -175,6 +187,20 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 
 			return JSONFactoryUtil.createJSONObject();
 		}
+	}
+
+	private String _getCustomCSS(
+		StyledLayoutStructureItem styledLayoutStructureItem,
+		ViewportSize viewportSize) {
+
+		if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
+			return styledLayoutStructureItem.getCustomCSS();
+		}
+
+		Map<String, String> viewportCustomCSS =
+			styledLayoutStructureItem.getViewportCustomCSS();
+
+		return viewportCustomCSS.get(viewportSize);
 	}
 
 	private JSONObject _getFrontendTokensJSONObject(

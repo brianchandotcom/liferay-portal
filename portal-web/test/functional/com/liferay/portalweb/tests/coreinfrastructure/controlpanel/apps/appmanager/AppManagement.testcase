@@ -711,6 +711,8 @@ definition {
 	@description = "This test attempts to install an app by uploading a file that is invalid. Error message is asserted."
 	@priority = "3"
 	test InvalidFileShouldNotBeUploaded {
+		property test.name.skip.portal.instance = "AppManagement#InvalidFileShouldNotBeUploaded";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
@@ -738,6 +740,8 @@ definition {
 	@description = "This test check search apps in marketplace store and check sign in and sign out."
 	@priority = "3"
 	test SearchMarketplaceStore {
+		property test.name.skip.portal.instance = "AppManagement#SearchMarketplaceStore";
+
 		task ("Given user login marketplace store assert user login in Purchased page") {
 			Navigator.openStoreURL();
 
@@ -833,6 +837,8 @@ definition {
 	@description = "This test view purchased apps in marketplace purchased page."
 	@priority = "3"
 	test ViewPurchasedApp {
+		property test.name.skip.portal.instance = "AppManagement#ViewPurchasedApp";
+
 		task ("Given login marketplace store") {
 			Navigator.openStoreURL();
 

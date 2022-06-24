@@ -2630,8 +2630,8 @@ http://www.w3.org/TR/html401/struct/global.html
 		<allowed-empty-tags>
 			<literal-list>
 				<literal value="br"/>
-					<literal value="hr"/>
-	<literal value="iframe"/>
+				<literal value="hr"/>
+				<literal value="iframe"/>
 				<literal value="a"/>
 				<literal value="img"/>
 				<literal value="param"/>

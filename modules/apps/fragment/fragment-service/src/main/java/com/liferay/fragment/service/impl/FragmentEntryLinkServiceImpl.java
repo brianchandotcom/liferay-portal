@@ -53,7 +53,7 @@ public class FragmentEntryLinkServiceImpl
 			long fragmentEntryId, long segmentsExperienceId, long plid,
 			String css, String html, String js, String configuration,
 			String editableValues, String namespace, int position,
-			String rendererKey, ServiceContext serviceContext)
+			String rendererKey, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkPermission(groupId, plid, false, true);
@@ -61,7 +61,8 @@ public class FragmentEntryLinkServiceImpl
 		return fragmentEntryLinkLocalService.addFragmentEntryLink(
 			getUserId(), groupId, originalFragmentEntryLinkId, fragmentEntryId,
 			segmentsExperienceId, plid, css, html, js, configuration,
-			editableValues, namespace, position, rendererKey, serviceContext);
+			editableValues, namespace, position, rendererKey, type,
+			serviceContext);
 	}
 
 	@Override

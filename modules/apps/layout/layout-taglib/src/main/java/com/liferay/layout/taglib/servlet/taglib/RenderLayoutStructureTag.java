@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -284,6 +285,73 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private String _getFormStyledLayoutStructureItemLayoutRedirect(
+			JSONObject successMessageJSONObject, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		long groupId = successMessageJSONObject.getLong("groupId");
+		boolean privateLayout = successMessageJSONObject.getBoolean(
+			"privateLayout");
+		long layoutId = successMessageJSONObject.getLong("layoutId");
+
+		Layout layout = LayoutServiceUtil.fetchLayout(
+			groupId, privateLayout, layoutId);
+
+		if (layout != null) {
+			return PortalUtil.getLayoutURL(layout, themeDisplay);
+		}
+
+		return null;
+	}
+
+	private String _getFormStyledLayoutStructureItemRedirect(
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem)
+		throws Exception {
+
+		JSONObject successMessageJSONObject =
+			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
+
+		if (successMessageJSONObject == null) {
+			return null;
+		}
+
+		String redirect = null;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)getRequest().getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (successMessageJSONObject.has("url")) {
+			redirect = _getFormStyledLayoutStructureItemURLRedirect(
+				themeDisplay, successMessageJSONObject);
+		}
+		else if (successMessageJSONObject.has("layoutUuid")) {
+			redirect = _getFormStyledLayoutStructureItemLayoutRedirect(
+				successMessageJSONObject, themeDisplay);
+		}
+
+		return redirect;
+	}
+
+	private String _getFormStyledLayoutStructureItemURLRedirect(
+			ThemeDisplay themeDisplay, JSONObject successMessageJSONObject)
+		throws Exception {
+
+		JSONObject urlJSONObject = successMessageJSONObject.getJSONObject(
+			"url");
+
+		String redirect = urlJSONObject.getString(themeDisplay.getLanguageId());
+
+		if (Validator.isNull(redirect)) {
+			String siteDefaultLanguageId = LanguageUtil.getLanguageId(
+				PortalUtil.getSiteDefaultLocale(
+					themeDisplay.getScopeGroupId()));
+
+			redirect = urlJSONObject.getString(siteDefaultLanguageId);
+		}
+
+		return redirect;
 	}
 
 	private InfoForm _getInfoForm(

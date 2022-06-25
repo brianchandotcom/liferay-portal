@@ -39,6 +39,7 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
+import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.helper.CollectionPaginationHelper;
@@ -179,13 +180,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 	protected static final String COLLECTION_ELEMENT_INDEX =
 		RenderLayoutStructureTag.class.getName() + "#COLLECTION_ELEMENT_INDEX";
 
-	protected static final String LAYOUT_STRUCTURE =
-		RenderLayoutStructureTag.class.getName() + "#LAYOUT_STRUCTURE";
-
 	private String _getErrorMessage(
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			InfoForm infoForm)
-		throws Exception {
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		InfoForm infoForm) {
 
 		HttpServletRequest httpServletRequest = getRequest();
 
@@ -900,6 +897,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				renderLayoutStructureDisplayContext)
 		throws Exception {
 
+		if (infoForm == null) {
+			return;
+		}
+
 		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write("<form action=\"");
@@ -1218,7 +1219,8 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		HttpServletRequest httpServletRequest = getRequest();
 
-		httpServletRequest.setAttribute(LAYOUT_STRUCTURE, _layoutStructure);
+		httpServletRequest.setAttribute(
+			LayoutWebKeys.LAYOUT_STRUCTURE, _layoutStructure);
 
 		_renderLayoutStructure(
 			childrenItemIds,

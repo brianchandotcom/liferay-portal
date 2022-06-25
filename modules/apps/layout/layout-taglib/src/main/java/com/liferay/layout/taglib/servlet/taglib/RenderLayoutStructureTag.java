@@ -996,6 +996,17 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			renderLayoutStructureDisplayContext.getStyle(
 				formStyledLayoutStructureItem));
 		jspWriter.write("\">");
+
+		String redirect = _getFormStyledLayoutStructureItemRedirect(
+			formStyledLayoutStructureItem);
+
+		if (Validator.isNotNull(redirect)) {
+			jspWriter.write(
+				"<input name=\"redirect\" type=\"hidden\" value=\"");
+			jspWriter.write(redirect);
+			jspWriter.write("\">");
+		}
+
 		jspWriter.write("<input name=\"classNameId\" type=\"hidden\" value=\"");
 		jspWriter.write(
 			String.valueOf(formStyledLayoutStructureItem.getClassNameId()));

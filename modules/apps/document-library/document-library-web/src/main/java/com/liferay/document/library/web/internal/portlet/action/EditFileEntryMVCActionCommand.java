@@ -967,8 +967,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "friendlyURLChanged",
 				_language.format(
 					_portal.getHttpServletRequest(actionRequest),
-					"the-following-friendly-url-x-was-changed-to-x-to-ensure-" +
-						"uniqueness",
+					"the-friendly-url-x-was-changed-to-x-to-ensure-uniqueness",
 					new Object[] {
 						"<strong>" + _html.escapeURL(originalFriendlyURL) +
 							"</strong>",

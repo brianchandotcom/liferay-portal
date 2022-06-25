@@ -65,7 +65,7 @@ describe('Add to Cart', () => {
 
 	beforeEach(() => {
 		fetchMock.mock(
-			/http:\/\/localhost\/o\/headless-commerce-delivery-cart\/v1.0\/carts\/[0-9]+\/items/,
+			/\/o\/headless-commerce-delivery-cart\/v1.0\/carts\/[0-9]+\/items/,
 			(_res, {body}) => {
 				addProductToCartFn(JSON.parse(body));
 
@@ -73,7 +73,7 @@ describe('Add to Cart', () => {
 			}
 		);
 		fetchMock.mock(
-			/http:\/\/localhost\/o\/headless-commerce-delivery-cart\/v1.0\/carts\/[0-9]+\?nestedFields=cartItems/,
+			/\/o\/headless-commerce-delivery-cart\/v1.0\/carts\/[0-9]+\?nestedFields=cartItems/,
 			{cartItems: []}
 		);
 

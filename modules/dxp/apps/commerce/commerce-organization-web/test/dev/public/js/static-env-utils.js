@@ -28,6 +28,7 @@ const Liferay = {
 		getCanonicalURL: () => '/',
 		getDefaultLanguageId: () => 'en_US',
 		getLanguageId: () => 'it_IT',
+		getPathContext: () => '',
 		getPathThemeImages: () => '/assets',
 		getPortalURL: () => window.location.origin,
 		getScopeGroupId: () => '123',

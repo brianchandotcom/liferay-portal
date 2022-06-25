@@ -47,7 +47,7 @@ function resolveCartsByAccountIdAndChannelIdPath(
 		});
 	}
 
-	return url;
+	return url.pathname + url.search;
 }
 
 export default function Cart(basePath) {

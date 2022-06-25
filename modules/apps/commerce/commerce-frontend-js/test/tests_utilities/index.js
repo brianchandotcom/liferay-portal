@@ -17,6 +17,8 @@ export function getRandomInt(min, max) {
 }
 
 export function processFakeRequestData(url, items, queriedItems) {
+	url = new URL(url, Liferay.ThemeDisplay.getPortalURL());
+
 	const page = url.searchParams.get('page') || 1;
 	const pageSize = url.searchParams.get('pageSize') || 10;
 	const query = url.searchParams.get('query');

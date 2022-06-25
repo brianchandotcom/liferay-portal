@@ -71,7 +71,7 @@ describe('Add to Cart Button', () => {
 
 	beforeEach(() => {
 		fetchMock.mock(
-			/http:\/\/localhost\/o\/headless-commerce-delivery-cart\/v1.0\/carts\/[0-9]+\?nestedFields=cartItems/,
+			/\/o\/headless-commerce-delivery-cart\/v1.0\/carts\/[0-9]+\?nestedFields=cartItems/,
 			(_, options) => {
 				if (options.method === 'PATCH') {
 					addProductsToCartFn(JSON.parse(options.body));

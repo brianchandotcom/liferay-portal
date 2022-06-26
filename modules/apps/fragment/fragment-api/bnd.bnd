@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.fragment.constants,\
 	com.liferay.fragment.contributor,\
 	com.liferay.fragment.exception,\
+	com.liferay.fragment.helper,\
 	com.liferay.fragment.importer,\
 	com.liferay.fragment.input.template.parser,\
 	com.liferay.fragment.listener,\

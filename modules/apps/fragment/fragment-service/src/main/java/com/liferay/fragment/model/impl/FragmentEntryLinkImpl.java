@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.model.impl;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -71,6 +72,42 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 		if (fragmentEntry.getGroupId() ==
 				GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isTypeComponent() {
+		if (getType() == FragmentConstants.TYPE_COMPONENT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isTypeInput() {
+		if (getType() == FragmentConstants.TYPE_INPUT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isTypeReact() {
+		if (getType() == FragmentConstants.TYPE_REACT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isTypeSection() {
+		if (getType() == FragmentConstants.TYPE_SECTION) {
 			return true;
 		}
 

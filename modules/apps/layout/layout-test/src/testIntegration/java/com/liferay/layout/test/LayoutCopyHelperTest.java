@@ -235,7 +235,7 @@ public class LayoutCopyHelperTest {
 					"portletId", LayoutPortletKeys.LAYOUT_TEST_PORTLET
 				).toString(),
 				StringPool.BLANK, 0, StringPool.BLANK,
-				FragmentConstants.TYPE_COMPONENT, _serviceContext);
+				FragmentConstants.TYPE_PORTLET, _serviceContext);
 
 		layoutStructure.addFragmentStyledLayoutStructureItem(
 			widgetFragmentEntryLink.getFragmentEntryLinkId(),

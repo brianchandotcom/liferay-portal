@@ -116,7 +116,7 @@ public class LayoutColumn {
 				).put(
 					"portletId", PortletIdCodec.decodePortletName(portletId)
 				).toString(),
-				StringPool.BLANK, 0, null, FragmentConstants.TYPE_COMPONENT,
+				StringPool.BLANK, 0, null, FragmentConstants.TYPE_PORTLET,
 				serviceContext);
 
 		_fragmentEntryLinkIds.add(fragmentEntryLink.getFragmentEntryLinkId());

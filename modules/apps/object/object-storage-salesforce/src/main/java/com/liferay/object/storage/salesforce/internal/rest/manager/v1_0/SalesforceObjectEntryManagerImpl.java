@@ -153,40 +153,24 @@ public class SalesforceObjectEntryManagerImpl
 			Filter filter, Pagination pagination, String search, Sort[] sorts)
 		throws Exception {
 
-		JSONObject responseJSONObject1 = _salesforceHttp.get(
+		JSONObject responseJSONObject = _salesforceHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
-			HttpComponentsUtil.addParameter(
-				"query", "q",
-				StringBundler.concat(
-					"SELECT FIELDS(ALL) FROM ",
-					_getSalesforceObjectName(objectDefinition.getName()),
-					_getSalesforcePagination(pagination))));
+			_getLocation(objectDefinition, pagination, search));
 
-		if ((responseJSONObject1 == null) ||
-			(responseJSONObject1.length() == 0)) {
+		if ((responseJSONObject == null) ||
+			(responseJSONObject.length() == 0)) {
 
 			return Page.of(Collections.emptyList());
 		}
 
-		JSONObject responseJSONObject2 = _salesforceHttp.get(
-			companyId, getGroupId(objectDefinition, scopeKey),
-			HttpComponentsUtil.addParameter(
-				"query", "q",
-				"SELECT COUNT(Id) FROM " +
-					_getSalesforceObjectName(objectDefinition.getName())));
-
-		JSONArray jsonArray = responseJSONObject2.getJSONArray("records");
+		JSONArray jsonArray = Validator.isNotNull(search) ?
+			responseJSONObject.getJSONArray("searchRecords") :
+				responseJSONObject.getJSONArray("records");
 
 		return Page.of(
-			_toObjectEntries(
-				companyId, responseJSONObject1.getJSONArray("records"),
-				objectDefinition),
+			_toObjectEntries(companyId, jsonArray, objectDefinition),
 			pagination,
-			jsonArray.getJSONObject(
-				0
-			).getInt(
-				"expr0"
-			));
+			_getTotalCount(companyId, objectDefinition, scopeKey, search));
 	}
 
 	@Override
@@ -266,6 +250,27 @@ public class SalesforceObjectEntryManagerImpl
 		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 	}
 
+	private String _getLocation(
+		ObjectDefinition objectDefinition, Pagination pagination,
+		String search) {
+
+		if (Validator.isNotNull(search)) {
+			return HttpComponentsUtil.addParameter(
+				"search", "q",
+				StringBundler.concat(
+					"FIND {", search, "} IN ALL FIELDS RETURNING ",
+					_getSalesforceObjectName(objectDefinition.getName()),
+					"(FIELDS(ALL)", _getSalesforcePagination(pagination), ")"));
+		}
+
+		return HttpComponentsUtil.addParameter(
+			"query", "q",
+			StringBundler.concat(
+				"SELECT FIELDS(ALL) FROM ",
+				_getSalesforceObjectName(objectDefinition.getName()),
+				_getSalesforcePagination(pagination)));
+	}
+
 	private ObjectField _getObjectFieldByExternalReferenceCode(
 		String externalReferenceCode, List<ObjectField> objectFields) {
 
@@ -301,6 +306,37 @@ public class SalesforceObjectEntryManagerImpl
 		return StringBundler.concat(
 			" LIMIT ", pagination.getPageSize(), " OFFSET ",
 			pagination.getStartPosition());
+	}
+
+	private int _getTotalCount(
+		long companyId, ObjectDefinition objectDefinition, String scopeKey,
+		String search) {
+
+		if (Validator.isNotNull(search)) {
+			JSONObject responseJSONObject = _salesforceHttp.get(
+				companyId, getGroupId(objectDefinition, scopeKey),
+				_getLocation(objectDefinition, Pagination.of(1, 200), search));
+
+			JSONArray jsonArray = responseJSONObject.getJSONArray(
+				"searchRecords");
+
+			return jsonArray.length();
+		}
+
+		JSONObject responseJSONObject = _salesforceHttp.get(
+			companyId, getGroupId(objectDefinition, scopeKey),
+			HttpComponentsUtil.addParameter(
+				"query", "q",
+				"SELECT COUNT(Id) FROM " +
+					_getSalesforceObjectName(objectDefinition.getName())));
+
+		JSONArray jsonArray = responseJSONObject.getJSONArray("records");
+
+		return jsonArray.getJSONObject(
+			0
+		).getInt(
+			"expr0"
+		);
 	}
 
 	private JSONObject _toJSONObject(

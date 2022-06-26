@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -26,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * @author Qi Zhang
  */
-public class JavaUpgradeEmptyLinesCheck extends BaseFileCheck {
+public class JavaUpgradeEmptyLinesCheck extends BaseJavaTermCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {
@@ -35,11 +37,16 @@ public class JavaUpgradeEmptyLinesCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+		String fileName, String absolutePath, JavaTerm javaTerm,
+		String fileContent) {
 
-		if (!fileName.endsWith("UpgradeProcess.java")) {
-			return content;
+		JavaClass javaClass = (JavaClass)javaTerm;
+
+		if (!_isUpgradeJavaClass(javaClass)) {
+			return javaClass.getContent();
 		}
+
+		String content = javaTerm.getContent();
 
 		for (String methodName : _DB_PROCESS_METHODS) {
 			Pattern pattern1 = Pattern.compile(
@@ -121,6 +128,23 @@ public class JavaUpgradeEmptyLinesCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_CLASS};
+	}
+
+	private boolean _isUpgradeJavaClass(JavaClass javaClass) {
+		List<String> extendedClassNames = javaClass.getExtendedClassNames();
+
+		for (String extendedClassName : extendedClassNames) {
+			if (extendedClassName.endsWith("UpgradeProcess")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String[] _DB_PROCESS_METHODS = {

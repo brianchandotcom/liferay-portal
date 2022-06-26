@@ -18,6 +18,10 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -62,8 +66,25 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 		return FragmentConstants.TYPE_COMPONENT;
 	}
 
-	private int _getFragmentEntryType(long fragmentEntryId, String rendererKey)
+	private int _getFragmentEntryType(
+			String editableValues, long fragmentEntryId, String rendererKey)
 		throws Exception {
+
+		if (Validator.isNotNull(editableValues)) {
+			try {
+				JSONObject editableValuesJSONObject =
+					JSONFactoryUtil.createJSONObject(editableValues);
+
+				if (editableValuesJSONObject.has("portletId")) {
+					return FragmentConstants.TYPE_PORTLET;
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
+		}
 
 		if (Validator.isNotNull(rendererKey)) {
 			FragmentEntry fragmentEntry =
@@ -80,8 +101,8 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 
 	private void _updateFragmentEntryType() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select fragmentEntryLinkId, fragmentEntryId, rendererKey " +
-					"from FragmentEntryLink");
+				"select fragmentEntryLinkId, fragmentEntryId, " +
+					"editableValues, rendererKey from FragmentEntryLink");
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -94,10 +115,13 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 					"fragmentEntryLinkId");
 
 				long fragmentEntryId = resultSet1.getLong("fragmentEntryId");
+				String editableValues = resultSet1.getString("editableValues");
 				String rendererKey = resultSet1.getString("rendererKey");
 
 				preparedStatement2.setInt(
-					1, _getFragmentEntryType(fragmentEntryId, rendererKey));
+					1,
+					_getFragmentEntryType(
+						editableValues, fragmentEntryId, rendererKey));
 
 				preparedStatement2.setLong(2, fragmentEntryLinkId);
 
@@ -107,6 +131,9 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 			preparedStatement2.executeBatch();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryLinkUpgradeProcess.class);
 
 	private final FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;

@@ -25,23 +25,16 @@ public class UpgradeAddress extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn(
 			"Address", "externalReferenceCode", "VARCHAR(75) null");
-
 		alterTableAddColumn("Address", "description", "STRING null");
-
 		alterTableAddColumn("Address", "latitude", "DOUBLE");
-
 		alterTableAddColumn("Address", "longitude", "DOUBLE");
-
 		alterTableAddColumn("Address", "name", "VARCHAR(255) null");
 
 		alterColumnType("Address", "street1", "VARCHAR(255) null");
-
 		alterColumnType("Address", "street2", "VARCHAR(255) null");
-
 		alterColumnType("Address", "street3", "VARCHAR(255) null");
 
 		alterTableAddColumn("Address", "validationDate", "DATE null");
-
 		alterTableAddColumn("Address", "validationStatus", "INTEGER");
 	}
 

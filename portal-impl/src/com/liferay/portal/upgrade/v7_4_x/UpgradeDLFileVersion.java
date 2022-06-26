@@ -24,7 +24,6 @@ public class UpgradeDLFileVersion extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		alterTableAddColumn("DLFileVersion", "expirationDate", "DATE null");
-
 		alterTableAddColumn("DLFileVersion", "reviewDate", "DATE null");
 	}
 

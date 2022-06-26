@@ -36,7 +36,6 @@ public class UpgradeDLFileEntry extends UpgradeProcess {
 		}
 
 		alterTableAddColumn("DLFileEntry", "expirationDate", "DATE null");
-
 		alterTableAddColumn("DLFileEntry", "reviewDate", "DATE null");
 	}
 

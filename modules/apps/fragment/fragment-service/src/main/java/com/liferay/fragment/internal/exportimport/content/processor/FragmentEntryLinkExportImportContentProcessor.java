@@ -17,13 +17,13 @@ package com.liferay.fragment.internal.exportimport.content.processor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -50,12 +50,9 @@ public class FragmentEntryLinkExportImportContentProcessor
 			boolean escapeContent)
 		throws Exception {
 
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			content);
+		FragmentEntryLink fragmentEntryLink = (FragmentEntryLink)stagedModel;
 
-		String portletId = editableValuesJSONObject.getString("portletId");
-
-		if (Validator.isNotNull(portletId)) {
+		if (fragmentEntryLink.isTypePortlet()) {
 			return content;
 		}
 
@@ -70,7 +67,8 @@ public class FragmentEntryLinkExportImportContentProcessor
 					portletDataContext, stagedModel, content,
 					exportReferencedContent, escapeContent);
 
-		editableValuesJSONObject = JSONFactoryUtil.createJSONObject(content);
+		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			content);
 
 		for (ExportImportContentProcessor<JSONObject>
 				exportImportContentProcessor :
@@ -91,12 +89,9 @@ public class FragmentEntryLinkExportImportContentProcessor
 			String content)
 		throws Exception {
 
-		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
-			content);
+		FragmentEntryLink fragmentEntryLink = (FragmentEntryLink)stagedModel;
 
-		String portletId = editableValuesJSONObject.getString("portletId");
-
-		if (Validator.isNotNull(portletId)) {
+		if (fragmentEntryLink.isTypePortlet()) {
 			return content;
 		}
 
@@ -109,7 +104,8 @@ public class FragmentEntryLinkExportImportContentProcessor
 				replaceImportContentReferences(
 					portletDataContext, stagedModel, content);
 
-		editableValuesJSONObject = JSONFactoryUtil.createJSONObject(content);
+		JSONObject editableValuesJSONObject = JSONFactoryUtil.createJSONObject(
+			content);
 
 		for (String fragmentEntryProcessorKey :
 				_FRAGMENT_ENTRY_PROCESSOR_KEYS) {

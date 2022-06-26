@@ -152,14 +152,10 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				FragmentWebKeys.FRAGMENT_ENTRY_LINK, fragmentEntryLink);
 		}
 
-		String editableValues = fragmentEntryLink.getEditableValues();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			editableValues);
-
-		if (Validator.isNotNull(jsonObject.getString("portletId"))) {
+		if (fragmentEntryLink.isTypePortlet()) {
 			return _renderWidgetHTML(
-				editableValues, fragmentEntryProcessorContext);
+				fragmentEntryLink.getEditableValues(),
+				fragmentEntryProcessorContext);
 		}
 
 		Set<String> processedPortletIds = new HashSet<>();

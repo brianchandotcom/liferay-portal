@@ -97,6 +97,15 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 	}
 
 	@Override
+	public boolean isTypePortlet() {
+		if (getType() == FragmentConstants.TYPE_PORTLET) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isTypeReact() {
 		if (getType() == FragmentConstants.TYPE_REACT) {
 			return true;

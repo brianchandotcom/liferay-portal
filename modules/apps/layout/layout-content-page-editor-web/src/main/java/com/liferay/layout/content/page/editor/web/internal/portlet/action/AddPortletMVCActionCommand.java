@@ -134,9 +134,7 @@ public class AddPortletMVCActionCommand
 		return jsonObject.put("layoutData", layoutDataJSONObject);
 	}
 
-	private String _getPortletInstanceId(String namespace, String portletId)
-		throws Exception {
-
+	private String _getPortletInstanceId(String namespace, String portletId) {
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 		if (portlet.isInstanceable()) {

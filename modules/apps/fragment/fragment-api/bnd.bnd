@@ -15,7 +15,6 @@ Export-Package:\
 	com.liferay.fragment.renderer.constants,\
 	com.liferay.fragment.service,\
 	com.liferay.fragment.service.persistence,\
-	com.liferay.fragment.util,\
 	com.liferay.fragment.util.comparator,\
 	com.liferay.fragment.util.configuration,\
 	com.liferay.fragment.validator

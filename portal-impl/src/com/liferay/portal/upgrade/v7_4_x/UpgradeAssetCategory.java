@@ -25,8 +25,8 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		alterColumnType("AssetCategory", "title", "TEXT null");
 		alterColumnType("AssetCategory", "description", "TEXT null");
+		alterColumnType("AssetCategory", "title", "TEXT null");
 
 		alterTableAddColumn(
 			"AssetCategory", "externalReferenceCode", "VARCHAR(75)");

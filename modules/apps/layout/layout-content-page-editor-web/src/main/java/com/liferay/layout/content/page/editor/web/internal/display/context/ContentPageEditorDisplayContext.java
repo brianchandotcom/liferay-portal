@@ -1135,8 +1135,6 @@ public class ContentPageEditorDisplayContext {
 
 		Map<String, List<Map<String, Object>>> fragmentCollectionMap =
 			new HashMap<>();
-		Map<String, FragmentRenderer> fragmentCollectionFragmentRenderers =
-			new HashMap<>();
 
 		List<FragmentRenderer> fragmentRenderers =
 			_fragmentRendererTracker.getFragmentRenderers();
@@ -1174,9 +1172,6 @@ public class ContentPageEditorDisplayContext {
 				fragmentCollectionMap.put(
 					fragmentRenderer.getCollectionKey(),
 					filteredDynamicFragments);
-
-				fragmentCollectionFragmentRenderers.put(
-					fragmentRenderer.getCollectionKey(), fragmentRenderer);
 			}
 			else {
 				fragmentCollections.add(dynamicFragment);

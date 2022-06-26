@@ -145,6 +145,32 @@ public class ObjectRelationship implements Cloneable, Serializable {
 
 	protected String name;
 
+	public String getObjectDefinitionExternalReferenceCode2() {
+		return objectDefinitionExternalReferenceCode2;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode2(
+		String objectDefinitionExternalReferenceCode2) {
+
+		this.objectDefinitionExternalReferenceCode2 =
+			objectDefinitionExternalReferenceCode2;
+	}
+
+	public void setObjectDefinitionExternalReferenceCode2(
+		UnsafeSupplier<String, Exception>
+			objectDefinitionExternalReferenceCode2UnsafeSupplier) {
+
+		try {
+			objectDefinitionExternalReferenceCode2 =
+				objectDefinitionExternalReferenceCode2UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String objectDefinitionExternalReferenceCode2;
+
 	public Long getObjectDefinitionId1() {
 		return objectDefinitionId1;
 	}

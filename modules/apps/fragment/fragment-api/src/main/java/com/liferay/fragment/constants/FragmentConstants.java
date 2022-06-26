@@ -34,6 +34,10 @@ public class FragmentConstants {
 
 	public static final String TYPE_INPUT_LABEL = "input";
 
+	public static final int TYPE_PORTLET = 4;
+
+	public static final String TYPE_PORTLET_LABEL = "widget";
+
 	public static final int TYPE_REACT = 2;
 
 	public static final String TYPE_REACT_LABEL = "react";
@@ -51,6 +55,10 @@ public class FragmentConstants {
 			return TYPE_INPUT;
 		}
 
+		if (Objects.equals(TYPE_PORTLET_LABEL, label)) {
+			return TYPE_PORTLET;
+		}
+
 		if (Objects.equals(TYPE_REACT_LABEL, label)) {
 			return TYPE_REACT;
 		}
@@ -65,6 +73,10 @@ public class FragmentConstants {
 
 		if (type == TYPE_INPUT) {
 			return TYPE_INPUT_LABEL;
+		}
+
+		if (type == TYPE_PORTLET) {
+			return TYPE_PORTLET_LABEL;
 		}
 
 		if (type == TYPE_REACT) {

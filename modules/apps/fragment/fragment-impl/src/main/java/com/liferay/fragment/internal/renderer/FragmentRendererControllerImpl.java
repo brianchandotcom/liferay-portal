@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.internal.renderer;
 
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.FragmentEntryContentException;
@@ -191,9 +190,7 @@ public class FragmentRendererControllerImpl
 				fragmentEntryLink.getRendererKey());
 		}
 
-		if ((fragmentRenderer == null) &&
-			(fragmentEntryLink.getType() == FragmentConstants.TYPE_REACT)) {
-
+		if ((fragmentRenderer == null) && fragmentEntryLink.isTypeReact()) {
 			fragmentRenderer = _fragmentRendererTracker.getFragmentRenderer(
 				FragmentRendererConstants.
 					FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY_REACT);

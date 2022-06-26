@@ -15,7 +15,6 @@
 package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.internal.servlet.taglib.util.BasicFragmentEntryActionDropdownItemsProvider;
@@ -82,7 +81,7 @@ public class BasicFragmentEntryVerticalCard
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(),
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ||
-			(fragmentEntry.getType() == FragmentConstants.TYPE_REACT)) {
+			fragmentEntry.isTypeReact()) {
 
 			return null;
 		}
@@ -132,7 +131,7 @@ public class BasicFragmentEntryVerticalCard
 
 	@Override
 	public boolean isSelectable() {
-		if (fragmentEntry.getType() == FragmentConstants.TYPE_REACT) {
+		if (fragmentEntry.isTypeReact()) {
 			return false;
 		}
 

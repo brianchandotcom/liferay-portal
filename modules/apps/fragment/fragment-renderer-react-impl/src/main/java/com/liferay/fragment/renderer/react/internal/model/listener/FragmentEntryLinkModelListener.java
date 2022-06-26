@@ -48,7 +48,7 @@ public class FragmentEntryLinkModelListener
 
 	@Override
 	public void onAfterCreate(FragmentEntryLink fragmentEntryLink) {
-		if (fragmentEntryLink.getType() != FragmentConstants.TYPE_REACT) {
+		if (!fragmentEntryLink.isTypeReact()) {
 			return;
 		}
 
@@ -65,7 +65,7 @@ public class FragmentEntryLinkModelListener
 
 	@Override
 	public void onAfterRemove(FragmentEntryLink fragmentEntryLink) {
-		if (fragmentEntryLink.getType() != FragmentConstants.TYPE_REACT) {
+		if (!fragmentEntryLink.isTypeReact()) {
 			return;
 		}
 
@@ -84,7 +84,7 @@ public class FragmentEntryLinkModelListener
 		FragmentEntryLink originalFragmentEntryLink,
 		FragmentEntryLink fragmentEntryLink) {
 
-		if (fragmentEntryLink.getType() != FragmentConstants.TYPE_REACT) {
+		if (!fragmentEntryLink.isTypeReact()) {
 			return;
 		}
 

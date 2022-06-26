@@ -16,7 +16,6 @@ package com.liferay.layout.taglib.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.fragment.constants.FragmentActionKeys;
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -229,7 +228,7 @@ public class LayoutClassedModelUsagesDisplayContext {
 				return StringPool.BLANK;
 			}
 
-			if (fragmentEntryLink.getType() != FragmentConstants.TYPE_SECTION) {
+			if (!fragmentEntryLink.isTypeSection()) {
 				return LanguageUtil.format(_resourceBundle, "x-element", name);
 			}
 

@@ -15,7 +15,6 @@
 package com.liferay.fragment.web.internal.servlet.taglib.clay;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
@@ -102,16 +101,13 @@ public class ContributedFragmentEntryVerticalCard
 
 	@Override
 	public String getStickerCssClass() {
-		int type = fragmentEntry.getType();
-
-		if ((type == FragmentConstants.TYPE_COMPONENT) ||
-			(type == FragmentConstants.TYPE_SECTION) ||
-			(type == FragmentConstants.TYPE_REACT)) {
+		if (fragmentEntry.isTypeComponent() || fragmentEntry.isTypeSection() ||
+			fragmentEntry.isTypeReact()) {
 
 			return "fragment-entry-basic-sticker";
 		}
 
-		if (type == FragmentConstants.TYPE_INPUT) {
+		if (fragmentEntry.isTypeInput()) {
 			return "fragment-entry-input-sticker";
 		}
 
@@ -120,19 +116,15 @@ public class ContributedFragmentEntryVerticalCard
 
 	@Override
 	public String getStickerIcon() {
-		int type = fragmentEntry.getType();
-
-		if ((type == FragmentConstants.TYPE_COMPONENT) ||
-			(type == FragmentConstants.TYPE_SECTION)) {
-
+		if (fragmentEntry.isTypeComponent() || fragmentEntry.isTypeSection()) {
 			return "code";
 		}
 
-		if (type == FragmentConstants.TYPE_INPUT) {
+		if (fragmentEntry.isTypeInput()) {
 			return "forms";
 		}
 
-		if (type == FragmentConstants.TYPE_REACT) {
+		if (fragmentEntry.isTypeReact()) {
 			return "react";
 		}
 

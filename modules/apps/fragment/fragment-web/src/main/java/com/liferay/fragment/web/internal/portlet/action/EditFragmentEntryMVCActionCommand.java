@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.web.internal.portlet.action;
 
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
@@ -100,7 +99,7 @@ public class EditFragmentEntryMVCActionCommand
 		draftFragmentEntry.setJs(js);
 		draftFragmentEntry.setConfiguration(configuration);
 
-		if (draftFragmentEntry.getType() == FragmentConstants.TYPE_INPUT) {
+		if (draftFragmentEntry.isTypeInput()) {
 			String[] fieldTypes = ParamUtil.getStringValues(
 				actionRequest, "fieldTypes");
 

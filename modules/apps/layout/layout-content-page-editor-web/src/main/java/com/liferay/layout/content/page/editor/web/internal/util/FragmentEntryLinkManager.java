@@ -44,6 +44,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -62,6 +63,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -156,20 +158,78 @@ public class FragmentEntryLinkManager {
 			defaultFragmentRendererContext.setInfoForm(
 				_getInfoForm(fragmentEntryLink, layoutStructure));
 
+			String content = _fragmentRendererController.render(
+				defaultFragmentRendererContext, httpServletRequest,
+				httpServletResponse);
+
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+
+			if (fragmentEntryLink.isTypePortlet()) {
+				String portletId = editableValuesJSONObject.getString(
+					"portletId");
+
+				return JSONUtil.put(
+					"comments",
+					_getFragmentEntryLinkCommentsJSONArray(
+						fragmentEntryLink, httpServletRequest)
+				).put(
+					"configuration", JSONFactoryUtil.createJSONObject()
+				).put(
+					"content", content
+				).put(
+					"cssClass",
+					LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
+						fragmentEntryLink)
+				).put(
+					"defaultConfigurationValues",
+					JSONFactoryUtil.createJSONObject()
+				).put(
+					"editableTypes", Collections.emptyMap()
+				).put(
+					"editableValues",
+					JSONFactoryUtil.createJSONObject(
+						fragmentEntryLink.getEditableValues())
+				).put(
+					"fragmentEntryId", 0
+				).put(
+					"fragmentEntryKey",
+					FragmentRendererConstants.
+						FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY
+				).put(
+					"fragmentEntryLinkId",
+					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
+				).put(
+					"fragmentEntryType",
+					FragmentConstants.getTypeLabel(
+						FragmentConstants.TYPE_PORTLET)
+				).put(
+					"name",
+					_portal.getPortletTitle(portletId, themeDisplay.getLocale())
+				).put(
+					"portletId", portletId
+				).put(
+					"segmentsExperienceId",
+					String.valueOf(fragmentEntryLink.getSegmentsExperienceId())
+				);
+			}
+
 			String configuration = _fragmentRendererController.getConfiguration(
 				defaultFragmentRendererContext);
+
+			JSONObject configurationJSONObject =
+				JSONFactoryUtil.createJSONObject(configuration);
+
+			FragmentEntryLinkItemSelectorUtil.
+				addFragmentEntryLinkFieldsSelectorURL(
+					_itemSelector, httpServletRequest, configurationJSONObject);
 
 			FragmentEntry fragmentEntry = _getFragmentEntry(
 				fragmentEntryLink, themeDisplay.getLocale());
 
 			String fragmentEntryKey = null;
 			String name = null;
-
-			JSONObject editableValuesJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues());
-
-			String portletId = editableValuesJSONObject.getString("portletId");
 
 			if (fragmentEntry != null) {
 				fragmentEntryKey = fragmentEntry.getFragmentEntryKey();
@@ -192,23 +252,7 @@ public class FragmentEntryLinkManager {
 
 					name = fragmentRenderer.getLabel(themeDisplay.getLocale());
 				}
-
-				if (Validator.isNotNull(portletId)) {
-					name = _portal.getPortletTitle(
-						portletId, themeDisplay.getLocale());
-				}
 			}
-
-			JSONObject configurationJSONObject =
-				JSONFactoryUtil.createJSONObject(configuration);
-
-			FragmentEntryLinkItemSelectorUtil.
-				addFragmentEntryLinkFieldsSelectorURL(
-					_itemSelector, httpServletRequest, configurationJSONObject);
-
-			String content = _fragmentRendererController.render(
-				defaultFragmentRendererContext, httpServletRequest,
-				httpServletResponse);
 
 			return JSONUtil.put(
 				"comments",
@@ -267,8 +311,6 @@ public class FragmentEntryLinkManager {
 				}
 			).put(
 				"name", name
-			).put(
-				"portletId", portletId
 			).put(
 				"segmentsExperienceId",
 				String.valueOf(fragmentEntryLink.getSegmentsExperienceId())

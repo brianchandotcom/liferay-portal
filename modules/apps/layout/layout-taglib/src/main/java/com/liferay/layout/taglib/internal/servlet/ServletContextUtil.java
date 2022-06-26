@@ -14,10 +14,9 @@
 
 package com.liferay.layout.taglib.internal.servlet;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.fragment.helper.FragmentEntryLinkHelper;
 import com.liferay.fragment.renderer.FragmentRendererController;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -55,20 +54,14 @@ public class ServletContextUtil {
 		return _collectionPaginationHelper;
 	}
 
-	public static String getContextPath() {
-		return _servletContext.getContextPath();
-	}
-
-	public static FragmentCollectionContributorTracker
-		getFragmentCollectionContributorTracker() {
-
-		return _fragmentCollectionContributorTracker;
-	}
-
 	public static FragmentEntryConfigurationParser
 		getFragmentEntryConfigurationParser() {
 
 		return _fragmentEntryConfigurationParser;
+	}
+
+	public static FragmentEntryLinkHelper getFragmentEntryLinkHelper() {
+		return _fragmentEntryLinkHelper;
 	}
 
 	public static FragmentEntryProcessorHelper
@@ -79,10 +72,6 @@ public class ServletContextUtil {
 
 	public static FragmentRendererController getFragmentRendererController() {
 		return _fragmentRendererController;
-	}
-
-	public static FragmentRendererTracker getFragmentRendererTracker() {
-		return _fragmentRendererTracker;
 	}
 
 	public static FrontendTokenDefinitionRegistry
@@ -187,19 +176,17 @@ public class ServletContextUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setFragmentCollectionContributorTracker(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker) {
-
-		_fragmentCollectionContributorTracker =
-			fragmentCollectionContributorTracker;
-	}
-
-	@Reference(unbind = "-")
 	protected void setFragmentEntryConfigurationParser(
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser) {
 
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
+	}
+
+	@Reference(unbind = "-")
+	protected void setFragmentEntryLinkHelper(
+		FragmentEntryLinkHelper fragmentEntryLinkHelper) {
+
+		_fragmentEntryLinkHelper = fragmentEntryLinkHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -214,13 +201,6 @@ public class ServletContextUtil {
 		FragmentRendererController fragmentRendererController) {
 
 		_fragmentRendererController = fragmentRendererController;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFragmentRendererTracker(
-		FragmentRendererTracker fragmentRendererTracker) {
-
-		_fragmentRendererTracker = fragmentRendererTracker;
 	}
 
 	@Reference(unbind = "-")
@@ -302,13 +282,11 @@ public class ServletContextUtil {
 	}
 
 	private static CollectionPaginationHelper _collectionPaginationHelper;
-	private static FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
 	private static FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
+	private static FragmentEntryLinkHelper _fragmentEntryLinkHelper;
 	private static FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
 	private static FragmentRendererController _fragmentRendererController;
-	private static FragmentRendererTracker _fragmentRendererTracker;
 	private static FrontendTokenDefinitionRegistry
 		_frontendTokenDefinitionRegistry;
 	private static InfoItemServiceTracker _infoItemServiceTracker;

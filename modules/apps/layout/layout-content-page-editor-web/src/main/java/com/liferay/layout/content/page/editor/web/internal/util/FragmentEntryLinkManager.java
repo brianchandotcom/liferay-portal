@@ -18,6 +18,7 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
+import com.liferay.fragment.helper.FragmentEntryLinkHelper;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerTracker;
 import com.liferay.fragment.model.FragmentEntry;
@@ -228,32 +229,6 @@ public class FragmentEntryLinkManager {
 			FragmentEntry fragmentEntry = _getFragmentEntry(
 				fragmentEntryLink, themeDisplay.getLocale());
 
-			String fragmentEntryKey = null;
-			String name = null;
-
-			if (fragmentEntry != null) {
-				fragmentEntryKey = fragmentEntry.getFragmentEntryKey();
-				name = fragmentEntry.getName();
-			}
-			else {
-				String rendererKey = fragmentEntryLink.getRendererKey();
-
-				if (Validator.isNull(rendererKey)) {
-					rendererKey =
-						FragmentRendererConstants.
-							FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY;
-				}
-
-				FragmentRenderer fragmentRenderer =
-					_fragmentRendererTracker.getFragmentRenderer(rendererKey);
-
-				if (fragmentRenderer != null) {
-					fragmentEntryKey = fragmentRenderer.getKey();
-
-					name = fragmentRenderer.getLabel(themeDisplay.getLocale());
-				}
-			}
-
 			return JSONUtil.put(
 				"comments",
 				_getFragmentEntryLinkCommentsJSONArray(
@@ -285,7 +260,30 @@ public class FragmentEntryLinkManager {
 					return 0;
 				}
 			).put(
-				"fragmentEntryKey", fragmentEntryKey
+				"fragmentEntryKey",
+				() -> {
+					if (fragmentEntry != null) {
+						return fragmentEntry.getFragmentEntryKey();
+					}
+
+					String rendererKey = fragmentEntryLink.getRendererKey();
+
+					if (Validator.isNull(rendererKey)) {
+						rendererKey =
+							FragmentRendererConstants.
+								FRAGMENT_ENTRY_FRAGMENT_RENDERER_KEY;
+					}
+
+					FragmentRenderer fragmentRenderer =
+						_fragmentRendererTracker.getFragmentRenderer(
+							rendererKey);
+
+					if (fragmentRenderer != null) {
+						return fragmentRenderer.getKey();
+					}
+
+					return StringPool.BLANK;
+				}
 			).put(
 				"fragmentEntryLinkId",
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
@@ -310,7 +308,9 @@ public class FragmentEntryLinkManager {
 					return null;
 				}
 			).put(
-				"name", name
+				"name",
+				_fragmentEntryLinkHelper.getFragmentEntryName(
+					fragmentEntryLink, themeDisplay.getLocale())
 			).put(
 				"segmentsExperienceId",
 				String.valueOf(fragmentEntryLink.getSegmentsExperienceId())
@@ -466,6 +466,9 @@ public class FragmentEntryLinkManager {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private FragmentEntryLinkHelper _fragmentEntryLinkHelper;
 
 	@Reference
 	private FragmentEntryLinkListenerTracker _fragmentEntryLinkListenerTracker;

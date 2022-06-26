@@ -149,7 +149,7 @@ public class UpgradeCTSchemaVersionTest {
 	private static CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Inject(
-		filter = "(&(component.name=com.liferay.change.tracking.internal.upgrade.ChangeTrackingServiceUpgrade))"
+		filter = "(&(component.name=com.liferay.change.tracking.internal.upgrade.registry.ChangeTrackingServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 

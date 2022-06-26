@@ -798,7 +798,7 @@ public class ContentTargetingUpgradeProcessTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.segments.content.targeting.upgrade.internal.v1_0_0." +
+		"com.liferay.segments.content.targeting.internal.upgrade.v1_0_0." +
 			"ContentTargetingUpgradeProcess";
 
 	private static DB _db;
@@ -818,7 +818,7 @@ public class ContentTargetingUpgradeProcessTest {
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.segments.content.targeting.upgrade.internal.SegmentsContentTargetingUpgrade"
+		filter = "component.name=com.liferay.segments.content.targeting.internal.upgrade.registry.SegmentsContentTargetingServiceUpgradeStepRegistrator"
 	)
 	private UpgradeStepRegistrator _upgradeStepRegistror;
 

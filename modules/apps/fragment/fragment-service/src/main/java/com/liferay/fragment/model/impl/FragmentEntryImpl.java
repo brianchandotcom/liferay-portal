@@ -144,6 +144,42 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	}
 
 	@Override
+	public boolean isTypeComponent() {
+		if (getType() == FragmentConstants.TYPE_COMPONENT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isTypeInput() {
+		if (getType() == FragmentConstants.TYPE_INPUT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isTypeReact() {
+		if (getType() == FragmentConstants.TYPE_REACT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isTypeSection() {
+		if (getType() == FragmentConstants.TYPE_SECTION) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public void populateZipWriter(ZipWriter zipWriter, String path)
 		throws Exception {
 

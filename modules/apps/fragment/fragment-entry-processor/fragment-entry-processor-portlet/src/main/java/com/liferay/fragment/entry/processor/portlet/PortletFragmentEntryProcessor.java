@@ -140,10 +140,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
-		Document document = _getDocument(html);
-
-		_validateFragmentEntryHTMLDocument(document);
-
 		HttpServletRequest httpServletRequest =
 			fragmentEntryProcessorContext.getHttpServletRequest();
 
@@ -157,6 +153,10 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				fragmentEntryLink.getEditableValues(),
 				fragmentEntryProcessorContext);
 		}
+
+		Document document = _getDocument(html);
+
+		_validateFragmentEntryHTMLDocument(document);
 
 		Set<String> processedPortletIds = new HashSet<>();
 

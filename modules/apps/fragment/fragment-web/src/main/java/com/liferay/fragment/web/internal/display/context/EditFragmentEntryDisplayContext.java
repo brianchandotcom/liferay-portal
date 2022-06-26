@@ -15,7 +15,6 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.configuration.FragmentServiceConfiguration;
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
@@ -284,9 +283,7 @@ public class EditFragmentEntryDisplayContext {
 
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
-		if ((fragmentEntry == null) ||
-			(fragmentEntry.getType() != FragmentConstants.TYPE_INPUT)) {
-
+		if ((fragmentEntry == null) || !fragmentEntry.isTypeInput()) {
 			return jsonArray;
 		}
 
@@ -341,9 +338,7 @@ public class EditFragmentEntryDisplayContext {
 
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
-		if ((fragmentEntry == null) ||
-			(fragmentEntry.getType() != FragmentConstants.TYPE_INPUT)) {
-
+		if ((fragmentEntry == null) || !fragmentEntry.isTypeInput()) {
 			return jsonArray;
 		}
 
@@ -567,7 +562,7 @@ public class EditFragmentEntryDisplayContext {
 	private boolean _isCacheableEnabled() {
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
-		if (fragmentEntry.getType() != FragmentConstants.TYPE_INPUT) {
+		if (!fragmentEntry.isTypeInput()) {
 			return true;
 		}
 
@@ -636,9 +631,7 @@ public class EditFragmentEntryDisplayContext {
 
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
-		if ((fragmentEntry == null) ||
-			(FragmentConstants.TYPE_INPUT != fragmentEntry.getType())) {
-
+		if ((fragmentEntry == null) || !fragmentEntry.isTypeInput()) {
 			return false;
 		}
 

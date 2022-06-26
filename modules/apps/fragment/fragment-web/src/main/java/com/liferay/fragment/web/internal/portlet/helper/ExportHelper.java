@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.web.internal.portlet.helper;
 
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
@@ -71,7 +70,7 @@ public class ExportHelper {
 			}
 
 			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				if (fragmentEntry.getType() == FragmentConstants.TYPE_REACT) {
+				if (fragmentEntry.isTypeReact()) {
 					continue;
 				}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.exception.NoSuchEntryLinkException;
@@ -312,7 +311,7 @@ public class DuplicateItemMVCActionCommand
 				namespace);
 		}
 
-		if (fragmentEntryLink.getType() == FragmentConstants.TYPE_INPUT) {
+		if (fragmentEntryLink.isTypeInput()) {
 			JSONObject freemarkerFragmentEntryProcessorJSONObject =
 				editableValuesJSONObject.getJSONObject(
 					FragmentEntryProcessorConstants.

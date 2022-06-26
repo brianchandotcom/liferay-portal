@@ -186,7 +186,7 @@ public class AddPortletMVCActionCommand
 				0, segmentsExperienceId, themeDisplay.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, editableValueJSONObject.toString(), namespace,
-				0, null, FragmentConstants.TYPE_COMPONENT, serviceContext);
+				0, null, FragmentConstants.TYPE_PORTLET, serviceContext);
 
 		JSONObject jsonObject = _addFragmentEntryLinkToLayoutData(
 			actionRequest, fragmentEntryLink.getFragmentEntryLinkId());

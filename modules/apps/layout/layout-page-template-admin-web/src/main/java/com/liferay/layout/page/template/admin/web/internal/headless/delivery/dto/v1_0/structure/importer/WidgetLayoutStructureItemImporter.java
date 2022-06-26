@@ -203,7 +203,7 @@ public class WidgetLayoutStructureItemImporter
 			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK,
 			editableValueJSONObject.toString(), widgetInstanceId, 0, null,
-			FragmentConstants.TYPE_COMPONENT,
+			FragmentConstants.TYPE_PORTLET,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

@@ -227,7 +227,7 @@ public class LayoutCrawlerTest {
 					"portletId", AssetPublisherPortletKeys.RECENT_CONTENT
 				).toString(),
 				StringPool.BLANK, 0, StringPool.BLANK,
-				FragmentConstants.TYPE_COMPONENT, serviceContext);
+				FragmentConstants.TYPE_PORTLET, serviceContext);
 
 		layoutStructure.addFragmentStyledLayoutStructureItem(
 			widgetFragmentEntryLink.getFragmentEntryLinkId(),

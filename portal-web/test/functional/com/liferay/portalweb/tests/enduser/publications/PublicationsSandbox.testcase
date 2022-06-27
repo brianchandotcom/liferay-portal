@@ -111,7 +111,7 @@ definition {
 		var sandboxedPublicationName3 = Publications.getSandboxedPublicationName(userScreenName = "usersn");
 
 		Publications.viewSandboxedPublication(
-			sandboxedPublicationName = "${sandboxedPublicationName2}",
+			sandboxedPublicationName = "${sandboxedPublicationName3}",
 			sandboxedUser = "true");
 	}
 

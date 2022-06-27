@@ -48,7 +48,7 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 		label: '',
 		name: undefined,
 		pluralLabel: '',
-		storageType: 'default',
+		storageType: storageTypes[0],
 	};
 	const [error, setError] = useState<string>('');
 
@@ -123,8 +123,9 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 	const selectedStorageType = (storageType: string) => {
 		const selected = storageType.toLowerCase();
 
-		return storageTypes.findIndex(
-			(type) => type.toLowerCase() === selected
+		return (
+			storageTypes.findIndex((type) => type.toLowerCase() === selected) +
+			1
 		);
 	};
 

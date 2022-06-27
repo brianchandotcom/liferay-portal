@@ -67,6 +67,11 @@ public class MBSuspiciousActivityLocalServiceWrapper
 			userId, messageId, description, type);
 	}
 
+	@Override
+	public int countAll() {
+		return _mbSuspiciousActivityLocalService.countAll();
+	}
+
 	/**
 	 * Creates a new message boards suspicious activity with the primary key. Does not add the message boards suspicious activity to the database.
 	 *
@@ -271,6 +276,28 @@ public class MBSuspiciousActivityLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBSuspiciousActivity> findAll() {
+		return _mbSuspiciousActivityLocalService.findAll();
+	}
+
+	@Override
+	public MBSuspiciousActivity findByPrimaryKey(long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.findByPrimaryKey(
+			suspiciousActivityId);
+	}
+
+	@Override
+	public MBSuspiciousActivity findByU_M(long userId, long messageId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.findByU_M(userId, messageId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -416,6 +443,14 @@ public class MBSuspiciousActivityLocalServiceWrapper
 
 		return _mbSuspiciousActivityLocalService.getPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public MBSuspiciousActivity remove(long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.remove(suspiciousActivityId);
 	}
 
 	/**

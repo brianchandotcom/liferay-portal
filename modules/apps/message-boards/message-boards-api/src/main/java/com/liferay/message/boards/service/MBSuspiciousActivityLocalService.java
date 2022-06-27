@@ -233,8 +233,12 @@ public interface MBSuspiciousActivityLocalService
 
 	public List<MBSuspiciousActivity> findAll();
 
+	public List<MBSuspiciousActivity> findByMessagedId(long messageId);
+
 	public MBSuspiciousActivity findByPrimaryKey(long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException;
+
+	public List<MBSuspiciousActivity> findByThreadId(long threadId);
 
 	public MBSuspiciousActivity findByU_M(long userId, long messageId)
 		throws NoSuchSuspiciousActivityException;

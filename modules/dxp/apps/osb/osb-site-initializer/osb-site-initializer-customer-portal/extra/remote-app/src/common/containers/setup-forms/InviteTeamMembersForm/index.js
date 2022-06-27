@@ -60,7 +60,7 @@ const InviteTeamMembersPage = ({
 		{error: associateUserAccountError},
 	] = useMutation(associateUserAccountWithAccountAndAccountRole);
 
-	const [baseButtonDisabled, setBaseButtonDisabled] = useState();
+	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [hasInitialError, setInitialError] = useState();
 	const [accountMemberRole, setAccountMemberRole] = useState();
 	const [accountRolesOptions, setAccountRolesOptions] = useState([]);

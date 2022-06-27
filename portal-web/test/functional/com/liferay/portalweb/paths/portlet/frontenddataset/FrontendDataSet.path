@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MANAGEMENT_BAR</td>
+	<td>//div[contains(@class,'data-set-management-bar')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STATUS_FILTER_CHECKBOX</td>
 	<td>//div[@class='dropdown-menu show']//*[@type="checkbox" and @aria-label='${key_status}']</td>
 	<td></td>

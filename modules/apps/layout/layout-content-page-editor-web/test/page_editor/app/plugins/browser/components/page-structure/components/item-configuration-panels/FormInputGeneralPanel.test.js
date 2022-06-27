@@ -23,10 +23,11 @@ import {VIEWPORT_SIZES} from '../../../../../../../../../src/main/resources/META
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {FormInputGeneralPanel} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/item-configuration-panels/FormInputGeneralPanel';
 
-const FRAGMENT_ENTRY_LINK_ID = '1';
+const FRAGMENT_ENTRY_LINK_ID_1 = '1';
+const FRAGMENT_ENTRY_LINK_ID_2 = '2';
 
 const FORM_ITEM = {
-	children: [],
+	children: ['input-item-1', 'input-item-2'],
 	config: {
 		classNameId: 'classNameId',
 		classTypeId: 'classTypeId',
@@ -36,12 +37,22 @@ const FORM_ITEM = {
 	type: LAYOUT_DATA_ITEM_TYPES.form,
 };
 
-const INPUT_ITEM = {
+const INPUT_ITEM_1 = {
 	children: [],
 	config: {
-		fragmentEntryLinkId: FRAGMENT_ENTRY_LINK_ID,
+		fragmentEntryLinkId: FRAGMENT_ENTRY_LINK_ID_1,
 	},
-	itemId: 'input-item',
+	itemId: 'input-item-1',
+	parentId: 'form-item',
+	type: LAYOUT_DATA_ITEM_TYPES.fragment,
+};
+
+const INPUT_ITEM_2 = {
+	children: [],
+	config: {
+		fragmentEntryLinkId: FRAGMENT_ENTRY_LINK_ID_2,
+	},
+	itemId: 'input-item-2',
 	parentId: 'form-item',
 	type: LAYOUT_DATA_ITEM_TYPES.fragment,
 };
@@ -80,6 +91,7 @@ jest.mock(
 const renderComponent = ({
 	fragmentEntryKey = 'textFragment',
 	mappedFieldId,
+	item = INPUT_ITEM_1,
 } = {}) => {
 	const mockDispatch = jest.fn((a) => {
 		if (typeof a === 'function') {
@@ -89,7 +101,7 @@ const renderComponent = ({
 
 	const state = {
 		fragmentEntryLinks: {
-			[FRAGMENT_ENTRY_LINK_ID]: {
+			[FRAGMENT_ENTRY_LINK_ID_1]: {
 				comments: [],
 				configuration: {},
 				editableValues: {
@@ -98,7 +110,17 @@ const renderComponent = ({
 					},
 				},
 				fragmentEntryKey,
-				fragmentEntryLinkId: FRAGMENT_ENTRY_LINK_ID,
+				fragmentEntryType: 'input',
+				name: 'Fragment',
+			},
+			[FRAGMENT_ENTRY_LINK_ID_2]: {
+				comments: [],
+				configuration: {},
+				editableValues: {
+					[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR]: {},
+				},
+				fragmentEntryKey,
+				fragmentEntryType: 'input',
 				name: 'Fragment',
 			},
 		},
@@ -106,7 +128,8 @@ const renderComponent = ({
 		layoutData: {
 			items: {
 				[FORM_ITEM.itemId]: FORM_ITEM,
-				[INPUT_ITEM.itemId]: INPUT_ITEM,
+				[INPUT_ITEM_1.itemId]: INPUT_ITEM_1,
+				[INPUT_ITEM_2.itemId]: INPUT_ITEM_2,
 			},
 		},
 		permissions: {UPDATE: true},
@@ -115,7 +138,7 @@ const renderComponent = ({
 
 	return render(
 		<StoreAPIContextProvider dispatch={mockDispatch} getState={() => state}>
-			<FormInputGeneralPanel item={INPUT_ITEM} />
+			<FormInputGeneralPanel item={item} />
 		</StoreAPIContextProvider>
 	);
 };
@@ -137,6 +160,18 @@ describe('FormInputGeneralPanel', () => {
 		renderComponent();
 
 		expect(screen.getByLabelText('field')).toBeInTheDocument();
+	});
+
+	it('shows in the field selector only unmapped options', () => {
+		renderComponent({
+			item: INPUT_ITEM_2,
+			mappedFieldId: 'notRequiredField',
+		});
+
+		expect(screen.queryByText('Required Field*')).toBeInTheDocument();
+		expect(
+			screen.queryByText('Not Required Field')
+		).not.toBeInTheDocument();
 	});
 
 	it('does not show configuration fieldset when fragment is not mapped', () => {

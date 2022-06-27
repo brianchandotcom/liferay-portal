@@ -66,11 +66,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ICON_VIEW_METRICS</td>
-	<td>//button[contains(@title,'View Metrics')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INSTRUCTIONS_SYNC_AC</td>
 	<td>//*[contains(@class,'font-weight') and contains(text(),'Sync to Liferay Analytics Cloud')]</td>
 	<td></td>

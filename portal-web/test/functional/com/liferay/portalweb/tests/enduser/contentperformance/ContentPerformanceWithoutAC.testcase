@@ -239,7 +239,7 @@ definition {
 				panel = "Applications",
 				portlet = "Content Dashboard");
 
-			ContentPerformance.showMetricsButton();
+			ContentDashboard.openViewMetricsByIcon();
 		}
 
 		task ("Check if elements present") {

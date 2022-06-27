@@ -487,6 +487,23 @@ definition {
 		}
 	}
 
+	macro openViewMetricsByIcon {
+		if (isSet(assetName)) {
+			Click.clickNoMouseOver(
+				key_assetName = "${assetName}",
+				locator1 = "ContentDashboard#ROW_PANEL_ASSET_NAME");
+		}
+		else {
+			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+		}
+
+		Click.javaScriptClick(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
+
+		while (IsNotVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL")) {
+			WaitForElementPresent(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
+		}
+	}
+
 	macro orderByModificationDate {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(

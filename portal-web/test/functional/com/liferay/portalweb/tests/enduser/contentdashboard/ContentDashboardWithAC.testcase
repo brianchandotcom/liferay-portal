@@ -84,11 +84,7 @@ definition {
 		task ("Go to Content Dashboard and click on View Metrics") {
 			ContentDashboard.goToContentDashboard();
 
-			MouseOver(
-				key_individualAttribute = "DM Document Title",
-				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
-
-			Click.javaScriptClick(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			ContentDashboard.openViewMetricsByIcon(assetTitle = "DM Document Title");
 		}
 
 		task ("Assert the Content Performance is present") {
@@ -351,11 +347,7 @@ definition {
 		task ("Go to Content Dashboard and click on View Mtrics") {
 			ContentDashboard.goToContentDashboard();
 
-			MouseOver(
-				key_individualAttribute = "DM Document Title",
-				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
-
-			Click.javaScriptClick(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			ContentDashboard.openViewMetricsByIcon(assetTitle = "DM Document Title");
 		}
 
 		task ("Assert the Content Performance is present") {

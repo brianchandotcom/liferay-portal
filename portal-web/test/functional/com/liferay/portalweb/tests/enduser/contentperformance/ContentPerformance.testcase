@@ -990,7 +990,7 @@ definition {
 
 			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
-			AssertVisible(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			AssertVisible(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
 		}
 
 		task ("Login with Test user, to allow tearDown") {
@@ -1082,7 +1082,7 @@ definition {
 
 			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
-			AssertVisible(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			AssertVisible(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
 		}
 
 		task ("Login with Test user, to allow tearDown") {
@@ -1165,7 +1165,7 @@ definition {
 
 			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
-			AssertElementNotPresent(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			AssertElementNotPresent(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
 		}
 
 		task ("Login with Test user, to allow tearDown") {
@@ -1252,7 +1252,7 @@ definition {
 
 			Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
-			AssertVisible(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			AssertVisible(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
 		}
 
 		task ("Login with Test user, to allow tearDown") {

@@ -1002,6 +1002,13 @@ definition {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
+		task ("Create a pending Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WebcontentContent",
+				groupName = "Test Site Name",
+				title = "Approved Web Content Title");
+		}
+
 		task ("Configure Web Content Article workflow to Single Approver") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
@@ -1012,27 +1019,37 @@ definition {
 				workflowResourceValue = "Web Content Article");
 		}
 
-		task ("Create a Web Content") {
+		task ("Create a pending Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Webcontent Content",
 				groupName = "Test Site Name",
-				title = "Webcontent Title");
+				title = "Pending Web Content Title");
 		}
 
 		task ("Navigate to Content Dashboard") {
 			ContentDashboard.goToContentDashboard();
 		}
 
-		task ("Check that Metrics icon is not present") {
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
+		task ("Chech that Metrics is present for approved asset") {
+			Click.clickNoMouseOver(
+				key_assetName = "Approved Web Content Title",
+				locator1 = "ContentDashboard#ROW_PANEL_ASSET_NAME");
 
-			AssertElementNotPresent(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			AssertVisible(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
 		}
 
-		task ("Check that Metrics option is not present at dropdown") {
+		task ("Check that Metrics icon is not present for pending asset") {
+			Click.clickNoMouseOver(
+				key_assetName = "Pending Web Content Title",
+				locator1 = "ContentDashboard#ROW_PANEL_ASSET_NAME");
+
+			AssertNotVisible(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
+		}
+
+		task ("Check that Metrics option is not present at dropdown for pending asset") {
 			Click(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
 
-			AssertElementNotPresent(locator1 = "ContentDashboard#VIEW_OPTION");
+			AssertNotVisible(locator1 = "ContentDashboard#VIEW_OPTION");
 		}
 	}
 

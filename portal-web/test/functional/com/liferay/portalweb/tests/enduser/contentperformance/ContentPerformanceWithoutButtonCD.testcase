@@ -62,9 +62,7 @@ definition {
 		task ("Check in Content Dashboard and open Content Performance Panel") {
 			ContentDashboard.goToContentDashboard();
 
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
-
-			Click(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			ContentDashboard.openViewMetricsByIcon();
 		}
 
 		task ("Check at panel that DXP is not connected to AC") {
@@ -82,7 +80,7 @@ definition {
 		task ("Assert the Metrics button is not shown anymore") {
 			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
-			AssertElementNotPresent(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			AssertElementNotPresent(locator1 = "ContentDashboard#ICON_VIEW_METRICS");
 		}
 
 		task ("Launch AC and get Token") {
@@ -104,9 +102,7 @@ definition {
 		task ("Check in Content Dashboard and open Content Performance Panel") {
 			ContentDashboard.goToContentDashboard();
 
-			Click.clickNoMouseOver(locator1 = "ContentDashboard#ROW_PANEL_WC");
-
-			Click.javaScriptClick(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+			ContentDashboard.openViewMetricsByIcon();
 		}
 
 		task ("Assert the button is not present and the message are present") {

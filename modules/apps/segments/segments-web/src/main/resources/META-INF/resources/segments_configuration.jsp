@@ -36,6 +36,12 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 	</h2>
 
 	<aui:form action="<%= segmentsCompanyConfigurationDisplayContext.getBindConfigurationActionURL() %>" method="post" name="fm">
+		<c:if test="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentsCompanyConfigurationDefined() %>">
+			<aui:alert closeable="<%= false %>" id="errorAlert" type="info">
+				<liferay-ui:message key="this-configuration-is-not-saved-yet.-the-values-shown-are-the-default" />
+			</aui:alert>
+		</c:if>
+
 		<div class="form-group">
 			<c:choose>
 				<c:when test="<%= segmentsCompanyConfigurationDisplayContext.isSegmentationChecked() || !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>">

@@ -125,6 +125,7 @@ export default function GlobalCSSCETsConfiguration({
 									<OptionsButton
 										globalCSSCET={globalCSSCET}
 										onDeleteButtonClick={deleteGlobalCSSCET}
+										portletNamespace={portletNamespace}
 									/>
 								</ClayTable.Cell>
 							</ClayTable.Row>
@@ -140,7 +141,10 @@ export default function GlobalCSSCETsConfiguration({
 	);
 }
 
-function OptionsButton({globalCSSCET, onDeleteButtonClick}) {
+function OptionsButton({globalCSSCET, onDeleteButtonClick, portletNamespace}) {
+	const buttonId = `${portletNamespace}_GlobalCSSCETsConfigurationOptionsButton_${globalCSSCET.cetExternalReferenceCode}`;
+	const [active, setActive] = useState(false);
+
 	const getDropDownItems = (globalCSSCET) => {
 		return [
 			{
@@ -153,10 +157,17 @@ function OptionsButton({globalCSSCET, onDeleteButtonClick}) {
 
 	return (
 		<ClayDropDownWithItems
+			active={active}
 			items={getDropDownItems(globalCSSCET)}
+			menuElementAttrs={{'aria-labelledby': buttonId, 'role': 'menu'}}
+			onActiveChange={setActive}
 			trigger={
 				<ClayButtonWithIcon
+					aria-expanded={active.toString()}
+					aria-haspopup="true"
+					aria-label={Liferay.Language.get('show-options')}
 					displayType="unstyled"
+					id={buttonId}
 					small
 					symbol="ellipsis-v"
 				/>

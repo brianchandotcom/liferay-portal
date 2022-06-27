@@ -338,4 +338,77 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test DeletedObjectDoesNotAppearInManyToManyRelationshipDetailsNestedFields_2 {
+		property portal.acceptance = "true";
+
+		task ("Given manyToMany relationship universitySubjects created") {
+			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
+			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
+
+			var relationshipName = ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "universitiesSubjects",
+				name = "universitiesSubjects",
+				objectDefinitionId1 = "${objectDefinitionId1}",
+				objectDefinitionId2 = "${objectDefinitionId2}",
+				type = "manyToMany");
+		}
+
+		task ("Given university entry created") {
+			var universityId1 = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay First University");
+			var universityId2 = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay Second University");
+			var universityId3 = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay Third University");
+		}
+
+		task ("Given subject entry created") {
+			var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "Liferay Foundations");
+		}
+
+		task ("When I relate subject entry with all three universities through universities PUT endpoint") {
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${universityId1}",
+				objectEntry2 = "${subjectId}",
+				relationshipName = "universitiesSubjects");
+
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${universityId2}",
+				objectEntry2 = "${subjectId}",
+				relationshipName = "universitiesSubjects");
+
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${universityId3}",
+				objectEntry2 = "${subjectId}",
+				relationshipName = "universitiesSubjects");
+		}
+
+		task ("When deleting one of the universities") {
+			ObjectDefinitionAPI.deleteObjectEntry(
+				en_US_plural_label = "universities",
+				objectEntryId = "${universityId1}");
+		}
+
+		task ("Then receiving correct information about the related objects in universities GET endpoint with nestedFields=universitiesSubjects") {
+			var responseToParse = ObjectDefinitionAPI.getObjectsWithNestedField(
+				nestedField = "universitiesSubjects",
+				objects = "universities");
+
+			ObjectDefinitionAPI.assertResponseIncludeCorrectDetailsOfNotDeletedObject(
+				expectedValue = "Liferay Foundations,Liferay Foundations",
+				responseToParse = "${responseToParse}",
+				subjectId = "${subjectId}");
+		}
+	}
+
 }

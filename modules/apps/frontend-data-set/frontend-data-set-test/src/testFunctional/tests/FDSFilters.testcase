@@ -134,7 +134,7 @@ definition {
 	}
 
 	@description = "LPS-155303. Assert management bar will render."
-	@priority = "5"
+	@priority = "3"
 	test ManagementBarWillRender {
 		task ("Then the Management Bar will be displayed correctly") {
 			AssertElementPresent(locator1 = "FrontendDataSet#MANAGEMENT_BAR");

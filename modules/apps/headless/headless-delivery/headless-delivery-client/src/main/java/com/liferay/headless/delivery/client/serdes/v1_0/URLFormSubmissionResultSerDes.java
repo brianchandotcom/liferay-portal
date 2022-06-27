@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.FormConfig;
+import com.liferay.headless.delivery.client.dto.v1_0.URLFormSubmissionResult;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,26 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FormConfigSerDes {
+public class URLFormSubmissionResultSerDes {
 
-	public static FormConfig toDTO(String json) {
-		FormConfigJSONParser formConfigJSONParser = new FormConfigJSONParser();
+	public static URLFormSubmissionResult toDTO(String json) {
+		URLFormSubmissionResultJSONParser urlFormSubmissionResultJSONParser =
+			new URLFormSubmissionResultJSONParser();
 
-		return formConfigJSONParser.parseToDTO(json);
+		return urlFormSubmissionResultJSONParser.parseToDTO(json);
 	}
 
-	public static FormConfig[] toDTOs(String json) {
-		FormConfigJSONParser formConfigJSONParser = new FormConfigJSONParser();
+	public static URLFormSubmissionResult[] toDTOs(String json) {
+		URLFormSubmissionResultJSONParser urlFormSubmissionResultJSONParser =
+			new URLFormSubmissionResultJSONParser();
 
-		return formConfigJSONParser.parseToDTOs(json);
+		return urlFormSubmissionResultJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FormConfig formConfig) {
-		if (formConfig == null) {
+	public static String toJSON(
+		URLFormSubmissionResult urlFormSubmissionResult) {
+
+		if (urlFormSubmissionResult == null) {
 			return "null";
 		}
 
@@ -53,37 +57,20 @@ public class FormConfigSerDes {
 
 		sb.append("{");
 
-		if (formConfig.getFormReference() != null) {
+		if (urlFormSubmissionResult.getUrl() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"formReference\": ");
+			sb.append("\"url\": ");
 
-			if (formConfig.getFormReference() instanceof String) {
+			if (urlFormSubmissionResult.getUrl() instanceof String) {
 				sb.append("\"");
-				sb.append((String)formConfig.getFormReference());
-				sb.append("\"");
-			}
-			else {
-				sb.append(formConfig.getFormReference());
-			}
-		}
-
-		if (formConfig.getFormSuccessSubmissionResult() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"formSuccessSubmissionResult\": ");
-
-			if (formConfig.getFormSuccessSubmissionResult() instanceof String) {
-				sb.append("\"");
-				sb.append((String)formConfig.getFormSuccessSubmissionResult());
+				sb.append((String)urlFormSubmissionResult.getUrl());
 				sb.append("\"");
 			}
 			else {
-				sb.append(formConfig.getFormSuccessSubmissionResult());
+				sb.append(urlFormSubmissionResult.getUrl());
 			}
 		}
 
@@ -93,66 +80,52 @@ public class FormConfigSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FormConfigJSONParser formConfigJSONParser = new FormConfigJSONParser();
+		URLFormSubmissionResultJSONParser urlFormSubmissionResultJSONParser =
+			new URLFormSubmissionResultJSONParser();
 
-		return formConfigJSONParser.parseToMap(json);
+		return urlFormSubmissionResultJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(FormConfig formConfig) {
-		if (formConfig == null) {
+	public static Map<String, String> toMap(
+		URLFormSubmissionResult urlFormSubmissionResult) {
+
+		if (urlFormSubmissionResult == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (formConfig.getFormReference() == null) {
-			map.put("formReference", null);
+		if (urlFormSubmissionResult.getUrl() == null) {
+			map.put("url", null);
 		}
 		else {
-			map.put(
-				"formReference", String.valueOf(formConfig.getFormReference()));
-		}
-
-		if (formConfig.getFormSuccessSubmissionResult() == null) {
-			map.put("formSuccessSubmissionResult", null);
-		}
-		else {
-			map.put(
-				"formSuccessSubmissionResult",
-				String.valueOf(formConfig.getFormSuccessSubmissionResult()));
+			map.put("url", String.valueOf(urlFormSubmissionResult.getUrl()));
 		}
 
 		return map;
 	}
 
-	public static class FormConfigJSONParser
-		extends BaseJSONParser<FormConfig> {
+	public static class URLFormSubmissionResultJSONParser
+		extends BaseJSONParser<URLFormSubmissionResult> {
 
 		@Override
-		protected FormConfig createDTO() {
-			return new FormConfig();
+		protected URLFormSubmissionResult createDTO() {
+			return new URLFormSubmissionResult();
 		}
 
 		@Override
-		protected FormConfig[] createDTOArray(int size) {
-			return new FormConfig[size];
+		protected URLFormSubmissionResult[] createDTOArray(int size) {
+			return new URLFormSubmissionResult[size];
 		}
 
 		@Override
 		protected void setField(
-			FormConfig formConfig, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			URLFormSubmissionResult urlFormSubmissionResult,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "formReference")) {
+			if (Objects.equals(jsonParserFieldName, "url")) {
 				if (jsonParserFieldValue != null) {
-					formConfig.setFormReference((Object)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "formSuccessSubmissionResult")) {
-
-				if (jsonParserFieldValue != null) {
-					formConfig.setFormSuccessSubmissionResult(
+					urlFormSubmissionResult.setUrl(
 						(Object)jsonParserFieldValue);
 				}
 			}

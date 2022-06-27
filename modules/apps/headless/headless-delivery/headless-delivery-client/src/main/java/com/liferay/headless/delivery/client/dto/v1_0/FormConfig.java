@@ -55,6 +55,31 @@ public class FormConfig implements Cloneable, Serializable {
 
 	protected Object formReference;
 
+	public Object getFormSuccessSubmissionResult() {
+		return formSuccessSubmissionResult;
+	}
+
+	public void setFormSuccessSubmissionResult(
+		Object formSuccessSubmissionResult) {
+
+		this.formSuccessSubmissionResult = formSuccessSubmissionResult;
+	}
+
+	public void setFormSuccessSubmissionResult(
+		UnsafeSupplier<Object, Exception>
+			formSuccessSubmissionResultUnsafeSupplier) {
+
+		try {
+			formSuccessSubmissionResult =
+				formSuccessSubmissionResultUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Object formSuccessSubmissionResult;
+
 	@Override
 	public FormConfig clone() throws CloneNotSupportedException {
 		return (FormConfig)super.clone();

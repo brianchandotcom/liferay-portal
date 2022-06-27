@@ -78,6 +78,17 @@ public class SegmentsCompanyConfigurationDisplayContext {
 		return _segmentsConfigurationProvider.isSegmentationEnabled();
 	}
 
+	public boolean isSegmentsCompanyConfigurationDefined()
+		throws ConfigurationException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _segmentsConfigurationProvider.
+			isSegmentsCompanyConfigurationDefined(themeDisplay.getCompanyId());
+	}
+
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;

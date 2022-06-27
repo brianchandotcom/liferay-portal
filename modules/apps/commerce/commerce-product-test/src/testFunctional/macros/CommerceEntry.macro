@@ -169,7 +169,7 @@ definition {
 			Button.clickSave();
 		}
 
-		WaitForElementPresent();
+		WaitForPageLoad();
 	}
 
 	macro addNewCountriesEntry {

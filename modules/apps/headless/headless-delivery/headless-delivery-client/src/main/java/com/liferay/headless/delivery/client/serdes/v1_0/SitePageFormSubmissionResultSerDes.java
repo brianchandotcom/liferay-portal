@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.FormConfig;
+import com.liferay.headless.delivery.client.dto.v1_0.SitePageFormSubmissionResult;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FormConfigSerDes {
+public class SitePageFormSubmissionResultSerDes {
 
-	public static FormConfig toDTO(String json) {
-		FormConfigJSONParser formConfigJSONParser = new FormConfigJSONParser();
+	public static SitePageFormSubmissionResult toDTO(String json) {
+		SitePageFormSubmissionResultJSONParser
+			sitePageFormSubmissionResultJSONParser =
+				new SitePageFormSubmissionResultJSONParser();
 
-		return formConfigJSONParser.parseToDTO(json);
+		return sitePageFormSubmissionResultJSONParser.parseToDTO(json);
 	}
 
-	public static FormConfig[] toDTOs(String json) {
-		FormConfigJSONParser formConfigJSONParser = new FormConfigJSONParser();
+	public static SitePageFormSubmissionResult[] toDTOs(String json) {
+		SitePageFormSubmissionResultJSONParser
+			sitePageFormSubmissionResultJSONParser =
+				new SitePageFormSubmissionResultJSONParser();
 
-		return formConfigJSONParser.parseToDTOs(json);
+		return sitePageFormSubmissionResultJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FormConfig formConfig) {
-		if (formConfig == null) {
+	public static String toJSON(
+		SitePageFormSubmissionResult sitePageFormSubmissionResult) {
+
+		if (sitePageFormSubmissionResult == null) {
 			return "null";
 		}
 
@@ -53,37 +59,23 @@ public class FormConfigSerDes {
 
 		sb.append("{");
 
-		if (formConfig.getFormReference() != null) {
+		if (sitePageFormSubmissionResult.getItemReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"formReference\": ");
+			sb.append("\"itemReference\": ");
 
-			if (formConfig.getFormReference() instanceof String) {
+			if (sitePageFormSubmissionResult.getItemReference() instanceof
+					String) {
+
 				sb.append("\"");
-				sb.append((String)formConfig.getFormReference());
-				sb.append("\"");
-			}
-			else {
-				sb.append(formConfig.getFormReference());
-			}
-		}
-
-		if (formConfig.getFormSuccessSubmissionResult() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"formSuccessSubmissionResult\": ");
-
-			if (formConfig.getFormSuccessSubmissionResult() instanceof String) {
-				sb.append("\"");
-				sb.append((String)formConfig.getFormSuccessSubmissionResult());
+				sb.append(
+					(String)sitePageFormSubmissionResult.getItemReference());
 				sb.append("\"");
 			}
 			else {
-				sb.append(formConfig.getFormSuccessSubmissionResult());
+				sb.append(sitePageFormSubmissionResult.getItemReference());
 			}
 		}
 
@@ -93,66 +85,56 @@ public class FormConfigSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FormConfigJSONParser formConfigJSONParser = new FormConfigJSONParser();
+		SitePageFormSubmissionResultJSONParser
+			sitePageFormSubmissionResultJSONParser =
+				new SitePageFormSubmissionResultJSONParser();
 
-		return formConfigJSONParser.parseToMap(json);
+		return sitePageFormSubmissionResultJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(FormConfig formConfig) {
-		if (formConfig == null) {
+	public static Map<String, String> toMap(
+		SitePageFormSubmissionResult sitePageFormSubmissionResult) {
+
+		if (sitePageFormSubmissionResult == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (formConfig.getFormReference() == null) {
-			map.put("formReference", null);
+		if (sitePageFormSubmissionResult.getItemReference() == null) {
+			map.put("itemReference", null);
 		}
 		else {
 			map.put(
-				"formReference", String.valueOf(formConfig.getFormReference()));
-		}
-
-		if (formConfig.getFormSuccessSubmissionResult() == null) {
-			map.put("formSuccessSubmissionResult", null);
-		}
-		else {
-			map.put(
-				"formSuccessSubmissionResult",
-				String.valueOf(formConfig.getFormSuccessSubmissionResult()));
+				"itemReference",
+				String.valueOf(
+					sitePageFormSubmissionResult.getItemReference()));
 		}
 
 		return map;
 	}
 
-	public static class FormConfigJSONParser
-		extends BaseJSONParser<FormConfig> {
+	public static class SitePageFormSubmissionResultJSONParser
+		extends BaseJSONParser<SitePageFormSubmissionResult> {
 
 		@Override
-		protected FormConfig createDTO() {
-			return new FormConfig();
+		protected SitePageFormSubmissionResult createDTO() {
+			return new SitePageFormSubmissionResult();
 		}
 
 		@Override
-		protected FormConfig[] createDTOArray(int size) {
-			return new FormConfig[size];
+		protected SitePageFormSubmissionResult[] createDTOArray(int size) {
+			return new SitePageFormSubmissionResult[size];
 		}
 
 		@Override
 		protected void setField(
-			FormConfig formConfig, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			SitePageFormSubmissionResult sitePageFormSubmissionResult,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "formReference")) {
+			if (Objects.equals(jsonParserFieldName, "itemReference")) {
 				if (jsonParserFieldValue != null) {
-					formConfig.setFormReference((Object)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "formSuccessSubmissionResult")) {
-
-				if (jsonParserFieldValue != null) {
-					formConfig.setFormSuccessSubmissionResult(
+					sitePageFormSubmissionResult.setItemReference(
 						(Object)jsonParserFieldValue);
 				}
 			}

@@ -47,36 +47,36 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "The page form's configuration.", value = "FormConfig"
+	description = "Represents a definition of a submission result of type URL.",
+	value = "URLFormSubmissionResult"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FormConfig")
-public class FormConfig implements Serializable {
+@XmlRootElement(name = "URLFormSubmissionResult")
+public class URLFormSubmissionResult implements Serializable {
 
-	public static FormConfig toDTO(String json) {
-		return ObjectMapperUtil.readValue(FormConfig.class, json);
+	public static URLFormSubmissionResult toDTO(String json) {
+		return ObjectMapperUtil.readValue(URLFormSubmissionResult.class, json);
 	}
 
-	public static FormConfig unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FormConfig.class, json);
+	public static URLFormSubmissionResult unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			URLFormSubmissionResult.class, json);
 	}
 
-	@Schema(description = "The form reference.")
+	@Schema(description = "The localized submission of URL type.")
 	@Valid
-	public Object getFormReference() {
-		return formReference;
+	public Object getUrl() {
+		return url;
 	}
 
-	public void setFormReference(Object formReference) {
-		this.formReference = formReference;
+	public void setUrl(Object url) {
+		this.url = url;
 	}
 
 	@JsonIgnore
-	public void setFormReference(
-		UnsafeSupplier<Object, Exception> formReferenceUnsafeSupplier) {
-
+	public void setUrl(UnsafeSupplier<Object, Exception> urlUnsafeSupplier) {
 		try {
-			formReference = formReferenceUnsafeSupplier.get();
+			url = urlUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -86,44 +86,9 @@ public class FormConfig implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The form reference.")
+	@GraphQLField(description = "The localized submission of URL type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object formReference;
-
-	@Schema(description = "The definition for the success message of the form.")
-	@Valid
-	public Object getFormSuccessSubmissionResult() {
-		return formSuccessSubmissionResult;
-	}
-
-	public void setFormSuccessSubmissionResult(
-		Object formSuccessSubmissionResult) {
-
-		this.formSuccessSubmissionResult = formSuccessSubmissionResult;
-	}
-
-	@JsonIgnore
-	public void setFormSuccessSubmissionResult(
-		UnsafeSupplier<Object, Exception>
-			formSuccessSubmissionResultUnsafeSupplier) {
-
-		try {
-			formSuccessSubmissionResult =
-				formSuccessSubmissionResultUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(
-		description = "The definition for the success message of the form."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object formSuccessSubmissionResult;
+	protected Object url;
 
 	@Override
 	public boolean equals(Object object) {
@@ -131,13 +96,14 @@ public class FormConfig implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FormConfig)) {
+		if (!(object instanceof URLFormSubmissionResult)) {
 			return false;
 		}
 
-		FormConfig formConfig = (FormConfig)object;
+		URLFormSubmissionResult urlFormSubmissionResult =
+			(URLFormSubmissionResult)object;
 
-		return Objects.equals(toString(), formConfig.toString());
+		return Objects.equals(toString(), urlFormSubmissionResult.toString());
 	}
 
 	@Override
@@ -152,46 +118,23 @@ public class FormConfig implements Serializable {
 
 		sb.append("{");
 
-		if (formReference != null) {
+		if (url != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"formReference\": ");
+			sb.append("\"url\": ");
 
-			if (formReference instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject((Map<?, ?>)formReference));
+			if (url instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)url));
 			}
-			else if (formReference instanceof String) {
+			else if (url instanceof String) {
 				sb.append("\"");
-				sb.append(_escape((String)formReference));
-				sb.append("\"");
-			}
-			else {
-				sb.append(formReference);
-			}
-		}
-
-		if (formSuccessSubmissionResult != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"formSuccessSubmissionResult\": ");
-
-			if (formSuccessSubmissionResult instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject(
-						(Map<?, ?>)formSuccessSubmissionResult));
-			}
-			else if (formSuccessSubmissionResult instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)formSuccessSubmissionResult));
+				sb.append(_escape((String)url));
 				sb.append("\"");
 			}
 			else {
-				sb.append(formSuccessSubmissionResult);
+				sb.append(url);
 			}
 		}
 
@@ -202,7 +145,7 @@ public class FormConfig implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.FormConfig",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.URLFormSubmissionResult",
 		name = "x-class-name"
 	)
 	public String xClassName;

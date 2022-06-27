@@ -14,13 +14,29 @@
 
 package com.liferay.portal.vulcan.extension;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.extension.validation.DefaultPropertyValidator;
 import com.liferay.portal.vulcan.extension.validation.PropertyValidator;
+
+import java.math.BigDecimal;
+
+import java.util.Map;
 
 /**
  * @author Carlos Correa
  */
 public class PropertyDefinition {
+
+	public PropertyDefinition(
+		Class<?> propertyClass, String propertyName, PropertyType propertyType,
+		PropertyValidator propertyValidator, boolean required) {
+
+		_propertyClass = propertyClass;
+		_propertyName = propertyName;
+		_propertyType = propertyType;
+		_propertyValidator = propertyValidator;
+		_required = required;
+	}
 
 	public PropertyDefinition(
 		String propertyName, PropertyType propertyType, boolean required) {
@@ -29,7 +45,8 @@ public class PropertyDefinition {
 		_propertyType = propertyType;
 		_required = required;
 
-		_propertyValidator = new DefaultPropertyValidator(propertyType);
+		_propertyClass = _propertyTypeClassMap.getOrDefault(propertyType, null);
+		_propertyValidator = new DefaultPropertyValidator();
 	}
 
 	public PropertyDefinition(
@@ -40,6 +57,12 @@ public class PropertyDefinition {
 		_propertyType = propertyType;
 		_propertyValidator = propertyValidator;
 		_required = required;
+
+		_propertyClass = _propertyTypeClassMap.getOrDefault(propertyType, null);
+	}
+
+	public Class<?> getPropertyClass() {
+		return _propertyClass;
 	}
 
 	public String getPropertyName() {
@@ -60,10 +83,29 @@ public class PropertyDefinition {
 
 	public enum PropertyType {
 
-		BIG_DECIMAL, BOOLEAN, DECIMAL, DOUBLE, INTEGER, LONG, TEXT
+		BIG_DECIMAL, BOOLEAN, DATE_TIME, DECIMAL, DOUBLE, INTEGER, LONG,
+		MULTIPLE_ELEMENT, SINGLE_ELEMENT, TEXT
 
 	}
 
+	private static final Map<PropertyType, Class<?>> _propertyTypeClassMap =
+		HashMapBuilder.<PropertyType, Class<?>>put(
+			PropertyType.BIG_DECIMAL, BigDecimal.class
+		).<PropertyType, Class<?>>put(
+			PropertyType.BOOLEAN, Boolean.class
+		).<PropertyType, Class<?>>put(
+			PropertyType.DECIMAL, Float.class
+		).<PropertyType, Class<?>>put(
+			PropertyType.DOUBLE, Double.class
+		).<PropertyType, Class<?>>put(
+			PropertyType.INTEGER, Integer.class
+		).<PropertyType, Class<?>>put(
+			PropertyType.LONG, Long.class
+		).<PropertyType, Class<?>>put(
+			PropertyType.TEXT, String.class
+		).build();
+
+	private final Class<?> _propertyClass;
 	private final String _propertyName;
 	private final PropertyType _propertyType;
 	private final PropertyValidator _propertyValidator;

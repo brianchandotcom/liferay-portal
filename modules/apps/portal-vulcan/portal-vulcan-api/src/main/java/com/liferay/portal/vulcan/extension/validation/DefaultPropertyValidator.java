@@ -16,8 +16,13 @@ package com.liferay.portal.vulcan.extension.validation;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
-import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import java.util.Map;
 
 import javax.validation.ValidationException;
 
@@ -26,60 +31,67 @@ import javax.validation.ValidationException;
  */
 public class DefaultPropertyValidator implements PropertyValidator {
 
-	public DefaultPropertyValidator(
-		PropertyDefinition.PropertyType propertyType) {
-
-		this.propertyType = propertyType;
-	}
-
 	@Override
-	public void validate(String propertyName, Object propertyValue) {
+	public void validate(
+		PropertyDefinition propertyDefinition, Object propertyValue) {
+
 		boolean valid = false;
 
-		if (propertyType == PropertyDefinition.PropertyType.BIG_DECIMAL) {
-			if (propertyValue instanceof BigDecimal) {
-				valid = true;
-			}
-		}
-		else if (propertyType == PropertyDefinition.PropertyType.BOOLEAN) {
-			if (propertyValue instanceof Boolean) {
-				valid = true;
-			}
-		}
-		else if (propertyType == PropertyDefinition.PropertyType.DECIMAL) {
-			if (propertyValue instanceof Float) {
-				valid = true;
-			}
-		}
-		else if (propertyType == PropertyDefinition.PropertyType.DOUBLE) {
-			if (propertyValue instanceof Double) {
-				valid = true;
-			}
-		}
-		else if (propertyType == PropertyDefinition.PropertyType.INTEGER) {
-			if (propertyValue instanceof Integer) {
-				valid = true;
-			}
-		}
-		else if (propertyType == PropertyDefinition.PropertyType.LONG) {
-			if (propertyValue instanceof Long) {
-				valid = true;
-			}
-		}
-		else if (propertyType == PropertyDefinition.PropertyType.TEXT) {
+		Class<?> clazz = propertyDefinition.getPropertyClass();
+
+		PropertyDefinition.PropertyType propertyType =
+			propertyDefinition.getPropertyType();
+
+		if (propertyType == PropertyDefinition.PropertyType.DATE_TIME) {
 			if (propertyValue instanceof String) {
+				DateFormat dateFormat = new SimpleDateFormat(
+					"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+				try {
+					dateFormat.parse((String)propertyValue);
+					valid = true;
+				}
+				catch (ParseException parseException) {
+				}
+			}
+		}
+		else if (propertyType ==
+					PropertyDefinition.PropertyType.MULTIPLE_ELEMENT) {
+
+			Class<?> propertyValueClass = propertyValue.getClass();
+
+			if ((clazz != null) && propertyValueClass.isArray()) {
+				valid = true;
+
+				for (Object object : (Object[])propertyValue) {
+					if (ObjectMapperUtil.readValue(clazz, object) == null) {
+						valid = false;
+
+						break;
+					}
+				}
+			}
+		}
+		else if (propertyType ==
+					PropertyDefinition.PropertyType.SINGLE_ELEMENT) {
+
+			if ((clazz != null) && (propertyValue instanceof Map) &&
+				(ObjectMapperUtil.readValue(clazz, propertyValue) != null)) {
+
 				valid = true;
 			}
+		}
+		else if ((clazz != null) && clazz.isInstance(propertyValue)) {
+			valid = true;
 		}
 
 		if (!valid) {
 			throw new ValidationException(
 				StringBundler.concat(
-					"The property name \"", propertyName,
+					"The property name \"",
+					propertyDefinition.getPropertyName(),
 					"\" is invalid for property type ", propertyType));
 		}
 	}
-
-	protected PropertyDefinition.PropertyType propertyType;
 
 }

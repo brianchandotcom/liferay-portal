@@ -14,11 +14,14 @@
 
 package com.liferay.portal.vulcan.extension.validation;
 
+import com.liferay.portal.vulcan.extension.PropertyDefinition;
+
 /**
  * @author Carlos Correa
  */
 public interface PropertyValidator {
 
-	public void validate(String propertyName, Object propertyValue);
+	public void validate(
+		PropertyDefinition propertyDefinition, Object propertyValue);
 
 }

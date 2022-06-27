@@ -938,10 +938,10 @@
     classnames "^2.2.6"
     d3 "^5.9.2"
 
-"@clayui/color-picker@3.62.0":
-  version "3.62.0"
-  resolved "https://registry.yarnpkg.com/@clayui/color-picker/-/color-picker-3.62.0.tgz#5af1c2e18ec359b8ac2f06604320ae253b525ecb"
-  integrity sha512-S0f8v6DgKfYtUKJ2+IsgkH06cpcs8Rrqc6d5cygOsjZscLymd4htr0F8tvO2hdPR1mp+v4ZpGdYGKfVWCJ3yiQ==
+"@clayui/color-picker@3.63.0":
+  version "3.63.0"
+  resolved "https://registry.yarnpkg.com/@clayui/color-picker/-/color-picker-3.63.0.tgz#fd15de3bb22191aa7ec7860e0adc1e0ae7dfb659"
+  integrity sha512-Yt00VaVAs1B9kej0PN1p06V94tk/lpaYbe5QCDD8Ctcr0bLKRFjryuB+HLoTQZMnmQoAjpkX+kX75CIyNZxgdA==
   dependencies:
     "@clayui/button" "^3.56.0"
     "@clayui/drop-down" "^3.62.0"
@@ -969,10 +969,10 @@
     react-dnd-html5-backend "^11.1.1"
     react-transition-group "^4.4.1"
 
-"@clayui/css@3.62.1":
-  version "3.62.1"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.62.1.tgz#9b014e0b11c6eae86eb35e9f5e706feac5165e73"
-  integrity sha512-5m5LzDAf7VY8GV65CPaWJ1Wh18J/mRx2tcSP485AiehSA1h6/NwdrolhzUKzk0g/ZKDSp0kykS6cFY3OFRJITg==
+"@clayui/css@3.63.0":
+  version "3.63.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.63.0.tgz#97e4762bc930233ee9d08c9a262972a4095e6ce6"
+  integrity sha512-8QTrsvN8hx0FdjnmBRkU03fiX1dKwPFbpCCbGo6dhgqbtk5Q1TdN8/NUURJXBbUWxmEyFLqKeTri4H0KOP/1Qw==
 
 "@clayui/data-provider@3.58.0":
   version "3.58.0"

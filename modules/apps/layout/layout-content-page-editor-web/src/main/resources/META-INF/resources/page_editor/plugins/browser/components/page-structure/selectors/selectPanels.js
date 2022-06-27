@@ -21,6 +21,7 @@ import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../../app/config/index';
+import selectCanUpdateCSSAdvancedOptions from '../../../../../app/selectors/selectCanUpdateCSSAdvancedOptions';
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemAdvancedConfiguration from '../../../../../app/selectors/selectCanUpdateItemAdvancedConfiguration';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
@@ -221,6 +222,10 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	const canUpdateItemAdvancedConfiguration = selectCanUpdateItemAdvancedConfiguration(
 		state
 	);
+	const canUpdateCSSAdvancedOptions = selectCanUpdateCSSAdvancedOptions(
+		state
+	);
+
 	const canUpdateItemConfiguration = selectCanUpdateItemConfiguration(state);
 
 	const haveAtLeastLimitedPermission =
@@ -256,14 +261,22 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
 		panelsIds = {
-			[PANEL_IDS.containerAdvanced]: canUpdateItemAdvancedConfiguration,
+			[PANEL_IDS.containerAdvanced]:
+				(canUpdateItemAdvancedConfiguration &&
+					state.selectedViewportSize === VIEWPORT_SIZES.desktop) ||
+				(canUpdateCSSAdvancedOptions &&
+					Liferay.FeatureFlags['LPS-147511']),
 			[PANEL_IDS.containerGeneral]: true,
 			[PANEL_IDS.containerStyles]: true,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.form) {
 		panelsIds = {
-			[PANEL_IDS.formAdvancedPanel]: canUpdateItemAdvancedConfiguration,
+			[PANEL_IDS.formAdvancedPanel]:
+				(canUpdateItemAdvancedConfiguration &&
+					state.selectedViewportSize === VIEWPORT_SIZES.desktop) ||
+				(canUpdateCSSAdvancedOptions &&
+					Liferay.FeatureFlags['LPS-147511']),
 			[PANEL_IDS.formGeneral]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.containerStyles]: haveAtLeastLimitedPermission,
@@ -275,7 +288,11 @@ export function selectPanels(activeItemId, activeItemType, state) {
 		];
 
 		panelsIds = {
-			[PANEL_IDS.fragmentAdvanced]: canUpdateItemAdvancedConfiguration,
+			[PANEL_IDS.fragmentAdvanced]:
+				(canUpdateItemAdvancedConfiguration &&
+					state.selectedViewportSize === VIEWPORT_SIZES.desktop) ||
+				(canUpdateCSSAdvancedOptions &&
+					Liferay.FeatureFlags['LPS-147511']),
 			[PANEL_IDS.fragmentStyles]: haveAtLeastLimitedPermission,
 			[PANEL_IDS.fragmentGeneral]:
 				fragmentEntryType !== FRAGMENT_ENTRY_TYPES.input &&
@@ -296,7 +313,11 @@ export function selectPanels(activeItemId, activeItemType, state) {
 		panelsIds = {
 			[PANEL_IDS.rowStyles]: true,
 			[PANEL_IDS.rowGeneral]: true,
-			[PANEL_IDS.rowAdvanced]: canUpdateItemAdvancedConfiguration,
+			[PANEL_IDS.rowAdvanced]:
+				(canUpdateItemAdvancedConfiguration &&
+					state.selectedViewportSize === VIEWPORT_SIZES.desktop) ||
+				(canUpdateCSSAdvancedOptions &&
+					Liferay.FeatureFlags['LPS-147511']),
 		};
 	}
 

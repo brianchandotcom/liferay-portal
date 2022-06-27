@@ -62,10 +62,27 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro activeStatus {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Account Subscription Groups");
+
+		CustomerPortal.viewCPObjectInfo();
+
+		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
+			label = "activationStatus",
+			value = "Active");
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro clearDXPCloudInfo {
 		CP2DXPCloudSetup.clearActivationStatus();
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CP2DXPCloudSetup.deleteEntryDXPCloudEnvironments(entry = "ERC-001");
 	}
@@ -297,6 +314,31 @@ definition {
 			label = "dxp.admins[0].github",
 			locator1 = "CP2DXPCloudSetup#SETUP_VALUE",
 			value = "GitHubUser");
+	}
+
+	macro viewActivationStatusCardValue {
+		AssertElementPresent(
+			locator1 = "CP2DXPCloudSetup#CARD_SUBSCRIPTION",
+			title = "Almost there! Setup DXP Cloud by finishing the activation form.");
+
+		AssertElementPresent(
+			locator1 = "CP2DXPCloudSetup#CARD_LOGO",
+			product = "dxp_icon");
+
+		AssertElementPresent(
+			locator1 = "CP2DXPCloudSetup#CARD_TITLE",
+			project = "Test Account 01");
+
+		AssertElementPresent(
+			locator1 = "CP2DXPCloudSetup#CARD_DATES",
+			date = "Mar 31, 2021 - Mar 30, 2025");
+
+		AssertElementPresent(
+			locator1 = "CP2DXPCloudSetup#STATUS_CARD",
+			key_status = "Not Activated");
+
+		AssertElementPresent(
+			locator1 = "CP2DXPCloudSetup#FINISH_ACTIVATION");
 	}
 
 }

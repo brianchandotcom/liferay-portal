@@ -3,12 +3,13 @@ definition {
 
 	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "false";
-	property portal.upstream = "false";
+	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Customer Portal";
+	property osgi.modules.includes = "site-initializer-customer-portal";
 
-	var testSiteName = "Test Customer Portal Name";
-	var testSiteURL = "test-customer-portal-name";
+	var testSiteName = "Customer Portal Name";
+	var testSiteURL = "customer-portal-name";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -56,7 +57,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -84,7 +85,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -108,7 +109,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -130,7 +131,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -154,7 +155,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -180,7 +181,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -210,7 +211,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -242,7 +243,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -278,7 +279,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -310,7 +311,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -346,7 +347,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -382,7 +383,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -418,7 +419,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -454,7 +455,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -487,7 +488,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -519,7 +520,7 @@ definition {
 			accountRoleTitle = "Account Administrator",
 			accountUserName = "Test Test");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 

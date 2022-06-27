@@ -6,9 +6,10 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Customer Portal";
+	property osgi.modules.includes = "site-initializer-customer-portal";
 
-	var testSiteName = "Test Customer Portal Name";
-	var testSiteURL = "test-customer-portal-name";
+	var testSiteName = "Customer Portal Name";
+	var testSiteURL = "customer-portal-name";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -42,7 +43,7 @@ definition {
 	@description = "LPS-143375 - Verify if Liferay Contact displays Liferay Contact's email."
 	@priority = "4"
 	test IsContactEmailDisplayed {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		Click(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
@@ -58,7 +59,7 @@ definition {
 	@description = "LPS-143373 - Verify if Liferay Contact displays Liferay Contact's name."
 	@priority = "4"
 	test IsContactNameDisplayed {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		Click(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
@@ -71,7 +72,7 @@ definition {
 	@description = "LPS-143374 - Verify if Liferay Contact displays Liferay Contact's role."
 	@priority = "3"
 	test IsContactRoleDisplayed {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		Click(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",

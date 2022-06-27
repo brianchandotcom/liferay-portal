@@ -549,7 +549,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertNotVisible(
+			AssertElementNotPresent(
 				key_text = "Region*",
 				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
 		}
@@ -659,7 +659,7 @@ definition {
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
 
-			AssertNotVisible(
+			AssertElementNotPresent(
 				key_text = "Region*",
 				locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
 		}

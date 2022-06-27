@@ -62,7 +62,11 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
@@ -2446,6 +2450,22 @@ public class JenkinsResultsParserUtil {
 
 	public static String getJobVariant(String json) {
 		return getJobVariant(new JSONObject(json));
+	}
+
+	public static LocalDate getLocalDate(Date date) {
+		Instant instant = date.toInstant();
+
+		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+		return zonedDateTime.toLocalDate();
+	}
+
+	public static LocalDateTime getLocalDateTime(Date date) {
+		Instant instant = date.toInstant();
+
+		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+		return zonedDateTime.toLocalDateTime();
 	}
 
 	public static Properties getLocalLiferayJenkinsEEBuildProperties() {

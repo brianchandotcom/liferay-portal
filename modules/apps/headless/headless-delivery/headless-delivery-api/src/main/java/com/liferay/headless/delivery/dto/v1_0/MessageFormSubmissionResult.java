@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -66,17 +65,17 @@ public class MessageFormSubmissionResult implements Serializable {
 
 	@Schema(description = "The localized submission of message type.")
 	@Valid
-	public Object getMessage() {
+	public FragmentInlineValue getMessage() {
 		return message;
 	}
 
-	public void setMessage(Object message) {
+	public void setMessage(FragmentInlineValue message) {
 		this.message = message;
 	}
 
 	@JsonIgnore
 	public void setMessage(
-		UnsafeSupplier<Object, Exception> messageUnsafeSupplier) {
+		UnsafeSupplier<FragmentInlineValue, Exception> messageUnsafeSupplier) {
 
 		try {
 			message = messageUnsafeSupplier.get();
@@ -91,7 +90,7 @@ public class MessageFormSubmissionResult implements Serializable {
 
 	@GraphQLField(description = "The localized submission of message type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object message;
+	protected FragmentInlineValue message;
 
 	@Override
 	public boolean equals(Object object) {
@@ -129,17 +128,7 @@ public class MessageFormSubmissionResult implements Serializable {
 
 			sb.append("\"message\": ");
 
-			if (message instanceof Map) {
-				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)message));
-			}
-			else if (message instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)message));
-				sb.append("\"");
-			}
-			else {
-				sb.append(message);
-			}
+			sb.append(String.valueOf(message));
 		}
 
 		sb.append("}");

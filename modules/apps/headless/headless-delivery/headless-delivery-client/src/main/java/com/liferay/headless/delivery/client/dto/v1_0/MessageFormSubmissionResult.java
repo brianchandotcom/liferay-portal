@@ -34,16 +34,16 @@ public class MessageFormSubmissionResult implements Cloneable, Serializable {
 		return MessageFormSubmissionResultSerDes.toDTO(json);
 	}
 
-	public Object getMessage() {
+	public FragmentInlineValue getMessage() {
 		return message;
 	}
 
-	public void setMessage(Object message) {
+	public void setMessage(FragmentInlineValue message) {
 		this.message = message;
 	}
 
 	public void setMessage(
-		UnsafeSupplier<Object, Exception> messageUnsafeSupplier) {
+		UnsafeSupplier<FragmentInlineValue, Exception> messageUnsafeSupplier) {
 
 		try {
 			message = messageUnsafeSupplier.get();
@@ -53,7 +53,7 @@ public class MessageFormSubmissionResult implements Cloneable, Serializable {
 		}
 	}
 
-	protected Object message;
+	protected FragmentInlineValue message;
 
 	@Override
 	public MessageFormSubmissionResult clone()

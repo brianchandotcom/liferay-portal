@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -66,17 +65,18 @@ public class SitePageFormSubmissionResult implements Serializable {
 
 	@Schema(description = "The localized submission of page type.")
 	@Valid
-	public Object getItemReference() {
+	public ClassFieldsReference getItemReference() {
 		return itemReference;
 	}
 
-	public void setItemReference(Object itemReference) {
+	public void setItemReference(ClassFieldsReference itemReference) {
 		this.itemReference = itemReference;
 	}
 
 	@JsonIgnore
 	public void setItemReference(
-		UnsafeSupplier<Object, Exception> itemReferenceUnsafeSupplier) {
+		UnsafeSupplier<ClassFieldsReference, Exception>
+			itemReferenceUnsafeSupplier) {
 
 		try {
 			itemReference = itemReferenceUnsafeSupplier.get();
@@ -91,7 +91,7 @@ public class SitePageFormSubmissionResult implements Serializable {
 
 	@GraphQLField(description = "The localized submission of page type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object itemReference;
+	protected ClassFieldsReference itemReference;
 
 	@Override
 	public boolean equals(Object object) {
@@ -129,18 +129,7 @@ public class SitePageFormSubmissionResult implements Serializable {
 
 			sb.append("\"itemReference\": ");
 
-			if (itemReference instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject((Map<?, ?>)itemReference));
-			}
-			else if (itemReference instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)itemReference));
-				sb.append("\"");
-			}
-			else {
-				sb.append(itemReference);
-			}
+			sb.append(String.valueOf(itemReference));
 		}
 
 		sb.append("}");

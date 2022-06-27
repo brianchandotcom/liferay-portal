@@ -34,16 +34,17 @@ public class SitePageFormSubmissionResult implements Cloneable, Serializable {
 		return SitePageFormSubmissionResultSerDes.toDTO(json);
 	}
 
-	public Object getItemReference() {
+	public ClassFieldsReference getItemReference() {
 		return itemReference;
 	}
 
-	public void setItemReference(Object itemReference) {
+	public void setItemReference(ClassFieldsReference itemReference) {
 		this.itemReference = itemReference;
 	}
 
 	public void setItemReference(
-		UnsafeSupplier<Object, Exception> itemReferenceUnsafeSupplier) {
+		UnsafeSupplier<ClassFieldsReference, Exception>
+			itemReferenceUnsafeSupplier) {
 
 		try {
 			itemReference = itemReferenceUnsafeSupplier.get();
@@ -53,7 +54,7 @@ public class SitePageFormSubmissionResult implements Cloneable, Serializable {
 		}
 	}
 
-	protected Object itemReference;
+	protected ClassFieldsReference itemReference;
 
 	@Override
 	public SitePageFormSubmissionResult clone()

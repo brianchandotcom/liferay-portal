@@ -64,14 +64,7 @@ public class URLFormSubmissionResultSerDes {
 
 			sb.append("\"url\": ");
 
-			if (urlFormSubmissionResult.getUrl() instanceof String) {
-				sb.append("\"");
-				sb.append((String)urlFormSubmissionResult.getUrl());
-				sb.append("\"");
-			}
-			else {
-				sb.append(urlFormSubmissionResult.getUrl());
-			}
+			sb.append(String.valueOf(urlFormSubmissionResult.getUrl()));
 		}
 
 		sb.append("}");
@@ -126,7 +119,8 @@ public class URLFormSubmissionResultSerDes {
 			if (Objects.equals(jsonParserFieldName, "url")) {
 				if (jsonParserFieldValue != null) {
 					urlFormSubmissionResult.setUrl(
-						(Object)jsonParserFieldValue);
+						FragmentInlineValueSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

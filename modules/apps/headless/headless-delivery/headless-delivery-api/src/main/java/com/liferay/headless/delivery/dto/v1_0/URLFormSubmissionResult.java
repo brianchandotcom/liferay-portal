@@ -20,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -65,16 +64,18 @@ public class URLFormSubmissionResult implements Serializable {
 
 	@Schema(description = "The localized submission of URL type.")
 	@Valid
-	public Object getUrl() {
+	public FragmentInlineValue getUrl() {
 		return url;
 	}
 
-	public void setUrl(Object url) {
+	public void setUrl(FragmentInlineValue url) {
 		this.url = url;
 	}
 
 	@JsonIgnore
-	public void setUrl(UnsafeSupplier<Object, Exception> urlUnsafeSupplier) {
+	public void setUrl(
+		UnsafeSupplier<FragmentInlineValue, Exception> urlUnsafeSupplier) {
+
 		try {
 			url = urlUnsafeSupplier.get();
 		}
@@ -88,7 +89,7 @@ public class URLFormSubmissionResult implements Serializable {
 
 	@GraphQLField(description = "The localized submission of URL type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object url;
+	protected FragmentInlineValue url;
 
 	@Override
 	public boolean equals(Object object) {
@@ -125,17 +126,7 @@ public class URLFormSubmissionResult implements Serializable {
 
 			sb.append("\"url\": ");
 
-			if (url instanceof Map) {
-				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)url));
-			}
-			else if (url instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)url));
-				sb.append("\"");
-			}
-			else {
-				sb.append(url);
-			}
+			sb.append(String.valueOf(url));
 		}
 
 		sb.append("}");

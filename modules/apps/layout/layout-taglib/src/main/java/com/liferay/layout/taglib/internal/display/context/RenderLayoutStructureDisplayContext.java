@@ -449,7 +449,7 @@ public class RenderLayoutStructureDisplayContext {
 			redirect = _getFormStyledLayoutStructureItemURLRedirect(
 				successMessageJSONObject);
 		}
-		else if (successMessageJSONObject.has("layoutUuid")) {
+		else if (successMessageJSONObject.has("layout")) {
 			redirect = _getFormStyledLayoutStructureItemLayoutRedirect(
 				successMessageJSONObject);
 		}
@@ -915,10 +915,16 @@ public class RenderLayoutStructureDisplayContext {
 			JSONObject successMessageJSONObject)
 		throws Exception {
 
-		long groupId = successMessageJSONObject.getLong("groupId");
-		boolean privateLayout = successMessageJSONObject.getBoolean(
-			"privateLayout");
-		long layoutId = successMessageJSONObject.getLong("layoutId");
+		JSONObject layoutJSONObject = successMessageJSONObject.getJSONObject(
+			"layout");
+
+		if (layoutJSONObject == null) {
+			return null;
+		}
+
+		long groupId = layoutJSONObject.getLong("groupId");
+		boolean privateLayout = layoutJSONObject.getBoolean("privateLayout");
+		long layoutId = layoutJSONObject.getLong("layoutId");
 
 		Layout layout = LayoutServiceUtil.fetchLayout(
 			groupId, privateLayout, layoutId);
@@ -936,6 +942,10 @@ public class RenderLayoutStructureDisplayContext {
 
 		JSONObject urlJSONObject = successMessageJSONObject.getJSONObject(
 			"url");
+
+		if (urlJSONObject == null) {
+			return null;
+		}
 
 		String redirect = urlJSONObject.getString(
 			_themeDisplay.getLanguageId());

@@ -379,8 +379,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 	}
 
 	private void _autofill(
-			long companyId, ObjectEntry testrayCaseResultAObjectEntry,
-			ObjectEntry testrayCaseResultBObjectEntry)
+			long companyId, ObjectEntry testrayCaseResultObjectEntry1,
+			ObjectEntry testrayCaseResultObjectEntry2)
 		throws Exception {
 
 		ObjectEntry recipientTestrayCaseResultObjectEntry = null;
@@ -391,7 +391,7 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			testrayIssueAEntriesPage = _objectEntryManager.getObjectEntries(
 				companyId, _objectDefinitions.get("CaseResultsIssues"), null,
 				null, _defaultDTOConverterContext,
-				"caseResultId eq '" + testrayCaseResultAObjectEntry.getId() +
+				"caseResultId eq '" + testrayCaseResultObjectEntry1.getId() +
 					"'",
 				null, null, null);
 
@@ -399,14 +399,14 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			testrayIssueBEntriesPage = _objectEntryManager.getObjectEntries(
 				companyId, _objectDefinitions.get("CaseResultsIssues"), null,
 				null, _defaultDTOConverterContext,
-				"caseResultId eq '" + testrayCaseResultBObjectEntry.getId() +
+				"caseResultId eq '" + testrayCaseResultObjectEntry2.getId() +
 					"'",
 				null, null, null);
 
 		Map<String, Object> testrayCaseResultCompositeMapA =
-			testrayCaseResultAObjectEntry.getProperties();
+			testrayCaseResultObjectEntry1.getProperties();
 		Map<String, Object> testrayCaseResultCompositeMapB =
-			testrayCaseResultBObjectEntry.getProperties();
+			testrayCaseResultObjectEntry2.getProperties();
 
 		List<ObjectEntry> testrayIssueAItems =
 			(List<ObjectEntry>)testrayIssueAEntriesPage.getItems();
@@ -421,8 +421,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			testrayIssueBItems.isEmpty()) {
 
 			recipientTestrayCaseResultObjectEntry =
-				testrayCaseResultBObjectEntry;
-			sourceTestrayCaseResultObjectEntry = testrayCaseResultAObjectEntry;
+				testrayCaseResultObjectEntry2;
+			sourceTestrayCaseResultObjectEntry = testrayCaseResultObjectEntry1;
 			sourceTestrayIssueItems = testrayIssueAItems;
 		}
 		else if (((Long)testrayCaseResultCompositeMapB.get(
@@ -433,8 +433,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				 testrayIssueAItems.isEmpty()) {
 
 			recipientTestrayCaseResultObjectEntry =
-				testrayCaseResultAObjectEntry;
-			sourceTestrayCaseResultObjectEntry = testrayCaseResultBObjectEntry;
+				testrayCaseResultObjectEntry1;
+			sourceTestrayCaseResultObjectEntry = testrayCaseResultObjectEntry2;
 			sourceTestrayIssueItems = testrayIssueBItems;
 		}
 
@@ -1505,20 +1505,20 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		for (Map.Entry<Long, ObjectEntry> entry :
 				testrayCaseIdCompositeMapA.entrySet()) {
 
-			ObjectEntry testrayCaseResultBObjectEntry =
+			ObjectEntry testrayCaseResultObjectEntry2 =
 				testrayCaseIdCompositeMapB.get(entry.getKey());
 
-			if (testrayCaseResultBObjectEntry == null) {
+			if (testrayCaseResultObjectEntry2 == null) {
 				continue;
 			}
 
-			ObjectEntry testrayCaseResultAObjectEntry = entry.getValue();
+			ObjectEntry testrayCaseResultObjectEntry1 = entry.getValue();
 
 			Map<String, Object> testrayCaseResultCompositeMapA =
-				testrayCaseResultAObjectEntry.getProperties();
+				testrayCaseResultObjectEntry1.getProperties();
 
 			Map<String, Object> testrayCaseResultCompositeMapB =
-				testrayCaseResultBObjectEntry.getProperties();
+				testrayCaseResultObjectEntry2.getProperties();
 
 			if (Validator.isNull(
 					testrayCaseResultCompositeMapA.get("errors")) ||
@@ -1536,8 +1536,8 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			}
 
 			_autofill(
-				companyId, testrayCaseResultAObjectEntry,
-				testrayCaseResultBObjectEntry);
+				companyId, testrayCaseResultObjectEntry1,
+				testrayCaseResultObjectEntry2);
 		}
 	}
 

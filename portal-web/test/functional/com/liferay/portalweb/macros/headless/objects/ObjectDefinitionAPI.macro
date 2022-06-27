@@ -409,6 +409,14 @@ definition {
 			expected = "${expectedValue}");
 	}
 
+	macro assertResponseIncludeCorrectDetailsOfNotDeletedObject {
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..universitiesSubjects[?(@.id==${subjectId})].name");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${expectedValue}");
+	}
+
 	macro assertResponseIncludesDetailsOfNotDeletedEmployee {
 		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..items[?(@.id==${employeeId2} && @.r_supervisor_c_managerId==${managerId2})].r_supervisor_c_managerId");
 

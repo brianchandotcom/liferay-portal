@@ -35,11 +35,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -102,26 +100,27 @@ public class InfoRequestFieldValuesProviderHelper {
 				_getInfoFields(
 					className, classTypeId, themeDisplay.getScopeGroupId())) {
 
-			if ((infoField.getInfoFieldType() instanceof ImageInfoFieldType) &&
-				ArrayUtil.isNotEmpty(
-					multipartParameterMap.get(infoField.getName()))) {
+			FileItem[] multipartParameters = multipartParameterMap.get(
+				infoField.getName());
 
-				for (FileItem fileItem :
-						multipartParameterMap.get(infoField.getName())) {
+			if ((multipartParameters != null) &&
+				(infoField.getInfoFieldType() instanceof ImageInfoFieldType)) {
 
+				for (FileItem fileItem : multipartParameters) {
 					infoFieldValues.add(
 						_getImageInfoFieldValue(
 							fileItem, infoField, themeDisplay));
 				}
 			}
 
-			if (ListUtil.isEmpty(
-					regularParameterMap.get(infoField.getName()))) {
+			List<String> regularParameters = regularParameterMap.get(
+				infoField.getName());
 
+			if (regularParameters == null) {
 				continue;
 			}
 
-			for (String value : regularParameterMap.get(infoField.getName())) {
+			for (String value : regularParameters) {
 				infoFieldValues.add(
 					_getInfoFieldValue(
 						infoField, themeDisplay.getLocale(), value));

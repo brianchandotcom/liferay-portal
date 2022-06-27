@@ -279,6 +279,17 @@ public class CPDefinitionsImporter {
 				customFieldJSONObject.getJSONObject("customValue");
 
 			if (customValueJSONObject != null) {
+				if (customValueJSONObject.get("data") instanceof BigDecimal) {
+					BigDecimal customValueBigDecimal =
+						(BigDecimal)customValueJSONObject.get("data");
+
+					expandoBridge.setAttributeDefault(
+						customFieldJSONObject.getString("name"),
+						customValueBigDecimal.doubleValue());
+
+					continue;
+				}
+
 				expandoBridge.setAttributeDefault(
 					customFieldJSONObject.getString("name"),
 					(Serializable)customValueJSONObject.get("data"));

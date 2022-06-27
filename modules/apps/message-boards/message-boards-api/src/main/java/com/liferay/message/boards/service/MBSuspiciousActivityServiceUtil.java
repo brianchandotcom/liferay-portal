@@ -85,6 +85,14 @@ public class MBSuspiciousActivityServiceUtil {
 		return getService().remove(suspiciousActivityId);
 	}
 
+	public static MBSuspiciousActivity toggleValidated(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().toggleValidated(suspiciousActivityId);
+	}
+
 	public static MBSuspiciousActivityService getService() {
 		return _service;
 	}

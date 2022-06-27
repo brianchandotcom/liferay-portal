@@ -65,11 +65,11 @@ public class PollsPortletIdToDDMPortletIdUpgradeProcess
 						DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM, "%'"));
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						StringBundler.concat(
-							"update PortletPreferenceValue set name = ",
-							"'formInstanceId' where name = 'questionId' AND ",
-							"portletPreferencesId = ?")));
+					connection,
+					StringBundler.concat(
+						"update PortletPreferenceValue set name = ",
+						"'formInstanceId' where name = 'questionId' AND ",
+						"portletPreferencesId = ?"));
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

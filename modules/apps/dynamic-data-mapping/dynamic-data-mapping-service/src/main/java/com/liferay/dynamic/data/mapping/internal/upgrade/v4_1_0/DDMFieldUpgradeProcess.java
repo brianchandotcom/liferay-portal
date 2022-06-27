@@ -115,28 +115,27 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 						"DDMStructure.ctCollectionId = 0"));
 			PreparedStatement insertDDMFieldPreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						StringBundler.concat(
-							"insert into DDMField (mvccVersion, ",
-							"ctCollectionId, fieldId, companyId, ",
-							"parentFieldId, storageId, structureVersionId, ",
-							"fieldName, fieldType, instanceId, localizable, ",
-							"priority) values (0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ",
-							"?, ?)")));
+					connection,
+					StringBundler.concat(
+						"insert into DDMField (mvccVersion, ctCollectionId, ",
+						"fieldId, companyId, parentFieldId, storageId, ",
+						"structureVersionId, fieldName, fieldType, ",
+						"instanceId, localizable, priority) values (0, 0, ?, ",
+						"?, ?, ?, ?, ?, ?, ?, ?, ?)"));
 			PreparedStatement insertDDMFieldAttributePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						StringBundler.concat(
-							"insert into DDMFieldAttribute (mvccVersion, ",
-							"ctCollectionId, fieldAttributeId, companyId, ",
-							"fieldId, storageId, attributeName, languageId, ",
-							"largeAttributeValue, smallAttributeValue) values ",
-							"(0, 0, ?, ?, ?, ?, ?, ?, ?, ?)")));
+					connection,
+					StringBundler.concat(
+						"insert into DDMFieldAttribute (mvccVersion, ",
+						"ctCollectionId, fieldAttributeId, companyId, ",
+						"fieldId, storageId, attributeName, languageId, ",
+						"largeAttributeValue, smallAttributeValue) values (0, ",
+						"0, ?, ?, ?, ?, ?, ?, ?, ?)"));
 			PreparedStatement deleteDDMContentPreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"delete from DDMContent where contentId = ? and " +
-							"ctCollectionId = 0"));
+					connection,
+					"delete from DDMContent where contentId = ? and " +
+						"ctCollectionId = 0");
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -177,9 +176,9 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = selectPreparedStatement.executeQuery();
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update DDMFormInstance set settings_ = ? where " +
-							"formInstanceId = ? and ctCollectionId = 0"))) {
+					connection,
+					"update DDMFormInstance set settings_ = ? where " +
+						"formInstanceId = ? and ctCollectionId = 0")) {
 
 			while (resultSet.next()) {
 				String settings = resultSet.getString("settings_");

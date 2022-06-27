@@ -53,10 +53,10 @@ public class LayoutPageTemplateCollectionUpgradeProcess extends UpgradeProcess {
 					"LayoutPageTemplateCollection");
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update LayoutPageTemplateCollection set " +
-							"lptCollectionKey = ? where " +
-								"layoutPageTemplateCollectionId = ?"))) {
+					connection,
+					"update LayoutPageTemplateCollection set " +
+						"lptCollectionKey = ? where " +
+							"layoutPageTemplateCollectionId = ?")) {
 
 			while (resultSet.next()) {
 				long layoutPageTemplateCollectionId = resultSet.getLong(

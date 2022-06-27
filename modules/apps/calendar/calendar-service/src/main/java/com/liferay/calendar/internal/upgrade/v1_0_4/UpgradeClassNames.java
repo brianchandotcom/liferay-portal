@@ -129,13 +129,11 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 				"select entryId from AssetEntry where classNameId = ?");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"delete from AssetLink where entryId1 = ? or " +
-							"entryId2 = ?"));
+					connection,
+					"delete from AssetLink where entryId1 = ? or entryId2 = ?");
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"delete from AssetEntry where entryId = ? "))) {
+					connection, "delete from AssetEntry where entryId = ? ")) {
 
 			preparedStatement1.setLong(
 				1, PortalUtil.getClassNameId(_CLASS_NAME_CAL_EVENT));

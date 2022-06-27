@@ -64,9 +64,9 @@ public class BlogsImagesUpgradeProcess extends UpgradeProcess {
 							"[$TRUE$] and smallImageId != 0"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update BlogsEntry set smallImageFileEntryId = ?, " +
-							"smallImageId = 0 where entryId = ?"));
+					connection,
+					"update BlogsEntry set smallImageFileEntryId = ?, " +
+						"smallImageId = 0 where entryId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

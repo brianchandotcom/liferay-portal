@@ -44,9 +44,9 @@ public class UpgradeAnnouncementsPortletPreferences extends UpgradeProcess {
 					"AND ownerType = ?"));
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update PortletPreferences set preferences = ? where " +
-							"portletPreferencesId = ?"));
+					connection,
+					"update PortletPreferences set preferences = ? where " +
+						"portletPreferencesId = ?");
 			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 			while (resultSet1.next()) {

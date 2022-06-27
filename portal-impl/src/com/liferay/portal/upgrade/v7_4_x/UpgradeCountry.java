@@ -42,9 +42,8 @@ public class UpgradeCountry extends UpgradeProcess {
 						"select countryId from Country where uuid_ is null");
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update Country set uuid_ = ? where countryId = " +
-								"?"));
+						connection,
+						"update Country set uuid_ = ? where countryId = ?");
 				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				while (resultSet.next()) {

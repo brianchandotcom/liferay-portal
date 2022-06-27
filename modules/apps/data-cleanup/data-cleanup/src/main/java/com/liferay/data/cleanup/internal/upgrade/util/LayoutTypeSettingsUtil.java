@@ -46,8 +46,8 @@ public class LayoutTypeSettingsUtil {
 
 		try (PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update Layout set typeSettings = ? where plid = ?"))) {
+					connection,
+					"update Layout set typeSettings = ? where plid = ?")) {
 
 			for (String portletId : portletIds) {
 				try (PreparedStatement selectPreparedStatement =

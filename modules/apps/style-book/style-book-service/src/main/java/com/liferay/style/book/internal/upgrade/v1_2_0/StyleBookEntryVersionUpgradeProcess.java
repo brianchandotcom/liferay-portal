@@ -44,9 +44,9 @@ public class StyleBookEntryVersionUpgradeProcess extends UpgradeProcess {
 						"select styleBookEntryId from StyleBookEntry");
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update StyleBookEntryVersion set uuid_ = ? " +
-								"where styleBookEntryId = ?"));
+						connection,
+						"update StyleBookEntryVersion set uuid_ = ? where " +
+							"styleBookEntryId = ?");
 				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				while (resultSet.next()) {

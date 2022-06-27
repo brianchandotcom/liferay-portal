@@ -45,8 +45,8 @@ public class ImageCompanyIdUpgradeProcess<T> extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update Image set companyId = ? where imageId = ?"))) {
+					connection,
+					"update Image set companyId = ? where imageId = ?")) {
 
 			ActionableDynamicQuery actionableDynamicQuery =
 				_actionableDynamicQuerySupplier.get();

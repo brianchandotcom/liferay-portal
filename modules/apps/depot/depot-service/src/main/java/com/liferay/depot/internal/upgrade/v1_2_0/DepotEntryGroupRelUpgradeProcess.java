@@ -40,10 +40,9 @@ public class DepotEntryGroupRelUpgradeProcess extends UpgradeProcess {
 						"select depotEntryGroupRelId from DepotEntryGroupRel");
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update DepotEntryGroupRel set groupId = " +
-								"toGroupId, uuid_ = ? where " +
-									"depotEntryGroupRelId = ?"));
+						connection,
+						"update DepotEntryGroupRel set groupId = toGroupId, " +
+							"uuid_ = ? where depotEntryGroupRelId = ?");
 				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				while (resultSet.next()) {

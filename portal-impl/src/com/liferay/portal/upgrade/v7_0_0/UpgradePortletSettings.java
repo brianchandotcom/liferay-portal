@@ -230,19 +230,19 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 						"?"));
 			PreparedStatement insertPreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						StringBundler.concat(
-							"insert into PortletPreferenceValue (mvccVersion, ",
-							"ctCollectionId, portletPreferenceValueId, ",
-							"companyId, portletPreferencesId, index_, ",
-							"largeValue, name, readOnly, smallValue) select 0 ",
-							"as mvccVersion, 0 as ctCollectionId, ? as ",
-							"portletPreferenceValueId, TEMP_TABLE.companyId, ",
-							"? as portletPreferencesId, TEMP_TABLE.index_, ",
-							"TEMP_TABLE.largeValue, TEMP_TABLE.name, ",
-							"TEMP_TABLE.readOnly, TEMP_TABLE.smallValue from ",
-							"PortletPreferenceValue TEMP_TABLE where ",
-							"TEMP_TABLE.portletPreferenceValueId = ?")))) {
+					connection,
+					StringBundler.concat(
+						"insert into PortletPreferenceValue (mvccVersion, ",
+						"ctCollectionId, portletPreferenceValueId, companyId, ",
+						"portletPreferencesId, index_, largeValue, name, ",
+						"readOnly, smallValue) select 0 as mvccVersion, 0 as ",
+						"ctCollectionId, ? as portletPreferenceValueId, ",
+						"TEMP_TABLE.companyId, ? as portletPreferencesId, ",
+						"TEMP_TABLE.index_, TEMP_TABLE.largeValue, ",
+						"TEMP_TABLE.name, TEMP_TABLE.readOnly, ",
+						"TEMP_TABLE.smallValue from PortletPreferenceValue ",
+						"TEMP_TABLE where TEMP_TABLE.portletPreferenceValueId ",
+						"= ?"))) {
 
 			selectPreparedStatement.setLong(1, oldPortletPreferencesId);
 

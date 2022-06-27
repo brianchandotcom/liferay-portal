@@ -93,7 +93,7 @@ public abstract class BaseExternalReferenceCodeUpgradeProcess
 				ResultSet resultSet = preparedStatement1.executeQuery();
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(updateSB.toString()))) {
+						connection, updateSB.toString())) {
 
 				while (resultSet.next()) {
 					long primKey = resultSet.getLong(1);

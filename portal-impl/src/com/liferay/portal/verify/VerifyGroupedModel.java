@@ -148,14 +148,14 @@ public class VerifyGroupedModel extends VerifyProcess {
 
 				try (PreparedStatement preparedStatement2 =
 						AutoBatchPreparedStatementUtil.autoBatch(
-							connection.prepareStatement(
-								StringBundler.concat(
-									"update ",
-									verifiableGroupedModel.getTableName(),
-									" set groupId = ? where ",
-									verifiableGroupedModel.
-										getPrimaryKeyColumnName(),
-									" = ?")))) {
+							connection,
+							StringBundler.concat(
+								"update ",
+								verifiableGroupedModel.getTableName(),
+								" set groupId = ? where ",
+								verifiableGroupedModel.
+									getPrimaryKeyColumnName(),
+								" = ?"))) {
 
 					while (resultSet.next()) {
 						long relatedPrimKey = resultSet.getLong(

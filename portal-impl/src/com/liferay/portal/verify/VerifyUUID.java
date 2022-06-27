@@ -97,12 +97,12 @@ public class VerifyUUID extends VerifyProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						StringBundler.concat(
-							"update ", verifiableUUIDModel.getTableName(),
-							" set uuid_ = ? where ",
-							verifiableUUIDModel.getPrimaryKeyColumnName(),
-							" = ?")))) {
+					connection,
+					StringBundler.concat(
+						"update ", verifiableUUIDModel.getTableName(),
+						" set uuid_ = ? where ",
+						verifiableUUIDModel.getPrimaryKeyColumnName(),
+						" = ?"))) {
 
 			while (resultSet.next()) {
 				long pk = resultSet.getLong(

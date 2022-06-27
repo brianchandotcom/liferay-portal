@@ -68,9 +68,9 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update MBMessage set urlSubject = ? where messageId " +
-							"= ?"))) {
+					connection,
+					"update MBMessage set urlSubject = ? where messageId = " +
+						"?")) {
 
 			int count = 0;
 			String curURLSubject = null;

@@ -83,12 +83,12 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						StringBundler.concat(
-							"insert into PortalPreferenceValue (mvccVersion, ",
-							"portalPreferenceValueId, portalPreferencesId, ",
-							"index_, key_, largeValue, namespace, smallValue) ",
-							"values (0, ?, ?, ?, ?, ?, ?, ?)")))) {
+					connection,
+					StringBundler.concat(
+						"insert into PortalPreferenceValue (mvccVersion, ",
+						"portalPreferenceValueId, portalPreferencesId, ",
+						"index_, key_, largeValue, namespace, smallValue) ",
+						"values (0, ?, ?, ?, ?, ?, ?, ?)"))) {
 
 			for (Preference preference : preferenceMap.values()) {
 				String namespace = null;

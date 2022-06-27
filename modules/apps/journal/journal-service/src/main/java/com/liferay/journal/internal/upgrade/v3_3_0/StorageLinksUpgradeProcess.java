@@ -52,9 +52,9 @@ public class StorageLinksUpgradeProcess extends UpgradeProcess {
 							JournalArticle.class)));
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update DDMStorageLink set structureVersionId = ? " +
-							"where storageLinkId = ?"));
+					connection,
+					"update DDMStorageLink set structureVersionId = ? where " +
+						"storageLinkId = ?");
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
@@ -78,9 +78,9 @@ public class StorageLinksUpgradeProcess extends UpgradeProcess {
 						"DDMStorageLink.structureId = 0"));
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update DDMStorageLink set structureId = ? where " +
-							"storageLinkId = ?"));
+					connection,
+					"update DDMStorageLink set structureId = ? where " +
+						"storageLinkId = ?");
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

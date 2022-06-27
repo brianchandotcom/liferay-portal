@@ -94,14 +94,14 @@ public class AssetDisplayPrivateLayoutUpgradeProcess extends UpgradeProcess {
 					"groupId = ? and privateLayout = ? and friendlyURL = ?");
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update Layout set privateLayout = ?, layoutId = ?, " +
-							"friendlyURL = ? where plid = ?"));
+					connection,
+					"update Layout set privateLayout = ?, layoutId = ?, " +
+						"friendlyURL = ? where plid = ?");
 			PreparedStatement preparedStatement4 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update LayoutFriendlyURL set privateLayout = ?, " +
-							"friendlyURL = ? where plid = ?"))) {
+					connection,
+					"update LayoutFriendlyURL set privateLayout = ?, " +
+						"friendlyURL = ? where plid = ?")) {
 
 			preparedStatement1.setBoolean(1, true);
 			preparedStatement1.setString(2, LayoutConstants.TYPE_ASSET_DISPLAY);

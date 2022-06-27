@@ -260,6 +260,7 @@
 		<Logger level="ERROR" name="de.hunsicker" />
 		<Logger level="ERROR" name="de.nava.informa" />
 		<Logger level="ERROR" name="freemarker.beans" />
+		<Logger level="ERROR" name="hsqldb.db" />
 		<Logger level="ERROR" name="httpclient.wire" />
 		<Logger level="ERROR" name="net.htmlparser.jericho" />
 		<Logger level="ERROR" name="net.sf.ehcache" />

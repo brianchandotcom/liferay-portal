@@ -96,7 +96,7 @@ definition {
 			category = "Order Management",
 			portlet = "Orders");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		ClickNoError(
 			key_orderStatus = "Pending",

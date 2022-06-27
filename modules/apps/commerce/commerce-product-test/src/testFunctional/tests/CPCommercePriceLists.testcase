@@ -47,7 +47,9 @@ definition {
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
 			value1 = "'MIN55861'");
 
-		Pause(locator1 = "2000");
+		WaitForElementPresent(
+			key_text = "Select",
+			locator1 = "Button#ANY");
 
 		Button.clickSelect();
 
@@ -1473,7 +1475,9 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(
+			ocator1 = "TextInput#NAME",
+			value1 = "Test Price List");
 
 		Type(
 			locator1 = "TextInput#NAME",
@@ -1845,7 +1849,7 @@ definition {
 
 		Button.clickSave();
 
-		Pause(locator1 = "1000");
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Pricing",
@@ -1965,7 +1969,7 @@ definition {
 
 		Button.clickSave();
 
-		Pause(locator1 = "1000");
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Pricing",
@@ -2123,7 +2127,7 @@ definition {
 
 		Button.clickSave();
 
-		Pause(locator1 = "1000");
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Pricing",
@@ -2318,7 +2322,7 @@ definition {
 
 		Button.clickSave();
 
-		Pause(locator1 = "1000");
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Pricing",

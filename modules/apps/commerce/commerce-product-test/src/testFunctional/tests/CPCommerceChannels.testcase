@@ -1941,7 +1941,7 @@ definition {
 
 		Click(locator1 = "Icon#CLOSE");
 
-		Pause(locator1 = "3000");
+		WaitForElementNotPresent();
 
 		SelectFrameTop();
 

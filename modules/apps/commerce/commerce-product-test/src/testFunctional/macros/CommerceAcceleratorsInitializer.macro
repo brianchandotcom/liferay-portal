@@ -137,7 +137,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Widgets");
 
-		Pause(locator1 = "5000");
+		WaitForElementPresent(locator1 = "NavBar#APPLICATION_SEARCH_FIELD");
 
 		Type(
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",

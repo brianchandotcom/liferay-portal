@@ -362,8 +362,6 @@ definition {
 			key_text = "Reset Zoom",
 			locator1 = "Button#ANY");
 
-		Pause(locator1 = "2000");
-
 		var actual_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
 
 		if (("${actual_position}" == "translate(0,0) scale(1)") || ("${actual_position}" == "translate(0, 0) scale(1,1)")) {

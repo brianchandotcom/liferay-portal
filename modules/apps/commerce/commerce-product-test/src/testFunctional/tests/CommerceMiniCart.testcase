@@ -750,7 +750,7 @@ definition {
 
 		Button.click(button = "Publish");
 
-		Pause(locator1 = "1000");
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 
 		Refresh();
 
@@ -1333,7 +1333,7 @@ definition {
 
 		Button.click(button = "Publish");
 
-		Pause(locator1 = "1000");
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 
 		Refresh();
 
@@ -1611,7 +1611,7 @@ definition {
 
 		Button.clickSave();
 
-		Pause(locator1 = "1000");
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",

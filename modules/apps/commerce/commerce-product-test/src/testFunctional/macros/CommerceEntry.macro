@@ -124,11 +124,11 @@ definition {
 	}
 
 	macro addNewChannelsEntry {
-		Pause(locator1 = "6000");
+		WaitForElementPresent(locator1 = "IFrame#MODAL_IFRAME");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(locator1 = "TextInput#NAME");
 
 		Type(
 			locator1 = "TextInput#NAME",
@@ -169,7 +169,7 @@ definition {
 			Button.clickSave();
 		}
 
-		Pause(locator1 = "5000");
+		WaitForElementPresent();
 	}
 
 	macro addNewCountriesEntry {
@@ -250,7 +250,7 @@ definition {
 	}
 
 	macro addNewDiscountsEntry {
-		Pause(locator1 = "3000");
+		WaitForElementPresent(locator1 = "IFrame#MODAL_IFRAME");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 
@@ -990,7 +990,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		Pause(locator1 = "3000");
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro saveEntry {
@@ -998,7 +998,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		Pause(locator1 = "3000");
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 	}
 
 	macro saveEntryAsDraft {
@@ -1013,8 +1013,6 @@ definition {
 				locator1 = "CommerceEntry#WORKFLOW_STATUS",
 				value1 = "${status}");
 		}
-
-		Pause(locator1 = "3000");
 	}
 
 	macro selectAssociatedOptionsValue {

@@ -23,7 +23,7 @@ definition {
 
 		echo("Creating new Option complete with Values...");
 
-		Pause(locator1 = "2000");
+		WaitForElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 
 		CPCommerceCatalog.newOptionsEntry(
 			optionDescription = "Option Description",

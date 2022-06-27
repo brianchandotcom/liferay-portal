@@ -399,7 +399,7 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		Pause(locator1 = "2000");
+		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SUBTOTAL");
 
 		AssertTextEquals.assertPartialText(
 			key_subtotalValue = "21.60",
@@ -465,7 +465,7 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		Pause(locator1 = "2000");
+		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SUBTOTAL");
 
 		AssertTextEquals.assertPartialText(
 			key_subtotalValue = "21.60",
@@ -538,7 +538,9 @@ definition {
 			key_toggleSwitch = "Coupon Code",
 			locator1 = "ToggleSwitch#ENABLE_TOGGLE_SWITCH_VIA_SPAN");
 
-		Pause(locator1 = "1000");
+		WaitForElementPresent(
+			key_fieldLabel = "Coupon Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT");
 
 		Type(
 			key_fieldLabel = "Coupon Code",
@@ -598,7 +600,10 @@ definition {
 
 		Button.click(button = "Apply");
 
-		Pause(locator1 = "1000");
+		WaitForElementPresent(
+			key_titleName = "Coupon Code",
+			locator1 = "TextInput#INPUT_CONTAINS_TITLE",
+			value1 = "TEST");
 
 		AssertElementPresent(
 			key_titleName = "Coupon Code",
@@ -634,7 +639,7 @@ definition {
 
 		Button.clickSave();
 
-		Pause(locator1 = "1000");
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",

@@ -239,6 +239,20 @@ public class MBSuspiciousActivityPersistenceTest {
 	}
 
 	@Test
+	public void testCountByMessageId() throws Exception {
+		_persistence.countByMessageId(RandomTestUtil.nextLong());
+
+		_persistence.countByMessageId(0L);
+	}
+
+	@Test
+	public void testCountByThreadId() throws Exception {
+		_persistence.countByThreadId(RandomTestUtil.nextLong());
+
+		_persistence.countByThreadId(0L);
+	}
+
+	@Test
 	public void testCountByU_M() throws Exception {
 		_persistence.countByU_M(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());

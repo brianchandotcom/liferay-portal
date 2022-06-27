@@ -14,6 +14,11 @@
 
 package com.liferay.message.boards.service;
 
+import com.liferay.message.boards.model.MBSuspiciousActivity;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for MBSuspiciousActivity. This utility wraps
  * <code>com.liferay.message.boards.service.impl.MBSuspiciousActivityServiceImpl</code> and is an
@@ -33,14 +38,57 @@ public class MBSuspiciousActivityServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.message.boards.service.impl.MBSuspiciousActivityServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static MBSuspiciousActivity addOrUpdateSuspiciousActivity(
+			long messageId, String description, String type)
+		throws PortalException {
+
+		return getService().addOrUpdateSuspiciousActivity(
+			messageId, description, type);
+	}
+
+	public static MBSuspiciousActivity deleteSuspiciousActivity(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().deleteSuspiciousActivity(suspiciousActivityId);
+	}
+
+	public static List<MBSuspiciousActivity> getMessageSuspiciousActivities(
+		long messageId) {
+
+		return getService().getMessageSuspiciousActivities(messageId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static MBSuspiciousActivity getSuspiciousActivity(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().getSuspiciousActivity(suspiciousActivityId);
+	}
+
+	public static List<MBSuspiciousActivity> getThreadSuspiciousActivities(
+		long threadId) {
+
+		return getService().getThreadSuspiciousActivities(threadId);
+	}
+
+	public static MBSuspiciousActivity updateValidated(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().updateValidated(suspiciousActivityId);
 	}
 
 	public static MBSuspiciousActivityService getService() {

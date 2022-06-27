@@ -144,6 +144,16 @@ public class MBSuspiciousActivityLocalServiceWrapper
 	}
 
 	@Override
+	public MBSuspiciousActivity deleteSuspiciousActivity(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.deleteSuspiciousActivity(
+			suspiciousActivityId);
+	}
+
+	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _mbSuspiciousActivityLocalService.dslQuery(dslQuery);
 	}
@@ -396,6 +406,14 @@ public class MBSuspiciousActivityLocalServiceWrapper
 			getMBSuspiciousActivityByUuidAndGroupId(uuid, groupId);
 	}
 
+	@Override
+	public java.util.List<MBSuspiciousActivity> getMessageSuspiciousActivities(
+		long messageId) {
+
+		return _mbSuspiciousActivityLocalService.getMessageSuspiciousActivities(
+			messageId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -418,6 +436,23 @@ public class MBSuspiciousActivityLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public MBSuspiciousActivity getSuspiciousActivity(long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.getSuspiciousActivity(
+			suspiciousActivityId);
+	}
+
+	@Override
+	public java.util.List<MBSuspiciousActivity> getThreadSuspiciousActivities(
+		long threadId) {
+
+		return _mbSuspiciousActivityLocalService.getThreadSuspiciousActivities(
+			threadId);
+	}
+
 	/**
 	 * Updates the message boards suspicious activity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -434,6 +469,15 @@ public class MBSuspiciousActivityLocalServiceWrapper
 
 		return _mbSuspiciousActivityLocalService.updateMBSuspiciousActivity(
 			mbSuspiciousActivity);
+	}
+
+	@Override
+	public MBSuspiciousActivity updateValidated(long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.updateValidated(
+			suspiciousActivityId);
 	}
 
 	@Override

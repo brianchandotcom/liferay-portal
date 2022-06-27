@@ -15,6 +15,7 @@
 package com.liferay.message.boards.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.message.boards.exception.NoSuchSuspiciousActivityException;
 import com.liferay.message.boards.model.MBSuspiciousActivity;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -140,6 +141,10 @@ public interface MBSuspiciousActivityLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	public MBSuspiciousActivity deleteSuspiciousActivity(
+			long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
@@ -314,6 +319,10 @@ public interface MBSuspiciousActivityLocalService
 			String uuid, long groupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBSuspiciousActivity> getMessageSuspiciousActivities(
+		long messageId);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -329,6 +338,14 @@ public interface MBSuspiciousActivityLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBSuspiciousActivity getSuspiciousActivity(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBSuspiciousActivity> getThreadSuspiciousActivities(
+		long threadId);
+
 	/**
 	 * Updates the message boards suspicious activity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -342,6 +359,9 @@ public interface MBSuspiciousActivityLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public MBSuspiciousActivity updateMBSuspiciousActivity(
 		MBSuspiciousActivity mbSuspiciousActivity);
+
+	public MBSuspiciousActivity updateValidated(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException;
 
 	@Override
 	@Transactional(enabled = false)

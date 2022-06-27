@@ -75,12 +75,12 @@ public class InfoRequestFieldValuesProviderHelper {
 		String classTypeId = ParamUtil.getString(
 			httpServletRequest, "classTypeId");
 
+		Map<String, String[]> parameterMap =
+			httpServletRequest.getParameterMap();
+
 		for (InfoField<?> infoField :
 				_getInfoFields(
 					className, classTypeId, themeDisplay.getScopeGroupId())) {
-
-			Map<String, String[]> parameterMap =
-				httpServletRequest.getParameterMap();
 
 			if (ArrayUtil.isEmpty(parameterMap.get(infoField.getName()))) {
 				continue;

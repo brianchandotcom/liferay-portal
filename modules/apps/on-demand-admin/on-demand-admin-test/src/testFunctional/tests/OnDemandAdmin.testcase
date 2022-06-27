@@ -1,0 +1,57 @@
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "On Demand Admin";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PortalInstances.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@description = "This test covers LPS-156154 and asserts that the portlet for On-Demand Admin is not available when accessing through a non-default instance."
+	@priority = "5"
+	test OnDemandAdminUnavailableInNonDefaultInstance {
+		task ("Given a new Virtual Instance is created") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+		}
+
+		task ("When an admin signs in to the non-default instance") {
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+		}
+
+		task ("Then the On-Demand Admin portlet should not be available to them") {
+			Portlet.viewNoPortletsPresentCP(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "On-Demand Admin");
+		}
+	}
+
+}

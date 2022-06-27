@@ -498,58 +498,22 @@ definition {
 
 			IFrame.selectPermissionsFrame();
 
-			Check.checkToggleSwitch(
-				key_roleTitle = "site-member",
-				locator1 = "Permissions#INLINE_PERMISSIONS_VIEW_CHECKBOX");
+			CommercePermissions.defineSingleRolePermissionsPG(
+				permissions = "delete,permissions,update,view",
+				roleTitle = "Site Member");
 
-			Check.checkToggleSwitch(
-				key_roleTitle = "site-member",
-				locator1 = "Permissions#INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX");
-
-			Check.checkToggleSwitch(
-				key_roleTitle = "site-member",
-				locator1 = "Permissions#INLINE_PERMISSIONS_DELETE_CHECKBOX");
-
-			Check.checkToggleSwitch(
-				key_roleTitle = "site-member",
-				locator1 = "Permissions#INLINE_PERMISSIONS_UPDATE_CHECKBOX");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-
-			SelectFrameTop();
-
-			ClickNoError(
-				key_modalTitle = "Permissions",
-				locator1 = "Button#CLOSE_MODAL");
+			IFrame.closeFrame();
 		}
 
 		task ("Then those permissions should be saved on the catalog") {
-			Refresh();
-
 			Click(
 				key_indexNumber = "2",
 				key_text = "Permissions",
 				locator1 = "Button#ANY_N");
 
-			IFrame.selectPermissionsFrame();
-
-			AssertChecked(
-				key_roleTitle = "site-member",
-				locator1 = "Permissions#INLINE_PERMISSIONS_UPDATE_CHECKBOX");
-
-			AssertChecked(
-				key_roleTitle = "site-member",
-				locator1 = "Permissions#INLINE_PERMISSIONS_DELETE_CHECKBOX");
-
-			AssertChecked(
-				key_roleTitle = "site-member",
-				locator1 = "Permissions#INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX");
-
-			AssertChecked(
-				key_roleTitle = "site-member",
-				locator1 = "Permissions#INLINE_PERMISSIONS_VIEW_CHECKBOX");
+			CommercePermissions.assertSingleRolePermissionsPG(
+				permissions = "delete,permissions,update,view",
+				roleTitle = "Site Member");
 		}
 	}
 

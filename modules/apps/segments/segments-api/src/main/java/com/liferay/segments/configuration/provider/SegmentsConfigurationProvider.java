@@ -28,6 +28,12 @@ public interface SegmentsConfigurationProvider {
 	public String getConfigurationURL(HttpServletRequest httpServletRequest)
 		throws PortalException;
 
+	public byte[] getSegmentsCompanyConfigurationAsBytes(long companyId)
+		throws ConfigurationException;
+
+	public String getSegmentsCompanyConfigurationFileName(long companyId)
+		throws ConfigurationException;
+
 	public boolean isRoleSegmentationEnabled() throws ConfigurationException;
 
 	public boolean isRoleSegmentationEnabled(long companyId)

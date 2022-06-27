@@ -70,8 +70,6 @@ definition {
 
 			Button.clickPublish();
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
@@ -90,9 +88,7 @@ definition {
 				key_individualAttribute = "DM Document Title",
 				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 
-			Click(
-				keyButtonAction = "View Metrics",
-				locator1 = "ContentDashboard#QUICK_ACTION_BUTTON_MENU");
+			Click.javaScriptClick(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
 		}
 
 		task ("Assert the Content Performance is present") {
@@ -341,8 +337,6 @@ definition {
 
 			Button.clickPublish();
 
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
@@ -361,9 +355,7 @@ definition {
 				key_individualAttribute = "DM Document Title",
 				locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 
-			Click(
-				keyButtonAction = "View Metrics",
-				locator1 = "ContentDashboard#QUICK_ACTION_BUTTON_MENU");
+			Click.javaScriptClick(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
 		}
 
 		task ("Assert the Content Performance is present") {

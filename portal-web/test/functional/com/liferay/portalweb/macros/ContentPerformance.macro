@@ -56,7 +56,7 @@ definition {
 	macro showMetricsButton {
 		Click(locator1 = "ContentDashboard#ROW_PANEL_WC");
 
-		Click(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
+		Click.javaScriptClick(locator1 = "ContentPerformance#ICON_VIEW_METRICS");
 
 		while (IsNotVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_SIDEBAR")) {
 			WaitForElementPresent(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_SIDEBAR");

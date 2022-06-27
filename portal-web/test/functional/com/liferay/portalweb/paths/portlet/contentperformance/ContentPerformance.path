@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>ICON_VIEW_METRICS</td>
-	<td>//button[contains(@label,'View Metrics')]</td>
+	<td>//button[contains(@title,'View Metrics')]</td>
 	<td></td>
 </tr>
 <tr>

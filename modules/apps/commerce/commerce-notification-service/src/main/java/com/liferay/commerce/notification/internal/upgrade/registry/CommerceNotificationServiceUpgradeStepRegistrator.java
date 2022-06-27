@@ -15,8 +15,6 @@
 package com.liferay.commerce.notification.internal.upgrade.registry;
 
 import com.liferay.commerce.notification.internal.upgrade.v2_0_0.util.CommerceNotificationTemplateCommerceAccountGroupRelTable;
-import com.liferay.commerce.notification.internal.upgrade.v2_1_0.CommerceNotificationQueueEntryUpgradeProcess;
-import com.liferay.commerce.notification.internal.upgrade.v2_2_0.CommerceNotificationTemplateUpgradeProcess;
 import com.liferay.commerce.notification.internal.upgrade.v2_2_1.CommerceNotificationTemplateGroupIdUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,6 +22,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,10 +52,14 @@ public class CommerceNotificationServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.0.0", "2.1.0",
-			new CommerceNotificationQueueEntryUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"CommerceNotificationQueueEntry", "classNameId LONG",
+				"classPK LONG"));
 
 		registry.register(
-			"2.1.0", "2.2.0", new CommerceNotificationTemplateUpgradeProcess());
+			"2.1.0", "2.2.0",
+			UpgradeProcessFactory.addColumns(
+				"CommerceNotificationTemplate", "to_ VARCHAR(75)"));
 
 		registry.register(
 			"2.2.0", "2.2.1",

@@ -14,7 +14,8 @@
 
 package com.liferay.document.library.opener.internal.upgrade.registry;
 
-import com.liferay.document.library.opener.internal.upgrade.v1_1_0.DLOpenerFileEntryReferenceUpgradeProcess;
+import com.liferay.document.library.opener.internal.upgrade.v1_1_0.util.DLOpenerFileEntryReferenceTable;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,7 +30,12 @@ public class DLOpenerServiceUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"1.0.0", "1.1.0", new DLOpenerFileEntryReferenceUpgradeProcess());
+			"1.0.0", "1.1.0",
+			UpgradeProcessFactory.addColumns(
+				"DLOpenerFileEntryReference", "referenceType VARCHAR(75) null"),
+			UpgradeProcessFactory.runSQL(
+				"update " + DLOpenerFileEntryReferenceTable.TABLE_NAME +
+					" set referenceType = 'GoogleDrive'"));
 	}
 
 }

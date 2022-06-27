@@ -15,9 +15,8 @@
 package com.liferay.search.experiences.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.search.experiences.internal.upgrade.v1_1_0.SXPBlueprintUpgradeProcess;
-import com.liferay.search.experiences.internal.upgrade.v1_1_0.SXPElementUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,8 +32,13 @@ public class SXPServiceUpgradeStepRegistrator
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"1.0.0", "1.1.0", new SXPElementUpgradeProcess(),
-			new SXPBlueprintUpgradeProcess());
+			"1.0.0", "1.1.0",
+			UpgradeProcessFactory.addColumns(
+				"SXPElement", "key_ VARCHAR(75) null",
+				"version VARCHAR(75) null"),
+			UpgradeProcessFactory.addColumns(
+				"SXPBlueprint", "key_ VARCHAR(75) null",
+				"version VARCHAR(75) null"));
 
 		registry.register(
 			"1.1.0", "1.2.0",

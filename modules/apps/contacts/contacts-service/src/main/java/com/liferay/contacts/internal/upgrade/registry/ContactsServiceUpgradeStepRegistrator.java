@@ -15,11 +15,11 @@
 package com.liferay.contacts.internal.upgrade.registry;
 
 import com.liferay.contacts.internal.upgrade.v2_0_0.EntryUpgradeProcess;
-import com.liferay.contacts.internal.upgrade.v2_0_2.EmailAddressUpgradeProcess;
 import com.liferay.contacts.internal.upgrade.v3_0_0.util.EntryTable;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,7 +43,10 @@ public class ContactsServiceUpgradeStepRegistrator
 
 		registry.register("2.0.0", "2.0.1", new DummyUpgradeStep());
 
-		registry.register("2.0.1", "2.0.2", new EmailAddressUpgradeProcess());
+		registry.register(
+			"2.0.1", "2.0.2",
+			UpgradeProcessFactory.alterColumnTypes(
+				"Contacts_Entry", "VARCHAR(254) null", "emailAddress"));
 
 		registry.register(
 			"2.0.2", "3.0.0",

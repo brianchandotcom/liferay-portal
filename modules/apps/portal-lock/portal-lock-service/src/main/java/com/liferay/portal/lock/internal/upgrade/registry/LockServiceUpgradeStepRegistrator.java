@@ -15,7 +15,7 @@
 package com.liferay.portal.lock.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
-import com.liferay.portal.lock.internal.upgrade.v1_0_0.LockUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.lock.internal.upgrade.v2_0_0.util.LockTable;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -30,7 +30,10 @@ public class LockServiceUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.1", "1.0.0", new LockUpgradeProcess());
+		registry.register(
+			"0.0.1", "1.0.0",
+			UpgradeProcessFactory.alterColumnTypes(
+				"Lock_", "VARCHAR(1024) null", "owner"));
 
 		registry.register(
 			"1.0.0", "2.0.0",
@@ -39,8 +42,8 @@ public class LockServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.0.0", "2.0.1",
-			new com.liferay.portal.lock.internal.upgrade.v2_0_1.
-				LockUpgradeProcess());
+			UpgradeProcessFactory.alterColumnTypes(
+				"Lock_", "VARCHAR(255) null", "key_"));
 	}
 
 }

@@ -14,11 +14,10 @@
 
 package com.liferay.commerce.currency.internal.upgrade.registry;
 
-import com.liferay.commerce.currency.internal.upgrade.v1_1_0.CommerceCurrencyUpgradeProcess;
-import com.liferay.commerce.currency.internal.upgrade.v1_2_0.CommerceCurrencySymbolUpgradeProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,10 +38,13 @@ public class CommerceCurrencyServiceUpgradeStepRegistrator
 		}
 
 		registry.register(
-			"1.0.0", "1.1.0", new CommerceCurrencyUpgradeProcess());
+			"1.0.0", "1.1.0",
+			UpgradeProcessFactory.dropColumns("CommerceCurrency", "groupId"));
 
 		registry.register(
-			"1.1.0", "1.2.0", new CommerceCurrencySymbolUpgradeProcess());
+			"1.1.0", "1.2.0",
+			UpgradeProcessFactory.addColumns(
+				"CommerceCurrency", "VARCHAR(75)", "symbol"));
 
 		registry.register(
 			"1.2.0", "1.3.0",

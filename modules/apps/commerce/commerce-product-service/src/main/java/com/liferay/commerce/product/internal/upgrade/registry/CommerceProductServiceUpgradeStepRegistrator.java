@@ -16,15 +16,14 @@ package com.liferay.commerce.product.internal.upgrade.registry;
 
 import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.commerce.pricing.constants.CommercePricingConstants;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.internal.upgrade.v1_10_1.CommerceSiteTypeUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_11_0.CPAttachmentFileEntryGroupUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_11_1.CPDisplayLayoutUpgradeProcess;
-import com.liferay.commerce.product.internal.upgrade.v1_2_0.ProductSubscriptionUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPDefinitionLinkUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPDefinitionOptionRelUpgradeProcess;
-import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPDefinitionUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPFriendlyURLEntryUpgradeProcess;
-import com.liferay.commerce.product.internal.upgrade.v1_3_0.CPInstanceUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.CProductUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v1_3_0.util.CProductTable;
 import com.liferay.commerce.product.internal.upgrade.v1_4_0.CPDefinitionSpecificationOptionValueUpgradeProcess;
@@ -34,16 +33,11 @@ import com.liferay.commerce.product.internal.upgrade.v1_6_0.CommerceCatalogUpgra
 import com.liferay.commerce.product.internal.upgrade.v1_6_0.util.CommerceCatalogTable;
 import com.liferay.commerce.product.internal.upgrade.v1_6_0.util.CommerceChannelRelTable;
 import com.liferay.commerce.product.internal.upgrade.v1_6_0.util.CommerceChannelTable;
-import com.liferay.commerce.product.internal.upgrade.v1_7_0.CPDefinitionFiltersUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v2_0_0.CPInstanceOptionValueRelUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v2_0_0.util.CPInstanceOptionValueRelTable;
-import com.liferay.commerce.product.internal.upgrade.v2_1_0.CommerceCatalogSystemUpgradeProcess;
-import com.liferay.commerce.product.internal.upgrade.v2_1_0.SubscriptionUpgradeProcess;
-import com.liferay.commerce.product.internal.upgrade.v2_2_0.CPDefinitionOptionValueRelUpgradeProcess;
-import com.liferay.commerce.product.internal.upgrade.v2_3_0.CommerceChannelUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v2_2_0.util.CPDefinitionOptionRelTable;
+import com.liferay.commerce.product.internal.upgrade.v2_2_0.util.CPDefinitionOptionValueRelTable;
 import com.liferay.commerce.product.internal.upgrade.v2_5_0.FriendlyURLEntryUpgradeProcess;
-import com.liferay.commerce.product.internal.upgrade.v3_1_0.CPTaxCategoryUpgradeProcess;
-import com.liferay.commerce.product.internal.upgrade.v3_8_0.CPMeasurementUnitUpgradeProcess;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -58,6 +52,7 @@ import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -84,7 +79,16 @@ public class CommerceProductServiceUpgradeStepRegistrator
 		registry.register("1.0.0", "1.1.0", new DummyUpgradeProcess());
 
 		registry.register(
-			"1.1.0", "1.2.0", new ProductSubscriptionUpgradeProcess());
+			"1.1.0", "1.2.0",
+			UpgradeProcessFactory.addColumns(
+				"CPDefinition", "subscriptionEnabled BOOLEAN",
+				"subscriptionLength INTEGER", "subscriptionType VARCHAR(75)",
+				"subscriptionTypeSettings TEXT", "maxSubscriptionCycles LONG"),
+			UpgradeProcessFactory.addColumns(
+				"CPInstance", "overrideSubscriptionInfo BOOLEAN",
+				"subscriptionEnabled BOOLEAN", "subscriptionLength INTEGER",
+				"subscriptionType VARCHAR(75)", "subscriptionTypeSettings TEXT",
+				"maxSubscriptionCycles LONG"));
 
 		registry.register(
 			"1.2.0", "1.3.0",
@@ -92,10 +96,14 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				CPAttachmentFileEntryUpgradeProcess(),
 			new CPDefinitionLinkUpgradeProcess(),
 			new CPDefinitionOptionRelUpgradeProcess(),
-			new CPDefinitionUpgradeProcess(), CProductTable.create(),
-			new CProductUpgradeProcess(),
+			UpgradeProcessFactory.addColumns(
+				"CPDefinition", "CProductId LONG", "version INTEGER"),
+			CProductTable.create(), new CProductUpgradeProcess(),
 			new CPFriendlyURLEntryUpgradeProcess(_classNameLocalService),
-			new CPInstanceUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"CPInstance", "CPInstanceUuid VARCHAR(75)"),
+			UpgradeProcessFactory.runSQL(
+				"update CPInstance set CPInstanceUuid = uuid_"));
 
 		registry.register(
 			"1.3.0", "1.4.0",
@@ -113,7 +121,12 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			new CPDefinitionTrashEntriesUpgradeProcess(_classNameLocalService));
 
 		registry.register(
-			"1.6.0", "1.7.0", new CPDefinitionFiltersUpgradeProcess());
+			"1.6.0", "1.7.0",
+			UpgradeProcessFactory.addColumns(
+				"CPDefinition", "accountGroupFilterEnabled BOOLEAN",
+				"channelFilterEnabled BOOLEAN"),
+			UpgradeProcessFactory.runSQL(
+				"update CPDefinition set channelFilterEnabled = [$TRUE$]"));
 
 		registry.register(
 			"1.7.0", "1.8.0",
@@ -158,11 +171,38 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				_jsonFactory, _portalUUID));
 
 		registry.register(
-			"2.0.0", "2.1.0", new CommerceCatalogSystemUpgradeProcess(),
-			new SubscriptionUpgradeProcess());
+			"2.0.0", "2.1.0",
+			UpgradeProcessFactory.alterColumnName(
+				"CommerceCatalog", "system", "system_ BOOLEAN"),
+			UpgradeProcessFactory.addColumns(
+				"CPDefinition", "deliverySubscriptionEnabled BOOLEAN",
+				"deliverySubscriptionLength INTEGER",
+				"deliverySubscriptionType VARCHAR(75)",
+				"deliverySubTypeSettings TEXT",
+				"deliveryMaxSubscriptionCycles LONG"),
+			UpgradeProcessFactory.addColumns(
+				"CPInstance", "deliverySubscriptionEnabled BOOLEAN",
+				"deliverySubscriptionLength INTEGER",
+				"deliverySubscriptionType VARCHAR(75)",
+				"deliverySubTypeSettings TEXT",
+				"deliveryMaxSubscriptionCycles LONG"));
 
 		registry.register(
-			"2.1.0", "2.2.0", new CPDefinitionOptionValueRelUpgradeProcess());
+			"2.1.0", "2.2.0",
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionOptionValueRel", "CPInstanceUuid VARCHAR(75)",
+				"CProductId LONG", "quantity INTEGER", "price DECIMAL(30, 16)"),
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionOptionRel", "priceType VARCHAR(75)"),
+			UpgradeProcessFactory.runSQL(
+				String.format(
+					"update %s set priceType = '%s'",
+					CPDefinitionOptionRelTable.TABLE_NAME,
+					CPConstants.PRODUCT_OPTION_PRICE_TYPE_STATIC)),
+			UpgradeProcessFactory.runSQL(
+				String.format(
+					"update %s set price = 0",
+					CPDefinitionOptionValueRelTable.TABLE_NAME)));
 
 		registry.register(
 			"2.2.0", "2.2.1",
@@ -172,12 +212,21 @@ public class CommerceProductServiceUpgradeStepRegistrator
 		registry.register("2.2.1", "2.2.2", new DummyUpgradeProcess());
 
 		registry.register(
-			"2.2.2", "2.3.0", new CommerceChannelUpgradeProcess());
+			"2.2.2", "2.3.0",
+			UpgradeProcessFactory.addColumns(
+				"CommerceChannel", "priceDisplayType VARCHAR(75)",
+				"discountsTargetNetPrice BOOLEAN"),
+			UpgradeProcessFactory.runSQL(
+				"update CommerceChannel set priceDisplayType = '" +
+					CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE + "'"),
+			UpgradeProcessFactory.runSQL(
+				"update CommerceChannel set discountsTargetNetPrice = " +
+					"[$TRUE$]"));
 
 		registry.register(
 			"2.3.0", "2.4.0",
-			new com.liferay.commerce.product.internal.upgrade.v2_4_0.
-				CPDefinitionOptionValueRelUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionOptionValueRel", "preselected BOOLEAN"));
 
 		registry.register(
 			"2.4.0", "2.5.0",
@@ -185,8 +234,8 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.5.0", "2.6.0",
-			new com.liferay.commerce.product.internal.upgrade.v2_6_0.
-				CPInstanceUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"CPInstance", "unspsc VARCHAR(75)"));
 
 		registry.register("2.6.0", "2.6.1", new DummyUpgradeProcess());
 
@@ -195,7 +244,10 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			new com.liferay.commerce.product.internal.upgrade.v3_0_0.
 				CPFriendlyURLEntryUpgradeProcess());
 
-		registry.register("3.0.0", "3.1.0", new CPTaxCategoryUpgradeProcess());
+		registry.register(
+			"3.0.0", "3.1.0",
+			UpgradeProcessFactory.addColumns(
+				"CPTaxCategory", "externalReferenceCode VARCHAR(75)"));
 
 		registry.register(
 			"3.1.0", "3.2.0",
@@ -207,8 +259,9 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.2.1", "3.3.0",
-			new com.liferay.commerce.product.internal.upgrade.v3_3_0.
-				CPAttachmentFileEntryUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"CPAttachmentFileEntry", "cdnEnabled BOOLEAN",
+				"cdnURL VARCHAR(255)"));
 
 		registry.register(
 			"3.3.0", "3.4.0",
@@ -241,8 +294,10 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.5.1", "3.6.0",
-			new com.liferay.commerce.product.internal.upgrade.v3_6_0.
-				CPInstanceUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"CPInstance", "discontinued BOOLEAN",
+				"replacementCPInstanceUuid VARCHAR(75)",
+				"replacementCProductId LONG", "discontinuedDate DATE"));
 
 		registry.register(
 			"3.6.0", "3.7.0",
@@ -257,12 +312,14 @@ public class CommerceProductServiceUpgradeStepRegistrator
 				"CPTaxCategory"));
 
 		registry.register(
-			"3.7.0", "3.8.0", new CPMeasurementUnitUpgradeProcess());
+			"3.7.0", "3.8.0",
+			UpgradeProcessFactory.addColumns(
+				"CPMeasurementUnit", "externalReferenceCode VARCHAR(75)"));
 
 		registry.register(
 			"3.8.0", "3.8.1",
-			new com.liferay.commerce.product.internal.upgrade.v3_8_1.
-				CPAttachmentFileEntryUpgradeProcess());
+			UpgradeProcessFactory.alterColumnTypes(
+				"CPAttachmentFileEntry", "STRING null", "cdnURL"));
 
 		registry.register(
 			"3.8.1", "3.9.0",

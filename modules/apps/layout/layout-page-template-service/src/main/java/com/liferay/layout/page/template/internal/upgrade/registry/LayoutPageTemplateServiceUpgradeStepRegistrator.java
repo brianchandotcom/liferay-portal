@@ -36,9 +36,9 @@ import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -90,7 +90,7 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.0.0", "3.0.1",
-			UpgradeStepFactory.alterColumnTypes(
+			UpgradeProcessFactory.alterColumnTypes(
 				"LayoutPageTemplateStructureRel", "TEXT null", "data_"));
 
 		registry.register(

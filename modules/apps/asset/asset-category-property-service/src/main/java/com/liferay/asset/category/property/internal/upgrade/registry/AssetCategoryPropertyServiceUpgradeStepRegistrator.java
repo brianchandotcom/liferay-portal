@@ -16,10 +16,10 @@ package com.liferay.asset.category.property.internal.upgrade.registry;
 
 import com.liferay.asset.category.property.internal.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.asset.category.property.internal.upgrade.v2_0_0.util.AssetCategoryPropertyTable;
-import com.liferay.asset.category.property.internal.upgrade.v2_2_0.AssetCategoryPropertyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -52,7 +52,9 @@ public class AssetCategoryPropertyServiceUpgradeStepRegistrator
 			});
 
 		registry.register(
-			"2.1.0", "2.2.0", new AssetCategoryPropertyUpgradeProcess());
+			"2.1.0", "2.2.0",
+			UpgradeProcessFactory.alterColumnTypes(
+				"AssetCategoryProperty", "VARCHAR(255) null", "key_", "value"));
 
 		registry.register(
 			"2.2.0", "2.3.0",

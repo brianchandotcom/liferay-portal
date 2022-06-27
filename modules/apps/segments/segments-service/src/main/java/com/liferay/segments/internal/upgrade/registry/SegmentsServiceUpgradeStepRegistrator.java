@@ -18,6 +18,7 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.segments.internal.upgrade.v2_0_0.SchemaUpgradeProcess;
 import com.liferay.segments.internal.upgrade.v2_0_0.SegmentsExperienceUpgradeProcess;
@@ -69,8 +70,8 @@ public class SegmentsServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.3.0", "2.4.0",
-			new com.liferay.segments.internal.upgrade.v2_4_0.
-				SchemaUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"SegmentsExperience", "typeSettings VARCHAR(75) null"));
 
 		registry.register("2.4.0", "2.5.0", new DummyUpgradeStep());
 

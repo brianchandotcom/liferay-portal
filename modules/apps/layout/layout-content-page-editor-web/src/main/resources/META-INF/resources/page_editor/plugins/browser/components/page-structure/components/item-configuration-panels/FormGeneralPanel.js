@@ -212,7 +212,7 @@ function SuccessMessageOptions({item, onValueSelect}) {
 	}, [successMessageConfig]);
 
 	const [url, setUrl] = useControlledState(
-		getEditableLocalizedValue(successMessageConfig.message, languageId)
+		getEditableLocalizedValue(successMessageConfig.url, languageId)
 	);
 	const [showMessagePreview, setShowMessagePreview] = useControlledState(
 		Boolean(item.config.showMessagePreview)

@@ -14,16 +14,19 @@
 
 package com.liferay.message.boards.service.impl;
 
+import com.liferay.message.boards.exception.NoSuchSuspiciousActivityException;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBSuspiciousActivity;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.base.MBSuspiciousActivityLocalServiceBaseImpl;
+import com.liferay.message.boards.service.persistence.MBSuspiciousActivityPersistence;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,7 +43,7 @@ public class MBSuspiciousActivityLocalServiceImpl
 
 	@Override
 	public MBSuspiciousActivity addOrUpdateSuspiciousActivity(
-			long userId, long messageId, String description, String type)
+		long userId, long messageId, String description, String type)
 		throws PortalException {
 
 		MBSuspiciousActivity suspiciousActivity =
@@ -77,6 +80,38 @@ public class MBSuspiciousActivityLocalServiceImpl
 			suspiciousActivity);
 	}
 
+	@Override
+	public MBSuspiciousActivity findByPrimaryKey(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityPersistence.findByPrimaryKey(suspiciousActivityId);
+	}
+
+	@Override
+	public List<MBSuspiciousActivity> findAll() {
+
+		return _mbSuspiciousActivityPersistence.findAll();
+	}
+
+	@Override
+	public MBSuspiciousActivity findByU_M(long userId, long messageId)
+		throws NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityPersistence.findByU_M(userId, messageId);
+	}
+
+	@Override
+	public MBSuspiciousActivity remove(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityPersistence.remove(suspiciousActivityId);
+	}
+
+	@Override
+	public int countAll() {
+		return _mbSuspiciousActivityPersistence.countAll();
+	}
+
 	@Reference
 	private MBMessagePersistence _mbMessagePersistence;
 
@@ -85,5 +120,8 @@ public class MBSuspiciousActivityLocalServiceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private MBSuspiciousActivityPersistence _mbSuspiciousActivityPersistence;
 
 }

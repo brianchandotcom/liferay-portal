@@ -71,7 +71,7 @@ const SlaCardLayout = ({
 								)}
 								displayType="secundary"
 							>
-								{i18n.translate(getKebabCase(slaLabel))}
+								{i18n.translate(slaLabel).toUpperCase()}
 							</ClayLabel>
 						</ClayCard.Caption>
 					</div>

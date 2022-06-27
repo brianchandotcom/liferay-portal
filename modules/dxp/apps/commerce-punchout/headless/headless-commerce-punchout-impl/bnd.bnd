@@ -2,8 +2,8 @@ Bundle-Name: Liferay Headless Commerce Punch Out Implementation
 Bundle-SymbolicName: com.liferay.headless.commerce.punchout.impl
 Bundle-Version: 4.0.19
 Import-Package:\
-	com.liferay.portal.kernel.security.auth; version="[2.0.0,99.0.0)",\
-	com.liferay.portal.kernel.service; version="[4.0.0,99.0.0)",\
+	com.liferay.portal.kernel.security.auth;version="[2.0.0,99.0.0)",\
+	com.liferay.portal.kernel.service;version="[4.0.0,99.0.0)",\
 	\
 	*
 Liferay-Enterprise-App: dxp.only=true;product.id=9a473157-06a6-44b6-b017-a360ffaf5f38

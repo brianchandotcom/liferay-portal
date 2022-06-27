@@ -66,14 +66,7 @@ public class MessageFormSubmissionResultSerDes {
 
 			sb.append("\"message\": ");
 
-			if (messageFormSubmissionResult.getMessage() instanceof String) {
-				sb.append("\"");
-				sb.append((String)messageFormSubmissionResult.getMessage());
-				sb.append("\"");
-			}
-			else {
-				sb.append(messageFormSubmissionResult.getMessage());
-			}
+			sb.append(String.valueOf(messageFormSubmissionResult.getMessage()));
 		}
 
 		sb.append("}");
@@ -131,7 +124,8 @@ public class MessageFormSubmissionResultSerDes {
 			if (Objects.equals(jsonParserFieldName, "message")) {
 				if (jsonParserFieldValue != null) {
 					messageFormSubmissionResult.setMessage(
-						(Object)jsonParserFieldValue);
+						FragmentInlineValueSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

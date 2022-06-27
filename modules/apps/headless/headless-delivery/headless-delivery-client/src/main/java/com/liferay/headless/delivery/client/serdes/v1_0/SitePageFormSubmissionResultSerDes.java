@@ -66,17 +66,9 @@ public class SitePageFormSubmissionResultSerDes {
 
 			sb.append("\"itemReference\": ");
 
-			if (sitePageFormSubmissionResult.getItemReference() instanceof
-					String) {
-
-				sb.append("\"");
-				sb.append(
-					(String)sitePageFormSubmissionResult.getItemReference());
-				sb.append("\"");
-			}
-			else {
-				sb.append(sitePageFormSubmissionResult.getItemReference());
-			}
+			sb.append(
+				String.valueOf(
+					sitePageFormSubmissionResult.getItemReference()));
 		}
 
 		sb.append("}");
@@ -135,7 +127,8 @@ public class SitePageFormSubmissionResultSerDes {
 			if (Objects.equals(jsonParserFieldName, "itemReference")) {
 				if (jsonParserFieldValue != null) {
 					sitePageFormSubmissionResult.setItemReference(
-						(Object)jsonParserFieldValue);
+						ClassFieldsReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

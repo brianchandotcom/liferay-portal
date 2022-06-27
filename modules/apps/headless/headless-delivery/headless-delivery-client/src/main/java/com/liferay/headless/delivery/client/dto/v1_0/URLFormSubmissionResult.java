@@ -34,15 +34,17 @@ public class URLFormSubmissionResult implements Cloneable, Serializable {
 		return URLFormSubmissionResultSerDes.toDTO(json);
 	}
 
-	public Object getUrl() {
+	public FragmentInlineValue getUrl() {
 		return url;
 	}
 
-	public void setUrl(Object url) {
+	public void setUrl(FragmentInlineValue url) {
 		this.url = url;
 	}
 
-	public void setUrl(UnsafeSupplier<Object, Exception> urlUnsafeSupplier) {
+	public void setUrl(
+		UnsafeSupplier<FragmentInlineValue, Exception> urlUnsafeSupplier) {
+
 		try {
 			url = urlUnsafeSupplier.get();
 		}
@@ -51,7 +53,7 @@ public class URLFormSubmissionResult implements Cloneable, Serializable {
 		}
 	}
 
-	protected Object url;
+	protected FragmentInlineValue url;
 
 	@Override
 	public URLFormSubmissionResult clone() throws CloneNotSupportedException {

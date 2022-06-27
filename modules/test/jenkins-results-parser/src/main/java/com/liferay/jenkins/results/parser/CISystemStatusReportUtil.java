@@ -59,12 +59,12 @@ public class CISystemStatusReportUtil {
 		List<Callable<String>> callables = new ArrayList<>();
 
 		for (LocalDate localDate : _recentTestrayBuilds.keySet()) {
-			List<TestrayBuild> builds = testrayRoutine.getTestrayBuilds(
+			List<TestrayBuild> testrayBuilds = testrayRoutine.getTestrayBuilds(
 				200, localDate.toString(), nameFilter);
 
-			_recentTestrayBuilds.put(localDate, builds);
+			_recentTestrayBuilds.put(localDate, testrayBuilds);
 
-			for (final TestrayBuild testrayBuild : builds) {
+			for (final TestrayBuild testrayBuild : testrayBuilds) {
 				callables.add(
 					new Callable<String>() {
 
@@ -140,14 +140,17 @@ public class CISystemStatusReportUtil {
 		JSONArray datesJSONArray = new JSONArray();
 		JSONArray durationsJSONArray = new JSONArray();
 
-		List<LocalDate> dates = new ArrayList<>(_recentTestrayBuilds.keySet());
+		List<LocalDate> localDates = new ArrayList<>(
+			_recentTestrayBuilds.keySet());
 
-		Collections.sort(dates);
+		Collections.sort(localDates);
 
-		for (LocalDate date : dates) {
+		for (LocalDate localDate : localDates) {
 			List<Long> durations = new ArrayList<>();
 
-			for (TestrayBuild testrayBuild : _recentTestrayBuilds.get(date)) {
+			for (TestrayBuild testrayBuild :
+					_recentTestrayBuilds.get(localDate)) {
+
 				TopLevelBuildReport topLevelBuildReport =
 					testrayBuild.getTopLevelBuildReport();
 
@@ -172,7 +175,7 @@ public class CISystemStatusReportUtil {
 			durations.removeAll(Collections.singleton(null));
 
 			if (durations.isEmpty()) {
-				datesJSONArray.put(date.toString());
+				datesJSONArray.put(localDate.toString());
 			}
 			else {
 				String meanDuration = JenkinsResultsParserUtil.combine(
@@ -181,7 +184,7 @@ public class CISystemStatusReportUtil {
 						JenkinsResultsParserUtil.getAverage(durations)));
 
 				datesJSONArray.put(
-					new String[] {date.toString(), meanDuration});
+					new String[] {localDate.toString(), meanDuration});
 			}
 
 			Collections.sort(durations);
@@ -203,16 +206,19 @@ public class CISystemStatusReportUtil {
 		JSONArray passedBuildsJSONArray = new JSONArray();
 		JSONArray unstableBuildsJSONArray = new JSONArray();
 
-		List<LocalDate> dates = new ArrayList<>(_recentTestrayBuilds.keySet());
+		List<LocalDate> localDates = new ArrayList<>(
+			_recentTestrayBuilds.keySet());
 
-		Collections.sort(dates);
+		Collections.sort(localDates);
 
-		for (LocalDate date : dates) {
+		for (LocalDate localDate : localDates) {
 			int failedBuilds = 0;
 			int passedBuilds = 0;
 			int unstableBuilds = 0;
 
-			for (TestrayBuild testrayBuild : _recentTestrayBuilds.get(date)) {
+			for (TestrayBuild testrayBuild :
+					_recentTestrayBuilds.get(localDate)) {
+
 				TopLevelBuildReport topLevelBuildReport =
 					testrayBuild.getTopLevelBuildReport();
 
@@ -239,7 +245,7 @@ public class CISystemStatusReportUtil {
 				}
 			}
 
-			datesJSONArray.put(date.toString());
+			datesJSONArray.put(localDate.toString());
 			passedBuildsJSONArray.put(passedBuilds);
 			failedBuildsJSONArray.put(failedBuilds);
 			unstableBuildsJSONArray.put(unstableBuilds);

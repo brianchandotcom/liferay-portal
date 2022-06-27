@@ -947,8 +947,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		return expirationDate;
 	}
 
-	private void _getFriendlyURLChangedMessage(
-		ActionRequest actionRequest, String originalFriendlyURL,
+	private void _getUrlTitleChangedMessage(
+		ActionRequest actionRequest, String originalUrlTitle,
 		long fileEntryId) {
 
 		FriendlyURLEntry friendlyURLEntry =
@@ -956,12 +956,12 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				_classNameLocalService.getClassNameId(FileEntry.class),
 				fileEntryId);
 
-		String currentFriendlyURL = friendlyURLEntry.getUrlTitle();
+		String currentUrlTitle = friendlyURLEntry.getUrlTitle();
 
-		if (Validator.isNotNull(originalFriendlyURL) &&
-			!currentFriendlyURL.equals(
+		if (Validator.isNotNull(originalUrlTitle) &&
+			!currentUrlTitle.equals(
 				_friendlyURLNormalizer.normalizeWithEncoding(
-					originalFriendlyURL))) {
+					originalUrlTitle))) {
 
 			MultiSessionMessages.add(
 				actionRequest, "friendlyURLChanged",
@@ -969,9 +969,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					_portal.getHttpServletRequest(actionRequest),
 					"the-friendly-url-x-was-changed-to-x-to-ensure-uniqueness",
 					new Object[] {
-						"<strong>" + _html.escapeURL(originalFriendlyURL) +
+						"<strong>" + _html.escapeURL(originalUrlTitle) +
 							"</strong>",
-						"<strong>" + currentFriendlyURL + "</strong>"
+						"<strong>" + currentUrlTitle + "</strong>"
 					}));
 		}
 	}
@@ -1407,7 +1407,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (_ffFriendlyURLEntryFileEntryConfiguration.enabled() &&
 				Validator.isNotNull(urlTitle)) {
 
-				_getFriendlyURLChangedMessage(
+				_getUrlTitleChangedMessage(
 					actionRequest, urlTitle, fileEntry.getFileEntryId());
 			}
 

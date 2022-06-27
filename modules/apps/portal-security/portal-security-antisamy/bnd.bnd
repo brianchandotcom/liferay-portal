@@ -8,6 +8,8 @@ Import-Package:\
 	!org.apache.log4j.*,\
 	!org.apache.xml.resolver.*,\
 	\
+	!org.conscrypt.*,\
+	\
 	!sun.io,\
 	\
 	org.w3c.dom,\

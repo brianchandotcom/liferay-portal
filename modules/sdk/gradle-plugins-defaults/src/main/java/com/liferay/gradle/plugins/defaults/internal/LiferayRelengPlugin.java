@@ -390,11 +390,25 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 							if (Validator.isNull(result) ||
 								GradlePluginsDefaultsUtil.isTestProject(
-									project) ||
-								!LiferayRelengUtil.hasUnpublishedDependencies(
 									project)) {
 
 								return false;
+							}
+
+							String dependencyName =
+								LiferayRelengUtil.getUnpublishedDependencyName(
+									project);
+
+							if (dependencyName == null) {
+								return false;
+							}
+
+							Logger logger = project.getLogger();
+
+							if (logger.isQuietEnabled()) {
+								logger.quiet(
+									"The project dependency '{}' has new commits.",
+									dependencyName);
 							}
 
 							return true;
@@ -780,7 +794,18 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 						project, project.getProjectDir(),
 						recordArtifactTask.getOutputFile())) {
 
-					if (LiferayRelengUtil.hasUnpublishedDependencies(project)) {
+					String dependencyName =
+						LiferayRelengUtil.getUnpublishedDependencyName(project);
+
+					if (dependencyName != null) {
+						Logger logger = project.getLogger();
+
+						if (logger.isInfoEnabled()) {
+							logger.info(
+								"The project dependency '{}' has new commits.",
+								dependencyName);
+						}
+
 						return false;
 					}
 

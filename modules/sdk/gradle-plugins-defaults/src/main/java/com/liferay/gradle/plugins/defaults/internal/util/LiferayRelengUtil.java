@@ -293,7 +293,7 @@ public class LiferayRelengUtil {
 		return false;
 	}
 
-	public static boolean hasUnpublishedDependencies(Project project) {
+	public static String getUnpublishedDependencyName(Project project) {
 		List<File> artifactPropertiesFiles = _getArtifactPropertiesFiles(
 			project, false);
 
@@ -304,19 +304,11 @@ public class LiferayRelengUtil {
 			if (hasUnpublishedCommits(
 					project, artifactProjectDir, artifactPropertiesFile)) {
 
-				Logger logger = project.getLogger();
-
-				if (logger.isQuietEnabled()) {
-					logger.quiet(
-						"The project dependency '{}' has new commits.",
-						artifactProjectDir.getName());
-				}
-
-				return true;
+				return artifactProjectDir.getName();
 			}
 		}
 
-		return false;
+		return null;
 	}
 
 	private static void _createNewFile(File file) {

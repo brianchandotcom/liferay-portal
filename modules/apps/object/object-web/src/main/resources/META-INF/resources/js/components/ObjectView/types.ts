@@ -23,11 +23,6 @@ export type TWorkflowStatus = {
 	value: string;
 };
 
-export type TLabelValueObject = {
-	label: string;
-	value: string;
-};
-
 export type TObjectField = {
 	businessType: string;
 	checked: boolean;
@@ -55,7 +50,7 @@ export type TObjectColumn = {
 	sortOrder?: string;
 	type?: string;
 	value?: string;
-	valueList?: TLabelValueObject[];
+	valueList?: LabelValueObject[];
 };
 
 export type TObjectViewColumn = {
@@ -83,7 +78,7 @@ export type TObjectViewFilterColumn = {
 	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	value?: string;
-	valueList?: TLabelValueObject[];
+	valueList?: LabelValueObject[];
 };
 
 export type TObjectView = {

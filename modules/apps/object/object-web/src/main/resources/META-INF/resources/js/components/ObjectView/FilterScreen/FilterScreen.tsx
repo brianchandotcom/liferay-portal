@@ -117,11 +117,6 @@ export function FilterScreen() {
 	);
 }
 
-interface IItem extends TLabelValueObject {
+interface IItem extends LabelValueObject {
 	checked?: boolean;
 }
-
-type TLabelValueObject = {
-	label: string;
-	value: string;
-};

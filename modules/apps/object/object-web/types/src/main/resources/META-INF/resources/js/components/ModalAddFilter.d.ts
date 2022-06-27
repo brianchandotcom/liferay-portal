@@ -26,7 +26,7 @@ export declare function ModalAddFilter({
 	workflowStatusJSONArray,
 }: IProps): JSX.Element;
 interface IProps {
-	currentFilters: TCurrentFilters[];
+	currentFilters: TCurrentFilter[];
 	editingFilter: boolean;
 	editingObjectFieldName: string;
 	header: string;
@@ -40,10 +40,10 @@ interface IProps {
 	) => void;
 	workflowStatusJSONArray: TWorkflowStatus[];
 }
-interface IItem extends TLabelValueObject {
+interface IItem extends LabelValueObject {
 	checked?: boolean;
 }
-declare type TCurrentFilters = {
+declare type TCurrentFilter = {
 	definition: {
 		[key: string]: string[];
 	} | null;
@@ -54,13 +54,9 @@ declare type TCurrentFilters = {
 	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	value?: string;
-	valueList?: TLabelValueObject[];
+	valueList?: LabelValueObject[];
 };
 declare type TWorkflowStatus = {
-	label: string;
-	value: string;
-};
-declare type TLabelValueObject = {
 	label: string;
 	value: string;
 };

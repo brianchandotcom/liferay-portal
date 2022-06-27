@@ -89,7 +89,8 @@ public class AutoBatchPreparedStatementUtil {
 
 	private static final Method _addBatchMethod;
 	private static final Method _closeMethod;
-	private static final Method _executeBatch;
+	private static final Method _executeBatchMethod;
+	private static final Method _getConnectionMethod;
 	private static volatile PortalExecutorManager _portalExecutorManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortalExecutorManager.class, AutoBatchPreparedStatementUtil.class,
@@ -99,7 +100,10 @@ public class AutoBatchPreparedStatementUtil {
 		try {
 			_addBatchMethod = PreparedStatement.class.getMethod("addBatch");
 			_closeMethod = PreparedStatement.class.getMethod("close");
-			_executeBatch = PreparedStatement.class.getMethod("executeBatch");
+			_executeBatchMethod = PreparedStatement.class.getMethod(
+				"executeBatch");
+			_getConnectionMethod = PreparedStatement.class.getMethod(
+				"getConnection");
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
 			throw new ExceptionInInitializerError(noSuchMethodException);
@@ -112,7 +116,7 @@ public class AutoBatchPreparedStatementUtil {
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
 
-			if (method.equals(_executeBatch)) {
+			if (method.equals(_executeBatchMethod)) {
 				if (_count > 0) {
 					_count = 0;
 
@@ -154,7 +158,9 @@ public class AutoBatchPreparedStatementUtil {
 			throws Throwable {
 
 			if (method.equals(_addBatchMethod)) {
-				_preparedStatement.addBatch();
+				PreparedStatement preparedStatement = _getPreparedStatement();
+
+				preparedStatement.addBatch();
 
 				if (++_count >= _HIBERNATE_JDBC_BATCH_SIZE) {
 					_executeBatch();
@@ -163,7 +169,7 @@ public class AutoBatchPreparedStatementUtil {
 				return null;
 			}
 
-			if (method.equals(_executeBatch)) {
+			if (method.equals(_executeBatchMethod)) {
 				if (_count > 0) {
 					_executeBatch();
 				}
@@ -195,25 +201,28 @@ public class AutoBatchPreparedStatementUtil {
 				if (throwable1 != null) {
 					throw throwable1;
 				}
+
+				return null;
 			}
 
-			return method.invoke(_preparedStatement, args);
+			if (method.equals(_getConnectionMethod)) {
+				return _connection;
+			}
+
+			return method.invoke(_getPreparedStatement(), args);
 		}
 
 		private ConcurrentBatchInvocationHandler(
-				Connection connection, String sql)
-			throws SQLException {
+			Connection connection, String sql) {
 
 			_connection = connection;
 			_sql = sql;
-
-			_preparedStatement = _connection.prepareStatement(_sql);
 		}
 
 		private void _executeBatch() throws SQLException {
 			_count = 0;
 
-			PreparedStatement preparedStatement = _preparedStatement;
+			PreparedStatement preparedStatement = _getPreparedStatement();
 
 			NoticeableFuture<Void> noticeableFuture =
 				_noticeableExecutorService.submit(
@@ -246,7 +255,15 @@ public class AutoBatchPreparedStatementUtil {
 
 				});
 
-			_preparedStatement = _connection.prepareStatement(_sql);
+			_preparedStatement = null;
+		}
+
+		private PreparedStatement _getPreparedStatement() throws SQLException {
+			if (_preparedStatement == null) {
+				_preparedStatement = _connection.prepareStatement(_sql);
+			}
+
+			return _preparedStatement;
 		}
 
 		private final Connection _connection;
@@ -274,7 +291,7 @@ public class AutoBatchPreparedStatementUtil {
 				return null;
 			}
 
-			if (method.equals(_executeBatch)) {
+			if (method.equals(_executeBatchMethod)) {
 				return new int[0];
 			}
 
@@ -302,23 +319,26 @@ public class AutoBatchPreparedStatementUtil {
 				if (throwable1 != null) {
 					throw throwable1;
 				}
+
+				return null;
 			}
 
-			return method.invoke(_preparedStatement, args);
+			if (method.equals(_getConnectionMethod)) {
+				return _connection;
+			}
+
+			return method.invoke(_getPreparedStatement(), args);
 		}
 
 		private ConcurrentNoBatchInvocationHandler(
-				Connection connection, String sql)
-			throws SQLException {
+			Connection connection, String sql) {
 
 			_connection = connection;
 			_sql = sql;
-
-			_preparedStatement = _connection.prepareStatement(_sql);
 		}
 
 		private void _executeUpdate() throws SQLException {
-			PreparedStatement preparedStatement = _preparedStatement;
+			PreparedStatement preparedStatement = _getPreparedStatement();
 
 			NoticeableFuture<Void> noticeableFuture =
 				_noticeableExecutorService.submit(
@@ -351,7 +371,15 @@ public class AutoBatchPreparedStatementUtil {
 
 				});
 
-			_preparedStatement = _connection.prepareStatement(_sql);
+			_preparedStatement = null;
+		}
+
+		private PreparedStatement _getPreparedStatement() throws SQLException {
+			if (_preparedStatement == null) {
+				_preparedStatement = _connection.prepareStatement(_sql);
+			}
+
+			return _preparedStatement;
 		}
 
 		private final Connection _connection;
@@ -377,7 +405,7 @@ public class AutoBatchPreparedStatementUtil {
 				return null;
 			}
 
-			if (method.equals(_executeBatch)) {
+			if (method.equals(_executeBatchMethod)) {
 				return new int[0];
 			}
 

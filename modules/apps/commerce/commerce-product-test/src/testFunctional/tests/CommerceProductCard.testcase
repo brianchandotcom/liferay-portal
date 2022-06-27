@@ -14,22 +14,55 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-	@description = "COMMERCE-5866. As a buyer, I want to be able to add a product to my wish list, by clicking on an Add To Wish List button"
+	@description = "COMMERCE-5866. Verify buyers can add products to their wish list from the product card."
 	@priority = "3"
 	test AddProductToWishListFromProductCard {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		Click(
-			key_productName = "U-Joint",
-			locator1 = "CommerceEntry#PRODUCT_CARD_ADD_TO_WISH_LIST_BUTTON");
+		task ("When the buyer logs in and adds products to their wish list from the product cards") {
+			User.logoutPG();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
 
-		AssertTextEquals(
-			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
-			value1 = "U-Joint");
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceEntry#PRODUCT_CARD_ADD_TO_WISH_LIST_BUTTON");
+
+			Click(
+				key_productName = "Transmission Cooler Line Assembly",
+				locator1 = "CommerceEntry#PRODUCT_CARD_ADD_TO_WISH_LIST_BUTTON");
+
+			Click(
+				key_productName = "Mount",
+				locator1 = "CommerceEntry#PRODUCT_CARD_ADD_TO_WISH_LIST_BUTTON");
+		}
+
+		task ("Then those products should shown up on their wish list") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/lists");
+
+			CommerceWishList.assertWishListProduct(
+				productName = "U-Joint,Transmission Cooler Line Assembly,Mount",
+				wishListName = "Default");
+		}
 	}
 
 	@description = "COMMERCE-5859. Verify the default channel currency is applied to product cards."

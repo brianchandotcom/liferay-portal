@@ -15,6 +15,7 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
@@ -54,6 +55,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -76,6 +78,9 @@ public class ObjectActionLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_objectActionIdsThreadLocal = ReflectionTestUtil.getFieldValue(
+			_objectActionEngine, "_objectActionIdsThreadLocal");
+
 		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
 			_objectDefinitionLocalService,
 			Arrays.asList(
@@ -98,6 +103,8 @@ public class ObjectActionLocalServiceTest {
 
 	@After
 	public void tearDown() {
+		_objectActionIdsThreadLocal.remove();
+
 		ReflectionTestUtil.setFieldValue(
 			_objectActionExecutorRegistry.getObjectActionExecutor(
 				ObjectActionExecutorConstants.KEY_GROOVY),
@@ -244,6 +251,8 @@ public class ObjectActionLocalServiceTest {
 
 		// Update object entry
 
+		_objectActionIdsThreadLocal.remove();
+
 		Assert.assertEquals(0, _argumentsList.size());
 
 		_objectEntryLocalService.updateObjectEntry(
@@ -302,6 +311,8 @@ public class ObjectActionLocalServiceTest {
 		Assert.assertEquals("https://onafterupdate.com", options.getLocation());
 
 		// Delete object entry
+
+		_objectActionIdsThreadLocal.remove();
 
 		Assert.assertEquals(0, _argumentsList.size());
 
@@ -502,7 +513,12 @@ public class ObjectActionLocalServiceTest {
 	private JSONFactory _jsonFactory;
 
 	@Inject
+	private ObjectActionEngine _objectActionEngine;
+
+	@Inject
 	private ObjectActionExecutorRegistry _objectActionExecutorRegistry;
+
+	private ThreadLocal<Set<Long>> _objectActionIdsThreadLocal;
 
 	@Inject
 	private ObjectActionLocalService _objectActionLocalService;

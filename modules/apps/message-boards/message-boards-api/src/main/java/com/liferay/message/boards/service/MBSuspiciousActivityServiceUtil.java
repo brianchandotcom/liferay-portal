@@ -14,6 +14,11 @@
 
 package com.liferay.message.boards.service;
 
+import com.liferay.message.boards.model.MBSuspiciousActivity;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for MBSuspiciousActivity. This utility wraps
  * <code>com.liferay.message.boards.service.impl.MBSuspiciousActivityServiceImpl</code> and is an
@@ -33,14 +38,51 @@ public class MBSuspiciousActivityServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.message.boards.service.impl.MBSuspiciousActivityServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static MBSuspiciousActivity addOrUpdateSuspiciousActivity(
+			long userId, long messageId, String description, String type)
+		throws PortalException {
+
+		return getService().addOrUpdateSuspiciousActivity(
+			userId, messageId, description, type);
+	}
+
+	public static int countAll() {
+		return getService().countAll();
+	}
+
+	public static List<MBSuspiciousActivity> findAll() {
+		return getService().findAll();
+	}
+
+	public static MBSuspiciousActivity findByPrimaryKey(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().findByPrimaryKey(suspiciousActivityId);
+	}
+
+	public static MBSuspiciousActivity findByU_M(long userId, long messageId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().findByU_M(userId, messageId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static MBSuspiciousActivity remove(long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().remove(suspiciousActivityId);
 	}
 
 	public static MBSuspiciousActivityService getService() {

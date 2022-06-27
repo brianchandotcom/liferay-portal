@@ -32,7 +32,7 @@ import {defaultLanguageId, locale} from '../utils/locale';
 
 HEADERS.append('Accept-Language', locale!.symbol);
 
-const PICKLIST_OPERATORS: TLabelValueObject[] = [
+const PICKLIST_OPERATORS: LabelValueObject[] = [
 	{
 		label: Liferay.Language.get('choose-an-option'),
 		value: '',
@@ -65,7 +65,7 @@ export function ModalAddFilter({
 	const [selectedFilterBy, setSelectedFilterBy] = useState<TObjectField>();
 
 	const [selectedFilterType, setSelectedFilterType] = useState<
-		TLabelValueObject
+		LabelValueObject
 	>();
 
 	const [query, setQuery] = useState<string>('');
@@ -323,7 +323,7 @@ export function ModalAddFilter({
 								selectedFilterBy.businessType !== 'Picklist'))
 					}
 					label={Liferay.Language.get('filter-type')}
-					onChange={(target: TLabelValueObject) =>
+					onChange={(target: LabelValueObject) =>
 						setSelectedFilterType(target)
 					}
 					options={PICKLIST_OPERATORS}
@@ -364,7 +364,7 @@ export function ModalAddFilter({
 }
 
 interface IProps {
-	currentFilters: TCurrentFilters[];
+	currentFilters: TCurrentFilter[];
 	editingFilter: boolean;
 	editingObjectFieldName: string;
 	header: string;
@@ -379,7 +379,7 @@ interface IProps {
 	workflowStatusJSONArray: TWorkflowStatus[];
 }
 
-interface IItem extends TLabelValueObject {
+interface IItem extends LabelValueObject {
 	checked?: boolean;
 }
 
@@ -393,7 +393,7 @@ type TPickListValue = {
 	type: string;
 };
 
-type TCurrentFilters = {
+type TCurrentFilter = {
 	definition: {[key: string]: string[]} | null;
 	fieldLabel: string;
 	filterBy: string;
@@ -402,15 +402,10 @@ type TCurrentFilters = {
 	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	value?: string;
-	valueList?: TLabelValueObject[];
+	valueList?: LabelValueObject[];
 };
 
 type TWorkflowStatus = {
-	label: string;
-	value: string;
-};
-
-type TLabelValueObject = {
 	label: string;
 	value: string;
 };

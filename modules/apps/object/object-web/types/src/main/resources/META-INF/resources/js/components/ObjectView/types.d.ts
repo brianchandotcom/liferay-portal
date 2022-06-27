@@ -20,10 +20,6 @@ export declare type TWorkflowStatus = {
 	label: string;
 	value: string;
 };
-export declare type TLabelValueObject = {
-	label: string;
-	value: string;
-};
 export declare type TObjectField = {
 	businessType: string;
 	checked: boolean;
@@ -50,7 +46,7 @@ export declare type TObjectColumn = {
 	sortOrder?: string;
 	type?: string;
 	value?: string;
-	valueList?: TLabelValueObject[];
+	valueList?: LabelValueObject[];
 };
 export declare type TObjectViewColumn = {
 	defaultSort: boolean;
@@ -77,7 +73,7 @@ export declare type TObjectViewFilterColumn = {
 	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	value?: string;
-	valueList?: TLabelValueObject[];
+	valueList?: LabelValueObject[];
 };
 export declare type TObjectView = {
 	defaultObjectView: boolean;

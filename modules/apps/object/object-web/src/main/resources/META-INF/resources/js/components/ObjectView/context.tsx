@@ -17,7 +17,6 @@ import React, {createContext, useReducer} from 'react';
 import {defaultLanguageId} from '../../utils/locale';
 import {
 	TAction,
-	TLabelValueObject,
 	TName,
 	TObjectField,
 	TObjectView,
@@ -698,7 +697,7 @@ const viewReducer = (state: TState, action: TAction) => {
 							...filterColumn,
 							definition: filterTypeValue && {
 								[filterTypeValue]: valueList.map(
-									(item: TLabelValueObject) => item.value
+									(item: LabelValueObject) => item.value
 								),
 							},
 							filterType: filterTypeValue,

@@ -132,8 +132,8 @@ public class FragmentMappedValueUtil {
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Item reference could not be set since no layout could be" +
-						"obtained",
+					"Item reference could not be set since no layout could " +
+						"be obtained",
 					portalException);
 			}
 

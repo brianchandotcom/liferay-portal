@@ -36,16 +36,6 @@ export default function GlobalCSSCETsConfiguration({
 		);
 	};
 
-	const getDropDownItems = (globalCSSCET) => {
-		return [
-			{
-				label: Liferay.Language.get('delete'),
-				onClick: () => deleteGlobalCSSCET(globalCSSCET),
-				symbolLeft: 'trash',
-			},
-		];
-	};
-
 	const handleClick = () => {
 		openSelectionModal({
 			multiple: true,
@@ -132,15 +122,9 @@ export default function GlobalCSSCETsConfiguration({
 								</ClayTable.Cell>
 
 								<ClayTable.Cell>
-									<ClayDropDownWithItems
-										items={getDropDownItems(globalCSSCET)}
-										trigger={
-											<ClayButtonWithIcon
-												displayType="unstyled"
-												small
-												symbol="ellipsis-v"
-											/>
-										}
+									<OptionsButton
+										globalCSSCET={globalCSSCET}
+										onDeleteButtonClick={deleteGlobalCSSCET}
 									/>
 								</ClayTable.Cell>
 							</ClayTable.Row>
@@ -153,5 +137,30 @@ export default function GlobalCSSCETsConfiguration({
 				</p>
 			)}
 		</>
+	);
+}
+
+function OptionsButton({globalCSSCET, onDeleteButtonClick}) {
+	const getDropDownItems = (globalCSSCET) => {
+		return [
+			{
+				label: Liferay.Language.get('delete'),
+				onClick: () => onDeleteButtonClick(globalCSSCET),
+				symbolLeft: 'trash',
+			},
+		];
+	};
+
+	return (
+		<ClayDropDownWithItems
+			items={getDropDownItems(globalCSSCET)}
+			trigger={
+				<ClayButtonWithIcon
+					displayType="unstyled"
+					small
+					symbol="ellipsis-v"
+				/>
+			}
+		/>
 	);
 }

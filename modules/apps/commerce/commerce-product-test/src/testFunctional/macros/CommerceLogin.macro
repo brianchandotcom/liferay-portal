@@ -128,6 +128,8 @@ definition {
 			samlEnabled = "true",
 			specificURL = "${baseURL}/${urlAppend}",
 			userEmailAddress = "${userEmailAddress}");
+
+		WaitForPageLoad();
 	}
 
 	macro miniumLogoutPG {

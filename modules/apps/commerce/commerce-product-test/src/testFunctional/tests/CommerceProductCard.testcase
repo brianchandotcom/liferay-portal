@@ -71,8 +71,6 @@ definition {
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the price currency shown on the product card is USD") {
@@ -572,8 +570,6 @@ definition {
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
-			WaitForPageLoad();
-
 			Click(
 				key_productName = "u-joint",
 				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
@@ -635,8 +631,6 @@ definition {
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the product card shows the default Minium catalog image") {
@@ -703,8 +697,6 @@ definition {
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the product card contains the custom image") {
@@ -1461,8 +1453,6 @@ definition {
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-
-			WaitForPageLoad();
 		}
 
 		task ("Then the product's price is shown on the product card") {
@@ -1563,8 +1553,6 @@ definition {
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
-			WaitForPageLoad();
-
 			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 		}
 
@@ -1650,8 +1638,6 @@ definition {
 				password = "test",
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
-
-			WaitForPageLoad();
 
 			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 		}

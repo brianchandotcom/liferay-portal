@@ -34,7 +34,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.service.WikiNodeLocalService;
@@ -82,19 +81,9 @@ public class WikiNodeResourceImpl extends BaseWikiNodeResourceImpl {
 			Long siteId, String externalReferenceCode)
 		throws Exception {
 
-		com.liferay.wiki.model.WikiNode wikiNode =
-			_wikiNodeLocalService.getWikiNodeByExternalReferenceCode(
-				siteId, externalReferenceCode);
-
-		String resourceName = getPermissionCheckerResourceName(
-			wikiNode.getNodeId());
-		Long resourceId = getPermissionCheckerResourceId(wikiNode.getNodeId());
-
-		PermissionUtil.checkPermission(
-			ActionKeys.VIEW, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(wikiNode.getNodeId()));
-
-		return _toWikiNode(wikiNode);
+		return _toWikiNode(
+			_wikiNodeService.getWikiNodeByExternalReferenceCode(
+				siteId, externalReferenceCode));
 	}
 
 	@Override

@@ -14,7 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.FormConfig;
+import com.liferay.headless.delivery.client.dto.v1_0.MessageFormSubmissionResult;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,22 +30,28 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class FormConfigSerDes {
+public class MessageFormSubmissionResultSerDes {
 
-	public static FormConfig toDTO(String json) {
-		FormConfigJSONParser formConfigJSONParser = new FormConfigJSONParser();
+	public static MessageFormSubmissionResult toDTO(String json) {
+		MessageFormSubmissionResultJSONParser
+			messageFormSubmissionResultJSONParser =
+				new MessageFormSubmissionResultJSONParser();
 
-		return formConfigJSONParser.parseToDTO(json);
+		return messageFormSubmissionResultJSONParser.parseToDTO(json);
 	}
 
-	public static FormConfig[] toDTOs(String json) {
-		FormConfigJSONParser formConfigJSONParser = new FormConfigJSONParser();
+	public static MessageFormSubmissionResult[] toDTOs(String json) {
+		MessageFormSubmissionResultJSONParser
+			messageFormSubmissionResultJSONParser =
+				new MessageFormSubmissionResultJSONParser();
 
-		return formConfigJSONParser.parseToDTOs(json);
+		return messageFormSubmissionResultJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FormConfig formConfig) {
-		if (formConfig == null) {
+	public static String toJSON(
+		MessageFormSubmissionResult messageFormSubmissionResult) {
+
+		if (messageFormSubmissionResult == null) {
 			return "null";
 		}
 
@@ -53,37 +59,20 @@ public class FormConfigSerDes {
 
 		sb.append("{");
 
-		if (formConfig.getFormReference() != null) {
+		if (messageFormSubmissionResult.getMessage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"formReference\": ");
+			sb.append("\"message\": ");
 
-			if (formConfig.getFormReference() instanceof String) {
+			if (messageFormSubmissionResult.getMessage() instanceof String) {
 				sb.append("\"");
-				sb.append((String)formConfig.getFormReference());
-				sb.append("\"");
-			}
-			else {
-				sb.append(formConfig.getFormReference());
-			}
-		}
-
-		if (formConfig.getFormSuccessSubmissionResult() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"formSuccessSubmissionResult\": ");
-
-			if (formConfig.getFormSuccessSubmissionResult() instanceof String) {
-				sb.append("\"");
-				sb.append((String)formConfig.getFormSuccessSubmissionResult());
+				sb.append((String)messageFormSubmissionResult.getMessage());
 				sb.append("\"");
 			}
 			else {
-				sb.append(formConfig.getFormSuccessSubmissionResult());
+				sb.append(messageFormSubmissionResult.getMessage());
 			}
 		}
 
@@ -93,66 +82,55 @@ public class FormConfigSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FormConfigJSONParser formConfigJSONParser = new FormConfigJSONParser();
+		MessageFormSubmissionResultJSONParser
+			messageFormSubmissionResultJSONParser =
+				new MessageFormSubmissionResultJSONParser();
 
-		return formConfigJSONParser.parseToMap(json);
+		return messageFormSubmissionResultJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(FormConfig formConfig) {
-		if (formConfig == null) {
+	public static Map<String, String> toMap(
+		MessageFormSubmissionResult messageFormSubmissionResult) {
+
+		if (messageFormSubmissionResult == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (formConfig.getFormReference() == null) {
-			map.put("formReference", null);
+		if (messageFormSubmissionResult.getMessage() == null) {
+			map.put("message", null);
 		}
 		else {
 			map.put(
-				"formReference", String.valueOf(formConfig.getFormReference()));
-		}
-
-		if (formConfig.getFormSuccessSubmissionResult() == null) {
-			map.put("formSuccessSubmissionResult", null);
-		}
-		else {
-			map.put(
-				"formSuccessSubmissionResult",
-				String.valueOf(formConfig.getFormSuccessSubmissionResult()));
+				"message",
+				String.valueOf(messageFormSubmissionResult.getMessage()));
 		}
 
 		return map;
 	}
 
-	public static class FormConfigJSONParser
-		extends BaseJSONParser<FormConfig> {
+	public static class MessageFormSubmissionResultJSONParser
+		extends BaseJSONParser<MessageFormSubmissionResult> {
 
 		@Override
-		protected FormConfig createDTO() {
-			return new FormConfig();
+		protected MessageFormSubmissionResult createDTO() {
+			return new MessageFormSubmissionResult();
 		}
 
 		@Override
-		protected FormConfig[] createDTOArray(int size) {
-			return new FormConfig[size];
+		protected MessageFormSubmissionResult[] createDTOArray(int size) {
+			return new MessageFormSubmissionResult[size];
 		}
 
 		@Override
 		protected void setField(
-			FormConfig formConfig, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			MessageFormSubmissionResult messageFormSubmissionResult,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "formReference")) {
+			if (Objects.equals(jsonParserFieldName, "message")) {
 				if (jsonParserFieldValue != null) {
-					formConfig.setFormReference((Object)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "formSuccessSubmissionResult")) {
-
-				if (jsonParserFieldValue != null) {
-					formConfig.setFormSuccessSubmissionResult(
+					messageFormSubmissionResult.setMessage(
 						(Object)jsonParserFieldValue);
 				}
 			}

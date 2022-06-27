@@ -60,7 +60,7 @@ const ModalDXPCActivationStatus = ({
 			(subscription) => subscription.name === PRODUCT_TYPES.dxpCloud
 		);
 
-		await client.mutate({		
+		await client.mutate({
 			mutation: updateAccountSubscriptionGroups,
 			variables: {
 				accountSubscriptionGroup: {

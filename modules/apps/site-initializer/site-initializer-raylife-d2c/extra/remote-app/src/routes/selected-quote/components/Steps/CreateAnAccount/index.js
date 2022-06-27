@@ -92,8 +92,7 @@ export function CreateAnAccount() {
 						type: ACTIONS.SET_ACCOUNT_ID,
 					});
 				})
-				.catch((error) => {
-					console.error(error);
+				.catch(() => {
 					setHasError(true);
 					setLoading(false);
 				});

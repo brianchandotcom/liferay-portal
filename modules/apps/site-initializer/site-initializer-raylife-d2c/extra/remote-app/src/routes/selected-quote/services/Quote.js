@@ -13,19 +13,24 @@
  */
 
 import {axios} from '../../../common/services/liferay/api';
+import {STORAGE_KEYS, getItem} from '../../../common/services/liferay/storage';
 
-const quoteComparisonAPI = 'o/c/quotecomparisons';
+const headlessRaylifeQuotesAPI = 'o/c/raylifequotes';
+const quoteId = getItem(STORAGE_KEYS.QUOTE_ID);
 
-export async function getQuoteComparisons() {
-	const response = await axios.get(
-		`${quoteComparisonAPI}/scopes/${Liferay.ThemeDisplay.getScopeGroupId()}`
-	);
+export function updateQuoteOrder(orderId) {
+	const payload = {
+		r_commerceOrderToQuotes_commerceOrderId: orderId,
+	};
 
-	return response.data;
+	return axios.patch(`${headlessRaylifeQuotesAPI}/${quoteId}`, payload);
 }
 
-export async function getQuoteComparisonById(id) {
-	const response = await axios.get(`${quoteComparisonAPI}/${id}`);
-
-	return response.data;
+export function updateQuoteBillingOption(id) {
+	return axios.patch(`${headlessRaylifeQuotesAPI}/${quoteId}`, {
+		billingOption: {
+			key: id === 0 ? 'payInFull' : 'installments',
+			name: id === 0 ? 'Pay in Full' : 'Installments',
+		},
+	});
 }

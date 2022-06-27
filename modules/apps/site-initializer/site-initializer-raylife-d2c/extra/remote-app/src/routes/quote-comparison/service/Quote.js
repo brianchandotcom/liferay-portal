@@ -13,15 +13,20 @@
  */
 
 import {axios} from '../../../common/services/liferay/api';
-import {getItem} from '../../../common/services/liferay/storage';
 
-const DeliveryAPI = 'o/c/raylifeapplications';
-const applicationId = getItem('raylife-application-id');
+const headlessRaylifeQuoteAPI = 'o/c/raylifequotes';
 
-export function updateOrderId(orderId) {
-	const payload = {
-		r_commerceOrderToApplications_commerceOrderId: orderId,
-	};
+const applicationId = localStorage.getItem('raylife-application-id');
 
-	return axios.patch(`${DeliveryAPI}/${applicationId}`, payload);
+export async function getQuotes() {
+	const response = await axios.get(
+		`${headlessRaylifeQuoteAPI}/?search=r_applicationToQuotes_c_raylifeApplicationId eq ${applicationId}`
+	);
+
+	return response.data;
+}
+export async function getQuoteById(quoteId) {
+	const response = await axios.get(`${headlessRaylifeQuoteAPI}/${quoteId}`);
+
+	return response.data;
 }

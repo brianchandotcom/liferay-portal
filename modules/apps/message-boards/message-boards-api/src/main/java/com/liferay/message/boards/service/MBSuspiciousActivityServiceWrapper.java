@@ -93,6 +93,15 @@ public class MBSuspiciousActivityServiceWrapper
 	}
 
 	@Override
+	public MBSuspiciousActivity toggleValidated(long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityService.toggleValidated(
+			suspiciousActivityId);
+	}
+
+	@Override
 	public MBSuspiciousActivityService getWrappedService() {
 		return _mbSuspiciousActivityService;
 	}

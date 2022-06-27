@@ -287,6 +287,50 @@ public class MBSuspiciousActivityServiceHttp {
 		}
 	}
 
+	public static com.liferay.message.boards.model.MBSuspiciousActivity
+			toggleValidated(
+				HttpPrincipal httpPrincipal, long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBSuspiciousActivityServiceUtil.class, "toggleValidated",
+				_toggleValidatedParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, suspiciousActivityId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.message.boards.exception.
+							NoSuchSuspiciousActivityException) {
+
+					throw (com.liferay.message.boards.exception.
+						NoSuchSuspiciousActivityException)exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.message.boards.model.MBSuspiciousActivity)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		MBSuspiciousActivityServiceHttp.class);
 
@@ -304,5 +348,7 @@ public class MBSuspiciousActivityServiceHttp {
 		long.class
 	};
 	private static final Class<?>[] _countAllParameterTypes5 = new Class[] {};
+	private static final Class<?>[] _toggleValidatedParameterTypes6 =
+		new Class[] {long.class};
 
 }

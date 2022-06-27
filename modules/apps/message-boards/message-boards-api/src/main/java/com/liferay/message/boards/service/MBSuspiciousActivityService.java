@@ -77,4 +77,7 @@ public interface MBSuspiciousActivityService extends BaseService {
 	public MBSuspiciousActivity remove(long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException;
 
+	public MBSuspiciousActivity toggleValidated(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException;
+
 }

@@ -157,6 +157,7 @@ const SetupAnalyticsCloudPage = ({
 					mutation: updateAccountSubscriptionGroups,
 					variables: {
 						accountSubscriptionGroup: {
+							accountKey: project.accountKey,
 							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
 						},
 						id: subscriptionGroupId,

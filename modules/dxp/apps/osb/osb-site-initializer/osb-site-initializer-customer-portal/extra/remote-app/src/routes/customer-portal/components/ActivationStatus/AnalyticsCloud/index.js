@@ -223,6 +223,7 @@ const ActivationStatusAnalyticsCloud = ({
 				mutation: updateAccountSubscriptionGroups,
 				variables: {
 					accountSubscriptionGroup: {
+						accountKey: project.accountKey,
 						activationStatus: STATUS_TAG_TYPE_NAMES.active,
 					},
 					id:

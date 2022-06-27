@@ -144,8 +144,6 @@ definition {
 			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
 		}
 
-		Pause(locator1 = "3000");
-
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		if (isSet(userMiddleName)) {
@@ -165,13 +163,9 @@ definition {
 	macro assignUserGroupAsMember {
 		Navigator.gotoNavItem(navItem = "User Groups");
 
-		Pause(locator1 = "3000");
-
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Pause(locator1 = "3000");
 
 		LexiconEntry.selectEntry(rowEntry = "${userGroupName}");
 
@@ -394,8 +388,6 @@ definition {
 			Button.clickAdd();
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
-
-			Pause(locator1 = "3000");
 
 			Navigator.gotoNavItem(navItem = "All Sites");
 

@@ -9,15 +9,11 @@
  * distribution rights of the Software.
  */
 
-import i18n from '../../../../common/I18n';
-import getKebabCase from '../../../../common/utils/getKebabCase';
-import {useCustomerPortal} from '../../context';
+import LiferayContact from '../LiferayContact';
 import SlaCard from '../SlaCard';
 import ProjectSupportSkeleton from './Skeleton';
 
-const ProjectSupport = () => {
-	const [{project}] = useCustomerPortal();
-
+const ProjectSupport = ({project}) => {
 	return (
 		<div className="container cp-project-contacs-container mb-5 mx-0">
 			<div className="row">
@@ -26,29 +22,7 @@ const ProjectSupport = () => {
 				</div>
 
 				<div className="col-7">
-					<h5 className="mb-4 rounded-sm text-neutral-10">
-						{i18n.translate('liferay-contact')}
-					</h5>
-
-					{project.liferayContactName && (
-						<div className="font-weight-bold rounded-sm text-neutral-8 text-paragraph">
-							{project.liferayContactName}
-						</div>
-					)}
-
-					{project.liferayContactRole && (
-						<div className="rounded-sm text-neutral-10 text-paragraph">
-							{i18n.translate(
-								getKebabCase(project.liferayContactRole)
-							)}
-						</div>
-					)}
-
-					{project.liferayContactEmailAddress && (
-						<div className="rounded-sm text-neutral-10 text-paragraph-sm">
-							{project.liferayContactEmailAddress}
-						</div>
-					)}
+					<LiferayContact project={project} />
 				</div>
 			</div>
 		</div>

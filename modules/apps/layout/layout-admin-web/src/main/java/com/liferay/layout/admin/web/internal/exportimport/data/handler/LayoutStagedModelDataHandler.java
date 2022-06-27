@@ -987,6 +987,9 @@ public class LayoutStagedModelDataHandler
 
 		_fixImportTypeSettings(importedLayout);
 
+		_updateLastMergeLayoutModifiedDate(
+			layoutElement, importedLayout, portletDataContext);
+
 		importedLayout = _layoutLocalService.updateLayout(importedLayout);
 
 		_importTheme(portletDataContext, layout, importedLayout);
@@ -2827,6 +2830,38 @@ public class LayoutStagedModelDataHandler
 		}
 
 		return importedLayout;
+	}
+
+	private void _updateLastMergeLayoutModifiedDate(
+		Element exportedLayoutElement, Layout importedLayout,
+		PortletDataContext portletDataContext) {
+
+		String layoutsImportMode = MapUtil.getString(
+			portletDataContext.getParameterMap(),
+			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
+			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID);
+
+		if (!layoutsImportMode.equals(
+				PortletDataHandlerKeys.
+					LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
+
+			return;
+		}
+
+		Layout exportedLayout = (Layout)portletDataContext.getZipEntryAsObject(
+			exportedLayoutElement.attributeValue("path"));
+
+		UnicodeProperties importedLayoutTypeSettingsUnicodeProperties =
+			importedLayout.getTypeSettingsProperties();
+
+		Date exportedLayoutModifiedDate = exportedLayout.getModifiedDate();
+
+		importedLayoutTypeSettingsUnicodeProperties.setProperty(
+			Sites.LAST_MERGE_LAYOUT_MODIFIED_DATE,
+			String.valueOf(exportedLayoutModifiedDate.getTime()));
+
+		importedLayout.setTypeSettingsProperties(
+			importedLayoutTypeSettingsUnicodeProperties);
 	}
 
 	private void _updateTypeSettings(Layout importedLayout, Layout layout)

@@ -81,8 +81,6 @@ definition {
 			key_userScreenName = "${userScreenName}",
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
 			value1 = "${userScreenName}");
-
-		Pause(locator1 = "1000");
 	}
 
 }

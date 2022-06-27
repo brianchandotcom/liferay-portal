@@ -752,8 +752,6 @@ definition {
 	}
 
 	macro answerPasswordReminder {
-		Pause(locator1 = "3000");
-
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#REMINDER_QUERY")) {
 			Type(
 				locator1 = "TextInput#REMINDER_QUERY",
@@ -764,8 +762,6 @@ definition {
 	}
 
 	macro answerPasswordReminderLocalized {
-		Pause(locator1 = "3000");
-
 		var key_localizedAnswer = "${localizedAnswer}";
 
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#ANSWER_LOCALIZED")) {
@@ -880,8 +876,6 @@ definition {
 			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_LINK",
 			value1 = "Select");
 
-		Pause(locator1 = "3000");
-
 		SelectFrame(locator1 = "IFrame#SELECT_REGULAR_ROLE");
 
 		var key_roleTitle = "${roleTitle}";
@@ -941,8 +935,6 @@ definition {
 		AssertClick(
 			locator1 = "UsersAndOrganizationsEditUser#USER_GROUPS_SELECT_LINK",
 			value1 = "Select");
-
-		Pause(locator1 = "3000");
 
 		SelectFrame(locator1 = "IFrame#SELECT_USER_GROUP");
 
@@ -1211,8 +1203,6 @@ definition {
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#UPLOAD_FILE",
 			value1 = "${imageName}");
-
-		Pause(locator1 = "3000");
 
 		WaitForElementPresent(locator1 = "UsersAndOrganizationsEditUser#USER_PORTRAIT_CROPPER");
 
@@ -1681,8 +1671,6 @@ definition {
 	macro editUserDisplaySettingsCP {
 		var key_userScreenName = "${userScreenName}";
 
-		Pause(locator1 = "1000");
-
 		AssertTextEquals(
 			locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME",
 			value1 = "${userScreenName}");
@@ -2108,8 +2096,6 @@ definition {
 	}
 
 	macro impersonateCP {
-		Pause(locator1 = "1000");
-
 		if (isSet(userName)) {
 			var userScreenName = "${userName}";
 		}
@@ -2299,8 +2285,6 @@ definition {
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#EMAIL_ADDRESS")) {
 			if (IsElementPresent(locator1 = "Button#SUBMIT")) {
 				Click(locator1 = "Button#SUBMIT");
-
-				Pause(locator1 = "30000");
 			}
 
 			SelectWindow.selectWindowNoSPARefresh(locator1 = "title=Terms of Use");
@@ -2751,8 +2735,6 @@ definition {
 	}
 
 	macro unlockUserAccount {
-		Pause(locator1 = "1000");
-
 		var key_userScreenName = "${userScreenName}";
 
 		AssertTextEquals(
@@ -2908,8 +2890,6 @@ definition {
 
 	macro viewCP {
 		if ("${userEmailAddressVariation}" == "At") {
-			Pause(locator1 = "1000");
-
 			Search.searchCP(searchTerm = "${userEmailAddress}");
 
 			AssertTextEquals(
@@ -2917,8 +2897,6 @@ definition {
 				value1 = "No users were found.");
 		}
 		else if ("${userEmailAddressVariation}" == "Period") {
-			Pause(locator1 = "1000");
-
 			Search.searchCP(searchTerm = "${userEmailAddress}");
 
 			AssertTextEquals(
@@ -2926,8 +2904,6 @@ definition {
 				value1 = "No users were found.");
 		}
 		else if ("${userScreenNameVariation}" == "Invalid") {
-			Pause(locator1 = "1000");
-
 			Search.searchCP(searchTerm = "${userScreenName}");
 
 			AssertTextEquals(

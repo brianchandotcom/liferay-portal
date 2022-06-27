@@ -84,8 +84,6 @@ definition {
 			key_userScreenName = "${userScreenName}",
 			locator1 = "UserGroupsAssignUsers#USER_TABLE_CHECKBOX");
 
-		Pause(locator1 = "3000");
-
 		SelectFrameTop();
 
 		AssertClick.assertTextClickAtWaitForLastScript(

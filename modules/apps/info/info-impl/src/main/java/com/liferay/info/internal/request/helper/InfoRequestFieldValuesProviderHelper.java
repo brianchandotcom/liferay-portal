@@ -113,8 +113,6 @@ public class InfoRequestFieldValuesProviderHelper {
 						_getImageInfoFieldValue(
 							fileItem, infoField, themeDisplay));
 				}
-
-				continue;
 			}
 
 			if (ListUtil.isEmpty(
@@ -253,7 +251,8 @@ public class InfoRequestFieldValuesProviderHelper {
 			return _getNumberInfoFieldValue(infoField, locale, value);
 		}
 
-		if (infoField.getInfoFieldType() instanceof SelectInfoFieldType ||
+		if (infoField.getInfoFieldType() instanceof ImageInfoFieldType ||
+			infoField.getInfoFieldType() instanceof SelectInfoFieldType ||
 			infoField.getInfoFieldType() instanceof TextInfoFieldType) {
 
 			return _getInfoFieldValue(infoField, locale, (Object)value);

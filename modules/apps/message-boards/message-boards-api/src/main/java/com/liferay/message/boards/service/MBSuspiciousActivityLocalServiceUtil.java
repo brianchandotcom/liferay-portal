@@ -399,6 +399,14 @@ public class MBSuspiciousActivityLocalServiceUtil {
 		return getService().remove(suspiciousActivityId);
 	}
 
+	public static MBSuspiciousActivity toggleValidated(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().toggleValidated(suspiciousActivityId);
+	}
+
 	/**
 	 * Updates the message boards suspicious activity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

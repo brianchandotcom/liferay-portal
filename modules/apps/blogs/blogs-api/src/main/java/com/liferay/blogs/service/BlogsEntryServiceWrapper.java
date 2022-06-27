@@ -104,6 +104,15 @@ public class BlogsEntryServiceWrapper
 	}
 
 	@Override
+	public BlogsEntry getBlogsEntryByExternalReferenceCode(
+			long siteId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _blogsEntryService.getBlogsEntryByExternalReferenceCode(
+			siteId, externalReferenceCode);
+	}
+
+	@Override
 	public java.util.List<BlogsEntry> getCompanyEntries(
 			long companyId, java.util.Date displayDate, int status, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {

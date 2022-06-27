@@ -78,6 +78,13 @@ public interface WikiPageService extends BaseService {
 		throws PortalException;
 
 	public WikiPage addPage(
+			String externalReferenceCode, long userId, long nodeId,
+			String title, double version, String content, String summary,
+			boolean minorEdit, String format, boolean head, String parentTitle,
+			String redirectTitle, ServiceContext serviceContext)
+		throws PortalException;
+
+	public WikiPage addPage(
 			String externalReferenceCode, long nodeId, String title,
 			String content, String summary, boolean minorEdit, String format,
 			String parentTitle, String redirectTitle,
@@ -211,6 +218,9 @@ public interface WikiPageService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getPage(long nodeId, String title, double version)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPage getPageByPageId(long pageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiPage> getPages(

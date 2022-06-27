@@ -140,6 +140,15 @@ public class WikiNodeServiceWrapper
 	}
 
 	@Override
+	public com.liferay.wiki.model.WikiNode getWikiNodeByExternalReferenceCode(
+			long siteId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _wikiNodeService.getWikiNodeByExternalReferenceCode(
+			siteId, externalReferenceCode);
+	}
+
+	@Override
 	public void importPages(
 			long nodeId, String importer, java.io.InputStream[] inputStreams,
 			java.util.Map<String, String[]> options)

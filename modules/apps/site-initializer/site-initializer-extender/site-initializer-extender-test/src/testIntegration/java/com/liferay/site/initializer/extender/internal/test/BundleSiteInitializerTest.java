@@ -228,7 +228,7 @@ public class BundleSiteInitializerTest {
 			_assertDDMTemplate(group);
 			_assertDLFileEntry(group);
 			_assertExpandoColumns(serviceContext);
-			_assertFragmentEntries(group);
+			_assertFragmentEntries(group,serviceContext);
 			_assertJournalArticles(group);
 			_assertKBArticles(group);
 			_assertLayoutPageTemplateEntry(group);
@@ -704,10 +704,15 @@ public class BundleSiteInitializerTest {
 		Assert.assertNull(expandoBridge.getAttribute("Test Expando Column 3"));
 	}
 
-	private void _assertFragmentEntries(Group group) {
+	private void _assertFragmentEntries(Group group, ServiceContext serviceContext)
+		throws Exception{
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			serviceContext.getCompanyId());
+
 		FragmentEntry testFragmentEntry1 =
 			_fragmentEntryLocalService.fetchFragmentEntry(
-				group.getGroupId(), "test-fragment-entry-1");
+				companyGroup.getGroupId(), "test-fragment-entry-1");
 
 		Assert.assertNotNull(testFragmentEntry1);
 		Assert.assertEquals(

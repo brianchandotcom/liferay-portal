@@ -2996,7 +2996,7 @@ components:
                     # @review
                     description:
                         The localized submission of message type.
-                    oneOf:
+                    allOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
             type: object
         NavigationMenu:
@@ -4480,7 +4480,7 @@ components:
                     # @review
                     description:
                         The localized submission of page type.
-                    oneOf:
+                    allOf:
                         - $ref: "#/components/schemas/ClassFieldsReference"
             type: object
         StructuredContent:
@@ -4823,7 +4823,7 @@ components:
                     # @review
                     description:
                         The localized submission of URL type.
-                    oneOf:
+                    allOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
             type: object
         WidgetInstance:

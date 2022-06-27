@@ -54,12 +54,20 @@ public class MBSuspiciousActivityServiceUtil {
 		return getService().findAll();
 	}
 
+	public static List<MBSuspiciousActivity> findByMessagedId(long messageId) {
+		return getService().findByMessagedId(messageId);
+	}
+
 	public static MBSuspiciousActivity findByPrimaryKey(
 			long suspiciousActivityId)
 		throws com.liferay.message.boards.exception.
 			NoSuchSuspiciousActivityException {
 
 		return getService().findByPrimaryKey(suspiciousActivityId);
+	}
+
+	public static List<MBSuspiciousActivity> findByThreadId(long threadId) {
+		return getService().findByThreadId(threadId);
 	}
 
 	public static MBSuspiciousActivity findByU_M(long userId, long messageId)

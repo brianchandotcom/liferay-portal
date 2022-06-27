@@ -46,6 +46,12 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 					method="post"
 					url="<%= segmentsCompanyConfigurationDisplayContext.getDeleteConfigurationActionURL() %>"
 				/>
+
+				<liferay-ui:icon
+					message="export"
+					method="get"
+					url="<%= segmentsCompanyConfigurationDisplayContext.getExportConfigurationActionURL() %>"
+				/>
 			</liferay-ui:icon-menu>
 		</c:if>
 	</h2>

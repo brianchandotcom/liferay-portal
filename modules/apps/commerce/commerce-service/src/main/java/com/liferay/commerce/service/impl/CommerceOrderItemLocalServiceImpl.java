@@ -59,6 +59,7 @@ import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -80,6 +81,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -346,14 +348,36 @@ public class CommerceOrderItemLocalServiceImpl
 							CommerceOrderItemTable.INSTANCE.commerceOrderId.eq(
 								commerceOrderId
 							).and(
-								CommerceOrderItemTable.INSTANCE.
-									commerceOrderItemId.in(
-										commerceOrderItemIds
-									).or(
-										CommerceOrderItemTable.INSTANCE.
-											externalReferenceCode.in(
-												externalReferenceCodes)
-									)
+								() -> {
+									Predicate predicate = null;
+
+									if (ArrayUtil.isNotEmpty(
+											commerceOrderItemIds)) {
+
+										predicate =
+											CommerceOrderItemTable.INSTANCE.
+												commerceOrderItemId.in(
+													commerceOrderItemIds);
+									}
+
+									if (ArrayUtil.isNotEmpty(
+											externalReferenceCodes)) {
+
+										if (predicate != null) {
+											return predicate.or(
+												CommerceOrderItemTable.INSTANCE.
+													externalReferenceCode.in(
+														externalReferenceCodes));
+										}
+
+										predicate =
+											CommerceOrderItemTable.INSTANCE.
+												externalReferenceCode.in(
+													externalReferenceCodes);
+									}
+
+									return predicate;
+								}
 							)
 						))
 				)
@@ -952,15 +976,27 @@ public class CommerceOrderItemLocalServiceImpl
 
 		validateParentCommerceOrderId(commerceOrderItem);
 
-		commerceOrderItem.setDiscountAmount(discountAmount);
-		commerceOrderItem.setDiscountPercentageLevel1(discountPercentageLevel1);
-		commerceOrderItem.setDiscountPercentageLevel2(discountPercentageLevel2);
-		commerceOrderItem.setDiscountPercentageLevel3(discountPercentageLevel3);
-		commerceOrderItem.setDiscountPercentageLevel4(discountPercentageLevel4);
-		commerceOrderItem.setFinalPrice(finalPrice);
+		commerceOrderItem.setDiscountAmount(
+			(BigDecimal)GetterUtil.get(discountAmount, BigDecimal.ZERO));
+		commerceOrderItem.setDiscountPercentageLevel1(
+			(BigDecimal)GetterUtil.get(
+				discountPercentageLevel1, BigDecimal.ZERO));
+		commerceOrderItem.setDiscountPercentageLevel2(
+			(BigDecimal)GetterUtil.get(
+				discountPercentageLevel2, BigDecimal.ZERO));
+		commerceOrderItem.setDiscountPercentageLevel3(
+			(BigDecimal)GetterUtil.get(
+				discountPercentageLevel3, BigDecimal.ZERO));
+		commerceOrderItem.setDiscountPercentageLevel4(
+			(BigDecimal)GetterUtil.get(
+				discountPercentageLevel4, BigDecimal.ZERO));
+		commerceOrderItem.setFinalPrice(
+			(BigDecimal)GetterUtil.get(finalPrice, BigDecimal.ZERO));
 		commerceOrderItem.setManuallyAdjusted(true);
-		commerceOrderItem.setPromoPrice(promoPrice);
-		commerceOrderItem.setUnitPrice(unitPrice);
+		commerceOrderItem.setPromoPrice(
+			(BigDecimal)GetterUtil.get(promoPrice, BigDecimal.ZERO));
+		commerceOrderItem.setUnitPrice(
+			(BigDecimal)GetterUtil.get(unitPrice, BigDecimal.ZERO));
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}
@@ -986,27 +1022,61 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
-		commerceOrderItem.setDiscountAmount(discountAmount);
-		commerceOrderItem.setDiscountPercentageLevel1(discountPercentageLevel1);
-		commerceOrderItem.setDiscountPercentageLevel2(discountPercentageLevel2);
-		commerceOrderItem.setDiscountPercentageLevel3(discountPercentageLevel3);
-		commerceOrderItem.setDiscountPercentageLevel4(discountPercentageLevel4);
+		commerceOrderItem.setDiscountAmount(
+			(BigDecimal)GetterUtil.get(discountAmount, BigDecimal.ZERO));
+		commerceOrderItem.setDiscountPercentageLevel1(
+			(BigDecimal)GetterUtil.get(
+				discountPercentageLevel1, BigDecimal.ZERO));
+		commerceOrderItem.setDiscountPercentageLevel2(
+			(BigDecimal)GetterUtil.get(
+				discountPercentageLevel2, BigDecimal.ZERO));
+		commerceOrderItem.setDiscountPercentageLevel3(
+			(BigDecimal)GetterUtil.get(
+				discountPercentageLevel3, BigDecimal.ZERO));
+		commerceOrderItem.setDiscountPercentageLevel4(
+			(BigDecimal)GetterUtil.get(
+				discountPercentageLevel4, BigDecimal.ZERO));
 		commerceOrderItem.setDiscountPercentageLevel1WithTaxAmount(
-			discountPercentageLevel1WithTaxAmount);
+			(BigDecimal)GetterUtil.get(
+				discountPercentageLevel1WithTaxAmount, BigDecimal.ZERO));
+
 		commerceOrderItem.setDiscountPercentageLevel2WithTaxAmount(
-			discountPercentageLevel2WithTaxAmount);
+			(BigDecimal)GetterUtil.get(
+				discountPercentageLevel2WithTaxAmount, BigDecimal.ZERO));
+
 		commerceOrderItem.setDiscountPercentageLevel3WithTaxAmount(
-			discountPercentageLevel3WithTaxAmount);
+			(BigDecimal)GetterUtil.get(
+				discountPercentageLevel3WithTaxAmount, BigDecimal.ZERO));
+
 		commerceOrderItem.setDiscountPercentageLevel4WithTaxAmount(
-			discountPercentageLevel4WithTaxAmount);
-		commerceOrderItem.setDiscountWithTaxAmount(discountAmountWithTaxAmount);
-		commerceOrderItem.setFinalPrice(finalPrice);
-		commerceOrderItem.setFinalPriceWithTaxAmount(finalPriceWithTaxAmount);
+			(BigDecimal)GetterUtil.get(
+				discountPercentageLevel4WithTaxAmount, BigDecimal.ZERO));
+
+		commerceOrderItem.setDiscountWithTaxAmount(
+			(BigDecimal)GetterUtil.get(
+				discountAmountWithTaxAmount, BigDecimal.ZERO));
+
+		commerceOrderItem.setFinalPrice(
+			(BigDecimal)GetterUtil.get(finalPrice, BigDecimal.ZERO));
+
+		commerceOrderItem.setFinalPriceWithTaxAmount(
+			(BigDecimal)GetterUtil.get(
+				finalPriceWithTaxAmount, BigDecimal.ZERO));
+
 		commerceOrderItem.setManuallyAdjusted(true);
-		commerceOrderItem.setPromoPrice(promoPrice);
-		commerceOrderItem.setPromoPriceWithTaxAmount(promoPriceWithTaxAmount);
-		commerceOrderItem.setUnitPrice(unitPrice);
-		commerceOrderItem.setUnitPriceWithTaxAmount(unitPriceWithTaxAmount);
+		commerceOrderItem.setPromoPrice(
+			(BigDecimal)GetterUtil.get(promoPrice, BigDecimal.ZERO));
+
+		commerceOrderItem.setPromoPriceWithTaxAmount(
+			(BigDecimal)GetterUtil.get(
+				promoPriceWithTaxAmount, BigDecimal.ZERO));
+
+		commerceOrderItem.setUnitPrice(
+			(BigDecimal)GetterUtil.get(unitPrice, BigDecimal.ZERO));
+
+		commerceOrderItem.setUnitPriceWithTaxAmount(
+			(BigDecimal)GetterUtil.get(
+				unitPriceWithTaxAmount, BigDecimal.ZERO));
 
 		return commerceOrderItemPersistence.update(commerceOrderItem);
 	}

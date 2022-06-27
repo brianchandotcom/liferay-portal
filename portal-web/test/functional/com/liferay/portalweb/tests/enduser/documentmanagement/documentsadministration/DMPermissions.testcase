@@ -744,7 +744,7 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "DM Document Type Name");
 
-		Pause(locator1 = "3000");
+		WaitForSPARefresh();
 
 		var documentTypeURL = selenium.getLocation();
 

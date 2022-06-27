@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Constants;
@@ -172,26 +171,15 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 
 	@Override
 	public WikiPage getWikiPage(Long wikiPageId) throws Exception {
-		com.liferay.wiki.model.WikiPage wikiPage =
-			_wikiPageLocalService.getPage(wikiPageId);
-
-		_wikiPageModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), wikiPage,
-			ActionKeys.VIEW);
-
-		return _toWikiPage(wikiPage);
+		return _toWikiPage(_wikiPageService.getPage(wikiPageId));
 	}
 
 	@Override
 	public Page<WikiPage> getWikiPageWikiPagesPage(Long parentWikiPageId)
 		throws Exception {
 
-		com.liferay.wiki.model.WikiPage wikiPage =
-			_wikiPageLocalService.getPage(parentWikiPageId);
-
-		_wikiPageModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), wikiPage,
-			ActionKeys.VIEW);
+		com.liferay.wiki.model.WikiPage wikiPage = _wikiPageService.getPage(
+			parentWikiPageId);
 
 		return Page.of(
 			HashMapBuilder.put(
@@ -238,17 +226,13 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 		throws Exception {
 
 		com.liferay.wiki.model.WikiPage parentWikiPage =
-			_wikiPageLocalService.getPage(parentWikiPageId);
-
-		_wikiNodeModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(),
-			parentWikiPage.getNodeId(), ActionKeys.ADD_PAGE);
+			_wikiPageService.getPage(parentWikiPageId);
 
 		ServiceContext serviceContext = _createServiceContext(
 			Constants.ADD, parentWikiPage.getGroupId(), wikiPage);
 
 		return _toWikiPage(
-			_wikiPageLocalService.addPage(
+			_wikiPageService.addPage(
 				wikiPage.getExternalReferenceCode(), contextUser.getUserId(),
 				parentWikiPage.getNodeId(), wikiPage.getHeadline(),
 				WikiPageConstants.VERSION_DEFAULT, wikiPage.getContent(),
@@ -288,11 +272,7 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 		throws Exception {
 
 		com.liferay.wiki.model.WikiPage serviceBuilderWikiPage =
-			_wikiPageLocalService.getPage(wikiPageId);
-
-		_wikiPageModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(),
-			serviceBuilderWikiPage, ActionKeys.UPDATE);
+			_wikiPageService.getPage(wikiPageId);
 
 		return _updateWikiPage(serviceBuilderWikiPage, wikiPage);
 	}
@@ -485,10 +465,6 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 
 	@Reference
 	private WikiPageLocalService _wikiPageLocalService;
-
-	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
-	private ModelResourcePermission<com.liferay.wiki.model.WikiPage>
-		_wikiPageModelResourcePermission;
 
 	@Reference
 	private WikiPageService _wikiPageService;

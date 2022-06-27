@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 
 import java.io.Serializable;
 
@@ -121,20 +120,9 @@ public class KnowledgeBaseFolderResourceImpl
 				Long siteId, String externalReferenceCode)
 		throws Exception {
 
-		KBFolder kbFolder =
-			_kbFolderLocalService.getKBFolderByExternalReferenceCode(
-				siteId, externalReferenceCode);
-
-		String resourceName = getPermissionCheckerResourceName(
-			kbFolder.getKbFolderId());
-		Long resourceId = getPermissionCheckerResourceId(
-			kbFolder.getKbFolderId());
-
-		PermissionUtil.checkPermission(
-			ActionKeys.VIEW, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(kbFolder.getKbFolderId()));
-
-		return _toKnowledgeBaseFolder(kbFolder);
+		return _toKnowledgeBaseFolder(
+			_kbFolderService.getKBFolderByExternalReferenceCode(
+				siteId, externalReferenceCode));
 	}
 
 	@Override

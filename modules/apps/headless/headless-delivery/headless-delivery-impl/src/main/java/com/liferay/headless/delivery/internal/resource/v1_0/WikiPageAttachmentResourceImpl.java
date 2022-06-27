@@ -30,6 +30,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
+import com.liferay.wiki.service.WikiPageService;
 
 import java.util.Optional;
 
@@ -69,11 +70,7 @@ public class WikiPageAttachmentResourceImpl
 			Long wikiPageId)
 		throws Exception {
 
-		WikiPage wikiPage = _wikiPageLocalService.getPageByPageId(wikiPageId);
-
-		_wikiPageModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), wikiPage,
-			ActionKeys.VIEW);
+		WikiPage wikiPage = _wikiPageService.getPageByPageId(wikiPageId);
 
 		return Page.of(
 			transform(
@@ -86,7 +83,7 @@ public class WikiPageAttachmentResourceImpl
 			Long wikiPageId, MultipartBody multipartBody)
 		throws Exception {
 
-		WikiPage wikiPage = _wikiPageLocalService.getPageByPageId(wikiPageId);
+		WikiPage wikiPage = _wikiPageService.getPageByPageId(wikiPageId);
 
 		_wikiPageModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), wikiPage,
@@ -140,5 +137,8 @@ public class WikiPageAttachmentResourceImpl
 
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
 	private ModelResourcePermission<WikiPage> _wikiPageModelResourcePermission;
+
+	@Reference
+	private WikiPageService _wikiPageService;
 
 }

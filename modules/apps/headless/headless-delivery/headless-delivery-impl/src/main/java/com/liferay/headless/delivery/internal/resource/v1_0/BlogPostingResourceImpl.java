@@ -58,7 +58,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
@@ -151,20 +150,9 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 			Long siteId, String externalReferenceCode)
 		throws Exception {
 
-		BlogsEntry blogsEntry =
-			_blogsEntryLocalService.getBlogsEntryByExternalReferenceCode(
-				siteId, externalReferenceCode);
-
-		String resourceName = getPermissionCheckerResourceName(
-			blogsEntry.getEntryId());
-		Long resourceId = getPermissionCheckerResourceId(
-			blogsEntry.getEntryId());
-
-		PermissionUtil.checkPermission(
-			ActionKeys.VIEW, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(blogsEntry.getEntryId()));
-
-		return _toBlogPosting(blogsEntry);
+		return _toBlogPosting(
+			_blogsEntryService.getBlogsEntryByExternalReferenceCode(
+				siteId, externalReferenceCode));
 	}
 
 	@Override

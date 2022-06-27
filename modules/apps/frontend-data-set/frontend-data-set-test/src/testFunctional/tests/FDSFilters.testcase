@@ -45,6 +45,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-155305. Assert results can be correctly filtered when selecting available filters."
+	@priority = "5"
+	test AvailableFiltersCanBeApplied {
+		task ("When click on the filter button") {
+			FDSFilters.openFilters();
+		}
+
+		task ("And selecting one of the available filters") {
+			FDSFilters.disableStatusFilters(key_status = "Approved,Draft");
+
+			FDSFilters.enableStatusFilters(key_status = "Pending");
+
+			Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
+		}
+
+		task ("Then the results will be displayed accordingly to the filter selected") {
+			AssertElementPresent(locator1 = "FrontendDataSet#EMPTY_FDS_TABLE_MESSAGE");
+		}
+
+		task ("And the Filters Summary boxes will be updated accordingly to it") {
+			AssertElementPresent(
+				key_filter = "Status: Pending",
+				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
+		}
+	}
+
 	@description = "LPS-155313. Assert results can be correctly filtered when exclude is enabled."
 	@priority = "5"
 	test ExcludeCanBeEnabled {

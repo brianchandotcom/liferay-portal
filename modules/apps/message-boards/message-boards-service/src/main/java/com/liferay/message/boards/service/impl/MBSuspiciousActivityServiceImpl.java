@@ -85,6 +85,15 @@ public class MBSuspiciousActivityServiceImpl
 		return _mbSuspiciousActivityLocalService.toggleValidated(suspiciousActivityId);
 
 	}
+	@Override
+	public List<MBSuspiciousActivity> findByThreadId(long threadId) {
+		return _mbSuspiciousActivityLocalService.findByThreadId(threadId);
+	}
+
+	@Override
+	public List<MBSuspiciousActivity> findByMessagedId(long messageId) {
+		return _mbSuspiciousActivityLocalService.findByMessagedId(messageId);
+	}
 
 	@Reference
 	MBSuspiciousActivityLocalService _mbSuspiciousActivityLocalService;

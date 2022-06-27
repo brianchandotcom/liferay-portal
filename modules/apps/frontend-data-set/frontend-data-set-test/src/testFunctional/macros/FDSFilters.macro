@@ -35,9 +35,9 @@ definition {
 	}
 
 	macro searchFilter {
-		AssertElementPresent(locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD");
+		VerifyElementPresent(locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD");
 
-		AssertElementPresent(locator1 = "FrontendDataSet#FILTER_SEARCH_BUTTON");
+		VerifyElementPresent(locator1 = "FrontendDataSet#FILTER_SEARCH_BUTTON");
 
 		Type(
 			locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD",

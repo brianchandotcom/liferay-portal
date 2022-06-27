@@ -43,4 +43,8 @@ public interface TopLevelBuildReport extends BuildReport {
 
 	public String getTestSuiteName();
 
+	public long getTopLevelActiveDuration();
+
+	public long getTopLevelPassiveDuration();
+
 }

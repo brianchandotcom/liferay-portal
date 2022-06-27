@@ -60,12 +60,8 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(httpServletRequest);
-
 		String className = _portal.getClassName(
-			ParamUtil.getLong(originalHttpServletRequest, "classNameId"));
-
+			ParamUtil.getLong(httpServletRequest, "classNameId"));
 		String formItemId = ParamUtil.getString(
 			httpServletRequest, "formItemId");
 
@@ -99,7 +95,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 			if (Validator.isNull(redirect)) {
-				SessionMessages.add(originalHttpServletRequest, formItemId);
+				SessionMessages.add(httpServletRequest, formItemId);
 			}
 		}
 		catch (CaptchaException captchaException) {
@@ -108,7 +104,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			}
 
 			SessionErrors.add(
-				originalHttpServletRequest, formItemId,
+				httpServletRequest, formItemId,
 				new InfoFormValidationException.InvalidCaptcha());
 		}
 		catch (InfoFormValidationException infoFormValidationException) {
@@ -117,14 +113,13 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			}
 
 			SessionErrors.add(
-				originalHttpServletRequest, formItemId,
-				infoFormValidationException);
+				httpServletRequest, formItemId, infoFormValidationException);
 
 			if (Validator.isNotNull(
 					infoFormValidationException.getInfoFieldUniqueId())) {
 
 				SessionErrors.add(
-					originalHttpServletRequest,
+					httpServletRequest,
 					infoFormValidationException.getInfoFieldUniqueId(),
 					infoFormValidationException);
 			}
@@ -135,7 +130,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			}
 
 			SessionErrors.add(
-				originalHttpServletRequest, formItemId, infoFormException);
+				httpServletRequest, formItemId, infoFormException);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -149,7 +144,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			}
 
 			SessionErrors.add(
-				originalHttpServletRequest, formItemId, infoFormException);
+				httpServletRequest, formItemId, infoFormException);
 		}
 
 		if (Validator.isNull(redirect)) {

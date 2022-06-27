@@ -29,6 +29,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -66,17 +67,20 @@ public class InfoRequestFieldValuesProviderHelper {
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
+		UploadServletRequest uploadServletRequest =
+			PortalUtil.getUploadServletRequest(httpServletRequest);
+
 		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
+			(ThemeDisplay)uploadServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		String className = PortalUtil.getClassName(
-			ParamUtil.getLong(httpServletRequest, "classNameId"));
+			ParamUtil.getLong(uploadServletRequest, "classNameId"));
 		String classTypeId = ParamUtil.getString(
-			httpServletRequest, "classTypeId");
+			uploadServletRequest, "classTypeId");
 
 		Map<String, String[]> parameterMap =
-			httpServletRequest.getParameterMap();
+			uploadServletRequest.getParameterMap();
 
 		for (InfoField<?> infoField :
 				_getInfoFields(

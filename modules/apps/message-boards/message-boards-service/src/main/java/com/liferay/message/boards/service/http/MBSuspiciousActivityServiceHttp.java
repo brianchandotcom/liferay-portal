@@ -14,13 +14,21 @@
 
 package com.liferay.message.boards.service.http;
 
+import com.liferay.message.boards.service.MBSuspiciousActivityServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.message.boards.service.MBSuspiciousActivityServiceUtil</code> service
+ * <code>MBSuspiciousActivityServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -41,4 +49,260 @@ package com.liferay.message.boards.service.http;
  * @generated
  */
 public class MBSuspiciousActivityServiceHttp {
+
+	public static com.liferay.message.boards.model.MBSuspiciousActivity
+			addOrUpdateSuspiciousActivity(
+				HttpPrincipal httpPrincipal, long userId, long messageId,
+				String description, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBSuspiciousActivityServiceUtil.class,
+				"addOrUpdateSuspiciousActivity",
+				_addOrUpdateSuspiciousActivityParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, messageId, description, type);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.message.boards.model.MBSuspiciousActivity)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.message.boards.model.MBSuspiciousActivity
+			findByPrimaryKey(
+				HttpPrincipal httpPrincipal, long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBSuspiciousActivityServiceUtil.class, "findByPrimaryKey",
+				_findByPrimaryKeyParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, suspiciousActivityId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.message.boards.exception.
+							NoSuchSuspiciousActivityException) {
+
+					throw (com.liferay.message.boards.exception.
+						NoSuchSuspiciousActivityException)exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.message.boards.model.MBSuspiciousActivity)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.message.boards.model.MBSuspiciousActivity> findAll(
+			HttpPrincipal httpPrincipal) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBSuspiciousActivityServiceUtil.class, "findAll",
+				_findAllParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.message.boards.model.MBSuspiciousActivity>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.message.boards.model.MBSuspiciousActivity
+			findByU_M(HttpPrincipal httpPrincipal, long userId, long messageId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBSuspiciousActivityServiceUtil.class, "findByU_M",
+				_findByU_MParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, userId, messageId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.message.boards.exception.
+							NoSuchSuspiciousActivityException) {
+
+					throw (com.liferay.message.boards.exception.
+						NoSuchSuspiciousActivityException)exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.message.boards.model.MBSuspiciousActivity)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.message.boards.model.MBSuspiciousActivity remove(
+			HttpPrincipal httpPrincipal, long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBSuspiciousActivityServiceUtil.class, "remove",
+				_removeParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, suspiciousActivityId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.message.boards.exception.
+							NoSuchSuspiciousActivityException) {
+
+					throw (com.liferay.message.boards.exception.
+						NoSuchSuspiciousActivityException)exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.message.boards.model.MBSuspiciousActivity)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int countAll(HttpPrincipal httpPrincipal) {
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBSuspiciousActivityServiceUtil.class, "countAll",
+				_countAllParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		MBSuspiciousActivityServiceHttp.class);
+
+	private static final Class<?>[]
+		_addOrUpdateSuspiciousActivityParameterTypes0 = new Class[] {
+			long.class, long.class, String.class, String.class
+		};
+	private static final Class<?>[] _findByPrimaryKeyParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _findAllParameterTypes2 = new Class[] {};
+	private static final Class<?>[] _findByU_MParameterTypes3 = new Class[] {
+		long.class, long.class
+	};
+	private static final Class<?>[] _removeParameterTypes4 = new Class[] {
+		long.class
+	};
+	private static final Class<?>[] _countAllParameterTypes5 = new Class[] {};
+
 }

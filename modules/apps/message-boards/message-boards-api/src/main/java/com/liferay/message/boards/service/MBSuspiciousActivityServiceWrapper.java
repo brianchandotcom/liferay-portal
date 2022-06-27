@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.service;
 
+import com.liferay.message.boards.model.MBSuspiciousActivity;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -37,6 +38,42 @@ public class MBSuspiciousActivityServiceWrapper
 		_mbSuspiciousActivityService = mbSuspiciousActivityService;
 	}
 
+	@Override
+	public MBSuspiciousActivity addOrUpdateSuspiciousActivity(
+			long userId, long messageId, String description, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbSuspiciousActivityService.addOrUpdateSuspiciousActivity(
+			userId, messageId, description, type);
+	}
+
+	@Override
+	public int countAll() {
+		return _mbSuspiciousActivityService.countAll();
+	}
+
+	@Override
+	public java.util.List<MBSuspiciousActivity> findAll() {
+		return _mbSuspiciousActivityService.findAll();
+	}
+
+	@Override
+	public MBSuspiciousActivity findByPrimaryKey(long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityService.findByPrimaryKey(
+			suspiciousActivityId);
+	}
+
+	@Override
+	public MBSuspiciousActivity findByU_M(long userId, long messageId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityService.findByU_M(userId, messageId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -45,6 +82,14 @@ public class MBSuspiciousActivityServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _mbSuspiciousActivityService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public MBSuspiciousActivity remove(long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityService.remove(suspiciousActivityId);
 	}
 
 	@Override

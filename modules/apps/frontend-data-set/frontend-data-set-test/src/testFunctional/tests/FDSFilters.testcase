@@ -133,6 +133,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-155311. Assert the filter cannot be filtered by searching."
+	@priority = "3"
+	test FilterNotFound {
+		task ("When clicking on the filter button") {
+			FDSFilters.openFilters();
+		}
+
+		task ("And typing a key word in the category search box") {
+			FDSFilters.searchFilter(searchTerm = "Pending");
+		}
+
+		task ("And there is no matching filter") {
+			AssertElementNotPresent(
+				key_filter = "Pending",
+				locator1 = "FrontendDataSet#FILTER_OPTION");
+		}
+
+		task ("Then the user will be warned about it") {
+			AssertElementPresent(locator1 = "FrontendDataSet#FILTER_WARM_MESSAGE");
+		}
+	}
+
 	@description = "LPS-155303. Assert management bar will render."
 	@priority = "3"
 	test ManagementBarWillRender {

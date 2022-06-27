@@ -19,9 +19,11 @@ import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.util.PropsUtil;
 
@@ -99,6 +101,19 @@ public class FormLayoutStructureItemImporter
 					formStyledLayoutStructureItem.setClassTypeId(subtypeId);
 				}
 			}
+
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-149720"))) {
+
+				JSONObject successMessageJSONObject =
+					_getSuccessMessageJSONObject(
+						layoutStructureItemImporterContext, sourceMap);
+
+				if (successMessageJSONObject != null) {
+					formStyledLayoutStructureItem.setSuccessMessageJSONObject(
+						successMessageJSONObject);
+				}
+			}
 		}
 
 		Map<String, Object> fragmentStyleMap =
@@ -138,6 +153,65 @@ public class FormLayoutStructureItemImporter
 	@Override
 	public PageElement.Type getPageElementType() {
 		return PageElement.Type.FORM;
+	}
+
+	private JSONObject _getLocalizedValuesJSONObject(
+		String key, Map<String, Object> propertiesMap) {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		Map<String, Object> map = (Map<String, Object>)propertiesMap.get(
+			"message");
+
+		if (MapUtil.isEmpty(map)) {
+			return jsonObject;
+		}
+
+		Map<String, Object> localizedMap = (Map<String, Object>)map.get(
+			"value_i18n");
+
+		if (localizedMap == null) {
+			return jsonObject;
+		}
+
+		for (Map.Entry<String, Object> entry : localizedMap.entrySet()) {
+			jsonObject.put(entry.getKey(), entry.getValue());
+		}
+
+		return JSONUtil.put(key, jsonObject);
+	}
+
+	private JSONObject _getSuccessMessageJSONObject(
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext,
+		Map<String, Object> sourceMap) {
+
+		Map<String, Object> formSuccessSubmissionResultMap =
+			(Map<String, Object>)sourceMap.get("formSuccessSubmissionResult");
+
+		if (MapUtil.isEmpty(formSuccessSubmissionResultMap)) {
+			return null;
+		}
+
+		if (formSuccessSubmissionResultMap.containsKey("message")) {
+			return _getLocalizedValuesJSONObject(
+				"message", formSuccessSubmissionResultMap);
+		}
+		else if (formSuccessSubmissionResultMap.containsKey("itemReference")) {
+			Map<String, Object> itemReference =
+				(Map<String, Object>)formSuccessSubmissionResultMap.get(
+					"itemReference");
+
+			return JSONUtil.put(
+				"layout",
+				getLayoutFromItemReferenceJSONObject(
+					itemReference, layoutStructureItemImporterContext));
+		}
+		else if (formSuccessSubmissionResultMap.containsKey("url")) {
+			return _getLocalizedValuesJSONObject(
+				"url", formSuccessSubmissionResultMap);
+		}
+
+		return null;
 	}
 
 	@Reference

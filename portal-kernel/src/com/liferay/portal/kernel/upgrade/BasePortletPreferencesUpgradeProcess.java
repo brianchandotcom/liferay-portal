@@ -392,10 +392,13 @@ public abstract class BasePortletPreferencesUpgradeProcess
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				sb.toString());
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"select portletPreferenceValueId, largeValue, name, " +
-					"readOnly, smallValue from PortletPreferenceValue where " +
-						"portletPreferencesId = ? order by index_ asc");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					StringBundler.concat(
+						"select portletPreferenceValueId, largeValue, name, ",
+						"readOnly, smallValue from PortletPreferenceValue ",
+						"where portletPreferencesId = ? order by index_ asc"));
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

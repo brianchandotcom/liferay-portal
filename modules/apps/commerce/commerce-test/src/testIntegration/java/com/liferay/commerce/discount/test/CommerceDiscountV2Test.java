@@ -31,6 +31,7 @@ import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalService;
 import com.liferay.commerce.discount.service.CommerceDiscountRuleLocalService;
 import com.liferay.commerce.discount.test.util.CommerceDiscountTestUtil;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.CommerceProductPrice;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
@@ -48,6 +49,7 @@ import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceAccountGroupTestUtil;
+import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.petra.string.StringPool;
@@ -882,6 +884,20 @@ public class CommerceDiscountV2Test {
 				commercePriceList.getCommercePriceListId(),
 				BigDecimal.valueOf(35));
 
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		CommerceTestUtil.addWarehouseCommerceChannelRel(
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			commerceChannel.getCommerceChannelId());
+
+		int quantity = 10;
+
+		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
+			_user.getUserId(), commerceInventoryWarehouse, cpInstance.getSku(),
+			quantity);
+
 		String couponCode = StringUtil.randomString();
 
 		CommerceDiscount commerceDiscount =
@@ -891,14 +907,18 @@ public class CommerceDiscountV2Test {
 				cpDefinition.getCPDefinitionId());
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			_commerceCurrency, null, _user, _group, _commerceAccount,
+			_commerceCurrency, commerceChannel, _user, _group, _commerceAccount,
 			commerceOrder);
+
+		CommerceTestUtil.addCommerceOrderItem(
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
+			commerceContext);
 
 		commerceOrder = _commerceOrderLocalService.applyCouponCode(
 			commerceOrder.getCommerceOrderId(), couponCode, commerceContext);
 
 		commerceContext = new TestCommerceContext(
-			_commerceCurrency, null, _user, _group, _commerceAccount,
+			_commerceCurrency, commerceChannel, _user, _group, _commerceAccount,
 			commerceOrder);
 
 		_commerceOrders.add(commerceOrder);

@@ -59,6 +59,7 @@ const INPUT_ITEM_2 = {
 
 const MOCK_CACHE = {
 	'allowedInputTypes-dateFragment': ['date'],
+	'allowedInputTypes-numericFragment': ['numeric'],
 	'allowedInputTypes-textFragment': ['text'],
 	'formFields-classNameId-classTypeId': [
 		{
@@ -76,6 +77,13 @@ const MOCK_CACHE = {
 					name: 'notRequiredField',
 					required: false,
 					type: 'text',
+				},
+				{
+					key: 'numericField',
+					label: 'Numeric Field',
+					name: 'numericField',
+					required: false,
+					type: 'numeric',
 				},
 			],
 			label: 'Fieldset',
@@ -169,6 +177,18 @@ describe('FormInputGeneralPanel', () => {
 		});
 
 		expect(screen.queryByText('Required Field*')).toBeInTheDocument();
+		expect(
+			screen.queryByText('Not Required Field')
+		).not.toBeInTheDocument();
+	});
+
+	it('shows in the field selector only the options whose type is supported by the fragment', () => {
+		renderComponent({
+			fragmentEntryKey: 'numericFragment',
+		});
+
+		expect(screen.queryByText('Numeric Field')).toBeInTheDocument();
+		expect(screen.queryByText('Required Field*')).not.toBeInTheDocument();
 		expect(
 			screen.queryByText('Not Required Field')
 		).not.toBeInTheDocument();

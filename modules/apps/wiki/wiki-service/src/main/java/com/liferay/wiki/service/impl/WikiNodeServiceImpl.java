@@ -177,6 +177,20 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 	}
 
 	@Override
+	public WikiNode getWikiNodeByExternalReferenceCode(
+			long siteId, String externalReferenceCode)
+		throws PortalException {
+
+		WikiNode node = wikiNodeLocalService.getWikiNodeByExternalReferenceCode(
+			siteId, externalReferenceCode);
+
+		_wikiNodeModelResourcePermission.check(
+			getPermissionChecker(), node, ActionKeys.VIEW);
+
+		return node;
+	}
+
+	@Override
 	public void importPages(
 			long nodeId, String importer, InputStream[] inputStreams,
 			Map<String, String[]> options)

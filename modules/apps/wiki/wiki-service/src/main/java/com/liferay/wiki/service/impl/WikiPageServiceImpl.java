@@ -125,6 +125,23 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 	@Override
 	public WikiPage addPage(
+			String externalReferenceCode, long userId, long nodeId,
+			String title, double version, String content, String summary,
+			boolean minorEdit, String format, boolean head, String parentTitle,
+			String redirectTitle, ServiceContext serviceContext)
+		throws PortalException {
+
+		_wikiNodeModelResourcePermission.check(
+			getPermissionChecker(), nodeId, ActionKeys.ADD_PAGE);
+
+		return wikiPageLocalService.addPage(
+			externalReferenceCode, userId, nodeId, title, version, content,
+			summary, minorEdit, format, head, parentTitle, redirectTitle,
+			serviceContext);
+	}
+
+	@Override
+	public WikiPage addPage(
 			String externalReferenceCode, long nodeId, String title,
 			String content, String summary, boolean minorEdit, String format,
 			String parentTitle, String redirectTitle,
@@ -518,6 +535,16 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		throws PortalException {
 
 		WikiPage page = wikiPageLocalService.getPage(nodeId, title, version);
+
+		_wikiPageModelResourcePermission.check(
+			getPermissionChecker(), page, ActionKeys.VIEW);
+
+		return page;
+	}
+
+	@Override
+	public WikiPage getPageByPageId(long pageId) throws PortalException {
+		WikiPage page = wikiPageLocalService.getPageByPageId(pageId);
 
 		_wikiPageModelResourcePermission.check(
 			getPermissionChecker(), page, ActionKeys.VIEW);

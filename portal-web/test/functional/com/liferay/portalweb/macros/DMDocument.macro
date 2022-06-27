@@ -3822,6 +3822,8 @@ definition {
 				key_mgDocumentTitle = "${mgDocumentTitle}",
 				locator1 = "MediaGallery#ENTRY_THUMBNAIL");
 
+			WaitForVisible(locator1 = "IFrame#SELECT_MEDIA_GALLERY_VIDEO");
+
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#SELECT_MEDIA_GALLERY_VIDEO");
 
 			AssertElementPresent(locator1 = "MediaGallery#ENTRY_VIDEO_PLAYED");

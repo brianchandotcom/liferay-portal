@@ -49,6 +49,10 @@ public class AccountGroupDisplay {
 		return _description;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -57,6 +61,7 @@ public class AccountGroupDisplay {
 		_accountEntriesCount = 0;
 		_accountGroupId = 0;
 		_description = StringPool.BLANK;
+		_externalReferenceCode = StringPool.BLANK;
 		_name = StringPool.BLANK;
 	}
 
@@ -64,6 +69,7 @@ public class AccountGroupDisplay {
 		_accountEntriesCount = _getAccountEntriesCount(accountGroup);
 		_accountGroupId = accountGroup.getAccountGroupId();
 		_description = accountGroup.getDescription();
+		_externalReferenceCode = accountGroup.getExternalReferenceCode();
 		_name = accountGroup.getName();
 	}
 
@@ -79,6 +85,7 @@ public class AccountGroupDisplay {
 	private final long _accountEntriesCount;
 	private final long _accountGroupId;
 	private final String _description;
+	private final String _externalReferenceCode;
 	private final String _name;
 
 }

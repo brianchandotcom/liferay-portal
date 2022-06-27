@@ -44,6 +44,8 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.io.Serializable;
 
+import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -375,7 +377,13 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				return String.valueOf(value);
 			}
 
-			return "[" + StringUtil.merge((String[])value, ",") + "]";
+			List<Object> objects = new ArrayList<>();
+
+			for (int i = 0; i < Array.getLength(value); i++) {
+				objects.add(Array.get(value, i));
+			}
+
+			return "[" + StringUtil.merge(objects.toArray(), ",") + "]";
 		}
 
 		return null;

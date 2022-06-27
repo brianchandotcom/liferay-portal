@@ -343,6 +343,9 @@ public interface MBSuspiciousActivityLocalService
 	public MBSuspiciousActivity remove(long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException;
 
+	public MBSuspiciousActivity toggleValidated(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException;
+
 	/**
 	 * Updates the message boards suspicious activity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

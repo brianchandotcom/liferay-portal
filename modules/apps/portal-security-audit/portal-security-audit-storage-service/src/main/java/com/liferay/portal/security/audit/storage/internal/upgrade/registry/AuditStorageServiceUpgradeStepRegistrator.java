@@ -17,7 +17,7 @@ package com.liferay.portal.security.audit.storage.internal.upgrade.registry;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
-import com.liferay.portal.security.audit.storage.internal.upgrade.v1_0_1.SchemaUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.security.audit.storage.internal.upgrade.v1_0_1.util.AuditEventTable;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
@@ -63,7 +63,10 @@ public class AuditStorageServiceUpgradeStepRegistrator
 
 		registry.register("0.0.1", "1.0.0", new DummyUpgradeStep());
 
-		registry.register("1.0.0", "1.0.1", new SchemaUpgradeProcess());
+		registry.register(
+			"1.0.0", "1.0.1",
+			UpgradeProcessFactory.alterColumnTypes(
+				"Audit_AuditEvent", "VARCHAR(255) null", "clientIP"));
 
 		registry.register(
 			"1.0.1", "2.0.0",

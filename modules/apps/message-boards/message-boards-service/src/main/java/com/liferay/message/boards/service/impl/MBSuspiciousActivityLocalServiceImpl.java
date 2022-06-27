@@ -127,6 +127,16 @@ public class MBSuspiciousActivityLocalServiceImpl
 
 	}
 
+	@Override
+	public List<MBSuspiciousActivity> findByThreadId(long threadId) {
+		return _mbSuspiciousActivityPersistence.findByThreadId(threadId);
+	}
+
+	@Override
+	public List<MBSuspiciousActivity> findByMessagedId(long messageId) {
+		return _mbSuspiciousActivityPersistence.findByMessagedId(messageId);
+	}
+
 	@Reference
 	private MBMessagePersistence _mbMessagePersistence;
 

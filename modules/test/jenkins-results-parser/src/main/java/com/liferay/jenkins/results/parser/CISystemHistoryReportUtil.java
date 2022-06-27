@@ -380,23 +380,24 @@ public class CISystemHistoryReportUtil {
 			}
 
 			if (_buildType.equals("top.level")) {
-				StopWatchRecordsGroup stopWatchRecordsGroup =
-					topLevelBuildReport.getStopWatchRecordsGroup();
-
 				if (_durationReportType.equals("active.duration")) {
-					_durations.add(_getActiveDuration(stopWatchRecordsGroup));
+					_durations.add(
+						topLevelBuildReport.getTopLevelActiveDuration());
 
 					return;
 				}
 
 				if (_durationReportType.equals("passive.duration")) {
-					_durations.add(_getPassiveDuration(stopWatchRecordsGroup));
+					_durations.add(
+						topLevelBuildReport.getTopLevelPassiveDuration());
 
 					return;
 				}
 
 				_durations.add(
-					_getDuration(stopWatchRecordsGroup, _durationReportType));
+					_getDuration(
+						topLevelBuildReport.getStopWatchRecordsGroup(),
+						_durationReportType));
 
 				return;
 			}
@@ -576,29 +577,6 @@ public class CISystemHistoryReportUtil {
 			_durationReportType = durationReportType;
 		}
 
-		private long _getActiveDuration(
-			StopWatchRecordsGroup stopWatchRecordsGroup) {
-
-			if (stopWatchRecordsGroup == null) {
-				return 0L;
-			}
-
-			long passiveDuration = _getPassiveDuration(stopWatchRecordsGroup);
-
-			if (passiveDuration == 0) {
-				return 0L;
-			}
-
-			long totalDuration = _getDuration(
-				stopWatchRecordsGroup, "total.duration");
-
-			if (passiveDuration > totalDuration) {
-				return totalDuration;
-			}
-
-			return totalDuration - passiveDuration;
-		}
-
 		private long _getDuration(
 			StopWatchRecordsGroup stopWatchRecordsGroup,
 			String durationReportType) {
@@ -639,28 +617,6 @@ public class CISystemHistoryReportUtil {
 			javascriptID = javascriptID.replaceAll("\\.", "_");
 
 			return javascriptID;
-		}
-
-		private long _getPassiveDuration(
-			StopWatchRecordsGroup stopWatchRecordsGroup) {
-
-			if (stopWatchRecordsGroup == null) {
-				return 0L;
-			}
-
-			long passiveDuration = 0L;
-
-			passiveDuration += _getDuration(
-				stopWatchRecordsGroup, "wait.for.invoked.jobs");
-			passiveDuration += _getDuration(
-				stopWatchRecordsGroup, "wait.for.invoked.smoke.jobs");
-
-			if (passiveDuration > 0L) {
-				return passiveDuration;
-			}
-
-			return _getDuration(
-				stopWatchRecordsGroup, "invoke.downstream.builds");
 		}
 
 		private final String _buildType;

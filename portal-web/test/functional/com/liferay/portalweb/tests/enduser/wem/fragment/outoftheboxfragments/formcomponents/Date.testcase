@@ -64,7 +64,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-151158. The page creator could configure the Date fragment."
+	@description = "This is a test for LPS-151158 and LPS-155502. The page creator could configure the Date fragment. View the behaviors of Help Text and Label."
 	@priority = "5"
 	test ConfigureDate {
 		property test.name.skip.portal.instance = "Date#ConfigureDate";
@@ -99,6 +99,13 @@ definition {
 		}
 
 		task ("Then the page creator could configure the Date fragment") {
+			task ("View the label before mapping field") {
+				PageEditor.viewInputStyle(
+					label = "Date",
+					showLabel = "true",
+					type = "date-input");
+			}
+
 			task ("Rename the label") {
 				PageEditor.editInput(
 					field = "Purchase Date",
@@ -120,6 +127,11 @@ definition {
 					label = "Are you a fun of Stephen Curry?",
 					showLabel = "false",
 					type = "date-input");
+
+				AssertTextEquals(
+					key_text = "Label",
+					locator1 = "TextInput#ANY",
+					value1 = "Are you a fun of Stephen Curry?");
 			}
 
 			task ("View the Help Text is disabled by default") {

@@ -16,7 +16,6 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.vulcan.api", version: "@com.liferay.portal.vulcan.api.version@"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test", version: "7.1.0"
-	testIntegrationCompile group: "commons-beanutils", name: "commons-beanutils"
 	testIntegrationCompile group: "commons-lang", name: "commons-lang"
 #if (${liferayVersion.startsWith("7.1")})
 	compileOnly group: "javax.servlet", name: "javax.servlet-api"

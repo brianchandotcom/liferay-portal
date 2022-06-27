@@ -716,7 +716,9 @@ public class ObjectFieldLocalServiceImpl
 		if (!Objects.equals(
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, businessType)) {
 
-			throw new ObjectFieldDefaultValueException();
+			throw new ObjectFieldDefaultValueException(
+				"Object field can only have default type when the business " +
+					"type is picklist");
 		}
 	}
 

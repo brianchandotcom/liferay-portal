@@ -133,7 +133,7 @@ const Overview = () => {
 
 	return (
 		<>
-			<ProjectSupport />
+			<ProjectSupport project={project} />
 			<div className="d-flex flex-column mr-4 mt-6">
 				{!isPartnership && <h3>{i18n.translate('subscriptions')}</h3>}
 

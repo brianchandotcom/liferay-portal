@@ -105,7 +105,7 @@ definition {
 		}
 
 		task ("Then quick action menu is displayed on the 2nd row") {
-			FDSQuickActions.viewQuickActionMenuIsPresent(title = "Sample2");
+			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample2");
 		}
 
 		task ("Then quick action menu is not displayed on 1st row") {

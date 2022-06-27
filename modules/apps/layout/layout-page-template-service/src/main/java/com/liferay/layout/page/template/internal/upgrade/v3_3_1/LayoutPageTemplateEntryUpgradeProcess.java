@@ -157,10 +157,10 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 						"from LayoutPageTemplateEntry");
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update LayoutPageTemplateEntry set " +
-							"layoutPageTemplateEntryKey = ?, name = ? where " +
-								"layoutPageTemplateEntryId = ?"))) {
+					connection,
+					"update LayoutPageTemplateEntry set " +
+						"layoutPageTemplateEntryKey = ?, name = ? where " +
+							"layoutPageTemplateEntryId = ?")) {
 
 			while (resultSet.next()) {
 				String name = resultSet.getString("name");

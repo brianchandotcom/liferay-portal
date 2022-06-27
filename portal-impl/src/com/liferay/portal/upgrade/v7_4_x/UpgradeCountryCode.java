@@ -51,16 +51,15 @@ public class UpgradeCountryCode extends UpgradeProcess {
 	private void _upgradeCountry() throws Exception {
 		try (PreparedStatement preparedStatement1 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						StringBundler.concat(
-							"insert into Country (mvccVersion, uuid_, ",
-							"defaultLanguageId, countryId, companyId, userId, ",
-							"createDate, modifiedDate, a2, a3, active_, ",
-							"billingAllowed, groupFilterEnabled, idd_, name, ",
-							"number_, position, shippingAllowed, ",
-							"subjectToVAT, zipRequired) values (0, ?, ?, ?, ",
-							"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
-							"?)")));
+					connection,
+					StringBundler.concat(
+						"insert into Country (mvccVersion, uuid_, ",
+						"defaultLanguageId, countryId, companyId, userId, ",
+						"createDate, modifiedDate, a2, a3, active_, ",
+						"billingAllowed, groupFilterEnabled, idd_, name, ",
+						"number_, position, shippingAllowed, subjectToVAT, ",
+						"zipRequired) values (0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+						"?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(
@@ -109,13 +108,13 @@ public class UpgradeCountryCode extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement1 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						StringBundler.concat(
-							"insert into Region (mvccVersion, uuid_, ",
-							"defaultLanguageId, regionId, companyId, userId, ",
-							"createDate, modifiedDate, countryId, active_, ",
-							"name, position, regionCode) values (0, ?, ?, ?, ",
-							"?, ?, ?, ?, ?, ?, ?, ?, ?)")));
+					connection,
+					StringBundler.concat(
+						"insert into Region (mvccVersion, uuid_, ",
+						"defaultLanguageId, regionId, companyId, userId, ",
+						"createDate, modifiedDate, countryId, active_, name, ",
+						"position, regionCode) values (0, ?, ?, ?, ?, ?, ?, ",
+						"?, ?, ?, ?, ?, ?)"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(

@@ -37,9 +37,9 @@ public class FragmentEntryLinkEditableValuesUpgradeProcess
 						"'BASIC_COMPONENT-separator'");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update FragmentEntryLink set editableValues = ? " +
-							"where fragmentEntryLinkId = ?"));
+					connection,
+					"update FragmentEntryLink set editableValues = ? where " +
+						"fragmentEntryLinkId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

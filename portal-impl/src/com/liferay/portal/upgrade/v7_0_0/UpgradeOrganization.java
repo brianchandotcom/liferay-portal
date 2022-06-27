@@ -96,9 +96,9 @@ public class UpgradeOrganization extends UpgradeProcess {
 					" and Group_.classPK = Organization_.organizationId"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update Group_ set parentGroupId = ?, treePath = ? " +
-							"where groupId = ?"))) {
+					connection,
+					"update Group_ set parentGroupId = ?, treePath = ? where " +
+						"groupId = ?")) {
 
 			List<OrganizationGroup> organizationGroups = new ArrayList<>();
 

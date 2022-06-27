@@ -69,14 +69,13 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 					"Role_.type_ =", RoleConstants.TYPE_SITE));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						StringBundler.concat(
-							"update Role_ set classNameId = ",
-							_classNameLocalService.getClassNameId(
-								AccountRole.class),
-							",  classPK = ?, type_ = ",
-							RoleConstants.TYPE_ACCOUNT,
-							" where roleId = ?")))) {
+					connection,
+					StringBundler.concat(
+						"update Role_ set classNameId = ",
+						_classNameLocalService.getClassNameId(
+							AccountRole.class),
+						",  classPK = ?, type_ = ", RoleConstants.TYPE_ACCOUNT,
+						" where roleId = ?"))) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {

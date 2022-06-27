@@ -136,9 +136,9 @@ public class AssetDisplayLayoutUpgradeProcess extends UpgradeProcess {
 					"AssetDisplayPageEntry where plid is null or plid = 0"));
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update AssetDisplayPageEntry set plid = ? where " +
-							"assetDisplayPageEntryId = ?"))) {
+					connection,
+					"update AssetDisplayPageEntry set plid = ? where " +
+						"assetDisplayPageEntryId = ?")) {
 
 			while (resultSet.next()) {
 				long classNameId = resultSet.getLong("classNameId");

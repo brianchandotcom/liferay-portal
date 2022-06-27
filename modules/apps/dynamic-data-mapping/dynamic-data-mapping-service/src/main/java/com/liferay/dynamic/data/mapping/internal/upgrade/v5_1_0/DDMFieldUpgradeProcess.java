@@ -103,9 +103,9 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 					"DDMStorageLink.structureId = 0"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update DDMStorageLink set structureId = ? where " +
-							"storageLinkId = ?"));
+					connection,
+					"update DDMStorageLink set structureId = ? where " +
+						"storageLinkId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

@@ -38,9 +38,9 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update FragmentEntryLink set editableValues = ? " +
-							"where fragmentEntryLinkId = ?"))) {
+					connection,
+					"update FragmentEntryLink set editableValues = ? where " +
+						"fragmentEntryLinkId = ?")) {
 
 			while (resultSet.next()) {
 				long fragmentEntryLinkId = resultSet.getLong(

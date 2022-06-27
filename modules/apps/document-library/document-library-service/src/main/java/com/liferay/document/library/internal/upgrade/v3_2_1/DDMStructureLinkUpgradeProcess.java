@@ -39,9 +39,9 @@ public class DDMStructureLinkUpgradeProcess extends UpgradeProcess {
 					"DLFileEntryType.fileEntryTypeId"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"delete from DDMStructureLink where classPK = ? and " +
-							"structureId = ?"));
+					connection,
+					"delete from DDMStructureLink where classPK = ? and " +
+						"structureId = ?");
 			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 			while (resultSet1.next()) {

@@ -57,12 +57,12 @@ public class UpgradeAssetCategory extends UpgradeProcess {
 						"TEMP_TABLE.treePath is null"));
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						SQLTransformer.transform(
-							StringBundler.concat(
-								"update AssetCategory set treePath = ",
-								"CONCAT(?, CAST_TEXT(categoryId), '/') where ",
-								"parentCategoryId = ?"))))) {
+					connection,
+					SQLTransformer.transform(
+						StringBundler.concat(
+							"update AssetCategory set treePath = CONCAT(?, ",
+							"CAST_TEXT(categoryId), '/') where ",
+							"parentCategoryId = ?")))) {
 
 			while (true) {
 				try (ResultSet resultSet =

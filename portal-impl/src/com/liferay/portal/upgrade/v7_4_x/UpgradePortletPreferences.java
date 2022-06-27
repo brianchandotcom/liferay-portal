@@ -91,13 +91,13 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						StringBundler.concat(
-							"insert into PortletPreferenceValue (mvccVersion, ",
-							"ctCollectionId, portletPreferenceValueId, ",
-							"companyId, portletPreferencesId, index_, ",
-							"largeValue, name, readOnly, smallValue) values ",
-							"(0, ?, ?, ?, ?, ?, ?, ?, ?, ?)")))) {
+					connection,
+					StringBundler.concat(
+						"insert into PortletPreferenceValue (mvccVersion, ",
+						"ctCollectionId, portletPreferenceValueId, companyId, ",
+						"portletPreferencesId, index_, largeValue, name, ",
+						"readOnly, smallValue) values (0, ?, ?, ?, ?, ?, ?, ",
+						"?, ?, ?)"))) {
 
 			for (Preference preference : preferenceMap.values()) {
 				String[] values = preference.getValues();

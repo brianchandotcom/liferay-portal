@@ -129,14 +129,14 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 					"FragmentEntryLink");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"delete from PortletPreferences where " +
-							"portletPreferencesId = ?"));
+					connection,
+					"delete from PortletPreferences where " +
+						"portletPreferencesId = ?");
 			PreparedStatement preparedStatement3 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update PortletPreferences set plid = ? where " +
-							"portletPreferencesId = ?"));
+					connection,
+					"update PortletPreferences set plid = ? where " +
+						"portletPreferencesId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

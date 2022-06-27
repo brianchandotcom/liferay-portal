@@ -118,9 +118,9 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 					"LayoutPageTemplateEntry where plid is null or plid = 0"));
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update LayoutPageTemplateEntry set plid = ? where " +
-							"layoutPageTemplateEntryId = ?"))) {
+					connection,
+					"update LayoutPageTemplateEntry set plid = ? where " +
+						"layoutPageTemplateEntryId = ?")) {
 
 			while (resultSet.next()) {
 				long companyId = resultSet.getLong("companyId");

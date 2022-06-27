@@ -61,9 +61,9 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 
 			try (PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update JournalArticleImage set elInstanceId = ? " +
-								"where articleId = ? and elName = ?"))) {
+						connection,
+						"update JournalArticleImage set elInstanceId = ? " +
+							"where articleId = ? and elName = ?")) {
 
 				while (resultSet.next()) {
 					String articleId = resultSet.getString(1);
@@ -89,9 +89,9 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 
 			try (PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update JournalArticleImage set elName = ? where " +
-								"articleImageId = ?"))) {
+						connection,
+						"update JournalArticleImage set elName = ? where " +
+							"articleImageId = ?")) {
 
 				while (resultSet.next()) {
 					String elName = resultSet.getString(2);

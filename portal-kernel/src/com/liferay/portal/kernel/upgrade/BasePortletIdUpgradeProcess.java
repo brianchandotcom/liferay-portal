@@ -295,7 +295,7 @@ public abstract class BasePortletIdUpgradeProcess extends UpgradeProcess {
 					connection.prepareStatement(selectSQL);
 				PreparedStatement updatePreparedStatement =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(updateSQL));
+						connection, updateSQL);
 				ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {

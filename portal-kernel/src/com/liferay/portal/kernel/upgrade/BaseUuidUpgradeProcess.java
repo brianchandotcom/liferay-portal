@@ -82,7 +82,7 @@ public abstract class BaseUuidUpgradeProcess extends UpgradeProcess {
 					connection.prepareStatement(selectSB.toString());
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(updateSB.toString()));
+						connection, updateSB.toString());
 				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				while (resultSet.next()) {

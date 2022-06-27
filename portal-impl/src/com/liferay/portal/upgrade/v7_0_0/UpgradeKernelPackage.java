@@ -104,7 +104,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(updateSQL))) {
+					connection, updateSQL)) {
 
 			while (resultSet.next()) {
 				preparedStatement2.setString(

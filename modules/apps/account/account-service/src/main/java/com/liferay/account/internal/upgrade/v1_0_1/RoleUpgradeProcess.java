@@ -47,10 +47,9 @@ public class RoleUpgradeProcess extends UpgradeProcess {
 							RoleConstants.TYPE_PROVIDER));
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update Role_ set type_ = " +
-								RoleConstants.TYPE_ACCOUNT +
-									" where roleId = ?"))) {
+						connection,
+						"update Role_ set type_ = " +
+							RoleConstants.TYPE_ACCOUNT + " where roleId = ?")) {
 
 				try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 					while (resultSet.next()) {

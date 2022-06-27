@@ -63,10 +63,9 @@ public class UpgradeUserGroupGroupRole extends UpgradeProcess {
 						"UserGroupGroupRole");
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update UserGroupGroupRole set userGroupGroupRoleId " +
-							"= ? where userGroupId = ? and groupId = ? and " +
-								"roleId = ?"));
+					connection,
+					"update UserGroupGroupRole set userGroupGroupRoleId = ? " +
+						"where userGroupId = ? and groupId = ? and roleId = ?");
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {

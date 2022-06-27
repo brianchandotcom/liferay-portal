@@ -40,9 +40,9 @@ public class UpgradeSchema extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"insert into CompanyInfo (companyInfoId, companyId, " +
-							"key_) values (?, ?, ?)"))) {
+					connection,
+					"insert into CompanyInfo (companyInfoId, companyId, " +
+						"key_) values (?, ?, ?)")) {
 
 			while (resultSet.next()) {
 				preparedStatement2.setLong(1, increment());

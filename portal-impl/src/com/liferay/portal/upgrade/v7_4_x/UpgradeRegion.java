@@ -80,8 +80,8 @@ public class UpgradeRegion extends UpgradeProcess {
 						"select regionId from Region where uuid_ is null");
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
-						connection.prepareStatement(
-							"update Region set uuid_ = ? where regionId = ?"));
+						connection,
+						"update Region set uuid_ = ? where regionId = ?");
 				ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 				while (resultSet.next()) {

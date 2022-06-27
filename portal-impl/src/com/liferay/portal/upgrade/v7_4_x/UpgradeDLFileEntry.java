@@ -47,9 +47,9 @@ public class UpgradeDLFileEntry extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update DLFileEntry set externalReferenceCode = ? " +
-							"where fileEntryId = ?"))) {
+					connection,
+					"update DLFileEntry set externalReferenceCode = ? where " +
+						"fileEntryId = ?")) {
 
 			while (resultSet.next()) {
 				long fileEntryId = resultSet.getLong(1);

@@ -281,12 +281,24 @@ public class MBSuspiciousActivityLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBSuspiciousActivity> findByMessagedId(
+		long messageId) {
+
+		return _mbSuspiciousActivityLocalService.findByMessagedId(messageId);
+	}
+
+	@Override
 	public MBSuspiciousActivity findByPrimaryKey(long suspiciousActivityId)
 		throws com.liferay.message.boards.exception.
 			NoSuchSuspiciousActivityException {
 
 		return _mbSuspiciousActivityLocalService.findByPrimaryKey(
 			suspiciousActivityId);
+	}
+
+	@Override
+	public java.util.List<MBSuspiciousActivity> findByThreadId(long threadId) {
+		return _mbSuspiciousActivityLocalService.findByThreadId(threadId);
 	}
 
 	@Override

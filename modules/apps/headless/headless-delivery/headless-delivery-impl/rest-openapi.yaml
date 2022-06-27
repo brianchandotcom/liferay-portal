@@ -2993,11 +2993,11 @@ components:
                 Represents a definition of a submission result of type message.
             properties:
                 message:
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
                     # @review
                     description:
                         The localized submission of message type.
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentInlineValue"
             type: object
         NavigationMenu:
             # @review
@@ -4477,11 +4477,11 @@ components:
                 Represents a definition of a submission result of type page.
             properties:
                 itemReference:
+                    allOf:
+                        - $ref: "#/components/schemas/ClassFieldsReference"
                     # @review
                     description:
                         The localized submission of page type.
-                    allOf:
-                        - $ref: "#/components/schemas/ClassFieldsReference"
             type: object
         StructuredContent:
             description:
@@ -4820,11 +4820,11 @@ components:
                 Represents a definition of a submission result of type URL.
             properties:
                 url:
+                    allOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
                     # @review
                     description:
                         The localized submission of URL type.
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentInlineValue"
             type: object
         WidgetInstance:
             # @review

@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>FILTER_SEARCH_BUTTON</td>
-	<td>//span[contains(@class,'input-group-inset-item')]//button[@class='btn btn-unstyled']</td>
+	<td>//div[@class='dropdown-menu show']//*[@type='button']//*[contains(@class,'lexicon-icon-search')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -99,7 +99,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_WARM_MESSAGE</td>
+	<td>FILTER_WARN_MESSAGE</td>
 	<td>//div[@class='dropdown-menu show']//*[@class='dropdown-caption' and contains(.,'No filters were found.')]</td>
 	<td></td>
 </tr>

@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.testray.TestrayBuild;
+
 import java.io.File;
 
 import java.net.URL;
@@ -56,6 +58,25 @@ public class BuildReportFactory {
 			_topLevelBuildReports.put(
 				buildURLString,
 				new URLTopLevelBuildReport(buildJSONObject, jobReport));
+		}
+
+		return _topLevelBuildReports.get(buildURLString);
+	}
+
+	public static TopLevelBuildReport newTopLevelBuildReport(
+		TestrayBuild testrayBuild) {
+
+		URL topLevelBuildURL = testrayBuild.getTopLevelBuildURL();
+
+		if (topLevelBuildURL == null) {
+			return null;
+		}
+
+		String buildURLString = String.valueOf(topLevelBuildURL);
+
+		if (!_topLevelBuildReports.containsKey(buildURLString)) {
+			_topLevelBuildReports.put(
+				buildURLString, new TestrayTopLevelBuildReport(testrayBuild));
 		}
 
 		return _topLevelBuildReports.get(buildURLString);

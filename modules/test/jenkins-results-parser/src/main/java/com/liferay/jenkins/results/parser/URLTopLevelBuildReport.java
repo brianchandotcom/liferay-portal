@@ -41,11 +41,11 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 			return buildReportJSONObject;
 		}
 
-		buildReportJSONObject = _getJSONObjectFromURL(
+		buildReportJSONObject = getJSONObjectFromURL(
 			getBuildReportJSONUserContentURL());
 
 		if (buildReportJSONObject == null) {
-			buildReportJSONObject = _getJSONObjectFromURL(
+			buildReportJSONObject = getJSONObjectFromURL(
 				getBuildReportJSONTestrayURL());
 		}
 
@@ -61,7 +61,7 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 		if (buildReportJSONObject == null) {
 			buildReportJSONObject = getBuildReportJSONObject(
-				_getJSONObjectFromURL(getBuildResultJSONTestrayURL()));
+				getJSONObjectFromURL(getBuildResultJSONTestrayURL()));
 		}
 
 		if (buildReportJSONObject == null) {
@@ -131,6 +131,47 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 		return _jenkinsConsoleLocalFile;
 	}
 
+	protected JSONObject getJSONObjectFromURL(URL url) {
+		if (!JenkinsResultsParserUtil.exists(url)) {
+			return null;
+		}
+
+		String urlString = String.valueOf(url);
+
+		if (!urlString.endsWith(".gz")) {
+			try {
+				return JenkinsResultsParserUtil.toJSONObject(urlString);
+			}
+			catch (IOException ioException) {
+				return null;
+			}
+		}
+
+		File file = new File(
+			System.getenv("WORKSPACE"),
+			JenkinsResultsParserUtil.getDistinctTimeStamp() + ".gz");
+
+		try {
+			JenkinsResultsParserUtil.toFile(url, file);
+
+			String fileContent = JenkinsResultsParserUtil.read(file);
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(fileContent)) {
+				return null;
+			}
+
+			return new JSONObject(fileContent);
+		}
+		catch (Exception exception) {
+			return null;
+		}
+		finally {
+			if (file.exists()) {
+				JenkinsResultsParserUtil.delete(file);
+			}
+		}
+	}
+
 	private void _addTestResultsFromBuildResults() {
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
 
@@ -192,52 +233,11 @@ public class URLTopLevelBuildReport extends BaseTopLevelBuildReport {
 		}
 	}
 
-	private JSONObject _getJSONObjectFromURL(URL url) {
-		if (!JenkinsResultsParserUtil.exists(url)) {
-			return null;
-		}
-
-		String urlString = String.valueOf(url);
-
-		if (!urlString.endsWith(".gz")) {
-			try {
-				return JenkinsResultsParserUtil.toJSONObject(urlString);
-			}
-			catch (IOException ioException) {
-				return null;
-			}
-		}
-
-		File file = new File(
-			System.getenv("WORKSPACE"),
-			JenkinsResultsParserUtil.getDistinctTimeStamp() + ".gz");
-
-		try {
-			JenkinsResultsParserUtil.toFile(url, file);
-
-			String fileContent = JenkinsResultsParserUtil.read(file);
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(fileContent)) {
-				return null;
-			}
-
-			return new JSONObject(fileContent);
-		}
-		catch (Exception exception) {
-			return null;
-		}
-		finally {
-			if (file.exists()) {
-				JenkinsResultsParserUtil.delete(file);
-			}
-		}
-	}
-
 	private Map<String, List<JSONObject>> _getTestResultsJSONObjectsMap() {
 		Map<String, List<JSONObject>> testResultsJSONObjectsMap =
 			new HashMap<>();
 
-		JSONObject buildResultJSONObject = _getJSONObjectFromURL(
+		JSONObject buildResultJSONObject = getJSONObjectFromURL(
 			getBuildResultJSONUserContentURL());
 
 		if (buildResultJSONObject == null) {

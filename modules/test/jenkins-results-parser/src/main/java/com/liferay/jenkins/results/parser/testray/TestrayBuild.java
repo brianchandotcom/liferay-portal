@@ -14,9 +14,11 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.liferay.jenkins.results.parser.BuildReportFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.StopWatchRecord;
 import com.liferay.jenkins.results.parser.StopWatchRecordsGroup;
+import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 
 import java.io.File;
 
@@ -25,6 +27,8 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -67,6 +71,16 @@ public class TestrayBuild {
 		_initBuildResultData();
 
 		return _result;
+	}
+
+	public String getStartYearMonth() {
+		Matcher matcher = _getTestrayAttachmentURLMatcher();
+
+		if (matcher == null) {
+			return null;
+		}
+
+		return matcher.group("startYearMonth");
 	}
 
 	public List<TestrayCaseResult> getTestrayCaseResults() {
@@ -125,6 +139,35 @@ public class TestrayBuild {
 		_initBuildResultData();
 
 		return _topLevelBuildDuration;
+	}
+
+	public TopLevelBuildReport getTopLevelBuildReport() {
+		if (_topLevelBuildReport != null) {
+			return _topLevelBuildReport;
+		}
+
+		_topLevelBuildReport = BuildReportFactory.newTopLevelBuildReport(this);
+
+		return _topLevelBuildReport;
+	}
+
+	public URL getTopLevelBuildURL() {
+		Matcher matcher = _getTestrayAttachmentURLMatcher();
+
+		if (matcher == null) {
+			return null;
+		}
+
+		try {
+			return new URL(
+				JenkinsResultsParserUtil.combine(
+					"https://", matcher.group("topLevelMasterHostname"),
+					".liferay.com/job/", matcher.group("topLevelJobName"), "/",
+					matcher.group("topLevelBuildNumber"), "/"));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	public URL getURL() {
@@ -382,6 +425,44 @@ public class TestrayBuild {
 		return stopWatchRecordsGroup;
 	}
 
+	private Matcher _getTestrayAttachmentURLMatcher() {
+		if (_testrayAttachmentURLMatcher != null) {
+			return _testrayAttachmentURLMatcher;
+		}
+
+		List<TestrayCaseResult> testrayCaseResults = getTestrayCaseResults();
+
+		if (testrayCaseResults.isEmpty()) {
+			return null;
+		}
+
+		int count = 0;
+
+		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
+			count++;
+
+			if (count >= 5) {
+				break;
+			}
+
+			for (TestrayAttachment testrayAttachment :
+					testrayCaseResult.getTestrayAttachments()) {
+
+				Matcher testrayAttachmentURLMatcher =
+					_testrayAttachmentURLPattern.matcher(
+						String.valueOf(testrayAttachment.getURL()));
+
+				if (testrayAttachmentURLMatcher.find()) {
+					_testrayAttachmentURLMatcher = testrayAttachmentURLMatcher;
+
+					return _testrayAttachmentURLMatcher;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	private Long _getTopLevelActiveBuildDuration(
 		JSONObject buildResultJSONObject) {
 
@@ -471,6 +552,13 @@ public class TestrayBuild {
 			buildResultJSONObject);
 	}
 
+	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"https://testray.liferay.com/reports/production/logs/",
+			"(?<startYearMonth>\\d{4}-\\d{2})/",
+			"(?<topLevelMasterHostname>test-\\d+-\\d+)/",
+			"(?<topLevelJobName>[^/]+)/(?<topLevelBuildNumber>\\d+)/.*"));
+
 	private boolean _buildResultDataPopulated;
 	private JSONObject _buildResultJSONObject;
 	private URL _buildResultURL;
@@ -478,11 +566,13 @@ public class TestrayBuild {
 	private final JSONObject _jsonObject;
 	private String _result;
 	private int _startTimestamp;
+	private Matcher _testrayAttachmentURLMatcher;
 	private final TestrayProductVersion _testrayProductVersion;
 	private final TestrayProject _testrayProject;
 	private final TestrayRoutine _testrayRoutine;
 	private final TestrayServer _testrayServer;
 	private Long _topLevelActiveBuildDuration;
 	private Long _topLevelBuildDuration;
+	private TopLevelBuildReport _topLevelBuildReport;
 
 }

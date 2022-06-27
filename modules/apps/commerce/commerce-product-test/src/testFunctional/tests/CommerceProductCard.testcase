@@ -1556,17 +1556,54 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-5862. As a buyer, I want to view the product SKU, if set(single SKU)"
+	@description = "COMMERCE-5862. Verify buyers can view the SKU of a product on the product card if it set."
 	@priority = "3"
 	test ViewProductCardSKU {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		AssertElementPresent(
-			key_productName = "U-Joint",
-			key_productSku = "MIN55861",
-			locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
+		task ("And given a product with a sku") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "U-Joint");
+
+			CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			var productSku = TestUtils.getElementTextContent(element = "//div[@class='table-list-title']/a");
+		}
+
+		task ("When the buyer logs in and views the product card") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then the product card shows the product SKU") {
+			AssertElementPresent(
+				key_productName = "U-Joint",
+				key_productSku = "${productSku}",
+				locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
+		}
 	}
 
 	@description = "COMMERCE-5865. Verify buyers can view the starting price on a product card when the product has different SKUs with different prices"

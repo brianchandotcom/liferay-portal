@@ -89,7 +89,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Stack;
 import java.util.TimeZone;
-import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -1396,80 +1395,6 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return Arrays.asList(propertyContent.split(","));
-	}
-
-	public static Map<URL, JSONObject> getBuildResultJSONObjects(
-		List<String> buildResultJsonURLs) {
-
-		final Map<URL, JSONObject> buildResultJSONObjects =
-			Collections.synchronizedMap(new TreeMap<URL, JSONObject>());
-
-		List<Callable<Void>> callables = new ArrayList<>();
-
-		for (final String buildResultJsonURL : buildResultJsonURLs) {
-			Callable<Void> callable = new Callable<Void>() {
-
-				@Override
-				public Void call() {
-					JSONObject jsonObject = null;
-
-					try {
-						jsonObject = toJSONObject(buildResultJsonURL);
-					}
-					catch (Exception exception) {
-						System.out.println(exception.toString());
-					}
-
-					if (jsonObject != null) {
-						try {
-							buildResultJSONObjects.put(
-								new URL(buildResultJsonURL), jsonObject);
-						}
-						catch (MalformedURLException malformedURLException) {
-							throw new RuntimeException(malformedURLException);
-						}
-					}
-
-					return null;
-				}
-
-			};
-
-			callables.add(callable);
-		}
-
-		ThreadPoolExecutor threadPoolExecutor = getNewThreadPoolExecutor(
-			25, true);
-
-		ParallelExecutor<Void> parallelExecutor = new ParallelExecutor<>(
-			callables, threadPoolExecutor);
-
-		parallelExecutor.execute();
-
-		return buildResultJSONObjects;
-	}
-
-	public static List<String> getBuildResultJsonURLs(
-		String jobURL, int maxBuildCount) {
-
-		List<String> buildResultJsonURLs = new ArrayList<>();
-
-		int lastCompletedBuildNumber =
-			JenkinsAPIUtil.getLastCompletedBuildNumber(jobURL);
-
-		int buildNumber = Math.max(
-			0, lastCompletedBuildNumber - (maxBuildCount - 1));
-
-		while (buildNumber <= lastCompletedBuildNumber) {
-			String buildURL = jobURL + "/" + buildNumber;
-
-			buildResultJsonURLs.add(
-				getBuildArtifactURL(buildURL, "build-result.json"));
-
-			buildNumber++;
-		}
-
-		return buildResultJsonURLs;
 	}
 
 	public static String getBuildURLByBuildID(String buildID) {

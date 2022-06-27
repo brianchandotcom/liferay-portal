@@ -155,11 +155,9 @@ function Actions({actions, itemData, itemId}) {
 
 	const [
 		{
-			activeView: {options},
+			activeView: {quickActionsEnabled},
 		},
 	] = useContext(ViewsContext);
-
-	const {quickActionsEnabled} = options || {};
 
 	const inlineEditingAvailable =
 		inlineEditingSettings && itemData.actions?.update;

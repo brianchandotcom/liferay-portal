@@ -87,12 +87,10 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 	} = useContext(FrontendDataSetContext);
 	const [
 		{
-			activeView: {options},
+			activeView: {quickActionsEnabled},
 			visibleFieldNames,
 		},
 	] = useContext(ViewsContext);
-
-	const {quickActionsEnabled} = options || {};
 
 	const visibleFields = getVisibleFields(schema.fields, visibleFieldNames);
 

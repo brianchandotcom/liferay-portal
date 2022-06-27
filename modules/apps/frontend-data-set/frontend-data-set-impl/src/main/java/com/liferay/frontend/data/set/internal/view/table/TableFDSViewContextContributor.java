@@ -88,6 +88,8 @@ public class TableFDSViewContextContributor
 		}
 
 		return HashMapBuilder.<String, Object>put(
+			"quickActionsEnabled", baseTableFDSView.isQuickActionsEnabled()
+		).put(
 			"schema", JSONUtil.put("fields", fieldsJSONArray)
 		).build();
 	}

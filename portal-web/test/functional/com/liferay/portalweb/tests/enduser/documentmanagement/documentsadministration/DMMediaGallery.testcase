@@ -462,19 +462,11 @@ definition {
 			mgDocumentFile = "Document_1.mp4",
 			mgDocumentTitle = "DM Document Title");
 
-		Pause(locator1 = "120000");
-
-		Refresh();
-
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 
-		Click(
-			key_mgDocumentTitle = "DM Document Title",
-			locator1 = "MediaGallery#ENTRY_THUMBNAIL");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#SELECT_MEDIA_GALLERY_VIDEO");
-
-		AssertElementPresent(locator1 = "MediaGallery#ENTRY_VIDEO_PLAYED");
+		DMDocument.viewPGViaMG(
+			mgDocumentTitle = "DM Document Title",
+			mgVideoPreview = "true");
 	}
 
 }

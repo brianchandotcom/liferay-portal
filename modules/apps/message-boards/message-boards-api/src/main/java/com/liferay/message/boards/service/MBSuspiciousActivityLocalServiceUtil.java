@@ -135,6 +135,14 @@ public class MBSuspiciousActivityLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static MBSuspiciousActivity deleteSuspiciousActivity(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().deleteSuspiciousActivity(suspiciousActivityId);
+	}
+
 	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}
@@ -351,6 +359,12 @@ public class MBSuspiciousActivityLocalServiceUtil {
 			uuid, groupId);
 	}
 
+	public static List<MBSuspiciousActivity> getMessageSuspiciousActivities(
+		long messageId) {
+
+		return getService().getMessageSuspiciousActivities(messageId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -367,6 +381,45 @@ public class MBSuspiciousActivityLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static List<MBSuspiciousActivity> getSuspiciousActivities() {
+		return getService().getSuspiciousActivities();
+	}
+
+	public static MBSuspiciousActivity getSuspiciousActivity(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().getSuspiciousActivity(suspiciousActivityId);
+	}
+
+	public static MBSuspiciousActivity getSuspiciousActivity(
+			long userId, long messageId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().getSuspiciousActivity(userId, messageId);
+	}
+
+	public static int getSuspiciousActivityCount() {
+		return getService().getSuspiciousActivityCount();
+	}
+
+	public static List<MBSuspiciousActivity> getThreadSuspiciousActivities(
+		long threadId) {
+
+		return getService().getThreadSuspiciousActivities(threadId);
+	}
+
+	public static MBSuspiciousActivity toggleSuspiciousActivityValidator(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().toggleSuspiciousActivityValidator(
+			suspiciousActivityId);
 	}
 
 	/**

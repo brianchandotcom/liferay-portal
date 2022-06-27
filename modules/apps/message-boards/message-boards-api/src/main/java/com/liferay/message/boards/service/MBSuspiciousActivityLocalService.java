@@ -15,6 +15,7 @@
 package com.liferay.message.boards.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.message.boards.exception.NoSuchSuspiciousActivityException;
 import com.liferay.message.boards.model.MBSuspiciousActivity;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -140,6 +141,10 @@ public interface MBSuspiciousActivityLocalService
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
+
+	public MBSuspiciousActivity deleteSuspiciousActivity(
+			long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
@@ -314,6 +319,10 @@ public interface MBSuspiciousActivityLocalService
 			String uuid, long groupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBSuspiciousActivity> getMessageSuspiciousActivities(
+		long messageId);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -328,6 +337,29 @@ public interface MBSuspiciousActivityLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBSuspiciousActivity> getSuspiciousActivities();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBSuspiciousActivity getSuspiciousActivity(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBSuspiciousActivity getSuspiciousActivity(
+			long userId, long messageId)
+		throws NoSuchSuspiciousActivityException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSuspiciousActivityCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBSuspiciousActivity> getThreadSuspiciousActivities(
+		long threadId);
+
+	public MBSuspiciousActivity toggleSuspiciousActivityValidator(
+			long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException;
 
 	/**
 	 * Updates the message boards suspicious activity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

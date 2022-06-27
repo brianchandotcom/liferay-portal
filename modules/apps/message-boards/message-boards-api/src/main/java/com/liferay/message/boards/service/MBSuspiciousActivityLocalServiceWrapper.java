@@ -144,6 +144,16 @@ public class MBSuspiciousActivityLocalServiceWrapper
 	}
 
 	@Override
+	public MBSuspiciousActivity deleteSuspiciousActivity(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.deleteSuspiciousActivity(
+			suspiciousActivityId);
+	}
+
+	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _mbSuspiciousActivityLocalService.dslQuery(dslQuery);
 	}
@@ -396,6 +406,14 @@ public class MBSuspiciousActivityLocalServiceWrapper
 			getMBSuspiciousActivityByUuidAndGroupId(uuid, groupId);
 	}
 
+	@Override
+	public java.util.List<MBSuspiciousActivity> getMessageSuspiciousActivities(
+		long messageId) {
+
+		return _mbSuspiciousActivityLocalService.getMessageSuspiciousActivities(
+			messageId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -416,6 +434,53 @@ public class MBSuspiciousActivityLocalServiceWrapper
 
 		return _mbSuspiciousActivityLocalService.getPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public java.util.List<MBSuspiciousActivity> getSuspiciousActivities() {
+		return _mbSuspiciousActivityLocalService.getSuspiciousActivities();
+	}
+
+	@Override
+	public MBSuspiciousActivity getSuspiciousActivity(long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.getSuspiciousActivity(
+			suspiciousActivityId);
+	}
+
+	@Override
+	public MBSuspiciousActivity getSuspiciousActivity(
+			long userId, long messageId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.getSuspiciousActivity(
+			userId, messageId);
+	}
+
+	@Override
+	public int getSuspiciousActivityCount() {
+		return _mbSuspiciousActivityLocalService.getSuspiciousActivityCount();
+	}
+
+	@Override
+	public java.util.List<MBSuspiciousActivity> getThreadSuspiciousActivities(
+		long threadId) {
+
+		return _mbSuspiciousActivityLocalService.getThreadSuspiciousActivities(
+			threadId);
+	}
+
+	@Override
+	public MBSuspiciousActivity toggleSuspiciousActivityValidator(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.
+			toggleSuspiciousActivityValidator(suspiciousActivityId);
 	}
 
 	/**

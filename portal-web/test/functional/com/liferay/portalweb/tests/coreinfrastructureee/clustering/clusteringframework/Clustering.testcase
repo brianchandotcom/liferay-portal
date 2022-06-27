@@ -224,7 +224,7 @@ definition {
 				locator1 = "build-test.xml",
 				value1 = "cluster-invoke-method -Dcluster.invoke.method=${method}");
 
-			Pause(locator1 = "10000");
+			WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_1.0.0");
 
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Result of ${method}: 9080",
@@ -240,7 +240,7 @@ definition {
 				locator1 = "build-test.xml",
 				value1 = "cluster-invoke-method -Dcluster.invoke.method=${method}");
 
-			Pause(locator1 = "10000");
+			WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_1.0.0");
 
 			Clustering.viewTextPresentOnSpecificNode(
 				expectedText = "Result of ${method}: 8080",
@@ -755,6 +755,8 @@ definition {
 		AssertTextNotPresent(
 			locator1 = "Home#PAGE_2_GUEST_VIEW",
 			value1 = "New Page Name");
+
+		// Pausing 180 seconds due to LRQA-75909
 
 		Pause(locator1 = "180000");
 

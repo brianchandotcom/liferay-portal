@@ -25,7 +25,7 @@ definition {
 		property dxp.license.file = "dxp-license-virtual-cluster.xml";
 		property test.name.skip.portal.instance = "ClusteringLicense#ClusterCanRecoverByShuttingDownAnyNodeWithManualRecovery";
 
-		Pause(locator1 = "360000");
+		WaitForConsoleTextPresent(value1 = "Spring Extender Unavailable Component Checker check result");
 
 		User.loginPG(
 			nodePort = "9080",
@@ -44,7 +44,7 @@ definition {
 
 		Clustering.shutdownSpecificServer(nodePort = "9080");
 
-		Pause(locator1 = "60000");
+		WaitForConsoleTextPresent(value1 = "Spring Extender Unavailable Component Checker check result");
 
 		for (var nodeNumber : list "8,10") {
 			User.firstLoginUI(
@@ -81,7 +81,7 @@ definition {
 		for (var nodeNumber : list "12,11,10") {
 			Clustering.waitForNodeShutdown(nodePort = "${nodeNumber}080");
 
-			Pause(locator1 = "60000");
+			WaitForConsoleTextPresent(value1 = "Spring Extender Unavailable Component Checker check result");
 		}
 
 		for (var nodeNumber : list "8,9") {
@@ -152,9 +152,7 @@ definition {
 
 		Clustering.waitForNodeShutdown(nodePort = "9080");
 
-		// Wait for cluster to notify all nodes that they are no longer overloaded
-
-		Pause(locator1 = "60000");
+		WaitForConsoleTextPresent(value1 = "Shutting down current node as it is the latest one");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Shutting down current node as it is the latest one",
@@ -343,7 +341,7 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated");
 
-		Pause(locator1 = "360000");
+		Clustering.waitForNodeShutdown(nodePort = "10080");
 
 		for (var nodeNumber : list "8,9") {
 			User.firstLoginUI(
@@ -364,7 +362,7 @@ definition {
 
 		Clustering.shutdownSpecificServer(nodePort = "10080");
 
-		Pause(locator1 = "60000");
+		Clustering.waitForNodeShutdown(nodePort = "10080");
 
 		for (var nodeNumber : list "8,9") {
 			User.firstLoginUI(

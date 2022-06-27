@@ -140,6 +140,8 @@ definition {
 			categoryName = "com.liferay.portal.cluster.multiple.sample.web.internal",
 			nodePort = "9080");
 
+		// Pausing 10 seconds due to LRQA-75909
+
 		Pause(locator1 = "10000");
 
 		Clustering.viewTextNotPresentOnSpecificNode(
@@ -156,6 +158,8 @@ definition {
 			categoryName = "com.liferay.portal.cluster.multiple.sample.web.internal",
 			nodePort = "8080");
 
+		// Pausing 10 seconds due to LRQA-75909
+
 		Pause(locator1 = "10000");
 
 		Clustering.viewTextPresentOnSpecificNode(
@@ -171,6 +175,8 @@ definition {
 		AssertTextEquals(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
 			value1 = "This node is master node");
+
+		// Pausing 10 seconds due to LRQA-75909
 
 		Pause(locator1 = "10000");
 
@@ -195,7 +201,7 @@ definition {
 			categoryName = "com.liferay.portal.cluster.multiple.sample.web.internal",
 			nodePort = "8080");
 
-		Pause(locator1 = "10000");
+		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_1.0.0");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Received message at",
@@ -221,7 +227,7 @@ definition {
 			categoryName = "com.liferay.portal.cluster.multiple.sample.web.internal",
 			nodePort = "9080");
 
-		Pause(locator1 = "10000");
+		WaitForConsoleTextPresent(value1 = "Cluster sample command is null");
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Scheduler job com.liferay.portal.cluster.multiple.sample.web.internal.messaging.ClusterSampleMessageListener.com.liferay.portal.cluster.multiple.sample.web.internal.messaging.ClusterSampleMessageListener already exists",

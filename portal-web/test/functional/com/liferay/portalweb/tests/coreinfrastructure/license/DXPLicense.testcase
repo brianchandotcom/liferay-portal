@@ -49,6 +49,8 @@ definition {
 
 		SignIn.signInTestSetup(licenseExpired = "true");
 
+		// Pausing 300 seconds due to LRQA-64640
+
 		Pause(locator1 = "300000");
 
 		Navigator.openURL();

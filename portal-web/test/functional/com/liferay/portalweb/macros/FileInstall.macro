@@ -6,8 +6,6 @@ definition {
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "delete-dependency-file  -Dliferay.dependency.jar=${jarFile} -Dliferay.home=${liferayHome}");
-
-		Pause(locator1 = "10000");
 	}
 
 	macro deletePortalJarOffline {
@@ -16,8 +14,6 @@ definition {
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "delete-dependency-file  -Dliferay.portal.dependency.jar=${jarFile} -Dliferay.home=${liferayHome}");
-
-		Pause(locator1 = "10000");
 	}
 
 	macro deleteWarOffline {
@@ -26,8 +22,6 @@ definition {
 		AntCommand(
 			locator1 = "build-test.xml",
 			value1 = "delete-dependency-file  -Dliferay.dependency.war=${warFile} -Dliferay.home=${liferayHome}");
-
-		Pause(locator1 = "10000");
 	}
 
 	macro deployFileOnServer {
@@ -43,8 +37,6 @@ definition {
 		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${jarFile}");
 
 		ArchiveUtil.archive("${dependencyFilePath}", "${deployDir}/${jarFile}");
-
-		Pause(locator1 = "10000");
 	}
 
 }

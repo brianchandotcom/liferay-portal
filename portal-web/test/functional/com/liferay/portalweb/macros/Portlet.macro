@@ -81,7 +81,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Widgets");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(locator1 = "NavBar#APPLICATION_SEARCH_FIELD");
 
 		Type(
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
@@ -108,8 +108,6 @@ definition {
 		while ((IsElementPresent(locator1 = "//body")) && ("${shutdownPauseCount}" != "12")) {
 			Refresh();
 
-			Pause(locator1 = "10000");
-
 			var shutdownPauseCount = ${shutdownPauseCount} + 1;
 
 			echo("Shutdown pause count: ${shutdownPauseCount}");
@@ -121,8 +119,6 @@ definition {
 
 		while (!(IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) && ("${startupPauseCount}" != "12")) {
 			Refresh();
-
-			Pause(locator1 = "10000");
 
 			var startupPauseCount = ${startupPauseCount} + 1;
 
@@ -678,7 +674,7 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Widgets");
 
-		Pause(locator1 = "5000");
+		WaitForElementPresent(locator1 = "NavBar#APPLICATION_SEARCH_FIELD");
 
 		Type(
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",

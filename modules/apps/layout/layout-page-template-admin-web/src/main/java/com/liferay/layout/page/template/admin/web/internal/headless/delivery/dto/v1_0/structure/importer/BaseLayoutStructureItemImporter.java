@@ -46,6 +46,63 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseLayoutStructureItemImporter {
 
+	public JSONObject getLayoutFromItemReferenceJSONObject(
+		Map<String, Object> itemReferenceMap,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
+
+		String friendlyURL = null;
+		Boolean privatePage = null;
+		String siteKey = null;
+
+		List<Map<String, String>> fields =
+			(List<Map<String, String>>)itemReferenceMap.get("fields");
+
+		for (Map<String, String> field : fields) {
+			String key = field.get("fieldName");
+
+			if (Objects.equals(key, "friendlyURL")) {
+				friendlyURL = field.get("fieldValue");
+			}
+			else if (Objects.equals(key, "privatePage")) {
+				privatePage = Boolean.valueOf(field.get("fieldValue"));
+			}
+			else if (Objects.equals(key, "siteKey")) {
+				siteKey = field.get("fieldValue");
+			}
+		}
+
+		if ((friendlyURL == null) || (privatePage == null)) {
+			return null;
+		}
+
+		Layout currentLayout = layoutStructureItemImporterContext.getLayout();
+
+		long groupId = currentLayout.getGroupId();
+
+		if (Validator.isNotNull(siteKey)) {
+			Group group = groupLocalService.fetchGroup(
+				currentLayout.getCompanyId(), siteKey);
+
+			if (group == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to process mapping because group ", siteKey,
+							" does not exist"));
+				}
+
+				return null;
+			}
+
+			groupId = group.getGroupId();
+		}
+
+		Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
+			groupId, privatePage, friendlyURL);
+
+		return _getLayoutJSONObject("friendlyURL", friendlyURL, layout);
+	}
+
 	protected Map<String, Object> getDefinitionMap(Object definition)
 		throws Exception {
 
@@ -134,7 +191,8 @@ public abstract class BaseLayoutStructureItemImporter {
 			Layout layout = layoutLocalService.fetchLayout(
 				GetterUtil.getLong(fieldValue));
 
-			_processLayout("PLID", fieldValue, jsonObject, layout);
+			jsonObject.put(
+				"layout", _getLayoutJSONObject("PLID", fieldValue, layout));
 
 			return;
 		}
@@ -142,58 +200,10 @@ public abstract class BaseLayoutStructureItemImporter {
 		if (Objects.equals(className, Layout.class.getName()) &&
 			itemReferenceMap.containsKey("fields")) {
 
-			String friendlyURL = null;
-			Boolean privatePage = null;
-			String siteKey = null;
-
-			List<Map<String, String>> fields =
-				(List<Map<String, String>>)itemReferenceMap.get("fields");
-
-			for (Map<String, String> field : fields) {
-				String key = field.get("fieldName");
-
-				if (Objects.equals(key, "friendlyURL")) {
-					friendlyURL = field.get("fieldValue");
-				}
-				else if (Objects.equals(key, "privatePage")) {
-					privatePage = Boolean.valueOf(field.get("fieldValue"));
-				}
-				else if (Objects.equals(key, "siteKey")) {
-					siteKey = field.get("fieldValue");
-				}
-			}
-
-			if ((friendlyURL == null) || (privatePage == null)) {
-				return;
-			}
-
-			Layout currentLayout =
-				layoutStructureItemImporterContext.getLayout();
-
-			long groupId = currentLayout.getGroupId();
-
-			if (Validator.isNotNull(siteKey)) {
-				Group group = groupLocalService.fetchGroup(
-					currentLayout.getCompanyId(), siteKey);
-
-				if (group == null) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Unable to process mapping because group ",
-								siteKey, " does not exist"));
-					}
-
-					return;
-				}
-
-				groupId = group.getGroupId();
-			}
-
-			Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
-				groupId, privatePage, friendlyURL);
-
-			_processLayout("friendlyURL", friendlyURL, jsonObject, layout);
+			jsonObject.put(
+				"layout",
+				getLayoutFromItemReferenceJSONObject(
+					itemReferenceMap, layoutStructureItemImporterContext));
 		}
 
 		String classNameId = null;
@@ -460,9 +470,8 @@ public abstract class BaseLayoutStructureItemImporter {
 	@Reference
 	protected Portal portal;
 
-	private void _processLayout(
-		String fieldKey, String fieldValue, JSONObject jsonObject,
-		Layout layout) {
+	private JSONObject _getLayoutJSONObject(
+		String fieldKey, String fieldValue, Layout layout) {
 
 		if (layout == null) {
 			if (_log.isWarnEnabled()) {
@@ -472,26 +481,24 @@ public abstract class BaseLayoutStructureItemImporter {
 						"be obtained for ", fieldKey, " ", fieldValue));
 			}
 
-			return;
+			return JSONFactoryUtil.createJSONObject();
 		}
 
-		jsonObject.put(
-			"layout",
-			JSONUtil.put(
-				"groupId", String.valueOf(layout.getGroupId())
-			).put(
-				"id", layout.getUuid()
-			).put(
-				"layoutId", String.valueOf(layout.getLayoutId())
-			).put(
-				"layoutUuid", layout.getUuid()
-			).put(
-				"privateLayout", layout.isPrivateLayout()
-			).put(
-				"title", layout.getName(LocaleUtil.getMostRelevantLocale())
-			).put(
-				"value", layout.getFriendlyURL()
-			));
+		return JSONUtil.put(
+			"groupId", String.valueOf(layout.getGroupId())
+		).put(
+			"id", layout.getUuid()
+		).put(
+			"layoutId", String.valueOf(layout.getLayoutId())
+		).put(
+			"layoutUuid", layout.getUuid()
+		).put(
+			"privateLayout", layout.isPrivateLayout()
+		).put(
+			"title", layout.getName(LocaleUtil.getMostRelevantLocale())
+		).put(
+			"value", layout.getFriendlyURL()
+		);
 	}
 
 	private static final String[] _ALIGN_KEYS = {

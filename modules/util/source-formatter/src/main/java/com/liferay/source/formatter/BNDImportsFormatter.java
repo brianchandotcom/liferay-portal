@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.BaseImportsFormatter;
@@ -22,6 +23,9 @@ import com.liferay.portal.tools.ImportPackage;
 
 import java.io.IOException;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,6 +64,12 @@ public class BNDImportsFormatter extends BaseImportsFormatter {
 
 		if (pos != -1) {
 			importString = importString.substring(0, pos);
+
+			pos = line.indexOf(StringPool.SEMICOLON);
+
+			line =
+				line.substring(0, pos + 1) +
+					_sortAttributes(line.substring(pos + 1));
 		}
 
 		return new BNDImportPackage(importString, line);
@@ -94,6 +104,43 @@ public class BNDImportsFormatter extends BaseImportsFormatter {
 		}
 
 		return content;
+	}
+
+	private String _sortAttributes(String attributes) {
+		List<String> attributeList = ListUtil.fromString(
+			attributes, StringPool.SEMICOLON);
+
+		Collections.sort(
+			attributeList,
+			new Comparator<String>() {
+
+				@Override
+				public int compare(String attribute1, String attribute2) {
+					if (attribute1.startsWith("-") &&
+						!attribute2.startsWith("-")) {
+
+						return 1;
+					}
+
+					if (!attribute1.startsWith("-") &&
+						attribute2.startsWith("-")) {
+
+						return -1;
+					}
+
+					String attributeName1 = attribute1.replaceFirst(
+						"(.+?):?=.+", "$1");
+
+					String attributeName2 = attribute2.replaceFirst(
+						"(.+?):?=.+", "$1");
+
+					return attributeName1.compareTo(attributeName2);
+				}
+
+			});
+
+		return ListUtil.toString(
+			attributeList, StringPool.BLANK, StringPool.SEMICOLON);
 	}
 
 }

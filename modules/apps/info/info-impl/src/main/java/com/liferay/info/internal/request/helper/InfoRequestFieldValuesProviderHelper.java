@@ -30,9 +30,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -79,18 +79,20 @@ public class InfoRequestFieldValuesProviderHelper {
 		String classTypeId = ParamUtil.getString(
 			uploadServletRequest, "classTypeId");
 
-		Map<String, String[]> parameterMap =
-			uploadServletRequest.getParameterMap();
+		Map<String, List<String>> regularParameterMap =
+			uploadServletRequest.getRegularParameterMap();
 
 		for (InfoField<?> infoField :
 				_getInfoFields(
 					className, classTypeId, themeDisplay.getScopeGroupId())) {
 
-			if (ArrayUtil.isEmpty(parameterMap.get(infoField.getName()))) {
+			if (ListUtil.isEmpty(
+					regularParameterMap.get(infoField.getName()))) {
+
 				continue;
 			}
 
-			for (String value : parameterMap.get(infoField.getName())) {
+			for (String value : regularParameterMap.get(infoField.getName())) {
 				infoFieldValues.add(
 					_getInfoFieldValue(
 						infoField, themeDisplay.getLocale(), value));

@@ -47,6 +47,8 @@ renderResponse.setTitle((accountGroupDisplay.getAccountGroupId() == 0) ? Languag
 			<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountGroup.class.getName(), "name") %></aui:validator>
 		</aui:input>
 
+		<aui:input label="external-reference-code" name="externalReferenceCode" type="text" value="<%= accountGroupDisplay.getExternalReferenceCode() %>" />
+
 		<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 			<aui:input name="description" type="textarea" value="<%= accountGroupDisplay.getDescription() %>" />
 		</aui:field-wrapper>

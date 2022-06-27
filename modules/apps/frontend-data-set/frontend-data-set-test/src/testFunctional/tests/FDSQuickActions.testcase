@@ -96,7 +96,7 @@ definition {
 	}
 
 	@description = "LPS-155458. Assert can be displayed on one an active row."
-	@priority = "5"
+	@priority = "4"
 	test CanDisplayOnOneActiveRow {
 		task ("When hover over 2nd row item") {
 			MouseOver(

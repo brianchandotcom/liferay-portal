@@ -111,6 +111,21 @@ public class MBSuspiciousActivityLocalServiceImpl
 	public int countAll() {
 		return _mbSuspiciousActivityPersistence.countAll();
 	}
+	public MBSuspiciousActivity toggleValidated(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException {
+		MBSuspiciousActivity suspiciousActivity = findByPrimaryKey(suspiciousActivityId);
+		if(suspiciousActivity.getValidated()){
+
+			suspiciousActivity.setValidated(false);
+
+		}else{
+
+			suspiciousActivity.setValidated(true);
+		}
+
+		return mbSuspiciousActivityLocalService.updateMBSuspiciousActivity(suspiciousActivity);
+
+	}
 
 	@Reference
 	private MBMessagePersistence _mbMessagePersistence;

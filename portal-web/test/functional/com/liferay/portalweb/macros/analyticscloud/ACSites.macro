@@ -5,7 +5,7 @@ definition {
 			key_cardTitle = "Visitors Behavior",
 			locator1 = "ACCards#CARD_TITLE");
 
-		var current = selenium.getText("//span[@class='title'and text()='${metricName}']/..//div[@class='metric-value']");
+		var current = selenium.getText("ACSites#SITE_METRIC_VALUE");
 
 		return "${current}";
 	}

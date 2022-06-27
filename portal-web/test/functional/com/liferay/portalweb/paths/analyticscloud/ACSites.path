@@ -129,8 +129,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ACTIVITY_VALUE_CARD</td>
-	<td>//li[contains(@class,'card-tab active') and contains(.,'${key_cardName}')]//div[contains(@class,'metric-value') and contains(.,'${key_totalValue}')]</td>
+	<td>SITE_METRIC_VALUE</td>
+	<td>//span[@class='title'and text()='${metricName}']/..//div[@class='metric-value']</td>
 	<td></td>
 </tr>
 <tr>

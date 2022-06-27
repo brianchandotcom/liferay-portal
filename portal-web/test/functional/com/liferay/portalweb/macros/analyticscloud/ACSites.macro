@@ -1,5 +1,15 @@
 definition {
 
+	macro getCurrentMetric {
+		WaitForVisible(
+			key_cardTitle = "Visitors Behavior",
+			locator1 = "ACCards#CARD_TITLE");
+
+		var current = selenium.getText("//span[@class='title'and text()='${metricName}']/..//div[@class='metric-value']");
+
+		return "${current}";
+	}
+
 	macro viewActivitiesDuration {
 		var valueNumber = "";
 		var timeUnit = "";

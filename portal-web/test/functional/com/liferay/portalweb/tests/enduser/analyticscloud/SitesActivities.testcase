@@ -169,10 +169,10 @@ definition {
 		}
 
 		task ("Assert views by location") {
-			var current = ACSettings.getCurrentNumber(metricName = "Views");
+			var current = ACSites.getCurrentMetric(metricName = "Views");
 
 			ACCards.viewGeomapTableText(
-				cardTitle = "Sessions by Location",
+				cardTitle = "Views by Location",
 				leftText = "Local Network",
 				rightText = "${current} 100%");
 		}

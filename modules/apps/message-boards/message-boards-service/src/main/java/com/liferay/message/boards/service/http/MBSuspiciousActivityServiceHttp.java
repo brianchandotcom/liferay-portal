@@ -331,6 +331,76 @@ public class MBSuspiciousActivityServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.message.boards.model.MBSuspiciousActivity> findByThreadId(
+			HttpPrincipal httpPrincipal, long threadId) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBSuspiciousActivityServiceUtil.class, "findByThreadId",
+				_findByThreadIdParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, threadId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.message.boards.model.MBSuspiciousActivity>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.message.boards.model.MBSuspiciousActivity>
+			findByMessagedId(HttpPrincipal httpPrincipal, long messageId) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBSuspiciousActivityServiceUtil.class, "findByMessagedId",
+				_findByMessagedIdParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, messageId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.message.boards.model.MBSuspiciousActivity>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		MBSuspiciousActivityServiceHttp.class);
 
@@ -349,6 +419,10 @@ public class MBSuspiciousActivityServiceHttp {
 	};
 	private static final Class<?>[] _countAllParameterTypes5 = new Class[] {};
 	private static final Class<?>[] _toggleValidatedParameterTypes6 =
+		new Class[] {long.class};
+	private static final Class<?>[] _findByThreadIdParameterTypes7 =
+		new Class[] {long.class};
+	private static final Class<?>[] _findByMessagedIdParameterTypes8 =
 		new Class[] {long.class};
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.info.internal.request.helper;
 
+import com.liferay.info.exception.InfoFormFileUploadException;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
@@ -74,7 +75,8 @@ public class InfoRequestFieldValuesProviderHelper {
 	}
 
 	public List<InfoFieldValue<Object>> getInfoFieldValues(
-		HttpServletRequest httpServletRequest) {
+			HttpServletRequest httpServletRequest)
+		throws InfoFormFileUploadException {
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
@@ -156,17 +158,18 @@ public class InfoRequestFieldValuesProviderHelper {
 	}
 
 	private InfoFieldValue<Object> _getImageInfoFieldValue(
-		FileItem fileItem, InfoField infoField, ThemeDisplay themeDisplay) {
+			FileItem fileItem, InfoField infoField, ThemeDisplay themeDisplay)
+		throws InfoFormFileUploadException {
 
 		try (InputStream inputStream = fileItem.getInputStream()) {
 			if (inputStream == null) {
-				return null;
+				throw new InfoFormFileUploadException(infoField.getUniqueId());
 			}
 
 			File file = FileUtil.createTempFile(inputStream);
 
 			if (file == null) {
-				return null;
+				throw new InfoFormFileUploadException(infoField.getUniqueId());
 			}
 
 			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
@@ -183,9 +186,9 @@ public class InfoRequestFieldValuesProviderHelper {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
-		}
 
-		return null;
+			throw new InfoFormFileUploadException(infoField.getUniqueId());
+		}
 	}
 
 	private <T> List<InfoField<?>> _getInfoFields(

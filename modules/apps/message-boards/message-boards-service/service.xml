@@ -408,6 +408,12 @@
 			<finder-column name="userId" />
 			<finder-column name="messageId" />
 		</finder>
+		<finder name="ThreadId" return-type="Collection">
+			<finder-column name="threadId" />
+		</finder>
+		<finder name="MessagedId" return-type="Collection">
+			<finder-column name="messageId" />
+		</finder>
 	</entity>
 	<entity human-name="message boards thread" local-service="true" name="MBThread" remote-service="true" trash-enabled="true" uuid="true">
 

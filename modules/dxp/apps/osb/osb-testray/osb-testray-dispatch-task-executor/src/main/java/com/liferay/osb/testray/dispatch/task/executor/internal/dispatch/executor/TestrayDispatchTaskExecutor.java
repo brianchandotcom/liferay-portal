@@ -1475,70 +1475,69 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		Map<String, Object> testrayRoutineProperties =
 			objectEntry.getProperties();
 
-		if ((boolean)testrayRoutineProperties.get("autoanalyze")) {
-			ObjectEntry currentRunObjectEntry =
-				_objectEntryManager.getObjectEntry(
-					_defaultDTOConverterContext, _objectDefinitions.get("Run"),
-					testrayRunId);
+		if (!(boolean)testrayRoutineProperties.get("autoanalyze")) {
+			return;
+		}
 
-			Map<String, Object> currentTestrayRunProperties =
-				currentRunObjectEntry.getProperties();
+		ObjectEntry currentRunObjectEntry = _objectEntryManager.getObjectEntry(
+			_defaultDTOConverterContext, _objectDefinitions.get("Run"),
+			testrayRunId);
 
-			ObjectEntry latestTestrayRunObjectEntry = _fetchLatestTestrayRun(
-				companyId,
-				(String)currentTestrayRunProperties.get("environmentHash"),
-				objectEntry.getId(), testrayRunId);
+		Map<String, Object> currentTestrayRunProperties =
+			currentRunObjectEntry.getProperties();
 
-			if (latestTestrayRunObjectEntry != null) {
-				Map<Long, ObjectEntry> testrayCaseIdCompositeMapA =
-					_getTestrayCaseIdCompositeMap(
-						companyId, currentRunObjectEntry);
+		ObjectEntry latestTestrayRunObjectEntry = _fetchLatestTestrayRun(
+			companyId,
+			(String)currentTestrayRunProperties.get("environmentHash"),
+			objectEntry.getId(), testrayRunId);
 
-				Map<Long, ObjectEntry> testrayCaseIdCompositeMapB =
-					_getTestrayCaseIdCompositeMap(
-						companyId, latestTestrayRunObjectEntry);
+		if (latestTestrayRunObjectEntry == null) {
+			return;
+		}
 
-				for (Map.Entry<Long, ObjectEntry> entry :
-						testrayCaseIdCompositeMapA.entrySet()) {
+		Map<Long, ObjectEntry> testrayCaseIdCompositeMapA =
+			_getTestrayCaseIdCompositeMap(companyId, currentRunObjectEntry);
 
-					ObjectEntry testrayCaseResultBObjectEntry =
-						testrayCaseIdCompositeMapB.get(entry.getKey());
+		Map<Long, ObjectEntry> testrayCaseIdCompositeMapB =
+			_getTestrayCaseIdCompositeMap(
+				companyId, latestTestrayRunObjectEntry);
 
-					if (testrayCaseResultBObjectEntry == null) {
-						continue;
-					}
+		for (Map.Entry<Long, ObjectEntry> entry :
+				testrayCaseIdCompositeMapA.entrySet()) {
 
-					ObjectEntry testrayCaseResultAObjectEntry =
-						entry.getValue();
+			ObjectEntry testrayCaseResultBObjectEntry =
+				testrayCaseIdCompositeMapB.get(entry.getKey());
 
-					Map<String, Object> testrayCaseResultCompositeMapA =
-						testrayCaseResultAObjectEntry.getProperties();
-
-					Map<String, Object> testrayCaseResultCompositeMapB =
-						testrayCaseResultBObjectEntry.getProperties();
-
-					if (Validator.isNull(
-							testrayCaseResultCompositeMapA.get("errors")) ||
-						Validator.isNull(
-							testrayCaseResultCompositeMapB.get("errors"))) {
-
-						continue;
-					}
-
-					String errorsA = (String)testrayCaseResultCompositeMapA.get(
-						"errors");
-
-					if (!errorsA.equals(
-							testrayCaseResultCompositeMapB.get("errors"))) {
-
-						continue;
-					}
-
-					_autofill(
-						companyId, testrayCaseResultAObjectEntry,
-						testrayCaseResultBObjectEntry);
-				}
+			if (testrayCaseResultBObjectEntry == null) {
+				continue;
 			}
+
+			ObjectEntry testrayCaseResultAObjectEntry = entry.getValue();
+
+			Map<String, Object> testrayCaseResultCompositeMapA =
+				testrayCaseResultAObjectEntry.getProperties();
+
+			Map<String, Object> testrayCaseResultCompositeMapB =
+				testrayCaseResultBObjectEntry.getProperties();
+
+			if (Validator.isNull(
+					testrayCaseResultCompositeMapA.get("errors")) ||
+				Validator.isNull(
+					testrayCaseResultCompositeMapB.get("errors"))) {
+
+				continue;
+			}
+
+			String errorsA = (String)testrayCaseResultCompositeMapA.get(
+				"errors");
+
+			if (!errorsA.equals(testrayCaseResultCompositeMapB.get("errors"))) {
+				continue;
+			}
+
+			_autofill(
+				companyId, testrayCaseResultAObjectEntry,
+				testrayCaseResultBObjectEntry);
 		}
 	}
 

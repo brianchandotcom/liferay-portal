@@ -48,7 +48,7 @@ export function getWebContents(dxpVersion, slaCurrent, subscriptionGroups) {
 	);
 
 	const hasAccessToActivateAnalyticsCloudContent =
-		!hasSubscriptionGroup.analyticsCloud &&
+		hasSubscriptionGroup.analyticsCloud &&
 		(hasSubscriptionGroup.portal || hasSubscriptionGroup.partnership) &&
 		(hasSubscriptionGroup.dxp || hasSubscriptionGroup.dxpCloud);
 

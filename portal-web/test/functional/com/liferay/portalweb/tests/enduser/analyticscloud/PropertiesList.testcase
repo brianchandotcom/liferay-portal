@@ -18,6 +18,36 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Bug: LRAC-11360 | Automation ID: LRAC-11361 | Test Summary: Paginate property list"
+	@priority = "4"
+	test CanPaginatePropertyList {
+		var propertyList = "Property Name 1,Property Name 2,Property Name 3,Property Name 4,Property Name 5,Property Name 6";
+
+		task ("go to property and add 6 properties") {
+			ACNavigation.goToSettings();
+
+			for (var n : list "${propertyList}") {
+				ACSettings.goToProperties();
+
+				ACProperties.addNewProperty(propertyName = "${n}");
+			}
+		}
+
+		task ("Change the pagination to 5") {
+			ACSettings.goToProperties();
+
+			ACUtils.changePagination(itemsPerPage = "5");
+		}
+
+		task ("Click next page") {
+			ACUtils.checkPreviousNextButton(nextButton = "true");
+		}
+
+		task ("Check that the existing properties in the AC appear in the list") {
+			ACUtils.assertItemsName(itemList = "Property Name 1");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9119 | Test Summary: Property list loading a lot of values"
 	@ignore = "true"
 	@priority = "2"

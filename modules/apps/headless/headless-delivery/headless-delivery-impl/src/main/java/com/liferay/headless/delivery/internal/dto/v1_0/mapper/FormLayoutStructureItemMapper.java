@@ -17,8 +17,14 @@ package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 import com.liferay.headless.delivery.dto.v1_0.ClassTypeReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.FormConfig;
+import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
+import com.liferay.headless.delivery.dto.v1_0.MessageFormSubmissionResult;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageFormDefinition;
+import com.liferay.headless.delivery.dto.v1_0.SitePageFormSubmissionResult;
+import com.liferay.headless.delivery.dto.v1_0.URLFormSubmissionResult;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.FragmentMappedValueUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.LocalizedValueUtil;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -61,6 +67,11 @@ public class FormLayoutStructureItemMapper
 							{
 								formReference = _toFormReference(
 									formStyledLayoutStructureItem);
+								formSuccessSubmissionResult =
+									_toFormSuccessSubmissionResult(
+										saveInlineContent,
+										saveMappingConfiguration,
+										formStyledLayoutStructureItem);
 							}
 						};
 						indexed = formStyledLayoutStructureItem.isIndexed();
@@ -124,6 +135,65 @@ public class FormLayoutStructureItemMapper
 		return new ContextReference() {
 			{
 				contextSource = ContextSource.DISPLAY_PAGE_ITEM;
+			}
+		};
+	}
+
+	private Object _toFormSuccessSubmissionResult(
+		boolean saveInlineContent, boolean saveMappingConfiguration,
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149720"))) {
+			return null;
+		}
+
+		JSONObject successMessageJSONObject =
+			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
+
+		if (successMessageJSONObject == null) {
+			return null;
+		}
+
+		if (saveInlineContent && successMessageJSONObject.has("message")) {
+			return new MessageFormSubmissionResult() {
+				{
+					message = _toFragmentInlineValue(
+						successMessageJSONObject.getJSONObject("message"));
+				}
+			};
+		}
+
+		if (saveInlineContent && successMessageJSONObject.has("url")) {
+			return new URLFormSubmissionResult() {
+				{
+					url = _toFragmentInlineValue(
+						successMessageJSONObject.getJSONObject("url"));
+				}
+			};
+		}
+
+		if (saveMappingConfiguration &&
+			successMessageJSONObject.has("layout")) {
+
+			JSONObject layoutJSONObject =
+				successMessageJSONObject.getJSONObject("layout");
+
+			return new SitePageFormSubmissionResult() {
+				{
+					itemReference =
+						FragmentMappedValueUtil.toLayoutClassFieldsReference(
+							layoutJSONObject);
+				}
+			};
+		}
+
+		return null;
+	}
+
+	private FragmentInlineValue _toFragmentInlineValue(JSONObject jsonObject) {
+		return new FragmentInlineValue() {
+			{
+				value_i18n = LocalizedValueUtil.toLocalizedValues(jsonObject);
 			}
 		};
 	}

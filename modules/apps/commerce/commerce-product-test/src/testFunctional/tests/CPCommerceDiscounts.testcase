@@ -399,7 +399,10 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SUBTOTAL");
+		WaitForElementPresent(
+			key_subtotalValue = "21.60",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SUBTOTAL",
+			value1 = "21.60");
 
 		AssertTextEquals.assertPartialText(
 			key_subtotalValue = "21.60",
@@ -465,7 +468,10 @@ definition {
 
 		Click(locator1 = "Button#CONTINUE");
 
-		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SUBTOTAL");
+		WaitForElementPresent(
+			key_subtotalValue = "21.60",
+			locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SUBTOTAL",
+			value1 = "21.60");
 
 		AssertTextEquals.assertPartialText(
 			key_subtotalValue = "21.60",

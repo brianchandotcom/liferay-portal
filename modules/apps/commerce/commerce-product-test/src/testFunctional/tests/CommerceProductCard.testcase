@@ -1415,45 +1415,80 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-6158. As a buyer, I want to see the barred list price and a discount price of a product, if set"
+	@description = "COMMERCE-6158. Verify buyers can see the barred list price and discount price of a product if a discount is set."
 	@priority = "3"
 	test ViewProductCardPriceWithDiscount {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		// TODO Review
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		CommerceNavigator.gotoPortlet(
-			category = "Pricing",
-			portlet = "Discounts");
+		task ("And given a product with a discount") {
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
 
-		Click(locator1 = "Button#PLUS");
+			Click(locator1 = "Button#PLUS");
 
-		CommerceEntry.addNewDiscountsEntry(
-			channelsEligibility = "Minium Portal",
-			discountAmount = "20",
-			discountName = "Test Discount",
-			discountTarget = "Products",
-			discountType = "Percentage");
+			CommerceEntry.addNewDiscountsEntry(
+				channelsEligibility = "Minium Portal",
+				discountAmount = "20",
+				discountName = "Test Discount",
+				discountTarget = "Products",
+				discountType = "Percentage");
 
-		CommerceRelations.assignSingleRelationToProductsEntry(
-			entryName = "ABS Sensor",
-			title = "Add Products");
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "ABS Sensor",
+				title = "Add Products");
 
-		Button.clickPublish();
+			Button.clickPublish();
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+			CommerceProducts.openProductsAdmin();
 
-		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
 
-		AssertElementPresent(
-			key_productName = "ABS Sensor",
-			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_VALUE_INACTIVE");
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-		AssertElementPresent(
-			key_productName = "ABS Sensor",
-			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_VALUE_FINAL");
+			var basePrice = TestUtils.getElementTextContent(element = "//div[@class='dnd-tr']//div[@class='dnd-td'][3]");
+		}
+
+		task ("When the buyer logs in and views the product card") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+		}
+
+		task ("Then the barred list price and discount price is shown on the product card") {
+			AssertTextEquals(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_VALUE_INACTIVE",
+				value1 = "${basePrice}");
+
+			AssertTextEquals(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_VALUE_FINAL",
+				value1 = "$ 40.00");
+		}
 	}
 
 	@description = "COMMERCE-6157. Verify buyers can see the barred list price and a sale price of a product if a promotion is set."

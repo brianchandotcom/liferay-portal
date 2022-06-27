@@ -19,6 +19,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -26,17 +27,27 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.math.BigDecimal;
 
@@ -79,12 +90,30 @@ public class InfoRequestFieldValuesProviderHelper {
 		String classTypeId = ParamUtil.getString(
 			uploadServletRequest, "classTypeId");
 
+		Map<String, FileItem[]> multipartParameterMap =
+			uploadServletRequest.getMultipartParameterMap();
+
 		Map<String, List<String>> regularParameterMap =
 			uploadServletRequest.getRegularParameterMap();
 
 		for (InfoField<?> infoField :
 				_getInfoFields(
 					className, classTypeId, themeDisplay.getScopeGroupId())) {
+
+			if ((infoField.getInfoFieldType() instanceof ImageInfoFieldType) &&
+				ArrayUtil.isNotEmpty(
+					multipartParameterMap.get(infoField.getName()))) {
+
+				for (FileItem fileItem :
+						multipartParameterMap.get(infoField.getName())) {
+
+					infoFieldValues.add(
+						_getImageInfoFieldValue(
+							fileItem, infoField, themeDisplay));
+				}
+
+				continue;
+			}
 
 			if (ListUtil.isEmpty(
 					regularParameterMap.get(infoField.getName()))) {
@@ -120,6 +149,39 @@ public class InfoRequestFieldValuesProviderHelper {
 		catch (ParseException parseException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(parseException);
+			}
+		}
+
+		return null;
+	}
+
+	private InfoFieldValue<Object> _getImageInfoFieldValue(
+		FileItem fileItem, InfoField infoField, ThemeDisplay themeDisplay) {
+
+		try (InputStream inputStream = fileItem.getInputStream()) {
+			if (inputStream == null) {
+				return null;
+			}
+
+			File file = FileUtil.createTempFile(inputStream);
+
+			if (file == null) {
+				return null;
+			}
+
+			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				InfoRequestFieldValuesProviderHelper.class.getName(),
+				TempFileEntryUtil.getTempFileName(fileItem.getFileName()), file,
+				fileItem.getContentType());
+
+			return _getInfoFieldValue(
+				infoField, themeDisplay.getLocale(),
+				String.valueOf(fileEntry.getFileEntryId()));
+		}
+		catch (IOException | PortalException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
 			}
 		}
 

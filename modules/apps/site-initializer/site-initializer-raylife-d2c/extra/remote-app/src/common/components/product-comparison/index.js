@@ -116,7 +116,10 @@ const ProductComparison = ({
 	product,
 	purchasable = true,
 }) => {
-	const {category, mostPopular, price, promo, ...productDetails} = product;
+	const {category, mostPopular, price, promo, ...productDetails} = JSON.parse(
+		product.dataJSON
+	);
+
 	const promoPrice = Number(promo);
 
 	return (

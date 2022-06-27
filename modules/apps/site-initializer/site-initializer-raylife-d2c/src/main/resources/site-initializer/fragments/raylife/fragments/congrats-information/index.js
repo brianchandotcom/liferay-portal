@@ -143,11 +143,13 @@ const buildList = (items = []) => {
 };
 
 const main = async () => {
-	const [application, quoteComparison, orderItem] = await Promise.all([
+	const [application, quote, orderItem] = await Promise.all([
 		fetchHeadless(`o/c/raylifeapplications/${applicationId}`),
-		fetchHeadless(`o/c/quotecomparisons/${quoteId}`),
+		fetchHeadless(`o/c/raylifequotes/${quoteId}`),
 		fetchHeadless(`o/headless-commerce-admin-order/v1.0/orders/${orderId}`),
 	]);
+
+	const quoteDataJSON = JSON.parse(quote.dataJSON);
 
 	const quoteDate = application.applicationCreateDate
 		? new Date(application.applicationCreateDate)
@@ -167,14 +169,14 @@ const main = async () => {
 		`Policy: #${applicationId}`
 	);
 
-	if (Number(quoteComparison.price) === Number(orderItem.totalAmount * 2)) {
+	if (Number(quoteDataJSON.price) === Number(orderItem.totalAmount * 2)) {
 		setValueToElement(
 			fragmentElement.querySelector('#congrats-price'),
-			`$${Number(quoteComparison.price || 0).toLocaleString('en-US')}`
+			`$${Number(quoteDataJSON.price || 0).toLocaleString('en-US')}`
 		);
 	}
 	else {
-		const discountInPrice = quoteComparison.price * 0.05;
+		const discountInPrice = quoteDataJSON.price * 0.05;
 
 		const discountDescription = `You saved 5% ($${Number(
 			discountInPrice || 0
@@ -183,7 +185,7 @@ const main = async () => {
 		setValueToElement(
 			fragmentElement.querySelector('#congrats-price'),
 			`$${Number(
-				quoteComparison.price - discountInPrice || 0
+				quoteDataJSON.price - discountInPrice || 0
 			).toLocaleString('en-US')}`
 		);
 
@@ -200,28 +202,28 @@ const main = async () => {
 	buildList([
 		{
 			title: 'Per Occurrence Limit',
-			value: quoteComparison.perOccuranceLimit,
+			value: quoteDataJSON.perOccuranceLimit,
 		},
 		{
 			title: 'Aggregate Limit',
-			value: quoteComparison.aggregateLimit,
+			value: quoteDataJSON.aggregateLimit,
 		},
 		{
 			title: 'Business Personal Property',
-			value: quoteComparison.businessPersonalProperty || false,
+			value: quoteDataJSON.businessPersonalProperty || false,
 		},
 		{
 			title: 'Product Recall or Replacement',
-			value: quoteComparison.productRecallOrReplacement,
+			value: quoteDataJSON.productRecallOrReplacement,
 		},
 		{
 			title: 'Money & Securities',
-			value: quoteComparison.moneyAndSecurities || false,
+			value: quoteDataJSON.moneyAndSecurities || false,
 		},
 	]);
 
 	if (application.applicationStatus.key !== 'bound') {
-		addPolicyEntryData({...application, ...quoteComparison});
+		addPolicyEntryData({...application, ...quoteDataJSON});
 		sendDigitalSignaturePolicy(application);
 		updateObjectPolicySent();
 	}

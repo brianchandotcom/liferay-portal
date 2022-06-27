@@ -14,7 +14,7 @@
 
 import {createContext, useEffect, useReducer} from 'react';
 import {STORAGE_KEYS, Storage} from '../../../common/services/liferay/storage';
-import {getQuoteComparisonById} from '../../quote-comparison/service/QuoteComparison';
+import {getQuoteById} from '../../quote-comparison/service/Quote';
 import {getChannel} from '../services/Channel';
 import {getSku} from '../services/Product';
 
@@ -175,7 +175,7 @@ const SelectedQuoteContextProvider = ({children}) => {
 		const [channel, sku, product] = await Promise.allSettled([
 			getChannel(),
 			getSku(productId),
-			getQuoteComparisonById(quoteId),
+			getQuoteById(quoteId),
 		]);
 
 		dispatch({

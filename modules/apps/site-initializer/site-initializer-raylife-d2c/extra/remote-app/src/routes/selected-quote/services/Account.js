@@ -16,7 +16,7 @@ import {axios} from '../../../common/services/liferay/api';
 
 const DeliveryAPI = 'o/headless-admin-user';
 
-export function createAccount(
+export async function createAccount(
 	firstName,
 	lastName,
 	emailAddress,
@@ -37,7 +37,7 @@ export function createAccount(
 		type: 'business',
 	};
 
-	axios.post(
+	await axios.post(
 		`${DeliveryAPI}/v1.0/user-accounts?captchaText=${captcha}`,
 		userPayload
 	);

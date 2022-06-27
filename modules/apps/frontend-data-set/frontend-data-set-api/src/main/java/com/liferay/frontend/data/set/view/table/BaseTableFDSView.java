@@ -51,4 +51,8 @@ public abstract class BaseTableFDSView implements FDSView {
 		return FDSConstants.TABLE;
 	}
 
+	public boolean isQuickActionsEnabled() {
+		return false;
+	}
+
 }

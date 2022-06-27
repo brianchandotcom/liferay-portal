@@ -1112,54 +1112,6 @@ definition {
 			locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
 	}
 
-	@description = "Verify buyers cannot change the currency of a channel."
-	@priority = "3"
-	test BuyersCannotEditChannelCurrency {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
-		property portal.acceptance = "false";
-
-		task ("Given a Commerce account with a buyer user") {
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-		}
-
-		task ("And given the buyer has permission to view a channel's configuration") {
-			CommercePermissions.defineChannelPermissionsViaJSONAPI(
-				roleTitle = "User",
-				update = "true",
-				view = "true");
-		}
-
-		task ("When the buyer logs in and goes to the Minium channel") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-
-			CommerceChannels.openChannelsAdmin();
-
-			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
-		}
-
-		task ("Then the buyer is unable to change the channel currency code") {
-			AssertElementNotPresent(
-				key_title = "Currency",
-				locator1 = "CommerceEntry#CATALOGS_FORM");
-		}
-	}
-
 	@description = "COMMERCE-5868. As a buyer, I want to be able to compare a product with other ones in a product comparison items list, by checking the product via checkbox"
 	@priority = "3"
 	test CompareProductFromProductCard {

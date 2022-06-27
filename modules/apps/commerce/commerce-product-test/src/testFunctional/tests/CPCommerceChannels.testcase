@@ -527,6 +527,54 @@ definition {
 			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
 	}
 
+	@description = "Verify users without edit permission cannot change the currency of a channel."
+	@priority = "3"
+	test CanNotEditChannelCurrencyAsUserWithoutEditPermission {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And given the buyer has permission to view a channel's configuration") {
+			CommercePermissions.defineChannelPermissionsViaJSONAPI(
+				roleTitle = "User",
+				update = "true",
+				view = "true");
+		}
+
+		task ("When the buyer logs in and goes to the Minium channel") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+		}
+
+		task ("Then the buyer is unable to change the channel currency code") {
+			AssertElementNotPresent(
+				key_title = "Currency",
+				locator1 = "CommerceEntry#CATALOGS_FORM");
+		}
+	}
+
 	@description = "Verify users can set and edit delivery term eligibility for shipping options."
 	@priority = "3"
 	test CanSetAndEditDeliveryTermsEligibility {

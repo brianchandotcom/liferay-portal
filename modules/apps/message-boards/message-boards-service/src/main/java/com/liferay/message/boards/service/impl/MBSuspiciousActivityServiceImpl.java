@@ -14,10 +14,18 @@
 
 package com.liferay.message.boards.service.impl;
 
+import com.liferay.message.boards.exception.NoSuchSuspiciousActivityException;
+import com.liferay.message.boards.model.MBSuspiciousActivity;
+import com.liferay.message.boards.service.MBSuspiciousActivityLocalService;
 import com.liferay.message.boards.service.base.MBSuspiciousActivityServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -31,4 +39,46 @@ import org.osgi.service.component.annotations.Component;
 )
 public class MBSuspiciousActivityServiceImpl
 	extends MBSuspiciousActivityServiceBaseImpl {
+
+	@Override
+	public MBSuspiciousActivity addOrUpdateSuspiciousActivity(
+		long userId, long messageId, String description, String type)
+		throws PortalException {
+
+		return mbSuspiciousActivityLocalService.addOrUpdateSuspiciousActivity(userId, messageId, description, type);
+	}
+	@Override
+	public MBSuspiciousActivity findByPrimaryKey(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.findByPrimaryKey(suspiciousActivityId);
+	}
+
+	@Override
+	public List<MBSuspiciousActivity> findAll() {
+
+		return _mbSuspiciousActivityLocalService.findAll();
+	}
+
+	@Override
+	public MBSuspiciousActivity findByU_M(long userId, long messageId)
+		throws NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.findByU_M(userId, messageId);
+	}
+
+	@Override
+	public MBSuspiciousActivity remove(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.remove(suspiciousActivityId);
+	}
+
+	@Override
+	public int countAll() {
+		return _mbSuspiciousActivityLocalService.countAll();
+	}
+
+	@Reference
+	MBSuspiciousActivityLocalService _mbSuspiciousActivityLocalService;
 }

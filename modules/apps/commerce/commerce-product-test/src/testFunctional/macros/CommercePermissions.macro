@@ -1,5 +1,95 @@
 definition {
 
+	macro defineCatalogPermissionsViaJSONAPI {
+		if ("${view}" == "true") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "${roleTitle}");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet",
+				roleTitle = "${roleTitle}");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
+				roleTitle = "${roleTitle}");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_COMMERCE_CATALOGS",
+				resourceName = "com.liferay.commerce.catalog",
+				roleTitle = "${roleTitle}");
+		}
+
+		if ("${permissions}" == "true") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "PERMISSIONS",
+				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
+				roleTitle = "${roleTitle}");
+		}
+
+		if ("${update}" == "true") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
+				roleTitle = "${roleTitle}");
+		}
+
+		if ("${delete}" == "true") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "DELETE",
+				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
+				roleTitle = "${roleTitle}");
+		}
+	}
+
+	macro defineChannelPermissionsViaJSONAPI {
+		if ("${view}" == "true") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_CONTROL_PANEL",
+				resourceName = "90",
+				roleTitle = "${roleTitle}");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet",
+				roleTitle = "${roleTitle}");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_COMMERCE_CHANNELS",
+				resourceName = "com.liferay.commerce.channel",
+				roleTitle = "${roleTitle}");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.commerce.product.model.CommerceChannel",
+				roleTitle = "${roleTitle}");
+		}
+
+		if ("${permissions}" == "true") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "PERMISSIONS",
+				resourceName = "com.liferay.commerce.product.model.CommerceChannel",
+				roleTitle = "${roleTitle}");
+		}
+
+		if ("${update}" == "true") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.commerce.product.model.CommerceChannel",
+				roleTitle = "${roleTitle}");
+		}
+
+		if ("${delete}" == "true") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "DELETE",
+				resourceName = "com.liferay.commerce.product.model.CommerceChannel",
+				roleTitle = "${roleTitle}");
+		}
+	}
+
 	macro definePermissionsPG {
 		SelectFrameTop(value1 = "relative=top");
 

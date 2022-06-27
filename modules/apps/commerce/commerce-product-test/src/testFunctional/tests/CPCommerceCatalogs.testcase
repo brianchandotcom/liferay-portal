@@ -477,33 +477,11 @@ definition {
 			CommerceJSONCatalogsAPI._addCatalog(catalogName = "Test Catalog");
 		}
 
-		task ("And given the user has permission to view catalogs in the catalog section of the admin panel") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
-				roleTitle = "User");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet",
-				roleTitle = "User");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
-				roleTitle = "User");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_COMMERCE_CATALOGS",
-				resourceName = "com.liferay.commerce.catalog",
-				roleTitle = "User");
-		}
-
-		task ("And given the user has permission to edit catalog permissions") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "PERMISSIONS",
-				resourceName = "com.liferay.commerce.product.model.CommerceCatalog",
-				roleTitle = "User");
+		task ("And given the user has permission to view catalogs in the admin panel and edit catalog permissions") {
+			CommercePermissions.defineCatalogPermissionsViaJSONAPI(
+				permissions = "true",
+				roleTitle = "User",
+				view = "true");
 		}
 
 		task ("When the user logs in and edits the catalog permissions") {

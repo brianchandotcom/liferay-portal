@@ -1141,31 +1141,11 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And given the buyer has permission to view channels in the admin panel") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = "90",
-				roleTitle = "User");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ACCESS_IN_CONTROL_PANEL",
-				resourceName = "com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet",
-				roleTitle = "User");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_COMMERCE_CHANNELS",
-				resourceName = "com.liferay.commerce.channel",
-				roleTitle = "User");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.commerce.product.model.CommerceChannel",
-				roleTitle = "User");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.commerce.product.model.CommerceChannel",
-				roleTitle = "User");
+		task ("And given the buyer has permission to view a channel's configuration") {
+			CommercePermissions.defineChannelPermissionsViaJSONAPI(
+				roleTitle = "User",
+				update = "true",
+				view = "true");
 		}
 
 		task ("When the buyer logs in and goes to the Minium channel") {

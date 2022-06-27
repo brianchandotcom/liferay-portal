@@ -12,4 +12,4 @@
  * details.
  */
 
-console.log('Sample Global JavaScript deployed.');
+window.alert('Sample Global JavaScript deployed.');

@@ -20,7 +20,6 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -179,7 +178,8 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				globalCSSCETExternalReferenceCodes) {
 
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				themeDisplay.getUserId(), _portal.getClassNameId(Layout.class),
+				themeDisplay.getUserId(),
+				_portal.getClassNameId(LayoutSet.class),
 				layoutSet.getLayoutSetId(), globalCSSCETExternalReferenceCode,
 				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
 		}
@@ -195,7 +195,8 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 				globalJSCETExternalReferenceCodes) {
 
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				themeDisplay.getUserId(), _portal.getClassNameId(Layout.class),
+				themeDisplay.getUserId(),
+				_portal.getClassNameId(LayoutSet.class),
 				layoutSet.getLayoutSetId(), globalJSCETExternalReferenceCode,
 				ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 		}

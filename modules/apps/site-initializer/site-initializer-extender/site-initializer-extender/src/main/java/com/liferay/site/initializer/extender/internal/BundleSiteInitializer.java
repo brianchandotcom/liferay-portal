@@ -1148,13 +1148,32 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addFragmentEntries(
-			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
-			Map<String, String> documentsStringUtilReplaceValues,
-			ServiceContext serviceContext)
+		Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+		Map<String, String> documentsStringUtilReplaceValues,
+		ServiceContext serviceContext) throws Exception{
+
+		Group group = _groupLocalService.getCompanyGroup(
+			serviceContext.getCompanyId());
+
+		_addFragmentEntries(assetListEntryIdsStringUtilReplaceValues,
+			documentsStringUtilReplaceValues,group.getGroupId(),
+			serviceContext,
+			"/site-initializer/fragments/company");
+
+		_addFragmentEntries(assetListEntryIdsStringUtilReplaceValues,
+			documentsStringUtilReplaceValues, serviceContext.getScopeGroupId(),
+			serviceContext,
+			"/site-initializer/fragments/group");
+	}
+
+	private void _addFragmentEntries(
+		Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+		Map<String, String> documentsStringUtilReplaceValues,
+		long groupId, ServiceContext serviceContext, String parentResourcePath)
 		throws Exception {
 
 		Enumeration<URL> enumeration = _bundle.findEntries(
-			"/site-initializer/fragments", StringPool.STAR, true);
+			parentResourcePath, StringPool.STAR, true);
 
 		if (enumeration == null) {
 			return;
@@ -1172,7 +1191,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			if (StringUtil.endsWith(
-					fileName, "fragment-composition-definition.json")) {
+				fileName, "fragment-composition-definition.json")) {
 
 				String json = StringUtil.read(url.openStream());
 
@@ -1191,24 +1210,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 					new String[] {"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]"},
 					new String[] {
 						scopeGroup.getFriendlyURL(),
-						String.valueOf(serviceContext.getScopeGroupId())
+						String.valueOf(groupId)
 					});
 
 				zipWriter.addEntry(
 					StringUtil.removeFirst(
-						fileName, "/site-initializer/fragments/"),
+						fileName, parentResourcePath),
 					json);
 			}
 			else {
 				zipWriter.addEntry(
 					StringUtil.removeFirst(
-						fileName, "/site-initializer/fragments/"),
+						fileName, parentResourcePath),
 					url.openStream());
 			}
 		}
 
 		_fragmentsImporter.importFragmentEntries(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
+			serviceContext.getUserId(), groupId, 0,
 			zipWriter.getFile(), false);
 	}
 

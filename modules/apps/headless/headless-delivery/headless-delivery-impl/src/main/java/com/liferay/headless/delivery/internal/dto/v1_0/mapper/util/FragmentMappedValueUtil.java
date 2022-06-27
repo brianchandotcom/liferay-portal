@@ -99,57 +99,7 @@ public class FragmentMappedValueUtil {
 		}
 
 		if (layoutJSONObject != null) {
-			final Layout layout;
-
-			try {
-				layout = LayoutLocalServiceUtil.getLayout(
-					layoutJSONObject.getLong("groupId"),
-					layoutJSONObject.getBoolean("privateLayout"),
-					layoutJSONObject.getLong("layoutId"));
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Item reference could not be set since no layout " +
-							"could be obtained",
-						portalException);
-				}
-
-				return null;
-			}
-
-			return new ClassFieldsReference() {
-				{
-					className = Layout.class.getName();
-
-					setFields(
-						() -> {
-							Field friendlyURLField = new Field();
-
-							friendlyURLField.setFieldName("friendlyURL");
-							friendlyURLField.setFieldValue(
-								layout.getFriendlyURL());
-
-							Field privatePageField = new Field();
-
-							privatePageField.setFieldName("privatePage");
-							privatePageField.setFieldValue(
-								String.valueOf(layout.isPrivateLayout()));
-
-							Field siteKeyField = new Field();
-
-							Group group = GroupLocalServiceUtil.getGroup(
-								layout.getGroupId());
-
-							siteKeyField.setFieldName("siteKey");
-							siteKeyField.setFieldValue(group.getGroupKey());
-
-							return new Field[] {
-								friendlyURLField, privatePageField, siteKeyField
-							};
-						});
-				}
-			};
+			return toLayoutClassFieldsReference(layoutJSONObject);
 		}
 
 		if (Validator.isNotNull(mappedField)) {
@@ -164,6 +114,61 @@ public class FragmentMappedValueUtil {
 			{
 				className = _toItemClassName(jsonObject);
 				classPK = _toItemClassPK(jsonObject);
+			}
+		};
+	}
+
+	public static ClassFieldsReference toLayoutClassFieldsReference(
+		JSONObject layoutJSONObject) {
+
+		final Layout layout;
+
+		try {
+			layout = LayoutLocalServiceUtil.getLayout(
+				layoutJSONObject.getLong("groupId"),
+				layoutJSONObject.getBoolean("privateLayout"),
+				layoutJSONObject.getLong("layoutId"));
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Item reference could not be set since no layout could be" +
+						"obtained",
+					portalException);
+			}
+
+			return null;
+		}
+
+		return new ClassFieldsReference() {
+			{
+				className = Layout.class.getName();
+
+				setFields(
+					() -> {
+						Field friendlyURLField = new Field();
+
+						friendlyURLField.setFieldName("friendlyURL");
+						friendlyURLField.setFieldValue(layout.getFriendlyURL());
+
+						Field privatePageField = new Field();
+
+						privatePageField.setFieldName("privatePage");
+						privatePageField.setFieldValue(
+							String.valueOf(layout.isPrivateLayout()));
+
+						Field siteKeyField = new Field();
+
+						Group group = GroupLocalServiceUtil.getGroup(
+							layout.getGroupId());
+
+						siteKeyField.setFieldName("siteKey");
+						siteKeyField.setFieldValue(group.getGroupKey());
+
+						return new Field[] {
+							friendlyURLField, privatePageField, siteKeyField
+						};
+					});
 			}
 		};
 	}

@@ -2987,6 +2987,18 @@ components:
             required:
                 - headline
             type: object
+        MessageFormSubmissionResult:
+            # @review
+            description:
+                Represents a definition of a submission result of type message.
+            properties:
+                message:
+                    # @review
+                    description:
+                        The localized submission of message type.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
+            type: object
         NavigationMenu:
             # @review
             description:
@@ -3459,6 +3471,15 @@ components:
                             oneOf:
                                 - $ref: "#/components/schemas/ClassTypeReference"
                                 - $ref: "#/components/schemas/ContextReference"
+                        formSuccessSubmissionResult:
+                            # @review
+                            description:
+                                The definition for the success message of the form.
+                            oneOf:
+                                - $ref: "#/components/schemas/MessageFormSubmissionResult"
+                                - $ref: "#/components/schemas/SitePageFormSubmissionResult"
+                                - $ref: "#/components/schemas/URLFormSubmissionResult"
+                            type: object
                     type: object
                 fragmentStyle:
                     allOf:
@@ -4450,6 +4471,18 @@ components:
             required:
                 - title
             type: object
+        SitePageFormSubmissionResult:
+            # @review
+            description:
+                Represents a definition of a submission result of type page.
+            properties:
+                itemReference:
+                    # @review
+                    description:
+                        The localized submission of page type.
+                    oneOf:
+                        - $ref: "#/components/schemas/ClassFieldsReference"
+            type: object
         StructuredContent:
             description:
                 Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is
@@ -4780,6 +4813,18 @@ components:
                         The localized category's names.
                     readOnly: true
                     type: object
+            type: object
+        URLFormSubmissionResult:
+            # @review
+            description:
+                Represents a definition of a submission result of type URL.
+            properties:
+                url:
+                    # @review
+                    description:
+                        The localized submission of URL type.
+                    oneOf:
+                        - $ref: "#/components/schemas/FragmentInlineValue"
             type: object
         WidgetInstance:
             # @review

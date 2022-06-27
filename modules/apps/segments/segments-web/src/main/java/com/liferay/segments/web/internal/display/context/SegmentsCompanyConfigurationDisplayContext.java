@@ -17,6 +17,8 @@ package com.liferay.segments.web.internal.display.context;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 
 import javax.portlet.PortletResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,6 +64,20 @@ public class SegmentsCompanyConfigurationDisplayContext {
 		).setActionName(
 			"/instance_settings/delete_segments_company_configuration"
 		).buildString();
+	}
+
+	public String getExportConfigurationActionURL() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
+
+		ResourceURL resourceURL =
+			(ResourceURL)requestBackedPortletURLFactory.createResourceURL(
+				ConfigurationAdminPortletKeys.INSTANCE_SETTINGS);
+
+		resourceURL.setResourceID(
+			"/instance_settings/export_segments_company_configuration");
+
+		return resourceURL.toString();
 	}
 
 	public boolean isRoleSegmentationChecked() throws ConfigurationException {

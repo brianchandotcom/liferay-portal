@@ -111,6 +111,11 @@ public interface WikiNodeService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiNode getWikiNodeByExternalReferenceCode(
+			long siteId, String externalReferenceCode)
+		throws PortalException;
+
 	public void importPages(
 			long nodeId, String importer, InputStream[] inputStreams,
 			Map<String, String[]> options)

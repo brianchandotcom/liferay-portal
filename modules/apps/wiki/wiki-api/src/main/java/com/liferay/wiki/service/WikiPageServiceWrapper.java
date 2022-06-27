@@ -66,6 +66,21 @@ public class WikiPageServiceWrapper
 
 	@Override
 	public com.liferay.wiki.model.WikiPage addPage(
+			String externalReferenceCode, long userId, long nodeId,
+			String title, double version, String content, String summary,
+			boolean minorEdit, String format, boolean head, String parentTitle,
+			String redirectTitle,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _wikiPageService.addPage(
+			externalReferenceCode, userId, nodeId, title, version, content,
+			summary, minorEdit, format, head, parentTitle, redirectTitle,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiPage addPage(
 			String externalReferenceCode, long nodeId, String title,
 			String content, String summary, boolean minorEdit, String format,
 			String parentTitle, String redirectTitle,
@@ -321,6 +336,13 @@ public class WikiPageServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _wikiPageService.getPage(nodeId, title, version);
+	}
+
+	@Override
+	public com.liferay.wiki.model.WikiPage getPageByPageId(long pageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _wikiPageService.getPageByPageId(pageId);
 	}
 
 	@Override

@@ -70,6 +70,20 @@ public class WikiPageServiceUtil {
 	}
 
 	public static WikiPage addPage(
+			String externalReferenceCode, long userId, long nodeId,
+			String title, double version, String content, String summary,
+			boolean minorEdit, String format, boolean head, String parentTitle,
+			String redirectTitle,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addPage(
+			externalReferenceCode, userId, nodeId, title, version, content,
+			summary, minorEdit, format, head, parentTitle, redirectTitle,
+			serviceContext);
+	}
+
+	public static WikiPage addPage(
 			String externalReferenceCode, long nodeId, String title,
 			String content, String summary, boolean minorEdit, String format,
 			String parentTitle, String redirectTitle,
@@ -290,6 +304,10 @@ public class WikiPageServiceUtil {
 		throws PortalException {
 
 		return getService().getPage(nodeId, title, version);
+	}
+
+	public static WikiPage getPageByPageId(long pageId) throws PortalException {
+		return getService().getPageByPageId(pageId);
 	}
 
 	public static List<WikiPage> getPages(

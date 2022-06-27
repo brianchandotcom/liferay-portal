@@ -483,6 +483,48 @@ public class WikiNodeServiceHttp {
 		}
 	}
 
+	public static com.liferay.wiki.model.WikiNode
+			getWikiNodeByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, long siteId,
+				String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				WikiNodeServiceUtil.class, "getWikiNodeByExternalReferenceCode",
+				_getWikiNodeByExternalReferenceCodeParameterTypes12);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, siteId, externalReferenceCode);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.wiki.model.WikiNode)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static void importPages(
 			HttpPrincipal httpPrincipal, long nodeId, String importer,
 			java.io.InputStream[] inputStreams,
@@ -492,7 +534,7 @@ public class WikiNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				WikiNodeServiceUtil.class, "importPages",
-				_importPagesParameterTypes12);
+				_importPagesParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, nodeId, importer, inputStreams, options);
@@ -528,7 +570,7 @@ public class WikiNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				WikiNodeServiceUtil.class, "moveNodeToTrash",
-				_moveNodeToTrashParameterTypes13);
+				_moveNodeToTrashParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId);
 
@@ -567,7 +609,7 @@ public class WikiNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				WikiNodeServiceUtil.class, "restoreNodeFromTrash",
-				_restoreNodeFromTrashParameterTypes14);
+				_restoreNodeFromTrashParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId);
 
@@ -601,7 +643,7 @@ public class WikiNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				WikiNodeServiceUtil.class, "subscribeNode",
-				_subscribeNodeParameterTypes15);
+				_subscribeNodeParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId);
 
@@ -635,7 +677,7 @@ public class WikiNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				WikiNodeServiceUtil.class, "unsubscribeNode",
-				_unsubscribeNodeParameterTypes16);
+				_unsubscribeNodeParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nodeId);
 
@@ -672,7 +714,7 @@ public class WikiNodeServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				WikiNodeServiceUtil.class, "updateNode",
-				_updateNodeParameterTypes17);
+				_updateNodeParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, nodeId, name, description, serviceContext);
@@ -744,19 +786,23 @@ public class WikiNodeServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _getNodesCountParameterTypes11 =
 		new Class[] {long.class, int.class};
-	private static final Class<?>[] _importPagesParameterTypes12 = new Class[] {
+	private static final Class<?>[]
+		_getWikiNodeByExternalReferenceCodeParameterTypes12 = new Class[] {
+			long.class, String.class
+		};
+	private static final Class<?>[] _importPagesParameterTypes13 = new Class[] {
 		long.class, String.class, java.io.InputStream[].class,
 		java.util.Map.class
 	};
-	private static final Class<?>[] _moveNodeToTrashParameterTypes13 =
+	private static final Class<?>[] _moveNodeToTrashParameterTypes14 =
 		new Class[] {long.class};
-	private static final Class<?>[] _restoreNodeFromTrashParameterTypes14 =
+	private static final Class<?>[] _restoreNodeFromTrashParameterTypes15 =
 		new Class[] {long.class};
-	private static final Class<?>[] _subscribeNodeParameterTypes15 =
+	private static final Class<?>[] _subscribeNodeParameterTypes16 =
 		new Class[] {long.class};
-	private static final Class<?>[] _unsubscribeNodeParameterTypes16 =
+	private static final Class<?>[] _unsubscribeNodeParameterTypes17 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateNodeParameterTypes17 = new Class[] {
+	private static final Class<?>[] _updateNodeParameterTypes18 = new Class[] {
 		long.class, String.class, String.class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};

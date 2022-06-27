@@ -83,6 +83,11 @@ public interface KBFolderService extends BaseService {
 	public KBFolder getKBFolder(long kbFolderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder getKBFolderByExternalReferenceCode(
+			long siteId, String externalReferenceCode)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder getKBFolderByUrlTitle(
 			long groupId, long parentKbFolderId, String urlTitle)
 		throws PortalException;

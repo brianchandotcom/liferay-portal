@@ -947,35 +947,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		return expirationDate;
 	}
 
-	private void _getUrlTitleChangedMessage(
-		ActionRequest actionRequest, String originalUrlTitle,
-		long fileEntryId) {
-
-		FriendlyURLEntry friendlyURLEntry =
-			_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
-				_classNameLocalService.getClassNameId(FileEntry.class),
-				fileEntryId);
-
-		String currentUrlTitle = friendlyURLEntry.getUrlTitle();
-
-		if (Validator.isNotNull(originalUrlTitle) &&
-			!currentUrlTitle.equals(
-				_friendlyURLNormalizer.normalizeWithEncoding(
-					originalUrlTitle))) {
-
-			MultiSessionMessages.add(
-				actionRequest, "friendlyURLChanged",
-				_language.format(
-					_portal.getHttpServletRequest(actionRequest),
-					"the-friendly-url-x-was-changed-to-x-to-ensure-uniqueness",
-					new Object[] {
-						"<strong>" + _html.escapeURL(originalUrlTitle) +
-							"</strong>",
-						"<strong>" + currentUrlTitle + "</strong>"
-					}));
-		}
-	}
-
 	private Date _getReviewDate(
 			UploadPortletRequest uploadPortletRequest,
 			boolean neverReviewDefaultValue, TimeZone timeZone)
@@ -1032,6 +1003,35 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
+	}
+
+	private void _getUrlTitleChangedMessage(
+		ActionRequest actionRequest, String originalUrlTitle,
+		long fileEntryId) {
+
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+				_classNameLocalService.getClassNameId(FileEntry.class),
+				fileEntryId);
+
+		String currentUrlTitle = friendlyURLEntry.getUrlTitle();
+
+		if (Validator.isNotNull(originalUrlTitle) &&
+			!currentUrlTitle.equals(
+				_friendlyURLNormalizer.normalizeWithEncoding(
+					originalUrlTitle))) {
+
+			MultiSessionMessages.add(
+				actionRequest, "friendlyURLChanged",
+				_language.format(
+					_portal.getHttpServletRequest(actionRequest),
+					"the-friendly-url-x-was-changed-to-x-to-ensure-uniqueness",
+					new Object[] {
+						"<strong>" + _html.escapeURL(originalUrlTitle) +
+							"</strong>",
+						"<strong>" + currentUrlTitle + "</strong>"
+					}));
+		}
 	}
 
 	private void _handleUploadException(

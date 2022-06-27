@@ -723,11 +723,21 @@ definition {
 	}
 
 	@description = "Verify that the user is able to define the Resource Action"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanDefineResourceAction {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDefineResourceAction";
 
-		// TODO CanDefineResourceAction pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+			assignmentType = "Resource Actions",
+			resourceActionsText = "Test");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Resource Actions: Test");
 
 	}
 

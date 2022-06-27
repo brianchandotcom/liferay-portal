@@ -247,6 +247,20 @@ public class MBSuspiciousActivityPersistenceTest {
 	}
 
 	@Test
+	public void testCountByThreadId() throws Exception {
+		_persistence.countByThreadId(RandomTestUtil.nextLong());
+
+		_persistence.countByThreadId(0L);
+	}
+
+	@Test
+	public void testCountByMessagedId() throws Exception {
+		_persistence.countByMessagedId(RandomTestUtil.nextLong());
+
+		_persistence.countByMessagedId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBSuspiciousActivity newMBSuspiciousActivity =
 			addMBSuspiciousActivity();

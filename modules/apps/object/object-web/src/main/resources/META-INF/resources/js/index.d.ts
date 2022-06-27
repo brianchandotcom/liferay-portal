@@ -156,6 +156,11 @@ interface PredefinedValue {
 	value: string;
 }
 
+interface LabelValueObject {
+	label: string;
+	value: string;
+}
+
 interface ObjectDefinitionsRelationship {
 	id: number;
 	label: string;

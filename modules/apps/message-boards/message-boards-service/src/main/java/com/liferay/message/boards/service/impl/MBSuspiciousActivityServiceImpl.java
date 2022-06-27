@@ -78,6 +78,13 @@ public class MBSuspiciousActivityServiceImpl
 	public int countAll() {
 		return _mbSuspiciousActivityLocalService.countAll();
 	}
+	@Override
+	public MBSuspiciousActivity toggleValidated(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException {
+
+		return _mbSuspiciousActivityLocalService.toggleValidated(suspiciousActivityId);
+
+	}
 
 	@Reference
 	MBSuspiciousActivityLocalService _mbSuspiciousActivityLocalService;

@@ -39,11 +39,17 @@ definition {
 			ACUtils.changePagination(itemsPerPage = "5");
 		}
 
+		task ("Check first 5 properties appear on first page") {
+			var propertyList1 = "Property Name 2,Property Name 3,Property Name 4,Property Name 5,Property Name 6";
+
+			ACUtils.assertItemsName(itemList = "${propertyList1}");
+		}
+
 		task ("Click next page") {
 			ACUtils.checkPreviousNextButton(nextButton = "true");
 		}
 
-		task ("Check that the existing properties in the AC appear in the list") {
+		task ("Check last property appear on second page") {
 			ACUtils.assertItemsName(itemList = "Property Name 1");
 		}
 	}

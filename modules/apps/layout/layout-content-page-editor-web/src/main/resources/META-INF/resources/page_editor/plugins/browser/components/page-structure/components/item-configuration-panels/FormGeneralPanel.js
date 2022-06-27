@@ -256,10 +256,10 @@ function SuccessMessageOptions({item, onValueSelect}) {
 
 			{selectedSource === LAYOUT_OPTION && (
 				<LayoutSelector
-					mappedLayout={successMessageConfig}
+					mappedLayout={successMessageConfig?.layout}
 					onLayoutSelect={(layout) =>
 						onValueSelect({
-							successMessage: {...layout},
+							successMessage: {layout},
 						})
 					}
 				/>
@@ -377,7 +377,7 @@ function getSelectedOption(successMessageConfig) {
 		return EMBEDDED_OPTION;
 	}
 
-	if (successMessageConfig.layoutUuid) {
+	if (successMessageConfig.layout?.layoutUuid) {
 		return LAYOUT_OPTION;
 	}
 

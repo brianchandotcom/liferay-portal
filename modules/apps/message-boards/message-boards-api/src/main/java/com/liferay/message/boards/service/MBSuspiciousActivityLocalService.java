@@ -15,6 +15,7 @@
 package com.liferay.message.boards.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.message.boards.exception.NoSuchSuspiciousActivityException;
 import com.liferay.message.boards.model.MBSuspiciousActivity;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -87,6 +88,8 @@ public interface MBSuspiciousActivityLocalService
 	public MBSuspiciousActivity addOrUpdateSuspiciousActivity(
 			long userId, long messageId, String description, String type)
 		throws PortalException;
+
+	public int countAll();
 
 	/**
 	 * Creates a new message boards suspicious activity with the primary key. Does not add the message boards suspicious activity to the database.
@@ -228,6 +231,14 @@ public interface MBSuspiciousActivityLocalService
 	public MBSuspiciousActivity fetchMBSuspiciousActivityByUuidAndGroupId(
 		String uuid, long groupId);
 
+	public List<MBSuspiciousActivity> findAll();
+
+	public MBSuspiciousActivity findByPrimaryKey(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException;
+
+	public MBSuspiciousActivity findByU_M(long userId, long messageId)
+		throws NoSuchSuspiciousActivityException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -328,6 +339,9 @@ public interface MBSuspiciousActivityLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public MBSuspiciousActivity remove(long suspiciousActivityId)
+		throws NoSuchSuspiciousActivityException;
 
 	/**
 	 * Updates the message boards suspicious activity in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

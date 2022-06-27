@@ -69,6 +69,10 @@ public class MBSuspiciousActivityLocalServiceUtil {
 			userId, messageId, description, type);
 	}
 
+	public static int countAll() {
+		return getService().countAll();
+	}
+
 	/**
 	 * Creates a new message boards suspicious activity with the primary key. Does not add the message boards suspicious activity to the database.
 	 *
@@ -240,6 +244,25 @@ public class MBSuspiciousActivityLocalServiceUtil {
 			uuid, groupId);
 	}
 
+	public static List<MBSuspiciousActivity> findAll() {
+		return getService().findAll();
+	}
+
+	public static MBSuspiciousActivity findByPrimaryKey(
+			long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().findByPrimaryKey(suspiciousActivityId);
+	}
+
+	public static MBSuspiciousActivity findByU_M(long userId, long messageId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().findByU_M(userId, messageId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -367,6 +390,13 @@ public class MBSuspiciousActivityLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static MBSuspiciousActivity remove(long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getService().remove(suspiciousActivityId);
 	}
 
 	/**

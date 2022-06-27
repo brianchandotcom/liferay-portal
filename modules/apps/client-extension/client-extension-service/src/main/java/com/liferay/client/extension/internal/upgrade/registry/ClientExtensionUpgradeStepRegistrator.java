@@ -18,8 +18,8 @@ import com.liferay.client.extension.internal.upgrade.v3_0_0.ClassNamesUpgradePro
 import com.liferay.client.extension.internal.upgrade.v3_1_0.util.ClientExtensionEntryRelTable;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -36,8 +36,8 @@ public class ClientExtensionUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.register(
 			"1.0.0", "1.0.1",
-			new com.liferay.client.extension.internal.upgrade.v1_0_1.
-				RemoteAppEntryUpgradeProcess());
+			UpgradeProcessFactory.alterColumnTypes(
+				"RemoteAppEntry", "VARCHAR(1024) null", "url"));
 
 		registry.register(
 			"1.0.1", "2.0.0",
@@ -51,8 +51,8 @@ public class ClientExtensionUpgradeStepRegistrator
 
 		registry.register(
 			"2.1.0", "2.2.0",
-			new com.liferay.client.extension.internal.upgrade.v2_2_0.
-				RemoteAppEntryUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"RemoteAppEntry", "friendlyURLMapping VARCHAR(75)"));
 
 		registry.register(
 			"2.2.0", "2.3.0",
@@ -99,7 +99,7 @@ public class ClientExtensionUpgradeStepRegistrator
 
 		registry.register(
 			"3.3.0", "3.4.0",
-			UpgradeStepFactory.addColumns(
+			UpgradeProcessFactory.addColumns(
 				"ClientExtensionEntryRel", "typeSettings TEXT null"));
 	}
 

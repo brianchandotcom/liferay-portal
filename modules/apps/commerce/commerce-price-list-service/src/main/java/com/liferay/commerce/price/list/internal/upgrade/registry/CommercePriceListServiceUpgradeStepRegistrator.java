@@ -14,13 +14,16 @@
 
 package com.liferay.commerce.price.list.internal.upgrade.registry;
 
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.internal.upgrade.v1_1_0.CommercePriceEntryUpgradeProcess;
 import com.liferay.commerce.price.list.internal.upgrade.v1_2_0.util.CommercePriceListAccountRelTable;
-import com.liferay.commerce.price.list.internal.upgrade.v2_0_0.CommerceTierPriceEntryUpgradeProcess;
 import com.liferay.commerce.price.list.internal.upgrade.v2_0_0.util.CommercePriceListCommerceAccountGroupRelTable;
 import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.util.CommercePriceListChannelRelTable;
 import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.util.CommercePriceListDiscountRelTable;
 import com.liferay.commerce.price.list.internal.upgrade.v2_2_0.util.CommercePriceListOrderTypeRelTable;
+import com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl;
+import com.liferay.commerce.price.list.model.impl.CommercePriceListAccountRelModelImpl;
+import com.liferay.commerce.price.list.model.impl.CommerceTierPriceEntryModelImpl;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -31,6 +34,8 @@ import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -62,28 +67,77 @@ public class CommercePriceListServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.2.0", "2.0.0",
-			new com.liferay.commerce.price.list.internal.upgrade.v2_0_0.
-				CommercePriceEntryUpgradeProcess(),
-			new com.liferay.commerce.price.list.internal.upgrade.v2_0_0.
-				CommercePriceListAccountRelUpgradeProcess(),
+			UpgradeProcessFactory.dropColumns(
+				CommercePriceEntryModelImpl.TABLE_NAME, "groupId"),
+			UpgradeProcessFactory.dropColumns(
+				CommercePriceListAccountRelModelImpl.TABLE_NAME, "groupId"),
 			CommercePriceListCommerceAccountGroupRelTable.create(),
-			new CommerceTierPriceEntryUpgradeProcess());
+			UpgradeProcessFactory.dropColumns(
+				CommerceTierPriceEntryModelImpl.TABLE_NAME, "groupId"));
 
 		registry.register(
 			"2.0.0", "2.1.0",
-			new com.liferay.commerce.price.list.internal.upgrade.v2_1_0.
-				CommercePriceEntryUpgradeProcess(),
-			new com.liferay.commerce.price.list.internal.upgrade.v2_1_0.
-				CommercePriceListUpgradeProcess(),
-			new com.liferay.commerce.price.list.internal.upgrade.v2_1_0.
-				CommerceTierPriceEntryUpgradeProcess(),
+			UpgradeProcessFactory.addColumns(
+				"CommercePriceEntry", "discountDiscovery BOOLEAN",
+				"discountLevel1 DECIMAL(30,16)",
+				"discountLevel2 DECIMAL(30,16)",
+				"discountLevel3 DECIMAL(30,16)",
+				"discountLevel4 DECIMAL(30,16)", "bulkPricing BOOLEAN",
+				"displayDate DATE", "expirationDate DATE", "status INTEGER",
+				"statusByUserId LONG", "statusByUserName VARCHAR(75)",
+				"statusDate DATE"),
+			UpgradeProcessFactory.runSQL(
+				"UPDATE CommercePriceEntry SET bulkPricing = [$TRUE$]"),
+			UpgradeProcessFactory.runSQL(
+				"UPDATE CommercePriceEntry SET displayDate = lastPublishDate"),
+			UpgradeProcessFactory.runSQL(
+				"UPDATE CommercePriceEntry SET status = " +
+					WorkflowConstants.STATUS_APPROVED),
+			UpgradeProcessFactory.runSQL(
+				"UPDATE CommercePriceEntry SET statusByUserId = userId"),
+			UpgradeProcessFactory.runSQL(
+				"UPDATE CommercePriceEntry SET statusByUserName = userName"),
+			UpgradeProcessFactory.runSQL(
+				"UPDATE CommercePriceEntry SET statusDate = modifiedDate"),
+			UpgradeProcessFactory.addColumns(
+				"CommercePriceList", "type_ VARCHAR(75)",
+				"catalogBasePriceList BOOLEAN"),
+			UpgradeProcessFactory.runSQL(
+				"UPDATE CommercePriceList SET type_ = '" +
+					CommercePriceListConstants.TYPE_PRICE_LIST + "'"),
+			UpgradeProcessFactory.runSQL(
+				"UPDATE CommercePriceList SET catalogBasePriceList = " +
+					"[$FALSE$]"),
+			UpgradeProcessFactory.addColumns(
+				"CommerceTierPriceEntry", "discountDiscovery BOOLEAN",
+				"discountLevel1 DECIMAL(30,16)",
+				"discountLevel2 DECIMAL(30,16)",
+				"discountLevel3 DECIMAL(30,16)",
+				"discountLevel4 DECIMAL(30,16)", "displayDate DATE",
+				"expirationDate DATE", "status INTEGER", "statusByUserId LONG",
+				"statusByUserName VARCHAR(75)", "statusDate DATE"),
+			UpgradeProcessFactory.runSQL(
+				"update CommerceTierPriceEntry set displayDate = " +
+					"lastPublishDate"),
+			UpgradeProcessFactory.runSQL(
+				"update CommerceTierPriceEntry set status = " +
+					WorkflowConstants.STATUS_APPROVED),
+			UpgradeProcessFactory.runSQL(
+				"update CommerceTierPriceEntry set statusByUserId = userId"),
+			UpgradeProcessFactory.runSQL(
+				"update CommerceTierPriceEntry set statusByUserName = " +
+					"userName"),
+			UpgradeProcessFactory.runSQL(
+				"update CommerceTierPriceEntry set statusDate = modifiedDate"),
 			CommercePriceListChannelRelTable.create(),
 			CommercePriceListDiscountRelTable.create());
 
 		registry.register(
 			"2.1.0", "2.1.1",
-			new com.liferay.commerce.price.list.internal.upgrade.v2_1_1.
-				CommercePriceListUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"CommercePriceList", "netPrice BOOLEAN"),
+			UpgradeProcessFactory.runSQL(
+				"update CommercePriceList set netPrice = [$TRUE$]"));
 
 		registry.register(
 			"2.1.1", "2.1.2",

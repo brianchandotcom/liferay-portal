@@ -16,14 +16,12 @@ package com.liferay.oauth2.provider.internal.upgrade.registry;
 
 import com.liferay.oauth2.provider.internal.upgrade.v2_0_0.OAuth2ApplicationScopeAliasesUpgradeProcess;
 import com.liferay.oauth2.provider.internal.upgrade.v3_2_0.OAuth2ApplicationFeatureUpgradeProcess;
-import com.liferay.oauth2.provider.internal.upgrade.v4_0_1.OAuth2ApplicationAllowedGrantTypesUpgradeProcess;
-import com.liferay.oauth2.provider.internal.upgrade.v4_1_0.OAuth2ApplicationClientAuthenticationMethodUpgradeProcess;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,45 +37,45 @@ public class OAuth2ServiceUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.register(
 			"1.0.0", "1.1.0",
-			new com.liferay.oauth2.provider.internal.upgrade.v1_1_0.
-				OAuth2ScopeGrantUpgradeProcess());
+			UpgradeProcessFactory.alterColumnTypes(
+				"OAuth2ScopeGrant", "VARCHAR(240) null", "scope"));
 
 		registry.register(
 			"1.1.0", "1.2.0",
-			UpgradeStepFactory.addColumns(
+			UpgradeProcessFactory.addColumns(
 				"OAuth2Authorization", "remoteHostInfo VARCHAR(255) null"));
 
 		registry.register(
 			"1.2.0", "1.3.0",
-			UpgradeStepFactory.addColumns(
+			UpgradeProcessFactory.addColumns(
 				"OAuth2ScopeGrant", "scopeAliases TEXT null"));
 
 		registry.register(
 			"1.3.0", "2.0.0",
 			new OAuth2ApplicationScopeAliasesUpgradeProcess(
 				_companyLocalService, _scopeLocator),
-			UpgradeStepFactory.dropColumns(
+			UpgradeProcessFactory.dropColumns(
 				"OAuth2ApplicationScopeAliases", "scopeAliases",
 				"scopeAliasesHash"));
 
 		registry.register(
 			"2.0.0", "3.0.0",
-			UpgradeStepFactory.addColumns(
+			UpgradeProcessFactory.addColumns(
 				"OAuth2Application", "clientCredentialUserId LONG"),
-			UpgradeStepFactory.addColumns(
+			UpgradeProcessFactory.addColumns(
 				"OAuth2Application",
 				"clientCredentialUserName VARCHAR(75) null"),
-			UpgradeStepFactory.runSQL(
+			UpgradeProcessFactory.runSQL(
 				"update OAuth2Application set clientCredentialUserId = " +
 					"userId, clientCredentialUserName = userName"));
 
 		registry.register(
 			"3.0.0", "3.1.0",
-			UpgradeStepFactory.addColumns(
+			UpgradeProcessFactory.addColumns(
 				"OAuth2Application", "rememberDevice BOOLEAN"),
-			UpgradeStepFactory.addColumns(
+			UpgradeProcessFactory.addColumns(
 				"OAuth2Application", "trustedApplication BOOLEAN"),
-			UpgradeStepFactory.addColumns(
+			UpgradeProcessFactory.addColumns(
 				"OAuth2Authorization",
 				"rememberDeviceContent VARCHAR(75) null"));
 
@@ -86,11 +84,24 @@ public class OAuth2ServiceUpgradeStepRegistrator
 
 		registry.register(
 			"4.0.0", "4.0.1",
-			new OAuth2ApplicationAllowedGrantTypesUpgradeProcess());
+			UpgradeProcessFactory.alterColumnTypes(
+				"OAuth2Application", "VARCHAR(128) null", "allowedGrantTypes"));
 
 		registry.register(
 			"4.0.1", "4.1.0",
-			new OAuth2ApplicationClientAuthenticationMethodUpgradeProcess());
+			UpgradeProcessFactory.addColumns(
+				"OAuth2Application",
+				"clientAuthenticationMethod VARCHAR(75) null"),
+			UpgradeProcessFactory.runSQL(
+				"update OAuth2Application set clientAuthenticationMethod = " +
+				"'client_secret_post' where (clientAuthenticationMethod " +
+				"is null or clientAuthenticationMethod = '');"),
+			UpgradeProcessFactory.runSQL(
+				"update OAuth2Application set clientAuthenticationMethod = " +
+				"'none' where (clientSecret is null OR clientSecret = " +
+				"'');"),
+			UpgradeProcessFactory.addColumns(
+				"OAuth2Application", "jwks VARCHAR(3999) null"));
 
 		registry.register(
 			"4.1.0", "4.2.0",

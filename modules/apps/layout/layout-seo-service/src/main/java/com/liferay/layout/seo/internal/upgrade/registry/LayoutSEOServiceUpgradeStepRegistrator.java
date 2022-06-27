@@ -14,9 +14,9 @@
 
 package com.liferay.layout.seo.internal.upgrade.registry;
 
-import com.liferay.layout.seo.internal.upgrade.v2_0_0.SEOEntryUpgradeProcess;
 import com.liferay.layout.seo.internal.upgrade.v2_1_0.SchemaUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,7 +30,16 @@ public class LayoutSEOServiceUpgradeStepRegistrator
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("1.0.0", "2.0.0", new SEOEntryUpgradeProcess());
+		registry.register(
+			"1.0.0", "2.0.0",
+			UpgradeProcessFactory.alterColumnName(
+				"LayoutSEOEntry", "enabled", "canonicalURLEnabled BOOLEAN"),
+			UpgradeProcessFactory.addColumns(
+				"LayoutSEOEntry", "openGraphTitleEnabled BOOLEAN",
+				"openGraphTitle STRING null",
+				"openGraphDescriptionEnabled BOOLEAN",
+				"openGraphDescription STRING null",
+				"openGraphImageFileEntryId LONG"));
 
 		registry.register("2.0.0", "2.1.0", new SchemaUpgradeProcess());
 

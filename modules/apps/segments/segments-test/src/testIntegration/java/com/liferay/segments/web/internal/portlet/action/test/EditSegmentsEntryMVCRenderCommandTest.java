@@ -80,6 +80,8 @@ public class EditSegmentsEntryMVCRenderCommandTest {
 
 		User user = TestPropsValues.getUser();
 
+		mockLiferayPortletRenderRequest.setAttribute(WebKeys.USER, user);
+
 		SegmentsEntry segmentsEntry = _addSegmentEntry(
 			String.format("(firstName eq '%s')", user.getFirstName()));
 

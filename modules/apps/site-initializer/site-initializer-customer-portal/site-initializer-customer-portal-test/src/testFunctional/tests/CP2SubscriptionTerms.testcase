@@ -3,12 +3,13 @@ definition {
 
 	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "false";
-	property portal.upstream = "false";
+	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Customer Portal";
+	property osgi.modules.includes = "site-initializer-customer-portal";
 
-	var testSiteName = "Test Customer Portal Name";
-	var testSiteURL = "test-customer-portal-name";
+	var testSiteName = "Customer Portal Name";
+	var testSiteURL = "customer-portal-name";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -44,7 +45,7 @@ definition {
 	@description = "LPS-144449 - Verify if when the user clicks on a subscription card its a pop-up showing the detailed terms."
 	@priority = "4"
 	test ClickingSubscriptionCardPopUpShows {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -62,7 +63,7 @@ definition {
 	@description = "LPS-144483 - Verify there if status Active shows up."
 	@priority = "3"
 	test IfActiveStatusShowsUp {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -86,7 +87,7 @@ definition {
 	@description = "LPS-144484 - Verify there if status Expired shows up."
 	@priority = "2"
 	test IfExpiredStatusShowsUp {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 02");
 
@@ -100,7 +101,7 @@ definition {
 	@description = "LPS-144485 - Verify there if status Future shows up."
 	@priority = "2"
 	test IfFutureStatusShowsUp {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -124,7 +125,7 @@ definition {
 	@description = "LPS-144452 - Check if when the user clicks out of the modal it closes."
 	@priority = "3"
 	test ModalCloseIfClickedOut {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -148,7 +149,7 @@ definition {
 	test ProvisionedColumnAppearsForCommerce {
 		SetWindowSize(value1 = "1920,1080");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 04");
 
@@ -171,7 +172,7 @@ definition {
 	test ProvisionedColumnAppearsForDXP {
 		SetWindowSize(value1 = "1920,1080");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 02");
 
@@ -196,7 +197,7 @@ definition {
 	@description = "LPS-144470 - Verify that the Provisioned column does not appear for DXP Cloud"
 	@priority = "3"
 	test ProvisionedColumnAppearsForDXPCloud {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 
@@ -217,7 +218,7 @@ definition {
 	@description = "LPS-144454 - Verify there is value under the Start - End Date column."
 	@priority = "4"
 	test ValueUnderColumnFields {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		CustomerPortal.enterOnProject(title = "Test Account 01");
 

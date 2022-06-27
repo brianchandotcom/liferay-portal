@@ -6,9 +6,10 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Customer Portal";
+	property osgi.modules.includes = "site-initializer-customer-portal";
 
-	var testSiteName = "Test Customer Portal Name";
-	var testSiteURL = "test-customer-portal-name";
+	var testSiteName = "Customer Portal Name";
+	var testSiteURL = "customer-portal-name";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -52,7 +53,7 @@ definition {
 			project = "PROJECT03",
 			value1 = "Delete");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		AssertElementPresent(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
@@ -63,7 +64,7 @@ definition {
 	@description = "LPS-143778 - Assert the name of the project card."
 	@priority = "4"
 	test AssertCardProjectNameMoreThan5 {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		AssertElementPresent(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
@@ -84,7 +85,7 @@ definition {
 			project = "PROJECT04",
 			value1 = "Delete");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		AssertElementPresent(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
@@ -95,7 +96,7 @@ definition {
 	@description = "LPS-143779 - Assert if the project card contains Status."
 	@priority = "4"
 	test AssertCardStatusMoreThan5 {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		AssertElementPresent(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
@@ -116,7 +117,7 @@ definition {
 			project = "PROJECT04",
 			value1 = "Delete");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		AssertElementPresent(
 			date = "Jan 11, 2022",
@@ -126,19 +127,11 @@ definition {
 	@description = "LPS-143780 - Assert if the project card contains Subscription End Date."
 	@priority = "4"
 	test AssertCardSubscriptionEndDateMoreThan5 {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		AssertElementPresent(
 			date = "Jan 11, 2022",
 			locator1 = "CP2LiferayContact#PROJECT_EXPIRATION_DATE");
-	}
-
-	@description = "LPS-143797 - Verify if for less than 5 projects the search bar it's not visible."
-	@priority = "2"
-	test AssertSearchBarNotVisible {
-
-		// TODO LPS-143797 Verify if for less than 5 projects the search bar it's not visible.
-
 	}
 
 	@description = "LPS-143785 - Check if when the user clicks on the card he is directed to another page."
@@ -146,17 +139,11 @@ definition {
 	test VerifyCardDirectsToAnotherPageMoreThan5 {
 		property portal.upstream = "quarantine";
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		Click(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
 			title = "Test Account 01");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "CP2LiferayContact#SUBSCRIPTIONS_PAGE");
 	}
@@ -164,7 +151,7 @@ definition {
 	@description = "LPS-143781 - Verify if the projects are displayed as a list."
 	@priority = "5"
 	test VerifyIfProjectsDisplayedAsAList {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		AssertElementPresent(locator1 = "CP2ProjectSelection#MORE_FIVE_PROJECTS");
 	}
@@ -182,7 +169,7 @@ definition {
 			project = "PROJECT04",
 			value1 = "Delete");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		AssertElementPresent(locator1 = "CP2ProjectSelection#LESS_FIVE_PROJECTS");
 	}
@@ -190,7 +177,7 @@ definition {
 	@description = "LPS-143782 - Verify if when more than 5 projects are chosen the search bar will be visible."
 	@priority = "3"
 	test VerifyIfSearchIsVisible {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		AssertElementPresent(locator1 = "CP2LiferayContact#SEARCH_PROJECT");
 	}
@@ -198,7 +185,7 @@ definition {
 	@description = "LPS-143784 - Verify if the number of projects is being showed by side of the search bar."
 	@priority = "3"
 	test VerifyProjectsNumberBySideOfSearchBar {
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		AssertElementPresent(
 			locator1 = "CP2LiferayContact#NUMBER_PROJECTS",
@@ -218,7 +205,7 @@ definition {
 			project = "PROJECT04",
 			value1 = "Delete");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		AssertElementPresent(
 			locator1 = "CP2LiferayContact#WELCOME_BANNER",
@@ -228,8 +215,6 @@ definition {
 	@description = "LPS-143794 - Check if when the user clicks on the card he is directed to another page."
 	@priority = "4"
 	test VerifyWhenCardIsClickedGoesAnotherPage {
-		property portal.upstream = "quarantine";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -240,17 +225,11 @@ definition {
 			project = "PROJECT04",
 			value1 = "Delete");
 
-		ApplicationsMenu.gotoSite(key_site = "Test Customer Portal Name");
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
 
 		Click(
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
 			title = "Test Account 01");
-
-		CustomerPortal.loginOktaToUpdateCP();
-
-		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "CP2LiferayContact#SUBSCRIPTIONS_PAGE");
 	}

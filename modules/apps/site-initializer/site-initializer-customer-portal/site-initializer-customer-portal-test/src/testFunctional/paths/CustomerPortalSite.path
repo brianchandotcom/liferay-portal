@@ -215,6 +215,11 @@
 	<td>//div[contains(@class, 'mb-5') and contains(.,'Activation Status')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>YOUR_ACCOUNT</td>
+	<td>//h1[contains(@class, 'no-subtitle') and contains(text(), 'Log Into Your Account')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

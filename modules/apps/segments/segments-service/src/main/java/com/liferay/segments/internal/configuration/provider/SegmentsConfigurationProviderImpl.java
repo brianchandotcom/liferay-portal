@@ -21,12 +21,14 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
@@ -39,6 +41,8 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.felix.cm.file.ConfigurationHandler;
 
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
@@ -87,6 +91,50 @@ public class SegmentsConfigurationProviderImpl
 		}
 
 		return null;
+	}
+
+	@Override
+	public byte[] getSegmentsCompanyConfigurationAsBytes(long companyId)
+		throws ConfigurationException {
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		Configuration configuration = _getSegmentsCompanyConfiguration(
+			companyId);
+
+		try {
+			ConfigurationHandler.write(
+				unsyncByteArrayOutputStream, configuration.getProperties());
+		}
+		catch (IOException ioException) {
+			throw new ConfigurationException(ioException);
+		}
+
+		return unsyncByteArrayOutputStream.toByteArray();
+	}
+
+	@Override
+	public String getSegmentsCompanyConfigurationFileName(long companyId)
+		throws ConfigurationException {
+
+		Configuration configuration = _getSegmentsCompanyConfiguration(
+			companyId);
+
+		if (configuration == null) {
+			return null;
+		}
+
+		String pid = configuration.getPid();
+		String factoryPid = configuration.getFactoryPid();
+
+		String factoryInstanceId = pid.substring(factoryPid.length() + 1);
+
+		factoryInstanceId = StringUtil.removeSubstring(
+			factoryInstanceId, "scoped.");
+
+		return StringBundler.concat(
+			factoryPid, "_", factoryInstanceId, ".config");
 	}
 
 	@Override

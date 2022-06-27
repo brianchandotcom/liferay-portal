@@ -706,7 +706,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write(
 			LayoutStructureItemCSSUtil.getStyledLayoutStructureItemCssClasses(
 				formStyledLayoutStructureItem));
-		jspWriter.write("\" method=\"POST=\" style=\"");
+		jspWriter.write("\" method=\"POST\" style=\"");
 		jspWriter.write(
 			renderLayoutStructureDisplayContext.getStyle(
 				formStyledLayoutStructureItem));

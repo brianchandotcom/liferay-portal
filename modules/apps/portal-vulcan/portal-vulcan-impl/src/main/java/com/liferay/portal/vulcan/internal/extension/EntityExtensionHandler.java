@@ -14,16 +14,21 @@
 
 package com.liferay.portal.vulcan.internal.extension;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
+import com.liferay.portal.vulcan.extension.validation.PropertyValidator;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.validation.ValidationException;
 
 /**
  * @author Javier de Arcos
@@ -93,8 +98,66 @@ public class EntityExtensionHandler {
 		long companyId, Map<String, Serializable> extendedProperties,
 		boolean partialUpdate) {
 
-		// TODO
+		Map<String, PropertyDefinition> propertyDefinitionMap = new HashMap<>();
 
+		for (ExtensionProvider extensionProvider : _extensionProviders) {
+			propertyDefinitionMap.putAll(
+				extensionProvider.getExtendedPropertyDefinitions(
+					companyId, _className));
+		}
+
+		List<String> unknownProperties = new ArrayList<>();
+
+		for (Map.Entry<String, Serializable> extendedPropertyEntry :
+				extendedProperties.entrySet()) {
+
+			String extendedPropertyName = extendedPropertyEntry.getKey();
+
+			if (!propertyDefinitionMap.containsKey(extendedPropertyName)) {
+				unknownProperties.add(extendedPropertyName);
+
+				continue;
+			}
+
+			PropertyDefinition propertyDefinition = propertyDefinitionMap.get(
+				extendedPropertyName);
+
+			PropertyValidator propertyValidator =
+				propertyDefinition.getPropertyValidator();
+
+			propertyValidator.validate(
+				propertyDefinition, extendedPropertyEntry.getValue());
+
+			propertyDefinitionMap.remove(extendedPropertyName);
+		}
+
+		if (ListUtil.isNotEmpty(unknownProperties)) {
+			throw new ValidationException(
+				"The properties [" + ListUtil.toString(unknownProperties, "") +
+					"] are unknown");
+		}
+
+		if (partialUpdate) {
+			return;
+		}
+
+		List<String> missingMandatoryProperties = new ArrayList<>();
+
+		for (PropertyDefinition propertyDefinition :
+				propertyDefinitionMap.values()) {
+
+			if (propertyDefinition.isRequired()) {
+				missingMandatoryProperties.add(
+					propertyDefinition.getPropertyName());
+			}
+		}
+
+		if (ListUtil.isNotEmpty(missingMandatoryProperties)) {
+			throw new ValidationException(
+				"The properties [" +
+					ListUtil.toString(missingMandatoryProperties, "") +
+						"] are mandatory");
+		}
 	}
 
 	private final String _className;

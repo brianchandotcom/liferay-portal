@@ -53,6 +53,144 @@ definition {
 		takeScreenshot();
 	}
 
+	@description = "Smoke test to verify portlet configuration is available, look and feel is available"
+	@priority = "5"
+	@refactordone
+	test CanConfigurePortletUI {
+		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
+		property portal.acceptance = "true";
+
+		task ("Given a portlet on public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				layoutTemplate = "1 Column");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				widgetName = "Clay Sample");
+
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
+		}
+
+		task ("When viewing configuration menu of the portlet") {
+			Portlet.gotoPortletOptions(
+				portletName = "Clay Sample",
+				portletOption = "Configuration");
+
+			IFrame.selectConfigurationFrame();
+		}
+
+		task ("Then configuration iframe is present") {
+			AssertTextEquals(
+				key_navItem = "Sharing",
+				locator1 = "NavBar#NAV_ITEM_LINK",
+				value1 = "Sharing");
+
+			IFrame.closeFrame();
+		}
+
+		task ("When viewing the Look and Feel configuration") {
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Clay Sample",
+				portletOption = "Look and Feel Configuration");
+
+			IFrame.selectConfigurationFrame();
+		}
+
+		task ("Then the look and feel configuration iframe is present") {
+			var key_tab = "General";
+
+			AssertTextEquals(
+				locator1 = "NavTab#TAB_LINK",
+				value1 = "General");
+
+			IFrame.closeFrame();
+		}
+	}
+
+	@description = "Smoke test to verify portlet can be dragged and dropped"
+	@priority = "5"
+	@refactordone
+	test CanDragAndDropPortlet {
+		property app.server.types = "tomcat";
+		property database.types = "mysql";
+		property environment.acceptance = "true";
+		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
+		property portal.acceptance = "true";
+
+		task ("Given a portlet on public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				layoutTemplate = "2 Columns (50/50)");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				widgetName = "Clay Sample");
+
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
+		}
+
+		task ("Then able to drag and drop portlet to another column in page") {
+			Portlet.dragAndDropPortletToColumnPG(
+				columnNumberFrom = "1",
+				columnNumberTo = "2",
+				portletName = "Clay Sample");
+
+			Portlet.dragAndDropPortletToColumnPG(
+				columnNumberFrom = "2",
+				columnNumberTo = "1",
+				portletName = "Clay Sample");
+		}
+	}
+
+	@description = "Smoke test to verify portlet can be removed"
+	@priority = "5"
+	@refactordone
+	test CanRemovePortlet {
+		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
+		property portal.acceptance = "true";
+
+		task ("Given a portlet on public page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+
+			JSONLayout.updateLayoutTemplateOfPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				layoutTemplate = "1 Column");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page",
+				widgetName = "Clay Sample");
+
+			Navigator.gotoPage(pageName = "Clay Sample Test Page");
+		}
+
+		task ("When delete Clay Sample Portlet on Test Page") {
+			Portlet.deletePG(portletName = "Clay Sample");
+		}
+
+		task ("Then Clay Sample Portlet is not present on page") {
+			Portlet.viewNoSpecificPG(portletName = "Clay Sample");
+		}
+	}
+
 	@description = "This is a use case for LPS-70390."
 	@priority = "4"
 	@refactordone
@@ -147,85 +285,6 @@ definition {
 		Portlet.assertPortletHeader(portletName = "DLPortlet");
 
 		takeScreenshot();
-	}
-
-	@description = "Smoke test to verify portlet can be dragged and dropped, configuration is available, look and feel is available, and can be removed"
-	@priority = "5"
-	@refactordone
-	test PortletUISmoke {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "true";
-		property osgi.modules.includes = "frontend-taglib-clay-sample-web";
-		property portal.acceptance = "true";
-
-		task ("Add portlet to public page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page",
-				widgetName = "Clay Sample");
-		}
-
-		task ("Assert the 'Configuration' iframe of the portlet") {
-			Navigator.gotoPage(pageName = "Test Page");
-
-			Portlet.gotoPortletOptions(
-				portletName = "Clay Sample",
-				portletOption = "Configuration");
-
-			IFrame.selectConfigurationFrame();
-
-			AssertTextEquals(
-				key_navItem = "Sharing",
-				locator1 = "NavBar#NAV_ITEM_LINK",
-				value1 = "Sharing");
-
-			IFrame.closeFrame();
-		}
-
-		task ("Assert the 'Look and Feel' iframe of the Clay Sample portlet") {
-			Navigator.gotoPage(pageName = "Test Page");
-
-			Portlet.gotoPortletOptions(
-				portletName = "Clay Sample",
-				portletOption = "Look and Feel Configuration");
-
-			IFrame.selectConfigurationFrame();
-
-			var key_tab = "General";
-
-			AssertTextEquals(
-				locator1 = "NavTab#TAB_LINK",
-				value1 = "General");
-
-			IFrame.closeFrame();
-		}
-
-		task ("Assert able to drag and drop portlet") {
-			Navigator.gotoPage(pageName = "Test Page");
-
-			Portlet.dragAndDropPortletToColumnPG(
-				columnNumberFrom = "1",
-				columnNumberTo = "2",
-				portletName = "Clay Sample");
-
-			Portlet.dragAndDropPortletToColumnPG(
-				columnNumberFrom = "2",
-				columnNumberTo = "1",
-				portletName = "Clay Sample");
-		}
-
-		task ("Removes Clay Sample Portlet on Test Page") {
-			Navigator.gotoPage(pageName = "Test Page");
-
-			Portlet.deletePG(portletName = "Clay Sample");
-
-			Portlet.viewNoSpecificPG(portletName = "Clay Sample");
-		}
 	}
 
 	@description = "This is a use case for LPS-95157. Verify control menu on home page is styled correctly after refreshing page."

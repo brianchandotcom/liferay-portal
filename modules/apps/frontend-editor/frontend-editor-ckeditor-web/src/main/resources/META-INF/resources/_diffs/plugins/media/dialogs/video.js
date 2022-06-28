@@ -15,7 +15,7 @@
 /* eslint-disable @liferay/no-get-data-attribute */
 
 CKEDITOR.dialog.add('video', (editor) => {
-	var TPL_SCRIPT =
+	const TPL_SCRIPT =
 		'boundingBox: "#" + mediaId,' +
 		'height: {height},' +
 		'ogvUrl: "{ogvUrl}",' +
@@ -24,19 +24,19 @@ CKEDITOR.dialog.add('video', (editor) => {
 		'width: {width}';
 
 	function commitValue(videoNode, extraStyles) {
-		var instance = this;
+		const instance = this;
 
-		var id = instance.id;
-		var value = instance.getValue();
+		const id = instance.id;
+		let value = instance.getValue();
 
-		var scriptTPL = null;
-		var textScript = null;
+		let scriptTPL = null;
+		let textScript = null;
 
-		var videoHeight = videoNode.getAttribute('data-height');
-		var videoOgvUrl = videoNode.getAttribute('data-video-ogv-url');
-		var videoPoster = videoNode.getAttribute('data-poster');
-		var videoUrl = videoNode.getAttribute('data-video-url');
-		var videoWidth = videoNode.getAttribute('data-width');
+		const videoHeight = videoNode.getAttribute('data-height');
+		let videoOgvUrl = videoNode.getAttribute('data-video-ogv-url');
+		const videoPoster = videoNode.getAttribute('data-poster');
+		let videoUrl = videoNode.getAttribute('data-video-url');
+		const videoWidth = videoNode.getAttribute('data-width');
 
 		if (id === 'poster') {
 			videoNode.setAttribute('data-document-url', value);
@@ -78,8 +78,8 @@ CKEDITOR.dialog.add('video', (editor) => {
 				extraStyles.backgroundImage = 'url(' + value + ')';
 			}
 			else if (id === 'height' || id === 'width') {
-				var height = videoHeight;
-				var width = videoWidth;
+				let height = videoHeight;
+				let width = videoWidth;
 
 				if (id === 'height') {
 					height = value;
@@ -112,12 +112,12 @@ CKEDITOR.dialog.add('video', (editor) => {
 	}
 
 	function loadValue(videoNode) {
-		var instance = this;
+		const instance = this;
 
-		var id = instance.id;
+		const id = instance.id;
 
 		if (videoNode) {
-			var value = null;
+			let value = null;
 
 			if (id === 'poster') {
 				value = videoNode.getAttribute('data-document-url');
@@ -206,13 +206,13 @@ CKEDITOR.dialog.add('video', (editor) => {
 		minWidth: 400,
 
 		onOk() {
-			var instance = this;
+			const instance = this;
 
 			editor.plugins.media.onOkCallback(instance, editor, 'video');
 		},
 
 		onShow() {
-			var instance = this;
+			const instance = this;
 
 			editor.plugins.media.onShowCallback(instance, editor, 'video');
 		},

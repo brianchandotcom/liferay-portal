@@ -15,9 +15,9 @@
 AUI.add(
 	'liferay-portlet-segments-simulation',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var SegmentsSimulation = A.Component.create({
+		const SegmentsSimulation = A.Component.create({
 			ATTRS: {
 				deactivateSimulationUrl: {
 					validator: Lang.isString,
@@ -40,7 +40,7 @@ AUI.add(
 
 			prototype: {
 				_bindUI() {
-					var instance = this;
+					const instance = this;
 
 					instance._eventHandles = [];
 
@@ -58,7 +58,7 @@ AUI.add(
 						})
 					);
 
-					var form = instance.get('form');
+					const form = instance.get('form');
 
 					A.one('#' + form.id).delegate(
 						'click',
@@ -69,9 +69,9 @@ AUI.add(
 				},
 
 				_deactivateSimulation() {
-					var instance = this;
+					const instance = this;
 
-					var form = instance.get('form');
+					const form = instance.get('form');
 
 					Liferay.Util.fetch(
 						instance.get('deactivateSimulationUrl'),
@@ -85,7 +85,7 @@ AUI.add(
 				},
 
 				_simulateSegmentsEntries() {
-					var instance = this;
+					const instance = this;
 
 					Liferay.Util.fetch(
 						instance.get('simulateSegmentsEntriesUrl'),
@@ -109,13 +109,13 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					new A.EventHandle(instance._eventHandles).detach();
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._bindUI();
 				},

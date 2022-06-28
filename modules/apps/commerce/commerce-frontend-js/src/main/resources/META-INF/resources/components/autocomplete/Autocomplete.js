@@ -236,14 +236,14 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 		/>
 	) : (
 		<ClayDropDown.ItemList className="mb-0">
-			{items && items.length === 0 && (
+			{items && !items.length && (
 				<ClayDropDown.Item className="disabled">
 					{Liferay.Language.get('no-items-were-found')}
 				</ClayDropDown.Item>
 			)}
 
 			{items &&
-				items.length > 0 &&
+				!!items.length &&
 				items.map((item) => (
 					<ClayAutocomplete.Item
 						key={item.id || String(item[props.itemsKey])}

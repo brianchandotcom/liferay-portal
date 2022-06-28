@@ -15,26 +15,26 @@
 AUI.add(
 	'liferay-scheduler-event-recorder',
 	(A) => {
-		var AArray = A.Array;
-		var Lang = A.Lang;
+		const AArray = A.Array;
+		const Lang = A.Lang;
 
-		var CalendarWorkflow = Liferay.CalendarWorkflow;
+		const CalendarWorkflow = Liferay.CalendarWorkflow;
 
-		var isObject = Lang.isObject;
-		var isString = Lang.isString;
-		var isValue = Lang.isValue;
+		const isObject = Lang.isObject;
+		const isString = Lang.isString;
+		const isValue = Lang.isValue;
 
-		var toInt = function (value) {
+		const toInt = function (value) {
 			return Lang.toInt(value, 10, 0);
 		};
 
-		var STR_BLANK = '';
+		const STR_BLANK = '';
 
-		var STR_COMMA_SPACE = ', ';
+		const STR_COMMA_SPACE = ', ';
 
-		var CalendarUtil = Liferay.CalendarUtil;
+		const CalendarUtil = Liferay.CalendarUtil;
 
-		var SchedulerEventRecorder = A.Component.create({
+		const SchedulerEventRecorder = A.Component.create({
 			ATTRS: {
 				calendarContainer: {
 					validator: isObject,
@@ -98,11 +98,11 @@ AUI.add(
 
 			prototype: {
 				_getFooterToolbar() {
-					var instance = this;
+					const instance = this;
 
-					var schedulerEvent = instance.get('event');
+					let schedulerEvent = instance.get('event');
 
-					var schedulerEventCreated = false;
+					let schedulerEventCreated = false;
 
 					if (schedulerEvent) {
 						schedulerEventCreated = true;
@@ -111,19 +111,19 @@ AUI.add(
 						schedulerEvent = instance;
 					}
 
-					var children = [];
-					var editGroup = [];
-					var respondGroup = [];
+					const children = [];
+					const editGroup = [];
+					const respondGroup = [];
 
-					var calendarContainer = instance.get('calendarContainer');
+					const calendarContainer = instance.get('calendarContainer');
 
-					var calendar = calendarContainer.getCalendar(
+					const calendar = calendarContainer.getCalendar(
 						schedulerEvent.get('calendarId')
 					);
-					var status = schedulerEvent.get('status');
+					const status = schedulerEvent.get('status');
 
 					if (calendar) {
-						var permissions = calendar.get('permissions');
+						const permissions = calendar.get('permissions');
 
 						if (
 							instance._hasSaveButton(
@@ -213,29 +213,29 @@ AUI.add(
 				},
 
 				_handleEditEvent() {
-					var instance = this;
+					const instance = this;
 
-					var scheduler = instance.get('scheduler');
+					const scheduler = instance.get('scheduler');
 
-					var activeViewName = scheduler
+					const activeViewName = scheduler
 						.get('activeView')
 						.get('name');
 
-					var date = scheduler.get('date');
+					const date = scheduler.get('date');
 
-					var schedulerEvent = instance.get('event');
+					const schedulerEvent = instance.get('event');
 
-					var editCalendarBookingURL = decodeURIComponent(
+					const editCalendarBookingURL = decodeURIComponent(
 						instance.get('editCalendarBookingURL')
 					);
 
-					var data = instance.serializeForm();
+					const data = instance.serializeForm();
 
 					data.activeView = activeViewName;
 
 					data.date = date.getTime();
 
-					var endTime = new Date(data.endTime);
+					const endTime = new Date(data.endTime);
 
 					data.endTimeDay = endTime.getDate();
 					data.endTimeHour = endTime.getHours();
@@ -243,7 +243,7 @@ AUI.add(
 					data.endTimeMonth = endTime.getMonth();
 					data.endTimeYear = endTime.getFullYear();
 
-					var startTime = new Date(data.startTime);
+					const startTime = new Date(data.startTime);
 
 					data.startTimeDay = startTime.getDate();
 					data.startTimeHour = startTime.getHours();
@@ -285,20 +285,20 @@ AUI.add(
 				},
 
 				_handleEventAnswer(event) {
-					var instance = this;
+					const instance = this;
 
-					var currentTarget = event.currentTarget;
+					const currentTarget = event.currentTarget;
 
-					var schedulerEvent = instance.get('event');
+					const schedulerEvent = instance.get('event');
 
-					var linkEnabled = A.DataType.Boolean.parse(
+					const linkEnabled = A.DataType.Boolean.parse(
 						currentTarget.hasClass('calendar-event-answer-true')
 					);
 
-					var statusData = toInt(currentTarget.getData('status'));
+					const statusData = toInt(currentTarget.getData('status'));
 
 					if (schedulerEvent && linkEnabled) {
-						var remoteServices = instance.get('remoteServices');
+						const remoteServices = instance.get('remoteServices');
 
 						if (schedulerEvent.isRecurring()) {
 							Liferay.RecurrenceUtil.openConfirmationPanel(
@@ -345,15 +345,15 @@ AUI.add(
 				},
 
 				_handleViewEvent(event) {
-					var instance = this;
+					const instance = this;
 
-					var viewCalendarBookingURL = decodeURIComponent(
+					const viewCalendarBookingURL = decodeURIComponent(
 						instance.get('viewCalendarBookingURL')
 					);
 
-					var data = instance.serializeForm();
+					const data = instance.serializeForm();
 
-					var schedulerEvent = instance.get('event');
+					const schedulerEvent = instance.get('event');
 
 					data.calendarBookingId = schedulerEvent.get(
 						'calendarBookingId'
@@ -395,24 +395,24 @@ AUI.add(
 				},
 
 				_hasWorkflowStatusPermission(schedulerEvent, newStatus) {
-					var instance = this;
+					const instance = this;
 
-					var hasPermission = false;
+					let hasPermission = false;
 
 					if (schedulerEvent) {
-						var calendarId = schedulerEvent.get('calendarId');
+						const calendarId = schedulerEvent.get('calendarId');
 
-						var calendarContainer = instance.get(
+						const calendarContainer = instance.get(
 							'calendarContainer'
 						);
 
-						var calendar = calendarContainer.getCalendar(
+						const calendar = calendarContainer.getCalendar(
 							calendarId
 						);
 
-						var permissions = calendar.get('permissions');
+						const permissions = calendar.get('permissions');
 
-						var status = schedulerEvent.get('status');
+						const status = schedulerEvent.get('status');
 
 						hasPermission =
 							permissions.MANAGE_BOOKINGS &&
@@ -424,9 +424,9 @@ AUI.add(
 				},
 
 				_renderPopOver() {
-					var instance = this;
+					const instance = this;
 
-					var popoverBB = instance.popover.get('boundingBox');
+					const popoverBB = instance.popover.get('boundingBox');
 
 					SchedulerEventRecorder.superclass._renderPopOver.apply(
 						this,
@@ -436,16 +436,16 @@ AUI.add(
 					popoverBB.delegate(
 						['change', 'keypress'],
 						(event) => {
-							var schedulerEvent =
+							const schedulerEvent =
 								instance.get('event') || instance;
 
-							var calendarId = toInt(event.currentTarget.val());
+							const calendarId = toInt(event.currentTarget.val());
 
-							var calendarContainer = instance.get(
+							const calendarContainer = instance.get(
 								'calendarContainer'
 							);
 
-							var selectedCalendar = calendarContainer.getCalendar(
+							const selectedCalendar = calendarContainer.getCalendar(
 								calendarId
 							);
 
@@ -466,32 +466,32 @@ AUI.add(
 				},
 
 				_showResources() {
-					var instance = this;
+					const instance = this;
 
-					var schedulerEvent = instance.get('event');
+					const schedulerEvent = instance.get('event');
 
-					var popoverBB = instance.popover.get('boundingBox');
+					const popoverBB = instance.popover.get('boundingBox');
 
 					popoverBB.toggleClass(
 						'calendar-portlet-event-recorder-editing',
 						!!schedulerEvent
 					);
 
-					var calendarContainer = instance.get('calendarContainer');
+					const calendarContainer = instance.get('calendarContainer');
 
-					var defaultCalendar = calendarContainer.get(
+					const defaultCalendar = calendarContainer.get(
 						'defaultCalendar'
 					);
 
-					var calendarId = defaultCalendar.get('calendarId');
-					var color = defaultCalendar.get('color');
+					let calendarId = defaultCalendar.get('calendarId');
+					let color = defaultCalendar.get('color');
 
-					var eventInstance = instance;
+					let eventInstance = instance;
 
 					if (schedulerEvent) {
 						calendarId = schedulerEvent.get('calendarId');
 
-						var calendar = calendarContainer.getCalendar(
+						const calendar = calendarContainer.getCalendar(
 							calendarId
 						);
 
@@ -506,9 +506,9 @@ AUI.add(
 						silent: true,
 					});
 
-					var portletNamespace = instance.get('portletNamespace');
+					const portletNamespace = instance.get('portletNamespace');
 
-					var eventRecorderCalendar = document.querySelector(
+					const eventRecorderCalendar = document.querySelector(
 						`#${portletNamespace}eventRecorderCalendar`
 					);
 
@@ -520,39 +520,39 @@ AUI.add(
 				},
 
 				_syncInvitees() {
-					var instance = this;
+					const instance = this;
 
-					var schedulerEvent = instance.get('event');
+					const schedulerEvent = instance.get('event');
 
 					if (schedulerEvent) {
-						var calendarContainer = instance.get(
+						const calendarContainer = instance.get(
 							'calendarContainer'
 						);
 
-						var calendar = calendarContainer.getCalendar(
+						const calendar = calendarContainer.getCalendar(
 							schedulerEvent.get('calendarId')
 						);
 
 						if (calendar) {
-							var permissions = calendar.get('permissions');
+							const permissions = calendar.get('permissions');
 
 							if (permissions.VIEW_BOOKING_DETAILS) {
-								var parentCalendarBookingId = schedulerEvent.get(
+								const parentCalendarBookingId = schedulerEvent.get(
 									'parentCalendarBookingId'
 								);
 
-								var portletNamespace = instance.get(
+								const portletNamespace = instance.get(
 									'portletNamespace'
 								);
 
-								var remoteServices = instance.get(
+								const remoteServices = instance.get(
 									'remoteServices'
 								);
 
 								remoteServices.getCalendarBookingInvitees(
 									parentCalendarBookingId,
 									(data) => {
-										var results = AArray.partition(
+										const results = AArray.partition(
 											data,
 											(item) => {
 												return (
@@ -582,19 +582,19 @@ AUI.add(
 				},
 
 				_syncInviteesContent(contentNode, calendarResources) {
-					var values = calendarResources.map((item) => {
+					const values = calendarResources.map((item) => {
 						return Liferay.Util.escapeHTML(item.name);
 					});
 
 					contentNode = document.querySelector(contentNode);
 
-					var messageNode = contentNode.querySelector(
+					const messageNode = contentNode.querySelector(
 						'.calendar-portlet-invitees'
 					);
 
-					var messageHTML = '&mdash;';
+					let messageHTML = '&mdash;';
 
-					if (values.length > 0) {
+					if (values.length) {
 						contentNode.style.display = '';
 
 						messageHTML = values.join(STR_COMMA_SPACE);
@@ -604,11 +604,11 @@ AUI.add(
 				},
 
 				getTemplateData() {
-					var instance = this;
+					const instance = this;
 
-					var editing = true;
+					let editing = true;
 
-					var schedulerEvent = instance.get('event');
+					let schedulerEvent = instance.get('event');
 
 					if (!schedulerEvent) {
 						editing = false;
@@ -616,15 +616,15 @@ AUI.add(
 						schedulerEvent = instance;
 					}
 
-					var calendarContainer = instance.get('calendarContainer');
+					const calendarContainer = instance.get('calendarContainer');
 
-					var calendar = calendarContainer.getCalendar(
+					const calendar = calendarContainer.getCalendar(
 						schedulerEvent.get('calendarId')
 					);
 
-					var permissions = calendar.get('permissions');
+					const permissions = calendar.get('permissions');
 
-					var templateData = SchedulerEventRecorder.superclass.getTemplateData.apply(
+					const templateData = SchedulerEventRecorder.superclass.getTemplateData.apply(
 						this,
 						arguments
 					);
@@ -665,20 +665,20 @@ AUI.add(
 				},
 
 				getUpdatedSchedulerEvent(optAttrMap) {
-					var instance = this;
+					const instance = this;
 
-					var attrMap = {
+					const attrMap = {
 						color: instance.get('color'),
 					};
 
-					var event = instance.get('event');
+					const event = instance.get('event');
 
 					if (event) {
-						var calendarContainer = instance.get(
+						const calendarContainer = instance.get(
 							'calendarContainer'
 						);
 
-						var calendar = calendarContainer.getCalendar(
+						const calendar = calendarContainer.getCalendar(
 							event.get('calendarId')
 						);
 
@@ -694,9 +694,9 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
-					var popoverBB = instance.popover.get('boundingBox');
+					const popoverBB = instance.popover.get('boundingBox');
 
 					popoverBB.delegate(
 						'click',
@@ -709,13 +709,13 @@ AUI.add(
 				isMasterBooking: Lang.emptyFnFalse,
 
 				populateForm() {
-					var instance = this;
+					const instance = this;
 
-					var bodyTemplate = instance.get('bodyTemplate');
+					const bodyTemplate = instance.get('bodyTemplate');
 
-					var headerTemplate = instance.get('headerTemplate');
+					const headerTemplate = instance.get('headerTemplate');
 
-					var templateData = instance.getTemplateData();
+					const templateData = instance.getTemplateData();
 
 					if (
 						A.instanceOf(bodyTemplate, A.Template) &&

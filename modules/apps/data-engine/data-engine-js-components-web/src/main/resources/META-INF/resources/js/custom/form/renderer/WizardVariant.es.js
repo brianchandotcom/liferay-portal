@@ -136,7 +136,7 @@ export function Container({
 
 					{pageIndex === activePage && (
 						<>
-							{pages.length > 0 && (
+							{!!pages.length && (
 								<PaginationControls
 									activePage={activePage}
 									onClick={onClick}

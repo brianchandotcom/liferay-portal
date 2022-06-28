@@ -132,7 +132,7 @@ export default function CSSClassSelectorField({
 							onValueSelect(field.name, nextItems);
 						}}
 						onKeyDown={(event) => {
-							if (event.key === ' ' && value.trim().length > 0) {
+							if (event.key === ' ' && !!value.trim().length) {
 								addItem(value.trim());
 								setValue('');
 							}
@@ -237,7 +237,7 @@ function CSSClassSelectorDropDown({
 							</ClayDropDown.Item>
 						</ClayDropDown.Group>
 
-						{filteredCssClasses.length > 0 && (
+						{!!filteredCssClasses.length && (
 							<ClayDropDown.Group
 								header={Liferay.Language.get(
 									'existing-classes'

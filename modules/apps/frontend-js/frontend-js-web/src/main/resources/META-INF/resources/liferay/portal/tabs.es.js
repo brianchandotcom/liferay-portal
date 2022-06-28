@@ -96,7 +96,7 @@ export function applyTabSelectionDOMChanges({
 
 	let tabSection;
 
-	for (var i = 0; i < names.length; i++) {
+	for (let i = 0; i < names.length; i++) {
 		tabSection = document.getElementById(
 			namespace + toCharCode(names[i]) + 'TabsSection'
 		);

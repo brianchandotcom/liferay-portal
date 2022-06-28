@@ -147,7 +147,7 @@ export function getCodeMirrorHints(cm, autocompleteSchema, availableLanguages) {
 
 	const propertyPathList = [];
 
-	while (propertyBracketList.length > 0) {
+	while (propertyBracketList.length) {
 		const lastItem = propertyBracketList.pop();
 
 		if (lastItem === '}' || lastItem === ']') {
@@ -466,7 +466,7 @@ function getSchemaProperties(
 
 	// If `propertyPathList` is empty, return the schema properties.
 
-	if (propertyPathList.length === 0) {
+	if (!propertyPathList.length) {
 		const propertyNames = Object.keys(schema.properties || {});
 
 		return propertyNames.map((name) => {

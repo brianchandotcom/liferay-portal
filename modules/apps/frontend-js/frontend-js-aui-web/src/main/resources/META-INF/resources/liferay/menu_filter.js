@@ -15,20 +15,20 @@
 AUI.add(
 	'liferay-menu-filter',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var CSS_HIDE = 'hide';
+		const CSS_HIDE = 'hide';
 
-		var STR_EMPTY = '';
+		const STR_EMPTY = '';
 
-		var TPL_INPUT_FILTER =
+		const TPL_INPUT_FILTER =
 			'<li class="btn-toolbar search-panel">' +
 			'<div class="form-group">' +
 			'<input class="col-md-12 field focus menu-item-filter search-query" placeholder="{placeholder}" type="text" />' +
 			'</div>' +
 			'</li>';
 
-		var MenuFilter = A.Component.create({
+		const MenuFilter = A.Component.create({
 			ATTRS: {
 				content: {
 					setter: A.one,
@@ -60,8 +60,8 @@ AUI.add(
 
 			prototype: {
 				_filterMenu(event) {
-					var instance = this;
-					var menuInstance = instance.get('menu');
+					const instance = this;
+					const menuInstance = instance.get('menu');
 
 					instance._menuItems.addClass(CSS_HIDE);
 
@@ -75,11 +75,11 @@ AUI.add(
 				},
 
 				_renderUI() {
-					var instance = this;
+					const instance = this;
 
-					var node = instance.get('content');
+					const node = instance.get('content');
 
-					var menuItems = node.all('li');
+					const menuItems = node.all('li');
 
 					node.prepend(
 						Lang.sub(TPL_INPUT_FILTER, {
@@ -93,7 +93,7 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._renderUI();
 					instance._bindUIACBase();
@@ -101,7 +101,7 @@ AUI.add(
 				},
 
 				reset() {
-					var instance = this;
+					const instance = this;
 
 					instance.get('inputNode').val(STR_EMPTY);
 

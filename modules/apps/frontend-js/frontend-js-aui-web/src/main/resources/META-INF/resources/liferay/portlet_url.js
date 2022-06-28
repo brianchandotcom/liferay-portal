@@ -22,10 +22,10 @@
 AUI.add(
 	'liferay-portlet-url',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var PortletURL = function (lifecycle, params, basePortletURL) {
-			var instance = this;
+		const PortletURL = function (lifecycle, params, basePortletURL) {
+			const instance = this;
 
 			instance.params = {};
 
@@ -92,9 +92,9 @@ AUI.add(
 
 		PortletURL.prototype = {
 			_isReservedParam(paramName) {
-				var instance = this;
+				const instance = this;
 
-				var result = false;
+				let result = false;
 
 				A.each(instance.reservedParams, (item, index) => {
 					if (index === paramName) {
@@ -110,13 +110,13 @@ AUI.add(
 			 */
 
 			setCopyCurrentRenderParameters() {
-				var instance = this;
+				const instance = this;
 
 				return instance;
 			},
 
 			setDoAsGroupId(doAsGroupId) {
-				var instance = this;
+				const instance = this;
 
 				instance.reservedParams.doAsGroupId = doAsGroupId;
 
@@ -124,7 +124,7 @@ AUI.add(
 			},
 
 			setDoAsUserId(doAsUserId) {
-				var instance = this;
+				const instance = this;
 
 				instance.reservedParams.doAsUserId = doAsUserId;
 
@@ -136,13 +136,13 @@ AUI.add(
 			 */
 
 			setEncrypt() {
-				var instance = this;
+				const instance = this;
 
 				return instance;
 			},
 
 			setEscapeXML(escapeXML) {
-				var instance = this;
+				const instance = this;
 
 				instance.options.escapeXML = escapeXML;
 
@@ -150,9 +150,9 @@ AUI.add(
 			},
 
 			setLifecycle(lifecycle) {
-				var instance = this;
+				const instance = this;
 
-				var reservedParams = instance.reservedParams;
+				const reservedParams = instance.reservedParams;
 
 				if (lifecycle === PortletURL.ACTION_PHASE) {
 					reservedParams.p_auth = Liferay.authToken;
@@ -170,7 +170,7 @@ AUI.add(
 			},
 
 			setName(name) {
-				var instance = this;
+				const instance = this;
 
 				instance.setParameter('javax.portlet.action', name);
 
@@ -178,7 +178,7 @@ AUI.add(
 			},
 
 			setParameter(key, value) {
-				var instance = this;
+				const instance = this;
 
 				if (instance._isReservedParam(key)) {
 					instance.reservedParams[key] = value;
@@ -191,7 +191,7 @@ AUI.add(
 			},
 
 			setParameters(parameters) {
-				var instance = this;
+				const instance = this;
 
 				A.each(parameters, (item, index) => {
 					instance.setParameter(index, item);
@@ -201,7 +201,7 @@ AUI.add(
 			},
 
 			setPlid(plid) {
-				var instance = this;
+				const instance = this;
 
 				instance.reservedParams.p_l_id = plid;
 
@@ -213,13 +213,13 @@ AUI.add(
 			 */
 
 			setPortletConfiguration() {
-				var instance = this;
+				const instance = this;
 
 				return instance;
 			},
 
 			setPortletId(portletId) {
-				var instance = this;
+				const instance = this;
 
 				instance.reservedParams.p_p_id = portletId;
 
@@ -227,7 +227,7 @@ AUI.add(
 			},
 
 			setPortletMode(portletMode) {
-				var instance = this;
+				const instance = this;
 
 				instance.reservedParams.p_p_mode = portletMode;
 
@@ -235,7 +235,7 @@ AUI.add(
 			},
 
 			setResourceId(resourceId) {
-				var instance = this;
+				const instance = this;
 
 				instance.reservedParams.p_p_resource_id = resourceId;
 
@@ -246,7 +246,7 @@ AUI.add(
 			 * @deprecated As of Mueller (7.2.x), with no direct replacement
 			 */
 			setSecure(secure) {
-				var instance = this;
+				const instance = this;
 
 				instance.options.secure = secure;
 
@@ -254,7 +254,7 @@ AUI.add(
 			},
 
 			setWindowState(windowState) {
-				var instance = this;
+				const instance = this;
 
 				instance.reservedParams.p_p_state = windowState;
 
@@ -262,11 +262,11 @@ AUI.add(
 			},
 
 			toString() {
-				var instance = this;
+				const instance = this;
 
-				var options = instance.options;
+				const options = instance.options;
 
-				var reservedParameters = {};
+				const reservedParameters = {};
 
 				Object.entries(instance.reservedParams).forEach(
 					([key, value]) => {
@@ -276,12 +276,12 @@ AUI.add(
 					}
 				);
 
-				var parameters = {
+				const parameters = {
 					...instance.params,
 					...reservedParameters,
 				};
 
-				var portletURL = Liferay.Util.PortletURL.createPortletURL(
+				const portletURL = Liferay.Util.PortletURL.createPortletURL(
 					options.basePortletURL,
 					parameters
 				);

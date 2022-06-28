@@ -22,9 +22,9 @@
 AUI.add(
 	'liferay-icon',
 	(A) => {
-		var _ICON_REGISTRY = {};
+		const _ICON_REGISTRY = {};
 
-		var Icon = {
+		const Icon = {
 			_forcePost(event) {
 				if (!Liferay.SPA || !Liferay.SPA.app) {
 					Liferay.Util.forcePost(event.currentTarget);
@@ -38,9 +38,9 @@ AUI.add(
 			},
 
 			_handleDocClick(event) {
-				var instance = this;
+				const instance = this;
 
-				var config = instance._getConfig(event);
+				const config = instance._getConfig(event);
 
 				if (config) {
 					event.preventDefault();
@@ -55,9 +55,9 @@ AUI.add(
 			},
 
 			_handleDocMouseOut(event) {
-				var instance = this;
+				const instance = this;
 
-				var config = instance._getConfig(event);
+				const config = instance._getConfig(event);
 
 				if (config && config.srcHover) {
 					instance._onMouseHover(event, config.src);
@@ -65,9 +65,9 @@ AUI.add(
 			},
 
 			_handleDocMouseOver(event) {
-				var instance = this;
+				const instance = this;
 
-				var config = instance._getConfig(event);
+				const config = instance._getConfig(event);
 
 				if (config && config.srcHover) {
 					instance._onMouseHover(event, config.srcHover);
@@ -75,7 +75,7 @@ AUI.add(
 			},
 
 			_onMouseHover(event, src) {
-				var image = event.currentTarget.one('img');
+				const image = event.currentTarget.one('img');
 
 				if (image) {
 					image.attr('src', src);
@@ -94,9 +94,9 @@ AUI.add(
 			},
 
 			register(config) {
-				var instance = this;
+				const instance = this;
 
-				var doc = A.one(A.config.doc);
+				const doc = A.one(A.config.doc);
 
 				_ICON_REGISTRY[config.id] = config;
 

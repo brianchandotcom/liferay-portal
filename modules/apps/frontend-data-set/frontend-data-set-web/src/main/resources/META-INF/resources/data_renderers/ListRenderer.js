@@ -17,7 +17,7 @@ import PropType from 'prop-types';
 import {getValueFromItem} from '../utils/index';
 
 function ListRenderer(props) {
-	if (!props.value || props.value.length === 0) {
+	if (!props.value || !props.value.length) {
 		return null;
 	}
 	if (props.options.singleItemLabel && props.value.length === 1) {

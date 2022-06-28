@@ -22,10 +22,10 @@
 AUI.add(
 	'liferay-history-manager',
 	(A) => {
-		var HistoryBase = A.HistoryBase;
-		var HistoryManager = new Liferay.History();
+		const HistoryBase = A.HistoryBase;
+		const HistoryManager = new Liferay.History();
 
-		var EVENT_STATE_CHANGE = 'stateChange';
+		const EVENT_STATE_CHANGE = 'stateChange';
 
 		HistoryManager.SRC_ADD = HistoryBase.SRC_ADD;
 		HistoryManager.SRC_REPLACE = HistoryBase.SRC_REPLACE;

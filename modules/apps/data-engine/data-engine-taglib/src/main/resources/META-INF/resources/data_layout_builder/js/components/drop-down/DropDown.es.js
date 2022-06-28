@@ -31,7 +31,7 @@ export default function DropDown({actions, className, disabled}) {
 		/>
 	);
 
-	if (actions.length === 0) {
+	if (!actions.length) {
 		return DropdownButton;
 	}
 

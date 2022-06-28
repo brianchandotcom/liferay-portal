@@ -119,7 +119,7 @@ const getSelectedItems = (filterResults) => {
 			? filter.items.filter((item) => item.active)
 			: [];
 
-		return filter.items.length > 0;
+		return !!filter.items.length;
 	});
 };
 

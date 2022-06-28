@@ -112,11 +112,11 @@ function FieldsTable({portletNamespace}) {
 							<ClayTable.Cell headingCell>
 								<ClayCheckbox
 									checked={
-										selectedFields.length > 0 &&
+										!!selectedFields.length &&
 										selectedFields.length === fields.length
 									}
 									indeterminate={
-										selectedFields.length > 0 &&
+										!!selectedFields.length &&
 										selectedFields.length < fields.length
 									}
 									onChange={() => {

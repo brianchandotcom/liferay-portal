@@ -41,7 +41,7 @@ export default function BreadcrumbNode({
 		<li className="breadcrumb-item breadcrumb-text-truncate mr-0">
 			{hasDropdown &&
 			section.subSections &&
-			section.subSections.length > 0 ? (
+			!!section.subSections.length ? (
 				<ClayDropDown
 					trigger={
 						<span className="c-p-0 questions-breadcrumb-unstyled text-truncate">

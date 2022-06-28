@@ -19,54 +19,54 @@ AUI.add(
 	'liferay-poller',
 	(A) => {
 		// eslint-disable-next-line @liferay/aui/no-object
-		var AObject = A.Object;
+		const AObject = A.Object;
 
-		var _browserKey = Math.ceil(Math.random() * Number.MAX_SAFE_INTEGER);
-		var _enabled = false;
-		var _encryptedUserId = null;
-		var _supportsComet = false;
+		const _browserKey = Math.ceil(Math.random() * Number.MAX_SAFE_INTEGER);
+		let _enabled = false;
+		let _encryptedUserId = null;
+		let _supportsComet = false;
 
-		var _delayAccessCount = 0;
-		var _delayIndex = 0;
-		var _delays = [1, 2, 3, 4, 5, 7, 10];
+		let _delayAccessCount = 0;
+		let _delayIndex = 0;
+		const _delays = [1, 2, 3, 4, 5, 7, 10];
 
-		var _getEncryptedUserId = function () {
+		const _getEncryptedUserId = function () {
 			return _encryptedUserId;
 		};
 
-		var _frozen = false;
-		var _locked = false;
+		let _frozen = false;
+		let _locked = false;
 
-		var _maxDelay = _delays.length - 1;
+		const _maxDelay = _delays.length - 1;
 
-		var _portletIdsMap = {};
+		const _portletIdsMap = {};
 
-		var _metaData = {
+		const _metaData = {
 			browserKey: _browserKey,
 			companyId: themeDisplay.getCompanyId(),
 			portletIdsMap: _portletIdsMap,
 			startPolling: true,
 		};
 
-		var _customDelay = null;
-		var _portlets = {};
-		var _requestDelay = _delays[0];
-		var _sendQueue = [];
-		var _suspended = false;
-		var _timerId = null;
+		let _customDelay = null;
+		const _portlets = {};
+		let _requestDelay = _delays[0];
+		const _sendQueue = [];
+		let _suspended = false;
+		let _timerId = null;
 
-		var _url = themeDisplay.getPathContext() + '/poller';
+		let _url = themeDisplay.getPathContext() + '/poller';
 
-		var _receiveChannel = _url + '/receive';
-		var _sendChannel = _url + '/send';
+		const _receiveChannel = _url + '/receive';
+		const _sendChannel = _url + '/send';
 
-		var _closeCurlyBrace = '}';
-		var _openCurlyBrace = '{';
+		const _closeCurlyBrace = '}';
+		const _openCurlyBrace = '{';
 
-		var _escapedCloseCurlyBrace = '[$CLOSE_CURLY_BRACE$]';
-		var _escapedOpenCurlyBrace = '[$OPEN_CURLY_BRACE$]';
+		const _escapedCloseCurlyBrace = '[$CLOSE_CURLY_BRACE$]';
+		const _escapedOpenCurlyBrace = '[$OPEN_CURLY_BRACE$]';
 
-		var Poller = {
+		const Poller = {
 			addListener(key, listener, scope) {
 				_portlets[key] = {
 					initialRequest: true,
@@ -106,7 +106,7 @@ AUI.add(
 			getSendUrl: _getSendUrl,
 
 			init(options) {
-				var instance = this;
+				const instance = this;
 
 				instance.setEncryptedUserId(options.encryptedUserId);
 				instance.setSupportsComet(options.supportsComet);
@@ -123,7 +123,7 @@ AUI.add(
 					delete _portlets[key];
 				}
 
-				if (AObject.keys(_portlets).length === 0) {
+				if (!AObject.keys(_portlets).length) {
 					_enabled = false;
 
 					_cancelRequestTimer();
@@ -163,9 +163,9 @@ AUI.add(
 
 			submitRequest(key, data, chunkId) {
 				if (!_frozen && key in _portlets) {
-					for (var i in data) {
+					for (const i in data) {
 						if (Object.prototype.hasOwnProperty.call(data, i)) {
-							var content = data[i];
+							let content = data[i];
 
 							if (content.replace) {
 								content = content.replace(
@@ -182,7 +182,7 @@ AUI.add(
 						}
 					}
 
-					var requestData = {
+					const requestData = {
 						data,
 						portletId: key,
 					};
@@ -240,23 +240,23 @@ AUI.add(
 		}
 
 		function _processResponse(id, object) {
-			var response = JSON.parse(object.responseText);
-			var send = false;
+			const response = JSON.parse(object.responseText);
+			let send = false;
 
 			if (Array.isArray(response)) {
-				var meta = response.shift();
+				const meta = response.shift();
 
-				for (var i = 0; i < response.length; i++) {
-					var chunk = response[i].payload;
+				for (let i = 0; i < response.length; i++) {
+					const chunk = response[i].payload;
 
-					var chunkData = chunk.data;
+					const chunkData = chunk.data;
 
-					var portletId = chunk.portletId;
+					const portletId = chunk.portletId;
 
-					var portlet = _portlets[portletId];
+					const portlet = _portlets[portletId];
 
 					if (portlet) {
-						var currentPortletId = _portletIdsMap[portletId];
+						const currentPortletId = _portletIdsMap[portletId];
 
 						if (chunkData && currentPortletId) {
 							chunkData.initialRequest = portlet.initialRequest;
@@ -305,7 +305,7 @@ AUI.add(
 
 				AObject.each(_portlets, _updatePortletIdsMap);
 
-				var requestStr = JSON.stringify([_metaData]);
+				const requestStr = JSON.stringify([_metaData]);
 
 				const body = new URLSearchParams();
 				body.append('pollerRequest', requestStr);
@@ -337,14 +337,14 @@ AUI.add(
 			) {
 				_locked = true;
 
-				var data = _sendQueue.shift();
+				const data = _sendQueue.shift();
 
 				_metaData.userId = _getEncryptedUserId();
 				_metaData.timestamp = new Date().getTime();
 
 				AObject.each(_portlets, _updatePortletIdsMap);
 
-				var requestStr = JSON.stringify([_metaData].concat(data));
+				const requestStr = JSON.stringify([_metaData].concat(data));
 
 				const body = new URLSearchParams();
 				body.append('pollerRequest', requestStr);

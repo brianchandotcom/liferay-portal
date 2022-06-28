@@ -19,21 +19,21 @@
 AUI.add(
 	'liferay-notification',
 	(A) => {
-		var Notification = A.Component.create({
+		const Notification = A.Component.create({
 			EXTENDS: Liferay.Alert,
 
 			NAME: 'liferaynotification',
 
 			prototype: {
 				_getAlertsContainer(targetNode) {
-					var instance = this;
+					const instance = this;
 
 					targetNode = targetNode || A.one('body');
 
-					var alertsContainer = instance._alertsContainer;
+					let alertsContainer = instance._alertsContainer;
 
 					if (!alertsContainer) {
-						var rootNode =
+						const rootNode =
 							targetNode || instance.get('rootNode') || A;
 
 						alertsContainer =

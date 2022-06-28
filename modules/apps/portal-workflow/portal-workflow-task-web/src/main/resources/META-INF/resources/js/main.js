@@ -15,13 +15,13 @@
 AUI.add(
 	'liferay-workflow-tasks',
 	(A) => {
-		var WorkflowTasks = {
+		const WorkflowTasks = {
 			_comments: {},
 			_content: {},
 			_forms: {},
 
 			_showPopup(form, height, title) {
-				var dialog = Liferay.Util.Window.getWindow({
+				const dialog = Liferay.Util.Window.getWindow({
 					dialog: {
 						bodyContent: form,
 						destroyOnHide: true,
@@ -52,14 +52,14 @@ AUI.add(
 									on: {
 										click() {
 											if (form) {
-												var hasErrors = false;
+												let hasErrors = false;
 
-												var liferayForm = Liferay.Form.get(
+												const liferayForm = Liferay.Form.get(
 													form.attr('id')
 												);
 
 												if (liferayForm) {
-													var validator =
+													const validator =
 														liferayForm.formValidator;
 
 													if (validator) {
@@ -105,18 +105,18 @@ AUI.add(
 			},
 
 			onTaskClick(event, randomId) {
-				var instance = this;
+				const instance = this;
 
 				event.preventDefault();
 
-				var icon = event.currentTarget;
+				const icon = event.currentTarget;
 
-				var form = A.Node.create('<form />');
+				const form = A.Node.create('<form />');
 
 				form.setAttribute('action', icon.attr('href'));
 				form.setAttribute('method', 'POST');
 
-				var comments = A.one('#' + randomId + 'updateComments');
+				let comments = A.one('#' + randomId + 'updateComments');
 
 				if (comments && !instance._comments[randomId]) {
 					instance._comments[randomId] = comments;

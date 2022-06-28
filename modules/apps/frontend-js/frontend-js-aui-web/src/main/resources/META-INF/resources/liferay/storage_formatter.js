@@ -22,9 +22,9 @@
 AUI.add(
 	'liferay-storage-formatter',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var StorageFormatter = function () {};
+		const StorageFormatter = function () {};
 
 		StorageFormatter.NAME = 'storageformatter';
 
@@ -62,14 +62,16 @@ AUI.add(
 
 		StorageFormatter.prototype = {
 			formatStorage(size) {
-				var instance = this;
+				const instance = this;
 
-				var addSpaceBeforeSuffix = instance.get('addSpaceBeforeSuffix');
-				var decimalSeparator = instance.get('decimalSeparator');
-				var denominator = instance.get('denominator');
-				var suffixGB = instance.get('suffixGB');
-				var suffixKB = instance.get('suffixKB');
-				var suffixMB = instance.get('suffixMB');
+				const addSpaceBeforeSuffix = instance.get(
+					'addSpaceBeforeSuffix'
+				);
+				const decimalSeparator = instance.get('decimalSeparator');
+				const denominator = instance.get('denominator');
+				const suffixGB = instance.get('suffixGB');
+				const suffixKB = instance.get('suffixKB');
+				const suffixMB = instance.get('suffixMB');
 
 				return Liferay.Util.formatStorage(size, {
 					addSpaceBeforeSuffix,

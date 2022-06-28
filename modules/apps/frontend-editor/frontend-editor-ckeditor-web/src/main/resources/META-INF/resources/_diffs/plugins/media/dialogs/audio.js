@@ -15,20 +15,20 @@
 /* eslint-disable @liferay/no-get-data-attribute */
 
 CKEDITOR.dialog.add('audio', (editor) => {
-	var TPL_SCRIPT =
+	const TPL_SCRIPT =
 		'boundingBox: "#" + mediaId,' + 'oggUrl: "{oggUrl}",' + 'url: "{url}"';
 
 	function commitValue(audioNode) {
-		var instance = this;
+		const instance = this;
 
-		var id = instance.id;
-		var value = instance.getValue();
+		const id = instance.id;
+		const value = instance.getValue();
 
-		var scriptTPL = null;
-		var textScript = null;
+		let scriptTPL = null;
+		let textScript = null;
 
-		var audioOggUrl = audioNode.getAttribute('data-audio-ogg-url');
-		var audioUrl = audioNode.getAttribute('data-audio-url');
+		let audioOggUrl = audioNode.getAttribute('data-audio-ogg-url');
+		let audioUrl = audioNode.getAttribute('data-audio-url');
 
 		if (id === 'url') {
 			audioNode.setAttribute('data-document-url', value);
@@ -60,12 +60,12 @@ CKEDITOR.dialog.add('audio', (editor) => {
 	}
 
 	function loadValue(audioNode) {
-		var instance = this;
+		const instance = this;
 
-		var id = instance.id;
+		const id = instance.id;
 
 		if (audioNode) {
-			var value = null;
+			let value = null;
 
 			if (id === 'url') {
 				value = audioNode.getAttribute('data-document-url');
@@ -116,13 +116,13 @@ CKEDITOR.dialog.add('audio', (editor) => {
 		minWidth: 400,
 
 		onOk() {
-			var instance = this;
+			const instance = this;
 
 			editor.plugins.media.onOkCallback(instance, editor, 'audio');
 		},
 
 		onShow() {
-			var instance = this;
+			const instance = this;
 
 			editor.plugins.media.onShowCallback(instance, editor, 'audio');
 		},

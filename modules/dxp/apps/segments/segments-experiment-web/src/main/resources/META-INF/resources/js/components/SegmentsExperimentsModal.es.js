@@ -82,7 +82,7 @@ function SegmentsExperimentsModal({
 						/>
 					</div>
 
-					{goals.length > 0 && (
+					{!!goals.length && (
 						<div className="form-group">
 							<label className="w100">
 								{Liferay.Language.get('select-goal')}

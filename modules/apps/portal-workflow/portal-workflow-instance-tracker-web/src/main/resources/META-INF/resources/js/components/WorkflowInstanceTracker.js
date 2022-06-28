@@ -141,7 +141,7 @@ export default function WorkflowInstanceTracker({workflowInstanceId}) {
 		reactFlowInstance.fitView();
 	};
 
-	if (layoutedElements.length === 0) {
+	if (!layoutedElements.length) {
 		return <ErrorFeedback />;
 	}
 

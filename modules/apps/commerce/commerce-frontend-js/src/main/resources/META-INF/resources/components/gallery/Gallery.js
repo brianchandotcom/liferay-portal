@@ -143,7 +143,7 @@ export default class Gallery extends React.Component {
 
 		return (
 			<div className="product-gallery">
-				{images && images.length > 0 && (
+				{images && !!images.length && (
 					<MainImage
 						adaptiveMediaImageHTMLTag={
 							images[selected].adaptiveMediaImageHTMLTag

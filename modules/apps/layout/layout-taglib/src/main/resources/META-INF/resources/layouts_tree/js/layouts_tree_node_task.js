@@ -15,14 +15,14 @@
 AUI.add(
 	'liferay-layouts-tree-node-task',
 	(A) => {
-		var LayoutsTreeNodeTask = A.Component.create({
+		const LayoutsTreeNodeTask = A.Component.create({
 			EXTENDS: A.TreeNodeTask,
 
 			NAME: 'layoutstreenodetask',
 
 			prototype: {
 				_uiSetChecked(val) {
-					var instance = this;
+					const instance = this;
 
 					instance._syncIconCheckUI();
 
@@ -35,14 +35,14 @@ AUI.add(
 				},
 
 				renderUI() {
-					var instance = this;
+					const instance = this;
 
 					LayoutsTreeNodeTask.superclass.renderUI.apply(
 						instance,
 						arguments
 					);
 
-					var checkEl = instance.get('checkEl');
+					const checkEl = instance.get('checkEl');
 
 					if (checkEl) {
 						checkEl.remove();
@@ -50,9 +50,9 @@ AUI.add(
 				},
 
 				toggleCheck() {
-					var instance = this;
+					const instance = this;
 
-					var checked = instance.get('checked');
+					const checked = instance.get('checked');
 
 					if (checked) {
 						instance.uncheck();

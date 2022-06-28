@@ -13,7 +13,7 @@
  */
 
 (function () {
-	var LiferayAUI = Liferay.AUI;
+	const LiferayAUI = Liferay.AUI;
 
 	AUI().applyConfig({
 		groups: {

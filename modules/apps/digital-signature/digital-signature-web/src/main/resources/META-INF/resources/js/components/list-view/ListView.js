@@ -93,7 +93,7 @@ const ListView = ({
 
 	let refetchOnActions;
 
-	if (actions && actions.length > 0) {
+	if (actions && !!actions.length) {
 		refetchOnActions = actions.map((action) => {
 			if (!action.action) {
 				return action;
@@ -115,8 +115,8 @@ const ListView = ({
 	}
 
 	const selectedFilters = getSelectedFilters(filters, query.filters);
-	const isEmpty = totalCount === 0 || items.length === 0;
-	const isFiltered = selectedFilters.length > 0;
+	const isEmpty = totalCount === 0 || !items.length;
+	const isFiltered = !!selectedFilters.length;
 
 	return (
 		<div className="list-view">

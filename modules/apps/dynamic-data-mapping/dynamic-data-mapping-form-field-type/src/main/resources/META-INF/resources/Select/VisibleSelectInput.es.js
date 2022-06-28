@@ -69,7 +69,7 @@ const VisibleSelectInput = forwardRef(
 			? Liferay.Language.get('choose-options')
 			: Liferay.Language.get('choose-an-option');
 
-		const isValueEmpty = value.length === 0;
+		const isValueEmpty = !value.length;
 
 		const selectedLabel = () => {
 			if (isValueEmpty) {

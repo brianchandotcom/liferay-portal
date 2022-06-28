@@ -36,7 +36,7 @@ class EventObserver {
 	notify(event, data) {
 		if (
 			Array.isArray(this.subscribes[event]) &&
-			this.subscribes[event].length > 0
+			!!this.subscribes[event].length
 		) {
 			try {
 				this.subscribes[event].map(

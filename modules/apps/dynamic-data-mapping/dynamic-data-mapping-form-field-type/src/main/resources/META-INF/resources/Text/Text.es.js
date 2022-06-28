@@ -34,7 +34,7 @@ const CounterContainer = ({
 }) => {
 	if (
 		!showCounter ||
-		(displayErrors === true && !valid && Object.keys(error).length === 0)
+		(displayErrors === true && !valid && !Object.keys(error).length)
 	) {
 		return null;
 	}
@@ -350,7 +350,7 @@ const Autocomplete = ({
 					if (
 						(event.key === 'Tab' || event.key === 'ArrowDown') &&
 						!event.shiftKey &&
-						filteredItems.length > 0 &&
+						!!filteredItems.length &&
 						visible
 					) {
 						event.preventDefault();
@@ -390,7 +390,7 @@ const Autocomplete = ({
 					}}
 					ref={itemListRef}
 				>
-					{filteredItems.length === 0 && (
+					{!filteredItems.length && (
 						<ClayDropDown.Item className="disabled">
 							{Liferay.Language.get('no-results-were-found')}
 						</ClayDropDown.Item>

@@ -1088,7 +1088,7 @@ export default function ChangeTrackingRenderView({
 				return 0;
 			});
 
-		if (filteredNodes.length === 0) {
+		if (!filteredNodes.length) {
 			return (
 				<div className="taglib-empty-result-message">
 					<div className="taglib-empty-search-result-message-header" />
@@ -1326,8 +1326,8 @@ export default function ChangeTrackingRenderView({
 		);
 
 		if (
-			(state.parents && state.parents.length > 0) ||
-			(state.children && state.children.length > 0)
+			(state.parents && !!state.parents.length) ||
+			(state.children && !!state.children.length)
 		) {
 			items.push(
 				<li className="autofit-col nav-item row-divider">
@@ -1341,14 +1341,14 @@ export default function ChangeTrackingRenderView({
 				>
 					<ClayLink
 						className={
-							state.parents && state.parents.length > 0
+							state.parents && !!state.parents.length
 								? undefined
 								: 'btn-link disabled'
 						}
 						data-tooltip-align="top"
 						onClick={() => setContentType(CONTENT_TYPE_PARENTS)}
 						title={
-							state.parents && state.parents.length > 0
+							state.parents && !!state.parents.length
 								? ''
 								: Liferay.Language.get(
 										'item-does-not-have-any-parents'
@@ -1366,14 +1366,14 @@ export default function ChangeTrackingRenderView({
 				>
 					<ClayLink
 						className={
-							state.children && state.children.length > 0
+							state.children && !!state.children.length
 								? undefined
 								: 'btn-link disabled'
 						}
 						data-tooltip-align="top"
 						onClick={() => setContentType(CONTENT_TYPE_CHILDREN)}
 						title={
-							state.children && state.children.length > 0
+							state.children && !!state.children.length
 								? ''
 								: Liferay.Language.get(
 										'item-does-not-have-any-children'
@@ -1420,7 +1420,7 @@ export default function ChangeTrackingRenderView({
 			{state.renderData && (
 				<div className="autofit-row sheet-title">
 					{state.renderData.locales &&
-						state.renderData.locales.length > 0 && (
+						!!state.renderData.locales.length && (
 							<LocalizationDropdown
 								currentLocale={currentLocale}
 								defaultLocale={state.renderData.defaultLocale}

@@ -15,53 +15,53 @@
 AUI.add(
 	'liferay-portlet-invite-members',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var Language = Liferay.Language;
+		const Language = Liferay.Language;
 
-		var Util = Liferay.Util;
+		const Util = Liferay.Util;
 
-		var CSS_INVITED = 'invited';
+		const CSS_INVITED = 'invited';
 
-		var KEY_ENTER = 13;
+		const KEY_ENTER = 13;
 
-		var STR_AVAILABLE_USERS_URL = 'availableUsersURL';
+		const STR_AVAILABLE_USERS_URL = 'availableUsersURL';
 
-		var STR_BLANK = '';
+		const STR_BLANK = '';
 
-		var STR_CLICK = 'click';
+		const STR_CLICK = 'click';
 
-		var STR_KEYPRESS = 'keypress';
+		const STR_KEYPRESS = 'keypress';
 
-		var STR_SPACE = ' ';
+		const STR_SPACE = ' ';
 
-		var TPL_EMAIL_ROW =
+		const TPL_EMAIL_ROW =
 			'<div class="user" data-emailAddress="{emailAddress}">' +
 			'<span class="email">{emailAddress}</span>' +
 			'</div>';
 
-		var TPL_MORE_RESULTS =
+		const TPL_MORE_RESULTS =
 			'<div class="more-results">' +
 			'<a href="javascript:void(0);" data-end="{end}">{message}</a>' +
 			'</div>';
 
-		var TPL_NO_USERS_MESSAGE =
+		const TPL_NO_USERS_MESSAGE =
 			'<small class="text-capitalize text-muted">{message}</small>';
 
-		var TPL_USER =
+		const TPL_USER =
 			'<div class="{cssClass}" data-userId="{userId}">' +
 			'<span class="name">{userFullName}</span>' +
 			'<span class="email">{userEmailAddress}</span>' +
 			'</div>';
 
-		var InviteMembersList = A.Component.create({
+		const InviteMembersList = A.Component.create({
 			AUGMENTS: [A.AutoCompleteBase],
 
 			EXTENDS: A.Base,
 
 			prototype: {
 				initializer(config) {
-					var instance = this;
+					const instance = this;
 
 					instance._listNode = A.one(config.listNode);
 
@@ -71,7 +71,7 @@ AUI.add(
 			},
 		});
 
-		var InviteMembers = A.Component.create({
+		const InviteMembers = A.Component.create({
 			ATTRS: {
 				availableUsersURL: {
 					validator: Lang.isString,
@@ -95,18 +95,18 @@ AUI.add(
 
 			prototype: {
 				_addMemberEmail() {
-					var instance = this;
+					const instance = this;
 
-					var emailInput = instance.one('#emailAddress');
+					const emailInput = instance.one('#emailAddress');
 
-					var emailAddress = Lang.trim(emailInput.val());
+					const emailAddress = Lang.trim(emailInput.val());
 
 					if (emailAddress) {
-						var emailRow = Lang.sub(TPL_EMAIL_ROW, {
+						const emailRow = Lang.sub(TPL_EMAIL_ROW, {
 							emailAddress,
 						});
 
-						var invitedEmailList = instance.one(
+						const invitedEmailList = instance.one(
 							'#invitedEmailList'
 						);
 
@@ -119,7 +119,7 @@ AUI.add(
 				},
 
 				_addMemberInvite(user) {
-					var instance = this;
+					const instance = this;
 
 					user.addClass(CSS_INVITED)
 						.cloneNode(true)
@@ -127,7 +127,7 @@ AUI.add(
 				},
 
 				_bindUI() {
-					var instance = this;
+					const instance = this;
 
 					instance._eventHandles = [
 						instance
@@ -164,7 +164,7 @@ AUI.add(
 				},
 
 				_createDataSource(url) {
-					var instance = this;
+					const instance = this;
 
 					return new A.DataSource.IO({
 						ioConfig: {
@@ -172,7 +172,7 @@ AUI.add(
 						},
 						on: {
 							request(event) {
-								var data = event.request;
+								const data = event.request;
 
 								event.cfg.data = instance.ns({
 									end: data.end || instance.get('pageDelta'),
@@ -186,7 +186,7 @@ AUI.add(
 				},
 
 				_getByName(form, name) {
-					var instance = this;
+					const instance = this;
 
 					return instance.one(
 						'[name=' + instance.ns(name) + ']',
@@ -195,11 +195,11 @@ AUI.add(
 				},
 
 				_handleInvite(event) {
-					var instance = this;
+					const instance = this;
 
-					var user = event.currentTarget;
+					const user = event.currentTarget;
 
-					var userId = user.attr('data-userId');
+					const userId = user.attr('data-userId');
 
 					if (userId) {
 						if (user.hasClass(CSS_INVITED)) {
@@ -215,7 +215,7 @@ AUI.add(
 				},
 
 				_onEmailKeypress(event) {
-					var instance = this;
+					const instance = this;
 
 					if (Number(event.keyCode) === KEY_ENTER) {
 						instance._addMemberEmail();
@@ -225,9 +225,9 @@ AUI.add(
 				},
 
 				_onInviteMembersListResults(event) {
-					var instance = this;
+					const instance = this;
 
-					var responseData = JSON.parse(event.data.responseText);
+					const responseData = JSON.parse(event.data.responseText);
 
 					instance._membersList.html(
 						instance._renderResults(responseData).join(STR_BLANK)
@@ -235,13 +235,13 @@ AUI.add(
 				},
 
 				_onMemberListClick(event) {
-					var instance = this;
+					const instance = this;
 
-					var node = event.currentTarget;
+					const node = event.currentTarget;
 
-					var start = A.DataType.Number.parse(node.dataset.end);
+					const start = A.DataType.Number.parse(node.dataset.end);
 
-					var end = start + instance.get('pageDelta');
+					const end = start + instance.get('pageDelta');
 
 					const body = new URLSearchParams(
 						instance.ns({
@@ -259,7 +259,7 @@ AUI.add(
 							return response.json();
 						})
 						.then((responseData) => {
-							var moreResults = instance._membersList.one(
+							const moreResults = instance._membersList.one(
 								'.more-results'
 							);
 
@@ -278,13 +278,13 @@ AUI.add(
 				},
 
 				_removeMemberInvite(user, userId) {
-					var instance = this;
+					const instance = this;
 
 					userId = userId || user.dataset.userId;
 
-					var membersList = instance.one('#membersList');
+					const membersList = instance.one('#membersList');
 
-					var memberListUser = membersList.one(
+					const memberListUser = membersList.one(
 						'[data-userId="' + userId + '"]'
 					);
 
@@ -292,7 +292,7 @@ AUI.add(
 						memberListUser.removeClass(CSS_INVITED);
 					}
 
-					var invitedUser = instance._invitedMembersList.one(
+					const invitedUser = instance._invitedMembersList.one(
 						'[data-userId="' + userId + '"]'
 					);
 
@@ -300,17 +300,17 @@ AUI.add(
 				},
 
 				_renderResults(responseData) {
-					var instance = this;
+					const instance = this;
 
-					var count = responseData.count;
-					var options = responseData.options;
-					var results = responseData.users;
+					const count = responseData.count;
+					const options = responseData.options;
+					const results = responseData.users;
 
-					var buffer = [];
+					const buffer = [];
 
-					if (results.length === 0) {
+					if (!results.length) {
 						if (Number(options.start) === 0) {
-							var noUsersMessage = A.Lang.sub(
+							const noUsersMessage = A.Lang.sub(
 								TPL_NO_USERS_MESSAGE,
 								{
 									message: Language.get(
@@ -325,14 +325,14 @@ AUI.add(
 					else {
 						buffer.push(
 							A.Array.map(results, (result) => {
-								var cssClass = 'user';
+								let cssClass = 'user';
 
 								if (result.hasPendingMemberRequest) {
 									cssClass +=
 										STR_SPACE + 'pending-member-request';
 								}
 
-								var invited = instance._invitedMembersList.one(
+								const invited = instance._invitedMembersList.one(
 									'[data-userId="' + result.userId + '"]'
 								);
 
@@ -354,7 +354,7 @@ AUI.add(
 						);
 
 						if (count > results.length) {
-							var moreResults = Lang.sub(TPL_MORE_RESULTS, {
+							const moreResults = Lang.sub(TPL_MORE_RESULTS, {
 								end: options.end,
 								message: Language.get('view-more'),
 							});
@@ -367,7 +367,7 @@ AUI.add(
 				},
 
 				_syncFields(form) {
-					var instance = this;
+					const instance = this;
 
 					instance._syncInvitedRoleIdField(form);
 
@@ -379,44 +379,44 @@ AUI.add(
 				},
 
 				_syncInvitedRoleIdField() {
-					var instance = this;
+					const instance = this;
 
-					var form = instance._form;
+					const form = instance._form;
 
-					var invitedRoleId = instance._getByName(
+					const invitedRoleId = instance._getByName(
 						form,
 						'invitedRoleId'
 					);
 
-					var roleId = instance._getByName(form, 'roleId');
+					const roleId = instance._getByName(form, 'roleId');
 
 					invitedRoleId.val(roleId ? roleId.val() : 0);
 				},
 
 				_syncInvitedTeamIdField(form) {
-					var instance = this;
+					const instance = this;
 
-					var invitedTeamId = instance._getByName(
+					const invitedTeamId = instance._getByName(
 						form,
 						'invitedTeamId'
 					);
 
-					var teamId = instance._getByName(form, 'teamId');
+					const teamId = instance._getByName(form, 'teamId');
 
 					invitedTeamId.val(teamId ? teamId.val() : 0);
 				},
 
 				_syncReceiverEmailAddressesField(form) {
-					var instance = this;
+					const instance = this;
 
-					var receiverEmailAddresses = instance._getByName(
+					const receiverEmailAddresses = instance._getByName(
 						form,
 						'receiverEmailAddresses'
 					);
 
-					var emailAddresses = [];
+					const emailAddresses = [];
 
-					var invitedEmailList = instance.one('#invitedEmailList');
+					const invitedEmailList = instance.one('#invitedEmailList');
 
 					invitedEmailList.all('.user').each((item) => {
 						emailAddresses.push(item.attr('data-emailAddress'));
@@ -426,14 +426,14 @@ AUI.add(
 				},
 
 				_syncReceiverUserIdsField(form) {
-					var instance = this;
+					const instance = this;
 
-					var receiverUserIds = instance._getByName(
+					const receiverUserIds = instance._getByName(
 						form,
 						'receiverUserIds'
 					);
 
-					var userIds = [];
+					const userIds = [];
 
 					instance._invitedMembersList.all('.user').each((item) => {
 						userIds.push(item.attr('data-userId'));
@@ -443,19 +443,19 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					new A.EventHandle(instance._eventHandles).detach();
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					if (!instance.rootNode) {
 						return;
 					}
 
-					var form = instance.get('form');
+					const form = instance.get('form');
 
 					instance._form = instance.one(form.node);
 
@@ -479,7 +479,7 @@ AUI.add(
 							};
 						},
 						resultTextLocator(response) {
-							var result = STR_BLANK;
+							let result = STR_BLANK;
 
 							if (typeof response.toString !== 'undefined') {
 								result = response.toString();

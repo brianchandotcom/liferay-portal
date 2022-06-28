@@ -210,9 +210,9 @@ const FilterInformationToolbar = ({
 	const [enableShowAll, setEnableShowAll] = useState(false);
 	const filterInformationMessageElementRef = useRef();
 
-	const hasConfigurationValues =
-		Object.values(collectionConfigurationValues).filter((value) => !!value)
-			.length > 0;
+	const hasConfigurationValues = !!Object.values(
+		collectionConfigurationValues
+	).filter((value) => !!value).length;
 
 	const filterInformationMessage = getFilterInformationMessage({
 		collectionConfiguration,

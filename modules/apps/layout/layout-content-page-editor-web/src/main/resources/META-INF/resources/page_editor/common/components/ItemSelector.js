@@ -85,7 +85,7 @@ export default function ItemSelector({
 				'onClick': () => onItemSelect(item),
 			});
 
-			if (quickMappedInfoItems.length > 0) {
+			if (quickMappedInfoItems.length) {
 				transformedMappedItems = quickMappedInfoItems.map(
 					transformMappedItem
 				);
@@ -220,7 +220,7 @@ export default function ItemSelector({
 				</ClayInput.GroupItem>
 
 				{showEditControls &&
-					(mappedItemsMenu.length > 0 ? (
+					(mappedItemsMenu.length ? (
 						<ClayInput.GroupItem shrink>
 							<ClayDropDownWithItems
 								items={mappedItemsMenu}

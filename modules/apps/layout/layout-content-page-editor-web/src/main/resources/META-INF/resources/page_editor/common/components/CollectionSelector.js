@@ -38,7 +38,7 @@ export default function CollectionSelector({
 
 	const filterConfig = collectionItem?.config ?? {};
 
-	const isPrefiltered = Object.keys(filterConfig).length > 0;
+	const isPrefiltered = !!Object.keys(filterConfig).length;
 
 	return (
 		<>

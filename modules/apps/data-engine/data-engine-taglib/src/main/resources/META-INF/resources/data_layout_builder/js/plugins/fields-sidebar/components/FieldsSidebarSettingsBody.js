@@ -29,7 +29,7 @@ import {useSettingsContextFilter} from '../../../utils/settingsForm.es';
  * This component will override the Column from Form Renderer.
  */
 const getColumn = ({objectFields}) => ({children, column, index}) => {
-	if (column.fields.length === 0) {
+	if (!column.fields.length) {
 		return null;
 	}
 

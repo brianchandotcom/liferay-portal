@@ -21,7 +21,7 @@
 		function moveOutOfCellGuard(node) {
 			const cellNodeRegex = /^(?:td|th)$/;
 
-			if (selectedCells.length > 0) {
+			if (selectedCells.length) {
 				return;
 			}
 

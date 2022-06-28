@@ -154,7 +154,7 @@ export function handleResizeRight(props, state, indexes, columnTarget) {
 			};
 		}
 		else if (columnTarget > currentColumnPosition) {
-			if (nextColumn.size === 1 && nextColumn.fields.length === 0) {
+			if (nextColumn.size === 1 && !nextColumn.fields.length) {
 				newCurrentColumn = {
 					...currentColumn,
 					size: currentColumn.size + newSize,
@@ -268,7 +268,7 @@ export function handleResizeLeft(props, state, indexes, columnTarget) {
 	else if (
 		previousColumn &&
 		previousColumn.size === 1 &&
-		previousColumn.fields.length === 0 &&
+		!previousColumn.fields.length &&
 		columnTarget <= previousColumnPosition
 	) {
 		newContext = FormSupport.removeColumn(

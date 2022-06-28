@@ -67,11 +67,11 @@ describe('utils', () => {
 	});
 
 	it('copies attributes from source node to target node', () => {
-		var nodeA = document.createElement('div');
+		const nodeA = document.createElement('div');
 		nodeA.setAttribute('a', 'valueA');
 		nodeA.setAttribute('b', 'valueB');
 
-		var nodeB = document.createElement('div');
+		const nodeB = document.createElement('div');
 		copyNodeAttributes(nodeA, nodeB);
 
 		expect(nodeA.attributes.length).toBe(nodeB.attributes.length);
@@ -82,7 +82,7 @@ describe('utils', () => {
 	});
 
 	it('clears attributes from a given node', () => {
-		var node = document.createElement('div');
+		const node = document.createElement('div');
 		node.setAttribute('a', 'valueA');
 		node.setAttribute('b', 'valueB');
 

@@ -13,11 +13,11 @@
  */
 
 (function () {
-	var pluginName = 'a11yhelpbtn';
+	const pluginName = 'a11yhelpbtn';
 
 	CKEDITOR.plugins.add(pluginName, {
 		init(editor) {
-			var helpText = CKEDITOR.env.mac ? ' Option+0' : ' Alt+0';
+			const helpText = CKEDITOR.env.mac ? ' Option+0' : ' Alt+0';
 
 			if (editor.ui.addButton) {
 				editor.ui.addButton('A11YBtn', {
@@ -27,17 +27,17 @@
 			}
 
 			editor.on('uiSpace', (event) => {
-				var toolbarHTML = event.data.html;
+				const toolbarHTML = event.data.html;
 
-				var a11ybtnIndex = toolbarHTML.indexOf('cke_button__a11ybtn');
+				const a11ybtnIndex = toolbarHTML.indexOf('cke_button__a11ybtn');
 
 				if (a11ybtnIndex !== -1) {
-					var a11ToolbarIndex = toolbarHTML.lastIndexOf(
+					const a11ToolbarIndex = toolbarHTML.lastIndexOf(
 						'class="cke_toolbar"',
 						a11ybtnIndex
 					);
 
-					var toolbarText = toolbarHTML
+					let toolbarText = toolbarHTML
 						.substr(a11ToolbarIndex)
 						.replace(
 							'class="cke_toolbar cke_toolbar_last"',

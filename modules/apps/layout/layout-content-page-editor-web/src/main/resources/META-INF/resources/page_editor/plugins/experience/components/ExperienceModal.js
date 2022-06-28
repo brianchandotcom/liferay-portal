@@ -183,7 +183,7 @@ const ExperienceModal = ({
 
 						<div className="d-flex">
 							<ClaySelect
-								disabled={segments.length === 0}
+								disabled={!segments.length}
 								id={segmentSelectId}
 								onChange={handleSegmentChange}
 								value={selectedSegmentId}

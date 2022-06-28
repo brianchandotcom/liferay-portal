@@ -506,7 +506,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 		}
 
 		if (errorMessage) {
-			var inputTypeFile = this.one('input[type="file"]');
+			const inputTypeFile = this.one('input[type="file"]');
 
 			if (inputTypeFile) {
 				inputTypeFile.value = '';

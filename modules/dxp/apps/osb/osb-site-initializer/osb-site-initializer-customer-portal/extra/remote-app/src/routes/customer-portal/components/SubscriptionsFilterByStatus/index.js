@@ -61,7 +61,7 @@ const SubscriptionsFilterByStatus = ({selectedStatus, setSelectedStatus}) => {
 							selectedStatus.length ===
 							Object.keys(SUBSCRIPTIONS_STATUS).length
 								? i18n.translate('all')
-								: selectedStatus.length === 0
+								: !selectedStatus.length
 								? i18n.translate('none')
 								: selectedStatus.join(', ')
 						}`}{' '}

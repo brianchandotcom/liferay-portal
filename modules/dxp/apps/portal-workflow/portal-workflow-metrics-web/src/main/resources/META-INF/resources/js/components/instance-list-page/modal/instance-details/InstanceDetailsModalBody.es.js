@@ -90,7 +90,7 @@ function Body({
 						{Liferay.Language.get('due-date-by-sla')}
 					</Body.SectionTitle>
 
-					{slaResults.length === 0 && (
+					{!slaResults.length && (
 						<p>
 							<span className="font-weight-medium text-muted">
 								{Liferay.Language.get(
@@ -100,7 +100,7 @@ function Body({
 						</p>
 					)}
 
-					{SLAs.open.length > 0 && (
+					{!!SLAs.open.length && (
 						<Body.SectionSubTitle>
 							{`${Liferay.Language.get('open').toUpperCase()} (${
 								SLAs.open.length
@@ -112,7 +112,7 @@ function Body({
 						<Body.SLAResultItem key={item.id} {...item} />
 					))}
 
-					{SLAs.resolved.length > 0 && (
+					{!!SLAs.resolved.length && (
 						<Body.SectionSubTitle>
 							{`${Liferay.Language.get(
 								'resolved'
@@ -124,7 +124,7 @@ function Body({
 						<Body.SLAResultItem key={item.id} {...item} />
 					))}
 
-					{SLAs.notStarted.length > 0 && (
+					{!!SLAs.notStarted.length && (
 						<Body.SectionSubTitle>
 							{`${Liferay.Language.get(
 								'not-started'

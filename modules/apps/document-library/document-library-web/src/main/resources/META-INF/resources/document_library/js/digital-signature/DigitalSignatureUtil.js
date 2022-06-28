@@ -83,9 +83,7 @@ const _composeBodyHTML = (crossedFileCountLimit, invalidFileExtensions) => {
 	let bodyHTML = '';
 
 	if (crossedFileCountLimit) {
-		bodyHTML += _invalidFileCountContent(
-			invalidFileExtensions.length === 0
-		);
+		bodyHTML += _invalidFileCountContent(!invalidFileExtensions.length);
 	}
 
 	if (invalidFileExtensions.length) {
@@ -137,13 +135,12 @@ const _showWarningModal = ({
 			},
 		],
 		status: 'warning',
-		title:
-			invalidFileExtensions.length === 0
-				? sub(
-						Liferay.Language.get('maximum-of-x-files-per-envelope'),
-						MAXIMUM_SELECTED_FILES
-				  )
-				: Liferay.Language.get('file-extensions-not-supported'),
+		title: !invalidFileExtensions.length
+			? sub(
+					Liferay.Language.get('maximum-of-x-files-per-envelope'),
+					MAXIMUM_SELECTED_FILES
+			  )
+			: Liferay.Language.get('file-extensions-not-supported'),
 	});
 
 export async function collectDigitalSignature(

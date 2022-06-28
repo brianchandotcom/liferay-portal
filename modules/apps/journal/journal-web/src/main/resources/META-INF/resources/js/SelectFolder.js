@@ -102,7 +102,7 @@ function FolderTree({filterQuery, handleSelectionChange, items: initialItems}) {
 		}
 	};
 
-	return filteredItems.length > 0 ? (
+	return filteredItems.length ? (
 		<ClayTreeView
 			items={filteredItems}
 			onItemsChange={setItems}

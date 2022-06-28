@@ -20,17 +20,17 @@
 AUI.add(
 	'liferay-item-selector-dialog',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var Util = Liferay.Util;
+		const Util = Liferay.Util;
 
-		var STR_EVENT_NAME = 'eventName';
+		const STR_EVENT_NAME = 'eventName';
 
-		var STR_SELECTED_ITEM = 'selectedItem';
+		const STR_SELECTED_ITEM = 'selectedItem';
 
-		var STR_VISIBLE = 'visible';
+		const STR_VISIBLE = 'visible';
 
-		var LiferayItemSelectorDialog = A.Component.create({
+		const LiferayItemSelectorDialog = A.Component.create({
 			ATTRS: {
 				dialogClasses: {
 					validator: Lang.isString,
@@ -74,13 +74,13 @@ AUI.add(
 
 			prototype: {
 				_onItemSelected(event) {
-					var instance = this;
+					const instance = this;
 
-					var currentItem = event.data;
+					const currentItem = event.data;
 
-					var dialog = Util.getWindow(instance.get(STR_EVENT_NAME));
+					const dialog = Util.getWindow(instance.get(STR_EVENT_NAME));
 
-					var addButton = dialog
+					const addButton = dialog
 						.getToolbar('footer')
 						.get('boundingBox')
 						.one('#addButton');
@@ -94,19 +94,19 @@ AUI.add(
 				 * @deprecated As of Mueller (7.2.x), with no direct replacement
 				 */
 				close() {
-					var instance = this;
+					const instance = this;
 
 					Util.getWindow(instance.get(STR_EVENT_NAME)).hide();
 				},
 
 				open() {
-					var instance = this;
+					const instance = this;
 
-					var strings = instance.get('strings');
+					const strings = instance.get('strings');
 
-					var eventName = instance.get(STR_EVENT_NAME);
+					const eventName = instance.get(STR_EVENT_NAME);
 
-					var zIndex = instance.get('zIndex');
+					const zIndex = instance.get('zIndex');
 
 					instance._currentItem = null;
 					instance._selectedItem = null;

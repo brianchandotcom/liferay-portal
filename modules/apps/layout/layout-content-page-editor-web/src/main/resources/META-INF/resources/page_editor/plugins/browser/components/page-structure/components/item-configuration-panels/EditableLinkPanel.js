@@ -62,7 +62,7 @@ export default function EditableLinkPanel({item}) {
 			...(editableValue.config || {}),
 		};
 
-		if (Object.keys(linkConfig).length > 0) {
+		if (Object.keys(linkConfig).length) {
 			setImageConfig({
 				alt: linkConfig.alt || '',
 				imageConfiguration: linkConfig.imageConfiguration || {},

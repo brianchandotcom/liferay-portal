@@ -51,7 +51,7 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 	const nodes = Object.keys(violations.nodes);
 
 	useLayoutEffect(() => {
-		if (nodes.length > 0) {
+		if (nodes.length) {
 			document.body.classList.add('a11y-body');
 
 			return () => {
@@ -126,7 +126,7 @@ export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 		[dispatch, params]
 	);
 
-	if (nodes.length === 0) {
+	if (!nodes.length) {
 		return null;
 	}
 

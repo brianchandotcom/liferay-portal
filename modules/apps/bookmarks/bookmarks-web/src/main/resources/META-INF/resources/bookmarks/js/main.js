@@ -15,9 +15,9 @@
 AUI.add(
 	'liferay-bookmarks',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var Bookmarks = A.Component.create({
+		const Bookmarks = A.Component.create({
 			ATTRS: {
 				editEntryUrl: {
 					validator: Lang.isString,
@@ -44,15 +44,15 @@ AUI.add(
 
 			prototype: {
 				_moveToFolder(object) {
-					var instance = this;
+					const instance = this;
 
-					var namespace = instance.NS;
+					const namespace = instance.NS;
 
-					var dropTarget = object.targetItem;
+					const dropTarget = object.targetItem;
 
-					var selectedItems = object.selectedItems;
+					const selectedItems = object.selectedItems;
 
-					var folderId = dropTarget.attr('data-folder-id');
+					const folderId = dropTarget.attr('data-folder-id');
 
 					if (folderId) {
 						if (
@@ -61,7 +61,7 @@ AUI.add(
 								dropTarget.one('input[type=checkbox]')
 							)
 						) {
-							var form = instance.get('form').node;
+							const form = instance.get('form').node;
 
 							form.get(namespace + 'newFolderId').val(folderId);
 
@@ -74,7 +74,7 @@ AUI.add(
 				},
 
 				_moveToTrash() {
-					var instance = this;
+					const instance = this;
 
 					instance._processAction(
 						'move_to_trash',
@@ -83,11 +83,11 @@ AUI.add(
 				},
 
 				_processAction(action, url, redirectUrl) {
-					var instance = this;
+					const instance = this;
 
-					var namespace = instance.NS;
+					const namespace = instance.NS;
 
-					var form = instance.get('form').node;
+					const form = instance.get('form').node;
 
 					redirectUrl = redirectUrl || location.href;
 
@@ -108,11 +108,11 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
-					var namespace = instance.NS;
+					const namespace = instance.NS;
 
-					var searchContainer = Liferay.SearchContainer.get(
+					const searchContainer = Liferay.SearchContainer.get(
 						namespace + instance.get('searchContainerId')
 					);
 

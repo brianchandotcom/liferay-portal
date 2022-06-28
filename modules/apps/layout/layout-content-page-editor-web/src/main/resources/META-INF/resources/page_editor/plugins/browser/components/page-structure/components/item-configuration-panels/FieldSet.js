@@ -88,7 +88,7 @@ export function FieldSet({
 		selectedViewportSize
 	);
 
-	return availableFields.length > 0 && label ? (
+	return !!availableFields.length && label ? (
 		<Collapse label={label} open>
 			<FieldSetContent
 				fields={availableFields}

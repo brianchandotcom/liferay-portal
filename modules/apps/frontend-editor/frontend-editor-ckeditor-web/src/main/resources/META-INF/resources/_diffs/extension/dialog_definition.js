@@ -13,19 +13,19 @@
  */
 
 CKEDITOR.on('dialogDefinition', (event) => {
-	var boundingWindow = event.editor.window;
+	const boundingWindow = event.editor.window;
 
-	var dialogDefinition = event.data.definition;
+	const dialogDefinition = event.data.definition;
 
-	var dialog = event.data.dialog;
+	const dialog = event.data.dialog;
 
-	var onShow = dialogDefinition.onShow;
+	const onShow = dialogDefinition.onShow;
 
-	var centerDialog = function () {
-		var dialogSize = dialog.getSize();
+	const centerDialog = function () {
+		const dialogSize = dialog.getSize();
 
-		var x = window.innerWidth / 2 - dialogSize.width / 2;
-		var y = window.innerHeight / 2 - dialogSize.height / 2;
+		const x = window.innerWidth / 2 - dialogSize.width / 2;
+		const y = window.innerHeight / 2 - dialogSize.height / 2;
 
 		dialog.move(x, y, false);
 	};
@@ -38,7 +38,7 @@ CKEDITOR.on('dialogDefinition', (event) => {
 		centerDialog();
 	};
 
-	var debounce = function (fn, delay) {
+	const debounce = function (fn, delay) {
 		return function debounced() {
 			clearTimeout(debounced.id);
 			debounced.id = setTimeout(() => {
@@ -47,14 +47,14 @@ CKEDITOR.on('dialogDefinition', (event) => {
 		};
 	};
 
-	var debounced = boundingWindow.on(
+	const debounced = boundingWindow.on(
 		'resize',
 		debounce(() => {
 			centerDialog();
 		}, 250)
 	);
 
-	var clearEventHandler = function () {
+	const clearEventHandler = function () {
 		clearTimeout(debounced.id);
 	};
 

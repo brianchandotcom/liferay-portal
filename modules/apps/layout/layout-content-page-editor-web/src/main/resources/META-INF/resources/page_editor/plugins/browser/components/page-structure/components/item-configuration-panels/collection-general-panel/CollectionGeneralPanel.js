@@ -290,7 +290,7 @@ export function CollectionGeneralPanel({item}) {
 								VIEWPORT_SIZES.desktop && (
 								<>
 									{listStyle !== LIST_STYLE_GRID &&
-										availableListItemStyles.length > 0 && (
+										!!availableListItemStyles.length && (
 											<ListItemStyleSelector
 												availableListItemStyles={
 													availableListItemStyles

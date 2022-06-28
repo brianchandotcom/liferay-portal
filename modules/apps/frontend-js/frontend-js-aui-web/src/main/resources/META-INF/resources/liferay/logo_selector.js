@@ -15,15 +15,15 @@
 AUI.add(
 	'liferay-logo-selector',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var DELETE_LOGO = 'DELETE_LOGO';
+		const DELETE_LOGO = 'DELETE_LOGO';
 
-		var MAP_DELETE_LOGO = {
+		const MAP_DELETE_LOGO = {
 			src: DELETE_LOGO,
 		};
 
-		var LogoSelector = A.Component.create({
+		const LogoSelector = A.Component.create({
 			ATTRS: {
 				defaultLogo: {
 					value: false,
@@ -35,7 +35,7 @@ AUI.add(
 
 				editLogoFn: {
 					setter(value) {
-						var fn = function () {};
+						let fn = function () {};
 
 						if (Lang.isFunction(window[value])) {
 							fn = window[value] || fn;
@@ -74,7 +74,7 @@ AUI.add(
 
 			prototype: {
 				_changeLogo(url, fileEntryId) {
-					var instance = this;
+					const instance = this;
 
 					url = Liferay.Util.addParams('t=' + Date.now(), url);
 
@@ -86,7 +86,7 @@ AUI.add(
 				},
 
 				_onDeleteLogoClick() {
-					var instance = this;
+					const instance = this;
 
 					instance.set(
 						'logoURL',
@@ -100,9 +100,9 @@ AUI.add(
 				},
 
 				_openEditLogoWindow(event) {
-					var instance = this;
+					const instance = this;
 
-					var editLogoURL = instance.get('editLogoURL');
+					const editLogoURL = instance.get('editLogoURL');
 
 					Liferay.Util.openWindow({
 						cache: false,
@@ -121,22 +121,22 @@ AUI.add(
 				},
 
 				_uiSetLogoURL(value, src) {
-					var instance = this;
+					const instance = this;
 
-					var logoURL = value;
+					const logoURL = value;
 
-					var logoDisplaySelector = instance.get(
+					const logoDisplaySelector = instance.get(
 						'logoDisplaySelector'
 					);
 
-					var deleteLogo = src === DELETE_LOGO;
+					const deleteLogo = src === DELETE_LOGO;
 
-					var defaultLogo = instance.get('defaultLogo');
+					const defaultLogo = instance.get('defaultLogo');
 
 					instance._avatar.attr('src', logoURL);
 
 					if (logoDisplaySelector) {
-						var logoDisplay = A.one(logoDisplaySelector);
+						const logoDisplay = A.one(logoDisplaySelector);
 
 						if (logoDisplay) {
 							logoDisplay.attr('src', logoURL);
@@ -163,7 +163,7 @@ AUI.add(
 				},
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
 					instance
 						.get('contentBox')
@@ -184,7 +184,7 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._portletNamespace = instance.get(
 						'portletNamespace'
@@ -198,12 +198,12 @@ AUI.add(
 				},
 
 				renderUI() {
-					var instance = this;
+					const instance = this;
 
-					var portletNamespace = instance._portletNamespace;
-					var randomNamespace = instance._randomNamespace;
+					const portletNamespace = instance._portletNamespace;
+					const randomNamespace = instance._randomNamespace;
 
-					var contentBox = instance.get('contentBox');
+					const contentBox = instance.get('contentBox');
 
 					instance._avatar = contentBox.one(
 						'#' + randomNamespace + 'avatar'

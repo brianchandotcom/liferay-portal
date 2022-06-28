@@ -284,7 +284,7 @@ export default function ChangeTrackingComments({
 		if (!fetchData) {
 			return <span aria-hidden="true" className="loading-animation" />;
 		}
-		else if (!fetchData.comments || fetchData.comments.length === 0) {
+		else if (!fetchData.comments || !fetchData.comments.length) {
 			return (
 				<div className="taglib-empty-result-message">
 					<div className="taglib-empty-result-message-header" />

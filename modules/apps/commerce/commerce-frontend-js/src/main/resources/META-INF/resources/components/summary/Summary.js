@@ -143,7 +143,7 @@ function Summary({
 	}, [apiUrl, datasetDisplayId, refreshData]);
 
 	useEffect(() => {
-		if (!!summaryData && Object.keys(summaryData).length > 0) {
+		if (!!summaryData && !!Object.keys(summaryData).length) {
 			setSummaryItems(mapDataToLayout(summaryData));
 		}
 

@@ -15,7 +15,7 @@
 AUI.add(
 	'liferay-calendar-session-listener',
 	(A) => {
-		var CalendarSessionListener = A.Component.create({
+		const CalendarSessionListener = A.Component.create({
 			ATTRS: {
 				calendars: {
 					value: [],
@@ -30,13 +30,13 @@ AUI.add(
 
 			prototype: {
 				_disableCalendars() {
-					var instance = this;
+					const instance = this;
 
-					var calendars = instance.get('calendars');
+					const calendars = instance.get('calendars');
 
 					// eslint-disable-next-line @liferay/aui/no-object
 					A.Object.each(calendars, (calendar) => {
-						var permissions = calendar.get('permissions');
+						const permissions = calendar.get('permissions');
 
 						permissions.DELETE = false;
 						permissions.MANAGE_BOOKINGS = false;
@@ -46,9 +46,9 @@ AUI.add(
 				},
 
 				_disableEvents() {
-					var instance = this;
+					const instance = this;
 
-					var scheduler = instance.get('scheduler');
+					const scheduler = instance.get('scheduler');
 
 					scheduler.getEvents().forEach((event) => {
 						event.set('disabled', true);
@@ -56,11 +56,11 @@ AUI.add(
 				},
 
 				_disableScheduler() {
-					var instance = this;
+					const instance = this;
 
-					var addEventButtons = A.all('.calendar-add-event-btn');
+					const addEventButtons = A.all('.calendar-add-event-btn');
 
-					var scheduler = instance.get('scheduler');
+					const scheduler = instance.get('scheduler');
 
 					addEventButtons.set('disabled', true);
 
@@ -68,7 +68,7 @@ AUI.add(
 				},
 
 				_onSessionExpired() {
-					var instance = this;
+					const instance = this;
 
 					instance._disableCalendars();
 
@@ -78,7 +78,7 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					Liferay.on(
 						'sessionExpired',

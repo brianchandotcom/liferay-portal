@@ -15,25 +15,25 @@
 AUI.add(
 	'liferay-layouts-tree',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var NODE_ID_TPL =
+		const NODE_ID_TPL =
 			'{treeId}_layout_{layoutId}_plid_{plid}_groupId_{groupId}';
 
-		var NODE_LINK_TPL =
+		const NODE_LINK_TPL =
 			'<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{layoutURL}" id="{id}" title="{title}">{label}</a>';
 
-		var STR_BOUNDING_BOX = 'boundingBox';
+		const STR_BOUNDING_BOX = 'boundingBox';
 
-		var STR_EMPTY = '';
+		const STR_EMPTY = '';
 
-		var STR_ID = 'id';
+		const STR_ID = 'id';
 
-		var STR_LINK_TEMPLATE = 'linkTemplate';
+		const STR_LINK_TEMPLATE = 'linkTemplate';
 
-		var STR_PARENT_NODE = 'parentNode';
+		const STR_PARENT_NODE = 'parentNode';
 
-		var TREE_CSS_CLASSES = {
+		const TREE_CSS_CLASSES = {
 			iconCheck: 'tree-icon icon-check',
 			iconCollapsed: 'icon-file',
 			iconExpanded: 'icon-file',
@@ -43,12 +43,12 @@ AUI.add(
 			iconUncheck: 'icon-check',
 		};
 
-		var TREE_LOADING_EL_TPL =
+		const TREE_LOADING_EL_TPL =
 			'<div class="lfr-tree-loading">' +
 			'<span class="icon icon-loading lfr-tree-loading-icon"></span>' +
 			'</div>';
 
-		var LayoutsTreeBase = function () {};
+		const LayoutsTreeBase = function () {};
 
 		LayoutsTreeBase.ATTRS = {
 			incomplete: {
@@ -95,7 +95,7 @@ AUI.add(
 
 		LayoutsTreeBase.prototype = {
 			_afterRenderTree() {
-				var instance = this;
+				const instance = this;
 
 				instance._treeLoadingElement.hide();
 
@@ -103,7 +103,7 @@ AUI.add(
 			},
 
 			_bindUILTBase() {
-				var instance = this;
+				const instance = this;
 
 				instance._eventHandles = instance._eventHandles || [];
 
@@ -124,7 +124,7 @@ AUI.add(
 			},
 
 			_createNodeId(groupId, layoutId, plid) {
-				var instance = this;
+				const instance = this;
 
 				return A.Lang.sub(NODE_ID_TPL, {
 					groupId,
@@ -135,15 +135,15 @@ AUI.add(
 			},
 
 			_createNodeLink(data, template) {
-				var instance = this;
+				const instance = this;
 
-				var className = 'layout-tree text-truncate ';
+				const className = 'layout-tree text-truncate ';
 
 				data.cssClass = data.cssClass
 					? className + data.cssClass
 					: className;
 
-				var urls = instance.get('urls');
+				const urls = instance.get('urls');
 
 				urls.forEach((item) => {
 					data[item.name] = A.Lang.sub(item.value, {
@@ -183,9 +183,9 @@ AUI.add(
 			},
 
 			_formatJSONResults(json) {
-				var instance = this;
+				const instance = this;
 
-				var output = json.layouts.map((node) => {
+				const output = json.layouts.map((node) => {
 					return instance._formatNode(node);
 				});
 
@@ -193,17 +193,17 @@ AUI.add(
 			},
 
 			_formatNode(node) {
-				var instance = this;
+				const instance = this;
 
-				var childLayouts = [];
-				var cssIcons = {};
-				var total = 0;
+				let childLayouts = [];
+				let cssIcons = {};
+				let total = 0;
 
-				var iconCssClassName = 'icon-link';
+				const iconCssClassName = 'icon-link';
 
-				var hasChildren = node.hasChildren;
-				var nodeChildren = node.children;
-				var nodeType = node.type;
+				const hasChildren = node.hasChildren;
+				const nodeChildren = node.children;
+				const nodeType = node.type;
 
 				if (
 					nodeType === 'embedded' ||
@@ -221,17 +221,17 @@ AUI.add(
 					total = nodeChildren.total;
 				}
 
-				var expanded = childLayouts.length > 0;
+				const expanded = !!childLayouts.length;
 
-				var maxChildren = instance.get('maxChildren');
+				const maxChildren = instance.get('maxChildren');
 
-				var id = instance._createNodeId(
+				const id = instance._createNodeId(
 					node.groupId,
 					node.layoutId,
 					node.plid
 				);
 
-				var newNode = {
+				const newNode = {
 					alwaysShowHitArea: hasChildren,
 					cssClasses: {
 						pages: {...TREE_CSS_CLASSES, ...cssIcons},
@@ -260,10 +260,10 @@ AUI.add(
 					instance._pendingSelectedNodeId = id;
 				}
 
-				var cssClass = STR_EMPTY;
-				var title = STR_EMPTY;
+				let cssClass = STR_EMPTY;
+				let title = STR_EMPTY;
 
-				var name = Liferay.Util.escapeHTML(node.name);
+				let name = Liferay.Util.escapeHTML(node.name);
 
 				if (node.layoutRevisionId) {
 					if (!node.layoutRevisionHead) {
@@ -307,9 +307,9 @@ AUI.add(
 			},
 
 			_formatNodeLabel(node, cssClass, name, title) {
-				var instance = this;
+				const instance = this;
 
-				var data = {
+				const data = {
 					cssClass,
 					label: name,
 					plid: node.plid,
@@ -319,7 +319,7 @@ AUI.add(
 					...node,
 				};
 
-				var label = instance._createNodeLink(
+				const label = instance._createNodeLink(
 					data,
 					instance.get(STR_LINK_TEMPLATE)
 				);
@@ -328,9 +328,9 @@ AUI.add(
 			},
 
 			_formatRootNode(rootConfig, children) {
-				var instance = this;
+				const instance = this;
 
-				var rootLabel = instance._createNodeLink(
+				const rootLabel = instance._createNodeLink(
 					{
 						label: Liferay.Util.escapeHTML(rootConfig.label),
 						plid: rootConfig.defaultParentLayoutId,
@@ -339,11 +339,11 @@ AUI.add(
 					rootConfig.linkTemplate
 				);
 
-				var maxChildren = instance.get('maxChildren');
+				const maxChildren = instance.get('maxChildren');
 
-				var layouts = instance.get('layouts');
+				const layouts = instance.get('layouts');
 
-				var rootNode = {
+				const rootNode = {
 					alwaysShowHitArea: true,
 					children,
 					cssClasses: {
@@ -374,9 +374,9 @@ AUI.add(
 			},
 
 			_getNodeIOConfig() {
-				var instance = this;
+				const instance = this;
 
-				var ioCfg = {
+				const ioCfg = {
 					cfg: {
 						data(node) {
 							return {
@@ -397,7 +397,7 @@ AUI.add(
 						method: 'POST',
 						on: {
 							success(event, id, xhr) {
-								var response;
+								let response;
 
 								try {
 									response = JSON.parse(xhr.responseText);
@@ -426,11 +426,11 @@ AUI.add(
 			},
 
 			_onDropAppend(event) {
-				var instance = this;
+				const instance = this;
 
-				var tree = event.tree;
+				const tree = event.tree;
 
-				var index =
+				const index =
 					tree.dragNode.get(STR_PARENT_NODE).getChildrenLength() - 1;
 
 				instance._updateLayoutParent(
@@ -441,11 +441,11 @@ AUI.add(
 			},
 
 			_onDropInsert(event) {
-				var instance = this;
+				const instance = this;
 
-				var tree = event.tree;
+				const tree = event.tree;
 
-				var index = tree.dragNode
+				const index = tree.dragNode
 					.get(STR_PARENT_NODE)
 					.indexOf(tree.dragNode);
 
@@ -457,11 +457,11 @@ AUI.add(
 			},
 
 			_parseLayouts(value) {
-				var instance = this;
+				const instance = this;
 
-				var children = instance._formatJSONResults(value);
+				let children = instance._formatJSONResults(value);
 
-				var rootConfig = instance.get('root');
+				const rootConfig = instance.get('root');
 
 				if (rootConfig) {
 					children = [instance._formatRootNode(rootConfig, children)];
@@ -480,39 +480,39 @@ AUI.add(
 			},
 
 			_restoreNodePosition(response) {
-				var instance = this;
+				const instance = this;
 
 				instance._displayNotice(response.message, 'warning', 10000);
 
-				var nodeId = A.Lang.sub(NODE_ID_TPL, {
+				const nodeId = A.Lang.sub(NODE_ID_TPL, {
 					groupId: response.groupId,
 					layoutId: response.layoutId,
 					plid: response.plid,
 					treeId: instance._treeId,
 				});
 
-				var parentNodeId = A.Lang.sub(NODE_ID_TPL, {
+				const parentNodeId = A.Lang.sub(NODE_ID_TPL, {
 					groupId: response.groupId,
 					layoutId: response.originalParentLayoutId,
 					plid: response.originalParentPlid,
 					treeId: instance._treeId,
 				});
 
-				var action = 'append';
+				let action = 'append';
 
-				var index = response.originalPriority;
+				const index = response.originalPriority;
 
-				var node = instance.getNodeById(nodeId);
-				var parentNode = instance.getNodeById(parentNodeId);
+				const node = instance.getNodeById(nodeId);
+				const parentNode = instance.getNodeById(parentNodeId);
 
-				var sibling;
+				let sibling;
 
 				if (index > 0) {
 					if (index === parentNode.childrenLength) {
 						action = 'append';
 					}
 					else {
-						var siblingIndex = index;
+						let siblingIndex = index;
 
 						if (node.get('parentNode').get('id') !== parentNodeId) {
 							siblingIndex -= 1;
@@ -533,7 +533,7 @@ AUI.add(
 			},
 
 			_setRootConfig(val) {
-				var defaultRootConfig = {
+				const defaultRootConfig = {
 					linkTemplate: NODE_LINK_TPL,
 				};
 
@@ -541,7 +541,7 @@ AUI.add(
 			},
 
 			_updateLayout(data) {
-				var instance = this;
+				const instance = this;
 
 				Liferay.Util.fetch(
 					themeDisplay.getPathMain() + '/portal/edit_layout',
@@ -569,7 +569,7 @@ AUI.add(
 			},
 
 			_updateLayoutParent(dragPlid, dropPlid, index) {
-				var instance = this;
+				const instance = this;
 
 				instance._updateLayout({
 					cmd: 'parent_layout_id',
@@ -580,33 +580,33 @@ AUI.add(
 			},
 
 			destructor() {
-				var instance = this;
+				const instance = this;
 
 				new A.EventHandle(instance._eventHandles).detach();
 			},
 
 			extractGroupId(node) {
-				var match = node.get(STR_ID).match(/groupId_(\d+)/);
+				const match = node.get(STR_ID).match(/groupId_(\d+)/);
 
 				return match && match[1];
 			},
 
 			extractLayoutId(node) {
-				var match = node.get(STR_ID).match(/layout_(\d+)/);
+				const match = node.get(STR_ID).match(/layout_(\d+)/);
 
 				return match && match[1];
 			},
 
 			extractPlid(node) {
-				var match = node.get(STR_ID).match(/plid_(\d+)/);
+				const match = node.get(STR_ID).match(/plid_(\d+)/);
 
 				return match && match[1];
 			},
 
 			initializer() {
-				var instance = this;
+				const instance = this;
 
-				var boundingBox = instance.get(STR_BOUNDING_BOX);
+				const boundingBox = instance.get(STR_BOUNDING_BOX);
 
 				instance._treeLoadingElement = boundingBox
 					.ancestor()
@@ -623,7 +623,7 @@ AUI.add(
 			},
 
 			renderUI() {
-				var instance = this;
+				const instance = this;
 
 				instance._parseLayouts(instance.get('layouts'));
 
@@ -631,9 +631,9 @@ AUI.add(
 			},
 
 			restoreSelectedNode() {
-				var instance = this;
+				const instance = this;
 
-				var pendingSelectedNodeId = instance._pendingSelectedNodeId;
+				const pendingSelectedNodeId = instance._pendingSelectedNodeId;
 
 				if (pendingSelectedNodeId) {
 					instance.getNodeById(pendingSelectedNodeId).select();

@@ -22,16 +22,16 @@
 AUI.add(
 	'liferay-history',
 	(A) => {
-		var Lang = A.Lang;
-		var QueryString = A.QueryString;
+		const Lang = A.Lang;
+		const QueryString = A.QueryString;
 
-		var isValue = Lang.isValue;
+		const isValue = Lang.isValue;
 
-		var WIN = A.config.win;
+		const WIN = A.config.win;
 
-		var LOCATION = WIN.location;
+		const LOCATION = WIN.location;
 
-		var History = A.Component.create({
+		const History = A.Component.create({
 			EXTENDS: A.History,
 
 			NAME: 'liferayhistory',
@@ -50,14 +50,14 @@ AUI.add(
 				}),
 
 				get(key) {
-					var instance = this;
+					const instance = this;
 
-					var value = History.superclass.get.apply(this, arguments);
+					let value = History.superclass.get.apply(this, arguments);
 
 					if (!isValue(value) && isValue(key)) {
-						var query = LOCATION.search;
+						const query = LOCATION.search;
 
-						var queryMap = instance._parse(query.substr(1));
+						const queryMap = instance._parse(query.substr(1));
 
 						if (
 							Object.prototype.hasOwnProperty.call(queryMap, key)

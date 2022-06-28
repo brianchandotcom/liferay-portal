@@ -235,7 +235,7 @@ export default function MultiPanelSidebar({
 								setHasError(true);
 							}}
 						>
-							{panelComponents.length === 0 && (
+							{!panelComponents.length && (
 								<ClayLoadingIndicator />
 							)}
 

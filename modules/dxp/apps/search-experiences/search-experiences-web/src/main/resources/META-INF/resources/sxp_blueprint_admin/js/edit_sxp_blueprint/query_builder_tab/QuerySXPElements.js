@@ -84,7 +84,7 @@ function QuerySXPElements({
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 
-			{elementInstances.length === 0 ? (
+			{!elementInstances.length ? (
 				<div className="sheet">
 					<div className="selected-sxp-elements-empty-text">
 						{Liferay.Language.get(

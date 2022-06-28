@@ -15,28 +15,28 @@
 AUI.add(
 	'liferay-asset-addon-entry-selector',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var NAME = 'assetaddonentryselector';
+		const NAME = 'assetaddonentryselector';
 
-		var STR_ASSET_ADDON_ENTRIES = 'assetAddonEntries';
+		const STR_ASSET_ADDON_ENTRIES = 'assetAddonEntries';
 
-		var STR_BLANK = '';
+		const STR_BLANK = '';
 
-		var STR_CHECKED = 'checked';
+		const STR_CHECKED = 'checked';
 
-		var STR_CLICK = 'click';
+		const STR_CLICK = 'click';
 
-		var STR_DATA_KEY = 'data-key';
+		const STR_DATA_KEY = 'data-key';
 
-		var STR_INPUT = 'input';
+		const STR_INPUT = 'input';
 
-		var STR_SELECTED_ASSET_ADDON_ENTRIES = 'selectedAssetAddonEntries';
+		const STR_SELECTED_ASSET_ADDON_ENTRIES = 'selectedAssetAddonEntries';
 
-		var TPL_SELECT_LIST =
+		const TPL_SELECT_LIST =
 			'<ul class="list-inline list-unstyled row">{entries}</ul>';
 
-		var TPL_STR_SELECTED_ASSET_ADDON_ENTRY =
+		const TPL_STR_SELECTED_ASSET_ADDON_ENTRY =
 			'<li class="col-md-6 form-check form-check-card">' +
 			'<label class="form-check-label">' +
 			'<input {checked} class="form-check-input sr-only" data-key={key} data-label={label} type="checkbox">' +
@@ -63,7 +63,7 @@ AUI.add(
 			'</label>' +
 			'</li>';
 
-		var TPL_SUMMARY_ASSET_ADDON_ENTRY =
+		const TPL_SUMMARY_ASSET_ADDON_ENTRY =
 			'<li class="col-md-4 list-entry" data-key="{key}" data-label="{label}">' +
 			'<div class="card card-horizontal card-type-directory">' +
 			'<div class="card-body">' +
@@ -87,7 +87,7 @@ AUI.add(
 			'</div>' +
 			'</li>';
 
-		var AssetAddonEntrySelector = A.Component.create({
+		const AssetAddonEntrySelector = A.Component.create({
 			ATTRS: {
 				assetAddonEntries: {
 					setter: '_setAssetAddonEntries',
@@ -112,7 +112,7 @@ AUI.add(
 
 			prototype: {
 				_bindUI() {
-					var instance = this;
+					const instance = this;
 
 					instance._eventHandles = [
 						instance.after(
@@ -135,12 +135,12 @@ AUI.add(
 				},
 
 				_getSelectDialog() {
-					var instance = this;
+					const instance = this;
 
-					var dialog = instance._dialog;
+					let dialog = instance._dialog;
 
 					if (!dialog) {
-						var dialogConfig = {
+						const dialogConfig = {
 							'autoHeightRatio': 0.5,
 							'toolbars.footer': instance._getSelectDialogFooterToolbar(),
 							'width': 540,
@@ -166,13 +166,13 @@ AUI.add(
 				},
 
 				_getSelectDialogContent() {
-					var instance = this;
+					const instance = this;
 
-					var selectedAssetAddonEntries = instance.get(
+					const selectedAssetAddonEntries = instance.get(
 						STR_SELECTED_ASSET_ADDON_ENTRIES
 					);
 
-					var entriesContent = instance
+					const entriesContent = instance
 						.get(STR_ASSET_ADDON_ENTRIES)
 						.reduce((previousValue, currentValue) => {
 							currentValue.checked =
@@ -191,7 +191,7 @@ AUI.add(
 							);
 						}, STR_BLANK);
 
-					var content = Lang.sub(TPL_SELECT_LIST, {
+					const content = Lang.sub(TPL_SELECT_LIST, {
 						entries: entriesContent,
 					});
 
@@ -199,9 +199,9 @@ AUI.add(
 				},
 
 				_getSelectDialogFooterToolbar() {
-					var instance = this;
+					const instance = this;
 
-					var footerToolbar = [
+					const footerToolbar = [
 						{
 							label: Liferay.Language.get('cancel'),
 							on: {
@@ -224,25 +224,25 @@ AUI.add(
 				},
 
 				_hideSelectDialog() {
-					var instance = this;
+					const instance = this;
 
 					instance._getSelectDialog().hide();
 				},
 
 				_onSelectClick() {
-					var instance = this;
+					const instance = this;
 
 					instance._showSelectDialog();
 				},
 
 				_onSummaryItemRemove(event) {
-					var instance = this;
+					const instance = this;
 
-					var selectedAssetAddonEntries = instance.get(
+					let selectedAssetAddonEntries = instance.get(
 						STR_SELECTED_ASSET_ADDON_ENTRIES
 					);
 
-					var removedItem = event.currentTarget
+					const removedItem = event.currentTarget
 						.ancestor('.list-entry')
 						.attr(STR_DATA_KEY);
 
@@ -259,9 +259,9 @@ AUI.add(
 				},
 
 				_setAssetAddonEntries(val) {
-					var instance = this;
+					const instance = this;
 
-					var entriesMap = {};
+					const entriesMap = {};
 
 					val.forEach((item) => {
 						entriesMap[item.key] = item;
@@ -271,22 +271,22 @@ AUI.add(
 				},
 
 				_showSelectDialog() {
-					var instance = this;
+					const instance = this;
 
 					instance._syncUI();
 					instance._getSelectDialog().show();
 				},
 
 				_syncUI() {
-					var instance = this;
+					const instance = this;
 
 					instance.get(STR_ASSET_ADDON_ENTRIES);
 
-					var selectedAssetAddonEntries = instance.get(
+					const selectedAssetAddonEntries = instance.get(
 						STR_SELECTED_ASSET_ADDON_ENTRIES
 					);
 
-					var selectedAssetAddonEntriesNode = instance.one(
+					const selectedAssetAddonEntriesNode = instance.one(
 						'.selected-entries'
 					);
 
@@ -315,11 +315,11 @@ AUI.add(
 				},
 
 				_updateSelectedEntries() {
-					var instance = this;
+					const instance = this;
 
-					var dialog = instance._getSelectDialog();
+					const dialog = instance._getSelectDialog();
 
-					var selectedAssetAddonEntries = [];
+					const selectedAssetAddonEntries = [];
 
 					dialog.bodyNode.all('input:checked').each((item) => {
 						selectedAssetAddonEntries.push(item.attr(STR_DATA_KEY));
@@ -334,13 +334,13 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					new A.EventHandle(instance._eventHandles).detach();
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._dialogId = A.guid();
 					instance._selectDialogContent = instance._getSelectDialogContent();

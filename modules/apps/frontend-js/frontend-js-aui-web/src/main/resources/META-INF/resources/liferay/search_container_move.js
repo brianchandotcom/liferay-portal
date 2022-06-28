@@ -15,25 +15,25 @@
 AUI.add(
 	'liferay-search-container-move',
 	(A) => {
-		var AUA = A.UA;
+		const AUA = A.UA;
 
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var STR_BLANK = '';
+		const STR_BLANK = '';
 
-		var STR_CONTENT_BOX = 'contentBox';
+		const STR_CONTENT_BOX = 'contentBox';
 
-		var STR_DATA = 'data';
+		const STR_DATA = 'data';
 
-		var STR_DRAG_NODE = 'dragNode';
+		const STR_DRAG_NODE = 'dragNode';
 
-		var STR_HOST = 'host';
+		const STR_HOST = 'host';
 
-		var STR_NODE = 'node';
+		const STR_NODE = 'node';
 
-		var TOUCH_ENABLED = AUA.mobile && AUA.touchEnabled;
+		const TOUCH_ENABLED = AUA.mobile && AUA.touchEnabled;
 
-		var SearchContainerMove = A.Component.create({
+		const SearchContainerMove = A.Component.create({
 			ATTRS: {
 				ddConfig: {
 					valueFn: '_valueDDConfig',
@@ -62,7 +62,7 @@ AUI.add(
 
 			prototype: {
 				_getMoveText(selectedItemsCount, targetAvailable) {
-					var moveText = STR_BLANK;
+					let moveText = STR_BLANK;
 
 					if (targetAvailable) {
 						moveText = Liferay.Language.get(
@@ -91,9 +91,9 @@ AUI.add(
 				},
 
 				_initDragAndDrop() {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
 					instance._ddHandler = new A.DD.Delegate({
 						container: host.get(STR_CONTENT_BOX),
@@ -126,19 +126,19 @@ AUI.add(
 				},
 
 				_initDropTargets() {
-					var instance = this;
+					const instance = this;
 
-					var dropTargets = instance.get('dropTargets');
+					const dropTargets = instance.get('dropTargets');
 
 					if (dropTargets && themeDisplay.isSignedIn()) {
-						var host = instance.get(STR_HOST);
+						const host = instance.get(STR_HOST);
 
 						dropTargets.forEach((target) => {
-							var container =
+							const container =
 								A.one(target.container) ||
 								host.get(STR_CONTENT_BOX);
 
-							var targetNodes = container.all(target.selector);
+							const targetNodes = container.all(target.selector);
 
 							targetNodes.each((item) => {
 								item.plug(A.Plugin.Drop, {
@@ -155,11 +155,11 @@ AUI.add(
 									'drop:hit'(event) {
 										item.removeClass(target.activeCssClass);
 
-										var selectedItems = instance._ddHandler.dd.get(
+										const selectedItems = instance._ddHandler.dd.get(
 											STR_DATA
 										).selectedItems;
 
-										var dropTarget = event.drop.get(
+										const dropTarget = event.drop.get(
 											STR_NODE
 										);
 
@@ -187,9 +187,9 @@ AUI.add(
 				},
 
 				_onDragDropHit(event) {
-					var instance = this;
+					const instance = this;
 
-					var proxyNode = event.target.get(STR_DRAG_NODE);
+					const proxyNode = event.target.get(STR_DRAG_NODE);
 
 					proxyNode.removeClass(instance.get('tooltipClass'));
 
@@ -197,26 +197,26 @@ AUI.add(
 				},
 
 				_onDragEnter(event) {
-					var instance = this;
+					const instance = this;
 
-					var dragNode = event.drag.get(STR_NODE);
+					const dragNode = event.drag.get(STR_NODE);
 
-					var dropTarget = event.drop.get(STR_NODE);
+					const dropTarget = event.drop.get(STR_NODE);
 
 					if (!dragNode.compareTo(dropTarget)) {
-						var proxyNode = event.target.get(STR_DRAG_NODE);
+						const proxyNode = event.target.get(STR_DRAG_NODE);
 
-						var dd = instance._ddHandler.dd;
+						const dd = instance._ddHandler.dd;
 
-						var selectedItemsCount = dd.get(STR_DATA)
+						const selectedItemsCount = dd.get(STR_DATA)
 							.selectedItemsCount;
 
-						var moveText = instance._getMoveText(
+						const moveText = instance._getMoveText(
 							selectedItemsCount,
 							true
 						);
 
-						var itemTitle = dropTarget.attr('data-title').trim();
+						const itemTitle = dropTarget.attr('data-title').trim();
 
 						proxyNode.html(
 							Lang.sub(moveText, [
@@ -228,34 +228,34 @@ AUI.add(
 				},
 
 				_onDragExit(event) {
-					var instance = this;
+					const instance = this;
 
-					var proxyNode = event.target.get(STR_DRAG_NODE);
+					const proxyNode = event.target.get(STR_DRAG_NODE);
 
-					var selectedItemsCount = instance._ddHandler.dd.get(
+					const selectedItemsCount = instance._ddHandler.dd.get(
 						STR_DATA
 					).selectedItemsCount;
 
-					var moveText = instance._getMoveText(selectedItemsCount);
+					const moveText = instance._getMoveText(selectedItemsCount);
 
 					proxyNode.html(Lang.sub(moveText, [selectedItemsCount]));
 				},
 
 				_onDragStart(event) {
-					var instance = this;
+					const instance = this;
 
-					var target = event.target;
+					const target = event.target;
 
-					var node = target.get(STR_NODE);
+					const node = target.get(STR_NODE);
 
-					var selectedItems = new A.NodeList(node);
+					let selectedItems = new A.NodeList(node);
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
 					if (host.hasPlugin('select')) {
-						var searchContainerSelect = host.select;
+						const searchContainerSelect = host.select;
 
-						var selected = searchContainerSelect.isSelected(node);
+						const selected = searchContainerSelect.isSelected(node);
 
 						if (!selected) {
 							searchContainerSelect.toggleAllRows(false);
@@ -271,23 +271,23 @@ AUI.add(
 						}
 					}
 
-					var selectedItemsCount = selectedItems.size();
+					const selectedItemsCount = selectedItems.size();
 
-					var dd = instance._ddHandler.dd;
+					const dd = instance._ddHandler.dd;
 
 					dd.set(STR_DATA, {
 						selectedItems,
 						selectedItemsCount,
 					});
 
-					var proxyNode = target.get(STR_DRAG_NODE);
+					const proxyNode = target.get(STR_DRAG_NODE);
 
 					proxyNode.setStyles({
 						height: STR_BLANK,
 						width: STR_BLANK,
 					});
 
-					var moveText = instance._getMoveText(selectedItemsCount);
+					const moveText = instance._getMoveText(selectedItemsCount);
 
 					proxyNode.html(Lang.sub(moveText, [selectedItemsCount]));
 
@@ -295,9 +295,9 @@ AUI.add(
 				},
 
 				_valueDDConfig() {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
 					return {
 						clickPixelThresh: TOUCH_ENABLED ? 100000 : 50,
@@ -308,13 +308,13 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					new A.EventHandle(instance._eventHandles).detach();
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._initDragAndDrop();
 

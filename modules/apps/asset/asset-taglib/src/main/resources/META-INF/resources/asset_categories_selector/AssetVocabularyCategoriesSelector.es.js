@@ -180,7 +180,7 @@ function AssetVocabulariesCategoriesSelector({
 			<ClayForm.Group
 				className={classNames({
 					'has-error':
-						(invalidItems && invalidItems.length > 0) || !isValid,
+						(invalidItems && !!invalidItems.length) || !isValid,
 				})}
 				id={id}
 			>
@@ -232,7 +232,7 @@ function AssetVocabulariesCategoriesSelector({
 							value={inputValue}
 						/>
 
-						{invalidItems && invalidItems.length > 0 && (
+						{invalidItems && !!invalidItems.length && (
 							<ClayForm.FeedbackGroup>
 								<ClayForm.FeedbackItem>
 									<ClayForm.FeedbackIndicator symbol="info-circle" />

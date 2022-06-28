@@ -13,46 +13,46 @@
  */
 
 (function () {
-	var DOMTaskRunner = {
+	const DOMTaskRunner = {
 		_scheduledTasks: [],
 
 		_taskStates: [],
 
 		addTask(task) {
-			var instance = this;
+			const instance = this;
 
 			instance._scheduledTasks.push(task);
 		},
 
 		addTaskState(state) {
-			var instance = this;
+			const instance = this;
 
 			instance._taskStates.push(state);
 		},
 
 		reset() {
-			var instance = this;
+			const instance = this;
 
 			instance._taskStates.length = 0;
 			instance._scheduledTasks.length = 0;
 		},
 
 		runTasks(node) {
-			var instance = this;
+			const instance = this;
 
-			var scheduledTasks = instance._scheduledTasks;
-			var taskStates = instance._taskStates;
+			const scheduledTasks = instance._scheduledTasks;
+			const taskStates = instance._taskStates;
 
-			var tasksLength = scheduledTasks.length;
-			var taskStatesLength = taskStates.length;
+			const tasksLength = scheduledTasks.length;
+			const taskStatesLength = taskStates.length;
 
-			for (var i = 0; i < tasksLength; i++) {
-				var task = scheduledTasks[i];
+			for (let i = 0; i < tasksLength; i++) {
+				const task = scheduledTasks[i];
 
-				var taskParams = task.params;
+				const taskParams = task.params;
 
-				for (var j = 0; j < taskStatesLength; j++) {
-					var state = taskStates[j];
+				for (let j = 0; j < taskStatesLength; j++) {
+					const state = taskStates[j];
 
 					if (task.condition(state, taskParams, node)) {
 						task.action(state, taskParams, node);

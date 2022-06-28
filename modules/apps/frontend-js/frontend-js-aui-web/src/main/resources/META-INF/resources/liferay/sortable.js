@@ -22,23 +22,23 @@
 AUI.add(
 	'liferay-sortable',
 	(A) => {
-		var Sortable = A.Sortable;
+		const Sortable = A.Sortable;
 
-		var STR_CONT = 'container';
+		const STR_CONT = 'container';
 
-		var STR_ID = 'id';
+		const STR_ID = 'id';
 
-		var STR_NODES = 'nodes';
+		const STR_NODES = 'nodes';
 
 		A.mix(
 			Sortable.prototype,
 			{
 				_onDragHorizontal(event) {
-					var instance = this;
+					const instance = this;
 
-					var pageX = event.pageX;
+					const pageX = event.pageX;
 
-					var x = instance._x;
+					const x = instance._x;
 
 					instance._up = pageX < x;
 
@@ -46,15 +46,15 @@ AUI.add(
 				},
 
 				_setDragMethod() {
-					var instance = this;
+					const instance = this;
 
-					var dragMethod;
+					let dragMethod;
 
-					var node = instance
+					const node = instance
 						.get(STR_CONT)
 						.one(instance.get(STR_NODES));
 
-					var floated = node ? node.getStyle('float') : 'none';
+					const floated = node ? node.getStyle('float') : 'none';
 
 					if (floated === 'left' || floated === 'right') {
 						dragMethod = '_onDragHorizontal';
@@ -69,11 +69,11 @@ AUI.add(
 				_x: null,
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
-					var id = 'sortable-' + A.guid();
+					const id = 'sortable-' + A.guid();
 
-					var delegateConfig = {
+					const delegateConfig = {
 						container: instance.get(STR_CONT),
 						dragConfig: {
 							groups: [id],
@@ -87,7 +87,7 @@ AUI.add(
 						delegateConfig.handles = instance.get('handles');
 					}
 
-					var delegate = new A.DD.Delegate(delegateConfig);
+					const delegate = new A.DD.Delegate(delegateConfig);
 
 					instance.set(STR_ID, id);
 

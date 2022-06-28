@@ -143,7 +143,7 @@ const CriteriaSidebarCollapse = ({
 								</p>
 
 								<ul className="pl-0">
-									{filteredProperties.length === 0 && (
+									{!filteredProperties.length && (
 										<li className="empty-message">
 											{Liferay.Language.get(
 												'no-results-were-found'
@@ -151,7 +151,7 @@ const CriteriaSidebarCollapse = ({
 										</li>
 									)}
 
-									{filteredProperties.length > 0 &&
+									{!!filteredProperties.length &&
 										filteredProperties.map(
 											({label, name, options, type}) => {
 												const defaultValue = getDefaultValue(

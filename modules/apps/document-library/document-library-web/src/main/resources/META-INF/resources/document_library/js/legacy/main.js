@@ -15,21 +15,21 @@
 AUI.add(
 	'liferay-document-library',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var WIN = A.config.win;
+		const WIN = A.config.win;
 
-		var HTML5_UPLOAD =
+		const HTML5_UPLOAD =
 			WIN && WIN.File && WIN.FormData && WIN.XMLHttpRequest;
 
-		var TPL_MOVE_FORM =
+		const TPL_MOVE_FORM =
 			'<form action="{actionUrl}" class="hide" method="POST"><input name="{namespace}cmd" value="move"/>' +
 			'<input name="{namespace}newFolderId" value="{newFolderId}"/>' +
 			'<input name="{namespace}{parameterName}" value="{parameterValue}"/>' +
 			'<input name="{namespace}redirect" value="{redirectUrl}"/>' +
 			'</form>';
 
-		var DocumentLibrary = A.Component.create({
+		const DocumentLibrary = A.Component.create({
 			ATTRS: {
 				downloadEntryUrl: {
 					validator: Lang.isString,
@@ -80,9 +80,9 @@ AUI.add(
 
 			prototype: {
 				_handleSearchContainerRowToggled(event) {
-					var instance = this;
+					const instance = this;
 
-					var selectedElements = event.elements.allSelectedElements;
+					const selectedElements = event.elements.allSelectedElements;
 
 					if (selectedElements.size() > 0) {
 						instance._selectedFileEntries = selectedElements.get(
@@ -93,21 +93,21 @@ AUI.add(
 						instance._selectedFileEntries = [];
 					}
 
-					var bulkSelection =
+					const bulkSelection =
 						instance._searchContainer.select &&
 						instance._searchContainer.select.get('bulkSelection');
 
-					var form = instance.get('form').node;
+					const form = instance.get('form').node;
 
 					form.get(instance.NS + 'selectAll').val(bulkSelection);
 				},
 
 				_moveCurrentSelection(newFolderId) {
-					var instance = this;
+					const instance = this;
 
-					var form = instance.get('form').node;
+					const form = instance.get('form').node;
 
-					var actionUrl = instance.get('editEntryUrl');
+					const actionUrl = instance.get('editEntryUrl');
 
 					form.attr('action', actionUrl);
 					form.attr('method', 'POST');
@@ -120,16 +120,16 @@ AUI.add(
 				},
 
 				_moveSingleElement(newFolderId, parameterName, parameterValue) {
-					var instance = this;
+					const instance = this;
 
-					var actionUrl = instance.get('editEntryUrl');
-					var namespace = instance.NS;
-					var originalForm = instance.get('form').node;
-					var redirectUrl = originalForm
+					const actionUrl = instance.get('editEntryUrl');
+					const namespace = instance.NS;
+					const originalForm = instance.get('form').node;
+					const redirectUrl = originalForm
 						.get(namespace + 'redirect')
 						.val();
 
-					var formNode = A.Node.create(
+					const formNode = A.Node.create(
 						A.Lang.sub(TPL_MOVE_FORM, {
 							actionUrl,
 							namespace,
@@ -146,13 +146,13 @@ AUI.add(
 				},
 
 				_moveToFolder(object) {
-					var instance = this;
+					const instance = this;
 
-					var dropTarget = object.targetItem;
+					const dropTarget = object.targetItem;
 
-					var selectedItems = object.selectedItems;
+					const selectedItems = object.selectedItems;
 
-					var folderId = dropTarget.attr('data-folder-id');
+					const folderId = dropTarget.attr('data-folder-id');
 
 					if (folderId) {
 						if (
@@ -167,7 +167,7 @@ AUI.add(
 				},
 
 				_moveToTrash() {
-					var instance = this;
+					const instance = this;
 
 					instance._processAction(
 						'move_to_trash',
@@ -176,20 +176,20 @@ AUI.add(
 				},
 
 				_openDocument(event) {
-					var instance = this;
+					const instance = this;
 
 					Liferay.Util.openDocument(
 						event.webDavUrl,
 						null,
 						(exception) => {
-							var errorMessage = Lang.sub(
+							const errorMessage = Lang.sub(
 								Liferay.Language.get(
 									'cannot-open-the-requested-document-due-to-the-following-reason'
 								),
 								[exception.message]
 							);
 
-							var openMSOfficeError = instance.ns(
+							const openMSOfficeError = instance.ns(
 								'openMSOfficeError'
 							);
 
@@ -203,7 +203,7 @@ AUI.add(
 				},
 
 				_plugUpload(event, config) {
-					var instance = this;
+					const instance = this;
 
 					instance.plug(Liferay.DocumentLibraryUpload, {
 						appViewEntryTemplates: config.appViewEntryTemplates,
@@ -222,11 +222,11 @@ AUI.add(
 				},
 
 				_processAction(action, url, redirectUrl) {
-					var instance = this;
+					const instance = this;
 
-					var namespace = instance.NS;
+					const namespace = instance.NS;
 
-					var form = instance.get('form').node;
+					const form = instance.get('form').node;
 
 					redirectUrl = redirectUrl || location.href;
 
@@ -247,7 +247,7 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					A.Array.invoke(instance._eventHandles, 'detach');
 
@@ -255,17 +255,17 @@ AUI.add(
 				},
 
 				getFolderId() {
-					var instance = this;
+					const instance = this;
 
 					return instance._folderId;
 				},
 
 				initializer(config) {
-					var instance = this;
+					const instance = this;
 
-					var eventHandles = [];
+					const eventHandles = [];
 
-					var documentLibraryContainer = instance.byId(
+					const documentLibraryContainer = instance.byId(
 						'documentLibraryContainer'
 					);
 
@@ -276,9 +276,9 @@ AUI.add(
 						'entriesContainer'
 					);
 
-					var namespace = instance.NS;
+					const namespace = instance.NS;
 
-					var searchContainer = Liferay.SearchContainer.get(
+					const searchContainer = Liferay.SearchContainer.get(
 						namespace + instance.get('searchContainerId')
 					);
 
@@ -301,7 +301,7 @@ AUI.add(
 
 					instance._searchContainer = searchContainer;
 
-					var foldersConfig = config.folders;
+					const foldersConfig = config.folders;
 
 					instance._folderId = foldersConfig.defaultParentFolderId;
 
@@ -331,11 +331,11 @@ AUI.add(
 				},
 
 				showFolderDialog(selectedItems, parameterName, parameterValue) {
-					var instance = this;
+					const instance = this;
 
-					var namespace = instance.NS;
+					const namespace = instance.NS;
 
-					var dialogTitle = '';
+					let dialogTitle = '';
 
 					if (Number(selectedItems) === 1) {
 						dialogTitle = Liferay.Language.get(

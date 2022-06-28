@@ -208,7 +208,7 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 								<TabType
 									description={description}
 									disabled={
-										objectLayoutTabs.length === 0 &&
+										!objectLayoutTabs.length &&
 										key === TYPES.RELATIONSHIPS
 									}
 									key={key}

@@ -15,9 +15,9 @@
 AUI.add(
 	'liferay-fullscreen-source-editor',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var CONTENT_TEMPLATE =
+		const CONTENT_TEMPLATE =
 			'<div class="cadmin lfr-fullscreen-source-editor-header row">' +
 			'<div class="col-6">' +
 			'<button class="btn btn-secondary btn-sm float-right lfr-portal-tooltip" data-title="{iconMoonTooltip}" id="switchTheme" type="button">' +
@@ -54,19 +54,19 @@ AUI.add(
 			'<div class="panel-splitter"></div>' +
 			'</div>';
 
-		var CSS_PREVIEW_PANEL = '.preview-panel';
+		const CSS_PREVIEW_PANEL = '.preview-panel';
 
-		var STR_BOUNDING_BOX = 'boundingBox';
+		const STR_BOUNDING_BOX = 'boundingBox';
 
-		var STR_CLICK = 'click';
+		const STR_CLICK = 'click';
 
-		var STR_DOT = '.';
+		const STR_DOT = '.';
 
-		var STR_LAYOUT = 'layout';
+		const STR_LAYOUT = 'layout';
 
-		var STR_VALUE = 'value';
+		const STR_VALUE = 'value';
 
-		var LiferayFullScreenSourceEditor = A.Component.create({
+		const LiferayFullScreenSourceEditor = A.Component.create({
 			ATTRS: {
 				aceOptions: {
 					validator: Lang.isObject,
@@ -113,9 +113,9 @@ AUI.add(
 
 			prototype: {
 				_getHtml(val) {
-					var instance = this;
+					const instance = this;
 
-					var dataProcessor = instance.get('dataProcessor');
+					const dataProcessor = instance.get('dataProcessor');
 
 					if (dataProcessor && dataProcessor.toHtml) {
 						val = dataProcessor.toHtml(val);
@@ -125,7 +125,7 @@ AUI.add(
 				},
 
 				_getValue(val) {
-					var instance = this;
+					const instance = this;
 
 					return instance._editor
 						? instance._editor.get(STR_VALUE)
@@ -133,7 +133,7 @@ AUI.add(
 				},
 
 				_onEditorChange(event) {
-					var instance = this;
+					const instance = this;
 
 					if (event.newVal || event.newVal === '') {
 						instance._previewPanel.html(
@@ -143,7 +143,7 @@ AUI.add(
 				},
 
 				_onLayoutChange(event) {
-					var instance = this;
+					const instance = this;
 
 					instance
 						.get(STR_BOUNDING_BOX)
@@ -154,7 +154,7 @@ AUI.add(
 				},
 
 				_onLayoutClick(event) {
-					var instance = this;
+					const instance = this;
 
 					instance.set(
 						STR_LAYOUT,
@@ -167,13 +167,13 @@ AUI.add(
 				},
 
 				_onValueChange(event) {
-					var instance = this;
+					const instance = this;
 
 					instance._editor.set(STR_VALUE, event.newVal);
 				},
 
 				_switchTheme() {
-					var instance = this;
+					const instance = this;
 
 					instance._editor.switchTheme();
 				},
@@ -184,11 +184,11 @@ AUI.add(
 				}),
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
-					var boundingBox = instance.get(STR_BOUNDING_BOX);
+					const boundingBox = instance.get(STR_BOUNDING_BOX);
 
-					var onChangeTask = A.debounce(
+					const onChangeTask = A.debounce(
 						'_onEditorChange',
 						instance.get('previewDelay'),
 						instance
@@ -223,9 +223,9 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
-					var sourceEditor = instance._editor;
+					const sourceEditor = instance._editor;
 
 					if (sourceEditor) {
 						sourceEditor.destroy();
@@ -235,9 +235,9 @@ AUI.add(
 				},
 
 				renderUI() {
-					var instance = this;
+					const instance = this;
 
-					var boundingBox = instance.get(STR_BOUNDING_BOX);
+					const boundingBox = instance.get(STR_BOUNDING_BOX);
 
 					boundingBox
 						.one(STR_DOT + instance.getClassName('content'))
@@ -254,10 +254,10 @@ AUI.add(
 						mode: 'html',
 						on: {
 							themeSwitched(event) {
-								var editorSwitchTheme =
+								const editorSwitchTheme =
 									instance._editorSwitchTheme;
 
-								var nextTheme =
+								const nextTheme =
 									event.themes[event.nextThemeIndex];
 
 								editorSwitchTheme
@@ -284,7 +284,7 @@ AUI.add(
 				},
 
 				resizeEditor() {
-					var instance = this;
+					const instance = this;
 
 					instance._editor.getEditor().resize();
 				},

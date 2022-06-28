@@ -12,9 +12,9 @@
 AUI.add(
 	'liferay-kaleo-designer-remote-services',
 	(A) => {
-		var KaleoDesignerRemoteServices = {
+		const KaleoDesignerRemoteServices = {
 			_invokeResourceURL(params) {
-				var url = Liferay.PortletURL.createResourceURL();
+				const url = Liferay.PortletURL.createResourceURL();
 
 				url.setParameters(params.queryParameters);
 				url.setPortletId(
@@ -35,7 +35,7 @@ AUI.add(
 			},
 
 			getRole(roleId, callback) {
-				var instance = this;
+				const instance = this;
 
 				instance._invokeResourceURL({
 					callback,
@@ -48,7 +48,7 @@ AUI.add(
 			},
 
 			getScriptLanguages(callback) {
-				var instance = this;
+				const instance = this;
 
 				instance._invokeResourceURL({
 					callback,
@@ -59,7 +59,7 @@ AUI.add(
 			},
 
 			getUser(emailAddress, screenName, userId, callback) {
-				var instance = this;
+				const instance = this;
 
 				instance._invokeResourceURL({
 					callback,

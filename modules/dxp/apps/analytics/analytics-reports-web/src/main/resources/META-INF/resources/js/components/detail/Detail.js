@@ -129,7 +129,7 @@ export default function Detail({
 
 					{(currentPage.view === TRAFFIC_CHANNELS.ORGANIC ||
 						currentPage.view === TRAFFIC_CHANNELS.PAID) &&
-						currentPageMocked.data.countrySearch.length > 0 &&
+						!!currentPageMocked.data.countrySearch.length &&
 						(Liferay.FeatureFlags['LPS-149256'] ? (
 							<CountriesDetail
 								currentPage={currentPageMocked}

@@ -81,7 +81,7 @@ export const Column = forwardRef(
 				onMouseOver={onMouseOver}
 				ref={ref}
 			>
-				{column.fields.length > 0 && (
+				{!!column.fields.length && (
 					<div
 						className={classnames(
 							'ddm-field-container ddm-target h-100',

@@ -100,9 +100,9 @@ function FormOptions({item, onValueSelect}) {
 	return (
 		<div className="mb-3">
 			<Collapse label={Liferay.Language.get('form-options')} open>
-				{availableFormTypes.length > 0 && (
+				{!!availableFormTypes.length && (
 					<SelectField
-						disabled={availableFormTypes.length === 0}
+						disabled={!availableFormTypes.length}
 						field={{
 							label: Liferay.Language.get('content-type'),
 							name: 'classNameId',
@@ -128,7 +128,7 @@ function FormOptions({item, onValueSelect}) {
 
 				{selectedType?.subtypes?.length > 0 && (
 					<SelectField
-						disabled={availableFormTypes.length === 0}
+						disabled={!availableFormTypes.length}
 						field={{
 							label: Liferay.Language.get('subtype'),
 							name: 'classTypeId',

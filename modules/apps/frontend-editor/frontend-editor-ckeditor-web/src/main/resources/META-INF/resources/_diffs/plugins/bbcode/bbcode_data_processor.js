@@ -13,7 +13,7 @@
  */
 
 (function () {
-	var toHex = function (val) {
+	const toHex = function (val) {
 		val = parseInt(val, 10).toString(16);
 
 		if (val.length === 1) {
@@ -23,7 +23,7 @@
 		return val;
 	};
 
-	var MAP_HANDLERS = {
+	const MAP_HANDLERS = {
 		a: '_handleLink',
 		b: '_handleStrong',
 		blockquote: '_handleQuote',
@@ -50,7 +50,7 @@
 		ul: '_handleUnorderedList',
 	};
 
-	var MAP_IMAGE_ATTRIBUTES = [
+	const MAP_IMAGE_ATTRIBUTES = [
 		'alt',
 		'class',
 		'data-image-id',
@@ -64,81 +64,81 @@
 		'width',
 	];
 
-	var MAP_LINK_HANDLERS = {
+	const MAP_LINK_HANDLERS = {
 		0: 'email',
 	};
 
-	var NEW_LINE = '\n';
+	const NEW_LINE = '\n';
 
-	var REGEX_COLOR_RGB = /^rgb\s*\(\s*([01]?\d\d?|2[0-4]\d|25[0-5]),\s*([01]?\d\d?|2[0-4]\d|25[0-5]),\s*([01]?\d\d?|2[0-4]\d|25[0-5])\s*\)$/;
+	const REGEX_COLOR_RGB = /^rgb\s*\(\s*([01]?\d\d?|2[0-4]\d|25[0-5]),\s*([01]?\d\d?|2[0-4]\d|25[0-5]),\s*([01]?\d\d?|2[0-4]\d|25[0-5])\s*\)$/;
 
-	var REGEX_EM = /em$/i;
+	const REGEX_EM = /em$/i;
 
-	var REGEX_LASTCHAR_NEWLINE_WHITESPACE = /(\r?\n\s*)$/;
+	const REGEX_LASTCHAR_NEWLINE_WHITESPACE = /(\r?\n\s*)$/;
 
-	var REGEX_LIST_CIRCLE = /circle/i;
+	const REGEX_LIST_CIRCLE = /circle/i;
 
-	var REGEX_LIST_LOWER_ALPHA = /lower-alpha/i;
+	const REGEX_LIST_LOWER_ALPHA = /lower-alpha/i;
 
-	var REGEX_LIST_LOWER_ROMAN = /lower-roman/i;
+	const REGEX_LIST_LOWER_ROMAN = /lower-roman/i;
 
-	var REGEX_LIST_SQUARE = /square/i;
+	const REGEX_LIST_SQUARE = /square/i;
 
-	var REGEX_LIST_UPPER_ALPHA = /upper-alpha/i;
+	const REGEX_LIST_UPPER_ALPHA = /upper-alpha/i;
 
-	var REGEX_LIST_UPPER_ROMAN = /upper-roman/i;
+	const REGEX_LIST_UPPER_ROMAN = /upper-roman/i;
 
-	var REGEX_NEWLINE = /\r?\n/g;
+	const REGEX_NEWLINE = /\r?\n/g;
 
-	var REGEX_PERCENT = /%$/i;
+	const REGEX_PERCENT = /%$/i;
 
-	var REGEX_PRE = /<pre>/gi;
+	const REGEX_PRE = /<pre>/gi;
 
-	var REGEX_PX = /px$/i;
+	const REGEX_PX = /px$/i;
 
-	var REGEX_SINGLE_QUOTE = /'/g;
+	const REGEX_SINGLE_QUOTE = /'/g;
 
-	var STR_EMPTY = '';
+	const STR_EMPTY = '';
 
-	var STR_MAILTO = 'mailto:';
+	const STR_MAILTO = 'mailto:';
 
-	var TAG_BLOCKQUOTE = 'blockquote';
+	const TAG_BLOCKQUOTE = 'blockquote';
 
-	var TAG_BR = 'br';
+	const TAG_BR = 'br';
 
-	var TAG_CITE = 'cite';
+	const TAG_CITE = 'cite';
 
-	var TAG_CODE = 'code';
+	const TAG_CODE = 'code';
 
-	var TAG_DIV = 'div';
+	const TAG_DIV = 'div';
 
-	var TAG_LI = 'li';
+	const TAG_LI = 'li';
 
-	var TAG_LINK = 'a';
+	const TAG_LINK = 'a';
 
-	var TAG_PARAGRAPH = 'p';
+	const TAG_PARAGRAPH = 'p';
 
-	var TAG_PRE = 'pre';
+	const TAG_PRE = 'pre';
 
-	var TAG_TABLE = 'table';
+	const TAG_TABLE = 'table';
 
-	var TAG_TD = 'td';
+	const TAG_TD = 'td';
 
-	var BBCodeDataProcessor = function (editor) {
+	const BBCodeDataProcessor = function (editor) {
 		this._editor = editor;
 	};
 
 	BBCodeDataProcessor.prototype = {
 		_allowNewLine(element) {
-			var instance = this;
+			const instance = this;
 
-			var allowNewLine = true;
+			let allowNewLine = true;
 
 			if (!instance._inPRE) {
-				var parentNode = element.parentNode;
+				const parentNode = element.parentNode;
 
 				if (parentNode) {
-					var parentTagName = parentNode.tagName;
+					let parentTagName = parentNode.tagName;
 
 					if (parentTagName) {
 						parentTagName = parentTagName.toLowerCase();
@@ -162,7 +162,7 @@
 		},
 
 		_checkParentElement(element, tagName) {
-			var parentNode = element.parentNode;
+			const parentNode = element.parentNode;
 
 			return (
 				parentNode &&
@@ -172,15 +172,15 @@
 		},
 
 		_convert(data) {
-			var instance = this;
+			const instance = this;
 
-			var node = document.createElement(TAG_DIV);
+			const node = document.createElement(TAG_DIV);
 
 			node.innerHTML = data;
 
 			instance._handle(node);
 
-			var endResult = instance._endResult.join(STR_EMPTY);
+			const endResult = instance._endResult.join(STR_EMPTY);
 
 			instance._endResult = null;
 
@@ -191,9 +191,9 @@
 			color = color.replace(
 				REGEX_COLOR_RGB,
 				(_match, red, green, blue) => {
-					var b = toHex(blue);
-					var g = toHex(green);
-					var r = toHex(red);
+					const b = toHex(blue);
+					const g = toHex(green);
+					const r = toHex(red);
 
 					color = '#' + r + g + b;
 
@@ -207,9 +207,9 @@
 		_endResult: null,
 
 		_getBodySize() {
-			var body = document.body;
+			const body = document.body;
 
-			var style;
+			let style;
 
 			if (document.defaultView.getComputedStyle) {
 				style = document.defaultView.getComputedStyle(body, null);
@@ -222,18 +222,20 @@
 		},
 
 		_getEmoticonSymbol(element) {
-			var instance = this;
+			const instance = this;
 
-			var emoticonSymbol = null;
+			let emoticonSymbol = null;
 
-			var imagePath = element.getAttribute('src');
+			const imagePath = element.getAttribute('src');
 
 			if (imagePath) {
-				var editorConfig = this._editor.config;
+				const editorConfig = this._editor.config;
 
-				var image = imagePath.substring(imagePath.lastIndexOf('/') + 1);
+				const image = imagePath.substring(
+					imagePath.lastIndexOf('/') + 1
+				);
 
-				var imageIndex = instance._getImageIndex(
+				const imageIndex = instance._getImageIndex(
 					editorConfig.smiley_images,
 					image
 				);
@@ -247,9 +249,9 @@
 		},
 
 		_getFontSize(fontSize) {
-			var instance = this;
+			const instance = this;
 
-			var bodySize;
+			let bodySize;
 
 			if (REGEX_PX.test(fontSize)) {
 				fontSize = instance._getFontSizePX(fontSize);
@@ -276,7 +278,7 @@
 		},
 
 		_getFontSizePX(fontSize) {
-			var sizeValue = parseInt(fontSize, 10);
+			let sizeValue = parseInt(fontSize, 10);
 
 			if (sizeValue <= 10) {
 				sizeValue = '1';
@@ -307,14 +309,14 @@
 		},
 
 		_getImageIndex(array, image) {
-			var index = -1;
+			let index = -1;
 
 			if (array.lastIndexOf) {
 				index = array.lastIndexOf(image);
 			}
 			else {
-				for (var i = array.length - 1; i >= 0; i--) {
-					var item = array[i];
+				for (let i = array.length - 1; i >= 0; i--) {
+					const item = array[i];
 
 					if (image === item) {
 						index = i;
@@ -328,26 +330,26 @@
 		},
 
 		_handle(node) {
-			var instance = this;
+			const instance = this;
 
 			if (!instance._endResult) {
 				instance._endResult = [];
 			}
 
-			var children = node.childNodes;
+			const children = node.childNodes;
 
-			var pushTagList = instance._pushTagList;
+			const pushTagList = instance._pushTagList;
 
-			var length = children.length;
+			const length = children.length;
 
-			for (var i = 0; i < length; i++) {
-				var listTagsIn = [];
-				var listTagsOut = [];
+			for (let i = 0; i < length; i++) {
+				const listTagsIn = [];
+				const listTagsOut = [];
 
-				var stylesTagsIn = [];
-				var stylesTagsOut = [];
+				const stylesTagsIn = [];
+				const stylesTagsOut = [];
 
-				var child = children[i];
+				const child = children[i];
 
 				instance._handleElementStart(child, listTagsIn, listTagsOut);
 				instance._handleStyles(child, stylesTagsIn, stylesTagsOut);
@@ -367,7 +369,7 @@
 		},
 
 		_handleBreak(element, listTagsIn) {
-			var instance = this;
+			const instance = this;
 
 			if (instance._inPRE) {
 				listTagsIn.push(NEW_LINE);
@@ -378,9 +380,9 @@
 		},
 
 		_handleCite(element, _listTagsIn, listTagsOut) {
-			var instance = this;
+			const instance = this;
 
-			var parentNode = element.parentNode;
+			const parentNode = element.parentNode;
 
 			if (
 				parentNode &&
@@ -388,9 +390,9 @@
 				parentNode.tagName.toLowerCase() === TAG_BLOCKQUOTE &&
 				!parentNode.getAttribute(TAG_CITE)
 			) {
-				var endResult = instance._endResult;
+				const endResult = instance._endResult;
 
-				for (var i = endResult.length - 1; i >= 0; i--) {
+				for (let i = endResult.length - 1; i >= 0; i--) {
 					if (endResult[i] === '[quote]') {
 						endResult[i] = '[quote=';
 
@@ -403,7 +405,7 @@
 		},
 
 		_handleData(data, element) {
-			var instance = this;
+			const instance = this;
 
 			if (data) {
 				if (!instance._allowNewLine(element)) {
@@ -424,9 +426,9 @@
 		},
 
 		_handleElementEnd(element) {
-			var instance = this;
+			const instance = this;
 
-			var tagName = element.tagName;
+			let tagName = element.tagName;
 
 			if (tagName) {
 				tagName = tagName.toLowerCase();
@@ -443,14 +445,14 @@
 		},
 
 		_handleElementStart(element, listTagsIn, listTagsOut) {
-			var instance = this;
+			const instance = this;
 
-			var tagName = element.tagName;
+			let tagName = element.tagName;
 
 			if (tagName) {
 				tagName = tagName.toLowerCase();
 
-				var handlerName = MAP_HANDLERS[tagName];
+				const handlerName = MAP_HANDLERS[tagName];
 
 				if (handlerName) {
 					instance[handlerName](element, listTagsIn, listTagsOut);
@@ -465,9 +467,9 @@
 		},
 
 		_handleFont(element, listTagsIn) {
-			var instance = this;
+			const instance = this;
 
-			var size = element.size;
+			let size = element.size;
 
 			if (size) {
 				size = parseInt(size, 10);
@@ -479,7 +481,7 @@
 				}
 			}
 
-			var color = element.color;
+			let color = element.color;
 
 			if (color) {
 				color = instance._convertRGBToHex(color);
@@ -491,17 +493,17 @@
 		},
 
 		_handleImage(element, listTagsIn, listTagsOut) {
-			var instance = this;
+			const instance = this;
 
-			var emoticonSymbol = instance._getEmoticonSymbol(element);
+			const emoticonSymbol = instance._getEmoticonSymbol(element);
 
 			if (emoticonSymbol) {
 				instance._endResult.push(emoticonSymbol);
 			}
 			else {
-				var attrSrc = element.getAttribute('src');
+				const attrSrc = element.getAttribute('src');
 
-				var openTag =
+				const openTag =
 					'[img' + instance._handleImageAttributes(element) + ']';
 
 				listTagsIn.push(openTag);
@@ -512,14 +514,14 @@
 		},
 
 		_handleImageAttributes(element) {
-			var attrs = '';
+			let attrs = '';
 
-			var length = MAP_IMAGE_ATTRIBUTES.length;
+			const length = MAP_IMAGE_ATTRIBUTES.length;
 
-			for (var i = 0; i < length; i++) {
-				var attrName = MAP_IMAGE_ATTRIBUTES[i];
+			for (let i = 0; i < length; i++) {
+				const attrName = MAP_IMAGE_ATTRIBUTES[i];
 
-				var attrValue = element.getAttribute(attrName);
+				const attrValue = element.getAttribute(attrName);
 
 				if (attrValue) {
 					attrs += ' ' + attrName + '="' + attrValue + '"';
@@ -536,16 +538,16 @@
 		},
 
 		_handleLink(element, listTagsIn, listTagsOut) {
-			var hrefAttribute = element.getAttribute('href');
+			let hrefAttribute = element.getAttribute('href');
 
 			if (hrefAttribute) {
-				var editorConfig = this._editor.config;
+				const editorConfig = this._editor.config;
 
 				if (hrefAttribute.indexOf(editorConfig.newThreadURL) >= 0) {
 					hrefAttribute = editorConfig.newThreadURL;
 				}
 
-				var linkHandler =
+				const linkHandler =
 					MAP_LINK_HANDLERS[hrefAttribute.indexOf(STR_MAILTO)] ||
 					'url';
 
@@ -556,7 +558,7 @@
 		},
 
 		_handleListItem(_element, listTagsIn) {
-			var instance = this;
+			const instance = this;
 
 			if (!instance._isLastItemNewLine()) {
 				listTagsIn.push(NEW_LINE);
@@ -568,7 +570,7 @@
 		_handleOrderedList(element, listTagsIn, listTagsOut) {
 			listTagsIn.push('[list');
 
-			var listStyleType = element.style.listStyleType;
+			const listStyleType = element.style.listStyleType;
 
 			if (REGEX_LIST_LOWER_ALPHA.test(listStyleType)) {
 				listTagsIn.push(' type="a"');
@@ -586,7 +588,7 @@
 				listTagsIn.push(' type="1"');
 			}
 
-			var start = element.start;
+			const start = element.start;
 
 			if (start >= 0) {
 				listTagsIn.push(' start="' + start + '"');
@@ -598,7 +600,7 @@
 		},
 
 		_handlePre(_element, listTagsIn, listTagsOut) {
-			var instance = this;
+			const instance = this;
 
 			instance._inPRE = true;
 
@@ -608,9 +610,9 @@
 		},
 
 		_handleQuote(element, listTagsIn, listTagsOut) {
-			var cite = element.getAttribute(TAG_CITE);
+			const cite = element.getAttribute(TAG_CITE);
 
-			var openTag = '[quote]';
+			let openTag = '[quote]';
 
 			if (cite) {
 				openTag = '[quote=' + cite + ']';
@@ -628,9 +630,9 @@
 		},
 
 		_handleStyleAlignCenter(element, stylesTagsIn, stylesTagsOut) {
-			var style = element.style;
+			const style = element.style;
 
-			var alignment = style.textAlign.toLowerCase();
+			const alignment = style.textAlign.toLowerCase();
 
 			if (alignment === 'center') {
 				stylesTagsIn.push('[center]');
@@ -640,9 +642,9 @@
 		},
 
 		_handleStyleAlignJustify(element, stylesTagsIn, stylesTagsOut) {
-			var style = element.style;
+			const style = element.style;
 
-			var alignment = style.textAlign.toLowerCase();
+			const alignment = style.textAlign.toLowerCase();
 
 			if (alignment === 'justify') {
 				stylesTagsIn.push('[justify]');
@@ -652,9 +654,9 @@
 		},
 
 		_handleStyleAlignLeft(element, stylesTagsIn, stylesTagsOut) {
-			var style = element.style;
+			const style = element.style;
 
-			var alignment = style.textAlign.toLowerCase();
+			const alignment = style.textAlign.toLowerCase();
 
 			if (alignment === 'left') {
 				stylesTagsIn.push('[left]');
@@ -664,9 +666,9 @@
 		},
 
 		_handleStyleAlignRight(element, stylesTagsIn, stylesTagsOut) {
-			var style = element.style;
+			const style = element.style;
 
-			var alignment = style.textAlign.toLowerCase();
+			const alignment = style.textAlign.toLowerCase();
 
 			if (alignment === 'right') {
 				stylesTagsIn.push('[right]');
@@ -676,9 +678,9 @@
 		},
 
 		_handleStyleBold(element, stylesTagsIn, stylesTagsOut) {
-			var style = element.style;
+			const style = element.style;
 
-			var fontWeight = style.fontWeight;
+			const fontWeight = style.fontWeight;
 
 			if (fontWeight.toLowerCase() === 'bold') {
 				stylesTagsIn.push('[b]');
@@ -688,11 +690,11 @@
 		},
 
 		_handleStyleColor(element, stylesTagsIn, stylesTagsOut) {
-			var instance = this;
+			const instance = this;
 
-			var style = element.style;
+			const style = element.style;
 
-			var color = style.color;
+			let color = style.color;
 
 			if (color) {
 				color = instance._convertRGBToHex(color);
@@ -704,9 +706,9 @@
 		},
 
 		_handleStyleFontFamily(element, stylesTagsIn, stylesTagsOut) {
-			var style = element.style;
+			const style = element.style;
 
-			var fontFamily = style.fontFamily;
+			const fontFamily = style.fontFamily;
 
 			if (fontFamily) {
 				stylesTagsIn.push(
@@ -720,11 +722,11 @@
 		},
 
 		_handleStyleFontSize(element, stylesTagsIn, stylesTagsOut) {
-			var instance = this;
+			const instance = this;
 
-			var style = element.style;
+			const style = element.style;
 
-			var fontSize = style.fontSize;
+			let fontSize = style.fontSize;
 
 			if (fontSize) {
 				fontSize = instance._getFontSize(fontSize);
@@ -736,9 +738,9 @@
 		},
 
 		_handleStyleItalic(element, stylesTagsIn, stylesTagsOut) {
-			var style = element.style;
+			const style = element.style;
 
-			var fontStyle = style.fontStyle;
+			const fontStyle = style.fontStyle;
 
 			if (fontStyle.toLowerCase() === 'italic') {
 				stylesTagsIn.push('[i]');
@@ -748,9 +750,9 @@
 		},
 
 		_handleStyleTextDecoration(element, stylesTagsIn, stylesTagsOut) {
-			var style = element.style;
+			const style = element.style;
 
-			var textDecoration = style.textDecoration.toLowerCase();
+			const textDecoration = style.textDecoration.toLowerCase();
 
 			if (textDecoration === 'line-through') {
 				stylesTagsIn.push('[s]');
@@ -765,9 +767,9 @@
 		},
 
 		_handleStyles(element, stylesTagsIn, stylesTagsOut) {
-			var instance = this;
+			const instance = this;
 
-			var tagName = element.tagName;
+			const tagName = element.tagName;
 
 			if (
 				(!tagName || tagName.toLowerCase() !== TAG_LINK) &&
@@ -829,7 +831,7 @@
 		},
 
 		_handleTableCaption(element, listTagsIn, listTagsOut) {
-			var instance = this;
+			const instance = this;
 
 			if (instance._checkParentElement(element, TAG_TABLE)) {
 				listTagsIn.push('[tr]', NEW_LINE, '[th]');
@@ -865,7 +867,7 @@
 		_handleUnorderedList(element, listTagsIn, listTagsOut) {
 			listTagsIn.push('[list');
 
-			var listStyleType = element.style.listStyleType;
+			const listStyleType = element.style.listStyleType;
 
 			if (REGEX_LIST_CIRCLE.test(listStyleType)) {
 				listTagsIn.push(' type="circle"]');
@@ -883,9 +885,9 @@
 		_inPRE: false,
 
 		_isLastItemNewLine() {
-			var instance = this;
+			const instance = this;
 
-			var endResult = instance._endResult;
+			const endResult = instance._endResult;
 
 			return (
 				endResult &&
@@ -894,14 +896,14 @@
 		},
 
 		_pushTagList(tagsList) {
-			var instance = this;
+			const instance = this;
 
-			var endResult = instance._endResult;
+			const endResult = instance._endResult;
 
-			var length = tagsList.length;
+			const length = tagsList.length;
 
-			for (var i = 0; i < length; i++) {
-				var tag = tagsList[i];
+			for (let i = 0; i < length; i++) {
+				const tag = tagsList[i];
 
 				endResult.push(tag);
 			}
@@ -910,22 +912,22 @@
 		constructor: BBCodeDataProcessor,
 
 		toDataFormat(html) {
-			var instance = this;
+			const instance = this;
 
 			html = html.replace(REGEX_PRE, '$&\n');
 
-			var data = instance._convert(html);
+			const data = instance._convert(html);
 
 			return data;
 		},
 
 		toHtml(data, config) {
-			var instance = this;
+			const instance = this;
 
 			if (!instance._bbcodeConverter) {
-				var editorConfig = this._editor.config;
+				const editorConfig = this._editor.config;
 
-				var converterConfig = {
+				const converterConfig = {
 					emoticonImages: editorConfig.smiley_images,
 					emoticonPath: editorConfig.smiley_path,
 					emoticonSymbols: editorConfig.smiley_symbols,
@@ -937,9 +939,9 @@
 			}
 
 			if (config) {
-				var fragment = CKEDITOR.htmlParser.fragment.fromHtml(data);
+				const fragment = CKEDITOR.htmlParser.fragment.fromHtml(data);
 
-				var writer = new CKEDITOR.htmlParser.basicWriter();
+				const writer = new CKEDITOR.htmlParser.basicWriter();
 
 				config.filter.applyTo(fragment);
 

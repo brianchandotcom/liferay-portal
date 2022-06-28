@@ -81,9 +81,7 @@ export function addColumn(
 }
 
 export function isEmptyColumn(pages, pageIndex, rowIndex, columnIndex) {
-	return (
-		pages[pageIndex].rows[rowIndex].columns[columnIndex].fields.length === 0
-	);
+	return !pages[pageIndex].rows[rowIndex].columns[columnIndex].fields.length;
 }
 
 export function addFieldToColumn(

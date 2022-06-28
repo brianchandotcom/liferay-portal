@@ -89,7 +89,7 @@ export default function ({
 								return;
 							}
 
-							var rowColumns = [];
+							const rowColumns = [];
 
 							rowColumns.push(
 								`<i class="${

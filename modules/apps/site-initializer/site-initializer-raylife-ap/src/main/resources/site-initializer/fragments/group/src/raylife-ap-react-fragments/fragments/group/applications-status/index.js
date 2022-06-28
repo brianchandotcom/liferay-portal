@@ -129,11 +129,11 @@ export default function () {
 				Status
 			</div>
 
-			{chartData.columns.length > 0 && (
+			{!!chartData.columns.length && (
 				<DonutChart chartData={chartData} title={chartTitle} />
 			)}
 
-			{chartData.columns.length === 0 && loadData && (
+			{!chartData.columns.length && loadData && (
 				<div className="align-items-center d-flex flex-grow-1 justify-content-center">
 					<span>No Data Applications</span>
 				</div>

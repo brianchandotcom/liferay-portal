@@ -13,9 +13,9 @@
  */
 
 (function () {
-	var A = AUI();
+	const A = AUI();
 
-	var entities = {
+	const entities = {
 		...Liferay.Util.MAP_HTML_CHARS_ESCAPED,
 		'(': '&#40;',
 		')': '&#41;',
@@ -23,17 +23,17 @@
 		']': '&#93;',
 	};
 
-	var BBCodeUtil = Liferay.namespace('BBCodeUtil');
+	const BBCodeUtil = Liferay.namespace('BBCodeUtil');
 
 	BBCodeUtil.escape = A.rbind('escapeHTML', Liferay.Util, true, entities);
 	BBCodeUtil.unescape = A.rbind('unescapeHTML', Liferay.Util, entities);
 })();
 (function () {
 	// eslint-disable-next-line no-control-regex
-	var REGEX_BBCODE = /(?:\[((?:[a-z]|\*){1,16})(?:[=\s]([^\x00-\x1F'<>[\]]{1,2083}))?\])|(?:\[\/([a-z]{1,16})\])/gi;
+	const REGEX_BBCODE = /(?:\[((?:[a-z]|\*){1,16})(?:[=\s]([^\x00-\x1F'<>[\]]{1,2083}))?\])|(?:\[\/([a-z]{1,16})\])/gi;
 
-	var Lexer = function (data) {
-		var instance = this;
+	const Lexer = function (data) {
+		const instance = this;
 
 		instance._data = data;
 	};
@@ -46,7 +46,7 @@
 		},
 
 		getNextToken() {
-			var instance = this;
+			const instance = this;
 
 			return REGEX_BBCODE.exec(instance._data);
 		},
@@ -55,13 +55,13 @@
 	Liferay.BBCodeLexer = Lexer;
 })();
 (function () {
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	const hasOwnProperty = Object.prototype.hasOwnProperty;
 
-	var isString = function (val) {
+	const isString = function (val) {
 		return typeof val === 'string';
 	};
 
-	var ELEMENTS_BLOCK = {
+	const ELEMENTS_BLOCK = {
 		'*': 1,
 		'center': 1,
 		'code': 1,
@@ -78,11 +78,11 @@
 		'tr': 1,
 	};
 
-	var ELEMENTS_CLOSE_SELF = {
+	const ELEMENTS_CLOSE_SELF = {
 		'*': 1,
 	};
 
-	var ELEMENTS_INLINE = {
+	const ELEMENTS_INLINE = {
 		b: 1,
 		color: 1,
 		font: 1,
@@ -95,12 +95,12 @@
 		url: 1,
 	};
 
-	var REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
+	const REGEX_TAG_NAME = /^\/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|right|\*|s|size|table|tr|th|td|li|list|font|u|url)$/i;
 
-	var STR_TAG_CODE = 'code';
+	const STR_TAG_CODE = 'code';
 
-	var Parser = function (config) {
-		var instance = this;
+	const Parser = function (config) {
+		const instance = this;
 
 		config = config || {};
 
@@ -111,18 +111,18 @@
 
 	Parser.prototype = {
 		_handleData(token, data) {
-			var instance = this;
+			const instance = this;
 
-			var length = data.length;
+			let length = data.length;
 
-			var lastIndex = length;
+			let lastIndex = length;
 
 			if (token) {
 				lastIndex = instance._lexer.getLastIndex();
 
 				length = lastIndex;
 
-				var tokenItem = token[1] || token[3];
+				const tokenItem = token[1] || token[3];
 
 				if (instance._isValidTag(tokenItem)) {
 					length = token.index;
@@ -140,13 +140,13 @@
 		},
 
 		_handleTagEnd(token) {
-			var instance = this;
+			const instance = this;
 
-			var pos = 0;
+			let pos = 0;
 
-			var stack = instance._stack;
+			const stack = instance._stack;
 
-			var tagName;
+			let tagName;
 
 			if (token) {
 				if (isString(token)) {
@@ -166,9 +166,9 @@
 			}
 
 			if (pos >= 0) {
-				var tokenTagEnd = Parser.TOKEN_TAG_END;
+				const tokenTagEnd = Parser.TOKEN_TAG_END;
 
-				for (var i = stack.length - 1; i >= pos; i--) {
+				for (let i = stack.length - 1; i >= pos; i--) {
 					instance._result.push({
 						type: tokenTagEnd,
 						value: stack[i],
@@ -180,15 +180,15 @@
 		},
 
 		_handleTagStart(token) {
-			var instance = this;
+			const instance = this;
 
-			var tagName = token[1].toLowerCase();
+			const tagName = token[1].toLowerCase();
 
 			if (instance._isValidTag(tagName)) {
-				var stack = instance._stack;
+				const stack = instance._stack;
 
 				if (hasOwnProperty.call(ELEMENTS_BLOCK, tagName)) {
-					var lastTag;
+					let lastTag;
 
 					while (
 						(lastTag = stack.last()) &&
@@ -216,7 +216,7 @@
 		},
 
 		_isValidTag(tagName) {
-			var valid = false;
+			let valid = false;
 
 			if (tagName && tagName.length) {
 				valid = REGEX_TAG_NAME.test(tagName);
@@ -226,7 +226,7 @@
 		},
 
 		_reset() {
-			var instance = this;
+			const instance = this;
 
 			instance._stack.length = 0;
 			instance._result.length = 0;
@@ -237,14 +237,14 @@
 		constructor: Parser,
 
 		init() {
-			var instance = this;
+			const instance = this;
 
-			var stack = [];
+			const stack = [];
 
 			stack.last =
 				stack.last ||
 				function () {
-					var instance = this;
+					const instance = this;
 
 					return instance[instance.length - 1];
 				};
@@ -257,13 +257,13 @@
 		},
 
 		parse(data) {
-			var instance = this;
+			const instance = this;
 
-			var lexer = new Liferay.BBCodeLexer(data);
+			const lexer = new Liferay.BBCodeLexer(data);
 
 			instance._lexer = lexer;
 
-			var token;
+			let token;
 
 			while ((token = lexer.getNextToken())) {
 				instance._handleData(token, data);
@@ -300,7 +300,7 @@
 
 			instance._handleTagEnd();
 
-			var result = instance._result.slice(0);
+			const result = instance._result.slice(0);
 
 			instance._reset();
 
@@ -315,14 +315,14 @@
 	Liferay.BBCodeParser = Parser;
 })();
 (function () {
-	var BBCodeUtil = Liferay.BBCodeUtil;
-	var CKTools = CKEDITOR.tools;
+	const BBCodeUtil = Liferay.BBCodeUtil;
+	const CKTools = CKEDITOR.tools;
 
-	var Parser = Liferay.BBCodeParser;
+	const Parser = Liferay.BBCodeParser;
 
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	const hasOwnProperty = Object.prototype.hasOwnProperty;
 
-	var MAP_FONT_SIZE = {
+	const MAP_FONT_SIZE = {
 		1: 10,
 		2: 12,
 		3: 14,
@@ -334,7 +334,7 @@
 		defaultSize: 14,
 	};
 
-	var MAP_HANDLERS = {
+	const MAP_HANDLERS = {
 		'*': '_handleListItem',
 		'b': '_handleStrong',
 		'center': '_handleTextAlign',
@@ -362,7 +362,7 @@
 		'url': '_handleURL',
 	};
 
-	var MAP_IMAGE_ATTRIBUTES = {
+	const MAP_IMAGE_ATTRIBUTES = {
 		'alt': 1,
 		'class': 1,
 		'data-image-id': 1,
@@ -376,7 +376,7 @@
 		'width': 1,
 	};
 
-	var MAP_ORDERED_LIST_STYLES = {
+	const MAP_ORDERED_LIST_STYLES = {
 		1: 'list-style-type: decimal;',
 		A: 'list-style-type: upper-alpha;',
 		I: 'list-style-type: upper-roman;',
@@ -384,7 +384,7 @@
 		i: 'list-style-type: lower-roman;',
 	};
 
-	var MAP_TOKENS_EXCLUDE_NEW_LINE = {
+	const MAP_TOKENS_EXCLUDE_NEW_LINE = {
 		'*': 3,
 		'li': 3,
 		'table': 2,
@@ -393,82 +393,82 @@
 		'tr': 3,
 	};
 
-	var MAP_UNORDERED_LIST_STYLES = {
+	const MAP_UNORDERED_LIST_STYLES = {
 		circle: 'list-style-type: circle;',
 		disc: 'list-style-type: disc;',
 		square: 'list-style-type: square;',
 	};
 
-	var REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]*)"\s*/g;
+	const REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]*)"\s*/g;
 
-	var REGEX_COLOR = /^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
+	const REGEX_COLOR = /^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
 
-	var REGEX_ESCAPE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
+	const REGEX_ESCAPE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
 
-	var REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,2048}$/i;
+	const REGEX_IMAGE_SRC = /^(?:https?:\/\/|\/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,2048}$/i;
 
-	var REGEX_LASTCHAR_NEWLINE = /\r?\n$/;
+	const REGEX_LASTCHAR_NEWLINE = /\r?\n$/;
 
-	var REGEX_NEW_LINE = /\r?\n/g;
+	const REGEX_NEW_LINE = /\r?\n/g;
 
-	var REGEX_NUMBER = /^[\\.0-9]{1,8}$/;
+	const REGEX_NUMBER = /^[\\.0-9]{1,8}$/;
 
-	var REGEX_STRING_IS_NEW_LINE = /^\r?\n$/;
+	const REGEX_STRING_IS_NEW_LINE = /^\r?\n$/;
 
-	var REGEX_URI = /^[-;/?:@&=+$,_.!~*'()%0-9a-zÀ-ÿ#]{1,2048}$|\${\S+}/i;
+	const REGEX_URI = /^[-;/?:@&=+$,_.!~*'()%0-9a-zÀ-ÿ#]{1,2048}$|\${\S+}/i;
 
-	var STR_BLANK = '';
+	const STR_BLANK = '';
 
-	var STR_CODE = 'code';
+	const STR_CODE = 'code';
 
-	var STR_EMAIL = 'email';
+	const STR_EMAIL = 'email';
 
-	var STR_IMG = 'img';
+	const STR_IMG = 'img';
 
-	var STR_MAILTO = 'mailto:';
+	const STR_MAILTO = 'mailto:';
 
-	var STR_NEW_LINE = '\n';
+	const STR_NEW_LINE = '\n';
 
-	var STR_START = 'start';
+	const STR_START = 'start';
 
-	var STR_TAG_A_CLOSE = '</a>';
+	const STR_TAG_A_CLOSE = '</a>';
 
-	var STR_TAG_ATTR_CLOSE = '">';
+	const STR_TAG_ATTR_CLOSE = '">';
 
-	var STR_TAG_ATTR_HREF_OPEN = '<a href="';
+	const STR_TAG_ATTR_HREF_OPEN = '<a href="';
 
-	var STR_TAG_END_CLOSE = '>';
+	const STR_TAG_END_CLOSE = '>';
 
-	var STR_TAG_END_OPEN = '</';
+	const STR_TAG_END_OPEN = '</';
 
-	var STR_TAG_LIST_ITEM_SHORT = '*';
+	const STR_TAG_LIST_ITEM_SHORT = '*';
 
-	var STR_TAG_OPEN = '<';
+	const STR_TAG_OPEN = '<';
 
-	var STR_TAG_P_CLOSE = '</p>';
+	const STR_TAG_P_CLOSE = '</p>';
 
-	var STR_TAG_SPAN_CLOSE = '</span>';
+	const STR_TAG_SPAN_CLOSE = '</span>';
 
-	var STR_TAG_SPAN_STYLE_OPEN = '<span style="';
+	const STR_TAG_SPAN_STYLE_OPEN = '<span style="';
 
-	var STR_TAG_URL = 'url';
+	const STR_TAG_URL = 'url';
 
-	var STR_TEXT_ALIGN = '<p style="text-align: ';
+	const STR_TEXT_ALIGN = '<p style="text-align: ';
 
-	var STR_TYPE = 'type';
+	const STR_TYPE = 'type';
 
-	var TOKEN_DATA = Parser.TOKEN_DATA;
+	const TOKEN_DATA = Parser.TOKEN_DATA;
 
-	var TOKEN_TAG_END = Parser.TOKEN_TAG_END;
+	const TOKEN_TAG_END = Parser.TOKEN_TAG_END;
 
-	var TOKEN_TAG_START = Parser.TOKEN_TAG_START;
+	const TOKEN_TAG_START = Parser.TOKEN_TAG_START;
 
-	var tplImage = new CKEDITOR.template(
+	const tplImage = new CKEDITOR.template(
 		'<img src="{imageSrc}" {attributes} />'
 	);
 
-	var Converter = function (config) {
-		var instance = this;
+	const Converter = function (config) {
+		const instance = this;
 
 		config = config || {};
 
@@ -481,13 +481,13 @@
 		_escapeHTML: Liferay.Util.escapeHTML,
 
 		_extractData(toTagName, consume) {
-			var instance = this;
+			const instance = this;
 
-			var result = [];
+			const result = [];
 
-			var index = instance._tokenPointer + 1;
+			let index = instance._tokenPointer + 1;
 
-			var token;
+			let token;
 
 			do {
 				token = instance._parsedData[index++];
@@ -513,7 +513,7 @@
 		},
 
 		_handleCode() {
-			var instance = this;
+			const instance = this;
 
 			instance._noParse = true;
 
@@ -523,9 +523,9 @@
 		},
 
 		_handleColor(token) {
-			var instance = this;
+			const instance = this;
 
-			var colorName = token.attribute;
+			let colorName = token.attribute;
 
 			if (!colorName || !REGEX_COLOR.test(colorName)) {
 				colorName = 'inherit';
@@ -542,25 +542,25 @@
 		},
 
 		_handleData(token) {
-			var instance = this;
+			const instance = this;
 
-			var emoticonImages = instance._config.emoticonImages;
-			var emoticonPath = instance._config.emoticonPath;
-			var emoticonSymbols = instance._config.emoticonSymbols;
+			const emoticonImages = instance._config.emoticonImages;
+			const emoticonPath = instance._config.emoticonPath;
+			const emoticonSymbols = instance._config.emoticonSymbols;
 
-			var value = instance._escapeHTML(token.value);
+			let value = instance._escapeHTML(token.value);
 
 			value = instance._handleNewLine(value);
 
 			if (!instance._noParse) {
-				var length = emoticonSymbols.length;
+				const length = emoticonSymbols.length;
 
-				for (var i = 0; i < length; i++) {
-					var image = tplImage.output({
+				for (let i = 0; i < length; i++) {
+					const image = tplImage.output({
 						imageSrc: emoticonPath + emoticonImages[i],
 					});
 
-					var escapedSymbol = emoticonSymbols[i].replace(
+					const escapedSymbol = emoticonSymbols[i].replace(
 						REGEX_ESCAPE_REGEX,
 						'\\$&'
 					);
@@ -576,17 +576,17 @@
 		},
 
 		_handleEm() {
-			var instance = this;
+			const instance = this;
 
 			instance._handleSimpleTag('em');
 		},
 
 		_handleEmail(token) {
-			var instance = this;
+			const instance = this;
 
-			var href = STR_BLANK;
+			let href = STR_BLANK;
 
-			var hrefInput =
+			let hrefInput =
 				token.attribute || instance._extractData(STR_EMAIL, false);
 
 			if (REGEX_URI.test(hrefInput)) {
@@ -605,9 +605,9 @@
 		},
 
 		_handleFont(token) {
-			var instance = this;
+			const instance = this;
 
-			var fontName = token.attribute;
+			let fontName = token.attribute;
 
 			fontName = CKTools.htmlEncodeAttr(fontName);
 
@@ -622,17 +622,17 @@
 		},
 
 		_handleImage(token) {
-			var instance = this;
+			const instance = this;
 
-			var imageSrc = STR_BLANK;
+			let imageSrc = STR_BLANK;
 
-			var imageSrcInput = instance._extractData(STR_IMG, true);
+			const imageSrcInput = instance._extractData(STR_IMG, true);
 
 			if (REGEX_IMAGE_SRC.test(imageSrcInput)) {
 				imageSrc = CKTools.htmlEncodeAttr(imageSrcInput);
 			}
 
-			var result = tplImage.output({
+			const result = tplImage.output({
 				attributes: instance._handleImageAttributes(token, token.value),
 				imageSrc,
 			});
@@ -641,18 +641,18 @@
 		},
 
 		_handleImageAttributes(token) {
-			var instance = this;
+			const instance = this;
 
-			var attrs = STR_BLANK;
+			let attrs = STR_BLANK;
 
 			if (token.attribute) {
-				var bbCodeAttr;
+				let bbCodeAttr;
 
 				while ((bbCodeAttr = REGEX_ATTRS.exec(token.attribute))) {
-					var attrName = bbCodeAttr[1];
+					const attrName = bbCodeAttr[1];
 
 					if (MAP_IMAGE_ATTRIBUTES[attrName]) {
-						var attrValue = bbCodeAttr[2];
+						const attrValue = bbCodeAttr[2];
 
 						if (attrValue) {
 							attrs +=
@@ -670,19 +670,19 @@
 		},
 
 		_handleList(token) {
-			var instance = this;
+			const instance = this;
 
-			var listAttributes = STR_BLANK;
-			var tag = 'ul';
+			let listAttributes = STR_BLANK;
+			let tag = 'ul';
 
 			if (token.attribute) {
-				var listAttribute;
+				let listAttribute;
 
 				while ((listAttribute = REGEX_ATTRS.exec(token.attribute))) {
-					var attrName = listAttribute[1];
-					var attrValue = listAttribute[2];
+					const attrName = listAttribute[1];
+					const attrValue = listAttribute[2];
 
-					var styleAttr;
+					let styleAttr;
 
 					if (attrName === STR_TYPE) {
 						if (MAP_ORDERED_LIST_STYLES[attrValue]) {
@@ -715,15 +715,15 @@
 		},
 
 		_handleListItem() {
-			var instance = this;
+			const instance = this;
 
 			instance._handleSimpleTag('li');
 		},
 
 		_handleNewLine(value) {
-			var instance = this;
+			const instance = this;
 
-			var nextToken;
+			let nextToken;
 
 			if (!instance._noParse) {
 				if (REGEX_STRING_IS_NEW_LINE.test(value)) {
@@ -764,11 +764,11 @@
 		},
 
 		_handleQuote(token) {
-			var instance = this;
+			const instance = this;
 
-			var cite = token.attribute;
+			let cite = token.attribute;
 
-			var result = '<blockquote><p>';
+			let result = '<blockquote><p>';
 
 			if (cite && cite.length) {
 				cite = BBCodeUtil.escape(cite);
@@ -782,7 +782,7 @@
 		},
 
 		_handleSimpleTag(tagName) {
-			var instance = this;
+			const instance = this;
 
 			instance._result.push(STR_TAG_OPEN, tagName, STR_TAG_END_CLOSE);
 
@@ -792,15 +792,15 @@
 		},
 
 		_handleSimpleTags(token) {
-			var instance = this;
+			const instance = this;
 
 			instance._handleSimpleTag(token.value);
 		},
 
 		_handleSize(token) {
-			var instance = this;
+			const instance = this;
 
-			var size = token.attribute;
+			let size = token.attribute;
 
 			if (!size || !REGEX_NUMBER.test(size)) {
 				size = '1';
@@ -818,45 +818,45 @@
 		},
 
 		_handleStrikeThrough() {
-			var instance = this;
+			const instance = this;
 
 			instance._handleSimpleTag('strike');
 		},
 
 		_handleStrong() {
-			var instance = this;
+			const instance = this;
 
 			instance._handleSimpleTag('strong');
 		},
 
 		_handleTable() {
-			var instance = this;
+			const instance = this;
 
 			instance._handleSimpleTag('table');
 		},
 
 		_handleTableCell() {
-			var instance = this;
+			const instance = this;
 
 			instance._handleSimpleTag('td');
 		},
 
 		_handleTableHeader() {
-			var instance = this;
+			const instance = this;
 
 			instance._handleSimpleTag('th');
 		},
 
 		_handleTableRow() {
-			var instance = this;
+			const instance = this;
 
 			instance._handleSimpleTag('tr');
 		},
 
 		_handleTagEnd(token) {
-			var instance = this;
+			const instance = this;
 
-			var tagName = token.value;
+			const tagName = token.value;
 
 			instance._result.push(instance._stack.pop());
 
@@ -866,17 +866,17 @@
 		},
 
 		_handleTagStart(token) {
-			var instance = this;
+			const instance = this;
 
-			var tagName = token.value;
+			const tagName = token.value;
 
-			var handlerName = MAP_HANDLERS[tagName] || '_handleSimpleTags';
+			const handlerName = MAP_HANDLERS[tagName] || '_handleSimpleTags';
 
 			instance[handlerName](token);
 		},
 
 		_handleTextAlign(token) {
-			var instance = this;
+			const instance = this;
 
 			instance._result.push(
 				STR_TEXT_ALIGN,
@@ -888,11 +888,11 @@
 		},
 
 		_handleURL(token) {
-			var instance = this;
+			const instance = this;
 
-			var href = STR_BLANK;
+			let href = STR_BLANK;
 
-			var hrefInput =
+			const hrefInput =
 				token.attribute || instance._extractData(STR_TAG_URL, false);
 
 			if (REGEX_URI.test(hrefInput)) {
@@ -907,7 +907,7 @@
 		},
 
 		_reset() {
-			var instance = this;
+			const instance = this;
 
 			instance._result.length = 0;
 			instance._stack.length = 0;
@@ -920,22 +920,22 @@
 		constructor: Converter,
 
 		convert(data) {
-			var instance = this;
+			const instance = this;
 
-			var parsedData = instance._parser.parse(data);
+			const parsedData = instance._parser.parse(data);
 
 			instance._parsedData = parsedData;
 
-			var length = parsedData.length;
+			const length = parsedData.length;
 
 			for (
 				instance._tokenPointer = 0;
 				instance._tokenPointer < length;
 				instance._tokenPointer++
 			) {
-				var token = parsedData[instance._tokenPointer];
+				const token = parsedData[instance._tokenPointer];
 
-				var type = token.type;
+				const type = token.type;
 
 				if (type === TOKEN_TAG_START) {
 					instance._handleTagStart(token);
@@ -951,7 +951,7 @@
 				}
 			}
 
-			var result = instance._result.join(STR_BLANK);
+			const result = instance._result.join(STR_BLANK);
 
 			instance._reset();
 
@@ -959,7 +959,7 @@
 		},
 
 		init(config) {
-			var instance = this;
+			const instance = this;
 
 			instance._parser = new Parser(config.parser);
 

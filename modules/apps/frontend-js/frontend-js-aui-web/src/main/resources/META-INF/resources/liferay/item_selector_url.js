@@ -20,18 +20,18 @@
 AUI.add(
 	'liferay-item-selector-url',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var ITEM_LINK_TPL =
+		const ITEM_LINK_TPL =
 			'<a data-returnType="URL" data-value="{value}" href="{preview}"></a>';
 
-		var STR_LINKS = 'links';
+		const STR_LINKS = 'links';
 
-		var STR_SELECTED_ITEM = 'selectedItem';
+		const STR_SELECTED_ITEM = 'selectedItem';
 
-		var STR_VISIBLE_CHANGE = 'visibleChange';
+		const STR_VISIBLE_CHANGE = 'visibleChange';
 
-		var ItemSelectorUrl = A.Component.create({
+		const ItemSelectorUrl = A.Component.create({
 			ATTRS: {
 				closeCaption: {
 					validator: Lang.isString,
@@ -47,7 +47,7 @@ AUI.add(
 
 			prototype: {
 				_afterVisibleChange(event) {
-					var instance = this;
+					const instance = this;
 
 					if (!event.newVal) {
 						instance.fire(STR_SELECTED_ITEM);
@@ -55,9 +55,9 @@ AUI.add(
 				},
 
 				_bindUI() {
-					var instance = this;
+					const instance = this;
 
-					var itemViewer = instance._itemViewer;
+					const itemViewer = instance._itemViewer;
 
 					instance._eventHandles = [
 						itemViewer.after(
@@ -84,7 +84,7 @@ AUI.add(
 				},
 
 				_onInput(event) {
-					var instance = this;
+					const instance = this;
 
 					Liferay.Util.toggleDisabled(
 						instance._buttonNode,
@@ -93,11 +93,11 @@ AUI.add(
 				},
 
 				_onItemSelected() {
-					var instance = this;
+					const instance = this;
 
-					var itemViewer = instance._itemViewer;
+					const itemViewer = instance._itemViewer;
 
-					var link = itemViewer
+					const link = itemViewer
 						.get(STR_LINKS)
 						.item(itemViewer.get('currentIndex'));
 
@@ -110,19 +110,19 @@ AUI.add(
 				},
 
 				_previewItem() {
-					var instance = this;
+					const instance = this;
 
-					var url = instance._inputNode.val();
+					const url = instance._inputNode.val();
 
 					if (url) {
-						var linkNode = A.Node.create(
+						const linkNode = A.Node.create(
 							Lang.sub(ITEM_LINK_TPL, {
 								preview: url,
 								value: url,
 							})
 						);
 
-						var itemViewer = instance._itemViewer;
+						const itemViewer = instance._itemViewer;
 
 						itemViewer.set(STR_LINKS, new A.NodeList(linkNode));
 
@@ -131,15 +131,15 @@ AUI.add(
 				},
 
 				_renderUI() {
-					var instance = this;
+					const instance = this;
 
-					var rootNode = instance.rootNode;
+					const rootNode = instance.rootNode;
 
 					instance._itemViewer.render(rootNode);
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					instance._itemViewer.destroy();
 
@@ -147,7 +147,7 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._itemViewer = new A.LiferayItemViewer({
 						btnCloseCaption: instance.get('closeCaption'),

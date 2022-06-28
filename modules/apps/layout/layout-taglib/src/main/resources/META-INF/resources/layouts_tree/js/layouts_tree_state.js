@@ -15,21 +15,21 @@
 AUI.add(
 	'liferay-layouts-tree-state',
 	(A) => {
-		var AArray = A.Array;
+		const AArray = A.Array;
 
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var STR_BOUNDING_BOX = 'boundingBox';
+		const STR_BOUNDING_BOX = 'boundingBox';
 
-		var STR_CHECKED_NODES = 'checkedNodes';
+		const STR_CHECKED_NODES = 'checkedNodes';
 
-		var STR_HOST = 'host';
+		const STR_HOST = 'host';
 
-		var STR_LOCAL_CHECKED_NODES = 'localCheckedNodes';
+		const STR_LOCAL_CHECKED_NODES = 'localCheckedNodes';
 
-		var STR_LOCAL_UNCHECKED_NODES = 'localUncheckedNodes';
+		const STR_LOCAL_UNCHECKED_NODES = 'localUncheckedNodes';
 
-		var LayoutsTreeState = A.Component.create({
+		const LayoutsTreeState = A.Component.create({
 			ATTRS: {
 				checkedNodes: {
 					validator: Lang.isObject,
@@ -81,19 +81,19 @@ AUI.add(
 				},
 
 				_matchParentNode(node) {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
-					var localCheckedNodes = instance.get(
+					const host = instance.get(STR_HOST);
+					const localCheckedNodes = instance.get(
 						STR_LOCAL_CHECKED_NODES
 					);
-					var localUncheckedNodes = instance.get(
+					const localUncheckedNodes = instance.get(
 						STR_LOCAL_UNCHECKED_NODES
 					);
 
-					var plid = host.extractPlid(node);
+					const plid = host.extractPlid(node);
 
-					var checked;
+					let checked;
 
 					if (localCheckedNodes.indexOf(plid) > -1) {
 						checked = true;
@@ -112,28 +112,30 @@ AUI.add(
 				},
 
 				_onCheckContentDisplayTreeAppend() {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
 					host.restoreSelectedNode();
 				},
 
 				_onNodeChildrenChange(event) {
-					var target = event.target;
+					const target = event.target;
 
-					target.set('alwaysShowHitArea', event.newVal.length > 0);
+					target.set('alwaysShowHitArea', !!event.newVal.length);
 				},
 
 				_onNodeExpandedChange(event) {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
-					var treeId = host.get(STR_BOUNDING_BOX).attr('data-treeid');
+					const treeId = host
+						.get(STR_BOUNDING_BOX)
+						.attr('data-treeid');
 
-					var expanded = event.newVal;
-					var target = event.target;
+					const expanded = event.newVal;
+					const target = event.target;
 
 					if (target === host.getChildren()[0]) {
 						Liferay.Util.Session.set(
@@ -144,7 +146,7 @@ AUI.add(
 						);
 					}
 					else {
-						var layoutId = host.extractLayoutId(target);
+						const layoutId = host.extractLayoutId(target);
 
 						instance._updateSessionTreeOpenedState(
 							treeId,
@@ -155,19 +157,19 @@ AUI.add(
 				},
 
 				_onNodeIOSuccess(event) {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
-					var paginationMap = {};
+					let paginationMap = {};
 
-					var updatePaginationMap = function (map, curNode) {
+					const updatePaginationMap = function (map, curNode) {
 						if (A.instanceOf(curNode, A.TreeNodeIO)) {
-							var paginationLimit = host.get('maxChildren');
+							const paginationLimit = host.get('maxChildren');
 
-							var layoutId = host.extractLayoutId(curNode);
+							const layoutId = host.extractLayoutId(curNode);
 
-							var children = curNode.get('children');
+							const children = curNode.get('children');
 
 							map[layoutId] =
 								Math.ceil(children.length / paginationLimit) *
@@ -175,15 +177,17 @@ AUI.add(
 						}
 					};
 
-					var target = event.target;
+					const target = event.target;
 
 					instance._matchParentNode(target);
 
-					var treeId = host.get(STR_BOUNDING_BOX).attr('data-treeid');
+					const treeId = host
+						.get(STR_BOUNDING_BOX)
+						.attr('data-treeid');
 
-					var root = host.get('root');
+					const root = host.get('root');
 
-					var key =
+					const key =
 						treeId +
 						':' +
 						root.groupId +
@@ -208,7 +212,7 @@ AUI.add(
 								updatePaginationMap(paginationMap, parent);
 							});
 
-							var sessionClickData = {};
+							const sessionClickData = {};
 
 							sessionClickData[key] = JSON.stringify(
 								paginationMap
@@ -222,16 +226,18 @@ AUI.add(
 				},
 
 				_onSelectableNodeCheckedChange(event) {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
-					var treeId = host.get(STR_BOUNDING_BOX).attr('data-treeid');
+					const treeId = host
+						.get(STR_BOUNDING_BOX)
+						.attr('data-treeid');
 
-					var newVal = event.checked;
-					var target = event.node;
+					const newVal = event.checked;
+					const target = event.node;
 
-					var plid = host.extractPlid(target);
+					const plid = host.extractPlid(target);
 
 					instance._updateSessionTreeCheckedState(
 						treeId + 'SelectedNode',
@@ -246,9 +252,9 @@ AUI.add(
 				},
 
 				_onSelectableNodeChildrenChange(event) {
-					var instance = this;
+					const instance = this;
 
-					var node = event.node;
+					const node = event.node;
 
 					if (node.get('checked')) {
 						instance._updateCheckedNodes({
@@ -262,17 +268,17 @@ AUI.add(
 				},
 
 				_onSelectableTreeAppend(event) {
-					var instance = this;
+					const instance = this;
 
 					instance._restoreCheckedNode(event.node);
 				},
 
 				_onSelectableTreeRender() {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
-					var rootNode = host.getChildren()[0];
+					const rootNode = host.getChildren()[0];
 
 					rootNode.set('checked', undefined);
 					rootNode.set('expanded', instance.get('rootNodeExpanded'));
@@ -281,13 +287,13 @@ AUI.add(
 				},
 
 				_restoreCheckedNode(node) {
-					var instance = this;
+					const instance = this;
 
-					var plid = instance.get(STR_HOST).extractPlid(node);
+					const plid = instance.get(STR_HOST).extractPlid(node);
 
-					var tree = node.get('ownerTree');
+					const tree = node.get('ownerTree');
 
-					var treeNodeTaskSuperClass = A.TreeNodeTask.superclass;
+					const treeNodeTaskSuperClass = A.TreeNodeTask.superclass;
 
 					if (instance.get(STR_CHECKED_NODES).indexOf(plid) > -1) {
 						treeNodeTaskSuperClass.check.call(node, tree);
@@ -302,25 +308,27 @@ AUI.add(
 				},
 
 				_updateCheckedNodes(nodeConfig) {
-					var instance = this;
+					const instance = this;
 
-					var checked = nodeConfig.checked;
-					var forceChildrenState = nodeConfig.forceChildrenState;
-					var node = nodeConfig.node;
+					let checked = nodeConfig.checked;
+					const forceChildrenState = nodeConfig.forceChildrenState;
+					const node = nodeConfig.node;
 
-					var plid = instance.get(STR_HOST).extractPlid(node);
+					const plid = instance.get(STR_HOST).extractPlid(node);
 
-					var checkedNodes = instance.get(STR_CHECKED_NODES);
-					var localCheckedNodes = instance.get(
+					const checkedNodes = instance.get(STR_CHECKED_NODES);
+					const localCheckedNodes = instance.get(
 						STR_LOCAL_CHECKED_NODES
 					);
-					var localUncheckedNodes = instance.get(
+					const localUncheckedNodes = instance.get(
 						STR_LOCAL_UNCHECKED_NODES
 					);
 
-					var checkedIndex = checkedNodes.indexOf(plid);
-					var localCheckedIndex = localCheckedNodes.indexOf(plid);
-					var localUncheckedIndex = localUncheckedNodes.indexOf(plid);
+					const checkedIndex = checkedNodes.indexOf(plid);
+					const localCheckedIndex = localCheckedNodes.indexOf(plid);
+					const localUncheckedIndex = localUncheckedNodes.indexOf(
+						plid
+					);
 
 					if (checked === undefined) {
 						checked = checkedIndex > -1;
@@ -354,10 +362,10 @@ AUI.add(
 
 					node.set('checked', checked);
 
-					var children = node.get('children');
+					const children = node.get('children');
 
 					if (children.length) {
-						var childrenChecked = forceChildrenState
+						const childrenChecked = forceChildrenState
 							? undefined
 							: checked;
 
@@ -372,9 +380,9 @@ AUI.add(
 				},
 
 				_updateSessionTreeCheckedState(treeId, nodeId, state) {
-					var instance = this;
+					const instance = this;
 
-					var data = {
+					const data = {
 						cmd: state ? 'layoutCheck' : 'layoutUncheck',
 						plid: nodeId,
 					};
@@ -383,11 +391,11 @@ AUI.add(
 				},
 
 				_updateSessionTreeClick(treeId, data) {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
-					var root = host.get('root');
+					const root = host.get('root');
 
 					data = {
 						groupId: root.groupId,
@@ -415,9 +423,9 @@ AUI.add(
 				},
 
 				_updateSessionTreeOpenedState(treeId, nodeId, state) {
-					var instance = this;
+					const instance = this;
 
-					var data = {
+					const data = {
 						nodeId,
 						openNode: state,
 					};
@@ -426,13 +434,13 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					new A.EventHandle(instance._eventHandles).detach();
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._eventHandles = [
 						instance.afterHostEvent(

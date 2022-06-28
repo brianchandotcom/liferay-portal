@@ -175,7 +175,7 @@ const VocabulariesSelectionBox = ({
 			<ClayDualListBox
 				className="vocabularies-selection"
 				disableLTR={handleDisableLeftToRight()}
-				disableRTL={rightElements.length === 0}
+				disableRTL={!rightElements.length}
 				items={items}
 				left={{
 					id: leftBoxName,

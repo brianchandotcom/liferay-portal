@@ -149,8 +149,8 @@ export default function DiagramBuilder() {
 			});
 
 			if (
-				getCollidingElements(elements, elementRectangle, position)
-					.length === 0
+				!getCollidingElements(elements, elementRectangle, position)
+					.length
 			) {
 				event.preventDefault();
 

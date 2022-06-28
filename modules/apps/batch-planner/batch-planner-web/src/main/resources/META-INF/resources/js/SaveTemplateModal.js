@@ -145,9 +145,7 @@ const SaveTemplateModal = ({
 							</ClayButton>
 
 							<ClayButton
-								disabled={
-									loadingResponse || inputValue.length === 0
-								}
+								disabled={loadingResponse || !inputValue.length}
 								displayType="primary"
 								type="submit"
 							>

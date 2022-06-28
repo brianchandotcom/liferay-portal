@@ -17,19 +17,21 @@ import {toggleDisabled} from 'frontend-js-web';
 import {previewSeoFireChange} from './PreviewSeoEvents.es';
 
 export default function ({namespace}) {
-	var canonicalURLEnabledCheck = document.getElementById(
+	const canonicalURLEnabledCheck = document.getElementById(
 		`${namespace}canonicalURLEnabled`
 	);
-	var canonicalURLField = document.getElementById(`${namespace}canonicalURL`);
-	var canonicalURLFieldDefaultLocale = document.getElementById(
+	const canonicalURLField = document.getElementById(
+		`${namespace}canonicalURL`
+	);
+	const canonicalURLFieldDefaultLocale = document.getElementById(
 		`${namespace}canonicalURL_${Liferay.ThemeDisplay.getLanguageId()}`
 	);
-	var canonicalURLAlert = document.getElementById(
+	const canonicalURLAlert = document.getElementById(
 		`${namespace}canonicalURLAlert`
 	);
 
 	canonicalURLEnabledCheck.addEventListener('click', (event) => {
-		var disabled = !event.target.checked;
+		const disabled = !event.target.checked;
 
 		canonicalURLAlert.classList.toggle('hide');
 

@@ -15,23 +15,23 @@
 AUI.add(
 	'liferay-layout-column',
 	(A) => {
-		var DDM = A.DD.DDM;
+		const DDM = A.DD.DDM;
 
-		var Layout = Liferay.Layout;
+		const Layout = Liferay.Layout;
 
-		var CSS_DRAGGING = 'dragging';
+		const CSS_DRAGGING = 'dragging';
 
 		Layout.getLastPortletNode = function (column) {
-			var portlets = column.all(Layout.options.portletBoundary);
+			const portlets = column.all(Layout.options.portletBoundary);
 
-			var lastIndex = portlets.size() - 1;
+			const lastIndex = portlets.size() - 1;
 
 			return portlets.item(lastIndex);
 		};
 
 		Layout.findSiblingPortlet = function (portletNode, siblingPos) {
-			var dragNodes = Layout.options.dragNodes;
-			var sibling = portletNode.get(siblingPos);
+			const dragNodes = Layout.options.dragNodes;
+			let sibling = portletNode.get(siblingPos);
 
 			while (sibling && !sibling.test(dragNodes)) {
 				sibling = sibling.get(siblingPos);
@@ -40,7 +40,7 @@ AUI.add(
 			return sibling;
 		};
 
-		var ColumnLayout = A.Component.create({
+		const ColumnLayout = A.Component.create({
 			ATTRS: {
 				proxyNode: {
 					value: Layout.PROXY_NODE,
@@ -53,17 +53,17 @@ AUI.add(
 
 			prototype: {
 				_positionNode(event) {
-					var portalLayout = event.currentTarget;
+					const portalLayout = event.currentTarget;
 
-					var activeDrop =
+					const activeDrop =
 						portalLayout.lastAlignDrop || portalLayout.activeDrop;
 
 					if (activeDrop) {
-						var dropNode = activeDrop.get('node');
-						var isStatic = dropNode.isStatic;
+						const dropNode = activeDrop.get('node');
+						const isStatic = dropNode.isStatic;
 
 						if (isStatic) {
-							var start = isStatic === 'start';
+							const start = isStatic === 'start';
 
 							portalLayout.quadrant = start ? 4 : 1;
 						}
@@ -76,10 +76,10 @@ AUI.add(
 				},
 
 				_syncProxyNodeSize() {
-					var instance = this;
+					const instance = this;
 
-					var dragNode = DDM.activeDrag.get('dragNode');
-					var proxyNode = instance.get('proxyNode');
+					const dragNode = DDM.activeDrag.get('dragNode');
+					const proxyNode = instance.get('proxyNode');
 
 					if (proxyNode && dragNode) {
 						dragNode.set('offsetHeight', 30);
@@ -94,7 +94,7 @@ AUI.add(
 			},
 
 			register() {
-				var columnLayoutDefaults = {
+				const columnLayoutDefaults = {
 					...Layout.DEFAULT_LAYOUT_OPTIONS,
 					after: {
 						'drag:end'() {
@@ -102,8 +102,8 @@ AUI.add(
 						},
 
 						'drag:start'() {
-							var node = DDM.activeDrag.get('node');
-							var nodeId = node.get('id');
+							const node = DDM.activeDrag.get('node');
+							const nodeId = node.get('id');
 
 							Layout.PORTLET_TOPPER.html(
 								Layout._getPortletTitle(nodeId)
@@ -131,32 +131,32 @@ AUI.add(
 							Liferay.Layout.updateOverNestedPortletInfo();
 						},
 						'placeholderAlign'(event) {
-							var portalLayout = event.currentTarget;
+							const portalLayout = event.currentTarget;
 
-							var activeDrop = portalLayout.activeDrop;
-							var lastActiveDrop = portalLayout.lastActiveDrop;
+							const activeDrop = portalLayout.activeDrop;
+							const lastActiveDrop = portalLayout.lastActiveDrop;
 
 							if (lastActiveDrop) {
-								var activeDropNode = activeDrop.get('node');
-								var lastActiveDropNode = lastActiveDrop.get(
+								const activeDropNode = activeDrop.get('node');
+								const lastActiveDropNode = lastActiveDrop.get(
 									'node'
 								);
 
-								var isStatic = activeDropNode.isStatic;
-								var quadrant = portalLayout.quadrant;
+								const isStatic = activeDropNode.isStatic;
+								const quadrant = portalLayout.quadrant;
 
 								if (isStatic) {
-									var start = isStatic === 'start';
+									const start = isStatic === 'start';
 
-									var siblingPos = start
+									const siblingPos = start
 										? 'nextSibling'
 										: 'previousSibling';
 
-									var siblingPortlet = Layout.findSiblingPortlet(
+									const siblingPortlet = Layout.findSiblingPortlet(
 										activeDropNode,
 										siblingPos
 									);
-									var staticSibling =
+									const staticSibling =
 										siblingPortlet &&
 										siblingPortlet.isStatic === isStatic;
 
@@ -169,13 +169,13 @@ AUI.add(
 									}
 								}
 
-								var overColumn = !activeDropNode.drop;
+								const overColumn = !activeDropNode.drop;
 
 								if (!Layout.OVER_NESTED_PORTLET && overColumn) {
-									var activeDropNodeId = activeDropNode.get(
+									const activeDropNodeId = activeDropNode.get(
 										'id'
 									);
-									var emptyColumn =
+									const emptyColumn =
 										Layout.EMPTY_COLUMNS[activeDropNodeId];
 
 									if (!emptyColumn) {
@@ -183,7 +183,7 @@ AUI.add(
 											activeDropNode !==
 											lastActiveDropNode
 										) {
-											var referencePortlet = Layout.getLastPortletNode(
+											let referencePortlet = Layout.getLastPortletNode(
 												activeDropNode
 											);
 
@@ -191,12 +191,12 @@ AUI.add(
 												referencePortlet &&
 												referencePortlet.isStatic
 											) {
-												var options = Layout.options;
+												const options = Layout.options;
 
-												var dropColumn = activeDropNode.one(
+												const dropColumn = activeDropNode.one(
 													options.dropContainer
 												);
-												var foundReferencePortlet = Layout.findReferencePortlet(
+												const foundReferencePortlet = Layout.findReferencePortlet(
 													dropColumn
 												);
 
@@ -205,7 +205,7 @@ AUI.add(
 												}
 											}
 
-											var drop = A.DD.DDM.getDrop(
+											const drop = A.DD.DDM.getDrop(
 												referencePortlet
 											);
 

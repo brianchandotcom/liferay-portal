@@ -15,21 +15,21 @@
 AUI.add(
 	'liferay-marketplace-messenger',
 	(A) => {
-		var NATIVE_MSG = !!window.postMessage;
+		const NATIVE_MSG = !!window.postMessage;
 
-		var MarketplaceMessenger = {
+		const MarketplaceMessenger = {
 			_messages: [],
 			_targetFrame: null,
 			_targetURI: null,
 
 			init(options, initMessage) {
-				var instance = this;
+				const instance = this;
 
 				if (A.Lang.isString(options)) {
 					instance._targetURI = options;
 				}
 				else if (A.Lang.isObject(options)) {
-					var targetFrame = options.targetFrame;
+					const targetFrame = options.targetFrame;
 
 					instance._targetFrame = A.one(targetFrame);
 
@@ -42,7 +42,7 @@ AUI.add(
 			},
 
 			postMessage(message) {
-				var instance = this;
+				const instance = this;
 
 				if (NATIVE_MSG) {
 					A.postMessage(
@@ -65,7 +65,7 @@ AUI.add(
 			},
 
 			receiveMessage(callback, validator) {
-				var instance = this;
+				const instance = this;
 
 				validator = validator || instance._targetURI;
 
@@ -73,16 +73,16 @@ AUI.add(
 					A.receiveMessage(callback, validator);
 				}
 				else {
-					var wrappedCallback = function (event) {
-						var response = event.responseData;
+					const wrappedCallback = function (event) {
+						const response = event.responseData;
 
 						callback(event);
 
 						instance._messages.shift();
 
-						var message = null;
+						let message = null;
 
-						if (instance._messages.length > 0) {
+						if (instance._messages.length) {
 							message = instance._messages[0];
 						}
 						else if (!response.empty) {
@@ -124,11 +124,11 @@ AUI.add(
 AUI.add(
 	'liferay-marketplace-util',
 	(A) => {
-		var MarketplaceUtil = {
+		const MarketplaceUtil = {
 			namespaceObject(namespace, object) {
-				var returnObject = {};
+				const returnObject = {};
 
-				var keys = Object.keys(object);
+				const keys = Object.keys(object);
 
 				A.Array.each(keys, (key) => {
 					returnObject[namespace + key] = object[key];

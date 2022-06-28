@@ -15,17 +15,17 @@
 AUI.add(
 	'liferay-item-selector-uploader',
 	(A) => {
-		var CSS_PROGRESS = 'progress';
+		const CSS_PROGRESS = 'progress';
 
-		var CSS_UPLOADING = 'uploading';
+		const CSS_UPLOADING = 'uploading';
 
-		var NAME = 'itemselectoruploader';
+		const NAME = 'itemselectoruploader';
 
-		var PROGRESS_HEIGHT = '6';
+		const PROGRESS_HEIGHT = '6';
 
-		var STR_VALUE = 'value';
+		const STR_VALUE = 'value';
 
-		var TPL_PROGRESS_BAR =
+		const TPL_PROGRESS_BAR =
 			'<div class="progress-container">' +
 			'<div class="upload-details">' +
 			'<strong id="{0}itemName"></strong>' +
@@ -38,7 +38,7 @@ AUI.add(
 			'"></div>' +
 			'</div>';
 
-		var ItemUploader = A.Component.create({
+		const ItemUploader = A.Component.create({
 			AUGMENTS: [Liferay.PortletBase],
 
 			EXTENDS: A.Base,
@@ -49,11 +49,11 @@ AUI.add(
 
 			prototype: {
 				_createProgressBar() {
-					var instance = this;
+					const instance = this;
 
-					var rootNode = instance.rootNode;
+					const rootNode = instance.rootNode;
 
-					var progressbarNode = A.Node.create(
+					const progressbarNode = A.Node.create(
 						A.Lang.sub(TPL_PROGRESS_BAR, [instance.NS])
 					);
 
@@ -61,7 +61,7 @@ AUI.add(
 
 					instance._progressBarNode = progressbarNode;
 
-					var progressbar = new A.ProgressBar({
+					const progressbar = new A.ProgressBar({
 						boundingBox: progressbarNode.one('.' + CSS_PROGRESS),
 						height: PROGRESS_HEIGHT,
 					}).render();
@@ -70,9 +70,9 @@ AUI.add(
 				},
 
 				_getUploader() {
-					var instance = this;
+					const instance = this;
 
-					var uploader = instance._uploader;
+					let uploader = instance._uploader;
 
 					if (!uploader) {
 						uploader = new A.Uploader({
@@ -86,7 +86,7 @@ AUI.add(
 				},
 
 				_onCancel() {
-					var instance = this;
+					const instance = this;
 
 					instance._currentFile.cancelUpload();
 
@@ -96,13 +96,13 @@ AUI.add(
 				},
 
 				_onUploadComplete(event) {
-					var instance = this;
+					const instance = this;
 
 					instance._stopProgress();
 
-					var data = JSON.parse(event.data);
+					const data = JSON.parse(event.data);
 
-					var eventName = data.success
+					const eventName = data.success
 						? 'itemUploadComplete'
 						: 'itemUploadError';
 
@@ -110,7 +110,7 @@ AUI.add(
 				},
 
 				_onUploadError(event) {
-					var instance = this;
+					const instance = this;
 
 					event.target.cancelUpload();
 
@@ -120,9 +120,9 @@ AUI.add(
 				},
 
 				_onUploadProgress(event) {
-					var instance = this;
+					const instance = this;
 
-					var percentLoaded = Math.round(event.percentLoaded);
+					const percentLoaded = Math.round(event.percentLoaded);
 
 					instance._progressBar.set(
 						STR_VALUE,
@@ -131,7 +131,7 @@ AUI.add(
 				},
 
 				_stopProgress() {
-					var instance = this;
+					const instance = this;
 
 					instance._progressBar.set(STR_VALUE, 0);
 
@@ -139,7 +139,7 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					if (instance._uploader) {
 						instance._uploader.destroy();
@@ -153,13 +153,13 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
-					var uploader = instance._getUploader();
+					const uploader = instance._getUploader();
 
 					instance._createProgressBar();
 
-					var cancelBtn = instance._progressBarNode.one(
+					const cancelBtn = instance._progressBarNode.one(
 						'#' + instance.NS + 'cancel'
 					);
 
@@ -184,11 +184,11 @@ AUI.add(
 				},
 
 				startUpload(file, url) {
-					var instance = this;
+					const instance = this;
 
 					file = new A.FileHTML5(file);
 
-					var uploader = instance._getUploader();
+					const uploader = instance._getUploader();
 
 					uploader.upload(file, url);
 

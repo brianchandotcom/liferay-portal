@@ -22,35 +22,35 @@
 AUI.add(
 	'liferay-form-placeholders',
 	(A) => {
-		var ANode = A.Node;
+		const ANode = A.Node;
 
-		var CSS_PLACEHOLDER = 'text-placeholder';
+		const CSS_PLACEHOLDER = 'text-placeholder';
 
-		var MAP_IGNORE_ATTRS = {
+		const MAP_IGNORE_ATTRS = {
 			id: 1,
 			name: 1,
 			type: 1,
 		};
 
-		var SELECTOR_PLACEHOLDER_INPUTS =
+		const SELECTOR_PLACEHOLDER_INPUTS =
 			'input[placeholder], textarea[placeholder]';
 
-		var STR_BLANK = '';
+		const STR_BLANK = '';
 
-		var STR_DATA_TYPE_PASSWORD_PLACEHOLDER =
+		const STR_DATA_TYPE_PASSWORD_PLACEHOLDER =
 			'data-type-password-placeholder';
 
-		var STR_FOCUS = 'focus';
+		const STR_FOCUS = 'focus';
 
-		var STR_PASSWORD = 'password';
+		const STR_PASSWORD = 'password';
 
-		var STR_PLACEHOLDER = 'placeholder';
+		const STR_PLACEHOLDER = 'placeholder';
 
-		var STR_SPACE = ' ';
+		const STR_SPACE = ' ';
 
-		var STR_TYPE = 'type';
+		const STR_TYPE = 'type';
 
-		var Placeholders = A.Component.create({
+		const Placeholders = A.Component.create({
 			EXTENDS: A.Plugin.Base,
 
 			NAME: 'placeholders',
@@ -59,14 +59,14 @@ AUI.add(
 
 			prototype: {
 				_initializePasswordNode(field) {
-					var placeholder = ANode.create(
+					const placeholder = ANode.create(
 						'<input name="' +
 							field.attr('name') +
 							'_pass_placeholder" type="text" />'
 					);
 
 					Liferay.Util.getAttributes(field, (value, name) => {
-						var result = false;
+						const result = false;
 
 						if (!MAP_IGNORE_ATTRS[name]) {
 							if (name === 'class') {
@@ -89,11 +89,11 @@ AUI.add(
 				},
 
 				_removePlaceholders() {
-					var instance = this;
+					const instance = this;
 
-					var formNode = instance.host.formNode;
+					const formNode = instance.host.formNode;
 
-					var placeholderInputs = formNode.all(
+					const placeholderInputs = formNode.all(
 						SELECTOR_PLACEHOLDER_INPUTS
 					);
 
@@ -105,10 +105,10 @@ AUI.add(
 				},
 
 				_toggleLocalizedPlaceholders(event, currentTarget) {
-					var placeholder = currentTarget.attr(STR_PLACEHOLDER);
+					const placeholder = currentTarget.attr(STR_PLACEHOLDER);
 
 					if (placeholder) {
-						var value = currentTarget.val();
+						const value = currentTarget.val();
 
 						if (event.type === STR_FOCUS) {
 							if (value === placeholder) {
@@ -124,7 +124,7 @@ AUI.add(
 				},
 
 				_togglePasswordPlaceholders(event, currentTarget) {
-					var placeholder = currentTarget.attr(STR_PLACEHOLDER);
+					const placeholder = currentTarget.attr(STR_PLACEHOLDER);
 
 					if (placeholder) {
 						if (event.type === STR_FOCUS) {
@@ -135,7 +135,7 @@ AUI.add(
 							) {
 								currentTarget.hide();
 
-								var passwordField = currentTarget.next();
+								const passwordField = currentTarget.next();
 
 								passwordField.show();
 
@@ -147,7 +147,7 @@ AUI.add(
 						else if (
 							currentTarget.attr(STR_TYPE) === STR_PASSWORD
 						) {
-							var value = currentTarget.val();
+							const value = currentTarget.val();
 
 							if (!value) {
 								currentTarget.hide();
@@ -159,9 +159,9 @@ AUI.add(
 				},
 
 				_togglePlaceholders(event) {
-					var instance = this;
+					const instance = this;
 
-					var currentTarget = event.currentTarget;
+					const currentTarget = event.currentTarget;
 
 					if (
 						currentTarget.hasAttribute(
@@ -181,10 +181,10 @@ AUI.add(
 						);
 					}
 					else {
-						var placeholder = currentTarget.attr(STR_PLACEHOLDER);
+						const placeholder = currentTarget.attr(STR_PLACEHOLDER);
 
 						if (placeholder) {
-							var value = currentTarget.val();
+							const value = currentTarget.val();
 
 							if (event.type === STR_FOCUS) {
 								if (value === placeholder) {
@@ -203,14 +203,14 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get('host');
+					const host = instance.get('host');
 
-					var formNode = host.formNode;
+					const formNode = host.formNode;
 
 					if (formNode) {
-						var placeholderInputs = formNode.all(
+						const placeholderInputs = formNode.all(
 							SELECTOR_PLACEHOLDER_INPUTS
 						);
 

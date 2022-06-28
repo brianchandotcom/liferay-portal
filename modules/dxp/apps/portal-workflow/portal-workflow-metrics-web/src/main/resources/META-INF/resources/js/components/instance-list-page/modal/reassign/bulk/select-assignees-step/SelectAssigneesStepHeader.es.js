@@ -39,7 +39,7 @@ export default function Header({data}) {
 		}
 	}, [data]);
 
-	const disableBulk = reassigning || assignees.length === 0;
+	const disableBulk = reassigning || !assignees.length;
 
 	const handleCheck = ({target}) => {
 		setBulkReassign({

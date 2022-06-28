@@ -35,8 +35,8 @@ function handleSearchBar() {
 Liferay.on('allPortletsReady', () => {
 	handleSearchBar();
 
-	var jsScrollArea = document.querySelector('.js-scroll-area');
-	var miniumTop = document.querySelector('[name=minium-top]');
+	const jsScrollArea = document.querySelector('.js-scroll-area');
+	const miniumTop = document.querySelector('[name=minium-top]');
 
 	function sign(x) {
 		return (x > 0) - (x < 0) || +x;

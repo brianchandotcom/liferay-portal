@@ -92,7 +92,7 @@ const SideMenu = () => {
 				<li>
 					<Button
 						appendIcon={
-							subscriptionGroups.length > 0 && 'angle-right-small'
+							!!subscriptionGroups.length && 'angle-right-small'
 						}
 						appendIconClassName="ml-auto"
 						className={classNames(
@@ -101,8 +101,7 @@ const SideMenu = () => {
 								'cp-product-activation-active': isOpenedProductsMenu,
 								'cp-products-list-active': hasSomeMenuItemActive,
 								'text-neutral-4': subscriptionGroups.length < 1,
-								'text-neutral-10':
-									subscriptionGroups.length > 0,
+								'text-neutral-10': !!subscriptionGroups.length,
 							}
 						)}
 						disabled={subscriptionGroups.length < 1}

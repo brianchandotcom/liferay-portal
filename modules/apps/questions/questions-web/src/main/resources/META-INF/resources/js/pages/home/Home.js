@@ -127,7 +127,7 @@ export default withRouter(({history, isHomePath}) => {
 							sections.actions &&
 							!!sections.actions.create &&
 							sections.items &&
-							sections.items.length > 0 && (
+							!!sections.items.length && (
 								<div className="c-mb-4 col-lg-4 col-md-6 col-xl-3">
 									<div className="questions-card text-decoration-none text-secondary">
 										<ClayCard
@@ -160,7 +160,7 @@ export default withRouter(({history, isHomePath}) => {
 							)}
 
 						{(sections.items &&
-							sections.items.length > 0 &&
+							!!sections.items.length &&
 							sections.items.map((section) => (
 								<div
 									className="c-mb-4 col-lg-4 col-md-6 col-xl-3"

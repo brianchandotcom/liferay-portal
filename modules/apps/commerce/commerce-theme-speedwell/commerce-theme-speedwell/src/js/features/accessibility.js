@@ -15,10 +15,10 @@
 (function (w) {
 	'use strict';
 
-	var KEYDOWN_EVENT = 'keydown';
-	var TAB_KEYCODE = 9;
-	var ACCESSIBILITY_CLASS = 'is-accessible';
-	var TIMEOUT = 5000;
+	const KEYDOWN_EVENT = 'keydown';
+	const TAB_KEYCODE = 9;
+	const ACCESSIBILITY_CLASS = 'is-accessible';
+	const TIMEOUT = 5000;
 
 	const removeAfter = setTimeout(() => {
 		w.removeEventListener(KEYDOWN_EVENT, needsAccessibility);

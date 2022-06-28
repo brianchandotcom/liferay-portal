@@ -15,11 +15,11 @@
 AUI.add(
 	'liferay-calendar-interval-selector',
 	(A) => {
-		var AArray = A.Array;
+		const AArray = A.Array;
 
-		var EVENT_SELECTION_CHANGE = 'selectionChange';
+		const EVENT_SELECTION_CHANGE = 'selectionChange';
 
-		var IntervalSelector = A.Component.create({
+		const IntervalSelector = A.Component.create({
 			ATTRS: {
 				endDatePicker: {
 					value: null,
@@ -46,20 +46,20 @@ AUI.add(
 
 			prototype: {
 				_initPicker(picker) {
-					var attrs = picker.getAttrs();
+					const attrs = picker.getAttrs();
 
 					// eslint-disable-next-line @liferay/aui/no-one
-					var inputNode = A.one(attrs.container._node.children[0]);
+					const inputNode = A.one(attrs.container._node.children[0]);
 
 					picker.useInputNodeOnce(inputNode);
 				},
 
 				_onEndDatePickerSelectionChange() {
-					var instance = this;
+					const instance = this;
 
 					instance._setEndDate();
 
-					var endDateValue = instance._endDate.valueOf();
+					const endDateValue = instance._endDate.valueOf();
 
 					if (
 						instance._validDate &&
@@ -77,11 +77,11 @@ AUI.add(
 				},
 
 				_onEndTimePickerSelectionChange() {
-					var instance = this;
+					const instance = this;
 
 					instance._setEndTime();
 
-					var endDateValue = instance._endDate.valueOf();
+					const endDateValue = instance._endDate.valueOf();
 
 					if (
 						instance._validDate &&
@@ -100,7 +100,7 @@ AUI.add(
 				},
 
 				_onStartDatePickerSelectionChange() {
-					var instance = this;
+					const instance = this;
 
 					instance._setStartDate();
 
@@ -117,7 +117,7 @@ AUI.add(
 				},
 
 				_onStartTimePickerSelectionChange() {
-					var instance = this;
+					const instance = this;
 
 					instance._setStartTime();
 
@@ -135,7 +135,7 @@ AUI.add(
 				},
 
 				_setDuration() {
-					var instance = this;
+					const instance = this;
 
 					instance._duration =
 						instance._endDate.valueOf() -
@@ -143,13 +143,13 @@ AUI.add(
 				},
 
 				_setEndDate() {
-					var instance = this;
+					const instance = this;
 
-					var endDatePicker = instance.get('endDatePicker');
+					const endDatePicker = instance.get('endDatePicker');
 
-					var endDateObj = endDatePicker.getDate();
+					const endDateObj = endDatePicker.getDate();
 
-					var endDate = instance._endDate;
+					const endDate = instance._endDate;
 
 					endDate.setMonth(
 						endDateObj.getMonth(),
@@ -159,9 +159,9 @@ AUI.add(
 				},
 
 				_setEndDatePickerDate() {
-					var instance = this;
+					const instance = this;
 
-					var endDatePicker = instance.get('endDatePicker');
+					const endDatePicker = instance.get('endDatePicker');
 
 					endDatePicker.clearSelection(true);
 
@@ -169,32 +169,32 @@ AUI.add(
 				},
 
 				_setEndTime() {
-					var instance = this;
+					const instance = this;
 
-					var endTimePicker = instance.get('endTimePicker');
+					const endTimePicker = instance.get('endTimePicker');
 
-					var endTime = endTimePicker.getTime();
+					const endTime = endTimePicker.getTime();
 
 					instance._endDate.setHours(endTime.getHours());
 					instance._endDate.setMinutes(endTime.getMinutes());
 				},
 
 				_setEndTimePickerTime() {
-					var instance = this;
+					const instance = this;
 
-					var endTimePicker = instance.get('endTimePicker');
+					const endTimePicker = instance.get('endTimePicker');
 
 					endTimePicker.selectDates([instance._endDate]);
 				},
 
 				_setStartDate() {
-					var instance = this;
+					const instance = this;
 
-					var startDatePicker = instance.get('startDatePicker');
+					const startDatePicker = instance.get('startDatePicker');
 
-					var startDateObj = startDatePicker.getDate();
+					const startDateObj = startDatePicker.getDate();
 
-					var startDate = instance._startDate;
+					const startDate = instance._startDate;
 
 					startDate.setMonth(
 						startDateObj.getMonth(),
@@ -204,9 +204,9 @@ AUI.add(
 				},
 
 				_setStartDatePickerDate() {
-					var instance = this;
+					const instance = this;
 
-					var startDatePicker = instance.get('startDatePicker');
+					const startDatePicker = instance.get('startDatePicker');
 
 					startDatePicker.clearSelection(true);
 
@@ -214,46 +214,46 @@ AUI.add(
 				},
 
 				_setStartTime() {
-					var instance = this;
+					const instance = this;
 
-					var startTimePicker = instance.get('startTimePicker');
+					const startTimePicker = instance.get('startTimePicker');
 
-					var startTime = startTimePicker.getTime();
+					const startTime = startTimePicker.getTime();
 
-					var startDate = instance._startDate;
+					const startDate = instance._startDate;
 
 					startDate.setHours(startTime.getHours());
 					startDate.setMinutes(startTime.getMinutes());
 				},
 
 				_setStartTimePickerTime() {
-					var instance = this;
+					const instance = this;
 
-					var startTimePicker = instance.get('startTimePicker');
+					const startTimePicker = instance.get('startTimePicker');
 
 					startTimePicker.selectDates([instance._startDate]);
 				},
 
 				_validate() {
-					var instance = this;
+					const instance = this;
 
-					var validDate = instance._duration > 0;
+					const validDate = instance._duration > 0;
 
 					instance._validDate = validDate;
 
-					var meetingEventDate = instance._containerNode;
+					const meetingEventDate = instance._containerNode;
 
 					if (meetingEventDate) {
 						meetingEventDate.toggleClass('error', !validDate);
 
-						var helpInline = meetingEventDate.one('.help-inline');
+						const helpInline = meetingEventDate.one('.help-inline');
 
 						if (validDate && helpInline) {
 							helpInline.remove();
 						}
 
 						if (!validDate && !helpInline) {
-							var inlineHelp = A.Node.create(
+							const inlineHelp = A.Node.create(
 								'<div class="help-inline">' +
 									Liferay.Language.get(
 										'the-end-time-must-be-after-the-start-time'
@@ -264,7 +264,7 @@ AUI.add(
 							meetingEventDate.insert(inlineHelp);
 						}
 
-						var submitButton = instance._submitButtonNode;
+						const submitButton = instance._submitButtonNode;
 
 						if (submitButton) {
 							submitButton.attr('disabled', !validDate);
@@ -273,13 +273,13 @@ AUI.add(
 				},
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
 					instance.startDurationPreservation();
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					instance.stopDurationPreservation();
 
@@ -287,7 +287,7 @@ AUI.add(
 				},
 
 				initializer(config) {
-					var instance = this;
+					const instance = this;
 
 					instance.eventHandlers = [];
 
@@ -316,13 +316,13 @@ AUI.add(
 				},
 
 				setDuration(duration) {
-					var instance = this;
+					const instance = this;
 
 					instance._duration = duration;
 				},
 
 				startDurationPreservation() {
-					var instance = this;
+					const instance = this;
 
 					instance.eventHandlers.push(
 						instance
@@ -357,7 +357,7 @@ AUI.add(
 				},
 
 				stopDurationPreservation() {
-					var instance = this;
+					const instance = this;
 
 					AArray.invoke(instance.eventHandlers, 'detach');
 				},

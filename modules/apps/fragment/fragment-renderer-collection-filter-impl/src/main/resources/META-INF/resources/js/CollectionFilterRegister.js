@@ -30,7 +30,7 @@ export function getCollectionFilterValue(
 		`${_filterPrefix}${filterType}_${filterFragmentEntryLinkId}`
 	);
 
-	if (value.length === 0) {
+	if (!value.length) {
 		value = null;
 	}
 	else if (value.length === 1) {

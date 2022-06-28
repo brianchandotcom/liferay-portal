@@ -132,7 +132,7 @@ export default withRouter(
 												'reply-to-message'
 											] &&
 												answer.status !== 'pending' &&
-												comments.length === 0 && (
+												!comments.length && (
 													<ClayButton
 														className="btn-sm c-px-2 c-py-1 text-reset text-secondary"
 														displayType="secondary"

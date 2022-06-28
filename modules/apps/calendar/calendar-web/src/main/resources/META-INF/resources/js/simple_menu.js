@@ -15,45 +15,45 @@
 AUI.add(
 	'liferay-calendar-simple-menu',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var getClassName = A.getClassName;
+		const getClassName = A.getClassName;
 
-		var isArray = Lang.isArray;
+		const isArray = Lang.isArray;
 
-		var CSS_SIMPLE_MENU_ITEM = getClassName('simple-menu', 'item');
+		const CSS_SIMPLE_MENU_ITEM = getClassName('simple-menu', 'item');
 
-		var CSS_SIMPLE_MENU_ITEM_HIDDEN = getClassName(
+		const CSS_SIMPLE_MENU_ITEM_HIDDEN = getClassName(
 			'simple-menu',
 			'item',
 			'hidden'
 		);
 
-		var CSS_SIMPLE_MENU_SEPARATOR = getClassName(
+		const CSS_SIMPLE_MENU_SEPARATOR = getClassName(
 			'simple-menu',
 			'separator'
 		);
 
-		var DEFAULT_ALIGN_POINTS = [
+		const DEFAULT_ALIGN_POINTS = [
 			A.WidgetPositionAlign.TL,
 			A.WidgetPositionAlign.BL,
 		];
 
-		var STR_BLANK = '';
+		const STR_BLANK = '';
 
-		var STR_DASH = '-';
+		const STR_DASH = '-';
 
-		var STR_DOT = '.';
+		const STR_DOT = '.';
 
-		var STR_SPACE = ' ';
+		const STR_SPACE = ' ';
 
-		var TPL_ICON = '<i class="{iconClass}"></i>';
+		const TPL_ICON = '<i class="{iconClass}"></i>';
 
-		var TPL_SIMPLE_MENU_ITEM =
+		const TPL_SIMPLE_MENU_ITEM =
 			'<li class="{cssClass}" data-id="{id}">{icon} {caption}</li>';
 
-		var getItemHandler = A.cached((id, items) => {
-			var found = null;
+		const getItemHandler = A.cached((id, items) => {
+			let found = null;
 
 			items.some((item) => {
 				if (item.id === id) {
@@ -66,7 +66,7 @@ AUI.add(
 			return found && found.fn;
 		});
 
-		var SimpleMenu = A.Component.create({
+		const SimpleMenu = A.Component.create({
 			ATTRS: {
 				alignNode: {
 					value: null,
@@ -108,7 +108,7 @@ AUI.add(
 
 			prototype: {
 				_closeMenu() {
-					var instance = this;
+					const instance = this;
 
 					instance.hide();
 
@@ -118,13 +118,13 @@ AUI.add(
 				},
 
 				_onClickItems(event) {
-					var instance = this;
+					const instance = this;
 
-					var items = instance.get('items');
+					const items = instance.get('items');
 
-					var id = event.currentTarget.attr('data-id');
+					const id = event.currentTarget.attr('data-id');
 
-					var handler = getItemHandler(id, items);
+					const handler = getItemHandler(id, items);
 
 					if (handler) {
 						instance._closeMenu();
@@ -134,9 +134,9 @@ AUI.add(
 				},
 
 				_onClickOutside(event) {
-					var instance = this;
+					const instance = this;
 
-					var toggler = instance.get('toggler');
+					const toggler = instance.get('toggler');
 
 					if (!toggler || !toggler.contains(event.target)) {
 						instance._closeMenu();
@@ -144,10 +144,10 @@ AUI.add(
 				},
 
 				_onVisibleChange(event) {
-					var instance = this;
+					const instance = this;
 
 					if (event.newVal) {
-						var contentBox = instance.get('contentBox');
+						const contentBox = instance.get('contentBox');
 
 						instance._outsideHandler = contentBox.on(
 							['mouseupoutside', 'touchendoutside'],
@@ -160,19 +160,19 @@ AUI.add(
 				},
 
 				_positionMenu() {
-					var instance = this;
+					const instance = this;
 
 					if (instance.items.size()) {
-						var Util = Liferay.Util;
+						const Util = Liferay.Util;
 
-						var align = {
+						let align = {
 							node: instance.get('alignNode'),
 							points: DEFAULT_ALIGN_POINTS,
 						};
 
-						var centered = false;
-						var modal = false;
-						var width = 222;
+						let centered = false;
+						let modal = false;
+						let width = 222;
 
 						if (Util.isPhone() || Util.isTablet()) {
 							align = null;
@@ -191,23 +191,23 @@ AUI.add(
 				},
 
 				_renderItems(items) {
-					var instance = this;
+					const instance = this;
 
-					var contentBox = instance.get('contentBox');
-					var hiddenItems = instance.get('hiddenItems');
+					const contentBox = instance.get('contentBox');
+					const hiddenItems = instance.get('hiddenItems');
 
 					instance.items = A.NodeList.create();
 
 					items.forEach((item) => {
-						var caption = item.caption;
+						let caption = item.caption;
 
 						if (!Object.prototype.hasOwnProperty.call(item, 'id')) {
 							item.id = A.guid();
 						}
 
-						var id = item.id;
+						const id = item.id;
 
-						var cssClass = CSS_SIMPLE_MENU_ITEM;
+						let cssClass = CSS_SIMPLE_MENU_ITEM;
 
 						if (caption === STR_DASH) {
 							cssClass = CSS_SIMPLE_MENU_SEPARATOR;
@@ -221,7 +221,7 @@ AUI.add(
 							cssClass += STR_SPACE + item.cssClass;
 						}
 
-						var icon = STR_BLANK;
+						let icon = STR_BLANK;
 
 						if (item.icon) {
 							icon = Lang.sub(TPL_ICON, {
@@ -231,7 +231,7 @@ AUI.add(
 							caption = [icon, caption].join(STR_SPACE);
 						}
 
-						var li = A.Node.create(
+						const li = A.Node.create(
 							Lang.sub(TPL_SIMPLE_MENU_ITEM, {
 								cssClass,
 								icon,
@@ -248,11 +248,11 @@ AUI.add(
 				},
 
 				_uiSetHiddenItems(val) {
-					var instance = this;
+					const instance = this;
 
 					if (instance.get('rendered')) {
 						instance.items.each((item) => {
-							var id = item.attr('data-id');
+							const id = item.attr('data-id');
 
 							item.toggleClass(
 								CSS_SIMPLE_MENU_ITEM_HIDDEN,
@@ -263,7 +263,7 @@ AUI.add(
 				},
 
 				_uiSetItems(val) {
-					var instance = this;
+					const instance = this;
 
 					if (instance.get('rendered')) {
 						instance._renderItems(val);
@@ -273,11 +273,11 @@ AUI.add(
 				CONTENT_TEMPLATE: '<ul></ul>',
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
 					A.Event.defineOutside('touchend');
 
-					var contentBox = instance.get('contentBox');
+					const contentBox = instance.get('contentBox');
 
 					instance._eventHandlers = [
 						A.getWin().on(
@@ -299,13 +299,13 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					new A.EventHandle(instance._eventHandlers).detach();
 				},
 
 				renderUI() {
-					var instance = this;
+					const instance = this;
 
 					instance.get('boundingBox').unselectable();
 

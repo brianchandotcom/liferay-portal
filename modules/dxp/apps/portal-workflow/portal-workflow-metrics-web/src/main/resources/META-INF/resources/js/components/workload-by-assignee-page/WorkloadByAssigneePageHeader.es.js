@@ -24,7 +24,7 @@ export default function Header({
 	selectedFilters,
 	totalCount,
 }) {
-	const showFiltersResult = routeParams.search || selectedFilters.length > 0;
+	const showFiltersResult = routeParams.search || !!selectedFilters.length;
 
 	return (
 		<>

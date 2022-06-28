@@ -146,8 +146,8 @@ function trackCustomAssetViewed(analytics) {
 			)
 			.filter((element) => isTrackableCustomAsset(element))
 			.forEach((element) => {
-				const formEnabled =
-					element.getElementsByTagName('form').length > 0;
+				const formEnabled = !!element.getElementsByTagName('form')
+					.length;
 
 				const payload = getCustomAssetPayload(element);
 				Object.assign(payload, {formEnabled});

@@ -83,14 +83,14 @@ function ItemSelectorInput({
 					readOnly
 					type="text"
 					value={
-						value && value.length > 0
+						value && !!value.length
 							? value.map((item) => item.label).join(', ')
 							: ''
 					}
 				/>
 			</ClayInput.GroupItem>
 
-			{value && value.length > 0 && (
+			{value && !!value.length && (
 				<ClayInput.GroupItem shrink>
 					<ClayButton
 						aria-label={Liferay.Language.get('delete')}

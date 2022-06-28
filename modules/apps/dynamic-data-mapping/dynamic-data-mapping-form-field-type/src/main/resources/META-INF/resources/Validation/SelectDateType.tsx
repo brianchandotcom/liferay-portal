@@ -47,7 +47,7 @@ const SelectDateType: React.FC<IProps> = ({
 		})),
 	];
 
-	if (dateFieldOptions.length > 0) {
+	if (dateFieldOptions.length) {
 		items.push(
 			{
 				type: 'divider',

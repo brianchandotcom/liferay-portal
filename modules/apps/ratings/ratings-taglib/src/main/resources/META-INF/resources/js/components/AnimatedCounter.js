@@ -24,7 +24,7 @@ function SlidingText({current, previous}) {
 	const maxLength = current.toString().length + 1;
 
 	const finishAnimation = () => {
-		if (isMounted) {
+		if (isMounted()) {
 			setAnimated(false);
 		}
 	};

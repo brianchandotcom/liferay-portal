@@ -93,8 +93,8 @@ class AccountUserEmailDomainValidator extends PortletBase {
 		return {
 			body(val, field) {
 				const emailDomain = val.substr(val.indexOf('@') + 1);
-				var errorMessage;
-				var hasError = false;
+				let errorMessage;
+				let hasError = false;
 
 				if (!!blockedDomains && blockedDomains.includes(emailDomain)) {
 					hasError = true;
@@ -200,7 +200,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 				return;
 			}
 
-			var fieldContainer = formValidator.findFieldContainer(field);
+			const fieldContainer = formValidator.findFieldContainer(field);
 
 			if (fieldContainer) {
 				fieldContainer.removeClass('has-warning');

@@ -25,7 +25,7 @@ const DropDown = ({
 	return (
 		<ClayAutocomplete.DropDown active={active}>
 			<ClayDropDown.ItemList id={`dropDownList${id}`}>
-				{items.length > 0 ? (
+				{items.length ? (
 					items.map((item, index) => (
 						<ClayAutocomplete.Item
 							className={index === activeItem ? 'active' : ''}

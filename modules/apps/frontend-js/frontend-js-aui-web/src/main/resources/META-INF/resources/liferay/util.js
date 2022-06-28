@@ -16,40 +16,40 @@
 (function (A) {
 	A.use('aui-base-lang');
 
-	var Lang = A.Lang;
+	const Lang = A.Lang;
 
-	var EVENT_CLICK = 'click';
+	const EVENT_CLICK = 'click';
 
-	var SRC_HIDE_LINK = {
+	const SRC_HIDE_LINK = {
 		src: 'hideLink',
 	};
 
-	var STR_RIGHT_SQUARE_BRACKET = ']';
+	const STR_RIGHT_SQUARE_BRACKET = ']';
 
-	var Window = {
+	const Window = {
 		_map: {},
 
 		getById(id) {
-			var instance = this;
+			const instance = this;
 
 			return instance._map[id];
 		},
 	};
 
-	var Util = {
+	const Util = {
 		_getEditableInstance(title) {
-			var editable = Util._EDITABLE;
+			let editable = Util._EDITABLE;
 
 			if (!editable) {
 				editable = new A.Editable({
 					after: {
 						contentTextChange(event) {
-							var instance = this;
+							const instance = this;
 
 							if (!event.initial) {
-								var title = instance.get('node');
+								const title = instance.get('node');
 
-								var portletTitleEditOptions = title.getData(
+								const portletTitleEditOptions = title.getData(
 									'portletTitleEditOptions'
 								);
 
@@ -64,9 +64,9 @@
 							}
 						},
 						startEditing() {
-							var instance = this;
+							const instance = this;
 
-							var Layout = Liferay.Layout;
+							const Layout = Liferay.Layout;
 
 							if (Layout) {
 								instance._dragListener = Layout.getLayoutHandler().on(
@@ -77,12 +77,12 @@
 								);
 							}
 
-							var title = instance.get('node');
+							const title = instance.get('node');
 
 							instance._titleListener = title.on(
 								'mouseupoutside',
 								(event) => {
-									var editable = Util._getEditableInstance(
+									const editable = Util._getEditableInstance(
 										title
 									);
 
@@ -97,7 +97,7 @@
 							);
 						},
 						stopEditing() {
-							var instance = this;
+							const instance = this;
 
 							if (instance._dragListener) {
 								instance._dragListener.detach();
@@ -254,14 +254,14 @@
 			const currentElement = Util.getElement(element);
 
 			if (currentElement) {
-				var children = currentElement.getElementsByTagName('*');
+				const children = currentElement.getElementsByTagName('*');
 
-				var emptyFnFalse = function () {
+				const emptyFnFalse = function () {
 					return false;
 				};
 
-				for (var i = children.length - 1; i >= 0; i--) {
-					var item = children[i];
+				for (let i = children.length - 1; i >= 0; i--) {
+					const item = children[i];
 
 					item.style.cursor = 'default';
 
@@ -330,7 +330,7 @@
 		 */
 		escapeCDATA(str) {
 			return str.replace(/<!\[CDATA\[|\]\]>/gi, (match) => {
-				var str = '';
+				let str = '';
 
 				if (match === ']]>') {
 					str = ']]&gt;';
@@ -377,7 +377,7 @@
 		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 		 */
 		getAttributes(element, attributeGetter) {
-			var result = null;
+			let result = null;
 
 			if (element) {
 				element = Util.getDOM(element);
@@ -388,16 +388,16 @@
 
 				result = {};
 
-				var getterFn = typeof attributeGetter === 'function';
-				var getterString = typeof attributeGetter === 'string';
+				const getterFn = typeof attributeGetter === 'function';
+				const getterString = typeof attributeGetter === 'string';
 
-				var attrs = element.attributes;
-				var length = attrs.length;
+				const attrs = element.attributes;
+				let length = attrs.length;
 
 				while (length--) {
-					var attr = attrs[length];
-					var name = attr.nodeName.toLowerCase();
-					var value = attr.nodeValue;
+					const attr = attrs[length];
+					let name = attr.nodeName.toLowerCase();
+					let value = attr.nodeValue;
 
 					if (getterString) {
 						if (name.indexOf(attributeGetter) === 0) {
@@ -426,7 +426,7 @@
 		 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 		 */
 		getColumnId(str) {
-			var columnId = str.replace(/layout-column_/, '');
+			const columnId = str.replace(/layout-column_/, '');
 
 			return columnId;
 		},
@@ -527,7 +527,7 @@
 		openInDialog(event, config) {
 			event.preventDefault();
 
-			var currentTarget = Util.getElement(event.currentTarget);
+			const currentTarget = Util.getElement(event.currentTarget);
 
 			// eslint-disable-next-line prefer-object-spread
 			config = Object.assign(
@@ -649,7 +649,7 @@
 				...params,
 			};
 
-			var data = {
+			const data = {
 				doAsUserId: params.doAsUserId,
 				p_auth: Liferay.authToken,
 				p_l_id: params.plid,
@@ -667,7 +667,7 @@
 		 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/setSelectionRange}
 		 */
 		setCursorPosition(element, position) {
-			var instance = this;
+			const instance = this;
 
 			instance.setSelectionRange(element, position, position);
 		},
@@ -688,7 +688,7 @@
 				element.setSelectionRange(selectionStart, selectionEnd);
 			}
 			else if (element.createTextRange) {
-				var textRange = element.createTextRange();
+				const textRange = element.createTextRange();
 
 				textRange.collapse(true);
 
@@ -760,23 +760,23 @@
 		'afterIframeLoaded',
 		(event) => {
 			// eslint-disable-next-line @liferay/aui/no-node
-			var nodeInstances = A.Node._instances;
+			const nodeInstances = A.Node._instances;
 
-			var docEl = event.doc;
+			const docEl = event.doc;
 
-			var docUID = docEl._yuid;
+			const docUID = docEl._yuid;
 
 			if (docUID in nodeInstances) {
 				delete nodeInstances[docUID];
 			}
 
-			var iframeDocument = A.one(docEl);
+			const iframeDocument = A.one(docEl);
 
-			var iframeBody = iframeDocument.one('body');
+			const iframeBody = iframeDocument.one('body');
 
-			var dialog = event.dialog;
+			const dialog = event.dialog;
 
-			var lfrFormContent = iframeBody.one('.lfr-form-content');
+			const lfrFormContent = iframeBody.one('.lfr-form-content');
 
 			iframeBody.addClass('dialog-iframe-popup');
 
@@ -786,7 +786,7 @@
 			) {
 				iframeBody.addClass('dialog-with-footer');
 
-				var stagingAlert = iframeBody.one(
+				const stagingAlert = iframeBody.one(
 					'.portlet-body > .lfr-portlet-message-staging-alert'
 				);
 
@@ -801,10 +801,10 @@
 
 			event.win.focus();
 
-			var iframeWindow = event.win;
+			const iframeWindow = event.win;
 
 			if (iframeWindow.Liferay.SPA) {
-				var beforeScreenFlipHandler = iframeWindow.Liferay.on(
+				const beforeScreenFlipHandler = iframeWindow.Liferay.on(
 					'beforeScreenFlip',
 					() => {
 						iframeWindow.document.body.classList.add(
@@ -820,7 +820,7 @@
 				};
 			}
 
-			var cancelEventHandler = iframeBody.delegate(
+			const cancelEventHandler = iframeBody.delegate(
 				EVENT_CLICK,
 				(event) => {
 					dialog.set(
@@ -852,13 +852,13 @@
 		Util,
 		'openDDMPortlet',
 		(config, callback) => {
-			var defaultValues = {
+			const defaultValues = {
 				eventName: 'selectStructure',
 			};
 			// eslint-disable-next-line @liferay/aui/no-merge
 			config = A.merge(defaultValues, config);
 
-			var params = {
+			const params = {
 				classNameId: config.classNameId,
 				classPK: config.classPK,
 				doAsGroupId:
@@ -922,14 +922,14 @@
 				params.showManageTemplates = config.showManageTemplates;
 			}
 
-			var url = Liferay.Util.PortletURL.createRenderURL(
+			const url = Liferay.Util.PortletURL.createRenderURL(
 				config.basePortletURL,
 				params
 			);
 
 			config.uri = url.toString();
 
-			var dialogConfig = config.dialog;
+			let dialogConfig = config.dialog;
 
 			if (!dialogConfig) {
 				dialogConfig = {};
@@ -937,13 +937,13 @@
 				config.dialog = dialogConfig;
 			}
 
-			var eventHandles = [];
+			const eventHandles = [];
 
 			if (callback) {
 				eventHandles.push(Liferay.once(config.eventName, callback));
 			}
 
-			var detachSelectionOnHideFn = function (event) {
+			const detachSelectionOnHideFn = function (event) {
 				Liferay.fire(config.eventName);
 
 				if (!event.newVal) {
@@ -969,7 +969,7 @@
 		(webDavUrl, onSuccess, onError) => {
 			if (A.UA.ie) {
 				try {
-					var executor = new A.config.win.ActiveXObject(
+					const executor = new A.config.win.ActiveXObject(
 						'SharePoint.OpenDocuments'
 					);
 
@@ -1067,20 +1067,20 @@
 		Util,
 		'portletTitleEdit',
 		(options) => {
-			var object = options.obj;
+			const object = options.obj;
 
 			A.Event.defineOutside('mouseup');
 
 			if (object) {
-				var title = object.one('.portlet-title-text');
+				const title = object.one('.portlet-title-text');
 
 				if (title && !title.hasClass('not-editable')) {
 					title.addClass('portlet-title-editable');
 
 					title.on(EVENT_CLICK, (event) => {
-						var editable = Util._getEditableInstance(title);
+						const editable = Util._getEditableInstance(title);
 
-						var rendered = editable.get('rendered');
+						const rendered = editable.get('rendered');
 
 						if (rendered) {
 							editable.fire('stopEditing');
@@ -1095,7 +1095,7 @@
 						editable._startEditing(event);
 
 						if (!rendered) {
-							var defaultIconsTpl =
+							const defaultIconsTpl =
 								A.ToolbarRenderer.prototype.TEMPLATES.icon;
 
 							A.ToolbarRenderer.prototype.TEMPLATES.icon = Liferay.Util.getLexiconIconTpl(
@@ -1120,13 +1120,13 @@
 		Util,
 		'editEntity',
 		(config, callback) => {
-			var dialog = Util.getWindow(config.id);
+			const dialog = Util.getWindow(config.id);
 
-			var eventName = config.eventName || config.id;
+			const eventName = config.eventName || config.id;
 
-			var eventHandles = [Liferay.on(eventName, callback)];
+			const eventHandles = [Liferay.on(eventName, callback)];
 
-			var detachSelectionOnHideFn = function (event) {
+			const detachSelectionOnHideFn = function (event) {
 				if (!event.newVal) {
 					new A.EventHandle(eventHandles).detach();
 				}
@@ -1143,10 +1143,10 @@
 				dialog.show();
 			}
 			else {
-				var destroyDialog = function (event) {
-					var dialogId = config.id;
+				const destroyDialog = function (event) {
+					const dialogId = config.id;
 
-					var dialogWindow = Util.getWindow(dialogId);
+					const dialogWindow = Util.getWindow(dialogId);
 
 					if (
 						dialogWindow &&
@@ -1158,7 +1158,7 @@
 					}
 				};
 
-				var editURL = new Liferay.Util.PortletURL.createPortletURL(
+				const editURL = new Liferay.Util.PortletURL.createPortletURL(
 					config.uri,
 					// eslint-disable-next-line @liferay/aui/no-merge
 					A.merge(
@@ -1201,47 +1201,47 @@
 		Util,
 		'selectEntity',
 		(config, callback) => {
-			var dialog = Util.getWindow(config.id);
+			const dialog = Util.getWindow(config.id);
 
-			var eventName = config.eventName || config.id;
+			const eventName = config.eventName || config.id;
 
-			var eventHandles = [Liferay.on(eventName, callback)];
+			const eventHandles = [Liferay.on(eventName, callback)];
 
-			var selectedData = config.selectedData;
+			const selectedData = config.selectedData;
 
 			if (selectedData) {
 				config.dialog.destroyOnHide = true;
 			}
 
-			var detachSelectionOnHideFn = function (event) {
+			const detachSelectionOnHideFn = function (event) {
 				if (!event.newVal) {
 					new A.EventHandle(eventHandles).detach();
 				}
 			};
 
-			var syncAssets = function (event) {
-				var currentWindow = event.currentTarget.node.get(
+			const syncAssets = function (event) {
+				const currentWindow = event.currentTarget.node.get(
 					'contentWindow.document'
 				);
 
-				var selectorButtons = currentWindow.all(
+				const selectorButtons = currentWindow.all(
 					'.lfr-search-container-wrapper .selector-button'
 				);
 
 				if (selectedData) {
 					// eslint-disable-next-line @liferay/aui/no-each
 					A.each(selectorButtons, (item) => {
-						var assetEntryId =
+						let assetEntryId =
 							item.attr('data-entityid') ||
 							item.attr('data-entityname');
 
-						var assetGroupId = item.attr('data-groupid');
+						const assetGroupId = item.attr('data-groupid');
 
 						if (assetGroupId) {
 							assetEntryId = assetGroupId + '-' + assetEntryId;
 						}
 
-						var disabled = selectedData.includes(assetEntryId);
+						const disabled = selectedData.includes(assetEntryId);
 
 						if (disabled) {
 							item.attr('data-prevent-selection', true);
@@ -1266,10 +1266,10 @@
 				dialog.show();
 			}
 			else {
-				var destroyDialog = function (event) {
-					var dialogId = config.id;
+				const destroyDialog = function (event) {
+					const dialogId = config.id;
 
-					var dialogWindow = Util.getWindow(dialogId);
+					const dialogWindow = Util.getWindow(dialogId);
 
 					if (
 						dialogWindow &&
@@ -1305,7 +1305,7 @@
 		Util,
 		'_openWindowProvider',
 		(config, callback) => {
-			var dialog = Window.getWindow(config);
+			const dialog = Window.getWindow(config);
 
 			if (Lang.isFunction(callback)) {
 				callback(dialog);

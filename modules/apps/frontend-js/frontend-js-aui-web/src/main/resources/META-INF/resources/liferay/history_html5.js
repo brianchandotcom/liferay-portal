@@ -23,29 +23,29 @@ AUI.add(
 	'liferay-history-html5',
 	(A) => {
 		// eslint-disable-next-line @liferay/aui/no-object
-		var AObject = A.Object;
-		var History = Liferay.History;
-		var Lang = A.Lang;
-		var QueryString = A.QueryString;
+		const AObject = A.Object;
+		const History = Liferay.History;
+		const Lang = A.Lang;
+		const QueryString = A.QueryString;
 
-		var isEmpty = AObject.isEmpty;
-		var isValue = Lang.isValue;
+		const isEmpty = AObject.isEmpty;
+		const isValue = Lang.isValue;
 
-		var WIN = A.config.win;
+		const WIN = A.config.win;
 
-		var HISTORY = WIN.history;
+		const HISTORY = WIN.history;
 
-		var LOCATION = WIN.location;
+		const LOCATION = WIN.location;
 
 		A.mix(
 			History.prototype,
 			{
 				_init(config) {
-					var instance = this;
+					const instance = this;
 
-					var hash = LOCATION.hash;
+					const hash = LOCATION.hash;
 
-					var locationHashValid =
+					const locationHashValid =
 						hash.indexOf(History.VALUE_SEPARATOR) !== -1;
 
 					if (locationHashValid) {
@@ -71,27 +71,27 @@ AUI.add(
 				},
 
 				_updateURI(state) {
-					var instance = this;
+					const instance = this;
 
-					var uriData = [
+					const uriData = [
 						LOCATION.search.substr(1),
 						LOCATION.hash.substr(1),
 					];
 
-					var hash = uriData[1];
-					var query = uriData[0];
+					const hash = uriData[1];
+					const query = uriData[0];
 
-					var queryMap = {};
+					let queryMap = {};
 
 					if (query) {
 						queryMap = instance._parse(query);
 					}
 
 					if (!state && hash) {
-						var hashMap = instance._parse(hash);
+						const hashMap = instance._parse(hash);
 
 						if (!isEmpty(hashMap)) {
-							var protectedHashMap = {};
+							const protectedHashMap = {};
 
 							state = hashMap;
 
@@ -142,7 +142,7 @@ AUI.add(
 				PROTECTED_HASH_KEYS: [/^liferay$/, /^tab$/, /^_\d+_tab$/],
 
 				add(state, options) {
-					var instance = this;
+					const instance = this;
 
 					options = options || {};
 

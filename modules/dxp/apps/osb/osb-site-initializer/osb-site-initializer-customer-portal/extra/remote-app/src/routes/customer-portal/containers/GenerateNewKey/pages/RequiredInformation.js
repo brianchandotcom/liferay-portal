@@ -57,7 +57,7 @@ const RequiredInformation = ({
 	const hasFilledAtLeastOneField = values?.keys?.every((key) => {
 		const fieldValues = Object.values(key).filter(Boolean);
 
-		return fieldValues.length > 0;
+		return !!fieldValues.length;
 	});
 
 	const newUsedKeys = usedKeysCount + values?.keys?.length;

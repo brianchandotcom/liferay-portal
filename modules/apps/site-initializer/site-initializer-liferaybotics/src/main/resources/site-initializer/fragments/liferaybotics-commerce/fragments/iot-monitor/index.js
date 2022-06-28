@@ -31,7 +31,7 @@ const productPurchased = configuration.productPurchased;
 const redirectDelay = parseInt(configuration.redirectDelay, 10);
 const productPageUrl = configuration.productPageUrl;
 
-var locked = false;
+let locked = false;
 
 function runOnScroll() {
 	if (locked) {
@@ -40,7 +40,7 @@ function runOnScroll() {
 	locked = true;
 
 	if (fragmentElement) {
-		var isVisible = checkVisible(fragmentElement);
+		const isVisible = checkVisible(fragmentElement);
 
 		if (enableDebug) {
 			console.debug(
@@ -68,8 +68,8 @@ function runOnScroll() {
 }
 
 function checkVisible(elm) {
-	var rect = elm.getBoundingClientRect();
-	var viewHeight = Math.max(
+	const rect = elm.getBoundingClientRect();
+	const viewHeight = Math.max(
 		document.documentElement.clientHeight,
 		window.innerHeight
 	);
@@ -81,7 +81,7 @@ const setCookie = function (cname, cvalue, expires) {
 	document.cookie = cname + '=' + cvalue + '; ' + expires;
 };
 const runCommissionedRobots = function () {
-	var d = new Date();
+	const d = new Date();
 	if (isNaN(cookieExpiry)) {
 		d.setTime(d.getTime() + 10000);
 	}

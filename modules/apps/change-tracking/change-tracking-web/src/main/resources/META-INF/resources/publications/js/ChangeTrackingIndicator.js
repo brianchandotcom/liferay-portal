@@ -292,13 +292,13 @@ const PublicationsSearchContainer = ({
 		const filterDisabled =
 			!state.fetchData ||
 			!state.fetchData.entries ||
-			state.fetchData.entries.length === 0;
+			!state.fetchData.entries.length;
 
 		const searchDisabled =
 			!resultsKeywords &&
 			state.fetchData &&
 			state.fetchData.entries &&
-			state.fetchData.entries.length === 0;
+			!state.fetchData.entries.length;
 
 		const items = [];
 
@@ -577,7 +577,7 @@ const PublicationsSearchContainer = ({
 				</ClayAlert>
 			);
 		}
-		else if (state.fetchData.entries.length === 0) {
+		else if (!state.fetchData.entries.length) {
 			let className = 'taglib-empty-result-message';
 
 			if (containerView) {

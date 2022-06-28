@@ -22,14 +22,14 @@
 AUI.add(
 	'liferay-store',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var isObject = Lang.isObject;
+		const isObject = Lang.isObject;
 
-		var TOKEN_SERIALIZE = 'serialize://';
+		const TOKEN_SERIALIZE = 'serialize://';
 
-		var Store = function (key, value) {
-			var method;
+		const Store = function (key, value) {
+			let method;
 
 			if (Lang.isFunction(value)) {
 				method = 'get';
@@ -56,9 +56,9 @@ AUI.add(
 
 		A.mix(Store, {
 			_getValues(cmd, key, callback) {
-				var instance = this;
+				const instance = this;
 
-				var config = {
+				const config = {
 					callback,
 					data: {
 						cmd,
@@ -76,7 +76,7 @@ AUI.add(
 			_ioRequest(config) {
 				config.data.p_auth = Liferay.authToken;
 
-				var doAsUserIdEncoded = themeDisplay.getDoAsUserIdEncoded();
+				const doAsUserIdEncoded = themeDisplay.getDoAsUserIdEncoded();
 
 				if (doAsUserIdEncoded) {
 					config.data.doAsUserId = doAsUserIdEncoded;
@@ -132,7 +132,7 @@ AUI.add(
 			},
 
 			_setValues(data) {
-				var instance = this;
+				const instance = this;
 
 				instance._ioRequest({
 					data,
@@ -140,21 +140,21 @@ AUI.add(
 			},
 
 			get(key, callback) {
-				var instance = this;
+				const instance = this;
 
 				instance._getValues('get', key, callback);
 			},
 
 			getAll(keys, callback) {
-				var instance = this;
+				const instance = this;
 
 				instance._getValues('getAll', keys, callback);
 			},
 
 			set(key, value) {
-				var instance = this;
+				const instance = this;
 
-				var object = {};
+				const object = {};
 
 				if (isObject(value)) {
 					value = TOKEN_SERIALIZE + JSON.stringify(value);
@@ -166,7 +166,7 @@ AUI.add(
 			},
 
 			setAll(object) {
-				var instance = this;
+				const instance = this;
 
 				instance._setValues(object);
 			},

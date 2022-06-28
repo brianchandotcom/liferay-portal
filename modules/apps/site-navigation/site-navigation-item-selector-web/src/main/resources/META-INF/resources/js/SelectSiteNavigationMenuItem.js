@@ -96,7 +96,7 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 				</ClayInput.Group>
 			</ClayForm.Group>
 
-			{items.length > 0 ? (
+			{items.length ? (
 				<ClayTreeView
 					items={items}
 					onItemsChange={setItems}

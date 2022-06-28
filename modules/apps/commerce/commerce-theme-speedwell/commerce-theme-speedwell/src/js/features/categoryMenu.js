@@ -15,11 +15,11 @@
 Liferay.component(
 	'SpeedwellCategoryMenu',
 	(function () {
-		var MAIN_LINK_SELECTOR = '.main-link';
-		var CATEGORY_NAV_SELECTOR = '.speedwell-category-nav';
-		var IS_OPEN = 'is-open';
-		var linkElements;
-		var categoryNavigationElement;
+		const MAIN_LINK_SELECTOR = '.main-link';
+		const CATEGORY_NAV_SELECTOR = '.speedwell-category-nav';
+		const IS_OPEN = 'is-open';
+		let linkElements;
+		let categoryNavigationElement;
 
 		const CONTAINER = document.getElementById('speedwell');
 

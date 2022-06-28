@@ -48,7 +48,7 @@ const handleKeydown = (event) => {
 export default function AuditBarChart({namespace, rtl, vocabularies}) {
 	const auditBarChartData = useMemo(() => {
 		const dataKeys = new Set();
-		var maxValue = 0;
+		let maxValue = 0;
 
 		const bars = vocabularies.reduce((acc, category) => {
 			if (!category.categories) {
@@ -271,7 +271,7 @@ export default function AuditBarChart({namespace, rtl, vocabularies}) {
 
 	return (
 		<>
-			{Object.keys(checkboxes).length > 0 && noCheckboxesChecked && (
+			{!!Object.keys(checkboxes).length && noCheckboxesChecked && (
 				<ClayEmptyState
 					className="empty-state no-categories-selected text-center"
 					description={Liferay.Language.get(
@@ -446,7 +446,7 @@ function CustomTooltip(props) {
 		return null;
 	}
 
-	for (var i = 0; i < payload.length; i++) {
+	for (let i = 0; i < payload.length; i++) {
 		if (payload[i].dataKey === tooltip.dataKey) {
 			return (
 				<ClayLayout.ContentRow

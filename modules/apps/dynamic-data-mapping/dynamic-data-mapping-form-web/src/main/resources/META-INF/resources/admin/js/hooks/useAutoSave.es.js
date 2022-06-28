@@ -191,7 +191,7 @@ export function AutoSaveProvider({children, interval, location, url}) {
 	}, [lastKnownHashRef, getCurrentStateHash]);
 
 	const performSave = useCallback(() => {
-		if (isMounted) {
+		if (isMounted()) {
 			if (pendingRequestRef.current) {
 				pendingRequestRef.current
 					.then(() => performSave())

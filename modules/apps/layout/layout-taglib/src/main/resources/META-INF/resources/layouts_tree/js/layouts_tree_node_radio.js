@@ -15,9 +15,9 @@
 AUI.add(
 	'liferay-layouts-tree-node-radio',
 	(A) => {
-		var TPL_RADIO = '<label><input type="radio"></label>';
+		const TPL_RADIO = '<label><input type="radio"></label>';
 
-		var LayoutsTreeNodeRadio = A.Component.create({
+		const LayoutsTreeNodeRadio = A.Component.create({
 			ATTRS: {
 				checkEl: {
 					setter: A.one,
@@ -31,7 +31,7 @@ AUI.add(
 
 			prototype: {
 				_uiSetChecked(val) {
-					var instance = this;
+					const instance = this;
 
 					instance
 						.get('checkEl')
@@ -40,34 +40,34 @@ AUI.add(
 				},
 
 				_valueCheckEl() {
-					var instance = this;
+					const instance = this;
 
-					var checkName = instance.get('checkName');
+					const checkName = instance.get('checkName');
 
 					return A.Node.create(TPL_RADIO).attr('name', checkName);
 				},
 
 				renderUI() {
-					var instance = this;
+					const instance = this;
 
 					LayoutsTreeNodeRadio.superclass.renderUI.apply(
 						instance,
 						arguments
 					);
 
-					var checkEl = instance.get('checkEl');
+					const checkEl = instance.get('checkEl');
 
 					checkEl.append(instance.get('label'));
 
 					checkEl.show();
 
-					var labelEl = instance.get('labelEl');
+					const labelEl = instance.get('labelEl');
 
 					labelEl.empty();
 
 					labelEl.addClass('radio');
 
-					var checkContainerEl = instance.get('checkContainerEl');
+					const checkContainerEl = instance.get('checkContainerEl');
 
 					checkContainerEl.removeClass(
 						'tree-node-checkbox-container'

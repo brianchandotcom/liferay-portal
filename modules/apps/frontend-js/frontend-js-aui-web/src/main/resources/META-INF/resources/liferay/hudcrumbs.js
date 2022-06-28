@@ -22,11 +22,11 @@
 AUI.add(
 	'liferay-hudcrumbs',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var NAME = 'hudcrumbs';
+		const NAME = 'hudcrumbs';
 
-		var Hudcrumbs = A.Component.create({
+		const Hudcrumbs = A.Component.create({
 			ATTRS: {
 				clone: {
 					value: null,
@@ -53,9 +53,9 @@ AUI.add(
 
 			prototype: {
 				_calculateDimensions() {
-					var instance = this;
+					const instance = this;
 
-					var region = instance.get('host').get('region');
+					const region = instance.get('host').get('region');
 
 					instance.get('clone').setStyles({
 						left: region.left + 'px',
@@ -69,13 +69,13 @@ AUI.add(
 				},
 
 				_onScroll(event) {
-					var instance = this;
+					const instance = this;
 
-					var scrollTop = event.currentTarget.get('scrollTop');
+					const scrollTop = event.currentTarget.get('scrollTop');
 
-					var hudcrumbs = instance.get('clone');
+					const hudcrumbs = instance.get('clone');
 
-					var action = 'hide';
+					let action = 'hide';
 
 					if (scrollTop >= instance.get('hostMidpoint')) {
 						action = 'show';
@@ -89,33 +89,33 @@ AUI.add(
 				},
 
 				_onStartNavigate() {
-					var instance = this;
+					const instance = this;
 
 					instance.get('clone').hide();
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					Liferay.detach('startNavigate', instance._onStartNavigate);
 
-					var win = instance._win;
+					const win = instance._win;
 
 					win.detach('scroll', instance._onScrollTask);
 					win.detach('windowresize', instance._calculateDimensions);
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
-					var breadcrumbs = instance.get('host');
-					var hudcrumbs = breadcrumbs.clone();
+					const breadcrumbs = instance.get('host');
+					const hudcrumbs = breadcrumbs.clone();
 
 					hudcrumbs.resetId();
 
 					// eslint-disable-next-line @liferay/aui/no-get-body
-					var body = A.getBody();
-					var win = A.getWin();
+					const body = A.getBody();
+					const win = A.getWin();
 
 					instance._body = body;
 					instance._win = win;

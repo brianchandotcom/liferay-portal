@@ -105,7 +105,7 @@ DeserializeUtil.prototype = {
 
 				if (type === 'task') {
 					node.assignments?.forEach((assignment) => {
-						var roleTypes = assignment['role-type'];
+						const roleTypes = assignment['role-type'];
 
 						roleTypes?.forEach((type, index) => {
 							if (type === 'depot') {
@@ -131,7 +131,7 @@ DeserializeUtil.prototype = {
 					node.notifications?.length && parseNotifications(node);
 
 				node.notifications?.forEach((notification) => {
-					var roleTypes = notification['role-type'];
+					const roleTypes = notification['role-type'];
 
 					roleTypes?.forEach((type, index) => {
 						if (type === 'depot') {

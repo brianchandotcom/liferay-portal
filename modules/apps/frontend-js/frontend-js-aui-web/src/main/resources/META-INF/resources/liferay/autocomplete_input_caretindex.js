@@ -22,17 +22,17 @@
 AUI.add(
 	'liferay-autocomplete-input-caretindex',
 	(A) => {
-		var STR_INPUT_NODE = 'inputNode';
+		const STR_INPUT_NODE = 'inputNode';
 
-		var AutcompleteInputCaretIndex = function () {};
+		const AutcompleteInputCaretIndex = function () {};
 
 		AutcompleteInputCaretIndex.prototype = {
 			_getCaretIndex(node) {
-				var instance = this;
+				const instance = this;
 
 				node = node || instance.get(STR_INPUT_NODE);
 
-				var input = node.getDOM();
+				const input = node.getDOM();
 
 				return {
 					end: input.selectionStart,
@@ -41,11 +41,11 @@ AUI.add(
 			},
 
 			_setCaretIndex(node, caretIndex) {
-				var instance = this;
+				const instance = this;
 
 				node = node || instance.get(STR_INPUT_NODE);
 
-				var input = node.getDOM();
+				const input = node.getDOM();
 
 				Liferay.Util.focusFormField(input);
 

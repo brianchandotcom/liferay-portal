@@ -22,14 +22,14 @@
 AUI.add(
 	'liferay-crop-region',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var CropRegion = function () {};
+		const CropRegion = function () {};
 
 		CropRegion.prototype = {
 			_getCropRegion(imagePreview, region) {
-				var instance = this;
-				var cropRegion;
+				const instance = this;
+				let cropRegion;
 
 				if (Liferay.Util.getCropRegion) {
 					cropRegion = Liferay.Util.getCropRegion(
@@ -38,20 +38,26 @@ AUI.add(
 					);
 				}
 				else {
-					var naturalSize = instance._getImgNaturalSize(imagePreview);
+					const naturalSize = instance._getImgNaturalSize(
+						imagePreview
+					);
 
-					var scaleX = naturalSize.width / imagePreview.width();
-					var scaleY = naturalSize.height / imagePreview.height();
+					const scaleX = naturalSize.width / imagePreview.width();
+					const scaleY = naturalSize.height / imagePreview.height();
 
-					var regionHeight = region.height
+					const regionHeight = region.height
 						? region.height * scaleY
 						: naturalSize.height;
-					var regionWidth = region.width
+					const regionWidth = region.width
 						? region.width * scaleX
 						: naturalSize.width;
 
-					var regionX = region.x ? Math.max(region.x * scaleX, 0) : 0;
-					var regionY = region.y ? Math.max(region.y * scaleY, 0) : 0;
+					const regionX = region.x
+						? Math.max(region.x * scaleX, 0)
+						: 0;
+					const regionY = region.y
+						? Math.max(region.y * scaleY, 0)
+						: 0;
 
 					cropRegion = {
 						height: regionHeight,
@@ -65,14 +71,14 @@ AUI.add(
 			},
 
 			_getImgNaturalSize(image) {
-				var imageHeight = image.get('naturalHeight');
-				var imageWidth = image.get('naturalWidth');
+				let imageHeight = image.get('naturalHeight');
+				let imageWidth = image.get('naturalWidth');
 
 				if (
 					Lang.isUndefined(imageHeight) ||
 					Lang.isUndefined(imageWidth)
 				) {
-					var tmp = new Image();
+					const tmp = new Image();
 
 					tmp.src = image.attr('src');
 

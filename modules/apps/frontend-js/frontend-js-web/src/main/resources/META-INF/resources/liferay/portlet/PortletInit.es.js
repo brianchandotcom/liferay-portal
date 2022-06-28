@@ -448,7 +448,7 @@ class PortletInit {
 
 	_updatePortletStates(updatedIds) {
 		return new Promise((resolve) => {
-			if (updatedIds.length === 0) {
+			if (!updatedIds.length) {
 				busy = false;
 			}
 			else {
@@ -522,11 +522,11 @@ class PortletInit {
 			}
 		});
 
-		if (eventListenersQueue.length > 0) {
+		if (eventListenersQueue.length) {
 			setTimeout(() => {
 				busy = true;
 
-				while (eventListenersQueue.length > 0) {
+				while (eventListenersQueue.length) {
 					const eventData = eventListenersQueue.shift();
 					const handler = eventData.handler;
 					const id = eventData.id;

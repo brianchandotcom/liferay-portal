@@ -39,7 +39,7 @@ class IntegerInput extends React.Component {
 	render() {
 		const {disabled, options, value} = this.props;
 
-		return options.length === 0 ? (
+		return !options.length ? (
 			<input
 				className="criterion-input form-control"
 				data-testid="integer-number"

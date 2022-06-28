@@ -113,7 +113,7 @@ function ModalAddColumns<T extends ModalItem>() {
 							<ClayCheckbox
 								checked={items.length === selected.length}
 								indeterminate={
-									selected.length > 0 &&
+									!!selected.length &&
 									items.length !== selected.length
 								}
 								onChange={() => {

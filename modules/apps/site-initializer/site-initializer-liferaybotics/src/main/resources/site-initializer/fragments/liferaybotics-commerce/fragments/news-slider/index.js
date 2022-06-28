@@ -15,22 +15,22 @@
 
 $('#thumbnail li').click(function () {
 	$(this).addClass('active').siblings().removeClass('active');
-	var slide = $('#slide li');
-	var slideTop = 0;
-	var slideBlock = $('#slide ul');
-	var thum = $('#thumbnail .thumbnail-list li');
-	var thumTop =
+	const slide = $('#slide li');
+	let slideTop = 0;
+	const slideBlock = $('#slide ul');
+	const thum = $('#thumbnail .thumbnail-list li');
+	const thumTop =
 		$('#thumbnail .thumbnail-list .active').position().top -
 		$('#thumbnail .thumbnail-list').position().top +
 		'px';
 
-	for (var i = 0; i < thum.length; i++) {
+	for (let i = 0; i < thum.length; i++) {
 		if ($(thum[i]).hasClass('active')) {
 			$($(slide)[i]).addClass('active').siblings().removeClass('active');
 		}
 	}
 
-	for (var y = 0; y < slide.length; y++) {
+	for (let y = 0; y < slide.length; y++) {
 		$($('#slide li .blur-img')[y]).attr(
 			'style',
 			$($('#slide li .img')[y]).attr('style')

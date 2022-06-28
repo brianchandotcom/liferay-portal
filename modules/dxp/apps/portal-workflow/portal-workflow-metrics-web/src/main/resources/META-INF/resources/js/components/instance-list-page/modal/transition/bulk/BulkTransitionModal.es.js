@@ -152,7 +152,7 @@ export default function BulkTransitionModal() {
 			},
 			component: SelectTasksStep,
 			nextBtn: {
-				disabled: tasks.length === 0 || fetching,
+				disabled: !tasks.length || fetching,
 				handle: handleNext,
 				text: Liferay.Language.get('next'),
 			},

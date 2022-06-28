@@ -15,27 +15,27 @@
 AUI.add(
 	'liferay-calendar-simple-color-picker',
 	(A) => {
-		var AArray = A.Array;
-		var Lang = A.Lang;
+		const AArray = A.Array;
+		const Lang = A.Lang;
 
-		var STR_BLANK = '';
+		const STR_BLANK = '';
 
-		var STR_DOT = '.';
+		const STR_DOT = '.';
 
-		var getClassName = A.getClassName;
+		const getClassName = A.getClassName;
 
-		var CSS_SIMPLE_COLOR_PICKER_ITEM = getClassName(
+		const CSS_SIMPLE_COLOR_PICKER_ITEM = getClassName(
 			'simple-color-picker',
 			'item'
 		);
 
-		var CSS_SIMPLE_COLOR_PICKER_ITEM_SELECTED = getClassName(
+		const CSS_SIMPLE_COLOR_PICKER_ITEM_SELECTED = getClassName(
 			'simple-color-picker',
 			'item',
 			'selected'
 		);
 
-		var TPL_SIMPLE_COLOR_PICKER_ITEM = new A.Template(
+		const TPL_SIMPLE_COLOR_PICKER_ITEM = new A.Template(
 			'<tpl for="pallete">',
 			'<div class="',
 			CSS_SIMPLE_COLOR_PICKER_ITEM,
@@ -46,7 +46,7 @@ AUI.add(
 			'</tpl>'
 		);
 
-		var SimpleColorPicker = A.Component.create({
+		const SimpleColorPicker = A.Component.create({
 			ATTRS: {
 				color: {
 					setter(val) {
@@ -100,9 +100,9 @@ AUI.add(
 
 			prototype: {
 				_onClickColor(event) {
-					var instance = this;
+					const instance = this;
 
-					var pallete = instance.get('pallete');
+					const pallete = instance.get('pallete');
 
 					instance.set(
 						'color',
@@ -111,7 +111,7 @@ AUI.add(
 				},
 
 				_renderPallete() {
-					var instance = this;
+					const instance = this;
 
 					instance.items = A.NodeList.create(
 						TPL_SIMPLE_COLOR_PICKER_ITEM.parse({
@@ -123,15 +123,15 @@ AUI.add(
 				},
 
 				_uiSetColor(val) {
-					var instance = this;
+					const instance = this;
 
-					var pallete = instance.get('pallete');
+					const pallete = instance.get('pallete');
 
 					instance.items.removeClass(
 						CSS_SIMPLE_COLOR_PICKER_ITEM_SELECTED
 					);
 
-					var newNode = instance.items.item(pallete.indexOf(val));
+					const newNode = instance.items.item(pallete.indexOf(val));
 
 					if (newNode) {
 						newNode.addClass(CSS_SIMPLE_COLOR_PICKER_ITEM_SELECTED);
@@ -139,7 +139,7 @@ AUI.add(
 				},
 
 				_uiSetPallete() {
-					var instance = this;
+					const instance = this;
 
 					if (instance.get('rendered')) {
 						instance._renderPallete();
@@ -147,9 +147,9 @@ AUI.add(
 				},
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
-					var contentBox = instance.get('contentBox');
+					const contentBox = instance.get('contentBox');
 
 					contentBox.delegate(
 						'click',
@@ -160,7 +160,7 @@ AUI.add(
 				},
 
 				renderUI() {
-					var instance = this;
+					const instance = this;
 
 					instance._renderPallete();
 				},

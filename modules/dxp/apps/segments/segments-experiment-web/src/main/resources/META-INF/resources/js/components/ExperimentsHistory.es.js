@@ -26,7 +26,7 @@ function ExperimentsHistory({experimentHistory, onDeleteSegmentsExperiment}) {
 
 	const noHistoryIllustration = `${imagesPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
 
-	return experimentHistory.length === 0 ? (
+	return !experimentHistory.length ? (
 		<div className="text-center">
 			<img
 				alt=""

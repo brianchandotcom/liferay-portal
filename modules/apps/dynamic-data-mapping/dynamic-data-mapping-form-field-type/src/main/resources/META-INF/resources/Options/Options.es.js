@@ -116,7 +116,7 @@ const refreshFields = (
 			generateKeyword: generateOptionValueUsingOptionLabel,
 			...initialOption,
 		},
-	].filter((field) => field && Object.keys(field).length > 0);
+	].filter((field) => field && !!Object.keys(field).length);
 
 	return normalizeFields(
 		refreshedFields,

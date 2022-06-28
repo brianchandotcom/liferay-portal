@@ -129,7 +129,7 @@ function SelectCategory({
 						className="category-tree"
 						id={`${namespace}categoryContainer`}
 					>
-						{items.length > 0 ? (
+						{items.length ? (
 							<SelectTree
 								filterQuery={filterQuery}
 								inheritSelection={inheritSelection}

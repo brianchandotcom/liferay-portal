@@ -13,19 +13,19 @@
  */
 
 (function () {
-	var A = AUI().use('oop');
+	const A = AUI().use('oop');
 
-	var usedModules = {};
+	const usedModules = {};
 
-	var Dependency = {
+	const Dependency = {
 		_getAOP(object, methodName) {
 			return object._yuiaop && object._yuiaop[methodName];
 		},
 
 		_proxy(object, methodName, methodFn, context, guid, modules, _A) {
-			var args;
+			let args;
 
-			var queue = Dependency._proxyLoaders[guid];
+			const queue = Dependency._proxyLoaders[guid];
 
 			Dependency._replaceMethod(object, methodName, methodFn, context);
 
@@ -33,7 +33,7 @@
 				methodFn.apply(context, args);
 			}
 
-			for (var i = modules.length - 1; i >= 0; i--) {
+			for (let i = modules.length - 1; i >= 0; i--) {
 				usedModules[modules[i]] = true;
 			}
 		},
@@ -41,9 +41,9 @@
 		_proxyLoaders: {},
 
 		_replaceMethod(object, methodName, methodFn) {
-			var AOP = Dependency._getAOP(object, methodName);
+			const AOP = Dependency._getAOP(object, methodName);
 
-			var proxy = object[methodName];
+			let proxy = object[methodName];
 
 			if (AOP) {
 				proxy = AOP.method;
@@ -62,12 +62,12 @@
 				modules = [modules];
 			}
 
-			var before;
+			let before;
 
-			var guid = A.guid();
+			const guid = A.guid();
 
 			if (A.Lang.isObject(methodFn, true)) {
-				var config = methodFn;
+				const config = methodFn;
 
 				methodFn = config.fn;
 				before = config.before;
@@ -81,16 +81,16 @@
 				object = object.prototype;
 			}
 
-			var AOP = Dependency._getAOP(object, methodName);
+			const AOP = Dependency._getAOP(object, methodName);
 
 			if (AOP) {
 				delete object._yuiaop[methodName];
 			}
 
-			var proxy = function () {
-				var args = arguments;
+			const proxy = function () {
+				const args = arguments;
 
-				var context = object;
+				let context = object;
 
 				if (proto) {
 					context = this;
@@ -111,9 +111,9 @@
 					}
 				}
 
-				var firstLoad = false;
+				let firstLoad = false;
 
-				var queue = Dependency._proxyLoaders[guid];
+				let queue = Dependency._proxyLoaders[guid];
 
 				if (!queue) {
 					firstLoad = true;

@@ -22,13 +22,13 @@
 AUI.add(
 	'liferay-restore-entry',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var isString = Lang.isString;
+		const isString = Lang.isString;
 
-		var STR_CHECK_ENTRY_URL = 'checkEntryURL';
+		const STR_CHECK_ENTRY_URL = 'checkEntryURL';
 
-		var RestoreEntry = A.Component.create({
+		const RestoreEntry = A.Component.create({
 			ATTRS: {
 				checkEntryURL: {
 					validator: isString,
@@ -51,19 +51,19 @@ AUI.add(
 
 			prototype: {
 				_afterCheckEntryFailure(uri) {
-					var instance = this;
+					const instance = this;
 
 					submitForm(instance._hrefFm, uri);
 				},
 
 				_afterCheckEntrySuccess(response, uri) {
-					var instance = this;
+					const instance = this;
 
 					if (response.success) {
 						submitForm(instance._hrefFm, uri);
 					}
 					else {
-						var data = instance.ns({
+						const data = instance.ns({
 							duplicateEntryId: response.duplicateEntryId,
 							oldName: response.oldName,
 							overridable: response.overridable,
@@ -82,15 +82,15 @@ AUI.add(
 				},
 
 				_afterPopupCheckEntrySuccess(response, form) {
-					var instance = this;
+					const instance = this;
 
 					if (response.success) {
 						submitForm(form);
 					}
 					else {
-						var errorMessage = response.errorMessage;
+						const errorMessage = response.errorMessage;
 
-						var errorMessageContainer = instance.byId(
+						const errorMessageContainer = instance.byId(
 							'errorMessageContainer'
 						);
 
@@ -104,10 +104,10 @@ AUI.add(
 						else {
 							errorMessageContainer.hide();
 
-							var messageContainer = instance.byId(
+							const messageContainer = instance.byId(
 								'messageContainer'
 							);
-							var newName = instance.byId('newName');
+							const newName = instance.byId('newName');
 
 							messageContainer.html(
 								Lang.sub(
@@ -122,11 +122,11 @@ AUI.add(
 				},
 
 				_checkEntry(event) {
-					var instance = this;
+					const instance = this;
 
-					var uri = event.uri;
+					const uri = event.uri;
 
-					var data = {
+					const data = {
 						trashEntryId: event.trashEntryId,
 					};
 
@@ -144,9 +144,9 @@ AUI.add(
 				},
 
 				_getPopup() {
-					var instance = this;
+					const instance = this;
 
-					var popup = instance._popup;
+					let popup = instance._popup;
 
 					if (!popup) {
 						popup = Liferay.Util.Window.getWindow({
@@ -173,9 +173,9 @@ AUI.add(
 				},
 
 				_initializeRestorePopup() {
-					var instance = this;
+					const instance = this;
 
-					var restoreTrashEntryFm = instance.byId(
+					const restoreTrashEntryFm = instance.byId(
 						'restoreTrashEntryFm'
 					);
 
@@ -186,7 +186,7 @@ AUI.add(
 						restoreTrashEntryFm
 					);
 
-					var closeButton = restoreTrashEntryFm.one('.btn-cancel');
+					const closeButton = restoreTrashEntryFm.one('.btn-cancel');
 
 					if (closeButton) {
 						closeButton.on(
@@ -196,8 +196,8 @@ AUI.add(
 						);
 					}
 
-					var newName = instance.byId('newName');
-					var rename = instance.byId('rename');
+					const newName = instance.byId('newName');
+					const rename = instance.byId('rename');
 
 					rename.on(
 						'click',
@@ -210,11 +210,11 @@ AUI.add(
 				},
 
 				_onRestoreTrashEntryFmSubmit(_event, form) {
-					var instance = this;
+					const instance = this;
 
-					var newName = instance.byId('newName');
-					var override = instance.byId('override');
-					var trashEntryId = instance.byId('trashEntryId');
+					const newName = instance.byId('newName');
+					const override = instance.byId('override');
+					const trashEntryId = instance.byId('trashEntryId');
 
 					if (
 						override.attr('checked') ||
@@ -223,7 +223,7 @@ AUI.add(
 						submitForm(form);
 					}
 					else {
-						var data = {
+						const data = {
 							newName: newName.val(),
 							trashEntryId: trashEntryId.val(),
 						};
@@ -248,13 +248,13 @@ AUI.add(
 				},
 
 				_showPopup(data, uri) {
-					var instance = this;
+					const instance = this;
 
-					var popup = instance._getPopup();
+					const popup = instance._getPopup();
 
 					popup.show();
 
-					var popupIO = popup.io;
+					const popupIO = popup.io;
 
 					popupIO.set('data', data);
 					popupIO.set('uri', uri);
@@ -263,19 +263,19 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					A.Array.invoke(instance._eventHandles, 'detach');
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._eventCheckEntry = instance.ns('checkEntry');
 
 					instance._hrefFm = A.one('#hrefFm');
 
-					var eventHandles = [
+					const eventHandles = [
 						Liferay.on(
 							instance._eventCheckEntry,
 							instance._checkEntry,

@@ -15,15 +15,15 @@
 AUI.add(
 	'liferay-search-container',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var CSS_TEMPLATE = 'd-none';
+		const CSS_TEMPLATE = 'd-none';
 
-		var STR_BLANK = '';
+		const STR_BLANK = '';
 
-		var STR_BOUNDING_BOX = 'boundingBox';
+		const STR_BOUNDING_BOX = 'boundingBox';
 
-		var SearchContainer = A.Component.create({
+		const SearchContainer = A.Component.create({
 			_cache: {},
 
 			ATTRS: {
@@ -39,7 +39,7 @@ AUI.add(
 			// See: https://stackoverflow.com/a/45119651/2103996
 
 			constructor: function constructor(config) {
-				var id = config.id;
+				const id = config.id;
 
 				config.boundingBox = config.boundingBox || '#' + id;
 				config.contentBox =
@@ -49,9 +49,9 @@ AUI.add(
 			},
 
 			get(id) {
-				var instance = this;
+				const instance = this;
 
-				var searchContainer = null;
+				let searchContainer = null;
 
 				if (instance._cache[id]) {
 					searchContainer = instance._cache[id];
@@ -67,7 +67,7 @@ AUI.add(
 
 			prototype: {
 				_addRow() {
-					var instance = this;
+					const instance = this;
 
 					instance._parentContainer.show();
 
@@ -77,11 +77,11 @@ AUI.add(
 				},
 
 				_deleteRow() {
-					var instance = this;
+					const instance = this;
 
-					var action = 'show';
+					let action = 'show';
 
-					if (instance._ids.length === 0) {
+					if (!instance._ids.length) {
 						action = 'hide';
 
 						if (instance._emptyResultsMessage) {
@@ -93,24 +93,26 @@ AUI.add(
 				},
 
 				addRow(array, id, columnsCssClasses) {
-					var instance = this;
+					const instance = this;
 
-					var row;
+					let row;
 
 					if (id) {
-						var template = instance._table.one('.' + CSS_TEMPLATE);
+						const template = instance._table.one(
+							'.' + CSS_TEMPLATE
+						);
 
 						if (template) {
 							row = template.previous()
 								? template.previous().clone()
 								: template.clone();
 
-							var cells = row.all('> td');
+							const cells = row.all('> td');
 
 							cells.empty();
 
 							array.forEach((item, index) => {
-								var cell = cells.item(index);
+								const cell = cells.item(index);
 
 								if (cell) {
 									cell.html(item);
@@ -146,7 +148,7 @@ AUI.add(
 				},
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
 					instance.publish('addRow', {
 						defaultFn: instance._addRow,
@@ -158,10 +160,10 @@ AUI.add(
 				},
 
 				deleteRow(object, id) {
-					var instance = this;
+					const instance = this;
 
 					if (Lang.isNumber(object) || Lang.isString(object)) {
-						var row = null;
+						let row = null;
 
 						instance._table.all('tr').some((item, index) => {
 							if (
@@ -181,7 +183,7 @@ AUI.add(
 					}
 
 					if (id) {
-						var index = instance._ids.indexOf(id.toString());
+						const index = instance._ids.indexOf(id.toString());
 
 						if (index > -1) {
 							instance._ids.splice(index, 1);
@@ -210,7 +212,7 @@ AUI.add(
 				},
 
 				executeAction(name, params) {
-					var instance = this;
+					const instance = this;
 
 					if (instance._actions[name]) {
 						instance._actions[name](params);
@@ -218,9 +220,9 @@ AUI.add(
 				},
 
 				getData(toArray) {
-					var instance = this;
+					const instance = this;
 
-					var ids = instance._ids;
+					let ids = instance._ids;
 
 					if (!toArray) {
 						ids = ids.join(',');
@@ -230,19 +232,19 @@ AUI.add(
 				},
 
 				getForm() {
-					var instance = this;
+					const instance = this;
 
 					return instance.get(STR_BOUNDING_BOX).ancestor('form');
 				},
 
 				getSize() {
-					var instance = this;
+					const instance = this;
 
 					return instance._ids.length;
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._ids = [];
 
@@ -252,17 +254,17 @@ AUI.add(
 				},
 
 				registerAction(name, fn) {
-					var instance = this;
+					const instance = this;
 
 					instance._actions[name] = fn;
 				},
 
 				renderUI() {
-					var instance = this;
+					const instance = this;
 
-					var id = instance.get('id');
+					const id = instance.get('id');
 
-					var boundingBox = instance.get(STR_BOUNDING_BOX);
+					const boundingBox = instance.get(STR_BOUNDING_BOX);
 
 					instance._dataStore = A.one('#' + id + 'PrimaryKeys');
 					instance._emptyResultsMessage = A.one(
@@ -270,10 +272,10 @@ AUI.add(
 					);
 
 					if (instance._dataStore) {
-						var dataStoreForm = instance._dataStore.attr('form');
+						const dataStoreForm = instance._dataStore.attr('form');
 
 						if (dataStoreForm) {
-							var method = dataStoreForm
+							const method = dataStoreForm
 								.attr('method')
 								.toLowerCase();
 
@@ -297,11 +299,11 @@ AUI.add(
 				},
 
 				syncUI() {
-					var instance = this;
+					const instance = this;
 
-					var dataStore = instance._dataStore;
+					const dataStore = instance._dataStore;
 
-					var initialIds = dataStore && dataStore.val();
+					let initialIds = dataStore && dataStore.val();
 
 					if (initialIds) {
 						initialIds = initialIds.split(',');
@@ -311,7 +313,7 @@ AUI.add(
 				},
 
 				updateDataStore(ids) {
-					var instance = this;
+					const instance = this;
 
 					if (ids) {
 						if (typeof ids === 'string') {
@@ -321,7 +323,7 @@ AUI.add(
 						instance._ids = ids;
 					}
 
-					var dataStore = instance._dataStore;
+					const dataStore = instance._dataStore;
 
 					if (dataStore) {
 						dataStore.val(instance._ids.join(','));
@@ -330,9 +332,9 @@ AUI.add(
 			},
 
 			register(object) {
-				var instance = this;
+				const instance = this;
 
-				var id = object.get('id');
+				const id = object.get('id');
 
 				instance._cache[id] = object;
 

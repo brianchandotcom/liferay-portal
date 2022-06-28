@@ -14,14 +14,14 @@
 
 (function () {
 	Liferay.lazyLoad = function () {
-		var failureCallback;
+		let failureCallback;
 
-		var isFunction = function (val) {
+		const isFunction = function (val) {
 			return typeof val === 'function';
 		};
 
-		var modules;
-		var successCallback;
+		let modules;
+		let successCallback;
 
 		if (Array.isArray(arguments[0])) {
 			modules = arguments[0];
@@ -32,7 +32,7 @@
 		else {
 			modules = [];
 
-			for (var i = 0; i < arguments.length; ++i) {
+			for (let i = 0; i < arguments.length; ++i) {
 				if (typeof arguments[i] === 'string') {
 					modules[i] = arguments[i];
 				}
@@ -47,16 +47,16 @@
 		}
 
 		return function () {
-			var args = [];
+			const args = [];
 
-			for (var i = 0; i < arguments.length; ++i) {
+			for (let i = 0; i < arguments.length; ++i) {
 				args.push(arguments[i]);
 			}
 
 			Liferay.Loader.require(
 				modules,
 				function () {
-					for (var i = 0; i < arguments.length; ++i) {
+					for (let i = 0; i < arguments.length; ++i) {
 						args.splice(i, 0, arguments[i]);
 					}
 

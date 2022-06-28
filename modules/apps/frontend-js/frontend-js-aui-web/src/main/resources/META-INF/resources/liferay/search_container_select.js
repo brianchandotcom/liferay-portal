@@ -15,41 +15,41 @@
 AUI.add(
 	'liferay-search-container-select',
 	(A) => {
-		var AArray = A.Array;
-		var Lang = A.Lang;
+		const AArray = A.Array;
+		const Lang = A.Lang;
 
-		var REGEX_MATCH_EVERYTHING = /.*/;
+		const REGEX_MATCH_EVERYTHING = /.*/;
 
 		// eslint-disable-next-line no-empty-character-class
-		var REGEX_MATCH_NOTHING = /^[]/;
+		const REGEX_MATCH_NOTHING = /^[]/;
 
-		var STR_ACTIONS_WILDCARD = '*';
+		const STR_ACTIONS_WILDCARD = '*';
 
-		var STR_CHECKBOX_SELECTOR = 'input[type=checkbox]:enabled';
+		const STR_CHECKBOX_SELECTOR = 'input[type=checkbox]:enabled';
 
-		var STR_CHECKED = 'checked';
+		const STR_CHECKED = 'checked';
 
-		var STR_CLICK = 'click';
+		const STR_CLICK = 'click';
 
-		var STR_CONTENT_BOX = 'contentBox';
+		const STR_CONTENT_BOX = 'contentBox';
 
-		var STR_HOST = 'host';
+		const STR_HOST = 'host';
 
-		var STR_ROW_CLASS_NAME_ACTIVE = 'rowClassNameActive';
+		const STR_ROW_CLASS_NAME_ACTIVE = 'rowClassNameActive';
 
-		var STR_ROW_SELECTOR = 'rowSelector';
+		const STR_ROW_SELECTOR = 'rowSelector';
 
-		var TPL_HIDDEN_INPUT_CHECKED =
+		const TPL_HIDDEN_INPUT_CHECKED =
 			'<input class="hide" name="{name}" value="{value}" type="checkbox" ' +
 			STR_CHECKED +
 			' />';
 
-		var TPL_HIDDEN_INPUT_UNCHECKED =
+		const TPL_HIDDEN_INPUT_UNCHECKED =
 			'<input class="hide" name="{name}" value="{value}" type="checkbox"/>';
 
-		var TPL_INPUT_SELECTOR = 'input[type="checkbox"][value="{value}"]';
+		const TPL_INPUT_SELECTOR = 'input[type="checkbox"][value="{value}"]';
 
-		var SearchContainerSelect = A.Component.create({
+		const SearchContainerSelect = A.Component.create({
 			ATTRS: {
 				bulkSelection: {
 					validator: Lang.isBoolean,
@@ -97,9 +97,9 @@ AUI.add(
 
 			prototype: {
 				_addRestoreTask() {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
 					Liferay.DOMTaskRunner.addTask({
 						action: A.Plugin.SearchContainerSelect.restoreTask,
@@ -117,13 +117,13 @@ AUI.add(
 				},
 
 				_addRestoreTaskState() {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
-					var elements = [];
+					const elements = [];
 
-					var allElements = instance._getAllElements(false);
+					const allElements = instance._getAllElements(false);
 
 					allElements.each((item) => {
 						elements.push({
@@ -147,9 +147,9 @@ AUI.add(
 				},
 
 				_getActions(elements) {
-					var instance = this;
+					const instance = this;
 
-					var actions = elements
+					const actions = elements
 						.getDOMNodes()
 						.map((node) => {
 							return A.one(node).ancestor(
@@ -157,7 +157,7 @@ AUI.add(
 							);
 						})
 						.filter((item) => {
-							var itemActions;
+							let itemActions;
 
 							if (item) {
 								itemActions = item.getData('actions');
@@ -180,7 +180,7 @@ AUI.add(
 				},
 
 				_getAllElements(onlySelected) {
-					var instance = this;
+					const instance = this;
 
 					return instance._getElements(
 						STR_CHECKBOX_SELECTOR,
@@ -189,7 +189,7 @@ AUI.add(
 				},
 
 				_getCurrentPageElements(onlySelected) {
-					var instance = this;
+					const instance = this;
 
 					return instance._getElements(
 						instance.get(STR_ROW_SELECTOR) +
@@ -200,11 +200,11 @@ AUI.add(
 				},
 
 				_getElements(selector, onlySelected) {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
-					var checked = onlySelected ? ':' + STR_CHECKED : '';
+					const checked = onlySelected ? ':' + STR_CHECKED : '';
 
 					return host.get(STR_CONTENT_BOX).all(selector + checked);
 				},
@@ -216,11 +216,11 @@ AUI.add(
 				},
 
 				_notifyRowToggle() {
-					var instance = this;
+					const instance = this;
 
-					var allSelectedElements = instance.getAllSelectedElements();
+					const allSelectedElements = instance.getAllSelectedElements();
 
-					var payload = {
+					const payload = {
 						actions: instance._getActions(allSelectedElements),
 						elements: {
 							allElements: instance._getAllElements(),
@@ -234,9 +234,9 @@ AUI.add(
 				},
 
 				_onClickRowSelector(config, event) {
-					var instance = this;
+					const instance = this;
 
-					var row = event.currentTarget.ancestor(
+					const row = event.currentTarget.ancestor(
 						instance.get(STR_ROW_SELECTOR)
 					);
 
@@ -244,7 +244,7 @@ AUI.add(
 				},
 
 				_onStartNavigate(event) {
-					var instance = this;
+					const instance = this;
 
 					if (
 						!instance._isActionUrl(event.path) &&
@@ -256,46 +256,50 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					new A.EventHandle(instance._eventHandles).detach();
 				},
 
 				getAllSelectedElements() {
-					var instance = this;
+					const instance = this;
 
 					return instance._getAllElements(true);
 				},
 
 				getCurrentPageElements() {
-					var instance = this;
+					const instance = this;
 
 					return instance._getCurrentPageElements();
 				},
 
 				getCurrentPageSelectedElements() {
-					var instance = this;
+					const instance = this;
 
 					return instance._getCurrentPageElements(true);
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
-					var hostContentBox = host.get(STR_CONTENT_BOX);
+					const hostContentBox = host.get(STR_CONTENT_BOX);
 
 					instance.set(
 						'bulkSelection',
 						hostContentBox.getData('bulkSelection')
 					);
 
-					var toggleRowFn = A.bind('_onClickRowSelector', instance, {
-						toggleCheckbox: true,
-					});
+					const toggleRowFn = A.bind(
+						'_onClickRowSelector',
+						instance,
+						{
+							toggleCheckbox: true,
+						}
+					);
 
-					var toggleRowCSSFn = A.bind(
+					const toggleRowCSSFn = A.bind(
 						'_onClickRowSelector',
 						instance,
 						{}
@@ -335,9 +339,9 @@ AUI.add(
 				},
 
 				toggleAllRows(selected, bulkSelection) {
-					var instance = this;
+					const instance = this;
 
-					var elements = bulkSelection
+					const elements = bulkSelection
 						? instance._getAllElements()
 						: instance._getCurrentPageElements();
 
@@ -358,10 +362,10 @@ AUI.add(
 				},
 
 				toggleRow(config, row) {
-					var instance = this;
+					const instance = this;
 
 					if (config && config.toggleCheckbox) {
-						var checkbox = row.one(STR_CHECKBOX_SELECTOR);
+						const checkbox = row.one(STR_CHECKBOX_SELECTOR);
 
 						checkbox.attr(STR_CHECKED, !checkbox.attr(STR_CHECKED));
 					}
@@ -375,7 +379,7 @@ AUI.add(
 			},
 
 			restoreTask(state, params, node) {
-				var container = A.one(node).one('#' + params.containerId);
+				const container = A.one(node).one('#' + params.containerId);
 
 				container.setData('bulkSelection', state.data.bulkSelection);
 
@@ -388,10 +392,10 @@ AUI.add(
 					});
 				}
 				else {
-					var offScreenElementsHtml = '';
+					let offScreenElementsHtml = '';
 
 					AArray.each(state.data.elements, (item) => {
-						var input = container.one(
+						const input = container.one(
 							Lang.sub(TPL_INPUT_SELECTOR, item)
 						);
 

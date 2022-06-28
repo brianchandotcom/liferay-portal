@@ -15,13 +15,13 @@
 AUI.add(
 	'liferay-search-modified-facet',
 	(A) => {
-		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
+		const DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
-		var FacetUtil = Liferay.Search.FacetUtil;
-		var Util = Liferay.Util;
+		const FacetUtil = Liferay.Search.FacetUtil;
+		const Util = Liferay.Util;
 
-		var ModifiedFacetFilter = function (config) {
-			var instance = this;
+		const ModifiedFacetFilter = function (config) {
+			const instance = this;
 
 			instance.form = config.form;
 			instance.fromInputDatePicker = config.fromInputDatePicker;
@@ -52,13 +52,13 @@ AUI.add(
 			}
 		};
 
-		var ModifiedFacetFilterUtil = {
+		const ModifiedFacetFilterUtil = {
 			clearSelections() {
-				var param = this.getParameterName();
-				var paramFrom = param + 'From';
-				var paramTo = param + 'To';
+				const param = this.getParameterName();
+				const paramFrom = param + 'From';
+				const paramTo = param + 'To';
 
-				var parameterArray = document.location.search
+				let parameterArray = document.location.search
 					.substr(1)
 					.split('&');
 
@@ -94,7 +94,7 @@ AUI.add(
 			 * @returns {String} The date string.
 			 */
 			toLocaleDateStringFormatted(date) {
-				var localDate = new Date(date);
+				const localDate = new Date(date);
 
 				localDate.setMinutes(
 					date.getMinutes() - date.getTimezoneOffset()
@@ -106,9 +106,9 @@ AUI.add(
 
 		A.mix(ModifiedFacetFilter.prototype, {
 			_initializeFormValidator() {
-				var instance = this;
+				const instance = this;
 
-				var dateRangeRuleName = instance.namespace + 'dateRange';
+				const dateRangeRuleName = instance.namespace + 'dateRange';
 
 				A.mix(
 					DEFAULTS_FORM_VALIDATOR.STRINGS,
@@ -133,7 +133,7 @@ AUI.add(
 					true
 				);
 
-				var customRangeValidator = new A.FormValidator({
+				const customRangeValidator = new A.FormValidator({
 					boundingBox: instance.form,
 					fieldContainer: 'div',
 					on: {
@@ -160,7 +160,7 @@ AUI.add(
 					},
 				});
 
-				var onRangeSelectionChange = function () {
+				const onRangeSelectionChange = function () {
 					customRangeValidator.validate();
 				};
 
@@ -186,25 +186,25 @@ AUI.add(
 			},
 
 			filter() {
-				var instance = this;
+				const instance = this;
 
-				var fromDate = instance.fromInputDatePicker.getDate();
+				const fromDate = instance.fromInputDatePicker.getDate();
 
-				var toDate = instance.toInputDatePicker.getDate();
+				const toDate = instance.toInputDatePicker.getDate();
 
-				var modifiedFromParameter = ModifiedFacetFilterUtil.toLocaleDateStringFormatted(
+				const modifiedFromParameter = ModifiedFacetFilterUtil.toLocaleDateStringFormatted(
 					fromDate
 				);
 
-				var modifiedToParameter = ModifiedFacetFilterUtil.toLocaleDateStringFormatted(
+				const modifiedToParameter = ModifiedFacetFilterUtil.toLocaleDateStringFormatted(
 					toDate
 				);
 
-				var param = ModifiedFacetFilterUtil.getParameterName();
-				var paramFrom = param + 'From';
-				var paramTo = param + 'To';
+				const param = ModifiedFacetFilterUtil.getParameterName();
+				const paramFrom = param + 'From';
+				const paramTo = param + 'To';
 
-				var parameterArray = document.location.search
+				let parameterArray = document.location.search
 					.substr(1)
 					.split('&');
 
@@ -223,7 +223,7 @@ AUI.add(
 					parameterArray
 				);
 
-				var startParameterNameElement = document.getElementById(
+				const startParameterNameElement = document.getElementById(
 					instance.namespace + 'start-parameter-name'
 				);
 

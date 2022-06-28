@@ -145,11 +145,11 @@ class Screen extends Cacheable {
 	 *     navigation until it is resolved.
 	 */
 	flip(surfaces) {
-		var transitions = [];
+		const transitions = [];
 
 		Object.keys(surfaces).forEach((sId) => {
-			var surface = surfaces[sId];
-			var deferred = surface.show(this.id);
+			const surface = surfaces[sId];
+			const deferred = surface.show(this.id);
 			transitions.push(deferred);
 		});
 

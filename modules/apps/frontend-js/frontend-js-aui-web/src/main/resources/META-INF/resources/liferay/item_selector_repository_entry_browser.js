@@ -20,33 +20,33 @@
 AUI.add(
 	'liferay-item-selector-repository-entry-browser',
 	(A) => {
-		var AArray = A.Array;
-		var Lang = A.Lang;
+		const AArray = A.Array;
+		const Lang = A.Lang;
 
-		var CSS_DROP_ACTIVE = 'drop-active';
+		const CSS_DROP_ACTIVE = 'drop-active';
 
-		var STATUS_CODE = Liferay.STATUS_CODE;
+		const STATUS_CODE = Liferay.STATUS_CODE;
 
-		var STR_DRAG_LEAVE = 'dragleave';
+		const STR_DRAG_LEAVE = 'dragleave';
 
-		var STR_DRAG_OVER = 'dragover';
+		const STR_DRAG_OVER = 'dragover';
 
-		var STR_DROP = 'drop';
+		const STR_DROP = 'drop';
 
-		var STR_ITEM_SELECTED = '_onItemSelected';
+		const STR_ITEM_SELECTED = '_onItemSelected';
 
-		var STR_ITEM_UPLOAD_ERROR = '_onItemUploadError';
+		const STR_ITEM_UPLOAD_ERROR = '_onItemUploadError';
 
-		var STR_LINKS = 'links';
+		const STR_LINKS = 'links';
 
-		var STR_SELECTED_ITEM = 'selectedItem';
+		const STR_SELECTED_ITEM = 'selectedItem';
 
-		var STR_VISIBLE_CHANGE = 'visibleChange';
+		const STR_VISIBLE_CHANGE = 'visibleChange';
 
-		var UPLOAD_ITEM_LINK_TPL =
+		const UPLOAD_ITEM_LINK_TPL =
 			'<a data-returnType="{returnType}" data-value="{value}" href="{preview}" title="{title}"></a>';
 
-		var ItemSelectorRepositoryEntryBrowser = A.Component.create({
+		const ItemSelectorRepositoryEntryBrowser = A.Component.create({
 			ATTRS: {
 				closeCaption: {
 					validator: Lang.isString,
@@ -84,7 +84,7 @@ AUI.add(
 
 			prototype: {
 				_afterVisibleChange(event) {
-					var instance = this;
+					const instance = this;
 
 					if (!event.newVal) {
 						instance.fire(STR_SELECTED_ITEM);
@@ -92,15 +92,15 @@ AUI.add(
 				},
 
 				_bindUI() {
-					var instance = this;
+					const instance = this;
 
-					var itemViewer = instance._itemViewer;
+					const itemViewer = instance._itemViewer;
 
-					var uploadItemViewer = instance._uploadItemViewer;
+					const uploadItemViewer = instance._uploadItemViewer;
 
-					var itemSelectorUploader = instance._itemSelectorUploader;
+					const itemSelectorUploader = instance._itemSelectorUploader;
 
-					var rootNode = instance.rootNode;
+					const rootNode = instance.rootNode;
 
 					instance._eventHandles = [
 						itemViewer
@@ -120,7 +120,7 @@ AUI.add(
 						),
 					];
 
-					var uploadItemURL = instance.get('uploadItemURL');
+					const uploadItemURL = instance.get('uploadItemURL');
 
 					if (uploadItemURL) {
 						instance._eventHandles.push(
@@ -161,7 +161,7 @@ AUI.add(
 						);
 					}
 
-					var inputFileNode = instance.one('input[type="file"]');
+					const inputFileNode = instance.one('input[type="file"]');
 
 					if (inputFileNode) {
 						instance._eventHandles.push(
@@ -174,12 +174,12 @@ AUI.add(
 				},
 
 				_ddEventHandler(event) {
-					var instance = this;
+					const instance = this;
 
-					var dataTransfer = event._event.dataTransfer;
+					const dataTransfer = event._event.dataTransfer;
 
 					if (dataTransfer && dataTransfer.types) {
-						var dataTransferTypes = dataTransfer.types || [];
+						const dataTransferTypes = dataTransfer.types || [];
 
 						if (
 							AArray.indexOf(dataTransferTypes, 'Files') > -1 &&
@@ -188,11 +188,11 @@ AUI.add(
 						) {
 							event.halt();
 
-							var type = event.type;
+							const type = event.type;
 
-							var eventDrop = type === STR_DROP;
+							const eventDrop = type === STR_DROP;
 
-							var rootNode = instance.rootNode;
+							const rootNode = instance.rootNode;
 
 							if (type === STR_DRAG_OVER) {
 								rootNode.addClass(CSS_DROP_ACTIVE);
@@ -201,7 +201,7 @@ AUI.add(
 								rootNode.removeClass(CSS_DROP_ACTIVE);
 
 								if (eventDrop) {
-									var file = dataTransfer.files[0];
+									const file = dataTransfer.files[0];
 
 									instance._validateFile(file);
 								}
@@ -211,14 +211,14 @@ AUI.add(
 				},
 
 				_getUploadErrorMessage(error) {
-					var instance = this;
+					const instance = this;
 
-					var message = Liferay.Language.get(
+					let message = Liferay.Language.get(
 						'an-unexpected-error-occurred-while-uploading-your-file'
 					);
 
 					if (error && error.errorType) {
-						var errorType = error.errorType;
+						const errorType = error.errorType;
 
 						if (
 							errorType ===
@@ -275,7 +275,7 @@ AUI.add(
 							errorType ===
 							STATUS_CODE.SC_UPLOAD_REQUEST_SIZE_EXCEPTION
 						) {
-							var maxUploadRequestSize =
+							const maxUploadRequestSize =
 								Liferay.PropsValues
 									.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE;
 
@@ -322,17 +322,17 @@ AUI.add(
 				},
 
 				_onInputFileChanged(event) {
-					var instance = this;
+					const instance = this;
 
-					var file = event.currentTarget.getDOMNode().files[0];
+					const file = event.currentTarget.getDOMNode().files[0];
 
 					instance._validateFile(file);
 				},
 
 				_onItemSelected(itemViewer) {
-					var instance = this;
+					const instance = this;
 
-					var link = itemViewer
+					const link = itemViewer
 						.get(STR_LINKS)
 						.item(itemViewer.get('currentIndex'));
 
@@ -345,15 +345,15 @@ AUI.add(
 				},
 
 				_onItemUploadCancel() {
-					var instance = this;
+					const instance = this;
 
 					instance._uploadItemViewer.hide();
 				},
 
 				_onItemUploadComplete(itemData) {
-					var instance = this;
+					const instance = this;
 
-					var uploadItemViewer = instance._uploadItemViewer;
+					const uploadItemViewer = instance._uploadItemViewer;
 
 					uploadItemViewer.updateCurrentImage(itemData);
 
@@ -361,11 +361,11 @@ AUI.add(
 				},
 
 				_onItemUploadError(event) {
-					var instance = this;
+					const instance = this;
 
 					instance._uploadItemViewer.hide();
 
-					var errorMessage = instance._getUploadErrorMessage(
+					const errorMessage = instance._getUploadErrorMessage(
 						event.error
 					);
 
@@ -373,10 +373,10 @@ AUI.add(
 				},
 
 				_previewFile(file) {
-					var instance = this;
+					const instance = this;
 
 					if (A.config.win.FileReader) {
-						var reader = new FileReader();
+						const reader = new FileReader();
 
 						reader.addEventListener('loadend', (event) => {
 							instance._showFile(file, event.target.result);
@@ -387,16 +387,16 @@ AUI.add(
 				},
 
 				_renderUI() {
-					var instance = this;
+					const instance = this;
 
-					var rootNode = instance.rootNode;
+					const rootNode = instance.rootNode;
 
 					instance._itemViewer.render(rootNode);
 					instance._uploadItemViewer.render(rootNode);
 				},
 
 				_showError(message) {
-					var instance = this;
+					const instance = this;
 
 					Liferay.Util.openToast({
 						container: instance.rootNode,
@@ -406,9 +406,9 @@ AUI.add(
 				},
 
 				_showFile(file, preview) {
-					var instance = this;
+					const instance = this;
 
-					var returnType = instance.get('uploadItemReturnType');
+					const returnType = instance.get('uploadItemReturnType');
 
 					if (!file.type.match(/image.*/)) {
 						preview =
@@ -416,7 +416,7 @@ AUI.add(
 							'/file_system/large/default.png';
 					}
 
-					var linkNode = A.Node.create(
+					const linkNode = A.Node.create(
 						Lang.sub(UPLOAD_ITEM_LINK_TPL, {
 							preview,
 							returnType,
@@ -443,22 +443,22 @@ AUI.add(
 				},
 
 				_validateFile(file) {
-					var instance = this;
+					const instance = this;
 
-					var errorMessage = '';
+					let errorMessage = '';
 
-					var fileExtension = file.name
+					const fileExtension = file.name
 						.split('.')
 						.pop()
 						.toLowerCase();
 
-					var validExtensions = instance.get('validExtensions');
+					const validExtensions = instance.get('validExtensions');
 
 					if (
 						validExtensions === '*' ||
 						validExtensions.indexOf(fileExtension) !== -1
 					) {
-						var maxFileSize = instance.get('maxFileSize');
+						const maxFileSize = instance.get('maxFileSize');
 
 						if (file.size <= maxFileSize) {
 							instance._previewFile(file);
@@ -486,7 +486,9 @@ AUI.add(
 					}
 
 					if (errorMessage) {
-						var inputTypeFile = instance.one('input[type="file"]');
+						const inputTypeFile = instance.one(
+							'input[type="file"]'
+						);
 
 						if (inputTypeFile) {
 							inputTypeFile.val('');
@@ -497,7 +499,7 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					instance._itemViewer.destroy();
 					instance._uploadItemViewer.destroy();
@@ -507,7 +509,7 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._itemViewer = new A.LiferayItemViewer({
 						btnCloseCaption: instance.get('closeCaption'),

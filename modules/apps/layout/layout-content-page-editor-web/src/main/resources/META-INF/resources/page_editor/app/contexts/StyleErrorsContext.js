@@ -50,7 +50,7 @@ export function useDeleteStyleError() {
 
 				const nextState = {
 					...rest,
-					...(Object.keys(filteredErrors).length > 0 && {
+					...(!!Object.keys(filteredErrors).length && {
 						[itemId]: filteredErrors,
 					}),
 				};
@@ -65,7 +65,7 @@ export function useDeleteStyleError() {
 export function useHasStyleErrors() {
 	const {state} = useContext(StyleErrorsStateContext);
 
-	return Object.keys(state).length > 0;
+	return !!Object.keys(state).length;
 }
 
 export function useSetStyleError() {

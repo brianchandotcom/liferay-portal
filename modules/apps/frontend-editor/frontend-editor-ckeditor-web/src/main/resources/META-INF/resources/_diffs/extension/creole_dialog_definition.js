@@ -16,21 +16,21 @@ CKEDITOR.on(
 	'dialogDefinition',
 	(event) => {
 		if (event.editor === ckEditor) {
-			var boundingWindow = event.editor.window;
+			const boundingWindow = event.editor.window;
 
-			var dialogName = event.data.name;
+			const dialogName = event.data.name;
 
-			var dialogDefinition = event.data.definition;
+			const dialogDefinition = event.data.definition;
 
-			var dialog = event.data.dialog;
+			const dialog = event.data.dialog;
 
-			var onShow = dialogDefinition.onShow;
+			const onShow = dialogDefinition.onShow;
 
-			var centerDialog = function () {
-				var dialogSize = dialog.getSize();
+			const centerDialog = function () {
+				const dialogSize = dialog.getSize();
 
-				var x = window.innerWidth / 2 - dialogSize.width / 2;
-				var y = window.innerHeight / 2 - dialogSize.height / 2;
+				const x = window.innerWidth / 2 - dialogSize.width / 2;
+				const y = window.innerHeight / 2 - dialogSize.height / 2;
 
 				dialog.move(x, y, false);
 			};
@@ -43,9 +43,9 @@ CKEDITOR.on(
 				centerDialog();
 			};
 
-			var debounce = function (fn, delay) {
+			const debounce = function (fn, delay) {
 				return function debounced() {
-					var args = arguments;
+					const args = arguments;
 					clearTimeout(debounced.id);
 					debounced.id = setTimeout(() => {
 						fn.apply(null, args);
@@ -60,7 +60,7 @@ CKEDITOR.on(
 				}, 250)
 			);
 
-			var infoTab;
+			let infoTab;
 
 			if (dialogName === 'cellProperties') {
 				infoTab = dialogDefinition.getContents('info');

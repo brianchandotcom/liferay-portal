@@ -55,7 +55,7 @@ export default function GroupLabels({
 	return (
 		<>
 			<span className="permission-scopes">
-				{groupNames.length === 0 ? (
+				{!groupNames.length ? (
 					<span>
 						{Liferay.Language.get('all-sites-and-asset-libraries')}
 					</span>

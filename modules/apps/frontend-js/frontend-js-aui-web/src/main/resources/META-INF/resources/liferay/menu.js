@@ -15,93 +15,93 @@
 AUI.add(
 	'liferay-menu',
 	(A) => {
-		var Util = Liferay.Util;
+		const Util = Liferay.Util;
 
-		var ARIA_ATTR_ROLE = 'role';
+		const ARIA_ATTR_ROLE = 'role';
 
-		var ATTR_CLASS_NAME = 'className';
+		const ATTR_CLASS_NAME = 'className';
 
-		var AUTO = 'auto';
+		const AUTO = 'auto';
 
-		var CSS_BTN_PRIMARY = 'btn-primary';
+		const CSS_BTN_PRIMARY = 'btn-primary';
 
-		var CSS_EXTENDED = 'lfr-extended';
+		const CSS_EXTENDED = 'lfr-extended';
 
-		var CSS_OPEN = 'open';
+		const CSS_OPEN = 'open';
 
-		var CSS_PORTLET = '.portlet';
+		const CSS_PORTLET = '.portlet';
 
-		var DEFAULT_ALIGN_POINTS = ['tl', 'bl'];
+		const DEFAULT_ALIGN_POINTS = ['tl', 'bl'];
 
-		var EVENT_CLICK = 'click';
+		const EVENT_CLICK = 'click';
 
-		var EVENT_KEYDOWN = 'keydown';
+		const EVENT_KEYDOWN = 'keydown';
 
-		var PARENT_NODE = 'parentNode';
+		const PARENT_NODE = 'parentNode';
 
-		var STR_BOTTOM = 'b';
+		const STR_BOTTOM = 'b';
 
-		var STR_LEFT = 'l';
+		const STR_LEFT = 'l';
 
-		var STR_LTR = 'ltr';
+		const STR_LTR = 'ltr';
 
-		var STR_RIGHT = 'r';
+		const STR_RIGHT = 'r';
 
-		var STR_RTL = 'rtl';
+		const STR_RTL = 'rtl';
 
-		var STR_TOP = 't';
+		const STR_TOP = 't';
 
-		var MAP_ALIGN_DOWN = {
+		const MAP_ALIGN_DOWN = {
 			downleft: ['tr', 'br'],
 			downright: DEFAULT_ALIGN_POINTS,
 		};
 
-		var MAP_ALIGN_HORIZONTAL_OVERLAY = {
+		const MAP_ALIGN_HORIZONTAL_OVERLAY = {
 			left: STR_RIGHT,
 			right: STR_LEFT,
 		};
 
-		var MAP_ALIGN_HORIZONTAL_OVERLAY_RTL = {
+		const MAP_ALIGN_HORIZONTAL_OVERLAY_RTL = {
 			left: STR_LEFT,
 			right: STR_RIGHT,
 		};
 
-		var MAP_ALIGN_HORIZONTAL_TRIGGER = {
+		const MAP_ALIGN_HORIZONTAL_TRIGGER = {
 			left: STR_LEFT,
 			right: STR_RIGHT,
 		};
 
-		var MAP_ALIGN_HORIZONTAL_TRIGGER_RTL = {
+		const MAP_ALIGN_HORIZONTAL_TRIGGER_RTL = {
 			left: STR_RIGHT,
 			right: STR_LEFT,
 		};
 
-		var MAP_ALIGN_VERTICAL_OVERLAY = {
+		const MAP_ALIGN_VERTICAL_OVERLAY = {
 			down: STR_TOP,
 			up: STR_BOTTOM,
 		};
 
-		var MAP_ALIGN_VERTICAL_TRIGGER = {
+		const MAP_ALIGN_VERTICAL_TRIGGER = {
 			down: STR_BOTTOM,
 			up: STR_TOP,
 		};
 
-		var MAP_LIVE_SEARCH = {};
+		const MAP_LIVE_SEARCH = {};
 
-		var REGEX_DIRECTION = /\bdirection-(downleft|downright|down|left|right|up)\b/;
+		const REGEX_DIRECTION = /\bdirection-(downleft|downright|down|left|right|up)\b/;
 
-		var REGEX_MAX_DISPLAY_ITEMS = /max-display-items-(\d+)/;
+		const REGEX_MAX_DISPLAY_ITEMS = /max-display-items-(\d+)/;
 
-		var SELECTOR_ANCHOR = 'a';
+		const SELECTOR_ANCHOR = 'a';
 
-		var SELECTOR_LIST_ITEM = 'li';
+		const SELECTOR_LIST_ITEM = 'li';
 
-		var SELECTOR_SEARCH_CONTAINER = '.lfr-menu-list-search-container';
+		const SELECTOR_SEARCH_CONTAINER = '.lfr-menu-list-search-container';
 
-		var TPL_MENU = '<div class="open" />';
+		const TPL_MENU = '<div class="open" />';
 
-		var Menu = function () {
-			var instance = this;
+		const Menu = function () {
+			const instance = this;
 
 			instance._handles = [];
 
@@ -112,24 +112,24 @@ AUI.add(
 
 		Menu.prototype = {
 			_closeActiveMenu() {
-				var instance = this;
+				const instance = this;
 
-				var menu = instance._activeMenu;
+				const menu = instance._activeMenu;
 
 				if (menu) {
-					var handles = instance._handles;
+					const handles = instance._handles;
 
 					A.Array.invoke(handles, 'detach');
 
 					handles.length = 0;
 
-					var overlay = instance._overlay;
+					const overlay = instance._overlay;
 
 					if (overlay) {
 						overlay.hide();
 					}
 
-					var trigger = instance._activeTrigger;
+					const trigger = instance._activeTrigger;
 
 					instance._activeMenu = null;
 					instance._activeTrigger = null;
@@ -144,7 +144,7 @@ AUI.add(
 					else {
 						trigger.get(PARENT_NODE).removeClass(CSS_OPEN);
 
-						var portlet = trigger.ancestor(CSS_PORTLET);
+						const portlet = trigger.ancestor(CSS_PORTLET);
 
 						if (portlet) {
 							portlet.removeClass(CSS_OPEN);
@@ -154,17 +154,17 @@ AUI.add(
 			},
 
 			_getAlignPoints: A.cached((cssClass) => {
-				var alignPoints = DEFAULT_ALIGN_POINTS;
+				let alignPoints = DEFAULT_ALIGN_POINTS;
 
-				var defaultOverlayHorizontalAlign = STR_RIGHT;
+				let defaultOverlayHorizontalAlign = STR_RIGHT;
 
-				var defaultTriggerHorizontalAlign = STR_LEFT;
+				let defaultTriggerHorizontalAlign = STR_LEFT;
 
-				var mapAlignHorizontalOverlay = MAP_ALIGN_HORIZONTAL_OVERLAY;
+				let mapAlignHorizontalOverlay = MAP_ALIGN_HORIZONTAL_OVERLAY;
 
-				var mapAlignHorizontalTrigger = MAP_ALIGN_HORIZONTAL_TRIGGER;
+				let mapAlignHorizontalTrigger = MAP_ALIGN_HORIZONTAL_TRIGGER;
 
-				var langDir =
+				const langDir =
 					Liferay.Language.direction[themeDisplay.getLanguageId()] ||
 					STR_LTR;
 
@@ -177,9 +177,9 @@ AUI.add(
 				}
 
 				if (cssClass.indexOf(AUTO) === -1) {
-					var directionMatch = cssClass.match(REGEX_DIRECTION);
+					const directionMatch = cssClass.match(REGEX_DIRECTION);
 
-					var direction =
+					const direction =
 						(directionMatch && directionMatch[1]) || AUTO;
 
 					if (direction.startsWith('down')) {
@@ -188,16 +188,16 @@ AUI.add(
 							MAP_ALIGN_DOWN.downright;
 					}
 					else {
-						var overlayHorizontal =
+						const overlayHorizontal =
 							mapAlignHorizontalOverlay[direction] ||
 							defaultOverlayHorizontalAlign;
-						var overlayVertical =
+						const overlayVertical =
 							MAP_ALIGN_VERTICAL_OVERLAY[direction] || STR_TOP;
 
-						var triggerHorizontal =
+						const triggerHorizontal =
 							mapAlignHorizontalTrigger[direction] ||
 							defaultTriggerHorizontalAlign;
-						var triggerVertical =
+						const triggerVertical =
 							MAP_ALIGN_VERTICAL_TRIGGER[direction] || STR_TOP;
 
 						alignPoints = [
@@ -211,12 +211,12 @@ AUI.add(
 			}),
 
 			_getMenu(trigger) {
-				var instance = this;
+				const instance = this;
 
-				var overlay = instance._overlay;
+				let overlay = instance._overlay;
 
 				if (!overlay) {
-					var MenuOverlay = A.Component.create({
+					const MenuOverlay = A.Component.create({
 						AUGMENTS: [
 							A.WidgetCssClass,
 							A.WidgetPosition,
@@ -258,17 +258,17 @@ AUI.add(
 					overlay.set('align.node', trigger);
 				}
 
-				var listContainer = trigger.getData('menuListContainer');
-				var menu = trigger.getData('menu');
-				var menuHeight = trigger.getData('menuHeight');
+				let listContainer = trigger.getData('menuListContainer');
+				let menu = trigger.getData('menu');
+				let menuHeight = trigger.getData('menuHeight');
 
-				var liveSearch = menu && MAP_LIVE_SEARCH[menu.guid()];
+				const liveSearch = menu && MAP_LIVE_SEARCH[menu.guid()];
 
 				if (liveSearch) {
 					liveSearch.reset();
 				}
 
-				var listItems;
+				let listItems;
 
 				if (!menu || !listContainer) {
 					listContainer = trigger.next('ul');
@@ -292,16 +292,16 @@ AUI.add(
 						listContainer.delegate(
 							'click',
 							(event) => {
-								var selectedListItem = event.currentTarget;
+								const selectedListItem = event.currentTarget;
 
-								var selectedListItemIcon = selectedListItem.one(
+								const selectedListItemIcon = selectedListItem.one(
 									'i'
 								);
 
-								var triggerIcon = trigger.one('i');
+								const triggerIcon = trigger.one('i');
 
 								if (selectedListItemIcon && triggerIcon) {
-									var selectedListItemIconClass = selectedListItemIcon.attr(
+									const selectedListItemIconClass = selectedListItemIcon.attr(
 										'class'
 									);
 
@@ -311,11 +311,11 @@ AUI.add(
 									);
 								}
 
-								var selectedListItemMessage = selectedListItem.one(
+								const selectedListItemMessage = selectedListItem.one(
 									'.lfr-icon-menu-text'
 								);
 
-								var triggerMessage = trigger.one(
+								const triggerMessage = trigger.one(
 									'.lfr-icon-menu-text'
 								);
 
@@ -352,16 +352,16 @@ AUI.add(
 			},
 
 			_getMenuHeight(trigger, menu, listItems) {
-				var instance = this;
+				const instance = this;
 
-				var cssClass = trigger.attr(ATTR_CLASS_NAME);
+				const cssClass = trigger.attr(ATTR_CLASS_NAME);
 
-				var height = AUTO;
+				let height = AUTO;
 
 				if (cssClass.indexOf('lfr-menu-expanded') === -1) {
-					var params = REGEX_MAX_DISPLAY_ITEMS.exec(cssClass);
+					const params = REGEX_MAX_DISPLAY_ITEMS.exec(cssClass);
 
-					var maxDisplayItems = params && parseInt(params[1], 10);
+					const maxDisplayItems = params && parseInt(params[1], 10);
 
 					if (maxDisplayItems && listItems.size() > maxDisplayItems) {
 						instance._getLiveSearch(
@@ -371,11 +371,11 @@ AUI.add(
 
 						height = 0;
 
-						var heights = listItems
+						const heights = listItems
 							.slice(0, maxDisplayItems)
 							.get('offsetHeight');
 
-						for (var i = heights.length - 1; i >= 0; i--) {
+						for (let i = heights.length - 1; i >= 0; i--) {
 							height += heights[i];
 						}
 					}
@@ -385,24 +385,24 @@ AUI.add(
 			},
 
 			_positionActiveMenu() {
-				var instance = this;
+				const instance = this;
 
-				var menu = instance._activeMenu;
-				var trigger = instance._activeTrigger;
+				const menu = instance._activeMenu;
+				const trigger = instance._activeTrigger;
 
 				if (menu) {
-					var cssClass = trigger.attr(ATTR_CLASS_NAME);
+					const cssClass = trigger.attr(ATTR_CLASS_NAME);
 
-					var overlay = instance._overlay;
+					const overlay = instance._overlay;
 
-					var align = overlay.get('align');
+					const align = overlay.get('align');
 
-					var listNode = menu.one('ul');
+					const listNode = menu.one('ul');
 
 					overlay.show();
 
-					var listNodeHeight = listNode.get('offsetHeight');
-					var listNodeWidth = listNode.get('offsetWidth');
+					const listNodeHeight = listNode.get('offsetHeight');
+					const listNodeWidth = listNode.get('offsetWidth');
 
 					align.points = instance._getAlignPoints(cssClass);
 
@@ -417,7 +417,7 @@ AUI.add(
 					});
 
 					if (!Util.isPhone() && !Util.isTablet()) {
-						var focusManager = overlay.bodyNode.focusManager;
+						const focusManager = overlay.bodyNode.focusManager;
 
 						if (focusManager) {
 							focusManager.focus(0);
@@ -430,7 +430,7 @@ AUI.add(
 					else {
 						trigger.get(PARENT_NODE).addClass(CSS_OPEN);
 
-						var portlet = trigger.ancestor(CSS_PORTLET);
+						const portlet = trigger.ancestor(CSS_PORTLET);
 
 						if (portlet) {
 							portlet.addClass(CSS_OPEN);
@@ -440,14 +440,14 @@ AUI.add(
 			},
 
 			_setARIARoles(trigger, menu) {
-				var links = menu.all(SELECTOR_ANCHOR);
+				const links = menu.all(SELECTOR_ANCHOR);
 
-				var searchContainer = menu.one(SELECTOR_SEARCH_CONTAINER);
+				const searchContainer = menu.one(SELECTOR_SEARCH_CONTAINER);
 
-				var listNode = menu.one('ul');
+				const listNode = menu.one('ul');
 
-				var ariaLinksAttr = 'menuitem';
-				var ariaListNodeAttr = 'menu';
+				const ariaLinksAttr = 'menuitem';
+				let ariaListNodeAttr = 'menu';
 
 				if (searchContainer) {
 					ariaListNodeAttr = 'listbox';
@@ -466,7 +466,7 @@ AUI.add(
 		};
 
 		Menu.handleFocus = function (id) {
-			var node = A.one(id);
+			const node = A.one(id);
 
 			if (node) {
 				node.delegate(
@@ -482,10 +482,10 @@ AUI.add(
 			}
 		};
 
-		var buffer = [];
+		const buffer = [];
 
 		Menu.register = function (id) {
-			var menuNode = document.getElementById(id);
+			const menuNode = document.getElementById(id);
 
 			if (menuNode) {
 				if (!Menu._INSTANCE) {
@@ -500,7 +500,7 @@ AUI.add(
 
 		Menu._registerTask = A.debounce(() => {
 			if (buffer.length) {
-				var nodes = A.all(buffer);
+				const nodes = A.all(buffer);
 
 				nodes.on(
 					[EVENT_CLICK, EVENT_KEYDOWN],
@@ -512,7 +512,7 @@ AUI.add(
 		}, 100);
 
 		Menu._targetLink = function (event, action) {
-			var anchor = event.currentTarget.one(SELECTOR_ANCHOR);
+			const anchor = event.currentTarget.one(SELECTOR_ANCHOR);
 
 			if (anchor) {
 				anchor[action]();
@@ -523,12 +523,12 @@ AUI.add(
 			Menu,
 			'_getFocusManager',
 			() => {
-				var menuInstance = Menu._INSTANCE;
+				const menuInstance = Menu._INSTANCE;
 
-				var focusManager = menuInstance._focusManager;
+				let focusManager = menuInstance._focusManager;
 
 				if (!focusManager) {
-					var bodyNode = menuInstance._overlay.bodyNode;
+					const bodyNode = menuInstance._overlay.bodyNode;
 
 					bodyNode.plug(A.Plugin.NodeFocusManager, {
 						circular: true,
@@ -543,7 +543,7 @@ AUI.add(
 					bodyNode.on(
 						'key',
 						() => {
-							var activeTrigger = menuInstance._activeTrigger;
+							const activeTrigger = menuInstance._activeTrigger;
 
 							if (activeTrigger) {
 								menuInstance._closeActiveMenu();
@@ -569,12 +569,12 @@ AUI.add(
 					);
 
 					focusManager.after('activeDescendantChange', (event) => {
-						var descendants = focusManager.get('descendants');
+						const descendants = focusManager.get('descendants');
 
-						var selectedItem = descendants.item(event.newVal);
+						const selectedItem = descendants.item(event.newVal);
 
 						if (selectedItem) {
-							var overlayList = bodyNode.one('ul');
+							const overlayList = bodyNode.one('ul');
 
 							if (overlayList) {
 								overlayList.setAttribute(
@@ -602,14 +602,14 @@ AUI.add(
 			Menu,
 			'_getLiveSearch',
 			(_trigger, menu) => {
-				var id = menu.guid();
+				const id = menu.guid();
 
-				var liveSearch = MAP_LIVE_SEARCH[id];
+				let liveSearch = MAP_LIVE_SEARCH[id];
 
 				if (!liveSearch) {
-					var listNode = menu.one('ul');
+					const listNode = menu.one('ul');
 
-					var results = [];
+					const results = [];
 
 					listNode.all('li').each((node) => {
 						results.push({
@@ -641,7 +641,7 @@ AUI.add(
 			Menu,
 			'_registerMenu',
 			(event) => {
-				var key = event.key || event.keyCode;
+				const key = event.key || event.keyCode;
 
 				if (
 					event.type === EVENT_KEYDOWN &&
@@ -650,13 +650,13 @@ AUI.add(
 					return;
 				}
 
-				var menuInstance = Menu._INSTANCE;
+				const menuInstance = Menu._INSTANCE;
 
-				var handles = menuInstance._handles;
+				const handles = menuInstance._handles;
 
-				var trigger = event.currentTarget;
+				const trigger = event.currentTarget;
 
-				var activeTrigger = menuInstance._activeTrigger;
+				const activeTrigger = menuInstance._activeTrigger;
 
 				if (activeTrigger) {
 					if (activeTrigger !== trigger) {
@@ -664,7 +664,7 @@ AUI.add(
 
 						activeTrigger.get(PARENT_NODE).removeClass(CSS_OPEN);
 
-						var portlet = activeTrigger.ancestor(CSS_PORTLET);
+						const portlet = activeTrigger.ancestor(CSS_PORTLET);
 
 						if (portlet) {
 							portlet.removeClass(CSS_OPEN);
@@ -678,7 +678,7 @@ AUI.add(
 				}
 
 				if (!trigger.hasClass('disabled')) {
-					var menu = menuInstance._getMenu(trigger);
+					const menu = menuInstance._getMenu(trigger);
 
 					menuInstance._activeMenu = menu;
 					menuInstance._activeTrigger = trigger;
@@ -688,7 +688,7 @@ AUI.add(
 					});
 
 					if (!handles.length) {
-						var listContainer = trigger.getData(
+						const listContainer = trigger.getData(
 							'menuListContainer'
 						);
 
@@ -724,7 +724,7 @@ AUI.add(
 							})
 						);
 
-						var DDM = A.DD && A.DD.DDM;
+						const DDM = A.DD && A.DD.DDM;
 
 						if (DDM) {
 							handles.push(

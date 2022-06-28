@@ -76,10 +76,6 @@ function showDropdown() {
 function hideDropdown() {
 	button.removeAttribute('aria-expanded');
 	dropdown.classList.remove('show');
-
-	if (searchInput) {
-		searchInput.value = '';
-	}
 }
 
 function getActiveDesdendant() {
@@ -118,6 +114,10 @@ function handleButtonClick() {
 
 		if (searchInput) {
 			searchInput.focus();
+
+			if (searchInput) {
+				searchInput.setSelectionRange(0, searchInput.value.length);
+			}
 		}
 		else {
 			listbox.focus();

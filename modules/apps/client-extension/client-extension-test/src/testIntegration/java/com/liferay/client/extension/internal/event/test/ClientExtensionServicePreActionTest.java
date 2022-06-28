@@ -94,9 +94,7 @@ public class ClientExtensionServicePreActionTest {
 
 	@Test
 	public void testProcessServicePreActionLayout() throws Exception {
-		String faviconURL = "http://" + RandomTestUtil.randomString() + ".com";
-
-		_addClientExtensionEntry(faviconURL);
+		_addClientExtensionEntry();
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -117,14 +115,12 @@ public class ClientExtensionServicePreActionTest {
 			(ThemeDisplay)mockHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Assert.assertEquals(faviconURL, themeDisplay.getFaviconURL());
+		Assert.assertEquals(_FAVICON_URL, themeDisplay.getFaviconURL());
 	}
 
 	@Test
 	public void testProcessServicePreActionLayoutSet() throws Exception {
-		String faviconURL = "http://" + RandomTestUtil.randomString() + ".com";
-
-		_addClientExtensionEntry(faviconURL);
+		_addClientExtensionEntry();
 
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			_group.getGroupId(), false);
@@ -149,14 +145,12 @@ public class ClientExtensionServicePreActionTest {
 			(ThemeDisplay)mockHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Assert.assertEquals(faviconURL, themeDisplay.getFaviconURL());
+		Assert.assertEquals(_FAVICON_URL, themeDisplay.getFaviconURL());
 	}
 
 	@Test
 	public void testProcessServicePreActionMasterLayout() throws Exception {
-		String faviconURL = "http://" + RandomTestUtil.randomString() + ".com";
-
-		_addClientExtensionEntry(faviconURL);
+		_addClientExtensionEntry();
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
@@ -190,10 +184,10 @@ public class ClientExtensionServicePreActionTest {
 			(ThemeDisplay)mockHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Assert.assertEquals(faviconURL, themeDisplay.getFaviconURL());
+		Assert.assertEquals(_FAVICON_URL, themeDisplay.getFaviconURL());
 	}
 
-	private void _addClientExtensionEntry(String faviconURL) throws Exception {
+	private void _addClientExtensionEntry() throws Exception {
 		_clientExtensionEntry =
 			_clientExtensionEntryLocalService.addClientExtensionEntry(
 				RandomTestUtil.randomString(), _user.getUserId(),
@@ -205,7 +199,7 @@ public class ClientExtensionServicePreActionTest {
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
-					"url", faviconURL
+					"url", _FAVICON_URL
 				).buildString());
 	}
 
@@ -255,6 +249,9 @@ public class ClientExtensionServicePreActionTest {
 			new LifecycleEvent(
 				mockHttpServletRequest, new MockHttpServletResponse()));
 	}
+
+	private static final String _FAVICON_URL =
+		"http://" + RandomTestUtil.randomString() + ".com";
 
 	private ClientExtensionEntry _clientExtensionEntry;
 

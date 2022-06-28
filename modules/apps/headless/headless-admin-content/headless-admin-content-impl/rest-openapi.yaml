@@ -208,6 +208,14 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
                   name: page
                   schema:
                       type: integer
@@ -314,9 +322,17 @@ paths:
                           type: string
                       type: array
                 - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
                 - in: query
                   name: filter
                   schema:
@@ -452,6 +468,14 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
                 - in: header
                   name: Accept-Language
                   schema:

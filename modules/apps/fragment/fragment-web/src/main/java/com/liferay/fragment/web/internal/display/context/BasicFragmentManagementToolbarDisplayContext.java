@@ -24,6 +24,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
+import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -312,8 +313,9 @@ public class BasicFragmentManagementToolbarDisplayContext
 
 	private static final InfoFieldType[] _INFO_FIELD_TYPES = {
 		BooleanInfoFieldType.INSTANCE, CaptchaInfoFieldType.INSTANCE,
-		DateInfoFieldType.INSTANCE, NumberInfoFieldType.INSTANCE,
-		SelectInfoFieldType.INSTANCE, TextInfoFieldType.INSTANCE
+		DateInfoFieldType.INSTANCE, FileInfoFieldType.INSTANCE,
+		NumberInfoFieldType.INSTANCE, SelectInfoFieldType.INSTANCE,
+		TextInfoFieldType.INSTANCE
 	};
 
 }

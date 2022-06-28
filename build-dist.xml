@@ -508,14 +508,18 @@ release was successful.</echo>
 	</target>
 
 	<target name="generate-tomcat-setenv">
-		<echo file="tools/servers/tomcat/bin/setenv.sh">CATALINA_OPTS="$CATALINA_OPTS ${app.server.tomcat.jvm.args} ${app.server.tomcat.jvm.mem}"</echo>
+		<echo file="tools/servers/tomcat/bin/setenv.sh">CATALINA_OPTS="$CATALINA_OPTS ${app.server.tomcat.jvm.args} ${app.server.tomcat.jvm.mem}"
+
+JDK_JAVA_OPTIONS="$JDK_JAVA_OPTIONS --add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED"</echo>
 
 		<chmod
 			file="tools/servers/tomcat/bin/setenv.sh"
 			perm="a+x"
 		/>
 
-		<echo file="tools/servers/tomcat/bin/setenv.bat">set "CATALINA_OPTS=%CATALINA_OPTS% ${app.server.tomcat.jvm.args} ${app.server.tomcat.jvm.mem}"</echo>
+		<echo file="tools/servers/tomcat/bin/setenv.bat">set "CATALINA_OPTS=%CATALINA_OPTS% ${app.server.tomcat.jvm.args} ${app.server.tomcat.jvm.mem}"
+
+set "JDK_JAVA_OPTIONS=%JDK_JAVA_OPTIONS% --add-opens=jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED"</echo>
 	</target>
 
 	<target name="install-weblogic14-setup-files">

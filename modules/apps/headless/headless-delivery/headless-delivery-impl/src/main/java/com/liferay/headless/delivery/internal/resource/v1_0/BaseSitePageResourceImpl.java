@@ -96,7 +96,7 @@ public abstract class BaseSitePageResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictedFields"
+				name = "restrictFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -169,7 +169,7 @@ public abstract class BaseSitePageResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictedFields"
+				name = "restrictFields"
 			)
 		}
 	)
@@ -218,7 +218,7 @@ public abstract class BaseSitePageResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictedFields"
+				name = "restrictFields"
 			)
 		}
 	)
@@ -273,7 +273,7 @@ public abstract class BaseSitePageResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictedFields"
+				name = "restrictFields"
 			)
 		}
 	)
@@ -332,7 +332,7 @@ public abstract class BaseSitePageResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictedFields"
+				name = "restrictFields"
 			)
 		}
 	)
@@ -387,7 +387,7 @@ public abstract class BaseSitePageResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictedFields"
+				name = "restrictFields"
 			)
 		}
 	)

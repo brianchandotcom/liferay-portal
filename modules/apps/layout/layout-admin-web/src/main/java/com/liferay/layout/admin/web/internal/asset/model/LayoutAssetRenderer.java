@@ -83,11 +83,10 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 
 		Locale locale = getLocale(portletRequest);
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(3);
 
-		sb.append("<strong>");
 		sb.append(LanguageUtil.get(locale, "page"));
-		sb.append(":</strong> ");
+		sb.append(": ");
 		sb.append(_layout.getHTMLTitle(locale));
 
 		if (_layout.isTypeContent() &&

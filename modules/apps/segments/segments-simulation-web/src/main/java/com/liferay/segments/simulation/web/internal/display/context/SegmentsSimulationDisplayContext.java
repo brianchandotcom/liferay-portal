@@ -15,6 +15,8 @@
 package com.liferay.segments.simulation.web.internal.display.context;
 
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -47,6 +49,7 @@ public class SegmentsSimulationDisplayContext {
 		HttpServletRequest httpServletRequest,
 		SegmentsConfigurationProvider segmentsConfigurationProvider) {
 
+		_httpServletRequest = httpServletRequest;
 		_segmentsConfigurationProvider = segmentsConfigurationProvider;
 
 		RenderResponse renderResponse =
@@ -71,6 +74,18 @@ public class SegmentsSimulationDisplayContext {
 	public String getPortletNamespace() {
 		return PortalUtil.getPortletNamespace(
 			SegmentsPortletKeys.SEGMENTS_SIMULATION);
+	}
+
+	public String getSegmentsConfigurationURL() {
+		try {
+			return _segmentsConfigurationProvider.getConfigurationURL(
+				_httpServletRequest);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public List<SegmentsEntry> getSegmentsEntries() {
@@ -146,6 +161,7 @@ public class SegmentsSimulationDisplayContext {
 		SegmentsSimulationDisplayContext.class);
 
 	private Long _groupId;
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
 	private List<SegmentsEntry> _segmentsEntries;

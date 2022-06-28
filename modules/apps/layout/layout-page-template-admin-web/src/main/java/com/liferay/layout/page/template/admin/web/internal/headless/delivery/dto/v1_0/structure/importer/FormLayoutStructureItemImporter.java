@@ -65,14 +65,19 @@ public class FormLayoutStructureItemImporter
 			return formStyledLayoutStructureItem;
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147511")) &&
-			definitionMap.containsKey("cssClasses")) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147511"))) {
+			if (definitionMap.containsKey("cssClasses")) {
+				List<String> cssClasses = (List<String>)definitionMap.get(
+					"cssClasses");
 
-			List<String> cssClasses = (List<String>)definitionMap.get(
-				"cssClasses");
+				formStyledLayoutStructureItem.setCssClasses(
+					new HashSet<>(cssClasses));
+			}
 
-			formStyledLayoutStructureItem.setCssClasses(
-				new HashSet<>(cssClasses));
+			if (definitionMap.containsKey("customCSS")) {
+				formStyledLayoutStructureItem.setCustomCSS(
+					String.valueOf(definitionMap.get("customCSS")));
+			}
 		}
 
 		Map<String, Object> sourceMap = (Map<String, Object>)definitionMap.get(

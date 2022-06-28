@@ -398,4 +398,36 @@ definition {
 			}
         }
 	}
+
+	macro checkProductId { 
+		for (var value : list "${list}") { 
+            var productName = StringUtil.extractFirst("${value}", ":");
+            var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
+
+            var status = StringUtil.extractFirst("${value}", ":");
+            var value = StringUtil.replaceFirst("${value}", "${status}:", "");
+
+			var productId = "${value}";
+
+
+            echo("--------------------------");
+            echo("productName: ${productName}");
+            echo("status: ${status}");
+            echo("productId: ${productId}");
+            echo("--------------------------");
+
+            Click(
+			    key_productName = "${productName}",
+			    key_status = "${status}",
+			    locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+
+            CommerceProducts.checkProductIdsEqual(
+                firstProductId = "${productId}",
+				secondProductId = selenium.getText("CommerceEntry#PRODUCT_ID"),
+                status = "${status}");
+
+            Navigator.gotoBack();
+
+        } 
+	}
 }

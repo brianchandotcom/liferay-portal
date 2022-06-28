@@ -55,7 +55,7 @@ if (commerceOrder != null) {
 				'click',
 				(event) => {
 					var actionURL =
-						'<%= PortalUtil.getPortalURL(request) + "/o/commerce-ui/order/" + commerceOrder.getCommerceOrderId() + "/coupon-code" %>';
+						'<%= PortalUtil.getPortalURL(request) + PortalUtil.getPathContext() + "/o/commerce-ui/order/" + commerceOrder.getCommerceOrderId() + "/coupon-code" %>';
 
 					Liferay.Util.fetch(actionURL, {
 						method: 'post',
@@ -104,7 +104,7 @@ if (commerceOrder != null) {
 				'click',
 				(event) => {
 					var actionURL =
-						'<%= PortalUtil.getPortalURL(request) + "/o/commerce-ui/order/" + commerceOrder.getCommerceOrderId() + "/coupon-code/" %>';
+						'<%= PortalUtil.getPortalURL(request) + PortalUtil.getPathContext() + "/o/commerce-ui/order/" + commerceOrder.getCommerceOrderId() + "/coupon-code/" %>';
 
 					actionURL =
 						actionURL +

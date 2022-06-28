@@ -21,7 +21,7 @@ CommerceChannelDisplayContext commerceChannelDisplayContext = (CommerceChannelDi
 
 CommerceChannel commerceChannel = commerceChannelDisplayContext.getCommerceChannel();
 
-String thumbnailURL = PortalUtil.getPortalURL(request) + "/o/commerce-channel-web/images/channel-default-icon.svg";
+String thumbnailURL = PortalUtil.getPortalURL(request) + PortalUtil.getPathContext() + "/o/commerce-channel-web/images/channel-default-icon.svg";
 
 portletDisplay.setShowBackIcon(true);
 

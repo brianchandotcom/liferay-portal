@@ -142,10 +142,11 @@ public class PortletDisplayTemplatePortletDataHandler
 		List<Long> classNameIds = _getClassNameIds(portletDataContext);
 
 		for (Element ddmTemplateElement : ddmTemplateElements) {
-			long classNameId = _portal.getClassNameId(
-				ddmTemplateElement.attributeValue("attached-class-name"));
+			if (classNameIds.contains(
+					_portal.getClassNameId(
+						ddmTemplateElement.attributeValue(
+							"attached-class-name")))) {
 
-			if (classNameIds.contains(classNameId)) {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, ddmTemplateElement);
 			}

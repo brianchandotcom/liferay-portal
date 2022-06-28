@@ -227,11 +227,9 @@ public class OpenAPIUtilTest {
 
 		Assert.assertTrue(createEntityScopes.isEmpty());
 
-		createEntityScopes = OpenAPIUtil.getCreateEntityScopes(
-			"Test", _openAPIYAML);
-
 		Assert.assertEquals(
-			Collections.singletonList("scope"), createEntityScopes);
+			Collections.singletonList("scope"),
+			OpenAPIUtil.getCreateEntityScopes("Test", _openAPIYAML));
 	}
 
 	@Test
@@ -266,11 +264,9 @@ public class OpenAPIUtilTest {
 
 		Assert.assertTrue(readEntityScopes.isEmpty());
 
-		readEntityScopes = OpenAPIUtil.getReadEntityScopes(
-			"Test", _openAPIYAML);
-
 		Assert.assertEquals(
-			Collections.singletonList("scope"), readEntityScopes);
+			Collections.singletonList("scope"),
+			OpenAPIUtil.getReadEntityScopes("Test", _openAPIYAML));
 	}
 
 	private void _assertField(

@@ -81,11 +81,8 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionPersistence.create(kaleoDefinitionVersionId);
 
-		long groupId = _staging.getLiveGroupId(
-			serviceContext.getScopeGroupId());
-
-		kaleoDefinitionVersion.setGroupId(groupId);
-
+		kaleoDefinitionVersion.setGroupId(
+			_staging.getLiveGroupId(serviceContext.getScopeGroupId()));
 		kaleoDefinitionVersion.setCompanyId(user.getCompanyId());
 		kaleoDefinitionVersion.setUserId(user.getUserId());
 		kaleoDefinitionVersion.setUserName(user.getFullName());
@@ -97,13 +94,10 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		kaleoDefinitionVersion.setDescription(description);
 		kaleoDefinitionVersion.setContent(content);
 		kaleoDefinitionVersion.setVersion(version);
-
-		int status = GetterUtil.getInteger(
-			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_APPROVED);
-
-		kaleoDefinitionVersion.setStatus(status);
-
+		kaleoDefinitionVersion.setStatus(
+			GetterUtil.getInteger(
+				serviceContext.getAttribute("status"),
+				WorkflowConstants.STATUS_APPROVED));
 		kaleoDefinitionVersion.setStatusByUserId(user.getUserId());
 		kaleoDefinitionVersion.setStatusByUserName(user.getFullName());
 		kaleoDefinitionVersion.setStatusDate(modifiedDate);

@@ -38,21 +38,33 @@ function debounce(fn, delay) {
 }
 
 function repositionDropdown() {
-	if (document.body.contains(wrapper)) {
-		if (wrapper.contains(dropdown)) {
-			document.body.appendChild(dropdown);
-		}
-	}
-	else if (document.body.contains(dropdown)) {
-		document.body.removeChild(dropdown);
-	}
-
 	const buttonRect = button.getBoundingClientRect();
 
-	dropdown.style.transform = `
-		translateX(${buttonRect.left + window.scrollX}px)
-		translateY(${buttonRect.bottom + window.scrollY}px)
-	`;
+	if (layoutMode === 'edit') {
+		dropdown.style.position = 'fixed';
+
+		dropdown.style.transform = `
+			translateX(${buttonRect.left}px)
+			translateY(${buttonRect.bottom}px)
+		`;
+	}
+	else {
+		if (document.body.contains(wrapper)) {
+			if (wrapper.contains(dropdown)) {
+				document.body.appendChild(dropdown);
+			}
+		}
+		else if (document.body.contains(dropdown)) {
+			dropdown.parentNode.removeChild(dropdown);
+		}
+
+		dropdown.style.position = 'absolute';
+
+		dropdown.style.transform = `
+			translateX(${buttonRect.left + window.scrollX}px)
+			translateY(${buttonRect.bottom + window.scrollY}px)
+		`;
+	}
 }
 
 function showDropdown() {
@@ -372,7 +384,6 @@ if (listbox.children.length) {
 	}
 
 	dropdown.style.left = '0';
-	dropdown.style.position = 'absolute';
 	dropdown.style.top = '0';
 
 	repositionDropdown();

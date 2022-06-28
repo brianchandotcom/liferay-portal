@@ -3240,6 +3240,11 @@ components:
                     items:
                         type: string
                     type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the fragment.
+                    type: string
                 displayAllItems:
                     # @review
                     description:
@@ -3459,6 +3464,11 @@ components:
                     items:
                         type: string
                     type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the fragment.
+                    type: string
                 formConfig:
                     # @review
                     description:
@@ -3512,6 +3522,11 @@ components:
                     items:
                         type: string
                     type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the fragment.
+                    type: string
                 fragment:
                     allOf:
                         - $ref: "#/components/schemas/Fragment"
@@ -3575,6 +3590,11 @@ components:
                     items:
                         type: string
                     type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the fragment.
+                    type: string
                 fragmentStyle:
                     allOf:
                         - $ref: "#/components/schemas/FragmentStyle"
@@ -3696,6 +3716,11 @@ components:
                     items:
                         type: string
                     type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the fragment.
+                    type: string
                 fragmentLink:
                     allOf:
                         - $ref: "#/components/schemas/FragmentLink"
@@ -3978,6 +4003,11 @@ components:
                     items:
                         type: string
                     type: array
+                customCSS:
+                    # @review
+                    description:
+                        Custom CSS that is applied on the fragment.
+                    type: string
                 fragmentStyle:
                     allOf:
                         - $ref: "#/components/schemas/FragmentStyle"

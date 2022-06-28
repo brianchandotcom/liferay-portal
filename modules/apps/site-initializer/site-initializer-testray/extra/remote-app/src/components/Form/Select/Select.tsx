@@ -19,7 +19,6 @@ import {BaseWrapper} from '../Base';
 
 type InputSelectProps = {
 	className?: string;
-
 	defaultOption?: boolean;
 	errors?: any;
 	id?: string;

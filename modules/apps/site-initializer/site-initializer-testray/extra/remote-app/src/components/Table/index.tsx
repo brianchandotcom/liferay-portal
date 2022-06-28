@@ -39,6 +39,7 @@ export type TableProps<T = any> = {
 	columns: Column[];
 	items: T[];
 	navigateTo?: (item: T) => string;
+	onClickRow?: (item: T) => void;
 	onSelectAllRows: () => void;
 	onSelectRow?: (row: any) => void;
 	onSort: (columnTable: string, direction: SortDirection) => void;
@@ -52,6 +53,7 @@ const Table: React.FC<TableProps> = ({
 	columns,
 	items,
 	navigateTo,
+	onClickRow,
 	onSelectRow,
 	onSelectAllRows,
 	onSort,
@@ -171,8 +173,14 @@ const Table: React.FC<TableProps> = ({
 								})}
 								key={columnIndex}
 								onClick={() => {
-									if (navigateTo && column.clickable) {
-										navigate(navigateTo(item));
+									if (column.clickable) {
+										if (onClickRow) {
+											onClickRow(item);
+										}
+
+										if (navigateTo) {
+											navigate(navigateTo(item));
+										}
 									}
 								}}
 							>

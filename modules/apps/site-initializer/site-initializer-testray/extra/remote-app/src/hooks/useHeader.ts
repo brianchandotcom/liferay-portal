@@ -44,7 +44,7 @@ const useHeader = ({
 	useDropdown,
 	useTabs = initialState.tabs,
 }: UseHeader = {}) => {
-	const [, dispatch] = useContext(HeaderContext);
+	const [context, dispatch] = useContext(HeaderContext);
 
 	const useActionString = JSON.stringify(useAction);
 	const useDropdownString = JSON.stringify(useDropdown);
@@ -129,6 +129,7 @@ const useHeader = ({
 	}, [setDropdown, useDropdownString]);
 
 	return {
+		context,
 		dispatch,
 		setActions,
 		setDropdown,

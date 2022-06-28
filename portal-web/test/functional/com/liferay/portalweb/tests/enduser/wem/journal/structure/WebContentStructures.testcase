@@ -518,8 +518,6 @@ definition {
 				webContentLinkToPage = "Test Great Grand Child Page",
 				webContentTitle = "Web Content Title");
 
-			Pause(locator1 = "3000");
-
 			WebContent.viewWithStructureCP(
 				predefinedValue = "true",
 				webContentLinkToPage = "Test Great Grand Child Page");

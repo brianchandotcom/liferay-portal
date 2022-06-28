@@ -500,4 +500,63 @@ definition {
 			optionLabelList = "Option 1,Option 2,Option 3");
 	}
 
+	@description = "Check if Single Selection Field details can be seen."
+	@priority = "4"
+	test ViewSingleSelectionFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Single Selection Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DEBuilder.openField(
+			fieldLabel = "Single Selection",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Single Selection",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Single Selection");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Single Selection");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Single Selection");
+
+		DataEngine.assertInlineField(fieldFieldLabel = "Single Selection");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Single Selection Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Single Selection",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		DataEngine.viewFieldSearchable(
+			fieldFieldLabel = "Single Selection",
+			searchableType = "Keyword");
+
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Single Selection");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Single Selection");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Single Selection");
+
+		DataEngine.assertInlineField(fieldFieldLabel = "Single Selection");
+	}
+
 }

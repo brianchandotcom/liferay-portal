@@ -150,7 +150,7 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		path = path + StringPool.SLASH + getFragmentEntryKey();
 
 		JSONObject jsonObject = JSONUtil.put(
-			"configurationPath", "index.json"
+			"configurationPath", "configuration.json"
 		).put(
 			"cssPath", "index.css"
 		).put(
@@ -198,9 +198,9 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 				FragmentExportImportConstants.FILE_NAME_FRAGMENT,
 			jsonObject.toString(2));
 
+		zipWriter.addEntry(path + "/configuration.json", getConfiguration());
 		zipWriter.addEntry(path + "/index.css", getCss());
 		zipWriter.addEntry(path + "/index.js", getJs());
-		zipWriter.addEntry(path + "/index.json", getConfiguration());
 		zipWriter.addEntry(path + "/index.html", getHtml());
 
 		if (previewFileEntry != null) {

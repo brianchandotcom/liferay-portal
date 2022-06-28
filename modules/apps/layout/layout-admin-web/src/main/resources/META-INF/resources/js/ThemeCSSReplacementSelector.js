@@ -18,6 +18,7 @@ import {openSelectionModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 export default function ThemeCSSReplacementSelector({
+	placeholder,
 	portletNamespace,
 	selectThemeCSSClientExtensionEventName,
 	selectThemeCSSClientExtensionURL,
@@ -62,9 +63,7 @@ export default function ThemeCSSReplacementSelector({
 						<ClayInput
 							id={`${portletNamespace}themeCSSReplacementExtension`}
 							onClick={onClick}
-							placeholder={Liferay.Language.get(
-								'no-theme-css-extension-loaded'
-							)}
+							placeholder={placeholder}
 							readOnly
 							type="text"
 							value={extensionName}

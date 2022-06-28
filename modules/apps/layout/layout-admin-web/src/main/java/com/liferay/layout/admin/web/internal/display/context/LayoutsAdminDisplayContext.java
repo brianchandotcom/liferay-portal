@@ -1250,6 +1250,10 @@ public class LayoutsAdminDisplayContext {
 					ClientExtensionEntryConstants.TYPE_THEME_CSS);
 
 		return HashMapBuilder.<String, Object>put(
+			"placeholder",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "no-theme-css-extension-loaded")
+		).put(
 			"selectThemeCSSClientExtensionEventName",
 			selectThemeCSSClientExtensionEventName
 		).put(

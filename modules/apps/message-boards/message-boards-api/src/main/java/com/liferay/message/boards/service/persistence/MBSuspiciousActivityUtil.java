@@ -550,68 +550,179 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.
+	 * Returns all the message boards suspicious activities where messageId = &#63;.
 	 *
-	 * @param userId the user ID
 	 * @param messageId the message ID
-	 * @return the matching message boards suspicious activity
+	 * @return the matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByMessagedId(long messageId) {
+		return getPersistence().findByMessagedId(messageId);
+	}
+
+	/**
+	 * Returns a range of all the message boards suspicious activities where messageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBSuspiciousActivityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param messageId the message ID
+	 * @param start the lower bound of the range of message boards suspicious activities
+	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
+	 * @return the range of matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByMessagedId(
+		long messageId, int start, int end) {
+
+		return getPersistence().findByMessagedId(messageId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards suspicious activities where messageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBSuspiciousActivityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param messageId the message ID
+	 * @param start the lower bound of the range of message boards suspicious activities
+	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByMessagedId(
+		long messageId, int start, int end,
+		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
+
+		return getPersistence().findByMessagedId(
+			messageId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards suspicious activities where messageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBSuspiciousActivityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param messageId the message ID
+	 * @param start the lower bound of the range of message boards suspicious activities
+	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByMessagedId(
+		long messageId, int start, int end,
+		OrderByComparator<MBSuspiciousActivity> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByMessagedId(
+			messageId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first message boards suspicious activity in the ordered set where messageId = &#63;.
+	 *
+	 * @param messageId the message ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards suspicious activity
 	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
 	 */
-	public static MBSuspiciousActivity findByU_M(long userId, long messageId)
+	public static MBSuspiciousActivity findByMessagedId_First(
+			long messageId,
+			OrderByComparator<MBSuspiciousActivity> orderByComparator)
 		throws com.liferay.message.boards.exception.
 			NoSuchSuspiciousActivityException {
 
-		return getPersistence().findByU_M(userId, messageId);
+		return getPersistence().findByMessagedId_First(
+			messageId, orderByComparator);
 	}
 
 	/**
-	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the first message boards suspicious activity in the ordered set where messageId = &#63;.
 	 *
-	 * @param userId the user ID
 	 * @param messageId the message ID
-	 * @return the matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
 	 */
-	public static MBSuspiciousActivity fetchByU_M(long userId, long messageId) {
-		return getPersistence().fetchByU_M(userId, messageId);
+	public static MBSuspiciousActivity fetchByMessagedId_First(
+		long messageId,
+		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
+
+		return getPersistence().fetchByMessagedId_First(
+			messageId, orderByComparator);
 	}
 
 	/**
-	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the last message boards suspicious activity in the ordered set where messageId = &#63;.
 	 *
-	 * @param userId the user ID
 	 * @param messageId the message ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards suspicious activity
+	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
 	 */
-	public static MBSuspiciousActivity fetchByU_M(
-		long userId, long messageId, boolean useFinderCache) {
-
-		return getPersistence().fetchByU_M(userId, messageId, useFinderCache);
-	}
-
-	/**
-	 * Removes the message boards suspicious activity where userId = &#63; and messageId = &#63; from the database.
-	 *
-	 * @param userId the user ID
-	 * @param messageId the message ID
-	 * @return the message boards suspicious activity that was removed
-	 */
-	public static MBSuspiciousActivity removeByU_M(long userId, long messageId)
+	public static MBSuspiciousActivity findByMessagedId_Last(
+			long messageId,
+			OrderByComparator<MBSuspiciousActivity> orderByComparator)
 		throws com.liferay.message.boards.exception.
 			NoSuchSuspiciousActivityException {
 
-		return getPersistence().removeByU_M(userId, messageId);
+		return getPersistence().findByMessagedId_Last(
+			messageId, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of message boards suspicious activities where userId = &#63; and messageId = &#63;.
+	 * Returns the last message boards suspicious activity in the ordered set where messageId = &#63;.
 	 *
-	 * @param userId the user ID
+	 * @param messageId the message ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
+	 */
+	public static MBSuspiciousActivity fetchByMessagedId_Last(
+		long messageId,
+		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
+
+		return getPersistence().fetchByMessagedId_Last(
+			messageId, orderByComparator);
+	}
+
+	/**
+	 * Returns the message boards suspicious activities before and after the current message boards suspicious activity in the ordered set where messageId = &#63;.
+	 *
+	 * @param suspiciousActivityId the primary key of the current message boards suspicious activity
+	 * @param messageId the message ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next message boards suspicious activity
+	 * @throws NoSuchSuspiciousActivityException if a message boards suspicious activity with the primary key could not be found
+	 */
+	public static MBSuspiciousActivity[] findByMessagedId_PrevAndNext(
+			long suspiciousActivityId, long messageId,
+			OrderByComparator<MBSuspiciousActivity> orderByComparator)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getPersistence().findByMessagedId_PrevAndNext(
+			suspiciousActivityId, messageId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the message boards suspicious activities where messageId = &#63; from the database.
+	 *
+	 * @param messageId the message ID
+	 */
+	public static void removeByMessagedId(long messageId) {
+		getPersistence().removeByMessagedId(messageId);
+	}
+
+	/**
+	 * Returns the number of message boards suspicious activities where messageId = &#63;.
+	 *
 	 * @param messageId the message ID
 	 * @return the number of matching message boards suspicious activities
 	 */
-	public static int countByU_M(long userId, long messageId) {
-		return getPersistence().countByU_M(userId, messageId);
+	public static int countByMessagedId(long messageId) {
+		return getPersistence().countByMessagedId(messageId);
 	}
 
 	/**
@@ -791,179 +902,68 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Returns all the message boards suspicious activities where messageId = &#63;.
+	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or throws a <code>NoSuchSuspiciousActivityException</code> if it could not be found.
 	 *
+	 * @param userId the user ID
 	 * @param messageId the message ID
-	 * @return the matching message boards suspicious activities
+	 * @return the matching message boards suspicious activity
+	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
 	 */
-	public static List<MBSuspiciousActivity> findByMessagedId(long messageId) {
-		return getPersistence().findByMessagedId(messageId);
+	public static MBSuspiciousActivity findByU_M(long userId, long messageId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
+
+		return getPersistence().findByU_M(userId, messageId);
 	}
 
 	/**
-	 * Returns a range of all the message boards suspicious activities where messageId = &#63;.
+	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBSuspiciousActivityModelImpl</code>.
-	 * </p>
-	 *
+	 * @param userId the user ID
 	 * @param messageId the message ID
-	 * @param start the lower bound of the range of message boards suspicious activities
-	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
-	 * @return the range of matching message boards suspicious activities
+	 * @return the matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
 	 */
-	public static List<MBSuspiciousActivity> findByMessagedId(
-		long messageId, int start, int end) {
-
-		return getPersistence().findByMessagedId(messageId, start, end);
+	public static MBSuspiciousActivity fetchByU_M(long userId, long messageId) {
+		return getPersistence().fetchByU_M(userId, messageId);
 	}
 
 	/**
-	 * Returns an ordered range of all the message boards suspicious activities where messageId = &#63;.
+	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBSuspiciousActivityModelImpl</code>.
-	 * </p>
-	 *
+	 * @param userId the user ID
 	 * @param messageId the message ID
-	 * @param start the lower bound of the range of message boards suspicious activities
-	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByMessagedId(
-		long messageId, int start, int end,
-		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
-
-		return getPersistence().findByMessagedId(
-			messageId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards suspicious activities where messageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBSuspiciousActivityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param messageId the message ID
-	 * @param start the lower bound of the range of message boards suspicious activities
-	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching message boards suspicious activities
+	 * @return the matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
 	 */
-	public static List<MBSuspiciousActivity> findByMessagedId(
-		long messageId, int start, int end,
-		OrderByComparator<MBSuspiciousActivity> orderByComparator,
-		boolean useFinderCache) {
+	public static MBSuspiciousActivity fetchByU_M(
+		long userId, long messageId, boolean useFinderCache) {
 
-		return getPersistence().findByMessagedId(
-			messageId, start, end, orderByComparator, useFinderCache);
+		return getPersistence().fetchByU_M(userId, messageId, useFinderCache);
 	}
 
 	/**
-	 * Returns the first message boards suspicious activity in the ordered set where messageId = &#63;.
+	 * Removes the message boards suspicious activity where userId = &#63; and messageId = &#63; from the database.
 	 *
+	 * @param userId the user ID
 	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
+	 * @return the message boards suspicious activity that was removed
 	 */
-	public static MBSuspiciousActivity findByMessagedId_First(
-			long messageId,
-			OrderByComparator<MBSuspiciousActivity> orderByComparator)
+	public static MBSuspiciousActivity removeByU_M(long userId, long messageId)
 		throws com.liferay.message.boards.exception.
 			NoSuchSuspiciousActivityException {
 
-		return getPersistence().findByMessagedId_First(
-			messageId, orderByComparator);
+		return getPersistence().removeByU_M(userId, messageId);
 	}
 
 	/**
-	 * Returns the first message boards suspicious activity in the ordered set where messageId = &#63;.
+	 * Returns the number of message boards suspicious activities where userId = &#63; and messageId = &#63;.
 	 *
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity fetchByMessagedId_First(
-		long messageId,
-		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
-
-		return getPersistence().fetchByMessagedId_First(
-			messageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last message boards suspicious activity in the ordered set where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity findByMessagedId_Last(
-			long messageId,
-			OrderByComparator<MBSuspiciousActivity> orderByComparator)
-		throws com.liferay.message.boards.exception.
-			NoSuchSuspiciousActivityException {
-
-		return getPersistence().findByMessagedId_Last(
-			messageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last message boards suspicious activity in the ordered set where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity fetchByMessagedId_Last(
-		long messageId,
-		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
-
-		return getPersistence().fetchByMessagedId_Last(
-			messageId, orderByComparator);
-	}
-
-	/**
-	 * Returns the message boards suspicious activities before and after the current message boards suspicious activity in the ordered set where messageId = &#63;.
-	 *
-	 * @param suspiciousActivityId the primary key of the current message boards suspicious activity
-	 * @param messageId the message ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a message boards suspicious activity with the primary key could not be found
-	 */
-	public static MBSuspiciousActivity[] findByMessagedId_PrevAndNext(
-			long suspiciousActivityId, long messageId,
-			OrderByComparator<MBSuspiciousActivity> orderByComparator)
-		throws com.liferay.message.boards.exception.
-			NoSuchSuspiciousActivityException {
-
-		return getPersistence().findByMessagedId_PrevAndNext(
-			suspiciousActivityId, messageId, orderByComparator);
-	}
-
-	/**
-	 * Removes all the message boards suspicious activities where messageId = &#63; from the database.
-	 *
-	 * @param messageId the message ID
-	 */
-	public static void removeByMessagedId(long messageId) {
-		getPersistence().removeByMessagedId(messageId);
-	}
-
-	/**
-	 * Returns the number of message boards suspicious activities where messageId = &#63;.
-	 *
+	 * @param userId the user ID
 	 * @param messageId the message ID
 	 * @return the number of matching message boards suspicious activities
 	 */
-	public static int countByMessagedId(long messageId) {
-		return getPersistence().countByMessagedId(messageId);
+	public static int countByU_M(long userId, long messageId) {
+		return getPersistence().countByU_M(userId, messageId);
 	}
 
 	/**

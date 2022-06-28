@@ -95,15 +95,16 @@ public class MBSuspiciousActivityServiceHttp {
 	}
 
 	public static com.liferay.message.boards.model.MBSuspiciousActivity
-			getSuspiciousActivity(
+			deleteSuspiciousActivity(
 				HttpPrincipal httpPrincipal, long suspiciousActivityId)
 		throws com.liferay.message.boards.exception.
 			NoSuchSuspiciousActivityException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				MBSuspiciousActivityServiceUtil.class, "getSuspiciousActivity",
-				_getSuspiciousActivityParameterTypes1);
+				MBSuspiciousActivityServiceUtil.class,
+				"deleteSuspiciousActivity",
+				_deleteSuspiciousActivityParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, suspiciousActivityId);
@@ -140,13 +141,50 @@ public class MBSuspiciousActivityServiceHttp {
 
 	public static java.util.List
 		<com.liferay.message.boards.model.MBSuspiciousActivity>
+			getMessageSuspiciousActivities(
+				HttpPrincipal httpPrincipal, long messageId) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				MBSuspiciousActivityServiceUtil.class,
+				"getMessageSuspiciousActivities",
+				_getMessageSuspiciousActivitiesParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, messageId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.message.boards.model.MBSuspiciousActivity>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.message.boards.model.MBSuspiciousActivity>
 			getSuspiciousActivities(HttpPrincipal httpPrincipal) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBSuspiciousActivityServiceUtil.class,
 				"getSuspiciousActivities",
-				_getSuspiciousActivitiesParameterTypes2);
+				_getSuspiciousActivitiesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -175,17 +213,17 @@ public class MBSuspiciousActivityServiceHttp {
 
 	public static com.liferay.message.boards.model.MBSuspiciousActivity
 			getSuspiciousActivity(
-				HttpPrincipal httpPrincipal, long userId, long messageId)
+				HttpPrincipal httpPrincipal, long suspiciousActivityId)
 		throws com.liferay.message.boards.exception.
 			NoSuchSuspiciousActivityException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBSuspiciousActivityServiceUtil.class, "getSuspiciousActivity",
-				_getSuspiciousActivityParameterTypes3);
+				_getSuspiciousActivityParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, userId, messageId);
+				methodKey, suspiciousActivityId);
 
 			Object returnObj = null;
 
@@ -218,19 +256,18 @@ public class MBSuspiciousActivityServiceHttp {
 	}
 
 	public static com.liferay.message.boards.model.MBSuspiciousActivity
-			deleteSuspiciousActivity(
-				HttpPrincipal httpPrincipal, long suspiciousActivityId)
+			getSuspiciousActivity(
+				HttpPrincipal httpPrincipal, long userId, long messageId)
 		throws com.liferay.message.boards.exception.
 			NoSuchSuspiciousActivityException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				MBSuspiciousActivityServiceUtil.class,
-				"deleteSuspiciousActivity",
-				_deleteSuspiciousActivityParameterTypes4);
+				MBSuspiciousActivityServiceUtil.class, "getSuspiciousActivity",
+				_getSuspiciousActivityParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, suspiciousActivityId);
+				methodKey, userId, messageId);
 
 			Object returnObj = null;
 
@@ -267,7 +304,7 @@ public class MBSuspiciousActivityServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				MBSuspiciousActivityServiceUtil.class,
 				"getSuspiciousActivityCount",
-				_getSuspiciousActivityCountParameterTypes5);
+				_getSuspiciousActivityCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -282,51 +319,6 @@ public class MBSuspiciousActivityServiceHttp {
 			}
 
 			return ((Integer)returnObj).intValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.message.boards.model.MBSuspiciousActivity
-			toggleSuspiciousActivityValidator(
-				HttpPrincipal httpPrincipal, long suspiciousActivityId)
-		throws com.liferay.message.boards.exception.
-			NoSuchSuspiciousActivityException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				MBSuspiciousActivityServiceUtil.class,
-				"toggleSuspiciousActivityValidator",
-				_toggleSuspiciousActivityValidatorParameterTypes6);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, suspiciousActivityId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.message.boards.exception.
-							NoSuchSuspiciousActivityException) {
-
-					throw (com.liferay.message.boards.exception.
-						NoSuchSuspiciousActivityException)exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.message.boards.model.MBSuspiciousActivity)
-				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -374,19 +366,20 @@ public class MBSuspiciousActivityServiceHttp {
 		}
 	}
 
-	public static java.util.List
-		<com.liferay.message.boards.model.MBSuspiciousActivity>
-			getMessageSuspiciousActivities(
-				HttpPrincipal httpPrincipal, long messageId) {
+	public static com.liferay.message.boards.model.MBSuspiciousActivity
+			toggleSuspiciousActivityValidator(
+				HttpPrincipal httpPrincipal, long suspiciousActivityId)
+		throws com.liferay.message.boards.exception.
+			NoSuchSuspiciousActivityException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				MBSuspiciousActivityServiceUtil.class,
-				"getMessageSuspiciousActivities",
-				_getMessageSuspiciousActivitiesParameterTypes8);
+				"toggleSuspiciousActivityValidator",
+				_toggleSuspiciousActivityValidatorParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, messageId);
+				methodKey, suspiciousActivityId);
 
 			Object returnObj = null;
 
@@ -394,13 +387,20 @@ public class MBSuspiciousActivityServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.message.boards.exception.
+							NoSuchSuspiciousActivityException) {
+
+					throw (com.liferay.message.boards.exception.
+						NoSuchSuspiciousActivityException)exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
 
-			return (java.util.List
-				<com.liferay.message.boards.model.MBSuspiciousActivity>)
-					returnObj;
+			return (com.liferay.message.boards.model.MBSuspiciousActivity)
+				returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -418,26 +418,26 @@ public class MBSuspiciousActivityServiceHttp {
 		_addOrUpdateSuspiciousActivityParameterTypes0 = new Class[] {
 			long.class, long.class, String.class, String.class
 		};
-	private static final Class<?>[] _getSuspiciousActivityParameterTypes1 =
+	private static final Class<?>[] _deleteSuspiciousActivityParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getSuspiciousActivitiesParameterTypes2 =
-		new Class[] {};
-	private static final Class<?>[] _getSuspiciousActivityParameterTypes3 =
-		new Class[] {long.class, long.class};
-	private static final Class<?>[] _deleteSuspiciousActivityParameterTypes4 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getSuspiciousActivityCountParameterTypes5 =
-		new Class[] {};
 	private static final Class<?>[]
-		_toggleSuspiciousActivityValidatorParameterTypes6 = new Class[] {
+		_getMessageSuspiciousActivitiesParameterTypes2 = new Class[] {
 			long.class
 		};
+	private static final Class<?>[] _getSuspiciousActivitiesParameterTypes3 =
+		new Class[] {};
+	private static final Class<?>[] _getSuspiciousActivityParameterTypes4 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getSuspiciousActivityParameterTypes5 =
+		new Class[] {long.class, long.class};
+	private static final Class<?>[] _getSuspiciousActivityCountParameterTypes6 =
+		new Class[] {};
 	private static final Class<?>[]
 		_getThreadSuspiciousActivitiesParameterTypes7 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[]
-		_getMessageSuspiciousActivitiesParameterTypes8 = new Class[] {
+		_toggleSuspiciousActivityValidatorParameterTypes8 = new Class[] {
 			long.class
 		};
 

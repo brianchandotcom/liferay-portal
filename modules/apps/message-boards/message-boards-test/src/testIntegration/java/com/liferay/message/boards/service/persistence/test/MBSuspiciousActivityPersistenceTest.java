@@ -239,11 +239,10 @@ public class MBSuspiciousActivityPersistenceTest {
 	}
 
 	@Test
-	public void testCountByU_M() throws Exception {
-		_persistence.countByU_M(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByMessagedId() throws Exception {
+		_persistence.countByMessagedId(RandomTestUtil.nextLong());
 
-		_persistence.countByU_M(0L, 0L);
+		_persistence.countByMessagedId(0L);
 	}
 
 	@Test
@@ -254,10 +253,11 @@ public class MBSuspiciousActivityPersistenceTest {
 	}
 
 	@Test
-	public void testCountByMessagedId() throws Exception {
-		_persistence.countByMessagedId(RandomTestUtil.nextLong());
+	public void testCountByU_M() throws Exception {
+		_persistence.countByU_M(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByMessagedId(0L);
+		_persistence.countByU_M(0L, 0L);
 	}
 
 	@Test

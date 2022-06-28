@@ -54,12 +54,14 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			Pause(locator1 = "3000");
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
 
 			Select(
 				key_fieldLabel = "Field",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Content");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("View the visual style of Content item in Selection panel") {
@@ -95,12 +97,14 @@ definition {
 				fragmentName = "Button",
 				id = "link");
 
-			Pause(locator1 = "3000");
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
 
 			Select(
 				key_fieldLabel = "Field",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("View the visual style of Title item in Selection panel") {

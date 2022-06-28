@@ -1042,7 +1042,7 @@ definition {
 				index = "1",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT");
 
-			Pause(locator1 = "3000");
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
 
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",

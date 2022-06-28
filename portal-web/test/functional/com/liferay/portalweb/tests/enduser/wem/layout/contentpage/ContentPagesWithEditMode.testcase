@@ -261,7 +261,9 @@ definition {
 
 				MenuItem.click(menuItem = "Content Editing");
 
-				Pause(locator1 = "3000");
+				AssertTextEquals(
+					locator1 = "PageEditor#EDIT_MODE_SELECTOR",
+					value1 = "Content Editing");
 			}
 		}
 

@@ -32,9 +32,14 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -167,6 +172,30 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				}
 
 				inputTemplateNode.addAttribute("dataType", dataType);
+
+				Optional<BigDecimal> maxValueOptional =
+					infoField.getAttributeOptional(
+						NumberInfoFieldType.MAX_VALUE);
+
+				maxValueOptional.ifPresent(
+					maxValue -> inputTemplateNode.addAttribute(
+						"max", maxValue));
+
+				Optional<BigDecimal> minValueOptional =
+					infoField.getAttributeOptional(
+						NumberInfoFieldType.MIN_VALUE);
+
+				minValueOptional.ifPresent(
+					minValue -> inputTemplateNode.addAttribute(
+						"min", minValue));
+
+				Optional<Integer> decimalPartMaxLengthOptional =
+					infoField.getAttributeOptional(
+						NumberInfoFieldType.DECIMAL_PART_MAX_LENGTH);
+
+				decimalPartMaxLengthOptional.ifPresent(
+					decimalPartMaxLength -> inputTemplateNode.addAttribute(
+						"step", _getStep(decimalPartMaxLength)));
 			}
 
 			if (infoField.getInfoFieldType() instanceof SelectInfoFieldType) {
@@ -222,6 +251,27 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private String _getStep(Integer decimalPartMaxLength) {
+		if (decimalPartMaxLength == null) {
+			return StringPool.BLANK;
+		}
+
+		if (decimalPartMaxLength <= 0) {
+			return "0";
+		}
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("0.");
+		sb.append(
+			StringUtil.merge(
+				Collections.nCopies(decimalPartMaxLength - 1, "0"),
+				StringPool.BLANK));
+		sb.append("1");
+
+		return sb.toString();
 	}
 
 	private final FragmentCollectionContributorTracker

@@ -705,7 +705,8 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertFragmentEntries(
-		Group group, ServiceContext serviceContext) {
+			Group group, ServiceContext serviceContext)
+		throws Exception {
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			serviceContext.getCompanyId());

@@ -20,6 +20,7 @@ export default function PredefinedValuesTable({
 	errors,
 	objectFieldsMap,
 	setValues,
+	validateExpressionURL,
 	values,
 }: IProps): JSX.Element;
 interface IProps {
@@ -30,6 +31,7 @@ interface IProps {
 	objectFieldsMap: Map<string, ObjectField>;
 	predefinedValues?: PredefinedValue[];
 	setValues: (params: Partial<ObjectAction>) => void;
+	validateExpressionURL: string;
 	values: Partial<ObjectAction>;
 }
 export {};

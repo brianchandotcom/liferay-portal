@@ -196,12 +196,50 @@ export default function ActionBuilder({
 		const allFields: ObjectField[] = [];
 
 		items.forEach((field) => {
-			if (field.businessType !== 'Relationship' && !field.system) {
+			if (
+				field.businessType !== 'Relationship' &&
+				field.businessType !== 'Aggregation' &&
+				!field.system
+			) {
 				allFields.push(field);
 			}
 		});
 
 		setCurrentObjectDefinitionFields(allFields);
+
+		const {
+			predefinedValues = [],
+		} = values.parameters as ObjectActionParameters;
+
+		const newPredefinedValues: PredefinedValue[] = [];
+
+		allFields.forEach((field) => {
+			let hasValue;
+			predefinedValues.forEach((item) => {
+				if (item.name === field.name) {
+					hasValue = item;
+
+					return;
+				}
+			});
+
+			if (hasValue) {
+				newPredefinedValues.push(hasValue);
+			}
+			else if (field.required) {
+				newPredefinedValues.push({
+					inputAsValue: false,
+					name: field.name,
+					value: '',
+				});
+			}
+		});
+		setValues({
+			parameters: {
+				...values.parameters,
+				predefinedValues: newPredefinedValues,
+			},
+		});
 	};
 
 	const handleSelectObject = async ({
@@ -232,12 +270,12 @@ export default function ActionBuilder({
 
 		const allFields: ObjectField[] = [];
 
-		const filteredFields = items.filter(
-			(objectField) => objectField.businessType !== 'Aggregation'
-		);
-
-		filteredFields.forEach((field) => {
-			if (field.businessType !== 'Relationship' && !field.system) {
+		items.forEach((field) => {
+			if (
+				field.businessType !== 'Relationship' &&
+				field.businessType !== 'Aggregation' &&
+				!field.system
+			) {
 				allFields.push(field);
 
 				if (field.required) {

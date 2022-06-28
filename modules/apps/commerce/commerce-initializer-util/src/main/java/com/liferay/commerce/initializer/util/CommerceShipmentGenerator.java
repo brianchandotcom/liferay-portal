@@ -141,7 +141,7 @@ public class CommerceShipmentGenerator {
 			expectedDateCalendar.get(Calendar.DAY_OF_MONTH),
 			expectedDateCalendar.get(Calendar.YEAR),
 			expectedDateCalendar.get(Calendar.HOUR),
-			expectedDateCalendar.get(Calendar.MINUTE));
+			expectedDateCalendar.get(Calendar.MINUTE), serviceContext);
 	}
 
 	private void _generateCommerceShipmentItems(

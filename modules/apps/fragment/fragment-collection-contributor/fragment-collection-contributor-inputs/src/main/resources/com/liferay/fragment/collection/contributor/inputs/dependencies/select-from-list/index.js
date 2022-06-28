@@ -25,7 +25,6 @@ let currentSearch = {
 
 const baseListboxItems = Array.from(listbox.children).map((child) => ({
 	label: child.textContent,
-	optionId: child.id,
 	value: child.dataset.optionValue,
 }));
 
@@ -293,7 +292,7 @@ function handleSearchKeyup() {
 
 			element.classList.add('dropdown-item');
 			element.dataset.optionValue = item.value;
-			element.id = item.optionId;
+			element.id = `${fragmentNamespace}-option-${item.value}`;
 			element.setAttribute('role', 'option');
 			element.textContent = item.label;
 
@@ -326,7 +325,6 @@ function handleSearchKeyup() {
 			setListboxItems(
 				result.items.map((entry) => ({
 					label: entry.name,
-					optionId: entry.key,
 					value: entry.key,
 				}))
 			);

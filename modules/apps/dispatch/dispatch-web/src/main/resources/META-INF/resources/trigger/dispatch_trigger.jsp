@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+DispatchTriggerDisplayContext dispatchTriggerDisplayContext = (DispatchTriggerDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(DispatchWebKeys.DISPATCH_TRIGGER);
 
 Date endDate = (dispatchTrigger.getEndDate() == null) ? new Date() : dispatchTrigger.getEndDate();
@@ -49,8 +51,6 @@ if (dispatchTrigger != null) {
 		neverEnd = false;
 	}
 
-	DispatchTriggerDisplayContext dispatchTriggerDisplayContext = (DispatchTriggerDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
 	DispatchTriggerMetadata dispatchTriggerMetadata = dispatchTriggerDisplayContext.getDispatchTriggerMetadata(dispatchTrigger.getDispatchTriggerId());
 
 	dispatchTaskExecutorReady = dispatchTriggerMetadata.isDispatchTaskExecutorReady();
@@ -77,7 +77,7 @@ if (dispatchTrigger != null) {
 					<aui:input name="active" />
 
 					<c:choose>
-						<c:when test="<%= ClusterExecutorUtil.isEnabled() %>">
+						<c:when test="<%= ClusterExecutorUtil.isEnabled() && !dispatchTriggerDisplayContext.isClusterModeSingle(dispatchTrigger.getDispatchTaskExecutorType()) %>">
 							<aui:select label="task-execution-cluster-mode" name="dispatchTaskClusterMode">
 
 								<%
@@ -96,8 +96,17 @@ if (dispatchTrigger != null) {
 							</aui:select>
 						</c:when>
 						<c:otherwise>
+
+							<%
+							DispatchTaskClusterMode dispatchTaskClusterMode = DispatchTaskClusterMode.NOT_APPLICABLE;
+
+							if (dispatchTriggerDisplayContext.isClusterModeSingle(dispatchTrigger.getDispatchTaskExecutorType())) {
+								dispatchTaskClusterMode = DispatchTaskClusterMode.SINGLE_NODE;
+							}
+							%>
+
 							<aui:select disabled="<%= true %>" helpMessage="this-option-is-enabled-only-in-a-clustered-environment" label="task-execution-cluster-mode" name="dispatchTaskClusterMode">
-								<aui:option label="<%= DispatchTaskClusterMode.NOT_APPLICABLE.getLabel() %>" />
+								<aui:option label="<%= dispatchTaskClusterMode.getLabel() %>" />
 							</aui:select>
 						</c:otherwise>
 					</c:choose>

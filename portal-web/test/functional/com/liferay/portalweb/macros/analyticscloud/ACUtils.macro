@@ -672,6 +672,11 @@ definition {
 		return "${value}";
 	}
 
+	macro harRecordingPause {
+		// Pausing for harRecording tests
+		Pause(locator1 = "5000");
+	}
+
 	macro launchAC {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 

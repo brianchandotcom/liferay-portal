@@ -37,7 +37,8 @@ const StatusBadge: React.FC<StatusBadgeProps> = ({children, type}) => (
 	<span
 		className={classNames(
 			'label text-uppercase text-nowrap',
-			statusBarClassNames[type] || type
+			statusBarClassNames[type] ||
+				type.toLocaleLowerCase().replace(' ', '-')
 		)}
 	>
 		{children}

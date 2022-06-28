@@ -51,6 +51,7 @@ const UserListView: React.FC<UserListViewProps> = ({
 				actions,
 				columns: [
 					{
+						clickable: true,
 						key: 'givenName',
 						render: (givenName, {familyName}) =>
 							`${givenName} ${familyName}`,
@@ -58,11 +59,13 @@ const UserListView: React.FC<UserListViewProps> = ({
 						value: i18n.translate('name'),
 					},
 					{
+						clickable: true,
 						key: 'alternateName',
 						sorteable: true,
 						value: i18n.translate('screen-name'),
 					},
 					{
+						clickable: true,
 						key: 'emailAddress',
 						sorteable: true,
 						value: i18n.translate('email-address'),

@@ -97,7 +97,7 @@ const baseFilters: Filter = {
 		label: 'Priority',
 		name: 'priority',
 		options: ['1', '2', '3', '4', '5'],
-		type: 'checkbox',
+		type: 'multiselect',
 	},
 	productVersion: {
 		gqlQuery: getProductVersions,

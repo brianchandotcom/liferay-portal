@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.internal.upgrade.v2_0_0;
 
-import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
 import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.sql.Date;
@@ -37,8 +37,7 @@ import java.util.Map;
  * @author Matija Petanjek
  * @author Igor Beslic
  */
-public class CPInstanceOptionValueRelUpgradeProcess
-	extends BaseCommerceProductServiceUpgradeProcess {
+public class CPInstanceOptionValueRelUpgradeProcess extends UpgradeProcess {
 
 	public CPInstanceOptionValueRelUpgradeProcess(
 		JSONFactory jsonFactory, PortalUUID portalUUID) {
@@ -51,7 +50,7 @@ public class CPInstanceOptionValueRelUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		_importContentFromCPInstanceJsonField();
 
-		dropColumn(CPInstanceModelImpl.TABLE_NAME, "json");
+		alterTableDropColumn(CPInstanceModelImpl.TABLE_NAME, "json");
 	}
 
 	private PreparedStatement _cpDefinitionOptionRelIdPreparedStatement()

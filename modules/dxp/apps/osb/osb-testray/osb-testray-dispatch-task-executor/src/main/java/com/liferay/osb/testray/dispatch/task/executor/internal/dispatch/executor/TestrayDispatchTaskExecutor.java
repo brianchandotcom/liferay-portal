@@ -385,57 +385,61 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 		ObjectEntry recipientTestrayCaseResultObjectEntry = null;
 		ObjectEntry sourceTestrayCaseResultObjectEntry = null;
-		List<ObjectEntry> sourceTestrayIssueItems = null;
+		List<ObjectEntry> sourceTestrayCaseResultsIssuesItems = null;
 
 		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			testrayIssueAEntriesPage = _objectEntryManager.getObjectEntries(
-				companyId, _objectDefinitions.get("CaseResultsIssues"), null,
-				null, _defaultDTOConverterContext,
-				"caseResultId eq '" + testrayCaseResultObjectEntry1.getId() +
-					"'",
-				null, null, null);
+			testrayCaseResultsIssuesObjectEntriesPage1 =
+				_objectEntryManager.getObjectEntries(
+					companyId, _objectDefinitions.get("CaseResultsIssues"),
+					null, null, _defaultDTOConverterContext,
+					"caseResultId eq '" +
+						testrayCaseResultObjectEntry1.getId() + "'",
+					null, null, null);
 
 		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			testrayIssueBEntriesPage = _objectEntryManager.getObjectEntries(
-				companyId, _objectDefinitions.get("CaseResultsIssues"), null,
-				null, _defaultDTOConverterContext,
-				"caseResultId eq '" + testrayCaseResultObjectEntry2.getId() +
-					"'",
-				null, null, null);
+			testrayCaseResultsIssuesObjectEntriesPage2 =
+				_objectEntryManager.getObjectEntries(
+					companyId, _objectDefinitions.get("CaseResultsIssues"),
+					null, null, _defaultDTOConverterContext,
+					"caseResultId eq '" +
+						testrayCaseResultObjectEntry2.getId() + "'",
+					null, null, null);
 
-		Map<String, Object> testrayCaseResultCompositeMapA =
+		Map<String, Object> testrayCaseResultPropertiesMap1 =
 			testrayCaseResultObjectEntry1.getProperties();
-		Map<String, Object> testrayCaseResultCompositeMapB =
+		Map<String, Object> testrayCaseResultPropertiesMap2 =
 			testrayCaseResultObjectEntry2.getProperties();
 
-		List<ObjectEntry> testrayIssueAItems =
-			(List<ObjectEntry>)testrayIssueAEntriesPage.getItems();
-		List<ObjectEntry> testrayIssueBItems =
-			(List<ObjectEntry>)testrayIssueBEntriesPage.getItems();
+		List<ObjectEntry> testrayCaseResultsIssues1 =
+			(List<ObjectEntry>)
+				testrayCaseResultsIssuesObjectEntriesPage1.getItems();
+		List<ObjectEntry> testrayCaseResultsIssues2 =
+			(List<ObjectEntry>)
+				testrayCaseResultsIssuesObjectEntriesPage2.getItems();
 
-		if (((Long)testrayCaseResultCompositeMapA.get(
+		if (((Long)testrayCaseResultPropertiesMap1.get(
 				"r_userToCaseResults_userId") > 0) &&
-			!testrayIssueAItems.isEmpty() &&
-			((Long)testrayCaseResultCompositeMapB.get(
+			!testrayCaseResultsIssues1.isEmpty() &&
+			((Long)testrayCaseResultPropertiesMap2.get(
 				"r_userToCaseResults_userId") <= 0) &&
-			testrayIssueBItems.isEmpty()) {
+			testrayCaseResultsIssues2.isEmpty()) {
 
 			recipientTestrayCaseResultObjectEntry =
 				testrayCaseResultObjectEntry2;
 			sourceTestrayCaseResultObjectEntry = testrayCaseResultObjectEntry1;
-			sourceTestrayIssueItems = testrayIssueAItems;
+			sourceTestrayCaseResultsIssuesItems = testrayCaseResultsIssues1;
 		}
-		else if (((Long)testrayCaseResultCompositeMapB.get(
+		else if (((Long)testrayCaseResultPropertiesMap2.get(
 					"r_userToCaseResults_userId") > 0) &&
-				 !testrayIssueBItems.isEmpty() &&
-				 ((Long)testrayCaseResultCompositeMapA.get(
+				 !testrayCaseResultsIssues2.isEmpty() &&
+				 ((Long)testrayCaseResultPropertiesMap1.get(
 					 "r_userToCaseResults_userId") <= 0) &&
-				 testrayIssueAItems.isEmpty()) {
+				 testrayCaseResultsIssues1.isEmpty()) {
 
 			recipientTestrayCaseResultObjectEntry =
 				testrayCaseResultObjectEntry1;
 			sourceTestrayCaseResultObjectEntry = testrayCaseResultObjectEntry2;
-			sourceTestrayIssueItems = testrayIssueBItems;
+			sourceTestrayCaseResultsIssuesItems = testrayCaseResultsIssues2;
 		}
 
 		if ((recipientTestrayCaseResultObjectEntry == null) ||
@@ -444,54 +448,80 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			return;
 		}
 
-		Map<String, Object> recipientTestrayCaseResultCompositeMap =
+		Map<String, Object> recipientTestrayCaseResultPropertiesMap =
 			recipientTestrayCaseResultObjectEntry.getProperties();
 
-		Map<String, Object> sourceTestrayCaseResultCompositeMap =
+		Map<String, Object> sourceTestrayCaseResultPropertiesMap =
 			sourceTestrayCaseResultObjectEntry.getProperties();
 
-		recipientTestrayCaseResultCompositeMap.put(
+		recipientTestrayCaseResultPropertiesMap.put(
 			"r_userToCaseResults_userId",
-			sourceTestrayCaseResultCompositeMap.get(
+			sourceTestrayCaseResultPropertiesMap.get(
 				"r_userToCaseResults_userId"));
-		recipientTestrayCaseResultCompositeMap.put(
-			"dueStatus", sourceTestrayCaseResultCompositeMap.get("dueStatus"));
+		recipientTestrayCaseResultPropertiesMap.put(
+			"dueStatus", sourceTestrayCaseResultPropertiesMap.get("dueStatus"));
 
 		recipientTestrayCaseResultObjectEntry.setProperties(
-			recipientTestrayCaseResultCompositeMap);
+			recipientTestrayCaseResultPropertiesMap);
 
 		_objectEntryManager.updateObjectEntry(
 			_defaultDTOConverterContext, _objectDefinitions.get("CaseResult"),
 			recipientTestrayCaseResultObjectEntry.getId(),
 			recipientTestrayCaseResultObjectEntry);
 
-		for (ObjectEntry issueObjectEntry : sourceTestrayIssueItems) {
-			Map<String, Object> testrayIssueIdsPropertiesMap =
-				issueObjectEntry.getProperties();
+		for (ObjectEntry objectEntry : sourceTestrayCaseResultsIssuesItems) {
+			Map<String, Object> propertiesMap = objectEntry.getProperties();
 
-			String testrayIssueName = String.valueOf(
-				testrayIssueIdsPropertiesMap.get(
-					"r_issueToCaseResultsIssues_c_issueId"));
+			String testrayIssueId = String.valueOf(
+				propertiesMap.get("r_issueToCaseResultsIssues_c_issueId"));
 
 			com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-				testrayIssuePage = _objectEntryManager.getObjectEntries(
-					companyId, _objectDefinitions.get("Issue"), null, null,
-					_defaultDTOConverterContext,
-					"id eq '" + testrayIssueName + "'", null, null, null);
+				testrayIssueObjectEntriesPage =
+					_objectEntryManager.getObjectEntries(
+						companyId, _objectDefinitions.get("Issue"), null, null,
+						_defaultDTOConverterContext,
+						"id eq '" + testrayIssueId + "'", null, null, null);
 
-			ObjectEntry objectEntry = testrayIssuePage.fetchFirstItem();
+			ObjectEntry testrayIssueObjectEntry =
+				testrayIssueObjectEntriesPage.fetchFirstItem();
 
-			if (objectEntry == null) {
+			if (testrayIssueObjectEntry == null) {
 				continue;
 			}
 
 			Map<String, Object> testrayIssuePropertiesMap =
-				objectEntry.getProperties();
+				testrayIssueObjectEntry.getProperties();
 
 			_addTestrayCaseResultIssue(
 				companyId, recipientTestrayCaseResultObjectEntry.getId(),
 				(String)testrayIssuePropertiesMap.get("name"));
 		}
+	}
+
+	private Map<Long, ObjectEntry> _buildTestrayCaseIdTestrayCaseResultMap(
+			long companyId, ObjectEntry testrayRun)
+		throws Exception {
+
+		Map<Long, ObjectEntry> testrayCaseIdCompositeMap = new HashMap<>();
+
+		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
+			testrayCaseResultObjectEntriesPage =
+				_objectEntryManager.getObjectEntries(
+					companyId, _objectDefinitions.get("CaseResult"), null, null,
+					_defaultDTOConverterContext,
+					"runId eq '" + testrayRun.getId() + "'", null, null, null);
+
+		for (ObjectEntry objectEntry :
+				testrayCaseResultObjectEntriesPage.getItems()) {
+
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			testrayCaseIdCompositeMap.put(
+				(long)properties.get("r_caseToCaseResult_c_caseId"),
+				objectEntry);
+		}
+
+		return testrayCaseIdCompositeMap;
 	}
 
 	private ObjectEntry _fetchLatestTestrayRun(
@@ -500,17 +530,18 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		throws Exception {
 
 		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			testrayBuildsEntriesPage = _objectEntryManager.getObjectEntries(
-				companyId, _objectDefinitions.get("Build"), null, null,
-				_defaultDTOConverterContext,
-				"routineId eq '" + testrayRoutineId + "'", null, null,
-				new Sort[] {new Sort("createDate_sortable", 3, false)});
+			testrayBuildsObjectEntriesPage =
+				_objectEntryManager.getObjectEntries(
+					companyId, _objectDefinitions.get("Build"), null, null,
+					_defaultDTOConverterContext,
+					"routineId eq '" + testrayRoutineId + "'", null, null,
+					new Sort[] {new Sort("createDate_sortable", 3, false)});
 
 		List<ObjectEntry> testrayBuilds =
-			(List<ObjectEntry>)testrayBuildsEntriesPage.getItems();
+			(List<ObjectEntry>)testrayBuildsObjectEntriesPage.getItems();
 
 		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			testrayRunsEntriesPage = _objectEntryManager.getObjectEntries(
+			testrayRunsObjectEntriesPage = _objectEntryManager.getObjectEntries(
 				companyId, _objectDefinitions.get("Run"), null, null,
 				_defaultDTOConverterContext,
 				StringBundler.concat(
@@ -519,9 +550,9 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 				null, null, null);
 
 		List<ObjectEntry> testrayRuns =
-			(List<ObjectEntry>)testrayRunsEntriesPage.getItems();
+			(List<ObjectEntry>)testrayRunsObjectEntriesPage.getItems();
 
-		return _getRunByBuild(testrayBuilds, testrayRuns);
+		return _getFirstTestrayRunInTestrayBuild(testrayBuilds, testrayRuns);
 	}
 
 	private String _getAttributeValue(String attributeName, Node node) {
@@ -538,6 +569,28 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 
 		return attributeNode.getTextContent();
+	}
+
+	private ObjectEntry _getFirstTestrayRunInTestrayBuild(
+		List<ObjectEntry> testrayBuilds, List<ObjectEntry> testrayRuns) {
+
+		for (ObjectEntry testrayRunObjectEntry : testrayRuns) {
+			Map<String, Object> testrayRunPropertiesMap =
+				testrayRunObjectEntry.getProperties();
+
+			for (ObjectEntry testrayBuildObjectEntry : testrayBuilds) {
+				Long testrayBuildId = testrayBuildObjectEntry.getId();
+
+				if (testrayBuildId.equals(
+						(Long)testrayRunPropertiesMap.get(
+							"r_buildToRuns_c_buildId"))) {
+
+					return testrayRunObjectEntry;
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private ObjectDefinition _getObjectDefinition(
@@ -621,27 +674,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		}
 
 		return map;
-	}
-
-	private ObjectEntry _getRunByBuild(
-		List<ObjectEntry> testrayBuilds, List<ObjectEntry> testrayRuns) {
-
-		for (ObjectEntry testrayRunObjectEntry : testrayRuns) {
-			Map<String, Object> properties =
-				testrayRunObjectEntry.getProperties();
-
-			for (ObjectEntry testrayBuildObjectEntry : testrayBuilds) {
-				Long testrayBuildId = testrayBuildObjectEntry.getId();
-
-				if (testrayBuildId.equals(
-						(Long)properties.get("r_buildToRuns_c_buildId"))) {
-
-					return testrayRunObjectEntry;
-				}
-			}
-		}
-
-		return null;
 	}
 
 	private String _getTestrayBuildDescription(
@@ -729,31 +761,6 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 		_objectEntryIds.put(objectEntryIdsKey, testrayBuildId);
 
 		return testrayBuildId;
-	}
-
-	private Map<Long, ObjectEntry> _getTestrayCaseIdCompositeMap(
-			long companyId, ObjectEntry testrayRun)
-		throws Exception {
-
-		Map<Long, ObjectEntry> testrayCaseIdCompositeMap = new HashMap<>();
-
-		com.liferay.portal.vulcan.pagination.Page<ObjectEntry>
-			testrayCaseResultEntriesPage = _objectEntryManager.getObjectEntries(
-				companyId, _objectDefinitions.get("CaseResult"), null, null,
-				_defaultDTOConverterContext,
-				"runId eq '" + testrayRun.getId() + "'", null, null, null);
-
-		for (ObjectEntry testrayCaseResult :
-				testrayCaseResultEntriesPage.getItems()) {
-
-			Map<String, Object> properties = testrayCaseResult.getProperties();
-
-			testrayCaseIdCompositeMap.put(
-				(long)properties.get("r_caseToCaseResult_c_caseId"),
-				testrayCaseResult);
-		}
-
-		return testrayCaseIdCompositeMap;
 	}
 
 	private Map<String, Object> _getTestrayCaseProperties(Element element) {
@@ -1468,45 +1475,48 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 			propertiesMap.get("testray.build.time"), testrayProjectId,
 			testrayRunId);
 
-		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
-			_defaultDTOConverterContext, _objectDefinitions.get("Routine"),
-			testrayRoutineId);
+		ObjectEntry testrayRoutineObjectEntry =
+			_objectEntryManager.getObjectEntry(
+				_defaultDTOConverterContext, _objectDefinitions.get("Routine"),
+				testrayRoutineId);
 
-		Map<String, Object> testrayRoutineProperties =
-			objectEntry.getProperties();
+		Map<String, Object> testrayRoutinePropertiesMap =
+			testrayRoutineObjectEntry.getProperties();
 
-		if (!(boolean)testrayRoutineProperties.get("autoanalyze")) {
+		if (!(boolean)testrayRoutinePropertiesMap.get("autoanalyze")) {
 			return;
 		}
 
-		ObjectEntry currentRunObjectEntry = _objectEntryManager.getObjectEntry(
-			_defaultDTOConverterContext, _objectDefinitions.get("Run"),
-			testrayRunId);
+		ObjectEntry currentTestrayRunObjectEntry =
+			_objectEntryManager.getObjectEntry(
+				_defaultDTOConverterContext, _objectDefinitions.get("Run"),
+				testrayRunId);
 
-		Map<String, Object> currentTestrayRunProperties =
-			currentRunObjectEntry.getProperties();
+		Map<String, Object> currentTestrayRunPropertiesMap =
+			currentTestrayRunObjectEntry.getProperties();
 
 		ObjectEntry latestTestrayRunObjectEntry = _fetchLatestTestrayRun(
 			companyId,
-			(String)currentTestrayRunProperties.get("environmentHash"),
-			objectEntry.getId(), testrayRunId);
+			(String)currentTestrayRunPropertiesMap.get("environmentHash"),
+			testrayRoutineObjectEntry.getId(), testrayRunId);
 
 		if (latestTestrayRunObjectEntry == null) {
 			return;
 		}
 
-		Map<Long, ObjectEntry> testrayCaseIdCompositeMapA =
-			_getTestrayCaseIdCompositeMap(companyId, currentRunObjectEntry);
+		Map<Long, ObjectEntry> testrayCaseIdTestrayCaseResultMap1 =
+			_buildTestrayCaseIdTestrayCaseResultMap(
+				companyId, currentTestrayRunObjectEntry);
 
-		Map<Long, ObjectEntry> testrayCaseIdCompositeMapB =
-			_getTestrayCaseIdCompositeMap(
+		Map<Long, ObjectEntry> testrayCaseIdTestrayCaseResultMap2 =
+			_buildTestrayCaseIdTestrayCaseResultMap(
 				companyId, latestTestrayRunObjectEntry);
 
 		for (Map.Entry<Long, ObjectEntry> entry :
-				testrayCaseIdCompositeMapA.entrySet()) {
+				testrayCaseIdTestrayCaseResultMap1.entrySet()) {
 
 			ObjectEntry testrayCaseResultObjectEntry2 =
-				testrayCaseIdCompositeMapB.get(entry.getKey());
+				testrayCaseIdTestrayCaseResultMap2.get(entry.getKey());
 
 			if (testrayCaseResultObjectEntry2 == null) {
 				continue;
@@ -1514,24 +1524,26 @@ public class TestrayDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
 			ObjectEntry testrayCaseResultObjectEntry1 = entry.getValue();
 
-			Map<String, Object> testrayCaseResultCompositeMapA =
+			Map<String, Object> testrayCaseResultPropertiesMap1 =
 				testrayCaseResultObjectEntry1.getProperties();
 
-			Map<String, Object> testrayCaseResultCompositeMapB =
+			Map<String, Object> testrayCaseResultPropertiesMap2 =
 				testrayCaseResultObjectEntry2.getProperties();
 
 			if (Validator.isNull(
-					testrayCaseResultCompositeMapA.get("errors")) ||
+					testrayCaseResultPropertiesMap1.get("errors")) ||
 				Validator.isNull(
-					testrayCaseResultCompositeMapB.get("errors"))) {
+					testrayCaseResultPropertiesMap2.get("errors"))) {
 
 				continue;
 			}
 
-			String errorsA = (String)testrayCaseResultCompositeMapA.get(
-				"errors");
+			String testrayCaseResultErrors1 =
+				(String)testrayCaseResultPropertiesMap1.get("errors");
 
-			if (!errorsA.equals(testrayCaseResultCompositeMapB.get("errors"))) {
+			if (!testrayCaseResultErrors1.equals(
+					testrayCaseResultPropertiesMap2.get("errors"))) {
+
 				continue;
 			}
 

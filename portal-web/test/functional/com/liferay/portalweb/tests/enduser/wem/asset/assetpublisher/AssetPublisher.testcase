@@ -627,8 +627,6 @@ definition {
 					content = "WebContent Content ${n}",
 					groupName = "Test Site Name",
 					title = "WebContent Title ${n}");
-
-				Pause(locator1 = "65000");
 			}
 		}
 

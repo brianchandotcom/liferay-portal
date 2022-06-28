@@ -44,6 +44,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageFragmentInstanceDefinition;
 import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.FragmentMappedValueUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.LocalizedValueUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.StyledLayoutStructureItemUtil;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceTracker;
@@ -61,16 +62,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,6 +111,10 @@ public class PageFragmentInstanceDefinitionMapper {
 
 		return new PageFragmentInstanceDefinition() {
 			{
+				cssClasses = StyledLayoutStructureItemUtil.getCssClasses(
+					fragmentStyledLayoutStructureItem);
+				customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
+					fragmentStyledLayoutStructureItem);
 				fragment = new Fragment() {
 					{
 						key = _getFragmentKey(fragmentEntry, rendererKey);
@@ -126,41 +128,6 @@ public class PageFragmentInstanceDefinitionMapper {
 					pageFragmentInstanceDefinitionFragmentViewports;
 				indexed = fragmentStyledLayoutStructureItem.isIndexed();
 				widgetInstances = _getWidgetInstances(fragmentEntryLink);
-
-				setCssClasses(
-					() -> {
-						if (!GetterUtil.getBoolean(
-								PropsUtil.get("feature.flag.LPS-147511"))) {
-
-							return null;
-						}
-
-						Set<String> cssClasses =
-							fragmentStyledLayoutStructureItem.getCssClasses();
-
-						if (SetUtil.isEmpty(cssClasses)) {
-							return null;
-						}
-
-						return ArrayUtil.toStringArray(cssClasses);
-					});
-				setCustomCSS(
-					() -> {
-						if (!GetterUtil.getBoolean(
-								PropsUtil.get("feature.flag.LPS-147511"))) {
-
-							return null;
-						}
-
-						String customCSS =
-							fragmentStyledLayoutStructureItem.getCustomCSS();
-
-						if (Validator.isNotNull(customCSS)) {
-							return customCSS;
-						}
-
-						return null;
-					});
 			}
 		};
 	}

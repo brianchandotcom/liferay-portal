@@ -19,13 +19,9 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentStyle;
 import com.liferay.headless.delivery.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.dto.v1_0.PageWidgetInstanceDefinition;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.WidgetInstanceMapper;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.StyledLayoutStructureItemUtil;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
-
-import java.util.Set;
 
 /**
  * @author Jürgen Kappler
@@ -34,8 +30,8 @@ import java.util.Set;
 public class PageWidgetInstanceDefinitionUtil {
 
 	public static PageWidgetInstanceDefinition toPageWidgetInstanceDefinition(
-		Set<String> cssClassesSet, FragmentEntryLink fragmentEntryLink,
-		String pageWidgetInstanceDefinitionCustomCSS,
+		FragmentEntryLink fragmentEntryLink,
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
 		FragmentStyle pageWidgetInstanceDefinitionFragmentStyle,
 		FragmentViewport[] pageWidgetInstanceDefinitionFragmentViewports,
 		String portletId, WidgetInstanceMapper widgetInstanceMapper) {
@@ -46,39 +42,15 @@ public class PageWidgetInstanceDefinitionUtil {
 
 		return new PageWidgetInstanceDefinition() {
 			{
+				cssClasses = StyledLayoutStructureItemUtil.getCssClasses(
+					fragmentStyledLayoutStructureItem);
+				customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
+					fragmentStyledLayoutStructureItem);
 				fragmentStyle = pageWidgetInstanceDefinitionFragmentStyle;
 				fragmentViewports =
 					pageWidgetInstanceDefinitionFragmentViewports;
 				widgetInstance = widgetInstanceMapper.getWidgetInstance(
 					fragmentEntryLink, portletId);
-
-				setCssClasses(
-					() -> {
-						if (!GetterUtil.getBoolean(
-								PropsUtil.get("feature.flag.LPS-147511")) ||
-							SetUtil.isEmpty(cssClassesSet)) {
-
-							return null;
-						}
-
-						return ArrayUtil.toStringArray(cssClassesSet);
-					});
-				setCustomCSS(
-					() -> {
-						if (!GetterUtil.getBoolean(
-								PropsUtil.get("feature.flag.LPS-147511"))) {
-
-							return null;
-						}
-
-						if (Validator.isNotNull(
-								pageWidgetInstanceDefinitionCustomCSS)) {
-
-							return pageWidgetInstanceDefinitionCustomCSS;
-						}
-
-						return null;
-					});
 			}
 		};
 	}

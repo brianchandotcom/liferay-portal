@@ -25,17 +25,13 @@ import com.liferay.headless.delivery.dto.v1_0.SitePageFormSubmissionResult;
 import com.liferay.headless.delivery.dto.v1_0.URLFormSubmissionResult;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.FragmentMappedValueUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.LocalizedValueUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.StyledLayoutStructureItemUtil;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
-
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -64,6 +60,11 @@ public class FormLayoutStructureItemMapper
 			{
 				definition = new PageFormDefinition() {
 					{
+						cssClasses =
+							StyledLayoutStructureItemUtil.getCssClasses(
+								formStyledLayoutStructureItem);
+						customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
+							formStyledLayoutStructureItem);
 						formConfig = new FormConfig() {
 							{
 								formReference = _toFormReference(
@@ -77,44 +78,6 @@ public class FormLayoutStructureItemMapper
 						};
 						indexed = formStyledLayoutStructureItem.isIndexed();
 
-						setCssClasses(
-							() -> {
-								if (!GetterUtil.getBoolean(
-										PropsUtil.get(
-											"feature.flag.LPS-147511"))) {
-
-									return null;
-								}
-
-								Set<String> cssClasses =
-									formStyledLayoutStructureItem.
-										getCssClasses();
-
-								if (SetUtil.isEmpty(cssClasses)) {
-									return null;
-								}
-
-								return ArrayUtil.toStringArray(cssClasses);
-							});
-						setCustomCSS(
-							() -> {
-								if (!GetterUtil.getBoolean(
-										PropsUtil.get(
-											"feature.flag.LPS-147511"))) {
-
-									return null;
-								}
-
-								String customCSS =
-									formStyledLayoutStructureItem.
-										getCustomCSS();
-
-								if (Validator.isNotNull(customCSS)) {
-									return customCSS;
-								}
-
-								return null;
-							});
 						setFragmentStyle(
 							() -> {
 								JSONObject itemConfigJSONObject =

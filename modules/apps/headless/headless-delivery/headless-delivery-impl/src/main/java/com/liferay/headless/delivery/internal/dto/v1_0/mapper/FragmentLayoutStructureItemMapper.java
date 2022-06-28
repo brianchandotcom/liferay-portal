@@ -103,9 +103,8 @@ public class FragmentLayoutStructureItemMapper
 				definition =
 					PageWidgetInstanceDefinitionUtil.
 						toPageWidgetInstanceDefinition(
-							fragmentStyledLayoutStructureItem.getCssClasses(),
 							fragmentEntryLink,
-							fragmentStyledLayoutStructureItem.getCustomCSS(),
+							fragmentStyledLayoutStructureItem,
 							toFragmentStyle(
 								itemConfigJSONObject.getJSONObject("styles"),
 								saveMappingConfiguration),

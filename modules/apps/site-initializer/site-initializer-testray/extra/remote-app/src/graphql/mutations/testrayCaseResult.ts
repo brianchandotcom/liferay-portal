@@ -23,7 +23,7 @@ export const UpdateCaseResult = gql`
 			@rest(
 				bodyKey: "CaseResult"
 				method: "PATCH"
-				path: "/caseresults/{args.caseResultId}"
+				path: "caseresults/{args.caseResultId}"
 				type: "C_CaseResult"
 			) {
 			id

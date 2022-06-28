@@ -3,7 +3,9 @@ definition {
 	macro gotoDefineCustomLanguages {
 		DepotNavigator.openDepotLanguages(depotName = "${depotName}");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(
+			key_languagesOption = "Define a custom default language and additional active languages for this asset library.",
+			locator1 = "Radio#DEPOT_LANGUAGES_OPTION");
 
 		Click.clickNoMouseOverNoWaitForVisible(
 			key_languagesOption = "Define a custom default language and additional active languages for this asset library.",

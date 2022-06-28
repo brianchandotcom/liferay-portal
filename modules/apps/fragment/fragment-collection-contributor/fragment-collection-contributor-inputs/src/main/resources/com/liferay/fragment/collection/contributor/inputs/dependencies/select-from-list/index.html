@@ -41,12 +41,12 @@
 
 		[#if 10 <= input.options?size]
 			<p aria-hidden="true" class="d-none forms-select-from-list-loading-results mt-3 mx-4">
-				<span class="sr-only">Loading results</span>
+				<span class="sr-only">${languageUtil.get(locale, "loading")}.</span>
 				<span aria-hidden="true" class="loading-animation"></span>
 			</p>
 
 			<p aria-hidden="true" class="d-none forms-select-from-list-no-results mt-3 mx-4 text-secondary">
-				No results were found.
+				${languageUtil.get(locale, "no-results-were-found")}
 			</p>
 		[/#if]
 	</div>

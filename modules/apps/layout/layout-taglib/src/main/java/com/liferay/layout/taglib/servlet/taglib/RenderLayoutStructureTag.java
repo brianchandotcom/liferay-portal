@@ -711,7 +711,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write(
 			renderLayoutStructureDisplayContext.getStyle(
 				formStyledLayoutStructureItem));
-		jspWriter.write(">");
+		jspWriter.write("\">");
 
 		String redirect =
 			renderLayoutStructureDisplayContext.

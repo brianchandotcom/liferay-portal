@@ -14,12 +14,6 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.model.FragmentComposition;
-import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.PageDropZoneDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
@@ -32,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -59,7 +52,7 @@ public class DropZoneLayoutStructureItemMapper
 				definition = new PageDropZoneDefinition() {
 					{
 						fragmentSettings = _toFragmentSettingsMap(
-							dropZoneLayoutStructureItem, groupId);
+							dropZoneLayoutStructureItem);
 					}
 				};
 				type = Type.DROP_ZONE;
@@ -67,85 +60,35 @@ public class DropZoneLayoutStructureItemMapper
 		};
 	}
 
-	private boolean _isFragmentEntryKey(String fragmentEntryKey, long groupId) {
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(
-				groupId, fragmentEntryKey);
-
-		if (fragmentEntry != null) {
-			return true;
-		}
-
-		fragmentEntry = _fragmentCollectionContributorTracker.getFragmentEntry(
-			fragmentEntryKey);
-
-		if (fragmentEntry != null) {
-			return true;
-		}
-
-		FragmentComposition fragmentComposition =
-			_fragmentCollectionContributorTracker.getFragmentComposition(
-				fragmentEntryKey);
-
-		if (fragmentComposition != null) {
-			return true;
-		}
-
-		FragmentRenderer fragmentRenderer =
-			_fragmentRendererTracker.getFragmentRenderer(fragmentEntryKey);
-
-		if (fragmentRenderer != null) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private Fragment[] _toFragments(
-		List<String> fragmentEntryKeys, long groupId) {
-
+	private Fragment[] _toFragments(List<String> fragmentEntryKeys) {
 		List<Fragment> fragments = new ArrayList<>();
 
 		for (String fragmentEntryKey : fragmentEntryKeys) {
-			if (_isFragmentEntryKey(fragmentEntryKey, groupId)) {
-				fragments.add(
-					new Fragment() {
-						{
-							key = fragmentEntryKey;
-						}
-					});
-			}
+			fragments.add(
+				new Fragment() {
+					{
+						key = fragmentEntryKey;
+					}
+				});
 		}
 
 		return fragments.toArray(new Fragment[0]);
 	}
 
 	private Map<String, Fragment[]> _toFragmentSettingsMap(
-		DropZoneLayoutStructureItem dropZoneLayoutStructureItem, long groupId) {
+		DropZoneLayoutStructureItem dropZoneLayoutStructureItem) {
 
 		if (dropZoneLayoutStructureItem.isAllowNewFragmentEntries()) {
 			return HashMapBuilder.put(
 				"unallowedFragments",
-				_toFragments(
-					dropZoneLayoutStructureItem.getFragmentEntryKeys(), groupId)
+				_toFragments(dropZoneLayoutStructureItem.getFragmentEntryKeys())
 			).build();
 		}
 
 		return HashMapBuilder.put(
 			"allowedFragments",
-			_toFragments(
-				dropZoneLayoutStructureItem.getFragmentEntryKeys(), groupId)
+			_toFragments(dropZoneLayoutStructureItem.getFragmentEntryKeys())
 		).build();
 	}
-
-	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
-
-	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
 
 }

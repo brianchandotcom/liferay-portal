@@ -1,5 +1,6 @@
 html#{$cadmin-selector} .cadmin .page-editor__custom-css-field {
 	textarea {
+		min-height: 200px;
 		white-space: pre-wrap;
 	}
 

@@ -17,19 +17,17 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayPopover from '@clayui/popover';
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 
 import useControlledState from '../../../core/hooks/useControlledState';
-import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
+import {FRAGMENT_CLASS_PLACEHOLDER} from '../../config/constants/fragmentClassPlaceholder';
 import {useId} from '../../utils/useId';
 import CodeMirrorEditor from '../CodeMirrorEditor';
 
-export default function CustomCSSField({field, item, onValueSelect, value}) {
-	const id = useId();
+const defaultValue = `.${FRAGMENT_CLASS_PLACEHOLDER} {\n\n}`;
 
-	const defaultValue = useMemo(() => {
-		return `.${getLayoutDataItemUniqueClassName(item.itemId)} {\n\n}`;
-	}, [item.itemId]);
+export default function CustomCSSField({field, onValueSelect, value}) {
+	const id = useId();
 
 	const [customCSS, setCustomCSS] = useControlledState(value || defaultValue);
 	const [editorModalOpen, setEditorModalOpen] = useState(false);

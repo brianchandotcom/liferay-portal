@@ -650,13 +650,16 @@ public class ObjectFieldLocalServiceImpl
 
 		_objectViewLocalService.unassociateObjectField(objectField);
 
-		if (Objects.equals(
+		if ((Objects.equals(
 				objectDefinition.getExtensionDBTableName(),
 				objectField.getDBTableName()) ||
-			(objectDefinition.isApproved() &&
-			 Objects.equals(
-				 objectField.getBusinessType(),
-				 ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP))) {
+			 (objectDefinition.isApproved() &&
+			  Objects.equals(
+				  objectField.getBusinessType(),
+				  ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP))) &&
+			!Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
 
 			if (Objects.equals(objectFieldSettingFileSource, "userComputer")) {
 				_deleteFileEntries(

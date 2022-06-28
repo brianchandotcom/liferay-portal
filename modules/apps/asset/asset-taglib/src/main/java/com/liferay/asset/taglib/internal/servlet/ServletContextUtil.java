@@ -14,10 +14,6 @@
 
 package com.liferay.asset.taglib.internal.servlet;
 
-import com.liferay.asset.util.AssetHelper;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
-
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,43 +25,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = {})
 public class ServletContextUtil {
 
-	public static AssetHelper getAssetHelper() {
-		return _assetHelper;
-	}
-
-	public static FragmentCollectionContributorTracker
-		getFragmentCollectionContributorTracker() {
-
-		return _fragmentCollectionContributorTracker;
-	}
-
-	public static FragmentRendererTracker getFragmentRendererTracker() {
-		return _fragmentRendererTracker;
-	}
-
 	public static ServletContext getServletContext() {
 		return _servletContext;
-	}
-
-	@Reference(unbind = "-")
-	protected void setAssetHelper(AssetHelper assetHelper) {
-		_assetHelper = assetHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFragmentCollectionContributorTracker(
-		FragmentCollectionContributorTracker
-			fragmentCollectionContributorTracker) {
-
-		_fragmentCollectionContributorTracker =
-			fragmentCollectionContributorTracker;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFragmentRendererTracker(
-		FragmentRendererTracker fragmentRendererTracker) {
-
-		_fragmentRendererTracker = fragmentRendererTracker;
 	}
 
 	@Reference(
@@ -76,10 +37,6 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private static AssetHelper _assetHelper;
-	private static FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-	private static FragmentRendererTracker _fragmentRendererTracker;
 	private static ServletContext _servletContext;
 
 }

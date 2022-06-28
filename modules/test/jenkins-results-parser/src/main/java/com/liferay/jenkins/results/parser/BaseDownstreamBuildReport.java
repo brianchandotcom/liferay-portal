@@ -39,6 +39,21 @@ public abstract class BaseDownstreamBuildReport
 	}
 
 	@Override
+	public long getOverheadDuration() {
+		long overheadDuration = getDuration();
+
+		for (TestReport testReport : getTestReports()) {
+			overheadDuration -= testReport.getDuration();
+		}
+
+		if (overheadDuration <= 0L) {
+			return 0L;
+		}
+
+		return overheadDuration;
+	}
+
+	@Override
 	public List<TestReport> getTestReports() {
 		List<TestReport> testReports = new ArrayList<>();
 

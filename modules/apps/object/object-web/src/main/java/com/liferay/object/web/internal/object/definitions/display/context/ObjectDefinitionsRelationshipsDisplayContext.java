@@ -26,6 +26,7 @@ import com.liferay.object.web.internal.configuration.activator.FFOneToOneRelatio
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -150,29 +151,28 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		);
 	}
 
+	public String getRESTContextPath(ObjectDefinition objectDefinition) {
+		if (!objectDefinition.isSystem()) {
+			return objectDefinition.getRESTContextPath();
+		}
+
+		SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
+			_systemObjectDefinitionMetadataTracker.
+				getSystemObjectDefinitionMetadata(objectDefinition.getName());
+
+		if (systemObjectDefinitionMetadata == null) {
+			return StringPool.BLANK;
+		}
+
+		return systemObjectDefinitionMetadata.getRESTContextPath();
+	}
+
 	public boolean isFFOneToOneRelationshipConfigurationEnabled() {
 		return _ffOneToOneRelationshipConfigurationActivator.enabled();
 	}
 
 	public boolean isParameterRequired(ObjectDefinition objectDefinition) {
-		String restContextPath;
-
-		if (!objectDefinition.isSystem()) {
-			restContextPath = objectDefinition.getRESTContextPath();
-		}
-		else {
-			SystemObjectDefinitionMetadata systemObjectDefinitionMetadata =
-				_systemObjectDefinitionMetadataTracker.
-					getSystemObjectDefinitionMetadata(
-						objectDefinition.getName());
-
-			if (systemObjectDefinitionMetadata == null) {
-				return false;
-			}
-
-			restContextPath =
-				systemObjectDefinitionMetadata.getRESTContextPath();
-		}
+		String restContextPath = getRESTContextPath(objectDefinition);
 
 		if (restContextPath.matches(".*/\\{\\w+}/.*")) {
 			return true;

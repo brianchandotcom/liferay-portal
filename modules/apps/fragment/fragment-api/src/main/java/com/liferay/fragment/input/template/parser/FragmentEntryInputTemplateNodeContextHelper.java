@@ -262,16 +262,12 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			return "0";
 		}
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("0.");
-		sb.append(
+		return StringBundler.concat(
+			"0.",
 			StringUtil.merge(
 				Collections.nCopies(decimalPartMaxLength - 1, "0"),
-				StringPool.BLANK));
-		sb.append("1");
-
-		return sb.toString();
+				StringPool.BLANK),
+			"1");
 	}
 
 	private final FragmentCollectionContributorTracker

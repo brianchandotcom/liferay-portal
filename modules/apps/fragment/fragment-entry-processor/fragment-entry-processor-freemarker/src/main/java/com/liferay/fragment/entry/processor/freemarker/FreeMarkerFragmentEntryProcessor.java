@@ -242,8 +242,8 @@ public class FreeMarkerFragmentEntryProcessor
 						"input",
 						new InputTemplateNode(
 							StringPool.BLANK, StringPool.BLANK,
-							StringPool.BLANK, StringPool.BLANK, "name", false,
-							false, false, "type", "value")
+							StringPool.BLANK, "name", false, false, false,
+							"type", "value")
 					).put(
 						"layoutMode", Constants.VIEW
 					).putAll(

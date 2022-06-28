@@ -64,8 +64,6 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		HttpServletRequest httpServletRequest,
 		Optional<InfoForm> infoFormOptional, Locale locale) {
 
-		String dataType = StringPool.BLANK;
-
 		String errorMessage = StringPool.BLANK;
 
 		InfoField infoField = null;
@@ -151,9 +149,15 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
 			type = infoFieldType.getName();
+		}
 
-			if (infoFieldType instanceof NumberInfoFieldType) {
-				dataType = "integer";
+		InputTemplateNode inputTemplateNode = new InputTemplateNode(
+			errorMessage, inputHelpText, inputLabel, name, required,
+			inputShowHelpText, inputShowLabel, type, "value");
+
+		if (infoField != null) {
+			if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {
+				String dataType = "integer";
 
 				Optional<Boolean> decimalOptional =
 					infoField.getAttributeOptional(NumberInfoFieldType.DECIMAL);
@@ -161,25 +165,21 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				if (decimalOptional.orElse(false)) {
 					dataType = "decimal";
 				}
+
+				inputTemplateNode.addAttribute("dataType", dataType);
 			}
-		}
 
-		InputTemplateNode inputTemplateNode = new InputTemplateNode(
-			dataType, errorMessage, inputHelpText, inputLabel, name, required,
-			inputShowHelpText, inputShowLabel, type, "value");
+			if (infoField.getInfoFieldType() instanceof SelectInfoFieldType) {
+				Optional<List<SelectInfoFieldType.Option>> optionsOptional =
+					infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS);
 
-		if ((infoField != null) &&
-			(infoField.getInfoFieldType() instanceof SelectInfoFieldType)) {
+				List<SelectInfoFieldType.Option> options =
+					optionsOptional.orElse(new ArrayList<>());
 
-			Optional<List<SelectInfoFieldType.Option>> optionsOptional =
-				infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS);
-
-			List<SelectInfoFieldType.Option> options = optionsOptional.orElse(
-				new ArrayList<>());
-
-			for (SelectInfoFieldType.Option option : options) {
-				inputTemplateNode.addOption(
-					option.getLabel(locale), option.getValue());
+				for (SelectInfoFieldType.Option option : options) {
+					inputTemplateNode.addOption(
+						option.getLabel(locale), option.getValue());
+				}
 			}
 		}
 

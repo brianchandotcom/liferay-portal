@@ -145,8 +145,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	private JSONObject _getInputJSONObject() {
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, "name", false, false, false, "type", "value");
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, "name", false,
+			false, false, "type", "value");
 
 		return inputTemplateNode.toJSONObject();
 	}

@@ -444,6 +444,7 @@
 		<column method-name="DBTableName" name="dbTableName" type="String" />
 		<column localized="true" name="label" type="String" />
 		<column name="name" type="String" />
+		<column name="parameterObjectFieldId" type="long" />
 		<column name="reverse" type="boolean" />
 		<column name="type" type="String" />
 
@@ -669,6 +670,7 @@
 		<exception>ObjectLayoutBoxCategorizationType</exception>
 		<exception>ObjectLayoutColumnSize</exception>
 		<exception>ObjectRelationshipName</exception>
+		<exception>ObjectRelationshipParameterObjectFieldId</exception>
 		<exception>ObjectRelationshipReverse</exception>
 		<exception>ObjectRelationshipType</exception>
 		<exception>ObjectValidationRuleEngine</exception>

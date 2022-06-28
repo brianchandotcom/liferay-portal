@@ -31,6 +31,7 @@ import com.liferay.object.internal.upgrade.v3_9_0.ObjectLayoutBoxUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -134,6 +135,11 @@ public class ObjectServiceUpgrade implements UpgradeStepRegistrator {
 			"3.13.0", "3.14.0",
 			new com.liferay.object.internal.upgrade.v3_14_0.
 				ObjectFieldUpgradeProcess());
+
+		registry.register(
+			"3.14.0", "3.15.0",
+			UpgradeStepFactory.addColumns(
+				"ObjectRelationship", "parameterObjectFieldId LONG"));
 	}
 
 }

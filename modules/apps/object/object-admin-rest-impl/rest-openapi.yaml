@@ -319,6 +319,9 @@ components:
                     type: integer
                 objectDefinitionName2:
                     type: string
+                parameterObjectFieldId:
+                    format: int64
+                    type: integer
                 reverse:
                     readOnly: true
                     type: boolean

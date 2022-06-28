@@ -8,6 +8,6 @@ Import-Package:\
 	!org.fusesource.jansi.*,\
 	\
 	*
-Liferay-Require-SchemaVersion: 3.14.0
+Liferay-Require-SchemaVersion: 3.15.0
 Liferay-Service: true
 -dsannotations-options: inherit

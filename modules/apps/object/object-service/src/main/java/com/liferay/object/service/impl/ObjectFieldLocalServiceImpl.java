@@ -255,6 +255,10 @@ public class ObjectFieldLocalServiceImpl
 		List<ObjectField> activeObjectFields = new ArrayList<>();
 
 		for (ObjectField objectField : objectFields) {
+			objectField.setObjectFieldSettings(
+				_objectFieldSettingPersistence.findByObjectFieldId(
+					objectField.getObjectFieldId()));
+
 			if (Validator.isNotNull(objectField.getRelationshipType())) {
 				ObjectRelationship objectRelationship =
 					_objectRelationshipPersistence.fetchByObjectFieldId2(
@@ -278,7 +282,16 @@ public class ObjectFieldLocalServiceImpl
 
 	@Override
 	public List<ObjectField> getCustomObjectFields(long objectFieldId) {
-		return _objectFieldPersistence.findByODI_S(objectFieldId, false);
+		List<ObjectField> objectFields = _objectFieldPersistence.findByODI_S(
+			objectFieldId, false);
+
+		for (ObjectField objectField : objectFields) {
+			objectField.setObjectFieldSettings(
+				_objectFieldSettingPersistence.findByObjectFieldId(
+					objectField.getObjectFieldId()));
+		}
+
+		return objectFields;
 	}
 
 	@Override
@@ -310,16 +323,32 @@ public class ObjectFieldLocalServiceImpl
 
 	@Override
 	public List<ObjectField> getObjectFields(long objectDefinitionId) {
-		return objectFieldPersistence.findByObjectDefinitionId(
-			objectDefinitionId);
+		List<ObjectField> objectFields =
+			objectFieldPersistence.findByObjectDefinitionId(objectDefinitionId);
+
+		for (ObjectField objectField : objectFields) {
+			objectField.setObjectFieldSettings(
+				_objectFieldSettingPersistence.findByObjectFieldId(
+					objectField.getObjectFieldId()));
+		}
+
+		return objectFields;
 	}
 
 	@Override
 	public List<ObjectField> getObjectFields(
 		long objectDefinitionId, String dbTableName) {
 
-		return objectFieldPersistence.findByODI_DTN(
+		List<ObjectField> objectFields = objectFieldPersistence.findByODI_DTN(
 			objectDefinitionId, dbTableName);
+
+		for (ObjectField objectField : objectFields) {
+			objectField.setObjectFieldSettings(
+				_objectFieldSettingPersistence.findByObjectFieldId(
+					objectField.getObjectFieldId()));
+		}
+
+		return objectFields;
 	}
 
 	@Override

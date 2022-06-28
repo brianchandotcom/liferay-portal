@@ -23,6 +23,7 @@ import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.FunctionalAxisTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitAxisTestClassGroup;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.HashMap;
@@ -127,6 +128,25 @@ public class TestrayFactory {
 			testrayBuild, topLevelBuild, axisTestClassGroup);
 	}
 
+	public static TestrayRoutine newTestrayRoutine(String testrayRoutineURL) {
+		TestrayRoutine testrayRoutine = _testrayRoutines.get(testrayRoutineURL);
+
+		if (testrayRoutine != null) {
+			return testrayRoutine;
+		}
+
+		try {
+			testrayRoutine = new TestrayRoutine(new URL(testrayRoutineURL));
+
+			_testrayRoutines.put(testrayRoutineURL, testrayRoutine);
+
+			return testrayRoutine;
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
+
 	public static TestrayServer newTestrayServer(String testrayServerURL) {
 		TestrayServer testrayServer = _testrayServers.get(testrayServerURL);
 
@@ -145,6 +165,8 @@ public class TestrayFactory {
 		_testrayAttachmentRecorders = new HashMap<>();
 	private static final Map<String, TestrayAttachmentUploader>
 		_testrayAttachmentUploaders = new HashMap<>();
+	private static final Map<String, TestrayRoutine> _testrayRoutines =
+		new HashMap<>();
 	private static final Map<String, TestrayServer> _testrayServers =
 		new HashMap<>();
 

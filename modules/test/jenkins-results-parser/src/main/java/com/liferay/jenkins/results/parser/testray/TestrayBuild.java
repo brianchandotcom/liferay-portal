@@ -32,7 +32,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class TestrayBuild {
+public class TestrayBuild implements Comparable<TestrayBuild> {
 
 	public TestrayBuild(TestrayRoutine testrayRoutine, JSONObject jsonObject) {
 		_testrayRoutine = testrayRoutine;
@@ -43,6 +43,17 @@ public class TestrayBuild {
 
 		_testrayProductVersion = _testrayProject.getTestrayProductVersionByID(
 			_jsonObject.getInt("testrayProductVersionId"));
+	}
+
+	@Override
+	public int compareTo(TestrayBuild testrayBuild) {
+		if (testrayBuild == null) {
+			throw new NullPointerException("Testray Build is null");
+		}
+
+		Integer id = testrayBuild.getID();
+
+		return id.compareTo(getID());
 	}
 
 	public String getDescription() {

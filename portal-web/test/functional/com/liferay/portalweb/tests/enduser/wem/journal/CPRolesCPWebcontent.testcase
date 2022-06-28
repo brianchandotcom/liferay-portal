@@ -536,10 +536,6 @@ definition {
 			category = "Content & Data",
 			portlet = "Web Content");
 
-		AssertVisible(locator1 = "Button#PLUS");
-
-		Pause(locator1 = "3000");
-
 		LexiconEntry.gotoAdd();
 
 		WebContent.addCP(

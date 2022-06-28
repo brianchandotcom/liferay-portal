@@ -1,8 +1,8 @@
 @component-name = "portal-commerce"
 definition {
 
-    property osgi.module.configuration.file.names = "com.liferay.commerce.product.configuration.CProductVersionConfiguration.config";
-    property osgi.module.configurations = "enabled=B&quot;true&quot;";
+	property osgi.module.configuration.file.names = "com.liferay.commerce.product.configuration.CProductVersionConfiguration.config";
+	property osgi.module.configurations = "enabled=B&quot;true&quot;";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -16,432 +16,137 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-    @description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9535"
-	@priority = "3"
-	test CanCheckVersionableProductSaveAsDraftButton {
-        property portal.acceptance = "false";
-
-        task ("When the Admin goes into the Commerce -> Products and create a new simple product") {
-            CommerceNavigator.gotoPortlet(
-			    category = "Product Management",
-			    portlet = "Products");
-
-		    CPCommerceCatalog.newProductsEntry(
-			    productCatalog = "Master",
-			    productName = "Simple T-Shirt",
-			    productType = "Simple");
-        }
-
-        task ("Then the admin now will see two buttons 'Save as Draft' and 'Publish'") {
-            AssertElementPresent(
-			    key_text = "Publish",
-			    locator1 = "Button#ANY");
-
-            AssertElementPresent(
-			    key_text = "Save as Draft",
-			    locator1 = "Button#ANY");       
-        }
-    }
-
-    @description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9537"
-	@priority = "3"
-	test CanCreateNewVersionableProductDraftVersion { 
-        property portal.acceptance = "false";
-
-        task ("Given the admin has already created a new simple product") {
-           CommerceNavigator.gotoPortlet(
-			    category = "Product Management",
-			    portlet = "Products");
-
-		    CPCommerceCatalog.newProductsEntry(
-			    productCatalog = "Master",
-			    productName = "Simple T-Shirt",
-			    productType = "Simple");
-
-            var approvedProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
-        }
-
-        task ("And click on 'Save as Draft'") {
-            Click(
-			    key_text = "Save as Draft",
-			    locator1 = "Button#ANY");        
-        }
-
-        task ("Then the admin will be redirected to the new page of the version of the product (see IDs difference) ") {
-            AssertElementPresent(
-			    key_status = "Draft",
-			    locator1 = "CommerceEntry#WORKFLOW_STATUS");  
-
-            var draftProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
-
-            CommerceProducts.checkProductIdsNotEqual(
-                firstProductId = "${approvedProductId}",
-                secondProductId = "${draftProductId}");         
-        }
-
-        task ("if the admin goes back, he will find two products with the same name where the first is approved, and the second is draft") {
-            Navigator.gotoBack();
-
-            CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft");
-
-            CommerceProducts.checkProductId(list = "Simple T-Shirt:Approved:${approvedProductId},Simple T-Shirt:Draft:${draftProductId}");
-        }
-
-    }
-
-    @description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9539"
-	@priority = "3"
-	test CanOnlyHaveOneVersionableProductDraftVersion { 
-        property portal.acceptance = "false";
-
-        task ("Given the admin has already created a new simple product") {
-            CommerceNavigator.gotoPortlet(
-			    category = "Product Management",
-			    portlet = "Products");
-
-		    CPCommerceCatalog.newProductsEntry(
-			    productCatalog = "Master",
-			    productName = "Simple T-Shirt",
-			    productType = "Simple");
-
-            var approvedProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
-        }
-
-        task ("And click on 'Save as Draft'") {
-            Click(
-			    key_text = "Save as Draft",
-			    locator1 = "Button#ANY");
-
-            AssertElementPresent(
-			    key_status = "Draft",
-			    locator1 = "CommerceEntry#WORKFLOW_STATUS");        
-        }
-
-        task ("Then a new version of the product is created") {
-            var incompleteProductId = selenium.getText("CommerceEntry#PRODUCT_ID");           
-        }
-
-        task ("And the admin goes back and opens the first approved product again") {
-            Navigator.gotoBack();
-
-            Click(
-			    key_productName = "Simple T-Shirt",
-			    key_status = "Approved",
-			    locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
-        }
-
-        task ("And click on 'Save as Draft'") {
-            Click(
-			    key_text = "Save as Draft",
-			    locator1 = "Button#ANY");        
-        }
-
-        task ("Then a message will be pop-out (check the message)") {
-            AssertElementPresent(locator1 = "CommerceNavigation#VALIDATE_SAVE_AS_DRAFT_MODAL_MESSAGE_WITH_VALIDATION");          
-        }
-
-        task ("And if the admin clicks on the 'Cancel' button") {
-            Click(locator1 = "Button#CANCEL");        
-        }
-
-        task ("Then nothing happens (check that we still have only 2 products)") {
-           Navigator.gotoBack();
-
-           CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft"); 
-        }
-
-        task ("But if the admin clicks on 'OK'") {
-            Click(
-			    key_productName = "Simple T-Shirt",
-			    key_status = "Approved",
-			    locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
-
-            Click(
-			    key_text = "Save as Draft",
-			    locator1 = "Button#ANY");
-
-            Click(locator1 = "Button#OK");
-
-            AssertElementPresent(
-			    key_status = "Draft",
-			    locator1 = "CommerceEntry#WORKFLOW_STATUS"); 
-
-            var draftProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
-
-        }
-
-        task ("Then if the admin goes back to the products page the admin will see 3 products, one approved, one incomplete, and one draft") {
-            CommerceProducts.checkProductIdsNotEqual(
-                firstProductId = "${incompleteProductId}",
-                secondProductId = "${draftProductId}");        
-
-            Navigator.gotoBack();
-
-            CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
-
-            CommerceProducts.checkProductId(list = "Simple T-Shirt:Approved:${approvedProductId},Simple T-Shirt:Incomplete:${incompleteProductId},Simple T-Shirt:Draft:${draftProductId}");
-        }
-    }
-
-    @description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9540"
-	@priority = "3"
-	test CanCheckVersionableProductVisibilityOnMiniumCatalogPage { 
-        property portal.acceptance = "false";
-
-        task ("Given the admin already created a Minium") {
-            CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-        }
-
-        task ("When the admin opens 'Hoses'") {
-            CommerceNavigator.gotoPortlet(
-			    category = "Product Management",
-			    portlet = "Products");
-
-            AppBuilderAdmin.searchByItem(itemName = "Hoses");
-
-            CommerceNavigator.gotoEntry(entryName = "Hoses");
-        }
-
-        task ("And change the Short Description to 'Hoses Short OLD' and the Full Description to 'Hoses Full OLD'") {
-            Type(
-			    locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
-			    value1 = "Hoses Short OLD");
-
-		    CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = "Hoses Full OLD");
-        }
-
-        task ("And Click on 'Publish'") {
-            Button.clickPublish();
-        }
-
-        task ("And after that the admin change again the Short Description to 'Hoses Short NEW' and the Full Description to 'Hoses Full NEW'") {
-            Type(
-			    locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
-			    value1 = "Hoses Short NEW");
-
-		    CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = "Hoses Full NEW");
-        }
-
-        task ("And click on 'Save as Draft'") {
-            Click(
-			    key_text = "Save as Draft",
-			    locator1 = "Button#ANY");
-        }
-
-        task ("And the admin goes back and searches for 'Hoses'") {
-            Navigator.gotoBack();
-        }
-
-        task ("Then the admin will see two 'Approved' Hoses one with the minium description and the other will have the world 'OLD' and the 'Draft' Hoses will have 'NEW'") {
-            var hosesMiniumFullDesc = "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment";
-
-            CommerceProducts.checkProductDescription(list = "Hoses:Approved::${hosesMiniumFullDesc}:1,Hoses:Approved:Hoses Short OLD:Hoses Full OLD:2,Hoses:Draft:Hoses Short NEW:Hoses Full NEW:1");
-        }
-
-        task ("And if the admin goes on the catalog page on Minium and searches for 'Hoses' he will see only one Hoses with the old description") { 
-            ApplicationsMenu.gotoSite(site = "Minium");
-
-            CommerceNavigator.searchCatalog(productName = "Hoses");
-
-            AssertTextEquals.assertPartialText(
-				key_productName = "Hoses",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
-				value1 = "120.00");
-
-            CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
-
-            AssertElementPresent(
-                locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
-                value = "Hoses Full OLD");
-        }
-
-        task ("But if the admin goes back on the product admin page and opens the 'Draft' Hoses and clicks on publish") { 
-            CommerceNavigator.gotoPortlet(
-			    category = "Product Management",
-			    portlet = "Products");
-
-            AppBuilderAdmin.searchByItem(itemName = "Hoses");
-
-            Click(
-			    key_productName = "Hoses",
-			    key_status = "Draft",
-			    locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
-
-            Button.clickPublish();           
-        }
-
-        task ("Then if the admin search for 'Hoses' on the product page the admin will see 3 approved 'Hoses'") { 
-            Navigator.gotoBack();
-
-            AppBuilderAdmin.searchByItem(itemName = "Hoses");
-
-            CommerceProducts.checkProductsPresent(list = "Hoses:Approved:1,Hoses:Approved:2,Hoses:Approved:3");
-
-            CommerceProducts.checkProductsNotPresent(list = "Hoses:Approved:4,Hoses:Draft:1,Hoses:Incomplete:1");
-
-            echo("They are present only 3 Approved product with the name Hoses");
-
-            echo("They are not present other product status with the name Hoses"); 
-        }
-
-        task ("And if the admin goes on Minium and searches for 'Hoses'") {
-            ApplicationsMenu.gotoSite(site = "Minium");
-
-            CommerceNavigator.searchCatalog(productName = "Hoses");
-        }
-
-        task ("Then the admin will see only one Hoses with a different price") {
-            AssertTextEquals.assertPartialText(
-				key_productName = "Hoses",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
-				value1 = "0.00");
-
-            AssertTextNotEquals.assertNotPartialText(
-				key_productName = "Hoses",
-				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
-				value1 = "120.00");
-        }
-
-        task ("And if the admin opens the details will see the new description") {
-            CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
-
-            AssertElementPresent(
-                locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
-                value = "Hoses Full NEW");
-        }
-    }
-
-    @description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9549"
+	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9549"
 	@priority = "3"
 	test CanCheckProductVersionsWithProductVersioningDisabled {
-        property portal.acceptance = "false";
-        property test.name.skip.portal.instance = "CPCommerceProductVersioning#CanCheckProductVersionsWithProductVersioningDisabled";
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductVersioning#CanCheckProductVersionsWithProductVersioningDisabled";
 
-        //This test need to disable the versioning for that reason the 'skip.portal.instance' is necessary
+		// This test need to disable the versioning for that reason the 'skip.portal.instance' is necessary
 
-        task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {
-            CommerceNavigator.gotoPortlet(
-			    category = "Product Management",
-			    portlet = "Products");
+		task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
 
-		    CPCommerceCatalog.newProductsEntry(
-			    productCatalog = "Master",
-			    productName = "Simple T-Shirt",
-			    productType = "Simple");
-        }
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+		}
 
-        task ("And click on 'Save as Draft'") {
-            Click(
-			    key_text = "Save as Draft",
-			    locator1 = "Button#ANY");      
-        }
+		task ("And click on 'Save as Draft'") {
+			Click(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
 
-        task ("And go back and open the first approved product again") {
-            Navigator.gotoBack();
+		task ("And go back and open the first approved product again") {
+			Navigator.gotoBack();
 
-            Click(
-			    key_productName = "Simple T-Shirt",
-			    key_status = "Approved",
-			    locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
-        }
+			Click(
+				key_productName = "Simple T-Shirt",
+				key_status = "Approved",
+				locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+		}
 
-        task ("And click on 'Save as Draft'") {
-            Click(
-			    key_text = "Save as Draft",
-			    locator1 = "Button#ANY");        
-        }
+		task ("And click on 'Save as Draft'") {
+			Click(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
 
-        task ("And the admin click on 'OK'") {
-             Click(locator1 = "Button#OK");
-        }
+		task ("And the admin click on 'OK'") {
+			Click(locator1 = "Button#OK");
+		}
 
-        task ("And the admin now will see 3 products, one is approved, one is draft and the last one is incomplete") {
-            Navigator.gotoBack();
+		task ("And the admin now will see 3 products, one is approved, one is draft and the last one is incomplete") {
+			Navigator.gotoBack();
 
-            CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
-        }
+			CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
+		}
 
-        task ("And the admin disable the versioning") {
-            ApplicationsMenu.gotoPortlet(
-			    category = "Configuration",
-			    panel = "Control Panel",
-			    portlet = "System Settings");
+		task ("And the admin disable the versioning") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
 
-		    Click(
-			    key_text = "Catalog",
-			    locator1 = "Link#ANY");
+			Click(
+				key_text = "Catalog",
+				locator1 = "Link#ANY");
 
-            Click(
-			    key_text = "Product Versioning",
-			    locator1 = "Link#ANY");
+			Click(
+				key_text = "Product Versioning",
+				locator1 = "Link#ANY");
 
-            Uncheck.uncheckToggleSwitch(
-			    checkboxName = "Enabled",
-			    locator1 = "Checkbox#ANY_CHECKBOX");
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "Enabled",
+				locator1 = "Checkbox#ANY_CHECKBOX");
 
-            Button.click(button = "Update");
+			Button.click(button = "Update");
 
-            Alert.viewSuccessMessage();   
-        }
+			Alert.viewSuccessMessage();
+		}
 
-        task ("Then the admin will still see 3 products, one approved, one incomplete, one draft") {
-            CommerceNavigator.gotoPortlet(
-			    category = "Product Management",
-			    portlet = "Products");
+		task ("Then the admin will still see 3 products, one approved, one incomplete, one draft") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
 
-            CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
+			CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
 
-            Click(
-			    key_productName = "Simple T-Shirt",
-			    key_status = "Approved",
-			    locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+			Click(
+				key_productName = "Simple T-Shirt",
+				key_status = "Approved",
+				locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
 
-            AssertElementNotPresent(
-			    key_text = "Save as Draft",
-			    locator1 = "Button#ANY");   
-        }
-    }
+			AssertElementNotPresent(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
+	}
 
-    @description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9553"
+	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9553"
 	@priority = "3"
 	test CanCheckVersionableProductConvertToDraftStatus {
-        property portal.acceptance = "false"; 
-         
-        task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {
-            CommerceNavigator.gotoPortlet(
-			    category = "Product Management",
-			    portlet = "Products");
+		property portal.acceptance = "false";
 
-		    CPCommerceCatalog.newProductsEntry(
-			    productCatalog = "Master",
-			    productName = "Simple T-Shirt",
-			    productType = "Simple");
+		task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
 
-            var approvedProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
-        }
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
 
-        task ("And click on 'Save as Draft' and save the ID") {
-            Click(
-			    key_text = "Save as Draft",
-			    locator1 = "Button#ANY");
+			var approvedProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
+		}
 
-            AssertElementPresent(
-			    key_status = "Draft",
-			    locator1 = "CommerceEntry#WORKFLOW_STATUS");    
+		task ("And click on 'Save as Draft' and save the ID") {
+			Click(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
 
-            var draftProductId = selenium.getText("CommerceEntry#PRODUCT_ID");     
-        }
+			AssertElementPresent(
+				key_status = "Draft",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
 
-        task ("And go back and open the first approved product again") {
-            Navigator.gotoBack();
+			var draftProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
+		}
 
-            Click(
-			    key_productName = "Simple T-Shirt",
-			    key_status = "Approved",
-			    locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
-        }
+		task ("And go back and open the first approved product again") {
+			Navigator.gotoBack();
 
-        task ("And click on 'Convert To Draft' (save the ID, the ID should remain the same for this product)") {
+			Click(
+				key_productName = "Simple T-Shirt",
+				key_status = "Approved",
+				locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+		}
+
+		task ("And click on 'Convert To Draft' (save the ID, the ID should remain the same for this product)") {
 			Click(
 				key_itemName = "",
 				locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
@@ -452,23 +157,316 @@ definition {
 
 			Click(locator1 = "Button#OK");
 
-            AssertElementPresent(
-			    key_status = "Draft",
-			    locator1 = "CommerceEntry#WORKFLOW_STATUS");
+			AssertElementPresent(
+				key_status = "Draft",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
 
-        }
-
-        task ("Then the admin will see 2 products, with different id and into the Draft status") {
-            CommerceProducts.checkProductIdsEqual(
-                firstProductId = "${approvedProductId}",
+		task ("Then the admin will see 2 products, with different id and into the Draft status") {
+			CommerceProducts.checkProductIdsEqual(
+				firstProductId = "${approvedProductId}",
 				secondProductId = selenium.getText("CommerceEntry#PRODUCT_ID"),
-                status = "Draft");
+				status = "Draft");
 
-            Navigator.gotoBack();
+			Navigator.gotoBack();
 
-            CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
+			CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
 
-            CommerceProducts.checkProductId(list = "Simple T-Shirt:Draft:${approvedProductId},Simple T-Shirt:Incomplete:${draftProductId}");        
-        }
-    }
+			CommerceProducts.checkProductId(list = "Simple T-Shirt:Draft:${approvedProductId},Simple T-Shirt:Incomplete:${draftProductId}");
+		}
+	}
+
+	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9535"
+	@priority = "3"
+	test CanCheckVersionableProductSaveAsDraftButton {
+		property portal.acceptance = "false";
+
+		task ("When the Admin goes into the Commerce -> Products and create a new simple product") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+		}
+
+		task ("Then the admin now will see two buttons 'Save as Draft' and 'Publish'") {
+			AssertElementPresent(
+				key_text = "Publish",
+				locator1 = "Button#ANY");
+
+			AssertElementPresent(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
+	}
+
+	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9540"
+	@priority = "3"
+	test CanCheckVersionableProductVisibilityOnMiniumCatalogPage {
+		property portal.acceptance = "false";
+
+		task ("Given the admin already created a Minium") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When the admin opens 'Hoses'") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			AppBuilderAdmin.searchByItem(itemName = "Hoses");
+
+			CommerceNavigator.gotoEntry(entryName = "Hoses");
+		}
+
+		task ("And change the Short Description to 'Hoses Short OLD' and the Full Description to 'Hoses Full OLD'") {
+			Type(
+				locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
+				value1 = "Hoses Short OLD");
+
+			CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = "Hoses Full OLD");
+		}
+
+		task ("And Click on 'Publish'") {
+			Button.clickPublish();
+		}
+
+		task ("And after that the admin change again the Short Description to 'Hoses Short NEW' and the Full Description to 'Hoses Full NEW'") {
+			Type(
+				locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
+				value1 = "Hoses Short NEW");
+
+			CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = "Hoses Full NEW");
+		}
+
+		task ("And click on 'Save as Draft'") {
+			Click(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
+
+		task ("And the admin goes back and searches for 'Hoses'") {
+			Navigator.gotoBack();
+		}
+
+		task ("Then the admin will see two 'Approved' Hoses one with the minium description and the other will have the world 'OLD' and the 'Draft' Hoses will have 'NEW'") {
+			var hosesMiniumFullDesc = "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment";
+
+			CommerceProducts.checkProductDescription(list = "Hoses:Approved::${hosesMiniumFullDesc}:1,Hoses:Approved:Hoses Short OLD:Hoses Full OLD:2,Hoses:Draft:Hoses Short NEW:Hoses Full NEW:1");
+		}
+
+		task ("And if the admin goes on the catalog page on Minium and searches for 'Hoses' he will see only one Hoses with the old description") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.searchCatalog(productName = "Hoses");
+
+			AssertTextEquals.assertPartialText(
+				key_productName = "Hoses",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
+				value1 = "120.00");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
+
+			AssertElementPresent(
+				locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
+				value = "Hoses Full OLD");
+		}
+
+		task ("But if the admin goes back on the product admin page and opens the 'Draft' Hoses and clicks on publish") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			AppBuilderAdmin.searchByItem(itemName = "Hoses");
+
+			Click(
+				key_productName = "Hoses",
+				key_status = "Draft",
+				locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+
+			Button.clickPublish();
+		}
+
+		task ("Then if the admin search for 'Hoses' on the product page the admin will see 3 approved 'Hoses'") {
+			Navigator.gotoBack();
+
+			AppBuilderAdmin.searchByItem(itemName = "Hoses");
+
+			CommerceProducts.checkProductsPresent(list = "Hoses:Approved:1,Hoses:Approved:2,Hoses:Approved:3");
+
+			CommerceProducts.checkProductsNotPresent(list = "Hoses:Approved:4,Hoses:Draft:1,Hoses:Incomplete:1");
+
+			echo("They are present only 3 Approved product with the name Hoses");
+
+			echo("They are not present other product status with the name Hoses");
+		}
+
+		task ("And if the admin goes on Minium and searches for 'Hoses'") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.searchCatalog(productName = "Hoses");
+		}
+
+		task ("Then the admin will see only one Hoses with a different price") {
+			AssertTextEquals.assertPartialText(
+				key_productName = "Hoses",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
+				value1 = "0.00");
+
+			AssertTextNotEquals.assertNotPartialText(
+				key_productName = "Hoses",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
+				value1 = "120.00");
+		}
+
+		task ("And if the admin opens the details will see the new description") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
+
+			AssertElementPresent(
+				locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
+				value = "Hoses Full NEW");
+		}
+	}
+
+	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9537"
+	@priority = "3"
+	test CanCreateNewVersionableProductDraftVersion {
+		property portal.acceptance = "false";
+
+		task ("Given the admin has already created a new simple product") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+
+			var approvedProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
+		}
+
+		task ("And click on 'Save as Draft'") {
+			Click(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then the admin will be redirected to the new page of the version of the product (see IDs difference) ") {
+			AssertElementPresent(
+				key_status = "Draft",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+			var draftProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
+
+			CommerceProducts.checkProductIdsNotEqual(
+				firstProductId = "${approvedProductId}",
+				secondProductId = "${draftProductId}");
+		}
+
+		task ("if the admin goes back, he will find two products with the same name where the first is approved, and the second is draft") {
+			Navigator.gotoBack();
+
+			CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft");
+
+			CommerceProducts.checkProductId(list = "Simple T-Shirt:Approved:${approvedProductId},Simple T-Shirt:Draft:${draftProductId}");
+		}
+	}
+
+	@description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9539"
+	@priority = "3"
+	test CanOnlyHaveOneVersionableProductDraftVersion {
+		property portal.acceptance = "false";
+
+		task ("Given the admin has already created a new simple product") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+
+			var approvedProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
+		}
+
+		task ("And click on 'Save as Draft'") {
+			Click(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+
+			AssertElementPresent(
+				key_status = "Draft",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+		}
+
+		task ("Then a new version of the product is created") {
+			var incompleteProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
+		}
+
+		task ("And the admin goes back and opens the first approved product again") {
+			Navigator.gotoBack();
+
+			Click(
+				key_productName = "Simple T-Shirt",
+				key_status = "Approved",
+				locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+		}
+
+		task ("And click on 'Save as Draft'") {
+			Click(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then a message will be pop-out (check the message)") {
+			AssertElementPresent(locator1 = "CommerceNavigation#VALIDATE_SAVE_AS_DRAFT_MODAL_MESSAGE_WITH_VALIDATION");
+		}
+
+		task ("And if the admin clicks on the 'Cancel' button") {
+			Click(locator1 = "Button#CANCEL");
+		}
+
+		task ("Then nothing happens (check that we still have only 2 products)") {
+			Navigator.gotoBack();
+
+			CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft");
+		}
+
+		task ("But if the admin clicks on 'OK'") {
+			Click(
+				key_productName = "Simple T-Shirt",
+				key_status = "Approved",
+				locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+
+			Click(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+
+			Click(locator1 = "Button#OK");
+
+			AssertElementPresent(
+				key_status = "Draft",
+				locator1 = "CommerceEntry#WORKFLOW_STATUS");
+
+			var draftProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
+		}
+
+		task ("Then if the admin goes back to the products page the admin will see 3 products, one approved, one incomplete, and one draft") {
+			CommerceProducts.checkProductIdsNotEqual(
+				firstProductId = "${incompleteProductId}",
+				secondProductId = "${draftProductId}");
+
+			Navigator.gotoBack();
+
+			CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
+
+			CommerceProducts.checkProductId(list = "Simple T-Shirt:Approved:${approvedProductId},Simple T-Shirt:Incomplete:${incompleteProductId},Simple T-Shirt:Draft:${draftProductId}");
+		}
+	}
+
 }

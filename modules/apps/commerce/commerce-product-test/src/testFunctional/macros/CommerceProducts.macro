@@ -96,6 +96,222 @@ definition {
 		}
 	}
 
+	macro checkProductDescription {
+		for (var value : list "${list}") {
+			var productName = StringUtil.extractFirst("${value}", ":");
+
+			var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
+
+			var status = StringUtil.extractFirst("${value}", ":");
+
+			var value = StringUtil.replaceFirst("${value}", "${status}:", "");
+
+			var productShortDescription = StringUtil.extractFirst("${value}", ":");
+
+			var value = StringUtil.replaceFirst("${value}", "${productShortDescription}:", "");
+
+			var productFullDescription = StringUtil.extractFirst("${value}", ":");
+
+			var value = StringUtil.replaceFirst("${value}", "${productFullDescription}:", "");
+
+			var row = "${value}";
+
+			AppBuilderAdmin.searchByItem(itemName = "${productName}");
+
+			if ("${row}" == "") {
+				Click(
+					key_productName = "${productName}",
+					key_status = "${status}",
+					locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+			}
+			else {
+				Click(
+					key_productName = "${productName}",
+					key_row = "${row}",
+					key_status = "${status}",
+					locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS_WITH_ROW");
+			}
+
+			echo("--------------------------");
+
+			echo("productName: ${productName}");
+
+			echo("status: ${status}");
+
+			echo("productShortDescription: ${productShortDescription}");
+
+			echo("productFullDescription: ${productFullDescription}");
+
+			echo("row: ${row}");
+
+			echo("--------------------------");
+
+			AssertElementPresent(
+				locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
+				value = "${productShortDescription}");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			AssertElementPresent(
+				locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
+				value = "${productFullDescription}");
+
+			SelectFrameTop();
+
+			Navigator.gotoBack();
+		}
+	}
+
+	macro checkProductId {
+		for (var value : list "${list}") {
+			var productName = StringUtil.extractFirst("${value}", ":");
+
+			var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
+
+			var status = StringUtil.extractFirst("${value}", ":");
+
+			var value = StringUtil.replaceFirst("${value}", "${status}:", "");
+
+			var productId = "${value}";
+
+			echo("--------------------------");
+
+			echo("productName: ${productName}");
+
+			echo("status: ${status}");
+
+			echo("productId: ${productId}");
+
+			echo("--------------------------");
+
+			Click(
+				key_productName = "${productName}",
+				key_status = "${status}",
+				locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+
+			CommerceProducts.checkProductIdsEqual(
+				firstProductId = "${productId}",
+				secondProductId = selenium.getText("CommerceEntry#PRODUCT_ID"),
+				status = "${status}");
+
+			Navigator.gotoBack();
+		}
+	}
+
+	macro checkProductIdsEqual {
+		var equals = CommerceProducts.isProductIdsEqual(
+			firstProductId = "${firstProductId}",
+			secondProductId = "${secondProductId}");
+
+		echo("equals = ${equals}");
+
+		if ("${equals}" == "false") {
+			fail("The product ID for the ${status} status with the ID ${secondProductId} is not correct, the expected ID is ${firstProductId}");
+		}
+
+		echo("The product ID for the ${status} status is the one with the ID ${secondProductId}");
+	}
+
+	macro checkProductIdsNotEqual {
+		var equals = CommerceProducts.isProductIdsEqual(
+			firstProductId = "${firstProductId}",
+			secondProductId = "${secondProductId}");
+
+		if ("${equals}" == "true") {
+			fail("A new version of the product has not been created because the first ID ${firstProductId} is the same of the second ID ${secondProductId}");
+		}
+
+		echo("The first version of the product ID is ${firstProductId}, the second version of the product ID is ${secondProductId}");
+	}
+
+	macro checkProductsNotPresent {
+		for (var value : list "${list}") {
+			var productName = StringUtil.extractFirst("${value}", ":");
+
+			var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
+
+			var status = StringUtil.extractFirst("${value}", ":");
+
+			var value = StringUtil.replaceFirst("${value}", "${status}:", "");
+
+			if ("${status}" == "") {
+				var status = "${value}";
+				var row = "";
+			}
+			else {
+				var row = "${value}";
+			}
+
+			echo("--------------------------");
+
+			echo("productName: ${productName}");
+
+			echo("status: ${status}");
+
+			echo("row: ${row}");
+
+			echo("--------------------------");
+
+			if ("${row}" == "") {
+				AssertElementNotPresent(
+					key_productName = "${productName}",
+					key_status = "${status}",
+					locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME");
+			}
+			else {
+				AssertElementNotPresent(
+					key_productName = "${productName}",
+					key_row = "${row}",
+					key_status = "${status}",
+					locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME_WITH_ROW");
+			}
+		}
+	}
+
+	macro checkProductsPresent {
+		for (var value : list "${list}") {
+			var productName = StringUtil.extractFirst("${value}", ":");
+
+			var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
+
+			var status = StringUtil.extractFirst("${value}", ":");
+
+			var value = StringUtil.replaceFirst("${value}", "${status}:", "");
+
+			if ("${status}" == "") {
+				var status = "${value}";
+				var row = "";
+			}
+			else {
+				var row = "${value}";
+			}
+
+			echo("--------------------------");
+
+			echo("productName: ${productName}");
+
+			echo("status: ${status}");
+
+			echo("row: ${row}");
+
+			echo("--------------------------");
+
+			if ("${row}" == "") {
+				AssertElementPresent(
+					key_productName = "${productName}",
+					key_status = "${status}",
+					locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME");
+			}
+			else {
+				AssertElementPresent(
+					key_productName = "${productName}",
+					key_row = "${row}",
+					key_status = "${status}",
+					locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME_WITH_ROW");
+			}
+		}
+	}
+
 	macro checkProductStatusAfterDuplicationAndConvertionToDraft {
 		AppBuilderAdmin.searchByItem(itemName = "${entryName}");
 
@@ -259,6 +475,15 @@ definition {
 			workflowResourceValue = "Commerce Product");
 	}
 
+	macro isProductIdsEqual {
+		if ("${firstProductId}" == "${secondProductId}") {
+			return "true";
+		}
+		else {
+			return "false";
+		}
+	}
+
 	macro moveCatalogEntriesToRecycleBin {
 		Click(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
 
@@ -289,202 +514,6 @@ definition {
 			value1 = "${replacementSKU}");
 
 		Button.clickPublish();
-	}
-
-	macro isProductIdsEqual {
-        if ("${firstProductId}" == "${secondProductId}") {
-			return "true";
-		} else {
-			return "false";
-		}
-	}
-
-	macro checkProductIdsEqual {
-		var equals = CommerceProducts.isProductIdsEqual(
-			firstProductId = "${firstProductId}",
-			secondProductId = "${secondProductId}");
-
-		echo("equals = ${equals}");
-
-		if ("${equals}" == "false") {
-			fail("The product ID for the ${status} status with the ID ${secondProductId} is not correct, the expected ID is ${firstProductId}");
-		}
-        
-		echo("The product ID for the ${status} status is the one with the ID ${secondProductId}");
-	}
-
-	macro checkProductIdsNotEqual { 
-		var equals = CommerceProducts.isProductIdsEqual(
-			firstProductId = "${firstProductId}",
-			secondProductId = "${secondProductId}");
-
-		if ("${equals}" == "true") {
-			fail("A new version of the product has not been created because the first ID ${firstProductId} is the same of the second ID ${secondProductId}");
-		}
-
-		echo("The first version of the product ID is ${firstProductId}, the second version of the product ID is ${secondProductId}");
-	}
-
-	macro checkProductsPresent { 
-		for (var value : list "${list}") { 
-            var productName = StringUtil.extractFirst("${value}", ":");
-            var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
-
-            var status = StringUtil.extractFirst("${value}", ":");
-            var value = StringUtil.replaceFirst("${value}", "${status}:", "");
-
-			if ("${status}" == "") {
-				var status = "${value}";
-				var row = "";
-			} else {
-				var row = "${value}";
-			}
-
-			echo("--------------------------");
-            echo("productName: ${productName}");
-            echo("status: ${status}");
-            echo("row: ${row}");
-            echo("--------------------------");
-
-			if ("${row}" == "") {
-				AssertElementPresent(
-                	key_productName = "${productName}",
-			    	key_status = "${status}",
-			    	locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME");
-			}
-			else {
-				AssertElementPresent(
-                	key_productName = "${productName}",
-			    	key_status = "${status}",
-                	key_row = "${row}",
-                	locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME_WITH_ROW");
-			}
-        }
-	}
-
-	macro checkProductsNotPresent { 
-		for (var value : list "${list}") { 
-            var productName = StringUtil.extractFirst("${value}", ":");
-            var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
-
-            var status = StringUtil.extractFirst("${value}", ":");
-            var value = StringUtil.replaceFirst("${value}", "${status}:", "");
-
-            if ("${status}" == "") {
-				var status = "${value}";
-				var row = "";
-			} else {
-				var row = "${value}";
-			}
-
-            echo("--------------------------");
-            echo("productName: ${productName}");
-            echo("status: ${status}");
-            echo("row: ${row}");
-            echo("--------------------------");
-
-			if ("${row}" == "") {
-				AssertElementNotPresent(
-                	key_productName = "${productName}",
-			    	key_status = "${status}",
-			    	locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME");
-			}
-			else {
-				AssertElementNotPresent(
-                	key_productName = "${productName}",
-			    	key_status = "${status}",
-                	key_row = "${row}",
-                	locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME_WITH_ROW");
-			}
-        }
-	}
-
-	macro checkProductId { 
-		for (var value : list "${list}") { 
-            var productName = StringUtil.extractFirst("${value}", ":");
-            var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
-
-            var status = StringUtil.extractFirst("${value}", ":");
-            var value = StringUtil.replaceFirst("${value}", "${status}:", "");
-
-			var productId = "${value}";
-
-
-            echo("--------------------------");
-            echo("productName: ${productName}");
-            echo("status: ${status}");
-            echo("productId: ${productId}");
-            echo("--------------------------");
-
-            Click(
-			    key_productName = "${productName}",
-			    key_status = "${status}",
-			    locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
-
-            CommerceProducts.checkProductIdsEqual(
-                firstProductId = "${productId}",
-				secondProductId = selenium.getText("CommerceEntry#PRODUCT_ID"),
-                status = "${status}");
-
-            Navigator.gotoBack();
-
-        } 
-	}
-
-	macro checkProductDescription {			
-		for (var value : list "${list}") { 
-            var productName = StringUtil.extractFirst("${value}", ":");
-            var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
-
-            var status = StringUtil.extractFirst("${value}", ":");
-            var value = StringUtil.replaceFirst("${value}", "${status}:", "");
-
-            var productShortDescription = StringUtil.extractFirst("${value}", ":");
-            var value = StringUtil.replaceFirst("${value}", "${productShortDescription}:", "");
-
-        	var productFullDescription = StringUtil.extractFirst("${value}", ":");
-            var value = StringUtil.replaceFirst("${value}", "${productFullDescription}:", "");
-
-            var row = "${value}";
-
-            AppBuilderAdmin.searchByItem(itemName = "${productName}");
-
-            if ("${row}" == "") {
-				Click(
-			    	key_productName = "${productName}",
-			    	key_status = "${status}",
-			    	locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
-			}
-			else {
-				Click(
-			    	key_productName = "${productName}",
-			    	key_status = "${status}",
-                	key_row = "${row}",
-			    	locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS_WITH_ROW");
-			}
-
-			echo("--------------------------");
-            echo("productName: ${productName}");
-            echo("status: ${status}");
-            echo("productShortDescription: ${productShortDescription}");
-            echo("productFullDescription: ${productFullDescription}");
-            echo("row: ${row}");
-            echo("--------------------------");
-
-			AssertElementPresent(
-                locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
-			    value = "${productShortDescription}");
-
-            SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-
-            AssertElementPresent(
-                locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
-                value = "${productFullDescription}");
-
-            SelectFrameTop();
-
-            Navigator.gotoBack();
-		}
 	}
 
 }

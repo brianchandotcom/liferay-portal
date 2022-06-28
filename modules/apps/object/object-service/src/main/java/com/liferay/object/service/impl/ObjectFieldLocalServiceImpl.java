@@ -44,6 +44,7 @@ import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -717,8 +718,10 @@ public class ObjectFieldLocalServiceImpl
 				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, businessType)) {
 
 			throw new ObjectFieldDefaultValueException(
-				"Object field can only have default type when the business " +
-					"type is picklist");
+				StringBundler.concat(
+					"Object field can only have a default type when the ",
+					"business type is \"",
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST, "\""));
 		}
 	}
 

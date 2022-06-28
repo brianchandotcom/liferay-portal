@@ -33,12 +33,12 @@ const SlaCard = ({
 			})}
 		>
 			<ClayCard
-				className={classNames('m-0 p-3 rounded-lg', {
-					'bg-brand-secondary-lighten-6 cp-sla-gold':
+				className={classNames('m-0 p-3 rounded-lg cp-sla-min-width', {
+					'bg-brand-secondary-lighten-6 border-brand-secondary-lighten-4':
 						slaTitle === SLA_TYPES.gold,
-					'bg-neutral-0 cp-sla-limited':
+					'bg-neutral-0 border-brand-primary-darken-2 ':
 						slaTitle === SLA_TYPES.limited,
-					'cp-sla-platinum': slaTitle === SLA_TYPES.platinum,
+					'bg-neutral-0 border-neutral-2 ': slaTitle === SLA_TYPES.platinum,
 				})}
 			>
 				<ClayCard.Row className="align-items-center d-flex justify-content-between">

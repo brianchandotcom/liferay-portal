@@ -3478,7 +3478,7 @@ definition {
 				idpEntityId = "${identityProviderEntityId}",
 				idpKeepAliveURL = "http://localhost:8080/c/portal/saml/keep_alive",
 				idpURL = "http://localhost:8080",
-				nameIdentifierFormat = "Email Address",
+				nameIdentifierFormat = "Unspecified",
 				spURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com",
 				userResolution = "dynamic");
@@ -3492,8 +3492,8 @@ definition {
 		task ("Add SP configurations to IdP") {
 			SAML.addSPConfigurationsToIdentityProvider(
 				idpURL = "http://localhost:8080",
-				nameIdentifierAttributeName = "emailAddress",
-				nameIdentifierFormat = "Email Address",
+				nameIdentifierAttributeName = "screenName",
+				nameIdentifierFormat = "Unspecified",
 				spAttributes = '''emailAddress
 					firstName
 					lastName
@@ -3523,7 +3523,7 @@ definition {
 			User.viewLoggedOutPG();
 
 			JSONUser.updateUser(
-				screenNameUpdate = "user1_changed",
+				screenNameUpdate = "user1",
 				userEmailAddress = "user1@liferay.com",
 				userEmailAddressUpdate = "user1changed@liferay.com",
 				userFirstName = "user_changed",
@@ -3544,7 +3544,7 @@ definition {
 				userEmailAddress = "user1changed@liferay.com",
 				userFirstName = "user_changed",
 				userLastName = "1_changed",
-				userScreenName = "user1_changed");
+				userScreenName = "user1");
 		}
 	}
 

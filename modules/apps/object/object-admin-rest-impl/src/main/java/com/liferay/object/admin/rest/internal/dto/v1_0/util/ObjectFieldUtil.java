@@ -15,6 +15,7 @@
 package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
@@ -69,6 +70,10 @@ public class ObjectFieldUtil {
 				listTypeDefinitionId =
 					serviceBuilderObjectField.getListTypeDefinitionId();
 				name = serviceBuilderObjectField.getName();
+				objectFieldSettings = TransformUtil.transformToArray(
+					serviceBuilderObjectField.getObjectFieldSettings(),
+					ObjectFieldSettingUtil::toObjectFieldSetting,
+					ObjectFieldSetting.class);
 				relationshipType = ObjectField.RelationshipType.create(
 					serviceBuilderObjectField.getRelationshipType());
 				required = serviceBuilderObjectField.isRequired();

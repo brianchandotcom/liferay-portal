@@ -172,6 +172,14 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 		return _searchContainer;
 	}
 
+	public boolean isClusterModeSingle(String type) {
+		if (_dispatchTaskExecutorRegistry.isClusterModeSingle(type)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private final DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 	private final DispatchTriggerLocalService _dispatchTriggerLocalService;
 	private final DispatchTriggerMetadataProvider

@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.object.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,7 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Marco Leo
  */
-public class ObjectRelationshipParameterObjectFieldIdException extends PortalException {
+public class ObjectRelationshipParameterObjectFieldIdException
+	extends PortalException {
 
 	public ObjectRelationshipParameterObjectFieldIdException() {
 	}
@@ -27,11 +29,15 @@ public class ObjectRelationshipParameterObjectFieldIdException extends PortalExc
 		super(msg);
 	}
 
-	public ObjectRelationshipParameterObjectFieldIdException(String msg, Throwable throwable) {
+	public ObjectRelationshipParameterObjectFieldIdException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public ObjectRelationshipParameterObjectFieldIdException(Throwable throwable) {
+	public ObjectRelationshipParameterObjectFieldIdException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

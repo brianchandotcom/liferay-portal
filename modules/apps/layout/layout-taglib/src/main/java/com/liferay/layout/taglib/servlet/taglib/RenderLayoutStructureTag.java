@@ -736,13 +736,16 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write("<input name=\"formItemId\" type=\"hidden\" value=\"");
 		jspWriter.write(formStyledLayoutStructureItem.getItemId());
 		jspWriter.write("\">");
-		jspWriter.write("<input name=\"plid\" type=\"hidden\" value=\"");
+		jspWriter.write("<input name=\"groupId\" type=\"hidden\" value=\"");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)getRequest().getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		jspWriter.write(String.valueOf(themeDisplay.getPlid()));
+		jspWriter.write(String.valueOf(themeDisplay.getScopeGroupId()));
 
+		jspWriter.write("\">");
+		jspWriter.write("<input name=\"plid\" type=\"hidden\" value=\"");
+		jspWriter.write(String.valueOf(themeDisplay.getPlid()));
 		jspWriter.write(
 			"\"><input name=\"segmentsExperienceId\" type=\"hidden\" value=\"");
 		jspWriter.write(

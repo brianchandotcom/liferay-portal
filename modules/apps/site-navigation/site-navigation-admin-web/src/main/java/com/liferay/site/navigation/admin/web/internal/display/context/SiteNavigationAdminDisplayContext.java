@@ -530,6 +530,8 @@ public class SiteNavigationAdminDisplayContext {
 				"multiSelection", siteNavigationMenuItemType.isMultiSelection()
 			).put(
 				"siteNavigationMenuId", getSiteNavigationMenuId()
+			).put(
+				"type", siteNavigationMenuItemType.getType()
 			).build()
 		).setLabel(
 			siteNavigationMenuItemType.getLabel(themeDisplay.getLocale())

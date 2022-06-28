@@ -33,9 +33,7 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("FragmentEntryLink", "type_")) {
-			alterTableAddColumn("FragmentEntryLink", "type_", "INTEGER");
-		}
+		alterTableAddColumn("FragmentEntryLink", "type_", "INTEGER");
 
 		_updateFragmentEntryType();
 	}

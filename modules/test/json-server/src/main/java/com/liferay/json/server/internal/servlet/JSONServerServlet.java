@@ -383,7 +383,7 @@ public class JSONServerServlet extends HttpServlet {
 			Object models = _applicationMap.get(_modelPath);
 
 			if ((models == null) || !(models instanceof List)) {
-				throw new ServletException("Unknown model name " + _modelPath);
+				throw new ServletException("Unknown model path " + _modelPath);
 			}
 
 			return (List<Map<String, Object>>)models;

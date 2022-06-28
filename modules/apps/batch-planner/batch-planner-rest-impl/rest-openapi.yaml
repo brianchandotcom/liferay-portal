@@ -81,6 +81,13 @@ components:
                 value:
                     type: string
             type: object
+        SiteScope:
+            properties:
+                label:
+                    type: string
+                value:
+                    format: int64
+                    type: integer
 info:
     license:
         name: Apache 2.0
@@ -165,6 +172,34 @@ paths:
                                     $ref: "#/components/schemas/Field"
                                 type: array
             tags: ["Field"]
+    /plans/{internalClassName}/site-scopes:
+        get:
+            operationId: getPlanInternalClassNameSiteScopesPage
+            parameters:
+                - in: path
+                  name: internalClassName
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: export
+                  required: false
+                  schema:
+                      type: boolean
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SiteScope"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SiteScope"
+                                type: array
+            tags: ["SiteScope"]
     /plans/{internalClassName}/template:
         get:
             operationId: getPlanTemplate

@@ -410,7 +410,7 @@ definition {
 	}
 
 	macro assertResponseIncludeCorrectDetailsOfNotDeletedObject {
-		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..universitiesSubjects[?(@.id==${subjectId})].name");
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$..universitiesSubjects[?(@.id==${objectEntryId})].name");
 
 		TestUtils.assertEquals(
 			actual = "${actual}",

@@ -467,8 +467,6 @@ definition {
 		}
 
 		task ("View the visual style of editable field") {
-			Pause(locator1 = "1000");
-
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",
@@ -495,8 +493,6 @@ definition {
 		}
 
 		task ("View the visual style of editable field") {
-			Pause(locator1 = "1000");
-
 			AssertCssValue(
 				fragmentName = "heading",
 				id = "element-text",

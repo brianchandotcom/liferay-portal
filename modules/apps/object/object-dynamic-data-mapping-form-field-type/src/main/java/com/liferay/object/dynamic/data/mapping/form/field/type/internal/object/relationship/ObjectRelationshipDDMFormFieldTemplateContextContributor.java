@@ -78,6 +78,10 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 			"objectDefinitionId",
 			GetterUtil.getLong(ddmFormField.getProperty("objectDefinitionId"))
 		).put(
+			"parameterObjectFieldName",
+			GetterUtil.getString(
+				ddmFormField.getProperty("parameterObjectFieldName"))
+		).put(
 			"placeholder",
 			() -> {
 				LocalizedValue localizedValue =

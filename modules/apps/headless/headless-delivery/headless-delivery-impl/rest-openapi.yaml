@@ -5118,7 +5118,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -5175,7 +5175,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -5220,7 +5220,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -5266,7 +5266,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -5318,7 +5318,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -5367,7 +5367,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -5429,7 +5429,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -5508,7 +5508,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -5561,7 +5561,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -5735,7 +5735,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -5781,7 +5781,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -5823,7 +5823,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -5989,7 +5989,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -6042,7 +6042,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -6213,7 +6213,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -6402,7 +6402,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -6580,7 +6580,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -6724,7 +6724,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -6813,7 +6813,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -6875,7 +6875,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -6927,7 +6927,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -7093,7 +7093,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -7179,7 +7179,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -7266,7 +7266,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -7462,7 +7462,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -7641,7 +7641,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -7808,7 +7808,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -7972,7 +7972,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -8060,7 +8060,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -8292,7 +8292,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -8373,7 +8373,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -8418,7 +8418,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -8626,7 +8626,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -8790,7 +8790,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -8878,7 +8878,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -9065,7 +9065,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -9146,7 +9146,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -9230,7 +9230,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -9320,7 +9320,7 @@ paths:
                       format: int64
                       type: integer
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -9464,7 +9464,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -9538,7 +9538,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -9717,7 +9717,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -9861,7 +9861,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -9912,7 +9912,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -10005,7 +10005,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -10274,7 +10274,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -10457,7 +10457,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -10516,7 +10516,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -10563,7 +10563,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -10611,7 +10611,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -10663,7 +10663,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -10712,7 +10712,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -10802,7 +10802,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -10883,7 +10883,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -10939,7 +10939,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -11218,7 +11218,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -11274,7 +11274,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -11442,7 +11442,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -11519,7 +11519,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -11675,7 +11675,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -11721,7 +11721,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -11766,7 +11766,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -11934,7 +11934,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -11990,7 +11990,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -12071,7 +12071,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -12127,7 +12127,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -12237,7 +12237,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -12280,7 +12280,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -12350,7 +12350,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -12402,7 +12402,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -12462,7 +12462,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: header
@@ -12502,7 +12502,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: header
@@ -12551,7 +12551,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: header
@@ -12595,7 +12595,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -12627,7 +12627,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
             responses:
@@ -12665,7 +12665,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -12823,7 +12823,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -12879,7 +12879,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -13220,7 +13220,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -13272,7 +13272,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -13437,7 +13437,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -13566,7 +13566,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -13618,7 +13618,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -13809,7 +13809,7 @@ paths:
                   schema:
                       type: boolean
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -14048,7 +14048,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -14227,7 +14227,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -14421,7 +14421,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -14505,7 +14505,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -14627,7 +14627,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: strin
             responses:
@@ -14756,7 +14756,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
                 - in: query
@@ -14834,7 +14834,7 @@ paths:
                   schema:
                       type: string
                 - in: query
-                  name: restrictedFields
+                  name: restrictFields
                   schema:
                       type: string
             responses:

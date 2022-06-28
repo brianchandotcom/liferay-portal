@@ -27,6 +27,10 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -43,10 +47,22 @@ public class ObjectFieldDBTypeUtil {
 
 		if (Objects.equals(
 				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_DECIMAL) ||
-			Objects.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			finalStep.attribute(
+				FileInfoFieldType.ALLOWED_FILE_EXTENSIONS,
+				_getAcceptedFileExtensions(objectField));
+
+			finalStep.attribute(
+				FileInfoFieldType.MAX_FILE_SIZE,
+				_getMaximumFileSize(objectField));
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_DECIMAL) ||
+				 Objects.equals(
+					 objectField.getBusinessType(),
+					 ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
 
 			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
 		}
@@ -109,6 +125,30 @@ public class ObjectFieldDBTypeUtil {
 		}
 
 		return TextInfoFieldType.INSTANCE;
+	}
+
+	private static String _getAcceptedFileExtensions(ObjectField objectField) {
+		ObjectFieldSetting acceptedFileExtensionsObjectFieldSetting =
+			ObjectFieldSettingLocalServiceUtil.fetchObjectFieldSetting(
+				objectField.getObjectFieldId(), "acceptedFileExtensions");
+
+		if (acceptedFileExtensionsObjectFieldSetting == null) {
+			return StringPool.BLANK;
+		}
+
+		return acceptedFileExtensionsObjectFieldSetting.getValue();
+	}
+
+	private static long _getMaximumFileSize(ObjectField objectField) {
+		ObjectFieldSetting objectFieldSetting =
+			ObjectFieldSettingLocalServiceUtil.fetchObjectFieldSetting(
+				objectField.getObjectFieldId(), "maximumFileSize");
+
+		if (objectFieldSetting == null) {
+			return 0;
+		}
+
+		return GetterUtil.getLong(objectFieldSetting.getValue());
 	}
 
 	private static List<SelectInfoFieldType.Option> _getOptions(

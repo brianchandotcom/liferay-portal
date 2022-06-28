@@ -12,6 +12,7 @@
  * details.
  */
 
+import {FRAGMENT_CLASS_PLACEHOLDER} from '../config/constants/fragmentClassPlaceholder';
 import {config} from '../config/index';
 import {getFrontendTokenValue} from './getFrontendTokenValue';
 import getLayoutDataItemTopperUniqueClassName from './getLayoutDataItemTopperUniqueClassName';
@@ -98,7 +99,10 @@ export default function generateStyleSheet(styles, {itemsWithTopper} = {}) {
 		}
 
 		if (customCSS && Liferay.FeatureFlags['LPS-147511']) {
-			css += customCSS;
+			css += customCSS.replaceAll(
+				FRAGMENT_CLASS_PLACEHOLDER,
+				getLayoutDataItemUniqueClassName(itemId)
+			);
 		}
 	});
 

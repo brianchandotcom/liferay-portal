@@ -25,6 +25,7 @@ import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
@@ -157,7 +158,12 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 						styledLayoutStructureItem, viewportSize);
 
 					if (Validator.isNotNull(customCSS)) {
-						cssSB.append(customCSS);
+						cssSB.append(
+							StringUtil.replace(
+								customCSS, _FRAGMENT_CLASS_PLACEHOLDER,
+								LayoutStructureItemCSSUtil.
+									getLayoutStructureItemUniqueCssClass(
+										styledLayoutStructureItem)));
 					}
 				}
 			}
@@ -423,6 +429,9 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 
 		return true;
 	}
+
+	private static final String _FRAGMENT_CLASS_PLACEHOLDER =
+		"[$FRAGMENT_CLASS$]";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStructureCommonStylesCSSServlet.class);

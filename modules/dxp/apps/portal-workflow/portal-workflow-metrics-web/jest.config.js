@@ -8,7 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
- 
+
 window.AUI = () => ({
 	use: (module, callback) => callback(module),
 });
@@ -37,17 +37,10 @@ window.Liferay = {
 			return key;
 		},
 	},
-	Session: {
-		extend: () => {},
-	},
 	ThemeDisplay: {
-		getBCP47LanguageId: () => 'en-US',
-		getLanguageId: () => 'en_US',
+		...window.Liferay.ThemeDisplay,
 		getPathContext: () => undefined,
-		getPathThemeImages: () => 'http://localhost:8080/o/admin-theme/images',
 		getPortalURL: () => window.location.origin,
-		getUserId: () => '123',
-		getUserName: () => 'Test Test',
 	},
 	authToken: 'auth',
 };

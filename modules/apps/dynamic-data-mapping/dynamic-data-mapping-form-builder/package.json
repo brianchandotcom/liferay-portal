@@ -8,9 +8,6 @@
 		},
 		"modulePathIgnorePatterns": [
 			"/__mock__/"
-		],
-		"setupFiles": [
-			"<rootDir>/jest-setup.config.js"
 		]
 	},
 	"main": "js/index.es.js",

@@ -24,11 +24,6 @@ window.Liferay.Language = {
 	},
 };
 
-window.Liferay.ThemeDisplay = {
-	...window.Liferay.ThemeDisplay,
-	getPathThemeImages: () => '/assets',
-};
-
 window.Liferay.fire = (name, payload) => {
 	const event = document.createEvent('CustomEvent');
 

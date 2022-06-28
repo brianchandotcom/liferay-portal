@@ -1401,7 +1401,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Web Content Article");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			for (var subtype : list "Basic Web Content,WC Structure Name") {
 				AssertElementPresent(
@@ -1415,7 +1415,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Document");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			for (var subtype : list "Basic Document,Google Drive Shortcut,DM Document Type Name") {
 				AssertElementPresent(

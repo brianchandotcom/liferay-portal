@@ -110,9 +110,13 @@ definition {
 				entryTitle = "WC WebContent Title",
 				navItem = "Web Content");
 
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "All Categories");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("View mapped content") {
@@ -170,12 +174,14 @@ definition {
 				entryTitle = "Blogs Entry Title",
 				navItem = "Blogs");
 
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
 			Select(
 				key_fieldLabel = "Field",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Content");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Blogs Entry Content",
@@ -277,12 +283,12 @@ definition {
 				entryTitle = "Web Content Title",
 				navItem = "Web Content");
 
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
 			Select(
 				key_fieldLabel = "Field",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Text");
-
-			Pause(locator1 = "3000");
 
 			PageEditor.waitForAutoSave();
 
@@ -306,12 +312,12 @@ definition {
 				entryTitle = "DM Document Title",
 				navItem = "Documents and Media");
 
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
 			Select(
 				key_fieldLabel = "Field",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Text");
-
-			Pause(locator1 = "3000");
 
 			PageEditor.waitForAutoSave();
 
@@ -371,11 +377,13 @@ definition {
 				entryTitle = "Document Title",
 				navItem = "Documents and Media");
 
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Title");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Document Title",
@@ -747,11 +755,13 @@ definition {
 				entryTitle = "Web Content Title",
 				navItem = "Web Content");
 
-			Pause(locator1 = "3000");
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
 
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Vocabulary Name");
+
+			PageEditor.waitForAutoSave();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Category Name",
@@ -769,11 +779,13 @@ definition {
 				entryTitle = "Blogs Entry Title",
 				navItem = "Blogs");
 
-			Pause(locator1 = "3000");
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
 
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Vocabulary Name");
+
+			PageEditor.waitForAutoSave();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Category Name",
@@ -791,11 +803,13 @@ definition {
 				entryTitle = "Document Title",
 				navItem = "Documents and Media");
 
-			Pause(locator1 = "3000");
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
 
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Vocabulary Name");
+
+			PageEditor.waitForAutoSave();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "Category Name",
@@ -836,9 +850,13 @@ definition {
 				entryTitle = "Blogs Entry Title",
 				navItem = "Blogs");
 
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Tags");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("View mapped content") {
@@ -881,9 +899,13 @@ definition {
 				entryTitle = "Web Content Title",
 				navItem = "Web Content");
 
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Tags");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("View mapped content") {
@@ -977,11 +999,13 @@ definition {
 				entryTitle = "Web Content Title",
 				navItem = "Web Content");
 
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Text");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "This is a Text field",
@@ -992,7 +1016,7 @@ definition {
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Text Box");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "This is a Text Box field",
@@ -1003,7 +1027,7 @@ definition {
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Rich Text");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "This is a Rich Text field",
@@ -1014,7 +1038,7 @@ definition {
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Date");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "10/10/20",
@@ -1025,7 +1049,7 @@ definition {
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Integer");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "9",
@@ -1036,7 +1060,7 @@ definition {
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Decimal");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			PageEditor.viewFragmentEditableText(
 				editableText = "0.5",
@@ -1380,6 +1404,8 @@ definition {
 				entryTitle = "liferay.com",
 				navItem = "Web Content");
 
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Title");
@@ -1450,6 +1476,8 @@ definition {
 				entryTitle = "Web Content Title 1",
 				navItem = "Web Content");
 
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
+
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Title");
@@ -1516,6 +1544,8 @@ definition {
 			PageEditorMapping.mapEditableFieldToAsset(
 				entryTitle = "Web Content Title",
 				navItem = "Web Content");
+
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
 
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",

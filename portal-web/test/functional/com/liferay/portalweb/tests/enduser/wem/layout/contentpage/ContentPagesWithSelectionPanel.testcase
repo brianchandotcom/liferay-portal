@@ -78,7 +78,9 @@ definition {
 		task ("Assert the order of element nodes in the Browser panel") {
 			PageEditor.gotoTab(tabName = "Browser");
 
-			Pause(locator1 = "3000");
+			WaitForVisible(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			var n = "1";
 
@@ -97,7 +99,7 @@ definition {
 				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Asset Publisher')]//div[@role='button'][@draggable='true']",
 				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true']");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("Assert the order of element nodes in the Selection panel") {
@@ -130,7 +132,7 @@ definition {
 				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true']",
 				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("Assert the order of element nodes in the Selection panel") {
@@ -209,13 +211,15 @@ definition {
 		task ("Move the Button into the Container via the Browser panel") {
 			PageEditor.gotoTab(tabName = "Browser");
 
-			Pause(locator1 = "3000");
+			WaitForVisible(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Button')]//div[@role='button'][@draggable='true']",
 				locator2 = "//div[contains(@class,'list-item__node')][contains(.,'Container')]//div[@role='button'][@draggable='true']");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			AssertElementPresent(
 				key_elementHeader = "//div[@aria-label='Button']",
@@ -232,7 +236,7 @@ definition {
 				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Asset Publisher')]//div[@role='button'][@draggable='true']",
 				locator2 = "//div[contains(@class,'treeview-node-list')][@role='group']/div[contains(@role,'treeitem')][1]//div[@role='button'][contains(@aria-label,'Module')]");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			AssertElementPresent(
 				key_columnNumber = "1",
@@ -280,13 +284,11 @@ definition {
 		}
 
 		task ("Move the Heading fragment to the cell of Collection Display via Selection panel") {
-			Pause(locator1 = "3000");
-
 			DragAndDrop.javaScriptDragAndDropToObject(
 				locator1 = "//div[contains(@class,'list-item__node')][contains(.,'Heading')]//div[@role='button'][@draggable='true']",
 				locator2 = "//div[contains(@class,'treeview-node-list')][@role='group']/div[contains(@role,'treeitem')]//div[@role='button'][contains(@aria-label,'Collection Item')]");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 
 			for (var n : list "1,2,3") {
 				AssertElementPresent(
@@ -358,7 +360,9 @@ definition {
 		task ("Assert elements information is organized in Selection panel") {
 			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
 
-			Pause(locator1 = "3000");
+			WaitForVisible(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			var n = "1";
 
@@ -434,7 +438,9 @@ definition {
 		task ("Assert elements information is organized in Selection panel") {
 			PageEditor.clickConfigurableField(fragmentName = "Fragment Name");
 
-			Pause(locator1 = "3000");
+			WaitForVisible(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			var n = "1";
 
@@ -1229,7 +1235,9 @@ definition {
 		task ("Assert elements information is organized in Selection panel") {
 			PageEditor.clickConfigurableField(fragmentName = "Slider");
 
-			Pause(locator1 = "3000");
+			WaitForVisible(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			var n = "1";
 
@@ -1262,7 +1270,9 @@ definition {
 		task ("Assert elements information is organized in Selection panel") {
 			PageEditor.clickConfigurableField(fragmentName = "Tabs");
 
-			Pause(locator1 = "3000");
+			WaitForVisible(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			var n = "1";
 
@@ -1285,7 +1295,9 @@ definition {
 		task ("Assert elements information is organized in Selection panel") {
 			PageEditor.clickConfigurableField(fragmentName = "Tabs");
 
-			Pause(locator1 = "3000");
+			WaitForVisible(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			var n = "1";
 
@@ -1308,7 +1320,9 @@ definition {
 		task ("Assert elements information is organized in Selection panel") {
 			PageEditor.clickConfigurableField(fragmentName = "Tabs");
 
-			Pause(locator1 = "3000");
+			WaitForVisible(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			var n = "1";
 
@@ -1352,12 +1366,14 @@ definition {
 				entryTitle = "Web Content Title",
 				navItem = "Web Content");
 
-			Pause(locator1 = "3000");
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
 
 			Select(
 				key_fieldLabel = "Field",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Content");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("View the visual style of Content item in Selection panel") {
@@ -1393,12 +1409,14 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text");
 
-			Pause(locator1 = "3000");
+			WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
 
 			Select(
 				key_fieldLabel = "Field",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Title");
+
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("View the visual style of Title item in Selection panel") {

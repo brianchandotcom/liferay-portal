@@ -156,7 +156,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "3 Modules per Row");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("Select the 6 Modules per Row as Layout in Landscape Phone viewport") {
@@ -167,7 +167,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "6 Modules per Row");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("Select the 1 Module per Row as Layout in Portrait Phone viewport") {
@@ -178,7 +178,7 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "1 Module per Row");
 
-			Pause(locator1 = "3000");
+			PageEditor.waitForAutoSave();
 		}
 
 		task ("Assert the Layout of Grid is 2 Modules per Row and the height of module is greater than 20px in Desktop viewport") {

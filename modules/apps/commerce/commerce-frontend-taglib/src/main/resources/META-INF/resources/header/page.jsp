@@ -28,12 +28,6 @@ if (bean instanceof WorkflowedModel) {
 }
 
 String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletKeys.MY_WORKFLOW_TASK);
-
-boolean openOrdersPortlet = false;
-
-if (CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT.equals(PortalUtil.getPortletId(request))) {
-	openOrdersPortlet = true;
-}
 %>
 
 <div class="bg-white border-bottom commerce-header<%= fullWidth ? " container-fluid" : StringPool.BLANK %><%= Validator.isNotNull(wrapperCssClasses) ? StringPool.SPACE + wrapperCssClasses : StringPool.BLANK %> side-panel-top-anchor">
@@ -133,7 +127,7 @@ if (CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT.equals(PortalUtil.getPortlet
 			<hr class="d-lg-none" />
 
 			<div class="align-items-center c-ml-auto d-flex justify-content-end">
-				<c:if test="<%= !openOrdersPortlet && Validator.isNotNull(reviewWorkflowTask) %>">
+				<c:if test="<%= !CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT.equals(PortalUtil.getPortletId(request)) && Validator.isNotNull(reviewWorkflowTask) %>">
 
 					<%
 					boolean assignedToCurrentUser = false;

@@ -312,4 +312,16 @@ definition {
         
 		echo("The product ID for the ${status} status is the one with the ID ${secondProductId}");
 	}
+
+	macro checkProductIdsNotEqual { 
+		var equals = CommerceProducts.isProductIdsEqual(
+			firstProductId = "${firstProductId}",
+			secondProductId = "${secondProductId}");
+
+		if ("${equals}" == "true") {
+			fail("A new version of the product has not been created because the first ID ${firstProductId} is the same of the second ID ${secondProductId}");
+		}
+
+		echo("The first version of the product ID is ${firstProductId}, the second version of the product ID is ${secondProductId}");
+	}
 }

@@ -266,6 +266,76 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test CanGetManyToManyRelationshipDetailsAsNestedFields_5 {
+		property portal.acceptance = "true";
+
+		task ("Given manyToMany relationship universitySubjects created") {
+			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
+			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
+
+			var relationshipName = ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "universitiesSubjects",
+				name = "universitiesSubjects",
+				objectDefinitionId1 = "${objectDefinitionId1}",
+				objectDefinitionId2 = "${objectDefinitionId2}",
+				type = "manyToMany");
+		}
+
+		task ("Given two university entries created") {
+			var universityId1 = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay First University");
+			var universityId2 = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay Second University");
+		}
+
+		task ("Given two subject entries created") {
+			var subjectId1 = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "Liferay First Foundations");
+			var subjectId2 = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "Liferay Second Foundations");
+		}
+
+		task ("When each subject related to each universtity through universities PUT endpoint") {
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${universityId1}",
+				objectEntry2 = "${subjectId1}",
+				relationshipName = "universitiesSubjects");
+
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${universityId2}",
+				objectEntry2 = "${subjectId2}",
+				relationshipName = "universitiesSubjects");
+		}
+
+		task ("Then receiving correct information about the related objects in subjects GET endpoint with nestedFields=universitiesSubjects") {
+			var responseToParse = ObjectDefinitionAPI.getObjectsWithNestedField(
+				nestedField = "universitiesSubjects",
+				objects = "subjects");
+
+			ObjectDefinitionAPI.assertNestedFieldDetail(
+				expectedValue = "Liferay First University",
+				getObjectsWithNestedFieldReponse = "${responseToParse}",
+				nestedField = "universitiesSubjects",
+				objectEntryId = "${subjectId1}",
+				objectField = "name");
+
+			ObjectDefinitionAPI.assertNestedFieldDetail(
+				expectedValue = "Liferay Second University",
+				getObjectsWithNestedFieldReponse = "${responseToParse}",
+				nestedField = "universitiesSubjects",
+				objectEntryId = "${subjectId2}",
+				objectField = "name");
+		}
+	}
+
 	@priority = "4"
 	test DeletedObjectDoesNotAppearInManyToManyRelationshipDetailsNestedFields_1 {
 		property portal.acceptance = "true";
@@ -406,8 +476,8 @@ definition {
 
 			ObjectDefinitionAPI.assertResponseIncludeCorrectDetailsOfNotDeletedObject(
 				expectedValue = "Liferay Foundations,Liferay Foundations",
-				responseToParse = "${responseToParse}",
-				subjectId = "${subjectId}");
+				objectEntryId = "${subjectId}",
+				responseToParse = "${responseToParse}");
 		}
 	}
 

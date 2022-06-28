@@ -52,6 +52,27 @@ public class UpgradeProcessFactory {
 		};
 	}
 
+	public static UpgradeProcess alterColumnName(
+		String tableName, String oldColumnName, String newColumnDefinition) {
+
+		Thread thread = Thread.currentThread();
+
+		String callerClazz = thread.getStackTrace()[2].getClassName();
+
+		String referenceName = StringBundler.concat(
+			callerClazz, " -> alterColumnName: ", tableName, " - ",
+			oldColumnName, " - ", newColumnDefinition);
+
+		return new UpgradeProcess(referenceName) {
+
+			@Override
+			protected void doUpgrade() throws Exception {
+				alterColumnName(tableName, oldColumnName, newColumnDefinition);
+			}
+
+		};
+	}
+
 	public static UpgradeProcess alterColumnTypes(
 		String tableName, String newType, String... columnNames) {
 

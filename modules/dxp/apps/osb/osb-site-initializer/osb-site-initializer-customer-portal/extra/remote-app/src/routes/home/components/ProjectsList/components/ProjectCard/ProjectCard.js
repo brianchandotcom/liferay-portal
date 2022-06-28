@@ -16,7 +16,7 @@ import i18n from '../../../../../../common/I18n';
 import {Skeleton, StatusTag} from '../../../../../../common/components';
 import {PAGE_ROUTER_TYPES} from '../../../../../../common/utils/constants';
 import getKebabCase from '../../../../../../common/utils/getKebabCase';
-import CardTitleDescription from './components/CardTitleDescription';
+import CardTitleDescription from './components/CardTitleDescription/CardTitleDescription';
 import StatusDescription from './components/StatusDescription';
 import redirect from './utils/redirect';
 

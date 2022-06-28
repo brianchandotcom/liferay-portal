@@ -13,7 +13,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {useEffect} from 'react';
 import i18n from '../../../../common/I18n';
-import ProjectCard from './components/ProjectCard/ProjectCard';
+import ProjectCard from './components/ProjectCard';
 import useIntersectionObserver from './hooks/useIntersectionObserver';
 
 const THRESHOLD_COUNT = 4;

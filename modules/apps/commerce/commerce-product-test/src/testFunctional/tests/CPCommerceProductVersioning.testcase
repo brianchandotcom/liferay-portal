@@ -88,4 +88,98 @@ definition {
         }
 
     }
+
+    @description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9539"
+	@priority = "3"
+	test CanOnlyHaveOneVersionableProductDraftVersion { 
+        property portal.acceptance = "false";
+
+        task ("Given the admin has already created a new simple product") {
+            CommerceNavigator.gotoPortlet(
+			    category = "Product Management",
+			    portlet = "Products");
+
+		    CPCommerceCatalog.newProductsEntry(
+			    productCatalog = "Master",
+			    productName = "Simple T-Shirt",
+			    productType = "Simple");
+
+            var approvedProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
+        }
+
+        task ("And click on 'Save as Draft'") {
+            Click(
+			    key_text = "Save as Draft",
+			    locator1 = "Button#ANY");
+
+            AssertElementPresent(
+			    key_status = "Draft",
+			    locator1 = "CommerceEntry#WORKFLOW_STATUS");        
+        }
+
+        task ("Then a new version of the product is created") {
+            var incompleteProductId = selenium.getText("CommerceEntry#PRODUCT_ID");           
+        }
+
+        task ("And the admin goes back and opens the first approved product again") {
+            Navigator.gotoBack();
+
+            Click(
+			    key_productName = "Simple T-Shirt",
+			    key_status = "Approved",
+			    locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+        }
+
+        task ("And click on 'Save as Draft'") {
+            Click(
+			    key_text = "Save as Draft",
+			    locator1 = "Button#ANY");        
+        }
+
+        task ("Then a message will be pop-out (check the message)") {
+            AssertElementPresent(locator1 = "CommerceNavigation#VALIDATE_SAVE_AS_DRAFT_MODAL_MESSAGE_WITH_VALIDATION");          
+        }
+
+        task ("And if the admin clicks on the 'Cancel' button") {
+            Click(locator1 = "Button#CANCEL");        
+        }
+
+        task ("Then nothing happens (check that we still have only 2 products)") {
+           Navigator.gotoBack();
+
+           CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft"); 
+        }
+
+        task ("But if the admin clicks on 'OK'") {
+            Click(
+			    key_productName = "Simple T-Shirt",
+			    key_status = "Approved",
+			    locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+
+            Click(
+			    key_text = "Save as Draft",
+			    locator1 = "Button#ANY");
+
+            Click(locator1 = "Button#OK");
+
+            AssertElementPresent(
+			    key_status = "Draft",
+			    locator1 = "CommerceEntry#WORKFLOW_STATUS"); 
+
+            var draftProductId = selenium.getText("CommerceEntry#PRODUCT_ID");
+
+        }
+
+        task ("Then if the admin goes back to the products page the admin will see 3 products, one approved, one incomplete, and one draft") {
+            CommerceProducts.checkProductIdsNotEqual(
+                firstProductId = "${incompleteProductId}",
+                secondProductId = "${draftProductId}");        
+
+            Navigator.gotoBack();
+
+            CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
+
+            CommerceProducts.checkProductId(list = "Simple T-Shirt:Approved:${approvedProductId},Simple T-Shirt:Incomplete:${incompleteProductId},Simple T-Shirt:Draft:${draftProductId}");
+        }
+    }
 }

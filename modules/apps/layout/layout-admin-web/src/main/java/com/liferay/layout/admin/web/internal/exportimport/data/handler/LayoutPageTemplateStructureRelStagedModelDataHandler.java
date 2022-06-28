@@ -221,7 +221,12 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 						portletDataContext, layoutPageTemplateStructureRel,
 						data));
 
-			data = _processData(data, portletDataContext);
+			LayoutStructure layoutStructure = LayoutStructure.of(data);
+
+			_processImportFragmentLayoutStructureItemsData(
+				layoutStructure, portletDataContext);
+
+			data = layoutStructure.toString();
 		}
 
 		importedLayoutPageTemplateStructureRel.setData(data);
@@ -263,10 +268,9 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
-	private String _processData(
-		String data, PortletDataContext portletDataContext) {
-
-		LayoutStructure layoutStructure = LayoutStructure.of(data);
+	private void _processImportFragmentLayoutStructureItemsData(
+		LayoutStructure layoutStructure,
+		PortletDataContext portletDataContext) {
 
 		Map<Long, Long> fragmentEntryLinkIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -294,8 +298,6 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 			fragmentStyledLayoutStructureItem.setFragmentEntryLinkId(
 				fragmentEntryLinkId);
 		}
-
-		return layoutStructure.toString();
 	}
 
 	private String _processReferenceStagedModels(

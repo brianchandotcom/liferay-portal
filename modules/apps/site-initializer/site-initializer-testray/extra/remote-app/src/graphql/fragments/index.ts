@@ -14,7 +14,6 @@
 
 export * from './liferayRole';
 export * from './liferayUserAccount';
-export * from './testrayAttachment';
 export * from './testrayCase';
 export * from './testrayCaseType';
 export * from './testrayComponent';
@@ -29,4 +28,3 @@ export * from './testraySubTask';
 export * from './testraySuite';
 export * from './testrayTask';
 export * from './testrayTeam';
-export * from './testrayWarning';

@@ -14,7 +14,6 @@
 
 export * from './liferayRole';
 export * from './liferayUserAccount';
-export * from './testrayAttachment';
 export * from './testrayBuild';
 export * from './testrayCase';
 export * from './testrayCaseResult';
@@ -32,7 +31,6 @@ export * from './testraySuite';
 export * from './testraySuiteCase';
 export * from './testrayTask';
 export * from './testrayTeam';
-export * from './testrayWarning';
 
 export type CType<ObjectKey extends string, Query = any> = {
 	c: {

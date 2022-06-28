@@ -115,6 +115,8 @@ public class ObjectRelationshipResourceImpl
 				objectRelationship.getDeletionTypeAsString(),
 				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
 				objectRelationship.getName(),
+				GetterUtil.getLong(
+					objectRelationship.getParameterObjectFieldId()),
 				objectRelationship.getTypeAsString()));
 	}
 
@@ -127,8 +129,9 @@ public class ObjectRelationshipResourceImpl
 			_objectRelationshipService.updateObjectRelationship(
 				objectRelationshipId,
 				objectRelationship.getDeletionTypeAsString(),
-				LocalizedMapUtil.getLocalizedMap(
-					objectRelationship.getLabel())));
+				LocalizedMapUtil.getLocalizedMap(objectRelationship.getLabel()),
+				GetterUtil.getLong(
+					objectRelationship.getParameterObjectFieldId())));
 	}
 
 	private ObjectRelationship _toObjectRelationship(
@@ -160,6 +163,8 @@ public class ObjectRelationshipResourceImpl
 				objectDefinitionId2 =
 					objectRelationship.getObjectDefinitionId2();
 				objectDefinitionName2 = objectDefinition.getShortName();
+				parameterObjectFieldId =
+					objectRelationship.getParameterObjectFieldId();
 				reverse = objectRelationship.isReverse();
 				type = ObjectRelationship.Type.create(
 					objectRelationship.getType());

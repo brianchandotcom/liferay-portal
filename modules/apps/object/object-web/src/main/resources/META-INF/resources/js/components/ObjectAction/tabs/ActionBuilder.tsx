@@ -502,6 +502,7 @@ export default function ActionBuilder({
 							errors={errors as {[key: string]: string}}
 							objectFieldsMap={objectFieldsMap}
 							setValues={setValues}
+							validateExpressionURL={validateExpressionURL}
 							values={values}
 						/>
 					)}

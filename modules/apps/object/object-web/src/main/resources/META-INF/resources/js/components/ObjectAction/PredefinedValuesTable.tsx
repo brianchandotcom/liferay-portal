@@ -32,6 +32,7 @@ export default function PredefinedValuesTable({
 	errors,
 	objectFieldsMap,
 	setValues,
+	validateExpressionURL,
 	values,
 }: IProps) {
 	const {predefinedValues = []} = values.parameters as ObjectActionParameters;
@@ -155,6 +156,7 @@ export default function PredefinedValuesTable({
 												});
 											},
 											source: item.value,
+											validateExpressionURL,
 										}
 									);
 								}}
@@ -220,6 +222,7 @@ export default function PredefinedValuesTable({
 		objectFieldsMap,
 		predefinedValues,
 		setValues,
+		validateExpressionURL,
 		values.parameters,
 	]);
 
@@ -315,5 +318,6 @@ interface IProps {
 	objectFieldsMap: Map<string, ObjectField>;
 	predefinedValues?: PredefinedValue[];
 	setValues: (params: Partial<ObjectAction>) => void;
+	validateExpressionURL: string;
 	values: Partial<ObjectAction>;
 }

@@ -142,24 +142,6 @@ public class FreeMarkerFragmentEntryProcessor
 			).put(
 				"fragmentEntryLinkNamespace", fragmentEntryLink.getNamespace()
 			).put(
-				"input",
-				() -> {
-					FragmentEntryInputTemplateNodeContextHelper
-						fragmentEntryInputTemplateNodeContextHelper =
-							new FragmentEntryInputTemplateNodeContextHelper(
-								_fragmentCollectionContributorTracker,
-								_fragmentEntryConfigurationParser,
-								_fragmentRendererTracker);
-
-					return fragmentEntryInputTemplateNodeContextHelper.
-						toInputTemplateNode(
-							fragmentEntryLink,
-							fragmentEntryProcessorContext.
-								getHttpServletRequest(),
-							fragmentEntryProcessorContext.getInfoFormOptional(),
-							fragmentEntryProcessorContext.getLocale());
-				}
-			).put(
 				"layoutMode",
 				_getLayoutMode(
 					fragmentEntryProcessorContext.getHttpServletRequest())
@@ -169,6 +151,23 @@ public class FreeMarkerFragmentEntryProcessor
 					fragmentEntryLink.getConfiguration(),
 					fragmentEntryProcessorContext.getSegmentsEntryIds())
 			).build());
+
+		if (fragmentEntryLink.isTypeInput()) {
+			FragmentEntryInputTemplateNodeContextHelper
+				fragmentEntryInputTemplateNodeContextHelper =
+					new FragmentEntryInputTemplateNodeContextHelper(
+						_fragmentCollectionContributorTracker,
+						_fragmentEntryConfigurationParser,
+						_fragmentRendererTracker);
+
+			template.put(
+				"input",
+				fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
+					fragmentEntryLink,
+					fragmentEntryProcessorContext.getHttpServletRequest(),
+					fragmentEntryProcessorContext.getInfoFormOptional(),
+					fragmentEntryProcessorContext.getLocale()));
+		}
 
 		template.prepareTaglib(
 			fragmentEntryProcessorContext.getHttpServletRequest(),

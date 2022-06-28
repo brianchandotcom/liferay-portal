@@ -218,7 +218,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		FragmentRendererContext fragmentRendererContext, String html,
 		HttpServletRequest httpServletRequest) {
 
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("<div id=\"");
 
@@ -283,13 +283,18 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			sb.append(fragmentRendererContext.getFragmentElementId());
 			sb.append("'); var fragmentNamespace = '");
 			sb.append(fragmentEntryLink.getNamespace());
-			sb.append("'; var input = ");
-			sb.append(
-				JSONUtil.toString(
-					_getInputJSONObject(
-						fragmentEntryLink, httpServletRequest,
-						fragmentRendererContext.getInfoFormOptional(),
-						fragmentRendererContext.getLocale())));
+			sb.append("'");
+
+			if (fragmentEntryLink.isTypeInput()) {
+				sb.append("; var input = ");
+				sb.append(
+					JSONUtil.toString(
+						_getInputJSONObject(
+							fragmentEntryLink, httpServletRequest,
+							fragmentRendererContext.getInfoFormOptional(),
+							fragmentRendererContext.getLocale())));
+			}
+
 			sb.append("; var layoutMode = '");
 			sb.append(
 				ParamUtil.getString(

@@ -263,11 +263,21 @@ public class CommerceShipmentServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceShipment updateCommerceShipment(
+			com.liferay.commerce.model.CommerceShipment commerceShipment)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentService.updateCommerceShipment(
+			commerceShipment);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipment updateCommerceShipment(
 			long commerceShipmentId, String carrier, String trackingNumber,
 			int status, int shippingDateMonth, int shippingDateDay,
 			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
 			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
-			int expectedDateHour, int expectedDateMinute)
+			int expectedDateHour, int expectedDateMinute,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentService.updateCommerceShipment(
@@ -275,7 +285,7 @@ public class CommerceShipmentServiceWrapper
 			shippingDateMonth, shippingDateDay, shippingDateYear,
 			shippingDateHour, shippingDateMinute, expectedDateMonth,
 			expectedDateDay, expectedDateYear, expectedDateHour,
-			expectedDateMinute);
+			expectedDateMinute, serviceContext);
 	}
 
 	@Override
@@ -287,7 +297,8 @@ public class CommerceShipmentServiceWrapper
 			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
 			int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
 			int expectedDateDay, int expectedDateYear, int expectedDateHour,
-			int expectedDateMinute)
+			int expectedDateMinute,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentService.updateCommerceShipment(
@@ -296,7 +307,7 @@ public class CommerceShipmentServiceWrapper
 			trackingNumber, status, shippingDateMonth, shippingDateDay,
 			shippingDateYear, shippingDateHour, shippingDateMinute,
 			expectedDateMonth, expectedDateDay, expectedDateYear,
-			expectedDateHour, expectedDateMinute);
+			expectedDateHour, expectedDateMinute, serviceContext);
 	}
 
 	@Override

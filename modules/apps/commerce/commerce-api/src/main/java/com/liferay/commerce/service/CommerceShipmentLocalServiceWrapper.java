@@ -711,7 +711,8 @@ public class CommerceShipmentLocalServiceWrapper
 			int status, int shippingDateMonth, int shippingDateDay,
 			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
 			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
-			int expectedDateHour, int expectedDateMinute)
+			int expectedDateHour, int expectedDateMinute,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentLocalService.updateCommerceShipment(
@@ -719,7 +720,7 @@ public class CommerceShipmentLocalServiceWrapper
 			shippingDateMonth, shippingDateDay, shippingDateYear,
 			shippingDateHour, shippingDateMinute, expectedDateMonth,
 			expectedDateDay, expectedDateYear, expectedDateHour,
-			expectedDateMinute);
+			expectedDateMinute, serviceContext);
 	}
 
 	@Override
@@ -731,7 +732,8 @@ public class CommerceShipmentLocalServiceWrapper
 			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
 			int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
 			int expectedDateDay, int expectedDateYear, int expectedDateHour,
-			int expectedDateMinute)
+			int expectedDateMinute,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentLocalService.updateCommerceShipment(
@@ -740,7 +742,7 @@ public class CommerceShipmentLocalServiceWrapper
 			trackingNumber, status, shippingDateMonth, shippingDateDay,
 			shippingDateYear, shippingDateHour, shippingDateMinute,
 			expectedDateMonth, expectedDateDay, expectedDateYear,
-			expectedDateHour, expectedDateMinute);
+			expectedDateHour, expectedDateMinute, serviceContext);
 	}
 
 	@Override

@@ -490,7 +490,8 @@ public interface CommerceShipmentLocalService
 			int status, int shippingDateMonth, int shippingDateDay,
 			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
 			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
-			int expectedDateHour, int expectedDateMinute)
+			int expectedDateHour, int expectedDateMinute,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -502,7 +503,7 @@ public interface CommerceShipmentLocalService
 			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
 			int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
 			int expectedDateDay, int expectedDateYear, int expectedDateHour,
-			int expectedDateMinute)
+			int expectedDateMinute, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

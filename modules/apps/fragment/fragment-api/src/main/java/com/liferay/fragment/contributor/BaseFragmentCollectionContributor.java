@@ -381,8 +381,15 @@ public abstract class BaseFragmentCollectionContributor
 		String js = _read(path, jsonObject.getString("jsPath"), "index.js");
 
 		boolean cacheable = jsonObject.getBoolean("cacheable");
+
 		String configuration = _read(
-			path, jsonObject.getString("configurationPath"), "index.json");
+			path, jsonObject.getString("configurationPath"),
+			"configuration.json");
+
+		if (Validator.isNull(configuration)) {
+			configuration = _read(
+				path, jsonObject.getString("configurationPath"), "index.json");
+		}
 
 		String thumbnailURL = _getImagePreviewURL(
 			jsonObject.getString("thumbnail"));

@@ -310,4 +310,95 @@ definition {
                 value = "Hoses Full NEW");
         }
     }
+
+    @description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9549"
+	@priority = "3"
+	test CanCheckProductVersionsWithProductVersioningDisabled {
+        property portal.acceptance = "false";
+        property test.name.skip.portal.instance = "CPCommerceProductVersioning#CanCheckProductVersionsWithProductVersioningDisabled";
+
+        //This test need to disable the versioning for that reason the 'skip.portal.instance' is necessary
+
+        task ("Given the admin has already created a new simple product and When the admin opens the product that was created before") {
+            CommerceNavigator.gotoPortlet(
+			    category = "Product Management",
+			    portlet = "Products");
+
+		    CPCommerceCatalog.newProductsEntry(
+			    productCatalog = "Master",
+			    productName = "Simple T-Shirt",
+			    productType = "Simple");
+        }
+
+        task ("And click on 'Save as Draft'") {
+            Click(
+			    key_text = "Save as Draft",
+			    locator1 = "Button#ANY");      
+        }
+
+        task ("And go back and open the first approved product again") {
+            Navigator.gotoBack();
+
+            Click(
+			    key_productName = "Simple T-Shirt",
+			    key_status = "Approved",
+			    locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+        }
+
+        task ("And click on 'Save as Draft'") {
+            Click(
+			    key_text = "Save as Draft",
+			    locator1 = "Button#ANY");        
+        }
+
+        task ("And the admin click on 'OK'") {
+             Click(locator1 = "Button#OK");
+        }
+
+        task ("And the admin now will see 3 products, one is approved, one is draft and the last one is incomplete") {
+            Navigator.gotoBack();
+
+            CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
+        }
+
+        task ("And the admin disable the versioning") {
+            ApplicationsMenu.gotoPortlet(
+			    category = "Configuration",
+			    panel = "Control Panel",
+			    portlet = "System Settings");
+
+		    Click(
+			    key_text = "Catalog",
+			    locator1 = "Link#ANY");
+
+            Click(
+			    key_text = "Product Versioning",
+			    locator1 = "Link#ANY");
+
+            Uncheck.uncheckToggleSwitch(
+			    checkboxName = "Enabled",
+			    locator1 = "Checkbox#ANY_CHECKBOX");
+
+            Button.click(button = "Update");
+
+            Alert.viewSuccessMessage();   
+        }
+
+        task ("Then the admin will still see 3 products, one approved, one incomplete, one draft") {
+            CommerceNavigator.gotoPortlet(
+			    category = "Product Management",
+			    portlet = "Products");
+
+            CommerceProducts.checkProductsPresent(list = "Simple T-Shirt:Approved,Simple T-Shirt:Draft,Simple T-Shirt:Incomplete");
+
+            Click(
+			    key_productName = "Simple T-Shirt",
+			    key_status = "Approved",
+			    locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+
+            AssertElementNotPresent(
+			    key_text = "Save as Draft",
+			    locator1 = "Button#ANY");   
+        }
+    }
 }

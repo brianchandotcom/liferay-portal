@@ -18,21 +18,16 @@ import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageRowDefinition;
 import com.liferay.headless.delivery.dto.v1_0.RowViewport;
 import com.liferay.headless.delivery.dto.v1_0.RowViewportDefinition;
+import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.StyledLayoutStructureItemUtil;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -60,6 +55,11 @@ public class RowLayoutStructureItemMapper
 			{
 				definition = new PageRowDefinition() {
 					{
+						cssClasses =
+							StyledLayoutStructureItemUtil.getCssClasses(
+								rowStyledLayoutStructureItem);
+						customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
+							rowStyledLayoutStructureItem);
 						gutters = rowStyledLayoutStructureItem.isGutters();
 						indexed = rowStyledLayoutStructureItem.isIndexed();
 						modulesPerRow =
@@ -71,43 +71,6 @@ public class RowLayoutStructureItemMapper
 						verticalAlignment =
 							rowStyledLayoutStructureItem.getVerticalAlignment();
 
-						setCssClasses(
-							() -> {
-								if (!GetterUtil.getBoolean(
-										PropsUtil.get(
-											"feature.flag.LPS-147511"))) {
-
-									return null;
-								}
-
-								Set<String> cssClasses =
-									rowStyledLayoutStructureItem.
-										getCssClasses();
-
-								if (SetUtil.isEmpty(cssClasses)) {
-									return null;
-								}
-
-								return ArrayUtil.toStringArray(cssClasses);
-							});
-						setCustomCSS(
-							() -> {
-								if (!GetterUtil.getBoolean(
-										PropsUtil.get(
-											"feature.flag.LPS-147511"))) {
-
-									return null;
-								}
-
-								String customCSS =
-									rowStyledLayoutStructureItem.getCustomCSS();
-
-								if (Validator.isNotNull(customCSS)) {
-									return customCSS;
-								}
-
-								return null;
-							});
 						setFragmentStyle(
 							() -> {
 								JSONObject itemConfigJSONObject =

@@ -61,6 +61,8 @@ public class LayoutStructure {
 			JSONObject itemsJSONObject =
 				layoutStructureJSONObject.getJSONObject("items");
 
+			List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
+				new ArrayList<>();
 			Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
 				new HashMap<>(itemsJSONObject.length());
 			Map<String, LayoutStructureItem> layoutStructureItems =
@@ -84,6 +86,16 @@ public class LayoutStructure {
 						fragmentStyledLayoutStructureItem.
 							getFragmentEntryLinkId(),
 						fragmentStyledLayoutStructureItem);
+				}
+				else if (layoutStructureItem instanceof
+							FormStyledLayoutStructureItem) {
+
+					FormStyledLayoutStructureItem
+						formStyledLayoutStructureItem =
+							(FormStyledLayoutStructureItem)layoutStructureItem;
+
+					formStyledLayoutStructureItems.add(
+						formStyledLayoutStructureItem);
 				}
 			}
 
@@ -114,8 +126,8 @@ public class LayoutStructure {
 
 			return new LayoutStructure(
 				deletedItemIds, deletedLayoutStructureItems,
-				fragmentLayoutStructureItems, layoutStructureItems,
-				rootItemsJSONObject.getString("main"));
+				formStyledLayoutStructureItems, fragmentLayoutStructureItems,
+				layoutStructureItems, rootItemsJSONObject.getString("main"));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -129,6 +141,7 @@ public class LayoutStructure {
 	public LayoutStructure() {
 		_deletedItemIds = new HashSet<>();
 		_deletedLayoutStructureItems = new HashMap<>();
+		_formStyledLayoutStructureItems = new ArrayList<>();
 		_fragmentLayoutStructureItems = new HashMap<>();
 		_layoutStructureItems = new HashMap<>();
 		_mainItemId = StringPool.BLANK;
@@ -370,6 +383,12 @@ public class LayoutStructure {
 		}
 
 		return null;
+	}
+
+	public List<FormStyledLayoutStructureItem>
+		getFormStyledLayoutStructureItems() {
+
+		return _formStyledLayoutStructureItems;
 	}
 
 	public Map<Long, LayoutStructureItem> getFragmentLayoutStructureItems() {
@@ -684,6 +703,7 @@ public class LayoutStructure {
 	private LayoutStructure(
 		Set<String> deletedItemIds,
 		Map<String, DeletedLayoutStructureItem> deletedLayoutStructureItems,
+		List<FormStyledLayoutStructureItem> formLayoutStructureItems,
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems,
 		Map<String, LayoutStructureItem> layoutStructureItems,
 		String mainItemId) {
@@ -693,6 +713,8 @@ public class LayoutStructure {
 		_fragmentLayoutStructureItems = fragmentLayoutStructureItems;
 		_layoutStructureItems = layoutStructureItems;
 		_mainItemId = mainItemId;
+
+		_formStyledLayoutStructureItems = formLayoutStructureItems;
 	}
 
 	private void _addColumnLayoutStructureItem(
@@ -918,6 +940,8 @@ public class LayoutStructure {
 	private final Set<String> _deletedItemIds;
 	private final Map<String, DeletedLayoutStructureItem>
 		_deletedLayoutStructureItems;
+	private final List<FormStyledLayoutStructureItem>
+		_formStyledLayoutStructureItems;
 	private final Map<Long, LayoutStructureItem> _fragmentLayoutStructureItems;
 	private final Map<String, LayoutStructureItem> _layoutStructureItems;
 	private String _mainItemId;

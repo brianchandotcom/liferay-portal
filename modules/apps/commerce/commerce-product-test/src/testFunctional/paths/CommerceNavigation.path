@@ -125,6 +125,11 @@
 	<td>//div[@class='liferay-modal-body'][contains(text(),'Converting the product status to draft will remove the product from the product catalog. Do you wish to proceed?')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>VALIDATE_SAVE_AS_DRAFT_MODAL_MESSAGE_WITH_VALIDATION</td>
+	<td>//div[@class='liferay-modal-body'][contains(text(),'There is already a draft version of this product. Continuing will replace that draft version with this draft version. Do you wish to proceed?')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

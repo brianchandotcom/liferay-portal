@@ -967,6 +967,36 @@
 	<td>//img[@class='aspect-ratio-item-center-middle aspect-ratio-item-fluid aspect-ratio-item-vertical-fluid']//..//..//..//..//..//..//h2[contains(text(),'${key_productName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PRODUCT_ID</td>
+	<td>//div[contains(@class,'header-info')]//span[contains(.,'ID')]/..//strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_ERC</td>
+	<td>//div[contains(@class,'header-info')]//span[contains(.,'ERC')]/..//strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_STATUS_BASED_ON_PRODUCT_NAME</td>
+	<td>//a[text()='${key_productName}']/../../../div/span[contains(@class,'workflow-status')]//strong[contains(.,'${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_ENTRY_BASED_ON_STATUS</td>
+	<td>//span[contains(@class,'workflow-status')]//strong[contains(.,'${key_status}')]/../../../..//a[text()='${key_productName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_ENTRY_BASED_ON_STATUS_WITH_ROW</td>
+	<td>xpath=((//strong[contains(.,'${key_status}')])[${key_row}]/../../../..//a[text()='${key_productName}'])</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_STATUS_BASED_ON_PRODUCT_NAME_WITH_ROW</td>
+	<td>xpath=((//a[text()='${key_productName}'])[${key_row}]/../../..//strong[contains(.,'${key_status}')])</td>
+	<td></td>
+</tr>
 
 <!--OPTION-->
 

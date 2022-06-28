@@ -609,7 +609,8 @@ public class CommerceShipmentLocalServiceUtil {
 			int status, int shippingDateMonth, int shippingDateDay,
 			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
 			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
-			int expectedDateHour, int expectedDateMinute)
+			int expectedDateHour, int expectedDateMinute,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCommerceShipment(
@@ -617,7 +618,7 @@ public class CommerceShipmentLocalServiceUtil {
 			shippingDateMonth, shippingDateDay, shippingDateYear,
 			shippingDateHour, shippingDateMinute, expectedDateMonth,
 			expectedDateDay, expectedDateYear, expectedDateHour,
-			expectedDateMinute);
+			expectedDateMinute, serviceContext);
 	}
 
 	public static CommerceShipment updateCommerceShipment(
@@ -628,7 +629,8 @@ public class CommerceShipmentLocalServiceUtil {
 			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
 			int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
 			int expectedDateDay, int expectedDateYear, int expectedDateHour,
-			int expectedDateMinute)
+			int expectedDateMinute,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCommerceShipment(
@@ -637,7 +639,7 @@ public class CommerceShipmentLocalServiceUtil {
 			trackingNumber, status, shippingDateMonth, shippingDateDay,
 			shippingDateYear, shippingDateHour, shippingDateMinute,
 			expectedDateMonth, expectedDateDay, expectedDateYear,
-			expectedDateHour, expectedDateMinute);
+			expectedDateHour, expectedDateMinute, serviceContext);
 	}
 
 	public static CommerceShipment updateExpectedDate(

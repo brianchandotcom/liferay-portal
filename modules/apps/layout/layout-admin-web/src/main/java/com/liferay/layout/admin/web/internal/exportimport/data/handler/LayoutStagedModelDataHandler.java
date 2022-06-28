@@ -987,7 +987,7 @@ public class LayoutStagedModelDataHandler
 
 		_fixImportTypeSettings(importedLayout);
 
-		_updateLastMergeLayoutModifiedDate(
+		_updateLastMergeLayoutModifiedTime(
 			layoutElement, importedLayout, portletDataContext);
 
 		importedLayout = _layoutLocalService.updateLayout(importedLayout);
@@ -2833,7 +2833,7 @@ public class LayoutStagedModelDataHandler
 		return importedLayout;
 	}
 
-	private void _updateLastMergeLayoutModifiedDate(
+	private void _updateLastMergeLayoutModifiedTime(
 		Element exportedLayoutElement, Layout importedLayout,
 		PortletDataContext portletDataContext) {
 

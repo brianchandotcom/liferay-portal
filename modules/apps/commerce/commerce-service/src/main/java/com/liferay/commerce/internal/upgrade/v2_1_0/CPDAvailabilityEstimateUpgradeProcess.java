@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.internal.upgrade.v2_1_0;
 
-import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
 import com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.sql.DatabaseMetaData;
@@ -34,8 +34,7 @@ import java.util.Objects;
 /**
  * @author Alec Sloan
  */
-public class CPDAvailabilityEstimateUpgradeProcess
-	extends BaseCommerceServiceUpgradeProcess {
+public class CPDAvailabilityEstimateUpgradeProcess extends UpgradeProcess {
 
 	public CPDAvailabilityEstimateUpgradeProcess(
 		CPDefinitionLocalService cpDefinitionLocalService) {
@@ -45,7 +44,7 @@ public class CPDAvailabilityEstimateUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addColumn("CPDAvailabilityEstimate", "CProductId", "LONG");
+		alterTableAddColumn("CPDAvailabilityEstimate", "CProductId", "LONG");
 
 		_addIndexes(CPDAvailabilityEstimateModelImpl.TABLE_NAME);
 
@@ -70,10 +69,6 @@ public class CPDAvailabilityEstimateUpgradeProcess
 				preparedStatement.execute();
 			}
 		}
-
-		runSQL("drop index IX_86A2368F on CPDAvailabilityEstimate");
-
-		alterTableDropColumn("CPDAvailabilityEstimate", "CPDefinitionId");
 	}
 
 	private void _addIndexes(String tableName) throws Exception {

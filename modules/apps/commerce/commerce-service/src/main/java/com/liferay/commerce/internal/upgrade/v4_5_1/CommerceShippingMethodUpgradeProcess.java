@@ -14,11 +14,11 @@
 
 package com.liferay.commerce.internal.upgrade.v4_5_1;
 
-import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,8 +28,7 @@ import java.sql.Statement;
 /**
  * @author Marco Leo
  */
-public class CommerceShippingMethodUpgradeProcess
-	extends BaseCommerceServiceUpgradeProcess {
+public class CommerceShippingMethodUpgradeProcess extends UpgradeProcess {
 
 	public CommerceShippingMethodUpgradeProcess(
 		ClassNameLocalService classNameLocalService,

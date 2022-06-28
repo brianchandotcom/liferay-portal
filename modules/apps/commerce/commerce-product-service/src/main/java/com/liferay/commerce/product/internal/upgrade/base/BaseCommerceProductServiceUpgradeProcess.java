@@ -32,19 +32,6 @@ import java.util.Objects;
 public abstract class BaseCommerceProductServiceUpgradeProcess
 	extends UpgradeProcess {
 
-	protected void addColumn(
-			String tableName, String columnName, String columnType)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Adding column %s to table %s", columnName, tableName));
-		}
-
-		alterTableAddColumn(tableName, columnName, columnType);
-	}
-
 	protected void addIndexes(String tableName) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -71,32 +58,6 @@ public abstract class BaseCommerceProductServiceUpgradeProcess
 						indexMetadata.getIndexName(), tableName));
 			}
 		}
-	}
-
-	protected void dropColumn(String tableName, String columnName)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Dropping column %s from table %s", columnName, tableName));
-		}
-
-		alterTableDropColumn(tableName, columnName);
-	}
-
-	protected void renameColumn(
-			String tableName, String oldColumnName, String newColumnName)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Renaming column %s to table %s", oldColumnName,
-					tableName));
-		}
-
-		alterColumnName(tableName, oldColumnName, newColumnName);
 	}
 
 	protected boolean tableHasIndex(String tableName, String indexName)

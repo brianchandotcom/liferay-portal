@@ -15,8 +15,6 @@
 package com.liferay.commerce.product.type.grouped.internal.upgrade.v1_1_0;
 
 import com.liferay.commerce.product.type.grouped.model.impl.CPDefinitionGroupedEntryModelImpl;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -31,7 +29,8 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_addColumn("CPDefinitionGroupedEntry", "entryCProductId", "LONG");
+		alterTableAddColumn(
+			"CPDefinitionGroupedEntry", "entryCProductId", "LONG");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update CPDefinitionGroupedEntry set entryCProductId = ? " +
@@ -52,34 +51,9 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
-		_dropColumn(
+		alterTableDropColumn(
 			CPDefinitionGroupedEntryModelImpl.TABLE_NAME,
 			"entryCPDefinitionId");
-	}
-
-	private void _addColumn(
-			String tableName, String columnName, String columnType)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Adding column %s to table %s", columnName, tableName));
-		}
-
-		alterTableAddColumn(tableName, columnName, columnType);
-	}
-
-	private void _dropColumn(String tableName, String columnName)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Dropping column %s from table %s", columnName, tableName));
-		}
-
-		alterTableDropColumn(tableName, columnName);
 	}
 
 	private long _getCProductId(long cpDefinitionId) throws Exception {
@@ -95,8 +69,5 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 
 		return 0;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPDefinitionGroupedEntryUpgradeProcess.class);
 
 }

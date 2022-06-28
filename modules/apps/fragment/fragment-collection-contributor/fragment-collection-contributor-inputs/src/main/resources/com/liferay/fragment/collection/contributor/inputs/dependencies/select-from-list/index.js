@@ -23,11 +23,6 @@ let currentSearch = {
 	query: '',
 };
 
-const baseListboxItems = Array.from(listbox.children).map((child) => ({
-	label: child.textContent,
-	value: child.dataset.optionValue,
-}));
-
 function debounce(fn, delay) {
 	let debounceId = null;
 
@@ -247,7 +242,7 @@ function filterLocalOptions() {
 	const preferedItems = [];
 	const restItems = [];
 
-	for (const item of baseListboxItems) {
+	for (const item of input.options) {
 		if (preferedItems.length + restItems.length === 10) {
 			break;
 		}
@@ -320,7 +315,7 @@ function handleSearchKeyup() {
 		listbox.innerHTML = '';
 	}
 	else {
-		setListboxItems(baseListboxItems);
+		setListboxItems(input.options);
 
 		return;
 	}

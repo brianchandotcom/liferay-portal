@@ -63,7 +63,7 @@ public interface Sites {
 		2;
 
 	public static final String LAST_MERGE_LAYOUT_MODIFIED_TIME =
-		"last-merge-layout-modified-date";
+		"last-merge-layout-modified-time";
 
 	public static final String LAST_MERGE_TIME = "last-merge-time";
 

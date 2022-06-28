@@ -9,16 +9,16 @@
  * distribution rights of the Software.
  */
 
-var copySaved = '';
+let copySaved = '';
 
-var starterkitList = document.getElementsByClassName('liferay-online-item');
+const starterkitList = document.getElementsByClassName('liferay-online-item');
 
 function addActiveClass(event) {
 	event.target.classList.add('active');
 }
 
 if (starterkitList) {
-	for (var i = 0, len = starterkitList.length; i < len; i++) {
+	for (let i = 0, len = starterkitList.length; i < len; i++) {
 		starterkitList[i].addEventListener('focus', addActiveClass);
 	}
 }

@@ -377,7 +377,7 @@ function SXPElement({
 						</ClayDropDown.ItemList>
 					</ClayDropDown>
 
-					{fieldSets.length > 0 && (
+					{!!fieldSets.length && (
 						<ClayList.ItemField>
 							<ClayButton
 								aria-label={
@@ -404,7 +404,7 @@ function SXPElement({
 				</ClayList.Item>
 			</ClayList>
 
-			{!collapse && fieldSets.length > 0 && (
+			{!collapse && !!fieldSets.length && (
 				<ClayList className="configuration-form-list">
 					{fieldSets.map(({fields}) => {
 						return fields.map((config) => (

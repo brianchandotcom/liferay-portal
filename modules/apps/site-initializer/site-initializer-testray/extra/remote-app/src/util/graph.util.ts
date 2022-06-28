@@ -40,7 +40,7 @@ export function getPercentLabel(percent: number) {
 		percentValue = LABEL_LESS_THAN_1;
 	}
 
-	var percentLabel = `${percentValue}%`;
+	const percentLabel = `${percentValue}%`;
 
 	return percentLabel;
 }

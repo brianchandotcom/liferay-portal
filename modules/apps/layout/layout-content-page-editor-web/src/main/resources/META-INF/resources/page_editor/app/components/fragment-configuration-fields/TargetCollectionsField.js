@@ -30,7 +30,7 @@ export function selectConfiguredCollectionDisplays(state) {
 		(item) =>
 			item.type === LAYOUT_DATA_ITEM_TYPES.collection &&
 			item.config?.collection &&
-			Object.keys(item.config.collection).length > 0 &&
+			!!Object.keys(item.config.collection).length &&
 			!isLayoutDataItemDeleted(state.layoutData, item.itemId)
 	);
 }
@@ -48,7 +48,7 @@ export function TargetCollectionsField({
 
 	const inputValue = useSelectorCallback(
 		(state) => {
-			if (nextValue.length === 0) {
+			if (!nextValue.length) {
 				return '';
 			}
 			else if (nextValue.length === 1) {

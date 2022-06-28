@@ -22,24 +22,24 @@
 AUI.add(
 	'liferay-pagination',
 	(A) => {
-		var ANode = A.Node;
-		var Lang = A.Lang;
+		const ANode = A.Node;
+		const Lang = A.Lang;
 
-		var BOUNDING_BOX = 'boundingBox';
+		const BOUNDING_BOX = 'boundingBox';
 
-		var ITEMS_PER_PAGE = 'itemsPerPage';
+		const ITEMS_PER_PAGE = 'itemsPerPage';
 
-		var ITEMS_PER_PAGE_LIST = 'itemsPerPageList';
+		const ITEMS_PER_PAGE_LIST = 'itemsPerPageList';
 
-		var NAME = 'pagination';
+		const NAME = 'pagination';
 
-		var PAGE = 'page';
+		const PAGE = 'page';
 
-		var RESULTS = 'results';
+		const RESULTS = 'results';
 
-		var STR_SPACE = ' ';
+		const STR_SPACE = ' ';
 
-		var Pagination = A.Component.create({
+		const Pagination = A.Component.create({
 			ATTRS: {
 				itemsPerPage: {
 					validator: Lang.isNumber,
@@ -94,13 +94,13 @@ AUI.add(
 
 			prototype: {
 				_afterResultsChange() {
-					var instance = this;
+					const instance = this;
 
 					instance._syncResults();
 				},
 
 				_dispatchRequest(state) {
-					var instance = this;
+					const instance = this;
 
 					if (
 						!Object.prototype.hasOwnProperty.call(
@@ -118,9 +118,9 @@ AUI.add(
 				},
 
 				_getLabelContent(itemsPerPage) {
-					var instance = this;
+					const instance = this;
 
-					var results = {};
+					const results = {};
 
 					if (!itemsPerPage) {
 						itemsPerPage = instance.get(ITEMS_PER_PAGE);
@@ -134,9 +134,9 @@ AUI.add(
 				},
 
 				_getResultsContent(page, itemsPerPage) {
-					var instance = this;
+					const instance = this;
 
-					var results = instance.get(RESULTS);
+					const results = instance.get(RESULTS);
 
 					if (!Lang.isValue(page)) {
 						page = instance.get(PAGE);
@@ -146,10 +146,10 @@ AUI.add(
 						itemsPerPage = instance.get(ITEMS_PER_PAGE);
 					}
 
-					var resultsContent;
+					let resultsContent;
 
 					if (results > itemsPerPage) {
-						var tmp = page * itemsPerPage;
+						const tmp = page * itemsPerPage;
 
 						resultsContent = Lang.sub(instance._resultsMessage, [
 							(page - 1) * itemsPerPage + 1,
@@ -168,22 +168,22 @@ AUI.add(
 				},
 
 				_onChangeRequest(event) {
-					var instance = this;
+					const instance = this;
 
-					var state = event.state;
+					const state = event.state;
 
-					var page = state.page;
+					const page = state.page;
 
-					var itemsPerPage = state.itemsPerPage;
+					const itemsPerPage = state.itemsPerPage;
 
 					instance._syncLabel(itemsPerPage);
 					instance._syncResults(page, itemsPerPage);
 				},
 
 				_onItemClick(event) {
-					var instance = this;
+					const instance = this;
 
-					var itemsPerPage = Lang.toInt(
+					const itemsPerPage = Lang.toInt(
 						event.currentTarget
 							.one('.taglib-text-icon')
 							.attr('data-value')
@@ -193,18 +193,18 @@ AUI.add(
 				},
 
 				_onItemsPerPageChange(event) {
-					var instance = this;
+					const instance = this;
 
-					var page = instance.get(PAGE);
+					const page = instance.get(PAGE);
 
-					var itemsPerPage = event.newVal;
+					const itemsPerPage = event.newVal;
 
 					instance._dispatchRequest({
 						itemsPerPage,
 						page,
 					});
 
-					var results = instance.get(RESULTS);
+					const results = instance.get(RESULTS);
 
 					instance.set(
 						'visible',
@@ -213,9 +213,9 @@ AUI.add(
 				},
 
 				_syncLabel(itemsPerPage) {
-					var instance = this;
+					const instance = this;
 
-					var results = instance._getLabelContent(itemsPerPage);
+					const results = instance._getLabelContent(itemsPerPage);
 
 					instance._deltaSelector
 						.one('.lfr-pagination-delta-selector-amount')
@@ -226,9 +226,9 @@ AUI.add(
 				},
 
 				_syncResults(page, itemsPerPage) {
-					var instance = this;
+					const instance = this;
 
-					var result = instance._getResultsContent(
+					const result = instance._getResultsContent(
 						page,
 						itemsPerPage
 					);
@@ -237,19 +237,19 @@ AUI.add(
 				},
 
 				_uiSetVisible(val) {
-					var instance = this;
+					const instance = this;
 
-					var hideClass = instance.get('hideClass');
+					const hideClass = instance.get('hideClass');
 
-					var hiddenClass = instance.getClassName('hidden');
+					let hiddenClass = instance.getClassName('hidden');
 
 					if (hideClass !== false) {
 						hiddenClass += STR_SPACE + (hideClass || 'hide');
 					}
 
-					var results = instance.get(RESULTS);
+					const results = instance.get(RESULTS);
 
-					var itemsPerPageList = instance.get(ITEMS_PER_PAGE_LIST);
+					const itemsPerPageList = instance.get(ITEMS_PER_PAGE_LIST);
 
 					instance._paginationControls.toggleClass(
 						hiddenClass,
@@ -290,7 +290,7 @@ AUI.add(
 					'<small class="search-results" id="{id}">{value}</small>',
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
 					Pagination.superclass.bindUI.apply(instance, arguments);
 
@@ -321,23 +321,23 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					new A.EventHandle(instance._eventHandles).detach();
 				},
 
 				renderUI() {
-					var instance = this;
+					const instance = this;
 
 					Pagination.superclass.renderUI.apply(instance, arguments);
 
-					var boundingBox = instance.get(BOUNDING_BOX);
+					const boundingBox = instance.get(BOUNDING_BOX);
 
 					boundingBox.addClass('lfr-pagination');
 
-					var namespace = instance.get('namespace');
+					const namespace = instance.get('namespace');
 
-					var deltaSelectorId = namespace + 'dataSelectorId';
+					const deltaSelectorId = namespace + 'dataSelectorId';
 
 					instance._itemsPerPageMessage = Liferay.Language.get(
 						'items-per-page'
@@ -349,9 +349,9 @@ AUI.add(
 						'showing-x-results'
 					);
 
-					var selectorLabel = instance._getLabelContent();
+					const selectorLabel = instance._getLabelContent();
 
-					var deltaSelector = ANode.create(
+					const deltaSelector = ANode.create(
 						Lang.sub(instance.TPL_DELTA_SELECTOR, {
 							amount: selectorLabel.amount,
 							id: deltaSelectorId,
@@ -359,26 +359,26 @@ AUI.add(
 						})
 					);
 
-					var itemContainer = ANode.create(
+					const itemContainer = ANode.create(
 						Lang.sub(instance.TPL_ITEM_CONTAINER, {
 							id: namespace + 'itemContainerId',
 						})
 					);
 
-					var itemsContainer = ANode.create(
+					const itemsContainer = ANode.create(
 						Lang.sub(instance.TPL_CONTAINER, {
 							id: namespace + 'itemsContainer',
 						})
 					);
 
-					var searchResults = ANode.create(
+					const searchResults = ANode.create(
 						Lang.sub(instance.TPL_RESULTS, {
 							id: namespace + 'searchResultsId',
 							value: instance._getResultsContent(),
 						})
 					);
 
-					var buffer = instance
+					const buffer = instance
 						.get(ITEMS_PER_PAGE_LIST)
 						.map((item, index) => {
 							return Lang.sub(instance.TPL_ITEM, {

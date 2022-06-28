@@ -51,7 +51,7 @@ function VelocityChart({timeRange, velocityData = {}, velocityUnit}) {
 
 	return (
 		<div className="velocity-chart">
-			{histograms.length > 0 && (
+			{!!histograms.length && (
 				<ResponsiveContainer height="100%" width="100%">
 					<LineChart
 						data={dataChart}

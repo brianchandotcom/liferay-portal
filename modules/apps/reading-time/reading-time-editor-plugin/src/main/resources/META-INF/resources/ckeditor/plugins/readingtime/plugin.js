@@ -13,7 +13,8 @@
  */
 
 (function () {
-	var NAMESPACE = '_com_liferay_reading_time_web_portlet_ReadingTimePortlet_';
+	const NAMESPACE =
+		'_com_liferay_reading_time_web_portlet_ReadingTimePortlet_';
 
 	CKEDITOR.plugins.add('readingtime', {
 		init(editor) {
@@ -42,7 +43,7 @@
 								return response.json();
 							})
 							.then((message) => {
-								var readingTimeElement = A.one(
+								const readingTimeElement = A.one(
 									'#' + editor.config.readingTime.elementId
 								);
 

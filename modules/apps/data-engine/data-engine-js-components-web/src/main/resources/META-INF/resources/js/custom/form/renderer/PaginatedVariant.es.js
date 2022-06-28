@@ -41,7 +41,7 @@ export function Container({
 
 			{pageIndex === activePage && (
 				<>
-					{pages.length > 0 && (
+					{!!pages.length && (
 						<>
 							<Pagination activePage={activePage} pages={pages} />
 							<PaginationControls

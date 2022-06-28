@@ -22,9 +22,9 @@
 AUI.add(
 	'liferay-xml-formatter',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var XMLFormatter = A.Component.create({
+		const XMLFormatter = A.Component.create({
 			ATTRS: {
 				lineIndent: {
 					validator: Lang.isString,
@@ -43,11 +43,11 @@ AUI.add(
 
 			prototype: {
 				format(content) {
-					var instance = this;
+					const instance = this;
 
-					var tagIndent = instance.get('tagIndent');
+					const tagIndent = instance.get('tagIndent');
 
-					var lineIndent = instance.get('lineIndent');
+					const lineIndent = instance.get('lineIndent');
 
 					return Liferay.Util.formatXML(content, {
 						lineIndent,

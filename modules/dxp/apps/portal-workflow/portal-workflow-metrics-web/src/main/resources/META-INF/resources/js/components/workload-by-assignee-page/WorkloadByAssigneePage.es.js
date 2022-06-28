@@ -61,7 +61,7 @@ function WorkloadByAssigneePage({query, routeParams}) {
 
 			<WorkloadByAssigneePage.Body
 				{...data}
-				filtered={search || selectedFilters.length > 0}
+				filtered={search || !!selectedFilters.length}
 				processId={processId}
 				taskNames={taskNames}
 			/>

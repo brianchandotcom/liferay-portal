@@ -243,7 +243,7 @@ const portlet = {
 
 			let found = false;
 
-			if (Array.isArray(str) && str.length > 0) {
+			if (Array.isArray(str) && !!str.length) {
 				found = true;
 			}
 

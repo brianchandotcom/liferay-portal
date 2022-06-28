@@ -38,7 +38,7 @@ const SelectLayout = ({
 }) => {
 	const [filter, setFilter] = useState();
 
-	const empty = nodes.length === 0;
+	const empty = !nodes.length;
 
 	return (
 		<ClayLayout.ContainerFluid className="p-4 select-layout">

@@ -18,8 +18,8 @@ function Table({items}) {
 	const blockedItems = items.filter(({status}) => status === 2);
 	const unblockedItems = items.filter(({status}) => status !== 2);
 
-	const showBlockedDivider = blockedItems.length > 0;
-	const showRunningDivider = showBlockedDivider && unblockedItems.length > 0;
+	const showBlockedDivider = !!blockedItems.length;
+	const showRunningDivider = showBlockedDivider && !!unblockedItems.length;
 
 	return (
 		<ClayTable className="table-responsive">

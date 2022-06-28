@@ -31,7 +31,7 @@ export default function NodeListItem({NodeComponent, node}: IProps) {
 	const children = node.children || [];
 
 	const nodeListItemClassNames = classNames('lfr-treeview-node-list-item', {
-		'with-children': children.length > 0,
+		'with-children': !!children.length,
 	});
 
 	const childrenId = `node-list-item-${node.id}-children`;

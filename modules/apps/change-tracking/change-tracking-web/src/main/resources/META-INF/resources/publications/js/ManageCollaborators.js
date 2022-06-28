@@ -443,7 +443,7 @@ const ManageCollaborators = ({
 					erroredResults.map(({error}) => error)
 				);
 
-				if (erroredResults.length === 0) {
+				if (!erroredResults.length) {
 					setMultiSelectValue('');
 				}
 
@@ -584,7 +584,7 @@ const ManageCollaborators = ({
 			userIds.push(selectedItemsKeys[i]);
 		}
 
-		if (publicationsUserRoleUserIds.length > 0) {
+		if (publicationsUserRoleUserIds.length) {
 			let key = Liferay.Language.get(
 				'you-are-inviting-user-x-who-does-not-have-access-to-publications'
 			);
@@ -697,7 +697,7 @@ const ManageCollaborators = ({
 	const renderCollaborators = () => {
 		let users = [];
 
-		if (collaborators && collaborators.length > 0) {
+		if (collaborators && !!collaborators.length) {
 			users = collaborators.slice(0);
 		}
 
@@ -707,7 +707,7 @@ const ManageCollaborators = ({
 			users.push(selectedUserData[keys[i]]);
 		}
 
-		if (users.length === 0) {
+		if (!users.length) {
 			return '';
 		}
 
@@ -898,7 +898,7 @@ const ManageCollaborators = ({
 							</ClayInput.GroupItem>
 						</ClayInput.Group>
 
-						{emailAddressErrorMessages.length > 0 && (
+						{!!emailAddressErrorMessages.length && (
 							<ClayForm.FeedbackGroup>
 								{emailAddressErrorMessages.map(
 									(emailAddressErrorMessage) => (
@@ -921,13 +921,13 @@ const ManageCollaborators = ({
 		return (
 			<ClayButton
 				disabled={
-					Object.keys(selectedItems).length === 0 &&
-					Object.keys(updatedRoles).length === 0
+					!Object.keys(selectedItems).length &&
+					!Object.keys(updatedRoles).length
 				}
 				displayType="primary"
 				type="submit"
 			>
-				{Object.keys(updatedRoles).length === 0
+				{!Object.keys(updatedRoles).length
 					? Liferay.Language.get('send')
 					: Liferay.Language.get('save')}
 			</ClayButton>
@@ -985,10 +985,10 @@ const ManageCollaborators = ({
 										displayType="secondary"
 										onClick={() => {
 											if (
-												(Object.keys(selectedItems)
-													.length === 0 &&
-													Object.keys(updatedRoles)
-														.length === 0) ||
+												(!Object.keys(selectedItems)
+													.length &&
+													!Object.keys(updatedRoles)
+														.length) ||
 												confirm(
 													Liferay.Language.get(
 														'discard-unsaved-changes'
@@ -1018,7 +1018,7 @@ const ManageCollaborators = ({
 			return trigger;
 		}
 
-		if (!collaborators || collaborators.length === 0) {
+		if (!collaborators || !collaborators.length) {
 			return (
 				<ClayButtonWithIcon
 					className="rounded-circle"
@@ -1101,7 +1101,7 @@ const ManageCollaborators = ({
 			);
 		}
 
-		if (users.length === 0) {
+		if (!users.length) {
 			columns.push(
 				<div className="autofit-col">
 					<ClaySticker

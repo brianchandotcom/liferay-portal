@@ -171,7 +171,7 @@ export function isCurrentBrowserPath(url) {
  * @return {string}
  */
 export function removePathTrailingSlash(path) {
-	var length = path ? path.length : 0;
+	const length = path ? path.length : 0;
 	if (length > 1 && path[length - 1] === '/') {
 		path = path.substr(0, length - 1);
 	}
@@ -259,7 +259,7 @@ export function runStyle(style, defaultFn, appendFn) {
  */
 export function runStylesInElement(element, defaultFn, appendFn) {
 	const styles = element.querySelectorAll('style,link');
-	if (styles.length === 0 && defaultFn) {
+	if (!styles.length && defaultFn) {
 		setTimeout(defaultFn);
 
 		return;

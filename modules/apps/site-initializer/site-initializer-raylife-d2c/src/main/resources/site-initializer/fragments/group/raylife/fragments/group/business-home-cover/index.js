@@ -164,7 +164,7 @@ getQuoteForm.onsubmit = function (event) {
 };
 
 fragmentElement.querySelector('#zip').onkeypress = (event) => {
-	var charCode = event.which ? event.which : event.keyCode;
+	const charCode = event.which ? event.which : event.keyCode;
 
 	return !(charCode > 31 && (charCode < 48 || charCode > 57));
 };

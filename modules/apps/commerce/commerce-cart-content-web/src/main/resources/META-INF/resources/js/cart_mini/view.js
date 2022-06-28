@@ -15,7 +15,7 @@
 import {delegate} from 'frontend-js-web';
 
 export default function ({namespace}) {
-	var orderTransition = document.getElementById(
+	const orderTransition = document.getElementById(
 		`${namespace}orderTransition`
 	);
 

@@ -58,9 +58,9 @@ const ACTIONS = {
 					return;
 				}
 
-				var value = JSON.parse(selectedItem.value);
+				const value = JSON.parse(selectedItem.value);
 
-				var portletURL = new Liferay.Util.PortletURL.createPortletURL(
+				const portletURL = new Liferay.Util.PortletURL.createPortletURL(
 					moveLayoutPageTemplateEntryURL,
 					{
 						targetLayoutPageTemplateCollectionId:

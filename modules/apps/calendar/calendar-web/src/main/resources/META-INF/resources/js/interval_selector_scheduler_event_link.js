@@ -15,9 +15,9 @@
 AUI.add(
 	'liferay-calendar-interval-selector-scheduler-event-link',
 	(A) => {
-		var AArray = A.Array;
+		const AArray = A.Array;
 
-		var IntervalSelectorSchedulerEventLink = A.Component.create({
+		const IntervalSelectorSchedulerEventLink = A.Component.create({
 			ATTRS: {
 				intervalSelector: {},
 
@@ -30,17 +30,17 @@ AUI.add(
 
 			prototype: {
 				_updateEndDate() {
-					var instance = this;
+					const instance = this;
 
-					var intervalSelector = instance.get('intervalSelector');
+					const intervalSelector = instance.get('intervalSelector');
 
-					var endDatePicker = intervalSelector.get('endDatePicker');
+					const endDatePicker = intervalSelector.get('endDatePicker');
 
-					var endTimePicker = intervalSelector.get('endTimePicker');
+					const endTimePicker = intervalSelector.get('endTimePicker');
 
-					var endDate = endDatePicker.getDate();
+					const endDate = endDatePicker.getDate();
 
-					var endTime = endTimePicker.getTime();
+					const endTime = endTimePicker.getTime();
 
 					endDate.setHours(endTime.getHours());
 
@@ -50,31 +50,33 @@ AUI.add(
 				},
 
 				_updateIntervalSelector(event) {
-					var instance = this;
+					const instance = this;
 
-					var prevDate = event.prevVal;
+					const prevDate = event.prevVal;
 
-					var newDate = event.newVal;
+					const newDate = event.newVal;
 
 					if (
 						!instance._intervalSelectorUpdated &&
 						prevDate.getTime() !== newDate.getTime()
 					) {
-						var intervalSelector = instance.get('intervalSelector');
+						const intervalSelector = instance.get(
+							'intervalSelector'
+						);
 
-						var schedulerEvent = instance.get('schedulerEvent');
+						const schedulerEvent = instance.get('schedulerEvent');
 
-						var attribute = event.attrName;
+						const attribute = event.attrName;
 
-						var prefix = attribute.replace('Date', '');
+						const prefix = attribute.replace('Date', '');
 
-						var date = schedulerEvent.get(attribute);
+						const date = schedulerEvent.get(attribute);
 
-						var datePicker = intervalSelector.get(
+						const datePicker = intervalSelector.get(
 							prefix + 'DatePicker'
 						);
 
-						var timePicker = intervalSelector.get(
+						const timePicker = intervalSelector.get(
 							prefix + 'TimePicker'
 						);
 
@@ -89,11 +91,11 @@ AUI.add(
 				},
 
 				_updateSchedulerEvent(eventDateType, eventDate) {
-					var instance = this;
+					const instance = this;
 
-					var schedulerEvent = instance.get('schedulerEvent');
+					const schedulerEvent = instance.get('schedulerEvent');
 
-					var scheduler = schedulerEvent.get('scheduler');
+					const scheduler = schedulerEvent.get('scheduler');
 
 					instance._intervalSelectorUpdated = true;
 
@@ -105,21 +107,21 @@ AUI.add(
 				},
 
 				_updateStartDate() {
-					var instance = this;
+					const instance = this;
 
-					var intervalSelector = instance.get('intervalSelector');
+					const intervalSelector = instance.get('intervalSelector');
 
-					var startDatePicker = intervalSelector.get(
+					const startDatePicker = intervalSelector.get(
 						'startDatePicker'
 					);
 
-					var startTimePicker = intervalSelector.get(
+					const startTimePicker = intervalSelector.get(
 						'startTimePicker'
 					);
 
-					var startDate = startDatePicker.getDate();
+					const startDate = startDatePicker.getDate();
 
-					var startTime = startTimePicker.getTime();
+					const startTime = startTimePicker.getTime();
 
 					startDate.setHours(startTime.getHours());
 
@@ -129,21 +131,21 @@ AUI.add(
 				},
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
-					var intervalSelector = instance.get('intervalSelector');
+					const intervalSelector = instance.get('intervalSelector');
 
-					var schedulerEvent = instance.get('schedulerEvent');
+					const schedulerEvent = instance.get('schedulerEvent');
 
-					var endDatePicker = intervalSelector.get('endDatePicker');
+					const endDatePicker = intervalSelector.get('endDatePicker');
 
-					var endTimePicker = intervalSelector.get('endTimePicker');
+					const endTimePicker = intervalSelector.get('endTimePicker');
 
-					var startDatePicker = intervalSelector.get(
+					const startDatePicker = intervalSelector.get(
 						'startDatePicker'
 					);
 
-					var startTimePicker = intervalSelector.get(
+					const startTimePicker = intervalSelector.get(
 						'startTimePicker'
 					);
 
@@ -176,7 +178,7 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					instance.unlink();
 
@@ -184,7 +186,7 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._intervalSelectorUpdated = false;
 
@@ -192,7 +194,7 @@ AUI.add(
 				},
 
 				unlink() {
-					var instance = this;
+					const instance = this;
 
 					AArray.invoke(instance.eventHandlers, 'detach');
 				},

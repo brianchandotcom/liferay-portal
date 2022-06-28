@@ -75,7 +75,7 @@ function InstanceSelector({selected, setSelected, virtualInstances}) {
 	};
 
 	const _isSelectAllChecked = () =>
-		currentVirtualInstances.length > 0 &&
+		!!currentVirtualInstances.length &&
 		currentVirtualInstances
 			.slice(activePage * delta - delta, activePage * delta)
 			.every(({id}) => selected.includes(id));
@@ -158,7 +158,7 @@ function InstanceSelector({selected, setSelected, virtualInstances}) {
 				</ManagementToolbar.Search>
 			</ManagementToolbar.Container>
 
-			{selected.length > 0 && (
+			{!!selected.length && (
 				<ClayToolbar subnav={{displayType: 'primary'}}>
 					<ClayToolbar.Nav>
 						<ClayToolbar.Item expand>

@@ -12,11 +12,11 @@
 AUI.add(
 	'liferay-kaleo-forms-components',
 	(A) => {
-		var KeyMap = A.Event.KeyMap;
+		const KeyMap = A.Event.KeyMap;
 
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var KaleoFormWizard = A.Component.create({
+		const KaleoFormWizard = A.Component.create({
 			ATTRS: {
 				currentStep: {
 					valueFn: '_valueCurrentStep',
@@ -37,26 +37,26 @@ AUI.add(
 
 			prototype: {
 				_afterTabSelectedChange(event) {
-					var instance = this;
+					const instance = this;
 
-					var tabView = instance.tabView;
+					const tabView = instance.tabView;
 
 					if (event.newVal === 1) {
-						var activeTabIndex = tabView.indexOf(event.target);
+						const activeTabIndex = tabView.indexOf(event.target);
 
-						var currentStep = activeTabIndex + 1;
+						const currentStep = activeTabIndex + 1;
 
 						instance.set('currentStep', currentStep);
 					}
 				},
 
 				_onTabSelectedChange(event) {
-					var instance = this;
+					const instance = this;
 
-					var tabView = instance.tabView;
+					const tabView = instance.tabView;
 
 					if (event.newVal === 1) {
-						var activeTabIndex = tabView.indexOf(event.target);
+						const activeTabIndex = tabView.indexOf(event.target);
 
 						if (!instance.validateStep(activeTabIndex)) {
 							event.preventDefault();
@@ -65,11 +65,11 @@ AUI.add(
 				},
 
 				_valueCurrentStep() {
-					var instance = this;
+					const instance = this;
 
-					var tabView = instance.get('tabView');
+					const tabView = instance.get('tabView');
 
-					var activeTabIndex = tabView.indexOf(
+					const activeTabIndex = tabView.indexOf(
 						tabView.get('selection')
 					);
 
@@ -77,7 +77,7 @@ AUI.add(
 				},
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
 					instance.after(
 						'tab:selectedChange',
@@ -92,9 +92,9 @@ AUI.add(
 				},
 
 				getTabViewPanels() {
-					var instance = this;
+					const instance = this;
 
-					var queries = A.TabviewBase._queries;
+					const queries = A.TabviewBase._queries;
 
 					return instance.tabView
 						.get('contentBox')
@@ -102,7 +102,7 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance.form = instance.get('form');
 
@@ -124,17 +124,17 @@ AUI.add(
 				},
 
 				navigate(offset) {
-					var instance = this;
+					const instance = this;
 
-					var tabView = instance.tabView;
+					const tabView = instance.tabView;
 
-					var activeTab = tabView.getActiveTab();
-					var tabViewTabs = tabView.getTabs();
+					const activeTab = tabView.getActiveTab();
+					const tabViewTabs = tabView.getTabs();
 
-					var newActiveTabIndex =
+					const newActiveTabIndex =
 						tabViewTabs.indexOf(activeTab) + offset;
 
-					var newActiveTab = tabView.item(newActiveTabIndex);
+					const newActiveTab = tabView.item(newActiveTabIndex);
 
 					if (newActiveTab) {
 						tabView.selectChild(newActiveTabIndex);
@@ -142,12 +142,12 @@ AUI.add(
 				},
 
 				validatePanel(panel) {
-					var instance = this;
+					const instance = this;
 
-					var validator = instance.validator;
+					const validator = instance.validator;
 
 					validator.eachRule((rule, fieldName) => {
-						var field = validator.getField(fieldName);
+						const field = validator.getField(fieldName);
 
 						if (panel.contains(field)) {
 							validator.validateField(field);
@@ -156,13 +156,13 @@ AUI.add(
 				},
 
 				validateStep(step) {
-					var instance = this;
+					const instance = this;
 
-					var tabViewPanels = instance.getTabViewPanels();
+					const tabViewPanels = instance.getTabViewPanels();
 
-					var tabViewTabs = instance.tabView.getTabs();
+					const tabViewTabs = instance.tabView.getTabs();
 
-					var valid = true;
+					let valid = true;
 
 					instance.validator.resetAllFields();
 
@@ -170,9 +170,9 @@ AUI.add(
 						if (index <= step - 1) {
 							instance.validatePanel(item);
 
-							var tabNode = tabViewTabs.item(index);
+							const tabNode = tabViewTabs.item(index);
 
-							var tabHasError = item.one('.error-field');
+							const tabHasError = item.one('.error-field');
 
 							tabNode.toggleClass('section-error', tabHasError);
 							tabNode.toggleClass(
@@ -193,7 +193,7 @@ AUI.add(
 
 		Liferay.KaleoFormWizard = KaleoFormWizard;
 
-		var ReadOnlyFormBuilderSupport = function () {};
+		const ReadOnlyFormBuilderSupport = function () {};
 
 		ReadOnlyFormBuilderSupport.ATTRS = {
 			formBuilder: {
@@ -204,19 +204,19 @@ AUI.add(
 
 		A.mix(ReadOnlyFormBuilderSupport.prototype, {
 			_afterFieldFocusedChangeReadOnlyFormBuilder() {
-				var instance = this;
+				const instance = this;
 
 				instance.unselectFields();
 			},
 
 			_afterRenderReadOnlyFormBuilder() {
-				var instance = this;
+				const instance = this;
 
 				instance.fieldsSortableList.destroy();
 			},
 
 			_onMouseOverFieldReadOnlyFormBuilder(event) {
-				var field = A.Widget.getByNode(event.currentTarget);
+				const field = A.Widget.getByNode(event.currentTarget);
 
 				field.controlsToolbar.hide();
 
@@ -230,7 +230,7 @@ AUI.add(
 			},
 
 			_valueFormBuilder() {
-				var instance = this;
+				const instance = this;
 
 				return {
 					allowRemoveRequiredFields: false,
@@ -247,9 +247,9 @@ AUI.add(
 			},
 
 			initializer() {
-				var instance = this;
+				const instance = this;
 
-				var formBuilder = instance.get('formBuilder');
+				const formBuilder = instance.get('formBuilder');
 
 				formBuilder.after(
 					'render',
@@ -269,9 +269,9 @@ AUI.add(
 			},
 		});
 
-		var TPL_MESSAGE = '<div class="alert alert-info">{message}</div>';
+		const TPL_MESSAGE = '<div class="alert alert-info">{message}</div>';
 
-		var KaleoDefinitionPreview = A.Component.create({
+		const KaleoDefinitionPreview = A.Component.create({
 			ATTRS: {
 				availableDefinitions: {
 					value: [],
@@ -297,25 +297,25 @@ AUI.add(
 
 			prototype: {
 				_onDialogKeyUp(event) {
-					var instance = this;
+					const instance = this;
 
-					var availableDefinitions = instance.get(
+					const availableDefinitions = instance.get(
 						'availableDefinitions'
 					);
 
-					var definition = instance.getDefinition();
+					const definition = instance.getDefinition();
 
-					var selectedIndex = availableDefinitions.indexOf(
+					const selectedIndex = availableDefinitions.indexOf(
 						definition
 					);
 
-					var keyCode = event.domEvent.keyCode;
+					const keyCode = event.domEvent.keyCode;
 
 					if (KeyMap.isKey(keyCode, 'ENTER')) {
 						instance.choose();
 					}
 					else {
-						var index = -1;
+						let index = -1;
 
 						if (KeyMap.isKey(keyCode, 'LEFT')) {
 							index = selectedIndex - 1;
@@ -324,7 +324,7 @@ AUI.add(
 							index = selectedIndex + 1;
 						}
 
-						var definitionPreview = availableDefinitions[index];
+						const definitionPreview = availableDefinitions[index];
 
 						if (definitionPreview) {
 							instance.select(definitionPreview.definitionId);
@@ -339,11 +339,11 @@ AUI.add(
 				},
 
 				_syncDialog() {
-					var instance = this;
+					const instance = this;
 
-					var definition = instance.getDefinition();
+					const definition = instance.getDefinition();
 
-					var dialog = instance.get('dialog');
+					const dialog = instance.get('dialog');
 
 					dialog.titleNode.html(definition.definitionName);
 
@@ -351,11 +351,11 @@ AUI.add(
 				},
 
 				_syncFormBuilder() {
-					var instance = this;
+					const instance = this;
 
-					var definition = instance.getDefinition();
+					const definition = instance.getDefinition();
 
-					var formBuilder = instance.get('formBuilder');
+					const formBuilder = instance.get('formBuilder');
 
 					formBuilder.render();
 
@@ -363,9 +363,9 @@ AUI.add(
 				},
 
 				_valueDialog() {
-					var instance = this;
+					const instance = this;
 
-					var formBuilder = instance.get('formBuilder');
+					const formBuilder = instance.get('formBuilder');
 
 					return {
 						dialog: {
@@ -412,15 +412,15 @@ AUI.add(
 				},
 
 				choose() {
-					var instance = this;
+					const instance = this;
 
 					instance.fire('choose', instance.getDefinition());
 
-					var dialog = instance.get('dialog');
+					const dialog = instance.get('dialog');
 
 					dialog.hide();
 
-					var nextBtn = instance.one('.kaleo-process-next');
+					const nextBtn = instance.one('.kaleo-process-next');
 
 					if (nextBtn) {
 						nextBtn.focus();
@@ -428,16 +428,16 @@ AUI.add(
 				},
 
 				getDefinition(definitionId) {
-					var instance = this;
+					const instance = this;
 
-					var availableDefinitions = instance.get(
+					const availableDefinitions = instance.get(
 						'availableDefinitions'
 					);
 
 					definitionId =
 						definitionId || instance.get('selectedDefinitionId');
 
-					var definition;
+					let definition;
 
 					availableDefinitions.forEach((item) => {
 						if (
@@ -454,9 +454,9 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
-					var dialog = instance.get('dialog');
+					const dialog = instance.get('dialog');
 
 					dialog.bodyNode.prepend(
 						Lang.sub(TPL_MESSAGE, {
@@ -470,15 +470,15 @@ AUI.add(
 				},
 
 				preview() {
-					var instance = this;
+					const instance = this;
 
-					var formBuilder = instance.get('formBuilder');
+					const formBuilder = instance.get('formBuilder');
 
 					formBuilder.show();
 
 					instance._syncFormBuilder();
 
-					var dialog = instance.get('dialog');
+					const dialog = instance.get('dialog');
 
 					dialog.show();
 
@@ -486,13 +486,13 @@ AUI.add(
 				},
 
 				select(definitionId) {
-					var instance = this;
+					const instance = this;
 
-					var availableDefinitions = instance.get(
+					const availableDefinitions = instance.get(
 						'availableDefinitions'
 					);
 
-					var selectedDefinitionId = -1;
+					let selectedDefinitionId = -1;
 
 					availableDefinitions.forEach((item) => {
 						if (

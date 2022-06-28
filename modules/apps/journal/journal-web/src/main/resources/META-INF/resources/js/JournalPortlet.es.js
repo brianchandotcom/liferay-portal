@@ -419,7 +419,7 @@ function attachFormChangeListener(
 			})
 			.filter((mutationRecord) => acceptMutationRecord(mutationRecord));
 
-		if (observedMutationRecords.length > 0) {
+		if (observedMutationRecords.length) {
 			handleChange();
 		}
 	});

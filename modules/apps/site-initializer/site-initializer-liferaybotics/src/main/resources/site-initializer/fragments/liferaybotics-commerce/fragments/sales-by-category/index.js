@@ -13,8 +13,8 @@
  * details.
  */
 
-var div = fragmentElement.querySelector('div');
-var chart = bb.generate({
+const div = fragmentElement.querySelector('div');
+const chart = bb.generate({
 	axis: {
 		x: {
 			tick: {

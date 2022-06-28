@@ -29,7 +29,7 @@ export default function FormReport({
 	formReportRecordsFieldValuesURL,
 	portletNamespace,
 }) {
-	if (!data || data.length === 0) {
+	if (!data || !data.length) {
 		return <EmptyState />;
 	}
 

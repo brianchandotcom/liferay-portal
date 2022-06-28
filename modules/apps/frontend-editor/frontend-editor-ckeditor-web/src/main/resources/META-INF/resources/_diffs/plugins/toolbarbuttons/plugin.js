@@ -81,7 +81,7 @@
 		else {
 			const ranges = selection.getRanges();
 
-			if (ranges.length > 0) {
+			if (ranges.length) {
 
 				// Webkit could report the following range on cell selection (#4948):
 				// <table><tr><td>[&nbsp;</td></tr></table>]

@@ -120,7 +120,7 @@ function getConnectedReactComponentAdapter(ReactComponent) {
 			delete changes.events;
 			delete changes.children;
 
-			if (changes && Object.keys(changes).length > 0) {
+			if (changes && !!Object.keys(changes).length) {
 				const newValues = {};
 				const keys = Object.keys(changes);
 

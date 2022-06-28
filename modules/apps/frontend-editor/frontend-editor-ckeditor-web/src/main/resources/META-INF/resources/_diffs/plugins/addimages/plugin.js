@@ -105,7 +105,7 @@
 
 			const transferFiles = nativeEvent.dataTransfer.files;
 
-			if (transferFiles.length > 0) {
+			if (transferFiles.length) {
 				new CKEDITOR.dom.event(nativeEvent).preventDefault();
 
 				const editor = event.listenerData.editor;
@@ -370,7 +370,7 @@
 				const TPL_PROGRESS_BAR = '<div class="progressbar"></div>';
 
 				const _onUploadError = () => {
-					var image = this._tempImage;
+					const image = this._tempImage;
 
 					if (image) {
 						image.parentElement.remove();
@@ -453,11 +453,11 @@
 				};
 
 				const _onUploadProgress = (event) => {
-					var percentLoaded = Math.round(event.percentLoaded);
+					const percentLoaded = Math.round(event.percentLoaded);
 
-					var target = event.details[0].target;
+					const target = event.details[0].target;
 
-					var progressbar = target.progressbar;
+					const progressbar = target.progressbar;
 
 					if (progressbar) {
 						progressbar.set('label', percentLoaded + ' %');

@@ -39,7 +39,7 @@ class Queue<T> {
 	}
 
 	peek() {
-		return this.queue.length === 0 ? null : this.queue[0];
+		return !this.queue.length ? null : this.queue[0];
 	}
 
 	has(selector: Selector<T>) {
@@ -510,7 +510,7 @@ export class A11yChecker {
 			} = record;
 
 			let node =
-				type === 'attributes' || removedNodes.length > 0
+				type === 'attributes' || !!removedNodes.length
 					? target
 					: addedNodes[0];
 

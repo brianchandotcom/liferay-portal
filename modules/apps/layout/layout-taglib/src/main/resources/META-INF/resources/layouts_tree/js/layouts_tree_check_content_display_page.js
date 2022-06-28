@@ -15,13 +15,13 @@
 AUI.add(
 	'liferay-layouts-tree-check-content-display-page',
 	(A) => {
-		var CSS_LAYOUT_INVALID = 'layout-page-invalid';
+		const CSS_LAYOUT_INVALID = 'layout-page-invalid';
 
-		var CSS_TREE_HITAREA = A.getClassName('tree', 'hitarea');
+		const CSS_TREE_HITAREA = A.getClassName('tree', 'hitarea');
 
-		var STR_HOST = 'host';
+		const STR_HOST = 'host';
 
-		var LayoutsTreeCheckContentDisplayPage = A.Component.create({
+		const LayoutsTreeCheckContentDisplayPage = A.Component.create({
 			EXTENDS: A.Plugin.Base,
 
 			NAME: 'layoutstreecheckcontentdisplaypage',
@@ -30,10 +30,10 @@ AUI.add(
 
 			prototype: {
 				_beforeClickNodeEl(event) {
-					var result;
+					let result;
 
 					if (!event.target.test('.' + CSS_TREE_HITAREA)) {
-						var link = event.currentTarget.one('a');
+						const link = event.currentTarget.one('a');
 
 						if (!link || link.hasClass(CSS_LAYOUT_INVALID)) {
 							result = new A.Do.Halt();
@@ -44,7 +44,7 @@ AUI.add(
 				},
 
 				_beforeFormatNodeLabel(node, cssClass, label) {
-					var result;
+					let result;
 
 					if (!node.contentDisplayPage) {
 						cssClass = cssClass + ' ' + CSS_LAYOUT_INVALID;
@@ -66,7 +66,7 @@ AUI.add(
 				},
 
 				_formatRootNode() {
-					var instance = this;
+					const instance = this;
 
 					return new A.Do.AlterReturn('Modified label attribute', {
 						...A.Do.currentRetVal,
@@ -75,9 +75,9 @@ AUI.add(
 				},
 
 				_onTreeAppend(event) {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
 					host.fire('checkContentDisplayTreeAppend', {
 						node: event.tree.node,
@@ -85,15 +85,15 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					new A.EventHandle(instance._eventHandles).detach();
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
 					instance._eventHandles = [
 						instance.afterHostEvent(

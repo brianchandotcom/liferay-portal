@@ -15,11 +15,11 @@
 AUI.add(
 	'liferay-staging',
 	() => {
-		var StagingBar = {
+		const StagingBar = {
 			init(config) {
-				var instance = this;
+				const instance = this;
 
-				var namespace = config.namespace;
+				const namespace = config.namespace;
 
 				instance.markAsReadyForPublicationURL =
 					config.markAsReadyForPublicationURL;

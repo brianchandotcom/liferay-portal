@@ -22,9 +22,9 @@
 AUI.add(
 	'liferay-autocomplete-input-caretoffset',
 	(A) => {
-		var ANode = A.Node;
+		const ANode = A.Node;
 
-		var MIRROR_STYLES = [
+		const MIRROR_STYLES = [
 			'boxSizing',
 			'fontFamily',
 			'fontSize',
@@ -44,19 +44,19 @@ AUI.add(
 			'wordSpacing',
 		];
 
-		var STR_INPUT_NODE = 'inputNode';
+		const STR_INPUT_NODE = 'inputNode';
 
-		var AutcompleteInputCaretOffset = function () {};
+		const AutcompleteInputCaretOffset = function () {};
 
 		AutcompleteInputCaretOffset.prototype = {
 			_applyMirrorContent() {
-				var instance = this;
+				const instance = this;
 
-				var input = instance.get(STR_INPUT_NODE);
+				const input = instance.get(STR_INPUT_NODE);
 
-				var value = input.val();
+				let value = input.val();
 
-				var caretIndex = instance._getCaretIndex().start;
+				let caretIndex = instance._getCaretIndex().start;
 
 				if (caretIndex === value.length) {
 					value += instance.TPL_CARET;
@@ -80,11 +80,11 @@ AUI.add(
 			},
 
 			_applyMirrorStyles() {
-				var instance = this;
+				const instance = this;
 
-				var inputNode = instance.get(STR_INPUT_NODE);
+				const inputNode = instance.get(STR_INPUT_NODE);
 
-				var inputMirror = instance._inputMirror;
+				const inputMirror = instance._inputMirror;
 
 				MIRROR_STYLES.forEach((item) => {
 					inputMirror.setStyle(item, inputNode.getStyle(item));
@@ -92,10 +92,10 @@ AUI.add(
 			},
 
 			_createInputMirror() {
-				var instance = this;
+				const instance = this;
 
 				if (!instance._inputMirror) {
-					var inputMirror = ANode.create(instance.TPL_INPUT_MIRROR);
+					const inputMirror = ANode.create(instance.TPL_INPUT_MIRROR);
 
 					// eslint-disable-next-line @liferay/aui/no-get-body
 					A.getBody().append(inputMirror);
@@ -105,7 +105,7 @@ AUI.add(
 			},
 
 			_getCaretOffset(node) {
-				var instance = this;
+				const instance = this;
 
 				instance._createInputMirror();
 
@@ -114,12 +114,12 @@ AUI.add(
 
 				node = node || instance.get(STR_INPUT_NODE);
 
-				var inputEl = node.getDOM();
+				const inputEl = node.getDOM();
 
-				var scrollLeft = inputEl.scrollLeft;
-				var scrollTop = inputEl.scrollTop;
+				const scrollLeft = inputEl.scrollLeft;
+				const scrollTop = inputEl.scrollTop;
 
-				var inputCaretEl = instance._inputMirror
+				const inputCaretEl = instance._inputMirror
 					.one('.input-caret')
 					.getDOM();
 

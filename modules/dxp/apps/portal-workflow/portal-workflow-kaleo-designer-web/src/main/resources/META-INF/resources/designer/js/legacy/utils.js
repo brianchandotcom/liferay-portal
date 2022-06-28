@@ -12,22 +12,22 @@
 AUI.add(
 	'liferay-kaleo-designer-utils',
 	(A) => {
-		var AArray = A.Array;
-		var isArray = Array.isArray;
+		const AArray = A.Array;
+		const isArray = Array.isArray;
 
-		var STR_CDATA_CLOSE = ']]>';
+		const STR_CDATA_CLOSE = ']]>';
 
-		var STR_CDATA_OPEN = '<![CDATA[';
+		const STR_CDATA_OPEN = '<![CDATA[';
 
-		var STR_CHAR_CRLF = '\r\n';
+		const STR_CHAR_CRLF = '\r\n';
 
-		var STR_CHAR_TAB = '\t';
+		const STR_CHAR_TAB = '\t';
 
-		var STR_ELLIPSIS = '...';
+		const STR_ELLIPSIS = '...';
 
-		var KaleoDesignerUtils = {};
+		const KaleoDesignerUtils = {};
 
-		var KaleoDesignerStrings = {
+		const KaleoDesignerStrings = {
 			account: Liferay.Language.get('account'),
 			action: Liferay.Language.get('action'),
 			actions: Liferay.Language.get('actions'),
@@ -119,11 +119,11 @@ AUI.add(
 			year: Liferay.Language.get('year'),
 		};
 
-		var PropertyListFormatter = {
+		const PropertyListFormatter = {
 			assignmentsType(data) {
-				var value = data.value;
+				const value = data.value;
 
-				var assignmentType;
+				let assignmentType;
 
 				if (value && value.assignmentType) {
 					assignmentType = value.assignmentType[0];
@@ -133,9 +133,9 @@ AUI.add(
 			},
 
 			forms(data) {
-				var value = data.value;
+				const value = data.value;
 
-				var templateName;
+				let templateName;
 
 				if (value) {
 					templateName = value.templateName;
@@ -145,9 +145,9 @@ AUI.add(
 			},
 
 			names(data) {
-				var value = data.value;
+				const value = data.value;
 
-				var names;
+				let names;
 
 				if (value) {
 					names = value.name;
@@ -163,7 +163,7 @@ AUI.add(
 
 		KaleoDesignerUtils.PropertyListFormatter = PropertyListFormatter;
 
-		var cdata = function (value) {
+		const cdata = function (value) {
 			value = value
 				.replace(STR_CDATA_OPEN, '')
 				.replace(STR_CDATA_CLOSE, '');
@@ -179,8 +179,8 @@ AUI.add(
 
 		KaleoDesignerUtils.cdata = cdata;
 
-		var jsonParse = function (val) {
-			var jsonObj = null;
+		const jsonParse = function (val) {
+			let jsonObj = null;
 
 			try {
 				jsonObj = JSON.parse(val);
@@ -192,8 +192,8 @@ AUI.add(
 
 		KaleoDesignerUtils.jsonParse = jsonParse;
 
-		var jsonStringify = function (val) {
-			var jsonString = null;
+		const jsonStringify = function (val) {
+			let jsonString = null;
 
 			try {
 				jsonString =
@@ -208,16 +208,16 @@ AUI.add(
 
 		KaleoDesignerUtils.jsonStringify = jsonStringify;
 
-		var serializeForm = function (form) {
-			var data = {};
+		const serializeForm = function (form) {
+			const data = {};
 
 			if (form) {
 				form.all(':input:not(:button)').each((item) => {
-					var checked = item.get('checked');
-					var name = item.get('name');
-					var type = item.get('type');
+					const checked = item.get('checked');
+					const name = item.get('name');
+					const type = item.get('type');
 
-					var value = item.val();
+					let value = item.val();
 
 					if (name) {
 						if (!isArray(data[name])) {
@@ -252,14 +252,14 @@ AUI.add(
 
 		KaleoDesignerUtils.serializeForm = serializeForm;
 
-		var uniformRandomInt = function (a, b) {
+		const uniformRandomInt = function (a, b) {
 			return parseInt(a + Math.random() * (b - a), 10) || 0;
 		};
 
 		KaleoDesignerUtils.uniformRandomInt = uniformRandomInt;
 
-		var previewBeforeRevert = function (_, renderUrl, actionUrl, title) {
-			var dialog = Liferay.Util.Window.getWindow({
+		const previewBeforeRevert = function (_, renderUrl, actionUrl, title) {
+			const dialog = Liferay.Util.Window.getWindow({
 				dialog: {
 					destroyOnHide: true,
 					modal: true,

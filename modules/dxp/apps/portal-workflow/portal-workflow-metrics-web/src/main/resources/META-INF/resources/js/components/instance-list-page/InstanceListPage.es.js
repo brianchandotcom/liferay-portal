@@ -85,7 +85,7 @@ function InstanceListPage({routeParams}) {
 				<InstanceListPage.Body
 					data={data}
 					fetchData={fetchData}
-					filtered={selectedFilters.length > 0}
+					filtered={!!selectedFilters.length}
 					routeParams={routeParams}
 				/>
 			</InstanceListPageProvider>

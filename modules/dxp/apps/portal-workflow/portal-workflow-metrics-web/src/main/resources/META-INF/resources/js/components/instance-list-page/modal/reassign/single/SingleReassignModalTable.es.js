@@ -151,7 +151,7 @@ function Table({items, setAssigneeId}) {
 
 			<ClayTable.Body>
 				{items &&
-					items.length > 0 &&
+					!!items.length &&
 					items.map((item, index) => (
 						<Table.Item
 							{...item}

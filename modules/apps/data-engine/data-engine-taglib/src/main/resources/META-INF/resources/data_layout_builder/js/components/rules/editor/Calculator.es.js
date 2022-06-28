@@ -37,8 +37,8 @@ function getStateBasedOnExpression(expression) {
 	const tokens = Tokenizer.tokenize(expression);
 
 	if (
-		tokens.length === 0 ||
-		(tokens.length > 0 &&
+		!tokens.length ||
+		(!!tokens.length &&
 			(tokens[tokens.length - 1].type !== Token.LITERAL ||
 				tokens[tokens.length - 1].value.includes('.')))
 	) {
@@ -46,7 +46,7 @@ function getStateBasedOnExpression(expression) {
 	}
 
 	if (
-		tokens.length > 0 &&
+		!!tokens.length &&
 		(tokens[tokens.length - 1].type === Token.OPERATOR ||
 			tokens[tokens.length - 1].value.slice(-1) === '.')
 	) {

@@ -516,8 +516,7 @@ function SearchBarConfigurationSuggestions({
 
 	return (
 		<div className="search-bar-configuration-suggestions">
-			{removeEmptyFields(suggestionsContributorConfiguration).length >
-			0 ? (
+			{removeEmptyFields(suggestionsContributorConfiguration).length ? (
 				removeEmptyFields(
 					suggestionsContributorConfiguration
 				).map(({id, ...item}) => (

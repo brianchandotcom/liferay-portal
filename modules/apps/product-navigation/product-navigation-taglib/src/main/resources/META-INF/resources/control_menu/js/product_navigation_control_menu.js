@@ -15,20 +15,20 @@
 AUI.add(
 	'liferay-product-navigation-control-menu',
 	(A) => {
-		var ControlMenu = {
+		const ControlMenu = {
 			init(containerId) {
-				var instance = this;
+				const instance = this;
 
-				var controlMenu = A.one(containerId);
+				const controlMenu = A.one(containerId);
 
 				if (controlMenu) {
-					var namespace = controlMenu.attr('data-namespace');
+					const namespace = controlMenu.attr('data-namespace');
 
 					instance._namespace = namespace;
 
 					Liferay.Util.toggleControls(controlMenu);
 
-					var eventHandle = controlMenu.on(
+					const eventHandle = controlMenu.on(
 						['focus', 'mousemove', 'touchstart'],
 						() => {
 							Liferay.fire('initLayout');

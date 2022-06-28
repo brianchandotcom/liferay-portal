@@ -18,12 +18,12 @@
 YUI.add(
 	'liferay-browser-selectors',
 	(A) => {
-		var REGEX_VERSION_DOT = /\./g;
+		const REGEX_VERSION_DOT = /\./g;
 
-		var YUI3_JS_ENABLED = 'yui3-js-enabled';
+		const YUI3_JS_ENABLED = 'yui3-js-enabled';
 
-		var parseVersionNumber = function (str) {
-			var count = 0;
+		const parseVersionNumber = function (str) {
+			let count = 0;
 
 			return parseFloat(
 				str.replace(REGEX_VERSION_DOT, () => {
@@ -32,15 +32,15 @@ YUI.add(
 			);
 		};
 
-		var DEFAULTS_VERSION = ['0', '0'];
+		const DEFAULTS_VERSION = ['0', '0'];
 
-		var getVersion = function (regex, userAgent) {
-			var version = (userAgent.match(regex) || DEFAULTS_VERSION)[1];
+		const getVersion = function (regex, userAgent) {
+			const version = (userAgent.match(regex) || DEFAULTS_VERSION)[1];
 
 			return parseVersionNumber(version);
 		};
 
-		var BROWSERS = [
+		const BROWSERS = [
 			'ie',
 			'opera',
 			'chrome',
@@ -56,24 +56,24 @@ YUI.add(
 			'safari',
 		];
 
-		var MAP_OS_SELECTORS = {
+		const MAP_OS_SELECTORS = {
 			macintosh: 'mac',
 			windows: 'win',
 		};
 
-		var nav = navigator;
+		const nav = navigator;
 
-		var CONFIG = A.config;
+		const CONFIG = A.config;
 
-		var DOC = CONFIG.doc;
+		const DOC = CONFIG.doc;
 
-		var userAgent = nav.userAgent;
+		const userAgent = nav.userAgent;
 
-		var UA = A.UA;
+		const UA = A.UA;
 
-		var OS = UA.os;
+		const OS = UA.os;
 
-		var UAX = {
+		const UAX = {
 			agent: userAgent,
 
 			aol: 0,
@@ -92,7 +92,7 @@ YUI.add(
 		UAX.rhino = OS === 'rhino';
 		UAX.win = OS === 'windows';
 
-		var BrowserSelectors = {
+		const BrowserSelectors = {
 			getSelectors() {
 
 				// The methods in this if block only run once across all instances
@@ -108,7 +108,7 @@ YUI.add(
 							userAgent
 						);
 
-						var docMode = DOC.documentMode;
+						const docMode = DOC.documentMode;
 
 						if (docMode) {
 							UA.browser = UA.ie;
@@ -145,8 +145,8 @@ YUI.add(
 					}
 
 					if (!UAX.win && !UAX.mac) {
-						var linux = /Linux/.test(userAgent);
-						var sun = /Solaris|SunOS/.test(userAgent);
+						const linux = /Linux/.test(userAgent);
+						const sun = /Solaris|SunOS/.test(userAgent);
 
 						if (linux) {
 							UA.os = 'linux';
@@ -158,27 +158,27 @@ YUI.add(
 						}
 					}
 
-					var touch = UA.touchEnabled;
+					const touch = UA.touchEnabled;
 
 					UAX.touch = touch;
 					UAX.touchMobile = touch && !!UA.mobile;
 
 					A.mix(UA, UAX);
 
-					var browserList = [];
-					var versionMajor = 0;
+					const browserList = [];
+					let versionMajor = 0;
 
-					var browser;
-					var uaVersionMajor;
-					var uaVersionMinor;
-					var version;
+					let browser;
+					let uaVersionMajor;
+					let uaVersionMinor;
+					let version;
 
-					var versionObj = {
+					const versionObj = {
 						major: versionMajor,
 						string: '',
 					};
 
-					var i = BROWSERS.length;
+					let i = BROWSERS.length;
 
 					while (i--) {
 						browser = BROWSERS[i];
@@ -237,9 +237,9 @@ YUI.add(
 					 * Browser selectors
 					 */
 
-					var selectors = [UA.renderer, 'js'].concat(browserList);
+					const selectors = [UA.renderer, 'js'].concat(browserList);
 
-					var osSelector = MAP_OS_SELECTORS[UA.os] || UA.os;
+					const osSelector = MAP_OS_SELECTORS[UA.os] || UA.os;
 
 					selectors.push(osSelector);
 
@@ -257,8 +257,8 @@ YUI.add(
 
 					UA.selectors = selectors.join(' ');
 
-					var svg;
-					var vml;
+					let svg;
+					let vml;
 
 					vml = !(svg = !!(
 						CONFIG.win.SVGAngle ||
@@ -269,12 +269,11 @@ YUI.add(
 					));
 
 					if (vml) {
-						var behaviorObj;
-						var div = DOC.createElement('div');
+						let div = DOC.createElement('div');
 
 						div.innerHTML = '<v:shape adj="1"/>';
 
-						behaviorObj = div.firstChild;
+						const behaviorObj = div.firstChild;
 
 						behaviorObj.style.behavior = 'url(#default#VML)';
 
@@ -301,9 +300,9 @@ YUI.add(
 			},
 
 			run() {
-				var documentElement = DOC.documentElement;
+				const documentElement = DOC.documentElement;
 
-				var selectors = this.getSelectors();
+				let selectors = this.getSelectors();
 
 				UA.dir = documentElement.getAttribute('dir') || 'ltr';
 

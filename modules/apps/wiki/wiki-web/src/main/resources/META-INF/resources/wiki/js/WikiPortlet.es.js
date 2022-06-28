@@ -187,7 +187,7 @@ class WikiPortlet {
 		const tempImages = this.rootNode.querySelector('img[data-random-id]');
 		let discardTempImages = true;
 
-		if (tempImages && tempImages.length > 0) {
+		if (tempImages && !!tempImages.length) {
 			if (confirm(this._strings.confirmDiscardImages)) {
 				tempImages.forEach((node) => {
 					node.parentElement.remove();

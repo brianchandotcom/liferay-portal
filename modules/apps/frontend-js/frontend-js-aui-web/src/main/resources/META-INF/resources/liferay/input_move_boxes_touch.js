@@ -22,37 +22,37 @@
 AUI.add(
 	'liferay-input-move-boxes-touch',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var STR_DOT = '.';
+		const STR_DOT = '.';
 
-		var STR_SELECTED = 'selected';
+		const STR_SELECTED = 'selected';
 
-		var STR_SORT_LIST_ACTIVE = 'sort-list-active';
+		const STR_SORT_LIST_ACTIVE = 'sort-list-active';
 
-		var SELECTOR_MOVE_OPTION = STR_DOT + 'move-option';
+		const SELECTOR_MOVE_OPTION = STR_DOT + 'move-option';
 
-		var SELECTOR_SELECTED = STR_DOT + STR_SELECTED;
+		const SELECTOR_SELECTED = STR_DOT + STR_SELECTED;
 
-		var SELECTOR_SORT_LIST_ACTIVE = STR_DOT + STR_SORT_LIST_ACTIVE;
+		const SELECTOR_SORT_LIST_ACTIVE = STR_DOT + STR_SORT_LIST_ACTIVE;
 
-		var SELECTOR_TITLE = STR_DOT + 'title';
+		const SELECTOR_TITLE = STR_DOT + 'title';
 
-		var STR_CHECKED = 'checked';
+		const STR_CHECKED = 'checked';
 
-		var STR_CLICK = 'click';
+		const STR_CLICK = 'click';
 
-		var STR_NODE = 'node';
+		const STR_NODE = 'node';
 
-		var STR_TRUE = 'true';
+		const STR_TRUE = 'true';
 
-		var TPL_EDIT_SELECTION =
+		const TPL_EDIT_SELECTION =
 			'<button class="btn btn-secondary edit-selection" type="button">' +
 			'<i class="icon-edit"></i> ' +
 			'<span class="btn-text">{0}</span>' +
 			'</button>';
 
-		var TPL_MOVE_OPTION = new A.Template(
+		const TPL_MOVE_OPTION = new A.Template(
 			'<tpl for="options">',
 			'<div class="handle move-option {[ values.selected ? "',
 			STR_SELECTED,
@@ -68,7 +68,7 @@ AUI.add(
 			'</tpl>'
 		);
 
-		var TPL_SORTABLE_CONTAINER =
+		const TPL_SORTABLE_CONTAINER =
 			'<div class="sortable-container ' +
 			STR_SORT_LIST_ACTIVE +
 			'"></div>';
@@ -77,18 +77,18 @@ AUI.add(
 			Liferay.InputMoveBoxes.prototype,
 			{
 				_afterDragStart(event) {
-					var dragNode = event.target.get('dragNode');
+					const dragNode = event.target.get('dragNode');
 
 					dragNode.addClass('move-option-dragging');
 				},
 
 				_afterDropHit(event) {
-					var instance = this;
+					const instance = this;
 
-					var dragNode = event.drag.get(STR_NODE);
-					var dropNode = event.drop.get(STR_NODE);
+					const dragNode = event.drag.get(STR_NODE);
+					const dropNode = event.drop.get(STR_NODE);
 
-					var value = dragNode.attr('data-value');
+					const value = dragNode.attr('data-value');
 
 					instance._afterDropHitTask({
 						dropNode,
@@ -97,29 +97,29 @@ AUI.add(
 				},
 
 				_afterDropHitFn(event) {
-					var instance = this;
+					const instance = this;
 
 					instance._syncSelectedSortList();
 
-					var dropNode = event.dropNode;
-					var value = event.value;
+					const dropNode = event.dropNode;
+					const value = event.value;
 
-					var moveOption = instance._sortableContainer.one(
+					const moveOption = instance._sortableContainer.one(
 						SELECTOR_MOVE_OPTION + '[data-value="' + value + '"]'
 					);
 
-					var selectedSortList = instance._selectedSortList;
+					const selectedSortList = instance._selectedSortList;
 
-					var dragNodeIndex = selectedSortList.indexOf(moveOption);
-					var dropNodeIndex = selectedSortList.indexOf(dropNode);
+					const dragNodeIndex = selectedSortList.indexOf(moveOption);
+					const dropNodeIndex = selectedSortList.indexOf(dropNode);
 
-					var referenceNodeIndex = dragNodeIndex + 1;
+					let referenceNodeIndex = dragNodeIndex + 1;
 
 					if (dropNodeIndex > dragNodeIndex) {
 						referenceNodeIndex = dragNodeIndex;
 					}
 
-					var item = instance._getOption(instance._leftBox, value);
+					const item = instance._getOption(instance._leftBox, value);
 
 					instance._sortLeftBox(item, referenceNodeIndex);
 				},
@@ -129,22 +129,22 @@ AUI.add(
 				},
 
 				_onCheckBoxChange(event) {
-					var instance = this;
+					const instance = this;
 
-					var currentTarget = event.currentTarget;
+					const currentTarget = event.currentTarget;
 
-					var selected = !currentTarget.attr(STR_CHECKED);
-					var value = currentTarget.val();
+					const selected = !currentTarget.attr(STR_CHECKED);
+					const value = currentTarget.val();
 
-					var from = instance._rightBox;
-					var to = instance._leftBox;
+					let from = instance._rightBox;
+					let to = instance._leftBox;
 
 					if (selected) {
 						from = instance._leftBox;
 						to = instance._rightBox;
 					}
 
-					var option = instance._getOption(from, value);
+					const option = instance._getOption(from, value);
 
 					option.attr(STR_SELECTED, true);
 					option.attr('data-selected', !selected);
@@ -157,13 +157,13 @@ AUI.add(
 				},
 
 				_onEditSelectionClick(event) {
-					var instance = this;
+					const instance = this;
 
-					var button = event.currentTarget;
+					const button = event.currentTarget;
 
 					button.toggleClass('active');
 
-					var btnText = Liferay.Language.get('edit');
+					let btnText = Liferay.Language.get('edit');
 
 					if (button.hasClass('active')) {
 						btnText = Liferay.Language.get('stop-editing');
@@ -171,16 +171,16 @@ AUI.add(
 
 					button.one('.btn-text').text(btnText);
 
-					var sortableContainer = instance._sortableContainer;
+					const sortableContainer = instance._sortableContainer;
 
 					sortableContainer.toggleClass('edit-list-active');
 					sortableContainer.toggleClass(STR_SORT_LIST_ACTIVE);
 				},
 
 				_renderButtons() {
-					var instance = this;
+					const instance = this;
 
-					var buttonTpl = Lang.sub(TPL_EDIT_SELECTION, [
+					const buttonTpl = Lang.sub(TPL_EDIT_SELECTION, [
 						Liferay.Language.get('edit'),
 					]);
 
@@ -192,15 +192,15 @@ AUI.add(
 				},
 
 				_renderSortList() {
-					var instance = this;
+					const instance = this;
 
-					var options = instance._contentBox.all(
+					const options = instance._contentBox.all(
 						'.choice-selector option'
 					);
 
-					var sortableContainer = instance._sortableContainer;
+					const sortableContainer = instance._sortableContainer;
 
-					var data = [];
+					const data = [];
 
 					options.each((item) => {
 						data.push({
@@ -236,17 +236,17 @@ AUI.add(
 				},
 
 				_sortLeftBox(item, index) {
-					var instance = this;
+					const instance = this;
 
-					var leftBox = instance._leftBox;
+					const leftBox = instance._leftBox;
 
-					var referenceNode = leftBox.all('option').item(index);
+					const referenceNode = leftBox.all('option').item(index);
 
 					leftBox.insertBefore(item, referenceNode);
 				},
 
 				_syncSelectedSortList() {
-					var instance = this;
+					const instance = this;
 
 					instance._selectedSortList = instance._sortableContainer.all(
 						SELECTOR_MOVE_OPTION + SELECTOR_SELECTED
@@ -254,16 +254,16 @@ AUI.add(
 				},
 
 				_toggleMoveOption(checkbox, option) {
-					var instance = this;
+					const instance = this;
 
-					var moveOption = checkbox.ancestor(SELECTOR_MOVE_OPTION);
+					const moveOption = checkbox.ancestor(SELECTOR_MOVE_OPTION);
 
 					moveOption.toggleClass(STR_SELECTED);
 
 					instance._syncSelectedSortList();
 
 					if (moveOption.hasClass(STR_SELECTED)) {
-						var index = instance._selectedSortList.indexOf(
+						const index = instance._selectedSortList.indexOf(
 							moveOption
 						);
 
@@ -272,9 +272,9 @@ AUI.add(
 				},
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
-					var dd = instance._sortable.delegate.dd;
+					const dd = instance._sortable.delegate.dd;
 
 					instance._editSelection.on(
 						STR_CLICK,
@@ -301,7 +301,7 @@ AUI.add(
 				},
 
 				renderUI() {
-					var instance = this;
+					const instance = this;
 
 					instance._contentBox = instance.get('contentBox');
 

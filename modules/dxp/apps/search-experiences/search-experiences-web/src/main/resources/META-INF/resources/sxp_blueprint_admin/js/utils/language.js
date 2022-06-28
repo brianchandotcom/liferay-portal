@@ -132,7 +132,7 @@ export function getLocalizedText(value, locale) {
 	else if (value[Liferay.ThemeDisplay.getDefaultLanguageId()]) {
 		return value[Liferay.ThemeDisplay.getDefaultLanguageId()];
 	}
-	else if (Object.keys(value).length > 0) {
+	else if (Object.keys(value).length) {
 		return value[Object.keys(value)[0]];
 	}
 

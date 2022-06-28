@@ -15,12 +15,12 @@
 AUI.add(
 	'liferay-menu-toggle',
 	(A) => {
-		var AEvent = A.Event;
-		var Lang = A.Lang;
+		const AEvent = A.Event;
+		const Lang = A.Lang;
 
-		var NAME = 'menutoggle';
+		const NAME = 'menutoggle';
 
-		var MenuToggle = A.Component.create({
+		const MenuToggle = A.Component.create({
 			ATTRS: {
 				content: {
 					validator: '_validateContent',
@@ -64,15 +64,15 @@ AUI.add(
 
 			prototype: {
 				_addMenuFilter() {
-					var instance = this;
+					const instance = this;
 
-					var menuFilter = instance._menuFilter;
+					let menuFilter = instance._menuFilter;
 
 					if (!menuFilter) {
-						var menu = instance._content.one('.dropdown-menu');
+						const menu = instance._content.one('.dropdown-menu');
 
 						if (menu) {
-							var menuItems = menu.all('li');
+							const menuItems = menu.all('li');
 
 							if (
 								menuItems.size() >
@@ -95,7 +95,7 @@ AUI.add(
 				},
 
 				_bindUI() {
-					var instance = this;
+					const instance = this;
 
 					if (instance._triggerNode) {
 						instance._triggerNode.on(['keyup', 'tap'], (event) => {
@@ -113,9 +113,9 @@ AUI.add(
 				},
 
 				_createMenuFilter(menu, menuItems) {
-					var instance = this;
+					const instance = this;
 
-					var results = [];
+					const results = [];
 
 					menuItems.each((node) => {
 						results.push({
@@ -137,7 +137,7 @@ AUI.add(
 				},
 
 				_getEventOutside(event) {
-					var eventOutside = event._event.type;
+					let eventOutside = event._event.type;
 
 					eventOutside = eventOutside.toLowerCase();
 
@@ -154,7 +154,7 @@ AUI.add(
 				},
 
 				_isContent(target) {
-					var instance = this;
+					const instance = this;
 
 					return instance._content.some((item) => {
 						return item.contains(target);
@@ -162,16 +162,16 @@ AUI.add(
 				},
 
 				_isTouchEvent(event) {
-					var eventType = event._event.type;
+					const eventType = event._event.type;
 
-					var touchEvent =
+					const touchEvent =
 						eventType === 'touchend' || eventType === 'touchstart';
 
 					return touchEvent && Liferay.Util.isTablet();
 				},
 
 				_toggleContent(force) {
-					var instance = this;
+					const instance = this;
 
 					instance._content.toggleClass('open', force);
 
@@ -180,7 +180,7 @@ AUI.add(
 					if (force) {
 						instance._addMenuFilter();
 
-						var inputFilterNode = instance._inputFilterNode;
+						const inputFilterNode = instance._inputFilterNode;
 
 						if (inputFilterNode) {
 							setTimeout(() => {
@@ -191,18 +191,18 @@ AUI.add(
 				},
 
 				_toggleMenu(event, target) {
-					var instance = this;
+					const instance = this;
 
-					var open = !instance.get('open');
-					var toggle = instance.get('toggle');
-					var toggleTouch = instance.get('toggleTouch');
+					const open = !instance.get('open');
+					const toggle = instance.get('toggle');
+					let toggleTouch = instance.get('toggleTouch');
 
-					var handleId = instance._handleId;
+					const handleId = instance._handleId;
 
 					instance._toggleContent(open);
 
 					if (!toggle) {
-						var handle = Liferay.Data[handleId];
+						let handle = Liferay.Data[handleId];
 
 						if (open && !handle) {
 							handle = target.on(
@@ -236,7 +236,7 @@ AUI.add(
 						Liferay.Data[handleId] = handle;
 					}
 					else {
-						var data = {};
+						const data = {};
 
 						data[handleId] = open ? 'open' : 'closed';
 
@@ -255,11 +255,11 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
-					var trigger = instance.get('trigger');
+					const trigger = instance.get('trigger');
 
-					var triggerId = trigger.guid();
+					const triggerId = trigger.guid();
 
 					instance._handleId = triggerId + 'Handle';
 

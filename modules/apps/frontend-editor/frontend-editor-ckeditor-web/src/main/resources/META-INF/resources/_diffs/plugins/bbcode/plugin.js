@@ -13,20 +13,20 @@
  */
 
 (function () {
-	var commandObject = {
+	const commandObject = {
 		context: 'pre',
 
 		exec(editor) {
 			editor.focus();
 			editor.fire('saveSnapshot');
 
-			var elementPath = new CKEDITOR.dom.elementPath(
+			const elementPath = new CKEDITOR.dom.elementPath(
 				editor.getSelection().getStartElement()
 			);
 
-			var elementAction = 'apply';
+			let elementAction = 'apply';
 
-			var preElement = new CKEDITOR.style({
+			const preElement = new CKEDITOR.style({
 				element: 'pre',
 			});
 
@@ -38,7 +38,7 @@
 
 			preElement[elementAction](editor.document);
 
-			var preBlock = editor.document.findOne('pre');
+			const preBlock = editor.document.findOne('pre');
 
 			if (preBlock && preBlock.getChildCount() === 0) {
 				preBlock.appendBogus();
@@ -50,11 +50,11 @@
 		},
 
 		refresh(editor, path) {
-			var firstBlock = path.block || path.blockLimit;
+			const firstBlock = path.block || path.blockLimit;
 
-			var buttonState = CKEDITOR.TRISTATE_OFF;
+			let buttonState = CKEDITOR.TRISTATE_OFF;
 
-			var element = editor.elementPath(firstBlock);
+			const element = editor.elementPath(firstBlock);
 
 			if (element.contains('pre', 1)) {
 				buttonState = CKEDITOR.TRISTATE_ON;
@@ -66,17 +66,17 @@
 
 	CKEDITOR.plugins.add('bbcode', {
 		init(editor) {
-			var instance = this;
+			const instance = this;
 
-			var path = instance.path;
+			const path = instance.path;
 
-			var dependencies = [
+			const dependencies = [
 				CKEDITOR.getUrl(path + 'bbcode_data_processor.js'),
 				CKEDITOR.getUrl(path + 'bbcode_parser.js'),
 			];
 
 			CKEDITOR.scriptLoader.load(dependencies, () => {
-				var bbcodeDataProcessor = CKEDITOR.plugins.get(
+				const bbcodeDataProcessor = CKEDITOR.plugins.get(
 					'bbcode_data_processor'
 				);
 

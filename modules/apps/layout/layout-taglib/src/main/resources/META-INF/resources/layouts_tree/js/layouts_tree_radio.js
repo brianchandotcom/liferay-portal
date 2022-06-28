@@ -15,14 +15,14 @@
 AUI.add(
 	'liferay-layouts-tree-radio',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var LABEL_TPL =
+		const LABEL_TPL =
 			'<span class="{cssClass}" title="{title}">{label}</span>';
 
-		var STR_HOST = 'host';
+		const STR_HOST = 'host';
 
-		var LayoutsTreeRadio = A.Component.create({
+		const LayoutsTreeRadio = A.Component.create({
 			ATTRS: {
 				showRootNode: {
 					value: false,
@@ -37,7 +37,7 @@ AUI.add(
 
 			prototype: {
 				_formatNode() {
-					var currentRetVal = A.Do.currentRetVal;
+					const currentRetVal = A.Do.currentRetVal;
 
 					return new A.Do.AlterReturn('Modified type attribute', {
 						...currentRetVal,
@@ -57,11 +57,11 @@ AUI.add(
 				},
 
 				_formatRootNode(rootConfig) {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
-					var labelEl = rootConfig.label;
+					let labelEl = rootConfig.label;
 
 					if (!instance.get('showRootNode')) {
 						labelEl = A.Node.create('<span class="hide"></span>');
@@ -78,7 +78,7 @@ AUI.add(
 				},
 
 				_onNodeCheckedChange(event) {
-					var instance = this;
+					const instance = this;
 
 					if (event.newVal) {
 						instance.get(STR_HOST).fire('radioNodeCheckedChange', {
@@ -88,15 +88,15 @@ AUI.add(
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					new A.EventHandle(instance._eventHandles).detach();
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
 					instance._eventHandles = [
 						instance.afterHostEvent(

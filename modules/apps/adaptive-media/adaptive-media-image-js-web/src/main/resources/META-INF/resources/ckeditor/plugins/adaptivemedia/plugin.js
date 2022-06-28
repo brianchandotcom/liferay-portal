@@ -13,24 +13,24 @@
  */
 
 (function () {
-	var Lang = AUI().Lang;
+	const Lang = AUI().Lang;
 
-	var IE9AndLater = AUI.Env.UA.ie >= 9;
+	const IE9AndLater = AUI.Env.UA.ie >= 9;
 
-	var STR_ADAPTIVE_MEDIA_FILE_ENTRY_RETURN_TYPE =
+	const STR_ADAPTIVE_MEDIA_FILE_ENTRY_RETURN_TYPE =
 		'com.liferay.adaptive.media.image.item.selector.AMImageFileEntryItemSelectorReturnType';
 
-	var STR_ADAPTIVE_MEDIA_URL_RETURN_TYPE =
+	const STR_ADAPTIVE_MEDIA_URL_RETURN_TYPE =
 		'com.liferay.adaptive.media.image.item.selector.AMImageURLItemSelectorReturnType';
 
-	var TPL_PICTURE_TAG =
+	const TPL_PICTURE_TAG =
 		'<picture {fileEntryAttributeName}="{fileEntryId}">{sources}<img src="{defaultSrc}"></picture>';
 
-	var TPL_SOURCE_TAG = '<source srcset="{srcset}" media="{media}">';
+	const TPL_SOURCE_TAG = '<source srcset="{srcset}" media="{media}">';
 
 	CKEDITOR.plugins.add('adaptivemedia', {
 		_bindEvent(editor) {
-			var instance = this;
+			const instance = this;
 
 			editor.on('beforeCommandExec', (event) => {
 				if (event.data.name === 'imageselector') {
@@ -38,7 +38,7 @@
 
 					event.cancel();
 
-					var onSelectedImageChangeFn = instance._onSelectedImageChange.bind(
+					const onSelectedImageChangeFn = instance._onSelectedImageChange.bind(
 						instance,
 						editor
 					);
@@ -54,13 +54,13 @@
 		},
 
 		_getImgElement(imageSrc, selectedItem, fileEntryAttributeName) {
-			var imgEl = CKEDITOR.dom.element.createFromHtml('<img>');
+			const imgEl = CKEDITOR.dom.element.createFromHtml('<img>');
 
 			if (
 				selectedItem.returnType ===
 				STR_ADAPTIVE_MEDIA_FILE_ENTRY_RETURN_TYPE
 			) {
-				var itemValue = JSON.parse(selectedItem.value);
+				const itemValue = JSON.parse(selectedItem.value);
 
 				imgEl.setAttribute('src', itemValue.url);
 				imgEl.setAttribute(
@@ -76,21 +76,21 @@
 		},
 
 		_getPictureElement(selectedItem, fileEntryAttributeName) {
-			var pictureEl;
+			let pictureEl;
 
 			try {
-				var itemValue = JSON.parse(selectedItem.value);
+				const itemValue = JSON.parse(selectedItem.value);
 
-				var sources = '';
+				let sources = '';
 
 				itemValue.sources.forEach((source) => {
-					var propertyNames = Object.getOwnPropertyNames(
+					const propertyNames = Object.getOwnPropertyNames(
 						source.attributes
 					);
 
-					var mediaText = propertyNames.reduce(
+					const mediaText = propertyNames.reduce(
 						(previous, current) => {
-							var value =
+							const value =
 								'(' +
 								current +
 								':' +
@@ -110,7 +110,7 @@
 					});
 				});
 
-				var pictureHtml = Lang.sub(TPL_PICTURE_TAG, {
+				const pictureHtml = Lang.sub(TPL_PICTURE_TAG, {
 					defaultSrc: itemValue.defaultSource,
 					fileEntryAttributeName,
 					fileEntryId: itemValue.fileEntryId,
@@ -125,11 +125,11 @@
 		},
 
 		_onSelectedImageChange(editor, imageSrc, selectedItem) {
-			var instance = this;
+			const instance = this;
 
-			var element;
+			let element;
 
-			var fileEntryAttributeName =
+			const fileEntryAttributeName =
 				editor.config.adaptiveMediaFileEntryAttributeName;
 
 			if (
@@ -150,8 +150,8 @@
 
 			if (IE9AndLater) {
 				if (!editor.window.$.AlloyEditor) {
-					var elementOuterHtml = element.getOuterHtml();
-					var emptySelectionMarkup = '&nbsp;';
+					const elementOuterHtml = element.getOuterHtml();
+					const emptySelectionMarkup = '&nbsp;';
 
 					editor.insertHtml(elementOuterHtml + emptySelectionMarkup);
 				}
@@ -177,7 +177,7 @@
 		},
 
 		init(editor) {
-			var instance = this;
+			const instance = this;
 
 			instance._bindEvent(editor);
 		},

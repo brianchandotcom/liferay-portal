@@ -275,7 +275,7 @@ export default function Comments({
 		const editorWrapper =
 			editor && document.querySelector(`#${formId} .editor-wrapper`);
 
-		if (!editorWrapper || editorWrapper.childNodes.length === 0) {
+		if (!editorWrapper || !editorWrapper.childNodes.length) {
 			fetch(editorURL, {
 				body: Util.objectToFormData(Util.ns(namespace, options)),
 				method: 'POST',
@@ -284,7 +284,7 @@ export default function Comments({
 					return response.text();
 				})
 				.then((response) => {
-					var editorWrapper = document.querySelector(
+					const editorWrapper = document.querySelector(
 						`#${formId} .editor-wrapper`
 					);
 

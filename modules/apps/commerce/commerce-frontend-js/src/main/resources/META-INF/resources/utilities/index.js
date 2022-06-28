@@ -101,9 +101,9 @@ export function getValueFromItem(item, fieldName) {
 }
 
 export function formatActionUrl(url, item) {
-	var regex = new RegExp('{(.*?)}', 'mg');
+	let regex = new RegExp('{(.*?)}', 'mg');
 
-	var replacedUrl = url.replace(regex, (matched) =>
+	let replacedUrl = url.replace(regex, (matched) =>
 		getValueFromItem(
 			item,
 			matched.substring(1, matched.length - 1).split('.')

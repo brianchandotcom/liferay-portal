@@ -12,16 +12,16 @@
 AUI.add(
 	'liferay-kaleo-forms-admin',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var STEPS_MAP = {
+		const STEPS_MAP = {
 			DETAILS: 1,
 			FIELDS: 2,
 			FORMS: 4,
 			WORKFLOW: 3,
 		};
 
-		var KaleoFormsAdmin = A.Component.create({
+		const KaleoFormsAdmin = A.Component.create({
 			ATTRS: {
 				currentURL: {
 					value: null,
@@ -56,16 +56,16 @@ AUI.add(
 
 			prototype: {
 				_afterCurrentStepChange(event) {
-					var instance = this;
+					const instance = this;
 
-					var sessionMap = instance._getSessionMap();
+					const sessionMap = instance._getSessionMap();
 
 					instance.saveInPortletSession(sessionMap);
 
-					var currentStep = event.newVal;
+					const currentStep = event.newVal;
 
 					if (currentStep !== STEPS_MAP.DETAILS) {
-						var currentName =
+						let currentName =
 							sessionMap['name' + themeDisplay.getLanguageId()];
 
 						if (!currentName) {
@@ -94,22 +94,22 @@ AUI.add(
 				},
 
 				_afterValidateField(event) {
-					var instance = this;
+					const instance = this;
 
-					var tabView = instance.get('tabView');
+					const tabView = instance.get('tabView');
 
-					var activeTab = tabView.getActiveTab();
+					const activeTab = tabView.getActiveTab();
 
-					var tabViewTabs = tabView.getTabs();
+					const tabViewTabs = tabView.getTabs();
 
-					var activeTabIndex = tabViewTabs.indexOf(activeTab);
+					const activeTabIndex = tabViewTabs.indexOf(activeTab);
 
-					var tabViewPanels = instance.formWizard.getTabViewPanels();
+					const tabViewPanels = instance.formWizard.getTabViewPanels();
 
-					var activePanel = tabViewPanels.item(activeTabIndex);
+					const activePanel = tabViewPanels.item(activeTabIndex);
 
 					if (activePanel.contains(event.validator.field)) {
-						var currentStepValid =
+						const currentStepValid =
 							event.type.indexOf('errorField') === -1;
 
 						instance.updateNavigationControls(currentStepValid);
@@ -117,9 +117,9 @@ AUI.add(
 				},
 
 				_getInputLocalizedValuesMap(inputLocalized, name) {
-					var localizedValuesMap = {};
+					const localizedValuesMap = {};
 
-					var translatedLanguages = inputLocalized
+					const translatedLanguages = inputLocalized
 						.get('translatedLanguages')
 						.values();
 
@@ -137,16 +137,16 @@ AUI.add(
 				},
 
 				_getSessionMap() {
-					var instance = this;
+					const instance = this;
 
-					var descriptionInputLocalized = Liferay.component(
+					const descriptionInputLocalized = Liferay.component(
 						instance.ns('description')
 					);
-					var nameInputLocalized = Liferay.component(
+					const nameInputLocalized = Liferay.component(
 						instance.ns('name')
 					);
 
-					var sessionMap = {
+					const sessionMap = {
 						...instance._getInputLocalizedValuesMap(
 							descriptionInputLocalized,
 							'description'
@@ -157,15 +157,17 @@ AUI.add(
 						),
 					};
 
-					var ddmStructureId = instance.one('#ddmStructureId').val();
-					var ddmStructureName = instance
+					const ddmStructureId = instance
+						.one('#ddmStructureId')
+						.val();
+					const ddmStructureName = instance
 						.one('#ddmStructureName')
 						.val();
-					var ddmTemplateId = instance.one('#ddmTemplateId').val();
-					var kaleoTaskFormPairsData = instance
+					const ddmTemplateId = instance.one('#ddmTemplateId').val();
+					const kaleoTaskFormPairsData = instance
 						.one('#kaleoTaskFormPairsData')
 						.val();
-					var workflowDefinition = instance
+					const workflowDefinition = instance
 						.one('#workflowDefinition')
 						.val();
 
@@ -180,9 +182,9 @@ AUI.add(
 				},
 
 				_hideSuccessMessage() {
-					var instance = this;
+					const instance = this;
 
-					var successMessageNode = instance.one('.alert-success');
+					const successMessageNode = instance.one('.alert-success');
 
 					if (successMessageNode) {
 						successMessageNode.hide();
@@ -190,32 +192,32 @@ AUI.add(
 				},
 
 				_isCurrentStepValid() {
-					var instance = this;
+					const instance = this;
 
-					var formWizard = instance.formWizard;
+					const formWizard = instance.formWizard;
 
-					var currentStep = formWizard.get('currentStep');
+					const currentStep = formWizard.get('currentStep');
 
 					return formWizard.validateStep(currentStep);
 				},
 
 				_loadFormsStep() {
-					var instance = this;
+					const instance = this;
 
-					var currentURL = instance.get('currentURL');
+					const currentURL = instance.get('currentURL');
 
-					var formsSearchContainer =
+					const formsSearchContainer =
 						'#' + instance.NS + 'formsSearchContainer';
 
-					var kaleoProcessId = instance.get('kaleoProcessId');
+					const kaleoProcessId = instance.get('kaleoProcessId');
 
-					var resultsContainer = instance.one('#resultsContainer');
+					const resultsContainer = instance.one('#resultsContainer');
 
-					var workflowDefinition = instance
+					const workflowDefinition = instance
 						.one('#workflowDefinition')
 						.val();
 
-					var backURL = new Liferay.PortletURL(
+					const backURL = new Liferay.PortletURL(
 						Liferay.PortletURL.RENDER_PHASE,
 						null,
 						currentURL
@@ -223,7 +225,7 @@ AUI.add(
 
 					backURL.setParameter('historyKey', 'forms');
 
-					var formsURL = new Liferay.PortletURL(
+					const formsURL = new Liferay.PortletURL(
 						Liferay.PortletURL.RENDER_PHASE,
 						null,
 						currentURL
@@ -262,19 +264,19 @@ AUI.add(
 				},
 
 				_onClickNext() {
-					var instance = this;
+					const instance = this;
 
 					instance.formWizard.navigate(1);
 				},
 
 				_onClickPrev() {
-					var instance = this;
+					const instance = this;
 
 					instance.formWizard.navigate(-1);
 				},
 
 				_onSubmitForm(event) {
-					var instance = this;
+					const instance = this;
 
 					event.preventDefault();
 
@@ -284,9 +286,9 @@ AUI.add(
 				},
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
-					var form = instance.get('form');
+					const form = instance.get('form');
 
 					form.formNode.on(
 						'submit',
@@ -319,7 +321,7 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance.nextBtn = instance.one('.kaleo-process-next');
 					instance.prevBtn = instance.one('.kaleo-process-previous');
@@ -335,7 +337,7 @@ AUI.add(
 				},
 
 				saveInPortletSession(data) {
-					var instance = this;
+					const instance = this;
 
 					// eslint-disable-next-line @liferay/aui/no-io
 					A.io.request(instance.get('saveInPortletSessionURL'), {
@@ -344,7 +346,7 @@ AUI.add(
 				},
 
 				syncUI() {
-					var instance = this;
+					const instance = this;
 
 					instance.updateNavigationControls();
 
@@ -352,7 +354,7 @@ AUI.add(
 				},
 
 				updateNavigationControls(currentStepValid) {
-					var instance = this;
+					const instance = this;
 
 					if (currentStepValid === undefined) {
 						currentStepValid = instance._isCurrentStepValid();
@@ -367,9 +369,9 @@ AUI.add(
 						!currentStepValid
 					);
 
-					var formWizard = instance.formWizard;
+					const formWizard = instance.formWizard;
 
-					var currentStep = formWizard.get('currentStep');
+					const currentStep = formWizard.get('currentStep');
 
 					if (currentStep === STEPS_MAP.DETAILS) {
 						instance.nextBtn.show();

@@ -180,9 +180,9 @@ export default function Chart({dataProviders = [], publishDate}) {
 					return;
 				}
 
-				var dataSetItems = {};
+				let dataSetItems = {};
 
-				for (var i = 0; i < data.length; i++) {
+				for (let i = 0; i < data.length; i++) {
 					if (data[i].status === 'fulfilled') {
 						dataSetItems = {
 							...dataSetItems,
@@ -294,7 +294,7 @@ export default function Chart({dataProviders = [], publishDate}) {
 								dataKey="label"
 								domain={
 									!validAnalyticsConnection ||
-									histogram.length === 0
+									!histogram.length
 										? [
 												new Date(
 													timeRange.startDate
@@ -324,7 +324,7 @@ export default function Chart({dataProviders = [], publishDate}) {
 
 							{!validAnalyticsConnection ||
 							publishedToday ||
-							histogram.length === 0 ? (
+							!histogram.length ? (
 								<YAxis
 									axisLine={{
 										stroke: CHART_COLORS.cartesianGrid,

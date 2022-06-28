@@ -21,7 +21,7 @@ export default function ({inputName, namespace, selectFolderURL}) {
 			iframeBodyCssClass: '',
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
-					var folderData = {
+					const folderData = {
 						idString: inputName,
 						idValue: selectedItem.folderId,
 						nameString: 'folderName',

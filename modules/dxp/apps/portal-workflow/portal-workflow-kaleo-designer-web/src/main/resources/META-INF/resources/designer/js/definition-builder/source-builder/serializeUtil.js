@@ -315,8 +315,7 @@ function appendXMLAssignments(
 		}
 		else if (
 			!dataAssignments.address ||
-			dataAssignments.address.filter((address) => address !== '')
-				.length === 0
+			!dataAssignments.address.filter((address) => address !== '').length
 		) {
 			buffer.push('<user />');
 		}
@@ -326,7 +325,7 @@ function appendXMLAssignments(
 }
 
 function appendXMLNotifications(buffer, notifications, nodeName, exporting) {
-	if (notifications && notifications.name && notifications.name.length > 0) {
+	if (notifications && notifications.name && !!notifications.name.length) {
 		const {
 			description,
 			executionType,
@@ -412,7 +411,7 @@ function appendXMLNotifications(buffer, notifications, nodeName, exporting) {
 }
 
 function appendXMLTaskTimers(buffer, taskTimers, exporting) {
-	if (taskTimers && taskTimers.name && taskTimers.name.length > 0) {
+	if (taskTimers && taskTimers.name && !!taskTimers.name.length) {
 		const xmlTaskTimers = XMLUtil.createObj('task-timers');
 
 		buffer.push(xmlTaskTimers.open);

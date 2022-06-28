@@ -101,8 +101,7 @@ const TranslationAdminContent = ({
 					<ClayInput.GroupItem shrink>
 						<ClayDropDown
 							active={
-								creationMenuActive &&
-								availableLocales.length > 0
+								creationMenuActive && !!availableLocales.length
 							}
 							hasLeftSymbols
 							menuElementAttrs={{
@@ -112,7 +111,7 @@ const TranslationAdminContent = ({
 							trigger={
 								<ClayButtonWithIcon
 									className="lfr-portal-tooltip"
-									disabled={availableLocales.length === 0}
+									disabled={!availableLocales.length}
 									small
 									symbol="plus"
 									title={Liferay.Language.get('add')}

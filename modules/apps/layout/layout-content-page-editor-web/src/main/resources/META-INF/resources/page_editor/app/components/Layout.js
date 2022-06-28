@@ -98,7 +98,7 @@ export default function Layout({mainItemId}) {
 	const hasWarningMessages =
 		config.isConversionDraft &&
 		config.layoutConversionWarningMessages &&
-		config.layoutConversionWarningMessages.length > 0;
+		!!config.layoutConversionWarningMessages.length;
 
 	return (
 		<>

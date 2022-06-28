@@ -29,12 +29,12 @@ export default function propsTransformer({
 					return;
 				}
 
-				var columnIds = form.querySelector(
+				const columnIds = form.querySelector(
 					`#${portletNamespace}columnIds`
 				);
 
 				if (columnIds) {
-					var checkedIds = getCheckedCheckboxes(
+					const checkedIds = getCheckedCheckboxes(
 						form,
 						`${portletNamespace}allRowIds`
 					);

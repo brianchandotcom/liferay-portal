@@ -88,7 +88,7 @@ function SelectAssetCategory({
 						className="category-tree mt-3"
 						id={`${namespace}categoryContainer`}
 					>
-						{items.length > 0 ? (
+						{items.length ? (
 							<AssetCategoryTree
 								filterQuery={filterQuery}
 								itemSelectedEventName={itemSelectedEventName}

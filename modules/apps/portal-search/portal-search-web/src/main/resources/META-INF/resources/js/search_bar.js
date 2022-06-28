@@ -15,18 +15,18 @@
 AUI.add(
 	'liferay-search-bar',
 	(A) => {
-		var SearchBar = function (form) {
+		const SearchBar = function (form) {
 			if (!form) {
 				return;
 			}
 
-			var instance = this;
+			const instance = this;
 
 			instance.form = form;
 
 			instance.form.on('submit', A.bind(instance._onSubmit, instance));
 
-			var emptySearchInput = instance.form.one(
+			const emptySearchInput = instance.form.one(
 				'.search-bar-empty-search-input'
 			);
 
@@ -48,7 +48,7 @@ AUI.add(
 
 		A.mix(SearchBar.prototype, {
 			_onSubmit(event) {
-				var instance = this;
+				const instance = this;
 
 				event.stopPropagation();
 
@@ -56,19 +56,19 @@ AUI.add(
 			},
 
 			getKeywords() {
-				var instance = this;
+				const instance = this;
 
 				if (!instance.keywordsInput) {
 					return '';
 				}
 
-				var keywords = instance.keywordsInput.val();
+				const keywords = instance.keywordsInput.val();
 
 				return keywords.replace(/^\s+|\s+$/, '');
 			},
 
 			isSubmitEnabled() {
-				var instance = this;
+				const instance = this;
 
 				return (
 					instance.getKeywords() !== '' || instance.emptySearchEnabled
@@ -76,12 +76,12 @@ AUI.add(
 			},
 
 			search() {
-				var instance = this;
+				const instance = this;
 
 				if (instance.isSubmitEnabled()) {
-					var searchURL = instance.form.get('action');
+					const searchURL = instance.form.get('action');
 
-					var queryString = instance.updateQueryString(
+					const queryString = instance.updateQueryString(
 						document.location.search
 					);
 
@@ -90,9 +90,9 @@ AUI.add(
 			},
 
 			updateQueryString(queryString) {
-				var instance = this;
+				const instance = this;
 
-				var searchParams = new URLSearchParams(queryString);
+				const searchParams = new URLSearchParams(queryString);
 
 				if (instance.keywordsInput) {
 					searchParams.set(

@@ -405,7 +405,7 @@ const MillerColumnsItem = ({
 				)}
 			</ClayLayout.ContentCol>
 
-			{layoutActions.length > 0 && (
+			{!!layoutActions.length && (
 				<ClayLayout.ContentCol className="miller-columns-item-actions">
 					<ClayDropDown
 						active={layoutActionsActive}
@@ -455,7 +455,7 @@ const MillerColumnsItem = ({
 				</ClayLayout.ContentCol>
 			))}
 
-			{dropdownActions.length > 0 && (
+			{!!dropdownActions.length && (
 				<ClayLayout.ContentCol className="miller-columns-item-actions">
 					<ClayDropDownWithItems
 						active={dropdownActionsActive}

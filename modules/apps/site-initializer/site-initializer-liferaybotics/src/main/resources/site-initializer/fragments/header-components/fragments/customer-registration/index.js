@@ -31,7 +31,7 @@ const queryInnerTextAll = function (root, selector, regex) {
 		return element.innerText.match(regex);
 	});
 
-	return rtn.length === 0 ? null : rtn;
+	return !rtn.length ? null : rtn;
 };
 
 const queryInnerText = function (root, selector, text) {
@@ -57,7 +57,7 @@ const runMenuTextOnload = configuration.runMenuTextOnload;
 const enableRegisterPage = configuration.enableRegisterPage;
 const runRegisterPageOnload = configuration.runRegisterPageOnload;
 
-var menuTextFunc = undefined;
+let menuTextFunc = undefined;
 if (enableMenuText) {
 	menuTextFunc = () => {
 		const menuText = configuration.menuText;
@@ -78,7 +78,7 @@ if (enableMenuText) {
 	};
 }
 
-var registerPageFunc = undefined;
+let registerPageFunc = undefined;
 if (enableRegisterPage) {
 	registerPageFunc = () => {
 		const registerPageUrl = configuration.registerPageUrl;
@@ -89,7 +89,7 @@ if (enableRegisterPage) {
 				_loginContainer
 			);
 			if (_createAccount) {
-				var getUrl = window.location;
+				const getUrl = window.location;
 				_createAccount.setAttribute(
 					'href',
 					getUrl.protocol + '//' + getUrl.host + registerPageUrl

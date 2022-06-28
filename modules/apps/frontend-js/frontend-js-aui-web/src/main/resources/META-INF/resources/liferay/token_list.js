@@ -22,7 +22,7 @@
 AUI().add(
 	'liferay-token-list',
 	(A) => {
-		var TPL_TOKEN = A.Template(
+		const TPL_TOKEN = A.Template(
 			'<tpl for=".">',
 			'<span class="lfr-token" data-fieldValues="{fieldValues}" data-clearFields="{clearFields}">',
 			'<span class="align-middle d-inline-block">{text:this.getTokenText}</span>',
@@ -44,7 +44,7 @@ AUI().add(
 			}
 		);
 
-		var TokenList = A.Component.create({
+		const TokenList = A.Component.create({
 			ATTRS: {
 				children: {
 					validator: Array.isArray,
@@ -59,9 +59,9 @@ AUI().add(
 
 			prototype: {
 				_addToken() {
-					var instance = this;
+					const instance = this;
 
-					var buffer = instance._buffer;
+					const buffer = instance._buffer;
 
 					instance.get('contentBox').append(TPL_TOKEN.parse(buffer));
 
@@ -73,7 +73,7 @@ AUI().add(
 				},
 
 				_onClick(event) {
-					var instance = this;
+					const instance = this;
 
 					instance.fire('close', {
 						item: event.currentTarget.ancestor('.lfr-token'),
@@ -81,10 +81,10 @@ AUI().add(
 				},
 
 				add(token) {
-					var instance = this;
+					const instance = this;
 
 					if (token) {
-						var buffer = instance._buffer;
+						const buffer = instance._buffer;
 
 						if (Array.isArray(token)) {
 							instance._buffer = buffer.concat(token);
@@ -98,9 +98,9 @@ AUI().add(
 				},
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
-					var boundingBox = instance.get('boundingBox');
+					const boundingBox = instance.get('boundingBox');
 
 					boundingBox.delegate(
 						'click',
@@ -115,7 +115,7 @@ AUI().add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._buffer = [];
 
@@ -126,7 +126,7 @@ AUI().add(
 				},
 
 				renderUI() {
-					var instance = this;
+					const instance = this;
 
 					instance.add(instance.get('children'));
 				},

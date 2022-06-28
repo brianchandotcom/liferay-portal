@@ -120,7 +120,7 @@ const handleNodeFiltering = ({
 	nodes,
 	query,
 }) => {
-	const nodeHasChildren = (node) => Array.isArray(node) && node.length > 0;
+	const nodeHasChildren = (node) => Array.isArray(node) && !!node.length;
 
 	return nodes.filter((node) => {
 		if (nodeHasChildren(node.children)) {

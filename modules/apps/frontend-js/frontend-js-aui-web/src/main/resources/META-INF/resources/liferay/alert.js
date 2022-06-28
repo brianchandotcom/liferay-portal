@@ -19,9 +19,9 @@
 AUI.add(
 	'liferay-alert',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var Alert = A.Component.create({
+		const Alert = A.Component.create({
 			ATTRS: {
 				animated: {
 					validator: Lang.isBoolean,
@@ -68,13 +68,13 @@ AUI.add(
 
 			prototype: {
 				_afterTypeChange() {
-					var instance = this;
+					const instance = this;
 
 					instance._updateCssClass();
 				},
 
 				_cancelHide() {
-					var instance = this;
+					const instance = this;
 
 					instance._clearHideTimer();
 
@@ -82,12 +82,12 @@ AUI.add(
 				},
 
 				_getAlertsContainer(targetNode) {
-					var instance = this;
+					const instance = this;
 
-					var alertsContainer = instance._alertsContainer;
+					let alertsContainer = instance._alertsContainer;
 
 					if (!alertsContainer) {
-						var rootNode =
+						const rootNode =
 							targetNode ||
 							instance.get('rootNode') ||
 							// eslint-disable-next-line @liferay/aui/no-get-body
@@ -107,7 +107,7 @@ AUI.add(
 								targetNode.prepend(alertsContainer);
 							}
 							else {
-								var navbar = rootNode.one(
+								const navbar = rootNode.one(
 									'.portlet-body > .navbar'
 								);
 
@@ -115,7 +115,7 @@ AUI.add(
 									navbar.placeAfter(alertsContainer);
 								}
 								else {
-									var prependTarget =
+									const prependTarget =
 										rootNode.one('.portlet-body') ||
 										rootNode;
 
@@ -131,14 +131,14 @@ AUI.add(
 				},
 
 				_getParentNode(targetNode) {
-					var instance = this;
+					const instance = this;
 
-					var parentNode = instance._parentNode;
+					let parentNode = instance._parentNode;
 
 					if (!parentNode) {
 						parentNode = A.Node.create(instance.TPL_ALERT_NODE);
 
-						var alertsContainer = instance._getAlertsContainer(
+						const alertsContainer = instance._getAlertsContainer(
 							targetNode
 						);
 
@@ -151,7 +151,7 @@ AUI.add(
 				},
 
 				_maybeHide() {
-					var instance = this;
+					const instance = this;
 
 					if (instance._ignoreHideDelay) {
 						instance._prepareTransition(false);
@@ -173,9 +173,9 @@ AUI.add(
 				},
 
 				_onMouseLeave() {
-					var instance = this;
+					const instance = this;
 
-					var delay = instance.get('delay');
+					const delay = instance.get('delay');
 
 					if (delay.hide > 0) {
 						instance.hide();
@@ -183,9 +183,9 @@ AUI.add(
 				},
 
 				_prepareTransition(visible) {
-					var instance = this;
+					const instance = this;
 
-					var parentNode = instance._getParentNode();
+					const parentNode = instance._getParentNode();
 
 					instance._clearHideTimer();
 
@@ -197,9 +197,9 @@ AUI.add(
 				},
 
 				_transition(visible) {
-					var instance = this;
+					const instance = this;
 
-					var parentNode = instance._getParentNode();
+					const parentNode = instance._getParentNode();
 
 					if (!visible || !parentNode.test('.in')) {
 						try {
@@ -218,7 +218,7 @@ AUI.add(
 
 									instance._uiSetVisibleHost(visible);
 
-									var delay = instance.get('delay');
+									const delay = instance.get('delay');
 
 									if (visible && delay.hide) {
 										instance.hide();
@@ -234,9 +234,9 @@ AUI.add(
 				},
 
 				_updateBodyContent() {
-					var instance = this;
+					const instance = this;
 
-					var bodyContent = Lang.sub(instance.TPL_CONTENT, {
+					const bodyContent = Lang.sub(instance.TPL_CONTENT, {
 						icon: instance.get('icon'),
 						message: instance.get('message'),
 						spritemap: Liferay.Icons.spritemap,
@@ -247,7 +247,7 @@ AUI.add(
 				},
 
 				_updateCssClass() {
-					var instance = this;
+					const instance = this;
 
 					instance.set('cssClass', 'alert-' + instance.get('type'));
 				},
@@ -261,9 +261,9 @@ AUI.add(
 					'<strong class="lead"><svg class="lexicon-icon" focusable="false"><use href="{spritemap}#{icon}" /><title>{title}</title></svg> {title}</strong>{message}',
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
-					var boundingBox = instance.get('boundingBox');
+					const boundingBox = instance.get('boundingBox');
 
 					instance._eventHandles = [
 						instance.after(
@@ -294,7 +294,7 @@ AUI.add(
 				},
 
 				render(parentNode) {
-					var instance = this;
+					const instance = this;
 
 					instance._updateBodyContent();
 					instance._updateCssClass();

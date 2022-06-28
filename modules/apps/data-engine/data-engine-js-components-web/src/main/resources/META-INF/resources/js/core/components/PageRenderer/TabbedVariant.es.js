@@ -19,7 +19,7 @@ import {Tabs} from '../Tabs.es';
 import * as DefaultVariant from './DefaultVariant.es';
 
 export function Column({children, column, index}) {
-	if (column.fields.length === 0) {
+	if (!column.fields.length) {
 		return null;
 	}
 
@@ -35,7 +35,7 @@ Column.displayName = 'TabbedVariant.Column';
 export function Container({activePage, children, pageIndex, pages}) {
 	return (
 		<div className="ddm-form-page-container tabbed">
-			{pages.length > 0 && pageIndex === activePage && (
+			{!!pages.length && pageIndex === activePage && (
 				<Tabs
 					activePage={activePage}
 					pageIndex={pageIndex}

@@ -34,7 +34,7 @@ function CartItemsList() {
 		<div className="mini-cart-items-list">
 			<CartViews.ItemsListActions />
 
-			{cartItems.length > 0 ? (
+			{cartItems.length ? (
 				<>
 					<div className="mini-cart-cart-items">
 						{cartItems.map((currentCartItem, index) => {

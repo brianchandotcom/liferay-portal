@@ -151,11 +151,11 @@ export default function Translation({
 			.filter(
 				(languageId) =>
 					showNotTranslated ||
-					editableValues.filter(
+					!!editableValues.filter(
 						(editableValue) =>
 							isTranslated(editableValue, languageId) ||
 							languageId === defaultLanguageId
-					).length > 0
+					).length
 			)
 			.map((languageId) => ({
 				languageId,

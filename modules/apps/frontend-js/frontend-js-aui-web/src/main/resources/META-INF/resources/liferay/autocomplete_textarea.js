@@ -22,24 +22,29 @@
 AUI.add(
 	'liferay-autocomplete-textarea',
 	(A) => {
-		var KeyMap = A.Event.KeyMap;
-		var Lang = A.Lang;
+		const KeyMap = A.Event.KeyMap;
+		const Lang = A.Lang;
 
-		var KEY_DOWN = KeyMap.DOWN;
+		const KEY_DOWN = KeyMap.DOWN;
 
-		var KEY_LIST = [KEY_DOWN, KeyMap.LEFT, KeyMap.RIGHT, KeyMap.UP].join();
+		const KEY_LIST = [
+			KEY_DOWN,
+			KeyMap.LEFT,
+			KeyMap.RIGHT,
+			KeyMap.UP,
+		].join();
 
-		var STR_INPUT_NODE = 'inputNode';
+		const STR_INPUT_NODE = 'inputNode';
 
-		var STR_SPACE = ' ';
+		const STR_SPACE = ' ';
 
-		var AutoCompleteTextarea = function () {};
+		const AutoCompleteTextarea = function () {};
 
 		AutoCompleteTextarea.prototype = {
 			_bindUIACTextarea() {
-				var instance = this;
+				const instance = this;
 
-				var inputNode = instance.get(STR_INPUT_NODE);
+				const inputNode = instance.get(STR_INPUT_NODE);
 
 				instance._eventHandles = [
 					inputNode.on(
@@ -51,36 +56,36 @@ AUI.add(
 			},
 
 			_getACPositionBase() {
-				var instance = this;
+				const instance = this;
 
 				return instance.get(STR_INPUT_NODE).getXY();
 			},
 
 			_getACPositionOffset() {
-				var instance = this;
+				const instance = this;
 
-				var inputNode = instance.get(STR_INPUT_NODE);
+				const inputNode = instance.get(STR_INPUT_NODE);
 
 				return [0, Lang.toInt(inputNode.getStyle('fontSize'))];
 			},
 
 			_getACVal() {
-				var instance = this;
+				const instance = this;
 
 				return instance.get(STR_INPUT_NODE).val();
 			},
 
 			_getPrevTrigger(content, position) {
-				var instance = this;
+				const instance = this;
 
-				var result = -1;
+				let result = -1;
 
-				var trigger = null;
+				let trigger = null;
 
-				var triggers = instance._getTriggers();
+				const triggers = instance._getTriggers();
 
-				for (var i = position; i >= 0; --i) {
-					var triggerIndex = triggers.indexOf(content[i]);
+				for (let i = position; i >= 0; --i) {
+					const triggerIndex = triggers.indexOf(content[i]);
 
 					if (triggerIndex >= 0) {
 						result = i;
@@ -97,24 +102,24 @@ AUI.add(
 			},
 
 			_getQuery(val) {
-				var instance = this;
+				const instance = this;
 
-				var result = null;
+				let result = null;
 
-				var caretIndex = instance._getCaretIndex();
+				const caretIndex = instance._getCaretIndex();
 
 				if (caretIndex) {
 					val = val.substring(0, caretIndex.start);
 
 					instance._getTriggers().forEach((item) => {
-						var lastTriggerIndex = val.lastIndexOf(item);
+						const lastTriggerIndex = val.lastIndexOf(item);
 
 						if (lastTriggerIndex >= 0) {
 							val = val.substring(lastTriggerIndex);
 
-							var regExp = instance._getRegExp();
+							const regExp = instance._getRegExp();
 
-							var res = regExp.exec(val);
+							const res = regExp.exec(val);
 
 							if (
 								res &&
@@ -132,59 +137,61 @@ AUI.add(
 			},
 
 			_onKeyUp(event) {
-				var instance = this;
+				const instance = this;
 
-				var acVisible = instance.get('visible');
+				const acVisible = instance.get('visible');
 
 				if (!acVisible || event.isKeyInSet('left', 'right')) {
-					var inputNode = instance.get(STR_INPUT_NODE);
+					const inputNode = instance.get(STR_INPUT_NODE);
 
-					var query = instance._getQuery(inputNode.val());
+					const query = instance._getQuery(inputNode.val());
 
 					instance._processKeyUp(query);
 				}
 			},
 
 			_setACVal(text) {
-				var instance = this;
+				const instance = this;
 
-				var inputNode = instance.get(STR_INPUT_NODE);
+				const inputNode = instance.get(STR_INPUT_NODE);
 
 				inputNode.val(text);
 			},
 
 			_updateValue(text) {
-				var instance = this;
+				const instance = this;
 
-				var caretIndex = instance._getCaretIndex();
+				const caretIndex = instance._getCaretIndex();
 
 				if (caretIndex) {
-					var val = instance._getACVal();
+					let val = instance._getACVal();
 
 					if (val) {
-						var lastTrigger = instance._getPrevTrigger(
+						const lastTrigger = instance._getPrevTrigger(
 							val,
 							caretIndex.start
 						);
 
-						var lastTriggerIndex = lastTrigger.index;
+						const lastTriggerIndex = lastTrigger.index;
 
 						if (lastTriggerIndex >= 0) {
-							var prefix = val.substring(0, lastTriggerIndex);
+							const prefix = val.substring(0, lastTriggerIndex);
 
 							val = val.substring(lastTriggerIndex);
 
-							var regExp = instance._getRegExp();
+							const regExp = instance._getRegExp();
 
-							var res = regExp.exec(val);
+							const res = regExp.exec(val);
 
 							if (res) {
-								var restText = val.substring(res[1].length + 1);
+								const restText = val.substring(
+									res[1].length + 1
+								);
 
-								var spaceAdded = 1;
+								let spaceAdded = 1;
 
 								if (
-									restText.length === 0 ||
+									!restText.length ||
 									restText[0] !== STR_SPACE
 								) {
 									text += STR_SPACE;
@@ -192,10 +199,10 @@ AUI.add(
 									spaceAdded = 0;
 								}
 
-								var resultText =
+								const resultText =
 									prefix + lastTrigger.value + text;
 
-								var resultEndPos =
+								const resultEndPos =
 									resultText.length + spaceAdded;
 
 								instance._setACVal(resultText + restText);
@@ -211,7 +218,7 @@ AUI.add(
 			},
 
 			destructor() {
-				var instance = this;
+				const instance = this;
 
 				if (instance._inputMirror) {
 					instance._inputMirror.remove();
@@ -219,7 +226,7 @@ AUI.add(
 			},
 
 			initializer() {
-				var instance = this;
+				const instance = this;
 
 				instance._bindUIACTextarea();
 			},

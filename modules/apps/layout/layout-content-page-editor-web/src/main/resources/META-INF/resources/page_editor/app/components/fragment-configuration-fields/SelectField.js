@@ -131,7 +131,7 @@ const MultiSelect = ({
 				setNextValue(changedValue);
 				onValueSelect(
 					field.name,
-					changedValue.length > 0 ? changedValue : null
+					changedValue.length ? changedValue : null
 				);
 			},
 			type: 'checkbox',

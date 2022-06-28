@@ -83,7 +83,7 @@ function SelectTypes({
 				{Liferay.Language.get('select-asset-types')}
 			</ClayButton>
 
-			{selectedTypes.length > 0 && (
+			{!!selectedTypes.length && (
 				<ClayTable>
 					<ClayTable.Body>
 						{searchableTypesSorted
@@ -125,11 +125,11 @@ function SelectTypes({
 						{Liferay.Language.get('select-types')}
 					</ClayModal.Header>
 
-					{searchableTypes.length > 0 ? (
+					{searchableTypes.length ? (
 						<>
 							<ManagementToolbar.Container
 								className={
-									modalSelectedTypes.length > 0 &&
+									!!modalSelectedTypes.length &&
 									'management-bar-primary'
 								}
 							>
@@ -138,19 +138,16 @@ function SelectTypes({
 										<ManagementToolbar.Item>
 											<ClayCheckbox
 												checked={
-													modalSelectedTypes.length >
-													0
+													!!modalSelectedTypes.length
 												}
 												indeterminate={
-													modalSelectedTypes.length >
-														0 &&
+													!!modalSelectedTypes.length &&
 													modalSelectedTypes.length !==
 														searchableTypes.length
 												}
 												onChange={() =>
 													setModalSelectedTypes(
-														modalSelectedTypes.length ===
-															0
+														!modalSelectedTypes.length
 															? searchableTypesClassNames
 															: []
 													)
@@ -159,7 +156,7 @@ function SelectTypes({
 										</ManagementToolbar.Item>
 
 										<ManagementToolbar.Item>
-											{modalSelectedTypes.length > 0 ? (
+											{modalSelectedTypes.length ? (
 												<>
 													<span className="component-text">
 														{sub(

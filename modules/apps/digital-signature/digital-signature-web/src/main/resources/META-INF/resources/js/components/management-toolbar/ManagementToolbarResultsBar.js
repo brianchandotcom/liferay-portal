@@ -80,7 +80,7 @@ export default function ManagementToolbarResultsBar({
 
 	return (
 		<>
-			{(keywords || selectedFilters.length > 0) && !isLoading && (
+			{(keywords || !!selectedFilters.length) && !isLoading && (
 				<ManagementToolbar.ResultsBar>
 					<ManagementToolbar.ResultsBarItem>
 						<span className="component-text text-truncate-inline">

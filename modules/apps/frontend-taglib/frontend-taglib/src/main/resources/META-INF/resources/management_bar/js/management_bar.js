@@ -15,19 +15,20 @@
 AUI.add(
 	'liferay-management-bar',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var ATTR_CHECKED = 'checked';
+		const ATTR_CHECKED = 'checked';
 
-		var STR_CLICK = 'click';
+		const STR_CLICK = 'click';
 
-		var STR_HASH = '#';
+		const STR_HASH = '#';
 
-		var STR_SECONDARY_BAR_OPEN = 'secondary-bar-open';
+		const STR_SECONDARY_BAR_OPEN = 'secondary-bar-open';
 
-		var STR_SELECT_ALL_CHECKBOXES_SELECTOR = 'selectAllCheckBoxesSelector';
+		const STR_SELECT_ALL_CHECKBOXES_SELECTOR =
+			'selectAllCheckBoxesSelector';
 
-		var ManagementBar = A.Component.create({
+		const ManagementBar = A.Component.create({
 			ATTRS: {
 				checkBoxesSelector: {
 					validator: Lang.isString,
@@ -61,7 +62,7 @@ AUI.add(
 
 			prototype: {
 				_bindUI() {
-					var instance = this;
+					const instance = this;
 
 					instance._eventHandles = [
 						instance._searchContainer.on(
@@ -88,9 +89,9 @@ AUI.add(
 				},
 
 				_detachSearchContainerRegisterHandle() {
-					var instance = this;
+					const instance = this;
 
-					var searchContainerRegisterHandle =
+					const searchContainerRegisterHandle =
 						instance._searchContainerRegisterHandle;
 
 					if (searchContainerRegisterHandle) {
@@ -101,9 +102,9 @@ AUI.add(
 				},
 
 				_getSelectAllCheckBox() {
-					var instance = this;
+					const instance = this;
 
-					var selectAllCheckBox = instance._selectAllCheckBox;
+					let selectAllCheckBox = instance._selectAllCheckBox;
 
 					if (!selectAllCheckBox) {
 						selectAllCheckBox = instance
@@ -119,9 +120,9 @@ AUI.add(
 				},
 
 				_onSearchContainerRegistered(event) {
-					var instance = this;
+					const instance = this;
 
-					var searchContainer = event.searchContainer;
+					const searchContainer = event.searchContainer;
 
 					if (
 						searchContainer.get('id') ===
@@ -136,19 +137,19 @@ AUI.add(
 				},
 
 				_onSearchContainerRowToggled(event) {
-					var instance = this;
+					const instance = this;
 
-					var elements = event.elements;
+					const elements = event.elements;
 
-					var numberAllSelectedElements = elements.allSelectedElements
+					const numberAllSelectedElements = elements.allSelectedElements
 						.filter(':enabled')
 						.size();
 
-					var numberCurrentPageSelectedElements = elements.currentPageSelectedElements
+					const numberCurrentPageSelectedElements = elements.currentPageSelectedElements
 						.filter(':enabled')
 						.size();
 
-					var numberCurrentPageElements = elements.currentPageElements
+					const numberCurrentPageElements = elements.currentPageElements
 						.filter(':enabled')
 						.size();
 
@@ -164,7 +165,7 @@ AUI.add(
 				},
 
 				_onSurfaceStartNavigate() {
-					var instance = this;
+					const instance = this;
 
 					Liferay.DOMTaskRunner.addTask({
 						action: Liferay.ManagementBar.restoreTask,
@@ -191,9 +192,9 @@ AUI.add(
 				},
 
 				_toggleSecondaryBar(show) {
-					var instance = this;
+					const instance = this;
 
-					var managementBarContainer = instance
+					const managementBarContainer = instance
 						.get('secondaryBar')
 						.ancestor('.management-bar-container');
 
@@ -204,7 +205,7 @@ AUI.add(
 				},
 
 				_toggleSelectAll(event) {
-					var instance = this;
+					const instance = this;
 
 					if (
 						!instance
@@ -214,19 +215,19 @@ AUI.add(
 						event.preventDefault();
 					}
 
-					var searchContainer = instance._searchContainer;
+					const searchContainer = instance._searchContainer;
 
 					if (searchContainer.hasPlugin('select')) {
-						var checked = event.currentTarget.attr(ATTR_CHECKED);
+						const checked = event.currentTarget.attr(ATTR_CHECKED);
 
 						searchContainer.select.toggleAllRows(checked);
 					}
 				},
 
 				_toggleSelectAllCheckBox(checked, partial) {
-					var instance = this;
+					const instance = this;
 
-					var selectAllCheckBox = instance._getSelectAllCheckBox();
+					const selectAllCheckBox = instance._getSelectAllCheckBox();
 
 					if (selectAllCheckBox) {
 						selectAllCheckBox.attr(ATTR_CHECKED, checked);
@@ -238,13 +239,13 @@ AUI.add(
 				},
 
 				_updateItemsCount(itemsCount) {
-					var instance = this;
+					const instance = this;
 
 					instance.get('itemsCountContainer').html(itemsCount);
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					instance._detachSearchContainerRegisterHandle();
 
@@ -252,7 +253,7 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._searchContainerRegisterHandle = Liferay.on(
 						'search-container:registered',
@@ -263,22 +264,22 @@ AUI.add(
 			},
 
 			restoreTask(state, params, node) {
-				var totalSelectedItems = state.data.elements.length;
+				const totalSelectedItems = state.data.elements.length;
 
 				node = A.one(node);
 
 				if (node) {
-					var itemsCountContainer = node.all(
+					const itemsCountContainer = node.all(
 						'.' + params.itemsCountContainerSelector
 					);
 
 					itemsCountContainer.html(totalSelectedItems);
 
-					var secondaryBar = node.one(
+					const secondaryBar = node.one(
 						STR_HASH + params.secondaryBarId
 					);
 
-					var managementBarContainer = secondaryBar.ancestor(
+					const managementBarContainer = secondaryBar.ancestor(
 						'.management-bar-container'
 					);
 
@@ -286,15 +287,15 @@ AUI.add(
 						managementBarContainer.addClass(STR_SECONDARY_BAR_OPEN);
 					}
 
-					var searchContainerNode = node.one(
+					const searchContainerNode = node.one(
 						STR_HASH + params.searchContainerNodeId
 					);
 
 					if (searchContainerNode) {
-						var selectedElements = A.Array.partition(
+						const selectedElements = A.Array.partition(
 							state.data.elements,
 							(item) => {
-								var valueSelector =
+								const valueSelector =
 									'[value="' + item.value + '"]';
 
 								return searchContainerNode.one(
@@ -303,15 +304,15 @@ AUI.add(
 							}
 						);
 
-						var onscreenSelectedItems =
+						const onscreenSelectedItems =
 							selectedElements.matches.length;
 
-						var checkBoxes = searchContainerNode.all(
+						const checkBoxes = searchContainerNode.all(
 							params.checkBoxesSelector
 						);
 
 						if (secondaryBar) {
-							var selectAllCheckBoxesCheckBox = secondaryBar.one(
+							const selectAllCheckBoxesCheckBox = secondaryBar.one(
 								params.selectAllCheckBoxesSelector
 							);
 
@@ -340,9 +341,9 @@ AUI.add(
 					return;
 				}
 
-				var returnNode;
+				let returnNode;
 
-				var currentNode = A.one(node);
+				const currentNode = A.one(node);
 
 				if (currentNode) {
 					returnNode = currentNode.one(

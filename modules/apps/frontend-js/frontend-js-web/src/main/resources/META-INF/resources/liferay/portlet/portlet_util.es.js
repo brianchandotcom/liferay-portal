@@ -250,7 +250,7 @@ const encodeParameter = function (name, values) {
 	let str = '';
 
 	if (Array.isArray(values)) {
-		if (values.length === 0) {
+		if (!values.length) {
 			str +=
 				TOKEN_DELIM +
 				encodeURIComponent(name) +

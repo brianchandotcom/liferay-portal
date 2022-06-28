@@ -1,5 +1,6 @@
 {
-	"dependencies": {},
+	"dependencies": {
+	},
 	"main": "js/index.es.js",
 	"name": "item-selector-upload-web",
 	"scripts": {

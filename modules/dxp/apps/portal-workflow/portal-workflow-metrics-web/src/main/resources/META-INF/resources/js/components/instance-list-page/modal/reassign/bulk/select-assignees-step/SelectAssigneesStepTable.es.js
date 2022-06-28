@@ -182,7 +182,7 @@ function Table({data, items}) {
 
 			<ClayTable.Body>
 				{items &&
-					items.length > 0 &&
+					!!items.length &&
 					items.map((item) => (
 						<Table.Item data={data} {...item} key={item.id} />
 					))}

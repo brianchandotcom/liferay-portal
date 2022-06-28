@@ -103,7 +103,7 @@ const setValueToElement = (element, value) => {
 	}
 };
 
-var currencyIntl = new Intl.NumberFormat('en-US', {
+const currencyIntl = new Intl.NumberFormat('en-US', {
 	currency: 'USD',
 });
 

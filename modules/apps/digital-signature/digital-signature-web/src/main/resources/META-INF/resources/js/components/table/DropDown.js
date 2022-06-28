@@ -52,7 +52,7 @@ export default function DropDown({actions, item, noActionsMessage}) {
 		action.show ? action.show(item) : true
 	);
 
-	if (actions.length === 0) {
+	if (!actions.length) {
 		return cloneElement(DropdownButton, {
 			'data-tooltip-align': 'bottom',
 			'data-tooltip-delay': '200',

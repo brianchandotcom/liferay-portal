@@ -15,14 +15,14 @@
 AUI.add(
 	'liferay-staging-version',
 	(A) => {
-		var StagingBar = Liferay.StagingBar;
+		const StagingBar = Liferay.StagingBar;
 
-		var MAP_CMD_REVISION = {
+		const MAP_CMD_REVISION = {
 			redo: 'redo_layout_revision',
 			undo: 'undo_layout_revision',
 		};
 
-		var MAP_TEXT_REVISION = {
+		const MAP_TEXT_REVISION = {
 			redo: Liferay.Language.get(
 				'are-you-sure-you-want-to-redo-your-last-changes'
 			),
@@ -33,7 +33,7 @@ AUI.add(
 
 		A.mix(StagingBar, {
 			_cleanup() {
-				var instance = this;
+				const instance = this;
 
 				if (instance._eventHandles) {
 					A.Array.invoke(instance._eventHandles, 'detach');
@@ -41,13 +41,13 @@ AUI.add(
 			},
 
 			_onInit() {
-				var instance = this;
+				const instance = this;
 
 				instance._cleanup();
 
-				var namespace = instance._namespace;
+				const namespace = instance._namespace;
 
-				var eventHandles = [
+				const eventHandles = [
 					Liferay.on(
 						namespace + 'redo',
 						instance._onRevisionChange,
@@ -72,10 +72,10 @@ AUI.add(
 					),
 				];
 
-				var layoutRevisionDetails = A.one(
+				const layoutRevisionDetails = A.one(
 					'#' + namespace + 'layoutRevisionDetails'
 				);
-				var layoutRevisionStatus = A.one(
+				const layoutRevisionStatus = A.one(
 					'#' + namespace + 'layoutRevisionStatus'
 				);
 
@@ -133,10 +133,10 @@ AUI.add(
 			},
 
 			_onRevisionChange(event, type) {
-				var instance = this;
+				const instance = this;
 
-				var cmd = MAP_CMD_REVISION[type];
-				var confirmText = MAP_TEXT_REVISION[type];
+				const cmd = MAP_CMD_REVISION[type];
+				const confirmText = MAP_TEXT_REVISION[type];
 
 				if (confirm(confirmText)) {
 					instance._updateRevision(
@@ -148,14 +148,14 @@ AUI.add(
 			},
 
 			_onSubmit(event) {
-				var instance = this;
+				const instance = this;
 
-				var namespace = instance._namespace;
+				const namespace = instance._namespace;
 
-				var layoutRevisionDetails = A.one(
+				const layoutRevisionDetails = A.one(
 					'#' + namespace + 'layoutRevisionDetails'
 				);
-				var layoutRevisionInfo = layoutRevisionDetails.one(
+				const layoutRevisionInfo = layoutRevisionDetails.one(
 					'.layout-revision-info'
 				);
 
@@ -163,7 +163,7 @@ AUI.add(
 					layoutRevisionInfo.addClass('loading');
 				}
 
-				var submitLink = A.one('#' + namespace + 'submitLink');
+				const submitLink = A.one('#' + namespace + 'submitLink');
 
 				if (submitLink) {
 					submitLink.html(Liferay.Language.get('loading') + '...');
@@ -205,7 +205,7 @@ AUI.add(
 			},
 
 			_updateRevision(cmd, layoutRevisionId, layoutSetBranchId) {
-				var updateLayoutData = {
+				const updateLayoutData = {
 					cmd,
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					layoutRevisionId,
@@ -239,7 +239,7 @@ AUI.add(
 			},
 
 			destructor() {
-				var instance = this;
+				const instance = this;
 
 				instance._cleanup();
 			},

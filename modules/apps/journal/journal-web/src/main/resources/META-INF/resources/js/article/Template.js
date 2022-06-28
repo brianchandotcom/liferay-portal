@@ -199,7 +199,7 @@ export default function ({
 }
 
 function getCurrentLanguage(namespace) {
-	var inputComponent = Liferay.component(`${namespace}titleMapAsXML`);
+	const inputComponent = Liferay.component(`${namespace}titleMapAsXML`);
 
 	if (inputComponent) {
 		return inputComponent.getSelectedLanguageId();

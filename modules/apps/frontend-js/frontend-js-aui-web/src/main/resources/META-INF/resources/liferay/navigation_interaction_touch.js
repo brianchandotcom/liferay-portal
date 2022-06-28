@@ -15,32 +15,32 @@
 AUI.add(
 	'liferay-navigation-interaction-touch',
 	(A) => {
-		var ANDROID = A.UA.android;
+		const ANDROID = A.UA.android;
 
-		var ANDROID_LEGACY = ANDROID && ANDROID < 4.4;
+		const ANDROID_LEGACY = ANDROID && ANDROID < 4.4;
 
-		var STR_OPEN = 'open';
+		const STR_OPEN = 'open';
 
 		A.mix(
 			Liferay.NavigationInteraction.prototype,
 			{
 				_handleShowNavigationMenu(menuNew) {
-					var instance = this;
+					const instance = this;
 
-					var mapHover = instance.MAP_HOVER;
+					const mapHover = instance.MAP_HOVER;
 
 					mapHover.menu = menuNew;
 
-					var menuOpen = menuNew.hasClass(STR_OPEN);
+					const menuOpen = menuNew.hasClass(STR_OPEN);
 
-					var handleId = menuNew.attr('id') + 'Handle';
+					const handleId = menuNew.attr('id') + 'Handle';
 
-					var handle = Liferay.Data[handleId];
+					let handle = Liferay.Data[handleId];
 
 					if (!menuOpen) {
 						Liferay.fire('showNavigationMenu', mapHover);
 
-						var outsideEvents = ['clickoutside', 'touchendoutside'];
+						let outsideEvents = ['clickoutside', 'touchendoutside'];
 
 						if (ANDROID_LEGACY) {
 							outsideEvents = outsideEvents[0];
@@ -70,7 +70,7 @@ AUI.add(
 				},
 
 				_initChildMenuHandlers(navigation) {
-					var instance = this;
+					const instance = this;
 
 					if (navigation) {
 						A.Event.defineOutside('touchend');
@@ -113,9 +113,9 @@ AUI.add(
 				_initNodeFocusManager: A.Lang.emptyFn,
 
 				_onTouchClick(event) {
-					var instance = this;
+					const instance = this;
 
-					var menuNew = event.currentTarget.ancestor(
+					const menuNew = event.currentTarget.ancestor(
 						instance._directChildLi
 					);
 

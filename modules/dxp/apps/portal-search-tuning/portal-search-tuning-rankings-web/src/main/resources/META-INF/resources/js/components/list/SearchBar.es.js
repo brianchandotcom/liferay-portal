@@ -52,7 +52,7 @@ class SearchBar extends Component {
 	};
 
 	_handleAllCheckbox = () => {
-		if (this.props.selectedIds.length > 0) {
+		if (this.props.selectedIds.length) {
 			this.props.onSelectClear();
 		}
 		else {
@@ -89,7 +89,7 @@ class SearchBar extends Component {
 	 * Checks if there are any items selected.
 	 * @returns {boolean} True if there is at least 1 item selected.
 	 */
-	_hasSelectedIds = () => this.props.selectedIds.length > 0;
+	_hasSelectedIds = () => !!this.props.selectedIds.length;
 
 	/**
 	 * Checks if any selected ids contain any hidden items.
@@ -144,7 +144,7 @@ class SearchBar extends Component {
 									checked={this._hasSelectedIds()}
 									disabled={!resultIds.length}
 									indeterminate={
-										selectedIds.length > 0 &&
+										!!selectedIds.length &&
 										selectedIds.length !== resultIds.length
 									}
 									onChange={this._handleAllCheckbox}

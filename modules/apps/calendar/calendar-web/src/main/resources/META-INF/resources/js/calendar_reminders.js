@@ -15,11 +15,11 @@
 AUI.add(
 	'liferay-calendar-reminders',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var STR_BLANK = '';
+		const STR_BLANK = '';
 
-		var TPL_REMINDER_SECTION =
+		const TPL_REMINDER_SECTION =
 			'<div class="calendar-portlet-reminder-section form-inline">' +
 			'<input <tpl if="!disabled">checked="checked"</tpl> class="calendar-portlet-reminder-check" id="{portletNamespace}reminder{i}" name="{portletNamespace}reminder{i}" type="checkbox" />' +
 			'<label class="reminder-type" for="{portletNamespace}reminder{i}">' +
@@ -35,7 +35,7 @@ AUI.add(
 			'</select>' +
 			'</div>';
 
-		var Reminders = A.Component.create({
+		const Reminders = A.Component.create({
 			ATTRS: {
 				portletNamespace: {
 					value: '',
@@ -74,10 +74,10 @@ AUI.add(
 
 			prototype: {
 				_onChangeCheckbox(event) {
-					var target = event.target;
+					const target = event.target;
 
-					var checked = target.get('checked');
-					var elements = target.siblings('input[type=text],select');
+					const checked = target.get('checked');
+					const elements = target.siblings('input[type=text],select');
 
 					elements.set('disabled', !checked);
 
@@ -87,18 +87,18 @@ AUI.add(
 				},
 
 				_uiSetValues(val) {
-					var instance = this;
+					const instance = this;
 
-					var boundingBox = instance.get('boundingBox');
-					var portletNamespace = instance.get('portletNamespace');
-					var strings = instance.get('strings');
+					const boundingBox = instance.get('boundingBox');
+					const portletNamespace = instance.get('portletNamespace');
+					const strings = instance.get('strings');
 
-					var buffer = [];
+					const buffer = [];
 
-					var tplReminder = instance.tplReminder;
+					const tplReminder = instance.tplReminder;
 
-					for (var i = 0; i < val.length; i++) {
-						var value = val[i];
+					for (let i = 0; i < val.length; i++) {
+						const value = val[i];
 
 						buffer.push(
 							tplReminder.parse({
@@ -117,9 +117,9 @@ AUI.add(
 				},
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
-					var boundingBox = instance.get('boundingBox');
+					const boundingBox = instance.get('boundingBox');
 
 					boundingBox.delegate(
 						'change',
@@ -130,7 +130,7 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance.tplReminder = new A.Template(TPL_REMINDER_SECTION);
 				},

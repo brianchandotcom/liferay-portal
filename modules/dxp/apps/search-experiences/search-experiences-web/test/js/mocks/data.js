@@ -352,7 +352,7 @@ export function mockSearchResults(itemsPerPage = 10) {
 	const hits = [];
 	const documents = [];
 
-	for (var i = 1; i <= itemsPerPage; i++) {
+	for (let i = 1; i <= itemsPerPage; i++) {
 		const score = Math.random() * 100;
 
 		const fields = {

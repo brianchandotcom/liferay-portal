@@ -15,10 +15,10 @@
 AUI.add(
 	'liferay-portlet-base',
 	(A) => {
-		var PortletBase = function (config) {
-			var instance = this;
+		const PortletBase = function (config) {
+			const instance = this;
 
-			var namespace;
+			let namespace;
 
 			if ('namespace' in config) {
 				namespace = config.namespace;
@@ -44,7 +44,7 @@ AUI.add(
 				getter: '_getRootNode',
 				setter: '_setRootNode',
 				valueFn() {
-					var instance = this;
+					const instance = this;
 
 					return A.one('#p_p_id' + instance.NS);
 				},
@@ -60,21 +60,21 @@ AUI.add(
 			},
 
 			_getNS() {
-				var instance = this;
+				const instance = this;
 
 				return instance.NS;
 			},
 
 			_getRootNode() {
-				var instance = this;
+				const instance = this;
 
 				return instance.rootNode;
 			},
 
 			_setRootNode(value) {
-				var instance = this;
+				const instance = this;
 
-				var rootNode = A.one(value);
+				const rootNode = A.one(value);
 
 				instance.rootNode = rootNode;
 
@@ -82,7 +82,7 @@ AUI.add(
 			},
 
 			all(selector, root) {
-				var instance = this;
+				const instance = this;
 
 				root = A.one(root) || instance.rootNode || A;
 
@@ -92,19 +92,19 @@ AUI.add(
 			},
 
 			byId(id) {
-				var instance = this;
+				const instance = this;
 
 				return A.one('#' + A.Lang.String.prefix(instance.NS, id));
 			},
 
 			ns(str) {
-				var instance = this;
+				const instance = this;
 
 				return Liferay.Util.ns(instance.NS, str);
 			},
 
 			one(selector, root) {
-				var instance = this;
+				const instance = this;
 
 				root = A.one(root) || instance.rootNode || A;
 

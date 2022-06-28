@@ -115,7 +115,7 @@ const Input = (props) => {
 		<ClayForm.Group
 			className={classNames({
 				disabled,
-				filled: value.length > 0,
+				filled: !!value.length,
 				['form-condensed']: condensed,
 				[STATE_CLASS_NAME_MAP[state]]: state,
 			})}
@@ -170,7 +170,7 @@ const Select = (props) => {
 		<ClayForm.Group
 			className={classNames({
 				disabled,
-				filled: value.length > 0,
+				filled: !!value.length,
 				['form-condensed']: condensed,
 				[STATE_CLASS_NAME_MAP[state]]: state,
 			})}

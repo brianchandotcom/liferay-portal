@@ -215,7 +215,7 @@ export default function Keywords({currentPage}) {
 						}
 					)}
 
-				{(publishedToday || keywords.length === 0) && (
+				{(publishedToday || !keywords.length) && (
 					<ClayList.Item flex>
 						<ClayList.ItemField expand>
 							<ClayList.ItemText>

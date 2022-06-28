@@ -136,7 +136,7 @@ export function syncActions(pages, actions) {
 		else if (action.action === 'calculate') {
 			const expressionFields = getExpressionFields(action);
 
-			if (expressionFields && expressionFields.length > 0) {
+			if (expressionFields && !!expressionFields.length) {
 				expressionFields.forEach((field) => {
 					if (!targetFieldExists(field, pages)) {
 						const inexistentField = new RegExp(field, 'g');
@@ -269,7 +269,7 @@ const expressionHasNonNumericFields = (action, fields) => {
 	const expressionFields = getExpressionFields(action);
 	let hasNonNumericFields = false;
 
-	if (expressionFields && expressionFields.length > 0) {
+	if (expressionFields && !!expressionFields.length) {
 		expressionFields.forEach((value) => {
 			const field = fields.find(({fieldName}) => fieldName === value);
 			if (field?.type !== 'numeric') {

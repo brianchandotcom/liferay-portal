@@ -280,7 +280,7 @@ function EditSXPBlueprintForm({
 					.fieldSets;
 
 				if (
-					fieldSets.length > 0 &&
+					!!fieldSets.length &&
 					!isCustomJSONSXPElement(uiConfigurationValues)
 				) {
 					fieldSets.map(({fields}) => {
@@ -320,7 +320,7 @@ function EditSXPBlueprintForm({
 					}
 				}
 
-				if (Object.keys(configErrors).length > 0) {
+				if (Object.keys(configErrors).length) {
 					elementInstancesArray[index] = {
 						uiConfigurationValues: configErrors,
 					};
@@ -328,7 +328,7 @@ function EditSXPBlueprintForm({
 			}
 		);
 
-		if (elementInstancesArray.length > 0) {
+		if (elementInstancesArray.length) {
 			errors.elementInstances = elementInstancesArray;
 		}
 

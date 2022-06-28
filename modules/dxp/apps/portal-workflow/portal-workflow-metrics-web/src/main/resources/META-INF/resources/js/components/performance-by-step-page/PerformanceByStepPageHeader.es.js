@@ -19,10 +19,10 @@ import ProcessVersionFilter from '../filter/ProcessVersionFilter.es';
 import TimeRangeFilter from '../filter/TimeRangeFilter.es';
 
 const hasFilterToShow = (selectedFilters = [], hideFilters = []) =>
-	selectedFilters.filter(
+	!!selectedFilters.filter(
 		(selectedItem) =>
 			!hideFilters.find((hideItem) => selectedItem.key === hideItem)
-	).length > 0;
+	).length;
 
 export default function Header({
 	filterKeys,

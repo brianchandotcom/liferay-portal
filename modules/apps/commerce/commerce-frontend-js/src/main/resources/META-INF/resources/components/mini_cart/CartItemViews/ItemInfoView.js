@@ -52,7 +52,7 @@ function ItemInfoViewBase({name, sku}) {
 }
 
 function ItemInfoView({childItems = [], name, options = '', sku}) {
-	const isBundle = childItems.length > 0;
+	const isBundle = !!childItems.length;
 	const hasOptions = !!options;
 
 	return (

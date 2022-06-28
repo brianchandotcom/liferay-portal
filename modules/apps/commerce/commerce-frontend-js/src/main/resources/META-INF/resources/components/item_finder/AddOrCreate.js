@@ -186,7 +186,7 @@ class AddOrCreateBase extends Component {
 									)}
 
 								{this.props.items &&
-									this.props.items.length === 0 &&
+									!this.props.items.length &&
 									!this.props.itemCreation && (
 										<ClayList.Header className="d-flex px-0">
 											{Liferay.Language.get(

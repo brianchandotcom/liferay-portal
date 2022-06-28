@@ -15,8 +15,8 @@
 AUI.add(
 	'liferay-search-modified-facet-configuration',
 	(A) => {
-		var ModifiedFacetConfiguration = function (form) {
-			var instance = this;
+		const ModifiedFacetConfiguration = function (form) {
+			const instance = this;
 
 			instance.form = form;
 
@@ -25,20 +25,22 @@ AUI.add(
 
 		A.mix(ModifiedFacetConfiguration.prototype, {
 			_onSubmit(event) {
-				var instance = this;
+				const instance = this;
 
 				event.preventDefault();
 
-				var ranges = [];
+				const ranges = [];
 
-				var rangeFormRows = A.all('.range-form-row').filter((item) => {
-					return !item.get('hidden');
-				});
+				const rangeFormRows = A.all('.range-form-row').filter(
+					(item) => {
+						return !item.get('hidden');
+					}
+				);
 
 				rangeFormRows.each((item) => {
-					var label = item.one('.label-input').val();
+					const label = item.one('.label-input').val();
 
-					var range = item.one('.range-input').val();
+					const range = item.one('.range-input').val();
 
 					ranges.push({
 						label,

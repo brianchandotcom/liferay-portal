@@ -101,7 +101,7 @@ export function BuilderScreen({
 				</ManagementToolbar.ItemList>
 			</ManagementToolbar.Container>
 
-			{tableItems.length > 0 ? (
+			{tableItems.length ? (
 				<ClayList>
 					{tableItems.map((viewColumn, index) => (
 						<React.Fragment key={viewColumn.objectFieldName}>

@@ -68,7 +68,7 @@ function LayoutFinder(props) {
 				`#${props.namespace}layoutsTree`
 			);
 
-			if (newKeywords.length === 0) {
+			if (!newKeywords.length) {
 				setLoading(false);
 				setLayouts([]);
 				setTotalCount(0);
@@ -171,7 +171,7 @@ function LayoutFinder(props) {
 									<>
 										<ol className="breadcrumb">
 											{layout.path &&
-												layout.path.length > 0 && (
+												!!layout.path.length && (
 													<>
 														{layout.path.map(
 															(layoutPath) => (

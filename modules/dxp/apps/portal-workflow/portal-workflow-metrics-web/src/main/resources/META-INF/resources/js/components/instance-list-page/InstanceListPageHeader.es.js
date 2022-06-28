@@ -105,12 +105,12 @@ export default function Header({
 	);
 
 	const allPageSelected =
-		items.length > 0 && items.length === selectedOnPage.length;
+		!!items.length && items.length === selectedOnPage.length;
 
 	const checkbox = {
 		checked: allPageSelected || selectAll,
 		indeterminate:
-			selectedOnPage.length > 0 && !allPageSelected && !selectAll,
+			!!selectedOnPage.length && !allPageSelected && !selectAll,
 	};
 
 	const isRemainingItem = (clear) => ({assignees = [], id, status}) => {
@@ -125,12 +125,12 @@ export default function Header({
 	};
 
 	const remainingItems = items.filter(isRemainingItem(true));
-	const toolbarActive = selectedItems.length > 0;
+	const toolbarActive = !!selectedItems.length;
 
 	useEffect(() => {
 		if (
 			selectAll &&
-			remainingItems.length > 0 &&
+			!!remainingItems.length &&
 			previousCount === totalCount
 		) {
 			setSelectedItems([
@@ -233,7 +233,7 @@ export default function Header({
 				)}
 			</ToolbarWithSelection>
 
-			{selectedFilterItems.length > 0 && (
+			{!!selectedFilterItems.length && (
 				<ResultsBar>
 					<ResultsBar.TotalCount
 						search={routeParams.search}

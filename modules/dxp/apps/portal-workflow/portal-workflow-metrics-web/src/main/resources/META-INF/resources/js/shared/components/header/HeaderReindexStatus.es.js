@@ -19,7 +19,7 @@ const HeaderReindexStatus = ({container}) => {
 
 	return (
 		<>
-			{reindexStatuses.length > 0 && (
+			{!!reindexStatuses.length && (
 				<Portal
 					className="control-menu-nav-item"
 					container={container}

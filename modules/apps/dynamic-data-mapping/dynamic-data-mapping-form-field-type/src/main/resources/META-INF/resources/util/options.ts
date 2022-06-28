@@ -119,7 +119,7 @@ export function normalizeValue<T>({
 	valueArray: T[];
 }) {
 	const assertValue =
-		valueArray.length || (valueArray.length === 0 && localizedValueEdited)
+		valueArray.length || (!valueArray.length && localizedValueEdited)
 			? valueArray
 			: predefinedValueArray;
 

@@ -76,7 +76,7 @@ function ItemConfigurationContent({activePanel, setActivePanel}) {
 
 	useEffect(() => {
 		if (
-			panels.length === 0 ||
+			!panels.length ||
 			panels.some((panel) => panel.panelId === activePanel.id)
 		) {
 			return;

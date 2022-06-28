@@ -301,8 +301,7 @@ const Collection = React.memo(
 						const {itemSubtype, itemType, ...collection} = response;
 
 						setCollection(
-							collection.length > 0 &&
-								collection.items?.length > 0
+							!!collection.length && collection.items?.length > 0
 								? collection
 								: {...collection, ...emptyCollection}
 						);

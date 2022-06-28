@@ -81,7 +81,7 @@ export default function (props) {
 				/>
 			)}
 
-			{initialPublicVocabularies && initialPublicVocabularies.length > 0 && (
+			{initialPublicVocabularies && !!initialPublicVocabularies.length && (
 				<>
 					<div className="border-0 mb-0 sheet-subtitle text-uppercase">
 						{Liferay.Language.get('public-categories')}
@@ -101,7 +101,7 @@ export default function (props) {
 			)}
 
 			{initialInternalVocabularies &&
-				initialInternalVocabularies.length > 0 && (
+				!!initialInternalVocabularies.length && (
 					<>
 						<div className="border-0 mb-0 sheet-subtitle text-uppercase">
 							{Liferay.Language.get('internal-categories')}

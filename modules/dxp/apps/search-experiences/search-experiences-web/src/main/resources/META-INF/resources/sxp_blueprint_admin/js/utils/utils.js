@@ -243,7 +243,7 @@ export function cleanUIConfiguration(uiConfiguration = {}) {
 					}
 				});
 
-				if (fields.length > 0) {
+				if (fields.length) {
 					fieldSets.push({fields});
 				}
 			}
@@ -265,10 +265,7 @@ export function getConfigurationEntry({sxpElement, uiConfigurationValues}) {
 		sxpElement.elementDefinition?.uiConfiguration
 	).fieldSets;
 
-	if (
-		fieldSets.length > 0 &&
-		!isCustomJSONSXPElement(uiConfigurationValues)
-	) {
+	if (!!fieldSets.length && !isCustomJSONSXPElement(uiConfigurationValues)) {
 		let flattenJSON = JSON.stringify(
 			sxpElement.elementDefinition?.configuration || {}
 		);

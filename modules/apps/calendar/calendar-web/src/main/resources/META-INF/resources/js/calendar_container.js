@@ -15,17 +15,17 @@
 AUI.add(
 	'liferay-calendar-container',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var isObject = Lang.isObject;
+		const isObject = Lang.isObject;
 
-		var toInt = Lang.toInt;
+		const toInt = Lang.toInt;
 
-		var STR_DASH = '-';
+		const STR_DASH = '-';
 
-		var STR_SPACE = ' ';
+		const STR_SPACE = ' ';
 
-		var CalendarContainer = A.Component.create({
+		const CalendarContainer = A.Component.create({
 			ATTRS: {
 				availableCalendars: {
 					validator: isObject,
@@ -61,7 +61,7 @@ AUI.add(
 
 			prototype: {
 				createCalendarsAutoComplete(resourceURL, input, afterSelectFn) {
-					var instance = this;
+					const instance = this;
 
 					input.plug(A.Plugin.AutoComplete, {
 						activateFirstItem: true,
@@ -82,10 +82,10 @@ AUI.add(
 						},
 						resultFormatter(query, results) {
 							return results.map((result) => {
-								var calendar = result.raw;
-								var calendarResourceName =
+								const calendar = result.raw;
+								const calendarResourceName =
 									calendar.calendarResourceName;
-								var name = calendar.name;
+								let name = calendar.name;
 
 								if (name !== calendarResourceName) {
 									name = [
@@ -110,23 +110,27 @@ AUI.add(
 				},
 
 				getCalendar(calendarId) {
-					var instance = this;
+					const instance = this;
 
-					var availableCalendars = instance.get('availableCalendars');
+					const availableCalendars = instance.get(
+						'availableCalendars'
+					);
 
 					return availableCalendars[calendarId];
 				},
 
 				getCalendarsMenu(config) {
-					var instance = this;
+					const instance = this;
 
-					var availableCalendars = instance.get('availableCalendars');
+					const availableCalendars = instance.get(
+						'availableCalendars'
+					);
 
-					var toggler = new A.Toggler({
+					const toggler = new A.Toggler({
 						after: {
 							expandedChange(event) {
 								if (event.newVal) {
-									var activeView = config.scheduler.get(
+									const activeView = config.scheduler.get(
 										'activeView'
 									);
 
@@ -140,17 +144,17 @@ AUI.add(
 						header: config.header,
 					});
 
-					var items = [
+					const items = [
 						{
 							caption: Liferay.Language.get('check-availability'),
 							fn() {
-								var instance = this;
+								const instance = this;
 
 								A.each(availableCalendars, (item) => {
 									item.set('visible', false);
 								});
 
-								var calendarList = instance.get('host');
+								const calendarList = instance.get('host');
 
 								calendarList.activeItem.set('visible', true);
 
@@ -163,7 +167,7 @@ AUI.add(
 						},
 					];
 
-					var calendarsMenu = {
+					const calendarsMenu = {
 						items,
 					};
 
@@ -171,9 +175,9 @@ AUI.add(
 						items.push({
 							caption: Liferay.Language.get('remove'),
 							fn() {
-								var instance = this;
+								const instance = this;
 
-								var calendarList = instance.get('host');
+								const calendarList = instance.get('host');
 
 								calendarList.remove(calendarList.activeItem);
 
@@ -184,14 +188,14 @@ AUI.add(
 
 						calendarsMenu.on = {
 							visibleChange(event) {
-								var instance = this;
+								const instance = this;
 
 								if (event.newVal) {
-									var calendarList = instance.get('host');
+									const calendarList = instance.get('host');
 
-									var calendar = calendarList.activeItem;
+									const calendar = calendarList.activeItem;
 
-									var hiddenItems = [];
+									const hiddenItems = [];
 
 									if (
 										calendar.get('calendarId') ===
@@ -210,19 +214,19 @@ AUI.add(
 				},
 
 				syncCalendarsMap(calendarLists) {
-					var instance = this;
+					const instance = this;
 
-					var defaultCalendar = instance.get('defaultCalendar');
+					let defaultCalendar = instance.get('defaultCalendar');
 
-					var availableCalendars = {};
+					const availableCalendars = {};
 
-					var visibleCalendars = {};
+					const visibleCalendars = {};
 
 					calendarLists.forEach((calendarList) => {
-						var calendars = calendarList.get('calendars');
+						const calendars = calendarList.get('calendars');
 
 						A.each(calendars, (item) => {
-							var calendarId = item.get('calendarId');
+							const calendarId = item.get('calendarId');
 
 							availableCalendars[calendarId] = item;
 
@@ -230,7 +234,7 @@ AUI.add(
 								visibleCalendars[calendarId] = item;
 							}
 
-							var calendarResourceId = item.get(
+							const calendarResourceId = item.get(
 								'calendarResourceId'
 							);
 

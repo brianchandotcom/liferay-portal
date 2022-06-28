@@ -35,7 +35,7 @@ class GeoJSONBase extends State {
 	addData(nativeFeaturesData) {
 		const nativeFeatures = this._getNativeFeatures(nativeFeaturesData);
 
-		if (nativeFeatures.length > 0) {
+		if (nativeFeatures.length) {
 			this.emit('featuresAdded', {
 				features: nativeFeatures.map(this._wrapNativeFeature),
 			});

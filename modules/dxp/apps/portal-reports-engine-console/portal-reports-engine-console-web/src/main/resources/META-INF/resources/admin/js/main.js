@@ -10,9 +10,9 @@
  */
 
 AUI().use('escape', 'aui-lang', (A) => {
-	var AEscape = A.Escape;
+	const AEscape = A.Escape;
 
-	var TPL_TAG_FORM =
+	const TPL_TAG_FORM =
 		'<div class="form-inline {key}" >' +
 		'<input class="form-control" type="text" disabled="disabled" value="{parameterKey}" /> ' +
 		'<input class="form-control" type="text" disabled="disabled" value="{parameterValue}" /> ' +
@@ -27,17 +27,17 @@ AUI().use('escape', 'aui-lang', (A) => {
 
 	Liferay.Report = {
 		_addParameter(namespace) {
-			var instance = this;
+			const instance = this;
 
 			instance._portletMessageContainer.setStyle('display', 'none');
 
-			var parameterKey = A.one('.parameters-key').val();
-			var parameterType = A.one('.parameters-input-type').val();
-			var parameterValue = A.one('.parameters-value').val();
+			const parameterKey = A.one('.parameters-key').val();
+			const parameterType = A.one('.parameters-input-type').val();
+			let parameterValue = A.one('.parameters-value').val();
 
-			var message = '';
+			let message = '';
 
-			if (parameterKey.length === 0) {
+			if (!parameterKey.length) {
 				A.all('.portlet-msg-error').setStyle('display', 'none');
 
 				message = Liferay.Language.get(
@@ -51,7 +51,7 @@ AUI().use('escape', 'aui-lang', (A) => {
 				return;
 			}
 
-			if (parameterType !== 'date' && parameterValue.length === 0) {
+			if (parameterType !== 'date' && !parameterValue.length) {
 				A.all('.portlet-msg-error').setStyle('display', 'none');
 
 				message = Liferay.Language.get(
@@ -81,13 +81,13 @@ AUI().use('escape', 'aui-lang', (A) => {
 				return;
 			}
 
-			var reportParameters = A.one('.report-parameters').val();
+			const reportParameters = A.one('.report-parameters').val();
 
 			if (reportParameters) {
-				var reportParametersJSON = JSON.parse(reportParameters);
+				const reportParametersJSON = JSON.parse(reportParameters);
 
-				for (var i in reportParametersJSON) {
-					var reportParameter = reportParametersJSON[i];
+				for (const i in reportParametersJSON) {
+					const reportParameter = reportParametersJSON[i];
 
 					if (reportParameter.key === parameterKey) {
 						message = Liferay.Language.get(
@@ -122,15 +122,15 @@ AUI().use('escape', 'aui-lang', (A) => {
 		},
 
 		_addReportParameter(parameterKey, parameterValue, parameterType) {
-			var reportParameters = [];
+			let reportParameters = [];
 
-			var parametersInput = A.one('.report-parameters');
+			const parametersInput = A.one('.report-parameters');
 
 			if (parametersInput.val()) {
 				reportParameters = JSON.parse(parametersInput.val());
 			}
 
-			var reportParameter = {
+			const reportParameter = {
 				key: parameterKey,
 				type: parameterType,
 				value: parameterValue,
@@ -142,17 +142,17 @@ AUI().use('escape', 'aui-lang', (A) => {
 		},
 
 		_addTag(parameterKey, parameterValue, parameterType) {
-			var tagsContainer = A.one('.report-tags');
+			const tagsContainer = A.one('.report-tags');
 
 			parameterKey = AEscape.html(parameterKey);
 			parameterType = AEscape.html(parameterType);
 			parameterValue = AEscape.html(parameterValue);
 
-			var key = AEscape.html(
+			const key = AEscape.html(
 				('report-tag-' + parameterKey).replace(/ /g, 'BLANK')
 			);
 
-			var html = A.Lang.sub(TPL_TAG_FORM, {
+			const html = A.Lang.sub(TPL_TAG_FORM, {
 				key,
 				parameterKey,
 				parameterType,
@@ -163,20 +163,22 @@ AUI().use('escape', 'aui-lang', (A) => {
 		},
 
 		_createRemoveParameterEvent() {
-			var instance = this;
+			const instance = this;
 
-			var reportTags = A.one('.report-tags');
+			const reportTags = A.one('.report-tags');
 
 			reportTags.delegate(
 				'click',
 				(event) => {
-					var currentTarget = event.currentTarget;
+					const currentTarget = event.currentTarget;
 
-					var parameterKey = currentTarget.getData('parameterKey');
-					var parameterValue = currentTarget.getData(
+					const parameterKey = currentTarget.getData('parameterKey');
+					const parameterValue = currentTarget.getData(
 						'parameterValue'
 					);
-					var parameterType = currentTarget.getData('parameterType');
+					const parameterType = currentTarget.getData(
+						'parameterType'
+					);
 
 					instance.deleteParameter(
 						parameterKey,
@@ -193,7 +195,7 @@ AUI().use('escape', 'aui-lang', (A) => {
 		},
 
 		_displayParameters(parameters) {
-			var instance = this;
+			const instance = this;
 
 			instance._portletMessageContainer.setStyle('display', 'none');
 
@@ -203,10 +205,10 @@ AUI().use('escape', 'aui-lang', (A) => {
 				return;
 			}
 
-			var reportParameters = JSON.parse(parameters);
+			const reportParameters = JSON.parse(parameters);
 
-			for (var i in reportParameters) {
-				var reportParameter = reportParameters[i];
+			for (const i in reportParameters) {
+				const reportParameter = reportParameters[i];
 
 				if (reportParameter.key && reportParameter.value) {
 					instance._addTag(
@@ -223,15 +225,17 @@ AUI().use('escape', 'aui-lang', (A) => {
 		},
 
 		_getDateValue(namespace) {
-			var parameterDateDay = A.one('#' + namespace + 'parameterDateDay');
-			var parameterDateMonth = A.one(
+			const parameterDateDay = A.one(
+				'#' + namespace + 'parameterDateDay'
+			);
+			const parameterDateMonth = A.one(
 				'#' + namespace + 'parameterDateMonth'
 			);
-			var parameterDateYear = A.one(
+			const parameterDateYear = A.one(
 				'#' + namespace + 'parameterDateYear'
 			);
 
-			var parameterDate = new Date();
+			const parameterDate = new Date();
 
 			parameterDate.setDate(parameterDateDay.val());
 			parameterDate.setMonth(parameterDateMonth.val());
@@ -241,11 +245,11 @@ AUI().use('escape', 'aui-lang', (A) => {
 		},
 
 		_sendMessage(message) {
-			var instance = this;
+			const instance = this;
 
 			message = Liferay.Util.unescapeHTML(message);
 
-			var portletMessageContainer = instance._portletMessageContainer;
+			const portletMessageContainer = instance._portletMessageContainer;
 
 			portletMessageContainer.addClass('portlet-msg-error');
 			portletMessageContainer.set('innerHTML', message);
@@ -253,11 +257,11 @@ AUI().use('escape', 'aui-lang', (A) => {
 		},
 
 		_toggleAddParameterButton(namespace) {
-			var instance = this;
+			const instance = this;
 
-			var parameterKey = A.one('.parameters-key').val();
-			var parameterType = A.one('.parameters-input-type').val();
-			var parameterValue = A.one('.parameters-value').val();
+			const parameterKey = A.one('.parameters-key').val();
+			const parameterType = A.one('.parameters-input-type').val();
+			let parameterValue = A.one('.parameters-value').val();
 
 			if (parameterType === 'date') {
 				parameterValue = instance._getDateValue(namespace);
@@ -272,7 +276,7 @@ AUI().use('escape', 'aui-lang', (A) => {
 		},
 
 		deleteParameter(parameterKey) {
-			var instance = this;
+			const instance = this;
 
 			instance._portletMessageContainer.setStyle('display', 'none');
 
@@ -283,12 +287,12 @@ AUI().use('escape', 'aui-lang', (A) => {
 					)
 				)
 			) {
-				var parametersInput = A.one('.report-parameters');
+				const parametersInput = A.one('.report-parameters');
 
-				var reportParameters = JSON.parse(parametersInput.val());
+				const reportParameters = JSON.parse(parametersInput.val());
 
-				for (var i in reportParameters) {
-					var reportParameter = reportParameters[i];
+				for (const i in reportParameters) {
+					const reportParameter = reportParameters[i];
 
 					if (reportParameter.key === parameterKey) {
 						reportParameters.splice(i, 1);
@@ -299,7 +303,7 @@ AUI().use('escape', 'aui-lang', (A) => {
 
 				parametersInput.val(JSON.stringify(reportParameters));
 
-				var key = ('.report-tag-' + parameterKey).replace(
+				const key = ('.report-tag-' + parameterKey).replace(
 					/ /g,
 					'BLANK'
 				);
@@ -309,9 +313,9 @@ AUI().use('escape', 'aui-lang', (A) => {
 		},
 
 		initialize(param) {
-			var instance = this;
+			const instance = this;
 
-			var namespace = param.namespace;
+			const namespace = param.namespace;
 
 			instance._portletMessageContainer = A.one('.report-message');
 
@@ -352,11 +356,11 @@ AUI().use('escape', 'aui-lang', (A) => {
 			});
 
 			A.one('.parameters-input-type').on('change', (event) => {
-				var currentTarget = event.currentTarget;
+				const currentTarget = event.currentTarget;
 
-				var parametersInputDate = A.one('.parameters-input-date');
-				var parametersValue = A.one('.parameters-value');
-				var parametersValueFieldSet = A.one(
+				const parametersInputDate = A.one('.parameters-input-date');
+				const parametersValue = A.one('.parameters-value');
+				const parametersValueFieldSet = A.one(
 					'.parameters-value-field-set'
 				);
 

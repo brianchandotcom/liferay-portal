@@ -33,7 +33,7 @@ export default function MappingFieldSelector({
 }) {
 	const mappingSelectorFieldSelectId = useId();
 
-	const hasWarnings = fields && fields.length === 0;
+	const hasWarnings = fields && !fields.length;
 
 	const selectedField = getSelectedField({fields, value});
 

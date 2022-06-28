@@ -29,9 +29,9 @@ function menuHasChildren() {
 
 	return (
 		contentElement &&
-		Array.from(contentElement.firstElementChild.children).filter(
+		!!Array.from(contentElement.firstElementChild.children).filter(
 			(child) => child.tagName !== 'STYLE'
-		).length > 0
+		).length
 	);
 }
 

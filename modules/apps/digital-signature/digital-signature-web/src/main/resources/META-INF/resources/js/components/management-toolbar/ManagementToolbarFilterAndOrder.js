@@ -110,7 +110,7 @@ export default function ManagementToolbarFilterAndOrder({
 		}
 	);
 
-	const enableDoneButton = filterItems.length > 0;
+	const enableDoneButton = !!filterItems.length;
 
 	const onSortButtonClick = (asc, newColumn) => {
 		dispatch({
@@ -120,7 +120,7 @@ export default function ManagementToolbarFilterAndOrder({
 	};
 
 	const orderByItems = () => {
-		if (sortableColumns.length === 0) {
+		if (!sortableColumns.length) {
 			return [];
 		}
 
@@ -171,7 +171,7 @@ export default function ManagementToolbarFilterAndOrder({
 
 	return (
 		<>
-			{dropDownItems.length > 0 && (
+			{!!dropDownItems.length && (
 				<ManagementToolbar.ItemList>
 					<ManagementToolbar.Item>
 						<DropDown

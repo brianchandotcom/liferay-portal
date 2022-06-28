@@ -37,7 +37,7 @@ const getDescriptionI18n = (sxpElementResponse, defaultLocale) => {
 		[defaultLocale]: sxpElementResponse.description,
 	};
 
-	if (Object.keys(descriptionObject).length === 0) {
+	if (!Object.keys(descriptionObject).length) {
 		descriptionObject = {[defaultLocale]: ''};
 	}
 

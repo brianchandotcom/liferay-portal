@@ -89,7 +89,7 @@ export function Column({
 
 	const handleResize = useCallback((resizing) => setResizing(resizing), []);
 
-	if (column.fields.length === 0) {
+	if (!column.fields.length) {
 		return (
 			<Placeholder
 				columnIndex={columnIndex}

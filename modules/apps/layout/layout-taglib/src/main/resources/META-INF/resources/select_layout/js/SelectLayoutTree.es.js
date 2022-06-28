@@ -157,7 +157,7 @@ export function SelectLayoutTree({
 		}
 	};
 
-	return filteredItems.length > 0 ? (
+	return filteredItems.length ? (
 		<ClayTreeView
 			items={filteredItems}
 			onItemsChange={(items) => setItems(items)}

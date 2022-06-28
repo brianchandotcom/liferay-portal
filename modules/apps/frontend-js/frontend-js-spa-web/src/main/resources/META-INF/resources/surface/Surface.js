@@ -128,7 +128,7 @@ class Surface extends Disposable {
 	 * @return {Element}
 	 */
 	createChild(screenId) {
-		var child = document.createElement('div');
+		const child = document.createElement('div');
 		child.setAttribute('id', this.makeId_(screenId));
 
 		return child;
@@ -192,9 +192,9 @@ class Surface extends Disposable {
 	 * inside the default child will be replaced by navigation.
 	 */
 	maybeWrapContentAsDefault_() {
-		var element = this.getElement();
+		const element = this.getElement();
 		if (element && !this.defaultChild) {
-			var childNodesToWrap = [];
+			const childNodesToWrap = [];
 
 			element.childNodes.forEach((childNode) => {
 
@@ -223,7 +223,7 @@ class Surface extends Disposable {
 				childNodesToWrap.push(childNode);
 			});
 
-			var fragment = document.createDocumentFragment();
+			const fragment = document.createDocumentFragment();
 
 			childNodesToWrap.forEach((childNode) => {
 				fragment.appendChild(childNode);
@@ -257,8 +257,8 @@ class Surface extends Disposable {
 	 * @return {Promise} Pauses the navigation until it is resolved.
 	 */
 	show(screenId) {
-		var from = this.activeChild;
-		var to = this.getChild(screenId);
+		const from = this.activeChild;
+		let to = this.getChild(screenId);
 		if (!to) {
 			to = this.defaultChild;
 		}
@@ -276,7 +276,7 @@ class Surface extends Disposable {
 	 * @param {!string} screenId The screen id to remove.
 	 */
 	remove(screenId) {
-		var child = this.getChild(screenId);
+		const child = this.getChild(screenId);
 		if (child) {
 			child.remove();
 		}
@@ -297,7 +297,7 @@ class Surface extends Disposable {
 	 *     navigation until it is resolved.
 	 */
 	transition(from, to) {
-		var transitionFn = this.transitionFn || Surface.defaultTransition;
+		const transitionFn = this.transitionFn || Surface.defaultTransition;
 
 		return Promise.resolve(transitionFn.call(this, from, to));
 	}

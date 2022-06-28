@@ -31,7 +31,7 @@ const queryInnerTextAll = function (root, selector, regex) {
 		return element.innerText.match(regex);
 	});
 
-	return rtn.length === 0 ? null : rtn;
+	return !rtn.length ? null : rtn;
 };
 
 const queryInnerText = function (root, selector, text) {
@@ -55,7 +55,7 @@ const enableDebug = configuration.enableDebug;
 const enableMenuText = configuration.enableMenuText;
 const runMenuTextOnload = configuration.runMenuTextOnload;
 
-var menuTextFunc = undefined;
+let menuTextFunc = undefined;
 if (enableMenuText) {
 	menuTextFunc = () => {
 		const menuText = configuration.menuText;
@@ -67,7 +67,7 @@ if (enableMenuText) {
 		if (_registerSpan) {
 			const _a = _registerSpan.closest('a');
 			if (_a) {
-				var link = _a.href;
+				let link = _a.href;
 				const regex = /\/(group|web)\//i;
 				link = link.replace(regex, `/${pageLocation}/`);
 				const friendlyUrlIndex = link.lastIndexOf('/');

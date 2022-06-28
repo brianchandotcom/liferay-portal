@@ -275,7 +275,7 @@ export default function PredefinedValuesTable({
 					/>
 				</div>
 
-				{predefinedValues.length > 0 ? (
+				{predefinedValues.length ? (
 					<ClayTable className="predefined-values-table">
 						<ClayTable.Head>
 							<ClayTable.Row>

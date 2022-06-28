@@ -14,7 +14,7 @@
 
 CKEDITOR.plugins.add('wikilink', {
 	init(editor) {
-		var instance = this;
+		const instance = this;
 
 		editor.addCommand('link', new CKEDITOR.dialogCommand('link'));
 		editor.addCommand('unlink', new CKEDITOR.unlinkCommand());
@@ -36,14 +36,14 @@ CKEDITOR.plugins.add('wikilink', {
 			// document.queryCommandEnabled does not work for this in Firefox.
 			// Use element paths to detect the state.
 
-			var command = editor.getCommand('unlink');
+			const command = editor.getCommand('unlink');
 
-			var commandState = CKEDITOR.TRISTATE_DISABLED;
+			let commandState = CKEDITOR.TRISTATE_DISABLED;
 
-			var lastElement = event.data.path.lastElement;
+			const lastElement = event.data.path.lastElement;
 
 			if (lastElement) {
-				var element = lastElement.getAscendant('a', true);
+				const element = lastElement.getAscendant('a', true);
 
 				if (
 					element &&
@@ -58,7 +58,7 @@ CKEDITOR.plugins.add('wikilink', {
 		});
 
 		editor.on('doubleclick', (event) => {
-			var element =
+			const element =
 				CKEDITOR.plugins.link.getSelectedLink(editor) ||
 				event.data.element;
 
@@ -86,7 +86,7 @@ CKEDITOR.plugins.add('wikilink', {
 
 		if (editor.contextMenu) {
 			editor.contextMenu.addListener((element) => {
-				var selectionObj = null;
+				let selectionObj = null;
 
 				if (element && !element.isReadOnly()) {
 					element = CKEDITOR.plugins.link.getSelectedLink(editor);
@@ -107,24 +107,24 @@ CKEDITOR.plugins.add('wikilink', {
 
 CKEDITOR.plugins.link = {
 	getSelectedLink(editor) {
-		var selectedLink = null;
+		let selectedLink = null;
 
 		try {
-			var selection = editor.getSelection();
+			const selection = editor.getSelection();
 
 			if (selection.getType() === CKEDITOR.SELECTION_ELEMENT) {
-				var selectedElement = selection.getSelectedElement();
+				const selectedElement = selection.getSelectedElement();
 
 				if (selectedElement.is('a')) {
 					selectedLink = selectedElement;
 				}
 			}
 			else {
-				var range = selection.getRanges(true)[0];
+				const range = selection.getRanges(true)[0];
 
 				range.shrink(CKEDITOR.SHRINK_TEXT);
 
-				var root = range.getCommonAncestor();
+				const root = range.getCommonAncestor();
 
 				selectedLink = root.getAscendant('a', true);
 			}
@@ -139,17 +139,17 @@ CKEDITOR.unlinkCommand = function () {};
 
 CKEDITOR.unlinkCommand.prototype = {
 	exec(editor) {
-		var selection = editor.getSelection();
+		const selection = editor.getSelection();
 
-		var bookmarks = selection.createBookmarks();
-		var ranges = selection.getRanges();
+		const bookmarks = selection.createBookmarks();
+		const ranges = selection.getRanges();
 
-		var length = ranges.length;
+		const length = ranges.length;
 
-		for (var i = 0; i < length; i++) {
-			var rangeRoot = ranges[i].getCommonAncestor(true);
+		for (let i = 0; i < length; i++) {
+			const rangeRoot = ranges[i].getCommonAncestor(true);
 
-			var element = rangeRoot.getAscendant('a', true);
+			const element = rangeRoot.getAscendant('a', true);
 
 			if (!element) {
 				continue;

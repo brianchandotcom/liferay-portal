@@ -20,7 +20,7 @@ const FilterSearch = ({
 	searchTerm,
 	totalCount,
 }) => {
-	const emptyResults = filteredItems.length === 0;
+	const emptyResults = !filteredItems.length;
 	const searchEnabled = totalCount > 12;
 
 	return (

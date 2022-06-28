@@ -292,7 +292,7 @@ function mergeDataSets({
 		};
 	});
 
-	if (newFormattedHistogram.length === 0) {
+	if (!newFormattedHistogram.length) {
 		return {
 			...resultDataSet,
 			histogram: previousDataSet.histogram,

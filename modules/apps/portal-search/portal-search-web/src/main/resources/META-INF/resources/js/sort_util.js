@@ -15,7 +15,7 @@
 AUI.add(
 	'liferay-search-sort-util',
 	() => {
-		var SortUtil = {
+		const SortUtil = {
 			addURLParameter(key, value, parameterArray) {
 				key = encodeURIComponent(key);
 				value = encodeURIComponent(value);
@@ -28,8 +28,8 @@ AUI.add(
 			removeURLParameters(key, parameterArray) {
 				key = encodeURIComponent(key);
 
-				var newParameters = parameterArray.filter((item) => {
-					var itemSplit = item.split('=');
+				const newParameters = parameterArray.filter((item) => {
+					const itemSplit = item.split('=');
 
 					if (itemSplit && itemSplit[0] === key) {
 						return false;
@@ -42,7 +42,7 @@ AUI.add(
 			},
 
 			setURLParameters(key, values, parameterArray) {
-				var newParameters = SortUtil.removeURLParameters(
+				let newParameters = SortUtil.removeURLParameters(
 					key,
 					parameterArray
 				);
@@ -59,9 +59,9 @@ AUI.add(
 			},
 
 			updateQueryString(key, selections, queryString) {
-				var search = queryString;
+				let search = queryString;
 
-				var hasQuestionMark = false;
+				let hasQuestionMark = false;
 
 				if (search[0] === '?') {
 					hasQuestionMark = true;
@@ -71,11 +71,11 @@ AUI.add(
 					search = search.substr(1);
 				}
 
-				var parameterArray = search.split('&').filter((item) => {
+				const parameterArray = search.split('&').filter((item) => {
 					return item.trim() !== '';
 				});
 
-				var newParameters = SortUtil.setURLParameters(
+				const newParameters = SortUtil.setURLParameters(
 					key,
 					selections,
 					parameterArray

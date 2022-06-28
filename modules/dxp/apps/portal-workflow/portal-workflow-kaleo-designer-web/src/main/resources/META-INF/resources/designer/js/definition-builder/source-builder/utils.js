@@ -154,7 +154,7 @@ export function parseNotifications(node) {
 		);
 
 		if (Array.isArray(notificationTypes[0])) {
-			var typeArray = [];
+			const typeArray = [];
 			notificationTypes[0].forEach((type) => {
 				typeArray.push({notificationType: type});
 			});

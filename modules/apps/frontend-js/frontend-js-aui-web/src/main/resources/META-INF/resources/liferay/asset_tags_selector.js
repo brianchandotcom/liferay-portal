@@ -18,21 +18,21 @@
 AUI.add(
 	'liferay-asset-tags-selector',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var AArray = A.Array;
+		const AArray = A.Array;
 
-		var LString = Lang.String;
+		const LString = Lang.String;
 
-		var CSS_INPUT_NODE = 'lfr-tag-selector-input';
+		const CSS_INPUT_NODE = 'lfr-tag-selector-input';
 
-		var CSS_NO_MATCHES = 'no-matches';
+		const CSS_NO_MATCHES = 'no-matches';
 
-		var CSS_POPUP = 'lfr-tag-selector-popup';
+		const CSS_POPUP = 'lfr-tag-selector-popup';
 
-		var CSS_TAGS_LIST = 'lfr-tags-selector-list';
+		const CSS_TAGS_LIST = 'lfr-tags-selector-list';
 
-		var MAP_INVALID_CHARACTERS = AArray.hash([
+		const MAP_INVALID_CHARACTERS = AArray.hash([
 			'"',
 			'#',
 			'%',
@@ -61,20 +61,20 @@ AUI.add(
 			'~',
 		]);
 
-		var NAME = 'tagselector';
+		const NAME = 'tagselector';
 
-		var STR_BLANK = '';
+		const STR_BLANK = '';
 
-		var TPL_CHECKED = ' checked="checked" ';
+		const TPL_CHECKED = ' checked="checked" ';
 
-		var TPL_LOADING = '<div class="loading-animation" />';
+		const TPL_LOADING = '<div class="loading-animation" />';
 
-		var TPL_SEARCH_FORM =
+		const TPL_SEARCH_FORM =
 			'<form action="javascript:void(0);" class="form-search lfr-tag-selector-search">' +
 			'<input class="form-control lfr-tag-selector-input search-query" placeholder="{0}" type="text" />' +
 			'</form>';
 
-		var TPL_TAG = new A.Template(
+		const TPL_TAG = new A.Template(
 			'<div class="lfr-tag-selector-tags {[(!values.tags || !values.tags.length) ? "',
 			CSS_NO_MATCHES,
 			'" : "',
@@ -88,7 +88,7 @@ AUI.add(
 			'</div>'
 		);
 
-		var TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';
+		const TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';
 
 		/**
 		 * OPTIONS
@@ -106,7 +106,7 @@ AUI.add(
 		 * portalModelResource {boolean}: Whether the asset model is on the portal level.
 		 */
 
-		var AssetTagsSelector = A.Component.create({
+		const AssetTagsSelector = A.Component.create({
 			ATTRS: {
 				allowAddEntry: {
 					value: true,
@@ -133,7 +133,7 @@ AUI.add(
 
 				dataSource: {
 					valueFn() {
-						var instance = this;
+						const instance = this;
 
 						return instance._getTagsDataSource();
 					},
@@ -150,7 +150,7 @@ AUI.add(
 
 				hiddenInput: {
 					setter(value) {
-						var instance = this;
+						const instance = this;
 
 						return A.one(value + instance.get('guid'));
 					},
@@ -181,13 +181,13 @@ AUI.add(
 
 			prototype: {
 				_addEntries() {
-					var instance = this;
+					const instance = this;
 
-					var text = LString.escapeHTML(instance.inputNode.val());
+					const text = LString.escapeHTML(instance.inputNode.val());
 
 					if (text) {
 						if (text.indexOf(',') > -1) {
-							var items = text.split(',');
+							const items = text.split(',');
 
 							items.forEach((item) => {
 								instance.entries.add(item, {});
@@ -202,9 +202,9 @@ AUI.add(
 				},
 
 				_bindTagsSelector() {
-					var instance = this;
+					const instance = this;
 
-					var form = instance.inputNode.get('form');
+					const form = instance.inputNode.get('form');
 
 					instance._submitFormListener = A.Do.before(
 						instance._addEntries,
@@ -219,7 +219,7 @@ AUI.add(
 				},
 
 				_getEntries(callback) {
-					var instance = this;
+					const instance = this;
 
 					Liferay.Service(
 						'/assettag/get-groups-tags',
@@ -231,10 +231,10 @@ AUI.add(
 				},
 
 				_getPopup() {
-					var instance = this;
+					const instance = this;
 
 					if (!instance._popup) {
-						var popup = Liferay.Util.getTop().Liferay.Util.Window.getWindow(
+						const popup = Liferay.Util.getTop().Liferay.Util.Window.getWindow(
 							{
 								dialog: {
 									cssClass: CSS_POPUP,
@@ -244,11 +244,11 @@ AUI.add(
 							}
 						);
 
-						var bodyNode = popup.bodyNode;
+						const bodyNode = popup.bodyNode;
 
 						bodyNode.html(STR_BLANK);
 
-						var searchForm = A.Node.create(
+						const searchForm = A.Node.create(
 							Lang.sub(TPL_SEARCH_FORM, [
 								Liferay.Language.get('search'),
 							])
@@ -256,9 +256,9 @@ AUI.add(
 
 						bodyNode.append(searchForm);
 
-						var searchField = searchForm.one('input');
+						const searchField = searchForm.one('input');
 
-						var entriesNode = A.Node.create(TPL_TAGS_CONTAINER);
+						const entriesNode = A.Node.create(TPL_TAGS_CONTAINER);
 
 						bodyNode.append(entriesNode);
 
@@ -269,7 +269,7 @@ AUI.add(
 
 						instance._initSearch();
 
-						var onCheckboxClick = A.bind(
+						const onCheckboxClick = A.bind(
 							'_onCheckboxClick',
 							instance
 						);
@@ -285,28 +285,28 @@ AUI.add(
 				},
 
 				_getTagsDataSource() {
-					var instance = this;
+					const instance = this;
 
-					var AssetTagSearch = Liferay.Service.bind(
+					const AssetTagSearch = Liferay.Service.bind(
 						'/assettag/search'
 					);
 
 					AssetTagSearch._serviceQueryCache = {};
 
-					var serviceQueryCache = AssetTagSearch._serviceQueryCache;
+					const serviceQueryCache = AssetTagSearch._serviceQueryCache;
 
-					var dataSource = new Liferay.Service.DataSource({
+					const dataSource = new Liferay.Service.DataSource({
 						on: {
 							request(event) {
-								var term = decodeURIComponent(event.request);
+								let term = decodeURIComponent(event.request);
 
-								var key = term;
+								const key = term;
 
 								if (term === '*') {
 									term = STR_BLANK;
 								}
 
-								var serviceQueryObj = serviceQueryCache[key];
+								let serviceQueryObj = serviceQueryCache[key];
 
 								if (!serviceQueryObj) {
 									serviceQueryObj = {
@@ -332,23 +332,23 @@ AUI.add(
 				},
 
 				_initSearch() {
-					var instance = this;
+					const instance = this;
 
-					var popup = instance._popup;
+					const popup = instance._popup;
 
 					popup.liveSearch = new A.LiveSearch({
 						after: {
 							search() {
-								var fieldsets = popup.entriesNode.all(
+								const fieldsets = popup.entriesNode.all(
 									'fieldset'
 								);
 
 								fieldsets.each((item) => {
-									var visibleEntries = item.one(
+									const visibleEntries = item.one(
 										'label:not(.hide)'
 									);
 
-									var action = 'addClass';
+									let action = 'addClass';
 
 									if (visibleEntries) {
 										action = 'removeClass';
@@ -359,7 +359,7 @@ AUI.add(
 							},
 						},
 						data(node) {
-							var value = node.attr('title');
+							const value = node.attr('title');
 
 							return value.toLowerCase();
 						},
@@ -369,7 +369,7 @@ AUI.add(
 				},
 
 				_namespace(name) {
-					var instance = this;
+					const instance = this;
 
 					return (
 						instance.get('instanceVar') +
@@ -379,7 +379,7 @@ AUI.add(
 				},
 
 				_onAddEntryClick(event) {
-					var instance = this;
+					const instance = this;
 
 					event.domEvent.preventDefault();
 
@@ -387,13 +387,13 @@ AUI.add(
 				},
 
 				_onCheckboxClick(event) {
-					var instance = this;
+					const instance = this;
 
-					var checkbox = event.currentTarget;
-					var checked = checkbox.get('checked');
-					var value = checkbox.val();
+					const checkbox = event.currentTarget;
+					const checked = checkbox.get('checked');
+					const value = checkbox.val();
 
-					var action = 'remove';
+					let action = 'remove';
 
 					if (checked) {
 						action = 'add';
@@ -403,9 +403,9 @@ AUI.add(
 				},
 
 				_onKeyPress(event) {
-					var instance = this;
+					const instance = this;
 
-					var charCode = event.charCode;
+					const charCode = event.charCode;
 
 					if (!A.UA.gecko || event._event.charCode) {
 						if (Number(charCode) === 44) {
@@ -424,11 +424,11 @@ AUI.add(
 				},
 
 				_renderIcons() {
-					var instance = this;
+					const instance = this;
 
-					var contentBox = instance.get('contentBox');
+					const contentBox = instance.get('contentBox');
 
-					var buttonGroup = [
+					const buttonGroup = [
 						{
 							label: Liferay.Language.get('select'),
 							on: {
@@ -452,15 +452,15 @@ AUI.add(
 						children: [buttonGroup],
 					}).render(contentBox);
 
-					var iconsBoundingBox = instance.icons.get('boundingBox');
+					const iconsBoundingBox = instance.icons.get('boundingBox');
 
 					instance.entryHolder.placeAfter(iconsBoundingBox);
 				},
 
 				_renderTemplate(data) {
-					var instance = this;
+					const instance = this;
 
-					var popup = instance._popup;
+					const popup = instance._popup;
 
 					TPL_TAG.render(
 						{
@@ -484,11 +484,11 @@ AUI.add(
 				},
 
 				_showPopup(event) {
-					var instance = this;
+					const instance = this;
 
 					event.domEvent.preventDefault();
 
-					var popup = instance._getPopup();
+					const popup = instance._getPopup();
 
 					popup.entriesNode.append(A.Node.create(TPL_LOADING));
 
@@ -496,7 +496,7 @@ AUI.add(
 				},
 
 				_showSelectPopup(event) {
-					var instance = this;
+					const instance = this;
 
 					instance._showPopup(event);
 
@@ -510,21 +510,21 @@ AUI.add(
 				},
 
 				_updateHiddenInput(event) {
-					var instance = this;
+					const instance = this;
 
-					var hiddenInput = instance.get('hiddenInput');
+					const hiddenInput = instance.get('hiddenInput');
 
 					hiddenInput.val(instance.entries.keys.join());
 
-					var popup = instance._popup;
+					const popup = instance._popup;
 
 					if (popup && popup.get('visible')) {
-						var checkbox = popup.bodyNode.one(
+						const checkbox = popup.bodyNode.one(
 							'input[value=' + event.attrName + ']'
 						);
 
 						if (checkbox) {
-							var checked = false;
+							let checked = false;
 
 							if (event.type === 'dataset:add') {
 								checked = true;
@@ -536,10 +536,10 @@ AUI.add(
 				},
 
 				_updateSelectList(data) {
-					var instance = this;
+					const instance = this;
 
-					for (var i = 0; i < data.length; i++) {
-						var tag = data[i];
+					for (let i = 0; i < data.length; i++) {
+						const tag = data[i];
 
 						tag.checked =
 							instance.entries.indexOfKey(tag.name) > -1
@@ -551,13 +551,13 @@ AUI.add(
 				},
 
 				addEntries() {
-					var instance = this;
+					const instance = this;
 
 					instance._addEntries();
 				},
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
 					AssetTagsSelector.superclass.bindUI.apply(
 						instance,
@@ -566,7 +566,7 @@ AUI.add(
 
 					instance._bindTagsSelector();
 
-					var entries = instance.entries;
+					const entries = instance.entries;
 
 					entries.after('add', instance._updateHiddenInput, instance);
 					entries.after(
@@ -577,7 +577,7 @@ AUI.add(
 				},
 
 				renderUI() {
-					var instance = this;
+					const instance = this;
 
 					AssetTagsSelector.superclass.renderUI.apply(
 						instance,
@@ -592,14 +592,14 @@ AUI.add(
 				},
 
 				syncUI() {
-					var instance = this;
+					const instance = this;
 
 					AssetTagsSelector.superclass.syncUI.apply(
 						instance,
 						arguments
 					);
 
-					var curEntries = instance.get('curEntries');
+					const curEntries = instance.get('curEntries');
 
 					curEntries.forEach(instance.add, instance);
 				},

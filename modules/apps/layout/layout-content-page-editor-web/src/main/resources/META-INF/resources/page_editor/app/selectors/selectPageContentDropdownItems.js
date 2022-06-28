@@ -131,7 +131,7 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 			});
 		}
 
-		if (dropdownItems.length === 0) {
+		if (!dropdownItems.length) {
 			return null;
 		}
 

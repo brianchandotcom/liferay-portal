@@ -259,7 +259,7 @@ export default function ({
 
 				<ClayList>
 					{initialClauseContributorsList.some(
-						({value}) => value.length === 0
+						({value}) => !value.length
 					) && (
 						<ClayAlert
 							actions={

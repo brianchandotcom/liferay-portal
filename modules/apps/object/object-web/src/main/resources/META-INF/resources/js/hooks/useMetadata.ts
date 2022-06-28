@@ -23,7 +23,7 @@ export default function useMetadata(
 	ffUseMetadataAsSystemFields: boolean
 ) {
 	return useMemo(() => {
-		if (!elementList || elementList.length === 0) {
+		if (!elementList || !elementList.length) {
 			return [] as SidebarCategory[];
 		}
 

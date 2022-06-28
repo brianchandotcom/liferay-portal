@@ -43,7 +43,7 @@ function ManagementToolbar({
 		<>
 			<FrontendManagementToolbar.Container
 				className={getCN('clause-contributors-management-bar', {
-					'management-bar-primary': selected.length > 0,
+					'management-bar-primary': !!selected.length,
 				})}
 			>
 				<FrontendManagementToolbar.ItemList>
@@ -51,11 +51,11 @@ function ManagementToolbar({
 						<ClayCheckbox
 							aria-label={Liferay.Language.get('checkbox')}
 							checked={
-								allItems.length > 0 &&
+								!!allItems.length &&
 								selected.length === allItems.length
 							}
 							indeterminate={
-								selected.length > 0 &&
+								!!selected.length &&
 								selected.length < allItems.length
 							}
 							onChange={() =>
@@ -69,10 +69,10 @@ function ManagementToolbar({
 					</FrontendManagementToolbar.Item>
 				</FrontendManagementToolbar.ItemList>
 
-				{selected.length > 0 ? (
+				{selected.length ? (
 					<>
 						<FrontendManagementToolbar.ItemList expand>
-							{allItems.length > 0 &&
+							{!!allItems.length &&
 							selected.length === allItems.length ? (
 								<FrontendManagementToolbar.Item className="navbar-form">
 									<span className="component-text text-truncate-inline">

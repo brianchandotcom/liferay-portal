@@ -227,7 +227,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 
 				if (wrapperElement) {
 					const elementList = wrapperElement.$;
-					if (elementList.length > 0) {
+					if (elementList.length) {
 						const lastElement = new CKEDITOR.dom.element(
 							elementList[elementList.length - 1]
 						);
@@ -671,9 +671,9 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 				}
 			});
 
-			var path = instance.path;
+			const path = instance.path;
 
-			var dependencies = [
+			const dependencies = [
 				CKEDITOR.getUrl(path + 'DragEvent.es.js'),
 				CKEDITOR.getUrl(path + 'Resizer.es.js'),
 			];

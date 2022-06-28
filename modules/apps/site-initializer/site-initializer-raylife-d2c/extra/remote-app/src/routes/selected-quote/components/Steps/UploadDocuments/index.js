@@ -105,7 +105,7 @@ const UploadDocuments = () => {
 				section.title,
 				true
 			);
-			if (section.required && section.files.length === 0) {
+			if (section.required && !section.files.length) {
 				onSetError(section, true);
 
 				continue;

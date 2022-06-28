@@ -75,7 +75,7 @@ class DDMFormHandler {
 
 		for (const ddmFormValue of this.fields) {
 			if (ddmFormValue.required) {
-				if (ddmFormValue.value.length === 0) {
+				if (!ddmFormValue.value.length) {
 					disabled = true;
 				}
 				else {

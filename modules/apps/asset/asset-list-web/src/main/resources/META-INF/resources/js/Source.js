@@ -355,7 +355,7 @@ export default function ({classTypes, namespace}) {
 		if (fromBox.attr('id') === id || toBox.attr('id') === id) {
 			toggleSubclasses();
 
-			if (document.getElementById(id).options.length === 0) {
+			if (!document.getElementById(id).options.length) {
 				toggleSaveButton(true);
 			}
 			else {

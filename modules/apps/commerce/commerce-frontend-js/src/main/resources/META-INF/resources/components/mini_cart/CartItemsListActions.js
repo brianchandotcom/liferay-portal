@@ -61,7 +61,7 @@ function CartItemsListActions() {
 		<div className="mini-cart-header">
 			<div className="mini-cart-header-block">
 				<div className="mini-cart-header-resume">
-					{cartItems.length > 0 && (
+					{!!cartItems.length && (
 						<>
 							<span className="items">{cartItems.length}</span>
 							{cartItems.length > 1

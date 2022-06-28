@@ -20,8 +20,8 @@
 export function hideLayoutPane(options) {
 	options = options || {};
 
-	var object = options.obj;
-	var pane = options.pane;
+	const object = options.obj;
+	let pane = options.pane;
 
 	if (object && object.checked) {
 		pane = document.querySelector(pane);
@@ -51,12 +51,12 @@ export function getLayoutIcons() {
 export function proposeLayout(options) {
 	options = options || {};
 
-	var namespace = options.namespace;
-	var reviewers = options.reviewers;
+	const namespace = options.namespace;
+	const reviewers = options.reviewers;
 
-	var contents = '<div><form action="' + options.url + '" method="post">';
+	let contents = '<div><form action="' + options.url + '" method="post">';
 
-	if (reviewers.length > 0) {
+	if (reviewers.length) {
 		contents +=
 			'<textarea name="' +
 			namespace +
@@ -66,7 +66,7 @@ export function proposeLayout(options) {
 			namespace +
 			'reviewUserId">';
 
-		for (var i = 0; i < reviewers.length; i++) {
+		for (let i = 0; i < reviewers.length; i++) {
 			contents +=
 				'<option value="' +
 				reviewers[i].userId +
@@ -115,7 +115,7 @@ export function publishToLive(options) {
 			modal: true,
 			on: {
 				visibleChange(event) {
-					var instance = this;
+					const instance = this;
 
 					if (!event.newVal) {
 						instance.destroy();
@@ -136,8 +136,8 @@ export function publishToLive(options) {
 export function showLayoutPane(options) {
 	options = options || {};
 
-	var object = options.obj;
-	var pane = options.pane;
+	const object = options.obj;
+	let pane = options.pane;
 
 	if (object && object.checked) {
 		pane = document.querySelector(pane);
@@ -156,11 +156,11 @@ export function showLayoutPane(options) {
 export function toggleLayoutDetails(options) {
 	options = options || {};
 
-	var detail = document.querySelector(options.detail);
-	var image = document.querySelector(options.toggle);
+	const detail = document.querySelector(options.detail);
+	const image = document.querySelector(options.toggle);
 
 	if (detail && image) {
-		var icon = themeDisplay.getPathThemeImages() + '/arrows/01_plus.png';
+		let icon = themeDisplay.getPathThemeImages() + '/arrows/01_plus.png';
 
 		if (detail.classList.contains('hide')) {
 			detail.classList.remove('hide');

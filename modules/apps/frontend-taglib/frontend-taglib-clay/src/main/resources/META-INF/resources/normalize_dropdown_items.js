@@ -81,7 +81,7 @@ export default function normalizeDropdownItems(items) {
 
 	const filteredItems = filterEmptyGroups(items);
 
-	if (filteredItems.length === 0) {
+	if (!filteredItems.length) {
 		return null;
 	}
 

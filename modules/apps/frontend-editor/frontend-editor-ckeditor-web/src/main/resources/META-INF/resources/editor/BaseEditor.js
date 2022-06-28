@@ -32,7 +32,7 @@ const BaseEditor = forwardRef(
 			Liferay.once('beforeScreenFlip', () => {
 				if (
 					window.CKEDITOR &&
-					Object.keys(window.CKEDITOR.instances).length === 0
+					!Object.keys(window.CKEDITOR.instances).length
 				) {
 					delete window.CKEDITOR;
 				}

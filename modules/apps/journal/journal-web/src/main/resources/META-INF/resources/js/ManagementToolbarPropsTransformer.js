@@ -78,7 +78,7 @@ export default function propsTransformer({
 	const moveEntries = () => {
 		let entrySelectorNodes = document.querySelectorAll('.entry-selector');
 
-		if (entrySelectorNodes.length === 0) {
+		if (!entrySelectorNodes.length) {
 			entrySelectorNodes = document.querySelectorAll(
 				'.card-page-item input[type="checkbox"]'
 			);

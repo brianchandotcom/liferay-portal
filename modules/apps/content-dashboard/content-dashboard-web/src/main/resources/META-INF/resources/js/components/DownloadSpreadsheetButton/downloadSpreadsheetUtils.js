@@ -28,7 +28,7 @@ export async function fetchFile({controller, url}) {
 export function downloadFileFromBlob(blob) {
 	const file = URL.createObjectURL(blob);
 
-	var fileLink = document.createElement('a');
+	const fileLink = document.createElement('a');
 	fileLink.href = file;
 
 	const today = new Date();

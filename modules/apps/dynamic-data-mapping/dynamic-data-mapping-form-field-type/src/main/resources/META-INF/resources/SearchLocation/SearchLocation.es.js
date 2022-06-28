@@ -35,7 +35,7 @@ const getClassNameBasedOnLayout = (layout, visibleField) => {
 };
 
 const isEmpty = (object) => {
-	return object && Object.keys(object).length === 0;
+	return object && !Object.keys(object).length;
 };
 
 const Field = ({
@@ -219,7 +219,7 @@ const Main = ({
 			/>
 
 			<div className="row">
-				{availableVisibleFields.length > 0 &&
+				{!!availableVisibleFields.length &&
 					availableVisibleFields.map((visibleField, index) => {
 						if (currentVisibleFields.includes(visibleField)) {
 							const visibleFieldName = name + '#' + visibleField;

@@ -221,7 +221,7 @@ const Sharing = ({
 					erroredResults.map(({error}) => error)
 				);
 
-				if (erroredResults.length === 0) {
+				if (!erroredResults.length) {
 					setMultiSelectValue('');
 				}
 
@@ -318,7 +318,7 @@ const Sharing = ({
 								</ClayForm.Text>
 							</ClayForm.FeedbackGroup>
 
-							{emailAddressErrorMessages.length > 0 && (
+							{!!emailAddressErrorMessages.length && (
 								<ClayForm.FeedbackGroup>
 									{emailAddressErrorMessages.map(
 										(emailAddressErrorMessage) => (

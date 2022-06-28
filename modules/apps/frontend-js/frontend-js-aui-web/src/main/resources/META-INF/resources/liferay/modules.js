@@ -16,26 +16,26 @@
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 (function () {
-	var LiferayAUI = Liferay.AUI;
+	const LiferayAUI = Liferay.AUI;
 
-	var COMBINE = LiferayAUI.getCombine();
+	const COMBINE = LiferayAUI.getCombine();
 
-	var CORE_MODULES = YUI.Env.core;
+	const CORE_MODULES = YUI.Env.core;
 
-	var INPUT_EL = document.createElement('input');
+	const INPUT_EL = document.createElement('input');
 
-	var PATH_EDITOR_CKEDITOR = LiferayAUI.getEditorCKEditorPath();
+	const PATH_EDITOR_CKEDITOR = LiferayAUI.getEditorCKEditorPath();
 
-	var PATH_JAVASCRIPT = '/o/frontend-js-aui-web';
+	const PATH_JAVASCRIPT = '/o/frontend-js-aui-web';
 
-	var SUPPORTS_INPUT_SELECTION =
+	const SUPPORTS_INPUT_SELECTION =
 		typeof INPUT_EL.selectionStart === 'number' &&
 		typeof INPUT_EL.selectionEnd === 'number';
 
-	var testHistory = function (A) {
-		var WIN = A.config.win;
+	const testHistory = function (A) {
+		const WIN = A.config.win;
 
-		var HISTORY = WIN.history;
+		const HISTORY = WIN.history;
 
 		return (
 			HISTORY &&

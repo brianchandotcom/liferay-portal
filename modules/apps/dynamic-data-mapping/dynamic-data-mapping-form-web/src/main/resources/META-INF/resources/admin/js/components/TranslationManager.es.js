@@ -69,7 +69,7 @@ export function TranslationManager() {
 							}
 						});
 
-						if (languageIds.length === 0) {
+						if (!languageIds.length) {
 							return;
 						}
 

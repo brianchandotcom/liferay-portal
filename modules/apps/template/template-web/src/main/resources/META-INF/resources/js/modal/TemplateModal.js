@@ -57,7 +57,7 @@ export default function TemplateModal({
 
 		const errors = validateFields(name, itemType, itemSubtype);
 
-		if (Object.keys(errors).length > 0) {
+		if (Object.keys(errors).length) {
 			setErrors(errors);
 
 			return;

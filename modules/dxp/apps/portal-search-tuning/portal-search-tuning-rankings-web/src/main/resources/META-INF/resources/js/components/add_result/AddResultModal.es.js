@@ -143,7 +143,7 @@ function AddResultModal({
 	 * deselected. Otherwise, select all items.
 	 */
 	function _handleAllCheckbox() {
-		if (_getCurrentResultSelectedIds().length > 0) {
+		if (_getCurrentResultSelectedIds().length) {
 			_deselectAll();
 		}
 		else {
@@ -307,27 +307,26 @@ function AddResultModal({
 	function _renderSearchResults() {
 		const classManagementBar = getCN(
 			'management-bar',
-			selectedIds.length > 0
+			selectedIds.length
 				? 'management-bar-primary'
 				: 'management-bar-light',
 			'navbar',
 			'navbar-expand-md'
 		);
 
-		const selectItemsLabel =
-			selectedIds.length > 0
-				? getPluralMessage(
-						Liferay.Language.get('x-item-selected'),
-						Liferay.Language.get('x-items-selected'),
-						selectedIds.length
-				  )
-				: Liferay.Language.get('select-items');
+		const selectItemsLabel = selectedIds.length
+			? getPluralMessage(
+					Liferay.Language.get('x-item-selected'),
+					Liferay.Language.get('x-items-selected'),
+					selectedIds.length
+			  )
+			: Liferay.Language.get('select-items');
 
 		const checked =
 			_getCurrentResultSelectedIds().length === resource.documents.length;
 
 		const indeterminate =
-			selectedIds.length > 0 &&
+			!!selectedIds.length &&
 			_getCurrentResultSelectedIds().length !== resource.documents.length;
 
 		return (
@@ -353,7 +352,7 @@ function AddResultModal({
 									</span>
 								</li>
 
-								{selectedIds.length > 0 && (
+								{!!selectedIds.length && (
 									<li className="nav-item nav-item-shrink">
 										<ClayButton
 											className="btn-outline-borderless"
@@ -481,7 +480,7 @@ function AddResultModal({
 							</ClayButton>
 
 							<ClayButton
-								disabled={selectedIds.length === 0}
+								disabled={!selectedIds.length}
 								onClick={_handleSubmit}
 							>
 								{Liferay.Language.get('add')}

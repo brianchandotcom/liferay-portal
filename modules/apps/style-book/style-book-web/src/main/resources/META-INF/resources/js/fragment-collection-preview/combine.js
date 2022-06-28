@@ -18,10 +18,10 @@ export function combine(...arrays) {
 	function addCombinations(combination, restArrays) {
 		const nonemptyArrays = restArrays.filter((array) => array.length);
 
-		if (nonemptyArrays.length === 0 && combination.length > 0) {
+		if (!nonemptyArrays.length && !!combination.length) {
 			combinations.push(combination);
 		}
-		else if (nonemptyArrays.length > 0) {
+		else if (nonemptyArrays.length) {
 			const [nextArray, ...nextRest] = nonemptyArrays;
 
 			nextArray.forEach((element) => {

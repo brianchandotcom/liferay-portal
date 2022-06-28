@@ -15,16 +15,16 @@
 AUI.add(
 	'liferay-layouts-tree-selectable',
 	(A) => {
-		var Lang = A.Lang;
+		const Lang = A.Lang;
 
-		var LABEL_TPL =
+		const LABEL_TPL =
 			'<span class="{cssClass}" title="{title}">{label}</span>';
 
-		var STR_DEFAULT_STATE = 'defaultState';
+		const STR_DEFAULT_STATE = 'defaultState';
 
-		var STR_HOST = 'host';
+		const STR_HOST = 'host';
 
-		var LayoutsTreeSelectable = A.Component.create({
+		const LayoutsTreeSelectable = A.Component.create({
 			ATTRS: {
 				defaultState: {
 					validator: Lang.isBoolean,
@@ -40,9 +40,9 @@ AUI.add(
 
 			prototype: {
 				_formatNode() {
-					var instance = this;
+					const instance = this;
 
-					var currentRetVal = A.Do.currentRetVal;
+					const currentRetVal = A.Do.currentRetVal;
 
 					return new A.Do.AlterReturn(
 						'Modified checked and type attributes',
@@ -66,7 +66,7 @@ AUI.add(
 				},
 
 				_formatRootNode(rootConfig) {
-					var instance = this;
+					const instance = this;
 
 					return new A.Do.AlterReturn(
 						'Modified checked, label and type attributes',
@@ -80,9 +80,9 @@ AUI.add(
 				},
 
 				_onNodeCheckedChange(event) {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
 					if (event.target === event.originalTarget) {
 						host.fire('selectableNodeCheckedChange', {
@@ -93,9 +93,9 @@ AUI.add(
 				},
 
 				_onNodeChildrenChange(event) {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
 					if (event.src !== A.Widget.UI_SRC) {
 						host.fire('selectableNodeChildrenChange', {
@@ -105,9 +105,9 @@ AUI.add(
 				},
 
 				_onTreeAppend(event) {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
 					host.fire('selectableTreeAppend', {
 						node: event.tree.node,
@@ -115,21 +115,21 @@ AUI.add(
 				},
 
 				_onTreeRender() {
-					var instance = this;
+					const instance = this;
 
-					var host = instance.get(STR_HOST);
+					const host = instance.get(STR_HOST);
 
 					host.fire('selectableTreeRender');
 				},
 
 				destructor() {
-					var instance = this;
+					const instance = this;
 
 					new A.EventHandle(instance._eventHandles).detach();
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance._eventHandles = [
 						instance.afterHostEvent(

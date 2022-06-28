@@ -70,7 +70,7 @@ function PerformanceByStepPage({query, routeParams}) {
 
 			<PerformanceByStepPage.Body
 				{...data}
-				filtered={search || selectedFilters.length > 0}
+				filtered={search || !!selectedFilters.length}
 			/>
 		</PromisesResolver>
 	);

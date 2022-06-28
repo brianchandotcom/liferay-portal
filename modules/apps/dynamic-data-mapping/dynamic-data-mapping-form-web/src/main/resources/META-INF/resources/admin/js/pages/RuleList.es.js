@@ -469,9 +469,9 @@ export function RuleList({
 				{Liferay.Language.get('rule-builder')}
 			</h1>
 
-			{rules.length === 0 && <EmptyState />}
+			{!rules.length && <EmptyState />}
 
-			{rules.length > 0 && (
+			{!!rules.length && (
 				<ClayList className="mt-4" showQuickActionsOnHover={false}>
 					{rules.map((rule, index) => (
 						<ListItem

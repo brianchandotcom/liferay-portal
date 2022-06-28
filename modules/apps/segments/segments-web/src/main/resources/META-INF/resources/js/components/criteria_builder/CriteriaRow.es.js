@@ -554,7 +554,7 @@ class CriteriaRow extends Component {
 		const warningOnProperty =
 			selectedProperty.options === undefined
 				? false
-				: selectedProperty.options.length === 0
+				: !selectedProperty.options.length
 				? false
 				: selectedProperty.options.find((option) => {
 						return (
@@ -567,7 +567,7 @@ class CriteriaRow extends Component {
 
 		if (
 			selectedProperty.options !== undefined &&
-			selectedProperty.options.length > 0 &&
+			!!selectedProperty.options.length &&
 			selectedProperty.options.find((option) => {
 				return option.value === value;
 			}) === undefined &&

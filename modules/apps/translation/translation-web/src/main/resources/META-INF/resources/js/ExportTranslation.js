@@ -391,9 +391,9 @@ const ExportTranslation = ({
 			<ClayButton.Group spaced>
 				<ClayButton
 					disabled={
-						selectedTargetLanguageIds.length === 0 ||
+						!selectedTargetLanguageIds.length ||
 						(experiences?.length > 1 &&
-							selectedExperiencesIds.length === 0)
+							!selectedExperiencesIds.length)
 					}
 					displayType="primary"
 					type="submit"

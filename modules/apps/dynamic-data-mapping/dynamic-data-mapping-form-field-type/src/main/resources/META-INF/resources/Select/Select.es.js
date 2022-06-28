@@ -233,7 +233,7 @@ const DropdownListWithSearch = ({
 				onChange={(event) => setQuery(event.target.value)}
 				value={query}
 			/>
-			{filteredOptions.length > 0 ? (
+			{filteredOptions.length ? (
 				<DropdownList
 					currentValue={currentValue}
 					expand={expand}

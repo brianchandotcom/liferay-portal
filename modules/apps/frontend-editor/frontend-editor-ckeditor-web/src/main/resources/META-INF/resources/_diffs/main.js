@@ -15,32 +15,32 @@
 AUI.add(
 	'inline-editor-ckeditor',
 	(A) => {
-		var Lang = A.Lang;
-		var PositionAlign = A.WidgetPositionAlign;
+		const Lang = A.Lang;
+		const PositionAlign = A.WidgetPositionAlign;
 
-		var ALIGN = 'align';
+		const ALIGN = 'align';
 
-		var BOUNDING_BOX = 'boundingBox';
+		const BOUNDING_BOX = 'boundingBox';
 
-		var EDITOR = 'editor';
+		const EDITOR = 'editor';
 
-		var EDITOR_NAME = 'editorName';
+		const EDITOR_NAME = 'editorName';
 
-		var EDITOR_PREFIX = 'editorPrefix';
+		const EDITOR_PREFIX = 'editorPrefix';
 
-		var EDITOR_SUFFIX = 'editorSuffix';
+		const EDITOR_SUFFIX = 'editorSuffix';
 
-		var POINT_BL = PositionAlign.BL;
+		const POINT_BL = PositionAlign.BL;
 
-		var POINT_TL = PositionAlign.TL;
+		const POINT_TL = PositionAlign.TL;
 
-		var POINTS_WINDOW_CENTER = [POINT_TL, PositionAlign.TC];
+		const POINTS_WINDOW_CENTER = [POINT_TL, PositionAlign.TC];
 
-		var VISIBLE = 'visible';
+		const VISIBLE = 'visible';
 
-		var WIN = A.config.win;
+		const WIN = A.config.win;
 
-		var CKEditorInline = A.Component.create({
+		const CKEditorInline = A.Component.create({
 			AUGMENTS: [Liferay.InlineEditorBase],
 
 			EXTENDS: A.Base,
@@ -49,7 +49,7 @@ AUI.add(
 
 			prototype: {
 				_attachScrollListener() {
-					var instance = this;
+					const instance = this;
 
 					if (!instance._scrollHandle) {
 						instance._scrollHandle = A.getWin().on(
@@ -61,7 +61,7 @@ AUI.add(
 				},
 
 				_destructor() {
-					var instance = this;
+					const instance = this;
 
 					A.Array.invoke(instance._eventHandles, 'removeListener');
 
@@ -71,23 +71,23 @@ AUI.add(
 				},
 
 				_getAutoSaveTimeout() {
-					var instance = this;
+					const instance = this;
 
-					var editor = instance.get(EDITOR);
+					const editor = instance.get(EDITOR);
 
 					return editor.config.autoSaveTimeout;
 				},
 
 				_getCloseNoticeTimeout() {
-					var instance = this;
+					const instance = this;
 
-					var editor = instance.get(EDITOR);
+					const editor = instance.get(EDITOR);
 
 					return editor.config.closeNoticeTimeout;
 				},
 
 				_onEditorBlur() {
-					var instance = this;
+					const instance = this;
 
 					instance.stopSaveTask();
 
@@ -97,9 +97,9 @@ AUI.add(
 				},
 
 				_onEditorFocus() {
-					var instance = this;
+					const instance = this;
 
-					var originalContentNode = A.one(
+					const originalContentNode = A.one(
 						'#' +
 							instance.get(EDITOR_NAME) +
 							instance.get(EDITOR_SUFFIX)
@@ -109,7 +109,7 @@ AUI.add(
 						originalContentNode.text(this.get(EDITOR).getData());
 					}
 
-					var notice = instance.getEditNotice();
+					const notice = instance.getEditNotice();
 
 					if (
 						notice.get(VISIBLE) &&
@@ -133,15 +133,15 @@ AUI.add(
 				},
 
 				_restoreContent() {
-					var instance = this;
+					const instance = this;
 
-					var originalContentNode = A.one(
+					const originalContentNode = A.one(
 						'#' +
 							instance.get(EDITOR_NAME) +
 							instance.get(EDITOR_SUFFIX)
 					);
 
-					var originalContent = originalContentNode.text();
+					const originalContent = originalContentNode.text();
 
 					instance.get(EDITOR).setData(originalContent);
 
@@ -151,27 +151,27 @@ AUI.add(
 				},
 
 				_updateNoticePosition() {
-					var instance = this;
+					const instance = this;
 
-					var notice = instance.getEditNotice();
+					const notice = instance.getEditNotice();
 
 					if (notice.get(VISIBLE)) {
-						var editorToolbarNode = A.one(
+						const editorToolbarNode = A.one(
 							instance.get(EDITOR_PREFIX) +
 								instance.get(EDITOR_NAME)
 						);
 
-						var editorToolbarVisible =
+						const editorToolbarVisible =
 							editorToolbarNode.getStyle('display') !== 'none';
 
-						var align = {
+						const align = {
 							node: WIN,
 							points: POINTS_WINDOW_CENTER,
 						};
 
 						if (editorToolbarVisible) {
-							var noticePosition = POINT_TL;
-							var containerPostion = POINT_BL;
+							let noticePosition = POINT_TL;
+							let containerPostion = POINT_BL;
 
 							if (
 								Lang.toInt(editorToolbarNode.getStyle('top')) >
@@ -190,9 +190,9 @@ AUI.add(
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
-					var editor = instance.get(EDITOR);
+					const editor = instance.get(EDITOR);
 
 					instance._eventHandles = [
 						editor.on('blur', instance._onEditorBlur, instance),
@@ -217,7 +217,7 @@ AUI.add(
 						'click',
 						(event) => {
 							if (event.shiftKey) {
-								var clone = event.currentTarget.clone();
+								const clone = event.currentTarget.clone();
 
 								document.body.appendChild(clone);
 
@@ -229,13 +229,13 @@ AUI.add(
 				},
 
 				isContentDirty() {
-					var instance = this;
+					const instance = this;
 
 					return instance.get(EDITOR).checkDirty();
 				},
 
 				resetDirty() {
-					var instance = this;
+					const instance = this;
 
 					instance.get(EDITOR).resetDirty();
 				},

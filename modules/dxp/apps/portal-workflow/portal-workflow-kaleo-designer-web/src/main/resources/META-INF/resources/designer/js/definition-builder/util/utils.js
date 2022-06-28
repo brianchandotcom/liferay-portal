@@ -19,7 +19,7 @@ function isObject(value) {
 }
 
 function isObjectEmpty(object) {
-	if (Object.keys(object).length === 0) {
+	if (!Object.keys(object).length) {
 		return true;
 	}
 

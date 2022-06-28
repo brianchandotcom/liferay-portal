@@ -53,7 +53,7 @@ function normalizeInputValue(fieldType, locale, value) {
 		fieldType === 'grid' ||
 		fieldType === 'image'
 	) {
-		return Object.keys(value).length === 0 ? '' : JSON.stringify(value);
+		return !Object.keys(value).length ? '' : JSON.stringify(value);
 	}
 
 	return value;

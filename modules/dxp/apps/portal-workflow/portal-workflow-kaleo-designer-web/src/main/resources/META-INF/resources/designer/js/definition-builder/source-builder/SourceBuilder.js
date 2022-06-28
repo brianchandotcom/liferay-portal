@@ -88,10 +88,10 @@ export default function SourceBuilder() {
 	function loadFile(event) {
 		setShowInvalidContentMessage(false);
 
-		var files = event.target.files;
+		const files = event.target.files;
 
 		if (files[0].type === 'text/xml') {
-			var reader = new FileReader();
+			const reader = new FileReader();
 
 			reader.onloadend = (event) => {
 				if (event.target.readyState === FileReader.DONE) {

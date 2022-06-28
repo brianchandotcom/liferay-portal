@@ -56,7 +56,7 @@ class StringInput extends React.Component {
 	render() {
 		const {disabled, options, renderEmptyValueErrors, value} = this.props;
 
-		return options.length === 0 ? (
+		return !options.length ? (
 			<input
 				className={classNames('criterion-input form-control', {
 					'criterion-input--error': !value && renderEmptyValueErrors,

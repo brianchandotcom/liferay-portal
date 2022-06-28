@@ -15,61 +15,64 @@
 AUI.add(
 	'liferay-calendar-list',
 	(A) => {
-		var AArray = A.Array;
-		var Lang = A.Lang;
+		const AArray = A.Array;
+		const Lang = A.Lang;
 
-		var isArray = Lang.isArray;
-		var isObject = Lang.isObject;
+		const isArray = Lang.isArray;
+		const isObject = Lang.isObject;
 
-		var getClassName = A.getClassName;
+		const getClassName = A.getClassName;
 
-		var STR_BLANK = '';
+		const STR_BLANK = '';
 
-		var STR_CALENDAR_LIST = 'calendar-list';
+		const STR_CALENDAR_LIST = 'calendar-list';
 
-		var STR_DOT = '.';
+		const STR_DOT = '.';
 
-		var STR_ITEM = 'item';
+		const STR_ITEM = 'item';
 
-		var STR_PLUS = '+';
+		const STR_PLUS = '+';
 
-		var CSS_CALENDAR_LIST_ITEM = getClassName(STR_CALENDAR_LIST, STR_ITEM);
+		const CSS_CALENDAR_LIST_ITEM = getClassName(
+			STR_CALENDAR_LIST,
+			STR_ITEM
+		);
 
-		var CSS_CALENDAR_LIST_ITEM_ACTIVE = getClassName(
+		const CSS_CALENDAR_LIST_ITEM_ACTIVE = getClassName(
 			STR_CALENDAR_LIST,
 			STR_ITEM,
 			'active'
 		);
 
-		var CSS_CALENDAR_LIST_ITEM_ARROW = getClassName(
+		const CSS_CALENDAR_LIST_ITEM_ARROW = getClassName(
 			STR_CALENDAR_LIST,
 			STR_ITEM,
 			'arrow'
 		);
 
-		var CSS_CALENDAR_LIST_ITEM_COLOR = getClassName(
+		const CSS_CALENDAR_LIST_ITEM_COLOR = getClassName(
 			STR_CALENDAR_LIST,
 			STR_ITEM,
 			'color'
 		);
 
-		var CSS_CALENDAR_LIST_ITEM_HOVER = getClassName(
+		const CSS_CALENDAR_LIST_ITEM_HOVER = getClassName(
 			STR_CALENDAR_LIST,
 			STR_ITEM,
 			'hover'
 		);
 
-		var CSS_CALENDAR_LIST_ITEM_LABEL = getClassName(
+		const CSS_CALENDAR_LIST_ITEM_LABEL = getClassName(
 			STR_CALENDAR_LIST,
 			STR_ITEM,
 			'label'
 		);
 
-		var CSS_ICON_CARET_DOWN = Liferay.Util.getLexiconIconTpl(
+		const CSS_ICON_CARET_DOWN = Liferay.Util.getLexiconIconTpl(
 			'caret-bottom'
 		);
 
-		var TPL_CALENDAR_LIST_ITEM = new A.Template(
+		const TPL_CALENDAR_LIST_ITEM = new A.Template(
 			'<tpl for="calendars">',
 			'<div class="',
 			CSS_CALENDAR_LIST_ITEM,
@@ -105,7 +108,7 @@ AUI.add(
 			'</tpl>'
 		);
 
-		var CalendarList = A.Component.create({
+		const CalendarList = A.Component.create({
 			ATTRS: {
 				calendars: {
 					setter: '_setCalendars',
@@ -133,11 +136,11 @@ AUI.add(
 
 			prototype: {
 				_clearCalendarColor(calendar) {
-					var instance = this;
+					const instance = this;
 
-					var node = instance.getCalendarNode(calendar);
+					const node = instance.getCalendarNode(calendar);
 
-					var colorNode = node.one(
+					const colorNode = node.one(
 						STR_DOT + CSS_CALENDAR_LIST_ITEM_COLOR
 					);
 
@@ -145,9 +148,9 @@ AUI.add(
 				},
 
 				_onCalendarColorChange(event) {
-					var instance = this;
+					const instance = this;
 
-					var target = event.target;
+					const target = event.target;
 
 					if (target.get('visible')) {
 						instance._setCalendarColor(target, event.newVal);
@@ -155,9 +158,9 @@ AUI.add(
 				},
 
 				_onCalendarVisibleChange(event) {
-					var instance = this;
+					const instance = this;
 
-					var target = event.target;
+					const target = event.target;
 
 					if (event.newVal) {
 						instance._setCalendarColor(target, target.get('color'));
@@ -168,16 +171,16 @@ AUI.add(
 				},
 
 				_onClick(event) {
-					var instance = this;
+					const instance = this;
 
-					var target = event.target.ancestor(
+					const target = event.target.ancestor(
 						STR_DOT + CSS_CALENDAR_LIST_ITEM_ARROW,
 						true,
 						STR_DOT + CSS_CALENDAR_LIST_ITEM
 					);
 
 					if (target) {
-						var activeNode = instance.activeNode;
+						let activeNode = instance.activeNode;
 
 						if (activeNode) {
 							activeNode.removeClass(
@@ -195,7 +198,7 @@ AUI.add(
 
 						instance.activeNode = activeNode;
 
-						var simpleMenu = instance.simpleMenu;
+						const simpleMenu = instance.simpleMenu;
 
 						simpleMenu.setAttrs({
 							alignNode: target,
@@ -206,7 +209,7 @@ AUI.add(
 						});
 					}
 					else {
-						var calendar = instance.getCalendarByNode(
+						const calendar = instance.getCalendarByNode(
 							event.currentTarget
 						);
 
@@ -215,11 +218,11 @@ AUI.add(
 				},
 
 				_onHoverOut(event) {
-					var instance = this;
+					const instance = this;
 
-					var currentTarget = event.currentTarget;
+					const currentTarget = event.currentTarget;
 
-					var calendar = instance.getCalendarByNode(currentTarget);
+					const calendar = instance.getCalendarByNode(currentTarget);
 
 					if (!calendar.get('visible')) {
 						instance._clearCalendarColor(calendar);
@@ -229,11 +232,11 @@ AUI.add(
 				},
 
 				_onHoverOver(event) {
-					var instance = this;
+					const instance = this;
 
-					var currentTarget = event.currentTarget;
+					const currentTarget = event.currentTarget;
 
-					var calendar = instance.getCalendarByNode(currentTarget);
+					const calendar = instance.getCalendarByNode(currentTarget);
 
 					currentTarget.addClass(CSS_CALENDAR_LIST_ITEM_HOVER);
 
@@ -246,7 +249,7 @@ AUI.add(
 				},
 
 				_onSimpleMenuVisibleChange(event) {
-					var instance = this;
+					const instance = this;
 
 					if (instance.activeNode && !event.newVal) {
 						instance.activeNode.removeClass(
@@ -256,10 +259,10 @@ AUI.add(
 				},
 
 				_renderCalendars() {
-					var instance = this;
+					const instance = this;
 
-					var calendars = instance.get('calendars');
-					var contentBox = instance.get('contentBox');
+					const calendars = instance.get('calendars');
+					const contentBox = instance.get('contentBox');
 
 					instance.items = A.NodeList.create(
 						TPL_CALENDAR_LIST_ITEM.parse({
@@ -271,11 +274,11 @@ AUI.add(
 				},
 
 				_setCalendarColor(calendar, val) {
-					var instance = this;
+					const instance = this;
 
-					var node = instance.getCalendarNode(calendar);
+					const node = instance.getCalendarNode(calendar);
 
-					var colorNode = node.one(
+					const colorNode = node.one(
 						STR_DOT + CSS_CALENDAR_LIST_ITEM_COLOR
 					);
 
@@ -286,16 +289,16 @@ AUI.add(
 				},
 
 				_setCalendars(val) {
-					var instance = this;
+					const instance = this;
 
-					var scheduler = instance.get('scheduler');
+					const scheduler = instance.get('scheduler');
 
-					var showCalendarResourceName = instance.get(
+					const showCalendarResourceName = instance.get(
 						'showCalendarResourceName'
 					);
 
 					val.forEach((item, index) => {
-						var calendar = item;
+						let calendar = item;
 
 						if (!A.instanceOf(item, Liferay.SchedulerCalendar)) {
 							calendar = new Liferay.SchedulerCalendar(item);
@@ -316,9 +319,9 @@ AUI.add(
 				},
 
 				_setSimpleMenu(val) {
-					var instance = this;
+					const instance = this;
 
-					var result = val;
+					let result = val;
 
 					if (val) {
 						result = {
@@ -344,7 +347,7 @@ AUI.add(
 				},
 
 				_uiSetCalendars() {
-					var instance = this;
+					const instance = this;
 
 					if (instance.get('rendered')) {
 						instance._renderCalendars();
@@ -352,9 +355,9 @@ AUI.add(
 				},
 
 				add(calendar) {
-					var instance = this;
+					const instance = this;
 
-					var calendars = instance.get('calendars');
+					const calendars = instance.get('calendars');
 
 					calendars.push(calendar);
 
@@ -362,9 +365,9 @@ AUI.add(
 				},
 
 				bindUI() {
-					var instance = this;
+					const instance = this;
 
-					var contentBox = instance.get('contentBox');
+					const contentBox = instance.get('contentBox');
 
 					instance.on(
 						'scheduler-calendar:colorChange',
@@ -398,20 +401,20 @@ AUI.add(
 				},
 
 				clear() {
-					var instance = this;
+					const instance = this;
 
 					instance.set('calendars', []);
 				},
 
 				getCalendar(calendarId) {
-					var instance = this;
+					const instance = this;
 
-					var calendars = instance.get('calendars');
+					const calendars = instance.get('calendars');
 
-					var calendar = null;
+					let calendar = null;
 
-					for (var i = 0; i < calendars.length; i++) {
-						var cal = calendars[i];
+					for (let i = 0; i < calendars.length; i++) {
+						const cal = calendars[i];
 
 						if (cal.get('calendarId') === calendarId) {
 							calendar = cal;
@@ -424,23 +427,23 @@ AUI.add(
 				},
 
 				getCalendarByNode(node) {
-					var instance = this;
+					const instance = this;
 
-					var calendars = instance.get('calendars');
+					const calendars = instance.get('calendars');
 
 					return calendars[instance.items.indexOf(node)];
 				},
 
 				getCalendarNode(calendar) {
-					var instance = this;
+					const instance = this;
 
-					var calendars = instance.get('calendars');
+					const calendars = instance.get('calendars');
 
 					return instance.items.item(calendars.indexOf(calendar));
 				},
 
 				initializer() {
-					var instance = this;
+					const instance = this;
 
 					instance.simpleMenu = new Liferay.SimpleMenu(
 						instance.get('simpleMenu')
@@ -448,12 +451,12 @@ AUI.add(
 				},
 
 				remove(calendar) {
-					var instance = this;
+					const instance = this;
 
-					var calendars = instance.get('calendars');
+					const calendars = instance.get('calendars');
 
-					if (calendars.length > 0) {
-						var index = calendars.indexOf(calendar);
+					if (calendars.length) {
+						const index = calendars.indexOf(calendar);
 
 						if (index > -1) {
 							AArray.remove(calendars, index);
@@ -468,7 +471,7 @@ AUI.add(
 				},
 
 				renderUI() {
-					var instance = this;
+					const instance = this;
 
 					instance._renderCalendars();
 

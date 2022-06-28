@@ -36,7 +36,7 @@
 		<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="list-unstyled" id="${fragmentEntryLinkNamespace}-listbox" role="listbox" tabindex="0">
 
 		[#list input.options as option]
-			<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option?index}" role="option">
+			<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
 				${option.label}
 			</li>
 		[/#list]

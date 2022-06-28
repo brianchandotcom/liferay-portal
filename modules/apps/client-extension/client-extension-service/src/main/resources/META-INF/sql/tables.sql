@@ -37,6 +37,6 @@ create table ClientExtensionEntryRel (
 	classPK LONG,
 	cetExternalReferenceCode VARCHAR(75) null,
 	type_ VARCHAR(75) null,
-	typeSettings VARCHAR(75) null,
+	typeSettings TEXT null,
 	primary key (clientExtensionEntryRelId, ctCollectionId)
 );

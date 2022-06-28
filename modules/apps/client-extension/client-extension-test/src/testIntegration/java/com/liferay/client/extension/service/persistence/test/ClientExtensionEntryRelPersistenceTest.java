@@ -297,7 +297,7 @@ public class ClientExtensionEntryRelPersistenceTest {
 			"clientExtensionEntryRelId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "cetExternalReferenceCode",
-			true, "type", true, "typeSettings", true);
+			true, "type", true);
 	}
 
 	@Test

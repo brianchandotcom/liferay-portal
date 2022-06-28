@@ -63,11 +63,12 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 
 	public static ClientExtensionEntryRel addClientExtensionEntryRel(
 			long userId, long classNameId, long classPK,
-			String cetExternalReferenceCode, String type)
+			String cetExternalReferenceCode, String type, String typeSettings)
 		throws PortalException {
 
 		return getService().addClientExtensionEntryRel(
-			userId, classNameId, classPK, cetExternalReferenceCode, type);
+			userId, classNameId, classPK, cetExternalReferenceCode, type,
+			typeSettings);
 	}
 
 	/**

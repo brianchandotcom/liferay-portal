@@ -17,6 +17,7 @@ package com.liferay.client.extension.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -75,9 +76,9 @@ public class ClientExtensionEntryRelTable
 			Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryRelTable, String> type =
 		createColumn("type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ClientExtensionEntryRelTable, String> typeSettings =
+	public final Column<ClientExtensionEntryRelTable, Clob> typeSettings =
 		createColumn(
-			"typeSettings", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+			"typeSettings", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private ClientExtensionEntryRelTable() {
 		super("ClientExtensionEntryRel", ClientExtensionEntryRelTable::new);

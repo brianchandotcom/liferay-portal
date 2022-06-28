@@ -9,16 +9,13 @@
  * distribution rights of the Software.
  */
 
-import {useEffect, useState} from 'react';
+import {useMemo} from 'react';
 import {FORMAT_DATE} from '../../../../../common/utils/constants/slaCardDate';
 import {SLA_CARD_NAMES} from '../../../../../common/utils/constants/slaCardNames';
 import getDateCustomFormat from '../../../../../common/utils/getDateCustomFormat';
 
 const useGetSlaData = (project) => {
-	const [slaData, setSlaData] = useState();
-	const [slaSelected, setSlaSelected] = useState();
-
-	useEffect(() => {
+	const memoizedSlaCards = useMemo(() => {
 		const {
 			slaCurrent,
 			slaCurrentEndDate,
@@ -31,66 +28,67 @@ const useGetSlaData = (project) => {
 			slaFutureStartDate,
 		} = project;
 
-		const slaRawData = {
-			current: {
-				dateEnd: getDateCustomFormat(slaCurrentEndDate, FORMAT_DATE),
-				dateStart: getDateCustomFormat(
-					slaCurrentStartDate,
-					FORMAT_DATE
-				),
-				label: SLA_CARD_NAMES.current,
-				title: slaCurrent?.split(' ')[0],
-			},
-			expired: {
-				dateEnd: getDateCustomFormat(slaExpiredEndDate, FORMAT_DATE),
-				dateStart: getDateCustomFormat(
-					slaExpiredStartDate,
-					FORMAT_DATE
-				),
-				label: SLA_CARD_NAMES.expired,
-				title: slaExpired?.split(' ')[0],
-			},
-			future: {
-				dateEnd: getDateCustomFormat(slaFutureEndDate, FORMAT_DATE),
-				dateStart: getDateCustomFormat(slaFutureStartDate, FORMAT_DATE),
-				label: SLA_CARD_NAMES.future,
-				title: slaFuture?.split(' ')[0],
-			},
+		const slaCurrentStatus = !!slaCurrent && {
+			endDate: getDateCustomFormat(
+				slaCurrent === slaFuture ? slaFutureEndDate : slaCurrentEndDate,
+				FORMAT_DATE,
+				'en-US'
+			),
+			label: SLA_CARD_NAMES.current,
+			startDate: getDateCustomFormat(
+				slaCurrent === slaExpired
+					? slaExpiredStartDate
+					: slaCurrentStartDate,
+				FORMAT_DATE,
+				'en-US'
+			),
+			title: slaCurrent.split(' ')[0],
 		};
 
-		const slaFiltedData = [];
+		const slaCards = [];
 
-		if (
-			slaRawData.current.title === slaRawData.expired.title &&
-			slaRawData.current.title === slaRawData.future.title
-		) {
-			slaRawData.current.dateStart = slaRawData.expired.dateStart;
-			slaRawData.current.dateEnd = slaRawData.future.dateEnd;
-			slaFiltedData.push(slaRawData.current);
-		} else if (slaRawData.current.title === slaRawData.expired.title) {
-			slaRawData.current.dateStart = slaRawData.expired.dateStart;
-			slaFiltedData.push(slaRawData.current);
-			slaFiltedData.push(slaRawData.future);
-		} else if (slaRawData.current.title === slaRawData.future.title) {
-			slaRawData.current.dateEnd = slaRawData.future.dateEnd;
-			slaFiltedData.push(slaRawData.current);
-			slaFiltedData.push(slaRawData.expired);
-		} else {
-			slaFiltedData.push(slaRawData.current);
-			slaFiltedData.push(slaRawData.expired);
-			slaFiltedData.push(slaRawData.future);
+		if (slaCurrentStatus) {
+			slaCards.push(slaCurrentStatus);
 		}
 
-		const slaSelectedCards = slaFiltedData.filter((sla) => sla.title);
-
-		if (!slaSelected) {
-			setSlaSelected(slaSelectedCards[0]?.label);
+		if (!!slaExpired && slaExpired !== slaCurrent) {
+			slaCards.push({
+				endDate: getDateCustomFormat(
+					slaExpiredEndDate,
+					FORMAT_DATE,
+					'en-US'
+				),
+				label: SLA_CARD_NAMES.expired,
+				startDate: getDateCustomFormat(
+					slaExpiredStartDate,
+					FORMAT_DATE,
+					'en-US'
+				),
+				title: slaExpired.split(' ')[0],
+			});
 		}
 
-		setSlaData(slaSelectedCards);
-	}, [project, slaSelected]);
+		if (!!slaFuture && slaFuture !== slaCurrent) {
+			slaCards.push({
+				endDate: getDateCustomFormat(
+					slaFutureEndDate,
+					FORMAT_DATE,
+					'en-US'
+				),
+				label: SLA_CARD_NAMES.future,
+				startDate: getDateCustomFormat(
+					slaFutureStartDate,
+					FORMAT_DATE,
+					'en-US'
+				),
+				title: slaFuture.split(' ')[0],
+			});
+		}
 
-	return {setSlaSelected, slaData, slaSelected};
+		return slaCards;
+	}, [project]);
+
+	return {memoizedSlaCards};
 };
 
 export default useGetSlaData;

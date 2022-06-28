@@ -11,20 +11,18 @@
 
 import {useState} from 'react';
 
-export default function useSwitchSlaCards(setSlaSelected, slaData) {
-	const [slaPosition, setSlaPosition] = useState(0);
+export default function useSwitchSlaCards(memoizedSlaCards) {
+	const [currentSlaCardPosition, setCurrentSlaCardPosition] = useState(0);
 
 	const handleSlaCardClick = () => {
-		const nextPosition = slaPosition + 1;
+		const nextPosition = currentSlaCardPosition + 1;
 
-		if (slaData[nextPosition]) {
-			setSlaSelected(slaData[nextPosition].label);
-			setSlaPosition(nextPosition);
+		if (memoizedSlaCards[nextPosition]) {
+			setCurrentSlaCardPosition(nextPosition);
 		} else {
-			setSlaSelected(slaData[0].label);
-			setSlaPosition(0);
+			setCurrentSlaCardPosition(0);
 		}
 	};
 
-	return handleSlaCardClick;
+	return {currentSlaCardPosition, handleSlaCardClick};
 }

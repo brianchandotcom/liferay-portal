@@ -3433,14 +3433,16 @@ definition {
 		}
 	}
 
-	@description = "LPS-105169 TC-1: SP initiated login should sync IdP&SP user attributes based on user attribute mapping - Using virtual instances."
+	@description = "LPS-105169 TC-1: SP initiated login should sync IdP&SP user attributes based on user attribute mapping - Using virtual instances. Blocked by LPS-137141."
 	@priority = "5"
 	test SPInitiatedSSOSyncsUserAttributesFromIdPToSPDefaultMapping {
 		property app.server.bundles.size = "0";
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
+		property portal.release = "quarantine";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "SAML#SPInitiatedSSOSyncsUserAttributesFromIdPToSPDefaultMapping";
 
 		var identityProviderEntityId = "samlidp";

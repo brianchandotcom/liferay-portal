@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -147,7 +149,15 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 			"objectRelationshipId", objectRelationship.getObjectRelationshipId()
 		).put(
 			"parameterObjectFieldId",
-			objectRelationship.getParameterObjectFieldId()
+			() -> {
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-155537"))) {
+
+					return objectRelationship.getParameterObjectFieldId();
+				}
+
+				return null;
+			}
 		).put(
 			"type", objectRelationship.getType()
 		);

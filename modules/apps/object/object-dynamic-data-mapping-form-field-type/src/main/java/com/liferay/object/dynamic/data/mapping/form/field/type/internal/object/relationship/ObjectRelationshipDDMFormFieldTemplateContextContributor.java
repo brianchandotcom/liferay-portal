@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -79,8 +80,16 @@ public class ObjectRelationshipDDMFormFieldTemplateContextContributor
 			GetterUtil.getLong(ddmFormField.getProperty("objectDefinitionId"))
 		).put(
 			"parameterObjectFieldName",
-			GetterUtil.getString(
-				ddmFormField.getProperty("parameterObjectFieldName"))
+			() -> {
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-155537"))) {
+
+					return GetterUtil.getString(
+						ddmFormField.getProperty("parameterObjectFieldName"));
+				}
+
+				return null;
+			}
 		).put(
 			"placeholder",
 			() -> {

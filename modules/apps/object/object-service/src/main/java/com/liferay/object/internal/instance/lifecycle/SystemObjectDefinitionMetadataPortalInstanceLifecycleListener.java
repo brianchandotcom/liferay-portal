@@ -188,7 +188,7 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 
 		if (Objects.equals(
 				systemObjectDefinitionMetadata.getName(), "Address") &&
-			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156121"))) {
+			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-155537"))) {
 
 			return;
 		}

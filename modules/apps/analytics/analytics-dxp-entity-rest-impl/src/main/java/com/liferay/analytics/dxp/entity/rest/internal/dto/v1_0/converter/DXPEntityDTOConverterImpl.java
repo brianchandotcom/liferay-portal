@@ -331,15 +331,15 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 		if (StringUtil.equals(
 				baseModel.getModelClassName(), Group.class.getName())) {
 
-			Field field = new Field();
+			for (Field field : fields) {
+				if (StringUtil.equals(field.getName(), "name")) {
+					Group group = (Group)baseModel;
 
-			field.setName("name");
+					field.setValue(group.getNameCurrentValue());
 
-			Group group = (Group)baseModel;
-
-			field.setValue(group.getNameCurrentValue());
-
-			fields.add(field);
+					break;
+				}
+			}
 		}
 
 		return fields.toArray(new Field[0]);

@@ -75,6 +75,9 @@ public class ClientExtensionEntryRelTable
 			Column.FLAG_DEFAULT);
 	public final Column<ClientExtensionEntryRelTable, String> type =
 		createColumn("type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ClientExtensionEntryRelTable, String> typeSettings =
+		createColumn(
+			"typeSettings", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private ClientExtensionEntryRelTable() {
 		super("ClientExtensionEntryRel", ClientExtensionEntryRelTable::new);

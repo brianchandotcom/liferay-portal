@@ -63,6 +63,7 @@ public class ClientExtensionEntryRelWrapper
 		attributes.put(
 			"cetExternalReferenceCode", getCETExternalReferenceCode());
 		attributes.put("type", getType());
+		attributes.put("typeSettings", getTypeSettings());
 
 		return attributes;
 	}
@@ -154,6 +155,12 @@ public class ClientExtensionEntryRelWrapper
 
 		if (type != null) {
 			setType(type);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 	}
 
@@ -320,6 +327,16 @@ public class ClientExtensionEntryRelWrapper
 	@Override
 	public String getType() {
 		return model.getType();
+	}
+
+	/**
+	 * Returns the type settings of this client extension entry rel.
+	 *
+	 * @return the type settings of this client extension entry rel
+	 */
+	@Override
+	public String getTypeSettings() {
+		return model.getTypeSettings();
 	}
 
 	/**
@@ -510,6 +527,16 @@ public class ClientExtensionEntryRelWrapper
 	@Override
 	public void setType(String type) {
 		model.setType(type);
+	}
+
+	/**
+	 * Sets the type settings of this client extension entry rel.
+	 *
+	 * @param typeSettings the type settings of this client extension entry rel
+	 */
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		model.setTypeSettings(typeSettings);
 	}
 
 	/**

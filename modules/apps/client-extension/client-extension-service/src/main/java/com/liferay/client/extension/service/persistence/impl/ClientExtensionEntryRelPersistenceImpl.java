@@ -3569,6 +3569,7 @@ public class ClientExtensionEntryRelPersistenceImpl
 		ctStrictColumnNames.add("classPK");
 		ctStrictColumnNames.add("cetExternalReferenceCode");
 		ctStrictColumnNames.add("type_");
+		ctStrictColumnNames.add("typeSettings");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

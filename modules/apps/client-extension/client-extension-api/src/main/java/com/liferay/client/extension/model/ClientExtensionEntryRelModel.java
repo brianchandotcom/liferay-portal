@@ -314,6 +314,21 @@ public interface ClientExtensionEntryRelModel
 	public void setType(String type);
 
 	/**
+	 * Returns the type settings of this client extension entry rel.
+	 *
+	 * @return the type settings of this client extension entry rel
+	 */
+	@AutoEscape
+	public String getTypeSettings();
+
+	/**
+	 * Sets the type settings of this client extension entry rel.
+	 *
+	 * @param typeSettings the type settings of this client extension entry rel
+	 */
+	public void setTypeSettings(String typeSettings);
+
+	/**
 	 * Returns the container model ID of this client extension entry rel.
 	 *
 	 * @return the container model ID of this client extension entry rel

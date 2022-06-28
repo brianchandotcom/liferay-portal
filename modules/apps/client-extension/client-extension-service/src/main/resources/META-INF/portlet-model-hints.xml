@@ -47,5 +47,6 @@
 		<field name="classPK" type="long" />
 		<field name="CETExternalReferenceCode" type="String" />
 		<field name="type" type="String" />
+		<field name="typeSettings" type="String" />
 	</model>
 </model-hints>

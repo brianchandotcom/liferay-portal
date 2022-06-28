@@ -232,6 +232,47 @@ function handleWindowResizeOrScroll() {
 	}
 }
 
+function filterLocalOptions() {
+	const preferedItems = [];
+	const restItems = [];
+
+	for (const item of baseListboxItems) {
+		if (preferedItems.length + restItems.length === 10) {
+			break;
+		}
+
+		const label = item.label.trim().toLowerCase();
+
+		if (label.startsWith(currentSearch.query)) {
+			preferedItems.push(item);
+		}
+		else if (label.includes(currentSearch.query)) {
+			restItems.push(item);
+		}
+	}
+
+	return Promise.resolve({
+		items: [...preferedItems, ...restItems].slice(0, 10).map((item) => ({
+			key: item.value,
+			name: item.label,
+		})),
+	});
+}
+
+function fetchRemoteOptions() {
+	const url = new URL(input.attributes.autocompleteURL);
+	url.searchParams.set('search', currentSearch.query);
+
+	return Liferay.Util.fetch(url, {
+		headers: new Headers({
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		}),
+		method: 'GET',
+		signal: currentSearch.abortController.signal,
+	}).then((response) => response.json());
+}
+
 function handleSearchKeyup() {
 	if (searchInput.value === currentSearch.query) {
 		return;
@@ -276,18 +317,11 @@ function handleSearchKeyup() {
 	loadingResultsMessage.classList.remove('d-none');
 	loadingResultsMessage.removeAttribute('aria-hidden');
 
-	const url = new URL(input.attributes.autocompleteURL);
-	url.searchParams.set('search', currentSearch.query);
+	const fetcher = input.attributes.autocompleteURL
+		? fetchRemoteOptions
+		: filterLocalOptions;
 
-	Liferay.Util.fetch(url, {
-		headers: new Headers({
-			'Accept': 'application/json',
-			'Content-Type': 'application/json',
-		}),
-		method: 'GET',
-		signal: currentSearch.abortController.signal,
-	})
-		.then((response) => response.json())
+	fetcher()
 		.then((result) => {
 			setListboxItems(
 				result.items.map((entry) => ({

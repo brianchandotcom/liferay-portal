@@ -18,8 +18,6 @@
 
 <%
 SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = (SegmentsSimulationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-String segmentsConfigurationURL = segmentsSimulationDisplayContext.getSegmentsConfigurationURL();
 %>
 
 <clay:container-fluid
@@ -43,9 +41,9 @@ String segmentsConfigurationURL = segmentsSimulationDisplayContext.getSegmentsCo
 							<strong class="lead"><%= LanguageUtil.get(request, "experiences-cannot-be-displayed-because-segmentation-is-disabled") %></strong>
 
 							<c:choose>
-								<c:when test="<%= segmentsConfigurationURL != null %>">
+								<c:when test="<%= segmentsSimulationDisplayContext.getSegmentsConfigurationURL() != null %>">
 									<clay:link
-										href="<%= segmentsConfigurationURL %>"
+										href="<%= segmentsSimulationDisplayContext.getSegmentsConfigurationURL() %>"
 										label='<%=
 											LanguageUtil.get(request, "to-enable,-go-to-instance-settings")
 										%>'

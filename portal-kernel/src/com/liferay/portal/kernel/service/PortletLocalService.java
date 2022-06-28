@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service;
 
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -136,6 +137,7 @@ public interface PortletLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public Portlet deletePortlet(long id) throws PortalException;
 
+	@CTAware
 	public void deletePortlet(long companyId, String portletId, long plid)
 		throws PortalException;
 

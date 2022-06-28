@@ -107,52 +107,53 @@ public class OpenGraphImageProvider {
 			long openGraphImageFileEntryId = _getOpenGraphImageFileEntryId(
 				layout, layoutSEOEntry);
 
-			if (openGraphImageFileEntryId != 0) {
-				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-					openGraphImageFileEntryId);
-
-				if ((fileEntry != null) && !fileEntry.isInTrash()) {
-					Iterable<KeyValuePair>
-						fileEntryMetadataOpenGraphTagKeyValuePairs =
-							_fileEntryMetadataOpenGraphTagsProvider.
-								getFileEntryMetadataOpenGraphTagKeyValuePairs(
-									fileEntry);
-
-					String imagePreviewURL = _dlurlHelper.getImagePreviewURL(
-						fileEntry, themeDisplay);
-
-					return Optional.of(
-						new OpenGraphImage() {
-
-							@Override
-							public Optional<String> getAltOptional() {
-								return Optional.ofNullable(
-									_getImageAltTagValue(
-										infoItemFieldValues, layout,
-										layoutSEOEntry,
-										themeDisplay.getLocale()));
-							}
-
-							@Override
-							public Iterable<KeyValuePair>
-								getMetadataTagKeyValuePairs() {
-
-								return fileEntryMetadataOpenGraphTagKeyValuePairs;
-							}
-
-							@Override
-							public Optional<String> getMimeTypeOptional() {
-								return Optional.of(fileEntry.getMimeType());
-							}
-
-							@Override
-							public String getUrl() {
-								return imagePreviewURL;
-							}
-
-						});
-				}
+			if (openGraphImageFileEntryId == 0) {
+				return Optional.empty();
 			}
+
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+				openGraphImageFileEntryId);
+
+			if ((fileEntry == null) || fileEntry.isInTrash()) {
+				return Optional.empty();
+			}
+
+			Iterable<KeyValuePair> fileEntryMetadataOpenGraphTagKeyValuePairs =
+				_fileEntryMetadataOpenGraphTagsProvider.
+					getFileEntryMetadataOpenGraphTagKeyValuePairs(fileEntry);
+
+			String imagePreviewURL = _dlurlHelper.getImagePreviewURL(
+				fileEntry, themeDisplay);
+
+			return Optional.of(
+				new OpenGraphImage() {
+
+					@Override
+					public Optional<String> getAltOptional() {
+						return Optional.ofNullable(
+							_getImageAltTagValue(
+								infoItemFieldValues, layout, layoutSEOEntry,
+								themeDisplay.getLocale()));
+					}
+
+					@Override
+					public Iterable<KeyValuePair>
+						getMetadataTagKeyValuePairs() {
+
+						return fileEntryMetadataOpenGraphTagKeyValuePairs;
+					}
+
+					@Override
+					public Optional<String> getMimeTypeOptional() {
+						return Optional.of(fileEntry.getMimeType());
+					}
+
+					@Override
+					public String getUrl() {
+						return imagePreviewURL;
+					}
+
+				});
 		}
 		catch (Exception exception) {
 			_log.error(exception);

@@ -50,10 +50,9 @@ public class ObjectFieldDBTypeUtil {
 
 			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
 		}
-
-		if (Objects.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
 
 			finalStep.attribute(
 				SelectInfoFieldType.OPTIONS, _getOptions(objectField));

@@ -107,7 +107,8 @@ public class ClientExtensionServicePreActionTest {
 				TestPropsValues.getUserId(),
 				_portal.getClassNameId(Layout.class), layout.getPlid(),
 				_clientExtensionEntry.getExternalReferenceCode(),
-				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
+				StringPool.BLANK);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -139,7 +140,8 @@ public class ClientExtensionServicePreActionTest {
 				_portal.getClassNameId(LayoutSet.class),
 				layoutSet.getLayoutSetId(),
 				_clientExtensionEntry.getExternalReferenceCode(),
-				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
+				StringPool.BLANK);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -178,7 +180,8 @@ public class ClientExtensionServicePreActionTest {
 				_portal.getClassNameId(Layout.class),
 				masterLayoutPageTemplateEntry.getPlid(),
 				_clientExtensionEntry.getExternalReferenceCode(),
-				ClientExtensionEntryConstants.TYPE_THEME_FAVICON);
+				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
+				StringPool.BLANK);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 

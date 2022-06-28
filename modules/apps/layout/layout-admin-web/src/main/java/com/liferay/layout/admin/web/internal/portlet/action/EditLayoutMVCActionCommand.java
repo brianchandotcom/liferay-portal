@@ -21,6 +21,7 @@ import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -301,7 +302,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 				_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 					userId, _portal.getClassNameId(Layout.class),
-					layout.getPlid(), cetExternalReferenceCode, type);
+					layout.getPlid(), cetExternalReferenceCode, type,
+					StringPool.BLANK);
 			}
 		}
 		else {
@@ -334,7 +336,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				userId, _portal.getClassNameId(Layout.class), layout.getPlid(),
 				globalCSSCETExternalReferenceCode,
-				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
+				StringPool.BLANK);
 		}
 
 		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
@@ -350,7 +353,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				userId, _portal.getClassNameId(Layout.class), layout.getPlid(),
 				globalJSCETExternalReferenceCode,
-				ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
+				ClientExtensionEntryConstants.TYPE_GLOBAL_JS, StringPool.BLANK);
 		}
 
 		String themeCSSCETExternalReferenceCode = ParamUtil.getString(

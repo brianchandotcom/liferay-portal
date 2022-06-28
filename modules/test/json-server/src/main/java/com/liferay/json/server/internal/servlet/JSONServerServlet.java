@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -47,8 +48,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -401,11 +400,11 @@ public class JSONServerServlet extends HttpServlet {
 
 			List<String> parts = StringUtil.split(path, '/');
 
-			_modelPath = path.replace('/' + parts.get(0) + '/', "");
+			String modelPath = path.replace('/' + parts.get(0) + '/', "");
 
 			for (String part : parts) {
 				if (part.equals("filter")) {
-					_modelPath = _modelPath.concat(
+					modelPath = modelPath.concat(
 						"?" + httpServletRequest.getQueryString());
 				}
 			}
@@ -427,18 +426,20 @@ public class JSONServerServlet extends HttpServlet {
 					"Unknown application name " + parts.get(0));
 			}
 
-			boolean numeric = StringUtils.numeric(parts.get(parts.size() - 1));
+			boolean numeric = Validator.isNumber(parts.get(parts.size() - 1));
 
 			if (numeric) {
 				_modelName = parts.get(parts.size() - 2);
 				_id = GetterUtil.getLongStrict(parts.get(parts.size() - 1));
-				_modelPath = _modelPath.replace(
+				modelPath = modelPath.replace(
 					'/' + parts.get(parts.size() - 1), "");
 			}
 			else {
 				_modelName = parts.get(1);
 				_id = -1;
 			}
+
+			_modelPath = modelPath;
 
 			byte[] bytes = StreamUtil.toByteArray(
 				httpServletRequest.getInputStream());

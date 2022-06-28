@@ -1,0 +1,19 @@
+@component-name = "portal-commerce"
+definition {
+
+    property osgi.module.configuration.file.names = "com.liferay.commerce.product.configuration.CProductVersionConfiguration.config";
+    property osgi.module.configurations = "enabled=B&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp();
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+}

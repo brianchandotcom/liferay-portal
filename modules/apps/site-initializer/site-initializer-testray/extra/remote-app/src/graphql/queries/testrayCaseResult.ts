@@ -30,6 +30,7 @@ export type TestrayCaseResult = {
 	id: number;
 	startDate: string;
 	user?: UserAccount;
+	warnings: number;
 };
 
 export const getCaseResultsAggregation = gql`
@@ -85,6 +86,7 @@ export const getCaseResults = gql`
 					component: r_componentToCases_c_component {
 						name
 					}
+					id
 					name
 					priority
 					caseNumber
@@ -107,14 +109,16 @@ export const getCaseResults = gql`
 					externalReferencePK
 				}
 				user: r_userToCaseResults_user {
-					objectDefinitionId
-					emailAddress
-					givenName
-					modifiedDate
 					additionalName
 					createDate
+					emailAddress
 					externalReferenceCode
+					givenName
+					id: uuid
+					modifiedDate
+					objectDefinitionId
 				}
+				warnings
 			}
 			lastPage
 			page
@@ -129,7 +133,7 @@ export const getCaseResult = gql`
 		caseResult(caseResultId: $caseResultId)
 			@rest(
 				type: "C_CaseResult"
-				path: "caseresults/{args.caseResultId}/?nestedFields=case,component,build.productVersion,build.routine,run&nestedFieldsDepth=3"
+				path: "caseresults/{args.caseResultId}/?nestedFields=case.caseType,component,build.productVersion,build.routine,run,user&nestedFieldsDepth=3"
 			) {
 			assignedUserId
 			attachments
@@ -149,8 +153,11 @@ export const getCaseResult = gql`
 				component: r_componentToCases_c_component {
 					name
 				}
+				description
+				id
 				name
 				priority
+				steps
 			}
 			closedDate
 			commentMBMessageId
@@ -164,6 +171,17 @@ export const getCaseResult = gql`
 			run: r_runToCaseResult_c_run {
 				externalReferencePK
 			}
+			user: r_userToCaseResults_user {
+				additionalName
+				createDate
+				emailAddress
+				externalReferenceCode
+				givenName
+				id: uuid
+				modifiedDate
+				objectDefinitionId
+			}
+			warnings
 		}
 	}
 `;

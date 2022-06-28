@@ -704,7 +704,9 @@ public class BundleSiteInitializerTest {
 		Assert.assertNull(expandoBridge.getAttribute("Test Expando Column 3"));
 	}
 
-	private void _assertFragmentEntries(Group group, ServiceContext serviceContext)
+	private void _assertFragmentEntries(Group group, ServiceContext serviceContext){
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			serviceContext.getCompanyId());
 
 		FragmentEntry testFragmentEntry1 =

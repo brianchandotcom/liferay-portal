@@ -17,7 +17,6 @@ package com.liferay.client.extension.internal.event.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
-import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -89,9 +88,6 @@ public class ClientExtensionServicePreActionTest {
 	public void tearDown() throws Exception {
 		_clientExtensionEntryLocalService.deleteClientExtensionEntry(
 			_clientExtensionEntry);
-
-		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRel(
-			_clientExtensionEntryRel);
 	}
 
 	@Test
@@ -102,13 +98,10 @@ public class ClientExtensionServicePreActionTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		_clientExtensionEntryRel =
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				TestPropsValues.getUserId(),
-				_portal.getClassNameId(Layout.class), layout.getPlid(),
-				_clientExtensionEntry.getExternalReferenceCode(),
-				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
-				StringPool.BLANK);
+		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+			TestPropsValues.getUserId(), _portal.getClassNameId(Layout.class),
+			layout.getPlid(), _clientExtensionEntry.getExternalReferenceCode(),
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -134,14 +127,11 @@ public class ClientExtensionServicePreActionTest {
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			_group.getGroupId(), false);
 
-		_clientExtensionEntryRel =
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				TestPropsValues.getUserId(),
-				_portal.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(),
-				_clientExtensionEntry.getExternalReferenceCode(),
-				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
-				StringPool.BLANK);
+		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+			TestPropsValues.getUserId(),
+			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
+			_clientExtensionEntry.getExternalReferenceCode(),
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -174,14 +164,11 @@ public class ClientExtensionServicePreActionTest {
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_clientExtensionEntryRel =
-			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
-				TestPropsValues.getUserId(),
-				_portal.getClassNameId(Layout.class),
-				masterLayoutPageTemplateEntry.getPlid(),
-				_clientExtensionEntry.getExternalReferenceCode(),
-				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
-				StringPool.BLANK);
+		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
+			TestPropsValues.getUserId(), _portal.getClassNameId(Layout.class),
+			masterLayoutPageTemplateEntry.getPlid(),
+			_clientExtensionEntry.getExternalReferenceCode(),
+			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -273,8 +260,6 @@ public class ClientExtensionServicePreActionTest {
 
 	@Inject
 	private ClientExtensionEntryLocalService _clientExtensionEntryLocalService;
-
-	private ClientExtensionEntryRel _clientExtensionEntryRel;
 
 	@Inject
 	private ClientExtensionEntryRelLocalService

@@ -16,4 +16,30 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+    @description = "This is a test for the story COMMERCE-9376, with the testplan COMMERCE-9534 and test ticket COMMERCE-9535"
+	@priority = "3"
+	test CanCheckVersionableProductSaveAsDraftButton {
+        property portal.acceptance = "false";
+
+        task ("When the Admin goes into the Commerce -> Products and create a new simple product") {
+            CommerceNavigator.gotoPortlet(
+			    category = "Product Management",
+			    portlet = "Products");
+
+		    CPCommerceCatalog.newProductsEntry(
+			    productCatalog = "Master",
+			    productName = "Simple T-Shirt",
+			    productType = "Simple");
+        }
+
+        task ("Then the admin now will see two buttons 'Save as Draft' and 'Publish'") {
+            AssertElementPresent(
+			    key_text = "Publish",
+			    locator1 = "Button#ANY");
+
+            AssertElementPresent(
+			    key_text = "Save as Draft",
+			    locator1 = "Button#ANY");       
+        }
+    }
 }

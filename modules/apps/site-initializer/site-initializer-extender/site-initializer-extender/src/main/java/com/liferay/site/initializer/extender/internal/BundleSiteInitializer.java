@@ -1150,7 +1150,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addFragmentEntries(
 			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
 			Map<String, String> documentsStringUtilReplaceValues, long groupId,
-			ServiceContext serviceContext, String parentResourcePath)
+			String parentResourcePath, ServiceContext serviceContext)
 		throws Exception {
 
 		Enumeration<URL> enumeration = _bundle.findEntries(
@@ -1187,7 +1187,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				Group scopeGroup = serviceContext.getScopeGroup();
 
 				json = StringUtil.replace(
-					json, new String[] {"[$FRIENDLY_URL$]", "[$GROUP_ID$]"},
+					json,
+					new String[] {"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]"},
 					new String[] {
 						scopeGroup.getFriendlyURL(), String.valueOf(groupId)
 					});
@@ -1218,12 +1219,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_addFragmentEntries(
 			assetListEntryIdsStringUtilReplaceValues,
 			documentsStringUtilReplaceValues, group.getGroupId(),
-			serviceContext, "/site-initializer/fragments/company");
+			"/site-initializer/fragments/company", serviceContext);
 
 		_addFragmentEntries(
 			assetListEntryIdsStringUtilReplaceValues,
 			documentsStringUtilReplaceValues, serviceContext.getScopeGroupId(),
-			serviceContext, "/site-initializer/fragments/group");
+			"/site-initializer/fragments/group", serviceContext);
 	}
 
 	private void _addJournalArticles(

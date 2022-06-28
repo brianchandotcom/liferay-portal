@@ -256,4 +256,55 @@ definition {
 			fieldName = "Separator");
 	}
 
+	@description = "Check if Separator Field details can be seen."
+	@priority = "4"
+	test ViewSeparatorFieldDetails {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "Separator Structure");
+
+		DEBuilder.addField(
+			fieldLabel = "Separator",
+			fieldName = "Separator");
+
+		DEBuilder.openField(
+			fieldLabel = "Separator",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Style",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Separator");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Separator");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "Separator Structure");
+
+		DEBuilder.openField(
+			fieldLabel = "Separator",
+			index = "1");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_FIELD_REFERENCE");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Style",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER");
+
+		DataEngine.assertShowLabelField(fieldFieldLabel = "Separator");
+
+		DataEngine.assertRepeatableField(fieldFieldLabel = "Separator");
+	}
+
 }

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
@@ -88,6 +89,24 @@ public class RowLayoutStructureItemMapper
 								}
 
 								return ArrayUtil.toStringArray(cssClasses);
+							});
+						setCustomCSS(
+							() -> {
+								if (!GetterUtil.getBoolean(
+										PropsUtil.get(
+											"feature.flag.LPS-147511"))) {
+
+									return null;
+								}
+
+								String customCSS =
+									rowStyledLayoutStructureItem.getCustomCSS();
+
+								if (Validator.isNotNull(customCSS)) {
+									return customCSS;
+								}
+
+								return null;
 							});
 						setFragmentStyle(
 							() -> {

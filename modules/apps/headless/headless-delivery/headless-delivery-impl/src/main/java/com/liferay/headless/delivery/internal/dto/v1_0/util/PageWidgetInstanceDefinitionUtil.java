@@ -35,6 +35,7 @@ public class PageWidgetInstanceDefinitionUtil {
 
 	public static PageWidgetInstanceDefinition toPageWidgetInstanceDefinition(
 		Set<String> cssClassesSet, FragmentEntryLink fragmentEntryLink,
+		String pageWidgetInstanceDefinitionCustomCSS,
 		FragmentStyle pageWidgetInstanceDefinitionFragmentStyle,
 		FragmentViewport[] pageWidgetInstanceDefinitionFragmentViewports,
 		String portletId, WidgetInstanceMapper widgetInstanceMapper) {
@@ -61,6 +62,22 @@ public class PageWidgetInstanceDefinitionUtil {
 						}
 
 						return ArrayUtil.toStringArray(cssClassesSet);
+					});
+				setCustomCSS(
+					() -> {
+						if (!GetterUtil.getBoolean(
+								PropsUtil.get("feature.flag.LPS-147511"))) {
+
+							return null;
+						}
+
+						if (Validator.isNotNull(
+								pageWidgetInstanceDefinitionCustomCSS)) {
+
+							return pageWidgetInstanceDefinitionCustomCSS;
+						}
+
+						return null;
 					});
 			}
 		};

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.Set;
@@ -94,6 +95,25 @@ public class FormLayoutStructureItemMapper
 								}
 
 								return ArrayUtil.toStringArray(cssClasses);
+							});
+						setCustomCSS(
+							() -> {
+								if (!GetterUtil.getBoolean(
+										PropsUtil.get(
+											"feature.flag.LPS-147511"))) {
+
+									return null;
+								}
+
+								String customCSS =
+									formStyledLayoutStructureItem.
+										getCustomCSS();
+
+								if (Validator.isNotNull(customCSS)) {
+									return customCSS;
+								}
+
+								return null;
 							});
 						setFragmentStyle(
 							() -> {

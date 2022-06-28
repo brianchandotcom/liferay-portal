@@ -25,7 +25,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
 	compileOnly group: "org.osgi", name: "org.osgi.core"
 
-	restBuilder (group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.248") {force = true}
+	restBuilder (group: "com.liferay", name: "com.liferay.portal.tools.rest.builder", version: "1.0.249") {force = true}
 #else
 	compileOnly group: "com.liferay.portal", name: "release.${product}.api"
 #if (${liferayVersion.startsWith("7.3")})

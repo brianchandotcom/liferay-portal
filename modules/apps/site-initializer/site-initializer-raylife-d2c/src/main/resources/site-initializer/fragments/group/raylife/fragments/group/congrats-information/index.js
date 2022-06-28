@@ -188,7 +188,8 @@ const main = async () => {
 			fragmentElement.querySelector('#congrats-price'),
 			`$${Number(quoteDataJSON.price || 0).toLocaleString('en-US')}`
 		);
-	} else {
+	}
+	else {
 		const discountInPrice = quoteComparison.price * 0.05;
 
 		const discountDescription = `You saved 5% ($${Number(

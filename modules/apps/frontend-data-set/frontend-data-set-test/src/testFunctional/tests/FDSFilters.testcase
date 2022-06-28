@@ -133,6 +133,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-155310. Assert results can be correctly filtered when searching for a filter."
+	@priority = "5"
+	test FilterCanBeSearched {
+		task ("When click on the filter button") {
+			FDSFilters.openFilters();
+		}
+
+		task ("And When typing a key word in the category search box") {
+			FDSFilters.searchFilter(searchTerm = "status");
+		}
+
+		task ("And When there is a matching filter ") {
+			VerifyElementPresent(
+				key_filter = "Status",
+				locator1 = "FrontendDataSet#FILTER_OPTION");
+		}
+
+		task ("Then the results will be displayed updated accordingly to it") {
+			FDSFilters.enableStatusFilters(key_status = "Pending");
+
+			Click(locator1 = "FrontendDataSet#EDIT_FILTER_BUTTON");
+		}
+
+		task ("And Then the Filters Summary boxes will be updated accordingly to it") {
+			AssertElementPresent(
+				key_filter = "Status: Approved, Draft, Pending",
+				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
+		}
+	}
+
 	@description = "LPS-155311. Assert the filter cannot be filtered by searching."
 	@priority = "3"
 	test FilterNotFound {

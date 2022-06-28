@@ -68,14 +68,12 @@ public class AuditEventManagerImpl implements AuditEventManager {
 			<com.liferay.portal.security.audit.storage.model.AuditEvent>
 				orderByComparator) {
 
-		List<com.liferay.portal.security.audit.storage.model.AuditEvent>
-			auditEvents = _auditEventLocalService.getAuditEvents(
+		return _translate(
+			_auditEventLocalService.getAuditEvents(
 				companyId, userId, userName, createDateGT, createDateLT,
 				eventType, className, classPK, clientHost, clientIP, serverName,
 				serverPort, sessionID, andSearch, start, end,
-				orderByComparator);
-
-		return _translate(auditEvents);
+				orderByComparator));
 	}
 
 	@Override

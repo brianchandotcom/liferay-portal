@@ -14,7 +14,9 @@
 
 package com.liferay.notification.rest.internal.graphql.query.v1_0;
 
+import com.liferay.notification.rest.dto.v1_0.NotificationQueueEntry;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
+import com.liferay.notification.rest.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.notification.rest.resource.v1_0.NotificationTemplateResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -50,12 +52,66 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
+	public static void setNotificationQueueEntryResourceComponentServiceObjects(
+		ComponentServiceObjects<NotificationQueueEntryResource>
+			notificationQueueEntryResourceComponentServiceObjects) {
+
+		_notificationQueueEntryResourceComponentServiceObjects =
+			notificationQueueEntryResourceComponentServiceObjects;
+	}
+
 	public static void setNotificationTemplateResourceComponentServiceObjects(
 		ComponentServiceObjects<NotificationTemplateResource>
 			notificationTemplateResourceComponentServiceObjects) {
 
 		_notificationTemplateResourceComponentServiceObjects =
 			notificationTemplateResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationQueueEntries(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public NotificationQueueEntryPage notificationQueueEntries(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_notificationQueueEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			notificationQueueEntryResource -> new NotificationQueueEntryPage(
+				notificationQueueEntryResource.getNotificationQueueEntriesPage(
+					search,
+					_filterBiFunction.apply(
+						notificationQueueEntryResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(
+						notificationQueueEntryResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {notificationQueueEntry(notificationQueueEntryId: ___){actions, bcc, body, cc, className, from, fromName, id, priority, sent, sentDate, subject, to, toName, triggerBy}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public NotificationQueueEntry notificationQueueEntry(
+			@GraphQLName("notificationQueueEntryId") Long
+				notificationQueueEntryId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_notificationQueueEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			notificationQueueEntryResource ->
+				notificationQueueEntryResource.getNotificationQueueEntry(
+					notificationQueueEntryId));
 	}
 
 	/**
@@ -104,6 +160,44 @@ public class Query {
 			notificationTemplateResource ->
 				notificationTemplateResource.getNotificationTemplate(
 					notificationTemplateId));
+	}
+
+	@GraphQLName("NotificationQueueEntryPage")
+	public class NotificationQueueEntryPage {
+
+		public NotificationQueueEntryPage(Page notificationQueueEntryPage) {
+			actions = notificationQueueEntryPage.getActions();
+
+			facets = notificationQueueEntryPage.getFacets();
+
+			items = notificationQueueEntryPage.getItems();
+			lastPage = notificationQueueEntryPage.getLastPage();
+			page = notificationQueueEntryPage.getPage();
+			pageSize = notificationQueueEntryPage.getPageSize();
+			totalCount = notificationQueueEntryPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
+		protected java.util.Collection<NotificationQueueEntry> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
 	}
 
 	@GraphQLName("NotificationTemplatePage")
@@ -164,6 +258,23 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			NotificationQueueEntryResource notificationQueueEntryResource)
+		throws Exception {
+
+		notificationQueueEntryResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		notificationQueueEntryResource.setContextCompany(_company);
+		notificationQueueEntryResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		notificationQueueEntryResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		notificationQueueEntryResource.setContextUriInfo(_uriInfo);
+		notificationQueueEntryResource.setContextUser(_user);
+		notificationQueueEntryResource.setGroupLocalService(_groupLocalService);
+		notificationQueueEntryResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			NotificationTemplateResource notificationTemplateResource)
 		throws Exception {
 
@@ -179,6 +290,8 @@ public class Query {
 		notificationTemplateResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<NotificationQueueEntryResource>
+		_notificationQueueEntryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<NotificationTemplateResource>
 		_notificationTemplateResourceComponentServiceObjects;
 

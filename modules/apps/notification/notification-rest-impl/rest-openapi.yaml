@@ -117,7 +117,7 @@ openapi: 3.0.1
 paths:
     "/notification-queue-entries":
         get:
-            operationId: getNotificationQueueEntryPage
+            operationId: getNotificationQueueEntriesPage
             parameters:
                 - in: query
                   name: filter

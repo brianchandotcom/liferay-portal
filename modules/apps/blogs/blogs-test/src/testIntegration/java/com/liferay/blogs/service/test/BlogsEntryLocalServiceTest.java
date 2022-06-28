@@ -181,6 +181,29 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddBlogsEntryWithoutExternalReferenceCode()
+		throws Exception {
+
+		BlogsEntry blogsEntry1 = BlogsEntryLocalServiceUtil.addEntry(
+			null, TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.nextDate(), false, false, new String[0],
+			RandomTestUtil.randomString(), null, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		String externalReferenceCode = blogsEntry1.getExternalReferenceCode();
+
+		Assert.assertEquals(externalReferenceCode, blogsEntry1.getUuid());
+
+		BlogsEntry blogsEntry2 =
+			BlogsEntryLocalServiceUtil.getBlogsEntryByExternalReferenceCode(
+				TestPropsValues.getGroupId(), externalReferenceCode);
+
+		Assert.assertEquals(blogsEntry1, blogsEntry2);
+	}
+
+	@Test
 	public void testAddCoverImageWithCoverImageURL() throws Exception {
 		BlogsEntry entry = addEntry(false);
 

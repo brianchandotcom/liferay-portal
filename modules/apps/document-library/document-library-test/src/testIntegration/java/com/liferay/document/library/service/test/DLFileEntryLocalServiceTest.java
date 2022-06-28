@@ -288,6 +288,31 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddFileEntryWithoutExternalReferenceCode()
+		throws Exception {
+
+		DLFileEntry dlFileEntry1 = DLFileEntryLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
+			new ByteArrayInputStream(new byte[0]), 0, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		String externalReferenceCode = dlFileEntry1.getExternalReferenceCode();
+
+		Assert.assertEquals(externalReferenceCode, dlFileEntry1.getUuid());
+
+		DLFileEntry dlFileEntry2 =
+			DLFileEntryLocalServiceUtil.getDLFileEntryByExternalReferenceCode(
+				_group.getGroupId(), externalReferenceCode);
+
+		Assert.assertEquals(dlFileEntry1, dlFileEntry2);
+	}
+
+	@Test
 	public void testAddsFileEntryWithExpirationDateReviewDate()
 		throws Exception {
 

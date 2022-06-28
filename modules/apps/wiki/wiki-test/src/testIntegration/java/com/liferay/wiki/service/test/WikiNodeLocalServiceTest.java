@@ -17,6 +17,7 @@ package com.liferay.wiki.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -91,6 +92,28 @@ public class WikiNodeLocalServiceTest {
 
 		Assert.assertEquals(
 			externalReferenceCode, wikiNode.getExternalReferenceCode());
+	}
+
+	@Test
+	public void testAddNodeWithoutExternalReferenceCode()
+		throws PortalException {
+
+		User user = TestPropsValues.getUser();
+
+		WikiNode wikiNode1 = WikiNodeLocalServiceUtil.addNode(
+			user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext());
+
+		String externalReferenceCode = wikiNode1.getExternalReferenceCode();
+
+		Assert.assertEquals(externalReferenceCode, wikiNode1.getUuid());
+
+		WikiNode wikiNode2 =
+			WikiNodeLocalServiceUtil.getWikiNodeByExternalReferenceCode(
+				TestPropsValues.getGroupId(), externalReferenceCode);
+
+		Assert.assertEquals(wikiNode1, wikiNode2);
 	}
 
 	@Test

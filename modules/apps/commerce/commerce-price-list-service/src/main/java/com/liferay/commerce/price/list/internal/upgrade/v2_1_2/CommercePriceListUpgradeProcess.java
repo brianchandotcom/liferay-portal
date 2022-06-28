@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.price.list.internal.upgrade.v2_1_2;
 
-import com.liferay.commerce.price.list.internal.upgrade.base.BaseCommercePriceListUpgradeProcess;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -30,8 +30,7 @@ import java.util.Arrays;
 /**
  * @author Riccardo Alberti
  */
-public class CommercePriceListUpgradeProcess
-	extends BaseCommercePriceListUpgradeProcess {
+public class CommercePriceListUpgradeProcess extends UpgradeProcess {
 
 	public CommercePriceListUpgradeProcess(
 		ResourceActionLocalService resourceActionLocalService,

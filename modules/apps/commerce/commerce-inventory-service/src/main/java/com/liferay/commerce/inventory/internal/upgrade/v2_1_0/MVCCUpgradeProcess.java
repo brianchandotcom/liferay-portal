@@ -18,8 +18,6 @@ import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.util.CommerceInven
 import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.util.CommerceInventoryReplenishmentItemTable;
 import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.util.CommerceInventoryWarehouseItemTable;
 import com.liferay.commerce.inventory.internal.upgrade.v2_1_0.util.CommerceInventoryWarehouseTable;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -30,40 +28,25 @@ public class MVCCUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (hasTable(CommerceInventoryBookedQuantityTable.TABLE_NAME)) {
-			_addColumn(
+			alterTableAddColumn(
 				"CIBookedQuantity", "mvccVersion", "LONG default 0 not null");
 		}
 
 		if (hasTable(CommerceInventoryReplenishmentItemTable.TABLE_NAME)) {
-			_addColumn(
+			alterTableAddColumn(
 				"CIReplenishmentItem", "mvccVersion",
 				"LONG default 0 not null");
 		}
 
 		if (hasTable(CommerceInventoryWarehouseTable.TABLE_NAME)) {
-			_addColumn("CIWarehouse", "mvccVersion", "LONG default 0 not null");
+			alterTableAddColumn(
+				"CIWarehouse", "mvccVersion", "LONG default 0 not null");
 		}
 
 		if (hasTable(CommerceInventoryWarehouseItemTable.TABLE_NAME)) {
-			_addColumn(
+			alterTableAddColumn(
 				"CIWarehouseItem", "mvccVersion", "LONG default 0 not null");
 		}
 	}
-
-	private void _addColumn(
-			String tableName, String columnName, String columnType)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				String.format(
-					"Adding column %s to table %s", columnName, tableName));
-		}
-
-		alterTableAddColumn(tableName, columnName, columnType);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MVCCUpgradeProcess.class);
 
 }

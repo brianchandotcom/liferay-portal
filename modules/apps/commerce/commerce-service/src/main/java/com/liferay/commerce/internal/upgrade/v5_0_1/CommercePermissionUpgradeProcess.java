@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.internal.upgrade.v5_0_1;
 
-import com.liferay.commerce.internal.upgrade.base.BaseCommerceServiceUpgradeProcess;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -34,8 +34,7 @@ import java.util.Objects;
 /**
  * @author Riccardo Alberti
  */
-public class CommercePermissionUpgradeProcess
-	extends BaseCommerceServiceUpgradeProcess {
+public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 
 	public CommercePermissionUpgradeProcess(
 		ResourceActionLocalService resourceActionLocalService,

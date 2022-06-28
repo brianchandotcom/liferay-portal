@@ -28,7 +28,14 @@ if (Validator.isNull(redirect)) {
 SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayContext = (SegmentsCompanyConfigurationDisplayContext)request.getAttribute(SegmentsCompanyConfigurationDisplayContext.class.getName());
 %>
 
+<liferay-util:html-top
+	outputKey="configuration_css"
+>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/configuration.css") %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <clay:sheet
+	cssClass="segments-configuration"
 	size="full"
 >
 	<h2>
@@ -50,58 +57,65 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 		</c:if>
 	</h2>
 
-	<aui:form action="<%= segmentsCompanyConfigurationDisplayContext.getBindConfigurationActionURL() %>" method="post" name="fm">
+	<aui:form action="<%= segmentsCompanyConfigurationDisplayContext.getBindConfigurationActionURL() %>" cssClass="mt-3" method="post" name="fm">
 		<c:if test="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentsCompanyConfigurationDefined() %>">
 			<aui:alert closeable="<%= false %>" id="errorAlert" type="info">
 				<liferay-ui:message key="this-configuration-is-not-saved-yet.-the-values-shown-are-the-default" />
 			</aui:alert>
 		</c:if>
 
-		<div class="form-group">
-			<c:choose>
-				<c:when test="<%= segmentsCompanyConfigurationDisplayContext.isSegmentationChecked() || !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>">
-					<input disabled name='<%= liferayPortletResponse.getNamespace() + "segmentationEnabled" %>' type="hidden" value='false' />
-				</c:when>
-				<c:otherwise>
-					<input name="<portlet:namespace />segmentationEnabled" type="hidden" value="false" />
-				</c:otherwise>
-			</c:choose>
+		<div class="row">
+			<div class="col-sm-12 form-group">
+				<div class="form-group__inner">
+					<c:choose>
+						<c:when test="<%= segmentsCompanyConfigurationDisplayContext.isSegmentationChecked() || !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>">
+							<input disabled name='<%= liferayPortletResponse.getNamespace() + "segmentationEnabled" %>' type="hidden" value='false' />
+						</c:when>
+						<c:otherwise>
+							<input name="<portlet:namespace />segmentationEnabled" type="hidden" value="false" />
+						</c:otherwise>
+					</c:choose>
 
-			<clay:checkbox
-				checked="<%= segmentsCompanyConfigurationDisplayContext.isSegmentationChecked() %>"
-				className="mb-3"
-				disabled="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>"
-				id='<%= liferayPortletResponse.getNamespace() + "segmentationEnabled" %>'
-				label='<%= LanguageUtil.get(request, "segmentation-enabled-name") %>'
-				name='<%= liferayPortletResponse.getNamespace() + "segmentationEnabled" %>'
-			/>
+					<clay:checkbox
+						checked="<%= segmentsCompanyConfigurationDisplayContext.isSegmentationChecked() %>"
+						disabled="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>"
+						id='<%= liferayPortletResponse.getNamespace() + "segmentationEnabled" %>'
+						label='<%= LanguageUtil.get(request, "segmentation-enabled-name") %>'
+						name='<%= liferayPortletResponse.getNamespace() + "segmentationEnabled" %>'
+					/>
 
-			<div aria-hidden="true" class="form-feedback-group">
-				<div class="form-text text-weight-normal"><liferay-ui:message key="segmentation-enabled-description" /></div>
+					<div aria-hidden="true" class="form-feedback-group">
+						<div class="form-text text-weight-normal"><liferay-ui:message key="segmentation-enabled-description" /></div>
+					</div>
+				</div>
 			</div>
 		</div>
 
-		<div class="form-group">
-			<c:choose>
-				<c:when test="<%= segmentsCompanyConfigurationDisplayContext.isRoleSegmentationChecked() || !segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() %>">
-					<input disabled name='<%= liferayPortletResponse.getNamespace() + "roleSegmentationEnabled" %>' type="hidden" value='false' />
-				</c:when>
-				<c:otherwise>
-					<input name="<portlet:namespace />roleSegmentationEnabled" type="hidden" value="false" />
-				</c:otherwise>
-			</c:choose>
+		<div class="row">
+			<div class="col-sm-12 form-group mb-0">
+				<div class="form-group__inner">
+					<c:choose>
+						<c:when test="<%= segmentsCompanyConfigurationDisplayContext.isRoleSegmentationChecked() || !segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() %>">
+							<input disabled name='<%= liferayPortletResponse.getNamespace() + "roleSegmentationEnabled" %>' type="hidden" value='false' />
+						</c:when>
+						<c:otherwise>
+							<input name="<portlet:namespace />roleSegmentationEnabled" type="hidden" value="false" />
+						</c:otherwise>
+					</c:choose>
 
-			<clay:checkbox
-				checked="<%= segmentsCompanyConfigurationDisplayContext.isRoleSegmentationChecked() %>"
-				disabled="<%= !segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() %>"
-				id='<%= liferayPortletResponse.getNamespace() + "roleSegmentationEnabled" %>'
-				label='<%= LanguageUtil.get(request, "role-segmentation-enabled-name") %>'
-				name='<%= liferayPortletResponse.getNamespace() + "roleSegmentationEnabled" %>'
-			/>
+					<clay:checkbox
+						checked="<%= segmentsCompanyConfigurationDisplayContext.isRoleSegmentationChecked() %>"
+						disabled="<%= !segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() %>"
+						id='<%= liferayPortletResponse.getNamespace() + "roleSegmentationEnabled" %>'
+						label='<%= LanguageUtil.get(request, "role-segmentation-enabled-name") %>'
+						name='<%= liferayPortletResponse.getNamespace() + "roleSegmentationEnabled" %>'
+					/>
 
-			<div aria-hidden="true" class="form-feedback-group">
-				<div class="form-text text-weight-normal">
-					<liferay-ui:message key="role-segmentation-enabled-description" />
+					<div aria-hidden="true" class="form-feedback-group">
+						<div class="form-text text-weight-normal">
+							<liferay-ui:message key="role-segmentation-enabled-description" />
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

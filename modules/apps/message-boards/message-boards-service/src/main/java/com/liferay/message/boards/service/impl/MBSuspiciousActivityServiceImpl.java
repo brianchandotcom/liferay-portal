@@ -48,51 +48,51 @@ public class MBSuspiciousActivityServiceImpl
 		return mbSuspiciousActivityLocalService.addOrUpdateSuspiciousActivity(userId, messageId, description, type);
 	}
 	@Override
-	public MBSuspiciousActivity findByPrimaryKey(long suspiciousActivityId)
+	public MBSuspiciousActivity getSuspiciousActivity(long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException {
 
-		return _mbSuspiciousActivityLocalService.findByPrimaryKey(suspiciousActivityId);
+		return _mbSuspiciousActivityLocalService.getSuspiciousActivity(suspiciousActivityId);
 	}
 
 	@Override
-	public List<MBSuspiciousActivity> findAll() {
+	public List<MBSuspiciousActivity> getSuspiciousActivities() {
 
-		return _mbSuspiciousActivityLocalService.findAll();
+		return _mbSuspiciousActivityLocalService.getSuspiciousActivities();
 	}
 
 	@Override
-	public MBSuspiciousActivity findByU_M(long userId, long messageId)
+	public MBSuspiciousActivity getSuspiciousActivity(long userId, long messageId)
 		throws NoSuchSuspiciousActivityException {
 
-		return _mbSuspiciousActivityLocalService.findByU_M(userId, messageId);
+		return _mbSuspiciousActivityLocalService.getSuspiciousActivity(userId, messageId);
 	}
 
 	@Override
-	public MBSuspiciousActivity remove(long suspiciousActivityId)
+	public MBSuspiciousActivity deleteSuspiciousActivity(long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException {
 
-		return _mbSuspiciousActivityLocalService.remove(suspiciousActivityId);
+		return _mbSuspiciousActivityLocalService.deleteSuspiciousActivity(suspiciousActivityId);
 	}
 
 	@Override
-	public int countAll() {
-		return _mbSuspiciousActivityLocalService.countAll();
+	public int getSuspiciousActivityCount() {
+		return _mbSuspiciousActivityLocalService.getSuspiciousActivityCount();
 	}
 	@Override
-	public MBSuspiciousActivity toggleValidated(long suspiciousActivityId)
+	public MBSuspiciousActivity toggleSuspiciousActivityValidator(long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException {
 
-		return _mbSuspiciousActivityLocalService.toggleValidated(suspiciousActivityId);
+		return _mbSuspiciousActivityLocalService.toggleSuspiciousActivityValidator(suspiciousActivityId);
 
 	}
 	@Override
-	public List<MBSuspiciousActivity> findByThreadId(long threadId) {
-		return _mbSuspiciousActivityLocalService.findByThreadId(threadId);
+	public List<MBSuspiciousActivity> getThreadSuspiciousActivities(long threadId) {
+		return _mbSuspiciousActivityLocalService.getThreadSuspiciousActivities(threadId);
 	}
 
 	@Override
-	public List<MBSuspiciousActivity> findByMessagedId(long messageId) {
-		return _mbSuspiciousActivityLocalService.findByMessagedId(messageId);
+	public List<MBSuspiciousActivity> getMessageSuspiciousActivities(long messageId) {
+		return _mbSuspiciousActivityLocalService.getMessageSuspiciousActivities(messageId);
 	}
 
 	@Reference

@@ -160,12 +160,12 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 	@Override
 	public BlogsEntry getBlogsEntryByExternalReferenceCode(
-			long siteId, String externalReferenceCode)
+			long groupId, String externalReferenceCode)
 		throws PortalException {
 
 		BlogsEntry entry =
 			blogsEntryLocalService.getBlogsEntryByExternalReferenceCode(
-				siteId, externalReferenceCode);
+				groupId, externalReferenceCode);
 
 		_blogsEntryModelResourcePermission.check(
 			getPermissionChecker(), entry, ActionKeys.VIEW);

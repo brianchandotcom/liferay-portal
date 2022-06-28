@@ -178,11 +178,11 @@ public class WikiNodeServiceImpl extends WikiNodeServiceBaseImpl {
 
 	@Override
 	public WikiNode getWikiNodeByExternalReferenceCode(
-			long siteId, String externalReferenceCode)
+			long groupId, String externalReferenceCode)
 		throws PortalException {
 
 		WikiNode node = wikiNodeLocalService.getWikiNodeByExternalReferenceCode(
-			siteId, externalReferenceCode);
+			groupId, externalReferenceCode);
 
 		_wikiNodeModelResourcePermission.check(
 			getPermissionChecker(), node, ActionKeys.VIEW);

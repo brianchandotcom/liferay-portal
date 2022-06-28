@@ -233,7 +233,7 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 
 		return _toWikiPage(
 			_wikiPageService.addPage(
-				wikiPage.getExternalReferenceCode(), contextUser.getUserId(),
+				wikiPage.getExternalReferenceCode(),
 				parentWikiPage.getNodeId(), wikiPage.getHeadline(),
 				WikiPageConstants.VERSION_DEFAULT, wikiPage.getContent(),
 				wikiPage.getHeadline(), false,

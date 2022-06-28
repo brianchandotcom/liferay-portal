@@ -16,13 +16,10 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.exception.StorageFieldValueException;
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentCompositionService;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.page.template.serializer.LayoutStructureItemJSONSerializer;
@@ -226,20 +223,10 @@ public class AddFragmentCompositionMVCActionCommand
 		AddFragmentCompositionMVCActionCommand.class);
 
 	@Reference
-	private FragmentCollectionContributorTracker
-		_fragmentCollectionContributorTracker;
-
-	@Reference
 	private FragmentCollectionService _fragmentCollectionService;
 
 	@Reference
 	private FragmentCompositionService _fragmentCompositionService;
-
-	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

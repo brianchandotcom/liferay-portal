@@ -15,9 +15,7 @@
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
-import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelector;
@@ -31,7 +29,6 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
@@ -144,20 +141,11 @@ public class ContentPageEditorDisplayContextProvider {
 	}
 
 	@Reference
-	private CommentManager _commentManager;
-
-	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
 
 	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;
-
-	@Reference
-	private FragmentRendererController _fragmentRendererController;
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;

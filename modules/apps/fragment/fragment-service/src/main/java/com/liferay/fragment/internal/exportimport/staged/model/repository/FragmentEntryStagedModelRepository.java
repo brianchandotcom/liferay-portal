@@ -16,7 +16,6 @@ package com.liferay.fragment.internal.exportimport.staged.model.repository;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.fragment.exception.RequiredFragmentEntryException;
@@ -237,8 +236,5 @@ public class FragmentEntryStagedModelRepository
 
 	@Reference
 	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;
-
-	@Reference
-	private Staging _staging;
 
 }

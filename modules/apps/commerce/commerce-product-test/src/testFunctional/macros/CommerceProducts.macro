@@ -291,4 +291,11 @@ definition {
 		Button.clickPublish();
 	}
 
+	macro isProductIdsEqual {
+        if ("${firstProductId}" == "${secondProductId}") {
+			return "true";
+		} else {
+			return "false";
+		}
+	}
 }

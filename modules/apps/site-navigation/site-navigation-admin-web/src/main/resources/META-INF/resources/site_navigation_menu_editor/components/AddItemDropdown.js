@@ -99,12 +99,20 @@ export function AddItemDropDown({trigger}) {
 						<ClayDropDown.Item
 							key={label}
 							onClick={() => {
+								const useSmallerModal = shouldUseSmallerModal(
+									data.type
+								);
+
 								if (data.itemSelector) {
 									Liferay.Util.openSelectionModal({
 										buttonAddLabel: data.multiSelection
 											? Liferay.Language.get('select')
 											: null,
+										height: useSmallerModal
+											? '60vh'
+											: undefined,
 										multiple: data.multiSelection,
+
 										onSelect: (selection) => {
 											fetch(data.addItemURL, {
 												body: objectToFormData(
@@ -125,7 +133,11 @@ export function AddItemDropDown({trigger}) {
 												window.location.reload();
 											});
 										},
+
 										selectEventName: `${portletNamespace}selectItem`,
+										size: useSmallerModal
+											? 'md'
+											: undefined,
 										title: data.addTitle,
 										url: data.href,
 									});
@@ -149,6 +161,17 @@ export function AddItemDropDown({trigger}) {
 			</ClayDropDown>
 		</>
 	);
+}
+
+const SMALLER_MODAL_TYPES = [
+	'com.liferay.asset.kernel.model.AssetCategory',
+	'layout',
+	'node',
+	'url',
+];
+
+function shouldUseSmallerModal(type) {
+	return SMALLER_MODAL_TYPES.includes(type);
 }
 
 AddItemDropDown.propTypes = {

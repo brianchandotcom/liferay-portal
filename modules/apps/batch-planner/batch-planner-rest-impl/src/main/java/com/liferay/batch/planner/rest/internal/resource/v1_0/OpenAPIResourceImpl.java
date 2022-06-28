@@ -84,6 +84,8 @@ public class OpenAPIResourceImpl {
 
 			add(PlanResourceImpl.class);
 
+			add(SiteScopeResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

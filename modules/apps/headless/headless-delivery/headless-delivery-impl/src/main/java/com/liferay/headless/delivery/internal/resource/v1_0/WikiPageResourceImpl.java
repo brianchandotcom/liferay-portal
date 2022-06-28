@@ -233,10 +233,9 @@ public class WikiPageResourceImpl extends BaseWikiPageResourceImpl {
 
 		return _toWikiPage(
 			_wikiPageService.addPage(
-				wikiPage.getExternalReferenceCode(),
-				parentWikiPage.getNodeId(), wikiPage.getHeadline(),
-				WikiPageConstants.VERSION_DEFAULT, wikiPage.getContent(),
-				wikiPage.getHeadline(), false,
+				wikiPage.getExternalReferenceCode(), parentWikiPage.getNodeId(),
+				wikiPage.getHeadline(), WikiPageConstants.VERSION_DEFAULT,
+				wikiPage.getContent(), wikiPage.getHeadline(), false,
 				_toFormat(wikiPage.getEncodingFormat()), false,
 				parentWikiPage.getTitle(), null, serviceContext));
 	}

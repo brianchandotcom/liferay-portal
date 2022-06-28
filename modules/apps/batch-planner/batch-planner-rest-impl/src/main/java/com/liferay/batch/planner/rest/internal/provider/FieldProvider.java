@@ -20,19 +20,13 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.batch.engine.Field;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateRegistry;
-import com.liferay.portal.vulcan.resource.OpenAPIResource;
 import com.liferay.portal.vulcan.util.OpenAPIUtil;
-import com.liferay.portal.vulcan.yaml.YAMLUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -79,7 +73,8 @@ public class FieldProvider {
 	}
 
 	public List<Field> getFields(String internalClassName) throws Exception {
-		OpenAPIYAML openAPIYAML = _getOpenAPIYAML(internalClassName);
+		OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
+			internalClassName);
 
 		Map<String, Field> dtoEntityFields = OpenAPIUtil.getDTOEntityFields(
 			internalClassName.substring(
@@ -89,27 +84,6 @@ public class FieldProvider {
 		return new ArrayList<>(dtoEntityFields.values());
 	}
 
-	private OpenAPIYAML _getOpenAPIYAML(String internalClassName)
-		throws Exception {
-
-		VulcanBatchEngineTaskItemDelegate vulcanBatchEngineTaskItemDelegate =
-			_vulcanBatchEngineTaskItemDelegateRegistry.
-				getVulcanBatchEngineTaskItemDelegate(internalClassName);
-
-		Response response = _openAPIResource.getOpenAPI(
-			Collections.singleton(
-				vulcanBatchEngineTaskItemDelegate.getResourceClass()),
-			"yaml");
-
-		if (response.getStatus() != 200) {
-			throw new IllegalArgumentException(
-				"Unable to find Open API specification for " +
-					internalClassName);
-		}
-
-		return YAMLUtil.loadOpenAPIYAML((String)response.getEntity());
-	}
-
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
@@ -117,10 +91,6 @@ public class FieldProvider {
 	private ObjectEntryOpenAPIResource _objectEntryOpenAPIResource;
 
 	@Reference
-	private OpenAPIResource _openAPIResource;
-
-	@Reference
-	private VulcanBatchEngineTaskItemDelegateRegistry
-		_vulcanBatchEngineTaskItemDelegateRegistry;
+	private OpenAPIYAMLProvider _openAPIYAMLProvider;
 
 }

@@ -15,25 +15,19 @@
 package com.liferay.batch.planner.rest.internal.resource.v1_0;
 
 import com.liferay.batch.planner.rest.dto.v1_0.SiteScope;
+import com.liferay.batch.planner.rest.internal.provider.OpenAPIYAMLProvider;
 import com.liferay.batch.planner.rest.resource.v1_0.SiteScopeResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.resource.OpenAPIResource;
 import com.liferay.portal.vulcan.util.OpenAPIUtil;
-import com.liferay.portal.vulcan.yaml.YAMLUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,40 +49,22 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 
 		List<String> entityScopes = null;
 
+		OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
+			internalClassName);
+
 		String simpleInternalClassName = internalClassName.substring(
 			internalClassName.lastIndexOf(StringPool.PERIOD) + 1);
 
 		if (GetterUtil.getBoolean(export)) {
 			entityScopes = OpenAPIUtil.getReadEntityScopes(
-				simpleInternalClassName, _getOpenAPIYAML(internalClassName));
+				simpleInternalClassName, openAPIYAML);
 		}
 		else {
 			entityScopes = OpenAPIUtil.getCreateEntityScopes(
-				simpleInternalClassName, _getOpenAPIYAML(internalClassName));
+				simpleInternalClassName, openAPIYAML);
 		}
 
 		return Page.of(_getSiteScopes(entityScopes));
-	}
-
-	private OpenAPIYAML _getOpenAPIYAML(String internalClassName)
-		throws Exception {
-
-		VulcanBatchEngineTaskItemDelegate vulcanBatchEngineTaskItemDelegate =
-			_vulcanBatchEngineTaskItemDelegateRegistry.
-				getVulcanBatchEngineTaskItemDelegate(internalClassName);
-
-		Response response = _openAPIResource.getOpenAPI(
-			Collections.singleton(
-				vulcanBatchEngineTaskItemDelegate.getResourceClass()),
-			"yaml");
-
-		if (response.getStatus() != 200) {
-			throw new IllegalArgumentException(
-				"Unable to find Open API specification for " +
-					internalClassName);
-		}
-
-		return YAMLUtil.loadOpenAPIYAML((String)response.getEntity());
 	}
 
 	private List<SiteScope> _getSiteScopes(List<String> entityScopes)
@@ -119,10 +95,6 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 	private GroupService _groupService;
 
 	@Reference
-	private OpenAPIResource _openAPIResource;
-
-	@Reference
-	private VulcanBatchEngineTaskItemDelegateRegistry
-		_vulcanBatchEngineTaskItemDelegateRegistry;
+	private OpenAPIYAMLProvider _openAPIYAMLProvider;
 
 }

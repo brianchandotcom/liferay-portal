@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.shipment.client.serdes.v1_0;
 
+import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.Shipment;
 import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.ShipmentItem;
 import com.liferay.headless.commerce.admin.shipment.client.json.BaseJSONParser;
@@ -107,6 +108,26 @@ public class ShipmentSerDes {
 			sb.append(liferayToJSONDateFormat.format(shipment.getCreateDate()));
 
 			sb.append("\"");
+		}
+
+		if (shipment.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < shipment.getCustomFields().length; i++) {
+				sb.append(String.valueOf(shipment.getCustomFields()[i]));
+
+				if ((i + 1) < shipment.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (shipment.getExpectedDate() != null) {
@@ -341,6 +362,13 @@ public class ShipmentSerDes {
 				liferayToJSONDateFormat.format(shipment.getCreateDate()));
 		}
 
+		if (shipment.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put("customFields", String.valueOf(shipment.getCustomFields()));
+		}
+
 		if (shipment.getExpectedDate() == null) {
 			map.put("expectedDate", null);
 		}
@@ -499,6 +527,18 @@ public class ShipmentSerDes {
 				if (jsonParserFieldValue != null) {
 					shipment.setCreateDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					shipment.setCustomFields(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomFieldSerDes.toDTO((String)object)
+						).toArray(
+							size -> new CustomField[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "expectedDate")) {

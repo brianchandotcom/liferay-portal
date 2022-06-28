@@ -1114,6 +1114,14 @@ public abstract class BaseShipmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (shipment.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("expectedDate", additionalAssertFieldName)) {
 				if (shipment.getExpectedDate() == null) {
 					valid = false;
@@ -1349,6 +1357,17 @@ public abstract class BaseShipmentResourceTestCase {
 			if (Objects.equals("createDate", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						shipment1.getCreateDate(), shipment2.getCreateDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						shipment1.getCustomFields(),
+						shipment2.getCustomFields())) {
 
 					return false;
 				}
@@ -1654,6 +1673,11 @@ public abstract class BaseShipmentResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("customFields")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("expectedDate")) {

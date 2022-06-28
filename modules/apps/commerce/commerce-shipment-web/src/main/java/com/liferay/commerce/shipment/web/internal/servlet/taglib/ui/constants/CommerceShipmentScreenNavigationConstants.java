@@ -19,7 +19,7 @@ package com.liferay.commerce.shipment.web.internal.servlet.taglib.ui.constants;
  */
 public class CommerceShipmentScreenNavigationConstants {
 
-	public static final String CATEGORY_KEY_ATTACHMENTS = "attachments";
+	public static final String CATEGORY_KEY_CUSTOM_FIELDS = "custom-fields";
 
 	public static final String CATEGORY_KEY_SHIPPING_SUMMARY =
 		"shipping-summary";

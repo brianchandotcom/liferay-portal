@@ -845,12 +845,11 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertNull(clusterRequest);
 
-		Trigger trigger = getTrigger(
-			_TEST_JOB_NAME_PREFIX + "new", _MEMORY_CLUSTER_TEST_GROUP_NAME,
-			_DEFAULT_INTERVAL);
-
 		_clusterSchedulerEngine.schedule(
-			trigger, StringPool.BLANK, StringPool.BLANK, new Message(),
+			getTrigger(
+				_TEST_JOB_NAME_PREFIX + "new", _MEMORY_CLUSTER_TEST_GROUP_NAME,
+				_DEFAULT_INTERVAL),
+			StringPool.BLANK, StringPool.BLANK, new Message(),
 			StorageType.MEMORY_CLUSTERED);
 
 		schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
@@ -1602,11 +1601,11 @@ public class ClusterSchedulerEngineTest {
 
 		Assert.assertTrue(_memoryClusteredJobs.isEmpty());
 
-		Trigger trigger = getTrigger(
-			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
-			_DEFAULT_INTERVAL * 2);
-
-		_clusterSchedulerEngine.update(trigger, StorageType.MEMORY_CLUSTERED);
+		_clusterSchedulerEngine.update(
+			getTrigger(
+				_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,
+				_DEFAULT_INTERVAL * 2),
+			StorageType.MEMORY_CLUSTERED);
 
 		schedulerResponse = _clusterSchedulerEngine.getScheduledJob(
 			_TEST_JOB_NAME_0, _MEMORY_CLUSTER_TEST_GROUP_NAME,

@@ -394,11 +394,8 @@ public class FinderCacheImpl
 				cacheValue);
 		}
 
-		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
-			finderPath.getCacheName());
-
 		PortalCacheHelperUtil.putWithoutReplicator(
-			portalCache, cacheKey, cacheValue);
+			_getPortalCache(finderPath.getCacheName()), cacheKey, cacheValue);
 	}
 
 	public void removeByEntityCache(String className, BaseModel<?> baseModel) {

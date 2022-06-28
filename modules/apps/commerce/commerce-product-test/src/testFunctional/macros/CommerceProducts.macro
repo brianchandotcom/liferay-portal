@@ -298,4 +298,18 @@ definition {
 			return "false";
 		}
 	}
+
+	macro checkProductIdsEqual {
+		var equals = CommerceProducts.isProductIdsEqual(
+			firstProductId = "${firstProductId}",
+			secondProductId = "${secondProductId}");
+
+		echo("equals = ${equals}");
+
+		if ("${equals}" == "false") {
+			fail("The product ID for the ${status} status with the ID ${secondProductId} is not correct, the expected ID is ${firstProductId}");
+		}
+        
+		echo("The product ID for the ${status} status is the one with the ID ${secondProductId}");
+	}
 }

@@ -96,7 +96,7 @@ public class ClientExtensionServicePreActionTest {
 	public void testProcessServicePreActionLayout() throws Exception {
 		String faviconURL = "http://" + RandomTestUtil.randomString() + ".com";
 
-		_clientExtensionEntry = _addClientExtensionEntry(faviconURL);
+		_addClientExtensionEntry(faviconURL);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -124,7 +124,7 @@ public class ClientExtensionServicePreActionTest {
 	public void testProcessServicePreActionLayoutSet() throws Exception {
 		String faviconURL = "http://" + RandomTestUtil.randomString() + ".com";
 
-		_clientExtensionEntry = _addClientExtensionEntry(faviconURL);
+		_addClientExtensionEntry(faviconURL);
 
 		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 			_group.getGroupId(), false);
@@ -156,7 +156,7 @@ public class ClientExtensionServicePreActionTest {
 	public void testProcessServicePreActionMasterLayout() throws Exception {
 		String faviconURL = "http://" + RandomTestUtil.randomString() + ".com";
 
-		_clientExtensionEntry = _addClientExtensionEntry(faviconURL);
+		_addClientExtensionEntry(faviconURL);
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
@@ -193,20 +193,20 @@ public class ClientExtensionServicePreActionTest {
 		Assert.assertEquals(faviconURL, themeDisplay.getFaviconURL());
 	}
 
-	private ClientExtensionEntry _addClientExtensionEntry(String faviconURL)
-		throws Exception {
-
-		return _clientExtensionEntryLocalService.addClientExtensionEntry(
-			RandomTestUtil.randomString(), _user.getUserId(), StringPool.BLANK,
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			StringPool.BLANK, StringPool.BLANK,
-			ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
-			UnicodePropertiesBuilder.create(
-				true
-			).put(
-				"url", faviconURL
-			).buildString());
+	private void _addClientExtensionEntry(String faviconURL) throws Exception {
+		_clientExtensionEntry =
+			_clientExtensionEntryLocalService.addClientExtensionEntry(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				StringPool.BLANK,
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				StringPool.BLANK, StringPool.BLANK,
+				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"url", faviconURL
+				).buildString());
 	}
 
 	private LifecycleAction _getLifecycleAction() {

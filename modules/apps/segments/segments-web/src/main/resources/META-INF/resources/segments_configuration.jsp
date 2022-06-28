@@ -122,38 +122,36 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 
 		<div class="sheet-footer">
 			<div class="btn-group-item">
-				<div class="btn-group-item">
-					<c:choose>
-						<c:when test="<%= true %>">
-							<clay:button
-								displayType="primary"
-								id='<%= liferayPortletResponse.getNamespace() + "update" %>'
-								label='<%= LanguageUtil.get(request, "update") %>'
-								name='<%= liferayPortletResponse.getNamespace() + "update" %>'
-								type="submit"
-							/>
-						</c:when>
-						<c:otherwise>
-							<clay:button
-								displayType="primary"
-								id='<%= liferayPortletResponse.getNamespace() + "save" %>'
-								label='<%= LanguageUtil.get(request, "save") %>'
-								name='<%= liferayPortletResponse.getNamespace() + "save" %>'
-								type="submit"
-							/>
-						</c:otherwise>
-					</c:choose>
-				</div>
+				<c:choose>
+					<c:when test="<%= true %>">
+						<clay:button
+							cssClass="submit-btn"
+							displayType="primary"
+							id='<%= liferayPortletResponse.getNamespace() + "update" %>'
+							label='<%= LanguageUtil.get(request, "update") %>'
+							name='<%= liferayPortletResponse.getNamespace() + "update" %>'
+							type="submit"
+						/>
+					</c:when>
+					<c:otherwise>
+						<clay:button
+							cssClass="submit-btn"
+							displayType="primary"
+							id='<%= liferayPortletResponse.getNamespace() + "save" %>'
+							label='<%= LanguageUtil.get(request, "save") %>'
+							name='<%= liferayPortletResponse.getNamespace() + "save" %>'
+							type="submit"
+						/>
+					</c:otherwise>
+				</c:choose>
 
-				<div class="btn-group-item">
-					<clay:link
-						displayType="secondary"
-						href="<%= redirect %>"
-						id='<%= liferayPortletResponse.getNamespace() + "cancel" %>'
-						label='<%= LanguageUtil.get(request, "cancel") %>'
-						type="button"
-					/>
-				</div>
+				<clay:link
+					displayType="secondary"
+					href="<%= redirect %>"
+					id='<%= liferayPortletResponse.getNamespace() + "cancel" %>'
+					label='<%= LanguageUtil.get(request, "cancel") %>'
+					type="button"
+				/>
 			</div>
 		</div>
 	</aui:form>

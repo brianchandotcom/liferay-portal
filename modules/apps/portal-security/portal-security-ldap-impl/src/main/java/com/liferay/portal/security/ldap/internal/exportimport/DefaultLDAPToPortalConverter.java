@@ -247,12 +247,8 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 				attributes, contactMappings, ContactConverterKeys.JOB_TITLE));
 
 		ldapUser.setContact(contact);
-
-		Map<String, String[]> contactExpandoAttributes = _getExpandoAttributes(
-			attributes, contactExpandoMappings);
-
-		ldapUser.setContactExpandoAttributes(contactExpandoAttributes);
-
+		ldapUser.setContactExpandoAttributes(
+			_getExpandoAttributes(attributes, contactExpandoMappings));
 		ldapUser.setCreatorUserId(0);
 		ldapUser.setGroupIds(null);
 		ldapUser.setOrganizationIds(null);

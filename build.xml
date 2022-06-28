@@ -12,10 +12,6 @@
 						includes="*.log*"
 					/>
 					<fileset
-						dir="${app.server.classes.portal.dir}"
-						includes="portal-*.properties,system-*.properties"
-					/>
-					<fileset
 						dir="${app.server.deploy.dir}"
 						includes="*-ext/**,*-ext.war/**,*-hook/**,*-hook.war/**,*-layouttpl/**,*-layouttpl.war/**,*-portlet/**,*-portlet.war/**,*-theme/**,*-theme.war/**,*-web/**,*-web.war/**"
 					/>
@@ -64,6 +60,10 @@
 					</then>
 					<else>
 						<delete failonerror="false">
+							<fileset
+								dir="${app.server.classes.portal.dir}"
+								includes="portal-*.properties,system-*.properties"
+							/>
 							<fileset
 								dir="${app.server.shielded-container-lib.portal.dir}"
 								excludes="${jdbc.drivers}"

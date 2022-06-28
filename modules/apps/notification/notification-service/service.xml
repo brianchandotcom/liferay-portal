@@ -47,6 +47,27 @@
 			<finder-column comparator="&lt;" name="sentDate" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="NotificationQueueEntryAttachment" remote-service="false" table="NQueueEntryAttachment" uuid="false">
+
+		<!-- PK fields -->
+
+		<column db-name="NQueueEntryAttachmentId" name="notificationQueueEntryAttachmentId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="fileEntryId" type="long" />
+		<column name="notificationQueueEntryId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="NotificationQueueEntryId" return-type="Collection">
+			<finder-column name="notificationQueueEntryId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="NotificationTemplate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -74,7 +95,33 @@
 		<column localized="true" name="subject" type="String" />
 		<column localized="true" name="to" type="String" />
 	</entity>
+	<entity local-service="true" name="NotificationTemplateAttachment" remote-service="false" table="NTemplateAttachment" uuid="false">
+
+		<!-- PK fields -->
+
+		<column db-name="NTemplateAttachmentId" name="notificationTemplateAttachmentId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="notificationTemplateId" type="long" />
+		<column name="objectFieldId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="NotificationTemplateId" return-type="Collection">
+			<finder-column name="notificationTemplateId" />
+		</finder>
+		<finder name="NTI_OFI" return-type="NotificationTemplateAttachment" unique="true">
+			<finder-column name="notificationTemplateId" />
+			<finder-column name="objectFieldId" />
+		</finder>
+	</entity>
 	<exceptions>
+		<exception>NotificationTemplateAttachmentObjectFieldId</exception>
 		<exception>NotificationTemplateFrom</exception>
 		<exception>NotificationTemplateName</exception>
 		<exception>NotificationTemplateObjectDefinitionId</exception>

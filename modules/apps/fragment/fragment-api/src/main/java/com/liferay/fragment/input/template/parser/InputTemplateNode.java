@@ -30,11 +30,10 @@ import java.util.Map;
 public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	public InputTemplateNode(
-		String dataType, String errorMessage, String helpText, String label,
-		String name, boolean required, boolean showHelpText, boolean showLabel,
-		String type, String value) {
+		String errorMessage, String helpText, String label, String name,
+		boolean required, boolean showHelpText, boolean showLabel, String type,
+		String value) {
 
-		_dataType = dataType;
 		_errorMessage = errorMessage;
 		_helpText = helpText;
 		_label = label;
@@ -45,7 +44,6 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		_type = type;
 		_value = value;
 
-		put("dataType", dataType);
 		put("errorMessage", errorMessage);
 		put("helpText", helpText);
 		put("label", label);
@@ -69,10 +67,6 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	public Map<String, Object> getAttributes() {
 		return _attributes;
-	}
-
-	public String getDataType() {
-		return _dataType;
 	}
 
 	public String getErrorMessage() {
@@ -129,8 +123,6 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 				return attributesJSONObject;
 			}
 		).put(
-			"dataType", _dataType
-		).put(
 			"errorMessage", _errorMessage
 		).put(
 			"helpText", _helpText
@@ -184,7 +176,6 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	private final Map<String, Object> _attributes = new HashMap<>();
-	private final String _dataType;
 	private final String _errorMessage;
 	private final String _helpText;
 	private final String _label;

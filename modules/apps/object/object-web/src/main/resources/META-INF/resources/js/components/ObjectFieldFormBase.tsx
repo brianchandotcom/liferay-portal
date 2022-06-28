@@ -23,7 +23,7 @@ import {
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';
-import {fetch, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 import React, {
 	ChangeEventHandler,
 	ReactNode,
@@ -32,8 +32,12 @@ import React, {
 	useState,
 } from 'react';
 
-import {HEADERS} from '../utils/constants';
-import {fetchPickListItems} from '../utils/fetchPickListItems';
+import {
+	getObjectFields,
+	getObjectRelationships,
+	getPickListItems,
+	getPickLists,
+} from '../utils/api';
 import {normalizeFieldSettings} from '../utils/fieldSettings';
 import {defaultLanguageId} from '../utils/locale';
 import {toCamelCase} from '../utils/string';
@@ -84,58 +88,6 @@ const aggregationFunctions = [
 	},
 ];
 
-async function fetchPickList() {
-	const result = await fetch(
-		'/o/headless-admin-list-type/v1.0/list-type-definitions?pageSize=-1',
-		{
-			headers: HEADERS,
-			method: 'GET',
-		}
-	);
-
-	const {items = []} = (await result.json()) as {
-		items: IPickList[] | undefined;
-	};
-
-	return items.map(({id, name}) => ({id, name}));
-}
-
-async function fetchObjectRelationships(objectDefinitonId: number) {
-	const result = await fetch(
-		`/o/object-admin/v1.0/object-definitions/${objectDefinitonId}/object-relationships`,
-		{
-			headers: HEADERS,
-			method: 'GET',
-		}
-	);
-
-	const {items = []} = (await result.json()) as {
-		items: ObjectRelationship[];
-	};
-
-	return items.map(({label, name, objectDefinitionId2}) => ({
-		label,
-		name,
-		objectDefinitionId2,
-	}));
-}
-
-async function fetchObjectFields(objectDefinitionId: number) {
-	const result = await fetch(
-		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields`,
-		{
-			headers: HEADERS,
-			method: 'GET',
-		}
-	);
-
-	const {items = []} = (await result.json()) as {
-		items: ObjectField[];
-	};
-
-	return items;
-}
-
 export default function ObjectFieldFormBase({
 	children,
 	disabled,
@@ -157,12 +109,13 @@ export default function ObjectFieldFormBase({
 
 		return businessTypeMap;
 	}, [objectFieldTypes]);
-	const [pickList, setPickList] = useState<IPickList[]>([]);
+
+	const [pickList, setPickList] = useState<PickList[]>([]);
 	const [pickListItems, setPickListItems] = useState<PickListItem[]>([]);
 
 	const handleTypeChange = async (option: ObjectFieldType) => {
 		if (option.businessType === 'Picklist') {
-			setPickList(await fetchPickList());
+			setPickList(await getPickLists());
 		}
 
 		let objectFieldSettings: ObjectFieldSetting[] | undefined;
@@ -330,7 +283,7 @@ export default function ObjectFieldFormBase({
 							onToggle={async (state) => {
 								setValues({required: state, state});
 								setPickListItems(
-									await fetchPickListItems(
+									await getPickListItems(
 										values.listTypeDefinitionId!
 									)
 								);
@@ -557,7 +510,7 @@ function AggregationSourceProperty({
 	useEffect(() => {
 		const makeFetch = async () => {
 			setObjectRelatonships(
-				await fetchObjectRelationships(objectDefinitionId)
+				await getObjectRelationships(objectDefinitionId)
 			);
 		};
 
@@ -579,7 +532,7 @@ function AggregationSourceProperty({
 						aggregationFunction.value === settings.function
 				);
 
-				const relatedFields = await fetchObjectFields(
+				const relatedFields = await getObjectFields(
 					currentRelatedObjectRelationship.objectDefinitionId2
 				);
 
@@ -616,7 +569,7 @@ function AggregationSourceProperty({
 		setSelectRelatedObjectRelationship(objectRelationship);
 		setSelectedSummarizeField('');
 
-		const relatedFields = await fetchObjectFields(
+		const relatedFields = await getObjectFields(
 			objectRelationship.objectDefinitionId2
 		);
 
@@ -893,8 +846,6 @@ interface IUseObjectFieldForm {
 	initialValues: Partial<ObjectField>;
 	onSubmit: (field: ObjectField) => void;
 }
-
-interface IPickList extends ItemIdName {}
 
 interface IProps {
 	children?: ReactNode;

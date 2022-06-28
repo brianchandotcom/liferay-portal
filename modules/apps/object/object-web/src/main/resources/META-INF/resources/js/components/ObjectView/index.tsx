@@ -22,14 +22,15 @@ import {
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
+import {fetchJSON, getObjectFields} from '../../utils/api';
 import {HEADERS} from '../../utils/constants';
-import {defaultLanguageId, locale} from '../../utils/locale';
+import {defaultLanguageId} from '../../utils/locale';
 import BasicInfoScreen from './BasicInfoScreen/BasicInfoScreen';
 import {DefaultSortScreen} from './DefaultSortScreen/DefaultSortScreen';
 import {FilterScreen} from './FilterScreen/FilterScreen';
 import ViewBuilderScreen from './ViewBuilderScreen/ViewBuilderScreen';
 import ViewContext, {TYPES, ViewContextProvider} from './context';
-import {TObjectField, TObjectView, TWorkflowStatus} from './types';
+import {TObjectView, TWorkflowStatus} from './types';
 
 const TABS = [
 	{
@@ -50,8 +51,6 @@ const TABS = [
 	},
 ];
 
-HEADERS.append('Accept-Language', locale!.symbol);
-
 const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [{isViewOnly, objectView, objectViewId}, dispatch] = useContext(
 		ViewContext
@@ -62,14 +61,6 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectViewResponse = await fetch(
-				`/o/object-admin/v1.0/object-views/${objectViewId}`,
-				{
-					headers: HEADERS,
-					method: 'GET',
-				}
-			);
-
 			const {
 				defaultObjectView,
 				name,
@@ -77,15 +68,11 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				objectViewColumns,
 				objectViewFilterColumns,
 				objectViewSortColumns,
-			} = (await objectViewResponse.json()) as any;
-
-			const objectFieldsResponse = await fetch(
-				`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields`,
-				{
-					headers: HEADERS,
-					method: 'GET',
-				}
+			} = await fetchJSON(
+				`/o/object-admin/v1.0/object-views/${objectViewId}`
 			);
+
+			const objectFields = await getObjectFields(objectDefinitionId);
 
 			const objectView = {
 				defaultObjectView,
@@ -102,12 +89,6 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				},
 				type: TYPES.ADD_OBJECT_VIEW,
 			});
-
-			const {
-				items: objectFields,
-			}: {
-				items: TObjectField[];
-			} = (await objectFieldsResponse.json()) as any;
 
 			dispatch({
 				payload: {

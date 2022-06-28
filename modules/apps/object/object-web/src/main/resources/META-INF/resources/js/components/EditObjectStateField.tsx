@@ -15,49 +15,25 @@
 import {Card, SidePanelForm} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {fetchPickListItems} from '../utils/fetchPickListItems';
+import {getPickListItems} from '../utils/api';
 import {defaultLanguageId} from '../utils/locale';
 import StateDefinition from './StateManager/StateDefinition';
 
-const locales: {label: string; symbol: string}[] = [];
-const languageLabels: string[] = [];
-const languages = Liferay.Language.available as LocalizedValue<string>;
-
-Object.entries(languages).forEach(([languageId, label]) => {
-	locales.push({
-		label: languageId,
-		symbol: languageId.replace('_', '-').toLocaleLowerCase(),
-	});
-
-	languageLabels.push(label);
-});
-
-export default function EditObjectStateField({
-	objectField: initialValues,
-	readOnly,
-}: IProps) {
-	const [pickListItems, setPickListItems] = useState<PickListItem[]>();
+export default function EditObjectStateField({objectField, readOnly}: IProps) {
+	const [pickListItems, setPickListItems] = useState<PickListItem[]>([]);
 
 	useEffect(() => {
-		async function fetchData() {
-			const items = await fetchPickListItems(
-				initialValues.listTypeDefinitionId
-			);
-
-			setPickListItems(items);
-		}
-
-		fetchData();
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		getPickListItems(objectField.listTypeDefinitionId).then(
+			setPickListItems
+		);
+	}, [objectField.listTypeDefinitionId, setPickListItems]);
 
 	return (
 		<SidePanelForm
 			className="lfr-objects__edit-object-state-field"
 			readOnly={readOnly}
 			title={`${
-				initialValues.label[defaultLanguageId]
+				objectField.label[defaultLanguageId]
 			} ${Liferay.Language.get('settings')}`}
 		>
 			<Card title={Liferay.Language.get('select-the-state-flow')}>

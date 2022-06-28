@@ -12,30 +12,21 @@
  * details.
  */
 
-export const availableLocales: TLocale[] = Object.keys(
-	Liferay.Language.available
-).map((language) => {
-	const formattedLocales = language.replace('_', '-');
-
-	return {
+export const availableLocales = Object.keys(Liferay.Language.available).map(
+	(language) => ({
 		label: language,
-		symbol: formattedLocales.toLowerCase(),
-	};
-});
+		symbol: language.replace('_', '-').toLowerCase(),
+	})
+);
 
-export const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId() as Locale;
+export const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export const defaultLocale = availableLocales.find(
 	(locale) => locale.label === defaultLanguageId
-);
+)!;
 
-export const languageId = Liferay.ThemeDisplay.getLanguageId() as Locale;
+export const languageId = Liferay.ThemeDisplay.getLanguageId();
 
 export const locale = availableLocales.find(
 	(locale) => locale.label === languageId
-);
-
-type TLocale = {
-	label: string;
-	symbol: string;
-};
+)!;

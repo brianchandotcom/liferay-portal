@@ -14,5 +14,6 @@
 
 export const HEADERS = new Headers({
 	'Accept': 'application/json',
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'application/json',
 });

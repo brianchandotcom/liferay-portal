@@ -12,11 +12,18 @@
  * details.
  */
 
-export declare function fetchPickListItems(
-	listTypeDefinitionId: number
-): Promise<
-	{
-		key: string;
-		name: string;
-	}[]
->;
+export declare function fetchJSON<T>(
+	input: RequestInfo,
+	init?: RequestInit
+): Promise<T>;
+export declare function getObjectDefinitions(): Promise<ObjectDefinition[]>;
+export declare function getObjectFields(
+	objectDefinitionId: number
+): Promise<ObjectField[]>;
+export declare function getObjectRelationships(
+	objectDefinitionId: number
+): Promise<ObjectRelationship[]>;
+export declare function getPickLists(): Promise<PickList[]>;
+export declare function getPickListItems(
+	pickListId: number
+): Promise<PickListItem[]>;

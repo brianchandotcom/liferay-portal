@@ -32,12 +32,8 @@ import React, {useEffect, useMemo, useState} from 'react';
 import PredefinedValuesTable from '../PredefinedValuesTable';
 
 import './ActionBuilder.scss';
+import {getObjectFields} from '../../../utils/api';
 import {ActionError} from '../index';
-
-const HEADERS = new Headers({
-	'Accept': 'application/json',
-	'Content-Type': 'application/json',
-});
 
 let objectsOptionsList: Array<
 	(
@@ -183,27 +179,22 @@ export default function ActionBuilder({
 	};
 
 	const fetchObjectDefinitionFields = async () => {
-		const response = await fetch(
-			`/o/object-admin/v1.0/object-definitions/${values.parameters?.objectDefinitionId}/object-fields`,
-			{
-				headers: HEADERS,
-				method: 'GET',
-			}
-		);
-
-		const {items} = (await response.json()) as {items: ObjectField[]};
-
 		const allFields: ObjectField[] = [];
 
-		items.forEach((field) => {
-			if (
-				field.businessType !== 'Aggregation' &&
-				field.businessType !== 'Relationship' &&
-				!field.system
-			) {
-				allFields.push(field);
-			}
-		});
+		if (values.parameters?.objectDefinitionId) {
+			const items = await getObjectFields(
+				values.parameters.objectDefinitionId
+			);
+			items.forEach((field) => {
+				if (
+					field.businessType !== 'Aggregation' &&
+					field.businessType !== 'Relationship' &&
+					!field.system
+				) {
+					allFields.push(field);
+				}
+			});
+		}
 
 		setCurrentObjectDefinitionFields(allFields);
 
@@ -258,15 +249,7 @@ export default function ActionBuilder({
 			parameters.relatedObjectEntries = false;
 		}
 
-		const response = await fetch(
-			`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields`,
-			{
-				headers: HEADERS,
-				method: 'GET',
-			}
-		);
-
-		const {items} = (await response.json()) as {items: ObjectField[]};
+		const items = await getObjectFields(objectDefinitionId);
 
 		const allFields: ObjectField[] = [];
 

@@ -12,13 +12,17 @@
  * details.
  */
 
-export declare const availableLocales: TLocale[];
+export declare const availableLocales: {
+	label: string;
+	symbol: string;
+}[];
 export declare const defaultLanguageId: Liferay.Language.Locale;
-export declare const defaultLocale: TLocale | undefined;
-export declare const languageId: Liferay.Language.Locale;
-export declare const locale: TLocale | undefined;
-declare type TLocale = {
+export declare const defaultLocale: {
 	label: string;
 	symbol: string;
 };
-export {};
+export declare const languageId: Liferay.Language.Locale;
+export declare const locale: {
+	label: string;
+	symbol: string;
+};

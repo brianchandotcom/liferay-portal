@@ -43,26 +43,9 @@ export declare type TObjectLayoutColumn = {
 	priority: number;
 	size: number;
 };
-export declare type TObjectField = {
-	DBType: string;
-	businessType: string;
-	id: number;
-	indexed: boolean;
-	indexedAsKeyword: boolean;
-	indexedLanguageId: string;
+export interface ObjectFieldLayout extends ObjectField {
 	inLayout?: boolean;
-	label: TName;
-	listTypeDefinitionId: boolean;
-	name: string;
-	required: boolean;
-	system: boolean;
-};
-export declare type TObjectRelationship = {
-	id: number;
+}
+export interface ObjectRelationshipLayout extends ObjectRelationship {
 	inLayout?: boolean;
-	label: TName;
-	name: string;
-	objectDefinitionId1: number;
-	objectDefinitionId2: number;
-	type: string;
-};
+}

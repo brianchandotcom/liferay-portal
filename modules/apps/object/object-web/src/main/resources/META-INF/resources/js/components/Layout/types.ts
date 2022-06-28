@@ -50,27 +50,10 @@ export type TObjectLayoutColumn = {
 	size: number;
 };
 
-export type TObjectField = {
-	DBType: string;
-	businessType: string;
-	id: number;
-	indexed: boolean;
-	indexedAsKeyword: boolean;
-	indexedLanguageId: string;
-	inLayout?: boolean; // eslint-disable-line @typescript-eslint/member-ordering
-	label: TName;
-	listTypeDefinitionId: boolean;
-	name: string;
-	required: boolean;
-	system: boolean;
-};
-
-export type TObjectRelationship = {
-	id: number;
+export interface ObjectFieldLayout extends ObjectField {
 	inLayout?: boolean;
-	label: TName;
-	name: string;
-	objectDefinitionId1: number;
-	objectDefinitionId2: number;
-	type: string;
-};
+}
+
+export interface ObjectRelationshipLayout extends ObjectRelationship {
+	inLayout?: boolean;
+}

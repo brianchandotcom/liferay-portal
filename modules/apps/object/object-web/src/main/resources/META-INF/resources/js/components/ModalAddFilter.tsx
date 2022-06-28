@@ -18,7 +18,6 @@ import {
 	AutoComplete,
 	FormCustomSelect,
 } from '@liferay/object-js-components-web';
-import {fetch} from 'frontend-js-web';
 import React, {
 	FormEvent,
 	useCallback,
@@ -27,10 +26,8 @@ import React, {
 	useState,
 } from 'react';
 
-import {HEADERS} from '../utils/constants';
-import {defaultLanguageId, locale} from '../utils/locale';
-
-HEADERS.append('Accept-Language', locale!.symbol);
+import {getPickListItems} from '../utils/api';
+import {defaultLanguageId} from '../utils/locale';
 
 const PICKLIST_OPERATORS: LabelValueObject[] = [
 	{
@@ -62,7 +59,7 @@ export function ModalAddFilter({
 
 	const [items, setItems] = useState<IItem[]>([]);
 
-	const [selectedFilterBy, setSelectedFilterBy] = useState<TObjectField>();
+	const [selectedFilterBy, setSelectedFilterBy] = useState<ObjectField>();
 
 	const [selectedFilterType, setSelectedFilterType] = useState<
 		LabelValueObject
@@ -72,9 +69,9 @@ export function ModalAddFilter({
 
 	const filteredAvailableFields = useMemo(() => {
 		return availableFields.filter(({label}) => {
-			return label[defaultLanguageId]
-				.toLowerCase()
-				.includes(query.toLowerCase());
+			return label[defaultLanguageId]!.toLowerCase().includes(
+				query.toLowerCase()
+			);
 		});
 	}, [availableFields, query]);
 
@@ -123,7 +120,7 @@ export function ModalAddFilter({
 		return newItemsValues;
 	};
 
-	const getCheckedPickListItems = (itemValues: TPickListValue[]): IItem[] => {
+	const getCheckedPickListItems = (itemValues: PickListItem[]): IItem[] => {
 		let newItemsValues: IItem[] = [];
 
 		const currentFilterColumn = currentFilters.find((filterColumn) => {
@@ -167,20 +164,12 @@ export function ModalAddFilter({
 	};
 
 	const setFieldValues = useCallback(
-		(objectField: TObjectField) => {
+		(objectField: ObjectFieldView) => {
 			if (objectField?.businessType === 'Picklist') {
 				const makeFetch = async () => {
-					const response = await fetch(
-						`/o/headless-admin-list-type/v1.0/list-type-definitions/${objectField.listTypeDefinitionId}/list-type-entries`,
-						{
-							headers: HEADERS,
-							method: 'GET',
-						}
+					const items = await getPickListItems(
+						objectField.listTypeDefinitionId
 					);
-
-					const {items = []} = (await response.json()) as {
-						items?: TPickListValue[];
-					};
 
 					if (editingFilter) {
 						setItems(getCheckedPickListItems(items));
@@ -244,14 +233,14 @@ export function ModalAddFilter({
 		}
 		else {
 			if (selectedFilterBy) {
-				setFieldValues(selectedFilterBy);
+				setFieldValues(
+					(selectedFilterBy as unknown) as ObjectFieldView
+				);
 			}
 			else {
-				const objectField = objectFields.find((objectField) => {
-					if (objectField.name === editingObjectFieldName) {
-						return objectField;
-					}
-				});
+				const objectField = objectFields.find(
+					({name}) => name === editingObjectFieldName
+				);
 
 				objectField && setFieldValues(objectField);
 			}
@@ -318,7 +307,7 @@ export function ModalAddFilter({
 					disabled={
 						!editingFilter &&
 						(!selectedFilterBy ||
-							(selectedFilterBy.businessType !==
+							((selectedFilterBy.businessType as string) !==
 								'Workflow Status' &&
 								selectedFilterBy.businessType !== 'Picklist'))
 					}
@@ -368,7 +357,7 @@ interface IProps {
 	editingFilter: boolean;
 	editingObjectFieldName: string;
 	header: string;
-	objectFields: TObjectField[];
+	objectFields: ObjectFieldView[];
 	observer: any;
 	onClose: () => void;
 	onSave: (
@@ -382,16 +371,6 @@ interface IProps {
 interface IItem extends LabelValueObject {
 	checked?: boolean;
 }
-
-type TPickListValue = {
-	dateCreated: string;
-	dateModified: number;
-	id: number;
-	key: string;
-	name: string;
-	name_i18n: TName;
-	type: string;
-};
 
 type TCurrentFilter = {
 	definition: {[key: string]: string[]} | null;
@@ -412,20 +391,4 @@ type TWorkflowStatus = {
 
 type TName = {
 	[key: string]: string;
-};
-
-type TObjectField = {
-	businessType: string;
-	checked: boolean;
-	filtered?: boolean;
-	hasFilter?: boolean;
-	id: number;
-	indexed: boolean;
-	indexedAsKeyword: boolean;
-	indexedLanguageId: string;
-	label: TName;
-	listTypeDefinitionId: boolean;
-	name: string;
-	required: boolean;
-	type: string;
 };

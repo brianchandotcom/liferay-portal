@@ -21,7 +21,7 @@ import React, {useContext, useMemo, useState} from 'react';
 
 import {defaultLanguageId} from '../../../utils/locale';
 import LayoutContext, {TYPES} from '../context';
-import {TObjectField} from '../types';
+import {ObjectFieldLayout} from '../types';
 import RequiredLabel from './RequiredLabel';
 
 const objectFieldSizes = [1, 2, 3];
@@ -95,7 +95,7 @@ const ModalAddObjectLayoutField: React.FC<IModalAddObjectLayoutFieldProps> = ({
 	const [{objectFields}, dispatch] = useContext(LayoutContext);
 	const [query, setQuery] = useState<string>('');
 	const [selectedObjectField, setSelectedObjectField] = useState<
-		TObjectField
+		ObjectFieldLayout
 	>();
 
 	const filteredObjectFields = useMemo(() => {

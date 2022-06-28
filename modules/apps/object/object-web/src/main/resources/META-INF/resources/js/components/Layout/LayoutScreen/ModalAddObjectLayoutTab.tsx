@@ -24,7 +24,7 @@ import React, {useContext, useMemo, useState} from 'react';
 import {defaultLanguageId} from '../../../utils/locale';
 import {separateCamelCase} from '../../../utils/string';
 import LayoutContext, {TYPES as EVENT_TYPES} from '../context';
-import {TObjectRelationship} from '../types';
+import {ObjectRelationshipLayout} from '../types';
 
 import './ModalAddObjectLayoutTab.scss';
 
@@ -123,7 +123,7 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 	const [selectedType, setSelectedType] = useState(TYPES.FIELDS);
 	const [query, setQuery] = useState<string>('');
 	const [selectedRelationship, setSelectedRelationship] = useState<
-		TObjectRelationship
+		ObjectRelationshipLayout
 	>();
 
 	const filteredRelationships = useMemo(() => {

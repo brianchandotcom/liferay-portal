@@ -18,7 +18,6 @@ import React, {useContext} from 'react';
 import {defaultLanguageId} from '../../../utils/locale';
 import Panel from '../../Panel/Panel';
 import LayoutContext from '../context';
-import {TObjectRelationship} from '../types';
 
 interface IObjectLayoutRelationshipProps
 	extends React.HTMLAttributes<HTMLElement> {
@@ -32,13 +31,13 @@ const ObjectLayoutRelationship: React.FC<IObjectLayoutRelationshipProps> = ({
 
 	const objectRelationship = objectRelationships.find(
 		({id}) => id === objectRelationshipId
-	) as TObjectRelationship;
+	)!;
 
 	return (
 		<>
 			<Panel key={`field_${objectRelationshipId}`}>
 				<Panel.SimpleBody
-					title={objectRelationship?.label[defaultLanguageId]}
+					title={objectRelationship?.label[defaultLanguageId]!}
 				>
 					<small className="text-secondary">
 						{Liferay.Language.get('relationship')} |{' '}

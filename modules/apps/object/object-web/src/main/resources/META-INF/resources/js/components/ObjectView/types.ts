@@ -23,22 +23,6 @@ export type TWorkflowStatus = {
 	value: string;
 };
 
-export type TObjectField = {
-	businessType: string;
-	checked: boolean;
-	filtered?: boolean;
-	hasFilter?: boolean;
-	id: number;
-	indexed: boolean;
-	indexedAsKeyword: boolean;
-	indexedLanguageId: string;
-	label: TName;
-	listTypeDefinitionId: boolean;
-	name: string;
-	required: boolean;
-	type: string;
-};
-
 export type TObjectColumn = {
 	defaultSort?: boolean;
 	fieldLabel?: string;
@@ -92,7 +76,7 @@ export type TObjectView = {
 export type TState = {
 	ffUseMetadataAsSystemFields: boolean;
 	isViewOnly: boolean;
-	objectFields: TObjectField[];
+	objectFields: ObjectFieldView[];
 	objectView: TObjectView;
 	objectViewId: string;
 	workflowStatusJSONArray: TWorkflowStatus[];

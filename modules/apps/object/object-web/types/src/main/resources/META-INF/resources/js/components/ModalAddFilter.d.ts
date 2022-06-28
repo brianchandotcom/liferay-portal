@@ -30,7 +30,7 @@ interface IProps {
 	editingFilter: boolean;
 	editingObjectFieldName: string;
 	header: string;
-	objectFields: TObjectField[];
+	objectFields: ObjectFieldView[];
 	observer: any;
 	onClose: () => void;
 	onSave: (
@@ -62,20 +62,5 @@ declare type TWorkflowStatus = {
 };
 declare type TName = {
 	[key: string]: string;
-};
-declare type TObjectField = {
-	businessType: string;
-	checked: boolean;
-	filtered?: boolean;
-	hasFilter?: boolean;
-	id: number;
-	indexed: boolean;
-	indexedAsKeyword: boolean;
-	indexedLanguageId: string;
-	label: TName;
-	listTypeDefinitionId: boolean;
-	name: string;
-	required: boolean;
-	type: string;
 };
 export {};

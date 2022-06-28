@@ -18,7 +18,6 @@ import {defaultLanguageId} from '../../utils/locale';
 import {
 	TAction,
 	TName,
-	TObjectField,
 	TObjectView,
 	TObjectViewColumn,
 	TObjectViewFilterColumn,
@@ -38,7 +37,7 @@ interface TInitialFilterColumn extends TObjectViewFilterColumn {
 
 const ViewContext = createContext({} as IViewContextProps);
 
-export const METADATA = [
+export const METADATA = ([
 	{
 		businessType: 'Author',
 		checked: false,
@@ -113,7 +112,7 @@ export const METADATA = [
 		required: false,
 		type: 'metadata',
 	},
-];
+] as unknown) as ObjectFieldView[];
 
 export enum TYPES {
 	ADD_OBJECT_FIELDS = 'ADD_OBJECT_FIELDS',
@@ -136,7 +135,7 @@ export enum TYPES {
 }
 
 const initialState = {
-	objectFields: [] as TObjectField[],
+	objectFields: [] as ObjectFieldView[],
 	objectView: {} as TObjectView,
 } as TState;
 
@@ -205,7 +204,7 @@ const viewReducer = (state: TState, action: TAction) => {
 			let objectFieldBusinessType;
 			const {objectFields} = state;
 
-			objectFields.forEach((objectField: TObjectField) => {
+			objectFields.forEach((objectField: ObjectFieldView) => {
 				if (objectField.name === objectFieldName) {
 					labels.push(objectField.label);
 					objectField.hasFilter = true;
@@ -285,7 +284,7 @@ const viewReducer = (state: TState, action: TAction) => {
 			});
 
 			const labels: TName[] = [];
-			objectFields.forEach((objectField: TObjectField) => {
+			objectFields.forEach((objectField: ObjectFieldView) => {
 				if (objectField.name === objectFieldName) {
 					labels.push(objectField.label);
 				}
@@ -355,7 +354,7 @@ const viewReducer = (state: TState, action: TAction) => {
 			const {ffUseMetadataAsSystemFields} = state;
 
 			const objectFieldsWithCheck = objectFields.map(
-				(field: TObjectField) => {
+				(field: ObjectFieldView) => {
 					return {
 						...field,
 						checked: false,
@@ -364,7 +363,7 @@ const viewReducer = (state: TState, action: TAction) => {
 				}
 			);
 
-			const newObjectFields: TObjectField[] = [];
+			const newObjectFields: ObjectFieldView[] = [];
 
 			if (!ffUseMetadataAsSystemFields) {
 				METADATA.map((field) => {
@@ -372,7 +371,7 @@ const viewReducer = (state: TState, action: TAction) => {
 				});
 			}
 
-			objectFieldsWithCheck.map((field: TObjectField) => {
+			objectFieldsWithCheck.map((field: ObjectFieldView) => {
 				newObjectFields.push(field);
 			});
 
@@ -400,12 +399,12 @@ const viewReducer = (state: TState, action: TAction) => {
 			const newObjectViewSortColumns: TObjectViewSortColumn[] = [];
 
 			objectViewColumns.forEach((viewColumn: TObjectViewColumn) => {
-				newObjectFields.forEach((objectField: TObjectField) => {
+				newObjectFields.forEach((objectField: ObjectFieldView) => {
 					if (objectField.name === viewColumn.objectFieldName) {
 						newObjectViewColumns.push({
 							...viewColumn,
 							defaultSort: false,
-							fieldLabel: objectField.label[defaultLanguageId],
+							fieldLabel: objectField.label[defaultLanguageId]!,
 							label: viewColumn.label,
 						});
 					}
@@ -413,11 +412,11 @@ const viewReducer = (state: TState, action: TAction) => {
 			});
 
 			objectViewSortColumns.forEach((sortColumn: TObjectViewColumn) => {
-				newObjectFields.forEach((objectField: TObjectField) => {
+				newObjectFields.forEach((objectField: ObjectFieldView) => {
 					if (objectField.name === sortColumn.objectFieldName) {
 						newObjectViewSortColumns.push({
 							...sortColumn,
-							fieldLabel: objectField.label[defaultLanguageId],
+							fieldLabel: objectField.label[defaultLanguageId]!,
 						});
 					}
 				});
@@ -445,7 +444,7 @@ const viewReducer = (state: TState, action: TAction) => {
 					const filterType = filterColumn.filterType;
 					const objectFieldName = filterColumn.objectFieldName;
 					const objectField = newObjectFields.find(
-						(field: TObjectField) => {
+						(field: ObjectFieldView) => {
 							if (field.name === objectFieldName) {
 								return field;
 							}

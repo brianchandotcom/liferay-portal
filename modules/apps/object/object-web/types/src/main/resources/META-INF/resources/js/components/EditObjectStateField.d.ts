@@ -15,7 +15,7 @@
 /// <reference types="react" />
 
 export default function EditObjectStateField({
-	objectField: initialValues,
+	objectField,
 	readOnly,
 }: IProps): JSX.Element;
 interface IProps {

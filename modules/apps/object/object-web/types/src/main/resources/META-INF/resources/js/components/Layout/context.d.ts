@@ -13,15 +13,19 @@
  */
 
 import React from 'react';
-import {TObjectField, TObjectLayout, TObjectRelationship} from './types';
+import {
+	ObjectFieldLayout,
+	ObjectRelationshipLayout,
+	TObjectLayout,
+} from './types';
 declare type TState = {
 	ffUseMetadataAsSystemFields: boolean;
 	isViewOnly: boolean;
 	objectFieldTypes: ObjectFieldType[];
-	objectFields: TObjectField[];
+	objectFields: ObjectFieldLayout[];
 	objectLayout: TObjectLayout;
 	objectLayoutId: string;
-	objectRelationships: TObjectRelationship[];
+	objectRelationships: ObjectRelationshipLayout[];
 };
 declare type TAction = {
 	payload: {

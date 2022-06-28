@@ -19,16 +19,20 @@ import {
 	findObjectLayoutRowIndex,
 } from '../../utils/layout';
 import {BoxesVisitor} from '../../utils/visitor';
-import {TObjectField, TObjectLayout, TObjectRelationship} from './types';
+import {
+	ObjectFieldLayout,
+	ObjectRelationshipLayout,
+	TObjectLayout,
+} from './types';
 
 type TState = {
 	ffUseMetadataAsSystemFields: boolean;
 	isViewOnly: boolean;
 	objectFieldTypes: ObjectFieldType[];
-	objectFields: TObjectField[];
+	objectFields: ObjectFieldLayout[];
 	objectLayout: TObjectLayout;
 	objectLayoutId: string;
-	objectRelationships: TObjectRelationship[];
+	objectRelationships: ObjectRelationshipLayout[];
 };
 
 type TAction = {
@@ -59,9 +63,9 @@ export enum TYPES {
 }
 
 const initialState = {
-	objectFields: [] as TObjectField[],
+	objectFields: [] as ObjectFieldLayout[],
 	objectLayout: {} as TObjectLayout,
-	objectRelationships: [] as TObjectRelationship[],
+	objectRelationships: [] as ObjectRelationshipLayout[],
 } as TState;
 
 const layoutReducer = (state: TState, action: TAction) => {

@@ -35,7 +35,7 @@ export default function useMetadata(
 				items.push({
 					content: name,
 					helpText: '',
-					label: label[defaultLanguageId],
+					label: label[defaultLanguageId]!,
 				});
 			});
 		}

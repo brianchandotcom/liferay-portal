@@ -25,6 +25,7 @@ import {
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import {getObjectDefinitions} from '../utils/api';
 import {HEADERS} from '../utils/constants';
 import {defaultLanguageId} from '../utils/locale';
 import {objectRelationshipTypes} from '../utils/objectRelationshipTypes';
@@ -41,13 +42,13 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 	const [error, setError] = useState<string>('');
 
 	const [objectDefinitions, setObjectDefinitions] = useState<
-		TObjectDefinition[]
+		ObjectDefinition[]
 	>([]);
 
 	const [
 		manyToManyObjectDefinitions,
 		setManyToManyObjectDefinitions,
-	] = useState<TObjectDefinition[]>([]);
+	] = useState<ObjectDefinition[]>([]);
 
 	const [manyToMany, setManyToMany] = useState(false);
 
@@ -134,36 +135,15 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 
 	useEffect(() => {
 		const makeRequest = async () => {
-			const result = await fetch(
-				'/o/object-admin/v1.0/object-definitions?page=-1',
-				{
-					headers: HEADERS,
-					method: 'GET',
-				}
-			);
+			const items = await getObjectDefinitions();
 
-			const {items = []} = (await result.json()) as {items?: []};
-
-			const [currentObjectDefinition]: TObjectDefinition[] = items.filter(
-				({id}: TObjectDefinition) => Number(objectDefinitionId) === id
-			);
+			const currentObjectDefinition = items.find(
+				({id}) => Number(objectDefinitionId) === id
+			)!;
 
 			const objectDefinitions = Liferay.FeatureFlags['LPS-135430']
-				? items
-						.filter(
-							({storageType}: TObjectDefinition) =>
-								storageType === 'default'
-						)
-						.map(({id, name, system}: TObjectDefinition) => ({
-							id,
-							name,
-							system,
-						}))
-				: items.map(({id, name, system}: TObjectDefinition) => ({
-						id,
-						name,
-						system,
-				  }));
+				? items.filter(({storageType}) => storageType === 'default')
+				: items;
 
 			let manyToManyObjectDefinitions = objectDefinitions.filter(
 				(objectDefinition) =>
@@ -178,17 +158,11 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 
 			setManyToManyObjectDefinitions(manyToManyObjectDefinitions);
 
-			if (currentObjectDefinition.system) {
-				const customObjectDefinitions = objectDefinitions.filter(
-					({system}: TObjectDefinition) => !system
-				);
+			const definitions = currentObjectDefinition.system
+				? objectDefinitions.filter(({system}) => !system)
+				: objectDefinitions;
 
-				setObjectDefinitions(customObjectDefinitions);
-
-				return;
-			}
-
-			setObjectDefinitions(objectDefinitions);
+			setObjectDefinitions(definitions);
 		};
 
 		makeRequest();
@@ -290,13 +264,6 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 	onClose: () => void;
 	system: boolean;
 }
-
-type TObjectDefinition = {
-	id: number;
-	name: string;
-	storageType?: string;
-	system: boolean;
-};
 
 type TInitialValues = {
 	label: string;

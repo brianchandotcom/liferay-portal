@@ -12,6 +12,7 @@ const SLA_TYPES = {
 	gold: 'Gold',
 	limited: 'Limited',
 	platinum: 'Platinum',
+	premium: 'Premium',
 };
 
 export {SLA_TYPES};

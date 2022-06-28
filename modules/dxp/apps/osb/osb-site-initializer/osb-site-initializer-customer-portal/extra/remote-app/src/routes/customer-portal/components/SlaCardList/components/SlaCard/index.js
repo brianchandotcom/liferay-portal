@@ -31,6 +31,8 @@ const SlaCard = ({endDate, label, selected, startDate, title}) => {
 					'bg-brand-secondary-lighten-6 cp-sla-gold':
 						title === SLA_TYPES.gold,
 					'bg-neutral-0 cp-sla-limited': title === SLA_TYPES.limited,
+					'border-brand-primary-lighten-3 bg-brand-primary-lighten-5 cp-sla-min-width':
+						title === SLA_TYPES.premium,
 					'cp-sla-platinum': title === SLA_TYPES.platinum,
 				})}
 			>
@@ -39,6 +41,8 @@ const SlaCard = ({endDate, label, selected, startDate, title}) => {
 						className={classNames('h5 mb-0', {
 							'text-brand-primary-darken-2':
 								title === SLA_TYPES.limited,
+							'text-brand-primary-lighten-1':
+								title === SLA_TYPES.premium,
 							'text-brand-secondary-darken-3':
 								title === SLA_TYPES.gold,
 							'text-neutral-7': title === SLA_TYPES.platinum,
@@ -57,6 +61,8 @@ const SlaCard = ({endDate, label, selected, startDate, title}) => {
 											title === SLA_TYPES.platinum,
 										'label-borderless-primary text-brand-primary-darken-2':
 											title === SLA_TYPES.limited,
+										'label-borderless-secondary text-brand-primary-lighten-1':
+											title === SLA_TYPES.premium,
 										'label-borderless-secondary text-brand-secondary-darken-3':
 											title === SLA_TYPES.gold,
 									}
@@ -73,6 +79,8 @@ const SlaCard = ({endDate, label, selected, startDate, title}) => {
 					className={classNames('', {
 						'text-brand-primary-darken-2':
 							title === SLA_TYPES.limited,
+						'text-brand-primary-lighten-1':
+							title === SLA_TYPES.premium,
 						'text-brand-secondary-darken-3':
 							title === SLA_TYPES.gold,
 						'text-neutral-6': title === SLA_TYPES.platinum,

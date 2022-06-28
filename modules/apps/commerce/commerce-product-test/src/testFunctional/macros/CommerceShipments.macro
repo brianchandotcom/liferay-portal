@@ -24,4 +24,18 @@ definition {
 			value1 = "${quantityInShipment}");
 	}
 
+	macro editShipmentCustomFields {
+		Click(
+			key_customFieldType = "${customFieldType}",
+			locator1 = "CustomFields#CUSTOM_FIELD_TYPE");
+
+		Type(
+			locator1 = "TextInput#CUSTOM_FIELD",
+			value1 = "${textValue}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 }

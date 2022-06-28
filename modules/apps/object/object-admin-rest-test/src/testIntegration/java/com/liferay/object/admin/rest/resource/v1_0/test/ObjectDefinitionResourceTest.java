@@ -261,6 +261,14 @@ public class ObjectDefinitionResourceTest
 	}
 
 	@Override
+	protected ObjectDefinition
+			testGetObjectDefinitionByExternalReferenceCode_addObjectDefinition()
+		throws Exception {
+
+		return _addObjectDefinition(randomObjectDefinition());
+	}
+
+	@Override
 	protected ObjectDefinition testGetObjectDefinitionsPage_addObjectDefinition(
 			ObjectDefinition objectDefinition)
 		throws Exception {

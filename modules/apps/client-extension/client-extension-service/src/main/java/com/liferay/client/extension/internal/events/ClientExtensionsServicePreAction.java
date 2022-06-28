@@ -153,6 +153,13 @@ public class ClientExtensionsServicePreAction extends Action {
 			ClientExtensionEntryConstants.TYPE_THEME_CSS);
 
 		if (cet == null) {
+			cet = _getCET(
+				_portal.getClassNameId(Layout.class),
+				layout.getMasterLayoutPlid(), layout.getCompanyId(),
+				ClientExtensionEntryConstants.TYPE_THEME_CSS);
+		}
+
+		if (cet == null) {
 			LayoutSet layoutSet = layout.getLayoutSet();
 
 			cet = _getCET(
@@ -188,6 +195,13 @@ public class ClientExtensionsServicePreAction extends Action {
 		CET cet = _getCET(
 			_portal.getClassNameId(Layout.class), layout.getPlid(),
 			layout.getCompanyId(), ClientExtensionEntryConstants.TYPE_THEME_JS);
+
+		if (cet == null) {
+			cet = _getCET(
+				_portal.getClassNameId(Layout.class),
+				layout.getMasterLayoutPlid(), layout.getCompanyId(),
+				ClientExtensionEntryConstants.TYPE_THEME_JS);
+		}
 
 		if (cet == null) {
 			LayoutSet layoutSet = layout.getLayoutSet();

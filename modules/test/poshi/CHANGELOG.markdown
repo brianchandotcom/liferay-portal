@@ -1,5 +1,33 @@
 # Poshi Runner Change Log
 
+## 1.0.359
+
+### Logger
+
+* [POSHI-34](https://issues.liferay.com/browse/POSHI-34) - Poshi Runner Logger JS updates/bug fix
+
+### Maintenance
+
+* [POSHI-365](https://issues.liferay.com/browse/POSHI-365) - Chrome failed to start: exited abnormally in HttpRequestUtilTest
+
+### Other
+
+* [LPS-150378](https://issues.liferay.com/browse/LPS-150378) - [SF] Inline what can be inlined
+* [LPS-152875](https://issues.liferay.com/browse/LPS-152875) - Upgrade org.json:json to 20220320 to resolve DoS vulerability
+
+### Runner
+
+* [POSHI-350](https://issues.liferay.com/browse/POSHI-350) - For poshi tests that don't use any webdriver methods, don't open the browser
+
+### Utils
+
+* [POSHI-369](https://issues.liferay.com/browse/POSHI-369) - Fix bug in ExecUtil#executeCommand
+
+### WebDriver
+
+* [POSHI-341](https://issues.liferay.com/browse/POSHI-341) - Optimize Poshi test execution logic
+* [POSHI-348](https://issues.liferay.com/browse/POSHI-348) - Update jsoup dependency to avoid security vulnerability
+
 ## 1.0.356
 
 ### Gradle

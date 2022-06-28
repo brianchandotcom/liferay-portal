@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.service.persistence.impl;
 
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
 import com.liferay.commerce.product.model.impl.CommerceChannelRelImpl;
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelFinder;
@@ -70,8 +71,8 @@ public class CommerceChannelRelFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, className, "CommerceChannel.commerceChannelId", null,
-					null, new long[] {0}, null);
+					sql, CommerceChannel.class.getName(),
+					"CommerceChannel.commerceChannelId");
 			}
 
 			String[] keywords = _customSQL.keywords(name, true);
@@ -161,8 +162,8 @@ public class CommerceChannelRelFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, className, "CommerceChannel.commerceChannelId", null,
-					null, new long[] {0}, null);
+					sql, CommerceChannel.class.getName(),
+					"CommerceChannel.commerceChannelId");
 			}
 
 			if (Validator.isNotNull(name)) {

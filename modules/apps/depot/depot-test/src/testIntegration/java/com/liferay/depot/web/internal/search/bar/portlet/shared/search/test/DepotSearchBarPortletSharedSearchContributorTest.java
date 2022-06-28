@@ -351,6 +351,11 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 			}
 
 			@Override
+			public Optional<String> getScope() {
+				return null;
+			}
+
+			@Override
 			public Optional<String> getScopeParameterName() {
 				return Optional.empty();
 			}
@@ -394,6 +399,10 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 			@Override
 			public void setPaginationStartParameterName(
 				String paginationStartParameterName) {
+			}
+
+			@Override
+			public void setScope(String scope) {
 			}
 
 			@Override

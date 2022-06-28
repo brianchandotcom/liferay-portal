@@ -55,7 +55,7 @@ export function BuilderScreen({
 	}, [objectColumns]);
 
 	const newFilteredItems = filteredItems.filter(
-		(objectColumns: TObjectColumn) =>
+		(objectColumns: TBuilderScreenColumn) =>
 			objectColumns.fieldLabel
 				?.toLowerCase()
 				.includes(query.toLowerCase())
@@ -131,7 +131,19 @@ export function BuilderScreen({
 
 							<DndProvider backend={HTML5Backend}>
 								<BuilderListItem
-									aliasColumnText={
+									disableEdit={disableEdit}
+									hasDragAndDrop={hasDragAndDrop}
+									index={index}
+									label={viewColumn.fieldLabel}
+									objectFieldName={viewColumn.objectFieldName}
+									onChangeColumnOrder={onChangeColumnOrder}
+									onDeleteColumn={onDeleteColumn}
+									onEditing={onEditing}
+									onEditingObjectFieldName={
+										onEditingObjectFieldName
+									}
+									onVisibleEditModal={onVisibleEditModal}
+									secondColumnValue={
 										defaultSort
 											? viewColumn.sortOrder === 'asc'
 												? Liferay.Language.get(
@@ -146,24 +158,9 @@ export function BuilderScreen({
 													defaultLanguageId
 											  ]
 									}
-									disableEdit={
-										disableEdit &&
-										disableEdit(
-											viewColumn.objectFieldBusinessType!
-										)
+									thirdColumnValues={
+										viewColumn.valueList ?? viewColumn.value
 									}
-									hasDragAndDrop={hasDragAndDrop}
-									index={index}
-									label={viewColumn.fieldLabel}
-									objectFieldName={viewColumn.objectFieldName}
-									onChangeColumnOrder={onChangeColumnOrder}
-									onDeleteColumn={onDeleteColumn}
-									onEditing={onEditing}
-									onEditingObjectFieldName={
-										onEditingObjectFieldName
-									}
-									onVisibleEditModal={onVisibleEditModal}
-									thirdColumnValues={viewColumn.valueList}
 								/>
 							</DndProvider>
 						</React.Fragment>
@@ -203,7 +200,7 @@ type TLabelValueObject = {
 	value: string;
 };
 
-type TObjectColumn = {
+type TBuilderScreenColumn = {
 	defaultSort?: boolean;
 	fieldLabel?: string;
 	filterBy?: string;
@@ -219,7 +216,7 @@ type TObjectColumn = {
 
 interface IProps {
 	defaultSort?: boolean;
-	disableEdit?: (businessType: string) => boolean;
+	disableEdit?: boolean;
 	emptyState: {
 		buttonText: string;
 		description: string;
@@ -228,7 +225,7 @@ interface IProps {
 	filter?: boolean;
 	firstColumnHeader: string;
 	hasDragAndDrop?: boolean;
-	objectColumns: TObjectColumn[];
+	objectColumns: TBuilderScreenColumn[];
 	onChangeColumnOrder?: (draggedIndex: number, targetIndex: number) => void;
 	onDeleteColumn: (objectFieldName: string) => void;
 	onEditing?: (boolean: boolean) => void;

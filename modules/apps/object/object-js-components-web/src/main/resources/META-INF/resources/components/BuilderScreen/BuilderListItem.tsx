@@ -23,7 +23,6 @@ import {useDrag, useDrop} from 'react-dnd';
 import './BuilderListItem.scss';
 
 interface IProps {
-	aliasColumnText?: string;
 	disableEdit?: boolean;
 	hasDragAndDrop?: boolean;
 	index: number;
@@ -34,7 +33,8 @@ interface IProps {
 	onEditing?: (boolean: boolean) => void;
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
 	onVisibleEditModal?: (boolean: boolean) => void;
-	thirdColumnValues?: TThirdColumnValues[];
+	secondColumnValue?: string;
+	thirdColumnValues?: TThirdColumnValues[] | string;
 }
 
 type TThirdColumnValues = {
@@ -53,7 +53,6 @@ type TDraggedOffset = {
 } | null;
 
 const BuilderListItem: React.FC<IProps> = ({
-	aliasColumnText,
 	disableEdit,
 	hasDragAndDrop,
 	index,
@@ -64,6 +63,7 @@ const BuilderListItem: React.FC<IProps> = ({
 	onEditing,
 	onEditingObjectFieldName,
 	onVisibleEditModal,
+	secondColumnValue,
 	thirdColumnValues,
 }) => {
 	const [active, setActive] = useState<boolean>(false);
@@ -162,7 +162,7 @@ const BuilderListItem: React.FC<IProps> = ({
 				)}
 				expand
 			>
-				<ClayList.ItemText>{aliasColumnText}</ClayList.ItemText>
+				<ClayList.ItemText>{secondColumnValue}</ClayList.ItemText>
 			</ClayList.ItemField>
 
 			<ClayList.ItemField
@@ -174,11 +174,13 @@ const BuilderListItem: React.FC<IProps> = ({
 				expand
 			>
 				<ClayList.ItemText>
-					{thirdColumnValues?.map((value, index) => {
-						return index !== thirdColumnValues.length - 1
-							? `${value.label}, `
-							: value.label;
-					})}
+					{typeof thirdColumnValues !== 'string'
+						? thirdColumnValues?.map((value, index) => {
+								return index !== thirdColumnValues.length - 1
+									? `${value.label}, `
+									: value.label;
+						  })
+						: thirdColumnValues}
 				</ClayList.ItemText>
 			</ClayList.ItemField>
 
@@ -196,17 +198,20 @@ const BuilderListItem: React.FC<IProps> = ({
 				}
 			>
 				<ClayDropDown.ItemList>
-					<ClayDropDown.Item
-						disabled={disableEdit}
-						onClick={() => handleEnableEditModal(objectFieldName)}
-					>
-						<ClayIcon
-							className="lfr-object__object-custom-view-builder-item-icon"
-							symbol="pencil"
-						/>
+					{!disableEdit && (
+						<ClayDropDown.Item
+							onClick={() =>
+								handleEnableEditModal(objectFieldName)
+							}
+						>
+							<ClayIcon
+								className="lfr-object__object-custom-view-builder-item-icon"
+								symbol="pencil"
+							/>
 
-						{Liferay.Language.get('edit')}
-					</ClayDropDown.Item>
+							{Liferay.Language.get('edit')}
+						</ClayDropDown.Item>
+					)}
 
 					<ClayDropDown.Item
 						onClick={() => onDeleteColumn(objectFieldName)}

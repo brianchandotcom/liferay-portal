@@ -15,16 +15,67 @@
 export declare function normalizeFieldSettings(
 	objectFieldSettings: ObjectFieldSetting[] | undefined
 ): {
-	function?: string | number | boolean | undefined;
-	maxLength?: string | number | boolean | undefined;
-	acceptedFileExtensions?: string | number | boolean | undefined;
-	fileSource?: string | number | boolean | undefined;
-	maximumFileSize?: string | number | boolean | undefined;
-	showCounter?: string | number | boolean | undefined;
-	showFilesInDocumentsAndMedia?: string | number | boolean | undefined;
-	storageDLFolderPath?: string | number | boolean | undefined;
-	relationship?: string | number | boolean | undefined;
-	summarizeField?: string | number | boolean | undefined;
+	function?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	acceptedFileExtensions?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	fileSource?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	maximumFileSize?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	maxLength?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	showCounter?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	showFilesInDocumentsAndMedia?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	storageDLFolderPath?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	relationship?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	summarizeField?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	filter?: string | number | boolean | ObjectFieldFilterSetting[] | undefined;
 };
 export declare function updateFieldSettings(
 	objectFieldSettings: ObjectFieldSetting[] | undefined,

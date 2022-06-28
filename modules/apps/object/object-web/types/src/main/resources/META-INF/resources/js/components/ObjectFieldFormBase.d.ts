@@ -25,6 +25,8 @@ export default function ObjectFieldFormBase({
 	objectField: values,
 	objectFieldTypes,
 	objectName,
+	onAggregationFilterChange,
+	onRelationshipChange,
 	setValues,
 }: IProps): JSX.Element;
 export declare function useObjectFieldForm({
@@ -46,6 +48,7 @@ export declare function useObjectFieldForm({
 			storageDLFolderPath: any;
 			relationship: any;
 			summarizeField: any;
+			filter: any;
 		}
 	>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -70,6 +73,8 @@ interface IProps {
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
+	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
+	onRelationshipChange?: (objectDefinitionId2: number) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 export declare type ObjectFieldErrors = FormError<

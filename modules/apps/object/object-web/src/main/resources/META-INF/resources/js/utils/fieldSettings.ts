@@ -16,7 +16,11 @@ export function normalizeFieldSettings(
 	objectFieldSettings: ObjectFieldSetting[] | undefined
 ) {
 	const settings: {
-		[key in ObjectFieldSettingName]?: string | number | boolean;
+		[key in ObjectFieldSettingName]?:
+			| string
+			| number
+			| boolean
+			| ObjectFieldFilterSetting[];
 	} = {};
 
 	objectFieldSettings?.forEach(({name, value}) => {

@@ -13,7 +13,9 @@
  */
 
 import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
+import {useModal} from '@clayui/modal';
 import {
+	BuilderScreen,
 	Card,
 	Input,
 	InputLocalized,
@@ -35,6 +37,7 @@ import {
 	updateFieldSettings,
 } from '../utils/fieldSettings';
 import {defaultLanguageId, defaultLocale} from '../utils/locale';
+import {ModalAddFilter} from './ModalAddFilter';
 import ObjectFieldFormBase, {
 	ObjectFieldErrors,
 	useObjectFieldForm,
@@ -68,6 +71,23 @@ export default function EditObjectField({
 	objectName,
 	readOnly,
 }: IProps) {
+	const [editingObjectFieldName, setEditingObjectFieldName] = useState('');
+	const [editingFilter, setEditingFilter] = useState(false);
+	const [objectFields, setObjectFields] = useState<ObjectField[]>();
+	const [objectDefinitionId2, setObjectDefinitionId2] = useState<number>();
+	const [aggregationFilters, setAggregatonFilters] = useState<
+		AggregationFilters[]
+	>([]);
+
+	const [visibleModal, setVisibleModal] = useState(false);
+
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			setEditingFilter(false);
+			setVisibleModal(false);
+		},
+	});
+
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
 		delete objectField.system;
 
@@ -137,6 +157,156 @@ export default function EditObjectField({
 			),
 		});
 
+	const handleDeleteFilterColumn = (objectFieldName: string) => {
+		const {objectFieldSettings} = values;
+
+		const [filter] = objectFieldSettings?.filter(
+			(fieldSetting) => fieldSetting.name === 'filter'
+		) as ObjectFieldSetting[];
+
+		const filterValues = filter.value as ObjectFieldFilterSetting[];
+
+		const newFilterValues: ObjectFieldFilterSetting[] = [
+			...filterValues.filter(
+				(filterValue) => filterValue.filterBy !== objectFieldName
+			),
+		];
+
+		const newFilter: ObjectFieldSetting = {
+			name: filter.name,
+			value: newFilterValues,
+		};
+
+		const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
+			...(objectFieldSettings?.filter(
+				(fieldSettings) => fieldSettings.name !== 'filter'
+			) as ObjectFieldSetting[]),
+			newFilter,
+		];
+
+		const newAggregationFilters = aggregationFilters.filter(
+			(aggregationFilter) =>
+				aggregationFilter.filterBy !== objectFieldName
+		);
+
+		setAggregatonFilters(newAggregationFilters);
+
+		setValues({
+			objectFieldSettings: newObjectFieldSettings,
+		});
+	};
+
+	const handleSaveFilterColumn = (
+		filterBy?: string,
+		fieldLabel?: LocalizedValue<string>,
+		objectFieldBusinessType?: string,
+		filterType?: string,
+		objectFieldName?: string,
+		valueList?: IItem[],
+		value?: string
+	) => {
+		const newAggregationFilters = [
+			...aggregationFilters,
+			{
+				fieldLabel: fieldLabel ? fieldLabel[defaultLanguageId] : '',
+				filterBy,
+				filterType,
+				label: fieldLabel,
+				objectFieldBusinessType,
+				objectFieldName,
+				value,
+				valueList,
+			},
+		] as AggregationFilters[];
+
+		const {objectFieldSettings} = values;
+
+		const filterSetting = objectFieldSettings?.filter(
+			({name}) => name === 'filter'
+		);
+
+		if (filterSetting?.length === 0 && objectFieldSettings) {
+			const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
+				...objectFieldSettings,
+				{
+					name: 'filter',
+					value: [
+						{
+							filterBy: objectFieldName,
+							filterType,
+							value: value
+								? value
+								: valueList?.map(({value}) => value),
+						},
+					],
+				},
+			];
+
+			setAggregatonFilters(newAggregationFilters);
+			setValues({
+				objectFieldSettings: newObjectFieldSettings,
+			});
+		}
+		else {
+			if (filterSetting) {
+				const [filter] = filterSetting;
+
+				const newFilterValues: ObjectFieldFilterSetting[] = [
+					...(filter.value as ObjectFieldFilterSetting[]),
+					{
+						filterBy: objectFieldName,
+						filterType,
+						value: value
+							? value
+							: valueList?.map(({value}) => value),
+					},
+				];
+
+				const newFilter: ObjectFieldSetting = {
+					name: filter.name,
+					value: newFilterValues,
+				};
+
+				const newObjectFieldSettings:
+					| ObjectFieldSetting[]
+					| undefined = [
+					...(objectFieldSettings?.filter(
+						(fieldSetting) => fieldSetting.name !== 'filter'
+					) as ObjectFieldSetting[]),
+					newFilter,
+				];
+
+				setAggregatonFilters(newAggregationFilters);
+				setValues({
+					objectFieldSettings: newObjectFieldSettings,
+				});
+			}
+		}
+	};
+
+	useEffect(() => {
+		if (values.businessType === 'Aggregation' && objectDefinitionId2) {
+			const makeFetch = async () => {
+				const response = await fetch(
+					`/o/object-admin/v1.0/object-definitions/${objectDefinitionId2}/object-fields`,
+					{
+						headers: HEADERS,
+					}
+				);
+
+				const {
+					items: objectFields,
+				}: {
+					items: ObjectField[];
+				} = (await response.json()) as any;
+
+				setObjectFields(objectFields);
+			};
+
+			makeFetch();
+		}
+	}, [values.businessType, objectDefinitionId2]);
+
 	return (
 		<SidePanelForm
 			className="lfr-objects__edit-object-field"
@@ -175,6 +345,8 @@ export default function EditObjectField({
 					objectField={values}
 					objectFieldTypes={objectFieldTypes}
 					objectName={objectName}
+					onAggregationFilterChange={setAggregatonFilters}
+					onRelationshipChange={setObjectDefinitionId2}
 					setValues={setValues}
 				>
 					{values.businessType === 'Attachment' && (
@@ -207,6 +379,56 @@ export default function EditObjectField({
 					)}
 				</ObjectFieldFormBase>
 			</Card>
+
+			{values.businessType === 'Aggregation' && (
+				<BuilderScreen
+					disableEdit
+					emptyState={{
+						buttonText: Liferay.Language.get('new-filter'),
+						description: Liferay.Language.get(
+							'use-conditions-to-specify-which-fields-will-be-considered-in-the-aggregation'
+						),
+						title: Liferay.Language.get(
+							'no-filter-was-created-yet'
+						),
+					}}
+					filter
+					firstColumnHeader={Liferay.Language.get('filter-by')}
+					objectColumns={aggregationFilters}
+					onDeleteColumn={handleDeleteFilterColumn}
+					onEditingObjectFieldName={setEditingObjectFieldName}
+					onVisibleEditModal={setVisibleModal}
+					openModal={() => setVisibleModal(true)}
+					secondColumnHeader={Liferay.Language.get('type')}
+					thirdColumnHeader={Liferay.Language.get('value')}
+					title={Liferay.Language.get('filters')}
+				/>
+			)}
+
+			{visibleModal && (
+				<ModalAddFilter
+					currentFilters={[]}
+					editingFilter={editingFilter}
+					editingObjectFieldName={editingObjectFieldName}
+					header={Liferay.Language.get('filter')}
+					objectFields={
+						objectFields?.filter((objectField) => {
+							if (
+								objectField.businessType === 'Picklist' ||
+								objectField.businessType === 'Integer' ||
+								objectField.businessType === 'LongInteger' ||
+								objectField.businessType === 'Date'
+							) {
+								return objectField;
+							}
+						}) ?? []
+					}
+					observer={observer}
+					onClose={onClose}
+					onSave={handleSaveFilterColumn}
+					workflowStatusJSONArray={[]}
+				/>
+			)}
 
 			{values.DBType !== 'Blob' && (
 				<SearchableContainer
@@ -483,6 +705,23 @@ function AttachmentProperties({
 	);
 }
 
+interface AggregationFilters {
+	defaultSort?: boolean;
+	fieldLabel?: string;
+	filterBy?: string;
+	label: LocalizedValue<string>;
+	objectFieldBusinessType?: string;
+	objectFieldName: string;
+	priority?: number;
+	sortOrder?: string;
+	type?: string;
+	value?: string;
+	valueList?: LabelValueObject[];
+}
+
+interface IItem extends LabelValueObject {
+	checked?: boolean;
+}
 interface IAttachmentPropertiesProps {
 	errors: ObjectFieldErrors;
 	objectFieldSettings: ObjectFieldSetting[];

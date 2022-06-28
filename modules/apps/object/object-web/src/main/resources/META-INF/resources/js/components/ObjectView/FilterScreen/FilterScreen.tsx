@@ -18,6 +18,7 @@ import React, {useContext, useState} from 'react';
 
 import {ModalAddFilter} from '../../ModalAddFilter';
 import ViewContext, {TYPES} from '../context';
+import {ObjectFieldView} from '../types';
 
 export function FilterScreen() {
 	const [
@@ -47,6 +48,9 @@ export function FilterScreen() {
 	};
 
 	const saveFilterColumn = (
+		filterBy?: string,
+		fieldLabel?: LocalizedValue<string>,
+		objectFieldBusinessType?: string,
 		filterType?: string,
 		objectFieldName?: string,
 		valueList?: IItem[]
@@ -76,10 +80,7 @@ export function FilterScreen() {
 	return (
 		<>
 			<BuilderScreen
-				disableEdit={(businessType: string) =>
-					businessType !== 'Picklist' &&
-					businessType !== 'Workflow Status'
-				}
+				disableEdit
 				emptyState={{
 					buttonText: Liferay.Language.get('new-filter'),
 					description: Liferay.Language.get(
@@ -106,7 +107,19 @@ export function FilterScreen() {
 					editingFilter={editingFilter}
 					editingObjectFieldName={editingObjectFieldName}
 					header={Liferay.Language.get('new-filter')}
-					objectFields={objectFields}
+					objectFields={objectFields.filter(
+						(objectField: ObjectFieldView) => {
+							if (
+								objectField.businessType === 'Picklist' ||
+								objectField.name === 'dateCreated' ||
+								objectField.name === 'dateModified' ||
+								(objectField.name === 'status' &&
+									!objectField.hasFilter)
+							) {
+								return objectField;
+							}
+						}
+					)}
 					observer={observer}
 					onClose={onClose}
 					onSave={saveFilterColumn}

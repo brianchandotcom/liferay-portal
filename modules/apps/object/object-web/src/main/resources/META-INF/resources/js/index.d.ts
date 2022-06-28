@@ -53,7 +53,9 @@ type ObjectFieldBusinessType =
 	| 'LongInteger'
 	| 'Integer'
 	| 'Decimal'
-	| 'PrecisionDecimal';
+	| 'PrecisionDecimal'
+	| 'Workflow Status'
+	| 'Date';
 interface ObjectFieldType {
 	businessType: ObjectFieldBusinessType;
 	dbType: string;
@@ -62,7 +64,7 @@ interface ObjectFieldType {
 }
 interface ObjectField {
 	DBType: string;
-	businessType: ObjectFieldBusinessType;
+	businessType: ObjectFieldBusinessType | string;
 	defaultValue?: string;
 	externalReferenceCode?: string;
 	id?: number;
@@ -105,7 +107,17 @@ interface ObjectDefinition {
 
 interface ObjectFieldSetting {
 	name: ObjectFieldSettingName;
-	value: string | number | boolean;
+	value: string | number | boolean | ObjectFieldFilterSetting[];
+}
+
+type ObjectFieldFilterSetting = {
+	filterBy?: string;
+	filterType?: string;
+	value?: string | string[];
+};
+
+interface IItem extends LabelValueObject {
+	checked?: boolean;
 }
 
 type ObjectFieldSettingName =
@@ -118,7 +130,8 @@ type ObjectFieldSettingName =
 	| 'storageDLFolderPath'
 	| 'relationship'
 	| 'function'
-	| 'summarizeField';
+	| 'summarizeField'
+	| 'filter';
 
 interface ObjectValidation {
 	active: boolean;

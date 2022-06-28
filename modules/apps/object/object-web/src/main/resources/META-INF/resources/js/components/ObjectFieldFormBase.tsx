@@ -146,6 +146,8 @@ export default function ObjectFieldFormBase({
 	objectField: values,
 	objectFieldTypes,
 	objectName,
+	onAggregationFilterChange,
+	onRelationshipChange,
 	setValues,
 }: IProps) {
 	const businessTypeMap = useMemo(() => {
@@ -274,6 +276,8 @@ export default function ObjectFieldFormBase({
 					objectFieldSettings={
 						values.objectFieldSettings as ObjectFieldSetting[]
 					}
+					onAggregationFilterChange={onAggregationFilterChange}
+					onRelationshipChange={onRelationshipChange}
 					setValues={setValues}
 				/>
 			)}
@@ -531,6 +535,8 @@ function AggregationSourceProperty({
 	disabled,
 	errors,
 	editingField,
+	onAggregationFilterChange,
+	onRelationshipChange,
 	objectDefinitionId,
 	objectFieldSettings = [],
 	setValues,
@@ -588,6 +594,12 @@ function AggregationSourceProperty({
 						relatedField.name === settings.summarizeField
 				) as ObjectField;
 
+				if (onRelationshipChange) {
+					onRelationshipChange(
+						currentRelatedObjectRelationship.objectDefinitionId2
+					);
+				}
+
 				setObjectRelationshipFields(
 					relatedFields.filter(
 						(objectField) =>
@@ -597,24 +609,38 @@ function AggregationSourceProperty({
 							objectField.businessType === 'PrecisionDecimal'
 					)
 				);
+
 				setSelectRelatedObjectRelationship(
 					currentRelatedObjectRelationship
 				);
+
 				setSelectedAggregationFunction(currentFunction);
-				setSelectedSummarizeField(
-					currentSummarizeField.label[defaultLanguageId]
-				);
+
+				if (currentSummarizeField) {
+					setSelectedSummarizeField(
+						currentSummarizeField.label[defaultLanguageId]
+					);
+				}
 			};
 
 			makeFetch();
 		}
-	}, [editingField, objectRelationships, objectFieldSettings]);
+	}, [
+		editingField,
+		objectRelationships,
+		objectFieldSettings,
+		onRelationshipChange,
+	]);
 
 	const handleChangeRelatedObjectRelationship = async (
 		objectRelationship: TObjectRelationship
 	) => {
 		setSelectRelatedObjectRelationship(objectRelationship);
 		setSelectedSummarizeField('');
+
+		if (onRelationshipChange) {
+			onRelationshipChange(objectRelationship.objectDefinitionId2);
+		}
 
 		const relatedFields = await fetchObjectFields(
 			objectRelationship.objectDefinitionId2
@@ -631,18 +657,23 @@ function AggregationSourceProperty({
 		setObjectRelationshipFields(numericFields);
 
 		const fieldSettingWithoutSummarizeField = objectFieldSettings.filter(
-			(fieldSettings) => fieldSettings.name !== 'summarizeField'
+			(fieldSettings) =>
+				fieldSettings.name !== 'summarizeField' &&
+				fieldSettings.name !== 'filter' &&
+				fieldSettings.name !== 'relationship'
 		);
 
 		const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
-			...fieldSettingWithoutSummarizeField.filter(
-				(fieldSettings) => fieldSettings.name !== 'relationship'
-			),
+			...fieldSettingWithoutSummarizeField,
 			{
 				name: 'relationship',
 				value: objectRelationship.name,
 			},
 		];
+
+		if (onAggregationFilterChange) {
+			onAggregationFilterChange([]);
+		}
 
 		setValues({
 			objectFieldSettings: newObjectFieldSettings,
@@ -876,6 +907,8 @@ interface IAggregationSourcePropertyProps {
 	errors: ObjectFieldErrors;
 	objectDefinitionId: number;
 	objectFieldSettings: ObjectFieldSetting[];
+	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
+	onRelationshipChange?: (objectDefinitionId2: number) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 
@@ -906,6 +939,8 @@ interface IProps {
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
+	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
+	onRelationshipChange?: (objectDefinitionId2: number) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 

@@ -227,6 +227,163 @@ definition {
 			value1 = "24.00");
 	}
 
+	test CanViewErrorNotificationWhenApplyingCouponCodeToWrongSku {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a discount of 10% applied to ABS Sensor's SKU") {
+			CommerceNavigator.gotoPortlet(
+				category = "Pricing",
+				portlet = "Discounts");
+
+			Click(locator1 = "Button#PLUS");
+
+			CommerceEntry.addNewDiscountsEntry(
+				discountAmount = "10",
+				discountName = "Test Discount",
+				discountTarget = "Products",
+				discountType = "Percentage");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "ABS Sensor",
+				title = "Add Products");
+		}
+
+		task ("And a coupon code added for the discount") {
+			Click(
+				key_name = "Coupon Code",
+				locator1 = "ToggleSwitch#ENABLE_SPECIFIC_TOGGLE_SWITCH");
+
+			Type(
+				key_fieldLabel = "Coupon Code",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "TEST");
+
+			Button.clickPublish();
+		}
+
+		task ("And a coupon code entry widget added to the checkout page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/checkout");
+
+			Click(locator1 = "Icon#PLUS");
+
+			Type(
+				key_text = "Search",
+				locator1 = "TextInput#ANY",
+				value1 = "Coupon Code Entry");
+
+			MouseOver(
+				categoryName = "Coupon Code Entry",
+				locator1 = "ContentDashboard#CATEGORY_NAME_ELEMENT");
+
+			Click(locator1 = "Button#PLUS");
+		}
+
+		task ("When the buyer logs in and goes into Minium site") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And the buyer adds ABS Sensor product to the cart") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "ABS Sensor",
+				productQuantity = "1");
+		}
+
+		task ("And the buyer navigates to checkout, applying the coupon code") {
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "View Details");
+
+			Button.click(button = "Checkout");
+
+			Type(
+				locator1 = "TextInput#DISCOUNT",
+				value1 = "TEST");
+
+			Click(
+				key_tab = "Apply",
+				locator1 = "Button#TAB_SUBMIT_BTN");
+
+			CommerceCheckout.setAddress(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code");
+
+			Click(locator1 = "Button#CONTINUE");
+
+			Click(
+				key_radioOption = "Standard",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("Then the discount of 10% is applied") {
+			AssertTextEquals.assertPartialText(
+				key_subtotalValue = "45.00",
+				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_SUBTOTAL",
+				value1 = "45.00");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("When the buyer adds a different product to the cart") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		}
+
+		task ("And applies the same coupon code") {
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "View Details");
+
+			Button.click(button = "Checkout");
+
+			Type(
+				locator1 = "TextInput#DISCOUNT",
+				value1 = "TEST");
+
+			Click(
+				key_tab = "Apply",
+				locator1 = "Button#TAB_SUBMIT_BTN");
+		}
+
+		task ("Then a UI error notification shows up and the discount of 10% is not applied") {
+			Alert.viewErrorMessage(errorMessage = "Error: The discount is not applicable to the current order.");
+		}
+	}
+
 	test CreateNewDiscount {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";

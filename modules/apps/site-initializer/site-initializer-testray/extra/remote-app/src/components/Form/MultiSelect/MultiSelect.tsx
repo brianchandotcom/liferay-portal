@@ -13,24 +13,46 @@
  */
 
 import Form from '..';
-import ClayMultiSelect from '@clayui/multi-select';
-import {useState} from 'react';
+import {InputHTMLAttributes, useState} from 'react';
+import ReactSelect from 'react-select';
+
+type Option = {label: string; value: string};
 
 type MultiSelectProps = {
 	label?: string;
-};
+	options: Option[];
+} & InputHTMLAttributes<HTMLInputElement>;
 
-const MultiSelect: React.FC<MultiSelectProps> = ({label}) => {
-	const [value, setValue] = useState('');
-	const [items, setItems] = useState([]);
+type SelectValue = Option | Option[] | undefined;
+
+const MultiSelect: React.FC<MultiSelectProps> = ({
+	disabled,
+	label,
+	name = '',
+	onChange,
+	options,
+	value,
+}) => {
+	const [selectValue, setSelectValue] = useState<SelectValue>(
+		value as SelectValue
+	);
 
 	return (
 		<Form.BaseWrapper label={label}>
-			<ClayMultiSelect
-				items={items}
-				onChange={setValue}
-				onItemsChange={(items: any) => setItems(items)}
-				value={value}
+			<ReactSelect
+				closeMenuOnSelect={false}
+				isDisabled={disabled}
+				isMulti
+				name={name}
+				onChange={(value) => {
+					setSelectValue(value as Option[]);
+
+					if (onChange) {
+						onChange({target: {name, value: value as any}} as any);
+					}
+				}}
+				options={options}
+				value={selectValue}
 			/>
 		</Form.BaseWrapper>
 	);

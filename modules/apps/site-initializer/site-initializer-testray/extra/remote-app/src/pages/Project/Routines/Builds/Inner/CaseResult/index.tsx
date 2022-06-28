@@ -12,26 +12,19 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
-import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {ReactNode, useState} from 'react';
 import {Link, useOutletContext} from 'react-router-dom';
 
+import Avatar from '../../../../../../components/Avatar';
 import AssignToMe from '../../../../../../components/Avatar/AssigneToMe';
 import Code from '../../../../../../components/Code';
 import Container from '../../../../../../components/Layout/Container';
 import StatusBadge from '../../../../../../components/StatusBadge';
 import QATable, {Orientation} from '../../../../../../components/Table/QATable';
-import {
-	CTypePagination,
-	TestrayAttachment,
-	TestrayCaseResult,
-	TestrayWarning,
-	getAttachments,
-	getWarnings,
-} from '../../../../../../graphql/queries';
+import {TestrayCaseResult} from '../../../../../../graphql/queries';
+import useAssignCaseResult from '../../../../../../hooks/useAssignCaseResult';
 import i18n from '../../../../../../i18n';
 import {getStatusLabel} from '../../../../../../util/constants';
 import {getTimeFromNow} from '../../../../../../util/date';
@@ -40,6 +33,12 @@ type CollapsableItemProps = {
 	children: ReactNode;
 	count: number;
 	title: string;
+};
+
+type TestrayAttachment = {
+	name: string;
+	url: string;
+	value: string;
 };
 
 const CollapsableItem: React.FC<CollapsableItemProps> = ({
@@ -52,7 +51,9 @@ const CollapsableItem: React.FC<CollapsableItemProps> = ({
 	return (
 		<>
 			<span className="custom-link" onClick={() => setVisible(!visible)}>
-				{`${visible ? 'Hide' : 'Show'} ${count} ${title}`}
+				{`${i18n.translate(
+					visible ? 'hide' : 'show'
+				)} ${count} ${title}`}
 			</span>
 
 			{visible && <div>{children}</div>}
@@ -61,50 +62,30 @@ const CollapsableItem: React.FC<CollapsableItemProps> = ({
 };
 
 const CaseResult = () => {
-	const {caseResult}: {caseResult: TestrayCaseResult} = useOutletContext();
+	const {
+		caseResult,
+		projectId,
+		refetch,
+	}: {
+		caseResult: TestrayCaseResult;
+		projectId: string;
+		refetch: () => void;
+	} = useOutletContext();
 
-	const {data} = useQuery<CTypePagination<'warnings', TestrayWarning>>(
-		getWarnings
-	);
+	const {onAssignToMe} = useAssignCaseResult();
 
-	const {data: attachmentData} = useQuery<
-		CTypePagination<'attachments', TestrayAttachment>
-	>(getAttachments);
+	const getAttachments = (): TestrayAttachment[] => {
+		try {
+			return JSON.parse(caseResult.attachments);
+		} catch (error) {
+			return [];
+		}
+	};
 
-	const {totalCount: warningTotalCount = 0, items: warnings = []} =
-		data?.c.warnings || {};
-
-	const {totalCount: attachmentTotalCount = 0, items: attachments = []} =
-		attachmentData?.c.attachments || {};
+	const attachments = getAttachments();
 
 	return (
 		<ClayLayout.Row>
-			<ClayLayout.Col className="p-0" xs={12}>
-				<ClayButton.Group className="mb-3 ml-3" spaced>
-					<ClayButton>{i18n.translate('assign')}</ClayButton>
-
-					<ClayButton displayType="secondary">
-						{i18n.translate('assign-to-me')}
-					</ClayButton>
-
-					<ClayButton disabled displayType="unstyled">
-						{i18n.translate('start-test')}
-					</ClayButton>
-
-					<ClayButton disabled displayType="unstyled">
-						{i18n.translate('complete-test')}
-					</ClayButton>
-
-					<ClayButton disabled displayType="unstyled">
-						{i18n.translate('reopen-test')}
-					</ClayButton>
-
-					<ClayButton displayType="secondary">
-						{i18n.translate('edit')}
-					</ClayButton>
-				</ClayButton.Group>
-			</ClayLayout.Col>
-
 			<ClayLayout.Col xs={9}>
 				<Container className="mt-4" collapsable title="Test Details">
 					<QATable
@@ -123,42 +104,36 @@ const CaseResult = () => {
 							},
 							{
 								title: i18n.translate('errors'),
-								value: <Code>{caseResult.errors}</Code>,
+								value: caseResult.errors && (
+									<Code>{caseResult.errors}</Code>
+								),
 							},
 							{
 								flexHeading: true,
 								title: i18n.sub(
 									'warnings-x',
-									warningTotalCount.toString()
+									caseResult.warnings.toString()
 								),
-								value: (
-									<CollapsableItem
-										count={warningTotalCount}
-										title={i18n.translate('warning')}
-									>
-										{warnings.map((warning, index) => (
-											<Code className="mt-2" key={index}>
-												{warning.content}
-											</Code>
-										))}
-									</CollapsableItem>
-								),
+								value: attachments.find(({name}) =>
+									name.toLowerCase().includes('warning')
+								)?.name,
 							},
 							{
 								flexHeading: true,
 								title: i18n.sub(
 									'attachments-x',
-									attachmentTotalCount.toString()
+									attachments.length.toString()
 								),
 								value: (
 									<CollapsableItem
 										count={attachments.length}
 										title={i18n.translate('attachment')}
 									>
-										<div className="d-flex flex-column">
+										<div className="d-flex flex-column mb-1">
 											{attachments.map(
 												(attachment, index) => (
 													<a
+														className="mt-2"
 														href={attachment.url}
 														key={index}
 														rel="noopener noreferrer"
@@ -211,7 +186,7 @@ const CaseResult = () => {
 							},
 							{
 								title: i18n.translate('estimated-duration'),
-								value: caseResult.case?.estimatedDuration,
+								value: caseResult.case?.estimatedDuration || 0,
 							},
 							{
 								title: i18n.translate('description'),
@@ -224,22 +199,20 @@ const CaseResult = () => {
 						]}
 					/>
 
-					<Link to="/project/1234/case/1234">
+					<Link
+						to={`/project/${projectId}/cases/${caseResult.case.id}`}
+					>
 						{i18n.translate('view-case')}
 					</Link>
 				</Container>
 			</ClayLayout.Col>
 
 			<ClayLayout.Col xs={3}>
-				<Container
-					className=""
-					collapsable
-					title={i18n.translate('dates')}
-				>
+				<Container collapsable title={i18n.translate('dates')}>
 					<QATable
 						items={[
 							{
-								title: i18n.translate('Updated'),
+								title: i18n.translate('updated'),
 								value: getTimeFromNow(caseResult.dateModified),
 							},
 							{
@@ -249,12 +222,25 @@ const CaseResult = () => {
 							{
 								divider: true,
 								title: i18n.translate('execution-date'),
-								value: 'a year ago',
+								value: getTimeFromNow(caseResult.dateModified),
 							},
 							{
 								divider: true,
 								title: i18n.translate('assignee'),
-								value: <AssignToMe />,
+								value: caseResult?.user ? (
+									<Avatar
+										displayName
+										name={`${caseResult.user.givenName} ${caseResult.user.additionalName}`}
+									/>
+								) : (
+									<AssignToMe
+										onClick={() =>
+											onAssignToMe(caseResult).then(
+												refetch
+											)
+										}
+									/>
+								),
 							},
 							{
 								divider: true,

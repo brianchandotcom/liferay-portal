@@ -19,12 +19,13 @@ import {Outlet, useLocation, useParams} from 'react-router-dom';
 import {getCaseResult} from '../../../../../../graphql/queries';
 import useHeader from '../../../../../../hooks/useHeader';
 import i18n from '../../../../../../i18n';
+import CaseResultHeaderActions from './CaseResultHeaderActions';
 
 const CaseResultOutlet = () => {
 	const {pathname} = useLocation();
 	const {buildId, caseResultId, projectId, routineId} = useParams();
 
-	const {data} = useQuery(getCaseResult, {
+	const {data, refetch} = useQuery(getCaseResult, {
 		variables: {
 			caseResultId,
 		},
@@ -34,10 +35,12 @@ const CaseResultOutlet = () => {
 
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}/case-result/${caseResultId}`;
 
-	const {setHeading, setTabs} = useHeader({shouldUpdate: false});
+	const {context, setHeading, setTabs} = useHeader({shouldUpdate: false});
+
+	const maxHeads = context.heading.length === 4;
 
 	useEffect(() => {
-		if (caseResult) {
+		if (caseResult && !maxHeads) {
 			setHeading(
 				[
 					{
@@ -48,7 +51,7 @@ const CaseResultOutlet = () => {
 				true
 			);
 		}
-	}, [setHeading, caseResult]);
+	}, [setHeading, maxHeads, caseResult]);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -68,7 +71,16 @@ const CaseResultOutlet = () => {
 	}, [basePath, pathname, setTabs]);
 
 	if (caseResult) {
-		return <Outlet context={{caseResult}} />;
+		return (
+			<>
+				<CaseResultHeaderActions
+					caseResult={caseResult}
+					refetch={refetch}
+				/>
+
+				<Outlet context={{caseResult, projectId, refetch}} />
+			</>
+		);
 	}
 
 	return null;

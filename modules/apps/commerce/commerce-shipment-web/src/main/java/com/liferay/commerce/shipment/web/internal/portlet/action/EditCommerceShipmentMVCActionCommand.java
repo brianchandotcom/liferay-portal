@@ -83,6 +83,9 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals("carrierDetails")) {
 				_updateCarrierDetails(actionRequest);
 			}
+			else if (cmd.equals("customFields")) {
+				_updateCustomFields(actionRequest);
+			}
 			else if (cmd.equals("expectedDate")) {
 				_updateExpectedDate(actionRequest);
 			}
@@ -201,9 +204,12 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 		long countryId = ParamUtil.getLong(actionRequest, "countryId");
 		String phoneNumber = ParamUtil.getString(actionRequest, "phoneNumber");
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceShipment.class.getName(), actionRequest);
+
 		return _commerceShipmentService.updateAddress(
 			commerceShipmentId, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber, null);
+			city, zip, regionId, countryId, phoneNumber, serviceContext);
 	}
 
 	private CommerceShipment _updateCarrierDetails(ActionRequest actionRequest)
@@ -226,6 +232,9 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 
 		long commerceShipmentId = ParamUtil.getLong(
 			actionRequest, "commerceShipmentId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceShipment.class.getName(), actionRequest);
 
 		CommerceShipment commerceShipment = null;
 
@@ -287,23 +296,36 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 				trackingNumber, status, shippingDateMonth, shippingDateDay,
 				shippingDateYear, shippingDateHour, shippingDateMinute,
 				expectedDateMonth, expectedDateDay, expectedDateYear,
-				expectedDateHour, expectedDateMinute);
+				expectedDateHour, expectedDateMinute, serviceContext);
 		}
 		else {
 			long commerceOrderId = ParamUtil.getLong(
 				actionRequest, "commerceOrderId");
 
 			if (commerceOrderId > 0) {
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
-						CommerceShipment.class.getName(), actionRequest);
-
 				commerceShipment = _commerceShipmentService.addCommerceShipment(
 					commerceOrderId, serviceContext);
 			}
 		}
 
 		return commerceShipment;
+	}
+
+	private void _updateCustomFields(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceShipmentId = ParamUtil.getLong(
+			actionRequest, "commerceShipmentId");
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.getCommerceShipment(commerceShipmentId);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceShipment.class.getName(), actionRequest);
+
+		commerceShipment.setExpandoBridgeAttributes(serviceContext);
+
+		_commerceShipmentService.updateCommerceShipment(commerceShipment);
 	}
 
 	private CommerceShipment _updateExpectedDate(ActionRequest actionRequest)

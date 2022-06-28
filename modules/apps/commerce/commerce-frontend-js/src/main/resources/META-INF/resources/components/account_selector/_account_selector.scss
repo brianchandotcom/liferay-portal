@@ -10,6 +10,10 @@
 		max-width: 16rem;
 		width: 300px;
 
+		@media screen and (min-width: 375px) and (max-width: 577px) {
+			width: 225px;
+		}
+
 		&:focus {
 			box-shadow: none !important;
 		}

@@ -485,7 +485,7 @@ public class WikiNodeServiceHttp {
 
 	public static com.liferay.wiki.model.WikiNode
 			getWikiNodeByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long siteId,
+				HttpPrincipal httpPrincipal, long groupId,
 				String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -495,7 +495,7 @@ public class WikiNodeServiceHttp {
 				_getWikiNodeByExternalReferenceCodeParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, siteId, externalReferenceCode);
+				methodKey, groupId, externalReferenceCode);
 
 			Object returnObj = null;
 

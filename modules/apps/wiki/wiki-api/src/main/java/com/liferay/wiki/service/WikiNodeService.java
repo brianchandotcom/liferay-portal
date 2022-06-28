@@ -113,7 +113,7 @@ public interface WikiNodeService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiNode getWikiNodeByExternalReferenceCode(
-			long siteId, String externalReferenceCode)
+			long groupId, String externalReferenceCode)
 		throws PortalException;
 
 	public void importPages(

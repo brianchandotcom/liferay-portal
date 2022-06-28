@@ -137,9 +137,9 @@ public class WikiPageServiceHttp {
 
 	public static com.liferay.wiki.model.WikiPage addPage(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
-			long userId, long nodeId, String title, double version,
-			String content, String summary, boolean minorEdit, String format,
-			boolean head, String parentTitle, String redirectTitle,
+			long nodeId, String title, double version, String content,
+			String summary, boolean minorEdit, String format, boolean head,
+			String parentTitle, String redirectTitle,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -148,8 +148,8 @@ public class WikiPageServiceHttp {
 				WikiPageServiceUtil.class, "addPage", _addPageParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, userId, nodeId, title,
-				version, content, summary, minorEdit, format, head, parentTitle,
+				methodKey, externalReferenceCode, nodeId, title, version,
+				content, summary, minorEdit, format, head, parentTitle,
 				redirectTitle, serviceContext);
 
 			Object returnObj = null;
@@ -2087,10 +2087,9 @@ public class WikiPageServiceHttp {
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addPageParameterTypes2 = new Class[] {
-		String.class, long.class, long.class, String.class, double.class,
-		String.class, String.class, boolean.class, String.class, boolean.class,
-		String.class, String.class,
-		com.liferay.portal.kernel.service.ServiceContext.class
+		String.class, long.class, String.class, double.class, String.class,
+		String.class, boolean.class, String.class, boolean.class, String.class,
+		String.class, com.liferay.portal.kernel.service.ServiceContext.class
 	};
 	private static final Class<?>[] _addPageParameterTypes3 = new Class[] {
 		String.class, long.class, String.class, String.class, String.class,

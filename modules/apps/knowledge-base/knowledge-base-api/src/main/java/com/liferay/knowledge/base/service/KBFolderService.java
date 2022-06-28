@@ -84,7 +84,7 @@ public interface KBFolderService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder getKBFolderByExternalReferenceCode(
-			long siteId, String externalReferenceCode)
+			long groupId, String externalReferenceCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

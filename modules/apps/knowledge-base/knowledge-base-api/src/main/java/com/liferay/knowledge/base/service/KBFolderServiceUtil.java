@@ -92,11 +92,11 @@ public class KBFolderServiceUtil {
 	}
 
 	public static KBFolder getKBFolderByExternalReferenceCode(
-			long siteId, String externalReferenceCode)
+			long groupId, String externalReferenceCode)
 		throws PortalException {
 
 		return getService().getKBFolderByExternalReferenceCode(
-			siteId, externalReferenceCode);
+			groupId, externalReferenceCode);
 	}
 
 	public static KBFolder getKBFolderByUrlTitle(

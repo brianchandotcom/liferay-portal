@@ -344,7 +344,7 @@ public class KBFolderServiceHttp {
 
 	public static com.liferay.knowledge.base.model.KBFolder
 			getKBFolderByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long siteId,
+				HttpPrincipal httpPrincipal, long groupId,
 				String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -354,7 +354,7 @@ public class KBFolderServiceHttp {
 				_getKBFolderByExternalReferenceCodeParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, siteId, externalReferenceCode);
+				methodKey, groupId, externalReferenceCode);
 
 			Object returnObj = null;
 

@@ -78,9 +78,9 @@ public interface WikiPageService extends BaseService {
 		throws PortalException;
 
 	public WikiPage addPage(
-			String externalReferenceCode, long userId, long nodeId,
-			String title, double version, String content, String summary,
-			boolean minorEdit, String format, boolean head, String parentTitle,
+			String externalReferenceCode, long nodeId, String title,
+			double version, String content, String summary, boolean minorEdit,
+			String format, boolean head, String parentTitle,
 			String redirectTitle, ServiceContext serviceContext)
 		throws PortalException;
 

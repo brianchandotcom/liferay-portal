@@ -141,11 +141,11 @@ public class WikiNodeServiceWrapper
 
 	@Override
 	public com.liferay.wiki.model.WikiNode getWikiNodeByExternalReferenceCode(
-			long siteId, String externalReferenceCode)
+			long groupId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _wikiNodeService.getWikiNodeByExternalReferenceCode(
-			siteId, externalReferenceCode);
+			groupId, externalReferenceCode);
 	}
 
 	@Override

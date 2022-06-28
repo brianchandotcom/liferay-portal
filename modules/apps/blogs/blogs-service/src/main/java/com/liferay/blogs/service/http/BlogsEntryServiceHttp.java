@@ -278,7 +278,7 @@ public class BlogsEntryServiceHttp {
 
 	public static com.liferay.blogs.model.BlogsEntry
 			getBlogsEntryByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, long siteId,
+				HttpPrincipal httpPrincipal, long groupId,
 				String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -289,7 +289,7 @@ public class BlogsEntryServiceHttp {
 				_getBlogsEntryByExternalReferenceCodeParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, siteId, externalReferenceCode);
+				methodKey, groupId, externalReferenceCode);
 
 			Object returnObj = null;
 

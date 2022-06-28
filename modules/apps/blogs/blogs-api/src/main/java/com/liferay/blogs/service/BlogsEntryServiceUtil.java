@@ -101,11 +101,11 @@ public class BlogsEntryServiceUtil {
 	}
 
 	public static BlogsEntry getBlogsEntryByExternalReferenceCode(
-			long siteId, String externalReferenceCode)
+			long groupId, String externalReferenceCode)
 		throws PortalException {
 
 		return getService().getBlogsEntryByExternalReferenceCode(
-			siteId, externalReferenceCode);
+			groupId, externalReferenceCode);
 	}
 
 	public static List<BlogsEntry> getCompanyEntries(

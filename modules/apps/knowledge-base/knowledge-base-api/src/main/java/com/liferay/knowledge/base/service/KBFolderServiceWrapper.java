@@ -102,11 +102,11 @@ public class KBFolderServiceWrapper
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder
 			getKBFolderByExternalReferenceCode(
-				long siteId, String externalReferenceCode)
+				long groupId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kbFolderService.getKBFolderByExternalReferenceCode(
-			siteId, externalReferenceCode);
+			groupId, externalReferenceCode);
 	}
 
 	@Override

@@ -125,11 +125,11 @@ public class WikiNodeServiceUtil {
 	}
 
 	public static WikiNode getWikiNodeByExternalReferenceCode(
-			long siteId, String externalReferenceCode)
+			long groupId, String externalReferenceCode)
 		throws PortalException {
 
 		return getService().getWikiNodeByExternalReferenceCode(
-			siteId, externalReferenceCode);
+			groupId, externalReferenceCode);
 	}
 
 	public static void importPages(

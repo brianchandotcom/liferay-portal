@@ -431,7 +431,7 @@ public class JSONServerServlet extends HttpServlet {
 			if (isNumeric) {
 				_modelName = parts.get(parts.size()-2);
 				_id = GetterUtil.getLongStrict(parts.get(parts.size()-1));
-				_modelPath = _modelPath.replace('/' + parts.get(parts.size()-1) + '/', "");
+				_modelPath = _modelPath.replace('/' + parts.get(parts.size()-1), "");
 
 			}
 			else {

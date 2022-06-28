@@ -33,7 +33,15 @@ export default function CustomCSSField({field, onValueSelect, value}) {
 	const [editorModalOpen, setEditorModalOpen] = useState(false);
 
 	const onSelect = (content) => {
-		if (defaultValue.trim() !== customCSS?.trim() && value !== content) {
+		if (defaultValue.trim() === content?.trim()) {
+			if (value) {
+				onValueSelect(field.name, '');
+			}
+
+			return;
+		}
+
+		if (value !== content) {
 			onValueSelect(field.name, content);
 		}
 	};

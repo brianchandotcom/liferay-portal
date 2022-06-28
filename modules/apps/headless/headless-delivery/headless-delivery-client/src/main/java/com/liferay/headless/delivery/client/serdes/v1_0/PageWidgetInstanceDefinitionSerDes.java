@@ -90,6 +90,20 @@ public class PageWidgetInstanceDefinitionSerDes {
 			sb.append("]");
 		}
 
+		if (pageWidgetInstanceDefinition.getCustomCSS() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customCSS\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageWidgetInstanceDefinition.getCustomCSS()));
+
+			sb.append("\"");
+		}
+
 		if (pageWidgetInstanceDefinition.getFragmentStyle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -173,6 +187,15 @@ public class PageWidgetInstanceDefinitionSerDes {
 				String.valueOf(pageWidgetInstanceDefinition.getCssClasses()));
 		}
 
+		if (pageWidgetInstanceDefinition.getCustomCSS() == null) {
+			map.put("customCSS", null);
+		}
+		else {
+			map.put(
+				"customCSS",
+				String.valueOf(pageWidgetInstanceDefinition.getCustomCSS()));
+		}
+
 		if (pageWidgetInstanceDefinition.getFragmentStyle() == null) {
 			map.put("fragmentStyle", null);
 		}
@@ -228,6 +251,12 @@ public class PageWidgetInstanceDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageWidgetInstanceDefinition.setCssClasses(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customCSS")) {
+				if (jsonParserFieldValue != null) {
+					pageWidgetInstanceDefinition.setCustomCSS(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {

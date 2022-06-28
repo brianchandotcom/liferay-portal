@@ -101,6 +101,27 @@ public class PageCollectionDefinition implements Cloneable, Serializable {
 
 	protected String[] cssClasses;
 
+	public String getCustomCSS() {
+		return customCSS;
+	}
+
+	public void setCustomCSS(String customCSS) {
+		this.customCSS = customCSS;
+	}
+
+	public void setCustomCSS(
+		UnsafeSupplier<String, Exception> customCSSUnsafeSupplier) {
+
+		try {
+			customCSS = customCSSUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String customCSS;
+
 	public Boolean getDisplayAllItems() {
 		return displayAllItems;
 	}

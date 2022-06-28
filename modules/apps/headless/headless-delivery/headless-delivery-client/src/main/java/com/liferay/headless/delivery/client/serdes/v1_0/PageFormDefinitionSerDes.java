@@ -83,6 +83,20 @@ public class PageFormDefinitionSerDes {
 			sb.append("]");
 		}
 
+		if (pageFormDefinition.getCustomCSS() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customCSS\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageFormDefinition.getCustomCSS()));
+
+			sb.append("\"");
+		}
+
 		if (pageFormDefinition.getFormConfig() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -169,6 +183,14 @@ public class PageFormDefinitionSerDes {
 				String.valueOf(pageFormDefinition.getCssClasses()));
 		}
 
+		if (pageFormDefinition.getCustomCSS() == null) {
+			map.put("customCSS", null);
+		}
+		else {
+			map.put(
+				"customCSS", String.valueOf(pageFormDefinition.getCustomCSS()));
+		}
+
 		if (pageFormDefinition.getFormConfig() == null) {
 			map.put("formConfig", null);
 		}
@@ -228,6 +250,12 @@ public class PageFormDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageFormDefinition.setCssClasses(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customCSS")) {
+				if (jsonParserFieldValue != null) {
+					pageFormDefinition.setCustomCSS(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "formConfig")) {

@@ -158,6 +158,34 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] cssClasses;
 
+	@Schema(description = "Custom CSS that is applied on the fragment.")
+	public String getCustomCSS() {
+		return customCSS;
+	}
+
+	public void setCustomCSS(String customCSS) {
+		this.customCSS = customCSS;
+	}
+
+	@JsonIgnore
+	public void setCustomCSS(
+		UnsafeSupplier<String, Exception> customCSSUnsafeSupplier) {
+
+		try {
+			customCSS = customCSSUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "Custom CSS that is applied on the fragment.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String customCSS;
+
 	@Schema(
 		description = "Whether to show all items when pagination is disabled."
 	)
@@ -648,6 +676,20 @@ public class PageCollectionDefinition implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (customCSS != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customCSS\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(customCSS));
+
+			sb.append("\"");
 		}
 
 		if (displayAllItems != null) {

@@ -831,7 +831,7 @@ definition {
 
 			Button.clickSubmitForPublication();
 
-			Pause(locator1 = "2000");
+			Alert.viewSuccessMessage();
 		}
 
 		task ("View the usages of the Web Content article") {

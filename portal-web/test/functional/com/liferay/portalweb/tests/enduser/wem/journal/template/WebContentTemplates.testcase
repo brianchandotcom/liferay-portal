@@ -269,7 +269,7 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			Pause(locator1 = "3000");
+			WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 		}
 
 		task ("Disable Template Creation") {

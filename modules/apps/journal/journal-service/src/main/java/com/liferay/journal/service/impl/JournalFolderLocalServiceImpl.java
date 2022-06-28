@@ -119,10 +119,6 @@ public class JournalFolderLocalServiceImpl
 
 		long folderId = counterLocalService.increment();
 
-		if (Validator.isNull(externalReferenceCode)) {
-			externalReferenceCode = String.valueOf(folderId);
-		}
-
 		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		JournalFolder folder = journalFolderPersistence.create(folderId);
@@ -1542,6 +1538,10 @@ public class JournalFolderLocalServiceImpl
 	private void _validateExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
 
 		JournalFolder journalFolder = journalFolderPersistence.fetchByG_ERC(
 			groupId, externalReferenceCode);

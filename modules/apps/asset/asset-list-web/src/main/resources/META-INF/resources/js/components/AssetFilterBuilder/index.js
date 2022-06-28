@@ -256,7 +256,7 @@ function Rule({
 	);
 }
 
-function AssetListFilter({
+function AssetFilterBuilder({
 	categorySelectorURL,
 	disabled,
 	groupIds,
@@ -359,7 +359,7 @@ function AssetListFilter({
 	);
 }
 
-AssetListFilter.propTypes = {
+AssetFilterBuilder.propTypes = {
 	categorySelectorURL: PropTypes.string,
 	groupIds: PropTypes.arrayOf(PropTypes.string),
 	namespace: PropTypes.string,
@@ -387,4 +387,4 @@ AssetListFilter.propTypes = {
 	vocabularyIds: PropTypes.arrayOf(PropTypes.string),
 };
 
-export default AssetListFilter;
+export default AssetFilterBuilder;

@@ -1148,28 +1148,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addFragmentEntries(
-		Map<String, String> assetListEntryIdsStringUtilReplaceValues,
-		Map<String, String> documentsStringUtilReplaceValues,
-		ServiceContext serviceContext) throws Exception{
-
-		Group group = _groupLocalService.getCompanyGroup(
-			serviceContext.getCompanyId());
-
-		_addFragmentEntries(assetListEntryIdsStringUtilReplaceValues,
-			documentsStringUtilReplaceValues,group.getGroupId(),
-			serviceContext,
-			"/site-initializer/fragments/company");
-
-		_addFragmentEntries(assetListEntryIdsStringUtilReplaceValues,
-			documentsStringUtilReplaceValues, serviceContext.getScopeGroupId(),
-			serviceContext,
-			"/site-initializer/fragments/group");
-	}
-
-	private void _addFragmentEntries(
-		Map<String, String> assetListEntryIdsStringUtilReplaceValues,
-		Map<String, String> documentsStringUtilReplaceValues,
-		long groupId, ServiceContext serviceContext, String parentResourcePath)
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+			Map<String, String> documentsStringUtilReplaceValues, long groupId,
+			ServiceContext serviceContext, String parentResourcePath)
 		throws Exception {
 
 		Enumeration<URL> enumeration = _bundle.findEntries(
@@ -1191,7 +1172,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			}
 
 			if (StringUtil.endsWith(
-				fileName, "fragment-composition-definition.json")) {
+					fileName, "fragment-composition-definition.json")) {
 
 				String json = StringUtil.read(url.openStream());
 
@@ -1209,26 +1190,41 @@ public class BundleSiteInitializer implements SiteInitializer {
 					json,
 					new String[] {"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]"},
 					new String[] {
-						scopeGroup.getFriendlyURL(),
-						String.valueOf(groupId)
+						scopeGroup.getFriendlyURL(), String.valueOf(groupId)
 					});
 
 				zipWriter.addEntry(
-					StringUtil.removeFirst(
-						fileName, parentResourcePath),
-					json);
+					StringUtil.removeFirst(fileName, parentResourcePath), json);
 			}
 			else {
 				zipWriter.addEntry(
-					StringUtil.removeFirst(
-						fileName, parentResourcePath),
+					StringUtil.removeFirst(fileName, parentResourcePath),
 					url.openStream());
 			}
 		}
 
 		_fragmentsImporter.importFragmentEntries(
-			serviceContext.getUserId(), groupId, 0,
-			zipWriter.getFile(), false);
+			serviceContext.getUserId(), groupId, 0, zipWriter.getFile(), false);
+	}
+
+	private void _addFragmentEntries(
+			Map<String, String> assetListEntryIdsStringUtilReplaceValues,
+			Map<String, String> documentsStringUtilReplaceValues,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Group group = _groupLocalService.getCompanyGroup(
+			serviceContext.getCompanyId());
+
+		_addFragmentEntries(
+			assetListEntryIdsStringUtilReplaceValues,
+			documentsStringUtilReplaceValues, group.getGroupId(),
+			serviceContext, "/site-initializer/fragments/company");
+
+		_addFragmentEntries(
+			assetListEntryIdsStringUtilReplaceValues,
+			documentsStringUtilReplaceValues, serviceContext.getScopeGroupId(),
+			serviceContext, "/site-initializer/fragments/group");
 	}
 
 	private void _addJournalArticles(

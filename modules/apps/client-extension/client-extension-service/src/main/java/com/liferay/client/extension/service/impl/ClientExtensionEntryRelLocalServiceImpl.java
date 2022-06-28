@@ -39,7 +39,7 @@ public class ClientExtensionEntryRelLocalServiceImpl
 	@Override
 	public ClientExtensionEntryRel addClientExtensionEntryRel(
 			long userId, long classNameId, long classPK,
-			String cetExternalReferenceCode, String type)
+			String cetExternalReferenceCode, String type, String typeSettings)
 		throws PortalException {
 
 		ClientExtensionEntryRel clientExtensionEntryRel =
@@ -57,6 +57,7 @@ public class ClientExtensionEntryRelLocalServiceImpl
 		clientExtensionEntryRel.setCETExternalReferenceCode(
 			cetExternalReferenceCode);
 		clientExtensionEntryRel.setType(type);
+		clientExtensionEntryRel.setTypeSettings(typeSettings);
 
 		return clientExtensionEntryRelPersistence.update(
 			clientExtensionEntryRel);

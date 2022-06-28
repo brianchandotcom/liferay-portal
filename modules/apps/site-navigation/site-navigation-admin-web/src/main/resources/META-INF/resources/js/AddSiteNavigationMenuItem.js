@@ -14,7 +14,7 @@
 
 import {fetch, openToast} from 'frontend-js-web';
 
-export default function ({namespace, selPortletId, selPortletIsAjaxable}) {
+export default function ({namespace}) {
 	const addButton = document.getElementById(`${namespace}addButton`);
 
 	if (addButton) {
@@ -38,10 +38,12 @@ export default function ({namespace, selPortletId, selPortletIsAjaxable}) {
 				.then((response) => response.json())
 				.then((response) => {
 					if (response.siteNavigationMenuItemId) {
-						Liferay.fire('closeWindow', {
-							id: `_${selPortletId}_addMenuItem`,
-							portletAjaxable: selPortletIsAjaxable,
-							refresh: selPortletId,
+						Liferay.Util.getOpener().Liferay.fire(
+							'reloadSiteNavigationMenuEditor'
+						);
+
+						Liferay.Util.getOpener().Liferay.fire('closeModal', {
+							id: `${namespace}addMenuItem`,
 						});
 					}
 					else {

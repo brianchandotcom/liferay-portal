@@ -143,14 +143,23 @@ export function AddItemDropDown({trigger}) {
 									});
 								}
 								else {
-									Liferay.Util.openWindow({
-										dialog: {
-											destroyOnHide: true,
-										},
+									Liferay.Util.openModal({
+										height: useSmallerModal
+											? '60vh'
+											: undefined,
 										id: `${portletNamespace}addMenuItem`,
+										iframeBodyCssClass: 'portal-popup',
+										size: useSmallerModal
+											? 'md'
+											: undefined,
 										title: data.addTitle,
-										uri: data.href,
+										url: data.href,
 									});
+
+									Liferay.once(
+										'reloadSiteNavigationMenuEditor',
+										() => window.location.reload()
+									);
 								}
 							}}
 						>

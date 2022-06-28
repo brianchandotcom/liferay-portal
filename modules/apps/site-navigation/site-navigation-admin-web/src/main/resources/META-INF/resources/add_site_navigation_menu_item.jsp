@@ -45,7 +45,7 @@ renderResponse.setTitle(siteNavigationMenuItemType.getAddTitle(locale));
 	<liferay-ui:message arguments='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' key="please-enter-a-name-with-fewer-than-x-characters" translateArguments="<%= false %>" />
 </liferay-ui:error>
 
-<aui:form action="<%= addURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm" onSubmit="event.preventDefault();">
+<aui:form action="<%= addURL %>" cssClass="add-site-navigation-menu-item container-fluid container-fluid-max-xl" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenuId %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
@@ -60,24 +60,13 @@ renderResponse.setTitle(siteNavigationMenuItemType.getAddTitle(locale));
 		</aui:fieldset>
 	</aui:fieldset-group>
 
-	<aui:button-row>
+	<aui:button-row cssClass="modal-footer position-fixed">
 		<aui:button name="addButton" type="submit" value='<%= type.equals("layout") ? "select" : "add" %>' />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 
-<%
-Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
-%>
-
 <liferay-frontend:component
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"selPortletId", HtmlUtil.escapeJS(selPortlet.getPortletId())
-		).put(
-			"selPortletIsAjaxable", selPortlet.isAjaxable()
-		).build()
-	%>'
 	module="js/AddSiteNavigationMenuItem"
 />

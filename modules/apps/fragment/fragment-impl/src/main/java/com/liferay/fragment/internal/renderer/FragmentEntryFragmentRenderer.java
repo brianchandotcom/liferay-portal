@@ -29,6 +29,7 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.form.InfoForm;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -175,7 +176,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			fragmentEntryInputTemplateNodeContextHelper =
 				new FragmentEntryInputTemplateNodeContextHelper(
 					_getFragmentEntryName(fragmentEntryLink),
-					_fragmentEntryConfigurationParser);
+					_fragmentEntryConfigurationParser, _itemSelector);
 
 		InputTemplateNode inputTemplateNode =
 			fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
@@ -469,6 +470,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

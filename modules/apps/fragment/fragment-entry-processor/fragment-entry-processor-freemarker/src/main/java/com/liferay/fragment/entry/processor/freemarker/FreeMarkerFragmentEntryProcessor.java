@@ -27,6 +27,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.io.DummyWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
@@ -164,7 +165,7 @@ public class FreeMarkerFragmentEntryProcessor
 						_getFragmentEntryName(
 							fragmentEntryLink,
 							fragmentEntryProcessorContext.getLocale()),
-						_fragmentEntryConfigurationParser);
+						_fragmentEntryConfigurationParser, _itemSelector);
 
 			template.put(
 				"input",
@@ -358,6 +359,9 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Reference
 	private FragmentRendererTracker _fragmentRendererTracker;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

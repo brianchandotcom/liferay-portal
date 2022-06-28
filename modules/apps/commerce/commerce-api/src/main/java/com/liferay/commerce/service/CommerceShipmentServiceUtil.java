@@ -227,11 +227,19 @@ public class CommerceShipmentServiceUtil {
 	}
 
 	public static CommerceShipment updateCommerceShipment(
+			CommerceShipment commerceShipment)
+		throws PortalException {
+
+		return getService().updateCommerceShipment(commerceShipment);
+	}
+
+	public static CommerceShipment updateCommerceShipment(
 			long commerceShipmentId, String carrier, String trackingNumber,
 			int status, int shippingDateMonth, int shippingDateDay,
 			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
 			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
-			int expectedDateHour, int expectedDateMinute)
+			int expectedDateHour, int expectedDateMinute,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCommerceShipment(
@@ -239,7 +247,7 @@ public class CommerceShipmentServiceUtil {
 			shippingDateMonth, shippingDateDay, shippingDateYear,
 			shippingDateHour, shippingDateMinute, expectedDateMonth,
 			expectedDateDay, expectedDateYear, expectedDateHour,
-			expectedDateMinute);
+			expectedDateMinute, serviceContext);
 	}
 
 	public static CommerceShipment updateCommerceShipment(
@@ -250,7 +258,8 @@ public class CommerceShipmentServiceUtil {
 			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
 			int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
 			int expectedDateDay, int expectedDateYear, int expectedDateHour,
-			int expectedDateMinute)
+			int expectedDateMinute,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCommerceShipment(
@@ -259,7 +268,7 @@ public class CommerceShipmentServiceUtil {
 			trackingNumber, status, shippingDateMonth, shippingDateDay,
 			shippingDateYear, shippingDateHour, shippingDateMinute,
 			expectedDateMonth, expectedDateDay, expectedDateYear,
-			expectedDateHour, expectedDateMinute);
+			expectedDateHour, expectedDateMinute, serviceContext);
 	}
 
 	public static CommerceShipment updateExpectedDate(

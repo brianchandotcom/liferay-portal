@@ -175,11 +175,16 @@ public interface CommerceShipmentService extends BaseService {
 		throws PortalException;
 
 	public CommerceShipment updateCommerceShipment(
+			CommerceShipment commerceShipment)
+		throws PortalException;
+
+	public CommerceShipment updateCommerceShipment(
 			long commerceShipmentId, String carrier, String trackingNumber,
 			int status, int shippingDateMonth, int shippingDateDay,
 			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
 			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
-			int expectedDateHour, int expectedDateMinute)
+			int expectedDateHour, int expectedDateMinute,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceShipment updateCommerceShipment(
@@ -190,7 +195,7 @@ public interface CommerceShipmentService extends BaseService {
 			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
 			int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
 			int expectedDateDay, int expectedDateYear, int expectedDateHour,
-			int expectedDateMinute)
+			int expectedDateMinute, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceShipment updateExpectedDate(

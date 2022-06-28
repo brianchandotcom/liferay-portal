@@ -377,6 +377,7 @@ export default function ActionBuilder({
 									'openExpressionBuilderModal',
 									{
 										onSave: handleSave,
+										required: true,
 										source: values.conditionExpression,
 										validateExpressionURL,
 									}

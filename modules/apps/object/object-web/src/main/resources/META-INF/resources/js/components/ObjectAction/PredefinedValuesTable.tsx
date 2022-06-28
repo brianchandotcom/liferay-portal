@@ -155,6 +155,9 @@ export default function PredefinedValuesTable({
 													},
 												});
 											},
+											required: objectFieldsMap.get(
+												item.name
+											)?.required,
 											source: item.value,
 											validateExpressionURL,
 										}

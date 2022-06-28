@@ -2576,14 +2576,14 @@ public class LayoutStagedModelDataHandler
 		}
 
 		Date existingLayoutModifiedDate = existingLayout.getModifiedDate();
-		long lastMergeLayoutModifiedDate = GetterUtil.getLong(
+		long lastMergeLayoutModifiedTime = GetterUtil.getLong(
 			existingLayout.getTypeSettingsProperty(
-				Sites.LAST_MERGE_LAYOUT_MODIFIED_DATE));
+				Sites.LAST_MERGE_LAYOUT_MODIFIED_TIME));
 		Date layoutModifiedDate = layout.getModifiedDate();
 
 		if ((existingLayoutModifiedDate == null) ||
 			(layoutModifiedDate == null) ||
-			(layoutModifiedDate.getTime() > lastMergeLayoutModifiedDate)) {
+			(layoutModifiedDate.getTime() > lastMergeLayoutModifiedTime)) {
 
 			return true;
 		}
@@ -2858,7 +2858,7 @@ public class LayoutStagedModelDataHandler
 		Date exportedLayoutModifiedDate = exportedLayout.getModifiedDate();
 
 		importedLayoutTypeSettingsUnicodeProperties.setProperty(
-			Sites.LAST_MERGE_LAYOUT_MODIFIED_DATE,
+			Sites.LAST_MERGE_LAYOUT_MODIFIED_TIME,
 			String.valueOf(exportedLayoutModifiedDate.getTime()));
 
 		importedLayout.setTypeSettingsProperties(

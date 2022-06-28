@@ -62,7 +62,7 @@ public interface Sites {
 	public static final int CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT =
 		2;
 
-	public static final String LAST_MERGE_LAYOUT_MODIFIED_DATE =
+	public static final String LAST_MERGE_LAYOUT_MODIFIED_TIME =
 		"last-merge-layout-modified-date";
 
 	public static final String LAST_MERGE_TIME = "last-merge-time";

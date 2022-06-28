@@ -68,7 +68,7 @@ export function Select({
 					<ClaySelect.Option
 						key={index}
 						label={label}
-						selected={value === label}
+						selected={value === index}
 						value={index}
 					/>
 				))}

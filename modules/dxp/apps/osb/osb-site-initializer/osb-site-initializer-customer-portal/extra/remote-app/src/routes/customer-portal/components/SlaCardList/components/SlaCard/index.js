@@ -38,7 +38,8 @@ const SlaCard = ({
 						slaTitle === SLA_TYPES.gold,
 					'bg-neutral-0 border-brand-primary-darken-2 ':
 						slaTitle === SLA_TYPES.limited,
-					'bg-neutral-0 border-neutral-2 ': slaTitle === SLA_TYPES.platinum,
+					'bg-neutral-0 border-neutral-2 ':
+						slaTitle === SLA_TYPES.platinum,
 				})}
 			>
 				<ClayCard.Row className="align-items-center d-flex justify-content-between">

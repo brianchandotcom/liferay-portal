@@ -228,7 +228,7 @@ public class BundleSiteInitializerTest {
 			_assertDDMStructure(group);
 			_assertDDMTemplate(group);
 			_assertDLFileEntry(group);
-			_assertFragmentEntries(group,serviceContext);
+			_assertFragmentEntries(group, serviceContext);
 			_assertJournalArticles(group);
 			_assertKBArticles(group);
 			_assertLayoutPageTemplateEntry(group);
@@ -703,8 +703,9 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(string.contains("1. Revelation"));
 	}
 
-	private void _assertFragmentEntries(Group group, ServiceContext serviceContext)
-		throws Exception{
+	private void _assertFragmentEntries(
+			Group group, ServiceContext serviceContext)
+		throws Exception {
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			serviceContext.getCompanyId());

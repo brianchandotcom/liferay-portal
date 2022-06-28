@@ -96,6 +96,25 @@ public class ContainerLayoutStructureItemMapper
 
 								return ArrayUtil.toStringArray(cssClasses);
 							});
+						setCustomCSS(
+							() -> {
+								if (!GetterUtil.getBoolean(
+										PropsUtil.get(
+											"feature.flag.LPS-147511"))) {
+
+									return null;
+								}
+
+								String customCSS =
+									containerStyledLayoutStructureItem.
+										getCustomCSS();
+
+								if (Validator.isNotNull(customCSS)) {
+									return customCSS;
+								}
+
+								return null;
+							});
 						setFragmentStyle(
 							() -> {
 								JSONObject itemConfigJSONObject =

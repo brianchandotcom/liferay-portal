@@ -654,10 +654,15 @@ definition {
 			var siteName = TestCase.getSiteName(siteName = "${siteName}");
 			var tokenCurl = '''
 				${portalURL}/o/oauth2/token \
-					--data grant_type=client_credentials&client_id=abc123&client_secret=abc123
-			''';
+					-d client_id=abc123 \
+					-d client_secret=abc123 \
+					-d grant_type=client_credentials
+				''';
 
 			var accessToken = OAuth2.getAccessToken(tokenCurl = "${tokenCurl}");
+
+			echo("## * Access Token: ${accessToken}");
+
 			var articleId = JSONWebcontentSetter.setArticleId(
 				groupName = "Guest",
 				title = "WC Title");

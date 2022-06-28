@@ -125,17 +125,14 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 	@Override
 	public WikiPage addPage(
-			String externalReferenceCode, long userId, long nodeId,
+			String externalReferenceCode, long nodeId,
 			String title, double version, String content, String summary,
 			boolean minorEdit, String format, boolean head, String parentTitle,
 			String redirectTitle, ServiceContext serviceContext)
 		throws PortalException {
 
-		_wikiNodeModelResourcePermission.check(
-			getPermissionChecker(), nodeId, ActionKeys.ADD_PAGE);
-
 		return wikiPageLocalService.addPage(
-			externalReferenceCode, userId, nodeId, title, version, content,
+			externalReferenceCode, getUserId(), nodeId, title, version, content,
 			summary, minorEdit, format, head, parentTitle, redirectTitle,
 			serviceContext);
 	}

@@ -48,6 +48,7 @@ const Renderer: React.FC<RendererProps> = ({
 	form,
 	onChange,
 }) => {
+	const [disabledFields, setDisableFields] = useState({});
 	const [gqlOptions, setGqlOptions] = useState<{[key: string]: []}>({});
 
 	const fieldsFiltered = fields.filter(({label}) =>
@@ -102,6 +103,7 @@ const Renderer: React.FC<RendererProps> = ({
 		<div className="form-renderer">
 			{fieldsFiltered.map((field, index) => {
 				const {label, name, type, options = [], gqlQuery} = field;
+				const currentValue = form[name];
 
 				const getOptions = () => {
 					const _options =
@@ -120,11 +122,30 @@ const Renderer: React.FC<RendererProps> = ({
 
 				if (['text', 'textarea'].includes(type)) {
 					return (
-						<Form.Input
-							key={index}
-							onChange={onChange}
-							{...field}
-						/>
+						<div key={index}>
+							<Form.Input
+								disabled={(disabledFields as any)[name]}
+								onChange={onChange}
+								value={currentValue}
+								{...field}
+							/>
+
+							{type === 'textarea' && (
+								<Form.Checkbox
+									label={i18n.sub('no-x', field.label)}
+									onClick={() => {
+										onChange({target: {name, value: null}});
+
+										setDisableFields({
+											...disabledFields,
+											[name]: !(disabledFields as any)[
+												name
+											],
+										});
+									}}
+								/>
+							)}
+						</div>
 					);
 				}
 
@@ -136,6 +157,7 @@ const Renderer: React.FC<RendererProps> = ({
 							name={name}
 							onChange={onChange}
 							options={getOptions()}
+							value={currentValue}
 						/>
 					);
 				}
@@ -187,7 +209,6 @@ const Renderer: React.FC<RendererProps> = ({
 					return (
 						<Form.AutoComplete
 							gqlQuery={gqlQuery as TypedDocumentNode}
-							key={index}
 							objectName="case"
 							onSearch={() => null}
 							transformData={field.transformData}
@@ -196,7 +217,15 @@ const Renderer: React.FC<RendererProps> = ({
 				}
 
 				if (type === 'multiselect') {
-					return <Form.MultiSelect key={index} label={label} />;
+					return (
+						<div className="mb-2" key={index}>
+							<Form.MultiSelect
+								label={label}
+								options={getOptions()}
+								value={currentValue}
+							/>
+						</div>
+					);
 				}
 
 				return null;

@@ -88,24 +88,21 @@ public class ClientExtensionServicePreActionTest {
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), _user.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 	}
 
 	@Test
 	public void testProcessServicePreActionLayout() throws Exception {
 		_addClientExtensionEntry();
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 			_user.getUserId(), _portal.getClassNameId(Layout.class),
-			layout.getPlid(), _clientExtensionEntry.getExternalReferenceCode(),
+			_layout.getPlid(), _clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
 
 		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+			_getMockHttpServletRequest();
 
 		_processServicePreAction(mockHttpServletRequest);
 
@@ -128,13 +125,8 @@ public class ClientExtensionServicePreActionTest {
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+			_getMockHttpServletRequest();
 
 		_processServicePreAction(mockHttpServletRequest);
 
@@ -163,17 +155,12 @@ public class ClientExtensionServicePreActionTest {
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
 
-		layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
-
-		_layoutLocalService.updateLayout(layout);
+		_layoutLocalService.updateLayout(_layout);
 
 		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+			_getMockHttpServletRequest();
 
 		_processServicePreAction(mockHttpServletRequest);
 
@@ -225,11 +212,23 @@ public class ClientExtensionServicePreActionTest {
 			"ClientExtensionsServicePreAction is not registered");
 	}
 
-	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {
+	private MockHttpServletRequest _getMockHttpServletRequest()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		return mockHttpServletRequest;
+	}
+
+	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
-		themeDisplay.setLayout(layout);
+		themeDisplay.setLayout(_layout);
 		themeDisplay.setLifecycleRender(true);
 		themeDisplay.setUser(_user);
 
@@ -264,6 +263,8 @@ public class ClientExtensionServicePreActionTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private Layout _layout;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

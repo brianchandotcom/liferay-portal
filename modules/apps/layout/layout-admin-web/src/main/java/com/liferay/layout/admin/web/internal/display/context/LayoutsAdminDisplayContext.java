@@ -2107,7 +2107,7 @@ public class LayoutsAdminDisplayContext {
 			if (clientExtensionEntryRel != null) {
 				return LanguageUtil.get(
 					themeDisplay.getLocale(),
-					"theme-css-inherited-from-master");
+					"theme-css-is-inherited-from-master");
 			}
 		}
 
@@ -2124,14 +2124,14 @@ public class LayoutsAdminDisplayContext {
 			Group group = selLayoutSet.getGroup();
 
 			return LanguageUtil.format(
-				themeDisplay.getLocale(), "theme-css-inherited-from-x",
+				themeDisplay.getLocale(), "theme-css-is-inherited-from-x",
 				group.getLayoutRootNodeName(
 					selLayoutSet.isPrivateLayout(), themeDisplay.getLocale()),
 				false);
 		}
 
 		return LanguageUtil.get(
-			themeDisplay.getLocale(), "no-theme-css-extension-loaded");
+			themeDisplay.getLocale(), "no-theme-css-extension-was-loaded");
 	}
 
 	private String _getStrictRobots() {

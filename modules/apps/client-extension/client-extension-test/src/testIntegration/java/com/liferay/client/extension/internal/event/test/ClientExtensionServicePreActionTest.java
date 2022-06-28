@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -121,8 +120,7 @@ public class ClientExtensionServicePreActionTest {
 	public void testProcessServicePreActionLayoutSet() throws Exception {
 		_addClientExtensionEntry();
 
-		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
-			_group.getGroupId(), false);
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 			_user.getUserId(), _portal.getClassNameId(LayoutSet.class),
@@ -273,9 +271,6 @@ public class ClientExtensionServicePreActionTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-
-	@Inject
-	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Inject
 	private Portal _portal;

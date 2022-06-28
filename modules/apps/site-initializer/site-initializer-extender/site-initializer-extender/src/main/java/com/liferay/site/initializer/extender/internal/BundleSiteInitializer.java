@@ -1187,8 +1187,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				Group scopeGroup = serviceContext.getScopeGroup();
 
 				json = StringUtil.replace(
-					json,
-					new String[] {"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]"},
+					json, new String[] {"[$FRIENDLY_URL$]", "[$GROUP_ID$]"},
 					new String[] {
 						scopeGroup.getFriendlyURL(), String.valueOf(groupId)
 					});

@@ -39,7 +39,7 @@ const ModalDXPCActivationStatus = ({
 }) => {
 	const [hasError, setHasError] = useState();
 
-	const [{subscriptionGroups}, dispatch] = useCustomerPortal();
+	const [{project, subscriptionGroups}, dispatch] = useCustomerPortal();
 	const {client} = useAppPropertiesContext();
 
 	const handleOnConfirm = () => {

@@ -289,17 +289,13 @@ public class JSONServerServletTest {
 			Assert.assertSame(
 				IndexOutOfBoundsException.class, throwable.getClass());
 
-			Assert.assertEquals(
-				"Index: 0",
-				throwable.getMessage());
+			Assert.assertEquals("Index: 0", throwable.getMessage());
 
 			Map<String, Object> message = _objectMapper.readValue(
 				mockHttpServletResponse.getContentAsString(), HashMap.class);
 
 			Assert.assertEquals(500, message.get("code"));
-			Assert.assertEquals(
-				"Index: 0",
-				message.get("message"));
+			Assert.assertEquals("Index: 0", message.get("message"));
 		}
 
 		// /fruit

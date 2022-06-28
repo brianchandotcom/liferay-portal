@@ -49,6 +49,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
@@ -426,13 +427,13 @@ public class JSONServerServlet extends HttpServlet {
 					"Unknown application name " + parts.get(0));
 			}
 
-			boolean isNumeric = StringUtils.isNumeric(parts.get(parts.size()-1));
+			boolean numeric = StringUtils.numeric(parts.get(parts.size() - 1));
 
-			if (isNumeric) {
-				_modelName = parts.get(parts.size()-2);
-				_id = GetterUtil.getLongStrict(parts.get(parts.size()-1));
-				_modelPath = _modelPath.replace('/' + parts.get(parts.size()-1), "");
-
+			if (numeric) {
+				_modelName = parts.get(parts.size() - 2);
+				_id = GetterUtil.getLongStrict(parts.get(parts.size() - 1));
+				_modelPath = _modelPath.replace(
+					'/' + parts.get(parts.size() - 1), "");
 			}
 			else {
 				_modelName = parts.get(1);
@@ -456,7 +457,7 @@ public class JSONServerServlet extends HttpServlet {
 		private final Map<String, Object> _applicationMap;
 		private final long _id;
 		private final String _modelName;
-		private String _modelPath;
+		private final String _modelPath;
 		private final Map<String, Object> _parameters;
 		private final String _relativePath;
 

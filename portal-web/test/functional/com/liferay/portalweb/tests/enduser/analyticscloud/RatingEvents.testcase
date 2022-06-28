@@ -84,7 +84,7 @@ definition {
 			task ("Start Har recording") {
 				ProxyUtil.startHarRecording("VOTE");
 
-				Pause(locator1 = "5000");
+				ACUtils.harRecordingPause();
 			}
 
 			Ratings.rateStar(ratingStarCount = "4");

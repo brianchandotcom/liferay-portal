@@ -93,7 +93,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("Get the userId number of the identity event") {
@@ -240,7 +240,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = "15000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("View the identity request properties value") {
@@ -307,7 +307,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("View the identity request properties value") {
@@ -360,7 +360,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("View the identity request properties value") {
@@ -418,7 +418,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("Get the userId number of the identity event") {
@@ -556,7 +556,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("Get the userId number of the identity event") {
@@ -664,7 +664,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("Get the userId number of the identity event") {

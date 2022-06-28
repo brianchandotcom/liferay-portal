@@ -108,7 +108,7 @@ definition {
 				locator1 = "Button#DOWNLOAD_SIDEBAR",
 				value1 = "Download");
 
-			Pause(locator1 = "5000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("View the Document events triggered") {
@@ -200,7 +200,7 @@ definition {
 				key_card = "New Document",
 				locator1 = "Card#CARD_TITLE");
 
-			Pause(locator1 = "10000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("View the Document events triggered") {

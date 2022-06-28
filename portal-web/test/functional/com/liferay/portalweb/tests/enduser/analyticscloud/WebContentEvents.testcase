@@ -119,7 +119,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("View the articleId of webContentClicked event") {
@@ -199,7 +199,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = "10000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("View the articleId of webContentViewed event") {

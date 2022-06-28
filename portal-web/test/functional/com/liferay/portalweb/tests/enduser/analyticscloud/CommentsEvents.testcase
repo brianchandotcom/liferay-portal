@@ -89,7 +89,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = "5000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("View the className of posted event") {
@@ -193,7 +193,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			Pause(locator1 = "10000");
+			ACUtils.harRecordingPause();
 		}
 
 		task ("View the className of posted event") {

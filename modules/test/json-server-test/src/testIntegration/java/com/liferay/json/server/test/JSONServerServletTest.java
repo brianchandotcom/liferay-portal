@@ -287,10 +287,10 @@ public class JSONServerServletTest {
 			Throwable throwable = logEntry.getThrowable();
 
 			Assert.assertSame(
-				IllegalArgumentException.class, throwable.getClass());
+				IndexOutOfBoundsException.class, throwable.getClass());
 
 			Assert.assertEquals(
-				"Missing application name in path null",
+				"Index: 0",
 				throwable.getMessage());
 
 			Map<String, Object> message = _objectMapper.readValue(
@@ -298,7 +298,7 @@ public class JSONServerServletTest {
 
 			Assert.assertEquals(500, message.get("code"));
 			Assert.assertEquals(
-				"Missing application name in path null",
+				"Index: 0",
 				message.get("message"));
 		}
 

@@ -48,6 +48,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
@@ -379,10 +380,10 @@ public class JSONServerServlet extends HttpServlet {
 		}
 
 		public List<Map<String, Object>> getModels() throws ServletException {
-			Object models = _applicationMap.get(_modelName);
+			Object models = _applicationMap.get(_modelPath);
 
 			if ((models == null) || !(models instanceof List)) {
-				throw new ServletException("Unknown model name " + _modelName);
+				throw new ServletException("Unknown model name " + _modelPath);
 			}
 
 			return (List<Map<String, Object>>)models;
@@ -398,6 +399,15 @@ public class JSONServerServlet extends HttpServlet {
 			String path = httpServletRequest.getPathInfo();
 
 			List<String> parts = StringUtil.split(path, '/');
+
+			_modelPath = path.replace('/' + parts.get(0) + '/', "");
+
+			for (String part : parts) {
+				if (part.equals("filter")) {
+					_modelPath = _modelPath.concat(
+						"?" + httpServletRequest.getQueryString());
+				}
+			}
 
 			if (parts.isEmpty()) {
 				throw new IllegalArgumentException(
@@ -416,12 +426,16 @@ public class JSONServerServlet extends HttpServlet {
 					"Unknown application name " + parts.get(0));
 			}
 
-			_modelName = parts.get(1);
+			boolean isNumeric = StringUtils.isNumeric(parts.get(parts.size()-1));
 
-			if (parts.size() > 2) {
-				_id = GetterUtil.getLongStrict(parts.get(2));
+			if (isNumeric) {
+				_modelName = parts.get(parts.size()-2);
+				_id = GetterUtil.getLongStrict(parts.get(parts.size()-1));
+				_modelPath = _modelPath.replace('/' + parts.get(parts.size()-1) + '/', "");
+
 			}
 			else {
+				_modelName = parts.get(1);
 				_id = -1;
 			}
 
@@ -442,6 +456,7 @@ public class JSONServerServlet extends HttpServlet {
 		private final Map<String, Object> _applicationMap;
 		private final long _id;
 		private final String _modelName;
+		private String _modelPath;
 		private final Map<String, Object> _parameters;
 		private final String _relativePath;
 

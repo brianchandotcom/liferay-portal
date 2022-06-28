@@ -430,4 +430,61 @@ definition {
 
         } 
 	}
+
+	macro checkProductDescription {			
+		for (var value : list "${list}") { 
+            var productName = StringUtil.extractFirst("${value}", ":");
+            var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
+
+            var status = StringUtil.extractFirst("${value}", ":");
+            var value = StringUtil.replaceFirst("${value}", "${status}:", "");
+
+            var productShortDescription = StringUtil.extractFirst("${value}", ":");
+            var value = StringUtil.replaceFirst("${value}", "${productShortDescription}:", "");
+
+        	var productFullDescription = StringUtil.extractFirst("${value}", ":");
+            var value = StringUtil.replaceFirst("${value}", "${productFullDescription}:", "");
+
+            var row = "${value}";
+
+            AppBuilderAdmin.searchByItem(itemName = "${productName}");
+
+            if ("${row}" == "") {
+				Click(
+			    	key_productName = "${productName}",
+			    	key_status = "${status}",
+			    	locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS");
+			}
+			else {
+				Click(
+			    	key_productName = "${productName}",
+			    	key_status = "${status}",
+                	key_row = "${row}",
+			    	locator1 = "CommerceEntry#PRODUCT_ENTRY_BASED_ON_STATUS_WITH_ROW");
+			}
+
+			echo("--------------------------");
+            echo("productName: ${productName}");
+            echo("status: ${status}");
+            echo("productShortDescription: ${productShortDescription}");
+            echo("productFullDescription: ${productFullDescription}");
+            echo("row: ${row}");
+            echo("--------------------------");
+
+			AssertElementPresent(
+                locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
+			    value = "${productShortDescription}");
+
+            SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+            AssertElementPresent(
+                locator1 = "RaylifeMobile#MESSAGE_MORE_INFO_INFORMATION",
+                value = "${productFullDescription}");
+
+            SelectFrameTop();
+
+            Navigator.gotoBack();
+		}
+	}
+
 }

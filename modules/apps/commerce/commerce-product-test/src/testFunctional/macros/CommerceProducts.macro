@@ -361,4 +361,41 @@ definition {
 			}
         }
 	}
+
+	macro checkProductsNotPresent { 
+		for (var value : list "${list}") { 
+            var productName = StringUtil.extractFirst("${value}", ":");
+            var value = StringUtil.replaceFirst("${value}", "${productName}:", "");
+
+            var status = StringUtil.extractFirst("${value}", ":");
+            var value = StringUtil.replaceFirst("${value}", "${status}:", "");
+
+            if ("${status}" == "") {
+				var status = "${value}";
+				var row = "";
+			} else {
+				var row = "${value}";
+			}
+
+            echo("--------------------------");
+            echo("productName: ${productName}");
+            echo("status: ${status}");
+            echo("row: ${row}");
+            echo("--------------------------");
+
+			if ("${row}" == "") {
+				AssertElementNotPresent(
+                	key_productName = "${productName}",
+			    	key_status = "${status}",
+			    	locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME");
+			}
+			else {
+				AssertElementNotPresent(
+                	key_productName = "${productName}",
+			    	key_status = "${status}",
+                	key_row = "${row}",
+                	locator1 = "CommerceEntry#PRODUCT_STATUS_BASED_ON_PRODUCT_NAME_WITH_ROW");
+			}
+        }
+	}
 }

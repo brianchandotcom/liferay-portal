@@ -15,10 +15,13 @@
 
 const applicationId = localStorage.getItem('raylife-application-id');
 const quoteId = localStorage.getItem('raylife-quote-id');
+const userId = Liferay.ThemeDisplay.getUserId();
+
 const raylifeApplicationForm = JSON.parse(
 	localStorage.getItem('raylife-application-form')
 );
 const orderId = localStorage.getItem('orderId');
+const nowDate = new Date().toISOString().split('T')[0];
 
 const fetchHeadless = async (url, options) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -36,6 +39,7 @@ const fetchHeadless = async (url, options) => {
 };
 
 const addPolicyEntryData = async ({
+	email,
 	firstName,
 	lastName,
 	price,
@@ -43,9 +47,19 @@ const addPolicyEntryData = async ({
 }) => {
 	await fetchHeadless(`/o/c/raylifepolicies/`, {
 		body: JSON.stringify({
-			dataJSON: JSON.stringify({productName}),
+			commission: (price * 0.2).toString(),
+			currencyType: 'USD',
+			dataJSON: JSON.stringify({monthlyPremium: price / 12, productName}),
+			policyCreateDate: nowDate,
+			policyOwnerEmail: email,
 			policyOwnerName: `${firstName} ${lastName}`,
+			policyStatus: {
+				key: 'executed',
+				name: 'Executed',
+			},
 			r_quoteToPolicies_c_raylifeQuoteId: quoteId,
+			r_userToPolicies_userId: userId,
+			startDate: nowDate,
 			termPremium: price,
 		}),
 		method: 'POST',
@@ -174,9 +188,8 @@ const main = async () => {
 			fragmentElement.querySelector('#congrats-price'),
 			`$${Number(quoteDataJSON.price || 0).toLocaleString('en-US')}`
 		);
-	}
-	else {
-		const discountInPrice = quoteDataJSON.price * 0.05;
+	} else {
+		const discountInPrice = quoteComparison.price * 0.05;
 
 		const discountDescription = `You saved 5% ($${Number(
 			discountInPrice || 0

@@ -26,6 +26,7 @@ import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.converter.ShipmentDTOConverter;
+import com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.admin.shipment.internal.util.v1_0.ShipmentItemUtil;
 import com.liferay.headless.commerce.admin.shipment.internal.util.v1_0.ShippingAddressUtil;
 import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShipmentResource;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -47,6 +49,8 @@ import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.io.Serializable;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -358,6 +362,15 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 		).build();
 	}
 
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		Shipment shipment) {
+
+		return CustomFieldsUtil.toMap(
+			CommerceShipment.class.getName(), contextCompany.getCompanyId(),
+			shipment.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+	}
+
 	private Shipment _toShipment(CommerceShipment commerceShipment)
 		throws Exception {
 
@@ -380,13 +393,11 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 			CommerceShipment commerceShipment, Shipment shipment)
 		throws Exception {
 
-		_commerceShipmentService.updateCarrierDetails(
-			commerceShipment.getCommerceShipmentId(),
-			GetterUtil.get(
-				shipment.getCarrier(), commerceShipment.getCarrier()),
-			GetterUtil.get(
-				shipment.getTrackingNumber(),
-				commerceShipment.getTrackingNumber()));
+		int expectedDay = 0;
+		int expectedMonth = 0;
+		int expectedYear = 0;
+		int expectedHour = 0;
+		int expectedMinute = 0;
 
 		Date expectedDate = shipment.getExpectedDate();
 
@@ -394,16 +405,18 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				expectedDate.getTime());
 
-			int expectedDay = calendar.get(Calendar.DAY_OF_MONTH);
-			int expectedMonth = calendar.get(Calendar.MONTH);
-			int expectedYear = calendar.get(Calendar.YEAR);
-			int expectedHour = calendar.get(Calendar.HOUR_OF_DAY);
-			int expectedMinute = calendar.get(Calendar.MINUTE);
-
-			_commerceShipmentService.updateExpectedDate(
-				commerceShipment.getCommerceShipmentId(), expectedMonth,
-				expectedDay, expectedYear, expectedHour, expectedMinute);
+			expectedDay = calendar.get(Calendar.DAY_OF_MONTH);
+			expectedMonth = calendar.get(Calendar.MONTH);
+			expectedYear = calendar.get(Calendar.YEAR);
+			expectedHour = calendar.get(Calendar.HOUR_OF_DAY);
+			expectedMinute = calendar.get(Calendar.MINUTE);
 		}
+
+		int shippingDay = 0;
+		int shippingMonth = 0;
+		int shippingYear = 0;
+		int shippingHour = 0;
+		int shippingMinute = 0;
 
 		Date shippingDate = shipment.getShippingDate();
 
@@ -411,16 +424,34 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				shippingDate.getTime());
 
-			int shippingDay = calendar.get(Calendar.DAY_OF_MONTH);
-			int shippingMonth = calendar.get(Calendar.MONTH);
-			int shippingYear = calendar.get(Calendar.YEAR);
-			int shippingHour = calendar.get(Calendar.HOUR_OF_DAY);
-			int shippingMinute = calendar.get(Calendar.MINUTE);
-
-			_commerceShipmentService.updateShippingDate(
-				commerceShipment.getCommerceShipmentId(), shippingMonth,
-				shippingDay, shippingYear, shippingHour, shippingMinute);
+			shippingDay = calendar.get(Calendar.DAY_OF_MONTH);
+			shippingMonth = calendar.get(Calendar.MONTH);
+			shippingYear = calendar.get(Calendar.YEAR);
+			shippingHour = calendar.get(Calendar.HOUR_OF_DAY);
+			shippingMinute = calendar.get(Calendar.MINUTE);
 		}
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			contextUser);
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			_getExpandoBridgeAttributes(shipment);
+
+		if (expandoBridgeAttributes != null) {
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+		}
+
+		_commerceShipmentService.updateCommerceShipment(
+			commerceShipment.getCommerceShipmentId(),
+			GetterUtil.get(
+				shipment.getCarrier(), commerceShipment.getCarrier()),
+			GetterUtil.get(
+				shipment.getTrackingNumber(),
+				commerceShipment.getTrackingNumber()),
+			commerceShipment.getStatus(), shippingMonth, shippingDay,
+			shippingYear, shippingHour, shippingMinute, expectedMonth,
+			expectedDay, expectedYear, expectedHour, expectedMinute,
+			serviceContext);
 	}
 
 	private CommerceShipment _updateNestedResources(

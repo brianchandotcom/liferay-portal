@@ -29,7 +29,6 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
 String dateString = dateFormat.format(new Date())
 
 File extraRemoteAppDir = new File(projectDir, "extra/remote-app/")
-File extraRemoteAppBuildDir = new File(projectDir, "extra/remote-app/build")
 File fragmentsSrcDir = new File(projectDir, "src/main/resources/site-initializer/fragments/")
 
 String webContextPath = ""
@@ -75,9 +74,9 @@ processResources {
 		dependsOn buildExtraRemoteApp
 
 		into("site-initializer/documents/company/remote-app/" + webContextPath) {
-			File assetManifestFile = new File(extraRemoteAppBuildDir, "asset-manifest.json")
+			File viteConfigTSFile = new File(extraRemoteAppDir, "vite.config.ts")
 
-			if (assetManifestFile.exists()) {
+			if (!viteConfigTSFile.exists()) {
 				from(new File(projectDir, "extra/remote-app/build/static/css")) {
 					include "*.css"
 				}
@@ -171,9 +170,9 @@ zipExtraRemoteApp {
 		destinationDir new File(buildDir, "dist")
 
 		into("remote-app/" + webContextPath) {
-			File assetManifestFile = new File(extraRemoteAppBuildDir, "asset-manifest.json")
+			File viteConfigTSFile = new File(extraRemoteAppDir, "vite.config.ts")
 
-			if (assetManifestFile.exists()) {
+			if (!viteConfigTSFile.exists()) {
 				from(new File(projectDir, "extra/remote-app/build/static/css")) {
 					include "*.css"
 				}

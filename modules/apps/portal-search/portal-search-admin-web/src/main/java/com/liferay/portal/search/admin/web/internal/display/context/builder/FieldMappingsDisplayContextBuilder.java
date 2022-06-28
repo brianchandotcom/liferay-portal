@@ -139,10 +139,9 @@ public class FieldMappingsDisplayContextBuilder {
 			fieldMappingIndexDisplayContext.setCssClass("active");
 		}
 
-		String url = HttpComponentsUtil.setParameter(
-			_currentURL, _namespace + "selectedIndexName", indexName);
-
-		fieldMappingIndexDisplayContext.setUrl(url);
+		fieldMappingIndexDisplayContext.setUrl(
+			HttpComponentsUtil.setParameter(
+				_currentURL, _namespace + "selectedIndexName", indexName));
 
 		return fieldMappingIndexDisplayContext;
 	}

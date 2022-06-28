@@ -193,11 +193,10 @@ public class SearchLocalizationHelperTest {
 
 		Stream<Group> stream = Arrays.stream(groups);
 
-		long[] groupIds = stream.mapToLong(
-			Group::getGroupId
-		).toArray();
-
-		searchContext.setGroupIds(groupIds);
+		searchContext.setGroupIds(
+			stream.mapToLong(
+				Group::getGroupId
+			).toArray());
 
 		return searchContext;
 	}

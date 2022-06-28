@@ -253,7 +253,7 @@ function Rule({
 	);
 }
 
-function AutoField({
+function AssetFilterBuilder({
 	categorySelectorURL,
 	groupIds,
 	namespace,
@@ -358,7 +358,7 @@ function AutoField({
 	);
 }
 
-AutoField.propTypes = {
+AssetFilterBuilder.propTypes = {
 	categorySelectorURL: PropTypes.string,
 	groupIds: PropTypes.arrayOf(PropTypes.string),
 	namespace: PropTypes.string,
@@ -388,7 +388,7 @@ AutoField.propTypes = {
 
 export default function (props) {
 	return (
-		<AutoField
+		<AssetFilterBuilder
 			{...props}
 			rules={props.rules.length ? props.rules : [DEFAULT_RULE]}
 		/>

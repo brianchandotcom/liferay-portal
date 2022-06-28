@@ -48,15 +48,15 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ImageMagick.class)
 public class ImageMagickImpl implements ImageMagick {
 
-	public ImageMagickImpl() {
-		reset();
-	}
-
 	@Override
 	public Future<?> convert(List<String> arguments) throws Exception {
 		if (!isEnabled()) {
 			throw new IllegalStateException(
 				"Cannot call \"convert\" when ImageMagick is disabled");
+		}
+
+		if (_globalSearchPath == null) {
+			reset();
 		}
 
 		ProcessExecutor processExecutor = _getProcessExecutor();

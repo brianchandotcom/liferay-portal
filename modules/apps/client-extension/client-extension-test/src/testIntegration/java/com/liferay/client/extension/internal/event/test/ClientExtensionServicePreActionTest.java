@@ -101,16 +101,7 @@ public class ClientExtensionServicePreActionTest {
 			_layout.getPlid(), _clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest();
-
-		_processServicePreAction(mockHttpServletRequest);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)mockHttpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Assert.assertEquals(_FAVICON_URL, themeDisplay.getFaviconURL());
+		_assertFaviconURL();
 	}
 
 	@Test
@@ -125,16 +116,7 @@ public class ClientExtensionServicePreActionTest {
 			_clientExtensionEntry.getExternalReferenceCode(),
 			ClientExtensionEntryConstants.TYPE_THEME_FAVICON, StringPool.BLANK);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest();
-
-		_processServicePreAction(mockHttpServletRequest);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)mockHttpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Assert.assertEquals(_FAVICON_URL, themeDisplay.getFaviconURL());
+		_assertFaviconURL();
 	}
 
 	@Test
@@ -159,16 +141,7 @@ public class ClientExtensionServicePreActionTest {
 
 		_layoutLocalService.updateLayout(_layout);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest();
-
-		_processServicePreAction(mockHttpServletRequest);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)mockHttpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Assert.assertEquals(_FAVICON_URL, themeDisplay.getFaviconURL());
+		_assertFaviconURL();
 	}
 
 	private void _addClientExtensionEntry() throws Exception {
@@ -185,6 +158,19 @@ public class ClientExtensionServicePreActionTest {
 				).put(
 					"url", _FAVICON_URL
 				).buildString());
+	}
+
+	private void _assertFaviconURL() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest();
+
+		_processServicePreAction(mockHttpServletRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)mockHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Assert.assertEquals(_FAVICON_URL, themeDisplay.getFaviconURL());
 	}
 
 	private LifecycleAction _getLifecycleAction() {

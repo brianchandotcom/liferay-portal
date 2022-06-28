@@ -86,14 +86,19 @@ public class WidgetLayoutStructureItemImporter
 			return fragmentStyledLayoutStructureItem;
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147511")) &&
-			definitionMap.containsKey("cssClasses")) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147511"))) {
+			if (definitionMap.containsKey("cssClasses")) {
+				List<String> cssClasses = (List<String>)definitionMap.get(
+					"cssClasses");
 
-			List<String> cssClasses = (List<String>)definitionMap.get(
-				"cssClasses");
+				fragmentStyledLayoutStructureItem.setCssClasses(
+					new HashSet<>(cssClasses));
+			}
 
-			fragmentStyledLayoutStructureItem.setCssClasses(
-				new HashSet<>(cssClasses));
+			if (definitionMap.containsKey("customCSS")) {
+				fragmentStyledLayoutStructureItem.setCustomCSS(
+					String.valueOf(definitionMap.get("customCSS")));
+			}
 		}
 
 		Map<String, Object> fragmentStyleMap =

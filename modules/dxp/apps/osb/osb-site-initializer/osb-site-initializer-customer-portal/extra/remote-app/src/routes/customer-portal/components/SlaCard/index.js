@@ -9,26 +9,68 @@
  * distribution rights of the Software.
  */
 
+import classNames from 'classnames';
 import i18n from '../../../../common/I18n';
-import CardWithSla from './components/CardWithSla';
-import CardWithoutSla from './components/CardWithoutSla';
+import SlaCardLayout from './components/SlaCardLayout';
+import SwitchSlaCardsButton from './components/SwitchSlaCardButton';
 import useGetSlaData from './hooks/useGetSlaData';
+import useSwitchSlaCards from './hooks/useSwitchSlaCards';
 
 const SlaCard = ({project}) => {
-	const {setSlaSelected, slaData, slaSelected} = useGetSlaData(project);
+	const {memoizedSlaCards} = useGetSlaData(project);
+	const {currentSlaCardPosition, handleSlaCardClick} = useSwitchSlaCards(
+		memoizedSlaCards
+	);
 
 	return (
 		<div className="cp-sla-container position-absolute">
 			<h5 className="mb-4">{i18n.translate('support-level')}</h5>
 
-			{slaData?.length ? (
-				<CardWithSla
-					setSlaSelected={setSlaSelected}
-					slaData={slaData}
-					slaSelected={slaSelected}
-				/>
+			{memoizedSlaCards?.length ? (
+				<div>
+					<div
+						className={classNames({
+							'ml-2': memoizedSlaCards.length > 1,
+						})}
+					>
+						<div
+							className={classNames(
+								'align-items-center d-flex cp-sla-card-holder',
+								{
+									'cp-sla-multiple-card ml-2':
+										memoizedSlaCards.length > 1,
+								}
+							)}
+						>
+							{memoizedSlaCards.map((sla, index) => (
+								<SlaCardLayout
+									key={sla.title}
+									slaDateEnd={sla.endDate}
+									slaDateStart={sla.startDate}
+									slaLabel={sla.label}
+									slaSelected={
+										currentSlaCardPosition === index
+									}
+									slaTitle={sla.title}
+								/>
+							))}
+						</div>
+					</div>
+
+					{memoizedSlaCards.length > 1 && (
+						<SwitchSlaCardsButton
+							handleSlaCardClick={handleSlaCardClick}
+						/>
+					)}
+				</div>
 			) : (
-				<CardWithoutSla />
+				<div className="bg-neutral-1 cp-n-sla-card rounded-lg">
+					<p className="px-3 py-2 text-neutral-7 text-paragraph-sm">
+						{i18n.translate(
+							"the-project's-support-level-is-displayed-here-for-projects-with-ticketing-support"
+						)}
+					</p>
+				</div>
 			)}
 		</div>
 	);

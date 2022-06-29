@@ -78,10 +78,6 @@ definition {
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
-			Click(
-				key_text = "Change Favicon",
-				locator1 = "Button#ANY");
-
 			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
 
 			AssertTextEquals(
@@ -132,10 +128,6 @@ definition {
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
-			Click(
-				key_text = "Change Favicon",
-				locator1 = "Button#ANY");
-
 			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
 
 			AssertTextEquals(
@@ -169,10 +161,6 @@ definition {
 				faviconName = "Favicon from Theme",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
-
-			Click(
-				key_text = "Change Favicon",
-				locator1 = "Button#ANY");
 
 			PagesAdmin.selectFaviconExtension(extensionName = "NBA Favicon");
 

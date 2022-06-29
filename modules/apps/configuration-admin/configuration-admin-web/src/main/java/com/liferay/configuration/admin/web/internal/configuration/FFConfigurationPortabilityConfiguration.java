@@ -33,7 +33,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface FFConfigurationPortabilityConfiguration {
 
 	@Meta.AD(
-		deflt = "false",
+		deflt = "true",
 		description = "configuration-portability-enabled-description",
 		required = false
 	)

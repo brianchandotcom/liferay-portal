@@ -260,6 +260,7 @@ public class LayoutGetFaviconURLTest {
 
 		themeDisplay.setRequest(mockHttpServletRequest);
 		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);

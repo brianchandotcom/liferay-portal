@@ -74,8 +74,8 @@ public class Log4jLogFactoryImpl implements LogFactory {
 	}
 
 	private static final Class<?>[] _BASE_UPGRADE_CLASSES = {
-		BaseDBProcess.class, BaseUpgradeCallable.class, LoggingTimer.class,
-		BaseDB.class
+		BaseDB.class, BaseDBProcess.class, BaseUpgradeCallable.class,
+		LoggingTimer.class
 	};
 
 	private static final Class<?>[] _STATIC_UPGRADE_CLASSES = {

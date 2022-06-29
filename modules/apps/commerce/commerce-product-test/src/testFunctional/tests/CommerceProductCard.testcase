@@ -1145,20 +1145,43 @@ definition {
 			locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
 	}
 
-	@description = "COMMERCE-5868. As a buyer, I want to be able to compare a product with other ones in a product comparison items list, by checking the product via checkbox"
+	@description = "COMMERCE-5868. Verify buyers can compare products by selecting which products to compare from the catalog product cards."
 	@priority = "3"
 	test CompareProductFromProductCard {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		Check.checkToggleSwitch(
-			key_productName = "U-Joint",
-			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+		task ("When the buyer clicks on the check box for multiple product cards") {
+			User.logoutPG();
 
-		AssertElementPresent(
-			key_value = "0",
-			locator1 = "CommerceEntry#MINI_COMPARE_ITEM_ACTIVE");
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.compareProducts(
+				clickCompare = "false",
+				products = "U-Joint,Mount");
+		}
+
+		task ("Then the products are added to the mini compare") {
+			FrontStore.assertMiniCompareItems(products = "U-Joint,Mount");
+		}
 	}
 
 	@description = "COMMERCE-5869. As a buyer, I want to be able to remove a product from a product comparison items list, by unchecking the product via checkbox"

@@ -30,20 +30,24 @@ definition {
 	test AddSiteTemplate {
 		property portal.acceptance = "true";
 
-		SiteTemplates.addCP(
-			siteTemplateActive = "Yes",
-			siteTemplateName = "Site Template Name");
+		task ("When: User adds new site template") {
+			SiteTemplates.addCP(
+				siteTemplateActive = "Yes",
+				siteTemplateName = "Site Template Name");
 
-		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+			SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		task ("Then: User can add a new site based on the previously created site template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		Site.addSiteTemplateCP(
-			siteName = "Site Name",
-			siteTemplateName = "Site Template Name");
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name");
+		}
 	}
 
 	@description = "User can create site based on templates and changes made on the parent template will apply to the child site by default."
@@ -53,63 +57,75 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template and a new site based on this site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		Site.openSitesAdmin();
+			Site.openSitesAdmin();
 
-		Site.addCP(
-			siteName = "Site Template Site Name",
-			siteTemplateName = "Site Template Name",
-			siteType = "Site Template");
+			Site.addCP(
+				siteName = "Site Template Site Name",
+				siteTemplateName = "Site Template Name",
+				siteType = "Site Template");
 
-		Navigator.openSiteURL(siteName = "Site Template Site Name");
+			Navigator.openSiteURL(siteName = "Site Template Site Name");
 
-		Portlet.viewNoPortletsPresentPG();
-
-		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "Home",
-			siteName = "${siteName}",
-			siteTemplateName = "Site Template Name");
-
-		ContentPages.gotoPageEditor();
-
-		PageEditor.addWidget(portletName = "Asset Publisher");
-
-		PageEditor.publish();
-
-		Navigator.openSiteURL(siteName = "Site Template Site Name");
-
-		if (IsElementNotPresent(locator1 = "Portlet#PORTLET_CONTENT")) {
-			Refresh();
+			Portlet.viewNoPortletsPresentPG();
 		}
 
-		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+		task ("When: User add a widget to the Site template") {
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Home",
+				siteName = "${siteName}",
+				siteTemplateName = "Site Template Name");
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+
+			PageEditor.publish();
+		}
+
+		task ("Then: The widget will be visible on the new site too") {
+			Navigator.openSiteURL(siteName = "Site Template Site Name");
+
+			if (IsElementNotPresent(locator1 = "Portlet#PORTLET_CONTENT")) {
+				Refresh();
+			}
+
+			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+		}
 	}
 
-	@description = "User can withdraw site administrator's right to modificaton of pages on a site template."
+	@description = "User can withdraw site administrator's right to modificate of pages on a site template."
 	@priority = "4"
 	test AddSiteTemplateDisablePageModification {
 		property portal.acceptance = "true";
 
-		SiteTemplates.addCP(
-			disableChanges = "true",
-			siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template with disallowing site admin's right to modificate pages") {
+			SiteTemplates.addCP(
+				disableChanges = "true",
+				siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		task ("When: User adds a new site based on this site template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		Site.addCP(
-			siteName = "Site Template Site Name",
-			siteTemplateName = "Site Template Name",
-			siteType = "Site Template");
+			Site.addCP(
+				siteName = "Site Template Site Name",
+				siteTemplateName = "Site Template Name",
+				siteType = "Site Template");
+		}
 
-		Navigator.openSiteURL(siteName = "Site Template Site Name");
+		task ("Then: User is unable to add new elements as there is no 'Add' button on the new site") {
+			Navigator.openSiteURL(siteName = "Site Template Site Name");
 
-		Page.viewPageLockCheck();
+			Page.viewPageLockCheck();
 
-		AssertElementNotPresent(locator1 = "ControlMenu#ADD");
+			AssertElementNotPresent(locator1 = "ControlMenu#ADD");
+		}
 	}
 
 	@description = "This is a use case for LPS-121137. Admin can enable and disable the porpagation of site template changes on site templates admin page."
@@ -119,121 +135,143 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		SiteTemplates.addCP(
-			disablePropagation = "true",
-			siteTemplateName = "Site Template Name");
+		task ("Given: User adds a new site template with disabled propagation") {
+			SiteTemplates.addCP(
+				disablePropagation = "true",
+				siteTemplateName = "Site Template Name");
+		}
 
-		Site.openSitesAdmin();
+		task ("And: Adds a new site based on the site template and an Asset Publisher widget to it") {
+			Site.openSitesAdmin();
 
-		Site.addSiteTemplateCP(
-			siteName = "Site Name",
-			siteTemplateName = "Site Template Name");
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name");
 
-		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "Home",
-			siteName = "${siteName}",
-			siteTemplateName = "Site Template Name");
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Home",
+				siteName = "${siteName}",
+				siteTemplateName = "Site Template Name");
 
-		ContentPages.gotoPageEditor();
+			ContentPages.gotoPageEditor();
 
-		PageEditor.addWidget(portletName = "Asset Publisher");
+			PageEditor.addWidget(portletName = "Asset Publisher");
 
-		PageEditor.publish();
+			PageEditor.publish();
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("When: That widget is not present without propagation on the site") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		Refresh();
+			Refresh();
 
-		Portlet.viewNoPortletsPresentPG();
+			Portlet.viewNoPortletsPresentPG();
+		}
 
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+		task ("And: Propagation is enabled") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
-		SiteTemplates.enablePropagation(siteTemplateName = "Site Template Name");
+			SiteTemplates.enablePropagation(siteTemplateName = "Site Template Name");
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("Then: The widget will appear on the site") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		Refresh();
+			Refresh();
 
-		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+		}
 
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+		task ("When: User disables propagation again and add a new widget on the template ") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
-		SiteTemplates.disablePropagation(siteTemplateName = "Site Template Name");
+			SiteTemplates.disablePropagation(siteTemplateName = "Site Template Name");
 
-		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "Home",
-			siteName = "${siteName}",
-			siteTemplateName = "Site Template Name");
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Home",
+				siteName = "${siteName}",
+				siteTemplateName = "Site Template Name");
 
-		ContentPages.gotoPageEditor();
+			ContentPages.gotoPageEditor();
 
-		PageEditor.addWidget(
-			portletName = "Blogs",
-			targetFragmentName = "Asset Publisher");
+			PageEditor.addWidget(
+				portletName = "Blogs",
+				targetFragmentName = "Asset Publisher");
 
-		PageEditor.publish();
+			PageEditor.publish();
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("Then: The widget will not be visible on the site") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		Refresh();
+			Refresh();
 
-		AssertElementNotPresent(
-			key_portletName = "Blogs",
-			locator1 = "Portlet#SPECIFIC_FRAGMENTS_AND_WIDGETS");
+			AssertElementNotPresent(
+				key_portletName = "Blogs",
+				locator1 = "Portlet#SPECIFIC_FRAGMENTS_AND_WIDGETS");
+		}
 	}
 
 	@description = "This is a use case for 118486. User should not be able to create child pages for pages derived from site templates."
 	@priority = "3"
 	test AssertNoChildPageOptionForPageDerivedFromSiteTemplate {
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template and a new site based on this site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		Site.addSiteTemplateCP(
-			siteName = "Site Name",
-			siteTemplateName = "Site Template Name");
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name");
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("When: User adds a new page to the site") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		PagesAdmin.addPage(pageName = "Test Page");
+			PagesAdmin.addPage(pageName = "Test Page");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		task ("Then: User shouldn't be able to create child page for the Home page ") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		MouseOver(
-			key_itemName = "Home",
-			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
+			MouseOver(
+				key_itemName = "Home",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
-		AssertElementNotPresent(
-			key_pageName = "Home",
-			locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
+			AssertElementNotPresent(
+				key_pageName = "Home",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
 
-		Click(
-			key_itemName = "Home",
-			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
+			Click(
+				key_itemName = "Home",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
-		AssertElementNotPresent(locator1 = "Button#NEW");
+			AssertElementNotPresent(locator1 = "Button#NEW");
+		}
 
-		Click(
-			key_itemName = "Test Page",
-			locator1 = "PagesAdmin#LIST_GROUP_ITEM");
+		task ("And: But should be able to add child page to Test Page") {
+			Click(
+				key_itemName = "Test Page",
+				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
 
-		Click(locator1 = "Button#NEW");
+			Click(locator1 = "Button#NEW");
 
-		AssertElementPresent(
-			key_menuItem = "Add Child Page of Test Page",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
+			AssertElementPresent(
+				key_menuItem = "Add Child Page of Test Page",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
 	}
 
-	@description = "This is a use case for LPS-121139. User is able to propagate pages only on site templates and in this situation only the corresponding page's SQL value will be updated. "
+	@description = "This is a use case for LPS-121139. User is able to propagate pages separately on site templates and in this situation only the corresponding page's SQL value will be updated. "
 	@priority = "4"
 	test AssertPartialSiteTemplatePropagation {
 		property database.types = "mysql";
@@ -241,172 +279,204 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template, a widget page and a portlet to it") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		SiteTemplates.addSitePageViaSiteTemplateCP(
-			pageName = "Widget Page Name",
-			siteTemplateName = "Site Template Name");
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Widget Page Name",
+				siteTemplateName = "Site Template Name");
 
-		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "Widget Page Name",
-			siteName = "${siteName}",
-			siteTemplateName = "Site Template Name");
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Widget Page Name",
+				siteName = "${siteName}",
+				siteTemplateName = "Site Template Name");
 
-		Portlet.addPG(portletName = "Asset Publisher");
+			Portlet.addPG(portletName = "Asset Publisher");
 
-		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
-
-		Site.openSitesAdmin();
-
-		Site.addCP(
-			siteName = "Site Name",
-			siteTemplateName = "Site Template Name",
-			siteType = "Site Template");
-
-		var homePageModificationDate1 = SiteTemplates.getPageModificationDate(
-			groupName = "Site Name",
-			pageNameFilter = "%Home%");
-		var widgetPageModificationDate1 = SiteTemplates.getPageModificationDate(
-			groupName = "Site Name",
-			pageNameFilter = "%Widget Page Name%");
-
-		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "Widget Page Name",
-			siteName = "${siteName}",
-			siteTemplateName = "Site Template Name");
-
-		Portlet.addPG(portletName = "Web Content Display");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Refresh();
-
-		Navigator.gotoSitePage(
-			pageName = "Widget Page Name",
-			siteName = "Site Name");
-
-		Refresh();
-
-		Alert.viewInfoMessageSpecific(infoMessage = "This application is not visible to users yet");
-
-		var homePageModificationDate2 = SiteTemplates.getPageModificationDate(
-			groupName = "Site Name",
-			pageNameFilter = "%Home%");
-		var widgetPageModificationDate2 = SiteTemplates.getPageModificationDate(
-			groupName = "Site Name",
-			pageNameFilter = "%Widget Page Name%");
-
-		if ("${widgetPageModificationDate2}" != "${widgetPageModificationDate1}") {
-			echo("The modification date of widget page is updated.");
+			Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
 		}
 
-		if ("${homePageModificationDate2}" != "${homePageModificationDate1}") {
-			fail("The modification date of home page should not be updated.");
+		task ("And: Adds a new site based on the template") {
+			Site.openSitesAdmin();
+
+			Site.addCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name",
+				siteType = "Site Template");
+
+			var homePageModificationDate1 = SiteTemplates.getPageModificationDate(
+				groupName = "Site Name",
+				pageNameFilter = "%Home%");
+			var widgetPageModificationDate1 = SiteTemplates.getPageModificationDate(
+				groupName = "Site Name",
+				pageNameFilter = "%Widget Page Name%");
 		}
 
-		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "Home",
-			siteName = "${siteName}",
-			siteTemplateName = "Site Template Name");
+		task ("And: Adds a portlet on the widget page of the site template") {
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Widget Page Name",
+				siteName = "${siteName}",
+				siteTemplateName = "Site Template Name");
 
-		ContentPages.gotoPageEditor();
-
-		PageEditor.addWidget(portletName = "Asset Publisher");
-
-		PageEditor.publish();
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Refresh();
-
-		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
-
-		Navigator.gotoSitePage(
-			pageName = "Widget Page Name",
-			siteName = "Site Name");
-
-		Refresh();
-
-		var homePageModificationDate3 = SiteTemplates.getPageModificationDate(
-			groupName = "Site Name",
-			pageNameFilter = "%Home%");
-		var widgetPageModificationDate3 = SiteTemplates.getPageModificationDate(
-			groupName = "Site Name",
-			pageNameFilter = "%Widget Page Name%");
-
-		if ("${widgetPageModificationDate3}" != "${widgetPageModificationDate2}") {
-			fail("The modification date of widget page should not be updated.");
+			Portlet.addPG(portletName = "Web Content Display");
 		}
 
-		if ("${homePageModificationDate3}" != "${homePageModificationDate1}") {
-			echo("The modification date of home page is updated.");
+		task ("When: The portlet is visible on the widget page of the site too") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			Refresh();
+
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Site Name");
+
+			Refresh();
+
+			Alert.viewInfoMessageSpecific(infoMessage = "This application is not visible to users yet");
+		}
+
+		task ("Then: The modification date of the widget page will be updated while the date of the home page will stay the same") {
+			var homePageModificationDate2 = SiteTemplates.getPageModificationDate(
+				groupName = "Site Name",
+				pageNameFilter = "%Home%");
+			var widgetPageModificationDate2 = SiteTemplates.getPageModificationDate(
+				groupName = "Site Name",
+				pageNameFilter = "%Widget Page Name%");
+
+			if ("${widgetPageModificationDate2}" != "${widgetPageModificationDate1}") {
+				echo("The modification date of widget page is updated.");
+			}
+
+			if ("${homePageModificationDate2}" != "${homePageModificationDate1}") {
+				fail("The modification date of home page should not be updated.");
+			}
+		}
+
+		task ("When: User adds a portlet to the home page of the template") {
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Home",
+				siteName = "${siteName}",
+				siteTemplateName = "Site Template Name");
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+
+			PageEditor.publish();
+		}
+
+		task ("And: The portlet is visible on the home page of the site") {
+			Navigator.openSiteURL(siteName = "Site Name");
+
+			Refresh();
+
+			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+		}
+
+		task ("Then: The modification date of the home page will be updated while the date of the widget page will stay the same") {
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Site Name");
+
+			Refresh();
+
+			var homePageModificationDate3 = SiteTemplates.getPageModificationDate(
+				groupName = "Site Name",
+				pageNameFilter = "%Home%");
+			var widgetPageModificationDate3 = SiteTemplates.getPageModificationDate(
+				groupName = "Site Name",
+				pageNameFilter = "%Widget Page Name%");
+
+			if ("${widgetPageModificationDate3}" != "${widgetPageModificationDate2}") {
+				fail("The modification date of widget page should not be updated.");
+			}
+
+			if ("${homePageModificationDate3}" != "${homePageModificationDate1}") {
+				echo("The modification date of home page is updated.");
+			}
 		}
 	}
 
-	@description = "This is a use case for LPS-131903 and LPS-132256 - Verify that users can not attempt to edit pages when disable changes."
+	@description = "This is a use case for LPS-131903 and LPS-132256. Verify that users can not attempt to edit pages when disable changes."
 	@priority = "3"
 	test CannotEditSiteLinkedToDisabledPageModificationSiteTemplate {
 		property portal.acceptance = "true";
 
-		SiteTemplates.addCP(
-			disableChanges = "true",
-			siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template with disallowing site admin's right to modificate pages") {
+			SiteTemplates.addCP(
+				disableChanges = "true",
+				siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		task ("When: Adds a site based on this site template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		Site.addCP(
-			siteName = "Site Template Site Name",
-			siteTemplateName = "Site Template Name",
-			siteType = "Site Template");
+			Site.addCP(
+				siteName = "Site Template Site Name",
+				siteTemplateName = "Site Template Name",
+				siteType = "Site Template");
+		}
 
-		Navigator.openSiteURL(siteName = "Site Template Site Name");
+		task ("Then: User is not able to edit the site or to view Permissions menu") {
+			Navigator.openSiteURL(siteName = "Site Template Site Name");
 
-		Page.viewPageLockCheck();
+			Page.viewPageLockCheck();
 
-		AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
+			AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
 
-		MouseOver(
-			key_pageName = "Home",
-			locator1 = "Home#PAGE");
+			MouseOver(
+				key_pageName = "Home",
+				locator1 = "Home#PAGE");
 
-		AssertElementNotPresent(locator1 = "Portlet#OPTIONS_ICON");
+			AssertElementNotPresent(locator1 = "Portlet#OPTIONS_ICON");
 
-		MenuItem.viewNotPresent(menuItem = "Permissions");
+			MenuItem.viewNotPresent(menuItem = "Permissions");
+		}
 	}
 
 	@description = "This is a use case for LPS-84497. User can deactivate then activate later a site template."
 	@priority = "3"
 	test DeactivateActivateSiteTemplate {
-		SiteTemplates.addCP(
-			siteTemplateActive = "Yes",
-			siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template ") {
+			SiteTemplates.addCP(
+				siteTemplateActive = "Yes",
+				siteTemplateName = "Site Template Name");
 
-		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+			SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		task ("When: User disables the site template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Site Templates");
 
-		SiteTemplates.deactivateCP(siteTemplateName = "Site Template Name");
+			SiteTemplates.deactivateCP(siteTemplateName = "Site Template Name");
+		}
 
-		SiteTemplates.viewTemplateStatusCP(
-			siteTemplateActiveEdit = "No",
-			siteTemplateName = "Site Template Name");
+		task ("Then: The site template will have deactivated status") {
+			SiteTemplates.viewTemplateStatusCP(
+				siteTemplateActiveEdit = "No",
+				siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		task ("When: User enables the site template again") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Site Templates");
 
-		SiteTemplates.activateCP(siteTemplateName = "Site Template Name");
+			SiteTemplates.activateCP(siteTemplateName = "Site Template Name");
+		}
 
-		SiteTemplates.viewTemplateStatusCP(
-			siteTemplateActiveEdit = "Yes",
-			siteTemplateName = "Site Template Name");
+		task ("Then: The site template will have activated status") {
+			SiteTemplates.viewTemplateStatusCP(
+				siteTemplateActiveEdit = "Yes",
+				siteTemplateName = "Site Template Name");
+		}
 	}
 
 	@description = "This is a use case for LPS-87081. User can delete site template both from it's hamburger menu and from the list of the site template admin page."
@@ -414,31 +484,43 @@ definition {
 	test DeleteSiteTemplate {
 		property portal.acceptance = "true";
 
-		SiteTemplates.addCP(
-			siteTemplateActive = "Yes",
-			siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template ") {
+			SiteTemplates.addCP(
+				siteTemplateActive = "Yes",
+				siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		task ("When: User deletes the new site template from it's hamburger menu") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Site Templates");
 
-		SiteTemplates.deleteCP(siteTemplateName = "Site Template Name");
+			SiteTemplates.deleteCP(siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		task ("Then: Site template will not be visible on the list ") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Site Templates");
 
-		SiteTemplates.viewNoTemplatesDisplay(siteTemplateName = "Site Template Name");
+			SiteTemplates.viewNoTemplatesDisplay(siteTemplateName = "Site Template Name");
+		}
 
-		SiteTemplates.addCP(
-			siteTemplateActive = "Yes",
-			siteTemplateName = "Site Template Name");
+		task ("When: User adds new site template") {
+			SiteTemplates.addCP(
+				siteTemplateActive = "Yes",
+				siteTemplateName = "Site Template Name");
+		}
 
-		SiteTemplates.deleteViaDeleteIconCP(siteTemplateName = "Site Template Name");
+		task ("And: Deletes the new site template on the site template admin page") {
+			SiteTemplates.deleteViaDeleteIconCP(siteTemplateName = "Site Template Name");
+		}
 
-		SiteTemplates.viewNoTemplatesDisplay(siteTemplateName = "Site Template Name");
+		task ("Then: Site template will not be visible on the list ") {
+			SiteTemplates.viewNoTemplatesDisplay(siteTemplateName = "Site Template Name");
+		}
 	}
 
 	@description = "User is not able to delete sites templates which are associated to existing sites."
@@ -446,34 +528,40 @@ definition {
 	test DeleteSiteTemplateAssociatedWithASite {
 		property portal.acceptance = "true";
 
-		SiteTemplates.addCP(
-			siteTemplateActive = "Yes",
-			siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template and a new site based on this site template") {
+			SiteTemplates.addCP(
+				siteTemplateActive = "Yes",
+				siteTemplateName = "Site Template Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		Site.addSiteTemplateCP(
-			siteName = "Site Name",
-			siteTemplateName = "Site Template Name");
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		task ("When: User tries to delete the Site template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Site Templates");
 
-		SiteTemplates.deleteCP(
-			associatedToSite = "true",
-			siteTemplateName = "Site Template Name");
+			SiteTemplates.deleteCP(
+				associatedToSite = "true",
+				siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		task ("Then: The deletion is unsuccessful and the site template is still present") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Site Templates");
 
-		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+			SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+		}
 	}
 
 	@description = "This is a use case for LPS-98548. User can import site templates to virtual instances and delete them."
@@ -481,45 +569,59 @@ definition {
 	test DeleteSiteTemplateImportedToVirtualInstance {
 		property test.name.skip.portal.instance = "CPSitetemplates#DeleteSiteTemplateImportedToVirtualInstance";
 
-		SiteTemplates.addCP(
-			siteTemplateActive = "Yes",
-			siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template and a new site based on this site template") {
+			SiteTemplates.addCP(
+				siteTemplateActive = "Yes",
+				siteTemplateName = "Site Template Name");
 
-		Site.openSitesAdmin();
+			Site.openSitesAdmin();
 
-		Site.addSiteTemplateCP(
-			siteName = "Site Name",
-			siteTemplateName = "Site Template Name");
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name");
+		}
 
-		SiteTemplatesNavigator.openSiteTemplatesAdmin();
+		task ("When: User export the site templates") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin();
 
-		LAR.exportPortlet(
-			larFileName = "site-template-name.lar",
-			portletName = "Site Templates");
+			LAR.exportPortlet(
+				larFileName = "site-template-name.lar",
+				portletName = "Site Templates");
+		}
 
-		PortalInstances.openVirtualInstancesAdmin();
+		task ("And: Adds a new virtual instance") {
+			PortalInstances.openVirtualInstancesAdmin();
 
-		PortalInstances.addCP(
-			mailDomain = "www.able.com",
-			virtualHost = "www.able.com",
-			webId = "www.able.com");
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+		}
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+		task ("And: Import the site template lar file on the virtual instance") {
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
 
-		SiteTemplatesNavigator.openSiteTemplatesAdmin(baseURL = "http://www.able.com:8080");
+			SiteTemplatesNavigator.openSiteTemplatesAdmin(baseURL = "http://www.able.com:8080");
 
-		LAR.importPortlet(larFileName = "site-template-name.lar");
+			LAR.importPortlet(larFileName = "site-template-name.lar");
+		}
 
-		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+		task ("Then: The site template from the lar file are visible") {
+			SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+		}
 
-		SiteTemplatesNavigator.openSiteTemplatesAdmin(baseURL = "http://www.able.com:8080");
+		task ("When: User deletes the site template on the virtual instance") {
+			SiteTemplatesNavigator.openSiteTemplatesAdmin(baseURL = "http://www.able.com:8080");
 
-		SiteTemplates.deleteCP(siteTemplateName = "Site Template Name");
+			SiteTemplates.deleteCP(siteTemplateName = "Site Template Name");
+		}
 
-		SiteTemplates.viewNoTemplatesDisplay(siteTemplateName = "Site Template Name");
+		task ("Then: The site template will not be visible on the list") {
+			SiteTemplates.viewNoTemplatesDisplay(siteTemplateName = "Site Template Name");
+		}
 	}
 
 	@description = "User can edit an existing site template."	
@@ -527,31 +629,37 @@ definition {
 	test EditSiteTemplate {
 		property portal.acceptance = "true";
 
-		SiteTemplates.addCP(
-			siteTemplateActive = "Yes",
-			siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template") {
+			SiteTemplates.addCP(
+				siteTemplateActive = "Yes",
+				siteTemplateName = "Site Template Name");
 
-		SiteTemplates.viewCP(
-			siteTemplateDescription = "This is a site template description",
-			siteTemplateName = "Site Template Name");
+			SiteTemplates.viewCP(
+				siteTemplateDescription = "This is a site template description",
+				siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		task ("When: User changes the description of the site template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Site Templates");
 
-		SiteTemplates.editCP(
-			siteTemplateDescription = "Site Template Description Edit",
-			siteTemplateName = "Site Template Name");
+			SiteTemplates.editCP(
+				siteTemplateDescription = "Site Template Description Edit",
+				siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		task ("Then: The site template's description will change accordingly if we open the site template admin page") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Site Templates");
 
-		SiteTemplates.viewCP(
-			siteTemplateDescription = "Site Template Description Edit",
-			siteTemplateName = "Site Template Name Edit");
+			SiteTemplates.viewCP(
+				siteTemplateDescription = "Site Template Description Edit",
+				siteTemplateName = "Site Template Name Edit");
+		}
 	}
 
 	@description = "User can edit the status of an existing site template."
@@ -559,36 +667,42 @@ definition {
 	test EditSiteTemplateStatus {
 		property portal.acceptance = "true";
 
-		SiteTemplates.addCP(
-			siteTemplateActive = "Yes",
-			siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template and a new site based on this site template") {
+			SiteTemplates.addCP(
+				siteTemplateActive = "Yes",
+				siteTemplateName = "Site Template Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		Site.addSiteTemplateCP(
-			siteName = "Site Name",
-			siteTemplateName = "Site Template Name");
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		task ("When: User disables the site template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Site Templates");
 
-		SiteTemplates.editTemplateStatusCP(
-			siteTemplateActiveEdit = "No",
-			siteTemplateName = "Site Template Name");
+			SiteTemplates.editTemplateStatusCP(
+				siteTemplateActiveEdit = "No",
+				siteTemplateName = "Site Template Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		task ("Then: The site template will have deactivated status") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Site Templates");
 
-		SiteTemplates.viewTemplateStatusCP(
-			siteTemplateActiveEdit = "No",
-			siteTemplateName = "Site Template Name");
+			SiteTemplates.viewTemplateStatusCP(
+				siteTemplateActiveEdit = "No",
+				siteTemplateName = "Site Template Name");
+		}
 	}
 
 	@description = "Information on site template admin page should be localized corresponding to the chosen language."
@@ -596,47 +710,57 @@ definition {
 	test LocalizeSiteTemplatesAdmin {
 		property test.name.skip.portal.instance = "CPSitetemplates#LocalizeSiteTemplatesAdmin";
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site ") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+			SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+		}
 
-		Navigator.gotoAccountSettings();
+		task ("When: User changes the language of the portal to Spanish") {
+			Navigator.gotoAccountSettings();
 
-		MyAccount.changeUserLanguage(
-			languageName = "español (España)",
-			saveButton = "Save",
-			successMessage = "Su petición ha terminado con éxito.");
+			MyAccount.changeUserLanguage(
+				languageName = "español (España)",
+				saveButton = "Save",
+				successMessage = "Su petición ha terminado con éxito.");
 
-		Navigator.openURL();
+			Navigator.openURL();
 
-		ProductMenuHelper.closeProductMenu();
+			ProductMenuHelper.closeProductMenu();
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sitios Web",
-			panel = "Panel de control",
-			portlet = "Plantillas de sitio web");
+		task ("Then: Site template admin page will be localized accordingly") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sitios Web",
+				panel = "Panel de control",
+				portlet = "Plantillas de sitio web");
 
-		SiteTemplates.viewDataLocalizedCP(siteTemplateNameList = "Site Template Name");
+			SiteTemplates.viewDataLocalizedCP(siteTemplateNameList = "Site Template Name");
+		}
 
-		Navigator.openURL();
+		task ("When: User changes the language of the portal back to English") {
+			Navigator.openURL();
 
-		UserBar.gotoDropdownItem(dropdownItem = "Mi cuenta");
+			UserBar.gotoDropdownItem(dropdownItem = "Mi cuenta");
 
-		MyAccount.changeUserLanguage(
-			languageName = "English (United States)",
-			saveButton = "Guardar",
-			successMessage = "Your request completed successfully.");
+			MyAccount.changeUserLanguage(
+				languageName = "English (United States)",
+				saveButton = "Guardar",
+				successMessage = "Your request completed successfully.");
 
-		Navigator.openURL();
+			Navigator.openURL();
 
-		ProductMenuHelper.closeProductMenu();
+			ProductMenuHelper.closeProductMenu();
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Site Templates");
+		task ("Then: Site template admin page will be localized accordingly") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Site Templates");
 
-		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+			SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
+		}
 	}
 
 	@description = "Sites created from templates should only be editable by connecting users with admin rights."
@@ -644,54 +768,64 @@ definition {
 	test OnlySiteAdminCanModifyPageAssociatedWithSiteTemplate {
 		property portal.acceptance = "true";
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template and a new site based on this site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		Site.addCP(
-			siteName = "Site Template Site Name",
-			siteTemplateName = "Site Template Name",
-			siteType = "Site Template");
+			Site.addCP(
+				siteName = "Site Template Site Name",
+				siteTemplateName = "Site Template Name",
+				siteType = "Site Template");
+		}
 
-		Navigator.openSiteURL(siteName = "Site Template Site Name");
+		task ("And: User has the right to edit the site") {
+			Navigator.openSiteURL(siteName = "Site Template Site Name");
 
-		AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("And: User adds a new user (usersn) and adds him the the site") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+			User.editPasswordCP(
+				userEmailAddress = "userea@liferay.com",
+				userScreenName = "usersn");
 
-		JSONUser.addUserToSite(
-			groupName = "Site Template Site Name",
-			userEmailAddress = "userea@liferay.com");
+			JSONUser.addUserToSite(
+				groupName = "Site Template Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.logoutPG();
+		task ("When: User logs in as the new user") {
+			User.logoutPG();
 
-		User.loginUserPG(userEmailAddress = "userea@liferay.com");
+			User.loginUserPG(userEmailAddress = "userea@liferay.com");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Home",
-			siteName = "Site Template Site Name");
+		task ("Then: The site is not ediatable as the new user does not have admin rights") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Template Site Name");
 
-		AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
+			AssertElementNotPresent(locator1 = "Icon#EDIT_PENCIL");
 
-		User.logoutPG();
+			User.logoutPG();
 
-		User.loginUserPG();
+			User.loginUserPG();
+		}
 	}
 
 	@description = "User can reset changes made on already existing portlets on sites which are based on site templates."
@@ -703,108 +837,132 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template and a page to it") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		SiteTemplates.addSitePageViaSiteTemplateCP(
-			pageName = "Site Page Name",
-			siteTemplateName = "Site Template Name");
+			SiteTemplates.addSitePageViaSiteTemplateCP(
+				pageName = "Site Page Name",
+				siteTemplateName = "Site Template Name");
+		}
 
-		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "Site Page Name",
-			siteName = "${siteName}",
-			siteTemplateName = "Site Template Name");
+		task ("And: Adds a portlet to the page then place it on the second column") {
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Site Page Name",
+				siteName = "${siteName}",
+				siteTemplateName = "Site Template Name");
 
-		Portlet.addPG(portletName = "Asset Publisher");
+			Portlet.addPG(portletName = "Asset Publisher");
 
-		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "Site Page Name",
-			siteName = "${siteName}",
-			siteTemplateName = "Site Template Name");
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Site Page Name",
+				siteName = "${siteName}",
+				siteTemplateName = "Site Template Name");
 
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "2",
-			portletName = "Asset Publisher");
+			Portlet.dragAndDropPortletToColumnPG(
+				columnNumberFrom = "1",
+				columnNumberTo = "2",
+				portletName = "Asset Publisher");
 
-		Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
+			Close.closeAndSelectWindow(locator1 = "Site Templates - ${siteName}");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		task ("And: Adds a site based on the site template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		Site.addSiteTemplateCP(
-			siteName = "Site Name",
-			siteTemplateName = "Site Template Name");
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
+		task ("When: User changes the position of the portlet to the first column on the new site") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page Name",
+				siteName = "Site Name");
 
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "2",
-			columnNumberTo = "1",
-			portletName = "Asset Publisher");
+			Portlet.dragAndDropPortletToColumnPG(
+				columnNumberFrom = "2",
+				columnNumberTo = "1",
+				portletName = "Asset Publisher");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
+		task ("Then: The reset button and information about change text is not present on the first column") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page Name",
+				siteName = "Site Name");
 
-		SiteTemplates.viewResetPageChanges(
-			columnNumberFrom = "1",
-			portletName = "Asset Publisher");
+			SiteTemplates.viewResetPageChanges(
+				columnNumberFrom = "1",
+				portletName = "Asset Publisher");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
+		task ("When: User changes the position of the portlet to the second column on the new site") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page Name",
+				siteName = "Site Name");
 
-		SiteTemplates.resetPageChanges(
-			columnNumberTo = "1",
-			portletName = "Asset Publisher");
+			SiteTemplates.resetPageChanges(
+				columnNumberTo = "1",
+				portletName = "Asset Publisher");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page Name",
-			siteName = "Site Name");
+		task ("Then: The reset button and information about change text is not present ") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page Name",
+				siteName = "Site Name");
+		}
 
-		SiteTemplates.viewResetPageChanges(
-			columnNumberFrom = "2",
-			portletName = "Asset Publisher");
+		task ("Then: The reset button and information about change text is not present on the second column") {
+			SiteTemplates.viewResetPageChanges(
+				columnNumberFrom = "2",
+				portletName = "Asset Publisher");
+		}
 	}
 
 	@description = "This is a use case for LPS-44550. XSS should not be possible through site template name field."
 	@priority = "4"
 	test SiteTemplateXSS {
-		SiteTemplates.addCP(
-			siteTemplateActive = "Yes",
-			siteTemplateName = '''<script>alert(123);</script>''');
+		task ("Given: User adds new site template with javascript in it's name") {
+			SiteTemplates.addCP(
+				siteTemplateActive = "Yes",
+				siteTemplateName = '''<script>alert(123);</script>''');
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		task ("And: Adds a new site based on the site template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		Site.addSiteTemplateCP(
-			siteName = "Site Name",
-			siteTemplateName = '''<script>alert(123);</script>''',
-			siteType = "Site Template",
-			uncheckPropagation = "true");
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = '''<script>alert(123);</script>''',
+				siteType = "Site Template",
+				uncheckPropagation = "true");
+		}
 
-		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+		task ("When: User opens the new site's page admin page") {
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-		Click(
-			key_itemName = "Pages",
-			locator1 = "ListGroupItem#ITEM_TEXT");
+			Click(
+				key_itemName = "Pages",
+				locator1 = "ListGroupItem#ITEM_TEXT");
 
-		Navigator.gotoNavTab(navTab = "Pages");
+			Navigator.gotoNavTab(navTab = "Pages");
+		}
 
-		AssertAlertNotPresent();
+		task ("Then: The javascript code will be escaped in the html source") {
+			AssertAlertNotPresent();
 
-		var actualScript = '''<script>alert(123);</script>''';
-		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+			var actualScript = '''<script>alert(123);</script>''';
+			var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
-		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+			AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
 
-		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+			AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+		}
 	}
 
 	@description = "This is a use case for LPS-124594 and LPS-129081. User can switch propagation status on site template sites with the propagation button."
@@ -812,47 +970,59 @@ definition {
 	test SwitchPropagationWithOneClickControl {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template and a new site based on this site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		Site.openSitesAdmin();
+			Site.openSitesAdmin();
 
-		Site.addSiteTemplateCP(
-			siteName = "Site Name",
-			siteTemplateName = "Site Template Name");
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name");
+		}
 
-		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "Home",
-			siteName = "${siteName}",
-			siteTemplateName = "Site Template Name");
+		task ("And: Disables propagation of the template") {
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Home",
+				siteName = "${siteName}",
+				siteTemplateName = "Site Template Name");
 
-		SiteTemplates.disablePropagationPG();
+			SiteTemplates.disablePropagationPG();
+		}
 
-		ContentPages.gotoPageEditor();
+		task ("When: User adds a portlet to the site template") {
+			ContentPages.gotoPageEditor();
 
-		PageEditor.addWidget(portletName = "Asset Publisher");
+			PageEditor.addWidget(portletName = "Asset Publisher");
 
-		PageEditor.publish();
+			PageEditor.publish();
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("Then: The portlet won't appear on the new site") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		Refresh();
+			Refresh();
 
-		Portlet.viewNoPortletsPresentPG();
+			Portlet.viewNoPortletsPresentPG();
+		}
 
-		SiteTemplatesNavigator.gotoSiteTemplatesPage(
-			pageName = "Home",
-			siteName = "${siteName}",
-			siteTemplateName = "Site Template Name");
+		task ("When: User enables propagation of the template") {
+			SiteTemplatesNavigator.gotoSiteTemplatesPage(
+				pageName = "Home",
+				siteName = "${siteName}",
+				siteTemplateName = "Site Template Name");
 
-		SiteTemplates.enablePropagationPG();
+			SiteTemplates.enablePropagationPG();
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("Then: The portlet will appear on the new site") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		Refresh();
+			Refresh();
 
-		AssertElementPresent(
-			key_portletName = "AssetPublisher",
-			locator1 = "Portlet#SPECIFIC_FRAGMENTS_AND_WIDGETS");
+			AssertElementPresent(
+				key_portletName = "AssetPublisher",
+				locator1 = "Portlet#SPECIFIC_FRAGMENTS_AND_WIDGETS");
+		}
 	}
 
 	@description = "This is a use case for LPS-133675. Javascript fields should be propagated on site templates."
@@ -860,32 +1030,42 @@ definition {
 	test ViewJavaScriptPropagateviaSiteTemplate {
 		var javascript = '''alert("alert!");''';
 
-		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		task ("Given: User adds new site template") {
+			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
+		}
 
-		SiteTemplates.gotoSettingsCP(siteTemplateName = "Site Template Name");
+		task ("When: User adds javascript code to the site") {
+			SiteTemplates.gotoSettingsCP(siteTemplateName = "Site Template Name");
 
-		SiteTemplates.AddSiteTemplateJavaScript(javaScript = "${javascript}");
+			SiteTemplates.AddSiteTemplateJavaScript(javaScript = "${javascript}");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		task ("Then: The script should be escaped in on the home page of th site template") {
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "View",
-			pageName = "Home");
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Home");
 
-		AssertConfirm(value1 = "alert!");
+			AssertConfirm(value1 = "alert!");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		task ("When: User adds a new site based on the site template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Sites",
+				panel = "Control Panel",
+				portlet = "Sites");
 
-		Site.addSiteTemplateCP(
-			siteName = "Site Name",
-			siteTemplateName = "Site Template Name");
+			Site.addSiteTemplateCP(
+				siteName = "Site Name",
+				siteTemplateName = "Site Template Name");
+		}
 
-		SiteTemplates.ViewSiteTemplateJavaScript(javaScript = "${javascript}");
+		task ("Then: The javascript will be inherited from the site template") {
+			SiteTemplates.ViewSiteTemplateJavaScript(javaScript = "${javascript}");
+		}
 	}
 
 }

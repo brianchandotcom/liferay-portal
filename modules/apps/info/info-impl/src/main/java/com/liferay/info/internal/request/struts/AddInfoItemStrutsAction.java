@@ -15,7 +15,6 @@
 package com.liferay.info.internal.request.struts;
 
 import com.liferay.captcha.util.CaptchaUtil;
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -220,6 +219,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 
 			if (((fragmentEntryLink != null) &&
+				 (fragmentEntryLink.isTypeInput()) &&
 				 _isCaptchaFragmentEntry(
 					 fragmentEntryLink.getFragmentEntryId(),
 					 fragmentEntryLink.getRendererKey())) ||
@@ -251,7 +251,6 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		}
 
 		if ((fragmentEntry == null) ||
-			(fragmentEntry.getType() != FragmentConstants.TYPE_INPUT) ||
 			Validator.isNull(fragmentEntry.getTypeOptions())) {
 
 			return false;

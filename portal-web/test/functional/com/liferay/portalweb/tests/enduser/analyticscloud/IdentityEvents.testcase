@@ -228,41 +228,12 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Form the date to convert to milliseconds") {
-			var currentDay = DateUtil.getCurrentDate();
-			var currentMonth = DateUtil.getCurrentMonth();
-			var currentYear = DateUtil.getCurrentYear();
-			var isLessThan9 = MathUtil.isLessThan("${currentDay}", "9");
-
-			if ("${currentDay}" == "1") {
-				var day = "28";
-
-				if ("${currentMonth}" == "1") {
-					var month = "12";
-					var year = ${currentYear} - 1;
-				}
-				else {
-					var month = ${currentMonth} - 1;
-				}
-			}
-			else {
-				var day = DateUtil.getDate("-1");
-				var month = "${currentMonth}";
-				var year = "${currentYear}";
-			}
+		task ("Get current time value in milliseconds from local storage") {
+			var currentMillisecondsValue = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
 		}
 
-		task ("Convert date to milliseconds") {
-			var millisecondsValue = ACUtils.convertDateToMilliseconds(
-				day = "${day}",
-				month = "${month}",
-				year = "${year}");
-		}
-
-		task ("Visit the AC Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+		task ("Returns current time value in milliseconds in 1 day") {
+			var millisecondsValue = ${currentMillisecondsValue} - 86400000;
 		}
 
 		task ("Change the local storage with the new value") {
@@ -326,41 +297,12 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Form the date to convert to milliseconds") {
-			var currentDay = DateUtil.getCurrentDate();
-			var currentMonth = DateUtil.getCurrentMonth();
-			var currentYear = DateUtil.getCurrentYear();
-			var isLessThan9 = MathUtil.isLessThan("${currentDay}", "9");
-
-			if ("${isLessThan9}" == "true") {
-				var day = "15";
-
-				if ("${currentMonth}" == "1") {
-					var month = "12";
-					var year = ${currentYear} - 1;
-				}
-				else {
-					var month = ${currentMonth} - 1;
-				}
-			}
-			else {
-				var day = DateUtil.getDate("-8");
-				var month = "${currentMonth}";
-				var year = "${currentYear}";
-			}
+		task ("Get current time value in milliseconds from local storage") {
+			var currentMillisecondsValue = ACUtils.getLocalStorageItem(keyName = "ac_client_identity_last_updated_date");
 		}
 
-		task ("Convert date to milliseconds") {
-			var millisecondsValue = ACUtils.convertDateToMilliseconds(
-				day = "${day}",
-				month = "${month}",
-				year = "${year}");
-		}
-
-		task ("Visit the AC Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
+		task ("Return current time value in milliseconds more than 7 days") {
+			var millisecondsValue = ${currentMillisecondsValue} - 691200000;
 		}
 
 		task ("Change the local storage with the new value") {

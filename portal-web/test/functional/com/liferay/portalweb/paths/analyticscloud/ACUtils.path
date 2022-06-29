@@ -161,14 +161,6 @@
 	<td></td>
 </tr>
 
-<!-- DIFFERENT_SITES -->
-
-<tr>
-	<td>INPUT_DATE</td>
-	<td>//input[@id='${key_inputField}']</td>
-	<td></td>
-</tr>
-
 <!-- CLICKABLE -->
 
 <tr>

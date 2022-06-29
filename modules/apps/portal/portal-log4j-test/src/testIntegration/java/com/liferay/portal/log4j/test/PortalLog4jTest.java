@@ -91,13 +91,13 @@ public class PortalLog4jTest {
 
 		Logger logger = (Logger)LogManager.getLogger(PortalLog4jTest.class);
 
+		logger.setAdditive(false);
+		logger.setLevel(Level.TRACE);
+
 		Logger upgradeLogger = (Logger)LogManager.getLogger(
 			TestUpgradeProcess.class.getName());
 
-		logger.setAdditive(false);
 		upgradeLogger.setAdditive(false);
-
-		logger.setLevel(Level.TRACE);
 		upgradeLogger.setLevel(Level.TRACE);
 
 		Logger rootLogger = (Logger)LogManager.getRootLogger();

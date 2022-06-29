@@ -146,6 +146,9 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		).put(
 			"objectRelationshipId", objectRelationship.getObjectRelationshipId()
 		).put(
+			"parameterObjectFieldId",
+			objectRelationship.getParameterObjectFieldId()
+		).put(
 			"type", objectRelationship.getType()
 		);
 	}

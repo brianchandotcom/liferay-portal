@@ -206,10 +206,10 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 			return styledLayoutStructureItem.getCustomCSS();
 		}
 
-		Map<String, String> viewportCustomCSS =
-			styledLayoutStructureItem.getViewportCustomCSS();
+		Map<String, String> customCSSViewports =
+			styledLayoutStructureItem.getCustomCSSViewports();
 
-		return viewportCustomCSS.get(viewportSize.getViewportSizeId());
+		return customCSSViewports.get(viewportSize.getViewportSizeId());
 	}
 
 	private JSONObject _getFrontendTokensJSONObject(

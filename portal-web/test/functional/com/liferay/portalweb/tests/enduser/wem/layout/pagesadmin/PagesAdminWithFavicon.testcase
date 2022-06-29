@@ -63,10 +63,6 @@ definition {
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
-			Click(
-				key_text = "Change Favicon",
-				locator1 = "Button#ANY");
-
 			PagesAdmin.selectFavicon(uploadFileName = "Document_1.jpg");
 
 			AssertTextEquals(
@@ -117,10 +113,6 @@ definition {
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
 
-			Click(
-				key_text = "Change Favicon",
-				locator1 = "Button#ANY");
-
 			PagesAdmin.selectFavicon(uploadFileName = "Document_2.jpg");
 
 			AssertTextEquals(
@@ -154,10 +146,6 @@ definition {
 				faviconName = "Favicon from Theme",
 				locator1 = "PagesAdmin#FAVICON_NAME",
 				value1 = "Favicon from Theme");
-
-			Click(
-				key_text = "Change Favicon",
-				locator1 = "Button#ANY");
 
 			PagesAdmin.selectFavicon(uploadFileName = "Document_3.jpg");
 

@@ -999,6 +999,10 @@ definition {
 	}
 
 	macro selectFavicon {
+		Click(
+			key_text = "Change Favicon",
+			locator1 = "Button#ANY");
+
 		if (isSet(imageFileName)) {
 			ItemSelector.selectDMImage(imageFileName = "${imageFileName}");
 		}
@@ -1010,6 +1014,10 @@ definition {
 	}
 
 	macro selectFaviconExtension {
+		Click(
+			key_text = "Change Favicon",
+			locator1 = "Button#ANY");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Navigator.gotoNavTab(navTab = "Extensions");

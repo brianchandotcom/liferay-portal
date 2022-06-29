@@ -40,7 +40,6 @@ import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletQName;
@@ -57,10 +56,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.io.IOException;
 
 import java.util.Calendar;
 import java.util.List;
@@ -106,8 +102,11 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				_updateCommerceOrder(actionRequest);
+			else if (cmd.equals("addBillingAddress")) {
+				_addBillingAddress(actionRequest);
+			}
+			else if (cmd.equals("addShippingAddress")) {
+				_addShippingAddress(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				_deleteCommerceOrders(actionRequest);
@@ -121,38 +120,20 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, actionResponse,
 					openOrdersPortletURL.toString());
 			}
-			else if (cmd.equals("addBillingAddress")) {
-				_addBillingAddress(actionRequest);
-			}
-			else if (cmd.equals("addShippingAddress")) {
-				_addShippingAddress(actionRequest);
-			}
 			else if (cmd.equals("purchaseOrderNumber")) {
 				_updatePurchaseOrderNumber(actionRequest);
 			}
 			else if (cmd.equals("requestedDeliveryDate")) {
 				_updateRequestedDeliveryDate(actionRequest);
 			}
+			else if (cmd.equals("reorder")) {
+				_reorderCommerceOrder(actionRequest);
+			}
 			else if (cmd.equals("selectBillingAddress")) {
 				_selectBillingAddress(actionRequest);
 			}
 			else if (cmd.equals("selectShippingAddress")) {
 				_selectShippingAddress(actionRequest);
-			}
-			else if (cmd.equals("updateBillingAddress")) {
-				_updateBillingAddress(actionRequest);
-			}
-			else if (cmd.equals("updateShippingAddress")) {
-				_updateShippingAddress(actionRequest);
-			}
-			else if (cmd.equals("updatePaymentTerms")) {
-				_updatePaymentTerms(actionRequest, actionResponse);
-			}
-			else if (cmd.equals("updateDeliveryTerms")) {
-				_updateDeliveryTerms(actionRequest, actionResponse);
-			}
-			else if (cmd.equals("reorder")) {
-				_reorderCommerceOrder(actionRequest);
 			}
 			else if (cmd.equals("setCurrent")) {
 				long commerceOrderId = ParamUtil.getLong(
@@ -180,6 +161,15 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (cmd.equals("transition")) {
 				_executeTransition(actionRequest);
+			}
+			else if (cmd.equals(Constants.UPDATE)) {
+				_updateCommerceOrder(actionRequest);
+			}
+			else if (cmd.equals("updateBillingAddress")) {
+				_updateBillingAddress(actionRequest);
+			}
+			else if (cmd.equals("updateShippingAddress")) {
+				_updateShippingAddress(actionRequest);
 			}
 		}
 		catch (Exception exception) {
@@ -625,60 +615,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getShippingAmount(),
 			commerceOrder.getShippingOptionName(), commerceOrder.getSubtotal(),
 			commerceOrder.getTotal(), commerceContext);
-	}
-
-	private void _updateDeliveryTerms(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortalException {
-
-		long commerceOrderId = ParamUtil.getLong(
-			actionRequest, "commerceOrderId");
-
-		String commerceDeliveryTermId = ParamUtil.getString(
-			actionRequest, "commerceDeliveryTermId");
-
-		if (!Validator.isNumber(commerceDeliveryTermId)) {
-			SessionErrors.add(actionRequest, "deliveryTermsInvalid");
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
-		_commerceOrderService.updateTermsAndConditions(
-			commerceOrder.getCommerceOrderId(),
-			GetterUtil.getLong(commerceDeliveryTermId), 0,
-			LanguageUtil.getLanguageId(actionRequest.getLocale()));
-	}
-
-	private void _updatePaymentTerms(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException, PortalException {
-
-		String commercePaymentTermId = ParamUtil.getString(
-			actionRequest, "commercePaymentTermId");
-
-		if (!Validator.isNumber(commercePaymentTermId)) {
-			SessionErrors.add(actionRequest, "paymentTermsInvalid");
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-
-		long commerceOrderId = ParamUtil.getLong(
-			actionRequest, "commerceOrderId");
-
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
-		_commerceOrderService.updateTermsAndConditions(
-			commerceOrder.getCommerceOrderId(), 0,
-			GetterUtil.getLong(commercePaymentTermId),
-			LanguageUtil.getLanguageId(actionRequest.getLocale()));
 	}
 
 	private void _updatePurchaseOrderNumber(ActionRequest actionRequest)

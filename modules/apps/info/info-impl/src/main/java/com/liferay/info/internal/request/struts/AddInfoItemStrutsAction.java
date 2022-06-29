@@ -184,15 +184,15 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			LayoutStructureItem layoutStructureItem =
 				layoutStructure.getLayoutStructureItem(childrenItemId);
 
+			if (_existsCaptchaLayoutStructureItem(
+					layoutStructureItem.getChildrenItemIds(),
+					layoutStructure)) {
+
+				return true;
+			}
+
 			if (!(layoutStructureItem instanceof
 					FragmentStyledLayoutStructureItem)) {
-
-				if (_existsCaptchaLayoutStructureItem(
-						layoutStructureItem.getChildrenItemIds(),
-						layoutStructure)) {
-
-					return true;
-				}
 
 				continue;
 			}
@@ -204,13 +204,6 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			if (fragmentStyledLayoutStructureItem.getFragmentEntryLinkId() <=
 					0) {
 
-				if (_existsCaptchaLayoutStructureItem(
-						fragmentStyledLayoutStructureItem.getChildrenItemIds(),
-						layoutStructure)) {
-
-					return true;
-				}
-
 				continue;
 			}
 
@@ -218,14 +211,11 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 
-			if (((fragmentEntryLink != null) &&
-				 (fragmentEntryLink.isTypeInput()) &&
-				 _isCaptchaFragmentEntry(
-					 fragmentEntryLink.getFragmentEntryId(),
-					 fragmentEntryLink.getRendererKey())) ||
-				_existsCaptchaLayoutStructureItem(
-					fragmentStyledLayoutStructureItem.getChildrenItemIds(),
-					layoutStructure)) {
+			if ((fragmentEntryLink != null) &&
+				fragmentEntryLink.isTypeInput() &&
+				_isCaptchaFragmentEntry(
+					fragmentEntryLink.getFragmentEntryId(),
+					fragmentEntryLink.getRendererKey())) {
 
 				return true;
 			}

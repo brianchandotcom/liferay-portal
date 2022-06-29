@@ -25,7 +25,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -146,6 +145,27 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		return fragmentEntryLink;
 	}
 
+	private String _getFragmentEntryName(FragmentEntryLink fragmentEntryLink) {
+		FragmentEntry fragmentEntry = null;
+
+		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
+			fragmentEntry =
+				_fragmentCollectionContributorTracker.getFragmentEntry(
+					fragmentEntryLink.getRendererKey());
+		}
+
+		if (fragmentEntry == null) {
+			fragmentEntry = _fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+		}
+
+		if (fragmentEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return fragmentEntry.getName();
+	}
+
 	private JSONObject _getInputJSONObject(
 		FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest,
@@ -154,9 +174,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		FragmentEntryInputTemplateNodeContextHelper
 			fragmentEntryInputTemplateNodeContextHelper =
 				new FragmentEntryInputTemplateNodeContextHelper(
-					_fragmentCollectionContributorTracker,
-					_fragmentEntryConfigurationParser,
-					_fragmentRendererTracker);
+					_getFragmentEntryName(fragmentEntryLink),
+					_fragmentEntryConfigurationParser);
 
 		InputTemplateNode inputTemplateNode =
 			fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
@@ -450,9 +469,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
-
-	@Reference
-	private FragmentRendererTracker _fragmentRendererTracker;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

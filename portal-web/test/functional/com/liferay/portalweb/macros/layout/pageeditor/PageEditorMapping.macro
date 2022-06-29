@@ -102,6 +102,8 @@ definition {
 				locator1 = "Card#CARD_TITLE");
 		}
 
+		SelectFrameTop();
+
 		AssertTextEquals(
 			key_fieldLabel = "Item",
 			locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",

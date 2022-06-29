@@ -120,6 +120,8 @@ definition {
 
 	macro clickSubmitButton {
 		Click(locator1 = "Button#SUBMIT");
+
+		SelectFrameTop();
 	}
 
 	macro clickSubmitForPublication {

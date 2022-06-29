@@ -85,6 +85,8 @@ definition {
 
 		Button.clickSave();
 
+		SelectFrameTop();
+
 		for (var domainName : list "${domainNames}") {
 			AssertElementPresent(
 				key_domainName = "${domainName}",
@@ -342,6 +344,8 @@ definition {
 			locator1 = "IFrame#MODAL_ANY");
 
 		LexiconEntry.gotoAdd();
+
+		SelectFrameTop();
 
 		Type(
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",

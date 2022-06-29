@@ -51,10 +51,12 @@ definition {
 		WaitForPageLoad();
 
 		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
 	}
 
 	macro gotoAddDropdownMenuItem {
-		LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAddNoSelectFrame();
 
 		DropdownMenuItem.click(menuItem = "${menuItem}");
 	}
@@ -63,6 +65,12 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "${menuItem}");
+	}
+
+	macro gotoAddNoSelectFrame {
+		WaitForPageLoad();
+
+		Click(locator1 = "Button#PLUS");
 	}
 
 	macro gotoAddReport {

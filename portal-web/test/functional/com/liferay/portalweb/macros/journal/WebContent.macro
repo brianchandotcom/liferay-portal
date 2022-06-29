@@ -363,6 +363,8 @@ definition {
 
 		LexiconCard.clickCard(card = "${dmDocumentTitle}");
 
+		SelectFrameTop();
+
 		PortletEntry.publish();
 	}
 
@@ -1157,6 +1159,8 @@ definition {
 					LexiconCard.clickCard(card = "${pageName}");
 				}
 			}
+
+			SelectFrameTop();
 
 			if ("${pageType}" == "Public Pages") {
 				AssertTextEquals(

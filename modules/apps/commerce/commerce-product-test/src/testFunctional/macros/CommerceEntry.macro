@@ -147,6 +147,8 @@ definition {
 			key_text = "Add",
 			locator1 = "Button#ANY");
 
+		SelectFrameTop();
+
 		WaitForPageLoad();
 
 		if (isSet(siteName)) {
@@ -269,6 +271,8 @@ definition {
 			value1 = "${discountTarget}");
 
 		Button.click(button = "Submit");
+
+		SelectFrameTop();
 
 		WaitForElementPresent(locator1 = "CommerceEntry#DISCOUNT_AMOUNT");
 

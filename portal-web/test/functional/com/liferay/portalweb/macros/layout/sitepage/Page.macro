@@ -150,6 +150,8 @@ definition {
 		LexiconTable.clickEllipsisItem(
 			item = "${item}",
 			tableEntry = "${tableEntry}");
+
+		SelectFrameTop();
 	}
 
 	macro gotoPagePanelPortlet {

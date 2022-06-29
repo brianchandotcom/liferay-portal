@@ -34,6 +34,8 @@ definition {
 			locator1 = "Button#SUBMIT",
 			value1 = "Submit");
 
+		SelectFrameTop();
+
 		AssertClick(
 			locator1 = "CommerceEntry#PRODUCT_IMAGE_SELECT_FILE",
 			value1 = "Select File");
@@ -140,6 +142,8 @@ definition {
 			locator1 = "Button#SUBMIT",
 			value1 = "Submit");
 
+		SelectFrameTop();
+
 		Refresh();
 
 		CommerceNavigator.gotoPortlet(
@@ -173,6 +177,8 @@ definition {
 		AssertClickNoError(
 			locator1 = "Button#SUBMIT",
 			value1 = "Submit");
+
+		SelectFrameTop();
 
 		Click(locator1 = "Icon#BACK");
 
@@ -247,6 +253,8 @@ definition {
 		AssertClickNoError(
 			locator1 = "Button#SUBMIT",
 			value1 = "Submit");
+
+		SelectFrameTop();
 
 		Click(locator1 = "Icon#BACK");
 
@@ -359,6 +367,8 @@ definition {
 		AssertClickNoError(
 			locator1 = "Button#SUBMIT",
 			value1 = "Submit");
+
+		SelectFrameTop();
 
 		Click(locator1 = "Icon#BACK");
 

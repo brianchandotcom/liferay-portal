@@ -31,11 +31,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_MENU</td>
-	<td>//label[contains(.,'Choose Menu')]/input[@type='radio']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CUSTOM_URL</td>
 	<td>//label[contains(.,'Custom')]/input[@type='radio']</td>
 	<td></td>

@@ -1,7 +1,9 @@
 definition {
 
 	macro chooseMenu {
-		Click(locator1 = "Radio#CHOOSE_MENU");
+		Click(
+			locator1 = "Radio#ANY",
+			radioLabel = "Choose Menu");
 
 		Click.pauseClickAt(locator1 = "Button#SELECT");
 

@@ -145,11 +145,13 @@ const FrontendDataSet = ({
 		let initialVisibleFieldNames = {};
 
 		if (activeViewSettings) {
-			const {name, visibleFieldNames} = JSON.parse(activeViewSettings);
+			const {name: activeViewName, visibleFieldNames} = JSON.parse(
+				activeViewSettings
+			);
 
-			if (name) {
+			if (activeViewName) {
 				initialActiveView = views.find(
-					({viewName}) => viewName === name
+					({name}) => name === activeViewName
 				);
 			}
 

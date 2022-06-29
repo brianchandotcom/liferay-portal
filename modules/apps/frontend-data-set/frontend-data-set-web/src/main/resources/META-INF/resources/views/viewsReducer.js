@@ -12,6 +12,8 @@
  * details.
  */
 
+import getViewComponent from './getViewComponent';
+
 export const ACTION_UPDATE_ACTIVE_VIEW = 'ACTION_UPDATE_ACTIVE_VIEW';
 export const ACTION_UPDATE_VIEW_COMPONENT = 'ACTION_UPDATE_VIEW_COMPONENT';
 export const ACTION_UPDATE_VISIBLE_FIELD_NAMES =
@@ -42,9 +44,15 @@ export function viewsReducer(state, {type, value}) {
 	const {activeView, views} = state;
 
 	if (type === ACTION_UPDATE_ACTIVE_VIEW) {
+		const activeView = views.find(({name}) => name === value);
+
+		if (activeView) {
+			activeView.component = getViewComponent(value);
+		}
+
 		return {
 			...state,
-			activeView: views.find(({name}) => name === value),
+			activeView,
 		};
 	}
 	else if (type === ACTION_UPDATE_VIEW_COMPONENT) {

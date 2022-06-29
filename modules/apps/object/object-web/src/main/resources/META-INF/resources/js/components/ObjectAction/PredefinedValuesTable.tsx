@@ -40,11 +40,10 @@ export default function PredefinedValuesTable({
 		const objectFields: ObjectField[] = [];
 
 		predefinedValues?.forEach(({name}) => {
-			currentObjectDefinitionFields.forEach((field) => {
-				if (field.name === name) {
-					objectFields.push(field);
-				}
-			});
+			if (objectFieldsMap.has(name)) {
+				const field = objectFieldsMap.get(name);
+				objectFields.push(field as ObjectField);
+			}
 		});
 
 		return objectFields;
@@ -59,15 +58,14 @@ export default function PredefinedValuesTable({
 			return updatedPredefinedValues;
 		};
 
-		const rows = predefinedValues.map((item) => {
+		const rows = predefinedValues.map(({inputAsValue, name, value}) => {
 			return (
-				<ClayTable.Row key={item.name}>
+				<ClayTable.Row key={name}>
 					<ClayTable.Cell className="lfr-object-web__predefined-values-table-cell-field">
 						<div className="lfr-object-web__predefined-values-table-field">
-							{item.name}
+							{name}
 
-							{objectFieldsMap.get(item.name)?.required ===
-								true && (
+							{objectFieldsMap.get(name)?.required === true && (
 								<span className="lfr-object-web__predefined-values-table-reference-mark">
 									<ClayIcon symbol="asterisk" />
 								</span>
@@ -78,11 +76,10 @@ export default function PredefinedValuesTable({
 					<ClayTable.Cell className="lfr-object-web__predefined-values-table-cell-input-method">
 						<div className="lfr-object-web__predefined-values-table-input-method">
 							<ClayCheckbox
-								checked={item.inputAsValue}
+								checked={inputAsValue}
 								disabled={false}
 								label={Liferay.Language.get('input-as-a-value')}
 								onChange={({target: {checked}}) => {
-									const {name} = item;
 									const newPredefinedValues = predefinedValues.map(
 										(field) => {
 											return field.name === name
@@ -121,11 +118,10 @@ export default function PredefinedValuesTable({
 					<ClayTable.Cell className="lfr-object-web__predefined-values-table-cell-new-value">
 						<div className="lfr-object-web__predefined-values-table-new-value">
 							<ExpressionBuilder
-								buttonDisabled={item.inputAsValue}
-								error={errors[item.name]}
+								buttonDisabled={inputAsValue}
+								error={errors[name]}
 								hideFeedback
 								onChange={({target: {value}}: any) => {
-									const {name} = item;
 									setValues({
 										parameters: {
 											...values.parameters,
@@ -143,8 +139,6 @@ export default function PredefinedValuesTable({
 										'openExpressionBuilderModal',
 										{
 											onSave: (value: string) => {
-												const {name} = item;
-
 												setValues({
 													parameters: {
 														...values.parameters,
@@ -155,22 +149,21 @@ export default function PredefinedValuesTable({
 													},
 												});
 											},
-											required: objectFieldsMap.get(
-												item.name
-											)?.required,
-											source: item.value,
+											required: objectFieldsMap.get(name)
+												?.required,
+											source: value,
 											validateExpressionURL,
 										}
 									);
 								}}
 								placeholder={
-									item.inputAsValue
+									inputAsValue
 										? Liferay.Language.get('input-a-value')
 										: Liferay.Language.get(
 												'input-a-value-or-create-an-expression'
 										  )
 								}
-								value={item.value}
+								value={value}
 							/>
 						</div>
 					</ClayTable.Cell>
@@ -183,10 +176,8 @@ export default function PredefinedValuesTable({
 							<ClayButtonWithIcon
 								className="reorder-page-button"
 								displayType="secondary"
-								id={item.name}
+								id={name}
 								onClick={() => {
-									const {name} = item;
-
 									if (objectFieldsMap.get(name)?.required) {
 										openToast({
 											message: Liferay.Language.get(
@@ -238,18 +229,17 @@ export default function PredefinedValuesTable({
 			header: Liferay.Language.get('add-fields'),
 			items: currentObjectDefinitionFields,
 			onSave: (items: ObjectField[]) => {
+				const predefinedValuesMap = new Map<string, PredefinedValue>();
+
+				predefinedValues.forEach((field) => {
+					predefinedValuesMap.set(field.name, field);
+				});
+
 				const newPredefinedValues = items.map(({name}) => {
-					let hasValue;
-					predefinedValues.forEach((item) => {
-						if (item.name === name) {
-							hasValue = item;
+					const value = predefinedValuesMap.get(name);
 
-							return;
-						}
-					});
-
-					return hasValue
-						? hasValue
+					return value
+						? value
 						: {
 								inputAsValue: false,
 								name,

@@ -26,6 +26,8 @@ if (Validator.isNull(redirect)) {
 }
 
 SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayContext = (SegmentsCompanyConfigurationDisplayContext)request.getAttribute(SegmentsCompanyConfigurationDisplayContext.class.getName());
+
+Boolean hasAlert = !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() || !segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled();
 %>
 
 <liferay-util:html-top
@@ -60,7 +62,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 	<aui:form action="<%= segmentsCompanyConfigurationDisplayContext.getBindConfigurationActionURL() %>" cssClass="mt-3" method="post" name="fm">
 		<c:if test="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>">
 			<clay:alert
-				cssClass="c-mb-4"
+				cssClass="c-my-4"
 				displayType="warning"
 			>
 				<strong class="lead"><%= LanguageUtil.get(request, "segmentation-is-disabled-in-system-settings") %></strong>
@@ -71,7 +73,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 
 		<c:if test="<%= !segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() %>">
 			<clay:alert
-				cssClass="c-mb-4"
+				cssClass="c-my-4"
 				displayType="warning"
 			>
 				<strong class="lead"><%= LanguageUtil.get(request, "assign-roles-by-segment-is-disabled-in-system-settings") %></strong>
@@ -86,7 +88,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 			</aui:alert>
 		</c:if>
 
-		<div class="row">
+		<div class="row <%= hasAlert ? "c-mt-5" : "" %>">
 			<div class="col-sm-12 form-group">
 				<div class="form-group__inner">
 					<c:choose>

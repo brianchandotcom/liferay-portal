@@ -139,10 +139,6 @@ definition {
 				portlet = "${portlet}");
 		}
 
-		if (("${portlet}" == "Export") || ("${portlet}" == "Import")) {
-			Pause(locator1 = "2000");
-		}
-
 		AssertTextEquals(
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
 			value1 = "${portlet}");

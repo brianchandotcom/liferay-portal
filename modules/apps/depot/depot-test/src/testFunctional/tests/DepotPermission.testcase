@@ -241,8 +241,6 @@ definition {
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
-		Pause(locator1 = "3000");
-
 		LexiconEntry.gotoAdd();
 
 		WebContent.addCP(

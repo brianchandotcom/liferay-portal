@@ -1401,7 +1401,9 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Web Content Article");
 
-			PageEditor.waitForAutoSave();
+			WaitForEditable(
+				key_fieldLabel = "Subtype",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
 
 			for (var subtype : list "Basic Web Content,WC Structure Name") {
 				AssertElementPresent(
@@ -1415,7 +1417,9 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Document");
 
-			PageEditor.waitForAutoSave();
+			WaitForEditable(
+				key_fieldLabel = "Subtype",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
 
 			for (var subtype : list "Basic Document,Google Drive Shortcut,DM Document Type Name") {
 				AssertElementPresent(

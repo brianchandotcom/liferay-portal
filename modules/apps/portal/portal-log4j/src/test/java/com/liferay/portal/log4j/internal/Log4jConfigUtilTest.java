@@ -14,12 +14,17 @@
 
 package com.liferay.portal.log4j.internal;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -259,6 +264,68 @@ public class Log4jConfigUtilTest {
 	}
 
 	@Test
+	public void testGetCompanyLogDirectory() throws Exception {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (!GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.COMPANY_LOG_ENABLED))) {
+
+			Assert.assertNull(
+				Log4jConfigUtil.getCompanyLogDirectory(companyId));
+
+			return;
+		}
+
+		String loggerName = StringUtil.randomString();
+
+		Log4jConfigUtil.configureLog4J(
+			_generateXMLConfigurationContent(loggerName, _INFO));
+
+		Assert.assertNull(Log4jConfigUtil.getCompanyLogDirectory(companyId));
+
+		File tempLogFileDir = null;
+
+		try {
+			Path path = Files.createTempDirectory(
+				Log4jConfigUtilTest.class.getName());
+
+			tempLogFileDir = path.toFile();
+
+			String tempLogFileDirPath = StringUtil.replace(
+				tempLogFileDir.getPath(), CharPool.BACK_SLASH,
+				CharPool.FORWARD_SLASH);
+
+			String filePattern = "liferay-@company.id@.%d{yyyy-MM-dd}.xml.log";
+
+			Log4jConfigUtil.configureLog4J(
+				_generateCompanyLogRoutingAppenderConfigurationContent(
+					"COMPANY_LOG_ROUTING_TEXT_FILE",
+					StringBundler.concat(
+						tempLogFileDirPath, CharPool.FORWARD_SLASH,
+						filePattern),
+					loggerName, _INFO));
+
+			Logger logger = (Logger)LogManager.getLogger(loggerName);
+
+			logger.info("Test message");
+
+			Assert.assertEquals(
+				"Company log directory should be " + tempLogFileDirPath,
+				tempLogFileDirPath,
+				Log4jConfigUtil.getCompanyLogDirectory(companyId));
+		}
+		finally {
+			if (tempLogFileDir != null) {
+				for (File file : tempLogFileDir.listFiles()) {
+					file.delete();
+				}
+
+				tempLogFileDir.delete();
+			}
+		}
+	}
+
+	@Test
 	public void testGetJDKLevel() {
 		Assert.assertEquals(
 			"FINE", String.valueOf(Log4jConfigUtil.getJDKLevel(_DEBUG)));
@@ -400,6 +467,30 @@ public class Log4jConfigUtilTest {
 		else {
 			Assert.assertEquals("Logging priority is wrong", priority, _OFF);
 		}
+	}
+
+	private String _generateCompanyLogRoutingAppenderConfigurationContent(
+		String appenderName, String filePattern, String loggerName,
+		String priority) {
+
+		StringBundler sb = new StringBundler(14);
+
+		sb.append("<?xml version=\"1.0\"?><Configuration strict=\"true\">");
+		sb.append("<Appenders><Appender name=\"");
+		sb.append(appenderName);
+		sb.append("\" filePattern=\"");
+		sb.append(filePattern);
+		sb.append("\" type=\"CompanyLogRouting\">");
+		sb.append("<TimeBasedTriggeringPolicy /><DirectWriteRolloverStrategy ");
+		sb.append("/></Appender></Appenders><Loggers><Logger level= \"");
+		sb.append(priority);
+		sb.append("\" name=\"");
+		sb.append(loggerName);
+		sb.append("\"><AppenderRef ref=\"");
+		sb.append(appenderName);
+		sb.append("\" /></Logger></Loggers></Configuration>");
+
+		return sb.toString();
 	}
 
 	private String _generateLog4j1XMLConfigurationContent(

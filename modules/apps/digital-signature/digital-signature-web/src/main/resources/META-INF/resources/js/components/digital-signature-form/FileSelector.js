@@ -13,7 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {createPortletURL} from 'frontend-js-web';
+import {createPortletURL, openSelectionModal} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import {AppContext} from '../../AppContext';
@@ -52,7 +52,7 @@ const FileSelector = ({disabled, onChange}) => {
 	};
 
 	const handleSelectButtonClicked = () => {
-		Liferay.Util.openSelectionModal({
+		openSelectionModal({
 			onSelect: handleFieldChanged,
 			selectEventName: `${portletNamespace}selectDocumentLibrary`,
 			title: Liferay.Language.get('select-document'),

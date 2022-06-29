@@ -24,6 +24,7 @@ import {
 	useConfig,
 	useFormState,
 } from 'data-engine-js-components-web';
+import {openSelectionModal} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -371,7 +372,7 @@ const Main = ({
 	const handleSelectButtonClicked = ({portletNamespace}, event) => {
 		onFocus(event);
 
-		Liferay.Util.openSelectionModal({
+		openSelectionModal({
 			onClose: () => onBlur(event),
 			onSelect: handleFieldChanged,
 			selectEventName: `${portletNamespace}selectDocumentLibrary`,

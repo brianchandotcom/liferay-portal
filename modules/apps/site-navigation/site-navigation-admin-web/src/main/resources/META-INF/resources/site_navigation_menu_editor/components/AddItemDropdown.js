@@ -13,7 +13,7 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
-import {fetch, objectToFormData} from 'frontend-js-web';
+import {fetch, objectToFormData, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -104,7 +104,7 @@ export function AddItemDropDown({trigger}) {
 								);
 
 								if (data.itemSelector) {
-									Liferay.Util.openSelectionModal({
+									openSelectionModal({
 										buttonAddLabel: data.multiSelection
 											? Liferay.Language.get('select')
 											: null,

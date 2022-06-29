@@ -15,7 +15,7 @@
 import ClayIcon from '@clayui/icon';
 import {State} from '@liferay/frontend-js-state-web';
 import classNames from 'classnames';
-import {STATUS_CODE, sub} from 'frontend-js-web';
+import {STATUS_CODE, openSelectionModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -156,7 +156,7 @@ const ImageSelector = ({
 	};
 
 	const handleSelectFileClick = () => {
-		Liferay.Util.openSelectionModal({
+		openSelectionModal({
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					const itemValue = JSON.parse(selectedItem.value);

@@ -12,7 +12,11 @@
  * details.
  */
 
-import {createPortletURL, delegate} from 'frontend-js-web';
+import {
+	createPortletURL,
+	delegate,
+	openSelectionModal as openSelectionModalUtil,
+} from 'frontend-js-web';
 
 export default function ({
 	baseSelectDefaultAddressURL,
@@ -36,7 +40,7 @@ export default function ({
 	};
 
 	const openSelectionModal = (title, type) => {
-		Liferay.Util.openSelectionModal({
+		openSelectionModalUtil({
 			buttonAddLabel: Liferay.Language.get('save'),
 			containerProps: {
 				className: '',

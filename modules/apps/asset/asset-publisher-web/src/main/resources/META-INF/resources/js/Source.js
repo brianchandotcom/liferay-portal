@@ -12,7 +12,12 @@
  * details.
  */
 
-import {delegate, sub, toggleSelectBox} from 'frontend-js-web';
+import {
+	delegate,
+	openSelectionModal,
+	sub,
+	toggleSelectBox,
+} from 'frontend-js-web';
 
 const ANY = 'any';
 const SELECT_MORE_THAN_ONE = 'select-more-than-one';
@@ -376,7 +381,7 @@ export default function ({assetPublisherNamespace, classTypes, namespace}) {
 			url
 		);
 
-		Liferay.Util.openSelectionModal({
+		openSelectionModal({
 			customSelectEvent: true,
 			id: `${namespace}selectDDMStructure${delegateTarget.id}`,
 			iframeBodyCssClass: '',

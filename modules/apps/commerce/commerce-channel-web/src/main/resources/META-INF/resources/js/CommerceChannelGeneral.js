@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openSelectionModal} from 'frontend-js-web';
+
 export default function ({itemSelectorURL, namespace}) {
 	const fileEntryIdInput = document.getElementById(`${namespace}fileEntryId`);
 	const fileEntryNameInput = document.getElementById(
@@ -28,7 +30,7 @@ export default function ({itemSelectorURL, namespace}) {
 		selectFileButton.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			Liferay.Util.openSelectionModal({
+			openSelectionModal({
 				onSelect: (selectedItem) => {
 					if (!selectedItem) {
 						return;

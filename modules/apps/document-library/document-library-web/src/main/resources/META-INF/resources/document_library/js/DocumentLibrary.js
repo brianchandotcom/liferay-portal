@@ -12,7 +12,7 @@
  * details.
  */
 
-import {buildFragment} from 'frontend-js-web';
+import {buildFragment, openSelectionModal} from 'frontend-js-web';
 
 export default function DocumentLibrary({
 	editEntryUrl,
@@ -115,7 +115,7 @@ export default function DocumentLibrary({
 				? Liferay.Language.get('select-destination-folder-for-x-item')
 				: Liferay.Language.get('select-destination-folder-for-x-items');
 
-		Liferay.Util.openSelectionModal({
+		openSelectionModal({
 			height: '480px',
 			id: namespace,
 			onSelect: (selectedItem) => {

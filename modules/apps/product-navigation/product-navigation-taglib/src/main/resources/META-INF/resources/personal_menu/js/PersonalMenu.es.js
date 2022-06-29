@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
-import {fetch} from 'frontend-js-web';
+import {fetch, openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
@@ -34,7 +34,7 @@ function mapItemsOnClick(items) {
 			newVal.onClick = () => {
 				const {selectEventName, title, url} = jsOnClickConfig;
 
-				Liferay.Util.openSelectionModal({
+				openSelectionModal({
 					id: selectEventName,
 					onSelect(selectedItem) {
 						Liferay.Util.navigate(selectedItem.url);

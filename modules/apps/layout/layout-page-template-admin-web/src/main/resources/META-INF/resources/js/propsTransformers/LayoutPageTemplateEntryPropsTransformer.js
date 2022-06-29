@@ -52,7 +52,7 @@ const ACTIONS = {
 		{itemSelectorURL, moveLayoutPageTemplateEntryURL},
 		namespace
 	) {
-		Liferay.Util.openSelectionModal({
+		openSelectionModal({
 			onSelect: (selectedItem) => {
 				if (!selectedItem) {
 					return;

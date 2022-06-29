@@ -11,7 +11,6 @@
 
 import {openModal} from 'frontend-js-web';
 
-
 let copySaved = '';
 
 const starterkitList = document.getElementsByClassName('liferay-online-item');

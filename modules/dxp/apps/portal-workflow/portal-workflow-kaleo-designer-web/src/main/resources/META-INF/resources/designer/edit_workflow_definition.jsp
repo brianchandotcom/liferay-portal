@@ -27,14 +27,14 @@ portletDisplay.setURLBack(
 		"/view.jsp"
 	).buildString());
 
-boolean isView = Objects.equals((String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE), "view");
+boolean view = Objects.equals((String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE), "view");
 
 String titleKey = "new-workflow-definition";
 
 if (kaleoDefinitionVersion != null) {
 	titleKey = "edit-workflow-definition";
 
-	if (isView) {
+	if (view) {
 		titleKey = "view-workflow-definition";
 	}
 }
@@ -52,7 +52,7 @@ renderResponse.setTitle(LanguageUtil.get(request, titleKey));
 		).put(
 			"displayNames", LocaleUtil.toDisplayNames(LanguageUtil.getAvailableLocales(), locale)
 		).put(
-			"isView", isView
+			"isView", view
 		).put(
 			"languageIds", LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales())
 		).put(

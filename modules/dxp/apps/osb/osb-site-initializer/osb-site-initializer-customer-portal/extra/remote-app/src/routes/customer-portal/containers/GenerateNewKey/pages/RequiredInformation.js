@@ -121,13 +121,18 @@ const RequiredInformation = ({
 			const sizing = `Sizing ${
 				infoSelectedKey?.selectedSubscription?.instanceSize || 1
 			}`;
+			const isVirtualClusterOrProduction = infoSelectedKey?.licenseEntryType?.includes(
+				'Virtual Cluster'
+			)
+				? 'virtual-cluster'
+				: 'production';
 
 			const licenseKey = {
 				accountKey,
 				active: true,
 				description: values?.description,
 				expirationDate: infoSelectedKey?.selectedSubscription.endDate,
-				licenseEntryType: 'production',
+				licenseEntryType: isVirtualClusterOrProduction,
 				maxClusterNodes: values?.maxClusterNodes || 0,
 				name: values?.name,
 				productKey: infoSelectedKey?.selectedSubscription.productKey,

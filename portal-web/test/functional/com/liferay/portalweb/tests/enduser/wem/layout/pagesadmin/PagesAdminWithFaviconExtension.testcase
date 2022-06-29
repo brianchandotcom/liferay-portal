@@ -1,0 +1,211 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-153457=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add two remote apps for favicon extension") {
+			JSONRemoteApp.addRemoteAppEntry(
+				name = "Google Favicon",
+				type = "themeFavicon",
+				url = "https://www.google.com/favicon.ico");
+
+			JSONRemoteApp.addRemoteAppEntry(
+				name = "NBA Favicon",
+				type = "themeFavicon",
+				url = "https://www.nba.com/favicon.ico");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			RemoteApps.tearDown();
+		}
+	}
+
+	@description = "This is a test for LPS-153654. The site designer could change favicon from favicon extension for page, page template, and group of pages."
+	@priority = "5"
+	test ChangeFavicons {
+		task ("Given a site designer has a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page Name");
+		}
+
+		task ("When the site designer accesses to the widget page") {
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site name");
+		}
+
+		task ("Then the site designer could view the favicon from theme") {
+			AssertElementPresent(
+				imageFileName = "classic-theme/images/favicon.ico",
+				locator1 = "Icon#FAVICON");
+		}
+
+		task ("When the site designer add a favicon extension to widget page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Widget Page Name");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertTextEquals(
+				faviconName = "Favicon from Theme",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Favicon from Theme");
+
+			Click(
+				key_text = "Change Favicon",
+				locator1 = "Button#ANY");
+
+			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
+
+			AssertTextEquals(
+				faviconName = "Google Favicon",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Google Favicon");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the site designer could view the new favicon on widget page") {
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site name");
+
+			AssertElementPresent(
+				imageFileName = "https://www.google.com/favicon.ico",
+				locator1 = "Icon#FAVICON");
+		}
+
+		task ("Given a site designer has a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Page Template Name",
+				pageTemplateType = "Content Page Template");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementPresent(
+				imageFileName = "classic-theme/images/favicon.ico",
+				locator1 = "Icon#FAVICON");
+		}
+
+		task ("When the site designer changes favicon of content page template") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			AssertTextEquals(
+				faviconName = "Favicon from Theme",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Favicon from Theme");
+
+			Click(
+				key_text = "Change Favicon",
+				locator1 = "Button#ANY");
+
+			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
+
+			AssertTextEquals(
+				faviconName = "Google Favicon",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Google Favicon");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the site designer could view the new favicon on content page template") {
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementPresent(
+				imageFileName = "https://www.google.com/favicon.ico",
+				locator1 = "Icon#FAVICON");
+		}
+
+		task ("When the site designer changes favicon of pages") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			WaitForPageLoad();
+
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Configuration");
+
+			AssertTextEquals(
+				faviconName = "Favicon from Theme",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Favicon from Theme");
+
+			Click(
+				key_text = "Change Favicon",
+				locator1 = "Button#ANY");
+
+			PagesAdmin.selectFaviconExtension(extensionName = "NBA Favicon");
+
+			AssertTextEquals(
+				faviconName = "NBA Favicon",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "NBA Favicon");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the site designer could view the new favicon on new page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertElementPresent(
+				imageFileName = "https://www.nba.com/favicon.ico",
+				locator1 = "Icon#FAVICON");
+
+			Navigator.gotoSitePage(
+				pageName = "Widget Page Name",
+				siteName = "Test Site name");
+
+			AssertElementPresent(
+				imageFileName = "https://www.google.com/favicon.ico",
+				locator1 = "Icon#FAVICON");
+		}
+	}
+
+}

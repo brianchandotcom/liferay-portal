@@ -19,6 +19,7 @@ import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -148,7 +149,23 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			inputShowHelpText, inputShowLabel, infoFieldType.getName(),
 			"value");
 
-		if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {
+		if (infoFieldType instanceof ImageInfoFieldType) {
+			Optional<String> acceptedFileExtensionsOptional =
+				infoField.getAttributeOptional(
+					ImageInfoFieldType.ALLOWED_FILE_EXTENSIONS);
+
+			inputTemplateNode.addAttribute(
+				"allowedFileExtensions",
+				acceptedFileExtensionsOptional.orElse(StringPool.BLANK));
+
+			Optional<Long> maximumFileSizeOptional =
+				infoField.getAttributeOptional(
+					ImageInfoFieldType.MAX_FILE_SIZE);
+
+			inputTemplateNode.addAttribute(
+				"maxFileSize", maximumFileSizeOptional.orElse(0L));
+		}
+		else if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {
 			String dataType = "integer";
 
 			Optional<Boolean> decimalOptional = infoField.getAttributeOptional(

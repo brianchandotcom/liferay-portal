@@ -1,13 +1,29 @@
 @component-name = "portal-commerce"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Shopping Experience";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp();
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Setup: Create an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 	}
 
 	tearDown {
@@ -20,10 +36,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
 
@@ -40,10 +52,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
 
 		for (var productName : list "U-Joint,Transmission Cooler Line Assembly,Torque Converters") {
 			Check.checkToggleSwitch(
@@ -93,11 +101,7 @@ definition {
 	test RemoveComparisonItemFromMiniCompare {
 		property portal.acceptance = "false";
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.searchEntry(entryName = "U-Joint");
 
@@ -155,11 +159,7 @@ definition {
 	test RemoveComparisonItemFromProductDetailsPage {
 		property portal.acceptance = "true";
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		CommerceProducts.openProductsAdmin();
 
 		CommerceNavigator.searchEntry(entryName = "U-Joint");
 
@@ -242,24 +242,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account");
-
-		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
-			accountName = "Commerce Account",
-			emailAddress = "buyer@liferay.com",
-			role = "Buyer",
-			userFirstName = "Buyer",
-			userLastName = "User",
-			userScreenName = "buyeruser");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 

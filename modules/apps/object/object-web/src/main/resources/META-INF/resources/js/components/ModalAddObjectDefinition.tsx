@@ -123,9 +123,8 @@ const ModalAddObjectDefinition: React.FC<IProps> = ({
 	const selectedStorageType = (storageType: string) => {
 		const selected = storageType.toLowerCase();
 
-		return (
-			storageTypes.findIndex((type) => type.toLowerCase() === selected) +
-			1
+		return storageTypes.findIndex(
+			(type) => type.toLowerCase() === selected
 		);
 	};
 

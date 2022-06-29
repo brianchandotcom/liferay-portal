@@ -23,7 +23,7 @@
 		<column name="classPK" type="long" />
 		<column name="countryId" type="long" />
 		<column name="regionId" type="long" />
-		<column name="typeId" type="long" />
+		<column name="listTypeId" type="long" />
 		<column name="city" type="String" />
 		<column name="description" type="String" />
 		<column name="latitude" type="double" />
@@ -71,7 +71,7 @@
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
-			<finder-column arrayable-operator="true" name="typeId" />
+			<finder-column arrayable-operator="true" name="listTypeId" />
 		</finder>
 		<finder name="C_C_C_M" return-type="Collection">
 			<finder-column name="companyId" />
@@ -213,8 +213,8 @@
 		<column name="firstName" type="String" />
 		<column name="middleName" type="String" />
 		<column name="lastName" type="String" />
-		<column name="prefixId" type="long" />
-		<column name="suffixId" type="long" />
+		<column name="prefixListTypeId" type="long" />
+		<column name="suffixListTypeId" type="long" />
 		<column name="male" type="boolean" />
 		<column name="birthday" type="Date" />
 		<column name="smsSn" type="String" />
@@ -344,7 +344,7 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="address" type="String" />
-		<column name="typeId" type="long" />
+		<column name="listTypeId" type="long" />
 		<column name="primary" type="boolean" />
 
 		<!-- Order -->
@@ -1208,7 +1208,7 @@
 		<column name="recursable" type="boolean" />
 		<column name="regionId" type="long" />
 		<column name="countryId" type="long" />
-		<column name="statusId" type="long" />
+		<column name="statusListTypeId" type="long" />
 		<column name="comments" type="String" />
 		<column name="logoId" type="long" />
 
@@ -1271,7 +1271,7 @@
 		<!-- Other fields -->
 
 		<column name="organizationId" type="long" />
-		<column name="typeId" type="long" />
+		<column name="listTypeId" type="long" />
 		<column name="sunOpen" type="int" />
 		<column name="sunClose" type="int" />
 		<column name="monOpen" type="int" />
@@ -1291,7 +1291,7 @@
 
 		<order by="asc">
 			<order-column name="organizationId" />
-			<order-column name="typeId" />
+			<order-column name="listTypeId" />
 		</order>
 
 		<!-- Finder methods -->
@@ -1435,7 +1435,7 @@
 		<column name="classPK" type="long" />
 		<column name="number" type="String" />
 		<column name="extension" type="String" />
-		<column name="typeId" type="long" />
+		<column name="listTypeId" type="long" />
 		<column name="primary" type="boolean" />
 
 		<!-- Order -->
@@ -3006,7 +3006,7 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="url" type="String" />
-		<column name="typeId" type="long" />
+		<column name="listTypeId" type="long" />
 		<column name="primary" type="boolean" />
 		<column name="lastPublishDate" type="Date" />
 

@@ -1115,7 +1115,7 @@ public class ObjectFieldLocalServiceTest {
 			objectDefinition2.getObjectDefinitionId(),
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			name, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+			name, 0, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		try {
 			String objectFieldNamePrefix = "r_" + name + "_";

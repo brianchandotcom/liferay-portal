@@ -116,7 +116,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(),
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				name, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+				name, 0, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -186,7 +186,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(),
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap("Able"), StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+				0, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Able"),
@@ -196,7 +196,7 @@ public class ObjectRelationshipLocalServiceTest {
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship.getObjectRelationshipId(),
 				objectRelationship.getDeletionType(),
-				LocalizedMapUtil.getLocalizedMap("Baker"));
+				LocalizedMapUtil.getLocalizedMap("Baker"), 0);
 
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("Baker"),
@@ -231,7 +231,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(),
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				name, type);
+				name, 0, type);
 
 		String objectFieldNamePrefix = "r_" + name + "_";
 
@@ -270,7 +270,7 @@ public class ObjectRelationshipLocalServiceTest {
 			_objectDefinition1.getObjectDefinitionId(),
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), type);
+			StringUtil.randomId(), 0, type);
 	}
 
 	private void _testSystemObjectRelationshipManyToMany() throws Exception {
@@ -290,7 +290,7 @@ public class ObjectRelationshipLocalServiceTest {
 					deletionType,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
-					relationshipName,
+					relationshipName, 0,
 					ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 			Assert.assertEquals(
@@ -322,7 +322,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(),
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"able", ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+				"able", 0, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 		}
 		catch (DuplicateObjectRelationshipException
 					duplicateObjectRelationshipException) {
@@ -339,7 +339,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition1.getObjectDefinitionId(),
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
+				StringUtil.randomId(), 0,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 		}
 		catch (ObjectRelationshipTypeException
@@ -357,7 +357,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_systemObjectDefinition.getObjectDefinitionId(),
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
+				StringUtil.randomId(), 0,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 		}
 		catch (ObjectRelationshipTypeException
@@ -374,7 +374,7 @@ public class ObjectRelationshipLocalServiceTest {
 			_systemObjectDefinition.getObjectDefinitionId(),
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(),
+			StringUtil.randomId(), 0,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 	}
 
@@ -386,7 +386,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_systemObjectDefinition.getObjectDefinitionId(),
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
+				StringUtil.randomId(), 0,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		String objectFieldNamePrefix =

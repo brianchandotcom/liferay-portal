@@ -467,7 +467,7 @@ public class ObjectRelatedModelsProviderTest {
 			_objectDefinition2.getObjectDefinitionId(),
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), relationshipType);
+			StringUtil.randomId(), 0, relationshipType);
 	}
 
 	private void _setUser(User user) {
@@ -503,7 +503,7 @@ public class ObjectRelatedModelsProviderTest {
 				systemObjectDefinition.getObjectDefinitionId(),
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
+				StringUtil.randomId(), 0,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
@@ -584,7 +584,7 @@ public class ObjectRelatedModelsProviderTest {
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship.getObjectRelationshipId(),
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-				objectRelationship.getLabelMap());
+				objectRelationship.getLabelMap(), 0);
 
 		objectEntry = _objectEntryLocalService.deleteObjectEntry(objectEntry);
 
@@ -599,7 +599,7 @@ public class ObjectRelatedModelsProviderTest {
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship.getObjectRelationshipId(),
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				objectRelationship.getLabelMap());
+				objectRelationship.getLabelMap(), 0);
 
 		objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
@@ -679,7 +679,7 @@ public class ObjectRelatedModelsProviderTest {
 				systemObjectDefinition.getObjectDefinitionId(),
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
+				StringUtil.randomId(), 0,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
@@ -773,7 +773,7 @@ public class ObjectRelatedModelsProviderTest {
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship.getObjectRelationshipId(),
 				ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
-				objectRelationship.getLabelMap());
+				objectRelationship.getLabelMap(), 0);
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry);
 
@@ -811,7 +811,7 @@ public class ObjectRelatedModelsProviderTest {
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship.getObjectRelationshipId(),
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				objectRelationship.getLabelMap());
+				objectRelationship.getLabelMap(), 0);
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry);
 

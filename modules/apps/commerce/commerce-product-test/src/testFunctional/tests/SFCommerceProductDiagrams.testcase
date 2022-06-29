@@ -148,14 +148,67 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "COMMERCE-8068. As a Developer, I want to verify if Shop By Diagram admin configuration with png images works on the storefront"
 	@priority = "4"
 	test AssertDefaultTypeDiagramStoreFront {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8068 AssertDefaultTypeDiagramStoreFront pending implementation
+		task ("Given a Diagram with the "Type" set to "Default", a png image uploaded as "Diagram File" and 2 pins linked to an SKU within the image") {
+			CommerceProducts.openProductsAdmin();
 
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Master",
+				productName = "Diagram Test",
+				productType = "Diagram");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			CommerceDiagram.addPin(
+				pinNumber = "1",
+				position = "0,150",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93015");
+
+			CommerceDiagram.addPin(
+				pinNumber = "2",
+				position = "150,100",
+				quantity = "1",
+				selectType = "Linked to a SKU",
+				sku = "MIN93020");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("When a Developer go into the product details of the diagram on Minium and clicks on a pin") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Diagram Test");
+		}
+
+		task ("Then the Developer is presented with the related product details page.") {
+			CommerceDiagram.viewPinInProduct(pinNumber = "1");
+
+			CommerceDiagram.assertPinToolTipInfoInProduct(
+				productName = "ABS Sensor",
+				selectedType = "Linked to a SKU",
+				sku = "MIN93015");
+
+			CommerceDiagram.viewPinInProduct(pinNumber = "2");
+
+			CommerceDiagram.assertPinToolTipInfoInProduct(
+				productName = "Brake Rotors",
+				selectedType = "Linked to a SKU",
+				sku = "MIN93020");
+		}
 	}
 
 	@description = "COMMERCE-8207. Diagram is rendered on the Product Details page."

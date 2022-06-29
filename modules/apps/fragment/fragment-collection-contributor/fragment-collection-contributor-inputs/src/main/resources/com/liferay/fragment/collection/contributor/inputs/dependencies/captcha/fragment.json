@@ -3,5 +3,10 @@
 	"fragmentEntryKey": "captcha",
 	"icon": "reload",
 	"name": "captcha",
-	"type": "input"
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"captcha"
+		]
+	}
 }

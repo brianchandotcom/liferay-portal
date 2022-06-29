@@ -55,7 +55,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -66,12 +65,12 @@ import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.initialization.Settings;
-import org.gradle.api.internal.TaskInputsInternal;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
+import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.bundling.Zip;
 
@@ -343,15 +342,11 @@ public class ClientExtensionProjectConfigurator
 		TaskProvider<Zip> zipTaskProvider) {
 
 		createClientExtensionConfigTaskProvider.configure(
-			new Action<CreateClientExtensionConfigTask>() {
+			createClientExtensionConfigTask -> {
+				TaskInputs taskInputs =
+					createClientExtensionConfigTask.getInputs();
 
-				@Override
-				public void execute(CreateClientExtensionConfigTask task) {
-					TaskInputsInternal inputs = task.getInputs();
-
-					inputs.file(project.file(_CLIENT_EXTENSION_YAML));
-				}
-
+				taskInputs.file(project.file(_CLIENT_EXTENSION_YAML));
 			});
 
 		zipTaskProvider.configure(

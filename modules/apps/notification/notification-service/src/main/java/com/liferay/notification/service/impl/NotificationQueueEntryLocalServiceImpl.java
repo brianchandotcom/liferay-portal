@@ -105,7 +105,15 @@ public class NotificationQueueEntryLocalServiceImpl
 	public void deleteNotificationQueueEntries(Date sentDate)
 		throws PortalException {
 
-		notificationQueueEntryPersistence.removeByLtSentDate(sentDate);
+		for (NotificationQueueEntry notificationQueueEntry :
+				notificationQueueEntryPersistence.findByLtSentDate(sentDate)) {
+
+			notificationQueueEntryPersistence.remove(notificationQueueEntry);
+
+			_notificationQueueEntryAttachmentLocalService.
+				deleteNotificationQueueEntryAttachments(
+					notificationQueueEntry.getNotificationQueueEntryId());
+		}
 	}
 
 	@Override
@@ -124,9 +132,15 @@ public class NotificationQueueEntryLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public NotificationQueueEntry deleteNotificationQueueEntry(
-		NotificationQueueEntry notificationQueueEntry) {
+			NotificationQueueEntry notificationQueueEntry)
+		throws PortalException {
 
-		notificationQueueEntryPersistence.remove(notificationQueueEntry);
+		notificationQueueEntry = notificationQueueEntryPersistence.remove(
+			notificationQueueEntry);
+
+		_notificationQueueEntryAttachmentLocalService.
+			deleteNotificationQueueEntryAttachments(
+				notificationQueueEntry.getNotificationQueueEntryId());
 
 		return notificationQueueEntry;
 	}

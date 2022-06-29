@@ -167,6 +167,10 @@ public class NotificationTemplateLocalServiceImpl
 		notificationTemplate = notificationTemplatePersistence.remove(
 			notificationTemplate);
 
+		_notificationTemplateAttachmentPersistence.
+			removeByNotificationTemplateId(
+				notificationTemplate.getNotificationTemplateId());
+
 		_resourceLocalService.deleteResource(
 			notificationTemplate, ResourceConstants.SCOPE_INDIVIDUAL);
 

@@ -18,8 +18,10 @@ import com.liferay.notification.model.NotificationQueueEntryAttachment;
 import com.liferay.notification.service.base.NotificationQueueEntryAttachmentLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carolina Barbosa
@@ -48,5 +50,26 @@ public class NotificationQueueEntryAttachmentLocalServiceImpl
 		return notificationQueueEntryAttachmentPersistence.update(
 			notificationQueueEntryAttachment);
 	}
+
+	@Override
+	public void deleteNotificationQueueEntryAttachments(
+			long notificationQueueEntryId)
+		throws PortalException {
+
+		for (NotificationQueueEntryAttachment notificationQueueEntryAttachment :
+				notificationQueueEntryAttachmentPersistence.
+					findByNotificationQueueEntryId(notificationQueueEntryId)) {
+
+			notificationQueueEntryAttachmentPersistence.remove(
+				notificationQueueEntryAttachment.
+					getNotificationQueueEntryAttachmentId());
+
+			_portletFileRepository.deletePortletFileEntry(
+				notificationQueueEntryAttachment.getFileEntryId());
+		}
+	}
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

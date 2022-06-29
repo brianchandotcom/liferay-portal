@@ -26,10 +26,12 @@ interface IAutoCompleteProps extends React.HTMLAttributes<HTMLElement> {
 	emptyStateMessage: string;
 	error?: string;
 	feedbackMessage?: string;
+	hasEmptyItem?: boolean;
 	items: any[];
 	label: string;
 	onChangeQuery: (value: string) => void;
 	onSelectItem: (item: any) => void;
+	placeholder?: string;
 	query: string;
 	required?: boolean;
 	value?: string;
@@ -42,16 +44,28 @@ export function AutoComplete({
 	emptyStateMessage,
 	error,
 	feedbackMessage,
+	hasEmptyItem,
 	id,
-	items,
+	items: initialItems,
 	label,
 	onChangeQuery,
 	onSelectItem,
+	placeholder,
 	query,
 	required = false,
 	value,
 }: IAutoCompleteProps) {
 	const [active, setActive] = useState<boolean>(false);
+
+	const items = hasEmptyItem
+		? [
+				{
+					id: '',
+					label: Liferay.Language.get('choose-an-option'),
+				},
+				...initialItems,
+		  ]
+		: initialItems;
 
 	return (
 		<FieldBase
@@ -68,7 +82,10 @@ export function AutoComplete({
 				trigger={
 					<CustomSelect
 						contentRight={<>{value && contentRight}</>}
-						placeholder={Liferay.Language.get('choose-an-option')}
+						placeholder={
+							placeholder ??
+							Liferay.Language.get('choose-an-option')
+						}
 						value={value}
 					/>
 				}
@@ -79,7 +96,13 @@ export function AutoComplete({
 					value={query}
 				/>
 
-				{items.length ? (
+				{(items.length === 1 && items[0].id === '') || !items.length ? (
+					<ClayDropDown.ItemList>
+						<ClayDropDown.Item>
+							{emptyStateMessage}
+						</ClayDropDown.Item>
+					</ClayDropDown.ItemList>
+				) : (
 					<ClayDropDown.ItemList>
 						{items.map((item, index) => {
 							return (
@@ -94,12 +117,6 @@ export function AutoComplete({
 								</ClayDropDown.Item>
 							);
 						})}
-					</ClayDropDown.ItemList>
-				) : (
-					<ClayDropDown.ItemList>
-						<ClayDropDown.Item>
-							{emptyStateMessage}
-						</ClayDropDown.Item>
 					</ClayDropDown.ItemList>
 				)}
 			</ClayDropDown>

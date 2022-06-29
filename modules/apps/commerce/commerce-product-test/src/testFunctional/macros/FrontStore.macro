@@ -84,6 +84,57 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
+	macro assertProductComparisonTable {
+		AssertLocation.assertPartialLocation(value1 = "group/minium/compare");
+
+		var columNumber = "1";
+
+		for (var product : list "${products}") {
+			var productSpecifications = CommerceJSONProductsAPI._getCommerceProductSpecifications(productName = "${product}");
+			var productOptions = CommerceJSONProductsAPI._getCommerceProductOptions(productName = "${product}");
+			var productName = StringUtil.lowerCase("${product}");
+
+			var productName = StringUtil.replace("${productName}", " ", "-");
+
+			AssertElementPresent(
+				key_productName = "${productName}",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+
+			for (var productOption : list "${productOptions}") {
+				if ("${productOption}" != "") {
+					var productOptionId = CommerceJSONProductsAPI._getCommerceProductOptionId(
+						productName = "${product}",
+						productOptionName = "${productOption}");
+
+					var productOptionValues = CommerceJSONProductsAPI._getCommerceProductOptionValues(productOptionId = "${productOptionId}");
+
+					var productOptionValues = StringUtil.replace("${productOptionValues}", ",", ", ");
+
+					AssertElementPresent(
+						key_columnNumber = "${columNumber}",
+						key_specification = "${productOption}",
+						key_value = "${productOptionValues}",
+						locator1 = "CommerceFrontStore#PRODUCT_COMPARISON_TABLE_SPECIFICATION");
+				}
+			}
+
+			for (var productSpecification : list "${productSpecifications}") {
+				var key_specification = StringUtil.extractFirst("${productSpecification}", ":");
+				var key_value = StringUtil.extractLast("${productSpecification}", ":");
+
+				var key_value = StringUtil.replace("${key_value}", "&comma;", ",");
+
+				AssertElementPresent(
+					key_columnNumber = "${columNumber}",
+					key_specification = "${key_specification}",
+					key_value = "${key_value}",
+					locator1 = "CommerceFrontStore#PRODUCT_COMPARISON_TABLE_SPECIFICATION");
+			}
+
+			var columNumber = ${columNumber} + 1;
+		}
+	}
+
 	macro assertProductDetails {
 		if (isSet(productName)) {
 			AssertElementPresent(
@@ -154,6 +205,34 @@ definition {
 			key_productName = "${productName}",
 			locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_INACTIVE_PRICE",
 			value1 = "${basePrice}");
+	}
+
+	macro compareProducts {
+		var comparisonItems = "0";
+
+		for (var product : list "${products}") {
+			if (!(IsElementPresent(key_productName = "${product}", locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX"))) {
+				CommerceNavigator.searchEntry(entryName = "${product}");
+			}
+
+			ScrollWebElementIntoView(
+				key_productName = "${product}",
+				locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+
+			Check.checkToggleSwitch(
+				key_productName = "${product}",
+				locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+
+			var comparisonItems = ${comparisonItems} + 1;
+
+			AssertElementPresent(
+				key_value = "${comparisonItems}",
+				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_ACTIVE_N");
+		}
+
+		if ("${clickCompare}" != "false") {
+			Button.click(button = "Compare");
+		}
 	}
 
 	macro getCurrentCartDataBadgeCount {

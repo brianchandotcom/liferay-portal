@@ -166,7 +166,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-155168. The user could submit Text verification of Simple Captcha via pressing enter at view mode."
+	@description = "This is a test for LPS-155168. The user could submit Text verification of Simple Captcha via pressing enter at view mode. The user could see error message when validation fail."
 	@priority = "5"
 	test SubmitTextVerificationViaPressingEnter {
 		property test.name.skip.portal.instance = "CaptchaFragment#SubmitTextVerificationViaPressingEnter";

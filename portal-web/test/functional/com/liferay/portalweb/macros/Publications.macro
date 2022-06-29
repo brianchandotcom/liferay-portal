@@ -96,18 +96,39 @@ definition {
 	}
 
 	macro disablePublications {
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		if ("${gotoInstancesettings}" == "true") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
 
-		Click.waitForMenuToggleJSClick(locator1 = "Publications#PUBLICATIONS_ELLIPSIS");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Publications",
+				configurationName = "Publications Settings",
+				configurationScope = "Virtual Instance Scope");
 
-		MenuItem.click(menuItem = "Settings");
+			FormFields.disableCheckbox(fieldName = "Enabled");
 
-		Uncheck.uncheckToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
+			AssertClick(
+				locator1 = "Button#SUBMIT",
+				value1 = "Update");
 
-		Click(locator1 = "Button#SAVE");
+			Alert.viewSuccessMessage();
+		}
+		else {
+			ApplicationsMenu.gotoPortlet(
+				category = "Publications",
+				panel = "Applications",
+				portlet = "Publications");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Publications#PUBLICATIONS_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Settings");
+
+			Uncheck.uncheckToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
+
+			Click(locator1 = "Button#SAVE");
+		}
 	}
 
 	macro enablePublications {

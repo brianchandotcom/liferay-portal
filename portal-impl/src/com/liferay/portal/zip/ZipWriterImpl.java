@@ -248,7 +248,9 @@ public class ZipWriterImpl implements ZipWriter {
 					}
 				}
 				catch (NoSuchFieldException noSuchFieldException) {
-					_log.debug(noSuchFieldException);
+					if (_log.isDebugEnabled()) {
+						_log.debug(noSuchFieldException);
+					}
 				}
 			}
 		}

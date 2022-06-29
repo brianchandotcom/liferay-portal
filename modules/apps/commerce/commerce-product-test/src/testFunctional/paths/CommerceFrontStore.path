@@ -151,6 +151,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_COMPARE_ITEM_N</td>
+	<td>//div[contains(@class,'mini-compare-item')][${key_value}]//div[@class='mini-compare-thumbnail']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_COMPARE_ITEM_CUSTOM_IMAGE</td>
 	<td>//div[contains(@class,'mini-compare active')]//div[contains(@style,'${key_productMediaId}')]</td>
 	<td></td>

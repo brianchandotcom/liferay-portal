@@ -139,8 +139,6 @@ public class MainServlet extends HttpServlet {
 			_log.debug("Destroy plugins");
 		}
 
-		DependencyManagerSyncUtil.sync();
-
 		_portalInitializedModuleServiceLifecycleServiceRegistration.
 			unregister();
 		_portalPortletsInitializedModuleServiceLifecycleServiceRegistration.
@@ -427,6 +425,8 @@ public class MainServlet extends HttpServlet {
 		}
 
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
+
+		DependencyManagerSyncUtil.sync();
 	}
 
 	@Override

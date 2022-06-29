@@ -153,6 +153,9 @@ public class ObjectRelationshipPersistenceTest {
 
 		newObjectRelationship.setName(RandomTestUtil.randomString());
 
+		newObjectRelationship.setParameterObjectFieldId(
+			RandomTestUtil.nextLong());
+
 		newObjectRelationship.setReverse(RandomTestUtil.randomBoolean());
 
 		newObjectRelationship.setType(RandomTestUtil.randomString());
@@ -209,6 +212,9 @@ public class ObjectRelationshipPersistenceTest {
 		Assert.assertEquals(
 			existingObjectRelationship.getName(),
 			newObjectRelationship.getName());
+		Assert.assertEquals(
+			existingObjectRelationship.getParameterObjectFieldId(),
+			newObjectRelationship.getParameterObjectFieldId());
 		Assert.assertEquals(
 			existingObjectRelationship.isReverse(),
 			newObjectRelationship.isReverse());
@@ -329,7 +335,8 @@ public class ObjectRelationshipPersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"objectDefinitionId1", true, "objectDefinitionId2", true,
 			"objectFieldId2", true, "deletionType", true, "dbTableName", true,
-			"label", true, "name", true, "reverse", true, "type", true);
+			"label", true, "name", true, "parameterObjectFieldId", true,
+			"reverse", true, "type", true);
 	}
 
 	@Test
@@ -684,6 +691,8 @@ public class ObjectRelationshipPersistenceTest {
 		objectRelationship.setLabel(RandomTestUtil.randomString());
 
 		objectRelationship.setName(RandomTestUtil.randomString());
+
+		objectRelationship.setParameterObjectFieldId(RandomTestUtil.nextLong());
 
 		objectRelationship.setReverse(RandomTestUtil.randomBoolean());
 

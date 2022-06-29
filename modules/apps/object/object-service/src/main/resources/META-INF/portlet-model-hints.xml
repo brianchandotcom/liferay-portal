@@ -201,6 +201,7 @@
 		<field name="DBTableName" type="String" />
 		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
+		<field name="parameterObjectFieldId" type="long" />
 		<field name="reverse" type="boolean" />
 		<field name="type" type="String" />
 	</model>

@@ -169,6 +169,14 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 				if (decimalOptional.orElse(false)) {
 					dataType = "decimal";
+
+					Optional<Integer> decimalPartMaxLengthOptional =
+						infoField.getAttributeOptional(
+							NumberInfoFieldType.DECIMAL_PART_MAX_LENGTH);
+
+					decimalPartMaxLengthOptional.ifPresent(
+						decimalPartMaxLength -> inputTemplateNode.addAttribute(
+							"step", _getStep(decimalPartMaxLength)));
 				}
 
 				inputTemplateNode.addAttribute("dataType", dataType);
@@ -188,14 +196,6 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				minValueOptional.ifPresent(
 					minValue -> inputTemplateNode.addAttribute(
 						"min", minValue));
-
-				Optional<Integer> decimalPartMaxLengthOptional =
-					infoField.getAttributeOptional(
-						NumberInfoFieldType.DECIMAL_PART_MAX_LENGTH);
-
-				decimalPartMaxLengthOptional.ifPresent(
-					decimalPartMaxLength -> inputTemplateNode.addAttribute(
-						"step", _getStep(decimalPartMaxLength)));
 			}
 
 			if (infoField.getInfoFieldType() instanceof SelectInfoFieldType) {

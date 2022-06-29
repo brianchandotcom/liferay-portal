@@ -689,6 +689,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			return;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)getRequest().getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write("<form action=\"");
@@ -711,21 +714,15 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write(
 			renderLayoutStructureDisplayContext.getStyle(
 				formStyledLayoutStructureItem));
-		jspWriter.write("\">");
-
-		String redirect =
+		jspWriter.write("\"><input name=\"redirect\" type=\"hidden\" value=\"");
+		jspWriter.write(
 			renderLayoutStructureDisplayContext.
 				getFormStyledLayoutStructureItemRedirect(
-					formStyledLayoutStructureItem);
-
-		if (Validator.isNotNull(redirect)) {
-			jspWriter.write(
-				"<input name=\"redirect\" type=\"hidden\" value=\"");
-			jspWriter.write(redirect);
-			jspWriter.write("\">");
-		}
-
-		jspWriter.write("<input name=\"classNameId\" type=\"hidden\" value=\"");
+					formStyledLayoutStructureItem));
+		jspWriter.write("\"><input name=\"backURL\" type=\"hidden\" value=\"");
+		jspWriter.write(themeDisplay.getURLCurrent());
+		jspWriter.write(
+			"\"><input name=\"classNameId\" type=\"hidden\" value=\"");
 		jspWriter.write(
 			String.valueOf(formStyledLayoutStructureItem.getClassNameId()));
 		jspWriter.write(
@@ -736,9 +733,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			"\"><input name=\"formItemId\" type=\"hidden\" value=\"");
 		jspWriter.write(formStyledLayoutStructureItem.getItemId());
 		jspWriter.write("\"><input name=\"groupId\" type=\"hidden\" value=\"");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)getRequest().getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		jspWriter.write(String.valueOf(themeDisplay.getScopeGroupId()));
 

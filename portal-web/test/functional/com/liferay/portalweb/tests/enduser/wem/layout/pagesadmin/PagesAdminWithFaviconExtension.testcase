@@ -196,4 +196,55 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153654. The site designer could clear the favicon extenion selection."
+	@priority = "4"
+	test ClearFaviconExtensionSelection {
+		task ("Given a site designer has a content page with a favicon extension") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
+
+			PortletEntry.save();
+		}
+
+		task ("Then the site designer could clear the favicon extension selection") {
+			AssertTextEquals(
+				faviconName = "Google Favicon",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Google Favicon");
+
+			Click(
+				buttonId = "clearFaviconButton",
+				locator1 = "Button#BUTTON_ID");
+
+			AssertTextEquals(
+				faviconName = "Favicon from Theme",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Favicon from Theme");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementPresent(
+				imageFileName = "classic-theme/images/favicon.ico",
+				locator1 = "Icon#FAVICON");
+		}
+	}
+
 }

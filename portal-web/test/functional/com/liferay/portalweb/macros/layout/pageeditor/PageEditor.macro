@@ -805,9 +805,9 @@ definition {
 
 			PageEditor.moveFragmentToFormContainerViaPageStructure(
 				dropTarget = "${dropTarget}",
-				elementName = "${fragmentName}",
+				fragmentName = "${fragmentName}",
 				index = "${index}",
-				targetElementName = "${targetFragmentName}");
+				targetFragmentName = "${targetFragmentName}");
 		}
 		else {
 			PageEditor.gotoTab(tabName = "Fragments and Widgets");

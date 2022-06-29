@@ -64,6 +64,65 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-155168. The user could submit Text verification of Simple Captcha via clicking submit at view mode."
+	@priority = "4"
+	test SubmitTextVerificationViaClickingSubmit {
+		property test.name.skip.portal.instance = "CaptchaFragment#SubmitTextVerificationViaClickingSubmit";
+
+		task ("Given a site member has a content page with a Captcha and a Submit Button inside Form Container") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Map the Form Container to new Object") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add a Captcha and a Submit Button fragment into Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "CAPTCHA");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "CAPTCHA");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the site member accesses to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the site member could submit text verification via clicking submit") {
+			Type(
+				inputFieldId = "captchaText",
+				locator1 = "TextInput#INPUT_ID",
+				value1 = "Fake");
+
+			Button.clickSubmitButton();
+
+			Alert.viewErrorMessage(errorMessage = "CAPTCHA verification failed. Please try again.");
+		}
+	}
+
 	@description = "This is a test for LPS-155168. The user could submit Text verification of Simple Captcha via pressing enter at view mode."
 	@priority = "5"
 	test SubmitTextVerificationViaPressingEnter {

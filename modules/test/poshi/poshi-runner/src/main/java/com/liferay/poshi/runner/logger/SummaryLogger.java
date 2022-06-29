@@ -751,8 +751,8 @@ public final class SummaryLogger {
 			Validator.isNull(element.attributeValue("function-summary")) &&
 			Validator.isNull(element.attributeValue("macro")) &&
 			Validator.isNull(element.attributeValue("macro-summary")) &&
-			Validator.isNull(element.attributeValue("summary")) &&
-			Validator.isNull(element.attributeValue("method"))) {
+			Validator.isNull(element.attributeValue("method")) &&
+			Validator.isNull(element.attributeValue("summary"))) {
 
 			return false;
 		}

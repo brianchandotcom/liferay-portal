@@ -21,7 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Matuzalem Teles
  */
-@ExtendedObjectClassDefinition(category = "infrastructure")
+@ExtendedObjectClassDefinition(
+	category = "frontend-walkthrough",
+	scope = ExtendedObjectClassDefinition.Scope.GROUP
+)
 @Meta.OCD(
 	id = "com.liferay.frontend.js.walkthrough.web.internal.configuration.WalkthroughConfiguration",
 	localization = "content/Language", name = "walkthrough-configuration-name"

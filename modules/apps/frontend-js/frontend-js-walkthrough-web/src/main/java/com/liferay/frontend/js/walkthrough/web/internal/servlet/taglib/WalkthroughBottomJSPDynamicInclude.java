@@ -16,20 +16,21 @@ package com.liferay.frontend.js.walkthrough.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.walkthrough.web.internal.configuration.WalkthroughConfiguration;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
-
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -48,6 +49,25 @@ public class WalkthroughBottomJSPDynamicInclude implements DynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		try {
+			WalkthroughConfiguration walkthroughConfiguration =
+				_configurationProvider.getGroupConfiguration(
+					WalkthroughConfiguration.class, group.getGroupId());
+
+			if (!walkthroughConfiguration.enableWalkthrough()) {
+				return;
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
 		ScriptData scriptData = new ScriptData();
 
 		String resolvedModuleName = _npmResolver.resolveModuleName(
@@ -65,22 +85,16 @@ public class WalkthroughBottomJSPDynamicInclude implements DynamicInclude {
 	public void register(
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 
-		if (_walkthroughConfiguration.enableWalkthrough()) {
-			dynamicIncludeRegistry.register(
-				"/html/common/themes/bottom.jsp#post");
-		}
+		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_walkthroughConfiguration = ConfigurableUtil.createConfigurable(
-			WalkthroughConfiguration.class, properties);
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		WalkthroughBottomJSPDynamicInclude.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private NPMResolver _npmResolver;
-
-	private volatile WalkthroughConfiguration _walkthroughConfiguration;
 
 }

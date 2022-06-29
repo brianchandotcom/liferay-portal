@@ -4,7 +4,7 @@ dependencies {
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testIntegrationCompile group: "org.hibernate", name: "hibernate-core", version: "5.6.7.Final"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	testIntegrationCompile group: "org.springframework", name: "spring-tx", version: "5.2.20.RELEASE"
+	testIntegrationCompile group: "org.springframework", name: "spring-tx", version: "5.2.22.RELEASE"
 	testIntegrationCompile project(":apps:layout:layout-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

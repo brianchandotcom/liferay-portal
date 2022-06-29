@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
+import com.liferay.headless.delivery.client.dto.v1_0.CustomCSSViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.PageSectionDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
@@ -132,6 +133,33 @@ public class PageSectionDefinitionSerDes {
 			sb.append(_escape(pageSectionDefinition.getCustomCSS()));
 
 			sb.append("\"");
+		}
+
+		if (pageSectionDefinition.getCustomCSSViewports() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customCSSViewports\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < pageSectionDefinition.getCustomCSSViewports().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						pageSectionDefinition.getCustomCSSViewports()[i]));
+
+				if ((i + 1) <
+						pageSectionDefinition.getCustomCSSViewports().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (pageSectionDefinition.getFragmentLink() != null) {
@@ -278,6 +306,15 @@ public class PageSectionDefinitionSerDes {
 				String.valueOf(pageSectionDefinition.getCustomCSS()));
 		}
 
+		if (pageSectionDefinition.getCustomCSSViewports() == null) {
+			map.put("customCSSViewports", null);
+		}
+		else {
+			map.put(
+				"customCSSViewports",
+				String.valueOf(pageSectionDefinition.getCustomCSSViewports()));
+		}
+
 		if (pageSectionDefinition.getFragmentLink() == null) {
 			map.put("fragmentLink", null);
 		}
@@ -383,6 +420,21 @@ public class PageSectionDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageSectionDefinition.setCustomCSS(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "customCSSViewports")) {
+
+				if (jsonParserFieldValue != null) {
+					pageSectionDefinition.setCustomCSSViewports(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomCSSViewportSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new CustomCSSViewport[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentLink")) {

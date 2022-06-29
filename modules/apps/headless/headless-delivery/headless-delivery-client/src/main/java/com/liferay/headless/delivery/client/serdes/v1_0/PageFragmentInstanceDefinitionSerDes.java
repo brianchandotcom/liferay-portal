@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
+import com.liferay.headless.delivery.client.dto.v1_0.CustomCSSViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.PageFragmentInstanceDefinition;
@@ -105,6 +106,36 @@ public class PageFragmentInstanceDefinitionSerDes {
 			sb.append(_escape(pageFragmentInstanceDefinition.getCustomCSS()));
 
 			sb.append("\"");
+		}
+
+		if (pageFragmentInstanceDefinition.getCustomCSSViewports() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customCSSViewports\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i <
+					 pageFragmentInstanceDefinition.
+						 getCustomCSSViewports().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						pageFragmentInstanceDefinition.getCustomCSSViewports()
+							[i]));
+
+				if ((i + 1) < pageFragmentInstanceDefinition.
+						getCustomCSSViewports().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (pageFragmentInstanceDefinition.getFragment() != null) {
@@ -277,6 +308,16 @@ public class PageFragmentInstanceDefinitionSerDes {
 				String.valueOf(pageFragmentInstanceDefinition.getCustomCSS()));
 		}
 
+		if (pageFragmentInstanceDefinition.getCustomCSSViewports() == null) {
+			map.put("customCSSViewports", null);
+		}
+		else {
+			map.put(
+				"customCSSViewports",
+				String.valueOf(
+					pageFragmentInstanceDefinition.getCustomCSSViewports()));
+		}
+
 		if (pageFragmentInstanceDefinition.getFragment() == null) {
 			map.put("fragment", null);
 		}
@@ -376,6 +417,21 @@ public class PageFragmentInstanceDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageFragmentInstanceDefinition.setCustomCSS(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "customCSSViewports")) {
+
+				if (jsonParserFieldValue != null) {
+					pageFragmentInstanceDefinition.setCustomCSSViewports(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomCSSViewportSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new CustomCSSViewport[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragment")) {

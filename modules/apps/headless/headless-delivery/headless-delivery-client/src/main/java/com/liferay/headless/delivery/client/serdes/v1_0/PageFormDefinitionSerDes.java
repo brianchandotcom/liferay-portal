@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
+import com.liferay.headless.delivery.client.dto.v1_0.CustomCSSViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.PageFormDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
@@ -95,6 +96,32 @@ public class PageFormDefinitionSerDes {
 			sb.append(_escape(pageFormDefinition.getCustomCSS()));
 
 			sb.append("\"");
+		}
+
+		if (pageFormDefinition.getCustomCSSViewports() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customCSSViewports\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < pageFormDefinition.getCustomCSSViewports().length; i++) {
+
+				sb.append(
+					String.valueOf(
+						pageFormDefinition.getCustomCSSViewports()[i]));
+
+				if ((i + 1) <
+						pageFormDefinition.getCustomCSSViewports().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (pageFormDefinition.getFormConfig() != null) {
@@ -191,6 +218,15 @@ public class PageFormDefinitionSerDes {
 				"customCSS", String.valueOf(pageFormDefinition.getCustomCSS()));
 		}
 
+		if (pageFormDefinition.getCustomCSSViewports() == null) {
+			map.put("customCSSViewports", null);
+		}
+		else {
+			map.put(
+				"customCSSViewports",
+				String.valueOf(pageFormDefinition.getCustomCSSViewports()));
+		}
+
 		if (pageFormDefinition.getFormConfig() == null) {
 			map.put("formConfig", null);
 		}
@@ -256,6 +292,21 @@ public class PageFormDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageFormDefinition.setCustomCSS(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "customCSSViewports")) {
+
+				if (jsonParserFieldValue != null) {
+					pageFormDefinition.setCustomCSSViewports(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CustomCSSViewportSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new CustomCSSViewport[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "formConfig")) {

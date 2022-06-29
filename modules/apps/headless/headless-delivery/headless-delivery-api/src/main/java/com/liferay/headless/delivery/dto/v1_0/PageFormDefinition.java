@@ -121,6 +121,38 @@ public class PageFormDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCSS;
 
+	@Schema(description = "The custom CSS viewports of the page collection.")
+	@Valid
+	public CustomCSSViewport[] getCustomCSSViewports() {
+		return customCSSViewports;
+	}
+
+	public void setCustomCSSViewports(CustomCSSViewport[] customCSSViewports) {
+		this.customCSSViewports = customCSSViewports;
+	}
+
+	@JsonIgnore
+	public void setCustomCSSViewports(
+		UnsafeSupplier<CustomCSSViewport[], Exception>
+			customCSSViewportsUnsafeSupplier) {
+
+		try {
+			customCSSViewports = customCSSViewportsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "The custom CSS viewports of the page collection."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected CustomCSSViewport[] customCSSViewports;
+
 	@Schema(description = "The page form's configuration.")
 	@Valid
 	public FormConfig getFormConfig() {
@@ -304,6 +336,26 @@ public class PageFormDefinition implements Serializable {
 			sb.append(_escape(customCSS));
 
 			sb.append("\"");
+		}
+
+		if (customCSSViewports != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customCSSViewports\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < customCSSViewports.length; i++) {
+				sb.append(String.valueOf(customCSSViewports[i]));
+
+				if ((i + 1) < customCSSViewports.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (formConfig != null) {

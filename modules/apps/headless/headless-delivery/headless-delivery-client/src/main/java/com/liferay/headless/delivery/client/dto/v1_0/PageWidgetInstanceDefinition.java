@@ -76,6 +76,28 @@ public class PageWidgetInstanceDefinition implements Cloneable, Serializable {
 
 	protected String customCSS;
 
+	public CustomCSSViewport[] getCustomCSSViewports() {
+		return customCSSViewports;
+	}
+
+	public void setCustomCSSViewports(CustomCSSViewport[] customCSSViewports) {
+		this.customCSSViewports = customCSSViewports;
+	}
+
+	public void setCustomCSSViewports(
+		UnsafeSupplier<CustomCSSViewport[], Exception>
+			customCSSViewportsUnsafeSupplier) {
+
+		try {
+			customCSSViewports = customCSSViewportsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected CustomCSSViewport[] customCSSViewports;
+
 	public FragmentStyle getFragmentStyle() {
 		return fragmentStyle;
 	}

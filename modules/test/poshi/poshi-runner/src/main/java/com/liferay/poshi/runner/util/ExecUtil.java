@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner.util;
 
+import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.OSDetector;
 
 import java.io.BufferedReader;
@@ -43,7 +44,7 @@ public class ExecUtil {
 		}
 
 		Process process = executeCommands(
-			true, new File("."), 1000 * 60 * 15, command);
+			true, new File("."), 1000 * 60 * _timeoutDuration, command);
 
 		if (process.exitValue() != 0) {
 			return readInputStream(process.getErrorStream(), true);
@@ -230,6 +231,12 @@ public class ExecUtil {
 		return sb.toString();
 	}
 
+	public static void setTimeoutDuration(String timeoutDuration) {
+		Long timeoutDurationLong = GetterUtil.getLong(timeoutDuration);
+
+		_timeoutDuration = timeoutDurationLong;
+	}
+
 	public static void sleep(long duration) {
 		try {
 			Thread.sleep(duration);
@@ -251,6 +258,7 @@ public class ExecUtil {
 
 	private static final long _BASH_COMMAND_TIMEOUT_DEFAULT = 1000 * 60 * 60;
 
+	private static long _timeoutDuration = 15;
 	private static final List<String> _whitelistedExecutableNames =
 		Arrays.asList("git", "grep", "sed");
 

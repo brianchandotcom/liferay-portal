@@ -7,7 +7,9 @@ definition {
 
 		Click.pauseClickAt(locator1 = "Button#SELECT");
 
-		Pause(locator1 = "5000");
+		WaitForElementPresent(
+			locator1 = "Modal#HEADER",
+			value1 = "Select Site Navigation Menu");
 
 		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -46,19 +48,9 @@ definition {
 
 	macro gotoSublevel {
 		if ("${type}" == "Drop Down") {
-			WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
-
-			MouseOver(
+			MouseOver.javaScriptMouseOver(
 				key_pageName = "${pageName}",
 				locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
-
-			while (IsElementNotPresent(key_pageName = "${pageName}", locator1 = "NavigationMenusWidget#OPEN_DROPDOWN_MENU")) {
-				Pause(locator1 = "3000");
-
-				MouseOver(
-					key_pageName = "${pageName}",
-					locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
-			}
 
 			Click(
 				key_itemName = "${itemName}",

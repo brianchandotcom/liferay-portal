@@ -43,6 +43,9 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                objectDefinitionId:
+                    format: int64
+                    type: integer
                 subject:
                     additionalProperties:
                         type: string

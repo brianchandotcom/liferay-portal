@@ -703,14 +703,14 @@ public class LayoutStructure {
 	private LayoutStructure(
 		Set<String> deletedItemIds,
 		Map<String, DeletedLayoutStructureItem> deletedLayoutStructureItems,
-		List<FormStyledLayoutStructureItem> formLayoutStructureItems,
+		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems,
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems,
 		Map<String, LayoutStructureItem> layoutStructureItems,
 		String mainItemId) {
 
 		_deletedItemIds = deletedItemIds;
 		_deletedLayoutStructureItems = deletedLayoutStructureItems;
-		_formStyledLayoutStructureItems = formLayoutStructureItems;
+		_formStyledLayoutStructureItems = formStyledLayoutStructureItems;
 		_fragmentLayoutStructureItems = fragmentLayoutStructureItems;
 		_layoutStructureItems = layoutStructureItems;
 		_mainItemId = mainItemId;

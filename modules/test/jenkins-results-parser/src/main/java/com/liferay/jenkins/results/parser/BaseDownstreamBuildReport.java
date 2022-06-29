@@ -16,6 +16,10 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,6 +55,47 @@ public abstract class BaseDownstreamBuildReport
 		}
 
 		return overheadDuration;
+	}
+
+	@Override
+	public List<TestClassReport> getTestClassReports() {
+		if (_testClassReportsMap != null) {
+			return new ArrayList<>(_testClassReportsMap.values());
+		}
+
+		_testClassReportsMap = new TreeMap<>();
+
+		String batchName = getBatchName();
+
+		for (TestReport testReport : getTestReports()) {
+			String testClassName = testReport.getTestName();
+
+			if (batchName.startsWith("integration") ||
+				batchName.startsWith("modules-integration") ||
+				batchName.startsWith("modules-unit") ||
+				batchName.startsWith("unit")) {
+
+				Matcher matcher = _jUnitTestNamePattern.matcher(testClassName);
+
+				if (matcher.find()) {
+					testClassName = matcher.group("testClassName");
+				}
+			}
+
+			TestClassReport testClassReport = _testClassReportsMap.get(
+				testClassName);
+
+			if (testClassReport == null) {
+				testClassReport = TestReportFactory.newTestClassReport(
+					this, testClassName);
+
+				_testClassReportsMap.put(testClassName, testClassReport);
+			}
+
+			testClassReport.addTestReport(testReport);
+		}
+
+		return new ArrayList<>(_testClassReportsMap.values());
 	}
 
 	@Override
@@ -90,7 +135,11 @@ public abstract class BaseDownstreamBuildReport
 		_topLevelBuildReport = topLevelBuildReport;
 	}
 
+	private static final Pattern _jUnitTestNamePattern = Pattern.compile(
+		"(?<testClassName>.*Test)\\.(?<testName>test.*)");
+
 	private final String _batchName;
+	private Map<String, TestClassReport> _testClassReportsMap;
 	private final TopLevelBuildReport _topLevelBuildReport;
 
 }

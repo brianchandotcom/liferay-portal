@@ -89,7 +89,8 @@ public class ClientExtensionServicePreActionTest {
 			_company.getCompanyId(), _user.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+		_layout = LayoutTestUtil.addTypeContentLayout(
+			_user.getUserId(), _group);
 	}
 
 	@Test

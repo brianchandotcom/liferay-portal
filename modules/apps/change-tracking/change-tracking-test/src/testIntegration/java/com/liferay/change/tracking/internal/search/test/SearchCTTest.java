@@ -409,7 +409,6 @@ public class SearchCTTest {
 				searchContext -> {
 					searchContext.setAttribute(
 						Field.GROUP_ID, _group.getGroupId());
-
 					searchContext.setAttribute(
 						Field.TYPE,
 						new String[] {LayoutConstants.TYPE_PORTLET});

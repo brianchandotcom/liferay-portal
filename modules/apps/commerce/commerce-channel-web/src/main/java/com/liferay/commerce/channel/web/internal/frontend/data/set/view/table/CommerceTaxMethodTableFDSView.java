@@ -97,7 +97,6 @@ public class CommerceTaxMethodTableFDSView
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildString());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));
 				dropdownItem.setTarget("sidePanel");

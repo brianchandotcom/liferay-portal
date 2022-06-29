@@ -100,7 +100,6 @@ public class CommercePaymentMethodTableFDSView
 					).setWindowState(
 						LiferayWindowState.POP_UP
 					).buildPortletURL());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));
 				dropdownItem.setTarget("sidePanel");

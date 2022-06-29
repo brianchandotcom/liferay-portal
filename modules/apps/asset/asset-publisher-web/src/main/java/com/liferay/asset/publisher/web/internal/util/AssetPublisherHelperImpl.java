@@ -449,7 +449,6 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		assetEntryQuery.setOrderByType1(
 			GetterUtil.getString(
 				portletPreferences.getValue("orderByType1", "DESC")));
-
 		assetEntryQuery.setOrderByType2(
 			GetterUtil.getString(
 				portletPreferences.getValue("orderByType2", "ASC")));

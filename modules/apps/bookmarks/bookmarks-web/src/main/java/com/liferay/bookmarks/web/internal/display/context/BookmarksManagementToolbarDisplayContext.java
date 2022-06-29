@@ -182,7 +182,6 @@ public class BookmarksManagementToolbarDisplayContext {
 					_removeNavigartionParameter(_currentURLObj));
 
 				labelItem.setCloseable(true);
-
 				labelItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "recent"));
 			}

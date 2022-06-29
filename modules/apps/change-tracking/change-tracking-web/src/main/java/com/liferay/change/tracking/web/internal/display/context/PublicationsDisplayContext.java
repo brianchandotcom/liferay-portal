@@ -113,7 +113,6 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 
 				autocompleteUserURL.setResourceID(
 					"/change_tracking/autocomplete_user");
-
 				autocompleteUserURL.setParameter(
 					"ctCollectionId",
 					String.valueOf(ctCollection.getCtCollectionId()));
@@ -128,7 +127,6 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 
 				getCollaboratorsURL.setResourceID(
 					"/change_tracking/get_collaborators");
-
 				getCollaboratorsURL.setParameter(
 					"ctCollectionId",
 					String.valueOf(ctCollection.getCtCollectionId()));
@@ -142,7 +140,6 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 					_renderResponse.createResourceURL();
 
 				inviteUsersURL.setResourceID("/change_tracking/invite_users");
-
 				inviteUsersURL.setParameter(
 					"ctCollectionId",
 					String.valueOf(ctCollection.getCtCollectionId()));
@@ -255,7 +252,6 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 
 				sharingVerifyEmailAddressURL.setResourceID(
 					"/change_tracking/verify_email_address");
-
 				sharingVerifyEmailAddressURL.setParameter(
 					"ctCollectionId",
 					String.valueOf(ctCollection.getCtCollectionId()));

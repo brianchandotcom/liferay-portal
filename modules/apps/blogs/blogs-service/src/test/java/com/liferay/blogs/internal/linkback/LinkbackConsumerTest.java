@@ -50,7 +50,6 @@ public class LinkbackConsumerTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_linkbackConsumer, "_commentManager", _commentManager);
-
 		ReflectionTestUtil.setFieldValue(_linkbackConsumer, "_http", _http);
 	}
 

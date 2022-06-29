@@ -335,7 +335,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		entry.setUrlTitle(urlTitle);
-
 		entry.setDescription(description);
 		entry.setContent(content);
 		entry.setDisplayDate(displayDate);
@@ -1234,7 +1233,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setAllowPingbacks(allowPingbacks);
 		entry.setAllowTrackbacks(allowTrackbacks);
 		entry.setStatus(status);
-
 		entry.setExpandoBridgeAttributes(serviceContext);
 
 		entry = blogsEntryPersistence.update(entry);
@@ -2011,7 +2009,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		subscriptionSender.setNotificationType(notificationType);
-
 		subscriptionSender.setPortletId(
 			PortletProviderUtil.getPortletId(
 				BlogsEntry.class.getName(), PortletProvider.Action.VIEW));

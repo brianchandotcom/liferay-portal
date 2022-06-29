@@ -70,7 +70,6 @@ public class ClientExtensionEntryUpgradeProcess extends UpgradeProcess {
 				}
 
 				preparedStatement.setString(1, typeSettings);
-
 				preparedStatement.setLong(
 					2, resultSet.getLong("clientExtensionEntryId"));
 

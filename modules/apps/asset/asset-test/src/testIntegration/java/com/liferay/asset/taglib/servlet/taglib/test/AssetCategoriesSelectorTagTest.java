@@ -136,7 +136,6 @@ public class AssetCategoriesSelectorTagTest {
 		assetCategoriesSelectorTag.setClassName(AssetEntry.class.getName());
 		assetCategoriesSelectorTag.setGroupIds(
 			new long[] {_group.getGroupId()});
-
 		assetCategoriesSelectorTag.setVisibilityTypes(
 			AssetVocabularyConstants.VISIBILITY_TYPES);
 
@@ -165,7 +164,6 @@ public class AssetCategoriesSelectorTagTest {
 		assetCategoriesSelectorTag.setClassName(AssetEntry.class.getName());
 		assetCategoriesSelectorTag.setGroupIds(
 			new long[] {_group.getGroupId()});
-
 		assetCategoriesSelectorTag.setVisibilityTypes(
 			new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL});
 
@@ -196,7 +194,6 @@ public class AssetCategoriesSelectorTagTest {
 		assetCategoriesSelectorTag.setClassName(AssetEntry.class.getName());
 		assetCategoriesSelectorTag.setGroupIds(
 			new long[] {_group.getGroupId()});
-
 		assetCategoriesSelectorTag.setVisibilityTypes(
 			new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
 

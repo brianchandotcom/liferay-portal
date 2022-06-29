@@ -67,7 +67,6 @@ public class AssetBrowserPortlet extends MVCPortlet {
 				_assetHelper, _portal.getHttpServletRequest(renderRequest),
 				renderResponse.createRenderURL(), renderRequest,
 				renderResponse));
-
 		renderRequest.setAttribute(AssetWebKeys.ASSET_HELPER, _assetHelper);
 
 		super.doDispatch(renderRequest, renderResponse);

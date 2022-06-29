@@ -1173,10 +1173,8 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		}
 
 		portletRequest.setAttribute("arguments", arguments);
-
 		portletRequest.setAttribute(
 			"data", getStackTrace((Exception)rootCauseThrowable));
-
 		portletRequest.setAttribute("pattern", pattern);
 		portletRequest.setAttribute("status", status);
 

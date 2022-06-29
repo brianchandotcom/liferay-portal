@@ -392,7 +392,6 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 
 		ratingsStats.setClassNameId(
 			_classNameLocalService.getClassNameId(className));
-
 		ratingsStats.setClassPK(classPK);
 		ratingsStats.setTotalEntries(totalEntries);
 		ratingsStats.setTotalScore(totalScore);
@@ -1114,7 +1113,6 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 
 		for (ExpandoValue expandoValue : expandoValues) {
 			expandoValue.setClassNameId(calendarBookingClassNameId);
-
 			expandoValue.setClassPK(calendarBookingId);
 
 			_expandoValueLocalService.updateExpandoValue(expandoValue);

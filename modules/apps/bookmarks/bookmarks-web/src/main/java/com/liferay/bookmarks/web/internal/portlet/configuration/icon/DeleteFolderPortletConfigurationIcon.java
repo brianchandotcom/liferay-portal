@@ -121,7 +121,6 @@ public class DeleteFolderPortletConfigurationIcon
 		}
 
 		deleteURL.setParameter("redirect", parentFolderURL.toString());
-
 		deleteURL.setParameter(
 			"folderId", String.valueOf(folder.getFolderId()));
 

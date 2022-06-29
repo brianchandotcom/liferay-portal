@@ -226,7 +226,6 @@ public class CTDocumentServlet extends HttpServlet {
 			}
 
 			PrincipalThreadLocal.setName(user.getUserId());
-
 			PrincipalThreadLocal.setPassword(
 				_portal.getUserPassword(httpServletRequest));
 

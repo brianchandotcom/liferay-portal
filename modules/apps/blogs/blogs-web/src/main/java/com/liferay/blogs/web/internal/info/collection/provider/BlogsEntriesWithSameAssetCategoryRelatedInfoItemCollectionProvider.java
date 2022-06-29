@@ -139,7 +139,6 @@ public class BlogsEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 		assetEntryQuery.setGroupIds(
 			new long[] {serviceContext.getScopeGroupId()});
-
 		assetEntryQuery.setOrderByCol1(Field.MODIFIED_DATE);
 
 		Optional<Sort> sortOptional = collectionQuery.getSortOptional();

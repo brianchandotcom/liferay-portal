@@ -99,7 +99,6 @@ public class ResourcePermissionsUpgradeProcess extends UpgradeProcess {
 				preparedStatement.setLong(9, userId);
 				preparedStatement.setLong(10, 15);
 				preparedStatement.setBoolean(11, true);
-
 				preparedStatement.setLong(12, mvccVersion);
 				preparedStatement.setLong(13, increment());
 				preparedStatement.setLong(14, companyId);

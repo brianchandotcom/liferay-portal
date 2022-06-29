@@ -50,11 +50,9 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		ReflectionTestUtil.setFieldValue(
 			_amImageHTMLExportImportContentProcessor,
 			"_amEmbeddedReferenceSetFactory", _amEmbeddedReferenceSetFactory);
-
 		ReflectionTestUtil.setFieldValue(
 			_amImageHTMLExportImportContentProcessor, "_amImageHTMLTagFactory",
 			_amImageHTMLTagFactory);
-
 		ReflectionTestUtil.setFieldValue(
 			_amImageHTMLExportImportContentProcessor, "_dlAppLocalService",
 			_dlAppLocalService);

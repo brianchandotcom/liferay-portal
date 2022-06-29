@@ -954,7 +954,6 @@ public class CalendarPortlet extends MVCPortlet {
 			calendarBooking.setStartTime(startTime);
 
 			calendarBooking.setEndTime(endTime);
-
 			calendarBooking.setRecurrence(
 				RecurrenceSerializer.serialize(recurrenceObj));
 

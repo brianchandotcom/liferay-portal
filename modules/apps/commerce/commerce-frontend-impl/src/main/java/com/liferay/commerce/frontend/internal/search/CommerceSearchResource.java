@@ -192,7 +192,6 @@ public class CommerceSearchResource {
 		}
 
 		searchItemModel.setSubtitle(subtitle);
-
 		searchItemModel.setUrl(
 			_cpDefinitionHelper.getFriendlyURL(
 				cpCatalogEntry.getCPDefinitionId(), themeDisplay));
@@ -278,9 +277,7 @@ public class CommerceSearchResource {
 				"item", String.valueOf(order.getId()));
 
 			searchItemModel.setIcon("document");
-
 			searchItemModel.setSubtitle(order.getAccountName());
-
 			searchItemModel.setUrl(
 				String.valueOf(
 					_commerceOrderHttpHelper.getCommerceCartPortletURL(
@@ -351,7 +348,6 @@ public class CommerceSearchResource {
 		}
 
 		searchContext.setAttributes(attributes);
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setKeywords(queryString);
 

@@ -190,7 +190,6 @@ public class AccountEntryLocalServiceImpl
 		_validateType(type);
 
 		accountEntry.setType(type);
-
 		accountEntry.setStatus(status);
 
 		accountEntry = accountEntryPersistence.update(accountEntry);
@@ -587,9 +586,8 @@ public class AccountEntryLocalServiceImpl
 
 		_validateName(name);
 
-		accountEntry.setName(name);
-
 		accountEntry.setDescription(description);
+		accountEntry.setName(name);
 
 		domains = _validateDomains(domains);
 

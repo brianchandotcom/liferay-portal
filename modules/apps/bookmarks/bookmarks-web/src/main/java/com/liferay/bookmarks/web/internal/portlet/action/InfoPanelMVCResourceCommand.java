@@ -49,11 +49,9 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		resourceRequest.setAttribute(
 			BookmarksWebKeys.BOOKMARKS_ENTRIES,
 			ActionUtil.getEntries(resourceRequest));
-
 		resourceRequest.setAttribute(
 			BookmarksWebKeys.BOOKMARKS_FOLDERS,
 			ActionUtil.getFolders(resourceRequest));
-
 		resourceRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
 		include(resourceRequest, resourceResponse, "/bookmarks/info_panel.jsp");

@@ -182,7 +182,6 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 		Account account = accountPersistence.findByPrimaryKey(accountId);
 
 		account.setModifiedDate(new Date());
-
 		account.setInboxFolderId(inboxFolderId);
 		account.setDraftFolderId(draftFolderId);
 		account.setSentFolderId(sentFolderId);

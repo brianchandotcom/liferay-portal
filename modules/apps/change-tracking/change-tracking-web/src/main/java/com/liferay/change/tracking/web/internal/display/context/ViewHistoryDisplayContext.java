@@ -173,7 +173,6 @@ public class ViewHistoryDisplayContext extends BasePublicationsDisplayContext {
 			ResourceURL statusURL = _renderResponse.createResourceURL();
 
 			statusURL.setResourceID("/change_tracking/get_publication_status");
-
 			statusURL.setParameter(
 				"ctProcessId", String.valueOf(ctProcess.getCtProcessId()));
 

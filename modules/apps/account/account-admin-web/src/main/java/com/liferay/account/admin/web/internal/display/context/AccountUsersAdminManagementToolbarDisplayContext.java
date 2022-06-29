@@ -318,7 +318,6 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 									removeLabelURL.toString());
 
 								labelItem.setCloseable(true);
-
 								labelItem.setLabel(
 									LanguageUtil.get(
 										httpServletRequest,
@@ -441,13 +440,11 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 				dropdownItem.setActive(
 					Objects.equals(
 						_getAccountEntriesNavigation(), "any-account"));
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "any-account"));
-
 				dropdownItem.setHref(
 					PortletURLUtil.clone(currentURLObj, liferayPortletResponse),
 					"accountEntriesNavigation", "any-account");
+				dropdownItem.setLabel(
+					LanguageUtil.get(httpServletRequest, "any-account"));
 			}
 		).add(
 			dropdownItem -> {
@@ -482,14 +479,12 @@ public class AccountUsersAdminManagementToolbarDisplayContext
 				dropdownItem.setActive(
 					Objects.equals(
 						_getAccountEntriesNavigation(), "no-assigned-account"));
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "no-assigned-account"));
-
 				dropdownItem.setHref(
 					PortletURLUtil.clone(currentURLObj, liferayPortletResponse),
 					"accountEntriesNavigation", "no-assigned-account");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						httpServletRequest, "no-assigned-account"));
 			}
 		).build();
 	}

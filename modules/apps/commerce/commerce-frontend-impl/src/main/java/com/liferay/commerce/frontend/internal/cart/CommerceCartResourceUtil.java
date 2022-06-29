@@ -160,7 +160,6 @@ public class CommerceCartResourceUtil {
 		}
 
 		priceModel.setDiscount(discountAmountCommerceMoney.format(locale));
-
 		priceModel.setDiscountPercentage(
 			_commercePriceFormatter.format(discountPercentage, locale));
 

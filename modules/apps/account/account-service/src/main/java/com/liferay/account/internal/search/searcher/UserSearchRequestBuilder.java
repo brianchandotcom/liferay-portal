@@ -138,7 +138,6 @@ public class UserSearchRequestBuilder {
 		}
 
 		searchContext.setAndSearch(andSearch);
-
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, _status
@@ -167,7 +166,6 @@ public class UserSearchRequestBuilder {
 			).putAll(
 				_attributes
 			).build());
-
 		searchContext.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		PermissionChecker permissionChecker =

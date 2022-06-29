@@ -77,7 +77,6 @@ public class ContentHits {
 
 		hits.setDocs(docs.toArray(new Document[0]));
 		hits.setScores(ArrayUtil.toFloatArray(scores));
-
 		hits.setSearchTime(
 			(float)(System.currentTimeMillis() - hits.getStart()) /
 				Time.SECOND);

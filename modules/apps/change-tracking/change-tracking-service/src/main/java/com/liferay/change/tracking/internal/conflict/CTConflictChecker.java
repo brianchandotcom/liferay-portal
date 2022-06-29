@@ -920,7 +920,6 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				CTEntry ctEntry = _modificationCTEntries.get(pk);
 
 				ctEntry.setModifiedDate(ctEntry.getModifiedDate());
-
 				ctEntry.setModelMvccVersion(mvccVersion);
 
 				_ctEntryLocalService.updateCTEntry(ctEntry);

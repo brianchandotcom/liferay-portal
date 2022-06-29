@@ -91,7 +91,6 @@ public class PanelCategoryBodyTag extends BasePanelTag {
 		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category-body:panelApps",
 			panelApps);
-
 		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category-body:panelCategory",
 			_panelCategory);

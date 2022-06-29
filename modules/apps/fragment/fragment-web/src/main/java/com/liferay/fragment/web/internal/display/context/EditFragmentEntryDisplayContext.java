@@ -665,4 +665,18 @@ public class EditFragmentEntryDisplayContext {
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 
+	private static class CaptchaInfoFieldType implements InfoFieldType {
+
+		public static final CaptchaInfoFieldType INSTANCE =
+			new CaptchaInfoFieldType();
+
+		public String getName() {
+			return "captcha";
+		}
+
+		private CaptchaInfoFieldType() {
+		}
+
+	}
+
 }

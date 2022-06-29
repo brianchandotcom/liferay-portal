@@ -16,6 +16,7 @@ package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.web.internal.info.field.type.CaptchaInfoFieldType;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -310,9 +311,9 @@ public class BasicFragmentManagementToolbarDisplayContext
 	}
 
 	private static final InfoFieldType[] _INFO_FIELD_TYPES = {
-		BooleanInfoFieldType.INSTANCE, DateInfoFieldType.INSTANCE,
-		NumberInfoFieldType.INSTANCE, SelectInfoFieldType.INSTANCE,
-		TextInfoFieldType.INSTANCE
+		BooleanInfoFieldType.INSTANCE, CaptchaInfoFieldType.INSTANCE,
+		DateInfoFieldType.INSTANCE, NumberInfoFieldType.INSTANCE,
+		SelectInfoFieldType.INSTANCE, TextInfoFieldType.INSTANCE
 	};
 
 }

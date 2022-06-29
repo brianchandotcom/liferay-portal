@@ -98,6 +98,9 @@ components:
                     type: string
                 panelCategoryKey:
                     type: string
+                parameterRequired:
+                    readOnly: true
+                    type: boolean
                 pluralLabel:
                     additionalProperties:
                         type: string

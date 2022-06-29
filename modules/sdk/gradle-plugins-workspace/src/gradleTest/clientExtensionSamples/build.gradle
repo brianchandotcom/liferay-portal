@@ -16,5 +16,11 @@ runGradleTest {
 		File sampleConfigFile = new File(sampleThemeFaviconProject.buildDir, "sampleThemeFavicon.client-extension-config.json")
 
 		assert sampleConfigFile.exists()
+
+		Task createClientExtensionConfigTask = sampleThemeFaviconProject.tasks["createClientExtensionConfig"]
+
+		File clientExtensionYamlFile = sampleThemeFaviconProject.file("client-extension.yaml")
+
+		assert createClientExtensionConfigTask.inputs.files.asPath == clientExtensionYamlFile.path
 	}
 }

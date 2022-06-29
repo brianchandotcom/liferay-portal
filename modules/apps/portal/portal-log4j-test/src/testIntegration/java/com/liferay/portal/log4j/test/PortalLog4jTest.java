@@ -125,6 +125,7 @@ public class PortalLog4jTest {
 				consoleAppender.start();
 
 				logger.addAppender(consoleAppender);
+
 				upgradeLogger.addAppender(consoleAppender);
 			}
 			else if (appender instanceof RollingFileAppender) {

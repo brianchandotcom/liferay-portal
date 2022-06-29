@@ -1,5 +1,0 @@
-demoGlobalJS:
-  description: "This JS file can be loaded as a script for a configured page"
-  name: Demo Global JavaScript
-  type: globalJS
-  url: global.js

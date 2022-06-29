@@ -1,6 +1,0 @@
-demoThemeFavicon:
-  description: "This adds a favicon that can be configured on a page"
-  name: Demo Theme Favicon
-  sourceCodeURL: https://www.liferay.com
-  type: themeFavicon
-  url: favicon.ico

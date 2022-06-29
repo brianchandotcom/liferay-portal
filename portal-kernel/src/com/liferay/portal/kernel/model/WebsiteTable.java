@@ -54,8 +54,8 @@ public class WebsiteTable extends BaseTable<WebsiteTable> {
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<WebsiteTable, String> url = createColumn(
 		"url", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<WebsiteTable, Long> typeId = createColumn(
-		"typeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<WebsiteTable, Long> listTypeId = createColumn(
+		"listTypeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<WebsiteTable, Boolean> primary = createColumn(
 		"primary_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<WebsiteTable, Date> lastPublishDate = createColumn(

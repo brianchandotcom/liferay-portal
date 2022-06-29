@@ -70,8 +70,9 @@ public class OrganizationTable extends BaseTable<OrganizationTable> {
 		"regionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<OrganizationTable, Long> countryId = createColumn(
 		"countryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<OrganizationTable, Long> statusId = createColumn(
-		"statusId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<OrganizationTable, Long> statusListTypeId =
+		createColumn(
+			"statusListTypeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<OrganizationTable, String> comments = createColumn(
 		"comments", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<OrganizationTable, Long> logoId = createColumn(

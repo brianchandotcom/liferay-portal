@@ -141,7 +141,7 @@ public class EmailAddressPersistenceTest {
 
 		newEmailAddress.setAddress(RandomTestUtil.randomString());
 
-		newEmailAddress.setTypeId(RandomTestUtil.nextLong());
+		newEmailAddress.setListTypeId(RandomTestUtil.nextLong());
 
 		newEmailAddress.setPrimary(RandomTestUtil.randomBoolean());
 
@@ -179,7 +179,8 @@ public class EmailAddressPersistenceTest {
 		Assert.assertEquals(
 			existingEmailAddress.getAddress(), newEmailAddress.getAddress());
 		Assert.assertEquals(
-			existingEmailAddress.getTypeId(), newEmailAddress.getTypeId());
+			existingEmailAddress.getListTypeId(),
+			newEmailAddress.getListTypeId());
 		Assert.assertEquals(
 			existingEmailAddress.isPrimary(), newEmailAddress.isPrimary());
 	}
@@ -270,7 +271,8 @@ public class EmailAddressPersistenceTest {
 			"EmailAddress", "mvccVersion", true, "uuid", true, "emailAddressId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "address", true, "typeId", true, "primary", true);
+			"classPK", true, "address", true, "listTypeId", true, "primary",
+			true);
 	}
 
 	@Test
@@ -511,7 +513,7 @@ public class EmailAddressPersistenceTest {
 
 		emailAddress.setAddress(RandomTestUtil.randomString());
 
-		emailAddress.setTypeId(RandomTestUtil.nextLong());
+		emailAddress.setListTypeId(RandomTestUtil.nextLong());
 
 		emailAddress.setPrimary(RandomTestUtil.randomBoolean());
 

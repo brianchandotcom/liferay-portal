@@ -60,10 +60,10 @@ public class ContactTable extends BaseTable<ContactTable> {
 		"middleName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ContactTable, String> lastName = createColumn(
 		"lastName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ContactTable, Long> prefixId = createColumn(
-		"prefixId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<ContactTable, Long> suffixId = createColumn(
-		"suffixId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ContactTable, Long> prefixListTypeId = createColumn(
+		"prefixListTypeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ContactTable, Long> suffixListTypeId = createColumn(
+		"suffixListTypeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ContactTable, Boolean> male = createColumn(
 		"male", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<ContactTable, Date> birthday = createColumn(

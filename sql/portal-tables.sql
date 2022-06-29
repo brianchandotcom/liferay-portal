@@ -12,7 +12,7 @@ create table Address (
 	classPK LONG,
 	countryId LONG,
 	regionId LONG,
-	typeId LONG,
+	listTypeId LONG,
 	city VARCHAR(75) null,
 	description STRING null,
 	latitude DOUBLE,
@@ -247,8 +247,8 @@ create table Contact_ (
 	firstName VARCHAR(75) null,
 	middleName VARCHAR(75) null,
 	lastName VARCHAR(75) null,
-	prefixId LONG,
-	suffixId LONG,
+	prefixListTypeId LONG,
+	suffixListTypeId LONG,
 	male BOOLEAN,
 	birthday DATE null,
 	smsSn VARCHAR(75) null,
@@ -484,7 +484,7 @@ create table EmailAddress (
 	classNameId LONG,
 	classPK LONG,
 	address VARCHAR(254) null,
-	typeId LONG,
+	listTypeId LONG,
 	primary_ BOOLEAN
 );
 
@@ -834,7 +834,7 @@ create table OrgLabor (
 	orgLaborId LONG not null primary key,
 	companyId LONG,
 	organizationId LONG,
-	typeId LONG,
+	listTypeId LONG,
 	sunOpen INTEGER,
 	sunClose INTEGER,
 	monOpen INTEGER,
@@ -869,7 +869,7 @@ create table Organization_ (
 	recursable BOOLEAN,
 	regionId LONG,
 	countryId LONG,
-	statusId LONG,
+	statusListTypeId LONG,
 	comments STRING null,
 	logoId LONG,
 	primary key (organizationId, ctCollectionId)
@@ -944,7 +944,7 @@ create table Phone (
 	classPK LONG,
 	number_ VARCHAR(75) null,
 	extension VARCHAR(75) null,
-	typeId LONG,
+	listTypeId LONG,
 	primary_ BOOLEAN
 );
 
@@ -1638,7 +1638,7 @@ create table Website (
 	classNameId LONG,
 	classPK LONG,
 	url STRING null,
-	typeId LONG,
+	listTypeId LONG,
 	primary_ BOOLEAN,
 	lastPublishDate DATE null
 );

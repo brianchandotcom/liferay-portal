@@ -258,18 +258,18 @@ public interface EmailAddressModel
 	public void setAddress(String address);
 
 	/**
-	 * Returns the type ID of this email address.
+	 * Returns the list type ID of this email address.
 	 *
-	 * @return the type ID of this email address
+	 * @return the list type ID of this email address
 	 */
-	public long getTypeId();
+	public long getListTypeId();
 
 	/**
-	 * Sets the type ID of this email address.
+	 * Sets the list type ID of this email address.
 	 *
-	 * @param typeId the type ID of this email address
+	 * @param listTypeId the list type ID of this email address
 	 */
-	public void setTypeId(long typeId);
+	public void setListTypeId(long listTypeId);
 
 	/**
 	 * Returns the primary of this email address.

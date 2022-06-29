@@ -300,32 +300,32 @@ public interface ContactModel
 	public void setLastName(String lastName);
 
 	/**
-	 * Returns the prefix ID of this contact.
+	 * Returns the prefix list type ID of this contact.
 	 *
-	 * @return the prefix ID of this contact
+	 * @return the prefix list type ID of this contact
 	 */
-	public long getPrefixId();
+	public long getPrefixListTypeId();
 
 	/**
-	 * Sets the prefix ID of this contact.
+	 * Sets the prefix list type ID of this contact.
 	 *
-	 * @param prefixId the prefix ID of this contact
+	 * @param prefixListTypeId the prefix list type ID of this contact
 	 */
-	public void setPrefixId(long prefixId);
+	public void setPrefixListTypeId(long prefixListTypeId);
 
 	/**
-	 * Returns the suffix ID of this contact.
+	 * Returns the suffix list type ID of this contact.
 	 *
-	 * @return the suffix ID of this contact
+	 * @return the suffix list type ID of this contact
 	 */
-	public long getSuffixId();
+	public long getSuffixListTypeId();
 
 	/**
-	 * Sets the suffix ID of this contact.
+	 * Sets the suffix list type ID of this contact.
 	 *
-	 * @param suffixId the suffix ID of this contact
+	 * @param suffixListTypeId the suffix list type ID of this contact
 	 */
-	public void setSuffixId(long suffixId);
+	public void setSuffixListTypeId(long suffixListTypeId);
 
 	/**
 	 * Returns the male of this contact.

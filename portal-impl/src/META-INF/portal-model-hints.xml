@@ -491,7 +491,7 @@
 		<field name="classPK" type="long" />
 		<field name="countryId" type="long" />
 		<field name="regionId" type="long" />
-		<field name="typeId" type="long" />
+		<field name="listTypeId" type="long" />
 		<field name="city" type="String" />
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
@@ -592,8 +592,8 @@
 		<field name="firstName" type="String" />
 		<field name="middleName" type="String" />
 		<field name="lastName" type="String" />
-		<field name="prefixId" type="long" />
-		<field name="suffixId" type="long" />
+		<field name="prefixListTypeId" type="long" />
+		<field name="suffixListTypeId" type="long" />
 		<field name="male" type="boolean" />
 		<field name="birthday" type="Date">
 			<hint name="year-range-delta">70</hint>
@@ -663,7 +663,7 @@
 			<hint name="display-width">210</hint>
 			<validator name="email" />
 		</field>
-		<field name="typeId" type="long" />
+		<field name="listTypeId" type="long" />
 		<field name="primary" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.Group">
@@ -1008,7 +1008,7 @@
 		<field name="recursable" type="boolean" />
 		<field name="regionId" type="long" />
 		<field name="countryId" type="long" />
-		<field name="statusId" type="long" />
+		<field name="statusListTypeId" type="long" />
 		<field name="comments" type="String">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">400</hint>
@@ -1020,7 +1020,7 @@
 		<field name="orgLaborId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="organizationId" type="long" />
-		<field name="typeId" type="long" />
+		<field name="listTypeId" type="long" />
 		<field name="sunOpen" type="int" />
 		<field name="sunClose" type="int" />
 		<field name="monOpen" type="int" />
@@ -1126,7 +1126,7 @@
 		<field name="extension" type="String">
 			<hint name="display-width">50</hint>
 		</field>
-		<field name="typeId" type="long" />
+		<field name="listTypeId" type="long" />
 		<field name="primary" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.PluginSetting">
@@ -1689,7 +1689,7 @@
 			<hint name="display-width">210</hint>
 			<validator name="url" />
 		</field>
-		<field name="typeId" type="long" />
+		<field name="listTypeId" type="long" />
 		<field name="primary" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>

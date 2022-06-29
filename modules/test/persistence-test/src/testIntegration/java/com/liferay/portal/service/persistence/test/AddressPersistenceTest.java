@@ -148,7 +148,7 @@ public class AddressPersistenceTest {
 
 		newAddress.setRegionId(RandomTestUtil.nextLong());
 
-		newAddress.setTypeId(RandomTestUtil.nextLong());
+		newAddress.setListTypeId(RandomTestUtil.nextLong());
 
 		newAddress.setCity(RandomTestUtil.randomString());
 
@@ -210,7 +210,7 @@ public class AddressPersistenceTest {
 		Assert.assertEquals(
 			existingAddress.getRegionId(), newAddress.getRegionId());
 		Assert.assertEquals(
-			existingAddress.getTypeId(), newAddress.getTypeId());
+			existingAddress.getListTypeId(), newAddress.getListTypeId());
 		Assert.assertEquals(existingAddress.getCity(), newAddress.getCity());
 		Assert.assertEquals(
 			existingAddress.getDescription(), newAddress.getDescription());
@@ -374,11 +374,11 @@ public class AddressPersistenceTest {
 			"externalReferenceCode", true, "addressId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"countryId", true, "regionId", true, "typeId", true, "city", true,
-			"description", true, "latitude", true, "longitude", true, "mailing",
-			true, "name", true, "primary", true, "street1", true, "street2",
-			true, "street3", true, "validationDate", true, "validationStatus",
-			true, "zip", true);
+			"countryId", true, "regionId", true, "listTypeId", true, "city",
+			true, "description", true, "latitude", true, "longitude", true,
+			"mailing", true, "name", true, "primary", true, "street1", true,
+			"street2", true, "street3", true, "validationDate", true,
+			"validationStatus", true, "zip", true);
 	}
 
 	@Test
@@ -674,7 +674,7 @@ public class AddressPersistenceTest {
 
 		address.setRegionId(RandomTestUtil.nextLong());
 
-		address.setTypeId(RandomTestUtil.nextLong());
+		address.setListTypeId(RandomTestUtil.nextLong());
 
 		address.setCity(RandomTestUtil.randomString());
 

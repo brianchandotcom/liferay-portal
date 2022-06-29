@@ -342,18 +342,18 @@ public interface OrganizationModel
 	public void setCountryId(long countryId);
 
 	/**
-	 * Returns the status ID of this organization.
+	 * Returns the status list type ID of this organization.
 	 *
-	 * @return the status ID of this organization
+	 * @return the status list type ID of this organization
 	 */
-	public long getStatusId();
+	public long getStatusListTypeId();
 
 	/**
-	 * Sets the status ID of this organization.
+	 * Sets the status list type ID of this organization.
 	 *
-	 * @param statusId the status ID of this organization
+	 * @param statusListTypeId the status list type ID of this organization
 	 */
-	public void setStatusId(long statusId);
+	public void setStatusListTypeId(long statusListTypeId);
 
 	/**
 	 * Returns the comments of this organization.

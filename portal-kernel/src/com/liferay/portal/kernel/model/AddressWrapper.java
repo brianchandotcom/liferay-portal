@@ -55,7 +55,7 @@ public class AddressWrapper
 		attributes.put("classPK", getClassPK());
 		attributes.put("countryId", getCountryId());
 		attributes.put("regionId", getRegionId());
-		attributes.put("typeId", getTypeId());
+		attributes.put("listTypeId", getListTypeId());
 		attributes.put("city", getCity());
 		attributes.put("description", getDescription());
 		attributes.put("latitude", getLatitude());
@@ -154,10 +154,10 @@ public class AddressWrapper
 			setRegionId(regionId);
 		}
 
-		Long typeId = (Long)attributes.get("typeId");
+		Long listTypeId = (Long)attributes.get("listTypeId");
 
-		if (typeId != null) {
-			setTypeId(typeId);
+		if (listTypeId != null) {
+			setListTypeId(listTypeId);
 		}
 
 		String city = (String)attributes.get("city");
@@ -360,6 +360,16 @@ public class AddressWrapper
 	}
 
 	/**
+	 * Returns the list type ID of this address.
+	 *
+	 * @return the list type ID of this address
+	 */
+	@Override
+	public long getListTypeId() {
+		return model.getListTypeId();
+	}
+
+	/**
 	 * Returns the longitude of this address.
 	 *
 	 * @return the longitude of this address
@@ -482,16 +492,6 @@ public class AddressWrapper
 	@Override
 	public ListType getType() {
 		return model.getType();
-	}
-
-	/**
-	 * Returns the type ID of this address.
-	 *
-	 * @return the type ID of this address
-	 */
-	@Override
-	public long getTypeId() {
-		return model.getTypeId();
 	}
 
 	/**
@@ -695,6 +695,16 @@ public class AddressWrapper
 	}
 
 	/**
+	 * Sets the list type ID of this address.
+	 *
+	 * @param listTypeId the list type ID of this address
+	 */
+	@Override
+	public void setListTypeId(long listTypeId) {
+		model.setListTypeId(listTypeId);
+	}
+
+	/**
 	 * Sets the longitude of this address.
 	 *
 	 * @param longitude the longitude of this address
@@ -802,16 +812,6 @@ public class AddressWrapper
 	@Override
 	public void setStreet3(String street3) {
 		model.setStreet3(street3);
-	}
-
-	/**
-	 * Sets the type ID of this address.
-	 *
-	 * @param typeId the type ID of this address
-	 */
-	@Override
-	public void setTypeId(long typeId) {
-		model.setTypeId(typeId);
 	}
 
 	/**

@@ -112,18 +112,18 @@ public interface OrgLaborModel
 	public void setOrganizationId(long organizationId);
 
 	/**
-	 * Returns the type ID of this org labor.
+	 * Returns the list type ID of this org labor.
 	 *
-	 * @return the type ID of this org labor
+	 * @return the list type ID of this org labor
 	 */
-	public long getTypeId();
+	public long getListTypeId();
 
 	/**
-	 * Sets the type ID of this org labor.
+	 * Sets the list type ID of this org labor.
 	 *
-	 * @param typeId the type ID of this org labor
+	 * @param listTypeId the list type ID of this org labor
 	 */
-	public void setTypeId(long typeId);
+	public void setListTypeId(long listTypeId);
 
 	/**
 	 * Returns the sun open of this org labor.

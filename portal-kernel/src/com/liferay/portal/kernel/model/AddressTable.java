@@ -60,8 +60,8 @@ public class AddressTable extends BaseTable<AddressTable> {
 		"countryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, Long> regionId = createColumn(
 		"regionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<AddressTable, Long> typeId = createColumn(
-		"typeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<AddressTable, Long> listTypeId = createColumn(
+		"listTypeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, String> city = createColumn(
 		"city", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, String> description = createColumn(

@@ -286,18 +286,18 @@ public interface AddressModel
 	public void setRegionId(long regionId);
 
 	/**
-	 * Returns the type ID of this address.
+	 * Returns the list type ID of this address.
 	 *
-	 * @return the type ID of this address
+	 * @return the list type ID of this address
 	 */
-	public long getTypeId();
+	public long getListTypeId();
 
 	/**
-	 * Sets the type ID of this address.
+	 * Sets the list type ID of this address.
 	 *
-	 * @param typeId the type ID of this address
+	 * @param listTypeId the list type ID of this address
 	 */
-	public void setTypeId(long typeId);
+	public void setListTypeId(long listTypeId);
 
 	/**
 	 * Returns the city of this address.

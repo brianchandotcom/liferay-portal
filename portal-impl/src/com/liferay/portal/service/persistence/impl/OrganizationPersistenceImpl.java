@@ -10608,7 +10608,7 @@ public class OrganizationPersistenceImpl
 		ctStrictColumnNames.add("recursable");
 		ctStrictColumnNames.add("regionId");
 		ctStrictColumnNames.add("countryId");
-		ctStrictColumnNames.add("statusId");
+		ctStrictColumnNames.add("statusListTypeId");
 		ctStrictColumnNames.add("comments");
 		ctStrictColumnNames.add("logoId");
 		ctStrictColumnNames.add("groups_");

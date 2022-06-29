@@ -273,18 +273,18 @@ public interface PhoneModel
 	public void setExtension(String extension);
 
 	/**
-	 * Returns the type ID of this phone.
+	 * Returns the list type ID of this phone.
 	 *
-	 * @return the type ID of this phone
+	 * @return the list type ID of this phone
 	 */
-	public long getTypeId();
+	public long getListTypeId();
 
 	/**
-	 * Sets the type ID of this phone.
+	 * Sets the list type ID of this phone.
 	 *
-	 * @param typeId the type ID of this phone
+	 * @param listTypeId the list type ID of this phone
 	 */
-	public void setTypeId(long typeId);
+	public void setListTypeId(long listTypeId);
 
 	/**
 	 * Returns the primary of this phone.

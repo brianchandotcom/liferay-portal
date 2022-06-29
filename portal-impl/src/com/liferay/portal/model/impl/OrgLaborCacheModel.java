@@ -84,8 +84,8 @@ public class OrgLaborCacheModel
 		sb.append(companyId);
 		sb.append(", organizationId=");
 		sb.append(organizationId);
-		sb.append(", typeId=");
-		sb.append(typeId);
+		sb.append(", listTypeId=");
+		sb.append(listTypeId);
 		sb.append(", sunOpen=");
 		sb.append(sunOpen);
 		sb.append(", sunClose=");
@@ -127,7 +127,7 @@ public class OrgLaborCacheModel
 		orgLaborImpl.setOrgLaborId(orgLaborId);
 		orgLaborImpl.setCompanyId(companyId);
 		orgLaborImpl.setOrganizationId(organizationId);
-		orgLaborImpl.setTypeId(typeId);
+		orgLaborImpl.setListTypeId(listTypeId);
 		orgLaborImpl.setSunOpen(sunOpen);
 		orgLaborImpl.setSunClose(sunClose);
 		orgLaborImpl.setMonOpen(monOpen);
@@ -158,7 +158,7 @@ public class OrgLaborCacheModel
 
 		organizationId = objectInput.readLong();
 
-		typeId = objectInput.readLong();
+		listTypeId = objectInput.readLong();
 
 		sunOpen = objectInput.readInt();
 
@@ -199,7 +199,7 @@ public class OrgLaborCacheModel
 
 		objectOutput.writeLong(organizationId);
 
-		objectOutput.writeLong(typeId);
+		objectOutput.writeLong(listTypeId);
 
 		objectOutput.writeInt(sunOpen);
 
@@ -234,7 +234,7 @@ public class OrgLaborCacheModel
 	public long orgLaborId;
 	public long companyId;
 	public long organizationId;
-	public long typeId;
+	public long listTypeId;
 	public int sunOpen;
 	public int sunClose;
 	public int monOpen;

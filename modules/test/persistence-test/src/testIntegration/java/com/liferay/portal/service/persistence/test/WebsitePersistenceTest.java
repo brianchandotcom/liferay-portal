@@ -141,7 +141,7 @@ public class WebsitePersistenceTest {
 
 		newWebsite.setUrl(RandomTestUtil.randomString());
 
-		newWebsite.setTypeId(RandomTestUtil.nextLong());
+		newWebsite.setListTypeId(RandomTestUtil.nextLong());
 
 		newWebsite.setPrimary(RandomTestUtil.randomBoolean());
 
@@ -175,7 +175,7 @@ public class WebsitePersistenceTest {
 			existingWebsite.getClassPK(), newWebsite.getClassPK());
 		Assert.assertEquals(existingWebsite.getUrl(), newWebsite.getUrl());
 		Assert.assertEquals(
-			existingWebsite.getTypeId(), newWebsite.getTypeId());
+			existingWebsite.getListTypeId(), newWebsite.getListTypeId());
 		Assert.assertEquals(
 			existingWebsite.isPrimary(), newWebsite.isPrimary());
 		Assert.assertEquals(
@@ -269,7 +269,7 @@ public class WebsitePersistenceTest {
 			"Website", "mvccVersion", true, "uuid", true, "websiteId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"url", true, "typeId", true, "primary", true, "lastPublishDate",
+			"url", true, "listTypeId", true, "primary", true, "lastPublishDate",
 			true);
 	}
 
@@ -501,7 +501,7 @@ public class WebsitePersistenceTest {
 
 		website.setUrl(RandomTestUtil.randomString());
 
-		website.setTypeId(RandomTestUtil.nextLong());
+		website.setListTypeId(RandomTestUtil.nextLong());
 
 		website.setPrimary(RandomTestUtil.randomBoolean());
 

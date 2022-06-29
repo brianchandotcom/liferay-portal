@@ -36,7 +36,10 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
+import com.liferay.object.system.SystemObjectDefinitionMetadata;
+import com.liferay.object.system.SystemObjectDefinitionMetadataTracker;
 import com.liferay.object.util.LocalizedMapUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -314,6 +317,27 @@ public class ObjectDefinitionResourceImpl
 						objectView),
 					ObjectView.class);
 				panelCategoryKey = objectDefinition.getPanelCategoryKey();
+
+				String restContextPath = StringPool.BLANK;
+
+				if (!objectDefinition.isSystem()) {
+					restContextPath = objectDefinition.getRESTContextPath();
+				}
+				else {
+					SystemObjectDefinitionMetadata
+						systemObjectDefinitionMetadata =
+							_systemObjectDefinitionMetadataTracker.
+								getSystemObjectDefinitionMetadata(
+									objectDefinition.getName());
+
+					if (systemObjectDefinitionMetadata != null) {
+						restContextPath =
+							systemObjectDefinitionMetadata.getRESTContextPath();
+					}
+				}
+
+				parameterRequired = restContextPath.matches(".*/\\{\\w+}/.*");
+
 				pluralLabel = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getPluralLabelMap());
 				portlet = objectDefinition.getPortlet();
@@ -366,5 +390,9 @@ public class ObjectDefinitionResourceImpl
 
 	@Reference
 	private ObjectViewLocalService _objectViewLocalService;
+
+	@Reference
+	private SystemObjectDefinitionMetadataTracker
+		_systemObjectDefinitionMetadataTracker;
 
 }

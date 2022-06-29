@@ -1402,11 +1402,15 @@ definition {
 
 			NavigationMenusWidget.selectNavigation(menuType = "Pages Hierarchy");
 
-			Pause(locator1 = "1000");
+			AssertSelectedLabel(
+				locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
+				value1 = "Pages Hierarchy");
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar minimally styled");
 
-			Pause(locator1 = "1000");
+			AssertSelectedLabel(
+				locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
+				value1 = "Bar minimally styled");
 
 			Portlet.saveAndCloseConfig();
 		}

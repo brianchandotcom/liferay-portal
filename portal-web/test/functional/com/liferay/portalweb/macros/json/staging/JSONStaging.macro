@@ -42,7 +42,7 @@ definition {
 			groupId = "${groupId}",
 			unCheckedContent = "${unCheckedContent}");
 
-		Pause(locator1 = "3000");
+		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Activate remote staging with or without page versioning with all content"

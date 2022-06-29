@@ -111,18 +111,43 @@ definition {
 	}
 
 	macro enablePublications {
-		ApplicationsMenu.gotoPortlet(
-			category = "Publications",
-			panel = "Applications",
-			portlet = "Publications");
+		if ("${gotoInstancesettings}" == "true") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
 
-		Check.checkToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Publications",
+				configurationName = "Publications Settings",
+				configurationScope = "Virtual Instance Scope");
 
-		if ("${enableSandboxOnly}" == "true") {
-			Check.checkToggleSwitch(locator1 = "Publications#ENABLE_SANDBOX_ONLY_TOGGLE_SWITCH");
+			FormFields.enableCheckbox(fieldName = "Enabled");
+
+			if ("${enableSandboxOnly}" == "true") {
+				FormFields.enableCheckbox(fieldName = "Sandbox Enabled");
+			}
+
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+
+			Alert.viewSuccessMessage();
 		}
+		else {
+			ApplicationsMenu.gotoPortlet(
+				category = "Publications",
+				panel = "Applications",
+				portlet = "Publications");
 
-		Click(locator1 = "Button#SAVE");
+			Check.checkToggleSwitch(locator1 = "Publications#ENABLE_PUBLICATIONS_TOGGLE_SWITCH");
+
+			if ("${enableSandboxOnly}" == "true") {
+				Check.checkToggleSwitch(locator1 = "Publications#ENABLE_SANDBOX_ONLY_TOGGLE_SWITCH");
+			}
+
+			Click(locator1 = "Button#SAVE");
+		}
 	}
 
 	macro enableSandboxOnly {

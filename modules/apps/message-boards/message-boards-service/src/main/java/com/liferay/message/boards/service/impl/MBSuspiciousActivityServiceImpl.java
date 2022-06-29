@@ -65,7 +65,6 @@ public class MBSuspiciousActivityServiceImpl
 			messageId);
 	}
 
-
 	@Override
 	public MBSuspiciousActivity getSuspiciousActivity(long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException {
@@ -73,7 +72,6 @@ public class MBSuspiciousActivityServiceImpl
 		return _mbSuspiciousActivityLocalService.getSuspiciousActivity(
 			suspiciousActivityId);
 	}
-
 
 	@Override
 	public List<MBSuspiciousActivity> getThreadSuspiciousActivities(
@@ -84,12 +82,11 @@ public class MBSuspiciousActivityServiceImpl
 	}
 
 	@Override
-	public MBSuspiciousActivity updateValidated(
-			long suspiciousActivityId)
+	public MBSuspiciousActivity updateValidated(long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException {
 
-		return _mbSuspiciousActivityLocalService.
-			updateValidated(suspiciousActivityId);
+		return _mbSuspiciousActivityLocalService.updateValidated(
+			suspiciousActivityId);
 	}
 
 	@Reference

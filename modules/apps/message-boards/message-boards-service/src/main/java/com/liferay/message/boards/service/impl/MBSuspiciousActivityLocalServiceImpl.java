@@ -20,7 +20,6 @@ import com.liferay.message.boards.model.MBSuspiciousActivity;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.base.MBSuspiciousActivityLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
-import com.liferay.message.boards.service.persistence.MBSuspiciousActivityPersistence;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -96,7 +95,6 @@ public class MBSuspiciousActivityLocalServiceImpl
 		return mbSuspiciousActivityPersistence.findByMessageId(messageId);
 	}
 
-
 	@Override
 	public MBSuspiciousActivity getSuspiciousActivity(long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException {
@@ -105,16 +103,15 @@ public class MBSuspiciousActivityLocalServiceImpl
 			suspiciousActivityId);
 	}
 
-
 	@Override
 	public List<MBSuspiciousActivity> getThreadSuspiciousActivities(
 		long threadId) {
 
 		return mbSuspiciousActivityPersistence.findByThreadId(threadId);
 	}
+
 	@Override
-	public MBSuspiciousActivity updateValidated(
-			long suspiciousActivityId)
+	public MBSuspiciousActivity updateValidated(long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException {
 
 		MBSuspiciousActivity suspiciousActivity = getSuspiciousActivity(

@@ -65,10 +65,6 @@ public class MBSuspiciousActivityServiceImpl
 			messageId);
 	}
 
-	@Override
-	public List<MBSuspiciousActivity> getSuspiciousActivities() {
-		return _mbSuspiciousActivityLocalService.getSuspiciousActivities();
-	}
 
 	@Override
 	public MBSuspiciousActivity getSuspiciousActivity(long suspiciousActivityId)

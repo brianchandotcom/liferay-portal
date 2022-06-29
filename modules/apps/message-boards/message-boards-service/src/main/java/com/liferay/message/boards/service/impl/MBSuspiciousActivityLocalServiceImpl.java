@@ -96,10 +96,6 @@ public class MBSuspiciousActivityLocalServiceImpl
 		return mbSuspiciousActivityPersistence.findByMessageId(messageId);
 	}
 
-	@Override
-	public List<MBSuspiciousActivity> getSuspiciousActivities() {
-		return mbSuspiciousActivityPersistence.findAll();
-	}
 
 	@Override
 	public MBSuspiciousActivity getSuspiciousActivity(long suspiciousActivityId)

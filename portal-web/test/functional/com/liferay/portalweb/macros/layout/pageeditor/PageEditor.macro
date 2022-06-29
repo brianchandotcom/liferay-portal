@@ -797,19 +797,33 @@ definition {
 			var position = "1";
 		}
 
-		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		if (isSet(targetFragmentName)) {
+			PageEditor.addFragment(
+				collectionName = "${collectionName}",
+				fragmentName = "${fragmentName}",
+				targetFragmentName = "Form Container");
 
-		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
+			PageEditor.moveFragmentToFormContainerViaPageStructure(
+				dropTarget = "${dropTarget}",
+				elementName = "${fragmentName}",
+				index = "${index}",
+				targetElementName = "${targetFragmentName}");
+		}
+		else {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_collectionName = "${collectionName}",
-			key_fragmentName = "${fragmentName}",
-			key_position = "${position}",
-			key_targetFragmentName = "Form Container",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#FORM_CONTAINER_CONTAINER");
+			PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
-		PageEditor.waitForAutoSave();
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				key_position = "${position}",
+				key_targetFragmentName = "Form Container",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#FORM_CONTAINER_CONTAINER");
+
+			PageEditor.waitForAutoSave();
+		}
 	}
 
 	macro addVideoFragmentURL {
@@ -3630,6 +3644,46 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			key_elementHeader = "//div[@aria-label='${elementName}']",
 			key_position = "1",
 			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+	}
+
+	macro moveFragmentToFormContainerViaPageStructure {
+		Variables.assertDefined(parameterList = "${fragmentName}");
+
+		PageEditor.gotoTab(tabName = "Browser");
+
+		Navigator.gotoNavTab(navTab = "Page Elements");
+
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		Click(
+			key_nodeName = "Form Container",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_COLLAPSED");
+
+		if ("${dropTarget}" == "Up") {
+			DragAndDrop.javaScriptDragAndDropToUp(
+				index = "${index}",
+				key_elementName = "${fragmentName}",
+				key_targetElementName = "${targetFragmentName}",
+				locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
+				locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
+		}
+		else {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				index = "${index}",
+				key_elementName = "${fragmentName}",
+				key_targetElementName = "${targetFragmentName}",
+				locator1 = "Treeview#NODE_DRAGGABLE_ELEMENT",
+				locator2 = "Treeview#NODE_DRAGGABLE_TARGET_ELEMENT");
+		}
+
+		PageEditor.waitForAutoSave();
+
+		AssertElementPresent(
+			key_elementHeader = "//div[@aria-label='${fragmentName}']",
+			key_position = "1",
+			locator1 = "PageEditor#FORM_CONTAINER_CONTAINER_NESTED_ELEMENT");
 	}
 
 	macro openExperienceMenu {

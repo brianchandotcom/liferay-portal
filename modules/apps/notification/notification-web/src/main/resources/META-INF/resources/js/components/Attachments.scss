@@ -1,0 +1,11 @@
+.lfr__notification-template-attachments {
+	display: flex;
+
+	&-fields {
+		width: 50%;
+
+		&:not(:last-child) {
+			margin-right: 16px;
+		}
+	}
+}

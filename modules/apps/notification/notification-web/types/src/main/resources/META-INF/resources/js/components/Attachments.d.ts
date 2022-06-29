@@ -14,28 +14,11 @@
 
 /// <reference types="react" />
 
-import './EditNotificationTemplate.scss';
-export default function EditNotificationTemplate({
-	baseResourceURL,
-	editorConfig,
-	notificationTemplateId,
-}: IProps): JSX.Element;
+import './Attachments.scss';
+import {TNotificationTemplate} from './EditNotificationTemplate';
+export declare function Attachments({setValues, values}: IProps): JSX.Element;
 interface IProps {
-	baseResourceURL: string;
-	editorConfig: string;
-	notificationTemplateId: number;
+	setValues: (values: Partial<TNotificationTemplate>) => void;
+	values: Partial<TNotificationTemplate>;
 }
-export declare type TNotificationTemplate = {
-	attachmentObjectFieldIds: string[] | number[];
-	bcc: string;
-	body: LocalizedValue<string>;
-	cc: string;
-	description: string;
-	from: string;
-	fromName: LocalizedValue<string>;
-	name: string;
-	objectDefinitionId: number;
-	subject: LocalizedValue<string>;
-	to: LocalizedValue<string>;
-};
 export {};

@@ -32,6 +32,7 @@ import {
 	defaultLanguageId,
 	defaultLocale,
 } from '../utils/locale';
+import {Attachments} from './Attachments';
 import {DefinitionOfTerms} from './DefinitionOfTerms';
 
 import './EditNotificationTemplate.scss';
@@ -158,6 +159,7 @@ export default function EditNotificationTemplate({
 				);
 
 				const {
+					attachmentObjectFieldIds,
 					bcc,
 					body,
 					cc,
@@ -165,12 +167,14 @@ export default function EditNotificationTemplate({
 					from,
 					fromName,
 					name,
+					objectDefinitionId,
 					subject,
 					to,
 				} = (await response.json()) as TNotificationTemplate;
 
 				setValues({
 					...values,
+					attachmentObjectFieldIds,
 					bcc,
 					body,
 					cc,
@@ -178,6 +182,7 @@ export default function EditNotificationTemplate({
 					from,
 					fromName,
 					name,
+					objectDefinitionId,
 					subject,
 					to,
 				});
@@ -384,6 +389,8 @@ export default function EditNotificationTemplate({
 						/>
 
 						<DefinitionOfTerms baseResourceURL={baseResourceURL} />
+
+						<Attachments setValues={setValues} values={values} />
 					</Card>
 				</div>
 			</div>
@@ -397,7 +404,8 @@ interface IProps {
 	notificationTemplateId: number;
 }
 
-type TNotificationTemplate = {
+export type TNotificationTemplate = {
+	attachmentObjectFieldIds: string[];
 	bcc: string;
 	body: LocalizedValue<string>;
 	cc: string;
@@ -405,6 +413,7 @@ type TNotificationTemplate = {
 	from: string;
 	fromName: LocalizedValue<string>;
 	name: string;
+	objectDefinitionId: number;
 	subject: LocalizedValue<string>;
 	to: LocalizedValue<string>;
 };

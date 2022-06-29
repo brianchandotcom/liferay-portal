@@ -50,7 +50,7 @@ public class NotificationQueueEntryLocalServiceTest {
 	public void testNotificationQueueEntry() throws Exception {
 		NotificationTemplate notificationTemplate =
 			_notificationTemplateLocalService.addNotificationTemplate(
-				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId(), 0, RandomTestUtil.randomString(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -61,7 +61,8 @@ public class NotificationQueueEntryLocalServiceTest {
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
 				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				Collections.emptyList());
 
 		NotificationQueueEntry notificationQueueEntry =
 			_notificationQueueEntryLocalService.addNotificationQueueEntry(
@@ -74,7 +75,7 @@ public class NotificationQueueEntryLocalServiceTest {
 				notificationTemplate.getFromName(LocaleUtil.US), 0,
 				notificationTemplate.getSubject(LocaleUtil.US),
 				notificationTemplate.getTo(LocaleUtil.US),
-				RandomTestUtil.randomString());
+				RandomTestUtil.randomString(), Collections.emptyList());
 
 		Assert.assertNotNull(notificationQueueEntry);
 		Assert.assertNotNull(

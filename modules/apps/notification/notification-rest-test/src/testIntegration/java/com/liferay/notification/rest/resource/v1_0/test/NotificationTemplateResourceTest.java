@@ -17,6 +17,7 @@ package com.liferay.notification.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -77,20 +78,26 @@ public class NotificationTemplateResourceTest
 	protected NotificationTemplate randomNotificationTemplate()
 		throws Exception {
 
-		NotificationTemplate notificationTemplate =
-			super.randomNotificationTemplate();
-
-		notificationTemplate.setBody(
-			LocalizedMapUtil.getI18nMap(
-				RandomTestUtil.randomLocaleStringMap()));
-		notificationTemplate.setFromName(
-			LocalizedMapUtil.getI18nMap(
-				RandomTestUtil.randomLocaleStringMap()));
-		notificationTemplate.setSubject(
-			LocalizedMapUtil.getI18nMap(
-				RandomTestUtil.randomLocaleStringMap()));
-
-		return notificationTemplate;
+		return new NotificationTemplate() {
+			{
+				bcc = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				body = LocalizedMapUtil.getI18nMap(
+					RandomTestUtil.randomLocaleStringMap());
+				cc = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				dateCreated = RandomTestUtil.nextDate();
+				dateModified = RandomTestUtil.nextDate();
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				from = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				fromName = LocalizedMapUtil.getI18nMap(
+					RandomTestUtil.randomLocaleStringMap());
+				id = RandomTestUtil.randomLong();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				objectDefinitionId = 0L;
+				subject = LocalizedMapUtil.getI18nMap(
+					RandomTestUtil.randomLocaleStringMap());
+			}
+		};
 	}
 
 	@Override

@@ -100,7 +100,7 @@ public class NotificationTemplateLocalServiceTest {
 				notificationTemplate.getFromName(LocaleUtil.US), 0,
 				notificationTemplate.getSubject(LocaleUtil.US),
 				notificationTemplate.getTo(LocaleUtil.US),
-				RandomTestUtil.randomString());
+				RandomTestUtil.randomString(), Collections.emptyList());
 
 		Assert.assertEquals(
 			notificationTemplate.getNotificationTemplateId(),
@@ -122,7 +122,7 @@ public class NotificationTemplateLocalServiceTest {
 		throws PortalException {
 
 		return _notificationTemplateLocalService.addNotificationTemplate(
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), 0, RandomTestUtil.randomString(),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), from,
@@ -132,7 +132,8 @@ public class NotificationTemplateLocalServiceTest {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			Collections.emptyList());
 	}
 
 	@Inject

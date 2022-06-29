@@ -153,7 +153,7 @@ public class NotificationTemplateServiceTest {
 		throws PortalException {
 
 		return _notificationTemplateLocalService.addNotificationTemplate(
-			user.getUserId(), RandomTestUtil.randomString(),
+			user.getUserId(), 0, RandomTestUtil.randomString(),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -164,7 +164,8 @@ public class NotificationTemplateServiceTest {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()));
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			Collections.emptyList());
 	}
 
 	private void _setUser(User user) {
@@ -182,7 +183,7 @@ public class NotificationTemplateServiceTest {
 
 			notificationTemplate =
 				_notificationTemplateService.addNotificationTemplate(
-					user.getUserId(), RandomTestUtil.randomString(),
+					user.getUserId(), 0, RandomTestUtil.randomString(),
 					Collections.singletonMap(
 						LocaleUtil.US, RandomTestUtil.randomString()),
 					RandomTestUtil.randomString(),
@@ -194,7 +195,8 @@ public class NotificationTemplateServiceTest {
 					Collections.singletonMap(
 						LocaleUtil.US, RandomTestUtil.randomString()),
 					Collections.singletonMap(
-						LocaleUtil.US, RandomTestUtil.randomString()));
+						LocaleUtil.US, RandomTestUtil.randomString()),
+					Collections.emptyList());
 		}
 		finally {
 			if (notificationTemplate != null) {
@@ -260,7 +262,7 @@ public class NotificationTemplateServiceTest {
 
 			notificationTemplate =
 				_notificationTemplateService.updateNotificationTemplate(
-					notificationTemplate.getNotificationTemplateId(),
+					notificationTemplate.getNotificationTemplateId(), 0,
 					RandomTestUtil.randomString(),
 					Collections.singletonMap(
 						LocaleUtil.US, RandomTestUtil.randomString()),
@@ -273,7 +275,8 @@ public class NotificationTemplateServiceTest {
 					Collections.singletonMap(
 						LocaleUtil.US, RandomTestUtil.randomString()),
 					Collections.singletonMap(
-						LocaleUtil.US, RandomTestUtil.randomString()));
+						LocaleUtil.US, RandomTestUtil.randomString()),
+					Collections.emptyList());
 		}
 		finally {
 			if (notificationTemplate != null) {

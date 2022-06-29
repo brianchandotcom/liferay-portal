@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
+import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.LayoutQueryStringComposite;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutType;
@@ -8226,31 +8227,74 @@ public class PortalImpl implements Portal {
 
 		for (Locale locale : availableLocales) {
 			String alternateURL = canonicalURL;
-			String alternateURLSuffix = canonicalURLSuffix;
+			String alternateURLSuffix = null;
 			String languageId = LocaleUtil.toLanguageId(locale);
 
 			if (replaceFriendlyURL) {
-				String friendlyURL = null;
+				String[] urlSeparators =
+					FriendlyURLResolverRegistryUtil.getURLSeparators();
 
-				for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
-					if (!languageId.equals(layoutFriendlyURL.getLanguageId())) {
-						continue;
+				for (String urlSeparator : urlSeparators) {
+					if (canonicalURLSuffix.startsWith(urlSeparator)) {
+						FriendlyURLResolver friendlyURLResolver =
+							FriendlyURLResolverRegistryUtil.
+								getFriendlyURLResolver(urlSeparator);
+
+						HttpServletRequest httpServletRequest =
+							themeDisplay.getRequest();
+
+						Map<String, Object> requestContext =
+							HashMapBuilder.<String, Object>put(
+								"request", httpServletRequest
+							).put(
+								WebKeys.LOCALE, locale
+							).build();
+
+						Map<String, String[]> params =
+							httpServletRequest.getParameterMap();
+
+						LayoutFriendlyURLComposite layoutFriendlyURLComposite =
+							friendlyURLResolver.getLayoutFriendlyURLComposite(
+								themeDisplay.getCompanyId(),
+								themeDisplay.getScopeGroupId(), false,
+								canonicalURLSuffix, params, requestContext);
+
+						alternateURLSuffix =
+							layoutFriendlyURLComposite.getFriendlyURL();
+
+						break;
 					}
-
-					friendlyURL = layoutFriendlyURL.getFriendlyURL();
-
-					if (groupFriendlyURLPrefix != null) {
-						friendlyURL = groupFriendlyURLPrefix.concat(
-							friendlyURL);
-					}
-
-					break;
 				}
 
-				if (friendlyURL != null) {
-					alternateURLSuffix = StringUtil.replaceFirst(
-						alternateURLSuffix, layout.getFriendlyURL(),
-						friendlyURL);
+				if (Validator.isNull(alternateURLSuffix)) {
+					alternateURLSuffix = canonicalURLSuffix;
+
+					String friendlyURL = null;
+
+					for (LayoutFriendlyURL layoutFriendlyURL :
+							layoutFriendlyURLs) {
+
+						if (!languageId.equals(
+								layoutFriendlyURL.getLanguageId())) {
+
+							continue;
+						}
+
+						friendlyURL = layoutFriendlyURL.getFriendlyURL();
+
+						if (groupFriendlyURLPrefix != null) {
+							friendlyURL = groupFriendlyURLPrefix.concat(
+								friendlyURL);
+						}
+
+						break;
+					}
+
+					if (friendlyURL != null) {
+						alternateURLSuffix = StringUtil.replaceFirst(
+							alternateURLSuffix, layout.getFriendlyURL(),
+							friendlyURL);
+					}
 				}
 
 				alternateURL = canonicalURLPrefix.concat(alternateURLSuffix);

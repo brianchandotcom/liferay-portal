@@ -203,32 +203,42 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			groupId, layoutDisplayPageObjectProvider,
 			layoutDisplayPageProvider);
 
-		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)requestContext.get("request");
+		String originalFriendlyURL = _getOriginalFriendlyURL(friendlyURL);
 
-		HttpSession httpSession = httpServletRequest.getSession();
+		String localizedFriendlyURL = originalFriendlyURL;
 
-		Locale locale = (Locale)httpSession.getAttribute(WebKeys.LOCALE);
+		String urlTitle = layoutDisplayPageObjectProvider.getURLTitle(
+			getLocale(requestContext));
 
-		if (locale != null) {
-			String originalFriendlyURL = _getOriginalFriendlyURL(friendlyURL);
+		if (Validator.isNotNull(urlTitle)) {
+			localizedFriendlyURL = getURLSeparator() + urlTitle;
+		}
 
-			String localizedFriendlyURL = originalFriendlyURL;
-
-			String urlTitle = layoutDisplayPageObjectProvider.getURLTitle(
-				locale);
-
-			if (Validator.isNotNull(urlTitle)) {
-				localizedFriendlyURL = getURLSeparator() + urlTitle;
-			}
-
-			if (!Objects.equals(originalFriendlyURL, localizedFriendlyURL)) {
-				return new LayoutFriendlyURLComposite(
-					layout, localizedFriendlyURL, true);
-			}
+		if (!Objects.equals(originalFriendlyURL, localizedFriendlyURL)) {
+			return new LayoutFriendlyURLComposite(
+				layout, localizedFriendlyURL, true);
 		}
 
 		return new LayoutFriendlyURLComposite(layout, friendlyURL, false);
+	}
+
+	protected Locale getLocale(Map<String, Object> requestContext) {
+		Locale locale = (Locale)requestContext.get(WebKeys.LOCALE);
+
+		if (locale == null) {
+			HttpServletRequest httpServletRequest =
+				(HttpServletRequest)requestContext.get("request");
+
+			HttpSession httpSession = httpServletRequest.getSession();
+
+			locale = (Locale)httpSession.getAttribute(WebKeys.LOCALE);
+
+			if (locale == null) {
+				locale = portal.getLocale(httpServletRequest);
+			}
+		}
+
+		return locale;
 	}
 
 	@Reference

@@ -639,9 +639,9 @@ public class EditFragmentEntryDisplayContext {
 	}
 
 	private static final InfoFieldType[] _INFO_FIELD_TYPES = {
-		BooleanInfoFieldType.INSTANCE, DateInfoFieldType.INSTANCE,
-		NumberInfoFieldType.INSTANCE, SelectInfoFieldType.INSTANCE,
-		TextInfoFieldType.INSTANCE
+		BooleanInfoFieldType.INSTANCE, CaptchaInfoFieldType.INSTANCE,
+		DateInfoFieldType.INSTANCE, NumberInfoFieldType.INSTANCE,
+		SelectInfoFieldType.INSTANCE, TextInfoFieldType.INSTANCE
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

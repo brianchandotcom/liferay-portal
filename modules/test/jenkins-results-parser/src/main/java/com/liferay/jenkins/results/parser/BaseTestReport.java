@@ -37,13 +37,13 @@ public class BaseTestReport implements TestReport {
 	}
 
 	@Override
-	public String getName() {
-		return _jsonObject.getString("name");
+	public String getStatus() {
+		return _jsonObject.getString("status");
 	}
 
 	@Override
-	public String getStatus() {
-		return _jsonObject.getString("status");
+	public String getTestName() {
+		return _jsonObject.getString("name");
 	}
 
 	protected BaseTestReport(

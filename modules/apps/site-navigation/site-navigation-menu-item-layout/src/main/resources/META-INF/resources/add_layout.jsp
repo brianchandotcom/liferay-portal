@@ -17,18 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
+Group group = themeDisplay.getScopeGroup();
+
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 PortletURL portletURL = currentURLObj;
 %>
 
-<clay:navigation-bar
-	navigationItems='<%=
-		new JSPNavigationItemList(pageContext) {
-			{
-				Group group = themeDisplay.getScopeGroup();
-
-				if (group.isPrivateLayoutsEnabled()) {
+<c:if test="<%= group.isPrivateLayoutsEnabled() %>">
+	<clay:navigation-bar
+		navigationItems='<%=
+			new JSPNavigationItemList(pageContext) {
+				{
 					add(
 						navigationItem -> {
 							navigationItem.setActive(!privateLayout);
@@ -43,18 +43,10 @@ PortletURL portletURL = currentURLObj;
 							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "private-pages"));
 						});
 				}
-				else {
-					add(
-						navigationItem -> {
-							navigationItem.setActive(!privateLayout);
-							navigationItem.setHref(portletURL, "privateLayout", false);
-							navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "pages"));
-						});
-				}
 			}
-		}
-	%>'
-/>
+		%>'
+	/>
+</c:if>
 
 <aui:input id="groupId" name="TypeSettingsProperties--groupId--" type="hidden" value="<%= scopeGroupId %>" />
 

@@ -63,11 +63,10 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		_objectDefinitionModelResourcePermission =
 			objectDefinitionModelResourcePermission;
 		_objectDefinitionService = objectDefinitionService;
-
-		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
-
 		_systemObjectDefinitionMetadataTracker =
 			systemObjectDefinitionMetadataTracker;
+
+		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()

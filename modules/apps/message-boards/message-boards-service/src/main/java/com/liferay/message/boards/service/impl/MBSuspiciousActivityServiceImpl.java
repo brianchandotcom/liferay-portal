@@ -101,12 +101,12 @@ public class MBSuspiciousActivityServiceImpl
 	}
 
 	@Override
-	public MBSuspiciousActivity toggleSuspiciousActivityValidator(
+	public MBSuspiciousActivity updateValidated(
 			long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException {
 
 		return _mbSuspiciousActivityLocalService.
-			toggleSuspiciousActivityValidator(suspiciousActivityId);
+			updateValidated(suspiciousActivityId);
 	}
 
 	@Reference

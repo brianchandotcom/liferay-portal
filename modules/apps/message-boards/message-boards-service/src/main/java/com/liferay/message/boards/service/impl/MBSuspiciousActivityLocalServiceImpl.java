@@ -86,26 +86,26 @@ public class MBSuspiciousActivityLocalServiceImpl
 			long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException {
 
-		return _mbSuspiciousActivityPersistence.remove(suspiciousActivityId);
+		return mbSuspiciousActivityPersistence.remove(suspiciousActivityId);
 	}
 
 	@Override
 	public List<MBSuspiciousActivity> getMessageSuspiciousActivities(
 		long messageId) {
 
-		return _mbSuspiciousActivityPersistence.findByMessagedId(messageId);
+		return mbSuspiciousActivityPersistence.findByMessageId(messageId);
 	}
 
 	@Override
 	public List<MBSuspiciousActivity> getSuspiciousActivities() {
-		return _mbSuspiciousActivityPersistence.findAll();
+		return mbSuspiciousActivityPersistence.findAll();
 	}
 
 	@Override
 	public MBSuspiciousActivity getSuspiciousActivity(long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException {
 
-		return _mbSuspiciousActivityPersistence.findByPrimaryKey(
+		return mbSuspiciousActivityPersistence.findByPrimaryKey(
 			suspiciousActivityId);
 	}
 
@@ -114,22 +114,22 @@ public class MBSuspiciousActivityLocalServiceImpl
 			long userId, long messageId)
 		throws NoSuchSuspiciousActivityException {
 
-		return _mbSuspiciousActivityPersistence.findByU_M(userId, messageId);
+		return mbSuspiciousActivityPersistence.findByU_M(userId, messageId);
 	}
 
 	@Override
 	public int getSuspiciousActivityCount() {
-		return _mbSuspiciousActivityPersistence.countAll();
+		return mbSuspiciousActivityPersistence.countAll();
 	}
 
 	@Override
 	public List<MBSuspiciousActivity> getThreadSuspiciousActivities(
 		long threadId) {
 
-		return _mbSuspiciousActivityPersistence.findByThreadId(threadId);
+		return mbSuspiciousActivityPersistence.findByThreadId(threadId);
 	}
-
-	public MBSuspiciousActivity toggleSuspiciousActivityValidator(
+	@Override
+	public MBSuspiciousActivity updateValidated(
 			long suspiciousActivityId)
 		throws NoSuchSuspiciousActivityException {
 
@@ -144,9 +144,6 @@ public class MBSuspiciousActivityLocalServiceImpl
 
 	@Reference
 	private MBMessagePersistence _mbMessagePersistence;
-
-	@Reference
-	private MBSuspiciousActivityPersistence _mbSuspiciousActivityPersistence;
 
 	@Reference
 	private MBThreadPersistence _mbThreadPersistence;

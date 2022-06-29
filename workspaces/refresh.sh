@@ -39,7 +39,7 @@ function refresh_sample_default_workspace {
 
 	echo -e "\n\nfeature.flag.LPS-153457=true" >> configs/local/portal-ext.properties
 
-	echo -e "\nliferay.workspace.docker.image.liferay=liferay/dxp:7.4.13.nightly-d4.1.3-20220622090520" >> gradle.properties
+	echo -e "\nliferay.workspace.docker.image.liferay=liferay/dxp:7.4.13.nightly-d4.1.4-20220628211901" >> gradle.properties
 
 	touch modules/.touch
 	touch themes/.touch

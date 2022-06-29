@@ -587,11 +587,10 @@ public class RenderLayoutStructureDisplayContext {
 			JSONObject messageJSONObject =
 				successMessageJSONObject.getJSONObject("message");
 
-			if (messageJSONObject.has(_themeDisplay.getLanguageId())) {
-				successMessage = messageJSONObject.getString(
-					_themeDisplay.getLanguageId());
-			}
-			else {
+			successMessage = messageJSONObject.getString(
+				_themeDisplay.getLanguageId());
+
+			if (Validator.isNull(successMessage)) {
 				String siteDefaultLanguageId = LanguageUtil.getLanguageId(
 					PortalUtil.getSiteDefaultLocale(
 						_themeDisplay.getScopeGroupId()));
@@ -601,7 +600,7 @@ public class RenderLayoutStructureDisplayContext {
 			}
 		}
 
-		if (successMessage == null) {
+		if (Validator.isNull(successMessage)) {
 			successMessage = LanguageUtil.get(
 				_themeDisplay.getLocale(),
 				"thank-you.-your-information-was-successfully-received");

@@ -21,6 +21,8 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.io.Serializable;
+
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
@@ -39,7 +41,7 @@ import java.util.Set;
 public class ExtendedEntity {
 
 	public static ExtendedEntity extend(
-		Object entity, Map<String, Object> extendedProperties,
+		Object entity, Map<String, Serializable> extendedProperties,
 		Set<String> filteredPropertyKeys) {
 
 		return new ExtendedEntity(
@@ -62,13 +64,13 @@ public class ExtendedEntity {
 	}
 
 	@JsonAnyGetter
-	public Map<String, Object> getExtendedProperties() {
+	public Map<String, Serializable> getExtendedProperties() {
 		return _extendedProperties;
 	}
 
 	private ExtendedEntity(
-		Object entity, Map<String, Object> extendedProperties,
-		Set<String> filteredPropertyKeys) {
+		Object entity, Map<String, Serializable> extendedProperties,
+		Set<String> filteredPropertyNames) {
 
 		_entity = entity;
 
@@ -78,7 +80,7 @@ public class ExtendedEntity {
 
 		extendedPropertyKeys.removeIf(Objects::isNull);
 
-		for (String key : filteredPropertyKeys) {
+		for (String key : filteredPropertyNames) {
 			_extendedProperties.put(key, null);
 		}
 
@@ -114,6 +116,6 @@ public class ExtendedEntity {
 	private static final Log _log = LogFactoryUtil.getLog(ExtendedEntity.class);
 
 	private final Object _entity;
-	private final Map<String, Object> _extendedProperties;
+	private final Map<String, Serializable> _extendedProperties;
 
 }

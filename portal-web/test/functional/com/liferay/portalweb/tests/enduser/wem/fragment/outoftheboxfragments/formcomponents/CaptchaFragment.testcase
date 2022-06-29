@@ -180,4 +180,85 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-155168. The user could submit Verification of reCaptcha at view mode."
+	@priority = "5"
+	test SubmitVerificationOfReCaptcha {
+		property test.name.skip.portal.instance = "CaptchaFragment#SubmitVerificationOfReCaptcha";
+
+		task ("Given a site member has a content page with a reCaptcha and a Submit Button inside Form Container") {
+			task ("Configure reCaptcha Engine") {
+				SystemSettings.openSystemSettingsAdmin();
+
+				SystemSettings.gotoConfiguration(
+					configurationCategory = "Security Tools",
+					configurationName = "CAPTCHA",
+					configurationScope = "System Scope");
+
+				SystemSettings.selectOptionSetting(
+					fieldName = "CAPTCHA Engine",
+					selectOption = "reCAPTCHA");
+
+				SystemSettings.editTextAreaSetting(
+					settingName = "reCAPTCHA Public Key",
+					settingValue = PropsUtil.get("recaptcha.public.key"));
+
+				SystemSettings.editTextAreaSetting(
+					settingName = "reCAPTCHA Private Key",
+					settingValue = PropsUtil.get("recaptcha.private.key"));
+
+				SystemSettings.saveConfiguration();
+			}
+
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Map the Form Container to new Object") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add a Captcha and a Submit Button fragment into Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "CAPTCHA");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "CAPTCHA");
+
+				AssertElementPresent(locator1 = "IFrame#RECAPTCHA");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the site member accesses to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the site member could submit verification of reCaptcha") {
+			AssertElementPresent(locator1 = "IFrame#RECAPTCHA");
+
+			Button.clickSubmitButton();
+
+			Alert.viewErrorMessage(errorMessage = "CAPTCHA verification failed. Please try again.");
+		}
+	}
+
 }

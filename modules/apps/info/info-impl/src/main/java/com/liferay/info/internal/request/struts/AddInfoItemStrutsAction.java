@@ -84,7 +84,9 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		String redirect = null;
 
 		try {
-			CaptchaUtil.check(httpServletRequest);
+			if (_isCaptchaLayoutStructureItem(formItemId, httpServletRequest)) {
+				CaptchaUtil.check(httpServletRequest);
+			}
 
 			String className = _portal.getClassName(
 				ParamUtil.getLong(httpServletRequest, "classNameId"));

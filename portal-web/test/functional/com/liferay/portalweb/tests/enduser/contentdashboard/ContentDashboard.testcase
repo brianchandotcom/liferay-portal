@@ -884,13 +884,7 @@ definition {
 		}
 
 		task ("Assert 'Clear All' disapears after clicking it") {
-			ClickNoError(
-				key_text = "Clear All",
-				locator1 = "Button#ANY");
-
-			AssertElementNotPresent(
-				key_text = "Clear All",
-				locator1 = "Button#ANY");
+			ContentDashboard.checkClearAllButtonNotPresent();
 		}
 
 		task ("Asserting that all checkboxes turns deselected") {
@@ -1754,13 +1748,7 @@ definition {
 		}
 
 		task ("Assert 'Clear All' disapears after clicking it") {
-			ClickNoError(
-				key_text = "Clear All",
-				locator1 = "Button#ANY");
-
-			AssertElementNotPresent(
-				key_text = "Clear All",
-				locator1 = "Button#ANY");
+			ContentDashboard.checkClearAllButtonNotPresent();
 		}
 
 		task ("Checking if the results bar not appears") {

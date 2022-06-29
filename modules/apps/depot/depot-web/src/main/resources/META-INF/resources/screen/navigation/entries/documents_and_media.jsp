@@ -29,7 +29,7 @@ DepotAdminDLDisplayContext depotAdminDLDisplayContext = (DepotAdminDLDisplayCont
 
 	<c:if test="<%= depotAdminDLDisplayContext.isShowFileSizePerMimeType() %>">
 		<liferay-frontend:fieldset
-			collapsible="<%= false %>"
+			collapsible="<%= true %>"
 			cssClass="mt-5"
 			label='<%= LanguageUtil.get(request, "maximum-file-size-and-mimetypes") %>'
 		>

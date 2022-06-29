@@ -274,6 +274,32 @@ definition {
 		return "${productIds}";
 	}
 
+	macro _getCommerceProductImageIds {
+		Variables.assertDefined(parameterList = "${productName}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/images \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var productImageIds = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		if ("${productImageIds}" == "") {
+			var productImageIds = "default";
+		}
+
+		return "${productImageIds}";
+	}
+
 	macro _getCommerceProductOptionId {
 		Variables.assertDefined(parameterList = "${productName},${productOptionName}");
 

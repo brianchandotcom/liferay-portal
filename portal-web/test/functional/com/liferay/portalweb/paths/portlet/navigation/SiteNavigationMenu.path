@@ -46,8 +46,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SIDEBAR</td>
-	<td>//div[contains(@class,'sidebar')]</td>
+	<td>SIDEBAR_OPEN</td>
+	<td>//div[contains(@class,'AppLayout-sidebar--visible')]</td>
 	<td></td>
 </tr>
 <tr>

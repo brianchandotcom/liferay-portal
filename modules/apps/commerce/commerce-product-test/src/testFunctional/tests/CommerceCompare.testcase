@@ -84,14 +84,57 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-5915. As a buyer, I want to see max number of compare items allowed in Compare page"
-	@ignore = "true"
+	@description = "COMMERCE-5915. Verify buyers can only see the max number of comparison items allowed in the Compare page."
 	@priority = "3"
 	test EditMaxNumberOfComparisonItemsInComparePage {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5915 EditMaxNumberOfComparisonItemsInComparePage pending implementation
+		task ("Given 4 products are selected for comparison") {
+			User.logoutPG();
 
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.compareProducts(products = "U-Joint,Transmission Fluid,Torque Converters,Mount");
+		}
+
+		task ("And given the admin changes the Products Limit in the product comparison table to 3") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/compare");
+
+			FrontStore.setMaxComparisonItems(maxItems = "3");
+		}
+
+		task ("When the buyer views the comparison from the Compare page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Button.click(button = "Compare");
+		}
+
+		task ("Then the buyer cannot see the fourth product in the comparison table") {
+			for (var product : list "U-Joint,Transmission Fluid,Torque Converters,Mount") {
+				if ("${product}" == "Mount") {
+					AssertElementNotPresent(
+						key_productName = "${product}",
+						locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+				}
+				else {
+					AssertElementPresent(
+						key_productName = "${product}",
+						locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+				}
+			}
+		}
 	}
 
 	@description = "COMMERCE-5916. As a buyer, I want to see max number of compare items allowed in MiniCompare widget"

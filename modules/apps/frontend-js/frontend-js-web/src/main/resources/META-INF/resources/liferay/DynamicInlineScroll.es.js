@@ -15,14 +15,6 @@
 import PortletBase from './PortletBase.es';
 import delegate from './delegate/delegate.es';
 
-function isBoolean(val) {
-	return typeof val === 'boolean';
-}
-
-function isString(val) {
-	return typeof val === 'string';
-}
-
 /**
  * Appends list item elements to dropdown menus with inline-scrollers on scroll
  * events to improve page loading performance.

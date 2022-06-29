@@ -13,15 +13,15 @@
  */
 
 function pictureTagTemplate({
+	defaultSrc,
 	fileEntryAttributeName,
 	fileEntryId,
 	sources,
-	defaultSrc,
 }) {
 	return `<picture ${fileEntryAttributeName}="${fileEntryId}">${sources}<img src="${defaultSrc}"></picture>`;
 }
 
-function sourceTagTemplate({srcset, media}) {
+function sourceTagTemplate({media, srcset}) {
 	return `<source srcset="${srcset}" media="${media}">`;
 }
 
@@ -114,7 +114,7 @@ function sourceTagTemplate({srcset, media}) {
 					});
 				});
 
-				let pictureHtml = pictureTagTemplate({
+				const pictureHtml = pictureTagTemplate({
 					defaultSrc: itemValue.defaultSource,
 					fileEntryAttributeName,
 					fileEntryId: itemValue.fileEntryId,

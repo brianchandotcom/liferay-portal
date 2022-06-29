@@ -143,16 +143,18 @@ name = HtmlUtil.escapeJS(name);
 			var url = tinymce.activeEditor.settings[browseUrls[meta.filetype]];
 
 			if (url) {
-				let zIndex;
+				var zIndex;
 
 				var tinymceDialogContainer = document.querySelector(
 					'.tox-tinymce-aux'
 				);
 
 				if (tinymceDialogContainer) {
-					var containerZIndex = window.getComputedStyle(tinymceDialogContainer).zIndex;
+					var containerZIndex = window.getComputedStyle(
+						tinymceDialogContainer
+					).zIndex;
 
-					zIndex = parseInt(containerZIndex) + 10
+					zIndex = parseInt(containerZIndex) + 10;
 				}
 
 				Liferay.Util.openSelectionModal({
@@ -182,8 +184,7 @@ name = HtmlUtil.escapeJS(name);
 						}
 
 						callback(selectedItem);
-					}
-
+					},
 				});
 			}
 		},

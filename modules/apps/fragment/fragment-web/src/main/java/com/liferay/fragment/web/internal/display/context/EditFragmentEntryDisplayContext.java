@@ -24,6 +24,7 @@ import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
+import com.liferay.fragment.web.internal.info.field.type.CaptchaInfoFieldType;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
@@ -664,19 +665,5 @@ public class EditFragmentEntryDisplayContext {
 	private Boolean _readOnly;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
-
-	private static class CaptchaInfoFieldType implements InfoFieldType {
-
-		public static final CaptchaInfoFieldType INSTANCE =
-			new CaptchaInfoFieldType();
-
-		public String getName() {
-			return "captcha";
-		}
-
-		private CaptchaInfoFieldType() {
-		}
-
-	}
 
 }

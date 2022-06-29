@@ -15,18 +15,24 @@
 package com.liferay.dispatch.web.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.internal.messaging.HiddenInUIDispatchTaskExecutor;
+import com.liferay.dispatch.internal.messaging.SingleNodeClusterModeDispatchTaskExecutor;
+import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -101,6 +107,75 @@ public class DispatchTriggerDisplayContextTest {
 					DISPATCH_TASK_EXECUTOR_TYPE_HIDDEN_IN_UI));
 	}
 
+	@Test
+	public void testSingleNodeTaskExecutorTypes() throws Exception {
+		Set<String> dispatchTaskExecutorTypes =
+			_dispatchTaskExecutorRegistry.getDispatchTaskExecutorTypes();
+
+		Assert.assertTrue(
+			dispatchTaskExecutorTypes.contains(
+				SingleNodeClusterModeDispatchTaskExecutor.
+					DISPATCH_TASK_EXECUTOR_TYPE_SINGLE_NODE));
+
+		Group group = GroupTestUtil.addGroup();
+
+		Company company = _companyLocalService.getCompany(group.getCompanyId());
+
+		User user = UserTestUtil.addUser(company);
+
+		DispatchTrigger dispatchTrigger =
+			_dispatchTriggerLocalService.addDispatchTrigger(
+				"test-reference", user.getUserId(),
+				SingleNodeClusterModeDispatchTaskExecutor.
+					DISPATCH_TASK_EXECUTOR_TYPE_SINGLE_NODE,
+				null, "test-trigger", false);
+
+		Assert.assertEquals(
+			DispatchTaskClusterMode.NOT_APPLICABLE,
+			DispatchTaskClusterMode.valueOf(
+				dispatchTrigger.getDispatchTaskClusterMode()));
+
+		DispatchTaskClusterMode dispatchTaskClusterMode =
+			DispatchTaskClusterMode.ALL_NODES;
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(
+				company, LayoutTestUtil.addTypePortletLayout(group), user,
+				"dispatchTriggerId",
+				String.valueOf(dispatchTrigger.getDispatchTriggerId()),
+				"active", "true", "cmd", "schedule", "cronExpression",
+				"* 0/5 * ? * MON-SAT", "dispatchTaskClusterMode",
+				String.valueOf(dispatchTaskClusterMode.getMode()),
+				"endDateMonth", "05", "endDateDay", "07", "endDateYear", "2022",
+				"endDateHour", "10", "endDateMinute", "30", "endDateAmPm", "1",
+				"startDateMonth", "05", "startDateDay", "07", "startDateYear",
+				"2022", "startDateHour", "09", "startDateMinute", "55",
+				"startDateAmPm", "1");
+
+		_mvcActionCommand.processAction(
+			new MockLiferayPortletActionRequest(mockHttpServletRequest),
+			new MockLiferayPortletActionResponse());
+
+		dispatchTrigger = _dispatchTriggerLocalService.getDispatchTrigger(
+			dispatchTrigger.getDispatchTriggerId());
+
+		Assert.assertEquals(
+			DispatchTaskClusterMode.SINGLE_NODE,
+			DispatchTaskClusterMode.valueOf(
+				dispatchTrigger.getDispatchTaskClusterMode()));
+
+		Object dispatchTriggerDisplayContext =
+			_getDispatchTriggerDisplayContext(mockHttpServletRequest);
+
+		Assert.assertNotNull(dispatchTriggerDisplayContext);
+
+		Assert.assertTrue(
+			ReflectionTestUtil.invoke(
+				dispatchTriggerDisplayContext, "isClusterModeSingle",
+				new Class<?>[] {String.class},
+				dispatchTrigger.getDispatchTaskExecutorType()));
+	}
+
 	private Object _getDispatchTriggerDisplayContext(
 			MockHttpServletRequest mockHttpServletRequest)
 		throws Exception {
@@ -117,7 +192,7 @@ public class DispatchTriggerDisplayContextTest {
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
-			Company company, Layout layout, User user)
+			Company company, Layout layout, User user, String... params)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -125,6 +200,12 @@ public class DispatchTriggerDisplayContextTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(company, layout, user));
+
+		if ((params != null) && ((params.length % 2) == 0)) {
+			for (int i = 0; i < params.length; i = i + 2) {
+				mockHttpServletRequest.addParameter(params[i], params[i + 1]);
+			}
+		}
 
 		return mockHttpServletRequest;
 	}
@@ -154,6 +235,11 @@ public class DispatchTriggerDisplayContextTest {
 
 	@Inject
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.dispatch.web.internal.portlet.action.EditDispatchTriggerMVCActionCommand"
+	)
+	private MVCActionCommand _mvcActionCommand;
 
 	@Inject(
 		filter = "component.name=com.liferay.dispatch.web.internal.portlet.action.ViewDispatchTriggerMVCRenderCommand"

@@ -74,6 +74,20 @@ public class RowLayoutStructureItemImporter
 				rowStyledLayoutStructureItem.setCustomCSS(
 					String.valueOf(definitionMap.get("customCSS")));
 			}
+
+			if (definitionMap.containsKey("customCSSViewports")) {
+				List<Map<String, Object>> customCSSViewports =
+					(List<Map<String, Object>>)definitionMap.get(
+						"customCSSViewports");
+
+				for (Map<String, Object> customCSSViewport :
+						customCSSViewports) {
+
+					rowStyledLayoutStructureItem.setCustomCSSViewport(
+						(String)customCSSViewport.get("id"),
+						(String)customCSSViewport.get("customCSS"));
+				}
+			}
 		}
 
 		rowStyledLayoutStructureItem.setGutters(

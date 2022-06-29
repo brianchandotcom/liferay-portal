@@ -65,6 +65,9 @@ public class FormLayoutStructureItemMapper
 								formStyledLayoutStructureItem);
 						customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
 							formStyledLayoutStructureItem);
+						customCSSViewports =
+							StyledLayoutStructureItemUtil.getCustomCSSViewports(
+								formStyledLayoutStructureItem);
 						formConfig = new FormConfig() {
 							{
 								formReference = _toFormReference(

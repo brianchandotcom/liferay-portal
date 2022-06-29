@@ -60,6 +60,9 @@ public class RowLayoutStructureItemMapper
 								rowStyledLayoutStructureItem);
 						customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
 							rowStyledLayoutStructureItem);
+						customCSSViewports =
+							StyledLayoutStructureItemUtil.getCustomCSSViewports(
+								rowStyledLayoutStructureItem);
 						gutters = rowStyledLayoutStructureItem.isGutters();
 						indexed = rowStyledLayoutStructureItem.isIndexed();
 						modulesPerRow =

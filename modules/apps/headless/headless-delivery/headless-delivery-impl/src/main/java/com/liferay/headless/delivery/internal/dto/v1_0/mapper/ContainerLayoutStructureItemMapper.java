@@ -70,6 +70,9 @@ public class ContainerLayoutStructureItemMapper
 								containerStyledLayoutStructureItem);
 						customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
 							containerStyledLayoutStructureItem);
+						customCSSViewports =
+							StyledLayoutStructureItemUtil.getCustomCSSViewports(
+								containerStyledLayoutStructureItem);
 						fragmentLink = _toFragmentLink(
 							containerStyledLayoutStructureItem.
 								getLinkJSONObject(),

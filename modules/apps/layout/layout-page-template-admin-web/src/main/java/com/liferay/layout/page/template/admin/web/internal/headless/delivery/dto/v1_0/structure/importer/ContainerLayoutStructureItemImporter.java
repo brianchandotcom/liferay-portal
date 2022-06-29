@@ -123,6 +123,20 @@ public class ContainerLayoutStructureItemImporter
 				containerStyledLayoutStructureItem.setCustomCSS(
 					String.valueOf(definitionMap.get("customCSS")));
 			}
+
+			if (definitionMap.containsKey("customCSSViewports")) {
+				List<Map<String, Object>> customCSSViewports =
+					(List<Map<String, Object>>)definitionMap.get(
+						"customCSSViewports");
+
+				for (Map<String, Object> customCSSViewport :
+						customCSSViewports) {
+
+					containerStyledLayoutStructureItem.setCustomCSSViewport(
+						(String)customCSSViewport.get("id"),
+						(String)customCSSViewport.get("customCSS"));
+				}
+			}
 		}
 
 		Map<String, Object> containerHtmlProperties =

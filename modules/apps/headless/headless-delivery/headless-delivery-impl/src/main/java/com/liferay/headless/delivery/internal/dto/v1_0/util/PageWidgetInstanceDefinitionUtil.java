@@ -46,6 +46,9 @@ public class PageWidgetInstanceDefinitionUtil {
 					fragmentStyledLayoutStructureItem);
 				customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
 					fragmentStyledLayoutStructureItem);
+				customCSSViewports =
+					StyledLayoutStructureItemUtil.getCustomCSSViewports(
+						fragmentStyledLayoutStructureItem);
 				fragmentStyle = pageWidgetInstanceDefinitionFragmentStyle;
 				fragmentViewports =
 					pageWidgetInstanceDefinitionFragmentViewports;

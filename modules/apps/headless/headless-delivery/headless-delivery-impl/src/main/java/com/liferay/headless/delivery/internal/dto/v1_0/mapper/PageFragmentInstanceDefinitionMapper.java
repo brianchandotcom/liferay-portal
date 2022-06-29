@@ -115,6 +115,9 @@ public class PageFragmentInstanceDefinitionMapper {
 					fragmentStyledLayoutStructureItem);
 				customCSS = StyledLayoutStructureItemUtil.getCustomCSS(
 					fragmentStyledLayoutStructureItem);
+				customCSSViewports =
+					StyledLayoutStructureItemUtil.getCustomCSSViewports(
+						fragmentStyledLayoutStructureItem);
 				fragment = new Fragment() {
 					{
 						key = _getFragmentKey(fragmentEntry, rendererKey);

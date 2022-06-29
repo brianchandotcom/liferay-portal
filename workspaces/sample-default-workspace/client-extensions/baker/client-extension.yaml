@@ -1,0 +1,15 @@
+baker-iframe-1:
+    description: ""
+    name: Baseball
+    type: iframe
+    url: https://en.wikipedia.org/wiki/Baseball
+baker-iframe-2:
+    description: ""
+    name: Football
+    type: iframe
+    url: https://en.wikipedia.org/wiki/Football
+baker-iframe-3:
+    description: ""
+    name: Hockey
+    type: iframe
+    url: https://en.wikipedia.org/wiki/Hockey

@@ -12,65 +12,43 @@ function check_blade {
 	fi
 }
 
-function refresh_able_remote_app {
-
-	#
-	# TODO The command "yarn build" breaks if checked out from Git
-	#
-
-	rm -fr sample-lxc-workspace/lxc/extensions/able-remote-app
-
-	pushd sample-lxc-workspace/lxc/extensions > /dev/null
-
-	../../../../tools/create_remote_app.sh able-remote-app react
-
-	pushd able-remote-app > /dev/null
-
-	yarn build
-
-	popd > /dev/null
-
-	popd > /dev/null
-}
-
-function refresh_baker_webhook {
-	cp sample-lxc-sm-workspace/gradlew sample-lxc-workspace/lxc/extensions/baker-webhook
-
-	cp -R sample-lxc-sm-workspace/gradle sample-lxc-workspace/lxc/extensions/baker-webhook
-}
-
-function refresh_sample_lxc_sm_workspace {
+function refresh_sample_default_workspace {
 	check_blade
 
-	rm -fr sample-lxc-sm-workspace
+	rm -fr sample-default-workspace
 
-	mkdir sample-lxc-sm-workspace
+	mkdir sample-default-workspace
 
-	cd sample-lxc-sm-workspace
+	cd sample-default-workspace
 
-	~/jpm/bin/blade init --liferay-version dxp-7.4-u20
+	~/jpm/bin/blade init --liferay-version dxp-7.4-u30
 
-	touch modules/.gitkeep
-	touch themes/.gitkeep
+	echo -e "\n**/dist\n**/node_modules_cache\n.DS_Store" >> .gitignore
+
+	echo -e "\n\nfeature.flag.LPS-153457=true" >> configs/local/portal-ext.properties
+
+	echo -e "\nliferay.workspace.docker.image.liferay=liferay/dxp:7.4.13.nightly-d4.1.3-20220622090520" >> gradle.properties
+
+	touch modules/.touch
+	touch themes/.touch
 
 	cd ..
 
-	#
-	# TODO Liferay Workspace needs to ignore the lxc directory
-	#
-
-	cp -R sample-lxc-workspace/lxc sample-lxc-sm-workspace
+	cp -R sample-minimal-workspace/client-extensions sample-default-workspace
 }
 
-function refresh_sample_lxc_workspace {
-	refresh_able_remote_app
-	refresh_baker_webhook
+function refresh_sample_minimal_workspace {
+	cp sample-default-workspace/.gitignore sample-minimal-workspace
+	cp sample-default-workspace/gradle.properties sample-minimal-workspace
+	cp sample-default-workspace/gradlew sample-minimal-workspace
+
+	cp -R sample-default-workspace/gradle sample-minimal-workspace
 }
 
 function main {
-	#refresh_sample_lxc_workspace
+	refresh_sample_default_workspace
 
-	refresh_sample_lxc_sm_workspace
+	refresh_sample_minimal_workspace
 }
 
 main "${@}"

@@ -1,0 +1,5 @@
+able-global-js:
+    description: ""
+    name: Able Global JavaScript
+    type: globalJS
+    url: global.js

@@ -1,0 +1,14 @@
+able-custom-element:
+    cssURLs:
+        - style.css
+    description: ""
+    friendlyURLMapping: vanilla-counter
+    htmlElementName: vanilla-counter
+    instanceable: false
+    name: Able Custom Element
+    portletCategoryName: category.remote-apps
+    sourceCodeURL: https://www.liferay.com
+    type: customElement
+    urls:
+        - index.js
+    useESM: false

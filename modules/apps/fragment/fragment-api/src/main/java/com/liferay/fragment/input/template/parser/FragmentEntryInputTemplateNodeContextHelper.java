@@ -19,14 +19,19 @@ import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -39,6 +44,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -169,6 +176,49 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 			inputTemplateNode.addAttribute(
 				"maxFileSize", maximumFileSizeOptional.orElse(0L));
+
+			Optional<FileInfoFieldType.FileSourceType> fileSourceOptional =
+				infoField.getAttributeOptional(FileInfoFieldType.FILE_SOURCE);
+
+			FileInfoFieldType.FileSourceType fileSourceType =
+				fileSourceOptional.orElse(null);
+
+			if (fileSourceType != null) {
+				boolean selectFromDocumentLibrary = false;
+
+				if (fileSourceType ==
+						FileInfoFieldType.FileSourceType.DOCUMENTS_AND_MEDIA) {
+
+					selectFromDocumentLibrary = true;
+				}
+
+				inputTemplateNode.addAttribute(
+					"selectFromDocumentLibrary", selectFromDocumentLibrary);
+
+				if (selectFromDocumentLibrary) {
+					FileItemSelectorCriterion fileItemSelectorCriterion =
+						new FileItemSelectorCriterion();
+
+					fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+						new FileEntryItemSelectorReturnType());
+
+					RequestBackedPortletURLFactory
+						requestBackedPortletURLFactory =
+							RequestBackedPortletURLFactoryUtil.create(
+								httpServletRequest);
+
+					PortletURL itemSelectorURL =
+						_itemSelector.getItemSelectorURL(
+							requestBackedPortletURLFactory,
+							fragmentEntryLink.getNamespace() +
+								"selectFileEntry",
+							fileItemSelectorCriterion);
+
+					inputTemplateNode.addAttribute(
+						"selectFromDocumentLibraryURL",
+						itemSelectorURL.toString());
+				}
+			}
 		}
 		else if (infoField.getInfoFieldType() instanceof NumberInfoFieldType) {
 			String dataType = "integer";

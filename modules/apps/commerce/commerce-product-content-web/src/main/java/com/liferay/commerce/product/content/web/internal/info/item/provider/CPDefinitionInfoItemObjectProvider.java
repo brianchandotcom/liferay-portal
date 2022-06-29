@@ -20,6 +20,7 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,6 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"info.item.identifier=com.liferay.info.item.ClassPKInfoItemIdentifier",
+		"item.class.name=com.liferay.commerce.product.model.CPDefinition",
 		"service.ranking:Integer=100"
 	},
 	service = InfoItemObjectProvider.class
@@ -51,16 +53,16 @@ public class CPDefinitionInfoItemObjectProvider
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 			(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
-			classPKInfoItemIdentifier.getClassPK());
-
-		if (cpDefinition == null) {
+		try {
+			return _cpDefinitionLocalService.getCPDefinition(
+				classPKInfoItemIdentifier.getClassPK());
+		}
+		catch (PortalException portalException) {
 			throw new NoSuchInfoItemException(
 				"Unable to get commerce product " +
-					classPKInfoItemIdentifier.getClassPK());
+					classPKInfoItemIdentifier.getClassPK(),
+				portalException);
 		}
-
-		return cpDefinition;
 	}
 
 	@Override

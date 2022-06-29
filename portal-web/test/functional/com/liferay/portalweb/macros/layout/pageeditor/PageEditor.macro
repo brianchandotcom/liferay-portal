@@ -4173,10 +4173,11 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		if (isSet(backgroundColor)) {
-			PageEditor.viewFragmentStyle(
-				backgroundColor = "${backgroundColor}",
+			PageEditor.viewFragmentCommonStyle(
 				fragmentName = "Container",
-				position = "${position}");
+				index = "${position}",
+				styleName = "backgroundColor",
+				styleValue = "${backgroundColor}");
 		}
 
 		if (isSet(backgroundImage)) {
@@ -4187,31 +4188,35 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		if (isSet(borderColor)) {
-			PageEditor.viewFragmentStyle(
-				borderColor = "${borderColor}",
+			PageEditor.viewFragmentCommonStyle(
 				fragmentName = "Container",
-				position = "${position}");
+				index = "${position}",
+				styleName = "borderColor",
+				styleValue = "${borderColor}");
 		}
 
 		if (isSet(borderRadius)) {
-			PageEditor.viewFragmentStyle(
-				borderRadius = "${borderRadius}",
+			PageEditor.viewFragmentCommonStyle(
 				fragmentName = "Container",
-				position = "${position}");
+				index = "${position}",
+				styleName = "borderRadius",
+				styleValue = "${borderRadius}");
 		}
 
 		if (isSet(borderWidth)) {
-			PageEditor.viewFragmentStyle(
-				borderWidth = "${borderWidth}",
+			PageEditor.viewFragmentCommonStyle(
 				fragmentName = "Container",
-				position = "${position}");
+				index = "${position}",
+				styleName = "borderWidth",
+				styleValue = "${borderWidth}");
 		}
 
 		if (isSet(boxShadow)) {
-			PageEditor.viewFragmentStyle(
-				boxShadow = "${boxShadow}",
+			PageEditor.viewFragmentTopperStyle(
 				fragmentName = "Container",
-				position = "${position}");
+				index = "${position}",
+				styleName = "boxShadow",
+				styleValue = "${boxShadow}");
 		}
 
 		if (isSet(containerWidth)) {
@@ -4250,66 +4255,75 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 		}
 
 		if (isSet(marginBottom)) {
-			PageEditor.viewFragmentStyle(
+			PageEditor.viewFragmentTopperStyle(
 				fragmentName = "Container",
-				marginBottom = "${marginBottom}",
-				position = "${position}");
+				index = "${position}",
+				styleName = "marginBottom",
+				styleValue = "spacer-${marginBottom}");
 		}
 
 		if (isSet(marginLeft)) {
-			PageEditor.viewFragmentStyle(
+			PageEditor.viewFragmentTopperStyle(
 				fragmentName = "Container",
-				marginLeft = "${marginLeft}",
-				position = "${position}");
+				index = "${position}",
+				styleName = "marginLeft",
+				styleValue = "spacer-${marginLeft}");
 		}
 
 		if (isSet(marginRight)) {
-			PageEditor.viewFragmentStyle(
+			PageEditor.viewFragmentTopperStyle(
 				fragmentName = "Container",
-				marginRight = "${marginRight}",
-				position = "${position}");
+				index = "${position}",
+				styleName = "marginRight",
+				styleValue = "spacer-${marginRight}");
 		}
 
 		if (isSet(marginTop)) {
-			PageEditor.viewFragmentStyle(
+			PageEditor.viewFragmentTopperStyle(
 				fragmentName = "Container",
-				marginTop = "${marginTop}",
-				position = "${position}");
+				index = "${position}",
+				styleName = "marginTop",
+				styleValue = "spacer-${marginTop}");
 		}
 
 		if (isSet(opacity)) {
-			PageEditor.viewFragmentStyle(
+			PageEditor.viewFragmentCommonStyle(
 				fragmentName = "Container",
-				opacity = "${opacity}",
-				position = "${position}");
+				index = "${position}",
+				styleName = "opacity",
+				styleValue = "${opacity}");
 		}
 
 		if (isSet(paddingBottom)) {
-			PageEditor.viewFragmentStyle(
+			PageEditor.viewFragmentCommonStyle(
 				fragmentName = "Container",
-				paddingBottom = "${paddingBottom}",
-				position = "${position}");
+				index = "${position}",
+				styleName = "paddingBottom",
+				styleValue = "spacer-${paddingBottom}");
 		}
 
 		if (isSet(paddingLeft)) {
-			PageEditor.viewFragmentStyle(
+			PageEditor.viewFragmentCommonStyle(
 				fragmentName = "Container",
-				paddingLeft = "${paddingLeft}",
-				position = "${position}");
+				index = "${position}",
+				styleName = "paddingLeft",
+				styleValue = "spacer-${paddingLeft}");
 		}
 
 		if (isSet(paddingRight)) {
-			PageEditor.viewFragmentStyle(
+			PageEditor.viewFragmentCommonStyle(
 				fragmentName = "Container",
-				paddingRight = "${paddingRight}",
-				position = "${position}");
+				index = "${position}",
+				styleName = "paddingRight",
+				styleValue = "spacer-${paddingRight}");
 		}
 
 		if (isSet(paddingTop)) {
-			PageEditor.viewFragmentStyle(
+			PageEditor.viewFragmentCommonStyle(
 				fragmentName = "Container",
-				paddingTop = "${paddingTop}",
-				position = "${position}");
+				index = "${position}",
+				styleName = "paddingTop",
+				styleValue = "spacer-${paddingTop}");
 		}
 	}
 

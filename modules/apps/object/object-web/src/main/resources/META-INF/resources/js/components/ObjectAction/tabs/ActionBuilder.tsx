@@ -197,8 +197,8 @@ export default function ActionBuilder({
 
 		items.forEach((field) => {
 			if (
-				field.businessType !== 'Relationship' &&
 				field.businessType !== 'Aggregation' &&
+				field.businessType !== 'Relationship' &&
 				!field.system
 			) {
 				allFields.push(field);
@@ -272,8 +272,8 @@ export default function ActionBuilder({
 
 		items.forEach((field) => {
 			if (
-				field.businessType !== 'Relationship' &&
 				field.businessType !== 'Aggregation' &&
+				field.businessType !== 'Relationship' &&
 				!field.system
 			) {
 				allFields.push(field);

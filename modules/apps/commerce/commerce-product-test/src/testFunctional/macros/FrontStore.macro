@@ -278,6 +278,25 @@ definition {
 			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTION");
 	}
 
+	macro setMaxComparisonItems {
+		Portlet.gotoPortletOptions(
+			portletName = "Product Comparison",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			key_fieldLabel = "Products Limit",
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+			value1 = "${maxItems}");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		Button.clickCancel();
+	}
+
 	@summary = "Depending on what value is passed as product configuration(min,max or multiple), return the corresponding expected text"
 	macro setQuantitySelectorPopoverListItemText {
 		if ("${quantityConfiguration}" == "min") {

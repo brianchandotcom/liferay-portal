@@ -85,7 +85,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADT_CAROUSEL_PLAY_PAUSE</td>
+	<td>ADT_CAROUSEL_ITEM_ICON</td>
 	<td>//menu/li/a[contains(@class,'carousel-menu-item')]</td>
 	<td></td>
 </tr>

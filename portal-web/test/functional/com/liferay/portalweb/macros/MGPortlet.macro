@@ -113,7 +113,7 @@ definition {
 	macro viewCustomADTCarouselPG {
 		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_ITEM");
 
-		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_PLAY_PAUSE");
+		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_ITEM_ICON");
 
 		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_PREVIOUS_ARROW");
 

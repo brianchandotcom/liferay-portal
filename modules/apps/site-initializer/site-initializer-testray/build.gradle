@@ -57,7 +57,7 @@ forceDeploy {
 
 node {
 	global = false
-	nodeVersion = "16.0.0"
+	nodeVersion = "16.15.1"
 	useNpm = false
 	yarnVersion = "1.22.5"
 }

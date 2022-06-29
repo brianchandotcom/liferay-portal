@@ -3,5 +3,5 @@
 	"fragmentEntryKey": "captcha",
 	"icon": "reload",
 	"name": "captcha",
-	"type": "component"
+	"type": "input"
 }

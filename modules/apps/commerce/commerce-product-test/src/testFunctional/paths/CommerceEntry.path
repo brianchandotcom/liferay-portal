@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_CARD_COMPARE_CHECKBOX_DISABLED</td>
+	<td>//p[@title='${key_productName}']//../..//input[contains(@aria-label,'Compare') and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_COMPARE_ITEM_ACTIVE</td>
 	<td>//div[@class="mini-compare-item active"]//div[@class="mini-compare-thumbnail"]</td>
 	<td></td>

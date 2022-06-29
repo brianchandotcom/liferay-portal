@@ -91,19 +91,28 @@ export default function CustomCSSField({field, onValueSelect, value}) {
 }
 
 function CustomCSSHelp() {
+	const id = useId();
+
 	const [showPopover, setShowPopover] = useState(false);
 
 	return (
 		<ClayPopover
 			alignPosition="top"
 			className="position-fixed"
+			disableScroll
 			header={Liferay.Language.get('custom-css')}
+			id={id}
 			onShowChange={setShowPopover}
+			role="tooltip"
 			show={showPopover}
 			trigger={
 				<span
+					aria-describedby={id}
+					onBlur={() => setShowPopover(false)}
+					onFocus={() => setShowPopover(true)}
 					onMouseEnter={() => setShowPopover(true)}
 					onMouseLeave={() => setShowPopover(false)}
+					tabIndex="0"
 				>
 					<ClayIcon
 						className="text-secondary"

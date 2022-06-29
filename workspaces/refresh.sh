@@ -62,6 +62,10 @@ function refresh_sample_minimal_workspace {
 	cp sample-default-workspace/settings.gradle sample-minimal-workspace
 
 	cp -R sample-default-workspace/gradle sample-minimal-workspace
+
+	mkdir -p sample-minimal-workspace/configs/local
+
+	cp sample-default-workspace/configs/local/portal-ext.properties sample-minimal-workspace/configs/local
 }
 
 function main {

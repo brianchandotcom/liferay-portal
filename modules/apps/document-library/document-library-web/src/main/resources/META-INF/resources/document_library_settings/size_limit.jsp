@@ -39,12 +39,16 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 		</clay:sheet-section>
 
 		<clay:sheet-section>
-			<span aria-hidden="true" class="loading-animation"></span>
+			<h3 class="sheet-subtitle"><liferay-ui:message key="maximum-file-size-and-mimetypes" /></h3>
 
-			<react:component
-				module="document_library/js/file-size-limit/FileSizeMimetypes"
-				props="<%= dlSizeLimitConfigurationDisplayContext.getFileSizePerMimeTypeData() %>"
-			/>
+			<div>
+				<span aria-hidden="true" class="loading-animation"></span>
+
+				<react:component
+					module="document_library/js/file-size-limit/FileSizeMimetypes"
+					props="<%= dlSizeLimitConfigurationDisplayContext.getFileSizePerMimeTypeData() %>"
+				/>
+			</div>
 		</clay:sheet-section>
 
 		<clay:sheet-footer>

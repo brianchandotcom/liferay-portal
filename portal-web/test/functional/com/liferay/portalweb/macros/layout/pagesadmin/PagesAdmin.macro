@@ -1009,6 +1009,18 @@ definition {
 		SelectFrameTop();
 	}
 
+	macro selectFaviconExtension {
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Navigator.gotoNavTab(navTab = "Extensions");
+
+		Click(
+			key_listEntry = "${extensionName}",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE");
+
+		SelectFrameTop();
+	}
+
 	macro selectPageItem {
 		var key_pageName = "${pageName}";
 

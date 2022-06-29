@@ -404,14 +404,14 @@
 
 		<!-- Finder methods -->
 
-		<finder name="U_M" return-type="MBSuspiciousActivity">
-			<finder-column name="userId" />
+		<finder name="MessageId" return-type="Collection">
 			<finder-column name="messageId" />
 		</finder>
 		<finder name="ThreadId" return-type="Collection">
 			<finder-column name="threadId" />
 		</finder>
-		<finder name="MessagedId" return-type="Collection">
+		<finder name="U_M" return-type="MBSuspiciousActivity">
+			<finder-column name="userId" />
 			<finder-column name="messageId" />
 		</finder>
 	</entity>

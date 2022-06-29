@@ -16,6 +16,12 @@ package com.liferay.poshi.runner.util;
 
 import java.text.SimpleDateFormat;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -126,6 +132,19 @@ public class DateUtil {
 
 	public static String getTimeInMilliseconds() {
 		return String.valueOf(System.currentTimeMillis());
+	}
+
+	public static String getTimeInMilliseconds(String date, String timeZone) {
+		LocalDateTime localDateTime = LocalDateTime.parse(
+			date, DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+
+		ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of(timeZone));
+
+		Instant instant = zonedDateTime.toInstant();
+
+		Long milliseconds = instant.toEpochMilli();
+
+		return String.valueOf(milliseconds);
 	}
 
 	public static String getYear(String offsetDays) {

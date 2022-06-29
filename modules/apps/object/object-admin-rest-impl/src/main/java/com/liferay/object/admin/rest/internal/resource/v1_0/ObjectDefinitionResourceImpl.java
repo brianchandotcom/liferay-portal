@@ -318,25 +318,31 @@ public class ObjectDefinitionResourceImpl
 					ObjectView.class);
 				panelCategoryKey = objectDefinition.getPanelCategoryKey();
 
-				String restContextPath = StringPool.BLANK;
+				if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-155537"))) {
 
-				if (!objectDefinition.isSystem()) {
-					restContextPath = objectDefinition.getRESTContextPath();
-				}
-				else {
-					SystemObjectDefinitionMetadata
-						systemObjectDefinitionMetadata =
-							_systemObjectDefinitionMetadataTracker.
-								getSystemObjectDefinitionMetadata(
-									objectDefinition.getName());
+					String restContextPath = StringPool.BLANK;
 
-					if (systemObjectDefinitionMetadata != null) {
-						restContextPath =
-							systemObjectDefinitionMetadata.getRESTContextPath();
+					if (!objectDefinition.isSystem()) {
+						restContextPath = objectDefinition.getRESTContextPath();
 					}
-				}
+					else {
+						SystemObjectDefinitionMetadata
+							systemObjectDefinitionMetadata =
+								_systemObjectDefinitionMetadataTracker.
+									getSystemObjectDefinitionMetadata(
+										objectDefinition.getName());
 
-				parameterRequired = restContextPath.matches(".*/\\{\\w+}/.*");
+						if (systemObjectDefinitionMetadata != null) {
+							restContextPath =
+								systemObjectDefinitionMetadata.
+									getRESTContextPath();
+						}
+					}
+
+					parameterRequired = restContextPath.matches(
+						".*/\\{\\w+}/.*");
+				}
 
 				pluralLabel = LocalizedMapUtil.getLanguageIdMap(
 					objectDefinition.getPluralLabelMap());

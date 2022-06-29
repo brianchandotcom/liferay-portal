@@ -57,7 +57,7 @@ import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.util.comparator.CalendarBookingStartTimeComparator;
 import com.liferay.calendar.web.internal.constants.CalendarWebKeys;
 import com.liferay.calendar.web.internal.display.context.CalendarDisplayContext;
-import com.liferay.calendar.web.internal.upgrade.CalendarWebUpgrade;
+import com.liferay.calendar.web.internal.upgrade.registry.CalendarWebUpgradeStepRegistrator;
 import com.liferay.calendar.web.internal.util.CalendarResourceUtil;
 import com.liferay.calendar.web.internal.util.CalendarUtil;
 import com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants;
@@ -1851,7 +1851,8 @@ public class CalendarPortlet extends MVCPortlet {
 	private CalendarService _calendarService;
 
 	@Reference
-	private CalendarWebUpgrade _calendarWebUpgrade;
+	private CalendarWebUpgradeStepRegistrator
+		_calendarWebUpgradeStepRegistrator;
 
 	@Reference
 	private CustomSQL _customSQL;

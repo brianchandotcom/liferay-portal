@@ -8,6 +8,7 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="BNDDirectoryNameCheck" files=".*" />
+		<suppress checks="JavaClassNameCheck" files=".*" />
 		<suppress checks="JavaInternalPackageCheck" files=".*" />
 		<suppress checks="JavaPackagePathCheck" files=".*" />
 		<suppress checks="JavaXMLSecurityCheck" files="xsl-content-web/src/main/java/com/liferay/xsl/content/web/internal/util/XSLContentUtil\.java" />

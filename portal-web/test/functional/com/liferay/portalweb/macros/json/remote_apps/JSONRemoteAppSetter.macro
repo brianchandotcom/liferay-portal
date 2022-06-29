@@ -1,0 +1,19 @@
+definition {
+
+	macro setNameMap {
+		Variables.assertDefined(parameterList = "${name}");
+
+		var nameMap = '''{"en_US":"${name}"}''';
+
+		return "${nameMap}";
+	}
+
+	macro setTypeSettings {
+		Variables.assertDefined(parameterList = "${url}");
+
+		var typeSettings = "url=${url}%0A";
+
+		return "${typeSettings}";
+	}
+
+}

@@ -67,6 +67,26 @@ definition {
 		JSONCurlUtil.post("${curl}");
 	}
 
+	macro _addRemoteAppEntry {
+		Variables.assertDefined(parameterList = "${description},${nameMap},${properties},${type},${typeSettings}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/remoteapp.clientextensionentry/add-client-extension-entry \
+				-u test@liferay.com:test \
+				-d externalReferenceCode= \
+				-d description=${description} \
+				-d nameMap=${nameMap} \
+				-d properties=${properties} \
+				-d sourceCodeURL= \
+				-d type=${type} \
+				-d typeSettings=${typeSettings}
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	macro _deleteIFrameRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${externalReferenceCode}");
 

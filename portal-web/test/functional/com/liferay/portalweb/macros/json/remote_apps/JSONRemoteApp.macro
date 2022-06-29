@@ -20,6 +20,28 @@ definition {
 			name = "${name}");
 	}
 
+	macro addRemoteAppEntry {
+		Variables.assertDefined(parameterList = "${name},${type},${url}");
+
+		if (!(isSet(description))) {
+			var description = "";
+		}
+
+		if (!(isSet(properties))) {
+			var properties = "";
+		}
+
+		var nameMap = JSONRemoteAppSetter.setNameMap(name = "${name}");
+		var typeSettings = JSONRemoteAppSetter.setTypeSettings(url = "${url}");
+
+		JSONRemoteAppAPI._addRemoteAppEntry(
+			description = "${description}",
+			nameMap = "${nameMap}",
+			properties = "${properties}",
+			type = "${type}",
+			typeSettings = "${typeSettings}");
+	}
+
 	macro deleteIFrameRemoteAppEntry {
 		Variables.assertDefined(parameterList = "${externalReferenceCode}");
 

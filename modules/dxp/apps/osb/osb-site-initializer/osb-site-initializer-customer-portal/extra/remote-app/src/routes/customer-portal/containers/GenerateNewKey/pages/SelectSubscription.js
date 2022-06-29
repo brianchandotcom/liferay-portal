@@ -334,13 +334,20 @@ const SelectSubscription = ({
 								subscriptionTerm
 							);
 
+							let numberOfActivationKeysAvailable =
+								subscriptionTerm.quantity -
+								subscriptionTerm.provisionedCount;
+							numberOfActivationKeysAvailable =
+								numberOfActivationKeysAvailable < 0
+									? 0
+									: numberOfActivationKeysAvailable;
+
 							return (
 								<Radio
 									description={i18n.sub(
 										'key-activation-available-x-of-x',
 										[
-											subscriptionTerm.quantity -
-												subscriptionTerm.provisionedCount,
+											numberOfActivationKeysAvailable,
 											subscriptionTerm.quantity,
 										]
 									)}

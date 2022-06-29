@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,26 +56,26 @@ public class CPDefinitionLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 
-		try {
-			CPDefinition cpDefinition =
-				_cpDefinitionLocalService.getCPDefinition(
-					infoItemReference.getClassPK());
+		CPDefinition cpDefinition = _cpDefinitionLocalService.fetchCPDefinition(
+			infoItemReference.getClassPK());
 
-			long groupId = cpDefinition.getGroupId();
+		if ((cpDefinition == null) ||
+			(cpDefinition.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
 
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			if (serviceContext != null) {
-				groupId = serviceContext.getScopeGroupId();
-			}
-
-			return new CPDefinitionLayoutDisplayPageObjectProvider(
-				cpDefinition, groupId);
+			return null;
 		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
+
+		long groupId = cpDefinition.getGroupId();
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			groupId = serviceContext.getScopeGroupId();
 		}
+
+		return new CPDefinitionLayoutDisplayPageObjectProvider(
+			cpDefinition, groupId);
 	}
 
 	@Override

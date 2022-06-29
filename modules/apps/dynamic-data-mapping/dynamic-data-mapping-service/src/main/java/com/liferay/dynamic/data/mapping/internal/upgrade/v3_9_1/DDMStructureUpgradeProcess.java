@@ -161,7 +161,6 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 						1,
 						_upgradeDDMStructureVersionDefinition(
 							resultSet.getString("definition")));
-
 					preparedStatement2.setLong(2, structureVersionId);
 
 					preparedStatement2.addBatch();

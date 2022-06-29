@@ -78,7 +78,6 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 						DLVideoWebKeys.PREVIEW_FILE_URLS,
 						_getPreviewFileURLs(
 							fileVersion, videoPosterURL, renderRequest));
-
 					renderRequest.setAttribute(
 						DLVideoWebKeys.VIDEO_POSTER_URL, videoPosterURL);
 

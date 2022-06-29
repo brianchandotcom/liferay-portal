@@ -318,7 +318,6 @@ public class DDMFormInstanceUpgradeProcess extends UpgradeProcess {
 				1,
 				_classNameLocalService.getClassNameId(
 					_CLASS_NAME_FORM_INSTANCE));
-
 			preparedStatement.setLong(
 				2,
 				_classNameLocalService.getClassNameId(_CLASS_NAME_RECORD_SET));

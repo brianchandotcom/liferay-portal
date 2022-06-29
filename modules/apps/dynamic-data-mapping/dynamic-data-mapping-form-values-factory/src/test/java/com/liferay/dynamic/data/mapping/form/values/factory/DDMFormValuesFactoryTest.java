@@ -1041,7 +1041,6 @@ public class DDMFormValuesFactoryTest {
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesJSONSerializer, "_jsonFactory",
 			new JSONFactoryImpl());
-
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesJSONSerializer, "_serviceTrackerMap",
 			ProxyFactory.newDummyInstance(ServiceTrackerMap.class));
@@ -1082,7 +1081,6 @@ public class DDMFormValuesFactoryTest {
 
 	protected void setUpLocaleThreadLocal() {
 		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
-
 		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.BRAZIL);
 	}
 

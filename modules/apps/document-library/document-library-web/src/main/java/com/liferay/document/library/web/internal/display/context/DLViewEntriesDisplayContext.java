@@ -240,7 +240,6 @@ public class DLViewEntriesDisplayContext {
 			_liferayPortletRequest, _liferayPortletResponse);
 
 		entriesChecker.setCssClass("entry-selector");
-
 		entriesChecker.setRememberCheckBoxStateURLRegex(
 			_dlAdminDisplayContext.getRememberCheckBoxStateURLRegex());
 

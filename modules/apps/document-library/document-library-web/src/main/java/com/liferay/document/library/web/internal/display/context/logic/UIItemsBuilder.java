@@ -493,7 +493,6 @@ public class UIItemsBuilder {
 
 		deleteMenuItem.setKey(DLUIItemKeys.DELETE_VERSION);
 		deleteMenuItem.setLabel("delete-version");
-
 		deleteMenuItem.setURL(
 			PortletURLBuilder.create(
 				_getActionURL(
@@ -547,7 +546,6 @@ public class UIItemsBuilder {
 			).put(
 				"senna-off", "true"
 			).build());
-
 		urlMenuItem.setMethod("get");
 	}
 

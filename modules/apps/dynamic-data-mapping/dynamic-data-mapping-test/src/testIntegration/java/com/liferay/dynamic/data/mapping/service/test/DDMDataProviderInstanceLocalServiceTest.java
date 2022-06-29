@@ -72,7 +72,6 @@ public class DDMDataProviderInstanceLocalServiceTest
 			createDDMDataProviderInstance();
 
 		ddmFormField.setProperty("dataSourceType", "data-provider");
-
 		ddmFormField.setProperty(
 			"ddmDataProviderInstanceId",
 			dataProviderInstance.getDataProviderInstanceId());

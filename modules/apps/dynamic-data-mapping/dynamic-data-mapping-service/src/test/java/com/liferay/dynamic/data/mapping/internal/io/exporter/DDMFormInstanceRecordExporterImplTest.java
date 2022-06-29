@@ -276,7 +276,6 @@ public class DDMFormInstanceRecordExporterImplTest {
 							"field1", "text");
 
 						ddmFormField1.setFieldReference("reference1");
-
 						ddmFormField1.setLabel(localizedValue1);
 
 						return ddmFormField1;

@@ -164,7 +164,6 @@ public class ShareFormInstanceMVCActionCommandTest {
 
 	private void _setUpShareFormInstanceMVCActionCommandCommand() {
 		ReflectionTestUtil.setFieldValue(_mvcActionCommand, "_portal", _portal);
-
 		ReflectionTestUtil.setFieldValue(
 			_mvcActionCommand, "_ddmFormInstanceService",
 			_ddmFormInstanceService);

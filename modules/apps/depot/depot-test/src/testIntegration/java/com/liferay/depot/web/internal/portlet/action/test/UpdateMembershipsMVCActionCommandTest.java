@@ -318,13 +318,10 @@ public class UpdateMembershipsMVCActionCommandTest {
 			ThemeDisplay themeDisplay = new ThemeDisplay();
 
 			themeDisplay.setCompany(_company);
-
-			themeDisplay.setUser(_user);
-
-			themeDisplay.setScopeGroupId(_group.getGroupId());
-
 			themeDisplay.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+			themeDisplay.setScopeGroupId(_group.getGroupId());
+			themeDisplay.setUser(_user);
 
 			return themeDisplay;
 		}

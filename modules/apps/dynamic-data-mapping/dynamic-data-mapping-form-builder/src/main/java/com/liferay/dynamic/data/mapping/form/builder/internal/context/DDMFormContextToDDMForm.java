@@ -543,7 +543,6 @@ public class DDMFormContextToDDMForm
 		ddmFormSuccessPageSettings.setBody(
 			createLocalizedValue(
 				jsonObject.getJSONObject("body"), defaultLocale));
-
 		ddmFormSuccessPageSettings.setTitle(
 			createLocalizedValue(
 				jsonObject.getJSONObject("title"), defaultLocale));

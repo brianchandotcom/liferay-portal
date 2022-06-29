@@ -321,7 +321,6 @@ public class DDMFieldLocalServiceTest {
 		ddmFormValues.setDefaultLocale(LocaleUtil.ENGLISH);
 		ddmFormValues.setAvailableLocales(
 			Collections.singleton(LocaleUtil.ENGLISH));
-
 		ddmFormValues.setDDMFormFieldValues(
 			Collections.singletonList(
 				_createDDMFormFieldValue(
@@ -355,7 +354,6 @@ public class DDMFieldLocalServiceTest {
 		ddmFormValues.setDefaultLocale(LocaleUtil.ENGLISH);
 		ddmFormValues.setAvailableLocales(
 			Collections.singleton(LocaleUtil.ENGLISH));
-
 		ddmFormValues.setDDMFormFieldValues(
 			Arrays.asList(
 				_createDDMFormFieldValue(

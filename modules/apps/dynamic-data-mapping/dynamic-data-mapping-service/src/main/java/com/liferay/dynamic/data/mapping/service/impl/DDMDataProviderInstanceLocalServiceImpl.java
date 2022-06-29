@@ -188,7 +188,6 @@ public class DDMDataProviderInstanceLocalServiceImpl
 		actionableDynamicQuery.setPerformActionMethod(
 			(DDMDataProviderInstance ddmDataProviderInstance) ->
 				deleteDataProviderInstance(ddmDataProviderInstance));
-
 		actionableDynamicQuery.setCompanyId(companyId);
 
 		actionableDynamicQuery.performActions();

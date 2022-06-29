@@ -145,7 +145,6 @@ public class IGConfigurationDisplayContext {
 
 		folderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new FolderItemSelectorReturnType());
-
 		folderItemSelectorCriterion.setFolderId(getRootFolderId());
 		folderItemSelectorCriterion.setIgnoreRootFolder(true);
 		folderItemSelectorCriterion.setRepositoryId(getSelectedRepositoryId());

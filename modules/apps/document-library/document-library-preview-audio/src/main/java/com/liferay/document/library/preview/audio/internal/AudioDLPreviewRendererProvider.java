@@ -74,11 +74,10 @@ public class AudioDLPreviewRendererProvider
 				_servletContext.getRequestDispatcher("/preview/view.jsp");
 
 			request.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
-
-			request.setAttribute(
 				DLPreviewAudioWebKeys.PREVIEW_FILE_URLS,
 				_getPreviewFileURLs(fileVersion, request));
+			request.setAttribute(
+				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
 
 			requestDispatcher.include(request, response);
 		};

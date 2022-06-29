@@ -178,7 +178,6 @@ public class DDLDisplayContext {
 					_renderResponse.createRenderURL(), "mvcPath",
 					"/edit_record_set.jsp", "redirect",
 					PortalUtil.getCurrentURL(_ddlRequestHelper.getRequest()));
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(_ddlRequestHelper.getRequest(), "add"));
 			}
@@ -738,9 +737,7 @@ public class DDLDisplayContext {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(true);
-
 				dropdownItem.setHref(getPortletURL(), "navigation", "all");
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(_ddlRequestHelper.getRequest(), "all"));
 			}

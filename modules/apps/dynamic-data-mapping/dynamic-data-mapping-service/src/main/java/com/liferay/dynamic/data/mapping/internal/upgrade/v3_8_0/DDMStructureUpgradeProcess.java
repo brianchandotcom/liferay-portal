@@ -327,7 +327,6 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 							_upgradeDDMStructureVersionDefinition(
 								resultSet.getString("definition"),
 								structureVersionId));
-
 						preparedStatement2.setLong(2, structureVersionId);
 
 						preparedStatement2.addBatch();
@@ -370,7 +369,6 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 						_DDM_FORM_FIELD_TUPLE_LABEL)));
 
 			fieldSetDDMFormField.setLabel(localizedValue);
-
 			fieldSetDDMFormField.setProperty(
 				"ddmStructureId", StringPool.BLANK);
 			fieldSetDDMFormField.setProperty(
@@ -403,7 +401,6 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 				});
 
 			fieldSetDDMFormField.setProperty("rows", rowsJSONArray);
-
 			fieldSetDDMFormField.setShowLabel(false);
 
 			ddmFormFieldsMap.put(

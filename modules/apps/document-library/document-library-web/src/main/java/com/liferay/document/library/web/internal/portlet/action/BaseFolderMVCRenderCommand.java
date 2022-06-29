@@ -51,10 +51,9 @@ public abstract class BaseFolderMVCRenderCommand implements MVCRenderCommand {
 				checkPermissions(themeDisplay.getPermissionChecker(), folder);
 			}
 
-			renderRequest.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
-
 			renderRequest.setAttribute(
 				DLWebKeys.DOCUMENT_LIBRARY_TRASH_HELPER, getDLTrashHelper());
+			renderRequest.setAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER, folder);
 
 			return getPath();
 		}

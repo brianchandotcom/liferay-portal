@@ -1082,7 +1082,6 @@ public class DDMFormPagesTemplateContextFactoryTest {
 
 		ReflectionTestUtil.setFieldValue(
 			ddmFormEvaluator, "ddmExpressionFactory", ddmExpressionFactoryImpl);
-
 		ReflectionTestUtil.setFieldValue(
 			ddmFormEvaluator, "ddmFormFieldTypeServicesTracker",
 			_ddmFormFieldTypeServicesTracker);

@@ -194,7 +194,6 @@ public class PollsToDDMUpgradeProcess extends UpgradeProcess {
 		}
 
 		ddmFormField.setLabel(localizedValue);
-
 		ddmFormField.setLocalizable(true);
 		ddmFormField.setProperty("inline", false);
 		ddmFormField.setProperty("instanceId", StringUtil.randomString(8));

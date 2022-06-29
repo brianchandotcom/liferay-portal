@@ -96,7 +96,6 @@ public class DocumentLibraryDDMFormFieldValueAccessorTest {
 		ReflectionTestUtil.setFieldValue(
 			_documentLibraryDDMFormFieldValueAccessor, "jsonFactory",
 			_jsonFactory);
-
 		ReflectionTestUtil.setFieldValue(
 			_documentLibraryDDMFormFieldValueAccessor, "_dlAppService",
 			dlAppService);

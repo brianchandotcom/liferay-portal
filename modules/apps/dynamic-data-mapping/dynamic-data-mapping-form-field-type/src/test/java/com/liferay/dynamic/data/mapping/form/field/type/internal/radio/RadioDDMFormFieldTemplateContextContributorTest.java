@@ -81,7 +81,6 @@ public class RadioDDMFormFieldTemplateContextContributorTest {
 			new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
-
 		ddmFormFieldRenderingContext.setProperty(
 			"options", _createDDMFormOptions());
 
@@ -103,7 +102,6 @@ public class RadioDDMFormFieldTemplateContextContributorTest {
 			new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
-
 		ddmFormFieldRenderingContext.setProperty(
 			"options", _createDDMFormOptions());
 
@@ -138,7 +136,6 @@ public class RadioDDMFormFieldTemplateContextContributorTest {
 			new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
-
 		ddmFormFieldRenderingContext.setProperty(
 			"options", _createDDMFormOptions());
 
@@ -193,10 +190,8 @@ public class RadioDDMFormFieldTemplateContextContributorTest {
 			new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
-
 		ddmFormFieldRenderingContext.setProperty(
 			"options", _createDDMFormOptions());
-
 		ddmFormFieldRenderingContext.setValue("value");
 
 		Map<String, Object> parameters =
@@ -216,10 +211,8 @@ public class RadioDDMFormFieldTemplateContextContributorTest {
 			new DDMFormFieldRenderingContext();
 
 		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
-
 		ddmFormFieldRenderingContext.setProperty(
 			"options", _createDDMFormOptions());
-
 		ddmFormFieldRenderingContext.setValue("[\"value\"]");
 
 		Map<String, Object> parameters =

@@ -614,7 +614,6 @@ public class DDMImpl implements DDM {
 		}
 
 		field.setDefaultLocale(defaultLocale);
-
 		field.setName(fieldName);
 		field.setValues(locale, fieldValues);
 

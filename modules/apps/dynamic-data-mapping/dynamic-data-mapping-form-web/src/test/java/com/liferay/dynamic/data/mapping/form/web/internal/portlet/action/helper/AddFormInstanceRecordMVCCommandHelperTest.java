@@ -410,15 +410,12 @@ public class AddFormInstanceRecordMVCCommandHelperTest {
 		ReflectionTestUtil.setFieldValue(
 			_addFormInstanceRecordMVCCommandHelper, "_ddmFormEvaluator",
 			_ddmFormEvaluator);
-
 		ReflectionTestUtil.setFieldValue(
 			_addFormInstanceRecordMVCCommandHelper, "_ddmFormInstanceService",
 			_ddmFormInstanceService);
-
 		ReflectionTestUtil.setFieldValue(
 			_addFormInstanceRecordMVCCommandHelper, "_ddmStructureLocalService",
 			_ddmStructureLocalService);
-
 		ReflectionTestUtil.setFieldValue(
 			_addFormInstanceRecordMVCCommandHelper, "_portal", _portal);
 

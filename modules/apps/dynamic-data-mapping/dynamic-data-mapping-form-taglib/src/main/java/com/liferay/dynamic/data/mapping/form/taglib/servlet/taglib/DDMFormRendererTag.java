@@ -105,7 +105,6 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 
 		ddmFormRenderingContext.setContainerId(
 			"form_" + StringUtil.randomString());
-
 		ddmFormRenderingContext.setGroupId(ddmFormInstance.getGroupId());
 
 		HttpServletRequest httpServletRequest = getRequest();
@@ -468,7 +467,6 @@ public class DDMFormRendererTag extends BaseDDMFormRendererTag {
 
 		if (GetterUtil.getBoolean(getShowSubmitButton())) {
 			ddmFormRenderingContext.setShowSubmitButton(true);
-
 			ddmFormRenderingContext.setSubmitLabel(
 				getSubmitLabel(
 					ddmFormInstance, ddmFormRenderingContext.getLocale()));

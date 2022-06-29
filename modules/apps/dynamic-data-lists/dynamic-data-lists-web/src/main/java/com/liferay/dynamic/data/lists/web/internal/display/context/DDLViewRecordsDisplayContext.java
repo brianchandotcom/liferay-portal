@@ -151,7 +151,6 @@ public class DDLViewRecordsDisplayContext {
 					"recordSetId",
 					String.valueOf(_ddlRecordSet.getRecordSetId()),
 					"formDDMTemplateId", String.valueOf(_formDDMTemplateId));
-
 				dropdownItem.setLabel(
 					LanguageUtil.format(
 						_ddlRequestHelper.getRequest(), "add-x",
@@ -524,9 +523,7 @@ public class DDLViewRecordsDisplayContext {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(true);
-
 				dropdownItem.setHref(getPortletURL(), "navigation", "all");
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(_ddlRequestHelper.getRequest(), "all"));
 			}

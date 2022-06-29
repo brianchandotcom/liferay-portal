@@ -117,7 +117,6 @@ public class DepotAdminSitesDisplayContext {
 								_currentURL.toString(),
 								_liferayPortletResponse))
 					).build());
-
 				dropdownItem.setDisabled(
 					depotEntryGroupRel.isDdmStructuresAvailable());
 				dropdownItem.setLabel(

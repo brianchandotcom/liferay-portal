@@ -229,7 +229,6 @@ public class FileEntryDisplayContextHelperTest {
 			_dlFileEntryPermission, "_dlFileEntryModelResourcePermission",
 			new MockModelResourcePermission(
 				overrideCheckOutPermission, updatePermission));
-
 		ReflectionTestUtils.setField(
 			_dlFileEntryPermission, "_fileEntryModelResourcePermission",
 			new MockModelResourcePermission(

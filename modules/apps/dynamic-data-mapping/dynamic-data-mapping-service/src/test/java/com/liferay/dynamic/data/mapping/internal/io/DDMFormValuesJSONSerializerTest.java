@@ -325,7 +325,6 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesJSONSerializer, "_jsonFactory",
 			new JSONFactoryImpl());
-
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesJSONSerializer, "_serviceTrackerMap",
 			ProxyFactory.newDummyInstance(ServiceTrackerMap.class));

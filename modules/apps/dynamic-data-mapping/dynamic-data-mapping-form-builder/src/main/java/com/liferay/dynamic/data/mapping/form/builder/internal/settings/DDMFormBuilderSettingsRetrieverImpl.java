@@ -41,7 +41,6 @@ public class DDMFormBuilderSettingsRetrieverImpl
 		ddmFormBuilderSettings.setDataProviderInstanceParameterSettingsURL(
 			_ddmFormBuilderSettingsRetrieverHelper.
 				getDDMDataProviderInstanceParameterSettingsURL());
-
 		ddmFormBuilderSettings.setDataProviderInstancesURL(
 			_ddmFormBuilderSettingsRetrieverHelper.
 				getDDMDataProviderInstancesURL());
@@ -64,7 +63,6 @@ public class DDMFormBuilderSettingsRetrieverImpl
 		ddmFormBuilderSettings.setFunctionsMetadata(
 			_ddmFormBuilderSettingsRetrieverHelper.
 				getSerializedDDMExpressionFunctionsMetadata(locale));
-
 		ddmFormBuilderSettings.setFieldSets(
 			_ddmFormBuilderSettingsRetrieverHelper.
 				getFieldSetsMetadataJSONArray(

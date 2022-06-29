@@ -1448,7 +1448,6 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 				String script = resultSet.getString("script");
 
 				preparedStatement2.setLong(1, resourceClassNameId);
-
 				preparedStatement2.setLong(2, templateId);
 
 				preparedStatement2.addBatch();

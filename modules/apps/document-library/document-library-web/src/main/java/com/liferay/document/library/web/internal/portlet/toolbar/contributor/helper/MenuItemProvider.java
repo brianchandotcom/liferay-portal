@@ -112,7 +112,6 @@ public class MenuItemProvider {
 		urlMenuItem.setLabel(
 			_language.get(
 				_portal.getHttpServletRequest(portletRequest), "file-upload"));
-
 		urlMenuItem.setURL(
 			PortletURLBuilder.create(
 				_getPortletURL(themeDisplay, portletRequest)
@@ -161,7 +160,6 @@ public class MenuItemProvider {
 		urlMenuItem.setLabel(
 			_language.get(
 				_portal.getHttpServletRequest(portletRequest), "folder"));
-
 		urlMenuItem.setURL(
 			PortletURLBuilder.create(
 				_getPortletURL(themeDisplay, portletRequest)
@@ -258,7 +256,6 @@ public class MenuItemProvider {
 		urlMenuItem.setLabel(
 			_language.get(
 				_portal.getHttpServletRequest(portletRequest), "repository"));
-
 		urlMenuItem.setURL(
 			PortletURLBuilder.create(
 				_getPortletURL(themeDisplay, portletRequest)
@@ -295,7 +292,6 @@ public class MenuItemProvider {
 		urlMenuItem.setLabel(
 			_language.get(
 				_portal.getHttpServletRequest(portletRequest), "shortcut"));
-
 		urlMenuItem.setURL(
 			PortletURLBuilder.create(
 				_getPortletURL(themeDisplay, portletRequest)

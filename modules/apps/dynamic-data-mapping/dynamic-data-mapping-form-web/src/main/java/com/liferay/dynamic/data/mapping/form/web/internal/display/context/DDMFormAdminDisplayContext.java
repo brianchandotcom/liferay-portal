@@ -1718,7 +1718,6 @@ public class DDMFormAdminDisplayContext {
 		NavigationItem navigationItem) {
 
 		navigationItem.setActive(false);
-
 		navigationItem.setHref(
 			PortletURLBuilder.create(
 				PortletURLFactoryUtil.create(

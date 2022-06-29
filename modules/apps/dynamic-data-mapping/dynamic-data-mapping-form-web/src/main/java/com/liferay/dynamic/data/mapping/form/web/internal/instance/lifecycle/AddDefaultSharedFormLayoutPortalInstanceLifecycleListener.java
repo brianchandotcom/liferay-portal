@@ -157,7 +157,6 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
-
 		serviceContext.setScopeGroupId(groupId);
 
 		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
@@ -186,7 +185,6 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
-
 		serviceContext.setScopeGroupId(groupId);
 
 		long defaultUserId = _userLocalService.getDefaultUserId(companyId);

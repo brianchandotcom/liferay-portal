@@ -281,15 +281,13 @@ public class DispatchTriggerLocalServiceImpl
 					endDateMinute, DispatchTriggerEndDateException.class));
 		}
 
+		dispatchTrigger.setDispatchTaskClusterMode(
+			dispatchTaskClusterMode.getMode());
 		dispatchTrigger.setOverlapAllowed(overlapAllowed);
-
 		dispatchTrigger.setStartDate(
 			_portal.getDate(
 				startDateMonth, startDateDay, startDateYear, startDateHour,
 				startDateMinute, DispatchTriggerStartDateException.class));
-
-		dispatchTrigger.setDispatchTaskClusterMode(
-			dispatchTaskClusterMode.getMode());
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 

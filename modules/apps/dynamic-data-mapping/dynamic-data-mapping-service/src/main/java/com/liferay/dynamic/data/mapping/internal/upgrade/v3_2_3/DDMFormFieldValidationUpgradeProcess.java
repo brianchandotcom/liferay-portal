@@ -74,7 +74,6 @@ public class DDMFormFieldValidationUpgradeProcess extends UpgradeProcess {
 							jsonObject1.getJSONArray("fields"))) {
 
 						preparedStatement2.setString(1, jsonObject1.toString());
-
 						preparedStatement2.setLong(2, structureId);
 
 						preparedStatement2.addBatch();

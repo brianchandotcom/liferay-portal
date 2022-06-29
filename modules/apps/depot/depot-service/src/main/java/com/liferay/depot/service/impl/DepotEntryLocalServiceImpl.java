@@ -142,7 +142,6 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 		}
 
 		depotEntry.setGroupId(group.getGroupId());
-
 		depotEntry.setCompanyId(serviceContext.getCompanyId());
 		depotEntry.setUserId(serviceContext.getUserId());
 

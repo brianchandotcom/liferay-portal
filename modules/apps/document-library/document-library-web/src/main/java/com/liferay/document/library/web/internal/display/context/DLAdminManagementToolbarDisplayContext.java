@@ -643,7 +643,6 @@ public class DLAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setActive(
 					navigation.equals("home") && (fileEntryTypeId == -1));
-
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
@@ -657,14 +656,12 @@ public class DLAdminManagementToolbarDisplayContext
 					).setParameter(
 						"fileEntryTypeId", (String)null
 					).buildPortletURL());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "all"));
 			}
 		).add(
 			dropdownItem -> {
 				dropdownItem.setActive(navigation.equals("recent"));
-
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
@@ -674,7 +671,6 @@ public class DLAdminManagementToolbarDisplayContext
 					).setNavigation(
 						"recent"
 					).buildPortletURL());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "recent"));
 			}
@@ -682,7 +678,6 @@ public class DLAdminManagementToolbarDisplayContext
 			_themeDisplay::isSignedIn,
 			dropdownItem -> {
 				dropdownItem.setActive(navigation.equals("mine"));
-
 				dropdownItem.setHref(
 					PortletURLBuilder.create(
 						PortletURLUtil.clone(
@@ -692,7 +687,6 @@ public class DLAdminManagementToolbarDisplayContext
 					).setNavigation(
 						"mine"
 					).buildPortletURL());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "mine"));
 			}

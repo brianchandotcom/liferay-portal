@@ -123,7 +123,6 @@ public class SaveStructureMVCActionCommand extends BaseMVCActionCommand {
 
 		portletURL.setParameter(
 			"structureId", String.valueOf(ddmStructure.getStructureId()));
-
 		portletURL.setParameter("redirect", redirect);
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());

@@ -181,7 +181,6 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 					}
 
 					preparedStatement2.setString(3, structureLayoutKey);
-
 					preparedStatement2.setLong(
 						4, resultSet.getLong("structureLayoutId"));
 
@@ -232,7 +231,6 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 							convertDDMFormDataDefinition(
 								resultSet.getString("definition"),
 								parentStructureId, parentStructureLayoutId));
-
 					preparedStatement2.setLong(
 						2, resultSet.getLong("structureVersionId"));
 					preparedStatement2.addBatch();

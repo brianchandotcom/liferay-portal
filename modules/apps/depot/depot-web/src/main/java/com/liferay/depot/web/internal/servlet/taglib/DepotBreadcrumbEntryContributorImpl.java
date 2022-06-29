@@ -154,7 +154,6 @@ public class DepotBreadcrumbEntryContributorImpl
 
 		breadcrumbEntry.setTitle(
 			group.getDescriptiveName(_portal.getLocale(httpServletRequest)));
-
 		breadcrumbEntry.setURL(
 			PortletURLBuilder.create(
 				_portal.getControlPanelPortletURL(

@@ -58,7 +58,6 @@ public class DLVideoDLPreviewRendererProvider
 				_servletContext.getRequestDispatcher("/preview.jsp");
 
 			request.setAttribute(FileVersion.class.getName(), fileVersion);
-
 			request.setAttribute(
 				DLVideoRenderer.class.getName(), _dlVideoRenderer);
 

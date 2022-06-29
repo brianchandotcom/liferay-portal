@@ -98,7 +98,6 @@ public class DLViewMVCRenderCommand extends BaseFolderMVCRenderCommand {
 
 			renderRequest.setAttribute(
 				DLAdminDisplayContext.class.getName(), dlAdminDisplayContext);
-
 			renderRequest.setAttribute(
 				DLAdminManagementToolbarDisplayContext.class.getName(),
 				_dlAdminDisplayContextProvider.

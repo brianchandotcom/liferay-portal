@@ -201,7 +201,6 @@ public class UploadGoogleDriveDocumentBackgroundTaskExecutor
 		file.setMimeType(
 			DLOpenerGoogleDriveMimeTypes.getGoogleDocsMimeType(
 				fileVersion.getMimeType()));
-
 		file.setName(fileVersion.getTitle());
 
 		Drive drive = new Drive.Builder(

@@ -525,10 +525,9 @@ public class DDMFormInstanceLocalServiceImpl
 			latestDDMFormInstanceVersion.getVersion(), majorVersion);
 
 		if (!updateVersion) {
-			ddmFormInstance.setVersion(version);
-
 			ddmFormInstance.setVersionUserId(user.getUserId());
 			ddmFormInstance.setVersionUserName(user.getFullName());
+			ddmFormInstance.setVersion(version);
 		}
 
 		ddmFormInstance.setNameMap(nameMap, defaultLocale);

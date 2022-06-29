@@ -647,7 +647,6 @@ public class DDMDataProviderDisplayContext {
 				PortalUtil.getCurrentURL(httpServletRequest), "groupId",
 				String.valueOf(themeDisplay.getScopeGroupId()), "type",
 				ddmDataProviderType);
-
 			dropdownItem.setLabel(
 				LanguageUtil.get(httpServletRequest, ddmDataProviderType));
 		};
@@ -666,9 +665,7 @@ public class DDMDataProviderDisplayContext {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(true);
-
 				dropdownItem.setHref(getPortletURL(), "navigation", "all");
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						_ddmDataProviderRequestHelper.getRequest(), "all"));

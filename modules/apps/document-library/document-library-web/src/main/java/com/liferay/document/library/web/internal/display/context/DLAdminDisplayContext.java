@@ -603,7 +603,6 @@ public class DLAdminDisplayContext {
 		dlSearchContainer.setHeaderNames(
 			ListUtil.fromArray(
 				_dlPortletInstanceSettingsHelper.getEntryColumns()));
-
 		dlSearchContainer.setOrderByCol(getOrderByCol());
 
 		boolean orderByModel = false;
@@ -658,7 +657,6 @@ public class DLAdminDisplayContext {
 				new Sort(
 					fieldName, type,
 					!StringUtil.equalsIgnoreCase(getOrderByType(), "asc")));
-
 			searchContext.setStart(dlSearchContainer.getStart());
 
 			Hits hits = indexer.search(searchContext);
@@ -805,12 +803,10 @@ public class DLAdminDisplayContext {
 
 		searchContext.setAttribute("searchRepositoryId", searchRepositoryId);
 		searchContext.setEnd(searchContainer.getEnd());
-
 		searchContext.setFolderIds(
 			new long[] {
 				ParamUtil.getLong(_httpServletRequest, "searchFolderId")
 			});
-
 		searchContext.setIncludeDiscussions(true);
 		searchContext.setIncludeInternalAssetCategories(true);
 		searchContext.setKeywords(

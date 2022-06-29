@@ -148,7 +148,6 @@ public class DDMDataProviderInstanceParameterSettingsServletTest {
 	private static void _setUpDDMFormValuesJSONDeserializer() {
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesJSONDeserializer, "_jsonFactory", _jsonFactory);
-
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesJSONDeserializer, "_serviceTrackerMap",
 			ProxyFactory.newDummyInstance(ServiceTrackerMap.class));
@@ -161,7 +160,6 @@ public class DDMDataProviderInstanceParameterSettingsServletTest {
 		ReflectionTestUtil.setFieldValue(
 			_ddmDataProviderInstanceParameterSettingsServlet, "_jsonFactory",
 			_jsonFactory);
-
 		ReflectionTestUtil.setFieldValue(
 			_ddmDataProviderInstanceParameterSettingsServlet,
 			"_jsonDDMFormValuesDeserializer", _ddmFormValuesJSONDeserializer);

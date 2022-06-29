@@ -51,7 +51,6 @@ public class FileEntryTitleInfoItemRenderer
 		try {
 			httpServletRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
-
 			httpServletRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_VERSION,
 				fileEntry.getFileVersion());

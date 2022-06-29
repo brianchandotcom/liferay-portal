@@ -68,7 +68,6 @@ public class DDMStructureIndexTypeUpgradeProcess extends UpgradeProcess {
 					preparedStatement2.addBatch();
 
 					preparedStatement3.setString(1, newDefinition);
-
 					preparedStatement3.setLong(2, resultSet.getLong(2));
 
 					preparedStatement3.addBatch();

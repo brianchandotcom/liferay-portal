@@ -980,7 +980,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAndSearch(true);
-
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.CLASS_NAME_ID,
@@ -996,7 +995,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			).put(
 				"structureId", ddmFormInstance.getStructureId()
 			).build());
-
 		searchContext.setCompanyId(ddmFormInstance.getCompanyId());
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {ddmFormInstance.getGroupId()});

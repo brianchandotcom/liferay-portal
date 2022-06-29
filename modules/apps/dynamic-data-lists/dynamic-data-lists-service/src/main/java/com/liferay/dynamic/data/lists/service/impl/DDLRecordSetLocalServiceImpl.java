@@ -832,10 +832,9 @@ public class DDLRecordSetLocalServiceImpl
 			latestRecordSetVersion.getVersion(), majorVersion);
 
 		if (!updateVersion) {
-			recordSet.setVersion(version);
-
 			recordSet.setVersionUserId(user.getUserId());
 			recordSet.setVersionUserName(user.getFullName());
+			recordSet.setVersion(version);
 		}
 
 		recordSet.setNameMap(nameMap);

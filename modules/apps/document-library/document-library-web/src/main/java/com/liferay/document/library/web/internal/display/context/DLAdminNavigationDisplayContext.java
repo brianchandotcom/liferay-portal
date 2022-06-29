@@ -91,7 +91,6 @@ public class DLAdminNavigationDisplayContext {
 			).setMVCRenderCommandName(
 				"/document_library/view"
 			).buildString());
-
 		navigationItem.setLabel(
 			LanguageUtil.get(
 				_liferayPortletRequest.getHttpServletRequest(), "files"));
@@ -101,14 +100,12 @@ public class DLAdminNavigationDisplayContext {
 		NavigationItem navigationItem, String navigation) {
 
 		navigationItem.setActive(navigation.equals("file_entry_types"));
-
 		navigationItem.setHref(
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
 			).setNavigation(
 				"file_entry_types"
 			).buildString());
-
 		navigationItem.setLabel(
 			LanguageUtil.get(
 				_liferayPortletRequest.getHttpServletRequest(),
@@ -130,7 +127,6 @@ public class DLAdminNavigationDisplayContext {
 			).setParameter(
 				"groupId", _themeDisplay.getScopeGroupId()
 			).buildString());
-
 		navigationItem.setLabel(
 			LanguageUtil.get(
 				_liferayPortletRequest.getHttpServletRequest(),

@@ -386,7 +386,6 @@ public class DDMFormValuesJSONDeserializerTest extends BaseDDMTestCase {
 	private void _setUpDDMFormValuesJSONDeserializer() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesDeserializer, "_jsonFactory", new JSONFactoryImpl());
-
 		ReflectionTestUtil.setFieldValue(
 			_ddmFormValuesDeserializer, "_serviceTrackerMap",
 			ProxyFactory.newDummyInstance(ServiceTrackerMap.class));

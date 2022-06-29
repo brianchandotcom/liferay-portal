@@ -107,7 +107,6 @@ public class DDMFormInstanceFieldSettingsValidator {
 						jsonObject.getString("instanceId"));
 					ddmFormFieldValue.setName(
 						jsonObject.getString("fieldName"));
-
 					ddmFormFieldValue.setValue(getValue(jsonObject));
 
 					fieldSettingsDDMFormValues.addDDMFormFieldValue(

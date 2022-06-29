@@ -153,7 +153,6 @@ public class DLFileEntryTypeDataDefinitionIdUpgradeProcess
 			preparedStatement.setDate(10, date);
 
 			preparedStatement.setLong(11, classNameId);
-
 			preparedStatement.setString(12, String.valueOf(ddmStructureId));
 			preparedStatement.setString(13, name);
 			preparedStatement.setString(14, _DEFINITION_DDM_STRUCTURE);
@@ -194,7 +193,6 @@ public class DLFileEntryTypeDataDefinitionIdUpgradeProcess
 			preparedStatement.setDate(8, date);
 
 			preparedStatement.setLong(9, classNameId);
-
 			preparedStatement.setString(10, String.valueOf(ddmStructureId));
 			preparedStatement.setLong(11, ddmStructureVersionId);
 			preparedStatement.setString(12, name);
@@ -236,7 +234,6 @@ public class DLFileEntryTypeDataDefinitionIdUpgradeProcess
 			preparedStatement.setLong(7, ddmStructureId);
 			preparedStatement.setString(8, name);
 			preparedStatement.setString(9, _DEFINITION_DDM_STRUCTURE);
-
 			preparedStatement.setLong(10, userId);
 			preparedStatement.setString(11, userName);
 			preparedStatement.setDate(12, date);

@@ -233,7 +233,6 @@ public class DDMFormInstanceFactory {
 			ddmFormValues.setAvailableLocales(
 				_ddmFormValues.getAvailableLocales());
 			ddmFormValues.setDefaultLocale(_ddmFormValues.getDefaultLocale());
-
 			ddmFormValues.setDDMFormFieldValues(
 				ddmFormFieldValue.getNestedDDMFormFieldValues());
 

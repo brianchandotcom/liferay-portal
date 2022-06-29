@@ -703,7 +703,6 @@ public class DDMDataDefinitionConverterImpl
 			"placeholder", _getEmptyLocalizedValue(defaultLocale));
 		ddmFormField.setProperty(
 			"tooltip", _getEmptyLocalizedValue(defaultLocale));
-
 		ddmFormField.setType("text");
 		ddmFormField.setVisibilityExpression(StringPool.BLANK);
 	}

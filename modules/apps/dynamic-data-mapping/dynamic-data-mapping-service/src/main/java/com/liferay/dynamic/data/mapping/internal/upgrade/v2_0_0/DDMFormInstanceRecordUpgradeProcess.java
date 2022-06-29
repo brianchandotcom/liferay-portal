@@ -90,7 +90,6 @@ public class DDMFormInstanceRecordUpgradeProcess extends UpgradeProcess {
 					8, resultSet.getString("versionUserName"));
 				preparedStatement2.setTimestamp(9, createDate);
 				preparedStatement2.setTimestamp(10, modifiedDate);
-
 				preparedStatement2.setLong(
 					11, resultSet.getLong("recordSetId"));
 				preparedStatement2.setString(

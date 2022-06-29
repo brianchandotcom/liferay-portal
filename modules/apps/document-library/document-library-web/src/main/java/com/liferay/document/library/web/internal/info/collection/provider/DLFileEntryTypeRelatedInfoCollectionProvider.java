@@ -205,7 +205,6 @@ public class DLFileEntryTypeRelatedInfoCollectionProvider
 
 		searchContext.setEntryClassNames(
 			new String[] {DLFileEntryConstants.getClassName()});
-
 		searchContext.setGroupIds(
 			new long[] {serviceContext.getScopeGroupId()});
 

@@ -218,7 +218,6 @@ public class DDMFormFieldTemplateContextFactoryTest {
 		ddmFormField.setTip(
 			DDMFormValuesTestUtil.createLocalizedValue(
 				"This is a tip.", _LOCALE));
-
 		ddmFormField.setProperty("displayStyle", "singleline");
 		ddmFormField.setRequiredErrorMessage(
 			DDMFormValuesTestUtil.createLocalizedValue(

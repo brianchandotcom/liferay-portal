@@ -97,11 +97,9 @@ public class DDMFormFieldTemplateContextContributorTestHelper {
 		ReflectionTestUtil.setFieldValue(
 			selectDDMFormFieldTemplateContextContributor,
 			"ddmFormFieldOptionsFactory", new DDMFormFieldOptionsFactoryImpl());
-
 		ReflectionTestUtil.setFieldValue(
 			selectDDMFormFieldTemplateContextContributor, "jsonFactory",
 			_jsonFactory);
-
 		ReflectionTestUtil.setFieldValue(
 			selectDDMFormFieldTemplateContextContributor, "portal", _portal);
 

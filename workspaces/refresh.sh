@@ -10,6 +10,8 @@ function check_blade {
 
 		exit 1
 	fi
+
+	~/jpm/bin/blade update -s
 }
 
 function refresh_sample_default_workspace {

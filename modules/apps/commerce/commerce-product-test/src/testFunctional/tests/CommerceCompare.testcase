@@ -114,62 +114,43 @@ definition {
 
 	}
 
-	@description = "COMMERCE-5913. As a buyer, I want to deselect items in Catalog for compare in MiniCompare widget"
+	@description = "COMMERCE-5913. Verify buyers can deselect items that are being compared from the MiniCompare widget."
 	@priority = "3"
 	test RemoveComparisonItemFromMiniCompare {
 		property portal.acceptance = "false";
 
-		CommerceProducts.openProductsAdmin();
+		task ("Given multiple products are selected for comparison") {
+			User.logoutPG();
 
-		CommerceNavigator.searchEntry(entryName = "U-Joint");
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
 
-		CommerceNavigator.gotoEntry(entryName = "U-Joint");
+			FrontStore.compareProducts(
+				clickCompare = "false",
+				products = "U-Joint,Transmission Fluid");
+		}
 
-		CommerceEntry.gotoMenuTab(menuTab = "Media");
+		task ("When the buyer clicks on the X button on a product in the mini compare widget") {
+			var transmissionFluidImageId = CommerceJSONProductsAPI._getCommerceProductImageIds(productName = "Transmission Fluid");
 
-		CommerceNavigator.gotoEntry(entryName = "Minium_ProductImage_64.png");
+			Click(
+				key_productMediaId = "${transmissionFluidImageId}",
+				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_REMOVE_BUTTON");
+		}
 
-		var firstProductFileEntryId = CommerceProductImages.getProductMediaId();
+		task ("Then that product is removed from the comparison") {
+			AssertElementNotPresent(
+				key_productMediaId = "${transmissionFluidImageId}",
+				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
 
-		Click(locator1 = "Icon#BACK");
+			Button.click(button = "Compare");
 
-		CommerceNavigator.searchEntry(entryName = "Transmission Fluid");
-
-		CommerceNavigator.gotoEntry(entryName = "Transmission Fluid");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Media");
-
-		CommerceNavigator.gotoEntry(entryName = "Minium_ProductImage_103.png");
-
-		var secondProductFileEntryId = CommerceProductImages.getProductMediaId();
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		Click.clickAtNotVisible(
-			key_productName = "U-Joint",
-			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
-
-		Click.clickAtNotVisible(
-			key_productName = "Transmission Fluid",
-			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
-
-		Refresh();
-
-		AssertElementPresent(
-			key_productMediaId = "${firstProductFileEntryId}",
-			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_REMOVE_BUTTON");
-
-		AssertElementPresent(
-			key_productMediaId = "${secondProductFileEntryId}",
-			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_REMOVE_BUTTON");
-
-		Click(
-			key_productMediaId = "${firstProductFileEntryId}",
-			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_REMOVE_BUTTON");
-
-		AssertElementNotPresent(
-			key_productMediaId = "${firstProductFileEntryId}",
-			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
+			AssertElementNotPresent(
+				key_productName = "transmission-fluid",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
 	}
 
 	@description = "COMMERCE-5914. As a buyer, I want to deselect a item in Product Details for compare in Product Widget"

@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>PRODUCT_COMPARISON_TABLE_SPECIFICATION</td>
+	<td>//td[contains(.,'${key_specification}')]/following-sibling::td[${key_columnNumber}][contains(.,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FS_IMAGE_GALLERY_ARROW_NEXT</td>
 	<td>//div[@class='arrow next']</td>
 	<td></td>

@@ -338,7 +338,7 @@ definition {
 			-H 'accept: application/json' \
 		''';
 
-		var productId = JSONCurlUtil.get("${curl}", "$..['productId']");
+		var productId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'].['en_US'] == '${productName}')].['productId']");
 
 		return "${productId}";
 	}

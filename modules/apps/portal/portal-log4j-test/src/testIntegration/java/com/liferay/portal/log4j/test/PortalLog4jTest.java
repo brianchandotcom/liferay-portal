@@ -156,9 +156,9 @@ public class PortalLog4jTest {
 		Logger upgradeLogger = (Logger)LogManager.getLogger(
 			TestUpgradeProcess.class.getName());
 
-		Map<String, Appender> appendersUpgrade = upgradeLogger.getAppenders();
+		Map<String, Appender> upgradeAppenders = upgradeLogger.getAppenders();
 
-		for (Appender appender : appendersUpgrade.values()) {
+		for (Appender appender : upgradeAppenders.values()) {
 			upgradeLogger.removeAppender(appender);
 
 			appender.stop();

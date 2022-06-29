@@ -1,0 +1,40 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Load headless delivery openAPI explorer"
+	@priority = "5"
+	test CanLoadHeadlessDeliveryOpenAPI {
+		property portal.acceptance = "true";
+
+		task ("Given navigate to headless delivery endpoint") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/o/api?endpoint=${portalURL}/o/headless-delivery/v1.0/openapi.json");
+		}
+
+		task ("Then headless delivery api loaded with no errors") {
+			AssertTextEquals(
+				locator1 = "Select#HEADLESS_SERVERS",
+				value1 = "${portalURL}/o/headless-delivery/");
+
+			AssertConsoleTextNotPresent(value1 = "Failed to load API definition");
+		}
+	}
+
+}

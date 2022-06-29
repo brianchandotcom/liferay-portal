@@ -255,6 +255,11 @@
 	<td>//select[contains(@id,'workflowDefinition-1')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>HEADLESS_SERVERS</td>
+	<td>//div[contains(@class,'servers')]//select</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

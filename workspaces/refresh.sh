@@ -34,6 +34,8 @@ function refresh_sample_default_workspace {
 
 	cd ..
 
+	rm -fr sample-default-workspace/client-extensions
+
 	cp -R sample-minimal-workspace/client-extensions sample-default-workspace
 }
 

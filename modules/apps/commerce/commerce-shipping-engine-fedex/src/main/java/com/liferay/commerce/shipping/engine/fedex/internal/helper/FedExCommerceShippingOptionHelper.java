@@ -358,7 +358,6 @@ public class FedExCommerceShippingOptionHelper {
 		address.setCity(commerceAddress.getCity());
 		address.setCountryCode(country.getA2());
 		address.setCountryName(country.getTitle(LocaleUtil.US));
-
 		address.setPostalCode(commerceAddress.getZip());
 
 		if (_fedExCommerceShippingEngineGroupServiceConfiguration.

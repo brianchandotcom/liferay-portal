@@ -668,7 +668,6 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		commerceTierPriceEntry.setDiscountLevel2(discountLevel2);
 		commerceTierPriceEntry.setDiscountLevel3(discountLevel3);
 		commerceTierPriceEntry.setDiscountLevel4(discountLevel4);
-
 		commerceTierPriceEntry.setDisplayDate(displayDate);
 
 		if ((expirationDate == null) || expirationDate.after(date)) {
@@ -814,7 +813,6 @@ public class CommerceTierPriceEntryLocalServiceImpl
 					"keywords", keywords
 				).build()
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 

@@ -235,7 +235,6 @@ public class CommerceProductDisplayPageTableFDSView
 
 		portletURL.setParameter(
 			"cpDisplayLayoutId", String.valueOf(productDisplayPageId));
-
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();

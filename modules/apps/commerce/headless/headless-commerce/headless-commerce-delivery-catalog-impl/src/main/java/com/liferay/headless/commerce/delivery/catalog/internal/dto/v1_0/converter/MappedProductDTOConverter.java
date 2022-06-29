@@ -283,7 +283,6 @@ public class MappedProductDTOConverter
 							mappedProductDTOConverterContext.
 								setReplacementCPInstanceId(
 									replacementCPInstance.getCPInstanceId());
-
 							mappedProductDTOConverterContext.
 								setReplacementCProductId(
 									cpInstance.getReplacementCProductId());

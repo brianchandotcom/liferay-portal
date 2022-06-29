@@ -123,7 +123,6 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 		}
 
 		ddmFormRenderingContext.setLocale(locale);
-
 		ddmFormRenderingContext.setPortletNamespace(
 			dataLayoutRendererContext.getPortletNamespace());
 		ddmFormRenderingContext.setReadOnly(

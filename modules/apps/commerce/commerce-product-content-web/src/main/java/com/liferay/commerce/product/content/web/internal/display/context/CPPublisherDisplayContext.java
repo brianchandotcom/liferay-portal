@@ -276,7 +276,6 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 			).put(
 				"params", new LinkedHashMap<String, Object>()
 			).build());
-
 		searchContext.setCompanyId(cpContentRequestHelper.getCompanyId());
 
 		CPQuery cpQuery = new CPQuery();

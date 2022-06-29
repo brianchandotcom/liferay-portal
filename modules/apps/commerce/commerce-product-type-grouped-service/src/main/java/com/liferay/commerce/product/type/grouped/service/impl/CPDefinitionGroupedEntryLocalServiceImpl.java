@@ -150,7 +150,6 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 			newCPDefinitionGroupedEntry.setUuid(PortalUUIDUtil.generate());
 			newCPDefinitionGroupedEntry.setCPDefinitionGroupedEntryId(
 				counterLocalService.increment());
-
 			newCPDefinitionGroupedEntry.setCPDefinitionId(newCPDefinitionId);
 
 			cpDefinitionGroupedEntryLocalService.addCPDefinitionGroupedEntry(

@@ -227,7 +227,6 @@ public class CounterLocalServiceTest {
 		public Long[] call() throws ProcessException {
 			System.setProperty(
 				PropsKeys.COUNTER_INCREMENT + "." + _counterName, "1");
-
 			System.setProperty("catalina.base", _catalinaBase);
 
 			// HikariCP

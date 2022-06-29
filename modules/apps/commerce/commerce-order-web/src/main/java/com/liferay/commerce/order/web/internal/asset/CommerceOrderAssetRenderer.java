@@ -145,11 +145,9 @@ public class CommerceOrderAssetRenderer
 		}
 
 		portletURL.setParameter("mvcRenderCommandName", orderRenderCommand);
-
 		portletURL.setParameter(
 			"commerceOrderId",
 			String.valueOf(_commerceOrder.getCommerceOrderId()));
-
 		portletURL.setParameter(
 			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE + "backURL",
 			PortalUtil.getCurrentURL(liferayPortletRequest));

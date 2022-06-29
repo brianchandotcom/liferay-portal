@@ -51,7 +51,6 @@ public class OrderFDSKeywordsFactoryImpl implements FDSKeywordsFactory {
 		orderFDSKeywordsImpl.setAccountId(commerceAccountId);
 
 		orderFDSKeywordsImpl.setCommerceOrderId(commerceOrderId);
-
 		orderFDSKeywordsImpl.setKeywords(
 			ParamUtil.getString(httpServletRequest, "search"));
 

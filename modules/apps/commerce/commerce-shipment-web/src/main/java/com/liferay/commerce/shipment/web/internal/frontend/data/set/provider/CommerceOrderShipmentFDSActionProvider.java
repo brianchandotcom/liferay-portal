@@ -122,7 +122,6 @@ public class CommerceOrderShipmentFDSActionProvider
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("backURL", portletURL.toString());
-
 		portletURL.setParameter(
 			"mvcRenderCommandName",
 			"/commerce_shipment/edit_commerce_shipment");

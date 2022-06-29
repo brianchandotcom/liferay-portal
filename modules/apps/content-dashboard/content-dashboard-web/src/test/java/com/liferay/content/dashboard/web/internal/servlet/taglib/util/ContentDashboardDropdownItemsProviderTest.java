@@ -85,10 +85,9 @@ public class ContentDashboardDropdownItemsProviderTest {
 			new MockLiferayPortletRenderRequest();
 
 		mockLiferayPortletRenderRequest.setAttribute(
-			"null-" + WebKeys.CURRENT_PORTLET_URL, new MockLiferayPortletURL());
-
-		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.LOCALE, LocaleUtil.US);
+		mockLiferayPortletRenderRequest.setAttribute(
+			"null-" + WebKeys.CURRENT_PORTLET_URL, new MockLiferayPortletURL());
 
 		ContentDashboardDropdownItemsProvider
 			contentDashboardDropdownItemsProvider =
@@ -124,10 +123,9 @@ public class ContentDashboardDropdownItemsProviderTest {
 			new MockLiferayPortletRenderRequest();
 
 		mockLiferayPortletRenderRequest.setAttribute(
-			"null-" + WebKeys.CURRENT_PORTLET_URL, new MockLiferayPortletURL());
-
-		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.LOCALE, LocaleUtil.US);
+		mockLiferayPortletRenderRequest.setAttribute(
+			"null-" + WebKeys.CURRENT_PORTLET_URL, new MockLiferayPortletURL());
 
 		ContentDashboardDropdownItemsProvider
 			contentDashboardDropdownItemsProvider =
@@ -167,10 +165,9 @@ public class ContentDashboardDropdownItemsProviderTest {
 			new MockLiferayPortletRenderRequest();
 
 		mockLiferayPortletRenderRequest.setAttribute(
-			"null-" + WebKeys.CURRENT_PORTLET_URL, new MockLiferayPortletURL());
-
-		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.LOCALE, LocaleUtil.US);
+		mockLiferayPortletRenderRequest.setAttribute(
+			"null-" + WebKeys.CURRENT_PORTLET_URL, new MockLiferayPortletURL());
 
 		ContentDashboardDropdownItemsProvider
 			contentDashboardDropdownItemsProvider =

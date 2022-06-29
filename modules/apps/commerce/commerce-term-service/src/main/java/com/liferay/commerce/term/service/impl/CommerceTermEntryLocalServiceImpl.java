@@ -142,7 +142,6 @@ public class CommerceTermEntryLocalServiceImpl
 		}
 
 		commerceTermEntry.setExpirationDate(expirationDate);
-
 		commerceTermEntry.setName(name);
 		commerceTermEntry.setPriority(priority);
 		commerceTermEntry.setType(type);
@@ -386,7 +385,6 @@ public class CommerceTermEntryLocalServiceImpl
 		}
 
 		commerceTermEntry.setExpirationDate(expirationDate);
-
 		commerceTermEntry.setName(name);
 		commerceTermEntry.setPriority(priority);
 		commerceTermEntry.setTypeSettingsUnicodeProperties(
@@ -493,7 +491,6 @@ public class CommerceTermEntryLocalServiceImpl
 			).put(
 				"accountEntryId", accountEntryId
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 

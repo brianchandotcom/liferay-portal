@@ -362,7 +362,6 @@ public class CommercePricingClassLocalServiceImpl
 					"keywords", keywords
 				).build()
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 

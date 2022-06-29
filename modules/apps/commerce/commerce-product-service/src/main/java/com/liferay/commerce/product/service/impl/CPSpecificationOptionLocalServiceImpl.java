@@ -416,7 +416,6 @@ public class CPSpecificationOptionLocalServiceImpl
 			dynamicQuery -> dynamicQuery.add(
 				RestrictionsFactoryUtil.eq(
 					"CPSpecificationOptionId", cpSpecificationOptionId)));
-
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CPDefinitionSpecificationOptionValue
 				cpDefinitionSpecificationOptionValue) -> {
@@ -440,7 +439,6 @@ public class CPSpecificationOptionLocalServiceImpl
 					}
 				}
 			});
-
 		indexableActionableDynamicQuery.setSearchEngineId(
 			indexer.getSearchEngineId());
 

@@ -244,7 +244,6 @@ public class CPPublisherConfigurationDisplayContext
 				"selectedCategories", "{selectedCategories}");
 			portletURL.setParameter("singleSelect", "{singleSelect}");
 			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
-
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			return portletURL.toString();

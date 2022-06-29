@@ -127,7 +127,6 @@ public class CommerceNotificationTemplateTableFDSView
 						"commerceNotificationTemplateId",
 						notificationTemplate.getNotificationTemplateId()
 					).buildPortletURL());
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 			}

@@ -197,7 +197,6 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 		resourceURL.setParameter(
 			"commerceVirtualOrderItemId",
 			String.valueOf(commerceVirtualOrderItemId));
-
 		resourceURL.setResourceID(
 			"/commerce_virtual_order_item_content" +
 				"/download_commerce_virtual_order_item");

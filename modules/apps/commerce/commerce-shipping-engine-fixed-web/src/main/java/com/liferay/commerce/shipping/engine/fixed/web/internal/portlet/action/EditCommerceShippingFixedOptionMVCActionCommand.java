@@ -155,7 +155,6 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 			"commerceShippingMethodId",
 			String.valueOf(
 				ParamUtil.getLong(actionRequest, "commerceShippingMethodId")));
-
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();

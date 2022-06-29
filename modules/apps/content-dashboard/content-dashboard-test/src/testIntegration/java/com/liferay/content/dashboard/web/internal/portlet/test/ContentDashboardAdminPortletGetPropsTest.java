@@ -621,7 +621,6 @@ public class ContentDashboardAdminPortletGetPropsTest {
 
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.COMPANY_ID, _company.getCompanyId());
-
 		mockLiferayPortletRenderRequest.setAttribute(
 			StringBundler.concat(
 				mockLiferayPortletRenderRequest.getPortletName(), "-",
@@ -631,7 +630,6 @@ public class ContentDashboardAdminPortletGetPropsTest {
 		String path = "/view.jsp";
 
 		mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
-
 		mockLiferayPortletRenderRequest.setAttribute(
 			MVCRenderConstants.
 				PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX + path,

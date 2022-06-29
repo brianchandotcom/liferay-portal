@@ -46,7 +46,6 @@ public class CPDefinitionGroupedEntryUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement.setLong(
 					1, _getCProductId(entryCPDefinitionId));
-
 				preparedStatement.setLong(2, entryCPDefinitionId);
 
 				preparedStatement.execute();

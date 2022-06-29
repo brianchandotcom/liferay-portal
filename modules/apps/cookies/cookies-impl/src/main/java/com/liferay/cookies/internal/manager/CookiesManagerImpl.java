@@ -102,7 +102,6 @@ public class CookiesManagerImpl implements CookiesManager {
 		}
 
 		cookie.setValue(encodedCookieValue);
-
 		cookie.setVersion(0);
 
 		httpServletResponse.addCookie(cookie);

@@ -57,7 +57,6 @@ public class CProductLocalServiceImpl extends CProductLocalServiceBaseImpl {
 		cProduct.setCompanyId(user.getCompanyId());
 		cProduct.setUserId(user.getUserId());
 		cProduct.setUserName(user.getFullName());
-
 		cProduct.setLatestVersion(1);
 
 		return cProductPersistence.update(cProduct);

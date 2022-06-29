@@ -734,7 +734,6 @@ public class CPTestUtil {
 					return null;
 				}
 			).build());
-
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setGroupIds(new long[] {group.getGroupId()});
 

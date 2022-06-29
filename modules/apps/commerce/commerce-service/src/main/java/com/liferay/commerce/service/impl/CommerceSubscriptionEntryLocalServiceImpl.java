@@ -673,7 +673,6 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 					"keywords", keywords
 				).build()
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 

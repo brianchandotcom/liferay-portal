@@ -101,7 +101,6 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 				).put(
 					"commerceChannelGroupId", groupId
 				).build());
-
 			searchContext.setCompanyId(themeDisplay.getCompanyId());
 
 			CPQuery cpQuery = new CPQuery();

@@ -395,11 +395,9 @@ public class CommerceShipmentDisplayContext
 		searchContext.setAttribute("orderStatuses", orderStatuses);
 
 		searchContext.setAttribute(
-			"useSearchResultPermissionFilter", Boolean.FALSE);
-
-		searchContext.setAttribute(
 			Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-
+		searchContext.setAttribute(
+			"useSearchResultPermissionFilter", Boolean.FALSE);
 		searchContext.setCompanyId(cpRequestHelper.getCompanyId());
 		searchContext.setEnd(QueryUtil.ALL_POS);
 

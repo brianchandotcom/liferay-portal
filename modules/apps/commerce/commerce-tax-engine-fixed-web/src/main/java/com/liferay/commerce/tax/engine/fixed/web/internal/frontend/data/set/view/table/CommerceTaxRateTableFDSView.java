@@ -268,7 +268,6 @@ public class CommerceTaxRateTableFDSView
 
 		portletURL.setParameter(
 			"commerceTaxFixedRateId", String.valueOf(taxRateId));
-
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();

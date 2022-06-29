@@ -187,7 +187,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			deliverySubscriptionTypeSettingsUnicodeProperties);
 		cpInstance.setDeliveryMaxSubscriptionCycles(
 			deliveryMaxSubscriptionCycles);
-
 		cpInstance.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		if ((displayDate != null) && date.before(displayDate)) {
@@ -1131,13 +1130,12 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setExpandoBridgeAttributes(serviceContext);
 		cpInstance.setUnspsc(unspsc);
 		cpInstance.setDiscontinued(discontinued);
-		cpInstance.setReplacementCPInstanceUuid(replacementCPInstanceUuid);
-		cpInstance.setReplacementCProductId(replacementCProductId);
-
 		cpInstance.setDiscontinuedDate(
 			PortalUtil.getDate(
 				discontinuedDateMonth, discontinuedDateDay,
 				discontinuedDateYear));
+		cpInstance.setReplacementCPInstanceUuid(replacementCPInstanceUuid);
+		cpInstance.setReplacementCProductId(replacementCProductId);
 
 		cpInstance = cpInstancePersistence.update(cpInstance);
 
@@ -1476,7 +1474,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					"keywords", keywords
 				).build()
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 
@@ -1519,7 +1516,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					"keywords", keywords
 				).build()
 			).build());
-
 		searchContext.setCompanyId(companyId);
 
 		if (Validator.isNotNull(keywords)) {
@@ -1555,7 +1551,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 					"keywords", keywords
 				).build()
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(groupIds);

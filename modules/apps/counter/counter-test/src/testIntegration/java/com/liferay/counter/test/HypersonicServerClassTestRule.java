@@ -137,7 +137,6 @@ public class HypersonicServerClassTestRule extends ClassTestRule<Server> {
 			new UnsyncPrintWriter(
 				new File(
 					_HYPERSONIC_TEMP_DIR_NAME, _DATABASE_NAME + ".std.log")));
-
 		testServer.setDatabaseName(0, _DATABASE_NAME);
 		testServer.setDatabasePath(
 			0, _HYPERSONIC_TEMP_DIR_NAME + _DATABASE_NAME);

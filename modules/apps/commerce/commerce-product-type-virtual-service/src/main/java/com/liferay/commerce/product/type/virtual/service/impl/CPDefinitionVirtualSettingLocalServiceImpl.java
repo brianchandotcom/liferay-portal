@@ -201,7 +201,6 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			newCPDefinitionVirtualSetting.setUuid(PortalUUIDUtil.generate());
 			newCPDefinitionVirtualSetting.setCPDefinitionVirtualSettingId(
 				counterLocalService.increment());
-
 			newCPDefinitionVirtualSetting.setClassPK(newCPDefinitionId);
 
 			cpDefinitionVirtualSettingLocalService.

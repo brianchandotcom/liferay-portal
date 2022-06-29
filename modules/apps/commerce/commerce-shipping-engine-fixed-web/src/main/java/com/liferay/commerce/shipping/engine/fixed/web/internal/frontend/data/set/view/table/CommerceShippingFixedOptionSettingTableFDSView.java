@@ -266,7 +266,6 @@ public class CommerceShippingFixedOptionSettingTableFDSView
 		portletURL.setParameter(
 			"commerceShippingFixedOptionRelId",
 			String.valueOf(shippingFixedOptionSettingId));
-
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();

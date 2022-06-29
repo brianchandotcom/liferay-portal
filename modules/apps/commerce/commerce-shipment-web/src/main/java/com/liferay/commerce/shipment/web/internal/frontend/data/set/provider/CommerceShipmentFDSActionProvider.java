@@ -121,7 +121,6 @@ public class CommerceShipmentFDSActionProvider implements FDSActionProvider {
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("backURL", portletURL.toString());
-
 		portletURL.setParameter(
 			"mvcRenderCommandName",
 			"/commerce_shipment/edit_commerce_shipment");

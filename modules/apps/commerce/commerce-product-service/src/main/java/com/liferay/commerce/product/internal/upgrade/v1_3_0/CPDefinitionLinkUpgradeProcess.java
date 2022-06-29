@@ -47,7 +47,6 @@ public class CPDefinitionLinkUpgradeProcess
 				long cpDefinitionId2 = resultSet.getLong("CPDefinitionId2");
 
 				preparedStatement.setLong(1, _getCProductId(cpDefinitionId2));
-
 				preparedStatement.setLong(2, cpDefinitionId2);
 
 				preparedStatement.execute();

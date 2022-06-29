@@ -114,11 +114,9 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 		}
 
 		corEntry.setExpirationDate(expirationDate);
-
 		corEntry.setName(name);
 		corEntry.setPriority(priority);
 		corEntry.setType(type);
-
 		corEntry.setTypeSettingsUnicodeProperties(
 			UnicodePropertiesBuilder.fastLoad(
 				typeSettings
@@ -406,10 +404,8 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 		}
 
 		corEntry.setExpirationDate(expirationDate);
-
 		corEntry.setName(name);
 		corEntry.setPriority(priority);
-
 		corEntry.setTypeSettingsUnicodeProperties(
 			UnicodePropertiesBuilder.fastLoad(
 				typeSettings

@@ -252,7 +252,6 @@ public class CommerceOrderTypeLocalServiceImpl
 			commerceOrderTypePersistence.findByPrimaryKey(commerceOrderTypeId);
 
 		commerceOrderType.setExternalReferenceCode(externalReferenceCode);
-
 		commerceOrderType.setNameMap(nameMap);
 		commerceOrderType.setDescriptionMap(descriptionMap);
 		commerceOrderType.setActive(active);

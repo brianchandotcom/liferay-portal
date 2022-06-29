@@ -99,7 +99,6 @@ public class CommerceSubscriptionEntryFDSActionProvider
 			PortletRequest.ACTION_PHASE);
 
 		portletURL.setParameter("redirect", portletURL.toString());
-
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/commerce_subscription_entry/edit_commerce_subscription_entry");

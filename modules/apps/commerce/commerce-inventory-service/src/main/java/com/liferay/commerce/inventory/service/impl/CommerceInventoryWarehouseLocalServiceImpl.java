@@ -417,7 +417,6 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 					return null;
 				}
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 

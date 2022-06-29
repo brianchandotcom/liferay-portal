@@ -99,10 +99,8 @@ public class CommerceCatalogUpgradeProcess extends UpgradeProcess {
 				preparedStatement1.setString(4, userName);
 				preparedStatement1.setDate(5, date);
 				preparedStatement1.setDate(6, date);
-
 				preparedStatement1.setString(
 					7, siteGroup.getName(defaultLanguageId));
-
 				preparedStatement1.setString(8, defaultLanguageId);
 
 				preparedStatement1.addBatch();

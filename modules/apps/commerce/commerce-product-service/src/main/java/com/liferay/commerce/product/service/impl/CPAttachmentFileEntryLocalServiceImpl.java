@@ -530,7 +530,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		}
 
 		searchContext.setAttributes(attributes);
-
 		searchContext.setCompanyId(cpDefinition.getCompanyId());
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {cpDefinition.getGroupId()});

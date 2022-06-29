@@ -82,7 +82,6 @@ public class CommerceCatalogLocalServiceImpl
 		commerceCatalog.setCompanyId(user.getCompanyId());
 		commerceCatalog.setUserId(user.getUserId());
 		commerceCatalog.setUserName(user.getFullName());
-
 		commerceCatalog.setName(name);
 		commerceCatalog.setCommerceCurrencyCode(commerceCurrencyCode);
 		commerceCatalog.setCatalogDefaultLanguageId(catalogDefaultLanguageId);

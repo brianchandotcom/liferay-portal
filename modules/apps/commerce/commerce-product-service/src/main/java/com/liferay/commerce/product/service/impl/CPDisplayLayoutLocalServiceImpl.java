@@ -206,7 +206,6 @@ public class CPDisplayLayoutLocalServiceImpl
 			).put(
 				"searchFilterEnabled", true
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {groupId});

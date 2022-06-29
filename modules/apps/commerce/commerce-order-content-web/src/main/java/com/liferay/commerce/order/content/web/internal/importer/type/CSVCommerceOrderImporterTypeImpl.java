@@ -305,7 +305,6 @@ public class CSVCommerceOrderImporterTypeImpl
 		}
 
 		commerceOrderImporterItemImpl.setJSON("[]");
-
 		commerceOrderImporterItemImpl.setQuantity(quantity);
 
 		if (csvRecord.isMapped(_REQUESTED_DELIVERY_DATE_FIELD_NAME) &&

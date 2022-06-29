@@ -759,7 +759,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		versionCommerceOrderValidatorImpl.setCommerceOrderItemLocalService(
 			_commerceOrderItemLocalService);
-
 		versionCommerceOrderValidatorImpl.setCPInstanceLocalService(
 			_cpInstanceLocalService);
 

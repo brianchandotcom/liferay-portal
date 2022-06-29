@@ -249,11 +249,10 @@ public class CommerceTestUtil {
 		CommerceShippingFixedOption commerceShippingFixedOption =
 			addCommerceShippingFixedOption(commerceShippingMethod);
 
-		commerceOrder.setShippingOptionName(
-			commerceShippingFixedOption.getName());
-
 		commerceOrder.setShippingAmount(
 			commerceShippingFixedOption.getAmount());
+		commerceOrder.setShippingOptionName(
+			commerceShippingFixedOption.getName());
 
 		return CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
 	}
@@ -473,11 +472,10 @@ public class CommerceTestUtil {
 		CommerceShippingFixedOption commerceShippingFixedOption =
 			addCommerceShippingFixedOption(commerceShippingMethod, value);
 
-		commerceOrder.setShippingOptionName(
-			commerceShippingFixedOption.getNameCurrentValue());
-
 		commerceOrder.setShippingAmount(
 			commerceShippingFixedOption.getAmount());
+		commerceOrder.setShippingOptionName(
+			commerceShippingFixedOption.getNameCurrentValue());
 
 		return CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
 	}

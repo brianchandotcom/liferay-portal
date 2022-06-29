@@ -1316,7 +1316,6 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 			if (country != null) {
 				shippingAddress.setCountryCode(country.getA2());
-
 				shippingAddress.setLine1(commerceAddress.getStreet1());
 				shippingAddress.setLine2(commerceAddress.getStreet2());
 				shippingAddress.setPostalCode(commerceAddress.getZip());
@@ -1340,7 +1339,6 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 		patch.setOp(PayPalCommercePaymentMethodConstants.OPERATION_REPLACE);
 		patch.setPath(StringPool.FORWARD_SLASH);
-
 		patch.setValue(
 			Collections.singletonMap(
 				PayPalCommercePaymentMethodConstants.STATE,

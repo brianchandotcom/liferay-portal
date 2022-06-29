@@ -180,7 +180,6 @@ public class CommerceShippingOriginLocatorImpl
 		commerceAddress.setRegionId(region.getRegionId());
 
 		commerceAddress.setCountryId(country.getCountryId());
-
 		commerceAddress.setLatitude(commerceInventoryWarehouse.getLatitude());
 		commerceAddress.setLongitude(commerceInventoryWarehouse.getLongitude());
 

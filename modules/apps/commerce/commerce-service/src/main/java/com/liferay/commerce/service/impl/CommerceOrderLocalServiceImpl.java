@@ -288,7 +288,6 @@ public class CommerceOrderLocalServiceImpl
 
 		commerceOrder.setOrderStatus(orderStatus);
 		commerceOrder.setPaymentStatus(paymentStatus);
-
 		commerceOrder.setStatus(WorkflowConstants.STATUS_DRAFT);
 		commerceOrder.setStatusByUserId(user.getUserId());
 		commerceOrder.setStatusByUserName(user.getFullName());

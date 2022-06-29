@@ -123,10 +123,9 @@ public class CPSearchResultsPortletSharedSearchContributor
 		SearchContext searchContext =
 			portletSharedSearchSettings.getSearchContext();
 
+		searchContext.setAttribute(CPField.PUBLISHED, Boolean.TRUE);
 		searchContext.setEntryClassNames(
 			new String[] {CPDefinition.class.getName()});
-
-		searchContext.setAttribute(CPField.PUBLISHED, Boolean.TRUE);
 
 		if (commerceChannel != null) {
 			searchContext.setAttribute(

@@ -75,7 +75,6 @@ public class CommercePriceEntryUpgradeProcess
 				preparedStatement.setLong(1, cpDefinition.getCProductId());
 
 				preparedStatement.setString(2, cpInstance.getCPInstanceUuid());
-
 				preparedStatement.setLong(3, cpInstanceId);
 
 				preparedStatement.execute();

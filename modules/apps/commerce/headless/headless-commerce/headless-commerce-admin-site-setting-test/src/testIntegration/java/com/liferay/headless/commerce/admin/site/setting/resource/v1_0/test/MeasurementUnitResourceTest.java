@@ -192,7 +192,6 @@ public class MeasurementUnitResourceTest
 		MeasurementUnit randomMeasurementUnit = randomMeasurementUnit();
 
 		randomMeasurementUnit.setRate(Double.valueOf("1.0"));
-
 		randomMeasurementUnit.setType("Unit");
 
 		MeasurementUnit postMeasurementUnit = _postMeasurementUnit(

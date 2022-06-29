@@ -744,7 +744,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 			ddmFormFieldTypeSettingsDDMForm.setAvailableLocales(
 				availableLocales);
-
 			ddmFormFieldTypeSettingsDDMForm.setDefaultLocale(
 				_getDefaultLocale());
 

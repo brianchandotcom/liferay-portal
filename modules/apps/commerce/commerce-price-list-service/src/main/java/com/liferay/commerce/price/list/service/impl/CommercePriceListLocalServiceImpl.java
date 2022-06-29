@@ -1281,7 +1281,6 @@ public class CommercePriceListLocalServiceImpl
 			).put(
 				"commerceAccountId", commerceAccountId
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(1);
 		searchContext.setGroupIds(new long[] {groupId});
@@ -1321,7 +1320,6 @@ public class CommercePriceListLocalServiceImpl
 					"keywords", keywords
 				).build()
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(groupIds);

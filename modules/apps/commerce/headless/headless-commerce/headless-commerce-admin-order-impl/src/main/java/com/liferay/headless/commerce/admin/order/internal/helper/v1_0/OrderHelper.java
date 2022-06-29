@@ -66,11 +66,10 @@ public class OrderHelper {
 				public void accept(Object object) throws Exception {
 					SearchContext searchContext = (SearchContext)object;
 
-					searchContext.setCompanyId(companyId);
-
 					searchContext.setAttribute(
 						"useSearchResultPermissionFilter",
 						useSearchResultPermissionFilter);
+					searchContext.setCompanyId(companyId);
 
 					long[] commerceChannelGroupIds =
 						_getCommerceChannelGroupIds(companyId);

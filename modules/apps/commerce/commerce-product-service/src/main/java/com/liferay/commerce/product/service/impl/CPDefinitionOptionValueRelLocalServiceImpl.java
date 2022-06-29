@@ -743,7 +743,6 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 					"keywords", keywords
 				).build()
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {groupId});

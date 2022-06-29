@@ -785,7 +785,6 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		if (!errorMessages.isEmpty()) {
 			cart.setValid(false);
-
 			cart.setErrorMessages(errorMessages.toArray(new String[0]));
 		}
 

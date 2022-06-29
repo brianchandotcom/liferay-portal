@@ -583,7 +583,6 @@ public class DataEngineExpandoBridgeImpl implements ExpandoBridge {
 						localizedValue.getDefaultLocale());
 				}
 			).build());
-
 		dataDefinitionField.setDefaultValue(
 			HashMapBuilder.<String, Object>put(
 				"en_US", defaultValue

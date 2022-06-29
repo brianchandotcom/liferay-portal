@@ -298,7 +298,6 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 					"keywords", keywords
 				).build()
 			).build());
-
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 

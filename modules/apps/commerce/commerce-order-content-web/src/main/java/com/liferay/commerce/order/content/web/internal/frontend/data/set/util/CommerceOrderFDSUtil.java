@@ -250,7 +250,6 @@ public class CommerceOrderFDSUtil {
 			).setParameter(
 				"tableName", CommerceOrderFDSNames.PLACED_ORDERS
 			).buildString());
-
 		portletURL.setParameter(
 			"mvcRenderCommandName",
 			"/commerce_order_content/view_commerce_order_details");

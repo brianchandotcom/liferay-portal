@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -97,8 +98,8 @@ public class ClientExtensionServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"3.3.0", "3.4.0",
-			new com.liferay.client.extension.internal.upgrade.v3_4_0.
-				ClientExtensionEntryRelUpgradeProcess());
+			UpgradeStepFactory.addColumns(
+				"ClientExtensionEntryRel", "typeSettings TEXT null"));
 	}
 
 	@Reference(

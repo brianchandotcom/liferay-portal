@@ -105,18 +105,6 @@ public class MBSuspiciousActivityLocalServiceImpl
 			suspiciousActivityId);
 	}
 
-	@Override
-	public MBSuspiciousActivity getSuspiciousActivity(
-			long userId, long messageId)
-		throws NoSuchSuspiciousActivityException {
-
-		return mbSuspiciousActivityPersistence.findByU_M(userId, messageId);
-	}
-
-	@Override
-	public int getSuspiciousActivityCount() {
-		return mbSuspiciousActivityPersistence.countAll();
-	}
 
 	@Override
 	public List<MBSuspiciousActivity> getThreadSuspiciousActivities(

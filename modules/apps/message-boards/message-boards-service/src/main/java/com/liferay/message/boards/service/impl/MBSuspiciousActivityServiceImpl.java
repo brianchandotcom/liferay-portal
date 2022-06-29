@@ -41,11 +41,11 @@ public class MBSuspiciousActivityServiceImpl
 
 	@Override
 	public MBSuspiciousActivity addOrUpdateSuspiciousActivity(
-			long userId, long messageId, String description, String type)
+			long messageId, String description, String type)
 		throws PortalException {
 
 		return _mbSuspiciousActivityLocalService.addOrUpdateSuspiciousActivity(
-			userId, messageId, description, type);
+			getUserId(), messageId, description, type);
 	}
 
 	@Override
@@ -74,19 +74,6 @@ public class MBSuspiciousActivityServiceImpl
 			suspiciousActivityId);
 	}
 
-	@Override
-	public MBSuspiciousActivity getSuspiciousActivity(
-			long userId, long messageId)
-		throws NoSuchSuspiciousActivityException {
-
-		return _mbSuspiciousActivityLocalService.getSuspiciousActivity(
-			userId, messageId);
-	}
-
-	@Override
-	public int getSuspiciousActivityCount() {
-		return _mbSuspiciousActivityLocalService.getSuspiciousActivityCount();
-	}
 
 	@Override
 	public List<MBSuspiciousActivity> getThreadSuspiciousActivities(

@@ -1184,32 +1184,75 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-5869. As a buyer, I want to be able to remove a product from a product comparison items list, by unchecking the product via checkbox"
+	@description = "COMMERCE-5869. Verify buyers can remove a product from a product comparison items list, by unchecking the product via checkbox"
 	@priority = "3"
 	test RemoveProductFromComparisonItems {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
 		// TODO Review
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		Check.checkToggleSwitch(
-			key_productName = "U-Joint",
-			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+		task ("And given multiple products are being compared") {
+			CommerceProducts.openProductsAdmin();
 
-		Refresh();
+			CommerceNavigator.searchEntry(entryName = "Transmission Fluid");
 
-		AssertChecked.assertCheckedNotVisible(
-			key_productName = "U-Joint",
-			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+			CommerceNavigator.gotoEntry(entryName = "Transmission Fluid");
 
-		AssertElementPresent(locator1 = "CommerceEntry#MINI_COMPARE_ITEM_ACTIVE");
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
 
-		Uncheck.uncheckToggleSwitch(
-			key_productName = "U-Joint",
-			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+			CommerceNavigator.gotoEntry(entryName = "Minium_ProductImage_103.png");
 
-		AssertElementNotPresent(locator1 = "CommerceEntry#MINI_COMPARE_ITEM_ACTIVE");
+			var productImage = CommerceProductImages.getProductMediaId();
+
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.compareProducts(
+				clickCompare = "false",
+				products = "U-Joint,Transmission Fluid");
+		}
+
+		task ("When the buyer unchecks one of the products being compared") {
+			Uncheck.uncheckToggleSwitch(
+				key_productName = "Transmission Fluid",
+				locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+		}
+
+		task ("Then the product is removed from the comparison") {
+			AssertElementNotPresent(
+				key_value = "2",
+				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_ACTIVE_N");
+
+			AssertElementNotPresent(
+				key_productMediaId = "${productImage}",
+				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
+
+			Button.click(button = "Compare");
+
+			AssertElementNotPresent(
+				key_productName = "transmission-fluid",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
 	}
 
 	@description = "COMMERCE-5867. Verify buyers can remove a product from a wish list."

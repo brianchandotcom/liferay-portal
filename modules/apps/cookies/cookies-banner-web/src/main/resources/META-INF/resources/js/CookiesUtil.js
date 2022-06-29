@@ -12,6 +12,8 @@
  * details.
  */
 
+export const userConfigCookieName = 'USER_CONSENT_CONFIGURED';
+
 export function acceptAllCookies(
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames
@@ -57,12 +59,10 @@ export function getCookie(name) {
 	return null;
 }
 
-export function setCookie(name, value, days = 180) {
-	const date = new Date();
+export function setCookie(name, value) {
+	Liferay.Util.Cookie.set(name, value, Liferay.Util.Cookie.TYPES.NECESSARY);
+}
 
-	date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-
-	const expires = '; expires=' + date.toUTCString();
-
-	document.cookie = name + '=' + (value || '') + expires + '; path=/';
+export function setUserConfigCookie() {
+	setCookie(userConfigCookieName, 'true');
 }

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -104,16 +105,7 @@ public class DispatchTaskExecutorRegistryImpl
 				(String)properties.get(_KEY_DISPATCH_TASK_EXECUTOR_NAME));
 		}
 
-		DispatchTaskClusterMode dispatchTaskClusterMode =
-			DispatchTaskClusterMode.valueOf(
-				GetterUtil.getString(
-					properties.get(_KEY_DISPATCH_TASK_EXECUTOR_CLUSTER_MODE),
-					DispatchTaskClusterMode.ALL_NODES.getLabel()));
-
-		if (dispatchTaskClusterMode == DispatchTaskClusterMode.SINGLE_NODE) {
-			_clusterModeSingleNodeDispatchTaskExecutors.add(
-				dispatchTaskExecutorType);
-		}
+		_checkDispatchTaskClusterMode(dispatchTaskExecutorType, properties);
 
 		_dispatchTaskExecutors.put(
 			dispatchTaskExecutorType, dispatchTaskExecutor);
@@ -128,6 +120,21 @@ public class DispatchTaskExecutorRegistryImpl
 
 		_dispatchTaskExecutorNames.remove(dispatchTaskExecutorType);
 		_dispatchTaskExecutors.remove(dispatchTaskExecutorType);
+	}
+
+	private void _checkDispatchTaskClusterMode(
+		String dispatchTaskExecutorType, Map<String, Object> properties) {
+
+		String label = GetterUtil.getString(
+			properties.get(_KEY_DISPATCH_TASK_EXECUTOR_CLUSTER_MODE),
+			DispatchTaskClusterMode.ALL_NODES.getLabel());
+
+		if (Objects.equals(
+				label, DispatchTaskClusterMode.SINGLE_NODE.getLabel())) {
+
+			_clusterModeSingleNodeDispatchTaskExecutors.add(
+				dispatchTaskExecutorType);
+		}
 	}
 
 	private void _validateDispatchTaskExecutorProperties(

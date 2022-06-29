@@ -2162,6 +2162,46 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-134561."
+	@priority = "4"
+	@uitest
+	test CheckSegmentationWithApostropheValueFilter {
+		property portal.acceptance = "true";
+
+		task ("Add user with apostrophe in first and last name") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "user'fn",
+				userLastName = "user'ln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add segment and check the user Belongs To the segment") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "Last Name");
+
+			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+			Segmentation.fillProperty(propertyField = "user'ln");
+
+			Segmentation.fillTitle(titleField = "CheckSegmentationWithApostropheValueFilter Test");
+
+			Segmentation.viewMembers(memberName = "user'fn user'ln");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	@description = "LPS-135495 Validate if, The title shown in the segments list shows the value for the current user language or the value for the criteria default language."
 	@priority = "3"
 	test CheckTitleLanguageInSegmentsList {

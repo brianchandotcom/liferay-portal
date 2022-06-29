@@ -17,6 +17,7 @@ import {render} from '@testing-library/react';
 import React from 'react';
 
 import CommonStylesManager from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/CommonStylesManager';
+import {FRAGMENT_CLASS_PLACEHOLDER} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/fragmentClassPlaceholder';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {useGlobalContext} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/GlobalContext';
@@ -100,11 +101,15 @@ const renderCommonStylesManager = ({
 						[ITEM_ID]: {
 							config: {
 								[VIEWPORT_SIZES.tablet]: {
+									customCSS: `.${FRAGMENT_CLASS_PLACEHOLDER} { color: lime; }`,
+
 									styles: {
 										backgroundColor: 'primaryColor',
 										marginBottom: '2',
 									},
 								},
+
+								customCSS: `.${FRAGMENT_CLASS_PLACEHOLDER} { color: aquamarine; }`,
 
 								styles: {
 									backgroundColor: 'dangerColor',
@@ -123,11 +128,14 @@ const renderCommonStylesManager = ({
 							[MASTER_ITEM_ID]: {
 								config: {
 									[VIEWPORT_SIZES.tablet]: {
+										customCSS: `.${FRAGMENT_CLASS_PLACEHOLDER} { color: red; }`,
 										styles: {
 											backgroundColor: 'primaryColor',
 											marginBottom: '2',
 										},
 									},
+
+									customCSS: `.${FRAGMENT_CLASS_PLACEHOLDER} { color: blue; }`,
 
 									styles: {
 										backgroundColor: 'dangerColor',
@@ -155,6 +163,12 @@ describe('CommonStylesManager', () => {
 			document,
 			window,
 		});
+
+		Liferay.FeatureFlags['LPS-147511'] = true;
+	});
+
+	afterAll(() => {
+		Liferay.FeatureFlags['LPS-147511'] = false;
 	});
 
 	it('creates a style tag', () => {
@@ -193,6 +207,10 @@ describe('CommonStylesManager', () => {
 			.${getLayoutDataItemTopperUniqueClassName(ITEM_ID)} {
 				margin-bottom: var(--spacer-3, 1rem) !important;
 				margin-top: var(--spacer-2, 0.5rem) !important;
+			}
+
+			.${getLayoutDataItemUniqueClassName(ITEM_ID)} { 
+				color: aquamarine; 
 			}`;
 
 		const style = document.getElementById('layout-common-styles');
@@ -208,7 +226,12 @@ describe('CommonStylesManager', () => {
 				background-color: var(--danger) !important;
 				margin-bottom: var(--spacer-3, 1rem) !important;
 				margin-top: var(--spacer-2, 0.5rem) !important;
-			}`;
+			}
+
+			.${getLayoutDataItemUniqueClassName(ITEM_ID)} { 
+				color: blue; 
+			}
+			`;
 
 		const style = document.getElementById('layout-master-common-styles');
 
@@ -237,7 +260,12 @@ describe('CommonStylesManager', () => {
 			.${getLayoutDataItemTopperUniqueClassName(ITEM_ID)} {
 				margin-bottom: var(--spacer-2, 0.5rem) !important;
 				margin-top: var(--spacer-2, 0.5rem) !important;
-			}`;
+			}
+
+			.${getLayoutDataItemUniqueClassName(ITEM_ID)} { 
+				color: lime; 
+			}
+			`;
 
 		const style = document.getElementById('layout-common-styles');
 
@@ -268,7 +296,12 @@ describe('CommonStylesManager', () => {
 			.${getLayoutDataItemTopperUniqueClassName(ITEM_ID)} {
 				margin-bottom: var(--spacer-2, 0.5rem) !important;
 				margin-top: var(--spacer-2, 0.5rem) !important;
-			}`;
+			}
+
+			.${getLayoutDataItemUniqueClassName(ITEM_ID)} { 
+				color: lime; 
+			}
+			`;
 
 		const style = document.getElementById('layout-common-styles');
 

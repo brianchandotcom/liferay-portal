@@ -155,7 +155,10 @@ public class CompanyLogServlet extends HttpServlet {
 				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 		}
 		else {
-			throw new FileNotFoundException();
+			throw new FileNotFoundException(
+				StringBundler.concat(
+					"Unable to find log file ", fileName, " for company ",
+					companyId));
 		}
 	}
 

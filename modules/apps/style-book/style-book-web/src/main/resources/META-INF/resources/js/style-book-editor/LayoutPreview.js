@@ -26,7 +26,7 @@ import {
 import {useFrontendTokensValues} from './StyleBookContext';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 
-export default function LayoutPreview() {
+export default React.memo(function LayoutPreview() {
 	const frontendTokensValues = useFrontendTokensValues();
 	const loading = useLoading();
 	const previewLayout = usePreviewLayout();
@@ -107,7 +107,7 @@ export default function LayoutPreview() {
 			</div>
 		</>
 	);
-}
+});
 
 function loadOverlay(iframeRef, previewLayoutType) {
 	if (previewLayoutType === LAYOUT_TYPES.fragmentCollection) {

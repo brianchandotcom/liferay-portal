@@ -33,7 +33,7 @@ const STATUS_TO_LABEL = {
 	[DRAFT_STATUS.saving]: `${Liferay.Language.get('saving')}...`,
 };
 
-export default function Toolbar() {
+export default React.memo(function Toolbar() {
 	const previewLayout = usePreviewLayout();
 
 	return (
@@ -75,7 +75,7 @@ export default function Toolbar() {
 			</ClayLayout.ContainerFluid>
 		</div>
 	);
-}
+});
 
 function DraftStatus() {
 	const draftStatus = useDraftStatus();

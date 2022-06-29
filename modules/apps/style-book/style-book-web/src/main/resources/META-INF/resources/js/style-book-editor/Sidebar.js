@@ -21,9 +21,33 @@ import FrontendTokenSet from './FrontendTokenSet';
 import {useFrontendTokensValues} from './StyleBookContext';
 import {config} from './config';
 
-export default function Sidebar() {
-	const frontendTokensValues = useFrontendTokensValues();
+export default React.memo(function Sidebar() {
 	const sidebarRef = useRef();
+
+	return (
+		<div className="style-book-editor__sidebar" ref={sidebarRef}>
+			<div className="style-book-editor__sidebar-content">
+				<ThemeInformation />
+
+				{config.frontendTokenDefinition.frontendTokenCategories ? (
+					<>
+						<FrontendTokenCategories />
+						<UpdateStyle sidebarRef={sidebarRef} />
+					</>
+				) : (
+					<ClayAlert className="m-3" displayType="info">
+						{Liferay.Language.get(
+							'this-theme-does-not-include-a-token-definition'
+						)}
+					</ClayAlert>
+				)}
+			</div>
+		</div>
+	);
+});
+
+function UpdateStyle({sidebarRef}) {
+	const frontendTokensValues = useFrontendTokensValues();
 
 	useEffect(() => {
 		if (sidebarRef.current) {
@@ -38,25 +62,9 @@ export default function Sidebar() {
 				}
 			);
 		}
-	}, [frontendTokensValues]);
+	}, [frontendTokensValues, sidebarRef]);
 
-	return (
-		<div className="style-book-editor__sidebar" ref={sidebarRef}>
-			<div className="style-book-editor__sidebar-content">
-				<ThemeInformation />
-
-				{config.frontendTokenDefinition.frontendTokenCategories ? (
-					<FrontendTokenCategories />
-				) : (
-					<ClayAlert className="m-3" displayType="info">
-						{Liferay.Language.get(
-							'this-theme-does-not-include-a-token-definition'
-						)}
-					</ClayAlert>
-				)}
-			</div>
-		</div>
-	);
+	return null;
 }
 
 function ThemeInformation() {

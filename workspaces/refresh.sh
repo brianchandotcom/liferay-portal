@@ -41,6 +41,10 @@ function refresh_sample_default_workspace {
 
 	echo -e "\nliferay.workspace.docker.image.liferay=liferay/dxp:7.4.13.nightly-d4.1.4-20220628211901" >> gradle.properties
 
+	sed -i'.bak' 's/4.0.0/4.0.1/g' settings.gradle
+
+	rm settings.gradle.bak
+
 	touch modules/.touch
 	touch themes/.touch
 
@@ -55,6 +59,7 @@ function refresh_sample_minimal_workspace {
 	cp sample-default-workspace/.gitignore sample-minimal-workspace
 	cp sample-default-workspace/gradle.properties sample-minimal-workspace
 	cp sample-default-workspace/gradlew sample-minimal-workspace
+	cp sample-default-workspace/settings.gradle sample-minimal-workspace
 
 	cp -R sample-default-workspace/gradle sample-minimal-workspace
 }

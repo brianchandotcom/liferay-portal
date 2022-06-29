@@ -61,6 +61,8 @@ return (element.offsetWidth < element.scrollWidth).toString();
 
 		echo("${message}");
 
+		takeScreenshot();
+
 		fail("${message}");
 	}
 

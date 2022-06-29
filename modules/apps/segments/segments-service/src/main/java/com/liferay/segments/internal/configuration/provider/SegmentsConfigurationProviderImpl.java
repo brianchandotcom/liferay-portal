@@ -66,9 +66,18 @@ public class SegmentsConfigurationProviderImpl
 			_portal.getUser(httpServletRequest));
 
 		if (permissionChecker.isCompanyAdmin()) {
-			String configurationPid =
+			Configuration configuration = _getSegmentsCompanyConfiguration(
+				_portal.getCompanyId(httpServletRequest));
+
+			String factoryPid =
 				"com.liferay.segments.configuration." +
 					"SegmentsCompanyConfiguration";
+
+			String pid = factoryPid;
+
+			if (configuration != null) {
+				pid = configuration.getPid();
+			}
 
 			return PortletURLBuilder.create(
 				_portal.getControlPanelPortletURL(
@@ -80,9 +89,9 @@ public class SegmentsConfigurationProviderImpl
 			).setRedirect(
 				_portal.getCurrentCompleteURL(httpServletRequest)
 			).setParameter(
-				"factoryPid", configurationPid
+				"factoryPid", factoryPid
 			).setParameter(
-				"pid", configurationPid
+				"pid", pid
 			).buildString();
 		}
 

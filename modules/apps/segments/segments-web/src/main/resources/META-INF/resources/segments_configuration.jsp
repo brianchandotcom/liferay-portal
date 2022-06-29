@@ -58,8 +58,30 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 	</h2>
 
 	<aui:form action="<%= segmentsCompanyConfigurationDisplayContext.getBindConfigurationActionURL() %>" cssClass="mt-3" method="post" name="fm">
+		<c:if test="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>">
+			<clay:alert
+				cssClass="c-mb-4"
+				displayType="warning"
+			>
+				<strong class="lead"><%= LanguageUtil.get(request, "segmentation-is-disabled-in-system-settings") %></strong>
+
+				<p class="c-mb-0"><liferay-ui:message key="contact-your-system-administrator-to-enable-it" /></p>
+			</clay:alert>
+		</c:if>
+
+		<c:if test="<%= !segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() %>">
+			<clay:alert
+				cssClass="c-mb-4"
+				displayType="warning"
+			>
+				<strong class="lead"><%= LanguageUtil.get(request, "assign-roles-by-segment-is-disabled-in-system-settings") %></strong>
+
+				<p class="c-mb-0"><liferay-ui:message key="contact-your-system-administrator-to-enable-it" /></p>
+			</clay:alert>
+		</c:if>
+
 		<c:if test="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentsCompanyConfigurationDefined() %>">
-			<aui:alert closeable="<%= false %>" id="errorAlert" type="info">
+			<aui:alert closeable="<%= false %>" cssClass="c-mb-4" id="errorAlert" type="info">
 				<liferay-ui:message key="this-configuration-is-not-saved-yet.-the-values-shown-are-the-default" />
 			</aui:alert>
 		</c:if>

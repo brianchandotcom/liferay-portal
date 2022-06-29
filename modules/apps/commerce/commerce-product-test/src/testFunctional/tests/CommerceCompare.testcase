@@ -286,32 +286,27 @@ definition {
 
 	}
 
-	@description = "COMMERCE-5919. As a buyer, when comparing items in Compare page, I want to view product options and specifications, if set"
+	@description = "COMMERCE-5919. Verify buyers can view product options and specifications, if set, when comparing items in the Compare page."
 	@priority = "3"
 	test ViewProductOptionsAndSpecificationsWhenComparingItemsInComparePage {
 		property portal.acceptance = "false";
 
 		// TODO Review
 
-		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+		task ("When the buyer selects multiple products for comparison and clicks compare") {
+			User.logoutPG();
 
-		Check.checkToggleSwitch(
-			key_productName = "ABS Sensor",
-			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
 
-		Check.checkToggleSwitch(
-			key_productName = "Brake Fluid",
-			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+			FrontStore.compareProducts(products = "U-Joint,Transmission Fluid");
+		}
 
-		Button.click(button = "Compare");
-
-		AssertElementPresent(
-			key_productName = "ABS Sensor",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
-
-		AssertElementPresent(
-			key_productName = "Brake Fluid",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		task ("Then the options and specifications for all selected products are shown in the Product Comparison Table widget") {
+			FrontStore.assertProductComparisonTable(products = "U-Joint,Transmission Fluid");
+		}
 	}
 
 }

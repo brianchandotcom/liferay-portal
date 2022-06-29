@@ -358,6 +358,59 @@ definition {
 		return "${productsCount}";
 	}
 
+	macro _getCommerceProductSpecifications {
+		Variables.assertDefined(parameterList = "${productName}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var productId = CommerceJSONProductsAPI._getProductId(productName = "${productName}");
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productSpecifications \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		var productSpecifications = JSONCurlUtil.get("${curl}", "$..['value'].['en_US']");
+		var productSpecificationLabels = JSONCurlUtil.get("${curl}", "$..['specificationKey']");
+		var count = StringUtil.count("${productSpecifications}", ",");
+		var specificationLabelsCount = StringUtil.count("${productSpecificationLabels}", ",");
+
+		var commaInSpecification = MathUtil.isGreaterThan("${count}", "${specificationLabelsCount}");
+
+		while (("${commaInSpecification}" == "true")) {
+			var productSpecifications = StringUtil.replaceFirst("${productSpecifications}", ",", "&comma;");
+			var count = ${count} - 1;
+
+			var commaInSpecification = MathUtil.isGreaterThan("${count}", "${specificationLabelsCount}");
+		}
+
+		for (var productSpecification : list "${productSpecifications}") {
+			if ("${count}" != "0") {
+				var productSpecificationLabel = StringUtil.extractFirst("${productSpecificationLabels}", ",");
+
+				var productSpecificationLabels = StringUtil.replaceFirst("${productSpecificationLabels}", "${productSpecificationLabel},", "");
+				var productSpecificationLabel = StringUtil.upperCaseFirstLetter("${productSpecificationLabel}");
+
+				var productSpecifications = StringUtil.replaceFirst("${productSpecifications}", "${productSpecification}", "${productSpecificationLabel}:${productSpecification}");
+				var count = ${count} - 1;
+			}
+			else {
+				var productSpecificationLabels = StringUtil.upperCaseFirstLetter("${productSpecificationLabels}");
+
+				var productSpecifications = StringUtil.replaceFirst("${productSpecifications}", "${productSpecification}", "${productSpecificationLabels}:${productSpecification}");
+			}
+		}
+
+		return "${productSpecifications}";
+
+		echo("${productName} Specifications:${productSpecifications}");
+	}
+
 	macro _getCPDefinitionId {
 		Variables.assertDefined(parameterList = "${productName}");
 

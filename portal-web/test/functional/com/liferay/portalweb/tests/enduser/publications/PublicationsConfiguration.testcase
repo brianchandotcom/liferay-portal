@@ -44,6 +44,56 @@ definition {
 	}
 
 	@priority = "5"
+	test EnableDisablePublicationsAndSandboxViaInstanceSettings {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Publications User",
+			userEmailAddress = "userea@liferay.com");
+
+		Publications.enablePublications(
+			enableSandboxOnly = "true",
+			gotoInstancesettings = "true");
+
+		Publications.createNewPublication(publicationName = "Publication Name");
+
+		SignOut.signOut();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		var sandboxedPublicationName1 = Publications.getSandboxedPublicationName(userScreenName = "usersn");
+
+		Publications.viewSandboxedPublication(
+			sandboxedPublicationName = "${sandboxedPublicationName1}",
+			sandboxedUser = "true");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test");
+
+		Publications.disablePublications(gotoInstancesettings = "true");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "Enabled");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "Sandbox Enabled");
+
+		AssertElementNotPresent(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
+	}
+
+	@priority = "5"
 	test EnableDisablePublicationsViaPublicationsAdmin {
 		property portal.acceptance = "true";
 

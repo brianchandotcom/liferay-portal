@@ -15,17 +15,18 @@
 package com.liferay.poshi.core.util;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class MathUtil {
 
-	public static int difference(Integer value1, Integer value2) {
+	public static Long difference(Long value1, Long value2) {
 		return value1 - value2;
 	}
 
-	public static boolean isGreaterThan(Integer value1, Integer value2) {
+	public static boolean isGreaterThan(Long value1, Long value2) {
 		if (value1 > value2) {
 			return true;
 		}
@@ -34,7 +35,7 @@ public class MathUtil {
 	}
 
 	public static boolean isGreaterThanOrEqualTo(
-		Integer value1, Integer value2) {
+		Long value1, Long value2) {
 
 		if (value1 >= value2) {
 			return true;
@@ -43,7 +44,7 @@ public class MathUtil {
 		return false;
 	}
 
-	public static boolean isLessThan(Integer value1, Integer value2) {
+	public static boolean isLessThan(Long value1, Long value2) {
 		if (value1 < value2) {
 			return true;
 		}
@@ -51,7 +52,7 @@ public class MathUtil {
 		return false;
 	}
 
-	public static boolean isLessThanOrEqualTo(Integer value1, Integer value2) {
+	public static boolean isLessThanOrEqualTo(Long value1, Long value2) {
 		if (value1 <= value2) {
 			return true;
 		}
@@ -59,19 +60,19 @@ public class MathUtil {
 		return false;
 	}
 
-	public static int percent(Integer percent, Integer value) {
-		return quotient(product(percent, value), 100, true);
+	public static Long percent(Long percent, Long value) {
+		return quotient(product(percent, value), 100L, true);
 	}
 
-	public static int product(Integer value1, Integer value2) {
+	public static Long product(Long value1, Long value2) {
 		return value1 * value2;
 	}
 
-	public static int quotient(Integer value1, Integer value2) {
+	public static Long quotient(Long value1, Long value2) {
 		return value1 / value2;
 	}
 
-	public static int quotient(Integer value1, Integer value2, boolean ceil) {
+	public static Long quotient(Long value1, Long value2, boolean ceil) {
 		if (ceil) {
 			return (value1 + value2 - 1) / value2;
 		}
@@ -79,13 +80,12 @@ public class MathUtil {
 		return quotient(value1, value2);
 	}
 
-	public static int randomNumber(Integer maxValue) {
-		Random random = new Random(System.nanoTime());
-
-		return random.nextInt(maxValue) + 1;
+	public static Long randomNumber(Long maxValue) {
+		ThreadLocalRandom current = ThreadLocalRandom.current();
+		return current.nextLong(maxValue) + 1;
 	}
 
-	public static int sum(Integer value1, Integer value2) {
+	public static Long sum(Long value1, Long value2) {
 		return value1 + value2;
 	}
 

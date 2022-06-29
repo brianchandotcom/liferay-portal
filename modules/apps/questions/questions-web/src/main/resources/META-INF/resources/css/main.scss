@@ -24,6 +24,11 @@
 	}
 }
 
+.question-tags-ellipsis {
+	max-width: 250px;
+	text-overflow: ellipsis;
+}
+
 .questions-title {
 	&:after {
 		background-color: $light-l1;

@@ -67,7 +67,7 @@ export default function TagsLayout({
 										<div className="autofit-col autofit-col-expand">
 											<div className="autofit-section">
 												<div className="card-title">
-													<span className="text-truncate">
+													<span className="question-tags-ellipsis text-truncate">
 														{tag.name}
 													</span>
 												</div>

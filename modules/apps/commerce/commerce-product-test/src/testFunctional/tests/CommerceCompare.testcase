@@ -153,66 +153,47 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-5914. As a buyer, I want to deselect a item in Product Details for compare in Product Widget"
+	@description = "COMMERCE-5914. Verify buyers can deselect items that are being compared from the product's details page."
 	@priority = "3"
 	test RemoveComparisonItemFromProductDetailsPage {
 		property portal.acceptance = "true";
 
-		CommerceProducts.openProductsAdmin();
+		task ("Given multiple products are selected for comparison") {
+			User.logoutPG();
 
-		CommerceNavigator.searchEntry(entryName = "U-Joint");
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
 
-		CommerceNavigator.gotoEntry(entryName = "U-Joint");
+			FrontStore.compareProducts(
+				clickCompare = "false",
+				products = "U-Joint,Transmission Fluid");
+		}
 
-		CommerceEntry.gotoMenuTab(menuTab = "Media");
+		task ("And given the buyer goes to one of the product's details page") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Transmission Fluid");
+		}
 
-		CommerceNavigator.gotoEntry(entryName = "Minium_ProductImage_64.png");
+		task ("When the buyer clicks on the comparison checkbox") {
+			var transmissionFluidImageId = CommerceJSONProductsAPI._getCommerceProductImageIds(productName = "Transmission Fluid");
 
-		var firstProductFileEntryId = CommerceProductImages.getProductMediaId();
+			Click.clickAtNotVisible(
+				checkboxName = "Compare",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
 
-		Click(locator1 = "Icon#BACK");
+		task ("Then that product is removed from the comparison") {
+			AssertElementNotPresent(
+				key_productMediaId = "${transmissionFluidImageId}",
+				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
 
-		CommerceNavigator.searchEntry(entryName = "Transmission Fluid");
+			Button.click(button = "Compare");
 
-		CommerceNavigator.gotoEntry(entryName = "Transmission Fluid");
-
-		CommerceEntry.gotoMenuTab(menuTab = "Media");
-
-		CommerceNavigator.gotoEntry(entryName = "Minium_ProductImage_103.png");
-
-		var secondProductFileEntryId = CommerceProductImages.getProductMediaId();
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		Click.clickAtNotVisible(
-			key_productName = "U-Joint",
-			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
-
-		Click.clickAtNotVisible(
-			key_productName = "Transmission Fluid",
-			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
-
-		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
-
-		AssertElementPresent(
-			key_productMediaId = "${firstProductFileEntryId}",
-			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
-
-		AssertElementPresent(
-			key_productMediaId = "${secondProductFileEntryId}",
-			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
-
-		AssertChecked.assertCheckedNotVisible(
-			checkboxName = "Compare",
-			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
-
-		Click.clickAtNotVisible(
-			checkboxName = "Compare",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		AssertElementNotPresent(
-			key_productMediaId = "${firstProductFileEntryId}",
-			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
+			AssertElementNotPresent(
+				key_productName = "transmission-fluid",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
 	}
 
 	@description = "COMMERCE-6662. I want to be able to use ADT to render Commerce Comparison Bar widget and I want to be able to select a Display Template and see it applied to the widget"

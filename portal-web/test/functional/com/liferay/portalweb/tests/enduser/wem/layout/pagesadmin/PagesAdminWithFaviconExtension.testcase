@@ -247,6 +247,76 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153654. The site designer could apply a different favicon extension to an inheritor page from page template."
+	@priority = "4"
+	test OverwriteInheritedFavionExtensionFromPageTemplate {
+		task ("Given a site designer has a content page with inherited favicon extension from content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Page Template Name",
+				pageTemplateType = "Content Page Template");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.publish();
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				collectionName = "Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Page Template Name");
+		}
+
+		task ("When the site designer accesses to the Look and Feel settings of content page") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the site designer could apply a new favicon extension") {
+			PagesAdmin.selectFaviconExtension(extensionName = "NBA Favicon");
+
+			AssertTextEquals(
+				faviconName = "NBA Favicon",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "NBA Favicon");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementPresent(
+				imageFileName = "https://www.nba.com/favicon.ico",
+				locator1 = "Icon#FAVICON");
+		}
+	}
+
 	@description = "This is a test for LPS-153654. Page should inherit the favicon extension from page template."
 	@priority = "4"
 	test ViewInheritedFavionExtensionFromPageTemplate {

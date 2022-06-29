@@ -19,7 +19,9 @@ import java.util.Set;
 
 /**
  * @author Javier de Arcos
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.portal.vulcan.extension.ExtensionProvider}
  */
+@Deprecated
 public interface ExtensionContext {
 
 	public Map<String, Object> getExtendedProperties(Object object);

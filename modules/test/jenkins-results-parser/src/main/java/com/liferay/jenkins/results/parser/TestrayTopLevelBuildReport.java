@@ -15,56 +15,16 @@
 package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.testray.TestrayBuild;
-import com.liferay.jenkins.results.parser.testray.TestrayS3Object;
 
 import java.io.File;
 import java.io.IOException;
 
 import java.net.URL;
 
-import org.json.JSONObject;
-
 /**
  * @author Michael Hashimoto
  */
 public class TestrayTopLevelBuildReport extends URLTopLevelBuildReport {
-
-	@Override
-	public JSONObject getBuildReportJSONObject() {
-		if (buildReportJSONObject != null) {
-			return buildReportJSONObject;
-		}
-
-		buildReportJSONObject = getJSONObjectFromURL(
-			getBuildReportJSONTestrayURL());
-
-		if (buildReportJSONObject == null) {
-			TestrayS3Object buildReportTestrayS3Object =
-				getBuildReportTestrayS3Object();
-
-			if (buildReportTestrayS3Object != null) {
-				buildReportJSONObject = new JSONObject(
-					buildReportTestrayS3Object.getValue());
-			}
-		}
-
-		if (buildReportJSONObject == null) {
-			buildReportJSONObject = getBuildReportJSONObject(
-				getJSONObjectFromURL(getBuildResultJSONTestrayURL()));
-		}
-
-		if (buildReportJSONObject == null) {
-			TestrayS3Object buildResultTestrayS3Object =
-				getBuildResultTestrayS3Object();
-
-			if (buildResultTestrayS3Object != null) {
-				buildReportJSONObject = getBuildReportJSONObject(
-					new JSONObject(buildResultTestrayS3Object.getValue()));
-			}
-		}
-
-		return buildReportJSONObject;
-	}
 
 	protected TestrayTopLevelBuildReport(TestrayBuild testrayBuild) {
 		super(testrayBuild.getTopLevelBuildURL());

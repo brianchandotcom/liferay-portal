@@ -117,8 +117,8 @@ public class RenderLayoutStructureDisplayContext {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append(PortalUtil.getPortalURL(_httpServletRequest));
-		sb.append(PortalUtil.getPathContext());
-		sb.append("/c/portal/add_info_item");
+		sb.append(_themeDisplay.getPathMain());
+		sb.append("/portal/add_info_item");
 
 		return sb.toString();
 	}

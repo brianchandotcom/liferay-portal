@@ -44,7 +44,7 @@ definition {
 	}
 
 	@priority = "5"
-	test EnableDisablePublications {
+	test EnableDisablePublicationsViaPublicationsAdmin {
 		property portal.acceptance = "true";
 
 		JSONGroup.addGroup(groupName = "Site Name");

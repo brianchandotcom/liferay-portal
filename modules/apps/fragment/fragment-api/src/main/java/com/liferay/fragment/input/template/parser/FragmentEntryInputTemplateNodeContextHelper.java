@@ -180,8 +180,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			minValueOptional.ifPresent(
 				minValue -> inputTemplateNode.addAttribute("min", minValue));
 		}
-
-		if (infoField.getInfoFieldType() instanceof SelectInfoFieldType) {
+		else if (infoField.getInfoFieldType() instanceof SelectInfoFieldType) {
 			Optional<List<SelectInfoFieldType.Option>> optionsOptional =
 				infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS);
 

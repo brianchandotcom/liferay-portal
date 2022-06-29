@@ -25,7 +25,8 @@ public class PropertiesDefinitionKeysCheck extends BaseDefinitionKeysCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("/liferay-plugin-package.properties") ||
+		if (fileName.endsWith("/gradle.properties") ||
+			fileName.endsWith("/liferay-plugin-package.properties") ||
 			fileName.endsWith("/TLiferayBatchFileProperties.properties")) {
 
 			content = sortDefinitionKeys(

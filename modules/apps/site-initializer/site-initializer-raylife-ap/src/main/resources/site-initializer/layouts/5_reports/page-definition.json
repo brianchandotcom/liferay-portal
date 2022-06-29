@@ -91,7 +91,9 @@
 											],
 											"indexed": true,
 											"layout": {
+												"align": "Center",
 												"borderWidth": 0,
+												"contentDisplay": "FlexColumn",
 												"marginBottom": 0,
 												"marginLeft": 0,
 												"marginRight": 0,
@@ -100,7 +102,7 @@
 												"paddingLeft": 0,
 												"paddingRight": 0,
 												"paddingTop": 2,
-												"widthType": "Fixed"
+												"widthType": "Fluid"
 											}
 										},
 										"pageElements": [
@@ -108,7 +110,9 @@
 												"definition": {
 													"fragmentStyle": {
 														"marginBottom": "4",
-														"textAlign": ""
+														"maxWidth": "1500px",
+														"textAlign": "",
+														"width": "100%"
 													},
 													"fragmentViewports": [
 														{
@@ -1112,67 +1116,6 @@
 													}
 												],
 												"type": "Row"
-											},
-											{
-												"definition": {
-													"fragmentStyle": {
-														"borderWidth": "0",
-														"marginTop": "4",
-														"textAlign": ""
-													},
-													"indexed": true,
-													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 2,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragment": {
-																"key": "section"
-															},
-															"fragmentConfig": {
-																"sectionId": "primary"
-															},
-															"fragmentFields": [
-															],
-															"indexed": true
-														},
-														"pageElements": [
-															{
-																"pageElements": [
-																	{
-																		"definition": {
-																			"fragment": {
-																				"key": "fake-content"
-																			},
-																			"fragmentConfig": {
-																				"fakeContentId": "fake content",
-																				"height": "503px"
-																			},
-																			"fragmentFields": [
-																			],
-																			"indexed": true
-																		},
-																		"type": "Fragment"
-																	}
-																],
-																"type": "FragmentDropZone"
-															}
-														],
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
 											}
 										],
 										"type": "Section"

@@ -1,11 +1,11 @@
-.tab-container {
-	height: 100vh;
-}
-
 .tab-container .container-fluid {
 	background-color: var(--white);
 	border-top: 1px solid #d4d4d6;
 	box-shadow: 0px 5px 15px rgba(77, 133, 255, 0.12);
+}
+
+.tab-container .nav-container {
+	max-width: 1500px;
 }
 
 .tab-container .nav-item:not(:last-child) {

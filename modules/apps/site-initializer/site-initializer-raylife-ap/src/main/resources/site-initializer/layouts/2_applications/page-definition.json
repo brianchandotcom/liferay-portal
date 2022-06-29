@@ -167,7 +167,9 @@
 															},
 															"indexed": true,
 															"layout": {
+																"align": "Center",
 																"borderWidth": 0,
+																"contentDisplay": "FlexColumn",
 																"marginBottom": 0,
 																"marginLeft": 0,
 																"marginRight": 0,
@@ -184,7 +186,9 @@
 																"definition": {
 																	"fragmentStyle": {
 																		"marginBottom": "4",
-																		"textAlign": ""
+																		"maxWidth": "1500px",
+																		"textAlign": "",
+																		"width": "100%"
 																	},
 																	"gutters": true,
 																	"indexed": true,
@@ -477,7 +481,10 @@
 															{
 																"definition": {
 																	"fragmentStyle": {
-																		"borderWidth": "0"
+																		"borderWidth": "0",
+																		"maxWidth": "1500px",
+																		"textAlign": "",
+																		"width": "100%"
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -551,7 +558,9 @@
 															},
 															"indexed": true,
 															"layout": {
+																"align": "Center",
 																"borderWidth": 0,
+																"contentDisplay": "FlexColumn",
 																"marginBottom": 0,
 																"marginLeft": 0,
 																"marginRight": 0,
@@ -568,7 +577,9 @@
 																"definition": {
 																	"fragmentStyle": {
 																		"marginBottom": "4",
-																		"textAlign": ""
+																		"maxWidth": "1500px",
+																		"textAlign": "",
+																		"width": "100%"
 																	},
 																	"gutters": true,
 																	"indexed": true,
@@ -864,7 +875,10 @@
 															{
 																"definition": {
 																	"fragmentStyle": {
-																		"borderWidth": "0"
+																		"borderWidth": "0",
+																		"maxWidth": "1500px",
+																		"textAlign": "",
+																		"width": "100%"
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -938,7 +952,9 @@
 															},
 															"indexed": true,
 															"layout": {
+																"align": "Center",
 																"borderWidth": 0,
+																"contentDisplay": "FlexColumn",
 																"marginBottom": 0,
 																"marginLeft": 0,
 																"marginRight": 0,
@@ -955,7 +971,9 @@
 																"definition": {
 																	"fragmentStyle": {
 																		"marginBottom": "4",
-																		"textAlign": ""
+																		"maxWidth": "1500px",
+																		"textAlign": "",
+																		"width": "100%"
 																	},
 																	"gutters": true,
 																	"indexed": true,
@@ -1251,7 +1269,10 @@
 															{
 																"definition": {
 																	"fragmentStyle": {
-																		"borderWidth": "0"
+																		"borderWidth": "0",
+																		"maxWidth": "1500px",
+																		"textAlign": "",
+																		"width": "100%"
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -1325,7 +1346,9 @@
 															},
 															"indexed": true,
 															"layout": {
+																"align": "Center",
 																"borderWidth": 0,
+																"contentDisplay": "FlexColumn",
 																"marginBottom": 0,
 																"marginLeft": 0,
 																"marginRight": 0,
@@ -1342,7 +1365,9 @@
 																"definition": {
 																	"fragmentStyle": {
 																		"marginBottom": "4",
-																		"textAlign": ""
+																		"maxWidth": "1500px",
+																		"textAlign": "",
+																		"width": "100%"
 																	},
 																	"gutters": true,
 																	"indexed": true,
@@ -1638,7 +1663,10 @@
 															{
 																"definition": {
 																	"fragmentStyle": {
-																		"borderWidth": "0"
+																		"borderWidth": "0",
+																		"maxWidth": "1500px",
+																		"textAlign": "",
+																		"width": "100%"
 																	},
 																	"indexed": true,
 																	"layout": {

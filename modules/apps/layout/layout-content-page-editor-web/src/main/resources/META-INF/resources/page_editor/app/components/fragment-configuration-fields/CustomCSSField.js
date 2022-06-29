@@ -61,6 +61,7 @@ export default function CustomCSSField({field, onValueSelect, value}) {
 						onClick={() => setEditorModalOpen(true)}
 						small
 						symbol="expand"
+						title={Liferay.Language.get('expand')}
 					/>
 				</div>
 
@@ -146,7 +147,7 @@ function CustomCSSEditorModal({
 		visible && (
 			<ClayModal observer={observer} size="full-screen">
 				<ClayModal.Header>
-					{Liferay.Language.get('edit-content')}
+					{Liferay.Language.get('custom-css')}
 				</ClayModal.Header>
 
 				<ClayModal.Body>

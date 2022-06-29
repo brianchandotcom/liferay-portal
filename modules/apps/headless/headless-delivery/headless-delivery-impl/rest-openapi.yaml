@@ -3233,18 +3233,6 @@ components:
                     items:
                         $ref: "#/components/schemas/CollectionViewport"
                     type: array
-                cssClasses:
-                    # @review
-                    description:
-                        A list of CSS Classes that are applied to the element.
-                    items:
-                        type: string
-                    type: array
-                customCSS:
-                    # @review
-                    description:
-                        Custom CSS that is applied on the fragment.
-                    type: string
                 displayAllItems:
                     # @review
                     description:

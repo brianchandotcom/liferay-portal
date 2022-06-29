@@ -137,14 +137,41 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-5916. As a buyer, I want to see max number of compare items allowed in MiniCompare widget"
-	@ignore = "true"
+	@description = "COMMERCE-5916. Verify buyers can only add the max number of comparison items allowed in the MiniCompare widget."
 	@priority = "3"
 	test EditMaxNumberOfComparisonItemsInMiniCompare {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5916 EditMaxNumberOfComparisonItemsInMiniCompare pending implementation
+		task ("Given the admin changes the Products Limit in the MiniCompare widget to 3") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium");
 
+			WaitForPageLoad();
+
+			FrontStore.setMaxComparisonItems(maxItems = "3");
+		}
+
+		task ("When buyer select 3 products for comparison") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.compareProducts(
+				clickCompare = "false",
+				products = "U-Joint,Transmission Fluid,Torque Converters");
+		}
+
+		task ("Then the buyer cannot add a fourth product to the comparison") {
+			AssertElementPresent(
+				key_productName = "Mount",
+				locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX_DISABLED");
+
+			AssertElementNotPresent(
+				key_value = "4",
+				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_N");
+		}
 	}
 
 	@description = "COMMERCE-5918. As a buyer, I want to deselect a item in Product Compare page"

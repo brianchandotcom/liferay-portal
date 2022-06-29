@@ -439,10 +439,10 @@ public class RenderLayoutStructureDisplayContext {
 			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
 
 		if (successMessageJSONObject == null) {
-			return null;
+			return StringPool.BLANK;
 		}
 
-		String redirect = null;
+		String redirect = StringPool.BLANK;
 
 		if (successMessageJSONObject.has("url")) {
 			redirect = _getFormStyledLayoutStructureItemURLRedirect(
@@ -917,7 +917,7 @@ public class RenderLayoutStructureDisplayContext {
 			"layout");
 
 		if (layoutJSONObject == null) {
-			return null;
+			return StringPool.BLANK;
 		}
 
 		String layoutUuid = layoutJSONObject.getString("layoutUuid");
@@ -931,7 +931,7 @@ public class RenderLayoutStructureDisplayContext {
 			return PortalUtil.getLayoutURL(layout, _themeDisplay);
 		}
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	private String _getFormStyledLayoutStructureItemURLRedirect(
@@ -942,7 +942,7 @@ public class RenderLayoutStructureDisplayContext {
 			"url");
 
 		if (urlJSONObject == null) {
-			return null;
+			return StringPool.BLANK;
 		}
 
 		String redirect = urlJSONObject.getString(

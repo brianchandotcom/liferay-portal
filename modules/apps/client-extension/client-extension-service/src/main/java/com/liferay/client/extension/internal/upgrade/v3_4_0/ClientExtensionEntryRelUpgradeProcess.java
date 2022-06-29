@@ -23,10 +23,8 @@ public class ClientExtensionEntryRelUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("ClientExtensionEntryRel", "typeSettings")) {
-			alterTableAddColumn(
-				"ClientExtensionEntryRel", "typeSettings", "TEXT null");
-		}
+		alterTableAddColumn(
+			"ClientExtensionEntryRel", "typeSettings", "TEXT null");
 	}
 
 }

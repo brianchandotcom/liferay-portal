@@ -16,132 +16,109 @@ import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import ImageRenderer from '../../data_renderers/ImageRenderer';
 
-function List({
-	dataLoading,
-	frontendDataSetContext,
-	items,
-	schema: {description, image, sticker, symbol, title},
-}) {
+const List = ({items, schema}) => {
+	const {selectedItemsKey} = useContext(FrontendDataSetContext);
+
+	return items?.length ? (
+		<ClayList>
+			{items.map((item, index) => {
+				return (
+					<ListItem
+						item={item}
+						key={item[selectedItemsKey] || index}
+						schema={schema}
+					/>
+				);
+			})}
+		</ClayList>
+	) : (
+		<ClayEmptyState
+			description={Liferay.Language.get('sorry,-no-results-were-found')}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+			title={Liferay.Language.get('no-results-found')}
+		/>
+	);
+};
+
+const ListItem = ({item, schema}) => {
 	const {
-		itemActions,
+		itemsActions,
 		selectItems,
 		selectedItemsKey,
 		selectedItemsValue,
 		selectionType,
-	} = useContext(frontendDataSetContext);
+	} = useContext(FrontendDataSetContext);
 
-	if (dataLoading) {
-		return <ClayLoadingIndicator className="mt-7" />;
-	}
-
-	if (!items?.length) {
-		return (
-			<ClayEmptyState
-				description={Liferay.Language.get(
-					'sorry,-no-results-were-found'
-				)}
-				imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
-				title={Liferay.Language.get('no-results-found')}
-			/>
-		);
-	}
+	const {description, image, sticker, symbol, title} = schema;
 
 	return (
-		<ClayList>
-			{items.map((item, i) => (
-				<ClayList.Item
-					className={classNames(
-						i
-							? 'border-left-0 border-bottom-0 border-right-0'
-							: 'border-0'
-					)}
-					flex
-					key={item.id}
-				>
-					<ClayList.ItemField className="justify-content-center">
-						{selectionType === 'single' ? (
-							<ClayRadio
-								checked={selectedItemsValue
-									.map((element) => String(element))
-									.includes(String(item[selectedItemsKey]))}
-								onChange={() =>
-									selectItems(item[selectedItemsKey])
-								}
-							/>
-						) : (
-							<ClayCheckbox
-								checked={selectedItemsValue
-									.map((element) => String(element))
-									.includes(String(item[selectedItemsKey]))}
-								onChange={() =>
-									selectItems(item[selectedItemsKey])
-								}
-							/>
-						)}
-					</ClayList.ItemField>
+		<ClayList.Item flex>
+			<ClayList.ItemField className="justify-content-center">
+				{selectionType === 'single' ? (
+					<ClayRadio
+						checked={selectedItemsValue
+							.map((element) => String(element))
+							.includes(String(item[selectedItemsKey]))}
+						onChange={() => selectItems(item[selectedItemsKey])}
+					/>
+				) : (
+					<ClayCheckbox
+						checked={selectedItemsValue
+							.map((element) => String(element))
+							.includes(String(item[selectedItemsKey]))}
+						onChange={() => selectItems(item[selectedItemsKey])}
+					/>
+				)}
+			</ClayList.ItemField>
 
-					{image && item[image] ? (
-						<ClayList.ItemField>
-							<ImageRenderer
-								sticker={sticker && item[sticker]}
-								value={{src: item[image]}}
-							/>
-						</ClayList.ItemField>
-					) : (
-						symbol &&
-						item[symbol] && (
-							<ClayList.ItemField>
-								<ClaySticker {...(sticker && item[sticker])}>
-									{item[symbol] && (
-										<ClayIcon symbol={item[symbol]} />
-									)}
-								</ClaySticker>
-							</ClayList.ItemField>
-						)
-					)}
-
-					<ClayList.ItemField
-						className="justify-content-center"
-						expand
-					>
-						{title && (
-							<ClayList.ItemTitle>
-								{item[title]}
-							</ClayList.ItemTitle>
-						)}
-
-						{description && (
-							<ClayList.ItemText>
-								{item[description]}
-							</ClayList.ItemText>
-						)}
-					</ClayList.ItemField>
-
+			{image && item[image] ? (
+				<ClayList.ItemField>
+					<ImageRenderer
+						sticker={sticker && item[sticker]}
+						value={{src: item[image]}}
+					/>
+				</ClayList.ItemField>
+			) : (
+				symbol &&
+				item[symbol] && (
 					<ClayList.ItemField>
-						{(itemActions || item.actionDropdownItems) && (
-							<Actions
-								actions={
-									itemActions || item.actionDropdownItems
-								}
-								itemData={item}
-								itemId={item[selectedItemsKey] || i}
-							/>
-						)}
+						<ClaySticker {...(sticker && item[sticker])}>
+							{item[symbol] && <ClayIcon symbol={item[symbol]} />}
+						</ClaySticker>
 					</ClayList.ItemField>
-				</ClayList.Item>
-			))}
-		</ClayList>
+				)
+			)}
+
+			<ClayList.ItemField className="justify-content-center" expand>
+				{title && (
+					<ClayList.ItemTitle>{item[title]}</ClayList.ItemTitle>
+				)}
+
+				{description && (
+					<ClayList.ItemText>{item[description]}</ClayList.ItemText>
+				)}
+			</ClayList.ItemField>
+
+			<ClayList.ItemField>
+				{(itemsActions || item.actionDropdownItems) && (
+					<Actions
+						actions={itemsActions || item.actionDropdownItems}
+						itemData={item}
+						itemId={item[selectedItemsKey]}
+					/>
+				)}
+			</ClayList.ItemField>
+		</ClayList.Item>
 	);
-}
+};
 
 List.propTypes = {
 	context: PropTypes.any,

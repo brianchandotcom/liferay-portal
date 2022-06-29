@@ -14,43 +14,17 @@
 
 import {ClayCardWithInfo} from '@clayui/card';
 import ClayEmptyState from '@clayui/empty-state';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useContext} from 'react';
+import React, {useContext, useRef} from 'react';
 
+import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {handleAction, isLink} from '../../actions/Actions';
 
-function Cards({dataLoading, frontendDataSetContext, items, schema}) {
-	const {
-		executeAsyncItemAction,
-		highlightItems,
-		openModal,
-		openSidePanel,
-		selectItems,
-		selectable,
-		selectedItemsKey,
-		selectedItemsValue,
-		style,
-	} = useContext(frontendDataSetContext);
+const Cards = ({items, schema}) => {
+	const {selectedItemsKey, style} = useContext(FrontendDataSetContext);
 
-	if (dataLoading) {
-		return <ClayLoadingIndicator className="mt-7" />;
-	}
-
-	if (!items?.length) {
-		return (
-			<ClayEmptyState
-				description={Liferay.Language.get(
-					'sorry,-no-results-were-found'
-				)}
-				imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
-				title={Liferay.Language.get('no-results-found')}
-			/>
-		);
-	}
-
-	return (
+	return items?.length ? (
 		<div
 			className={classNames(
 				'cards-container mb-n4',
@@ -58,71 +32,92 @@ function Cards({dataLoading, frontendDataSetContext, items, schema}) {
 			)}
 		>
 			<div className="row">
-				{items.map((item) => {
+				{items.map((item, index) => {
 					return (
-						<div className="col-md-3" key={item[selectedItemsKey]}>
-							<ClayCardWithInfo
-								actions={item.actionDropdownItems.map(
-									({href, ...action}) => ({
-										...action,
-										href: isLink(
-											action.target,
-											action.onClick
-										)
-											? href
-											: null,
-										onClick: (event) => {
-											handleAction(
-												{
-													event,
-													itemId:
-														item[selectedItemsKey],
-													method: action.data?.method,
-													url: href,
-													...action,
-												},
-												{
-													executeAsyncItemAction,
-													highlightItems,
-													openModal,
-													openSidePanel,
-												}
-											);
-										},
-									})
-								)}
-								description={
-									schema.description &&
-									item[schema.description]
-								}
-								href={
-									(schema.href && item[schema.href]) || null
-								}
-								imgProps={schema.image && item[schema.image]}
-								onSelectChange={
-									selectable &&
-									(() => selectItems(item[selectedItemsKey]))
-								}
-								selected={
-									selectable &&
-									!!selectedItemsValue.find(
-										(element) =>
-											element === item[selectedItemsKey]
-									)
-								}
-								stickerProps={
-									schema.sticker && item[schema.sticker]
-								}
-								symbol={schema.symbol && item[schema.symbol]}
-								title={schema.title && item[schema.title]}
-							/>
+						<div
+							className="col-md-3"
+							key={item[selectedItemsKey] || index}
+						>
+							<Card item={item} schema={schema} />
 						</div>
 					);
 				})}
 			</div>
 		</div>
+	) : (
+		<ClayEmptyState
+			description={Liferay.Language.get('sorry,-no-results-were-found')}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+			title={Liferay.Language.get('no-results-found')}
+		/>
 	);
-}
+};
+
+const Card = ({item, schema}) => {
+	const {
+		executeAsyncItemAction,
+		highlightItems,
+		itemsActions,
+		onActionDropdownItemClick,
+		openModal,
+		openSidePanel,
+		selectItems,
+		selectable,
+		selectedItemsKey,
+		selectedItemsValue,
+	} = useContext(FrontendDataSetContext);
+
+	const actionsRef = useRef(itemsActions || item.actionDropdownItems);
+
+	return (
+		<ClayCardWithInfo
+			actions={actionsRef.current?.map((action) => ({
+				...action,
+				href: isLink(action.target, null) ? action.href : null,
+				onClick: (event) => {
+					if (onActionDropdownItemClick) {
+						onActionDropdownItemClick({
+							action,
+							event,
+							itemData: item,
+						});
+					}
+
+					handleAction(
+						{
+							event,
+							itemId: item[selectedItemsKey],
+							method: action.data?.method,
+							url: action.href,
+							...action,
+						},
+						{
+							executeAsyncItemAction,
+							highlightItems,
+							openModal,
+							openSidePanel,
+						}
+					);
+				},
+			}))}
+			description={schema.description && item[schema.description]}
+			href={(schema.href && item[schema.href]) || null}
+			imgProps={schema.image && item[schema.image]}
+			onSelectChange={
+				selectable && (() => selectItems(item[selectedItemsKey]))
+			}
+			selected={
+				selectable &&
+				!!selectedItemsValue.find(
+					(element) => element === item[selectedItemsKey]
+				)
+			}
+			stickerProps={schema.sticker && item[schema.sticker]}
+			symbol={schema.symbol && item[schema.symbol]}
+			title={schema.title && item[schema.title]}
+		/>
+	);
+};
 
 Cards.propTypes = {
 	items: PropTypes.array,

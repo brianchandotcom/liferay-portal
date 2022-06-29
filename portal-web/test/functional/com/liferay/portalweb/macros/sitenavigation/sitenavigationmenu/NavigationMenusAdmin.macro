@@ -1,11 +1,9 @@
 definition {
 
 	macro _addItemPage {
-		if (!(isSet(privacy))) {
-			var privacy = "Pages";
+		if (isSet(privacy)) {
+			Navigator.gotoNavItem(navItem = "${privacy}");
 		}
-
-		Navigator.gotoNavItem(navItem = "${privacy}");
 
 		Portlet.expandTree();
 

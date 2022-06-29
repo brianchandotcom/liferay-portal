@@ -209,7 +209,7 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 		Map<String, String> viewportCustomCSS =
 			styledLayoutStructureItem.getViewportCustomCSS();
 
-		return viewportCustomCSS.get(viewportSize);
+		return viewportCustomCSS.get(viewportSize.getViewportSizeId());
 	}
 
 	private JSONObject _getFrontendTokensJSONObject(

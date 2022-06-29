@@ -47,11 +47,9 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -285,16 +283,10 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			String formItemId, HttpServletRequest httpServletRequest)
 		throws InfoFormException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		LayoutStructure layoutStructure =
 			LayoutStructureUtil.getLayoutStructure(
-				ParamUtil.getLong(
-					httpServletRequest, "plid", themeDisplay.getPlid()),
-				ParamUtil.getLong(
-					httpServletRequest, "segmentsExperienceId"));
+				ParamUtil.getLong(httpServletRequest, "plid"),
+				ParamUtil.getLong(httpServletRequest, "segmentsExperienceId"));
 
 		if (layoutStructure == null) {
 			throw new InfoFormException();

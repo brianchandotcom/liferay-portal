@@ -1038,6 +1038,25 @@ components:
                     readOnly: true
                     type: string
             type: object
+        CustomCSSViewport:
+            # @review
+            description:
+                Represents a custom CSS viewport.
+            properties:
+                customCSS:
+                    # @review
+                    description:
+                        The definition of the custom CSS viewport.
+                    type: string
+                id:
+                    # @review
+                    description:
+                        The custom CSS viewport's ID.
+                    type: string
+            required:
+                - id
+                - customCSS
+            type: object
         CustomField:
             # @review
             description:
@@ -3457,6 +3476,13 @@ components:
                     description:
                         Custom CSS that is applied on the fragment.
                     type: string
+                customCSSViewports:
+                    # @review
+                    description:
+                        The custom CSS viewports of the page collection.
+                    items:
+                        $ref: "#/components/schemas/CustomCSSViewport"
+                    type: array
                 formConfig:
                     # @review
                     description:
@@ -3515,6 +3541,13 @@ components:
                     description:
                         Custom CSS that is applied on the fragment.
                     type: string
+                customCSSViewports:
+                    # @review
+                    description:
+                        The custom CSS viewports of the page collection.
+                    items:
+                        $ref: "#/components/schemas/CustomCSSViewport"
+                    type: array
                 fragment:
                     allOf:
                         - $ref: "#/components/schemas/Fragment"
@@ -3583,6 +3616,13 @@ components:
                     description:
                         Custom CSS that is applied on the fragment.
                     type: string
+                customCSSViewports:
+                    # @review
+                    description:
+                        The custom CSS viewports of the page collection.
+                    items:
+                        $ref: "#/components/schemas/CustomCSSViewport"
+                    type: array
                 fragmentStyle:
                     allOf:
                         - $ref: "#/components/schemas/FragmentStyle"
@@ -3709,6 +3749,13 @@ components:
                     description:
                         Custom CSS that is applied on the fragment.
                     type: string
+                customCSSViewports:
+                    # @review
+                    description:
+                        The custom CSS viewports of the page collection.
+                    items:
+                        $ref: "#/components/schemas/CustomCSSViewport"
+                    type: array
                 fragmentLink:
                     allOf:
                         - $ref: "#/components/schemas/FragmentLink"
@@ -3996,6 +4043,13 @@ components:
                     description:
                         Custom CSS that is applied on the fragment.
                     type: string
+                customCSSViewports:
+                    # @review
+                    description:
+                        The custom CSS viewports of the page collection.
+                    items:
+                        $ref: "#/components/schemas/CustomCSSViewport"
+                    type: array
                 fragmentStyle:
                     allOf:
                         - $ref: "#/components/schemas/FragmentStyle"

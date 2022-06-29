@@ -25,6 +25,7 @@ import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.selenium.LiferaySeleniumMethod;
 import com.liferay.poshi.core.util.FileUtil;
+import com.liferay.poshi.core.util.GetterUtil;
 import com.liferay.poshi.core.util.MathUtil;
 import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsUtil;
@@ -468,7 +469,7 @@ public class PoshiContext {
 	}
 
 	public static List<List<String>> getTestBatchGroups(
-			String propertyQuery, int maxGroupSize)
+			String propertyQuery, long maxGroupSize)
 		throws Exception {
 
 		if (maxGroupSize <= 0) {
@@ -513,14 +514,16 @@ public class PoshiContext {
 
 			Collections.sort(classCommandNameGroup);
 
-			int testCount = classCommandNameGroup.size();
+			long testCount = classCommandNameGroup.size();
 
-			int groupCount = MathUtil.quotient(testCount, maxGroupSize, true);
+			long groupCount = MathUtil.quotient(testCount, maxGroupSize, true);
 
-			int groupSize = MathUtil.quotient(testCount, groupCount, true);
+			long groupSize = MathUtil.quotient(testCount, groupCount, true);
+
+			int groupSizeInt = GetterUtil.getInteger(groupSize);
 
 			List<List<String>> testBatchGroups = Lists.partition(
-				classCommandNameGroup, groupSize);
+				classCommandNameGroup, groupSizeInt);
 
 			for (List<String> testBatchGroup : testBatchGroups) {
 				orderedTestBatchGroups.put(

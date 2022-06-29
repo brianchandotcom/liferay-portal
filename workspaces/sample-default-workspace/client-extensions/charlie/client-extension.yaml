@@ -1,15 +1,12 @@
 charlie-iframe-1:
-    description: ""
     name: Blueberry
     type: iframe
     url: https://en.wikipedia.org/wiki/Blueberry
 charlie-iframe-2:
-    description: ""
     name: Mango
     type: iframe
     url: https://en.wikipedia.org/wiki/Mango
 charlie-iframe-3:
-    description: ""
     name: Pomegranate
     type: iframe
     url: https://en.wikipedia.org/wiki/Pomegranate

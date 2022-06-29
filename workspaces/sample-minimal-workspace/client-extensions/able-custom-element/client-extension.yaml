@@ -1,7 +1,6 @@
 able-custom-element:
     cssURLs:
         - style.css
-    description: ""
     friendlyURLMapping: vanilla-counter
     htmlElementName: vanilla-counter
     instanceable: false

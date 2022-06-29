@@ -1,5 +1,4 @@
 able-global-css:
-    description: ""
     name: Able Global CSS
     type: globalCSS
     url: global.css

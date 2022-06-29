@@ -1,0 +1,62 @@
+definition {
+
+	macro activePartnersRole {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		CustomerPortal.viewCPObjectInfo();
+
+		Click(locator1 = "CP2TeamMembers#SELECT_PARTNER");
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro addFieldsTeamMembersExtra {
+		Type(
+			key_fieldNumber = "${position}",
+			locator1 = "CP2TeamMembers#EMAIL_FIELD",
+			value1 = "${rowEmail}");
+
+		Select(
+			key_rowNumber = "${positionNumber}",
+			locator1 = "CP2TeamMembers#ROLE_SELECT",
+			value1 = "${rowRole}");
+
+		if (isSet(addMembers)) {
+			Click(locator1 = "CP2TeamMembers#ADD_MORE_MEMBERS");
+		}
+	}
+
+	macro clickInviteMembers {
+		Click(locator1 = "CP2TeamMembers#INVITE_BUTTON");
+	}
+
+	macro clickTeamMembersSendInvitation {
+		Click(locator1 = "CP2TeamMembers#SEND_INVITATIONS_BUTTON");
+	}
+
+	macro deleteMemberInvitedViaAccounts {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Navigator.gotoNavTab(navTab = "Users");
+
+		Accounts.goToEntryMenuItem(
+			menuItem = "Remove",
+			rowEntry = "test01@liferay.com");
+
+		AssertConfirm(value1 = "Are you sure you want to remove this user?");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro viewTeamMembersPage {
+		AssertElementPresent(locator1 = "CustomerPortalSite#TEAM_MEMBERS_MAIN_PAGE");
+	}
+
+}

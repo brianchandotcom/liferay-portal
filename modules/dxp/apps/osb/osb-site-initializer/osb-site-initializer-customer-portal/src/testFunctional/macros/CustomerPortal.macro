@@ -1,0 +1,544 @@
+definition {
+
+	macro accountTableProject {
+		Click(locator1 = "CustomerPortalSite#ACCOUNTS_PROJECTS");
+	}
+
+	macro activeContactRole {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		CustomerPortal.viewCPObjectInfo();
+
+		Type(
+			locator1 = "CP2LiferayContact#CONTACT_ROLE",
+			value1 = "Quality Assurance Analyst");
+
+		Click(locator1 = "Button#SAVE");
+	}
+
+	macro addIdPCForCustomerPortal {
+		AssertClick(
+			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
+			value1 = "Add Identity Provider");
+
+		Type(
+			locator1 = "TextInput#SAML_NAME_FIELD",
+			value1 = "${idpNameId}");
+
+		Type(
+			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENTITY_ID_FIELD",
+			value1 = "${idpEntityId}");
+
+		Check(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ENABLED_CHECKBOX");
+
+		if (isSet(idpMetadataURL)) {
+			Type(
+				locator1 = "TextInput#SAML_METADATA_URL_FIELD",
+				value1 = "${idpMetadataURL}");
+		}
+
+		if (isSet(nameIdentifierFormat)) {
+			Select(
+				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
+				value1 = "${nameIdentifierFormat}");
+		}
+		else {
+			Select(
+				locator1 = "Select#SAML_NAME_IDENTIFIER_FORMAT_SELECT",
+				value1 = "Email Address");
+		}
+
+		if (isSet(idpAttributeMappingText)) {
+			SAMLPortlet.addIdentityProviderConnectionAttributeMappingWithCustomAttributes(
+				idpAttributeMapping = "${idpAttributeMapping}",
+				idpAttributeMappingText = "${idpAttributeMappingText}");
+		}
+		else if (isSet(idpAttributeMapping)) {
+			SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = "${idpAttributeMapping}");
+		}
+	}
+
+	macro assertQuickLinksPanelInfo {
+		AssertElementPresent(
+			locator1 = "CP2NavigationMenu#QUICK_LINKS",
+			title = "${title}");
+	}
+
+	macro assertQuickLinksPanelIsHidden {
+		AssertElementPresent(locator1 = "CP2NavigationMenu#QUICK_LINKS_COLLAPSED");
+	}
+
+	macro assertSlaCard {
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#SLA_CARD",
+			type = "${type}");
+	}
+
+	macro assertSlaCardNotAppears {
+		AssertElementNotPresent(
+			locator1 = "CustomerPortalSite#SLA_CARD",
+			typeCard = "${typeCard}");
+	}
+
+	macro cannotAppearsQuickLinksPanelInfo {
+		AssertElementNotPresent(
+			locator1 = "CP2NavigationMenu#QUICK_LINKS",
+			title = "${title}");
+	}
+
+	macro changeUserRole {
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Click(
+			key_accountName = "${accountName}",
+			locator1 = "CustomerPortalSite#ACCOUNT_NAME");
+
+		Navigator.gotoNavTab(navTab = "Users");
+
+		Accounts.goToEntryMenuItem(
+			menuItem = "Assign Roles",
+			rowEntry = "${accountUserName}");
+
+		SelectFrame(
+			key_title = "Assign Roles",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Check(
+			key_tableEntry = "${accountRoleTitle}",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.click(button = "Done");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro checkToggleHideWidget {
+		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
+	}
+
+	macro clickOnCancelButton {
+		Click(locator1 = "CustomerPortalSite#CANCEL_BUTTON");
+	}
+
+	macro clickOnSkipForNowButton {
+		Click(locator1 = "CustomerPortalSite#SKIP_FOR_NOW_BUTTON");
+	}
+
+	macro clickOnStartProjectSetup {
+		Click(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+	}
+
+	macro clickOnSubmitButton {
+		Click(locator1 = "CP2DXPCloudSetup#SUBMIT_BUTTON");
+	}
+
+	macro createCPSiteObjects {
+		CustomerPortal.showCPObject(title = "Account Flag");
+
+		CustomerPortal.showCPObject(title = "Koroneiki Account");
+	}
+
+	macro customerPortalApisTearDown {
+		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
+
+		CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet");
+
+		RemoteApps.deleteRemoteApp();
+	}
+
+	macro customerPortalTearDown {
+		CustomerPortal.deleteEntryAccountFlag(entry = "ERC-001");
+
+		CustomerPortal.deleteCPObject(title = "Account Flag");
+
+		CustomerPortal.deleteCPObject(title = "Koroneiki Account");
+
+		CustomerPortal.customerPortalApisTearDown();
+	}
+
+	macro deactivateKoroneikiAccount {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		CustomerPortal.viewCPObjectInfo();
+
+		Click(locator1 = "CP2TeamMembers#SELECT_PARTNER");
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro deleteCPObject {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		ObjectPortlet.selectObject(label = "${title}");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Choose an Option");
+
+		CustomerPortal.uncheckToggleHideInactiveWidget();
+
+		CreateObject.saveObject();
+	}
+
+	macro deleteEntryAccountFlag {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Account Flags");
+
+		ObjectPortlet.deleteEntry(entry = "${entry}");
+	}
+
+	macro enterOnProject {
+		if (!(isSet(status))) {
+			var status = "Active";
+		}
+
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			title = "${title}");
+	}
+
+	macro enterOnSubscription {
+		Click(
+			cardName = "Non-Production",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL_CARD");
+	}
+
+	macro loginOktaToUpdateCP {
+		var userEmailAddress = "garrettz@mbopartners.com.broken";
+		var userPassword = "q4F63ZEH3njnnA34S761";
+
+		Open.openInTheNewTab(locator1 = "https://login-dev.liferay.com/");
+
+		Type(
+			locator1 = "CustomerPortalSite#OKTA_USERNAME",
+			value1 = "${userEmailAddress}");
+
+		Type(
+			locator1 = "CustomerPortalSite#OKTA_PASSWORD",
+			value1 = "${userPassword}");
+
+		Click(locator1 = "CustomerPortalSite#OKTA_SUBMIT");
+	}
+
+	macro notViewProduct {
+		for (var product : list "${productTab}") {
+			AssertElementNotPresent(
+				key_product = "${productTab}",
+				locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
+				value = "${product}");
+		}
+	}
+
+	macro replaceCertificateAndPrivateKey {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		AssertClick(
+			key_certificateUsage = "${certificateUsage}",
+			locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE",
+			value1 = "Replace Certificate");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COMMON_NAME_FIELD",
+			value1 = "Liferay QA");
+
+		Type(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_ORGANIZATION_FIELD",
+			value1 = "Liferay");
+
+		Type(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_COUNTRY_FIELD",
+			value1 = "USA");
+
+		if ("${certificateUsage}" == "SIGNING") {
+			Select(
+				locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_ALGORITHM_SELECT",
+				value1 = "RSA");
+		}
+
+		Select(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_LENGTH_SELECT",
+			value1 = "2048");
+
+		Type(
+			locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD",
+			value1 = "${samlKeyPassword}");
+
+		AssertClick(
+			locator1 = "Button#SUBMIT",
+			value1 = "Save");
+
+		Refresh();
+
+		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent(
+			key_certificateUsage = "${certificateUsage}",
+			locator1 = "CPSAMLAdmin#DOWNLOAD_CERTIFICATE");
+
+		AssertElementPresent(
+			key_certificateUsage = "${certificateUsage}",
+			locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE");
+	}
+
+	macro selectNavigatorWindow {
+		SelectWindow(locator1 = "title=${navigatorWidow}");
+	}
+
+	macro setUpForCP20 {
+		task ("Configure SAML Admin general info") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Security",
+				panel = "Control Panel",
+				portlet = "SAML Admin");
+
+			SAMLRole.configure(
+				samlEntityId = "customer2.liferay.com",
+				samlRoleType = "Service Provider");
+
+			if (IsElementPresent(locator1 = "CustomerPortalSite#CERTIFICATE", value = "SIGNING")) {
+				CustomerPortal.replaceCertificateAndPrivateKey(
+					certificateUsage = "SIGNING",
+					samlKeyPassword = "QATEST");
+
+				if (IsElementPresent(locator1 = "CPSAMLAdmin#DELETE_CERTIFICATE")) {
+					SAMLRole.deleteCertificate();
+				}
+
+				SAMLRole.configureCertificateAndPrivateKey(
+					certificateUsage = "ENCRYPTION",
+					samlKeyPassword = "QATEST");
+
+				Click(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
+
+				AssertClick(
+					locator1 = "Button#SAVE",
+					value1 = "Save");
+			}
+			else {
+				SAMLRole.configureCertificateAndPrivateKey(
+					certificateUsage = "SIGNING",
+					samlKeyPassword = "QATEST");
+
+				SAMLRole.configureCertificateAndPrivateKey(
+					certificateUsage = "ENCRYPTION",
+					samlKeyPassword = "QATEST");
+
+				Click(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
+
+				AssertClick(
+					locator1 = "Button#SAVE",
+					value1 = "Save");
+			}
+		}
+
+		task ("Configure IdP Connections") {
+
+			//var entityId = PropsUtil.get("okta.cp.entityId");
+			//var metadataURL = PropsUtil.get("okta.cp.metadataURL");
+
+			var entityId = "http://www.okta.com/exk158id544C4j3KK0h8";
+			var metadataURL = "https://provisioning.liferay.com/documents/20124/139691/customer-2.0-local-metadata.xml/eeac6c00-20b9-dafd-3059-4151d02d487b";
+
+			SAMLNavigation.gotoIdentityProviderConnections();
+
+			CustomerPortal.addIdPCForCustomerPortal(
+				idpAttributeMapping = "emailAddress,UUID,screenName,lastName,firstName",
+				idpEntityId = "${entityId}",
+				idpMetadataURL = "${metadataURL}",
+				idpNameId = "CP2",
+				nameIdentifierFormat = "Unspecified");
+
+			PortletEntry.save();
+		}
+	}
+
+	macro showCPObject {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		ObjectPortlet.selectObject(label = "${title}");
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CustomerPortal.checkToggleHideWidget();
+
+		CreateObject.saveObject();
+	}
+
+	macro tearDownForOktaAndSAML {
+		task ("Teardown") {
+			var entityId = "http://www.okta.com/exk158id544C4j3KK0h8";
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Security",
+				panel = "Control Panel",
+				portlet = "SAML Admin");
+
+			SAMLNavigation.gotoIdentityProviderConnections();
+
+			SAMLPortlet.deleteSAMLConnection(samlEntityId = "${entityId}");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Security",
+				panel = "Control Panel",
+				portlet = "SAML Admin");
+
+			Click(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
+
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+
+			SAMLRole.deleteCertificate();
+
+			CustomerPortal.customerPortalTearDown();
+		}
+	}
+
+	macro uncheckToggleHideInactiveWidget {
+		Uncheck.uncheckToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
+	}
+
+	macro viewAllProjectsTitlePage {
+		AssertElementPresent(locator1 = "CustomerPortalSite#PROJECT_TITLE_MAIN_PAGE");
+	}
+
+	macro viewCardValue {
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#PROJECT_LOGO",
+			logo = "dxp_icon");
+
+		AssertElementPresent(
+			cardName = "Non-Production",
+			locator1 = "CustomerPortalSite#CARD_NAME");
+
+		AssertElementPresent(
+			locator1 = "CustomerPortalSite#CARD_INSTANCE",
+			title = "Instance Size: ");
+
+		AssertElementPresent(
+			date = "03/31/2021 - 03/30/2022",
+			locator1 = "CustomerPortalSite#CARD_DATE",
+			status = "Active");
+	}
+
+	macro viewCPObjectCustomInfo {
+		Click(
+			key_index = "${index}",
+			key_text = "",
+			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+		MenuItem.click(menuItem = "View");
+	}
+
+	macro viewCPObjectInfo {
+		Click(
+			key_text = "",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "View");
+	}
+
+	macro viewGetStartedModal {
+		AssertElementPresent(locator1 = "CustomerPortalSite#GETTING_STARTED_MODAL");
+	}
+
+	macro viewInviteTeamMembersModalPage {
+		AssertElementPresent(locator1 = "CustomerPortalSite#INVITE_TEAM_MEMBERS_TITLE");
+	}
+
+	macro viewObjectInfo {
+		Click(
+			key_index = "4",
+			key_text = "",
+			locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+		MenuItem.click(menuItem = "View");
+	}
+
+	macro viewStartProjectSetupButton {
+		AssertElementPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
+	}
+
+	macro viewSubcriptionsPage {
+		AssertElementPresent(locator1 = "CustomerPortalSite#SUBCRIPTIONS_PROJECT_INSIDE_PAGE");
+	}
+
+	macro viewSubscriptionManagementList {
+		for (var product : list "${productList}") {
+			AssertElementPresent(
+				key_product = "${productList}",
+				locator1 = "CustomerPortalSite#SUBSCRIPTION_DROPDOWN",
+				value1 = "${product}");
+		}
+	}
+
+	macro viewSubscriptionManagementTab {
+		for (var product : list "${productTab}") {
+			AssertElementPresent(
+				key_product = "${productTab}",
+				locator1 = "CustomerPortalSite#SUBSCRIPTION_NAVBAR",
+				value = "${product}");
+		}
+	}
+
+	macro viewTableValue {
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#TABLE_VALUE",
+			value = "11/30/2022 - 03/30/2025",
+			value1 = "11/30/2022 - 03/30/2025");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#TABLE_VALUE",
+			value = "1",
+			value1 = "1");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#TABLE_HEAD",
+			title = "Instance Size",
+			value1 = "Instance Size");
+
+		AssertTextEquals(
+			locator1 = "CustomerPortalSite#TABLE_STATUS",
+			status = "Future",
+			value1 = "Future");
+	}
+
+	macro viewValueFieldKoroneiki {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		CustomerPortal.viewCPObjectInfo();
+
+		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
+	}
+
+}

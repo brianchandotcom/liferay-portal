@@ -75,7 +75,17 @@ public class LayoutStructure {
 				layoutStructureItems.put(key, layoutStructureItem);
 
 				if (layoutStructureItem instanceof
-						FragmentStyledLayoutStructureItem) {
+						FormStyledLayoutStructureItem) {
+
+					FormStyledLayoutStructureItem
+						formStyledLayoutStructureItem =
+							(FormStyledLayoutStructureItem)layoutStructureItem;
+
+					formStyledLayoutStructureItems.add(
+						formStyledLayoutStructureItem);
+				}
+				else if (layoutStructureItem instanceof
+							FragmentStyledLayoutStructureItem) {
 
 					FragmentStyledLayoutStructureItem
 						fragmentStyledLayoutStructureItem =
@@ -86,16 +96,6 @@ public class LayoutStructure {
 						fragmentStyledLayoutStructureItem.
 							getFragmentEntryLinkId(),
 						fragmentStyledLayoutStructureItem);
-				}
-				else if (layoutStructureItem instanceof
-							FormStyledLayoutStructureItem) {
-
-					FormStyledLayoutStructureItem
-						formStyledLayoutStructureItem =
-							(FormStyledLayoutStructureItem)layoutStructureItem;
-
-					formStyledLayoutStructureItems.add(
-						formStyledLayoutStructureItem);
 				}
 			}
 
@@ -710,11 +710,10 @@ public class LayoutStructure {
 
 		_deletedItemIds = deletedItemIds;
 		_deletedLayoutStructureItems = deletedLayoutStructureItems;
+		_formStyledLayoutStructureItems = formLayoutStructureItems;
 		_fragmentLayoutStructureItems = fragmentLayoutStructureItems;
 		_layoutStructureItems = layoutStructureItems;
 		_mainItemId = mainItemId;
-
-		_formStyledLayoutStructureItems = formLayoutStructureItems;
 	}
 
 	private void _addColumnLayoutStructureItem(

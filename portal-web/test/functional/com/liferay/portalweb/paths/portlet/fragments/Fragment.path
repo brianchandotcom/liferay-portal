@@ -141,6 +141,11 @@
 <!--FORM COMPONENTS-->
 
 <tr>
+	<td>INPUT_CAPTCHA_BODY</td>
+	<td>xpath=(//div[contains(@id,'fragment-')]//fieldset[contains(@class,'form-input-captcha')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INPUT_FIELD</td>
 	<td>xpath=(//div[contains(@id,'fragment-')]//div[contains(@class,'form')]//input[contains(@id,'${type}')])[${index}]</td>
 	<td></td>

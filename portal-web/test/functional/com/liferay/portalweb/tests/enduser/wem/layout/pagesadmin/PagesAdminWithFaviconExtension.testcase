@@ -294,6 +294,11 @@ definition {
 			Click(locator1 = "PageEditor#MORE_LINK");
 
 			WaitForPageLoad();
+
+			AssertTextEquals(
+				faviconName = "Favicon from Master",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "Favicon from Master");
 		}
 
 		task ("Then the site designer could apply a new favicon extension") {

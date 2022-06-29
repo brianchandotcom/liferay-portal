@@ -15,10 +15,7 @@
 import {
 	ADD_REDO_ACTION,
 	ADD_UNDO_ACTION,
-	LOADING,
 	SET_DRAFT_STATUS,
-	SET_PREVIEW_LAYOUT,
-	SET_PREVIEW_LAYOUT_TYPE,
 	SET_TOKEN_VALUES,
 	UPDATE_UNDO_REDO_HISTORY,
 } from './constants/actionTypes';
@@ -27,12 +24,6 @@ const MAX_UNDO_ACTIONS = 100;
 
 export default function reducer(state, action) {
 	switch (action.type) {
-		case LOADING: {
-			const {value} = action;
-
-			return {...state, loading: value};
-		}
-
 		case SET_DRAFT_STATUS: {
 			const {value} = action;
 
@@ -40,18 +31,6 @@ export default function reducer(state, action) {
 				...state,
 				draftStatus: value,
 			};
-		}
-
-		case SET_PREVIEW_LAYOUT: {
-			const {layout} = action;
-
-			return {...state, previewLayout: layout};
-		}
-
-		case SET_PREVIEW_LAYOUT_TYPE: {
-			const {layoutType} = action;
-
-			return {...state, previewLayoutType: layoutType};
 		}
 
 		case SET_TOKEN_VALUES: {

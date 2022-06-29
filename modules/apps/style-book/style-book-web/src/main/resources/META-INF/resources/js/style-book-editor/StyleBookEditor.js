@@ -15,6 +15,7 @@
 import {StyleErrorsContextProvider} from '@liferay/layout-content-page-editor-web';
 import React from 'react';
 
+import {LayoutContextProvider} from './LayoutContext';
 import LayoutPreview from './LayoutPreview';
 import Sidebar from './Sidebar';
 import {StyleBookContextProvider} from './StyleBookContext';
@@ -24,23 +25,36 @@ import {DRAFT_STATUS} from './constants/draftStatusConstants';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {useCloseProductMenu} from './useCloseProductMenu';
 
-const StyleBookEditor = () => {
+const StyleBookEditor = React.memo(() => {
 	useCloseProductMenu();
 
 	return (
-		<div className="cadmin style-book-editor">
+		<div className="cadmin d-flex flex-wrap style-book-editor">
 			<StyleErrorsContextProvider>
-				<Toolbar />
+				<LayoutContextProvider
+					initialState={{
+						previewLayout: getMostRecentLayout(
+							config.previewOptions
+						),
+						previewLayoutType: config.previewOptions.find((type) =>
+							type.data.recentLayouts.find(
+								(layout) =>
+									layout ===
+									getMostRecentLayout(config.previewOptions)
+							)
+						)?.type,
+					}}
+				>
+					<Toolbar />
 
-				<div className="d-flex">
 					<LayoutPreview />
+				</LayoutContextProvider>
 
-					<Sidebar />
-				</div>
+				<Sidebar />
 			</StyleErrorsContextProvider>
 		</div>
 	);
-};
+});
 
 export default function ({
 	fragmentCollectionPreviewURL = '',
@@ -73,14 +87,6 @@ export default function ({
 			initialState={{
 				draftStatus: DRAFT_STATUS.notSaved,
 				frontendTokensValues,
-				previewLayout: getMostRecentLayout(config.previewOptions),
-				previewLayoutType: config.previewOptions.find((type) =>
-					type.data.recentLayouts.find(
-						(layout) =>
-							layout ===
-							getMostRecentLayout(config.previewOptions)
-					)
-				)?.type,
 				redoHistory: [],
 				undoHistory: [],
 			}}

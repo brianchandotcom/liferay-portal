@@ -19,9 +19,10 @@ import classNames from 'classnames';
 import {ALIGN_POSITIONS, align} from 'frontend-js-web';
 import React, {useLayoutEffect, useRef, useState} from 'react';
 
+import {usePreviewLayout} from './LayoutContext';
 import PreviewSelector from './PreviewSelector';
 import PublishButton from './PublishButton';
-import {useDraftStatus, usePreviewLayout} from './StyleBookContext';
+import {useDraftStatus} from './StyleBookContext';
 import Undo from './Undo';
 import UndoHistory from './UndoHistory';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';

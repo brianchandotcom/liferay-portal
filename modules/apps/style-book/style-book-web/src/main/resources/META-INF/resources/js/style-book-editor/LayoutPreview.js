@@ -18,12 +18,12 @@ import classNames from 'classnames';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {
-	useFrontendTokensValues,
 	useLoading,
 	usePreviewLayout,
 	usePreviewLayoutType,
 	useSetLoading,
-} from './StyleBookContext';
+} from './LayoutContext';
+import {useFrontendTokensValues} from './StyleBookContext';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 
 export default function LayoutPreview() {

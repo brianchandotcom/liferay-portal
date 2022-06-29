@@ -13,15 +13,12 @@
  */
 
 import {openToast} from 'frontend-js-web';
-import React, {useCallback, useContext, useReducer} from 'react';
+import React, {useContext, useReducer} from 'react';
 
 import {
 	ADD_REDO_ACTION,
 	ADD_UNDO_ACTION,
-	LOADING,
 	SET_DRAFT_STATUS,
-	SET_PREVIEW_LAYOUT,
-	SET_PREVIEW_LAYOUT_TYPE,
 	SET_TOKEN_VALUES,
 	UPDATE_UNDO_REDO_HISTORY,
 } from './constants/actionTypes';
@@ -34,9 +31,6 @@ const StyleBookDispatchContext = React.createContext(() => {});
 export const StyleBookStoreContext = React.createContext({
 	draftStatus: null,
 	frontendTokensValues: {},
-	loading: true,
-	previewLayout: {},
-	previewLayoutType: null,
 	redoHistory: [],
 	undoHistory: [],
 });
@@ -63,18 +57,6 @@ export function useDraftStatus() {
 
 export function useFrontendTokensValues() {
 	return useContext(StyleBookStoreContext).frontendTokensValues;
-}
-
-export function useLoading() {
-	return useContext(StyleBookStoreContext).loading;
-}
-
-export function usePreviewLayout() {
-	return useContext(StyleBookStoreContext).previewLayout;
-}
-
-export function usePreviewLayoutType() {
-	return useContext(StyleBookStoreContext).previewLayoutType;
 }
 
 export function useRedoHistory() {
@@ -140,28 +122,6 @@ export function useSaveTokenValue() {
 			});
 		});
 	};
-}
-
-export function useSetLoading() {
-	const dispatch = useDispatch();
-
-	return useCallback((value) => dispatch({type: LOADING, value}), [dispatch]);
-}
-
-export function useSetPreviewLayout() {
-	const dispatch = useDispatch();
-
-	return useCallback(
-		(layout) => dispatch({layout, type: SET_PREVIEW_LAYOUT}),
-		[dispatch]
-	);
-}
-
-export function useSetPreviewLayoutType() {
-	const dispatch = useDispatch();
-
-	return (layoutType) =>
-		dispatch({layoutType, type: SET_PREVIEW_LAYOUT_TYPE});
 }
 
 export function useOnUndo() {

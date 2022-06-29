@@ -20,13 +20,12 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {
-	useDispatch,
 	usePreviewLayout,
 	usePreviewLayoutType,
 	useSetLoading,
 	useSetPreviewLayout,
 	useSetPreviewLayoutType,
-} from './StyleBookContext';
+} from './LayoutContext';
 import {config} from './config';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {itemSelectorValueFromFragmentCollection} from './item_selector_value/itemSelectorValueFromFragmentCollection';
@@ -130,7 +129,6 @@ LayoutTypeSelector.propTypes = {
 
 export function LayoutSelector({layoutType}) {
 	const [active, setActive] = useState(false);
-	const dispatch = useDispatch();
 	const previewLayout = usePreviewLayout();
 	const setLoading = useSetLoading();
 	const setPreviewLayout = useSetPreviewLayout();
@@ -149,7 +147,7 @@ export function LayoutSelector({layoutType}) {
 		setLoading(true);
 		setPreviewLayout(previewData.recentLayouts[0]);
 		setRecentLayouts(previewData.recentLayouts);
-	}, [dispatch, previewData, setLoading, setPreviewLayout]);
+	}, [previewData, setLoading, setPreviewLayout]);
 
 	const selectPreviewLayout = (layout) => {
 		if (

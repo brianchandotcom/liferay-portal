@@ -901,7 +901,7 @@ definition {
 				echo("The auto image resolution is right.");
 			}
 			else {
-				fail("The auto image resolution is wrong.");
+				TestUtils.fail(message = "The auto image resolution is wrong.");
 			}
 		}
 		else {
@@ -911,7 +911,7 @@ definition {
 				echo("The auto image resolution is right.");
 			}
 			else {
-				fail("The auto image resolution is wrong.");
+				TestUtils.fail(message = "The auto image resolution is wrong.");
 			}
 		}
 	}

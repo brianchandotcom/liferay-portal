@@ -9,6 +9,11 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                attachmentObjectFieldIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
                 bcc:
                     type: string
                 body:

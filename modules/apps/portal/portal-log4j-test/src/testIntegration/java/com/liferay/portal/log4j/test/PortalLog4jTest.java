@@ -91,14 +91,14 @@ public class PortalLog4jTest {
 
 		Logger logger = (Logger)LogManager.getLogger(PortalLog4jTest.class);
 
-		Logger loggerUpgrade = (Logger)LogManager.getLogger(
+		Logger upgradeLogger = (Logger)LogManager.getLogger(
 			TestUpgradeProcess.class.getName());
 
 		logger.setAdditive(false);
-		loggerUpgrade.setAdditive(false);
+		upgradeLogger.setAdditive(false);
 
 		logger.setLevel(Level.TRACE);
-		loggerUpgrade.setLevel(Level.TRACE);
+		upgradeLogger.setLevel(Level.TRACE);
 
 		Logger rootLogger = (Logger)LogManager.getRootLogger();
 
@@ -125,7 +125,7 @@ public class PortalLog4jTest {
 				consoleAppender.start();
 
 				logger.addAppender(consoleAppender);
-				loggerUpgrade.addAppender(consoleAppender);
+				upgradeLogger.addAppender(consoleAppender);
 			}
 			else if (appender instanceof RollingFileAppender) {
 				if (Objects.equals("TEXT_FILE", appender.getName())) {
@@ -152,13 +152,13 @@ public class PortalLog4jTest {
 			appender.stop();
 		}
 
-		Logger loggerUpgrade = (Logger)LogManager.getLogger(
+		Logger upgradeLogger = (Logger)LogManager.getLogger(
 			TestUpgradeProcess.class.getName());
 
-		Map<String, Appender> appendersUpgrade = loggerUpgrade.getAppenders();
+		Map<String, Appender> appendersUpgrade = upgradeLogger.getAppenders();
 
 		for (Appender appender : appendersUpgrade.values()) {
-			loggerUpgrade.removeAppender(appender);
+			upgradeLogger.removeAppender(appender);
 
 			appender.stop();
 		}

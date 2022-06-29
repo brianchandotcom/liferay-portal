@@ -14,13 +14,17 @@
 
 package com.liferay.notification.service.impl;
 
+import com.liferay.notification.model.NotificationTemplateAttachment;
 import com.liferay.notification.service.base.NotificationTemplateAttachmentLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Gabriel Albuquerque
+ * @author Carolina Barbosa
  */
 @Component(
 	property = "model.class.name=com.liferay.notification.model.NotificationTemplateAttachment",
@@ -28,4 +32,31 @@ import org.osgi.service.component.annotations.Component;
 )
 public class NotificationTemplateAttachmentLocalServiceImpl
 	extends NotificationTemplateAttachmentLocalServiceBaseImpl {
+
+	@Override
+	public NotificationTemplateAttachment addNotificationTemplateAttachment(
+			long companyId, long notificationTemplateId, long objectFieldId)
+		throws PortalException {
+
+		NotificationTemplateAttachment notificationTemplateAttachment =
+			notificationTemplateAttachmentPersistence.create(
+				counterLocalService.increment());
+
+		notificationTemplateAttachment.setCompanyId(companyId);
+		notificationTemplateAttachment.setNotificationTemplateId(
+			notificationTemplateId);
+		notificationTemplateAttachment.setObjectFieldId(objectFieldId);
+
+		return notificationTemplateAttachmentPersistence.update(
+			notificationTemplateAttachment);
+	}
+
+	@Override
+	public List<NotificationTemplateAttachment>
+		getNotificationTemplateAttachments(long notificationTemplateId) {
+
+		return notificationTemplateAttachmentPersistence.
+			findByNotificationTemplateId(notificationTemplateId);
+	}
+
 }

@@ -14,13 +14,15 @@
 
 package com.liferay.notification.service.impl;
 
+import com.liferay.notification.model.NotificationQueueEntryAttachment;
 import com.liferay.notification.service.base.NotificationQueueEntryAttachmentLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Gabriel Albuquerque
+ * @author Carolina Barbosa
  */
 @Component(
 	property = "model.class.name=com.liferay.notification.model.NotificationQueueEntryAttachment",
@@ -28,4 +30,23 @@ import org.osgi.service.component.annotations.Component;
 )
 public class NotificationQueueEntryAttachmentLocalServiceImpl
 	extends NotificationQueueEntryAttachmentLocalServiceBaseImpl {
+
+	@Override
+	public NotificationQueueEntryAttachment addNotificationQueueEntryAttachment(
+			long companyId, long fileEntryId, long notificationQueueEntryId)
+		throws PortalException {
+
+		NotificationQueueEntryAttachment notificationQueueEntryAttachment =
+			notificationQueueEntryAttachmentPersistence.create(
+				counterLocalService.increment());
+
+		notificationQueueEntryAttachment.setCompanyId(companyId);
+		notificationQueueEntryAttachment.setFileEntryId(fileEntryId);
+		notificationQueueEntryAttachment.setNotificationQueueEntryId(
+			notificationQueueEntryId);
+
+		return notificationQueueEntryAttachmentPersistence.update(
+			notificationQueueEntryAttachment);
+	}
+
 }

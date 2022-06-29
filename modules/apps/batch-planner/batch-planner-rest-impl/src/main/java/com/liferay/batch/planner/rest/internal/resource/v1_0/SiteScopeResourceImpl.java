@@ -15,7 +15,7 @@
 package com.liferay.batch.planner.rest.internal.resource.v1_0;
 
 import com.liferay.batch.planner.rest.dto.v1_0.SiteScope;
-import com.liferay.batch.planner.rest.internal.provider.OpenAPIYAMLProvider;
+import com.liferay.batch.planner.rest.internal.vulcan.yaml.openapi.OpenAPIYAMLProvider;
 import com.liferay.batch.planner.rest.resource.v1_0.SiteScopeResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;

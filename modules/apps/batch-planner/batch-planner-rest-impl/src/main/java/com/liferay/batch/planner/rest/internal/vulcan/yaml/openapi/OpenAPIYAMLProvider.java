@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.planner.rest.internal.provider;
+package com.liferay.batch.planner.rest.internal.vulcan.yaml.openapi;
 
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateRegistry;

@@ -20,7 +20,7 @@ import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.rest.dto.v1_0.Mapping;
 import com.liferay.batch.planner.rest.dto.v1_0.Plan;
 import com.liferay.batch.planner.rest.dto.v1_0.Policy;
-import com.liferay.batch.planner.rest.internal.provider.FieldProvider;
+import com.liferay.batch.planner.rest.internal.vulcan.batch.engine.FieldProvider;
 import com.liferay.batch.planner.rest.resource.v1_0.PlanResource;
 import com.liferay.batch.planner.service.BatchPlannerMappingService;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;

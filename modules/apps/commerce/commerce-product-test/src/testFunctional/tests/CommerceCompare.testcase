@@ -30,20 +30,33 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
-	@description = "COMMERCE-5912. As a buyer, I want to select an item in Product Details for compare in Product Widget"
+	@description = "COMMERCE-5912. Verify buyers can select a product for comparison from the product's details page."
 	@priority = "3"
 	test AddComparisonItemFromProductDetailsPage {
 		property portal.acceptance = "false";
 
 		// TODO Review
 
-		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+		task ("Given the buyer goes to a product's details page") {
+			User.logoutPG();
 
-		Click.clickAtNotVisible(
-			checkboxName = "Compare",
-			locator1 = "Checkbox#ANY_CHECKBOX");
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
 
-		AssertElementPresent(locator1 = "CommerceEntry#MINI_COMPARE_ITEM_ACTIVE");
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Transmission Fluid");
+		}
+
+		task ("When the buyer clicks on the comparison checkbox") {
+			Click.clickAtNotVisible(
+				checkboxName = "Compare",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Then the product is selected for comparison") {
+			FrontStore.assertMiniCompareItems(products = "Transmission Fluid");
+		}
 	}
 
 	@description = "COMMERCE-5911. Verify products selected for comparison are visible in the mini compare widget at the bottom of the page."

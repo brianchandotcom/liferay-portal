@@ -999,6 +999,10 @@ definition {
 	}
 
 	macro selectFavicon {
+		WaitForEditable(
+			key_text = "Change Favicon",
+			locator1 = "Button#ANY");
+
 		Click(
 			key_text = "Change Favicon",
 			locator1 = "Button#ANY");
@@ -1014,6 +1018,10 @@ definition {
 	}
 
 	macro selectFaviconExtension {
+		WaitForEditable(
+			key_text = "Change Favicon",
+			locator1 = "Button#ANY");
+
 		Click(
 			key_text = "Change Favicon",
 			locator1 = "Button#ANY");

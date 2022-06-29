@@ -15,8 +15,10 @@
 package com.liferay.notification.service.impl;
 
 import com.liferay.notification.constants.NotificationTermContributorConstants;
+import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFieldIdException;
 import com.liferay.notification.exception.NotificationTemplateFromException;
 import com.liferay.notification.exception.NotificationTemplateNameException;
+import com.liferay.notification.exception.NotificationTemplateObjectDefinitionIdException;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.model.NotificationTemplateAttachment;
@@ -29,6 +31,11 @@ import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.notification.term.contributor.NotificationTermContributorRegistry;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.util.NotificationTypeRegistry;
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -83,7 +90,7 @@ public class NotificationTemplateLocalServiceImpl
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
-		_validate(name, from);
+		_validate(objectDefinitionId, from, name, attachmentObjectFieldIds);
 
 		NotificationTemplate notificationTemplate =
 			notificationTemplatePersistence.create(
@@ -296,7 +303,7 @@ public class NotificationTemplateLocalServiceImpl
 			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
-		_validate(name, from);
+		_validate(objectDefinitionId, from, name, attachmentObjectFieldIds);
 
 		NotificationTemplate notificationTemplate =
 			notificationTemplatePersistence.findByPrimaryKey(
@@ -408,13 +415,42 @@ public class NotificationTemplateLocalServiceImpl
 			object, termNames);
 	}
 
-	private void _validate(String name, String from) throws PortalException {
+	private void _validate(
+			long objectDefinitionId, String from, String name,
+			List<Long> attachmentObjectFieldIds)
+		throws PortalException {
+
 		if (Validator.isNull(name)) {
 			throw new NotificationTemplateNameException("Name is null");
 		}
 
 		if (Validator.isNull(from)) {
 			throw new NotificationTemplateFromException("From is null");
+		}
+
+		if (objectDefinitionId > 0) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectDefinitionId);
+
+			if (objectDefinition == null) {
+				throw new NotificationTemplateObjectDefinitionIdException();
+			}
+		}
+
+		for (long attachmentObjectFieldId : attachmentObjectFieldIds) {
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				attachmentObjectFieldId);
+
+			if ((objectField == null) ||
+				!Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
+				!Objects.equals(
+					objectField.getObjectDefinitionId(), objectDefinitionId)) {
+
+				throw new NotificationTemplateAttachmentObjectFieldIdException();
+			}
 		}
 	}
 
@@ -446,6 +482,12 @@ public class NotificationTemplateLocalServiceImpl
 
 	@Reference
 	private NotificationTypeRegistry _notificationTypeRegistry;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private Portal _portal;

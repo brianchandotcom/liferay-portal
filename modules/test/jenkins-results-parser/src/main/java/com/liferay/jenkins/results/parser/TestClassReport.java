@@ -14,23 +14,23 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.json.JSONObject;
+import java.util.List;
 
 /**
  * @author Michael Hashimoto
  */
-public class TestReportFactory {
+public interface TestClassReport {
 
-	public static TestClassReport newTestClassReport(
-		DownstreamBuildReport downstreamBuildReport, String testClassName) {
+	public void addTestReport(TestReport testReport);
 
-		return new DefaultTestClassReport(downstreamBuildReport, testClassName);
-	}
+	public DownstreamBuildReport getDownstreamBuildReport();
 
-	public static TestReport newTestReport(
-		DownstreamBuildReport downstreamBuildReport, JSONObject jsonObject) {
+	public long getDuration();
 
-		return new DefaultTestReport(downstreamBuildReport, jsonObject);
-	}
+	public String getStatus();
+
+	public String getTestClassName();
+
+	public List<TestReport> getTestReports();
 
 }

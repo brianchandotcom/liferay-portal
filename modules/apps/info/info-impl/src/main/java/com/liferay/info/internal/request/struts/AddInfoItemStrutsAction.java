@@ -177,14 +177,14 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			new InfoRequestFieldValuesProviderHelper(_infoItemServiceTracker);
 	}
 
-	private boolean _existsCaptchaLayoutStructureItem(
+	private boolean _hasCaptcha(
 		List<String> childrenItemIds, LayoutStructure layoutStructure) {
 
 		for (String childrenItemId : childrenItemIds) {
 			LayoutStructureItem layoutStructureItem =
 				layoutStructure.getLayoutStructureItem(childrenItemId);
 
-			if (_existsCaptchaLayoutStructureItem(
+			if (_hasCaptcha(
 					layoutStructureItem.getChildrenItemIds(),
 					layoutStructure)) {
 
@@ -288,7 +288,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			throw new InfoFormException();
 		}
 
-		return _existsCaptchaLayoutStructureItem(
+		return _hasCaptcha(
 			formLayoutStructureItem.getChildrenItemIds(), layoutStructure);
 	}
 

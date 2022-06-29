@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.internal.upgrade.registry;
 
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.search.experiences.internal.upgrade.v1_1_0.SXPBlueprintUpgradeProcess;
 import com.liferay.search.experiences.internal.upgrade.v1_1_0.SXPElementUpgradeProcess;
@@ -37,9 +38,21 @@ public class SXPServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.1.0", "1.2.0",
-			new com.liferay.search.experiences.internal.upgrade.v1_2_0.
-				SXPElementUpgradeProcess(),
-			new com.liferay.search.experiences.internal.upgrade.v1_2_0.
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"SXPBlueprint", "sxpBlueprintId"},
+						{"SXPElement", "sxpElementId"}
+					};
+				}
+
+			});
+
+		registry.register(
+			"1.2.0", "1.3.0",
+			new com.liferay.search.experiences.internal.upgrade.v1_3_0.
 				SXPBlueprintUpgradeProcess());
 	}
 

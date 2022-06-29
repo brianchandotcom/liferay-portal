@@ -27,7 +27,7 @@ portletDisplay.setURLBack(
 		"/view.jsp"
 	).buildString());
 
-boolean view = Objects.equals((String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE), "view");
+boolean view = Objects.equals(request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE), "view");
 
 String titleKey = "new-workflow-definition";
 

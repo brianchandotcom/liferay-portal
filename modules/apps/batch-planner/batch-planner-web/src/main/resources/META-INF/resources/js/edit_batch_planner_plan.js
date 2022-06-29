@@ -147,6 +147,7 @@ export default function ({
 
 			Liferay.fire(SCHEMA_SELECTED_EVENT, {
 				schema: data.items,
+				schemaName: selectedOption.value,
 			});
 		}
 		catch (error) {

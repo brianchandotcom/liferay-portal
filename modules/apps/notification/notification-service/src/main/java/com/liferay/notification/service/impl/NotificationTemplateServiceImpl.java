@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -47,10 +48,11 @@ public class NotificationTemplateServiceImpl
 
 	@Override
 	public NotificationTemplate addNotificationTemplate(
-			long userId, String bcc, Map<Locale, String> bodyMap, String cc,
-			String description, String from, Map<Locale, String> fromNameMap,
-			String name, Map<Locale, String> subjectMap,
-			Map<Locale, String> toMap)
+			long userId, long objectDefinitionId, String bcc,
+			Map<Locale, String> bodyMap, String cc, String description,
+			String from, Map<Locale, String> fromNameMap, String name,
+			Map<Locale, String> subjectMap, Map<Locale, String> toMap,
+			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -58,8 +60,8 @@ public class NotificationTemplateServiceImpl
 			NotificationActionKeys.ADD_NOTIFICATION_TEMPLATE);
 
 		return _notificationTemplateLocalService.addNotificationTemplate(
-			userId, bcc, bodyMap, cc, description, from, fromNameMap, name,
-			subjectMap, toMap);
+			userId, objectDefinitionId, bcc, bodyMap, cc, description, from,
+			fromNameMap, name, subjectMap, toMap, attachmentObjectFieldIds);
 	}
 
 	@Override
@@ -102,18 +104,20 @@ public class NotificationTemplateServiceImpl
 
 	@Override
 	public NotificationTemplate updateNotificationTemplate(
-			long notificationTemplateId, String bcc,
+			long notificationTemplateId, long objectDefinitionId, String bcc,
 			Map<Locale, String> bodyMap, String cc, String description,
 			String from, Map<Locale, String> fromNameMap, String name,
-			Map<Locale, String> subjectMap, Map<Locale, String> toMap)
+			Map<Locale, String> subjectMap, Map<Locale, String> toMap,
+			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
 		_notificationTemplateModelResourcePermission.check(
 			getPermissionChecker(), notificationTemplateId, ActionKeys.UPDATE);
 
 		return _notificationTemplateLocalService.updateNotificationTemplate(
-			notificationTemplateId, bcc, bodyMap, cc, description, from,
-			fromNameMap, name, subjectMap, toMap);
+			notificationTemplateId, objectDefinitionId, bcc, bodyMap, cc,
+			description, from, fromNameMap, name, subjectMap, toMap,
+			attachmentObjectFieldIds);
 	}
 
 	@Reference

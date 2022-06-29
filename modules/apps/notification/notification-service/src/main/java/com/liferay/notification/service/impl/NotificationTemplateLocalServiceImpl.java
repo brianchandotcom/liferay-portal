@@ -19,9 +19,12 @@ import com.liferay.notification.exception.NotificationTemplateFromException;
 import com.liferay.notification.exception.NotificationTemplateNameException;
 import com.liferay.notification.model.NotificationQueueEntry;
 import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.notification.model.NotificationTemplateAttachment;
 import com.liferay.notification.service.NotificationQueueEntryLocalService;
+import com.liferay.notification.service.NotificationTemplateAttachmentLocalService;
 import com.liferay.notification.service.base.NotificationTemplateLocalServiceBaseImpl;
 import com.liferay.notification.service.persistence.NotificationQueueEntryPersistence;
+import com.liferay.notification.service.persistence.NotificationTemplateAttachmentPersistence;
 import com.liferay.notification.term.contributor.NotificationTermContributor;
 import com.liferay.notification.term.contributor.NotificationTermContributorRegistry;
 import com.liferay.notification.type.NotificationType;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,6 +55,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,10 +76,11 @@ public class NotificationTemplateLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public NotificationTemplate addNotificationTemplate(
-			long userId, String bcc, Map<Locale, String> bodyMap, String cc,
-			String description, String from, Map<Locale, String> fromNameMap,
-			String name, Map<Locale, String> subjectMap,
-			Map<Locale, String> toMap)
+			long userId, long objectDefinitionId, String bcc,
+			Map<Locale, String> bodyMap, String cc, String description,
+			String from, Map<Locale, String> fromNameMap, String name,
+			Map<Locale, String> subjectMap, Map<Locale, String> toMap,
+			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
 		_validate(name, from);
@@ -89,6 +95,7 @@ public class NotificationTemplateLocalServiceImpl
 		notificationTemplate.setUserId(user.getUserId());
 		notificationTemplate.setUserName(user.getFullName());
 
+		notificationTemplate.setObjectDefinitionId(objectDefinitionId);
 		notificationTemplate.setBcc(bcc);
 		notificationTemplate.setBodyMap(bodyMap);
 		notificationTemplate.setCc(cc);
@@ -101,6 +108,14 @@ public class NotificationTemplateLocalServiceImpl
 
 		notificationTemplate = notificationTemplatePersistence.update(
 			notificationTemplate);
+
+		for (long attachmentObjectFieldId : attachmentObjectFieldIds) {
+			_notificationTemplateAttachmentLocalService.
+				addNotificationTemplateAttachment(
+					notificationTemplate.getCompanyId(),
+					notificationTemplate.getNotificationTemplateId(),
+					attachmentObjectFieldId);
+		}
 
 		_resourceLocalService.addResources(
 			notificationTemplate.getCompanyId(), 0,
@@ -274,10 +289,11 @@ public class NotificationTemplateLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public NotificationTemplate updateNotificationTemplate(
-			long notificationTemplateId, String bcc,
+			long notificationTemplateId, long objectDefinitionId, String bcc,
 			Map<Locale, String> bodyMap, String cc, String description,
 			String from, Map<Locale, String> fromNameMap, String name,
-			Map<Locale, String> subjectMap, Map<Locale, String> toMap)
+			Map<Locale, String> subjectMap, Map<Locale, String> toMap,
+			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
 		_validate(name, from);
@@ -286,6 +302,7 @@ public class NotificationTemplateLocalServiceImpl
 			notificationTemplatePersistence.findByPrimaryKey(
 				notificationTemplateId);
 
+		notificationTemplate.setObjectDefinitionId(objectDefinitionId);
 		notificationTemplate.setBcc(bcc);
 		notificationTemplate.setBodyMap(bodyMap);
 		notificationTemplate.setCc(cc);
@@ -296,7 +313,44 @@ public class NotificationTemplateLocalServiceImpl
 		notificationTemplate.setSubjectMap(subjectMap);
 		notificationTemplate.setToMap(toMap);
 
-		return notificationTemplatePersistence.update(notificationTemplate);
+		notificationTemplate = notificationTemplatePersistence.update(
+			notificationTemplate);
+
+		List<Long> oldAttachmentObjectFieldIds = new ArrayList<>();
+
+		for (NotificationTemplateAttachment notificationTemplateAttachment :
+				_notificationTemplateAttachmentPersistence.
+					findByNotificationTemplateId(
+						notificationTemplate.getNotificationTemplateId())) {
+
+			if (ListUtil.exists(
+					attachmentObjectFieldIds,
+					attachmentObjectFieldId -> Objects.equals(
+						attachmentObjectFieldId,
+						notificationTemplateAttachment.getObjectFieldId()))) {
+
+				oldAttachmentObjectFieldIds.add(
+					notificationTemplateAttachment.getObjectFieldId());
+
+				continue;
+			}
+
+			_notificationTemplateAttachmentPersistence.remove(
+				notificationTemplateAttachment);
+		}
+
+		for (long attachmentObjectFieldId :
+				ListUtil.remove(
+					attachmentObjectFieldIds, oldAttachmentObjectFieldIds)) {
+
+			_notificationTemplateAttachmentLocalService.
+				addNotificationTemplateAttachment(
+					notificationTemplate.getCompanyId(),
+					notificationTemplate.getNotificationTemplateId(),
+					attachmentObjectFieldId);
+		}
+
+		return notificationTemplate;
 	}
 
 	private String _formatContent(
@@ -377,6 +431,14 @@ public class NotificationTemplateLocalServiceImpl
 	@Reference
 	private NotificationQueueEntryPersistence
 		_notificationQueueEntryPersistence;
+
+	@Reference
+	private NotificationTemplateAttachmentLocalService
+		_notificationTemplateAttachmentLocalService;
+
+	@Reference
+	private NotificationTemplateAttachmentPersistence
+		_notificationTemplateAttachmentPersistence;
 
 	@Reference
 	private NotificationTermContributorRegistry

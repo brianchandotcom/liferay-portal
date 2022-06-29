@@ -247,6 +247,75 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153654. The site designer could apply a different favicon extension to an inheritor page from master page."
+	@priority = "4"
+	test OverwriteInheritedFavionExtensionFromMasterPageTemplate {
+		task ("Given a site designer has a content page with inherited favicon extension from master page template") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Master Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Edit",
+				masterLayoutName = "Master Page Template");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			PagesAdmin.selectFaviconExtension(extensionName = "Google Favicon");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			Button.click(button = "Publish Master");
+
+			Alert.viewSuccessMessage();
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				masterLayoutName = "Master Page Template",
+				pageName = "Test Page Name");
+		}
+
+		task ("When the site designer accesses to the Look and Feel settings of content page") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the site designer could apply a new favicon extension") {
+			PagesAdmin.selectFaviconExtension(extensionName = "NBA Favicon");
+
+			AssertTextEquals(
+				faviconName = "NBA Favicon",
+				locator1 = "PagesAdmin#FAVICON_NAME",
+				value1 = "NBA Favicon");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementPresent(
+				imageFileName = "https://www.nba.com/favicon.ico",
+				locator1 = "Icon#FAVICON");
+		}
+	}
+
 	@description = "This is a test for LPS-153654. The site designer could apply a different favicon extension to an inheritor page from page template."
 	@priority = "4"
 	test OverwriteInheritedFavionExtensionFromPageTemplate {

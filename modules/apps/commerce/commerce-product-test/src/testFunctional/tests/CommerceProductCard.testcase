@@ -1208,18 +1208,6 @@ definition {
 		}
 
 		task ("And given multiple products are being compared") {
-			CommerceProducts.openProductsAdmin();
-
-			CommerceNavigator.searchEntry(entryName = "Transmission Fluid");
-
-			CommerceNavigator.gotoEntry(entryName = "Transmission Fluid");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Media");
-
-			CommerceNavigator.gotoEntry(entryName = "Minium_ProductImage_103.png");
-
-			var productImage = CommerceProductImages.getProductMediaId();
-
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -1239,12 +1227,10 @@ definition {
 		}
 
 		task ("Then the product is removed from the comparison") {
-			AssertElementNotPresent(
-				key_value = "2",
-				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_ACTIVE_N");
+			var productImageId = CommerceJSONProductsAPI._getCommerceProductImageIds(productName = "Transmission Fluid");
 
 			AssertElementNotPresent(
-				key_productMediaId = "${productImage}",
+				key_productMediaId = "${productImageId}",
 				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
 
 			Button.click(button = "Compare");

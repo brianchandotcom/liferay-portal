@@ -54,30 +54,6 @@ definition {
 		// TODO Review
 
 		task ("When multiple products are selected for comparison") {
-			CommerceProducts.openProductsAdmin();
-
-			CommerceNavigator.searchEntry(entryName = "U-Joint");
-
-			CommerceNavigator.gotoEntry(entryName = "U-Joint");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Media");
-
-			CommerceNavigator.gotoEntry(entryName = "Minium_ProductImage_64.png");
-
-			var uJointImage = CommerceProductImages.getProductMediaId();
-
-			CommerceProducts.openProductsAdmin();
-
-			CommerceNavigator.searchEntry(entryName = "Transmission Fluid");
-
-			CommerceNavigator.gotoEntry(entryName = "Transmission Fluid");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Media");
-
-			CommerceNavigator.gotoEntry(entryName = "Minium_ProductImage_103.png");
-
-			var transmissionFluidImage = CommerceProductImages.getProductMediaId();
-
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -91,13 +67,7 @@ definition {
 		}
 
 		task ("Then those products are visible in the mini compare widget") {
-			AssertElementPresent(
-				key_productMediaId = "${uJointImage}",
-				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
-
-			AssertElementPresent(
-				key_productMediaId = "${transmissionFluidImage}",
-				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
+			FrontStore.assertMiniCompareItems(products = "U-Joint,Transmission Fluid");
 		}
 	}
 

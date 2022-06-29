@@ -84,6 +84,16 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
+	macro assertMiniCompareItems {
+		for (var product : list "${products}") {
+			var productImageId = CommerceJSONProductsAPI._getCommerceProductImageIds(productName = "${product}");
+
+			AssertElementPresent(
+				key_productMediaId = "${productImageId}",
+				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
+		}
+	}
+
 	macro assertProductComparisonTable {
 		AssertLocation.assertPartialLocation(value1 = "group/minium/compare");
 
@@ -228,6 +238,8 @@ definition {
 			AssertElementPresent(
 				key_value = "${comparisonItems}",
 				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_ACTIVE_N");
+
+			FrontStore.assertMiniCompareItems(products = "${product}");
 		}
 
 		if ("${clickCompare}" != "false") {

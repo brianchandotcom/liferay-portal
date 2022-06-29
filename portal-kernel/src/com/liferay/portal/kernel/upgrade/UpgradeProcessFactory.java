@@ -12,21 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.step.util;
+package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
- * @author Carlos Sierra Andrés
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
- * 			com.liferay.portal.kernel.upgrade.UpgradeProcessFactory}
+ * @author Luis Ortiz Fuentes
  */
-@Deprecated
-public class UpgradeStepFactory {
+public class UpgradeProcessFactory {
 
-	public static UpgradeStep addColumns(
+	public static UpgradeProcess addColumns(
 		String tableName, String... columnDefinitions) {
 
 		return new UpgradeProcess() {
@@ -46,7 +41,7 @@ public class UpgradeStepFactory {
 		};
 	}
 
-	public static UpgradeStep alterColumnTypes(
+	public static UpgradeProcess alterColumnTypes(
 		String tableName, String newType, String... columnNames) {
 
 		return new UpgradeProcess() {
@@ -61,7 +56,7 @@ public class UpgradeStepFactory {
 		};
 	}
 
-	public static UpgradeStep dropColumns(
+	public static UpgradeProcess dropColumns(
 		String tableName, String... columnNames) {
 
 		return new UpgradeProcess() {

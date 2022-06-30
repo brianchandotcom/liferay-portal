@@ -1,0 +1,254 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-150277=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add three items within Object Picklist") {
+			Picklist.addPicklistViaAPI(picklistName = "Ticket Type");
+
+			for (var ticketName : list "Reserved,Giveaways,Members") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = "${ticketName}",
+					itemName = "${ticketName}",
+					picklistName = "Ticket Type");
+			}
+		}
+
+		task ("Add a company Object with a Picklist field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Purchase Order");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Type",
+				fieldPicklist = "Ticket Type",
+				fieldType = "Picklist");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+		}
+
+		task ("Enable Inputs Fragment collection in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Disable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
+
+			Picklist.deletePicklistViaAPI(picklistName = "Ticket Type");
+		}
+	}
+
+	@description = "This is a test for LPS-151159. The page designer map the Select from List fragment to objects fields on content pages."
+	@priority = "4"
+	test MapPicklistFieldOnContentPage {
+		property test.name.skip.portal.instance = "SelectFromList#MapPicklistFieldOnContentPage";
+
+		task ("Given a page designer has a mapped Form Container on content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+		}
+
+		task ("When the page designer maps Select from list fragment after added to Form Container") {
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Select from List");
+
+			PageEditor.editInput(
+				field = "Type",
+				fragmentName = "Select from List",
+				helpText = "Just one type of ticket can be selected",
+				hideHelpText = "false",
+				label = "Select your ticket",
+				markAsRequired = "false");
+		}
+
+		task ("Then the page designer can see available options on select from list fragment at edit mode") {
+			PageEditor.viewInputStyle(
+				helpText = "Just one type of ticket can be selected",
+				label = "Select your ticket",
+				showHelpText = "true",
+				showLabel = "true",
+				type = "select-from-list");
+
+			Click(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			MenuItem.viewOrder(menuItemList = "Reserved,Giveaways,Members");
+		}
+
+		task ("When the page designer navigates to published content page at view mode") {
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the pages designer can see available options on select from list fragment at view mode") {
+			PageEditor.viewInputStyle(
+				helpText = "Just one type of ticket can be selected",
+				label = "Select your ticket",
+				showHelpText = "true",
+				showLabel = "true",
+				type = "select-from-list");
+
+			Click(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			MenuItem.viewOrder(menuItemList = "Reserved,Giveaways,Members");
+		}
+	}
+
+	@description = "This is a test for LPS-151159. The page designer map the Select from List fragment to objects fields on display page template."
+	@priority = "4"
+	test MapPicklistFieldOnDisplayPageTemplate {
+		property test.name.skip.portal.instance = "SelectFromList#MapPicklistFieldOnDisplayPageTemplate";
+		property testray.component.names = "Display Pages,Fragments";
+
+		task ("Given a page designer has a mapped Form Container on display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+		}
+
+		task ("When the page designer maps Select from list fragment after added to Form Container") {
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Select from List");
+
+			PageEditor.editInput(
+				field = "Type",
+				fragmentName = "Select from List",
+				helpText = "Just one type of ticket can be selected",
+				hideHelpText = "false",
+				label = "Select your ticket",
+				markAsRequired = "false");
+		}
+
+		task ("Then the page designer can see available options on select from list fragment at edit mode") {
+			PageEditor.viewInputStyle(
+				helpText = "Just one type of ticket can be selected",
+				label = "Select your ticket",
+				showHelpText = "true",
+				showLabel = "true",
+				type = "select-from-list");
+
+			Click(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			MenuItem.viewOrder(menuItemList = "Reserved,Giveaways,Members");
+		}
+
+		task ("When the page designer marks the display page template as default") {
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Then the pages designer can see available options in associated display page template") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Web Content Title",
+				menuItem = "View Content");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+
+			PageEditor.viewInputStyle(
+				helpText = "Just one type of ticket can be selected",
+				label = "Select your ticket",
+				showHelpText = "true",
+				showLabel = "true",
+				type = "select-from-list");
+
+			Click(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			MenuItem.viewOrder(menuItemList = "Reserved,Giveaways,Members");
+		}
+	}
+
+}

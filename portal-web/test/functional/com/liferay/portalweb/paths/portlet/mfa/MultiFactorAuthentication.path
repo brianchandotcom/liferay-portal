@@ -137,6 +137,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOTP_CLOCK_SKEW</td>
+	<td>//input[contains(@id,"clockSkew")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOTP_FIELD</td>
 	<td>//input[contains(@id,"mfaTimeBasedOTP")]</td>
 	<td></td>

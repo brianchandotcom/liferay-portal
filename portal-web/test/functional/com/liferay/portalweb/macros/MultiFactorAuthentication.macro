@@ -127,6 +127,10 @@ definition {
 			FormFields.disableCheckbox(fieldName = "enabled");
 		}
 
+		Type(
+			locator1 = "MultiFactorAuthentication#TOTP_CLOCK_SKEW",
+			value1 = "10000");
+
 		MultiFactorAuthentication.saveConfiguration();
 	}
 

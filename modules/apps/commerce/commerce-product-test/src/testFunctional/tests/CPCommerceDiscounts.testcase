@@ -229,7 +229,7 @@ definition {
 
 	@description = "This is a test for COMMERCE-9592."
 	@priority = "3"
-	test CanViewErrorNotificationWhenApplyingCouponCodeToWrongSku {
+	test CanViewErrorNotificationWhenApplyingCouponCodeToWrongProduct {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
 
@@ -250,7 +250,7 @@ definition {
 				userSiteMembership = "Minium");
 		}
 
-		task ("And a discount of 10% applied to ABS Sensor's SKU") {
+		task ("And a discount of 10% applied to ABS Sensor product") {
 			CommerceNavigator.gotoPortlet(
 				category = "Pricing",
 				portlet = "Discounts");
@@ -260,12 +260,12 @@ definition {
 			CommerceEntry.addNewDiscountsEntry(
 				discountAmount = "10",
 				discountName = "Test Discount",
-				discountTarget = "SKUs",
+				discountTarget = "Products",
 				discountType = "Percentage");
 
 			CommerceRelations.assignSingleRelationToProductsEntry(
-				entryName = "MIN93015",
-				title = "Add SKUs");
+				entryName = "ABS Sensor",
+				title = "Add Products");
 		}
 
 		task ("And a coupon code added for the discount") {

@@ -47,6 +47,8 @@ renderResponse.setTitle((accountGroupDisplay.getAccountGroupId() == 0) ? Languag
 			<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountGroup.class.getName(), "name") %></aui:validator>
 		</aui:input>
 
+		<liferay-ui:error embed="<%= false %>" key="<%= DuplicateAccountGroupExternalReferenceCodeException.class.getName() %>" message="the-given-external-reference-code-belongs-to-another-account-group" />
+
 		<aui:input label="external-reference-code" name="externalReferenceCode" type="text" value="<%= accountGroupDisplay.getExternalReferenceCode() %>" />
 
 		<aui:field-wrapper cssClass="form-group lfr-input-text-container">

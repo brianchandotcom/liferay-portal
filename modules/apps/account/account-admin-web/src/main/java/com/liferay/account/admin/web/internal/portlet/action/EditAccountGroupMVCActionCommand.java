@@ -15,11 +15,17 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeException;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -52,21 +58,56 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					String redirect = ParamUtil.getString(
+						actionRequest, "redirect");
 
-		if (cmd.equals(Constants.ADD)) {
-			AccountGroup accountGroup = _addAccountGroup(actionRequest);
+					if (cmd.equals(Constants.ADD)) {
+						AccountGroup accountGroup = _addAccountGroup(
+							actionRequest);
 
-			redirect = HttpComponentsUtil.setParameter(
-				redirect, actionResponse.getNamespace() + "accountGroupId",
-				accountGroup.getAccountGroupId());
+						redirect = HttpComponentsUtil.setParameter(
+							redirect,
+							actionResponse.getNamespace() + "accountGroupId",
+							accountGroup.getAccountGroupId());
+					}
+					else if (cmd.equals(Constants.UPDATE)) {
+						_updateAccountGroup(actionRequest);
+					}
+
+					if (Validator.isNotNull(redirect)) {
+						sendRedirect(actionRequest, actionResponse, redirect);
+					}
+
+					return null;
+				});
 		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			_updateAccountGroup(actionRequest);
-		}
+		catch (Exception exception) {
+			if (exception instanceof PrincipalException) {
+				SessionErrors.add(actionRequest, exception.getClass());
 
-		if (Validator.isNotNull(redirect)) {
-			sendRedirect(actionRequest, actionResponse, redirect);
+				actionResponse.setRenderParameter(
+					"mvcPath", "/account_groups_admin/error.jsp");
+			}
+			else if (exception instanceof DuplicateAccountGroupExternalReferenceCodeException) {
+
+				SessionErrors.add(actionRequest, exception.getClass());
+
+				hideDefaultErrorMessage(actionRequest);
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName",
+					"/account_admin/edit_account_group");
+			}
+			else {
+				throw exception;
+			}
+		}
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
 		}
 	}
 
@@ -95,6 +136,10 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 		_accountGroupService.updateAccountGroup(
 			accountGroupId, description, name);
 	}
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private AccountGroupService _accountGroupService;

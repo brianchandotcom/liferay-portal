@@ -76,6 +76,7 @@ page import="com.liferay.account.constants.AccountPortletKeys" %><%@
 page import="com.liferay.account.constants.AccountRoleConstants" %><%@
 page import="com.liferay.account.exception.AccountEntryDomainsException" %><%@
 page import="com.liferay.account.exception.DuplicateAccountEntryExternalReferenceCodeException" %><%@
+page import="com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeException" %><%@
 page import="com.liferay.account.model.AccountEntry" %><%@
 page import="com.liferay.account.model.AccountGroup" %><%@
 page import="com.liferay.account.model.AccountRole" %><%@

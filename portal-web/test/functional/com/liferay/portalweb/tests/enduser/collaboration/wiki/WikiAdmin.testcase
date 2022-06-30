@@ -346,33 +346,6 @@ definition {
 			wikiPageTitle = "Dr. Asmund Grey");
 	}
 
-	@description = "This ensures that the wiki page RSS can be viewed."
-	@ignore = "true"
-	@priority = "4"
-	@refactordone
-	test CanViewPageRSS {
-
-		// This test will re-work after POSHI-6
-
-		JSONWiki.addWikiPage(
-			groupName = "Guest",
-			wikiNodeName = "Main",
-			wikiPageContent = "Wiki Page Content",
-			wikiPageName = "Wiki Page RSS");
-
-		WikiNavigator.openToWikiPage(
-			siteURLKey = "guest",
-			wikiNodeName = "Main",
-			wikiPageTitle = "Wiki Page RSS");
-
-		WikiPage.viewRSS(
-			site = "Guest",
-			version = "1.0",
-			wikiNodeName = "Main",
-			wikiPageContent = "Wiki Page Content",
-			wikiPageTitle = "Wiki Page RSS");
-	}
-
 	@description = "This ensures that the deleted front page can be restored."
 	@priority = "5"
 	@refactordone

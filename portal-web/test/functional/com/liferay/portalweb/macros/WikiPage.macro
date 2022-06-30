@@ -2,29 +2,6 @@ definition {
 
 	var assetType = "Wiki Page";
 
-	macro _checkForRSSTitleCP {
-		if (IsElementNotPresent(locator1 = "RSS#FEED_TITLE")) {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Wiki",
-				site = "${site}");
-
-			WikiNavigator.gotoNode(wikiNodeName = "${wikiNodeName}");
-
-			WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = "${wikiPageTitle}");
-
-			WikiEntry.viewPageContentBody(wikiPageContent = "${wikiPageContent}");
-
-			Click(locator1 = "Icon#INFO");
-
-			AssertClick.assertPartialTextClickAt(
-				locator1 = "Link#FEED",
-				value1 = "Feed");
-
-			Pause(locator1 = "3000");
-		}
-	}
-
 	macro _editEmptyFrontPage {
 		AssertClick(
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
@@ -1738,47 +1715,6 @@ definition {
 			key_relatedAssetTitle = "${relatedAssetTitle}",
 			locator1 = "AssetRelatedAssets#ASSET_TITLE",
 			value1 = "${relatedAssetTitle}");
-	}
-
-	macro viewRSS {
-		var wikiNodeName = "${wikiNodeName}";
-		var wikiPageContent = "${wikiPageContent}";
-		var wikiPageTitle = "${wikiPageTitle}";
-
-		Click(locator1 = "Icon#INFO");
-
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "Link#FEED",
-			value1 = "Feed");
-
-		Pause(locator1 = "3000");
-
-		WikiPage._checkForRSSTitleCP(
-			site = "${site}",
-			wikiNodeName = "${wikiNodeName}",
-			wikiPageContent = "${wikiPageContent}",
-			wikiPageTitle = "${wikiPageTitle}");
-
-		SelectWindow(locator1 = "title=${wikiPageTitle}");
-
-		var key_entryContent = "${wikiPageContent}";
-		var key_entryTitle = "${wikiPageTitle}";
-
-		AssertTextEquals(
-			locator1 = "RSS#FEED_TITLE",
-			value1 = "${wikiPageTitle}");
-
-		AssertTextEquals(
-			locator1 = "RSS#FEED_SUBTITLE",
-			value1 = "${wikiPageTitle}");
-
-		AssertTextEquals(
-			locator1 = "RSS#ENTRY_CONTENT",
-			value1 = "${wikiPageContent}");
-
-		AssertClick(
-			locator1 = "RSS#ENTRY_TITLE",
-			value1 = "${wikiPageTitle} ${version}");
 	}
 
 	macro viewSearchResultsPG {

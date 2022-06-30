@@ -444,7 +444,7 @@ definition {
 
 		// It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518
 
-		Pause(locator1 = "30000");
+		ACUtils.sessionPause();
 	}
 
 	macro closeModal {
@@ -673,8 +673,13 @@ definition {
 	}
 
 	macro harRecordingPause {
-		// Pausing for harRecording tests
-		Pause(locator1 = "5000");
+		if (isSet(time)) {
+			// Pauseing for harRecording test for reuse purpose
+			Pause(locator1 = "${time}");
+		} else if (!(isSet(time))){
+			// Pausing for harRecording tests
+			Pause(locator1 = "5000");
+		}
 	}
 
 	macro launchAC {
@@ -726,6 +731,11 @@ definition {
 		}
 	}
 
+	macro logInPause {
+		// Pause is necessary because poshi logs in from one user to another very quickly.
+			Pause(locator1 = "5000");
+	}
+
 	@summary = "This macro access a page/document"
 	macro navigateToSitePage {
 		for (var documentTitle : list "${documentTitleList}") {
@@ -734,10 +744,8 @@ definition {
 				siteName = "${siteName}");
 
 			if ("${actionType}" == "View WC") {
-				Pause(locator1 = "5000");
-
 				// Pause is necessary because the web content event is sent too fast and doesn't have time to process if you navigate to another page quickly.
-
+				ACUtils.sessionPause(time = "5000");
 			}
 
 			if ("${actionType}" == "View Blog") {
@@ -790,9 +798,7 @@ definition {
 				siteName = "${siteName}",
 				submitText = "${submitText}");
 
-			// Pause is necessary because poshi logs in from one user to another very quickly. For more information about pause see LRAC-9514
-
-			Pause(locator1 = "5000");
+			ACUtils.logInPause();
 		}
 	}
 
@@ -868,6 +874,16 @@ definition {
 			KeyPress(
 				locator1 = "ACSettings#SEARCH_BAR",
 				value1 = "\ENTER");
+		}
+	}
+
+	macro sessionPause {
+		if (isSet(time)) {
+		// Pause for reusable purpose
+			Pause(locator1 = "${time}");
+		} else if (!(isSet(time))){
+		// It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518
+			Pause(locator1 = "30000");
 		}
 	}
 

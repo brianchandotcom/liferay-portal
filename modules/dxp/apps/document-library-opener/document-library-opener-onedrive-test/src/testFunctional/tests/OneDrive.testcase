@@ -345,7 +345,7 @@ definition {
 	@description = "This test covers LPS-102478. It ensures that an Office 365 document automatically checks in after the lock is expired."
 	@priority = "4"
 	test AutoCheckinDocumentAfterLockExpiration {
-		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=80000";
+		property custom.properties = "lock.expiration.time.com.liferay.document.library.kernel.model.DLFileEntry=1000";
 		property test.name.skip.portal.instance = "OneDrive#AutoCheckinDocumentAfterLockExpiration";
 
 		OneDrive.deleteDocument(dmDocumentTitle = "Auto Checkin Word Doc Title");
@@ -361,8 +361,6 @@ definition {
 			dmDocumentTypeName = "Word");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Pause(locator1 = "100000");
 
 		Refresh();
 

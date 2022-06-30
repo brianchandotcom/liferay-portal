@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>CP2ProjectSelection</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CP2ProjectSelection</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>MORE_FIVE_PROJECTS</td>
+	<td>//div[contains(@class, 'home-projects-sm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LESS_FIVE_PROJECTS</td>
+	<td>//div[contains(@class, 'home-projects')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

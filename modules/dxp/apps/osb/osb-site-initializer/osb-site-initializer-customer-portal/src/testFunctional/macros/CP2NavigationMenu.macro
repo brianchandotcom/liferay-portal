@@ -1,0 +1,105 @@
+definition {
+
+	macro addProducts {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		ObjectPortlet.selectCustomObject(label = "Account Subscription Group");
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CustomerPortal.checkToggleHideWidget();
+
+		CreateObject.saveObject();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Account Subscription Groups");
+
+		Click(locator1 = "CP2NavigationMenu#BUTTON_ADD");
+
+		Type(
+			field = "Account Key",
+			locator1 = "CP2NavigationMenu#FIELD_SUBSCRIPTION_GROUPS",
+			value1 = "ERC-001");
+
+		Click(locator1 = "CP2NavigationMenu#SELECT_HAS_ACTIVATION");
+
+		Type(
+			field = "Name",
+			locator1 = "CP2NavigationMenu#FIELD_SUBSCRIPTION_GROUPS",
+			value1 = "Enterprise Search");
+
+		Click(locator1 = "CP2NavigationMenu#BUTTON_SAVE");
+	}
+
+	macro cancelTeamMembersInvitation {
+		Click(locator1 = "CP2NavigationMenu#INVITE_MEMBERS_CANCEL_BUTTON");
+	}
+
+	macro clickOnHideButton {
+		Click(locator1 = "CP2NavigationMenu#HIDE_BUTTON");
+	}
+
+	macro clickOnProductButton {
+		Click(
+			locator1 = "CP2NavigationMenu#PRODUCT",
+			product = "${product}");
+	}
+
+	macro clickOnShowButton {
+		Click(locator1 = "CP2NavigationMenu#SHOW_BUTTON");
+	}
+
+	macro clickOnStatusButton {
+		Click(
+			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
+			title = "${title}");
+
+		Click(
+			locator1 = "CP2NavigationMenu#SELECT_STATUS_OVERVIEW",
+			status = "All");
+
+		Click(
+			locator1 = "CP2NavigationMenu#SELECT_STATUS_OVERVIEW",
+			status = "${status}");
+	}
+
+	macro goToCP2 {
+		Refresh();
+
+		Click(locator1 = "CP2NavigationMenu#APPLICATIONS_MENU_ACCOUNTS");
+
+		Click(
+			key_site = "${site}",
+			locator1 = "ApplicationsMenu#SITE_LINK");
+	}
+
+	macro goToProductActivation {
+		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+	}
+
+	macro goToTeamMembers {
+		Click(locator1 = "CP2NavigationMenu#TEAM_MEMBERS");
+	}
+
+	macro openLastIdCreated {
+		var idCreated = selenium.getText("RaylifeRetrieveEmail#ID_CREATED");
+
+		Click(
+			locator1 = "RaylifeRetrieveEmail#ID_CREATED",
+			value1 = "${idCreated}");
+
+		WaitForElementPresent(locator1 = "RaylifeRetrieveEmail#QUOTE_RETRIEVE_LINK");
+
+		var openURL = selenium.getAttribute("RaylifeRetrieveEmail#SITE_LINK");
+
+		Navigator.openSpecificURL(url = "${openURL}");
+	}
+
+}

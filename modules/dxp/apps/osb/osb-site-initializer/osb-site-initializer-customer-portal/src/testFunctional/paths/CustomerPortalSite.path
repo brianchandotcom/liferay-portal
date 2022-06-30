@@ -1,0 +1,226 @@
+<html>
+<head>
+<title>CustomerPortalSite</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CustomerPortalSite</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>FIELDS_KORONEIKI</td>
+	<td>//div[contains(@data-field-name, '${field}')]//input[contains(@value, '${value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBTITLE_SUPPORT</td>
+	<td>//p[contains(@class, 'text-paragraph-sm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNTS_TABLE</td>
+	<td>//tr[(@data-qa-id='row') and contains(., '${value}') and contains(., 'Active')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNTS_PROJECTS</td>
+	<td>//td[contains(@class, 'lfr-name-column')]//a[contains(text(), '${title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OBJECTS_TABLE</td>
+	<td>//div[(@class='dnd-tbody') and contains(., '${value}') and contains(., 'Approved')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CERTIFICATE</td>
+	<td>//button[contains(@onclick, 'replace') and contains(@onclick, '${value}') and contains(., 'Replace')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OKTA_USERNAME</td>
+	<td>//input[contains(@id, 'okta-signin-username')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OKTA_PASSWORD</td>
+	<td>//input[contains(@id, 'okta-signin-password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SKIP_TO_CONTENT</td>
+	<td>//*[contains(text(),'Skip to Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OKTA_COOKIES</td>
+	<td>//div[@class='banner-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OKTA_SUBMIT</td>
+	<td>//input[contains(@id, 'okta-signin-submit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECT_LOGO</td>
+	<td>//div[contains(@class, 'card-subscription')]//img[contains(@src, '${logo}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_NAME</td>
+	<td>//div[contains(@class, 'cards-subscription')]//h5[(text()='${cardName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_STATUS</td>
+	<td>//div[contains(@class, 'card-subscription')]//span[(text()='${status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_DATE</td>
+	<td>//div[contains(@class, 'card-subscription')]//p[(text()='${date}')]//..//span[(text()='${status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_INSTANCE</td>
+	<td>//div[contains(@class, 'card-subscription')]//..//p[contains(text(), '${title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_INFO</td>
+	<td>//div[contains(@class, 'card-subscription')]//h5[(text()='${cardName}')]//..//p[(text()='${date}')]//..//span[(text()='${status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTION_NAVBAR1</td>
+	<td>//div[@id='subscription-navbar']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTION_NAVBAR</td>
+	<td>//div[@id='subscription-navbar']/button[@value='${value}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTION_DROPDOWN</td>
+	<td>//button[contains(@class, 'dropdown-toggle') and contains(text(), 'Partnership')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_HEAD</td>
+	<td>//thead//th[text()= '${title}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_VALUE</td>
+	<td>//tbody//td[text()= '${value}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_STATUS</td>
+	<td>//td[contains(@class, 'text-center')]/span[contains(@class, 'label')]/span[(text()= '${status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL</td>
+	<td>//div[contains(@class, 'modal-dialog')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_TITLE</td>
+	<td>//div[contains(@class, 'flex-row')]//h2[contains(., '${modalTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_MODAL_CARD</td>
+	<td>//button[contains(@aria-label, 'close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECT_TABLE_NAME</td>
+	<td>//div[contains(@class,'card-body')]//h4[contains(@title,'${key_projectName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_NAME</td>
+	<td>//td[contains(@class,'table-title')]//a[contains(text(),'${key_accountName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GETTING_STARTED_MODAL</td>
+	<td>//header[contains(@class,'p-4')]//h2[contains(text(),'Let’s set up your project')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBCRIPTIONS_PROJECT_INSIDE_PAGE</td>
+	<td>//div[contains(@class,'d-flex')]//h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>START_PROJECT_SETUP_BUTTON</td>
+	<td>//div[contains(@class,'d-flex')]//button[contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITE_TEAM_MEMBERS_TITLE</td>
+	<td>//div[contains(@class,'d-flex')]//h2[contains(text(),'Invite your team members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SKIP_FOR_NOW_BUTTON</td>
+	<td>//button[contains(text(), 'Skip for now')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECT_TITLE_MAIN_PAGE</td>
+	<td>//div//h2[contains(@id,'project-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEAM_MEMBERS_MAIN_PAGE</td>
+	<td>//h1[contains(@class,'m-0') and contains(text(),'Team Members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE</td>
+	<td>//div[contains(@class, 'alert-danger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(@class, 'text-center') and contains(text(), 'Thank you for submitting this request!')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_CARD</td>
+	<td>//div[contains(text(), '${type}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_HEADING</td>
+	<td>//div[contains(@id, 'welcome-user') and contains(.,'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(@type, 'button') and contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIVATION_STATUS_PAGE</td>
+	<td>//div[contains(@class, 'mb-5') and contains(.,'Activation Status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_ACCOUNT</td>
+	<td>//h1[contains(@class, 'no-subtitle') and contains(text(), 'Log Into Your Account')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

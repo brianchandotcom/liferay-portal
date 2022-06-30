@@ -21,6 +21,13 @@ export declare function normalizeFieldSettings(
 		| boolean
 		| ObjectFieldFilterSetting[]
 		| undefined;
+	filter?: string | number | boolean | ObjectFieldFilterSetting[] | undefined;
+	maxLength?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
 	acceptedFileExtensions?:
 		| string
 		| number
@@ -34,12 +41,6 @@ export declare function normalizeFieldSettings(
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	maximumFileSize?:
-		| string
-		| number
-		| boolean
-		| ObjectFieldFilterSetting[]
-		| undefined;
-	maxLength?:
 		| string
 		| number
 		| boolean
@@ -75,7 +76,6 @@ export declare function normalizeFieldSettings(
 		| boolean
 		| ObjectFieldFilterSetting[]
 		| undefined;
-	filter?: string | number | boolean | ObjectFieldFilterSetting[] | undefined;
 };
 export declare function updateFieldSettings(
 	objectFieldSettings: ObjectFieldSetting[] | undefined,

@@ -39,6 +39,7 @@ export declare function useObjectFieldForm({
 	errors: FormError<
 		ObjectField & {
 			function: any;
+			filter: any;
 			maxLength: any;
 			acceptedFileExtensions: any;
 			fileSource: any;
@@ -48,7 +49,6 @@ export declare function useObjectFieldForm({
 			storageDLFolderPath: any;
 			relationship: any;
 			summarizeField: any;
-			filter: any;
 		}
 	>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;

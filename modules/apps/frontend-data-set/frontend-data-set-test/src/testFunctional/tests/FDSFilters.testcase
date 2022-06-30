@@ -45,6 +45,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-155309. Assert all filters can be removed."
+	@priority = "4"
+	test AllFiltersCanBeRemoved {
+		task ("When there is a filter already established") {
+			AssertElementPresent(
+				key_filter = "Status: Approved, Draft",
+				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
+		}
+
+		task ("Then all of them can be removed at once") {
+			ClickNoError(locator1 = "FrontendDataSet#RESET_FILTERS");
+		}
+
+		task ("Then the results will be displayed updated accordingly to it") {
+			AssertTextEquals(
+				locator1 = "FrontendDataSet#PAGINATION_RESULTS",
+				value1 = "Showing 1 to 10 of 100");
+		}
+
+		task ("And the Filters Summary boxes will be updated accordingly to it") {
+			AssertElementNotPresent(
+				key_filter = "Status: Approved, Draft",
+				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
+		}
+	}
+
 	@description = "LPS-155305. Assert results can be correctly filtered when selecting available filters."
 	@priority = "5"
 	test AvailableFiltersCanBeApplied {

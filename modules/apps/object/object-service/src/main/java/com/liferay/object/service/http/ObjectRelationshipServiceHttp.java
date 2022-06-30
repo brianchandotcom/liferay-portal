@@ -55,7 +55,7 @@ public class ObjectRelationshipServiceHttp {
 				HttpPrincipal httpPrincipal, long objectDefinitionId1,
 				long objectDefinitionId2, String deletionType,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
-				String type)
+				long parameterObjectFieldId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -65,7 +65,7 @@ public class ObjectRelationshipServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectDefinitionId1, objectDefinitionId2,
-				deletionType, labelMap, name, type);
+				deletionType, labelMap, name, parameterObjectFieldId, type);
 
 			Object returnObj = null;
 
@@ -306,7 +306,8 @@ public class ObjectRelationshipServiceHttp {
 			updateObjectRelationship(
 				HttpPrincipal httpPrincipal, long objectRelationshipId,
 				String deletionType,
-				java.util.Map<java.util.Locale, String> labelMap)
+				java.util.Map<java.util.Locale, String> labelMap,
+				long parameterObjectFieldId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -315,7 +316,8 @@ public class ObjectRelationshipServiceHttp {
 				_updateObjectRelationshipParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectRelationshipId, deletionType, labelMap);
+				methodKey, objectRelationshipId, deletionType, labelMap,
+				parameterObjectFieldId);
 
 			Object returnObj = null;
 
@@ -351,7 +353,7 @@ public class ObjectRelationshipServiceHttp {
 	private static final Class<?>[] _addObjectRelationshipParameterTypes0 =
 		new Class[] {
 			long.class, long.class, String.class, java.util.Map.class,
-			String.class, String.class
+			String.class, long.class, String.class
 		};
 	private static final Class<?>[]
 		_addObjectRelationshipMappingTableValuesParameterTypes1 = new Class[] {
@@ -367,6 +369,6 @@ public class ObjectRelationshipServiceHttp {
 	private static final Class<?>[] _getObjectRelationshipsParameterTypes5 =
 		new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[] _updateObjectRelationshipParameterTypes6 =
-		new Class[] {long.class, String.class, java.util.Map.class};
+		new Class[] {long.class, String.class, java.util.Map.class, long.class};
 
 }

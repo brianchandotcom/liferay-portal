@@ -42,12 +42,12 @@ public class ObjectRelationshipServiceUtil {
 	public static ObjectRelationship addObjectRelationship(
 			long objectDefinitionId1, long objectDefinitionId2,
 			String deletionType, Map<java.util.Locale, String> labelMap,
-			String name, String type)
+			String name, long parameterObjectFieldId, String type)
 		throws PortalException {
 
 		return getService().addObjectRelationship(
 			objectDefinitionId1, objectDefinitionId2, deletionType, labelMap,
-			name, type);
+			name, parameterObjectFieldId, type);
 	}
 
 	public static void addObjectRelationshipMappingTableValues(
@@ -99,11 +99,12 @@ public class ObjectRelationshipServiceUtil {
 
 	public static ObjectRelationship updateObjectRelationship(
 			long objectRelationshipId, String deletionType,
-			Map<java.util.Locale, String> labelMap)
+			Map<java.util.Locale, String> labelMap, long parameterObjectFieldId)
 		throws PortalException {
 
 		return getService().updateObjectRelationship(
-			objectRelationshipId, deletionType, labelMap);
+			objectRelationshipId, deletionType, labelMap,
+			parameterObjectFieldId);
 	}
 
 	public static ObjectRelationshipService getService() {

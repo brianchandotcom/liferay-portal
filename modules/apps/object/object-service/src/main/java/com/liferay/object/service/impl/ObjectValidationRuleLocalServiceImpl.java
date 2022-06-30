@@ -182,30 +182,36 @@ public class ObjectValidationRuleLocalServiceImpl
 	}
 
 	@Override
-	public void validate(ObjectEntry objectEntry) throws PortalException {
-		if (objectEntry == null) {
+	public void validate(
+			Object object, long objectDefinitionId,
+			Map<String, Object> modelAttributes)
+		throws PortalException {
+
+		if (object == null) {
 			return;
 		}
 
-		Map<String, Serializable> values = _objectEntryLocalService.getValues(
-			objectEntry);
-
 		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
 			HashMapBuilder.<String, Object>putAll(
-				objectEntry.getModelAttributes());
+				modelAttributes
+			).put(
+				"currentUserId",
+				() -> (PrincipalThreadLocal.getUserId() > 0) ?
+					PrincipalThreadLocal.getUserId() : null
+			);
 
-		if (values != null) {
-			hashMapWrapper.putAll(values);
-		}
+		if (object instanceof ObjectEntry) {
+			Map<String, Serializable> values =
+				_objectEntryLocalService.getValues((ObjectEntry)object);
 
-		if (PrincipalThreadLocal.getUserId() > 0) {
-			hashMapWrapper.put(
-				"currentUserId", PrincipalThreadLocal.getUserId());
+			if (values != null) {
+				hashMapWrapper.putAll(values);
+			}
 		}
 
 		List<ObjectValidationRule> objectValidationRules =
 			objectValidationRuleLocalService.getObjectValidationRules(
-				objectEntry.getObjectDefinitionId(), true);
+				objectDefinitionId, true);
 
 		for (ObjectValidationRule objectValidationRule :
 				objectValidationRules) {

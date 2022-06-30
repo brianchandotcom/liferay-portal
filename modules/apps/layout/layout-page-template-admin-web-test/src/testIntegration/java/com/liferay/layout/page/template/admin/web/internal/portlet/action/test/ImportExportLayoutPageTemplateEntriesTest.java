@@ -828,6 +828,25 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryRowCssClasses()
+		throws Exception {
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-147511", Boolean.TRUE.toString())) {
+
+			_addTextFragmentEntry();
+
+			File expectedFile = _generateZipFile(
+				"container/css_classes/expected", null, null);
+			File inputFile = _generateZipFile(
+				"container/css_classes/input", null, null);
+
+			_validateImportExport(expectedFile, inputFile);
+		}
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryRowCustomCSS()
 		throws Exception {
 

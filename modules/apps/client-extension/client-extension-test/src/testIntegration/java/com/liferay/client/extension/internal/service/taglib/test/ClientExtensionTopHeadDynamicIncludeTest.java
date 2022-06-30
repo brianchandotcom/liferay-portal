@@ -64,7 +64,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Víctor Galán
  */
 @RunWith(Arquillian.class)
-public class ClientExtensionTopJSDynamicIncludeTest {
+public class ClientExtensionTopHeadDynamicIncludeTest {
 
 	@ClassRule
 	@Rule
@@ -77,11 +77,11 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 	}
 
 	@Test
-	public void testGlobalJSClientExtensionEntriesAreAdded() throws Exception {
-		String layoutSetGlobalJSURL = _getRandomURL();
+	public void testGlobalCSSClientExtensionEntriesAreAdded() throws Exception {
+		String layoutSetGlobalCSSURL = _getRandomURL();
 
-		ClientExtensionEntry layoutSetGlobalJSClientExtensionEntry =
-			_addGlobalJSClientExtension(layoutSetGlobalJSURL);
+		ClientExtensionEntry layoutSetGlobalCSSClientExtensionEntry =
+			_addGlobalCSSClientExtension(layoutSetGlobalCSSURL);
 
 		LayoutSet publicLayoutSet = _group.getPublicLayoutSet();
 
@@ -89,13 +89,13 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 			TestPropsValues.getUserId(),
 			_portal.getClassNameId(LayoutSet.class),
 			publicLayoutSet.getLayoutSetId(),
-			layoutSetGlobalJSClientExtensionEntry.getExternalReferenceCode(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, StringPool.BLANK);
+			layoutSetGlobalCSSClientExtensionEntry.getExternalReferenceCode(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK);
 
-		String masterLayoutGlobalJSURL = _getRandomURL();
+		String masterLayoutGlobalCSSURL = _getRandomURL();
 
-		ClientExtensionEntry masterLayoutGlobalJSClientExtensionEntry =
-			_addGlobalJSClientExtension(masterLayoutGlobalJSURL);
+		ClientExtensionEntry masterLayoutGlobalCSSClientExtensionEntry =
+			_addGlobalCSSClientExtension(masterLayoutGlobalCSSURL);
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
@@ -108,13 +108,14 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 			TestPropsValues.getUserId(), _portal.getClassNameId(Layout.class),
 			masterLayoutPageTemplateEntry.getPlid(),
-			masterLayoutGlobalJSClientExtensionEntry.getExternalReferenceCode(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, StringPool.BLANK);
+			masterLayoutGlobalCSSClientExtensionEntry.
+				getExternalReferenceCode(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK);
 
-		String layoutGlobalJSURL = _getRandomURL();
+		String layoutGlobalCSSURL = _getRandomURL();
 
-		ClientExtensionEntry layoutGlobalJSClientExtensionEntry =
-			_addGlobalJSClientExtension(layoutGlobalJSURL);
+		ClientExtensionEntry layoutGlobalCSSClientExtensionEntry =
+			_addGlobalCSSClientExtension(layoutGlobalCSSURL);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -125,8 +126,8 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 			TestPropsValues.getUserId(), _portal.getClassNameId(Layout.class),
 			layout.getPlid(),
-			layoutGlobalJSClientExtensionEntry.getExternalReferenceCode(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, StringPool.BLANK);
+			layoutGlobalCSSClientExtensionEntry.getExternalReferenceCode(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -138,12 +139,12 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 		Assert.assertEquals(
 			_normalize(
 				_getExpected(
-					layoutGlobalJSURL, layoutSetGlobalJSURL,
-					masterLayoutGlobalJSURL)),
+					layoutGlobalCSSURL, layoutSetGlobalCSSURL,
+					masterLayoutGlobalCSSURL)),
 			_normalize(mockHttpServletResponse.getContentAsString()));
 	}
 
-	private ClientExtensionEntry _addGlobalJSClientExtension(String url)
+	private ClientExtensionEntry _addGlobalCSSClientExtension(String url)
 		throws Exception {
 
 		ClientExtensionEntry clientExtensionEntry =
@@ -153,7 +154,7 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				StringPool.BLANK, StringPool.BLANK,
-				ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
+				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS,
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
@@ -166,8 +167,8 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 	}
 
 	private String _getExpected(
-			String layoutGlobalJSURL, String layoutSetGlobalJSURL,
-			String masterLayoutGlobalJSURL)
+			String layoutGlobalCSSURL, String layoutSetGlobalCSSURL,
+			String masterLayoutGlobalCSSURL)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -176,14 +177,14 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 			StringUtil.read(
 				clazz.getClassLoader(),
 				"com/liferay/client/extension/internal/service/taglib/test" +
-					"/dependencies/global_js_client_extensions_expected.html"),
+					"/dependencies/global_css_client_extensions_expected.html"),
 			"[$", "$]",
 			HashMapBuilder.put(
-				"LAYOUT_GLOBAL_JS_URL", layoutGlobalJSURL
+				"LAYOUT_GLOBAL_CSS_URL", layoutGlobalCSSURL
 			).put(
-				"LAYOUT_SET_GLOBAL_JS_URL", layoutSetGlobalJSURL
+				"LAYOUT_SET_GLOBAL_CSS_URL", layoutSetGlobalCSSURL
 			).put(
-				"MASTER_LAYOUT_GLOBAL_JS_URL", masterLayoutGlobalJSURL
+				"MASTER_LAYOUT_GLOBAL_CSS_URL", masterLayoutGlobalCSSURL
 			).build());
 	}
 
@@ -221,7 +222,7 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 		_clientExtensionEntryRelLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.client.extension.internal.service.taglib.ClientExtensionTopJSDynamicInclude"
+		filter = "component.name=com.liferay.client.extension.internal.service.taglib.ClientExtensionTopHeadDynamicInclude"
 	)
 	private DynamicInclude _dynamicInclude;
 

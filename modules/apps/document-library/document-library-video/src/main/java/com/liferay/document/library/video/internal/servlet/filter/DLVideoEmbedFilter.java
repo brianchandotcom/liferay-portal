@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.video.internal.servlet.filter;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.video.internal.constants.DLVideoPortletKeys;
@@ -25,14 +26,23 @@ import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -41,6 +51,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
@@ -50,6 +61,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -122,8 +134,18 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 		return getEmbedVideoURL.toString();
 	}
 
-	private FileEntry _getFileEntry(List<String> pathParts)
+	private FileEntry _getFileEntry(
+			HttpServletRequest httpServletRequest, List<String> pathParts)
 		throws PortalException {
+
+		if (_PATH_SEPARATOR_FILE_ENTRY.equals(pathParts.get(1))) {
+			Optional<FileEntry> fileEntryOptional = _resolveFileEntry(
+				httpServletRequest, pathParts);
+
+			return fileEntryOptional.orElseThrow(
+				() -> new NoSuchFileEntryException(
+					"No file entry found for friendly URL " + pathParts));
+		}
 
 		long groupId = GetterUtil.getLong(pathParts.get(1));
 
@@ -153,7 +175,7 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 		}
 
 		try {
-			FileEntry fileEntry = _getFileEntry(pathParts);
+			FileEntry fileEntry = _getFileEntry(httpServletRequest, pathParts);
 
 			String version = ParamUtil.getString(httpServletRequest, "version");
 
@@ -184,10 +206,85 @@ public class DLVideoEmbedFilter extends BasePortalFilter {
 		return StringPool.BLANK;
 	}
 
+	private Group _getGroup(long companyId, String name)
+		throws PortalException {
+
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
+			companyId, StringPool.SLASH + name);
+
+		if (group != null) {
+			return group;
+		}
+
+		User user = _userLocalService.getUserByScreenName(companyId, name);
+
+		return user.getGroup();
+	}
+
+	private User _getUser(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		User user = _portal.getUser(httpServletRequest);
+
+		if (user != null) {
+			return user;
+		}
+
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		String userIdString = (String)httpSession.getAttribute("j_username");
+		String password = (String)httpSession.getAttribute("j_password");
+
+		if ((userIdString != null) && (password != null)) {
+			long userId = GetterUtil.getLong(userIdString);
+
+			return _userLocalService.getUser(userId);
+		}
+
+		Company company = _companyLocalService.getCompany(
+			_portal.getCompanyId(httpServletRequest));
+
+		return company.getDefaultUser();
+	}
+
+	private Optional<FileEntry> _resolveFileEntry(
+			HttpServletRequest httpServletRequest, List<String> pathParts)
+		throws PortalException {
+
+		if (_fileEntryFriendlyURLResolver == null) {
+			return Optional.empty();
+		}
+
+		User user = _getUser(httpServletRequest);
+
+		Group group = _getGroup(user.getCompanyId(), pathParts.get(2));
+
+		return _fileEntryFriendlyURLResolver.resolveFriendlyURL(
+			group.getGroupId(), pathParts.get(3));
+	}
+
+	private static final String _PATH_SEPARATOR_FILE_ENTRY =
+		FriendlyURLResolverConstants.URL_SEPARATOR_Y_FILE_ENTRY;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLVideoEmbedFilter.class);
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private FileEntryFriendlyURLResolver _fileEntryFriendlyURLResolver;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

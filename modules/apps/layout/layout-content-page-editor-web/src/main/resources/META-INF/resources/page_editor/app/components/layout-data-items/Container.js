@@ -51,6 +51,7 @@ const Container = React.memo(
 		const {
 			align,
 			contentDisplay,
+			contentVisibility,
 			flexWrap,
 			justify,
 			widthType,
@@ -95,6 +96,10 @@ const Container = React.memo(
 				style['--background-image-file-entry-id'] =
 					backgroundImage.fileEntryId;
 			}
+		}
+
+		if (contentVisibility) {
+			style.contentVisibility = contentVisibility;
 		}
 
 		const HTMLTag = itemConfig.htmlTag || 'div';

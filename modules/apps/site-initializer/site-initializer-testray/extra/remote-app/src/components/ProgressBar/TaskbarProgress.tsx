@@ -14,22 +14,14 @@
 
 import classNames from 'classnames';
 
-const taskbarClassNames: any = {
-	blocked: 'blocked',
-	failed: 'failed',
-	incomplete: 'test-incomplete',
-	other: 'others-completed',
-	passed: 'passed',
-	self: 'self-completed',
-	test_fix: 'test-fix',
-};
-
 type TaskbarProgress = {
 	displayTotalCompleted: boolean;
 	items: [string, number][];
 	legend?: boolean;
-	total: number;
-	totalCompleted: number;
+	taskbarClassNames?: {
+		[key: string]: string;
+	};
+	totalCompleted?: number;
 };
 
 const NaNToZero = (value: number) => (Number.isNaN(value) ? 0 : value);
@@ -38,86 +30,102 @@ const TaskbarProgress: React.FC<TaskbarProgress> = ({
 	displayTotalCompleted,
 	items,
 	legend,
-	total,
+	taskbarClassNames = {
+		blocked: 'blocked',
+		failed: 'failed',
+		incomplete: 'test-incomplete',
+		other: 'others-completed',
+		passed: 'passed',
+		self: 'self-completed',
+		test_fix: 'test-fix',
+	},
 	totalCompleted,
-}) => (
-	<>
-		<div className="testray-progress-bar">
-			{items.map((item, index) => {
-				const [label, value] = item;
-				const percent = NaNToZero(Math.ceil((value * 100) / total));
+}) => {
+	const total = items
+		.map(([, value]) => value)
+		.reduce((prevValue, currentValue) => prevValue + currentValue);
 
-				if (value) {
-					return (
-						<div
-							className={classNames(
-								'progress-bar-item',
-								taskbarClassNames[label]
-							)}
-							key={index}
-							style={{width: `${percent}%`}}
-							title={`${percent}% ${label}`}
-						/>
-					);
-				}
-			})}
-		</div>
-
-		{legend && (
-			<div className="d-flex testray-progress-bar">
-				{displayTotalCompleted && (
-					<div className="justify-content-between mr-5">
-						<div className="align-items-center d-flex">
-							<span className="font-family-sans-serif font-weight-semi-bold mr-1 text-paragraph-lg">
-								{totalCompleted}
-							</span>
-
-							<span>/</span>
-
-							<span className="font-family-sans-serif ml-1 text-paragraph-sm">
-								{total}
-							</span>
-						</div>
-
-						<span className="font-family-sans-serif text-neutral-6 text-paragraph-xs">
-							TOTAL COMPLETED
-						</span>
-					</div>
-				)}
-
+	return (
+		<>
+			<div className="testray-progress-bar">
 				{items.map((item, index) => {
 					const [label, value] = item;
 					const percent = NaNToZero(Math.ceil((value * 100) / total));
-					const percentTitle = `${percent}% (${value})`;
 
-					return (
-						<div className="d-flex flex-column" key={index}>
-							<div className="align-items-center d-flex mr-5">
-								<div
-									className={classNames(
-										'legend-bar-item font-family-sans-serif',
-										taskbarClassNames[label]
-									)}
-									title={percentTitle}
-								/>
+					if (value) {
+						return (
+							<div
+								className={classNames(
+									'progress-bar-item',
+									taskbarClassNames[label]
+								)}
+								key={index}
+								style={{width: `${percent}%`}}
+								title={`${percent}% ${label}`}
+							/>
+						);
+					}
+				})}
+			</div>
 
-								<span
-									className="font-family-sans-serif mx-2"
-									title={percentTitle}
-								>
-									{percentTitle}
+			{legend && (
+				<div className="d-flex testray-progress-bar">
+					{displayTotalCompleted && (
+						<div className="justify-content-between mr-5">
+							<div className="align-items-center d-flex">
+								<span className="font-family-sans-serif font-weight-semi-bold mr-1 text-paragraph-lg">
+									{totalCompleted}
+								</span>
+
+								<span>/</span>
+
+								<span className="font-family-sans-serif ml-1 text-paragraph-sm">
+									{total}
 								</span>
 							</div>
 
-							<span className="mt-1 text-neutral-6 text-paragraph-xs">
-								{label.toUpperCase()}
+							<span className="font-family-sans-serif text-neutral-6 text-paragraph-xs">
+								TOTAL COMPLETED
 							</span>
 						</div>
-					);
-				})}
-			</div>
-		)}
-	</>
-);
+					)}
+
+					{items.map((item, index) => {
+						const [label, value] = item;
+						const percent = NaNToZero(
+							Math.ceil((value * 100) / total)
+						);
+						const percentTitle = `${percent}% (${value})`;
+
+						return (
+							<div className="d-flex flex-column" key={index}>
+								<div className="align-items-center d-flex mr-5">
+									<div
+										className={classNames(
+											'legend-bar-item font-family-sans-serif',
+											taskbarClassNames[label]
+										)}
+										title={percentTitle}
+									/>
+
+									<span
+										className="font-family-sans-serif mx-2"
+										title={percentTitle}
+									>
+										{percentTitle}
+									</span>
+								</div>
+
+								<span className="mt-1 text-neutral-6 text-paragraph-xs">
+									{label.toUpperCase()}
+								</span>
+							</div>
+						);
+					})}
+				</div>
+			)}
+		</>
+	);
+};
 
 export default TaskbarProgress;

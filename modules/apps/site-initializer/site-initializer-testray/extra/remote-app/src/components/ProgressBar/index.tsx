@@ -32,10 +32,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 		([, valueA], [, valueB]) => valueB - valueA
 	);
 
-	const total = sortedItems
-		.map(([, value]) => value)
-		.reduce((prevValue, currentValue) => prevValue + currentValue);
-
 	const totalCompleted = useMemo(() => {
 		const _totalCompleted = sortedItems
 			.filter(([label, value]) => {
@@ -59,7 +55,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 			displayTotalCompleted={displayTotalCompleted}
 			items={sortedItems}
 			legend={legend}
-			total={total}
 			totalCompleted={totalCompleted}
 		/>
 	);

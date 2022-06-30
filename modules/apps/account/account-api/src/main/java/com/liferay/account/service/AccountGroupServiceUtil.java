@@ -83,6 +83,14 @@ public class AccountGroupServiceUtil {
 			accountGroupId, description, name);
 	}
 
+	public static AccountGroup updateExternalReferenceCode(
+			long accountGroupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			accountGroupId, externalReferenceCode);
+	}
+
 	public static AccountGroupService getService() {
 		return _service;
 	}

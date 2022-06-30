@@ -377,4 +377,14 @@ public interface AccountGroupLocalService
 			long accountGroupId, String description, String name)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public AccountGroup updateExternalReferenceCode(
+			AccountGroup accountGroup, String externalReferenceCode)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public AccountGroup updateExternalReferenceCode(
+			long accountGroupId, String externalReferenceCode)
+		throws PortalException;
+
 }

@@ -438,6 +438,22 @@ public class AccountGroupLocalServiceUtil {
 			accountGroupId, description, name);
 	}
 
+	public static AccountGroup updateExternalReferenceCode(
+			AccountGroup accountGroup, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			accountGroup, externalReferenceCode);
+	}
+
+	public static AccountGroup updateExternalReferenceCode(
+			long accountGroupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			accountGroupId, externalReferenceCode);
+	}
+
 	public static AccountGroupLocalService getService() {
 		return _service;
 	}

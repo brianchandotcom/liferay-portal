@@ -89,6 +89,15 @@ public class AccountGroupServiceWrapper
 	}
 
 	@Override
+	public com.liferay.account.model.AccountGroup updateExternalReferenceCode(
+			long accountGroupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupService.updateExternalReferenceCode(
+			accountGroupId, externalReferenceCode);
+	}
+
+	@Override
 	public AccountGroupService getWrappedService() {
 		return _accountGroupService;
 	}

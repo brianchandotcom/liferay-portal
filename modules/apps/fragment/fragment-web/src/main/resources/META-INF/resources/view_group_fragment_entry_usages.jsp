@@ -55,11 +55,13 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 							modelVar="group"
 						>
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand table-cell-minw-200"
 								name="name"
 								value="<%= group.getDescriptiveName(locale) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-cell-minw-100"
 								name="usages"
 								translate="<%= true %>"
 								value="<%= String.valueOf(groupFragmentEntryLinkDisplayContext.getFragmentGroupUsageCount(group)) %>"

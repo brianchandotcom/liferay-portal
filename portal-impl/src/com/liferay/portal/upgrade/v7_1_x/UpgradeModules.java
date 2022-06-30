@@ -18,7 +18,7 @@ package com.liferay.portal.upgrade.v7_1_x;
  * @author Alberto Chaparro
  */
 public class UpgradeModules
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradeModules {
+	extends com.liferay.portal.kernel.upgrade.util.UpgradeModules {
 
 	@Override
 	public String[] getBundleSymbolicNames() {

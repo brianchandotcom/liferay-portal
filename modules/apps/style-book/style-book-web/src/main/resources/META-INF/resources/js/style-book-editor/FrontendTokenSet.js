@@ -14,7 +14,7 @@
 
 import {Collapse} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useCallback, useMemo} from 'react';
 
 import {useFrontendTokensValues, useSaveTokenValue} from './StyleBookContext';
 import {config} from './config';
@@ -58,30 +58,37 @@ export default function FrontendTokenSet({frontendTokens, label, open}) {
 	const frontendTokensValues = useFrontendTokensValues();
 	const saveTokenValue = useSaveTokenValue();
 
-	const tokenValues = getColorFrontendTokens(
-		config.frontendTokenDefinition,
-		frontendTokensValues
+	const tokenValues = useMemo(
+		() =>
+			getColorFrontendTokens(
+				config.frontendTokenDefinition,
+				frontendTokensValues
+			),
+		[frontendTokensValues]
 	);
 
-	const updateFrontendTokensValues = (frontendToken, value) => {
-		const {mappings = [], label, name} = frontendToken;
+	const updateFrontendTokensValues = useCallback(
+		(frontendToken, value) => {
+			const {mappings = [], label, name} = frontendToken;
 
-		const cssVariableMapping = mappings.find(
-			(mapping) => mapping.type === 'cssVariable'
-		);
+			const cssVariableMapping = mappings.find(
+				(mapping) => mapping.type === 'cssVariable'
+			);
 
-		if (value) {
-			saveTokenValue({
-				label,
-				name,
-				value: {
-					cssVariableMapping: cssVariableMapping.value,
-					name: tokenValues[value]?.name,
-					value: tokenValues[value]?.value || value,
-				},
-			});
-		}
-	};
+			if (value) {
+				saveTokenValue({
+					label,
+					name,
+					value: {
+						cssVariableMapping: cssVariableMapping.value,
+						name: tokenValues[value]?.name,
+						value: tokenValues[value]?.value || value,
+					},
+				});
+			}
+		},
+		[saveTokenValue, tokenValues]
+	);
 
 	return (
 		<Collapse label={label} open={open}>

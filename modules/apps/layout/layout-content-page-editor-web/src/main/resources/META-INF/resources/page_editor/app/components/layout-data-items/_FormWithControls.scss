@@ -6,7 +6,7 @@ html#{$cadmin-selector} .page-editor {
 		}
 
 		&__success-message,
-		& .empty {
+		&--success .empty {
 			min-height: 0;
 		}
 	}

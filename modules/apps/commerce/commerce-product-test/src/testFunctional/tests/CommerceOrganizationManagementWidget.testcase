@@ -54,10 +54,6 @@ definition {
 		}
 
 		task ("And the user svg node is clicked") {
-			WaitForVisible(
-				key_orgType = "user",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
-
 			Click(
 				key_orgType = "user",
 				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
@@ -112,10 +108,6 @@ definition {
 		}
 
 		task ("And the account svg node is clicked") {
-			WaitForVisible(
-				key_orgType = "account",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
-
 			Click(
 				key_orgType = "account",
 				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
@@ -183,10 +175,6 @@ definition {
 		}
 
 		task ("And the user svg node is clicked") {
-			WaitForVisible(
-				key_orgType = "user",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
-
 			Click(
 				key_orgType = "user",
 				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
@@ -235,10 +223,6 @@ definition {
 		}
 
 		task ("And the account svg node is clicked") {
-			WaitForVisible(
-				key_orgType = "account",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
-
 			Click(
 				key_orgType = "account",
 				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
@@ -287,10 +271,6 @@ definition {
 		}
 
 		task ("And the organization icon is clicked") {
-			WaitForVisible(
-				key_orgType = "organization",
-				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");
-
 			Click(
 				key_orgType = "organization",
 				locator1 = "CommerceOrganizationManagementWidget#NODE_ACTION");

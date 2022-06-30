@@ -18,8 +18,8 @@ import {
 	SET_DRAFT_STATUS,
 	SET_TOKEN_VALUES,
 	UPDATE_UNDO_REDO_HISTORY,
-} from '../../src/main/resources/META-INF/resources/js/style-book-editor/constants/actionTypes';
-import reducer from '../../src/main/resources/META-INF/resources/js/style-book-editor/reducer';
+} from '../../../src/main/resources/META-INF/resources/js/style-book-editor/constants/actionTypes';
+import editorReducer from '../../../src/main/resources/META-INF/resources/js/style-book-editor/reducers/editorReducer';
 
 const STATE = {
 	draftStatus: null,
@@ -55,9 +55,9 @@ const STATE = {
 	],
 };
 
-describe('reducer', () => {
+describe('editorReducer', () => {
 	it('saves needed state when dispatching SET_DRAFT_STATUS action', () => {
-		const {draftStatus} = reducer(STATE, {
+		const {draftStatus} = editorReducer(STATE, {
 			type: SET_DRAFT_STATUS,
 			value: 'saving',
 		});
@@ -74,7 +74,7 @@ describe('reducer', () => {
 			},
 		};
 
-		const {frontendTokensValues} = reducer(STATE, {
+		const {frontendTokensValues} = editorReducer(STATE, {
 			tokens,
 			type: SET_TOKEN_VALUES,
 		});
@@ -95,7 +95,7 @@ describe('reducer', () => {
 			},
 		};
 
-		const {redoHistory, undoHistory} = reducer(STATE, {
+		const {redoHistory, undoHistory} = editorReducer(STATE, {
 			isRedo: true,
 			type: ADD_UNDO_ACTION,
 			...token,
@@ -115,7 +115,7 @@ describe('reducer', () => {
 			},
 		};
 
-		const {redoHistory, undoHistory} = reducer(STATE, {
+		const {redoHistory, undoHistory} = editorReducer(STATE, {
 			type: ADD_UNDO_ACTION,
 			...token,
 		});
@@ -134,7 +134,7 @@ describe('reducer', () => {
 			},
 		};
 
-		const {redoHistory} = reducer(STATE, {
+		const {redoHistory} = editorReducer(STATE, {
 			type: ADD_REDO_ACTION,
 			...token,
 		});
@@ -165,7 +165,7 @@ describe('reducer', () => {
 			},
 		];
 
-		const {redoHistory, undoHistory} = reducer(STATE, {
+		const {redoHistory, undoHistory} = editorReducer(STATE, {
 			redoHistory: nextRedoHistory,
 			type: UPDATE_UNDO_REDO_HISTORY,
 			undoHistory: nextUndoHistory,
@@ -176,7 +176,7 @@ describe('reducer', () => {
 	});
 
 	it('saves needed state when dispatching UPDATE_UNDO_REDO_HISTORY action and there are no previous redo/undo history', () => {
-		const {redoHistory, undoHistory} = reducer(STATE, {
+		const {redoHistory, undoHistory} = editorReducer(STATE, {
 			type: UPDATE_UNDO_REDO_HISTORY,
 		});
 

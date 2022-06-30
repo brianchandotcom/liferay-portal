@@ -18,11 +18,11 @@ import {
 	SET_DRAFT_STATUS,
 	SET_TOKEN_VALUES,
 	UPDATE_UNDO_REDO_HISTORY,
-} from './constants/actionTypes';
+} from '../constants/actionTypes';
 
 const MAX_UNDO_ACTIONS = 100;
 
-export default function reducer(state, action) {
+export default function editorReducer(state, action) {
 	switch (action.type) {
 		case SET_DRAFT_STATUS: {
 			const {value} = action;

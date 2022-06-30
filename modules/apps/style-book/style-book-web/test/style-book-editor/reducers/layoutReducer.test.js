@@ -12,12 +12,12 @@
  * details.
  */
 
- import {
+import {
 	LOADING,
 	SET_PREVIEW_LAYOUT,
 	SET_PREVIEW_LAYOUT_TYPE,
-} from '../../src/main/resources/META-INF/resources/js/style-book-editor/constants/actionTypes';
-import layoutReducer from '../../src/main/resources/META-INF/resources/js/style-book-editor/layoutReducer';
+} from '../../../src/main/resources/META-INF/resources/js/style-book-editor/constants/actionTypes';
+import layoutReducer from '../../../src/main/resources/META-INF/resources/js/style-book-editor/reducers/layoutReducer';
 
 const STATE = {
 	draftStatus: null,

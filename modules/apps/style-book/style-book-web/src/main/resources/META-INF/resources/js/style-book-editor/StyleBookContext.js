@@ -24,7 +24,7 @@ import {
 } from './constants/actionTypes';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 import {UNDO_TYPES} from './constants/undoTypes';
-import reducer from './reducer';
+import editorReducer from './reducers/editorReducer';
 import saveDraft from './saveDraft';
 
 const StyleBookDispatchContext = React.createContext(() => {});
@@ -36,7 +36,7 @@ export const StyleBookStoreContext = React.createContext({
 });
 
 export function StyleBookContextProvider({children, initialState}) {
-	const [state, dispatch] = useReducer(reducer, initialState);
+	const [state, dispatch] = useReducer(editorReducer, initialState);
 
 	return (
 		<StyleBookDispatchContext.Provider value={dispatch}>

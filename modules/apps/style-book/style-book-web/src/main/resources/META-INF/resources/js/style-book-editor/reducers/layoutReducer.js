@@ -16,7 +16,7 @@ import {
 	LOADING,
 	SET_PREVIEW_LAYOUT,
 	SET_PREVIEW_LAYOUT_TYPE,
-} from './constants/actionTypes';
+} from '../constants/actionTypes';
 
 export default function layoutReducer(state, action) {
 	switch (action.type) {

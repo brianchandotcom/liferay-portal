@@ -15,7 +15,6 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -335,6 +334,9 @@ public interface ObjectValidationRuleLocalService
 	public ObjectValidationRule updateObjectValidationRule(
 		ObjectValidationRule objectValidationRule);
 
-	public void validate(ObjectEntry objectEntry) throws PortalException;
+	public void validate(
+			Object object, long objectDefinitionId,
+			Map<String, Object> modelAttributes)
+		throws PortalException;
 
 }

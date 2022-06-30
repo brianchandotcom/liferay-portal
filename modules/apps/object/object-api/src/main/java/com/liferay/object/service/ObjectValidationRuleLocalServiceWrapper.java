@@ -446,10 +446,13 @@ public class ObjectValidationRuleLocalServiceWrapper
 	}
 
 	@Override
-	public void validate(com.liferay.object.model.ObjectEntry objectEntry)
+	public void validate(
+			Object object, long objectDefinitionId,
+			java.util.Map<String, Object> modelAttributes)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_objectValidationRuleLocalService.validate(objectEntry);
+		_objectValidationRuleLocalService.validate(
+			object, objectDefinitionId, modelAttributes);
 	}
 
 	@Override

@@ -252,7 +252,7 @@ definition {
 
 			// Pause is necessary because poshi logs in from one user to another very quickly.
 
-			ACUtils.harRecordingPause();
+			ACUtils.logInPause();
 		}
 
 		task ("Sign in as new user") {

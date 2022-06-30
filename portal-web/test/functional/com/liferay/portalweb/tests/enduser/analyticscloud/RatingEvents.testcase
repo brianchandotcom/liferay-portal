@@ -57,7 +57,7 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = "10000");
+			ACUtils.logInPause();
 
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}

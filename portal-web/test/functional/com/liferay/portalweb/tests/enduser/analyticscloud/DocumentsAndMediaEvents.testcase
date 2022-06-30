@@ -160,8 +160,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = "10000");
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}
 

@@ -49,8 +49,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = "10000");
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}
 
@@ -123,8 +121,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = "10000");
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}
 
@@ -196,8 +192,6 @@ definition {
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
-
-			Pause(locator1 = "10000");
 
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}
@@ -274,8 +268,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = "10000");
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}
 
@@ -350,8 +342,6 @@ definition {
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
-
-			Pause(locator1 = "10000");
 
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}
@@ -428,8 +418,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = "10000");
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}
 
@@ -505,8 +493,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			Pause(locator1 = "10000");
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}
 
@@ -556,8 +542,6 @@ definition {
 			ACUtils.launchAC();
 
 			ACNavigation.goToSettings();
-
-			Pause(locator1 = "10000");
 
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}

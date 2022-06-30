@@ -431,10 +431,6 @@ definition {
 				siteName = "Site Name");
 		}
 
-		task ("Stay 5 seconds") {
-			ACUtils.harRecordingPause();
-		}
-
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("pageEvents");
 		}
@@ -517,10 +513,6 @@ definition {
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
-		}
-
-		task ("Stay 5 seconds") {
-			ACUtils.harRecordingPause();
 		}
 
 		task ("Start Har recording") {
@@ -718,10 +710,6 @@ definition {
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
-		}
-
-		task ("Stay 5 seconds") {
-			ACUtils.harRecordingPause();
 		}
 
 		task ("Start Har recording") {

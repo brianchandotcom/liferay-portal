@@ -14,34 +14,29 @@
 
 package com.liferay.portal.upgrade;
 
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeAddress;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAsset;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeAssetTagsResourcePermission;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeCompanyId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibraryPortletId;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeDocumentLibraryPreferences;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeEmailAddress;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeEmailNotificationPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeExpando;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeGroup;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeLayout;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeListType;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeLookAndFeel;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeMembershipRequest;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMobileDeviceRules;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMySQL;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeOrgLabor;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeOrganization;
-import com.liferay.portal.upgrade.v7_0_0.UpgradePhone;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortalPreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletDisplayTemplatePreferences;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePortletId;
@@ -49,14 +44,12 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradePostgreSQL;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRatings;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRelease;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRepository;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeRepositoryEntry;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeResourcePermission;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSchema;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSharding;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSocial;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeSubscription;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeUser;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeWebsite;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeWorkflow;
 import com.liferay.portal.verify.VerifyUUID;
 import com.liferay.portal.verify.model.AssetTagVerifiableUUIDModel;
@@ -108,30 +101,45 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 
 		upgrade(new UpgradeKernelPackage());
 
-		upgrade(new UpgradeAddress());
+		upgrade(
+			UpgradeProcessFactory.alterColumnTypes(
+				"Address", "LONG", "typeId"));
 		upgrade(new UpgradeAsset());
-		upgrade(new UpgradeAssetTagsResourcePermission());
+		upgrade(
+			UpgradeProcessFactory.runSQL(
+				"delete from ResourcePermission where name = " +
+					"'com.liferay.portlet.asset.model.AssetTag' and scope = " +
+						ResourceConstants.SCOPE_INDIVIDUAL));
 		upgrade(new UpgradeCompanyId());
 		upgrade(new UpgradeDocumentLibrary());
 		upgrade(new UpgradeDocumentLibraryPortletId());
 		upgrade(new UpgradeDocumentLibraryPreferences());
-		upgrade(new UpgradeEmailAddress());
+		upgrade(
+			UpgradeProcessFactory.alterColumnTypes(
+				"EmailAddress", "LONG", "typeId"));
 		upgrade(new UpgradeEmailNotificationPreferences());
 		upgrade(new UpgradeExpando());
 		upgrade(new UpgradeGroup());
 		upgrade(new UpgradeLastPublishDate());
 		upgrade(new UpgradeLayout());
-		upgrade(new UpgradeListType());
+		upgrade(
+			UpgradeProcessFactory.alterColumnTypes(
+				"ListType", "LONG not null", "listTypeId"));
 		upgrade(new UpgradeLookAndFeel());
-		upgrade(new UpgradeMembershipRequest());
+		upgrade(
+			UpgradeProcessFactory.alterColumnTypes(
+				"MembershipRequest", "LONG", "statusId"));
 		upgrade(new UpgradeMessageBoards());
 		upgrade(
 			UpgradeModulesFactory.create(
 				_BUNDLE_SYMBOLIC_NAMES, _CONVERTED_LEGACY_MODULES));
 		upgrade(new UpgradeMySQL());
 		upgrade(new UpgradeOrganization());
-		upgrade(new UpgradeOrgLabor());
-		upgrade(new UpgradePhone());
+		upgrade(
+			UpgradeProcessFactory.alterColumnTypes(
+				"OrgLabor", "LONG", "typeId"));
+		upgrade(
+			UpgradeProcessFactory.alterColumnTypes("Phone", "LONG", "typeId"));
 		upgrade(new UpgradePortalPreferences());
 		upgrade(new UpgradePortletDisplayTemplatePreferences());
 		upgrade(new UpgradePortletId());
@@ -139,12 +147,16 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(new UpgradeRatings());
 		upgrade(new UpgradeRelease());
 		upgrade(new UpgradeRepository());
-		upgrade(new UpgradeRepositoryEntry());
+		upgrade(
+			UpgradeProcessFactory.alterColumnTypes(
+				"RepositoryEntry", "VARCHAR(255) null", "mappedId"));
 		upgrade(new UpgradeResourcePermission());
 		upgrade(new UpgradeSocial());
 		upgrade(new UpgradeSubscription());
 		upgrade(new UpgradeUser());
-		upgrade(new UpgradeWebsite());
+		upgrade(
+			UpgradeProcessFactory.alterColumnTypes(
+				"Website", "LONG", "typeId"));
 		upgrade(new UpgradeWorkflow());
 
 		upgrade(new UpgradeMobileDeviceRules());

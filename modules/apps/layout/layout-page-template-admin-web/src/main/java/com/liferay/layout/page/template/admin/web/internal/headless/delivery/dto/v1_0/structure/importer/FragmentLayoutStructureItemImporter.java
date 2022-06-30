@@ -302,7 +302,7 @@ public class FragmentLayoutStructureItemImporter
 					getDefaultEditableValuesJSONObject(
 						_getProcessedHTML(
 							fragmentEntry.getCompanyId(), configuration,
-							fragmentCollection, html, fragmentKey),
+							fragmentCollection, html, fragmentKey, type),
 						configuration);
 		}
 
@@ -750,7 +750,7 @@ public class FragmentLayoutStructureItemImporter
 	private String _getProcessedHTML(
 			long companyId, String configuration,
 			FragmentCollection fragmentCollection, String html,
-			String rendererKey)
+			String rendererKey, int type)
 		throws Exception {
 
 		String processedHTML = _replaceResources(fragmentCollection, html);
@@ -762,6 +762,7 @@ public class FragmentLayoutStructureItemImporter
 		fragmentEntryLink.setHtml(processedHTML);
 		fragmentEntryLink.setConfiguration(configuration);
 		fragmentEntryLink.setRendererKey(rendererKey);
+		fragmentEntryLink.setType(type);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();

@@ -1,4 +1,4 @@
-sampleThemeCSS:
+sample-theme-css:
     clayURL: "css/clay.css"
     mainURL: "css/main.css"
     name: "Sample Theme CSS"

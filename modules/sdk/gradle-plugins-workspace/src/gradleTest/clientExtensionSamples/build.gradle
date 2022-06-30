@@ -2,8 +2,8 @@ task runGradleTest
 
 runGradleTest {
 	dependsOn ":sample-iframe:buildClientExtension"
-	dependsOn ":sampleThemeCSS:buildClientExtension"
-	dependsOn ":sampleThemeFavicon:buildClientExtension"
+	dependsOn ":sample-theme-css:buildClientExtension"
+	dependsOn ":sample-theme-favicon:buildClientExtension"
 
 	doLast {
 		Project sampleIFrameProject = project(":sample-iframe")
@@ -18,15 +18,15 @@ runGradleTest {
 
 		assert lcpJson.text.contains("sampleiframe")
 
-		Project sampleThemeCSSProject = project(":sampleThemeCSS")
+		Project sampleThemeCSSProject = project(":sample-theme-css")
 
-		File distFile = new File(sampleThemeCSSProject.projectDir, "dist/sampleThemeCSS.zip")
+		File distFile = new File(sampleThemeCSSProject.projectDir, "dist/sample-theme-css.zip")
 
 		assert distFile.exists()
 
-		Project sampleThemeFaviconProject = project(":sampleThemeFavicon")
+		Project sampleThemeFaviconProject = project(":sample-theme-favicon")
 
-		File sampleConfigFile = new File(sampleThemeFaviconProject.buildDir, "sampleThemeFavicon.client-extension-config.json")
+		File sampleConfigFile = new File(sampleThemeFaviconProject.buildDir, "sample-theme-favicon.client-extension-config.json")
 
 		assert sampleConfigFile.exists()
 

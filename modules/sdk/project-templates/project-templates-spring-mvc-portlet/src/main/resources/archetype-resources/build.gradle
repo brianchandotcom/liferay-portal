@@ -26,6 +26,9 @@ dependencies {
 #if (${framework.equals("springportletmvc")} && ${frameworkDependencies.equals("provided")})
 	compile group: "com.liferay.portletmvc4spring", name: "com.liferay.portletmvc4spring.thin", version: "4.1.9", transitive: false
 #end
+#if (${liferayVersion.startsWith("7.4")} && ${framework.equals("springportletmvc")})
+	compile group: "com.rometools", name: "rome", version: "1.16.0"
+#end
 #if (${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")})
 	compile group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
 #end

@@ -83,6 +83,13 @@
 			</exclusions>
 		</dependency>
 #end
+#if (${liferayVersion.startsWith("7.4")} and ${framework.equals("springportletmvc")})
+		<dependency>
+			<groupId>com.rometools</groupId>
+			<artifactId>rome</artifactId>
+			<version>1.16.0</version>
+		</dependency>
+#end
 		<dependency>
 			<groupId>javax.portlet</groupId>
 			<artifactId>portlet-api</artifactId>

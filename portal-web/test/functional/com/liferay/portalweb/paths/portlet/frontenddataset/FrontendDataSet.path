@@ -55,6 +55,11 @@
 	<td>//*[normalize-space(text())='${key_itemName}']/parent::*[contains(@class,'dnd-tr')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGINATION_RESULTS</td>
+	<td>//div[contains(@class,'pagination-results') and contains(.,'Showing 1 to 10 of 100')]</td>
+	<td></td>
+</tr>
 
 <!--FILTERS-->
 

@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.BaseWebServerTestCase;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.methods.Method;
@@ -112,24 +110,15 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 	}
 
 	private void _addFileEntry(String urlTitle) throws Exception {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.document.library.configuration." +
-						"FFFriendlyURLEntryFileEntryConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
-
-			_dlAppLocalService.addFileEntry(
-				null, TestPropsValues.getUserId(), group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				RandomTestUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				RandomTestUtil.randomString(), urlTitle,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				(byte[])null, null, null,
-				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
-		}
+		_dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			RandomTestUtil.randomString(), urlTitle,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			(byte[])null, null, null,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	private MockHttpServletRequest _createMockHttpServletRequest(String path)

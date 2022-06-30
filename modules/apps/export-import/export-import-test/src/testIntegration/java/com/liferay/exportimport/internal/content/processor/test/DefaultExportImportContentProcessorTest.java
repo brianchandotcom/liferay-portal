@@ -41,7 +41,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -70,7 +69,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -288,74 +286,61 @@ public class DefaultExportImportContentProcessorTest {
 
 	@Test
 	public void testExportDLReferencesFriendlyURL() throws Exception {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.document.library.configuration." +
-						"FFFriendlyURLEntryFileEntryConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", Boolean.TRUE
-					).build())) {
+		_portletDataContextExport.setZipWriter(new TestReaderWriter());
 
-			_portletDataContextExport.setZipWriter(new TestReaderWriter());
+		_fileEntry = DLAppLocalServiceUtil.updateFileEntry(
+			TestPropsValues.getUserId(), _fileEntry.getFileEntryId(),
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			_fileEntry.getTitle(), _fileEntry.getTitle(), StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.AUTOMATIC,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
-			_fileEntry = DLAppLocalServiceUtil.updateFileEntry(
-				TestPropsValues.getUserId(), _fileEntry.getFileEntryId(),
-				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-				_fileEntry.getTitle(), _fileEntry.getTitle(), StringPool.BLANK,
-				StringPool.BLANK, DLVersionNumberIncrease.AUTOMATIC,
-				TestDataConstants.TEST_BYTE_ARRAY, null, null,
-				ServiceContextTestUtil.getServiceContext(
-					_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
+		String content = _replaceParameters(
+			_getContent("dl_references_file_friendly_urls.txt"), _fileEntry);
 
-			String content = _replaceParameters(
-				_getContent("dl_references_file_friendly_urls.txt"),
-				_fileEntry);
+		_exportImportContentProcessor.validateContentReferences(
+			_stagingGroup.getGroupId(), content);
 
-			_exportImportContentProcessor.validateContentReferences(
-				_stagingGroup.getGroupId(), content);
+		List<String> urls = _getURLs(content);
 
-			List<String> urls = _getURLs(content);
+		content = _exportImportContentProcessor.replaceExportContentReferences(
+			_portletDataContextExport, _referrerStagedModel, content, true,
+			true);
 
-			content =
-				_exportImportContentProcessor.replaceExportContentReferences(
-					_portletDataContextExport, _referrerStagedModel, content,
-					true, true);
-
-			for (String url : urls) {
-				Assert.assertFalse(
-					url + " must not be in :" + content, content.contains(url));
-			}
-
-			TestReaderWriter testReaderWriter =
-				(TestReaderWriter)_portletDataContextExport.getZipWriter();
-
-			_assertContainsReference(
-				testReaderWriter.getEntries(),
-				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId());
-
-			_assertContainsBinary(
-				testReaderWriter.getBinaryEntries(),
-				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId());
-
-			int count = 0;
-
-			for (String entry : testReaderWriter.getEntries()) {
-				if (entry.contains(DLFileEntryConstants.getClassName())) {
-					Assert.assertTrue(
-						content,
-						content.contains(
-							"[$dl-reference=" + entry +
-								"$,$include-friendly-url=true$]"));
-
-					count++;
-				}
-			}
-
-			Assert.assertTrue(
-				"There should be at least one file entry reference", count > 0);
+		for (String url : urls) {
+			Assert.assertFalse(
+				url + " must not be in :" + content, content.contains(url));
 		}
+
+		TestReaderWriter testReaderWriter =
+			(TestReaderWriter)_portletDataContextExport.getZipWriter();
+
+		_assertContainsReference(
+			testReaderWriter.getEntries(), DLFileEntryConstants.getClassName(),
+			_fileEntry.getFileEntryId());
+
+		_assertContainsBinary(
+			testReaderWriter.getBinaryEntries(),
+			DLFileEntryConstants.getClassName(), _fileEntry.getFileEntryId());
+
+		int count = 0;
+
+		for (String entry : testReaderWriter.getEntries()) {
+			if (entry.contains(DLFileEntryConstants.getClassName())) {
+				Assert.assertTrue(
+					content,
+					content.contains(
+						"[$dl-reference=" + entry +
+							"$,$include-friendly-url=true$]"));
+
+				count++;
+			}
+		}
+
+		Assert.assertTrue(
+			"There should be at least one file entry reference", count > 0);
 	}
 
 	@Test
@@ -1314,55 +1299,42 @@ public class DefaultExportImportContentProcessorTest {
 			boolean deleteFileEntryBeforeImport)
 		throws Exception {
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.document.library.configuration." +
-						"FFFriendlyURLEntryFileEntryConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", Boolean.TRUE
-					).build())) {
+		_fileEntry = DLAppLocalServiceUtil.updateFileEntry(
+			TestPropsValues.getUserId(), _fileEntry.getFileEntryId(),
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			_fileEntry.getTitle(), _fileEntry.getTitle(), StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.AUTOMATIC,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
-			_fileEntry = DLAppLocalServiceUtil.updateFileEntry(
-				TestPropsValues.getUserId(), _fileEntry.getFileEntryId(),
-				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-				_fileEntry.getTitle(), _fileEntry.getTitle(), StringPool.BLANK,
-				StringPool.BLANK, DLVersionNumberIncrease.AUTOMATIC,
-				TestDataConstants.TEST_BYTE_ARRAY, null, null,
-				ServiceContextTestUtil.getServiceContext(
-					_stagingGroup.getGroupId(), TestPropsValues.getUserId()));
-
-			Element referrerStagedModelElement =
-				_portletDataContextExport.getExportDataElement(
-					_referrerStagedModel);
-
-			String referrerStagedModelPath = ExportImportPathUtil.getModelPath(
+		Element referrerStagedModelElement =
+			_portletDataContextExport.getExportDataElement(
 				_referrerStagedModel);
 
-			referrerStagedModelElement.addAttribute(
-				"path", referrerStagedModelPath);
+		String referrerStagedModelPath = ExportImportPathUtil.getModelPath(
+			_referrerStagedModel);
 
-			String content = _replaceParameters(
-				_getContent("dl_references_file_friendly_urls.txt"),
-				_fileEntry);
+		referrerStagedModelElement.addAttribute(
+			"path", referrerStagedModelPath);
 
-			content =
-				_exportImportContentProcessor.replaceExportContentReferences(
-					_portletDataContextExport, _referrerStagedModel, content,
-					true, true);
+		String content = _replaceParameters(
+			_getContent("dl_references_file_friendly_urls.txt"), _fileEntry);
 
-			_portletDataContextImport.setScopeGroupId(_fileEntry.getGroupId());
+		content = _exportImportContentProcessor.replaceExportContentReferences(
+			_portletDataContextExport, _referrerStagedModel, content, true,
+			true);
 
-			if (deleteFileEntryBeforeImport) {
-				DLAppLocalServiceUtil.deleteFileEntry(
-					_fileEntry.getFileEntryId());
-			}
+		_portletDataContextImport.setScopeGroupId(_fileEntry.getGroupId());
 
-			content =
-				_exportImportContentProcessor.replaceImportContentReferences(
-					_portletDataContextImport, _referrerStagedModel, content);
-
-			Assert.assertFalse(content, content.contains("[$dl-reference="));
+		if (deleteFileEntryBeforeImport) {
+			DLAppLocalServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
 		}
+
+		content = _exportImportContentProcessor.replaceImportContentReferences(
+			_portletDataContextImport, _referrerStagedModel, content);
+
+		Assert.assertFalse(content, content.contains("[$dl-reference="));
 	}
 
 	private void _testImportLayoutReferences() throws Exception {

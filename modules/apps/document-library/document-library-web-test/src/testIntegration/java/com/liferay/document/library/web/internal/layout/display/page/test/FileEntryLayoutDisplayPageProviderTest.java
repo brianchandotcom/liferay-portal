@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -55,24 +53,15 @@ public class FileEntryLayoutDisplayPageProviderTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.document.library.configuration." +
-						"FFFriendlyURLEntryFileEntryConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", Boolean.TRUE
-					).build())) {
-
-			_fileEntry = _dlAppLocalService.addFileEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				RandomTestUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				new byte[0], null, null,
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-		}
+		_fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			RandomTestUtil.randomString(), StringPool.BLANK,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new byte[0], null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
 	@Test

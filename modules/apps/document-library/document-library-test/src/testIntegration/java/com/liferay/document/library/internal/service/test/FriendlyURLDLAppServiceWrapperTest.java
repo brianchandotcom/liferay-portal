@@ -21,7 +21,6 @@ import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -60,315 +58,232 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 
 	@Test
 	public void testAddFileEntryBytesAddsFriendlyURLEntry() throws Exception {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
+			StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 
-			FileEntry fileEntry = _dlAppService.addFileEntry(
-				null, group.getGroupId(), parentFolder.getFolderId(),
-				StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				StringUtil.randomString(), "urltitle",
-				StringUtil.randomString(), StringPool.BLANK,
-				TestDataConstants.TEST_BYTE_ARRAY, null, null,
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId()));
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry.getFileEntryId());
 
-			FriendlyURLEntry friendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					_portal.getClassNameId(FileEntry.class),
-					fileEntry.getFileEntryId());
-
-			Assert.assertNotNull(friendlyURLEntry);
-			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
-		}
+		Assert.assertNotNull(friendlyURLEntry);
+		Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 	}
 
 	@Test
 	public void testAddFileEntryFileAddsFriendlyURLEntry() throws Exception {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
+			StringPool.BLANK,
+			FileUtil.createTempFile(
+				new UnsyncByteArrayInputStream(
+					TestDataConstants.TEST_BYTE_ARRAY)),
+			null, null,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 
-			FileEntry fileEntry = _dlAppService.addFileEntry(
-				null, group.getGroupId(), parentFolder.getFolderId(),
-				StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				StringUtil.randomString(), "urltitle",
-				StringUtil.randomString(), StringPool.BLANK,
-				FileUtil.createTempFile(
-					new UnsyncByteArrayInputStream(
-						TestDataConstants.TEST_BYTE_ARRAY)),
-				null, null,
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId()));
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry.getFileEntryId());
 
-			FriendlyURLEntry friendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					_portal.getClassNameId(FileEntry.class),
-					fileEntry.getFileEntryId());
-
-			Assert.assertNotNull(friendlyURLEntry);
-			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
-		}
+		Assert.assertNotNull(friendlyURLEntry);
+		Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 	}
 
 	@Test
 	public void testAddFileEntryInputStreamAddsFriendlyURLEntry()
 		throws Exception {
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
+			StringPool.BLANK,
+			new UnsyncByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY),
+			0, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 
-			FileEntry fileEntry = _dlAppService.addFileEntry(
-				null, group.getGroupId(), parentFolder.getFolderId(),
-				StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				StringUtil.randomString(), "urltitle",
-				StringUtil.randomString(), StringPool.BLANK,
-				new UnsyncByteArrayInputStream(
-					TestDataConstants.TEST_BYTE_ARRAY),
-				0, null, null,
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId()));
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry.getFileEntryId());
 
-			FriendlyURLEntry friendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					_portal.getClassNameId(FileEntry.class),
-					fileEntry.getFileEntryId());
-
-			Assert.assertNotNull(friendlyURLEntry);
-			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
-		}
+		Assert.assertNotNull(friendlyURLEntry);
+		Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 	}
 
 	@Test
-	public void testtestUpdateFileEntryAndCheckInFileUpdatesFriendlyURLEntry()
+	public void testUpdateFileEntryAndCheckInFileUpdatesFriendlyURLEntry()
 		throws Exception {
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
+		File file = FileUtil.createTempFile(
+			new UnsyncByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY));
 
-			File file = FileUtil.createTempFile(
-				new UnsyncByteArrayInputStream(
-					TestDataConstants.TEST_BYTE_ARRAY));
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), RandomTestUtil.randomString(),
+			StringUtil.randomString(), StringPool.BLANK, file, null, null,
+			serviceContext);
 
-			FileEntry fileEntry = _dlAppService.addFileEntry(
-				null, group.getGroupId(), parentFolder.getFolderId(),
-				StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				StringUtil.randomString(), RandomTestUtil.randomString(),
-				StringUtil.randomString(), StringPool.BLANK, file, null, null,
-				serviceContext);
+		fileEntry = _dlAppService.updateFileEntryAndCheckIn(
+			fileEntry.getFileEntryId(), StringUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.MAJOR, file, null, null,
+			serviceContext);
 
-			fileEntry = _dlAppService.updateFileEntryAndCheckIn(
-				fileEntry.getFileEntryId(), StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
-				StringPool.BLANK, DLVersionNumberIncrease.MAJOR, file, null,
-				null, serviceContext);
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry.getFileEntryId());
 
-			FriendlyURLEntry friendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					_portal.getClassNameId(FileEntry.class),
-					fileEntry.getFileEntryId());
-
-			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
-		}
+		Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 	}
 
 	@Test
 	public void testUpdateFileEntryAndCheckInInputStreamUpdatesFriendlyURLEntry()
 		throws Exception {
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
+		InputStream inputStream = new UnsyncByteArrayInputStream(
+			TestDataConstants.TEST_BYTE_ARRAY);
+		long size = 0;
 
-			InputStream inputStream = new UnsyncByteArrayInputStream(
-				TestDataConstants.TEST_BYTE_ARRAY);
-			long size = 0;
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
+			StringPool.BLANK, inputStream, size, null, null, serviceContext);
 
-			FileEntry fileEntry = _dlAppService.addFileEntry(
-				null, group.getGroupId(), parentFolder.getFolderId(),
-				StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				StringUtil.randomString(), "urltitle",
-				StringUtil.randomString(), StringPool.BLANK, inputStream, size,
-				null, null, serviceContext);
+		fileEntry = _dlAppService.updateFileEntryAndCheckIn(
+			fileEntry.getFileEntryId(), StringUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.MAJOR, inputStream, size,
+			null, null, serviceContext);
 
-			fileEntry = _dlAppService.updateFileEntryAndCheckIn(
-				fileEntry.getFileEntryId(), StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
-				StringPool.BLANK, DLVersionNumberIncrease.MAJOR, inputStream,
-				size, null, null, serviceContext);
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry.getFileEntryId());
 
-			FriendlyURLEntry friendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					_portal.getClassNameId(FileEntry.class),
-					fileEntry.getFileEntryId());
-
-			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
-		}
+		Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 	}
 
 	@Test
 	public void testUpdateFileEntryBytesUpdatesFriendlyURLEntry()
 		throws Exception {
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
+		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
 
-			byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), RandomTestUtil.randomString(),
+			StringUtil.randomString(), StringPool.BLANK, bytes, null, null,
+			serviceContext);
 
-			FileEntry fileEntry = _dlAppService.addFileEntry(
-				null, group.getGroupId(), parentFolder.getFolderId(),
-				StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				StringUtil.randomString(), RandomTestUtil.randomString(),
-				StringUtil.randomString(), StringPool.BLANK, bytes, null, null,
-				serviceContext);
+		fileEntry = _dlAppService.updateFileEntry(
+			fileEntry.getFileEntryId(), StringUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.MAJOR, bytes, null, null,
+			serviceContext);
 
-			fileEntry = _dlAppService.updateFileEntry(
-				fileEntry.getFileEntryId(), StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
-				StringPool.BLANK, DLVersionNumberIncrease.MAJOR, bytes, null,
-				null, serviceContext);
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry.getFileEntryId());
 
-			FriendlyURLEntry friendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					_portal.getClassNameId(FileEntry.class),
-					fileEntry.getFileEntryId());
-
-			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
-		}
+		Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 	}
 
 	@Test
 	public void testUpdateFileEntryFileUpdatesFriendlyURLEntry()
 		throws Exception {
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
+		File file = FileUtil.createTempFile(
+			new UnsyncByteArrayInputStream(TestDataConstants.TEST_BYTE_ARRAY));
 
-			File file = FileUtil.createTempFile(
-				new UnsyncByteArrayInputStream(
-					TestDataConstants.TEST_BYTE_ARRAY));
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), RandomTestUtil.randomString(),
+			StringUtil.randomString(), StringPool.BLANK, file, null, null,
+			serviceContext);
 
-			FileEntry fileEntry = _dlAppService.addFileEntry(
-				null, group.getGroupId(), parentFolder.getFolderId(),
-				StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				StringUtil.randomString(), RandomTestUtil.randomString(),
-				StringUtil.randomString(), StringPool.BLANK, file, null, null,
-				serviceContext);
+		fileEntry = _dlAppService.updateFileEntry(
+			fileEntry.getFileEntryId(), StringUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.MAJOR, file, null, null,
+			serviceContext);
 
-			fileEntry = _dlAppService.updateFileEntry(
-				fileEntry.getFileEntryId(), StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
-				StringPool.BLANK, DLVersionNumberIncrease.MAJOR, file, null,
-				null, serviceContext);
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry.getFileEntryId());
 
-			FriendlyURLEntry friendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					_portal.getClassNameId(FileEntry.class),
-					fileEntry.getFileEntryId());
-
-			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
-		}
+		Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 	}
 
 	@Test
 	public void testUpdateFileEntryInputStreamUpdatesFriendlyURLEntry()
 		throws Exception {
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID,
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
+		InputStream inputStream = new UnsyncByteArrayInputStream(
+			TestDataConstants.TEST_BYTE_ARRAY);
+		long size = 0;
 
-			InputStream inputStream = new UnsyncByteArrayInputStream(
-				TestDataConstants.TEST_BYTE_ARRAY);
-			long size = 0;
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId());
+		FileEntry fileEntry = _dlAppService.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
+			StringPool.BLANK, inputStream, size, null, null, serviceContext);
 
-			FileEntry fileEntry = _dlAppService.addFileEntry(
-				null, group.getGroupId(), parentFolder.getFolderId(),
-				StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				StringUtil.randomString(), "urltitle",
-				StringUtil.randomString(), StringPool.BLANK, inputStream, size,
-				null, null, serviceContext);
+		fileEntry = _dlAppService.updateFileEntry(
+			fileEntry.getFileEntryId(), StringUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
+			StringPool.BLANK, DLVersionNumberIncrease.MAJOR, inputStream, size,
+			null, null, serviceContext);
 
-			fileEntry = _dlAppService.updateFileEntry(
-				fileEntry.getFileEntryId(), StringUtil.randomString(),
-				ContentTypes.APPLICATION_OCTET_STREAM,
-				RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
-				StringPool.BLANK, DLVersionNumberIncrease.MAJOR, inputStream,
-				size, null, null, serviceContext);
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry.getFileEntryId());
 
-			FriendlyURLEntry friendlyURLEntry =
-				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					_portal.getClassNameId(FileEntry.class),
-					fileEntry.getFileEntryId());
-
-			Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
-		}
+		Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
 	}
-
-	private static final String
-		_FF_FRIENDLY_URL_ENTRY_FILE_ENTRY_CONFIGURATION_PID =
-			"com.liferay.document.library.configuration." +
-				"FFFriendlyURLEntryFileEntryConfiguration";
 
 	@Inject
 	private static DLAppService _dlAppService;

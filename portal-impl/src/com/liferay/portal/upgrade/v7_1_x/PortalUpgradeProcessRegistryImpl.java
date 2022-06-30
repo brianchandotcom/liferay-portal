@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_1_x;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
@@ -52,7 +53,10 @@ public class PortalUpgradeProcessRegistryImpl
 				},
 				null));
 
-		upgradeProcesses.put(new Version(1, 1, 1), new UpgradeCounter());
+		upgradeProcesses.put(
+			new Version(1, 1, 1),
+			UpgradeProcessFactory.alterColumnTypes(
+				"Counter", "VARCHAR(150) not null", "name"));
 
 		upgradeProcesses.put(new Version(1, 1, 2), new UpgradeDB2());
 
@@ -60,15 +64,22 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(2, 0, 0), new UpgradeAssetTagsPermission());
 
 		upgradeProcesses.put(
-			new Version(2, 0, 1), new UpgradeDocumentLibrary());
+			new Version(2, 0, 1),
+			UpgradeProcessFactory.alterColumnTypes(
+				"DLFileEntryType", "VARCHAR(75) null", "fileEntryTypeKey"));
 
 		upgradeProcesses.put(
-			new Version(2, 0, 2), new UpgradePasswordPolicyRegex());
+			new Version(2, 0, 2),
+			UpgradeProcessFactory.alterColumnTypes(
+				"PasswordPolicy", "STRING null", "regex"));
 
 		upgradeProcesses.put(
 			new Version(2, 0, 3), new UpgradePortalPreferences());
 
-		upgradeProcesses.put(new Version(2, 0, 4), new UpgradeUserGroup());
+		upgradeProcesses.put(
+			new Version(2, 0, 4),
+			UpgradeProcessFactory.alterColumnTypes(
+				"UserGroup", "VARCHAR(255) null", "name"));
 
 		upgradeProcesses.put(
 			new Version(2, 0, 5), new UpgradeAnnouncementsPortletId());

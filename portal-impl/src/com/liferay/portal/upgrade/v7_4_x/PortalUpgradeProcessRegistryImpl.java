@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_4_x;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
@@ -70,19 +71,29 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(12, 0, 0), new UpgradePortalPreferences());
 
 		upgradeProcesses.put(
-			new Version(12, 0, 1), new UpgradeResourceAction());
+			new Version(12, 0, 1),
+			UpgradeProcessFactory.runSQL(
+				"update ResourceAction set actionId = 'MANAGE_COUNTRIES' " +
+					"where name='90' and actionId = " +
+						"'MANAGE_COMMERCE_COUNTRIES'"));
 
 		upgradeProcesses.put(
 			new Version(12, 0, 2), new UpgradeDLFileEntryType());
 
 		upgradeProcesses.put(new Version(12, 1, 0), new UpgradeDLFileEntry());
 
-		upgradeProcesses.put(new Version(12, 1, 1), new UpgradeDLFileVersion());
+		upgradeProcesses.put(
+			new Version(12, 1, 1),
+			UpgradeProcessFactory.addColumns(
+				"DLFileVersion", "expirationDate DATE null",
+				"reviewDate DATE null"));
 
 		upgradeProcesses.put(new Version(12, 2, 0), new UpgradeCompanyId());
 
 		upgradeProcesses.put(
-			new Version(12, 2, 1), new UpgradeAssetEntryTitle());
+			new Version(12, 2, 1),
+			UpgradeProcessFactory.alterColumnTypes(
+				"AssetEntry", "TEXT null", "title"));
 
 		upgradeProcesses.put(
 			new Version(12, 2, 2), new UpgradePortalPreferenceValue());
@@ -100,7 +111,12 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(13, 3, 0),
 			new CTModelUpgradeProcess("Repository", "RepositoryEntry"));
 
-		upgradeProcesses.put(new Version(13, 3, 1), new UpgradeRepository());
+		upgradeProcesses.put(
+			new Version(13, 3, 1),
+			UpgradeProcessFactory.runSQL(
+				"update Repository set portletId = name where (portletId is " +
+					"null or portletId = '') and name = " +
+						"'com.liferay.portal.kernel.util.TempFileEntryUtil'"));
 
 		upgradeProcesses.put(new Version(13, 3, 2), new UpgradeMappingTables());
 
@@ -108,7 +124,10 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(new Version(13, 3, 4), new UpgradeExpandoColumn());
 
-		upgradeProcesses.put(new Version(13, 3, 5), new UpgradeContact());
+		upgradeProcesses.put(
+			new Version(13, 3, 5),
+			UpgradeProcessFactory.alterColumnTypes(
+				"Contact_", "LONG NULL", "prefixId", "suffixId"));
 
 		upgradeProcesses.put(
 			new Version(14, 0, 0), new UpgradeExternalReferenceCode());

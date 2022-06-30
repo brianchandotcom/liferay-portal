@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_3_x;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
@@ -61,7 +62,9 @@ public class PortalUpgradeProcessRegistryImpl
 				"AssetEntries_AssetCategories", "AssetEntries_AssetTags"));
 
 		upgradeProcesses.put(
-			new Version(8, 1, 1), new UpgradeAssetCategoryName());
+			new Version(8, 1, 1),
+			UpgradeProcessFactory.alterColumnTypes(
+				"AssetCategory", "VARCHAR(255) null", "name"));
 
 		upgradeProcesses.put(
 			new Version(8, 2, 0), new UpgradeAssetEntryMappingTables());
@@ -97,7 +100,10 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(8, 9, 0), new UpgradeRatingsMVCCVersion());
 
 		upgradeProcesses.put(
-			new Version(8, 10, 0), new UpgradeResourceAction());
+			new Version(8, 10, 0),
+			UpgradeProcessFactory.runSQL(
+				"delete from ResourceAction where name in ('136', '150', " +
+					"'151', '152', '153', '157', '158')"));
 
 		upgradeProcesses.put(
 			new Version(8, 11, 0),

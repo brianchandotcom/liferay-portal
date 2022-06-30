@@ -73,7 +73,7 @@ public class ZipWriterImpl implements ZipWriter {
 
 		URI fileURI = _file.toURI();
 
-		_uri = URI.create("jar:file:" + fileURI.getPath());
+		_uri = URI.create("jar:file:" + fileURI.getRawPath());
 
 		try (FileSystem fileSystem = FileSystems.newFileSystem(
 				_uri, Collections.singletonMap("create", "true"))) {

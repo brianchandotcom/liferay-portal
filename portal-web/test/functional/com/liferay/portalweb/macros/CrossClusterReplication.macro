@@ -16,16 +16,29 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
 	}
 
+	macro compareSuccessfulWriteRequests {
+		var ccrStatsInitial = "${ccrStatsInitial}";
+		var ccrStatsSubsequent = CrossClusterReplication.getSuccessfulWriteRequestsFromCCRStats();
+
+		var result = MathUtil.isLessThan("${ccrStatsInitial}", "${ccrStatsSubsequent}");
+
+		if ("${result}" == "true") {
+			echo("PASSED: ccrStatsInitial:'${ccrStatsInitial} 'is less than ccrStatsSubsequent:'${ccrStatsSubsequent}'");
+		}
+		else {
+			TestUtils.fail(message = "FAILED: ccrStatsInitial:'${ccrStatsInitial}' is greater than or equals to ccrStatsSubsequent:'${ccrStatsRetry}'");
+		}
+	}
+
 	macro getSuccessfulWriteRequestsFromCCRStats {
 		var index = JSONCompany.getCompanyId();
-		var port = Elasticsearch.getServerPort();
 		var portalHostname = PropsUtil.get("portal.hostname");
 
-		var curl = "http://${portalHostname}:${port}/liferay-${index}-search-tuning-synonyms/_ccr/stats?pretty";
+		var curl = "http://${portalHostname}:9202/liferay-${index}-search-tuning-synonyms/_ccr/stats?pretty";
 
 		var ccrSynonymInfo = JSONCurlUtil.get("${curl}");
 
-		var successfulWriteRequests = RegexUtil.replace("${ccrSynonymInfo}", "successful_write_requests\" : \"(\d+)", "1");
+		var successfulWriteRequests = RegexUtil.replace("${ccrSynonymInfo}", "successful_write_requests\" : (\d+)", "1");
 
 		echo("Number of successful_write_requests: ${successfulWriteRequests}");
 

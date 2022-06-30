@@ -1417,8 +1417,6 @@ definition {
 			propertyValue = "Duration: 1 minute");
 
 		ProcessBuilderKaleoDesignerReact.viewTimersInfo(name = "Name of Definition Timer edited");
-
-		
 	}
 
 	@description = "Verify that the user can edit the Timers recurrence field"

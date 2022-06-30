@@ -70,119 +70,87 @@ definition {
 	@description = "Search for specific segment"
 	@priority = "5"
 	test CanSearchForSegment {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsList#CanSearchForSegment";
 
-		var usernameList = "ac,userea";
-		var emailList = "ac@liferay.com,userea@liferay.com";
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
 
-		for (var name : list "${usernameList}") {
-			JSONUser.addUser(
-				userEmailAddress = "${name}@liferay.com",
-				userFirstName = "${name}",
-				userLastName = "${name}",
-				userScreenName = "${name}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		ACDXPSettings.syncNewContactData();
+		task ("Create two dynamic segments") {
+			for (var n : list "1,2") {
+				ACNavigation.goToSegments();
 
-		ACUtils.navigateToSitePageWithUser(
-			emailList = "${emailList}",
-			pageName = "AC Page",
-			siteName = "Site Name");
+				ACSegments.createDynamicSegment();
 
-		ACUtils.launchAC();
+				ACUtils.setItemName(itemName = "Dynamic Segment Test ${n}");
 
-		ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+				ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-		ACNavigation.goToSegments();
+				ACSegments.addSegmentField(segmentField = "email");
 
-		ACSegments.createStaticSegment();
+				ACSegments.editTextCriterion(textInput = "test@liferay.com");
 
-		ACUtils.setItemName(itemName = "Static Segment Test");
+				ACSegments.saveSegment();
+			}
+		}
 
-		ACSegments.addStaticMember(tableMember = "ac ac");
+		task ("Go to segment list") {
+			ACNavigation.goToSegments();
+		}
 
-		ACSegments.saveSegment();
+		task ("Search for a segment and check that only it appears in the list") {
+			ACUtils.searchBar(searchItem = "Dynamic Segment Test 1");
 
-		ACNavigation.goToSegments();
+			ACUtils.viewNameList(nameList = "Dynamic Segment Test 1");
 
-		ACSegments.createStaticSegment();
+			ACUtils.viewNameListIsNotPresent(nameList = "Dynamic Segment Test 2");
+		}
 
-		ACUtils.setItemName(itemName = "Static Segment Test 2");
+		task ("Search for a segment that does not exist and check that nothing appears in the list") {
+			ACUtils.searchBar(searchItem = "Dynamic Segment Test 3");
 
-		ACSegments.addStaticMember(tableMember = "userea userea");
-
-		ACSegments.saveSegment();
-
-		ACNavigation.goToSegments();
-
-		ACSegments.viewSegmentName(searchTerm = "Static Segment Test");
-
-		ACSegments.viewSegmentName(searchTerm = "Static Segment Test 2");
-
-		ACSegments.deleteSegment(searchTerm = "Static Segment Test");
-
-		ACSegments.deleteSegment(searchTerm = "Static Segment Test 2");
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no results found.");
+		}
 	}
 
-	@description = "Search for specific segment"
+	@description = "Segment list shows a list of segments"
 	@priority = "5"
 	test CanShowSegmentList {
-		property analytics.cloud.upstream = "false";
 		property test.name.skip.portal.instance = "SegmentsList#CanShowSegmentList";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Switch the property in AC") {
+			ACUtils.launchAC();
 
-		ACDXPSettings.syncNewContactData();
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		task ("Create two dynamic segments") {
+			for (var n : list "1,2") {
+				ACNavigation.goToSegments();
 
-		ACUtils.navigateToSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+				ACSegments.createDynamicSegment();
 
-		ACUtils.closeAllSessionsAndWait();
+				ACUtils.setItemName(itemName = "Dynamic Segment Test ${n}");
 
-		ACUtils.launchAC();
+				ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
-		ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+				ACSegments.addSegmentField(segmentField = "email");
 
-		ACNavigation.goToSegments();
+				ACSegments.editTextCriterion(textInput = "test@liferay.com");
 
-		ACSegments.createStaticSegment();
+				ACSegments.saveSegment();
+			}
+		}
 
-		ACUtils.setItemName(itemName = "Static Segment Test");
+		task ("Go to segment list") {
+			ACNavigation.goToSegments();
+		}
 
-		ACSegments.addStaticMember(tableMember = "userfn userln");
-
-		ACSegments.saveSegment();
-
-		ACNavigation.goToSegments();
-
-		ACSegments.createDynamicSegment();
-
-		ACUtils.setItemName(itemName = "Dynamic Segment Test");
-
-		ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
-
-		ACSegments.addSegmentField(segmentField = "email");
-
-		ACSegments.editTextCriterion(textInput = "userea@liferay.com");
-
-		ACSegments.saveSegment();
-
-		ACNavigation.goToSegments();
-
-		ACSegments.assertSegmentPresent(segmentName = "Static Segment Test");
-
-		ACSegments.assertSegmentPresent(segmentName = "Dynamic Segment Test");
+		task ("Check that existing segments appear in the list") {
+			ACUtils.viewNameList(nameList = "Dynamic Segment Test 1,Dynamic Segment Test 2");
+		}
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8578 | Test Summary: Order the Segment List By Membership"

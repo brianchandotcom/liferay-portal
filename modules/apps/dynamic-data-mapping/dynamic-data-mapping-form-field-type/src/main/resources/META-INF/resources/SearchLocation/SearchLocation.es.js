@@ -14,6 +14,7 @@
 
 import {ClayInput} from '@clayui/form';
 import {SettingsContext, useFormState} from 'data-engine-js-components-web';
+import {openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -153,7 +154,7 @@ const Main = ({
 
 	useEffect(() => {
 		window.gm_authFailure = function () {
-			Liferay.Util.openToast({
+			openToast({
 				message: Liferay.Language.get(
 					'communication-with-the-api-provider-failed'
 				),

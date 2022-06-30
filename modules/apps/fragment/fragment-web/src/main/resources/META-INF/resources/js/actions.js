@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openModal, openSelectionModal} from 'frontend-js-web';
+import {openModal, openSelectionModal, openToast} from 'frontend-js-web';
 
 import openDeleteFragmentCollectionModal from './openDeleteFragmentCollectionModal';
 
@@ -100,7 +100,7 @@ export const ACTIONS = {
 			},
 			() => {
 				if (processed) {
-					Liferay.Util.openToast({
+					openToast({
 						message: Liferay.Language.get(
 							'your-request-processed-successfully'
 						),

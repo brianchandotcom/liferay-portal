@@ -12,7 +12,7 @@
  * details.
  */
 
-import {sub} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 
 import {
 	getDataEngineStructure,
@@ -65,7 +65,7 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 		} = dataLayoutBuilder.current.state.dataDefinition;
 
 		if (!nameInput.value || !name[defaultLanguageId]) {
-			Liferay.Util.openToast({
+			openToast({
 				message: sub(
 					Liferay.Language.get(
 						'please-enter-a-valid-title-for-the-default-language-x'

@@ -12,6 +12,8 @@
  * details.
  */
 
+import {openToast} from 'frontend-js-web';
+
 export default function ({namespace}) {
 	const loading = document.querySelector('.add-group-loading');
 	const content = document.querySelector(
@@ -68,7 +70,7 @@ export default function ({namespace}) {
 					});
 				}
 				else {
-					Liferay.Util.openToast({
+					openToast({
 						autoClose: false,
 						container: alertContainer,
 						message: response.error,

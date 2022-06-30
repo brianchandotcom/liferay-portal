@@ -12,7 +12,7 @@
  * details.
  */
 
-import {sub} from 'frontend-js-web';
+import {openToast, sub} from 'frontend-js-web';
 
 const isElementInnerSelector = (element, ...selectors) =>
 	!selectors.some((selector) => element.closest(selector));
@@ -82,7 +82,7 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 		const description = getInputLocalizedValues('description');
 
 		if (!nameInput.value && !name[defaultLanguageId]) {
-			Liferay.Util.openToast({
+			openToast({
 				message: sub(
 					Liferay.Language.get(
 						'please-enter-a-valid-title-for-the-default-language-x'

@@ -18,7 +18,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import {FieldArray, withFormik} from 'formik';
-import {debounce, fetch, openModal} from 'frontend-js-web';
+import {debounce, fetch, openModal, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
@@ -146,7 +146,7 @@ class SegmentEdit extends Component {
 			.catch(() => {
 				this.setState({membersCountLoading: false});
 
-				Liferay.Util.openToast({
+				openToast({
 					message: Liferay.Language.get(
 						'an-unexpected-error-occurred'
 					),
@@ -381,7 +381,7 @@ class SegmentEdit extends Component {
 				event.preventDefault();
 
 				errorMessages.forEach((message) => {
-					Liferay.Util.openToast({
+					openToast({
 						message,
 						type: 'danger',
 					});

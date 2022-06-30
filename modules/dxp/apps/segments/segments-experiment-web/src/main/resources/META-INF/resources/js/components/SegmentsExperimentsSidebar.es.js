@@ -10,6 +10,7 @@
  */
 
 import ClayModal, {useModal} from '@clayui/modal';
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useReducer} from 'react';
 
@@ -274,7 +275,7 @@ function SegmentsExperimentsSidebar({
 				}
 			})
 			.catch(function _errorCallback() {
-				Liferay.Util.openToast({
+				openToast({
 					message: Liferay.Language.get(
 						'an-unexpected-error-occurred'
 					),

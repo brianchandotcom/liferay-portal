@@ -57,6 +57,60 @@ public class SegmentsConfigurationProviderTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testGetCompanyConfigurationURL() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.USER_ID, TestPropsValues.getUserId());
+
+		String configurationURL =
+			_segmentsConfigurationProvider.getCompanyConfigurationURL(
+				mockHttpServletRequest);
+
+		Assert.assertTrue(
+			configurationURL.contains(
+				"factoryPid=com.liferay.segments.configuration." +
+					"SegmentsCompanyConfiguration"));
+	}
+
+	@Test
+	public void testGetCompanyConfigurationURLWithoutPermission()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		User user = UserTestUtil.addUser(TestPropsValues.getGroupId());
+
+		mockHttpServletRequest.setAttribute(WebKeys.USER_ID, user.getUserId());
+
+		Assert.assertNull(
+			_segmentsConfigurationProvider.getCompanyConfigurationURL(
+				mockHttpServletRequest));
+
+		_userLocalService.deleteUser(user);
+	}
+
+	@Test
 	public void testGetConfigurationURL() throws Exception {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -81,7 +135,7 @@ public class SegmentsConfigurationProviderTest {
 		Assert.assertTrue(
 			configurationURL.contains(
 				"factoryPid=com.liferay.segments.configuration." +
-					"SegmentsCompanyConfiguration"));
+					"SegmentsConfiguration"));
 	}
 
 	@Test

@@ -1,5 +1,30 @@
 definition {
 
+	macro addDiagramProductWithImage {
+		CommerceJSONProductsAPI._addCommerceProduct(
+			catalogName = "${catalogName}",
+			productName = "${productName}",
+			productType = "Diagram",
+			shortDescription = "${shortDescription}",
+			sku = "${sku}");
+
+		CommerceProducts.openProductsAdmin();
+
+		CommerceNavigator.searchEntry(entryName = "Diagram");
+
+		CommerceNavigator.gotoEntry(entryName = "${productName}");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+		CommerceProductImages.addDiagramImages(
+			imageTitles = "${imageTitle}",
+			productType = "Diagram");
+
+		SelectFrame(value1 = "relative=top");
+
+		Button.clickPublish();
+	}
+
 	macro addEntry {
 		Click(locator1 = "Button#PLUS");
 

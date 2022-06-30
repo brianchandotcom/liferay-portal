@@ -1248,7 +1248,14 @@ definition {
 	macro viewInlineImage {
 		var key_uploadFileName = "${uploadFileName}";
 
-		AssertVisible(locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE");
+		if (isSet(entryContent)) {
+			AssertVisible(
+				key_entryContent = "${entryContent}",
+				locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE_SPECIFIC");
+		}
+		else {
+			AssertVisible(locator1 = "BlogsEntry#CONTENT_INLINE_IMAGE");
+		}
 	}
 
 	macro viewNoAddPermissions {

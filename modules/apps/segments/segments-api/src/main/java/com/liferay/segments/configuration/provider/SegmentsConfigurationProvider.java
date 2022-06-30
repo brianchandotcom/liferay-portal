@@ -25,6 +25,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface SegmentsConfigurationProvider {
 
+	public String getCompanyConfigurationURL(
+			HttpServletRequest httpServletRequest)
+		throws PortalException;
+
 	public String getConfigurationURL(HttpServletRequest httpServletRequest)
 		throws PortalException;
 

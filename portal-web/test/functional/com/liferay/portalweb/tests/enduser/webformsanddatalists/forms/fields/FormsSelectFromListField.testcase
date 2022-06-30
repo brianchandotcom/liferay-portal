@@ -93,11 +93,7 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
+		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 

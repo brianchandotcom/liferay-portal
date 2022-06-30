@@ -43,7 +43,7 @@ definition {
 			locator1 = "TextInput#FILE",
 			value1 = "${attachmentFileName}");
 
-		Pause(locator1 = "5000");
+		WaitForElementPresent(locator1 = "Checkbox#SELECT_ALL");
 
 		if (IsElementPresent(key_title = "Uploading", locator1 = "Header#H4_TITLE")) {
 			Refresh();
@@ -837,7 +837,7 @@ definition {
 			locator1 = "Link#WIKI_EDIT",
 			value1 = "Edit");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

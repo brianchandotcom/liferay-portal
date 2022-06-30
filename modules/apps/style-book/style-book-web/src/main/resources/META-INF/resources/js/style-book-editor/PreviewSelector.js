@@ -19,15 +19,15 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+import {config} from './config';
+import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {
 	usePreviewLayout,
 	usePreviewLayoutType,
 	useSetLoading,
 	useSetPreviewLayout,
 	useSetPreviewLayoutType,
-} from './LayoutContext';
-import {config} from './config';
-import {LAYOUT_TYPES} from './constants/layoutTypes';
+} from './contexts/LayoutContext';
 import {itemSelectorValueFromFragmentCollection} from './item_selector_value/itemSelectorValueFromFragmentCollection';
 import {itemSelectorValueFromLayout} from './item_selector_value/itemSelectorValueFromLayout';
 import openItemSelector from './openItemSelector';

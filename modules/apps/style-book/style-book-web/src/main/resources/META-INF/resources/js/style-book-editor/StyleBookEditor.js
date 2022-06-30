@@ -15,14 +15,14 @@
 import {StyleErrorsContextProvider} from '@liferay/layout-content-page-editor-web';
 import React from 'react';
 
-import {LayoutContextProvider} from './LayoutContext';
 import LayoutPreview from './LayoutPreview';
 import Sidebar from './Sidebar';
-import {StyleBookContextProvider} from './StyleBookContext';
 import Toolbar from './Toolbar';
 import {config, initializeConfig} from './config';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
 import {LAYOUT_TYPES} from './constants/layoutTypes';
+import {LayoutContextProvider} from './contexts/LayoutContext';
+import {StyleBookEditorContextProvider} from './contexts/StyleBookEditorContext';
 import {useCloseProductMenu} from './useCloseProductMenu';
 
 const StyleBookEditor = React.memo(() => {
@@ -83,7 +83,7 @@ export default function ({
 	});
 
 	return (
-		<StyleBookContextProvider
+		<StyleBookEditorContextProvider
 			initialState={{
 				draftStatus: DRAFT_STATUS.notSaved,
 				frontendTokensValues,
@@ -92,7 +92,7 @@ export default function ({
 			}}
 		>
 			<StyleBookEditor />
-		</StyleBookContextProvider>
+		</StyleBookEditorContextProvider>
 	);
 }
 

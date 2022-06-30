@@ -18,8 +18,8 @@ import {
 	LOADING,
 	SET_PREVIEW_LAYOUT,
 	SET_PREVIEW_LAYOUT_TYPE,
-} from './constants/actionTypes';
-import layoutReducer from './reducers/layoutReducer';
+} from '../constants/actionTypes';
+import layoutReducer from '../reducers/layoutReducer';
 
 const LayoutDispatchContext = React.createContext(() => {});
 export const LayoutStoreContext = React.createContext({

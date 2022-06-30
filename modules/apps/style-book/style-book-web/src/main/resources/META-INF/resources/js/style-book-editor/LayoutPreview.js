@@ -17,14 +17,14 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import {LAYOUT_TYPES} from './constants/layoutTypes';
 import {
 	useLoading,
 	usePreviewLayout,
 	usePreviewLayoutType,
 	useSetLoading,
-} from './LayoutContext';
-import {useFrontendTokensValues} from './StyleBookContext';
-import {LAYOUT_TYPES} from './constants/layoutTypes';
+} from './contexts/LayoutContext';
+import {useFrontendTokensValues} from './contexts/StyleBookEditorContext';
 
 export default React.memo(function LayoutPreview() {
 	const frontendTokensValues = useFrontendTokensValues();

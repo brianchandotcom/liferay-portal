@@ -19,13 +19,13 @@ import classNames from 'classnames';
 import {ALIGN_POSITIONS, align} from 'frontend-js-web';
 import React, {useLayoutEffect, useRef, useState} from 'react';
 
-import {usePreviewLayout} from './LayoutContext';
 import PreviewSelector from './PreviewSelector';
 import PublishButton from './PublishButton';
-import {useDraftStatus} from './StyleBookContext';
 import Undo from './Undo';
 import UndoHistory from './UndoHistory';
 import {DRAFT_STATUS} from './constants/draftStatusConstants';
+import {usePreviewLayout} from './contexts/LayoutContext';
+import {useDraftStatus} from './contexts/StyleBookEditorContext';
 
 const STATUS_TO_LABEL = {
 	[DRAFT_STATUS.draftSaved]: Liferay.Language.get('saved'),

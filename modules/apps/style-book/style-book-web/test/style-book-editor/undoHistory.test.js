@@ -16,8 +16,8 @@ import '@testing-library/jest-dom/extend-expect';
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import {StyleBookContextProvider} from '../../src/main/resources/META-INF/resources/js/style-book-editor/StyleBookContext';
 import UndoHistory from '../../src/main/resources/META-INF/resources/js/style-book-editor/UndoHistory';
+import {StyleBookEditorContextProvider} from '../../src/main/resources/META-INF/resources/js/style-book-editor/contexts/StyleBookEditorContext';
 
 const STATE = {
 	redoHistory: [
@@ -68,7 +68,7 @@ const STATE = {
 
 function renderUndoHistory() {
 	return render(
-		<StyleBookContextProvider
+		<StyleBookEditorContextProvider
 			initialState={{
 				draftStatus: 'saved',
 				frontendTokensValues: {},
@@ -79,7 +79,7 @@ function renderUndoHistory() {
 			}}
 		>
 			<UndoHistory />
-		</StyleBookContextProvider>
+		</StyleBookEditorContextProvider>
 	);
 }
 

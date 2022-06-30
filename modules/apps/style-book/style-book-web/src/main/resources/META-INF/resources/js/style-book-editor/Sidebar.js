@@ -18,8 +18,8 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useEffect, useRef, useState} from 'react';
 
 import FrontendTokenSet from './FrontendTokenSet';
-import {useFrontendTokensValues} from './StyleBookContext';
 import {config} from './config';
+import {useFrontendTokensValues} from './contexts/StyleBookEditorContext';
 
 export default React.memo(function Sidebar() {
 	const sidebarRef = useRef();

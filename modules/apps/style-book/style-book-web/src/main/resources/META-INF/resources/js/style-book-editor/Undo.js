@@ -22,7 +22,7 @@ import {
 	useOnUndo,
 	useRedoHistory,
 	useUndoHistory,
-} from './StyleBookContext';
+} from './contexts/StyleBookEditorContext';
 
 export default function Undo() {
 	const onUndo = useOnUndo();

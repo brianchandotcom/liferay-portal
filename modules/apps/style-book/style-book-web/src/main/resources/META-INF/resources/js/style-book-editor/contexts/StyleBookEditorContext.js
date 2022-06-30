@@ -21,50 +21,50 @@ import {
 	SET_DRAFT_STATUS,
 	SET_TOKEN_VALUES,
 	UPDATE_UNDO_REDO_HISTORY,
-} from './constants/actionTypes';
-import {DRAFT_STATUS} from './constants/draftStatusConstants';
-import {UNDO_TYPES} from './constants/undoTypes';
-import editorReducer from './reducers/editorReducer';
-import saveDraft from './saveDraft';
+} from '../constants/actionTypes';
+import {DRAFT_STATUS} from '../constants/draftStatusConstants';
+import {UNDO_TYPES} from '../constants/undoTypes';
+import editorReducer from '../reducers/editorReducer';
+import saveDraft from '../saveDraft';
 
-const StyleBookDispatchContext = React.createContext(() => {});
-export const StyleBookStoreContext = React.createContext({
+const StyleBookEditorDispatchContext = React.createContext(() => {});
+export const StyleBookEditorStoreContext = React.createContext({
 	draftStatus: null,
 	frontendTokensValues: {},
 	redoHistory: [],
 	undoHistory: [],
 });
 
-export function StyleBookContextProvider({children, initialState}) {
+export function StyleBookEditorContextProvider({children, initialState}) {
 	const [state, dispatch] = useReducer(editorReducer, initialState);
 
 	return (
-		<StyleBookDispatchContext.Provider value={dispatch}>
-			<StyleBookStoreContext.Provider value={state}>
+		<StyleBookEditorDispatchContext.Provider value={dispatch}>
+			<StyleBookEditorStoreContext.Provider value={state}>
 				{children}
-			</StyleBookStoreContext.Provider>
-		</StyleBookDispatchContext.Provider>
+			</StyleBookEditorStoreContext.Provider>
+		</StyleBookEditorDispatchContext.Provider>
 	);
 }
 
 export function useDispatch() {
-	return useContext(StyleBookDispatchContext);
+	return useContext(StyleBookEditorDispatchContext);
 }
 
 export function useDraftStatus() {
-	return useContext(StyleBookStoreContext).draftStatus;
+	return useContext(StyleBookEditorStoreContext).draftStatus;
 }
 
 export function useFrontendTokensValues() {
-	return useContext(StyleBookStoreContext).frontendTokensValues;
+	return useContext(StyleBookEditorStoreContext).frontendTokensValues;
 }
 
 export function useRedoHistory() {
-	return useContext(StyleBookStoreContext).redoHistory;
+	return useContext(StyleBookEditorStoreContext).redoHistory;
 }
 
 export function useUndoHistory() {
-	return useContext(StyleBookStoreContext).undoHistory;
+	return useContext(StyleBookEditorStoreContext).undoHistory;
 }
 
 function internalSaveTokenValues({dispatch, frontendTokensValues, tokens}) {

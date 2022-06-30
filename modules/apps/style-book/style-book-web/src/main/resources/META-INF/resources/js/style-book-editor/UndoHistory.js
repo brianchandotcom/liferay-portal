@@ -21,12 +21,12 @@ import {
 } from '@liferay/frontend-js-react-web';
 import React, {useState} from 'react';
 
+import {UNDO_TYPES} from './constants/undoTypes';
 import {
 	useMultipleUndo,
 	useRedoHistory,
 	useUndoHistory,
-} from './StyleBookContext';
-import {UNDO_TYPES} from './constants/undoTypes';
+} from './contexts/StyleBookEditorContext';
 
 export default function UndoHistory() {
 	const isMounted = useIsMounted();

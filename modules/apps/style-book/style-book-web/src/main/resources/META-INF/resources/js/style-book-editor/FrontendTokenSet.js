@@ -16,9 +16,12 @@ import {Collapse} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useMemo, useRef} from 'react';
 
-import {useFrontendTokensValues, useSaveTokenValue} from './StyleBookContext';
 import {config} from './config';
 import {FRONTEND_TOKEN_TYPES} from './constants/frontendTokenTypes';
+import {
+	useFrontendTokensValues,
+	useSaveTokenValue,
+} from './contexts/StyleBookEditorContext';
 import BooleanFrontendToken from './frontend_tokens/BooleanFrontendToken';
 import ColorFrontendToken from './frontend_tokens/ColorFrontendToken';
 import SelectFrontendToken from './frontend_tokens/SelectFrontendToken';

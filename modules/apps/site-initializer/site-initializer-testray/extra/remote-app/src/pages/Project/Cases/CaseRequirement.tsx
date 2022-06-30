@@ -19,33 +19,34 @@ import Button from '../../../components/Button';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {
+	TestrayCase,
 	TestrayRequirementCase,
-	TestraySuite,
 	getRequirementCases,
 } from '../../../graphql/queries';
-import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {searchUtil} from '../../../util/search';
 import CaseRequirementLinkModal from './CaseRequirementLinkModal';
+import useCaseRequirementActions from './useCaseRequirementActions';
 
 const CaseRequirement = () => {
 	const {
 		projectId,
 		testrayCase,
-	}: {projectId: number; testrayCase: TestraySuite} = useOutletContext();
+	}: {projectId: number; testrayCase: TestrayCase} = useOutletContext();
 
-	const {modal} = useFormModal();
+	const {actions, formModal} = useCaseRequirementActions(testrayCase);
 
 	return (
 		<Container>
-			<CaseRequirementLinkModal modal={modal} />
+			<CaseRequirementLinkModal modal={formModal} />
 
 			<ListView
+				forceRefetch={formModal.forceRefetch}
 				managementToolbarProps={{
 					buttons: (
 						<Button
 							displayType="secondary"
-							onClick={() => modal.open()}
+							onClick={() => formModal.open()}
 							symbol="list-ul"
 							toolbar
 						>
@@ -56,6 +57,7 @@ const CaseRequirement = () => {
 				}}
 				query={getRequirementCases}
 				tableProps={{
+					actions,
 					columns: [
 						{
 							clickable: true,

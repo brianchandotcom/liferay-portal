@@ -53,7 +53,7 @@ definition {
 		}
 
 		task ("Assert the form validator displays an error that the file is not a zip file") {
-			Pause(locator1 = "10000");
+			WaitForElementPresent(locator1 = "Message#ERROR_FORM_VALIDATION");
 
 			AssertTextEquals(
 				locator1 = "Message#ERROR_FORM_VALIDATION",
@@ -1419,8 +1419,6 @@ definition {
 					workflowStatus = "Approved");
 
 				var n = ${n} + 1;
-
-				Pause(locator1 = "3000");
 			}
 		}
 	}

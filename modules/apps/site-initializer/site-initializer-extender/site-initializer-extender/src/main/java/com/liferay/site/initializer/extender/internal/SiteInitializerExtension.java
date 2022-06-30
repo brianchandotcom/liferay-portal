@@ -134,6 +134,7 @@ public class SiteInitializerExtension {
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		ThemeLocalService themeLocalService,
 		UserAccountResource.Factory userAccountResourceFactory,
+		UserGroupLocalService userGroupLocalService,
 		UserLocalService userLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory) {
@@ -167,7 +168,8 @@ public class SiteInitializerExtension {
 			siteNavigationMenuItemTypeRegistry, siteNavigationMenuLocalService,
 			structuredContentFolderResourceFactory, styleBookEntryZipProcessor,
 			taxonomyCategoryResourceFactory, taxonomyVocabularyResourceFactory,
-			themeLocalService, userAccountResourceFactory, userLocalService,
+			themeLocalService, userAccountResourceFactory, 
+			userGroupLocalService, userLocalService,
 			workflowDefinitionLinkLocalService,
 			workflowDefinitionResourceFactory);
 

@@ -246,6 +246,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		TaxonomyVocabularyResource.Factory taxonomyVocabularyResourceFactory,
 		ThemeLocalService themeLocalService,
 		UserAccountResource.Factory userAccountResourceFactory,
+		UserGroupLocalService userGroupLocalService,
 		UserLocalService userLocalService,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		WorkflowDefinitionResource.Factory workflowDefinitionResourceFactory) {
@@ -308,6 +309,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_taxonomyVocabularyResourceFactory = taxonomyVocabularyResourceFactory;
 		_themeLocalService = themeLocalService;
 		_userAccountResourceFactory = userAccountResourceFactory;
+		_userGroupLocalService = userGroupLocalService;
 		_userLocalService = userLocalService;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
@@ -480,6 +482,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					taxonomyCategoryIdsStringUtilReplaceValues));
 
 			_invoke(() -> _addWorkflowDefinitions(serviceContext));
+
+			_invoke(() -> _addUserGroups(serviceContext));
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -3222,6 +3226,39 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addUserGroups(ServiceContext serviceContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/user-groups.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			String name = jsonObject.getString("name");
+
+			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
+				serviceContext.getCompanyId(), name);
+
+			if (userGroup == null) {
+				userGroup = _userGroupLocalService.addUserGroup(
+					serviceContext.getUserId(), serviceContext.getCompanyId(),
+					name,
+					jsonObject.getString("description"),
+					serviceContext);
+			}
+
+			_userGroupLocalService.addGroupUserGroup(
+				serviceContext.getScopeGroupId(), userGroup);
+		}
+	}
+
 	private void _addUserRoles(ServiceContext serviceContext) throws Exception {
 		String json = SiteInitializerUtil.read(
 			"/site-initializer/user-roles.json", _servletContext);
@@ -3731,6 +3768,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_taxonomyVocabularyResourceFactory;
 	private final ThemeLocalService _themeLocalService;
 	private final UserAccountResource.Factory _userAccountResourceFactory;
+	private final UserGroupLocalService _userGroupLocalService;
 	private final UserLocalService _userLocalService;
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;

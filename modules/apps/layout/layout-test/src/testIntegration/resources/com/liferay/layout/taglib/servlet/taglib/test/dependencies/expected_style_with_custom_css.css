@@ -1,0 +1,21 @@
+.lfr-layout-structure-item-container {
+	color: blue;
+}
+
+@media screen and (max-width: 991px) {
+	.lfr-layout-structure-item-container {
+		color: yellow;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.lfr-layout-structure-item-container {
+		color: red;
+	}
+}
+
+@media screen and (max-width: 575px) {
+	.lfr-layout-structure-item-container {
+		color: pink;
+	}
+}

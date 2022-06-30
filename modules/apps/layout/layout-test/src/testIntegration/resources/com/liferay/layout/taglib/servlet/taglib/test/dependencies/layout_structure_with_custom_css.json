@@ -1,0 +1,39 @@
+{
+	"deletedItems": [
+	],
+	"items": {
+		"container": {
+			"children": [
+			],
+			"config": {
+				"customCSS": ".[$FRAGMENT_CLASS$] { color: blue; }",
+				"landscapeMobile": {
+					"customCSS": ".[$FRAGMENT_CLASS$] { color: red; }"
+				},
+				"portraitMobile": {
+					"customCSS": ".[$FRAGMENT_CLASS$] { color: pink; }"
+				},
+				"tablet": {
+					"customCSS": ".[$FRAGMENT_CLASS$] { color: yellow; }"
+				},
+				"widthType": "fluid"
+			},
+			"itemId": "container",
+			"parentId": "root",
+			"type": "container"
+		},
+		"root": {
+			"children": [
+				"container"
+			],
+			"itemId": "root",
+			"parentId": "",
+			"type": "root"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "root"
+	},
+	"version": 1.1
+}

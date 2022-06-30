@@ -313,9 +313,7 @@ definition {
 	@description = "This is a use case for LPS-66229."
 	@priority = "3"
 	test AddRecordWithBlankDocumentsAndMediaField {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP(
 			ddlDataDefinitionDescription = "Data Definition Description",
@@ -328,11 +326,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPage(pageName = "DDL Page");
 
@@ -367,17 +361,11 @@ definition {
 	@priority = "3"
 	test AddRecordWithBlankLinkToPageField {
 		task ("Create a DDL containing a Link to Page") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
+			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 			PagesAdmin.addPage(pageName = "Test Page");
 
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 			DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
 
@@ -424,11 +412,7 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AddRecordWithBlankWebContentField {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPage(pageName = "DDL Page");
 
@@ -533,11 +517,7 @@ definition {
 	test AddRecordWithRepeatableTextField {
 		property portal.acceptance = "quarantine";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP();
 
@@ -550,11 +530,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLList.addCP();
 
@@ -562,11 +538,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLRecord.addCP();
 
@@ -582,11 +554,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPage(pageName = "DDL Page");
 
@@ -904,11 +872,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPage(pageName = "Dynamic Data Lists Page");
 
@@ -1054,9 +1018,7 @@ definition {
 
 	@priority = "2"
 	test AssertConfigurationMenulist {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1092,9 +1054,7 @@ definition {
 
 	@priority = "3"
 	test AssertDecimalFieldInvalidDataErrorMessage {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1102,11 +1062,7 @@ definition {
 
 		Portlet.addPG(portletName = "Dynamic Data Lists Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP(ddlDataDefinitionName = "Decimal Invalid Value Data Definition Name");
 
@@ -1193,11 +1149,7 @@ definition {
 
 	@priority = "4"
 	test AssertGuestCannotEditRecord {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP(
 			ddlDataDefinitionDescription = "Data Definition Description",
@@ -1217,11 +1169,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLNavigator.gotoDataDefinitionPermissions(ddlDataDefinitionName = "Data Definition");
 
@@ -1229,11 +1177,7 @@ definition {
 			addOrRemoveViewPermission = "Add",
 			roleList = "Guest");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1342,9 +1286,7 @@ definition {
 
 	@priority = "3"
 	test AssertIntegerFieldInvalidDataErrorMessage {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1352,11 +1294,7 @@ definition {
 
 		Portlet.addPG(portletName = "Dynamic Data Lists Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP(ddlDataDefinitionName = "Integer Invalid Value Data Definition Name");
 
@@ -1398,9 +1336,7 @@ definition {
 
 	@priority = "4"
 	test AssertNumberFieldInvalidDataErrorMessage {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1408,11 +1344,7 @@ definition {
 
 		Portlet.addPG(portletName = "Dynamic Data Lists Display");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP(ddlDataDefinitionName = "Number Predefined Value Data Definition Name");
 
@@ -1456,31 +1388,19 @@ definition {
 	test AssertUserCannotDeleteEntryAfterPermissionRemoved {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
+		JSONUser.addUser(
 			userEmailAddress = "userea1@liferay.com",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
 			userScreenName = "usersn1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea1@liferay.com",
 			userScreenName = "usersn1");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP(
 			ddlDataDefinitionDescription = "Data Definition Description",
@@ -1493,11 +1413,7 @@ definition {
 
 		DDLDataDefinition.save();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		Refresh();
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPage(pageName = "Data Definition Page Name");
 
@@ -1526,11 +1442,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLList.editPermissions(ddlListName = "DDL List Name");
 
@@ -1540,10 +1452,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Data Definition Page Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.impersonateCP(
 			siteName = "${siteName}",
@@ -1557,11 +1466,7 @@ definition {
 			closeWindowTitle = "Data Definition Page Name - ${siteName}",
 			selectWindowTitle = "Users and Organizations - ${siteName}");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLList.editPermissions(ddlListName = "DDL List Name");
 
@@ -1571,10 +1476,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Data Definition Page Name");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.impersonateCP(
 			siteName = "${siteName}",
@@ -1587,9 +1489,7 @@ definition {
 
 	@priority = "4"
 	test AssertUserUpdateRejectedRecord {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 		PagesAdmin.addPage(pageName = "Dynamic Data Lists Display Page");
 
@@ -1643,10 +1543,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
@@ -2330,10 +2227,7 @@ definition {
 	test RolesPermissionsDynamicDataLists {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		PortalSettings.openInstanceSettingsAdmin();
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "User Authentication",
@@ -2414,11 +2308,7 @@ definition {
 			roleTitle = "Records Manager Name",
 			userEmailAddress = "userea2@liferay.com");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		DDLDataDefinition.addCP(ddlDataDefinitionName = "Employee Profile Data Definition");
 
@@ -2496,11 +2386,7 @@ definition {
 	test SelectLinkToPagePage {
 		property portal.upstream = "quarantine";
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 		for (var pageName : list "P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12") {
 			PagesAdmin.addPage(pageName = "${pageName}");

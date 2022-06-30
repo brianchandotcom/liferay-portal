@@ -1125,6 +1125,7 @@ public abstract class BaseAssetSearchTestCase {
 			Calendar calendar = new GregorianCalendar();
 
 			calendar.setTime(date);
+
 			calendar.set(Calendar.SECOND, 0);
 			calendar.set(Calendar.MILLISECOND, 0);
 

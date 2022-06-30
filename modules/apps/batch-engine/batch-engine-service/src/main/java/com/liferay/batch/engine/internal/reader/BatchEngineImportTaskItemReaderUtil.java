@@ -57,6 +57,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 			if (field != null) {
 				field.setAccessible(true);
+
 				field.set(
 					item,
 					_objectMapper.convertValue(

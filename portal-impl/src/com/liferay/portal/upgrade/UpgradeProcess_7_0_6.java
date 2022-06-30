@@ -15,8 +15,8 @@
 package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.upgrade.v7_0_6.UpgradeRepository;
 import com.liferay.portal.upgrade.v7_0_6.UpgradeResourceAction;
 import com.liferay.portal.upgrade.v7_0_6.UpgradeThemeId;
 
@@ -32,7 +32,9 @@ public class UpgradeProcess_7_0_6 extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(new UpgradeRepository());
+		upgrade(
+			UpgradeProcessFactory.alterColumnTypes(
+				"Repository", "VARCHAR(200) null", "name"));
 		upgrade(new UpgradeResourceAction());
 		upgrade(new UpgradeThemeId());
 

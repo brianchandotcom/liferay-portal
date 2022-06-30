@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_2_x;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 
@@ -42,7 +43,14 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(new Version(5, 0, 2), new UpgradeCountry());
 
-		upgradeProcesses.put(new Version(5, 0, 3), new UpgradeModules());
+		upgradeProcesses.put(
+			new Version(5, 0, 3),
+			UpgradeModulesFactory.create(
+				new String[] {
+					"com.liferay.asset.service",
+					"com.liferay.document.library.repository.cmis.impl"
+				},
+				null));
 
 		upgradeProcesses.put(new Version(5, 0, 4), new UpgradeLayout());
 

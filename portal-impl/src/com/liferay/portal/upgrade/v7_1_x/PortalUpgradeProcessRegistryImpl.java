@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_1_x;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 
@@ -33,7 +34,23 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(new Version(1, 0, 0), new UpgradeSchema());
 
-		upgradeProcesses.put(new Version(1, 1, 0), new UpgradeModules());
+		upgradeProcesses.put(
+			new Version(1, 1, 0),
+			UpgradeModulesFactory.create(
+				new String[] {
+					"com.liferay.asset.category.property.service",
+					"com.liferay.asset.entry.rel.service",
+					"com.liferay.asset.tag.stats.service",
+					"com.liferay.blogs.service",
+					"com.liferay.document.library.content.service",
+					"com.liferay.document.library.file.rank.service",
+					"com.liferay.document.library.sync.service",
+					"com.liferay.layout.page.template.service",
+					"com.liferay.message.boards.service",
+					"com.liferay.subscription.service",
+					"com.liferay.trash.service"
+				},
+				null));
 
 		upgradeProcesses.put(new Version(1, 1, 1), new UpgradeCounter());
 

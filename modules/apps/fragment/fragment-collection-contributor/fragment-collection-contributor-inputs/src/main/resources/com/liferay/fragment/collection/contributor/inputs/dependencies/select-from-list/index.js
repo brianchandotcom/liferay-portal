@@ -242,7 +242,7 @@ function filterLocalOptions() {
 	const preferedItems = [];
 	const restItems = [];
 
-	for (const item of input.options) {
+	for (const item of input.attributes.options) {
 		if (preferedItems.length + restItems.length === 10) {
 			break;
 		}
@@ -315,7 +315,7 @@ function handleSearchKeyup() {
 		listbox.innerHTML = '';
 	}
 	else {
-		setListboxItems(input.options);
+		setListboxItems(input.attributes.options);
 
 		return;
 	}

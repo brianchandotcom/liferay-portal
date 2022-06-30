@@ -14,7 +14,7 @@
 
 import {Collapse} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, useRef} from 'react';
 
 import {useFrontendTokensValues, useSaveTokenValue} from './StyleBookContext';
 import {config} from './config';
@@ -57,15 +57,40 @@ const getColorFrontendTokens = (
 export default function FrontendTokenSet({frontendTokens, label, open}) {
 	const frontendTokensValues = useFrontendTokensValues();
 	const saveTokenValue = useSaveTokenValue();
+	const tokenNameRef = useRef(null);
+	const tokenValuesRef = useRef({});
 
-	const tokenValues = useMemo(
-		() =>
-			getColorFrontendTokens(
+	const tokenValues = useMemo(() => {
+		if (!Object.values(tokenValuesRef.current).length) {
+			tokenValuesRef.current = getColorFrontendTokens(
 				config.frontendTokenDefinition,
 				frontendTokensValues
-			),
-		[frontendTokensValues]
-	);
+			);
+
+			return tokenValuesRef.current;
+		}
+
+		const newTokenValues = Object.entries(frontendTokensValues).reduce(
+			(acc, frontendTokenValue) => {
+				const [name, {value}] = frontendTokenValue;
+
+				if (value !== tokenValuesRef.current[name]?.value) {
+					return {
+						...acc,
+						[name]: {
+							...tokenValuesRef.current[name],
+							value,
+						},
+					};
+				}
+
+				return acc;
+			},
+			{}
+		);
+
+		return {...tokenValuesRef.current, ...newTokenValues};
+	}, [frontendTokensValues]);
 
 	const updateFrontendTokensValues = useCallback(
 		(frontendToken, value) => {
@@ -111,7 +136,9 @@ export default function FrontendTokenSet({frontendTokens, label, open}) {
 					props = {
 						...props,
 						frontendTokensValues,
-						onValueSelect: (_, value) => {
+						onValueSelect: (name, value) => {
+							tokenNameRef.current = name;
+
 							updateFrontendTokensValues(frontendToken, value);
 						},
 						tokenValues,

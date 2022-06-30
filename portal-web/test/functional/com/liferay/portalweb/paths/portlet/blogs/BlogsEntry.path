@@ -116,6 +116,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_INLINE_IMAGE_SPECIFIC</td>
+	<td>//div[contains(@class,'content')]//p[contains(normalize-space(),'${key_entryContent}')]//img[contains(@src,'${key_uploadFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_INLINE_IMAGE_PREVIEW</td>
 	<td>so/screenshots/blogs/content_inline_image_preview.png</td>
 	<td></td>

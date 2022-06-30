@@ -92,7 +92,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 			</aui:alert>
 		</c:if>
 
-		<div class="row <%= !segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() || !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() ? "c-mt-5" : "" %>">
+		<div class="row <%= (!segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() || !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled()) ? "c-mt-5" : "" %>">
 			<div class="col-sm-12 form-group">
 				<div class="form-group__inner">
 					<c:choose>

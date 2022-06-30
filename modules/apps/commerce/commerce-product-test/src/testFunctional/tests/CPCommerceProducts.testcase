@@ -7,7 +7,7 @@ definition {
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {
-		CommerceConfiguration.commerceSetUp();
+		CommerceConfiguration.commerceSetUp(storeFront = "true");
 	}
 
 	tearDown {

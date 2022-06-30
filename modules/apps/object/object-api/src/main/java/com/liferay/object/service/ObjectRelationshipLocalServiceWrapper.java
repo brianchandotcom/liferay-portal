@@ -42,12 +42,12 @@ public class ObjectRelationshipLocalServiceWrapper
 			long userId, long objectDefinitionId1, long objectDefinitionId2,
 			String deletionType,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
-			String type)
+			long parameterObjectFieldId, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectRelationshipLocalService.addObjectRelationship(
 			userId, objectDefinitionId1, objectDefinitionId2, deletionType,
-			labelMap, name, type);
+			labelMap, name, parameterObjectFieldId, type);
 	}
 
 	/**
@@ -467,11 +467,13 @@ public class ObjectRelationshipLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectRelationship updateObjectRelationship(
 			long objectRelationshipId, String deletionType,
-			java.util.Map<java.util.Locale, String> labelMap)
+			java.util.Map<java.util.Locale, String> labelMap,
+			long parameterObjectFieldId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectRelationshipLocalService.updateObjectRelationship(
-			objectRelationshipId, deletionType, labelMap);
+			objectRelationshipId, deletionType, labelMap,
+			parameterObjectFieldId);
 	}
 
 	/**

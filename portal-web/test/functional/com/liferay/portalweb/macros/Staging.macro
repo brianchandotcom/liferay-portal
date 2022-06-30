@@ -441,7 +441,7 @@ definition {
 		var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "1", "PM");
 		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'schedulerStartDateMinute')]@value");
 
-		var displayDateMinuteFuture = ${displayDateMinute} + 3;
+		var displayDateMinuteFuture = ${displayDateMinute} + 5;
 
 		var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
 

@@ -880,9 +880,9 @@ public class EditAssetListDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getSegmentsConfigurationURL() {
+	public String getSegmentsCompanyConfigurationURL() {
 		try {
-			return _segmentsConfigurationProvider.getConfigurationURL(
+			return _segmentsConfigurationProvider.getCompanyConfigurationURL(
 				_httpServletRequest);
 		}
 		catch (PortalException portalException) {

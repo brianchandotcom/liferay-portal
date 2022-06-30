@@ -582,7 +582,8 @@ public class ContentPageEditorDisplayContext {
 				"searchContainerPageMaxDelta",
 				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA
 			).put(
-				"segmentsConfigurationURL", _getSegmentsConfigurationURL()
+				"segmentsConfigurationURL",
+				_getSegmentsCompanyConfigurationURL()
 			).put(
 				"sidebarPanels", getSidebarPanels()
 			).put(
@@ -1949,9 +1950,9 @@ public class ContentPageEditorDisplayContext {
 		return resourceURL.toString();
 	}
 
-	private String _getSegmentsConfigurationURL() {
+	private String _getSegmentsCompanyConfigurationURL() {
 		try {
-			return _segmentsConfigurationProvider.getConfigurationURL(
+			return _segmentsConfigurationProvider.getCompanyConfigurationURL(
 				httpServletRequest);
 		}
 		catch (PortalException portalException) {

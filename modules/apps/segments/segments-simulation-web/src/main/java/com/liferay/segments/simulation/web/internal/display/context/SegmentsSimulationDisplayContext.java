@@ -76,9 +76,9 @@ public class SegmentsSimulationDisplayContext {
 			SegmentsPortletKeys.SEGMENTS_SIMULATION);
 	}
 
-	public String getSegmentsConfigurationURL() {
+	public String getSegmentsCompanyConfigurationURL() {
 		try {
-			return _segmentsConfigurationProvider.getConfigurationURL(
+			return _segmentsConfigurationProvider.getCompanyConfigurationURL(
 				_httpServletRequest);
 		}
 		catch (PortalException portalException) {

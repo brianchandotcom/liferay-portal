@@ -445,15 +445,15 @@ public class EditSegmentsEntryDisplayContext {
 		).put(
 			"requestMembersCountURL", _getSegmentsEntryClassPKsCountURL()
 		).put(
-			"segmentsConfigurationURL", _getSegmentsConfigurationURL()
+			"segmentsConfigurationURL", _getSegmentsCompanyConfigurationURL()
 		).put(
 			"showInEditMode", _isShowInEditMode()
 		).build();
 	}
 
-	private String _getSegmentsConfigurationURL() {
+	private String _getSegmentsCompanyConfigurationURL() {
 		try {
-			return _segmentsConfigurationProvider.getConfigurationURL(
+			return _segmentsConfigurationProvider.getCompanyConfigurationURL(
 				_httpServletRequest);
 		}
 		catch (PortalException portalException) {

@@ -52,11 +52,11 @@ public class SegmentsEntryDisplayContext {
 		return group.getDescriptiveName(locale);
 	}
 
-	public static String getSegmentsConfigurationURL(
+	public static String getSegmentsCompanyConfigurationURL(
 		HttpServletRequest httpServletRequest) {
 
 		try {
-			return _segmentsConfigurationProvider.getConfigurationURL(
+			return _segmentsConfigurationProvider.getCompanyConfigurationURL(
 				httpServletRequest);
 		}
 		catch (PortalException portalException) {

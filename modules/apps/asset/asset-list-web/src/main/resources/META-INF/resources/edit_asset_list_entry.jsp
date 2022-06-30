@@ -41,7 +41,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 		<strong class="lead"><%= LanguageUtil.get(request, "personalized-variations-cannot-be-displayed-because-segmentation-is-disabled") %></strong>
 
 		<%
-		String segmentsConfigurationURL = editAssetListDisplayContext.getSegmentsConfigurationURL();
+		String segmentsConfigurationURL = editAssetListDisplayContext.getSegmentsCompanyConfigurationURL();
 		%>
 
 		<c:choose>

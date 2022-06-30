@@ -49,7 +49,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 		<strong class="lead"><%= LanguageUtil.get(request, "segmentation-is-disabled") %></strong>
 
 		<%
-		String segmentsConfigurationURL = segmentsDisplayContext.getSegmentsConfigurationURL(request);
+		String segmentsConfigurationURL = segmentsDisplayContext.getSegmentsCompanyConfigurationURL(request);
 		%>
 
 		<c:choose>

@@ -212,11 +212,11 @@ public class SegmentsDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getSegmentsConfigurationURL(
+	public String getSegmentsCompanyConfigurationURL(
 		HttpServletRequest httpServletRequest) {
 
 		try {
-			return _segmentsConfigurationProvider.getConfigurationURL(
+			return _segmentsConfigurationProvider.getCompanyConfigurationURL(
 				httpServletRequest);
 		}
 		catch (PortalException portalException) {

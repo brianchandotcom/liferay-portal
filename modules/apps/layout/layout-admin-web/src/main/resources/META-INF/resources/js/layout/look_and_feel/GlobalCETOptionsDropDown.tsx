@@ -16,7 +16,10 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import React, {useState} from 'react';
 
-export function GlobalCETOptionsDropDown({dropdownItems, dropdownTriggerId}) {
+export function GlobalCETOptionsDropDown({
+	dropdownItems,
+	dropdownTriggerId,
+}: IProps) {
 	const [active, setActive] = useState(false);
 
 	return (
@@ -30,7 +33,7 @@ export function GlobalCETOptionsDropDown({dropdownItems, dropdownTriggerId}) {
 			onActiveChange={setActive}
 			trigger={
 				<ClayButtonWithIcon
-					aria-expanded={active.toString()}
+					aria-expanded={active}
 					aria-haspopup="true"
 					aria-label={Liferay.Language.get('show-options')}
 					displayType="unstyled"
@@ -41,4 +44,14 @@ export function GlobalCETOptionsDropDown({dropdownItems, dropdownTriggerId}) {
 			}
 		/>
 	);
+}
+
+interface IProps {
+	dropdownItems: Array<{
+		label: string;
+		onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+		symbolLeft?: string;
+		value?: string;
+	}>;
+	dropdownTriggerId: string;
 }

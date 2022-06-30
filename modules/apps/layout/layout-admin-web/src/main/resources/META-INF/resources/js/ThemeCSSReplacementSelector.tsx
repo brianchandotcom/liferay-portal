@@ -24,14 +24,14 @@ export default function ThemeCSSReplacementSelector({
 	selectThemeCSSClientExtensionURL,
 	themeCSSCETExternalReferenceCode,
 	themeCSSExtensionName,
-}) {
+}: IProps) {
 	const [extensionName, setExtensionName] = useState(themeCSSExtensionName);
 	const [cetExternalReferenceCode, setCETExternalReferenceCode] = useState(
 		themeCSSCETExternalReferenceCode
 	);
 
 	const onClick = () => {
-		openSelectionModal({
+		openSelectionModal<{value: string}>({
 			onSelect: (selectedItem) => {
 				const item = JSON.parse(selectedItem.value);
 
@@ -107,4 +107,13 @@ export default function ThemeCSSReplacementSelector({
 			</ClayForm.Group>
 		</>
 	);
+}
+
+interface IProps {
+	placeholder: string;
+	portletNamespace: string;
+	selectThemeCSSClientExtensionEventName: string;
+	selectThemeCSSClientExtensionURL: string;
+	themeCSSCETExternalReferenceCode: string;
+	themeCSSExtensionName: string;
 }

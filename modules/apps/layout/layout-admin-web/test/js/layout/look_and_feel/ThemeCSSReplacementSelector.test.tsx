@@ -24,9 +24,13 @@ jest.mock('frontend-js-web', () => ({
 	openSelectionModal: jest.fn(),
 }));
 
+const openSelectionModalMock = openSelectionModal as jest.Mock<
+	typeof openSelectionModal
+>;
+
 describe('ThemeCSSReplacementSelector', () => {
 	afterEach(() => {
-		openSelectionModal.mockReset();
+		openSelectionModalMock.mockReset();
 	});
 
 	it('shows selected theme CSS', async () => {
@@ -46,7 +50,7 @@ describe('ThemeCSSReplacementSelector', () => {
 	});
 
 	it('allows selecting a new theme CSS', async () => {
-		openSelectionModal.mockImplementation(({onSelect}) =>
+		openSelectionModalMock.mockImplementation(({onSelect}) =>
 			onSelect({
 				value: JSON.stringify({
 					cetExternalReferenceCode: 'new-theme-css',
@@ -74,7 +78,7 @@ describe('ThemeCSSReplacementSelector', () => {
 	});
 
 	it('allows replacing existing theme CSS', async () => {
-		openSelectionModal.mockImplementation(({onSelect}) =>
+		openSelectionModalMock.mockImplementation(({onSelect}) =>
 			onSelect({
 				value: JSON.stringify({
 					cetExternalReferenceCode: 'replaced-theme-css',

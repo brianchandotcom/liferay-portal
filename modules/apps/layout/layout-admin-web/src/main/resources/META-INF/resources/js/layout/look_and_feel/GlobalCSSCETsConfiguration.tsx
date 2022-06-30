@@ -19,39 +19,39 @@ import React, {useState} from 'react';
 
 import {GlobalCETOptionsDropDown} from './GlobalCETOptionsDropDown';
 
-export default function GlobalJSCETsConfiguration({
-	globalJSCETSelectorURL,
-	globalJSCETs: initialGlobalJSCETs,
+export default function GlobalCSSCETsConfiguration({
+	globalCSSCETSelectorURL,
+	globalCSSCETs: initialGlobalCSSCETs,
 	portletNamespace,
-	selectGlobalJSCETsEventName,
-}) {
-	const [globalJSCETs, setGlobalJSCETs] = useState(initialGlobalJSCETs);
+	selectGlobalCSSCETsEventName,
+}: IProps) {
+	const [globalCSSCETs, setGlobalCSSCETs] = useState(initialGlobalCSSCETs);
 
-	const deleteGlobalJSCET = (deletedGlobalJSCET) => {
-		setGlobalJSCETs((previousGlobalJSCETs) =>
-			previousGlobalJSCETs.filter(
-				(globalJSCET) =>
-					globalJSCET.cetExternalReferenceCode !==
-					deletedGlobalJSCET.cetExternalReferenceCode
+	const deleteGlobalCSSCET = (deletedGlobalCSSCET: IGlobalCSSCET) => {
+		setGlobalCSSCETs((previousGlobalCSSCETs) =>
+			previousGlobalCSSCETs.filter(
+				(globalCSSCET) =>
+					globalCSSCET.cetExternalReferenceCode !==
+					deletedGlobalCSSCET.cetExternalReferenceCode
 			)
 		);
 	};
 
-	const getDropDownButtonId = (globalJSCET) =>
-		`${portletNamespace}_GlobalJSCETsConfigurationOptionsButton_${globalJSCET.cetExternalReferenceCode}`;
+	const getDropDownButtonId = (globalCSSCET: IGlobalCSSCET) =>
+		`${portletNamespace}_GlobalCSSCETsConfigurationOptionsButton_${globalCSSCET.cetExternalReferenceCode}`;
 
-	const getDropDownItems = (globalJSCET) => {
+	const getDropDownItems = (globalCSSCET: IGlobalCSSCET) => {
 		return [
 			{
 				label: Liferay.Language.get('delete'),
-				onClick: () => deleteGlobalJSCET(globalJSCET),
+				onClick: () => deleteGlobalCSSCET(globalCSSCET),
 				symbolLeft: 'trash',
 			},
 		];
 	};
 
 	const handleClick = () => {
-		openSelectionModal({
+		openSelectionModal<{value: string[]}>({
 			multiple: true,
 			onSelect(selectedItems) {
 				if (!selectedItems.value) {
@@ -62,40 +62,42 @@ export default function GlobalJSCETsConfiguration({
 					JSON.parse(selectedItem)
 				);
 
-				setGlobalJSCETs((previousGlobalJSCETs) => {
-					const nextGlobalJSCETs = [
-						...previousGlobalJSCETs,
+				setGlobalCSSCETs((previousGlobalCSSCETs) => {
+					const nextGlobalCSSCETs = [
+						...previousGlobalCSSCETs,
 						...items,
 					];
 
-					return nextGlobalJSCETs.filter(
-						(globalJSCET, index) =>
-							nextGlobalJSCETs.findIndex(
+					return nextGlobalCSSCETs.filter(
+						(globalCSSCET, index) =>
+							nextGlobalCSSCETs.findIndex(
 								({cetExternalReferenceCode}) =>
-									globalJSCET.cetExternalReferenceCode ===
+									globalCSSCET.cetExternalReferenceCode ===
 									cetExternalReferenceCode
 							) === index
 					);
 				});
 			},
-			selectEventName: selectGlobalJSCETsEventName,
-			title: Liferay.Language.get('select-javascript-extensions'),
-			url: globalJSCETSelectorURL,
+			selectEventName: selectGlobalCSSCETsEventName,
+			title: Liferay.Language.get('select-css-extensions'),
+			url: globalCSSCETSelectorURL,
 		});
 	};
 
 	return (
 		<>
 			<input
-				name={`${portletNamespace}globalJSCETExternalReferenceCodes`}
+				name={`${portletNamespace}globalCSSCETExternalReferenceCodes`}
 				type="hidden"
-				value={globalJSCETs
-					.map((globalJSCET) => globalJSCET.cetExternalReferenceCode)
+				value={globalCSSCETs
+					.map(
+						(globalCSSCET) => globalCSSCET.cetExternalReferenceCode
+					)
 					.join(',')}
 			/>
 
 			<h3 className="sheet-subtitle">
-				{Liferay.Language.get('javascript-extensions')}
+				{Liferay.Language.get('css-extensions')}
 			</h3>
 
 			<ClayButton
@@ -105,10 +107,10 @@ export default function GlobalJSCETsConfiguration({
 				small
 				type="button"
 			>
-				{Liferay.Language.get('add-javascript-extensions')}
+				{Liferay.Language.get('add-css-extensions')}
 			</ClayButton>
 
-			{globalJSCETs.length ? (
+			{globalCSSCETs.length ? (
 				<ClayTable>
 					<ClayTable.Head>
 						<ClayTable.Row>
@@ -125,21 +127,21 @@ export default function GlobalJSCETsConfiguration({
 					</ClayTable.Head>
 
 					<ClayTable.Body>
-						{globalJSCETs.map((globalJSCET) => (
+						{globalCSSCETs.map((globalCSSCET) => (
 							<ClayTable.Row
-								key={globalJSCET.cetExternalReferenceCode}
+								key={globalCSSCET.cetExternalReferenceCode}
 							>
 								<ClayTable.Cell expanded headingTitle>
-									{globalJSCET.name}
+									{globalCSSCET.name}
 								</ClayTable.Cell>
 
 								<ClayTable.Cell>
 									<GlobalCETOptionsDropDown
 										dropdownItems={getDropDownItems(
-											globalJSCET
+											globalCSSCET
 										)}
 										dropdownTriggerId={getDropDownButtonId(
-											globalJSCET
+											globalCSSCET
 										)}
 									/>
 								</ClayTable.Cell>
@@ -149,11 +151,21 @@ export default function GlobalJSCETsConfiguration({
 				</ClayTable>
 			) : (
 				<p className="text-secondary">
-					{Liferay.Language.get(
-						'no-javascript-extensions-were-loaded'
-					)}
+					{Liferay.Language.get('no-css-extensions-were-loaded')}
 				</p>
 			)}
 		</>
 	);
+}
+
+interface IGlobalCSSCET {
+	cetExternalReferenceCode: string;
+	name: string;
+}
+
+interface IProps {
+	globalCSSCETSelectorURL: string;
+	globalCSSCETs: IGlobalCSSCET[];
+	portletNamespace: string;
+	selectGlobalCSSCETsEventName: string;
 }

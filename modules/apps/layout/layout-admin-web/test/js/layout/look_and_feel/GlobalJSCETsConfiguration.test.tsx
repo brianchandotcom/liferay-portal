@@ -24,9 +24,13 @@ jest.mock('frontend-js-web', () => ({
 	openSelectionModal: jest.fn(),
 }));
 
+const openSelectionModalMock = openSelectionModal as jest.Mock<
+	typeof openSelectionModal
+>;
+
 describe('GlobalJSCETsConfiguration', () => {
 	afterEach(() => {
-		openSelectionModal.mockReset();
+		openSelectionModalMock.mockReset();
 	});
 
 	it('shows "no extensions loaded" if there are no extensions', async () => {
@@ -107,7 +111,7 @@ describe('GlobalJSCETsConfiguration', () => {
 	});
 
 	it('removes duplicated extensions if any', async () => {
-		openSelectionModal.mockImplementation(() => {});
+		openSelectionModalMock.mockImplementation(() => () => {});
 
 		render(
 			<GlobalJSCETsConfiguration
@@ -137,7 +141,7 @@ describe('GlobalJSCETsConfiguration', () => {
 			})
 		);
 
-		const [[{onSelect}]] = openSelectionModal.mock.calls;
+		const [[{onSelect}]] = openSelectionModalMock.mock.calls;
 
 		act(() => {
 			onSelect({

@@ -161,7 +161,7 @@ export default function EditObjectField({
 		const {objectFieldSettings} = values;
 
 		const [filter] = objectFieldSettings?.filter(
-			(fieldSetting) => fieldSetting.name === 'filter'
+			(fieldSetting) => fieldSetting.name === 'filters'
 		) as ObjectFieldSetting[];
 
 		const filterValues = filter.value as ObjectFieldFilterSetting[];
@@ -179,7 +179,7 @@ export default function EditObjectField({
 
 		const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
 			...(objectFieldSettings?.filter(
-				(fieldSettings) => fieldSettings.name !== 'filter'
+				(fieldSettings) => fieldSettings.name !== 'filters'
 			) as ObjectFieldSetting[]),
 			newFilter,
 		];
@@ -222,21 +222,23 @@ export default function EditObjectField({
 		const {objectFieldSettings} = values;
 
 		const filterSetting = objectFieldSettings?.filter(
-			({name}) => name === 'filter'
+			({name}) => name === 'filters'
 		);
 
 		if (filterSetting?.length === 0 && objectFieldSettings) {
 			const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
 				...objectFieldSettings,
 				{
-					name: 'filter',
+					name: 'filters',
 					value: [
 						{
 							filterBy: objectFieldName,
 							filterType,
-							value: value
-								? value
-								: valueList?.map(({value}) => value),
+							json: {
+								[filterType as string]: value
+									? value
+									: valueList?.map(({value}) => value),
+							},
 						},
 					],
 				},
@@ -256,9 +258,11 @@ export default function EditObjectField({
 					{
 						filterBy: objectFieldName,
 						filterType,
-						value: value
-							? value
-							: valueList?.map(({value}) => value),
+						json: {
+							[filterType as string]: value
+								? value
+								: valueList?.map(({value}) => value),
+						},
 					},
 				];
 
@@ -271,7 +275,7 @@ export default function EditObjectField({
 					| ObjectFieldSetting[]
 					| undefined = [
 					...(objectFieldSettings?.filter(
-						(fieldSetting) => fieldSetting.name !== 'filter'
+						(fieldSetting) => fieldSetting.name !== 'filters'
 					) as ObjectFieldSetting[]),
 					newFilter,
 				];
@@ -298,7 +302,9 @@ export default function EditObjectField({
 					items: objectFields,
 				}: {
 					items: ObjectField[];
-				} = (await response.json()) as any;
+				} = (await response.json()) as {
+					items: ObjectField[];
+				};
 
 				setObjectFields(objectFields);
 			};

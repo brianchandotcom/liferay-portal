@@ -659,7 +659,7 @@ function AggregationSourceProperty({
 		const fieldSettingWithoutSummarizeField = objectFieldSettings.filter(
 			(fieldSettings) =>
 				fieldSettings.name !== 'summarizeField' &&
-				fieldSettings.name !== 'filter' &&
+				fieldSettings.name !== 'filters' &&
 				fieldSettings.name !== 'relationship'
 		);
 

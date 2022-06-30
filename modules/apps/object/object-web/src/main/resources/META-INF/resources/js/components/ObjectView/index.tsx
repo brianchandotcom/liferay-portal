@@ -107,7 +107,9 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				items: objectFields,
 			}: {
 				items: ObjectField[];
-			} = (await objectFieldsResponse.json()) as any;
+			} = (await objectFieldsResponse.json()) as {
+				items: ObjectField[];
+			};
 
 			dispatch({
 				payload: {

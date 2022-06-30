@@ -21,7 +21,6 @@ export declare function normalizeFieldSettings(
 		| boolean
 		| ObjectFieldFilterSetting[]
 		| undefined;
-	filter?: string | number | boolean | ObjectFieldFilterSetting[] | undefined;
 	maxLength?:
 		| string
 		| number
@@ -71,6 +70,12 @@ export declare function normalizeFieldSettings(
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	summarizeField?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	filters?:
 		| string
 		| number
 		| boolean

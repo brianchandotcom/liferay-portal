@@ -113,7 +113,7 @@ interface ObjectFieldSetting {
 type ObjectFieldFilterSetting = {
 	filterBy?: string;
 	filterType?: string;
-	value?: string | string[];
+	json?: {[key: string]: string | string[] | undefined};
 };
 
 interface IItem extends LabelValueObject {
@@ -131,7 +131,7 @@ type ObjectFieldSettingName =
 	| 'relationship'
 	| 'function'
 	| 'summarizeField'
-	| 'filter';
+	| 'filters';
 
 interface ObjectValidation {
 	active: boolean;

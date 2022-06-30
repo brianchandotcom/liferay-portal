@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayToggle} from '@clayui/form';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -23,7 +24,14 @@ import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelector} from '../../contexts/StoreContext';
 import {useId} from '../../utils/useId';
 
-export function CheckboxField({disabled, field, onValueSelect, title, value}) {
+export function CheckboxField({
+	className,
+	disabled,
+	field,
+	onValueSelect,
+	title,
+	value,
+}) {
 	const helpTextId = useId();
 	const [nextValue, setNextValue] = useControlledState(value || false);
 
@@ -55,7 +63,7 @@ export function CheckboxField({disabled, field, onValueSelect, title, value}) {
 	);
 
 	return (
-		<ClayForm.Group className="mb-0 mt-1">
+		<ClayForm.Group className={classNames(className, 'h-100')}>
 			<div
 				className="align-items-center d-flex justify-content-between page-editor__sidebar__fieldset__field-checkbox"
 				data-tooltip-align="bottom"

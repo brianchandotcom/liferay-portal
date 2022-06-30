@@ -1,0 +1,97 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"customCSS": ".[$FRAGMENT_CLASS$] { color: blue; }",
+					"customCSSViewports": [
+						{
+							"customCSS": ".[$FRAGMENT_CLASS$] { color: red; }",
+							"id": "landscapeMobile"
+						},
+						{
+							"customCSS": ".[$FRAGMENT_CLASS$] { color: pink; }",
+							"id": "portraitMobile"
+						},
+						{
+							"customCSS": ".[$FRAGMENT_CLASS$] { color: aquamarine; }",
+							"id": "tablet"
+						}
+					],
+					"fragmentStyle": {
+						"backgroundColor": "",
+						"borderRadius": "rounded-0",
+						"borderWidth": "0",
+						"fontFamily": "sans-serif",
+						"fontSize": "medium",
+						"fontWeight": "font-weight-normal",
+						"height": "h-auto",
+						"maxHeight": "none",
+						"maxWidth": "none",
+						"minHeight": "auto",
+						"minWidth": "auto",
+						"opacity": "100",
+						"overflow": "visible",
+						"shadow": "shadow-none",
+						"textAlign": "none",
+						"width": "w-auto"
+					},
+					"gutters": true,
+					"modulesPerRow": 1,
+					"numberOfColumns": 1,
+					"reverseOrder": false,
+					"rowViewports": [
+						{
+							"id": "landscapeMobile",
+							"rowViewportDefinition": {
+							}
+						},
+						{
+							"id": "portraitMobile",
+							"rowViewportDefinition": {
+							}
+						},
+						{
+							"id": "tablet",
+							"rowViewportDefinition": {
+							}
+						}
+					],
+					"verticalAlignment": "top"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"columnViewports": [
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "landscapeMobile"
+								},
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"columnViewportDefinition": {
+									},
+									"id": "tablet"
+								}
+							],
+							"size": 12
+						},
+						"type": "Column"
+					}
+				],
+				"type": "Row"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

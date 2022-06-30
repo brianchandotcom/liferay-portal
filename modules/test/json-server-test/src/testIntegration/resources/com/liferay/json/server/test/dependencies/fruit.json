@@ -53,10 +53,10 @@
 			}
 		}
 	],
-	"best/filter?grape": [
+	"grape/filter?merlot": [
 		{
 			"id": 1,
-			"name": "Cabernet Franc"
+			"name": "Merlot"
 		}
 	],
 	"orange": [

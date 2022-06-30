@@ -422,9 +422,9 @@ public class JSONServerServletTest {
 				"The input is invalid.", message.get("message"));
 		}
 
-		// /fruit/best/filter?grape
+		// /fruit/grape/filter?merlot
 
-		mockHttpServletRequest.setPathInfo("/fruit/best/filter?grape");
+		mockHttpServletRequest.setPathInfo("/fruit/grape/filter?merlot");
 
 		mockHttpServletResponse = new MockHttpServletResponse();
 
@@ -438,7 +438,7 @@ public class JSONServerServletTest {
 		Map<String, Object> grape = grapes.get(0);
 
 		Assert.assertEquals(1, grape.get("id"));
-		Assert.assertEquals("Cabernet Franc", grape.get("name"));
+		Assert.assertEquals("Merlot", grape.get("name"));
 
 		// /fruit/orange
 

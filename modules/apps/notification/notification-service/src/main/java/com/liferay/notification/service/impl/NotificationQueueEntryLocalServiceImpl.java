@@ -17,6 +17,7 @@ package com.liferay.notification.service.impl;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.notification.model.NotificationQueueEntry;
+import com.liferay.notification.service.NotificationQueueEntryAttachmentLocalService;
 import com.liferay.notification.service.base.NotificationQueueEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -55,7 +56,7 @@ public class NotificationQueueEntryLocalServiceImpl
 			long userId, long notificationTemplateId, String bcc, String body,
 			String cc, String className, long classPK, String from,
 			String fromName, double priority, String subject, String to,
-			String toName)
+			String toName, List<Long> fileEntryIds)
 		throws PortalException {
 
 		NotificationQueueEntry notificationQueueEntry =
@@ -82,7 +83,17 @@ public class NotificationQueueEntryLocalServiceImpl
 		notificationQueueEntry.setTo(to);
 		notificationQueueEntry.setToName(toName);
 
-		return notificationQueueEntryPersistence.update(notificationQueueEntry);
+		notificationQueueEntry = notificationQueueEntryPersistence.update(
+			notificationQueueEntry);
+
+		for (long fileEntryId : fileEntryIds) {
+			_notificationQueueEntryAttachmentLocalService.
+				addNotificationQueueEntryAttachment(
+					notificationQueueEntry.getCompanyId(), fileEntryId,
+					notificationQueueEntry.getNotificationQueueEntryId());
+		}
+
+		return notificationQueueEntry;
 	}
 
 	@Override
@@ -193,6 +204,10 @@ public class NotificationQueueEntryLocalServiceImpl
 
 	@Reference
 	private MailService _mailService;
+
+	@Reference
+	private NotificationQueueEntryAttachmentLocalService
+		_notificationQueueEntryAttachmentLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

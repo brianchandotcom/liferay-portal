@@ -15,10 +15,7 @@
 import {
 	ADD_REDO_ACTION,
 	ADD_UNDO_ACTION,
-	LOADING,
 	SET_DRAFT_STATUS,
-	SET_PREVIEW_LAYOUT,
-	SET_PREVIEW_LAYOUT_TYPE,
 	SET_TOKEN_VALUES,
 	UPDATE_UNDO_REDO_HISTORY,
 } from '../../src/main/resources/META-INF/resources/js/style-book-editor/constants/actionTypes';
@@ -59,15 +56,6 @@ const STATE = {
 };
 
 describe('reducer', () => {
-	it('saves needed state when dispatching LOADING action', () => {
-		const {loading} = reducer(STATE, {
-			type: LOADING,
-			value: false,
-		});
-
-		expect(loading).toBe(false);
-	});
-
 	it('saves needed state when dispatching SET_DRAFT_STATUS action', () => {
 		const {draftStatus} = reducer(STATE, {
 			type: SET_DRAFT_STATUS,
@@ -75,30 +63,6 @@ describe('reducer', () => {
 		});
 
 		expect(draftStatus).toBe('saving');
-	});
-
-	it('saves needed state when dispatching SET_PREVIEW_LAYOUT action', () => {
-		const layout = {
-			name: 'hello world',
-			private: false,
-			url: 'my-url',
-		};
-
-		const {previewLayout} = reducer(STATE, {
-			layout,
-			type: SET_PREVIEW_LAYOUT,
-		});
-
-		expect(previewLayout).toBe(layout);
-	});
-
-	it('saves needed state when dispatching SET_PREVIEW_LAYOUT_TYPE action', () => {
-		const {previewLayoutType} = reducer(STATE, {
-			layoutType: 'layoutTest',
-			type: SET_PREVIEW_LAYOUT_TYPE,
-		});
-
-		expect(previewLayoutType).toBe('layoutTest');
 	});
 
 	it('saves needed state when dispatching SET_TOKEN_VALUES action', () => {

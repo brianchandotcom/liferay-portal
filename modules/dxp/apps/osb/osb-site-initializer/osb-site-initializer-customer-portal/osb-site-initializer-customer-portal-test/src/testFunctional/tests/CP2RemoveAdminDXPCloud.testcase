@@ -6,7 +6,7 @@ definition {
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-	property testray.main.component.name = "Site Initializer Customer Portal";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
 
 	var testSiteName = "Customer Portal Name";
 	var testSiteURL = "customer-portal-name";
@@ -46,9 +46,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-148181 - Verify if when the user types a email at Invite Your Team Members the same email appears at Accounts - Details - Project that you are testing"
+	@description = "LPS-150058 - Verify if the user is allowed to remove the additional admin(s) added before continuing"
 	@priority = "5"
-	test IfInvitedIsSeenOnAccountRoles {
+	test IfAddedAdminCanBeRemoved {
 		Accounts.openAccountsAdmin();
 
 		CustomerPortal.accountTableProject(title = "Test Account 01");
@@ -64,22 +64,21 @@ definition {
 		CustomerPortal.clickOnStartProjectSetup();
 
 		CP2TeamMembers.addFieldsTeamMembersExtra(
+			addMembers = "false",
 			position = "0",
 			positionNumber = "0",
-			rowEmail = "test01@liferay.com",
+			rowEmail = "test01@project.com",
 			rowRole = "User");
 
 		CP2TeamMembers.clickTeamMembersSendInvitation();
 
-		Accounts.openAccountsAdmin();
+		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
 
-		CustomerPortal.accountTableProject(title = "Test Account 01");
+		CP2DXPCloudSetup.clickOnAddAnotherAdminButton();
 
-		Navigator.gotoNavTab(navTab = "Users");
+		CP2DXPCloudSetup.clickOnRemoveThisAdminButton();
 
-		AssertElementPresent(
-			email = "test01@liferay.com",
-			locator1 = "CP2TeamMembers#ACCOUNT_USER_NAME");
+		CP2DXPCloudSetup.notViewSetupDXPCloufEXtraInfo();
 	}
 
 }

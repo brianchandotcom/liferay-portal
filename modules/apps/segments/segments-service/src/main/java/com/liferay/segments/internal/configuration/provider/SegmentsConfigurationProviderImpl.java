@@ -60,16 +60,15 @@ public class SegmentsConfigurationProviderImpl
 	implements SegmentsConfigurationProvider {
 
 	@Override
-	public String getConfigurationURL(HttpServletRequest httpServletRequest)
+	public String getCompanyConfigurationURL(
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			_portal.getUser(httpServletRequest));
 
 		if (permissionChecker.isCompanyAdmin()) {
-			String factoryPid =
-				"com.liferay.segments.configuration." +
-					"SegmentsCompanyConfiguration";
+			String factoryPid = SegmentsCompanyConfiguration.class.getName();
 
 			String pid = factoryPid;
 
@@ -95,6 +94,31 @@ public class SegmentsConfigurationProviderImpl
 				"factoryPid", factoryPid
 			).setParameter(
 				"pid", pid
+			).buildString();
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getConfigurationURL(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_portal.getUser(httpServletRequest));
+
+		if (permissionChecker.isOmniadmin()) {
+			return PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					httpServletRequest,
+					ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/configuration_admin/edit_configuration"
+			).setRedirect(
+				_portal.getCurrentCompleteURL(httpServletRequest)
+			).setParameter(
+				"factoryPid", SegmentsConfiguration.class.getName()
 			).buildString();
 		}
 

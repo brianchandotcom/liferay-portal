@@ -467,6 +467,67 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-8971. Verify that the Diagram Product name and short description are displayed on the product card."
+	@priority = "4"
+	test CanAssertDiagramNameAndDescriptionOnTheProductCard {
+		property portal.acceptance = "COMMERCE-8971";
+
+		task ("Given a Diagram product with an image, name and short description") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.addDiagramProductWithImage(
+				catalogName = "Minium",
+				imageTitle = "Black",
+				productName = "Test Diagram 1",
+				productType = "Diagram",
+				shortDescription = "This is a short description.",
+				sku = "SKU1001");
+		}
+
+		task ("And given a Diagram product with an image, name and a longer description") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.addDiagramProductWithImage(
+				catalogName = "Minium",
+				imageTitle = "Black",
+				productName = "Test Diagram 2",
+				productType = "Diagram",
+				shortDescription = "This is a longer description. This is a longer description. This is a longer description. This is a longer description.",
+				sku = "SKU1002");
+		}
+
+		task ("When a buyer navigates to the Minium Catalog and views the first Diagram Product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.searchCatalog(productName = "Test Diagram 1");
+		}
+
+		task ("Then the product name and short description is displayed") {
+			CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Test Diagram 1");
+
+			CommerceAcceleratorsInitializer.assertMiniumCardDescription(
+				productDescription = "This is a short description.",
+				productName = "Test Diagram 1");
+		}
+
+		task ("When a buyer navigates to the Minium Catalog and views the second Diagram Product") {
+			CommerceNavigator.searchCatalog(productName = "Test Diagram 2");
+		}
+
+		task ("Then the product name and a truncated description is displayed because the description is longer") {
+			CommerceAcceleratorsInitializer.viewMiniumCardName(productName = "Test Diagram 2");
+
+			CommerceAcceleratorsInitializer.assertMiniumCardDescriptionTruncated(
+				productDescription = "This is a longer description. This is a longer description. This is a longer description. This is a longer description.",
+				productName = "Test Diagram 2");
+		}
+	}
+
 	@description = "COMMERCE-8129. Assert that a buyer can see the thumbnails for a diagram"
 	@priority = "4"
 	test CanAssertDiagramThumbnailIntoSearchResults {

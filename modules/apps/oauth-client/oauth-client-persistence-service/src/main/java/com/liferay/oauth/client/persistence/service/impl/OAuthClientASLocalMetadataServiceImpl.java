@@ -77,12 +77,12 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
-			long companyId, String localWellKnownURI)
+			String localWellKnownURI)
 		throws PortalException {
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataLocalService.
-				getOAuthClientASLocalMetadata(companyId, localWellKnownURI);
+				getOAuthClientASLocalMetadata(localWellKnownURI);
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientASLocalMetadata,
@@ -111,12 +111,12 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
-			long companyId, String localWellKnownURI)
+			String localWellKnownURI)
 		throws PortalException {
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataLocalService.
-				getOAuthClientASLocalMetadata(companyId, localWellKnownURI);
+				getOAuthClientASLocalMetadata(localWellKnownURI);
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
 			getPermissionChecker(), oAuthClientASLocalMetadata,

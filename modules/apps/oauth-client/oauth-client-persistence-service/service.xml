@@ -30,8 +30,7 @@
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
-		<finder name="C_L" return-type="OAuthClientASLocalMetadata" unique="true">
-			<finder-column name="companyId" />
+		<finder name="LocalWellKnownURI" return-type="OAuthClientASLocalMetadata" unique="true">
 			<finder-column name="localWellKnownURI" />
 		</finder>
 	</entity>

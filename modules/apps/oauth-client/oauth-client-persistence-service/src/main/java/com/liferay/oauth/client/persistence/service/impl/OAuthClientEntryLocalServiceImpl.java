@@ -73,8 +73,7 @@ public class OAuthClientEntryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		_validateAuthServerWellKnownURI(
-			user.getCompanyId(), authServerWellKnownURI);
+		_validateAuthServerWellKnownURI(authServerWellKnownURI);
 
 		ClientInformation clientInformation = _parseClientInformation(
 			authServerWellKnownURI, infoJSON);
@@ -225,8 +224,7 @@ public class OAuthClientEntryLocalServiceImpl
 			oAuthClientEntryLocalService.getOAuthClientEntry(
 				oAuthClientEntryId);
 
-		_validateAuthServerWellKnownURI(
-			oAuthClientEntry.getCompanyId(), authServerWellKnownURI);
+		_validateAuthServerWellKnownURI(authServerWellKnownURI);
 
 		ClientInformation clientInformation = _parseClientInformation(
 			authServerWellKnownURI, infoJSON);
@@ -292,14 +290,12 @@ public class OAuthClientEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateAuthServerWellKnownURI(
-			long companyId, String authServerWellKnownURI)
+	private void _validateAuthServerWellKnownURI(String authServerWellKnownURI)
 		throws PortalException {
 
 		if (authServerWellKnownURI.endsWith("local")) {
 			_oAuthClientASLocalMetadataLocalService.
-				getOAuthClientASLocalMetadata(
-					companyId, authServerWellKnownURI);
+				getOAuthClientASLocalMetadata(authServerWellKnownURI);
 
 			return;
 		}

@@ -107,18 +107,6 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
-			long companyId, String localWellKnownURI)
-		throws PortalException {
-
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataPersistence.findByC_L(
-				companyId, localWellKnownURI);
-
-		return deleteOAuthClientASLocalMetadata(oAuthClientASLocalMetadata);
-	}
-
-	@Override
-	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
 			OAuthClientASLocalMetadata oAuthClientASLocalMetadata)
 		throws PortalException {
 
@@ -136,11 +124,23 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 	}
 
 	@Override
-	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
-		long companyId, String localWellKnownURI) {
+	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
+			String localWellKnownURI)
+		throws PortalException {
 
-		return oAuthClientASLocalMetadataPersistence.fetchByC_L(
-			companyId, localWellKnownURI);
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			oAuthClientASLocalMetadataPersistence.findByLocalWellKnownURI(
+				localWellKnownURI);
+
+		return deleteOAuthClientASLocalMetadata(oAuthClientASLocalMetadata);
+	}
+
+	@Override
+	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
+		String localWellKnownURI) {
+
+		return oAuthClientASLocalMetadataPersistence.fetchByLocalWellKnownURI(
+			localWellKnownURI);
 	}
 
 	@Override
@@ -161,11 +161,11 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
-			long companyId, String localWellKnownURI)
+			String localWellKnownURI)
 		throws PortalException {
 
-		return oAuthClientASLocalMetadataPersistence.findByC_L(
-			companyId, localWellKnownURI);
+		return oAuthClientASLocalMetadataPersistence.findByLocalWellKnownURI(
+			localWellKnownURI);
 	}
 
 	@Override

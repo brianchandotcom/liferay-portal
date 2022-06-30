@@ -2,7 +2,7 @@ const numericInput = fragmentElement.querySelector(
 	`#${fragmentNamespace}-numeric-input`
 );
 
-const isInteger = numericInput.getAttribute('data-type') === 'integer';
+const isInteger = input.attributes.dataType === 'integer';
 
 function handleOnKeydown(event) {
 	if (isInteger && (event.key === ',' || event.key === '.')) {

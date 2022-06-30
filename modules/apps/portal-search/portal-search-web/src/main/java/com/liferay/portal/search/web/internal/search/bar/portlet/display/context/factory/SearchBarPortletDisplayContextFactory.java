@@ -147,16 +147,6 @@ public class SearchBarPortletDisplayContextFactory {
 				searchBarPrecedenceHelper, searchBarPortletPreferences,
 				themeDisplay));
 
-		SearchScopePreference searchScopePreference =
-			searchBarPortletPreferences.getSearchScopePreference();
-
-		if (searchScopePreference ==
-				SearchScopePreference.LET_THE_USER_CHOOSE) {
-
-			searchBarPortletDisplayContext.setLetTheUserChooseTheSearchScope(
-				true);
-		}
-
 		searchBarPortletDisplayContext.setPaginationStartParameterName(
 			Optional.ofNullable(
 				searchRequest.getPaginationStartParameterName()
@@ -181,10 +171,10 @@ public class SearchBarPortletDisplayContextFactory {
 		searchBarPortletDisplayContext.setSearchBarPortletInstanceConfiguration(
 			searchBarPortletInstanceConfiguration);
 
-		_setSelectedSearchScope(
+		_setSelectedSearchScopePreference(
 			portletPreferencesLookup, scopeParameterValueOptional.orElse(null),
 			searchBarPortletDisplayContext, searchBarPrecedenceHelper,
-			searchScopePreference,
+			searchBarPortletPreferences,
 			portletSharedSearchResponse.getSearchSettings(), themeDisplay);
 
 		if (searchBarPortletPreferences.isInvisible()) {
@@ -285,11 +275,11 @@ public class SearchBarPortletDisplayContextFactory {
 		}
 	}
 
-	protected SearchScope getSearchScope(
+	protected SearchScopePreference getSearchScopePreference(
 		PortletPreferencesLookup portletPreferencesLookup,
 		String scopeParameterValue,
 		SearchBarPrecedenceHelper searchBarPrecedenceHelper,
-		SearchScopePreference searchScopePreference,
+		SearchBarPortletPreferences searchBarPortletPreferences,
 		SearchSettings searchSettings, ThemeDisplay themeDisplay) {
 
 		Portlet headerSearchBarPortlet =
@@ -307,22 +297,25 @@ public class SearchBarPortletDisplayContextFactory {
 				Optional<String> optional = searchSettings.getScope();
 
 				if (optional.isPresent()) {
-					return SearchScope.getSearchScope(optional.get());
+					return SearchScopePreference.getSearchScopePreference(
+						optional.get());
 				}
 			}
 		}
 
 		if (scopeParameterValue != null) {
-			return SearchScope.getSearchScope(scopeParameterValue);
+			return SearchScopePreference.getSearchScopePreference(
+				scopeParameterValue);
 		}
 
-		SearchScope searchScope = searchScopePreference.getSearchScope();
+		SearchScopePreference searchScopePreference =
+			searchBarPortletPreferences.getSearchScopePreference();
 
-		if (searchScope != null) {
-			return searchScope;
+		if (searchScopePreference != null) {
+			return searchScopePreference;
 		}
 
-		return SearchScope.THIS_SITE;
+		return SearchScopePreference.THIS_SITE;
 	}
 
 	protected boolean isAvailableEverythingSearchScope() {
@@ -425,25 +418,32 @@ public class SearchBarPortletDisplayContextFactory {
 		return searchRequest.isEmptySearchEnabled();
 	}
 
-	private void _setSelectedSearchScope(
+	private void _setSelectedSearchScopePreference(
 		PortletPreferencesLookup portletPreferencesLookup,
 		String scopeParameterValue,
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext,
 		SearchBarPrecedenceHelper searchBarPrecedenceHelper,
-		SearchScopePreference searchScopePreference,
+		SearchBarPortletPreferences searchBarPortletPreferences,
 		SearchSettings searchSettings, ThemeDisplay themeDisplay) {
 
-		SearchScope searchScope = getSearchScope(
+		SearchScopePreference searchScopePreference = getSearchScopePreference(
 			portletPreferencesLookup, scopeParameterValue,
-			searchBarPrecedenceHelper, searchScopePreference, searchSettings,
-			themeDisplay);
+			searchBarPrecedenceHelper, searchBarPortletPreferences,
+			searchSettings, themeDisplay);
 
-		if (searchScope == SearchScope.EVERYTHING) {
+		if (searchScopePreference == SearchScopePreference.EVERYTHING) {
 			searchBarPortletDisplayContext.setSelectedEverythingSearchScope(
 				true);
 		}
 
-		if (searchScope == SearchScope.THIS_SITE) {
+		if (searchScopePreference ==
+				SearchScopePreference.LET_THE_USER_CHOOSE) {
+
+			searchBarPortletDisplayContext.setLetTheUserChooseTheSearchScope(
+				true);
+		}
+
+		if (searchScopePreference == SearchScopePreference.THIS_SITE) {
 			searchBarPortletDisplayContext.setSelectedCurrentSiteSearchScope(
 				true);
 		}

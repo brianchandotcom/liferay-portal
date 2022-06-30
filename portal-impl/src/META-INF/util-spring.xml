@@ -191,6 +191,11 @@
 			<bean class="com.liferay.portal.theme.PortletDecoratorFactoryImpl" />
 		</property>
 	</bean>
+	<bean class="com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactoryUtil" id="com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactoryUtil">
+		<property name="upgradeModulesFactory">
+			<bean class="com.liferay.portal.upgrade.util.UpgradeModulesFactoryImpl" />
+		</property>
+	</bean>
 	<bean class="com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil" id="com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil">
 		<property name="upgradeTableFactory">
 			<bean class="com.liferay.portal.upgrade.util.DefaultUpgradeTableFactoryImpl" />

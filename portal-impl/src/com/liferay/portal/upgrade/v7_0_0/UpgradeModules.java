@@ -14,116 +14,20 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.model.dao.ReleaseDAO;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.LoggingTimer;
-
-import java.io.IOException;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 /**
  * @author Roberto Díaz
  */
-public class UpgradeModules extends UpgradeProcess {
+public class UpgradeModules
+	extends com.liferay.portal.kernel.upgrade.util.UpgradeModules {
 
+	@Override
 	public String[] getBundleSymbolicNames() {
 		return _BUNDLE_SYMBOLIC_NAMES;
 	}
 
+	@Override
 	public String[][] getConvertedLegacyModules() {
 		return _CONVERTED_LEGACY_MODULES;
-	}
-
-	protected void addRelease(String... bundleSymbolicNames)
-		throws SQLException {
-
-		ReleaseDAO releaseDAO = new ReleaseDAO();
-
-		for (String bundleSymbolicName : bundleSymbolicNames) {
-			releaseDAO.addRelease(connection, bundleSymbolicName);
-		}
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		updateExtractedModules();
-
-		updateConvertedLegacyModules();
-	}
-
-	protected boolean hasServiceComponent(String buildNamespace)
-		throws SQLException {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select serviceComponentId from ServiceComponent where " +
-					"buildNamespace = ?")) {
-
-			preparedStatement.setString(1, buildNamespace);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	protected void updateConvertedLegacyModules()
-		throws IOException, SQLException {
-
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			for (String[] convertedLegacyModule : getConvertedLegacyModules()) {
-				String oldServletContextName = convertedLegacyModule[0];
-				String newServletContextName = convertedLegacyModule[1];
-
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"select servletContextName, buildNumber from " +
-								"Release_ where servletContextName = ?")) {
-
-					preparedStatement.setString(1, oldServletContextName);
-
-					try (ResultSet resultSet =
-							preparedStatement.executeQuery()) {
-
-						if (!resultSet.next()) {
-							String buildNamespace = convertedLegacyModule[2];
-
-							if (hasServiceComponent(buildNamespace)) {
-								addRelease(newServletContextName);
-							}
-						}
-						else {
-							updateServletContextName(
-								oldServletContextName, newServletContextName);
-						}
-					}
-				}
-			}
-		}
-	}
-
-	protected void updateExtractedModules() throws SQLException {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			addRelease(getBundleSymbolicNames());
-		}
-	}
-
-	protected void updateServletContextName(
-			String oldServletContextName, String newServletContextName)
-		throws IOException, SQLException {
-
-		runSQL(
-			StringBundler.concat(
-				"update Release_ set servletContextName = '",
-				newServletContextName, "' where servletContextName = '",
-				oldServletContextName, "'"));
 	}
 
 	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {

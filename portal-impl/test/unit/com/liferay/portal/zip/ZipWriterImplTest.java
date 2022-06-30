@@ -306,6 +306,29 @@ public class ZipWriterImplTest {
 	}
 
 	@Test
+	public void testConstructorWithFilePathContainSpecialCharacter()
+		throws IOException {
+
+		Path tempFolderPath = Files.createTempDirectory("test folder");
+
+		File zipFile = new File(tempFolderPath.toFile(), "file with space.zip");
+
+		ZipWriter zipWriter = new ZipWriterImpl(zipFile);
+
+		File file = zipWriter.getFile();
+
+		try {
+			Assert.assertNotNull(file);
+			Assert.assertTrue(file.exists());
+			Assert.assertEquals(zipFile.getPath(), file.getPath());
+		}
+		finally {
+			file.delete();
+			Files.delete(tempFolderPath);
+		}
+	}
+
+	@Test
 	public void testFinish() throws Exception {
 		File tempZipFile = new File(_tempZipFilePath);
 

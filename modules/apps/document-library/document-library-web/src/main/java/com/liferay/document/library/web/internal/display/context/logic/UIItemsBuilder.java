@@ -963,11 +963,6 @@ public class UIItemsBuilder {
 			"action", "checkin"
 		).putData(
 			"checkinURL", portletURL.toString()
-		).putData(
-			"onClick",
-			StringBundler.concat(
-				_getNamespace(), "showVersionDetailsDialog('",
-				HtmlUtil.escapeJS(portletURL.toString()), "');")
 		).setIcon(
 			"unlock"
 		).setKey(

@@ -58,6 +58,7 @@ public class ObjectRelationshipWrapper
 		attributes.put("dbTableName", getDBTableName());
 		attributes.put("label", getLabel());
 		attributes.put("name", getName());
+		attributes.put("parameterObjectFieldId", getParameterObjectFieldId());
 		attributes.put("reverse", isReverse());
 		attributes.put("type", getType());
 
@@ -155,6 +156,13 @@ public class ObjectRelationshipWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Long parameterObjectFieldId = (Long)attributes.get(
+			"parameterObjectFieldId");
+
+		if (parameterObjectFieldId != null) {
+			setParameterObjectFieldId(parameterObjectFieldId);
 		}
 
 		Boolean reverse = (Boolean)attributes.get("reverse");
@@ -369,6 +377,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public long getObjectRelationshipId() {
 		return model.getObjectRelationshipId();
+	}
+
+	/**
+	 * Returns the parameter object field ID of this object relationship.
+	 *
+	 * @return the parameter object field ID of this object relationship
+	 */
+	@Override
+	public long getParameterObjectFieldId() {
+		return model.getParameterObjectFieldId();
 	}
 
 	/**
@@ -643,6 +661,16 @@ public class ObjectRelationshipWrapper
 	@Override
 	public void setObjectRelationshipId(long objectRelationshipId) {
 		model.setObjectRelationshipId(objectRelationshipId);
+	}
+
+	/**
+	 * Sets the parameter object field ID of this object relationship.
+	 *
+	 * @param parameterObjectFieldId the parameter object field ID of this object relationship
+	 */
+	@Override
+	public void setParameterObjectFieldId(long parameterObjectFieldId) {
+		model.setParameterObjectFieldId(parameterObjectFieldId);
 	}
 
 	/**

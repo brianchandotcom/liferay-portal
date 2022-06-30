@@ -77,6 +77,10 @@ public class ObjectRelationshipTable
 		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectRelationshipTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ObjectRelationshipTable, Long> parameterObjectFieldId =
+		createColumn(
+			"parameterObjectFieldId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectRelationshipTable, Boolean> reverse =
 		createColumn(
 			"reverse", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

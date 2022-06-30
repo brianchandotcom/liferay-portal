@@ -113,6 +113,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-155463. Assert that Quick actions icons list should be limited to three actions."
+	@priority = "4"
+	test CanDisplayUpToThreeIcons {
+		task ("Then quick action menu only has 3 actions icons available") {
+			AssertElementPresent(
+				key_index = "1",
+				key_title = "Sample1",
+				locator1 = "FrontendDataSet#QUICK_ACTION_ITEM_INDEX");
+
+			AssertElementPresent(
+				key_index = "2",
+				key_title = "Sample1",
+				locator1 = "FrontendDataSet#QUICK_ACTION_ITEM_INDEX");
+
+			AssertElementPresent(
+				key_index = "3",
+				key_title = "Sample1",
+				locator1 = "FrontendDataSet#QUICK_ACTION_ITEM_INDEX");
+
+			AssertElementNotPresent(
+				key_index = "4",
+				key_title = "Sample1",
+				locator1 = "FrontendDataSet#QUICK_ACTION_ITEM_INDEX");
+		}
+	}
+
 	@description = "LPS-155466. Assert that test-pencil is appended to browser URL after clicking."
 	@priority = "5"
 	test CanExecuteAnAction {

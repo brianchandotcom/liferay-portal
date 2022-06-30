@@ -120,8 +120,12 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		return _accountGroupService.addAccountGroup(
+		AccountGroup accountGroup = _accountGroupService.addAccountGroup(
 			themeDisplay.getUserId(), description, name);
+
+		return _accountGroupService.updateExternalReferenceCode(
+			accountGroup.getAccountGroupId(),
+			ParamUtil.getString(actionRequest, "externalReferenceCode"));
 	}
 
 	private void _updateAccountGroup(ActionRequest actionRequest)
@@ -133,8 +137,12 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		_accountGroupService.updateAccountGroup(
+		AccountGroup accountGroup = _accountGroupService.updateAccountGroup(
 			accountGroupId, description, name);
+
+		_accountGroupService.updateExternalReferenceCode(
+			accountGroup.getAccountGroupId(),
+			ParamUtil.getString(actionRequest, "externalReferenceCode"));
 	}
 
 	private static final TransactionConfig _transactionConfig =

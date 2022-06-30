@@ -226,6 +226,7 @@
 		<exception>DuplicateAccountEntryId</exception>
 		<exception>DuplicateAccountEntryOrganizationRel</exception>
 		<exception>DuplicateAccountEntryUserRel</exception>
+		<exception>DuplicateAccountGroupExternalReferenceCode</exception>
 		<exception>DuplicateAccountGroupRel</exception>
 	</exceptions>
 </service-builder>

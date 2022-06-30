@@ -51,28 +51,25 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			String localWellKnownURI = ParamUtil.getString(
 				actionRequest, "localWellKnownURI");
 			String metadataJSON = ParamUtil.getString(
 				actionRequest, "metadataJSON");
 
-			OAuthClientASLocalMetadata oAuthClientASLocalMetadata = null;
-
 			if (Validator.isNull(localWellKnownURI)) {
-				oAuthClientASLocalMetadata =
-					_oAuthClientASLocalMetadataService.
-						addOAuthClientASLocalMetadata(
-							themeDisplay.getUserId(), metadataJSON,
-							"openid-configuration");
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				_oAuthClientASLocalMetadataService.
+					addOAuthClientASLocalMetadata(
+						themeDisplay.getUserId(), metadataJSON,
+						"openid-configuration");
 			}
 			else {
-				oAuthClientASLocalMetadata =
+				OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 					_oAuthClientASLocalMetadataService.
-						getOAuthClientASLocalMetadata(
-							themeDisplay.getCompanyId(), localWellKnownURI);
+						getOAuthClientASLocalMetadata(localWellKnownURI);
 
 				_oAuthClientASLocalMetadataService.
 					updateOAuthClientASLocalMetadata(

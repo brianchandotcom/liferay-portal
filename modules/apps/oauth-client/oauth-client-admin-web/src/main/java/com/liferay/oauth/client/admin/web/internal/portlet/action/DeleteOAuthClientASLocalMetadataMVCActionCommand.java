@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -49,14 +47,11 @@ public class DeleteOAuthClientASLocalMetadataMVCActionCommand
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			String localWellKnownURI = ParamUtil.getString(
 				actionRequest, "localWellKnownURI");
 
 			_oAuthClientASLocalMetadataService.deleteOAuthClientASLocalMetadata(
-				themeDisplay.getCompanyId(), localWellKnownURI);
+				localWellKnownURI);
 		}
 		catch (PortalException portalException) {
 			if (_log.isInfoEnabled()) {

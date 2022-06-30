@@ -397,7 +397,7 @@ const Walkthrough = ({
 		currentStepIndex,
 		setCurrentStepIndex,
 	] = useLocalStorage('walkthrough-current-step', () =>
-		steps.length === 0 ? null : 0
+		!steps.length ? null : 0
 	);
 
 	if (currentStepIndex === null) {

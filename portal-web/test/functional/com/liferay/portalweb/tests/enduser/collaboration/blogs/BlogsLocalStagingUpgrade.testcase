@@ -138,13 +138,25 @@ definition {
 
 	}
 
-	@description = "This test covers LPS-154454."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154454. It ensures that a blogs small image can be published and rendered correctly after an upgrade from 7.2.10.4."
 	@priority = "4"
 	test CanPublishSmallImageAfterUpgradeFrom72104Archive {
+		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
+		property portal.version = "7.2.10.4";
 
-		// TODO LPS-154454
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_1.jpg");
 	}
 
 	@description = "This test covers LPS-154453. It ensures that a blogs small image can be published and rendered correctly after an upgrade from 7.3.10.1."

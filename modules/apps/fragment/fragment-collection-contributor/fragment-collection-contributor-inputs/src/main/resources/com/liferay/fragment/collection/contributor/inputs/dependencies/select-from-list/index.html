@@ -16,7 +16,7 @@
 
 	<div class="dropdown-menu">
 		[#if input.attributes?? && input.attributes.options??]
-			[#if 10 <= input.attributes.options?size]
+			[#if 10 < input.attributes.options?size]
 				<div class="dropdown-section">
 					<div class="input-group input-group-sm">
 						<div class="input-group-item">
@@ -48,7 +48,7 @@
 
 			</ul>
 
-			[#if 10 <= input.attributes.options?size]
+			[#if 10 < input.attributes.options?size]
 				<p aria-hidden="true" class="d-none forms-select-from-list-loading-results mt-3 mx-4">
 					<span class="sr-only">${languageUtil.get(locale, "loading")}.</span>
 					<span aria-hidden="true" class="loading-animation"></span>

@@ -151,7 +151,7 @@ definition {
 
 			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
 
-			Pause(locator1 = "3000");
+			FragmentsEditor.waitForAutoSave();
 		}
 
 		task ("Type css codes in CSS section") {
@@ -162,13 +162,13 @@ definition {
 
 			FragmentsEditor.typeCssEditor(content = "${cssSnippet}");
 
-			Pause(locator1 = "3000");
+			FragmentsEditor.waitForAutoSave();
 		}
 
 		task ("Type json codes in Configuration section") {
 			FragmentsEditor.gotoConfigurationTab();
 
-			Pause(locator1 = "3000");
+			FragmentsEditor.waitForAutoSave();
 
 			var jsonSnippet = '''
 {
@@ -192,7 +192,7 @@ definition {
 
 			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
 
-			Pause(locator1 = "3000");
+			FragmentsEditor.waitForAutoSave();
 
 			PortletEntry.publish();
 		}

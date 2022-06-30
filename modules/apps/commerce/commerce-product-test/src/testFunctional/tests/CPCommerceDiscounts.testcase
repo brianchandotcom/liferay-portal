@@ -227,6 +227,8 @@ definition {
 			value1 = "24.00");
 	}
 
+	@description = "This is a test for COMMERCE-9592."
+	@priority = "3"
 	test CanViewErrorNotificationWhenApplyingCouponCodeToWrongSku {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property portal.acceptance = "false";
@@ -258,12 +260,12 @@ definition {
 			CommerceEntry.addNewDiscountsEntry(
 				discountAmount = "10",
 				discountName = "Test Discount",
-				discountTarget = "Products",
+				discountTarget = "SKUs",
 				discountType = "Percentage");
 
 			CommerceRelations.assignSingleRelationToProductsEntry(
-				entryName = "ABS Sensor",
-				title = "Add Products");
+				entryName = "MIN93015",
+				title = "Add SKUs");
 		}
 
 		task ("And a coupon code added for the discount") {
@@ -282,18 +284,7 @@ definition {
 		task ("And a coupon code entry widget added to the checkout page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "group/minium/checkout");
 
-			Click(locator1 = "Icon#PLUS");
-
-			Type(
-				key_text = "Search",
-				locator1 = "TextInput#ANY",
-				value1 = "Coupon Code Entry");
-
-			MouseOver(
-				categoryName = "Coupon Code Entry",
-				locator1 = "ContentDashboard#CATEGORY_NAME_ELEMENT");
-
-			Click(locator1 = "Button#PLUS");
+			CommerceAcceleratorsInitializer.addPortlet(portletName = "Coupon Code Entry");
 		}
 
 		task ("When the buyer logs in and goes into Minium site") {

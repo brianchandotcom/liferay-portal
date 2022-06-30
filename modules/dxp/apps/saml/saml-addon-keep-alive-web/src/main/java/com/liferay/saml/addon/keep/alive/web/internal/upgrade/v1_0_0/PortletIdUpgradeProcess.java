@@ -14,6 +14,7 @@
 
 package com.liferay.saml.addon.keep.alive.web.internal.upgrade.v1_0_0;
 
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
@@ -23,6 +24,10 @@ public class PortletIdUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (StartupHelperUtil.isDBNew()) {
+			return;
+		}
+
 		_deletePortletId();
 		_deletePortletPreferences();
 		_deleteResourceAction();

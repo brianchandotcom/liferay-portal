@@ -156,7 +156,7 @@
 
 		Liferay.FeatureFlags = Object.keys(featureFlags).reduce(
 			(acc, key) => ({
-				...acc, [key]: Boolean(featureFlags[key])
+				...acc, [key]: featureFlags[key] === 'true'
 			}), {}
 		);
 

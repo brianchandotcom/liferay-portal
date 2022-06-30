@@ -17,6 +17,8 @@ package com.liferay.segments.web.internal.display.context;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -85,6 +87,18 @@ public class SegmentsCompanyConfigurationDisplayContext {
 		return resourceURL.toString();
 	}
 
+	public String getSegmentsCompanyConfigurationURL() {
+		try {
+			return _segmentsConfigurationProvider.getConfigurationURL(
+				_httpServletRequest);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+
+			return null;
+		}
+	}
+
 	public boolean isRoleSegmentationChecked() throws ConfigurationException {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -121,6 +135,9 @@ public class SegmentsCompanyConfigurationDisplayContext {
 		return _segmentsConfigurationProvider.
 			isSegmentsCompanyConfigurationDefined(themeDisplay.getCompanyId());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SegmentsCompanyConfigurationDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;

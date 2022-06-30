@@ -71,7 +71,25 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 			>
 				<strong class="lead"><%= LanguageUtil.get(request, "segmentation-is-disabled-in-system-settings") %></strong>
 
-				<p class="c-mb-0"><liferay-ui:message key="contact-your-system-administrator-to-enable-it" /></p>
+				<%
+				String segmentsConfigurationURL = segmentsCompanyConfigurationDisplayContext.getSegmentsCompanyConfigurationURL();
+				%>
+
+				<c:choose>
+					<c:when test="<%= segmentsConfigurationURL != null %>">
+						<clay:link
+							href="<%= segmentsConfigurationURL %>"
+							label='<%=
+								LanguageUtil.get(request, "to-enable,-go-to-system-settings")
+%>'
+						/>
+					</c:when>
+					<c:otherwise>
+				<span><%=
+				LanguageUtil.get(
+					request, "contact-your-system-administrator-to-enable-segmentation") %></span>
+					</c:otherwise>
+				</c:choose>
 			</clay:alert>
 		</c:if>
 
@@ -82,7 +100,25 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 			>
 				<strong class="lead"><%= LanguageUtil.get(request, "assign-roles-by-segment-is-disabled-in-system-settings") %></strong>
 
-				<p class="c-mb-0"><liferay-ui:message key="contact-your-system-administrator-to-enable-it" /></p>
+				<%
+				String segmentsConfigurationURL = segmentsCompanyConfigurationDisplayContext.getSegmentsCompanyConfigurationURL();
+				%>
+
+				<c:choose>
+					<c:when test="<%= segmentsConfigurationURL != null %>">
+						<clay:link
+							href="<%= segmentsConfigurationURL %>"
+							label='<%=
+								LanguageUtil.get(request, "to-enable,-go-to-system-settings")
+%>'
+						/>
+					</c:when>
+					<c:otherwise>
+				<span><%=
+				LanguageUtil.get(
+					request, "contact-your-system-administrator-to-enable-segmentation") %></span>
+					</c:otherwise>
+				</c:choose>
 			</clay:alert>
 		</c:if>
 

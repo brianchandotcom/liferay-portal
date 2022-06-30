@@ -14,9 +14,13 @@
 
 package com.liferay.object.storage.salesforce.internal.rest.manager.v1_0;
 
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
@@ -43,6 +47,7 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -168,7 +173,8 @@ public class SalesforceObjectEntryManagerImpl
 				responseJSONObject.getJSONArray("records");
 
 		return Page.of(
-			_toObjectEntries(companyId, jsonArray, objectDefinition),
+			_toObjectEntries(
+				companyId, dtoConverterContext, jsonArray, objectDefinition),
 			pagination,
 			_getTotalCount(companyId, objectDefinition, scopeKey, search));
 	}
@@ -216,7 +222,7 @@ public class SalesforceObjectEntryManagerImpl
 		}
 
 		return _toObjectEntry(
-			companyId, _getDateFormat(),
+			companyId, _getDateFormat(), dtoConverterContext,
 			_salesforceHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
 				StringBundler.concat(
@@ -359,11 +365,20 @@ public class SalesforceObjectEntryManagerImpl
 				continue;
 			}
 
-			Object value =
-				Objects.equals(entry.getValue(), StringPool.BLANK) ? null :
-					entry.getValue();
+			Object value = entry.getValue();
 
-			map.put(objectField.getExternalReferenceCode(), value);
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+				Map<String, String> mapValue = (HashMap<String, String>)value;
+
+				value = mapValue.get("key");
+			}
+
+			map.put(
+				objectField.getExternalReferenceCode(),
+				Objects.equals(value, StringPool.BLANK) ? null : value);
 
 			if (Objects.equals(
 					objectField.getObjectFieldId(),
@@ -377,18 +392,22 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	private List<ObjectEntry> _toObjectEntries(
-			long companyId, JSONArray jsonArray,
-			ObjectDefinition objectDefinition)
+			long companyId, DTOConverterContext dtoConverterContext,
+			JSONArray jsonArray, ObjectDefinition objectDefinition)
 		throws Exception {
+
+		DateFormat dateFormat = _getDateFormat();
 
 		return JSONUtil.toList(
 			jsonArray,
 			jsonObject -> _toObjectEntry(
-				companyId, _getDateFormat(), jsonObject, objectDefinition));
+				companyId, dateFormat, dtoConverterContext, jsonObject,
+				objectDefinition));
 	}
 
 	private ObjectEntry _toObjectEntry(
-			long companyId, DateFormat dateFormat, JSONObject jsonObject,
+			long companyId, DateFormat dateFormat,
+			DTOConverterContext dtoConverterContext, JSONObject jsonObject,
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
@@ -435,9 +454,40 @@ public class SalesforceObjectEntryManagerImpl
 
 				Map<String, Object> properties = objectEntry.getProperties();
 
-				properties.put(
-					objectField.getName(),
-					jsonObject.isNull(key) ? null : jsonObject.get(key));
+				if (jsonObject.isNull(key)) {
+					properties.put(objectField.getName(), null);
+
+					continue;
+				}
+
+				Object value = jsonObject.get(key);
+
+				if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+					ListTypeEntry listTypeEntry =
+						_listTypeEntryLocalService.fetchListTypeEntry(
+							objectField.getListTypeDefinitionId(),
+							(String)value);
+
+					if (listTypeEntry == null) {
+						continue;
+					}
+
+					value = new ListEntry() {
+						{
+							key = listTypeEntry.getKey();
+							name = listTypeEntry.getName(
+								dtoConverterContext.getLocale());
+							name_i18n = LocalizedMapUtil.getI18nMap(
+								dtoConverterContext.isAcceptAllLanguages(),
+								listTypeEntry.getNameMap());
+						}
+					};
+				}
+
+				properties.put(objectField.getName(), value);
 			}
 		}
 
@@ -446,6 +496,9 @@ public class SalesforceObjectEntryManagerImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

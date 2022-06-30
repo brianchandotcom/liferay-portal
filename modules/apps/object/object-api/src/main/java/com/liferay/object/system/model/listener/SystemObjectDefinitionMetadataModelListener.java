@@ -19,6 +19,7 @@ import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -51,6 +52,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		Class<?> modelClass, ObjectActionEngine objectActionEngine,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectValidationRuleLocalService objectValidationRuleLocalService,
 		UserLocalService userLocalService) {
 
 		_dtoConverterRegistry = dtoConverterRegistry;
@@ -59,6 +61,7 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		_objectActionEngine = objectActionEngine;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectValidationRuleLocalService = objectValidationRuleLocalService;
 		_userLocalService = userLocalService;
 	}
 
@@ -90,6 +93,26 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 	}
 
 	@Override
+	public void onBeforeCreate(T model) throws ModelListenerException {
+		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					_getCompanyId(model), _modelClass.getName());
+
+			if (objectDefinition == null) {
+				return;
+			}
+
+			_objectValidationRuleLocalService.validate(
+				model, objectDefinition.getObjectDefinitionId(),
+				model.getModelAttributes());
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
+	}
+
+	@Override
 	public void onBeforeRemove(T baseModel) throws ModelListenerException {
 		try {
 			ObjectDefinition objectDefinition =
@@ -103,6 +126,28 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 			_objectEntryLocalService.deleteRelatedObjectEntries(
 				0, objectDefinition.getObjectDefinitionId(),
 				GetterUtil.getLong(baseModel.getPrimaryKeyObj()));
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
+	}
+
+	@Override
+	public void onBeforeUpdate(T originalModel, T model)
+		throws ModelListenerException {
+
+		try {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					_getCompanyId(model), _modelClass.getName());
+
+			if (objectDefinition == null) {
+				return;
+			}
+
+			_objectValidationRuleLocalService.validate(
+				model, objectDefinition.getObjectDefinitionId(),
+				model.getModelAttributes());
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -275,6 +320,8 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 	private final ObjectActionEngine _objectActionEngine;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
+	private final ObjectValidationRuleLocalService
+		_objectValidationRuleLocalService;
 	private final UserLocalService _userLocalService;
 
 }

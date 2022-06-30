@@ -222,7 +222,8 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 
 		if ((customFields != null) && !customFields.isEmpty()) {
 			ExpandoUtil.updateExpando(
-				contextCompany.getCompanyId(), CommerceAccountGroup.class,
+				contextCompany.getCompanyId(),
+				com.liferay.account.model.AccountGroup.class,
 				commerceAccountGroup.getPrimaryKey(), customFields);
 		}
 
@@ -265,7 +266,8 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 
 		if ((customFields != null) && !customFields.isEmpty()) {
 			ExpandoUtil.updateExpando(
-				contextCompany.getCompanyId(), CommerceAccountGroup.class,
+				contextCompany.getCompanyId(),
+				com.liferay.account.model.AccountGroup.class,
 				commerceAccountGroup.getPrimaryKey(), customFields);
 		}
 

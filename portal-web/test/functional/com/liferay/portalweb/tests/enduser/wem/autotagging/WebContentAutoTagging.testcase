@@ -190,4 +190,78 @@ definition {
 		AssetCategorization.viewTag(tagName = "dxp");
 	}
 
+	@description = "This test asserts that tags are not updated if user unchecked Update Auto Tags when updating a web content."
+	@priority = "4"
+	test NoTagUpdatesAfterDisablingUpdateAutoTags {
+		property custom.properties = "feature.flag.LPS-150762=true";
+		property test.name.skip.portal.instance = "WebContentAutoTagging#NoTagUpdatesAfterDisablingUpdateAutoTags";
+
+		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "Instance Settings");
+
+		JSONWebcontent.addWebContent(
+			content = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. In a Forrester presentation, analyst Liz Herbert notes that real digital transformation spans both the experience layer and the operations core. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. This responsiveness to customer needs can be achieved in a number of ways, from basic personalization of experience, to more advanced configurable workflows, to full modularization of business services that can be quickly re-assembled in new ways. However, not all companies are prepared for that level of change, and may in the meantime want to start segmenting audiences in order to target personalized offers. Some vendors, particularly those that have had content management systems, can do this well. Ideally, your platform will have both operational and marketing capabilities, so that even if you start with digital marketing, you won’t have to go through a second vendor selection process when you are ready for operational transformation. Also, there isn’t just one way to achieve these goals. Using any category heritage of DXP in combination with an overall architecture for integration and modular services can get you there.",
+			groupName = "Test Site Name",
+			title = "Digital Transformation or Digital Experience");
+
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Test Site Name",
+			siteURLKey = "test-site-name",
+			webContentTitle = "Digital Transformation or Digital Experience");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		FormFields.disableCheckbox(fieldName = "Update Auto Tags");
+
+		WebContent.editCP(
+			webContentContentEdit = "Alice's Adventures in Wonderland",
+			webContentTitle = "Digital Transformation or Digital Experience",
+			webContentTitleEdit = "Digital Transformation or Digital Experience Edit");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience Edit");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		for (var tagName : list "dxp,herbert") {
+			AssetCategorization.viewTag(tagName = "${tagName}");
+		}
+
+		for (var tagName : list "adventures,alice") {
+			AssetCategorization.viewNoTag(tagName = "${tagName}");
+		}
+	}
+
+	@description = "This test asserts that new tags detected are added if user checked Update Auto Tags when updating a web content."
+	@priority = "4"
+	test TagUpdatesAfterEnablingUpdateAutoTags {
+		property custom.properties = "feature.flag.LPS-150762=true";
+		property test.name.skip.portal.instance = "WebContentAutoTagging#TagUpdatesAfterEnablingUpdateAutoTags";
+
+		AutoTagging.enableUpdateAutoTags(enableUpdateAutoTagsFor = "System Settings");
+
+		JSONWebcontent.addWebContent(
+			content = "Digital Transformation or Digital Experience? When selecting a DXP, companies should decide whether they are ready for deep transformation of their business operations, or are focused primarily on marketing and brand awareness, as these priorities tend to reflect the different strengths among the DXP vendors. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. In a Forrester presentation, analyst Liz Herbert notes that real digital transformation spans both the experience layer and the operations core. Having an attractive website or mobile app is good, but more substantial gains in customer experience require processes to be re-optimized with the customer in mind. This responsiveness to customer needs can be achieved in a number of ways, from basic personalization of experience, to more advanced configurable workflows, to full modularization of business services that can be quickly re-assembled in new ways. However, not all companies are prepared for that level of change, and may in the meantime want to start segmenting audiences in order to target personalized offers. Some vendors, particularly those that have had content management systems, can do this well. Ideally, your platform will have both operational and marketing capabilities, so that even if you start with digital marketing, you won’t have to go through a second vendor selection process when you are ready for operational transformation. Also, there isn’t just one way to achieve these goals. Using any category heritage of DXP in combination with an overall architecture for integration and modular services can get you there.",
+			groupName = "Test Site Name",
+			title = "Digital Transformation or Digital Experience");
+
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Test Site Name",
+			siteURLKey = "test-site-name",
+			webContentTitle = "Digital Transformation or Digital Experience");
+
+		AutoTagging.viewUpdateAutoTagsSetting();
+
+		WebContent.editCP(
+			webContentContentEdit = "Alice's Adventures in Wonderland",
+			webContentTitle = "Digital Transformation or Digital Experience",
+			webContentTitleEdit = "Digital Transformation or Digital Experience Edit");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Digital Transformation or Digital Experience Edit");
+
+		Panel.expandPanel(panel = "Categorization");
+
+		for (var tagName : list "adventures,alice,dxp,herbert") {
+			AssetCategorization.viewTag(tagName = "${tagName}");
+		}
+	}
+
 }

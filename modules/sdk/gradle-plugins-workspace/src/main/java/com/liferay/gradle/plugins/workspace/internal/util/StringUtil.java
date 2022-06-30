@@ -87,6 +87,12 @@ public class StringUtil {
 		return new String(buffer, 0, offset, "UTF-8");
 	}
 
+	public static String toAlphaNumericLowerCase(String value) {
+		String alphaNumericOnly = value.replaceAll("[^a-zA-Z0-9]", "");
+
+		return toLowerCase(alphaNumericOnly);
+	}
+
 	public static String toLowerCase(String s) {
 		if (s == null) {
 			return null;

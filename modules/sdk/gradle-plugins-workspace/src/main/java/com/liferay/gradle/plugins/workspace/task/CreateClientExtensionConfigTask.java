@@ -102,12 +102,11 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		File outputLcpJsonFile = getLcpJsonFile();
 
 		try {
-			String projectName = project.getName();
-
 			String lcpJsonContent = _loadTemplate(
 				_CLIENT_EXTENSION_LCP_JSON + ".tpl",
 				Collections.singletonMap(
-					"__CLIENT_EXTENSION_ID__", projectName.toLowerCase()));
+					"__CLIENT_EXTENSION_ID__",
+					StringUtil.toAlphaNumericLowerCase(project.getName())));
 
 			File inputLcpJsonFile = project.file("LCP.json");
 

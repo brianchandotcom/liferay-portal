@@ -18,6 +18,29 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
+	@description = "This test covers LPS-154458. It ensures that an image is rendered correctly in a Media Gallery widget after an upgrade from 7.2.10.4."
+	@priority = "4"
+	test CanPublishImageInMGAfterUpgradeFrom72104Archive {
+		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
+		property portal.version = "7.2.10.4";
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		DMDocument.viewPGViaMG(
+			mgDocumentTitle = "Commerce_White.jpg",
+			staging = "true");
+	}
+
 	@description = "This test covers LPS-154457. It ensures that an image is rendered correctly in a Media Gallery widget after an upgrade from 7.3.10.1."
 	@priority = "4"
 	test CanPublishImageInMGAfterUpgradeFrom73101Archive {

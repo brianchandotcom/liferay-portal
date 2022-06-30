@@ -1,6 +1,7 @@
 @component-name = "portal-solutions"
 definition {
 
+	property osgi.modules.includes = "site-initializer-raylife-d2c";
 	property portal.release = "false";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";

@@ -425,7 +425,9 @@ definition {
 	}
 
 	macro closeAllSessions {
-		ACUtils.restartDockerContainer(containerName = "osbasahredis");
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "clear-redis");
 
 		var analyticsCloudAsahCuratorBatchURL = PropsUtil.get("analytics.cloud.asah.curator.batch.url");
 

@@ -18,10 +18,8 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -53,16 +51,10 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		put("showLabel", showLabel);
 		put("type", type);
 		put("value", value);
-
-		put("options", _options);
 	}
 
 	public void addAttribute(String name, Object object) {
 		_attributes.put(name, object);
-	}
-
-	public void addOption(String label, String value) {
-		_options.add(new Option(label, value));
 	}
 
 	public Map<String, Object> getAttributes() {
@@ -87,10 +79,6 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 
 	public String getInputValue() {
 		return _value;
-	}
-
-	public List<InputTemplateNode.Option> getOptions() {
-		return _options;
 	}
 
 	public String getType() {
@@ -131,18 +119,6 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 		).put(
 			"name", _name
 		).put(
-			"options",
-			() -> {
-				JSONObject optionsJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				for (Option option : _options) {
-					optionsJSONObject.put(option.getLabel(), option.getValue());
-				}
-
-				return optionsJSONObject;
-			}
-		).put(
 			"required", _required
 		).put(
 			"showHelpText", _showHelpText
@@ -170,6 +146,15 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 			return _value;
 		}
 
+		@Override
+		public String toString() {
+			return JSONUtil.put(
+				"label", _label
+			).put(
+				"value", _value
+			).toString();
+		}
+
 		private final String _label;
 		private final String _value;
 
@@ -180,7 +165,6 @@ public class InputTemplateNode extends LinkedHashMap<String, Object> {
 	private final String _helpText;
 	private final String _label;
 	private final String _name;
-	private final List<InputTemplateNode.Option> _options = new ArrayList<>();
 	private final boolean _required;
 	private final boolean _showHelpText;
 	private final boolean _showLabel;

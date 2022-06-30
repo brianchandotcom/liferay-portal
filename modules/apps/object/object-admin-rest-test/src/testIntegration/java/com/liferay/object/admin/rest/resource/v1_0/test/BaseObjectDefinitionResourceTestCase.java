@@ -1050,6 +1050,16 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"parameterRequired", additionalAssertFieldName)) {
+
+				if (objectDefinition.getParameterRequired() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("pluralLabel", additionalAssertFieldName)) {
 				if (objectDefinition.getPluralLabel() == null) {
 					valid = false;
@@ -1387,6 +1397,19 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"parameterRequired", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.getParameterRequired(),
+						objectDefinition2.getParameterRequired())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("pluralLabel", additionalAssertFieldName)) {
 				if (!equals(
 						(Map)objectDefinition1.getPluralLabel(),
@@ -1711,6 +1734,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("parameterRequired")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("pluralLabel")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1808,6 +1836,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 					RandomTestUtil.randomString());
 				panelCategoryKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				parameterRequired = RandomTestUtil.randomBoolean();
 				portlet = RandomTestUtil.randomBoolean();
 				scope = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				storageType = StringUtil.toLowerCase(

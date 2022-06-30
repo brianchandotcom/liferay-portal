@@ -524,6 +524,34 @@ public class ObjectDefinition implements Serializable {
 	protected String panelCategoryKey;
 
 	@Schema
+	public Boolean getParameterRequired() {
+		return parameterRequired;
+	}
+
+	public void setParameterRequired(Boolean parameterRequired) {
+		this.parameterRequired = parameterRequired;
+	}
+
+	@JsonIgnore
+	public void setParameterRequired(
+		UnsafeSupplier<Boolean, Exception> parameterRequiredUnsafeSupplier) {
+
+		try {
+			parameterRequired = parameterRequiredUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean parameterRequired;
+
+	@Schema
 	@Valid
 	public Map<String, String> getPluralLabel() {
 		return pluralLabel;
@@ -980,6 +1008,16 @@ public class ObjectDefinition implements Serializable {
 			sb.append(_escape(panelCategoryKey));
 
 			sb.append("\"");
+		}
+
+		if (parameterRequired != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parameterRequired\": ");
+
+			sb.append(parameterRequired);
 		}
 
 		if (pluralLabel != null) {

@@ -384,6 +384,11 @@ public abstract class BaseObjectDefinitionResourceImpl
 				objectDefinition.getPanelCategoryKey());
 		}
 
+		if (objectDefinition.getParameterRequired() != null) {
+			existingObjectDefinition.setParameterRequired(
+				objectDefinition.getParameterRequired());
+		}
+
 		if (objectDefinition.getPluralLabel() != null) {
 			existingObjectDefinition.setPluralLabel(
 				objectDefinition.getPluralLabel());

@@ -153,22 +153,38 @@ const ACTIONS = {
 export default function propsTransformer({items, portletNamespace, ...props}) {
 	return {
 		...props,
-		items: items.map((item) => {
-			return {
-				...item,
-				items: item.items?.map((child) => ({
-					...child,
-					onClick(event) {
-						const action = child.data?.action;
+		items: items.map((item) =>
+			item?.type === 'group'
+				? {
+						...item,
+						items: item.items?.map((child) => ({
+							...child,
+							onClick(event) {
+								const action = child.data?.action;
 
-						if (action) {
-							event.preventDefault();
+								if (action) {
+									event.preventDefault();
 
-							ACTIONS[action](child.data, portletNamespace);
-						}
-					},
-				})),
-			};
-		}),
+									ACTIONS[action](
+										child.data,
+										portletNamespace
+									);
+								}
+							},
+						})),
+				  }
+				: {
+						...item,
+						onClick(event) {
+							const action = item.data?.action;
+
+							if (action) {
+								event.preventDefault();
+
+								ACTIONS[action](item.data, portletNamespace);
+							}
+						},
+				  }
+		),
 	};
 }

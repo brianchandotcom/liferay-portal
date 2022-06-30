@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -55,12 +56,20 @@ public class WalkthroughBottomJSPDynamicInclude implements DynamicInclude {
 
 		Group group = themeDisplay.getScopeGroup();
 
+		String steps = null;
+
 		try {
 			WalkthroughConfiguration walkthroughConfiguration =
 				_configurationProvider.getGroupConfiguration(
 					WalkthroughConfiguration.class, group.getGroupId());
 
 			if (!walkthroughConfiguration.enableWalkthrough()) {
+				return;
+			}
+
+			steps = walkthroughConfiguration.steps();
+
+			if (Validator.isNull(steps)) {
 				return;
 			}
 		}
@@ -74,7 +83,7 @@ public class WalkthroughBottomJSPDynamicInclude implements DynamicInclude {
 			"@liferay/frontend-js-walkthrough-web/index");
 
 		scriptData.append(
-			null, "WalkthroughRender.default()",
+			null, "WalkthroughRender.default(" + steps + ")",
 			resolvedModuleName + " as WalkthroughRender",
 			ScriptData.ModulesType.ES6);
 

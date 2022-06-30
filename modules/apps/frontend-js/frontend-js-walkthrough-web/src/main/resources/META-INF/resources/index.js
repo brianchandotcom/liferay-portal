@@ -39,10 +39,10 @@ const getDefaultContainer = () => {
 	return container;
 };
 
-function WalkthroughSample(props) {
+function Root(props) {
 	return <Walkthrough {...defautValue} {...props} />;
 }
 
 export default function main(props = {}) {
-	render(WalkthroughSample, props, getDefaultContainer());
+	render(Root, props, getDefaultContainer());
 }

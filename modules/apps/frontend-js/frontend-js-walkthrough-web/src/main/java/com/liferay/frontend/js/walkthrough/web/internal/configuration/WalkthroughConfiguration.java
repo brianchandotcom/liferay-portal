@@ -34,10 +34,7 @@ public @interface WalkthroughConfiguration {
 	@Meta.AD(deflt = "false", name = "enable-walkthrough", required = false)
 	public boolean enableWalkthrough();
 
-	@Meta.AD(
-		deflt = "{closeOnClickOutside: false, closeable: true, pages: {}, skippable: true, steps: []}",
-		name = "steps-walkthrough", required = false
-	)
+	@Meta.AD(name = "steps-walkthrough", required = false)
 	public String steps();
 
 }

@@ -30,9 +30,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
-
-import org.gradle.internal.impldep.com.google.api.client.repackaged.com.google.common.base.Objects;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -139,7 +138,7 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 				"\": \"*\"",
 			"\"metal-tools-soy\": \"4.3.2\"");
 
-		if (Objects.equal("7.2.1-1", _liferayVersion)) {
+		if (Objects.equals("7.2.1-1", _liferayVersion)) {
 			testContains(
 				gradleProjectDir, "build.gradle",
 				"compileOnly group: \"com.liferay\", name: " +

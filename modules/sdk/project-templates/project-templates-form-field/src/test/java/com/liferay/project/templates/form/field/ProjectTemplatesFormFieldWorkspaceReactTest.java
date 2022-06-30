@@ -27,9 +27,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Properties;
-
-import org.gradle.internal.impldep.com.google.api.client.repackaged.com.google.common.base.Objects;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -87,7 +86,7 @@ public class ProjectTemplatesFormFieldWorkspaceReactTest
 			new File(workspaceDir, "modules"), "form-field", name,
 			"--liferay-version", _liferayVersion, "--js-framework", "react");
 
-		if (Objects.equal("7.2.1-1", _liferayVersion)) {
+		if (Objects.equals("7.2.1-1", _liferayVersion)) {
 			testContains(
 				gradleProjectDir, "build.gradle",
 				"compileOnly group: \"com.liferay\", name: " +

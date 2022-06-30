@@ -10,13 +10,12 @@ runGradleTest {
 
 		FileTree sampleIFrameDistZipFileTree = zipTree(sampleIFrameProject.file("dist/sample-iframe.zip"))
 
-		File lcpJson = sampleIFrameDistZipFileTree.files.find {
+		File lcpJsonFile = sampleIFrameDistZipFileTree.files.find {
 			it.name == "LCP.json"
 		}
 
-		assert !lcpJson.text.contains("sample-iframe")
-
-		assert lcpJson.text.contains("sampleiframe")
+		assert !lcpJsonFile.text.contains("sample-iframe")
+		assert lcpJsonFile.text.contains("sampleiframe")
 
 		Project sampleThemeCSSProject = project(":sample-theme-css")
 

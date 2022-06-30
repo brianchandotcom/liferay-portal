@@ -19,6 +19,7 @@ import {TestrayRequirement} from './testrayRequirement';
 
 export type TestrayRequirementCase = {
 	case: TestrayCase;
+	id: number;
 	requirement: TestrayRequirement;
 };
 
@@ -31,7 +32,7 @@ export const getRequirementCases = gql`
 		requirementscaseses(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_RequirementCase"
-				path: "requirementscaseses?filter={args.filter}&page={args.page}&pageSize={args.pageSize}&nestedFields=case.component,requirement&nestedFieldsDepth=2"
+				path: "requirementscaseses?filter={args.filter}&page={args.page}&pageSize={args.pageSize}&nestedFields=case.component,requirement.component.team&nestedFieldsDepth=3"
 			) {
 			items {
 				case: r_caseToRequirementsCases_c_case {
@@ -49,6 +50,7 @@ export const getRequirementCases = gql`
 					steps
 					stepsType
 				}
+				id
 				requirement: r_requiremenToRequirementsCases_c_requirement {
 					components
 					description

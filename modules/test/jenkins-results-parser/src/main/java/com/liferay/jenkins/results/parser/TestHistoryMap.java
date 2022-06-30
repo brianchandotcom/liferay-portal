@@ -150,9 +150,9 @@ public class TestHistoryMap {
 			String filePath, String batchNameRegex)
 		throws IOException {
 
-		JSONArray durationDataJSONArrays = new JSONArray();
+		JSONArray durationDataJSONArray = new JSONArray();
 
-		durationDataJSONArrays.put(
+		durationDataJSONArray.put(
 			new String[] {
 				"Name", "Batch Type", "Results", "Duration", "Average Duration"
 			});
@@ -169,11 +169,11 @@ public class TestHistoryMap {
 					continue;
 				}
 
-				JSONArray durationDataJSONArray = new JSONArray();
+				JSONArray jsonArray = new JSONArray();
 
-				durationDataJSONArray.put(testHistory.getTestName());
+				jsonArray.put(testHistory.getTestName());
 
-				durationDataJSONArray.put(testHistory.getBatchName());
+				jsonArray.put(testHistory.getBatchName());
 
 				JSONArray durationJSONArray = new JSONArray();
 				JSONArray statusesJSONArray = new JSONArray();
@@ -203,20 +203,20 @@ public class TestHistoryMap {
 					statusesJSONArray.put(statusJSONArray);
 				}
 
-				durationDataJSONArray.put(statusesJSONArray);
+				jsonArray.put(statusesJSONArray);
 
-				durationDataJSONArray.put(durationJSONArray);
+				jsonArray.put(durationJSONArray);
 
-				durationDataJSONArray.put(testHistory.getAverageDuration());
+				jsonArray.put(testHistory.getAverageDuration());
 
-				durationDataJSONArrays.put(durationDataJSONArray);
+				durationDataJSONArray.put(jsonArray);
 			}
 		}
 
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("var durationData = ");
-		sb.append(durationDataJSONArrays);
+		sb.append(durationDataJSONArray);
 		sb.append(";\nvar durationDataGeneratedDate = new Date(");
 		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
 		sb.append(");\nvar testrayRoutineURL = \"");
@@ -231,9 +231,9 @@ public class TestHistoryMap {
 	public void writeFlakyTestDataJavaScriptFile(String filePath)
 		throws IOException {
 
-		JSONArray flakyTestDataJSONArrays = new JSONArray();
+		JSONArray flakyTestDataJSONArray = new JSONArray();
 
-		flakyTestDataJSONArrays.put(
+		flakyTestDataJSONArray.put(
 			new String[] {"Name", "Batch Type", "Results", "Status Changes"});
 
 		for (BatchHistory batchHistory : _batchHistoryMap.values()) {
@@ -242,11 +242,11 @@ public class TestHistoryMap {
 					continue;
 				}
 
-				JSONArray flakyTestDataJSONArray = new JSONArray();
+				JSONArray jsonArray = new JSONArray();
 
-				flakyTestDataJSONArray.put(testHistory.getTestName());
+				jsonArray.put(testHistory.getTestName());
 
-				flakyTestDataJSONArray.put(testHistory.getBatchName());
+				jsonArray.put(testHistory.getBatchName());
 
 				JSONArray statusesJSONArray = new JSONArray();
 
@@ -263,18 +263,18 @@ public class TestHistoryMap {
 					statusesJSONArray.put(statusJSONArray);
 				}
 
-				flakyTestDataJSONArray.put(statusesJSONArray);
+				jsonArray.put(statusesJSONArray);
 
-				flakyTestDataJSONArray.put(testHistory.getStatusChanges());
+				jsonArray.put(testHistory.getStatusChanges());
 
-				flakyTestDataJSONArrays.put(flakyTestDataJSONArray);
+				flakyTestDataJSONArray.put(jsonArray);
 			}
 		}
 
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("var flakyTestData = ");
-		sb.append(flakyTestDataJSONArrays);
+		sb.append(flakyTestDataJSONArray);
 		sb.append(";\nvar flakyTestDataGeneratedDate = new Date(");
 		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
 		sb.append(");\nvar testrayRoutineURL = \"");

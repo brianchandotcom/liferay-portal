@@ -212,6 +212,10 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
                   name: restrictFields
                   schema:
                       type: string
@@ -329,6 +333,10 @@ paths:
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
                 - in: query
                   name: restrictFields
                   schema:
@@ -470,6 +478,10 @@ paths:
                       type: integer
                 - in: query
                   name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
                   schema:
                       type: string
                 - in: query

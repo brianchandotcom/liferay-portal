@@ -596,6 +596,7 @@ public class ResourceOpenAPIParser {
 				StringUtil.equals(parameterName, "aggregationTerms") ||
 				StringUtil.equals(parameterName, "fields") ||
 				StringUtil.equals(parameterName, "filter") ||
+				StringUtil.equals(parameterName, "nestedFields") ||
 				StringUtil.equals(parameterName, "restrictFields") ||
 				StringUtil.equals(parameterName, "sort")) {
 

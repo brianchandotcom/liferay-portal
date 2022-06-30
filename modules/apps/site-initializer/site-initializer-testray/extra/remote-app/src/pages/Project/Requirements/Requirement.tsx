@@ -29,22 +29,28 @@ import {
 } from '../../../graphql/queries';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
+import {filters} from '../../../schema/filter';
 import {DescriptionType} from '../../../types';
 import {searchUtil} from '../../../util/search';
+import RequirementCaseLinkModal from './RequirementCaseLinkModal';
+import useRequirementCaseActions from './useRequirementCaseActions';
 
 const Requirement = () => {
 	const {projectId} = useParams();
 	const testrayRequirement: TestrayRequirement = useOutletContext();
+	const {actions, formModal} = useRequirementCaseActions(testrayRequirement);
 
-	const {setHeading, setTabs} = useHeader({shouldUpdate: false});
+	const {context, setHeading, setTabs} = useHeader({shouldUpdate: false});
+
+	const maxHeads = context.heading.length === 2;
 
 	useEffect(() => {
-		if (testrayRequirement) {
+		if (testrayRequirement && !maxHeads) {
 			setTimeout(() => {
 				setHeading([{title: testrayRequirement.key}], true);
 			}, 0);
 		}
-	}, [setHeading, testrayRequirement]);
+	}, [setHeading, testrayRequirement, maxHeads]);
 
 	useEffect(() => {
 		setTabs([]);
@@ -52,6 +58,11 @@ const Requirement = () => {
 
 	return (
 		<>
+			<RequirementCaseLinkModal
+				modal={formModal}
+				projectId={projectId as string}
+			/>
+
 			<Container collapsable title={i18n.translate('details')}>
 				<QATable
 					items={[
@@ -115,21 +126,25 @@ const Requirement = () => {
 
 			<Container className="mt-3">
 				<ListView
+					forceRefetch={formModal.forceRefetch}
 					managementToolbarProps={{
 						buttons: (
 							<ClayManagementToolbar.Item>
 								<Button
 									displayType="secondary"
+									onClick={() => formModal.open()}
 									symbol="list-ul"
 								>
 									{i18n.translate('link-cases')}
 								</Button>
 							</ClayManagementToolbar.Item>
 						),
+						filterFields: filters.requirementCase as any,
 						title: i18n.translate('cases'),
 					}}
 					query={getRequirementCases}
 					tableProps={{
+						actions,
 						columns: [
 							{
 								clickable: true,

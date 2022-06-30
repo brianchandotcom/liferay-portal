@@ -49,7 +49,9 @@ public class AccountGroupDisplay {
 		return _description;
 	}
 
-	public String getExternalReferenceCode() { return _externalReferenceCode; }
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
 
 	public String getName() {
 		return _name;

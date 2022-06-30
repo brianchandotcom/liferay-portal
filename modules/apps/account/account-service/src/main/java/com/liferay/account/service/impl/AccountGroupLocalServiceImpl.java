@@ -15,11 +15,11 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeException;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.base.AccountGroupLocalServiceBaseImpl;
 import com.liferay.account.service.persistence.AccountGroupRelPersistence;
-import com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeException;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -249,13 +249,14 @@ public class AccountGroupLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AccountGroup updateExternalReferenceCode(
-		AccountGroup accountGroup, String externalReferenceCode)
+			AccountGroup accountGroup, String externalReferenceCode)
 		throws PortalException {
 
 		if (Objects.equals(
-			accountGroup.getExternalReferenceCode(),
-			externalReferenceCode)) {
-		return accountGroup;
+				accountGroup.getExternalReferenceCode(),
+				externalReferenceCode)) {
+
+			return accountGroup;
 		}
 
 		_validadeExternalReferenceCode(
@@ -269,7 +270,7 @@ public class AccountGroupLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AccountGroup updateExternalReferenceCode(
-		long accountGroupId, String externalReferenceCode)
+			long accountGroupId, String externalReferenceCode)
 		throws PortalException {
 
 		return updateExternalReferenceCode(
@@ -347,7 +348,7 @@ public class AccountGroupLocalServiceImpl
 	}
 
 	private void _validadeExternalReferenceCode(
-		long accountGroupId, String externalReferenceCode)
+			long accountGroupId, String externalReferenceCode)
 		throws PortalException {
 
 		if (Validator.isNull(externalReferenceCode)) {

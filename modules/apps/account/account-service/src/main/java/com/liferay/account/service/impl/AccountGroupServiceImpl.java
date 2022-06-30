@@ -103,7 +103,7 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 
 	@Override
 	public AccountGroup updateExternalReferenceCode(
-		long accountGroupId, String externalReferenceCode)
+			long accountGroupId, String externalReferenceCode)
 		throws PortalException {
 
 		_accountGroupModelResourcePermission.check(

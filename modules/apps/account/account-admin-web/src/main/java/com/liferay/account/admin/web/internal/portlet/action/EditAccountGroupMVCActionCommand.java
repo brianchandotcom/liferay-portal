@@ -92,7 +92,8 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 				actionResponse.setRenderParameter(
 					"mvcPath", "/account_groups_admin/error.jsp");
 			}
-			else if (exception instanceof DuplicateAccountGroupExternalReferenceCodeException) {
+			else if (exception instanceof
+						DuplicateAccountGroupExternalReferenceCodeException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());
 

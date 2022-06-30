@@ -14,6 +14,9 @@
 
 package com.liferay.notification.service.impl;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.notification.constants.NotificationTermContributorConstants;
 import com.liferay.notification.exception.NotificationTemplateAttachmentObjectFieldIdException;
 import com.liferay.notification.exception.NotificationTemplateFromException;
@@ -41,18 +44,25 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -245,6 +255,9 @@ public class NotificationTemplateLocalServiceImpl
 		EmailAddressValidator emailAddressValidator =
 			EmailAddressValidatorFactory.getInstance();
 
+		List<Long> fileEntryIds = _getFileEntryIds(
+			user.getCompanyId(), notificationTemplateId, object);
+
 		for (String emailAddressOrUserId : StringUtil.split(to)) {
 			User toUser = _userLocalService.fetchUser(
 				GetterUtil.getLong(emailAddressOrUserId));
@@ -275,8 +288,8 @@ public class NotificationTemplateLocalServiceImpl
 							notificationType.getClassName(object),
 							notificationType.getClassPK(object),
 							notificationTemplate.getFrom(), fromName, 0,
-							subject, emailAddressOrUserId,
-							emailAddressOrUserId);
+							subject, emailAddressOrUserId, emailAddressOrUserId,
+							fileEntryIds);
 
 					continue;
 				}
@@ -289,7 +302,8 @@ public class NotificationTemplateLocalServiceImpl
 				notificationType.getClassName(object),
 				notificationType.getClassPK(object),
 				notificationTemplate.getFrom(), fromName, 0, subject,
-				toUser.getEmailAddress(), notificationTemplate.getName());
+				toUser.getEmailAddress(), notificationTemplate.getName(),
+				fileEntryIds);
 		}
 	}
 
@@ -415,6 +429,78 @@ public class NotificationTemplateLocalServiceImpl
 			object, termNames);
 	}
 
+	private List<Long> _getFileEntryIds(
+			long companyId, long notificationTemplateId, Object object)
+		throws PortalException {
+
+		if (!(object instanceof Map)) {
+			return new ArrayList<>();
+		}
+
+		Group group = _groupLocalService.getCompanyGroup(companyId);
+
+		Repository repository = _getRepository(group.getGroupId());
+
+		if (repository == null) {
+			return new ArrayList<>();
+		}
+
+		List<Long> fileEntryIds = new ArrayList<>();
+
+		for (NotificationTemplateAttachment notificationTemplateAttachment :
+				_notificationTemplateAttachmentPersistence.
+					findByNotificationTemplateId(notificationTemplateId)) {
+
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				notificationTemplateAttachment.getObjectFieldId());
+
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+				MapUtil.getLong(
+					(Map<String, Object>)object, objectField.getName()));
+
+			if (dlFileEntry == null) {
+				continue;
+			}
+
+			FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
+				repository.getGroupId(),
+				_userLocalService.getDefaultUserId(companyId),
+				NotificationTemplate.class.getName(), 0,
+				NotificationPortletKeys.NOTIFICATION_TEMPLATES,
+				repository.getDlFolderId(), dlFileEntry.getContentStream(),
+				_portletFileRepository.getUniqueFileName(
+					group.getGroupId(), repository.getDlFolderId(),
+					dlFileEntry.getFileName()),
+				dlFileEntry.getMimeType(), false);
+
+			fileEntryIds.add(fileEntry.getFileEntryId());
+		}
+
+		return fileEntryIds;
+	}
+
+	private Repository _getRepository(long groupId) {
+		Repository repository = _portletFileRepository.fetchPortletRepository(
+			groupId, NotificationPortletKeys.NOTIFICATION_TEMPLATES);
+
+		if (repository != null) {
+			return repository;
+		}
+
+		try {
+			return _portletFileRepository.addPortletRepository(
+				groupId, NotificationPortletKeys.NOTIFICATION_TEMPLATES,
+				new ServiceContext());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
+	}
+
 	private void _validate(
 			long objectDefinitionId, String from, String name,
 			List<Long> attachmentObjectFieldIds)
@@ -461,6 +547,12 @@ public class NotificationTemplateLocalServiceImpl
 		"\\[%[^\\[%]+%\\]", Pattern.CASE_INSENSITIVE);
 
 	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private NotificationQueueEntryLocalService
 		_notificationQueueEntryLocalService;
 
@@ -491,6 +583,9 @@ public class NotificationTemplateLocalServiceImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

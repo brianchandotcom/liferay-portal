@@ -250,7 +250,7 @@ definition {
 	macro viewPG {
 		var key_entryComment = "${entryComment}";
 
-		Pause(locator1 = "1000");
+		WaitForElementPresent(locator1 = "Comments#COMMENT_BODY");
 
 		if (isSet(noAddPermissions)) {
 			AssertTextNotPresent(
@@ -268,8 +268,6 @@ definition {
 				key_userFullName = "${userFullName}",
 				locator1 = "Comments#USER_NAME_2",
 				value1 = "${userFullName}");
-
-			AssertElementPresent(locator1 = "Comments#COMMENT_BODY");
 		}
 		else {
 			var key_userFullName = "${userFullName}";

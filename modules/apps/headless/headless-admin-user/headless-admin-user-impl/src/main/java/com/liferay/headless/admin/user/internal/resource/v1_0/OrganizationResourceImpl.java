@@ -420,7 +420,7 @@ public class OrganizationResourceImpl
 				_getDefaultParentOrganizationId(organization),
 				organization.getName(), serviceBuilderOrganization.getType(),
 				_getRegionId(organization, countryId), countryId,
-				serviceBuilderOrganization.getStatusId(),
+				serviceBuilderOrganization.getStatusListTypeId(),
 				organization.getComment(), false, null, group.isSite(),
 				_getAddresses(organization), _getEmailAddresses(organization),
 				_getOrgLabors(organization), _getPhones(organization),
@@ -450,7 +450,7 @@ public class OrganizationResourceImpl
 		boolean site = false;
 
 		if (serviceBuilderOrganization != null) {
-			statusId = serviceBuilderOrganization.getStatusId();
+			statusId = serviceBuilderOrganization.getStatusListTypeId();
 
 			Group group = serviceBuilderOrganization.getGroup();
 
@@ -781,7 +781,7 @@ public class OrganizationResourceImpl
 
 		OrgLabor orgLabor = _orgLaborLocalService.createOrgLabor(0);
 
-		orgLabor.setTypeId(typeId);
+		orgLabor.setListTypeId(typeId);
 
 		HoursAvailable[] hoursAvailableArray = service.getHoursAvailable();
 

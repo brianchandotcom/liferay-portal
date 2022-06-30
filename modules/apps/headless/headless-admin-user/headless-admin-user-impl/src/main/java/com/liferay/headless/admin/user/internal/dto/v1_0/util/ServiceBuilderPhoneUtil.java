@@ -40,7 +40,7 @@ public class ServiceBuilderPhoneUtil {
 
 		serviceBuilderPhone.setNumber(number);
 		serviceBuilderPhone.setExtension(extension);
-		serviceBuilderPhone.setTypeId(
+		serviceBuilderPhone.setListTypeId(
 			ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
 				"other", phone.getPhoneType(), type));
 		serviceBuilderPhone.setPrimary(

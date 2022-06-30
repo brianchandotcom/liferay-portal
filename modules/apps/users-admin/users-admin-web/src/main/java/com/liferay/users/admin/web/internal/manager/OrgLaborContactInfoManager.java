@@ -60,7 +60,7 @@ public class OrgLaborContactInfoManager
 
 		OrgLabor orgLabor = _orgLaborLocalService.createOrgLabor(orgLaborId);
 
-		orgLabor.setTypeId(typeId);
+		orgLabor.setListTypeId(typeId);
 		orgLabor.setSunOpen(sunOpen);
 		orgLabor.setSunClose(sunClose);
 		orgLabor.setMonOpen(monOpen);
@@ -82,7 +82,7 @@ public class OrgLaborContactInfoManager
 	@Override
 	protected OrgLabor doAdd(OrgLabor orgLabor) throws Exception {
 		return _orgLaborService.addOrgLabor(
-			_classPK, orgLabor.getTypeId(), orgLabor.getSunOpen(),
+			_classPK, orgLabor.getListTypeId(), orgLabor.getSunOpen(),
 			orgLabor.getSunClose(), orgLabor.getMonOpen(),
 			orgLabor.getMonClose(), orgLabor.getTueOpen(),
 			orgLabor.getTueClose(), orgLabor.getWedOpen(),
@@ -100,7 +100,7 @@ public class OrgLaborContactInfoManager
 	@Override
 	protected void doUpdate(OrgLabor orgLabor) throws Exception {
 		_orgLaborService.updateOrgLabor(
-			orgLabor.getOrgLaborId(), orgLabor.getTypeId(),
+			orgLabor.getOrgLaborId(), orgLabor.getListTypeId(),
 			orgLabor.getSunOpen(), orgLabor.getSunClose(),
 			orgLabor.getMonOpen(), orgLabor.getMonClose(),
 			orgLabor.getTueOpen(), orgLabor.getTueClose(),

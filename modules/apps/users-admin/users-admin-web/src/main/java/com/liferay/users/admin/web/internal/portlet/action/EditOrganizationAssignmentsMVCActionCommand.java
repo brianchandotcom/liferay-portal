@@ -125,7 +125,7 @@ public class EditOrganizationAssignmentsMVCActionCommand
 					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 					organization.getName(), organization.getType(),
 					organization.getRegionId(), organization.getCountryId(),
-					organization.getStatusId(), organization.getComments(),
+					organization.getStatusListTypeId(), organization.getComments(),
 					organizationGroup.isSite(), serviceContext);
 			}
 		}

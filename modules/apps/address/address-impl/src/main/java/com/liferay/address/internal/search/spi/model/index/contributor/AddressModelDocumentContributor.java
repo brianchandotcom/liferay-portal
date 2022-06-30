@@ -42,7 +42,7 @@ public class AddressModelDocumentContributor
 		document.addText("description", address.getDescription());
 		document.addText("regionName", _getRegionName(address));
 		document.addText("street1", address.getStreet1());
-		document.addKeyword("typeId", address.getTypeId());
+		document.addKeyword("typeId", address.getListTypeId());
 		document.addText("zip", address.getZip());
 	}
 

@@ -64,7 +64,7 @@ public class CommerceBillingAddressCommerceQualifierMetadata
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 
-		return AddressTable.INSTANCE.typeId.in(
+		return AddressTable.INSTANCE.listTypeId.in(
 			new Long[] {
 				accountEntryAddressTypeBillingAndShippingListType.
 					getListTypeId(),

@@ -43,7 +43,7 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 		OrgLabor orgLabor = orgLaborPersistence.create(orgLaborId);
 
 		orgLabor.setOrganizationId(organizationId);
-		orgLabor.setTypeId(typeId);
+		orgLabor.setListTypeId(typeId);
 		orgLabor.setSunOpen(sunOpen);
 		orgLabor.setSunClose(sunClose);
 		orgLabor.setMonOpen(monOpen);
@@ -79,7 +79,7 @@ public class OrgLaborLocalServiceImpl extends OrgLaborLocalServiceBaseImpl {
 
 		OrgLabor orgLabor = orgLaborPersistence.findByPrimaryKey(orgLaborId);
 
-		orgLabor.setTypeId(typeId);
+		orgLabor.setListTypeId(typeId);
 		orgLabor.setSunOpen(sunOpen);
 		orgLabor.setSunClose(sunClose);
 		orgLabor.setMonOpen(monOpen);

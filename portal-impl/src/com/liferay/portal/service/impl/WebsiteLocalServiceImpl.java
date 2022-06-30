@@ -60,7 +60,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		website.setClassNameId(classNameId);
 		website.setClassPK(classPK);
 		website.setUrl(url);
-		website.setTypeId(typeId);
+		website.setListTypeId(typeId);
 		website.setPrimary(primary);
 
 		return websitePersistence.update(website);
@@ -119,7 +119,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		Website website = websitePersistence.findByPrimaryKey(websiteId);
 
 		website.setUrl(url);
-		website.setTypeId(typeId);
+		website.setListTypeId(typeId);
 		website.setPrimary(primary);
 
 		return websitePersistence.update(website);

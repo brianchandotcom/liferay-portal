@@ -109,7 +109,7 @@ public class AddressDisplay {
 		_region = address.getRegion();
 		_street = address.getStreet1();
 		_type = _getType(address);
-		_typeId = address.getTypeId();
+		_typeId = address.getListTypeId();
 		_zip = address.getZip();
 	}
 

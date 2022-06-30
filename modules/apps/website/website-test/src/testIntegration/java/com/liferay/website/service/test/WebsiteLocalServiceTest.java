@@ -87,7 +87,7 @@ public class WebsiteLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_website = _websiteLocalService.updateWebsite(
-			_website.getWebsiteId(), _website.getUrl(), _website.getTypeId(),
+			_website.getWebsiteId(), _website.getUrl(), _website.getListTypeId(),
 			false);
 
 		Assert.assertFalse(_website.isPrimary());
@@ -101,7 +101,7 @@ public class WebsiteLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_websiteLocalService.updateWebsite(
-			_website.getWebsiteId(), _INVALID_URL, _website.getTypeId(),
+			_website.getWebsiteId(), _INVALID_URL, _website.getListTypeId(),
 			_website.isPrimary());
 	}
 

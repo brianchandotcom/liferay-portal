@@ -87,7 +87,7 @@ public class AddressImpl extends AddressBaseImpl {
 		ListType type = null;
 
 		try {
-			type = ListTypeServiceUtil.getListType(getTypeId());
+			type = ListTypeServiceUtil.getListType(getListTypeId());
 		}
 		catch (Exception exception) {
 			type = new ListTypeImpl();

@@ -186,7 +186,7 @@ public class SetupWizardSampleDataUtil {
 				adminUser.getReminderQueryAnswer(), screenName, emailAddress,
 				false, null, languageId, adminUser.getTimeZoneId(), greeting,
 				adminUser.getComments(), firstName, adminUser.getMiddleName(),
-				lastName, contact.getPrefixId(), contact.getSuffixId(),
+				lastName, contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
 				contact.isMale(), birthdayMonth, birthdayDay, birthdayYear,
 				contact.getSmsSn(), contact.getFacebookSn(),
 				contact.getJabberSn(), contact.getSkypeSn(),

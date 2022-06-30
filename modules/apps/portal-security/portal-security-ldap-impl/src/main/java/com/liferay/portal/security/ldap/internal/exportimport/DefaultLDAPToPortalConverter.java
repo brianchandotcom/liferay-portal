@@ -185,11 +185,11 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 			contactMappings.put(ContactConverterKeys.SUFFIX, suffix);
 		}
 
-		contact.setPrefixId(
+		contact.setPrefixListTypeId(
 			_getListTypeId(
 				attributes, contactMappings, ContactConverterKeys.PREFIX,
 				ListTypeConstants.CONTACT_PREFIX));
-		contact.setSuffixId(
+		contact.setSuffixListTypeId(
 			_getListTypeId(
 				attributes, contactMappings, ContactConverterKeys.SUFFIX,
 				ListTypeConstants.CONTACT_SUFFIX));

@@ -50,7 +50,7 @@ public class ServiceBuilderAddressUtil {
 		address.setRegionId(
 			ServiceBuilderRegionUtil.getServiceBuilderRegionId(
 				postalAddress.getAddressRegion(), countryId));
-		address.setTypeId(
+		address.setListTypeId(
 			ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
 				"other", postalAddress.getAddressType(), type));
 		address.setCity(city);

@@ -88,7 +88,7 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 		/>
 
 		<%
-		ListType websiteListType = ListTypeServiceUtil.getListType(website.getTypeId());
+		ListType websiteListType = ListTypeServiceUtil.getListType(website.getListTypeId());
 
 		String websiteTypeKey = websiteListType.getName();
 		%>

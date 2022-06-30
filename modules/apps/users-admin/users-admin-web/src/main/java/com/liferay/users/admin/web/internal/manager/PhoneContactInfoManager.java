@@ -54,7 +54,7 @@ public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 
 		phone.setNumber(number);
 		phone.setExtension(extension);
-		phone.setTypeId(typeId);
+		phone.setListTypeId(typeId);
 		phone.setPrimary(primary);
 
 		return phone;
@@ -64,7 +64,7 @@ public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 	public Phone doAdd(Phone phone) throws Exception {
 		return _phoneService.addPhone(
 			_className, _classPK, phone.getNumber(), phone.getExtension(),
-			phone.getTypeId(), phone.isPrimary(), new ServiceContext());
+			phone.getListTypeId(), phone.isPrimary(), new ServiceContext());
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class PhoneContactInfoManager extends BaseContactInfoManager<Phone> {
 	public void doUpdate(Phone phone) throws Exception {
 		_phoneService.updatePhone(
 			phone.getPhoneId(), phone.getNumber(), phone.getExtension(),
-			phone.getTypeId(), phone.isPrimary());
+			phone.getListTypeId(), phone.isPrimary());
 	}
 
 	@Override

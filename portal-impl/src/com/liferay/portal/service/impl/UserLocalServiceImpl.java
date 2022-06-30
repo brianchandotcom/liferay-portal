@@ -1201,8 +1201,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setFirstName(firstName);
 		contact.setMiddleName(middleName);
 		contact.setLastName(lastName);
-		contact.setPrefixId(prefixId);
-		contact.setSuffixId(suffixId);
+		contact.setPrefixListTypeId(prefixId);
+		contact.setSuffixListTypeId(suffixId);
 		contact.setMale(male);
 		contact.setBirthday(
 			getBirthday(birthdayMonth, birthdayDay, birthdayYear));
@@ -4499,8 +4499,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			contact.setFirstName(firstName);
 			contact.setMiddleName(middleName);
 			contact.setLastName(lastName);
-			contact.setPrefixId(prefixId);
-			contact.setSuffixId(suffixId);
+			contact.setPrefixListTypeId(prefixId);
+			contact.setSuffixListTypeId(suffixId);
 			contact.setMale(male);
 			contact.setBirthday(birthday);
 			contact.setJobTitle(jobTitle);
@@ -5290,8 +5290,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setFirstName(firstName);
 		contact.setMiddleName(middleName);
 		contact.setLastName(lastName);
-		contact.setPrefixId(prefixId);
-		contact.setSuffixId(suffixId);
+		contact.setPrefixListTypeId(prefixId);
+		contact.setSuffixListTypeId(suffixId);
 		contact.setMale(male);
 		contact.setBirthday(
 			getBirthday(birthdayMonth, birthdayDay, birthdayYear));

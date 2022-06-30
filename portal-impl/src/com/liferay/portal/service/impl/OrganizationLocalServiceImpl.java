@@ -292,7 +292,7 @@ public class OrganizationLocalServiceImpl
 		organization.setRecursable(true);
 		organization.setRegionId(regionId);
 		organization.setCountryId(countryId);
-		organization.setStatusId(statusId);
+		organization.setStatusListTypeId(statusId);
 		organization.setComments(comments);
 		organization.setExpandoBridgeAttributes(serviceContext);
 
@@ -2026,7 +2026,7 @@ public class OrganizationLocalServiceImpl
 		organization.setRecursable(true);
 		organization.setRegionId(regionId);
 		organization.setCountryId(countryId);
-		organization.setStatusId(statusId);
+		organization.setStatusListTypeId(statusId);
 		organization.setComments(comments);
 
 		PortalUtil.updateImageId(

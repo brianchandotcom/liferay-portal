@@ -52,7 +52,7 @@ public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 		Website website = _websiteLocalService.createWebsite(websiteId);
 
 		website.setUrl(url);
-		website.setTypeId(typeId);
+		website.setListTypeId(typeId);
 		website.setPrimary(primary);
 
 		return website;
@@ -61,7 +61,7 @@ public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 	@Override
 	protected Website doAdd(Website website) throws Exception {
 		return _websiteService.addWebsite(
-			_className, _classPK, website.getUrl(), website.getTypeId(),
+			_className, _classPK, website.getUrl(), website.getListTypeId(),
 			website.isPrimary(), new ServiceContext());
 	}
 
@@ -73,7 +73,7 @@ public class WebsiteContactInfoManager extends BaseContactInfoManager<Website> {
 	@Override
 	protected void doUpdate(Website website) throws Exception {
 		_websiteService.updateWebsite(
-			website.getWebsiteId(), website.getUrl(), website.getTypeId(),
+			website.getWebsiteId(), website.getUrl(), website.getListTypeId(),
 			website.isPrimary());
 	}
 

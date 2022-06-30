@@ -335,7 +335,7 @@ public class CommerceOrderCommerceDefinitionTermContributor
 
 		Contact contact = user.getContact();
 
-		long prefixId = contact.getPrefixId();
+		long prefixId = contact.getPrefixListTypeId();
 
 		if (prefixId > 0) {
 			ListType listType = _listTypeService.getListType(prefixId);

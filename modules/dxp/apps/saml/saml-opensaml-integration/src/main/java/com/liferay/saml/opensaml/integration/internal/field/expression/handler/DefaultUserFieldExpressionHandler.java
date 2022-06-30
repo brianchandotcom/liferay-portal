@@ -262,7 +262,7 @@ public class DefaultUserFieldExpressionHandler
 			newUser.getTimeZoneId(), newUser.getGreeting(),
 			newUser.getComments(), newUser.getFirstName(),
 			newUser.getMiddleName(), newUser.getLastName(),
-			contact.getPrefixId(), contact.getSuffixId(), newUser.getMale(),
+			contact.getPrefixListTypeId(), contact.getSuffixListTypeId(), newUser.getMale(),
 			birthdayCalendar.get(Calendar.MONTH),
 			birthdayCalendar.get(Calendar.DATE),
 			birthdayCalendar.get(Calendar.YEAR), contact.getSmsSn(),

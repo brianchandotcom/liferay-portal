@@ -116,7 +116,7 @@ public class LDAPUser {
 	}
 
 	public long getPrefixId() {
-		return _contact.getPrefixId();
+		return _contact.getPrefixListTypeId();
 	}
 
 	public String getReminderQueryAnswer() {
@@ -152,7 +152,7 @@ public class LDAPUser {
 	}
 
 	public long getSuffixId() {
-		return _contact.getSuffixId();
+		return _contact.getSuffixListTypeId();
 	}
 
 	public String getTimeZoneId() {
@@ -306,7 +306,7 @@ public class LDAPUser {
 	}
 
 	public void setPrefixId(long prefixId) {
-		_contact.setPrefixId(prefixId);
+		_contact.setPrefixListTypeId(prefixId);
 	}
 
 	public void setReminderQueryAnswer(String reminderQueryAnswer) {
@@ -346,7 +346,7 @@ public class LDAPUser {
 	}
 
 	public void setSuffixId(long suffixId) {
-		_contact.setSuffixId(suffixId);
+		_contact.setSuffixListTypeId(suffixId);
 	}
 
 	public void setTimeZoneId(String timeZoneId) {

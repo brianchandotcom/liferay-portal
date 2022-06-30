@@ -59,7 +59,7 @@ public class EmailAddressContactInfoManager
 			_emailAddressLocalService.createEmailAddress(emailAddressId);
 
 		emailAddress.setAddress(address);
-		emailAddress.setTypeId(typeId);
+		emailAddress.setListTypeId(typeId);
 		emailAddress.setPrimary(primary);
 
 		return emailAddress;
@@ -69,7 +69,7 @@ public class EmailAddressContactInfoManager
 	protected EmailAddress doAdd(EmailAddress emailAddress) throws Exception {
 		return _emailAddressService.addEmailAddress(
 			_className, _classPK, emailAddress.getAddress(),
-			emailAddress.getTypeId(), emailAddress.isPrimary(),
+			emailAddress.getListTypeId(), emailAddress.isPrimary(),
 			new ServiceContext());
 	}
 
@@ -82,7 +82,7 @@ public class EmailAddressContactInfoManager
 	protected void doUpdate(EmailAddress emailAddress) throws Exception {
 		_emailAddressService.updateEmailAddress(
 			emailAddress.getEmailAddressId(), emailAddress.getAddress(),
-			emailAddress.getTypeId(), emailAddress.isPrimary());
+			emailAddress.getListTypeId(), emailAddress.isPrimary());
 	}
 
 	@Override

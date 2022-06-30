@@ -1285,7 +1285,7 @@ public class ContactsCenterPortlet extends MVCPortlet {
 			user.getReminderQueryAnswer(), screenName, emailAddress,
 			!deleteLogo, portraitBytes, user.getLanguageId(),
 			user.getTimeZoneId(), user.getGreeting(), comments, firstName,
-			middleName, lastName, contact.getPrefixId(), contact.getSuffixId(),
+			middleName, lastName, contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
 			user.isMale(), birthdayMonth, birthdayDay, birthdayYear, smsSn,
 			facebookSn, jabberSn, skypeSn, twitterSn, jobTitle,
 			user.getGroupIds(), user.getOrganizationIds(), user.getRoleIds(),

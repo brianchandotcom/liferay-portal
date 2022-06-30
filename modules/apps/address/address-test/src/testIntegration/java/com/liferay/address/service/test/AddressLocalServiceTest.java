@@ -188,7 +188,7 @@ public class AddressLocalServiceTest {
 		_addressLocalService.updateAddress(
 			address.getAddressId(), name, description, street1, null, null,
 			city, zip, region.getRegionId(), country.getCountryId(),
-			address.getTypeId(), address.isMailing(), address.isPrimary(),
+			address.getListTypeId(), address.isMailing(), address.isPrimary(),
 			address.getPhoneNumber());
 
 		List<Address> expectedAddresses = Arrays.asList(address);
@@ -248,7 +248,7 @@ public class AddressLocalServiceTest {
 			address.getAddressId(), address.getName(), address.getDescription(),
 			address.getStreet1(), address.getStreet2(), address.getStreet3(),
 			address.getCity(), address.getZip(), address.getRegionId(),
-			address.getCountryId(), address.getTypeId(), address.isMailing(),
+			address.getCountryId(), address.getListTypeId(), address.isMailing(),
 			address.isPrimary(), phoneNumber);
 
 		List<Phone> phones = _phoneLocalService.getPhones(

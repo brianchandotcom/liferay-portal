@@ -3825,7 +3825,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			fields.add("middleName");
 		}
 
-		if (prefixId != contact.getPrefixId()) {
+		if (prefixId != contact.getPrefixListTypeId()) {
 			fields.add("prefix");
 		}
 
@@ -3833,7 +3833,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			fields.add("screenName");
 		}
 
-		if (suffixId != contact.getSuffixId()) {
+		if (suffixId != contact.getSuffixListTypeId()) {
 			fields.add("suffix");
 		}
 

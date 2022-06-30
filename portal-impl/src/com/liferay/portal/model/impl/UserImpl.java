@@ -400,7 +400,7 @@ public class UserImpl extends UserBaseImpl {
 			Contact contact = fetchContact();
 
 			if (contact != null) {
-				prefixId = contact.getPrefixId();
+				prefixId = contact.getPrefixListTypeId();
 			}
 		}
 
@@ -410,7 +410,7 @@ public class UserImpl extends UserBaseImpl {
 			Contact contact = fetchContact();
 
 			if (contact != null) {
-				suffixId = contact.getSuffixId();
+				suffixId = contact.getSuffixListTypeId();
 			}
 		}
 

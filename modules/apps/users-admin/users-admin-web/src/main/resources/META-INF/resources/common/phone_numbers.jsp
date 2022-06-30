@@ -88,7 +88,7 @@ List<Phone> phones = PhoneServiceUtil.getPhones(className, classPK);
 		/>
 
 		<%
-		ListType phoneListType = ListTypeServiceUtil.getListType(phone.getTypeId());
+		ListType phoneListType = ListTypeServiceUtil.getListType(phone.getListTypeId());
 
 		String phoneTypeKey = phoneListType.getName();
 		%>

@@ -109,13 +109,13 @@ public class WebsiteStagedModelDataHandler
 
 			importedWebsite = _websiteLocalService.addWebsite(
 				userId, website.getClassName(), website.getClassPK(),
-				website.getUrl(), website.getTypeId(), website.isPrimary(),
+				website.getUrl(), website.getListTypeId(), website.isPrimary(),
 				serviceContext);
 		}
 		else {
 			importedWebsite = _websiteLocalService.updateWebsite(
 				existingWebsite.getWebsiteId(), website.getUrl(),
-				website.getTypeId(), website.isPrimary());
+				website.getListTypeId(), website.isPrimary());
 		}
 
 		portletDataContext.importClassedModel(website, importedWebsite);

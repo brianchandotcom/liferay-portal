@@ -98,7 +98,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		address.setClassPK(classPK);
 		address.setCountryId(countryId);
 		address.setRegionId(regionId);
-		address.setTypeId(typeId);
+		address.setListTypeId(typeId);
 		address.setCity(city);
 		address.setDescription(description);
 		address.setMailing(mailing);
@@ -131,7 +131,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 			address.getName(), address.getDescription(), address.getStreet1(),
 			address.getStreet2(), address.getStreet3(), address.getCity(),
 			address.getZip(), address.getRegionId(), address.getCountryId(),
-			address.getTypeId(), address.isMailing(), address.isPrimary(),
+			address.getListTypeId(), address.isMailing(), address.isPrimary(),
 			address.getPhoneNumber(), serviceContext);
 	}
 
@@ -285,7 +285,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
 		address.setCountryId(countryId);
 		address.setRegionId(regionId);
-		address.setTypeId(typeId);
+		address.setListTypeId(typeId);
 		address.setCity(city);
 		address.setDescription(description);
 		address.setMailing(mailing);

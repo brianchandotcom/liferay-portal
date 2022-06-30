@@ -75,14 +75,19 @@ public class RenderFragmentEntryDisplayContext {
 		fragmentEntryLink.setConfiguration(configuration);
 
 		String rendererKey = null;
-		int type = FragmentConstants.TYPE_COMPONENT;
 
 		if ((fragmentEntry != null) && (fragmentEntryId == 0)) {
 			rendererKey = fragmentEntry.getFragmentEntryKey();
-			type = fragmentEntry.getType();
 		}
 
 		fragmentEntryLink.setRendererKey(rendererKey);
+
+		int type = FragmentConstants.TYPE_COMPONENT;
+
+		if (fragmentEntry != null) {
+			type = fragmentEntry.getType();
+		}
+
 		fragmentEntryLink.setType(type);
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =

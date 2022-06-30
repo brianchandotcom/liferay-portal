@@ -121,7 +121,9 @@ definition {
 			key_fieldName = "Text",
 			locator1 = "Sidebar#ADD_FIELD_NAME");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
 		AssertVisible(
 			key_fieldFieldLabel = "Text",

@@ -390,7 +390,12 @@ export default function EditNotificationTemplate({
 
 						<DefinitionOfTerms baseResourceURL={baseResourceURL} />
 
-						<Attachments setValues={setValues} values={values} />
+						{Liferay.FeatureFlags['LPS-155663'] && (
+							<Attachments
+								setValues={setValues}
+								values={values}
+							/>
+						)}
 					</Card>
 				</div>
 			</div>
@@ -405,7 +410,7 @@ interface IProps {
 }
 
 export type TNotificationTemplate = {
-	attachmentObjectFieldIds: string[];
+	attachmentObjectFieldIds: string[] | number[];
 	bcc: string;
 	body: LocalizedValue<string>;
 	cc: string;

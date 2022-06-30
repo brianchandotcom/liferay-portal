@@ -16,6 +16,22 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
 	}
 
+	macro getSuccessfulWriteRequestsFromCCRStats {
+		var index = JSONCompany.getCompanyId();
+		var port = Elasticsearch.getServerPort();
+		var portalHostname = PropsUtil.get("portal.hostname");
+
+		var curl = "http://${portalHostname}:${port}/liferay-${index}-search-tuning-synonyms/_ccr/stats?pretty";
+
+		var ccrSynonymInfo = JSONCurlUtil.get("${curl}");
+
+		var successfulWriteRequests = RegexUtil.replace("${ccrSynonymInfo}", "successful_write_requests\" : \"(\d+)", "1");
+
+		echo("Number of successful_write_requests: ${successfulWriteRequests}");
+
+		return "${successfulWriteRequests}";
+	}
+
 	macro setupCrossClusterReplication {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

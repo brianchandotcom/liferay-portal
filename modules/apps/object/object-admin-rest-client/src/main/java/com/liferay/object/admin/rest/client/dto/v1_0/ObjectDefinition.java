@@ -378,6 +378,27 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected String panelCategoryKey;
 
+	public Boolean getParameterRequired() {
+		return parameterRequired;
+	}
+
+	public void setParameterRequired(Boolean parameterRequired) {
+		this.parameterRequired = parameterRequired;
+	}
+
+	public void setParameterRequired(
+		UnsafeSupplier<Boolean, Exception> parameterRequiredUnsafeSupplier) {
+
+		try {
+			parameterRequired = parameterRequiredUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean parameterRequired;
+
 	public Map<String, String> getPluralLabel() {
 		return pluralLabel;
 	}

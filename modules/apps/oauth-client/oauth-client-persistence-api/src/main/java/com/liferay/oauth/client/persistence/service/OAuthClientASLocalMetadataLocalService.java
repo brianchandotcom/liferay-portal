@@ -111,10 +111,6 @@ public interface OAuthClientASLocalMetadataLocalService
 			long oAuthClientASLocalMetadataId)
 		throws PortalException;
 
-	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
-			long companyId, String localWellKnownURI)
-		throws PortalException;
-
 	/**
 	 * Deletes the o auth client as local metadata from the database. Also notifies the appropriate model listeners.
 	 *
@@ -129,6 +125,10 @@ public interface OAuthClientASLocalMetadataLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
 			OAuthClientASLocalMetadata oAuthClientASLocalMetadata)
+		throws PortalException;
+
+	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
+			String localWellKnownURI)
 		throws PortalException;
 
 	/**
@@ -216,7 +216,7 @@ public interface OAuthClientASLocalMetadataLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
-		long companyId, String localWellKnownURI);
+		String localWellKnownURI);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -247,7 +247,7 @@ public interface OAuthClientASLocalMetadataLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
-			long companyId, String localWellKnownURI)
+			String localWellKnownURI)
 		throws PortalException;
 
 	/**

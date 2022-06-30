@@ -637,73 +637,68 @@ public class OAuthClientASLocalMetadataUtil {
 	}
 
 	/**
-	 * Returns the o auth client as local metadata where companyId = &#63; and localWellKnownURI = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
+	 * Returns the o auth client as local metadata where localWellKnownURI = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
 	 * @param localWellKnownURI the local well known uri
 	 * @return the matching o auth client as local metadata
 	 * @throws NoSuchOAuthClientASLocalMetadataException if a matching o auth client as local metadata could not be found
 	 */
-	public static OAuthClientASLocalMetadata findByC_L(
-			long companyId, String localWellKnownURI)
+	public static OAuthClientASLocalMetadata findByLocalWellKnownURI(
+			String localWellKnownURI)
 		throws com.liferay.oauth.client.persistence.exception.
 			NoSuchOAuthClientASLocalMetadataException {
 
-		return getPersistence().findByC_L(companyId, localWellKnownURI);
+		return getPersistence().findByLocalWellKnownURI(localWellKnownURI);
 	}
 
 	/**
-	 * Returns the o auth client as local metadata where companyId = &#63; and localWellKnownURI = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the o auth client as local metadata where localWellKnownURI = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param localWellKnownURI the local well known uri
 	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
 	 */
-	public static OAuthClientASLocalMetadata fetchByC_L(
-		long companyId, String localWellKnownURI) {
+	public static OAuthClientASLocalMetadata fetchByLocalWellKnownURI(
+		String localWellKnownURI) {
 
-		return getPersistence().fetchByC_L(companyId, localWellKnownURI);
+		return getPersistence().fetchByLocalWellKnownURI(localWellKnownURI);
 	}
 
 	/**
-	 * Returns the o auth client as local metadata where companyId = &#63; and localWellKnownURI = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth client as local metadata where localWellKnownURI = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
 	 * @param localWellKnownURI the local well known uri
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth client as local metadata, or <code>null</code> if a matching o auth client as local metadata could not be found
 	 */
-	public static OAuthClientASLocalMetadata fetchByC_L(
-		long companyId, String localWellKnownURI, boolean useFinderCache) {
+	public static OAuthClientASLocalMetadata fetchByLocalWellKnownURI(
+		String localWellKnownURI, boolean useFinderCache) {
 
-		return getPersistence().fetchByC_L(
-			companyId, localWellKnownURI, useFinderCache);
+		return getPersistence().fetchByLocalWellKnownURI(
+			localWellKnownURI, useFinderCache);
 	}
 
 	/**
-	 * Removes the o auth client as local metadata where companyId = &#63; and localWellKnownURI = &#63; from the database.
+	 * Removes the o auth client as local metadata where localWellKnownURI = &#63; from the database.
 	 *
-	 * @param companyId the company ID
 	 * @param localWellKnownURI the local well known uri
 	 * @return the o auth client as local metadata that was removed
 	 */
-	public static OAuthClientASLocalMetadata removeByC_L(
-			long companyId, String localWellKnownURI)
+	public static OAuthClientASLocalMetadata removeByLocalWellKnownURI(
+			String localWellKnownURI)
 		throws com.liferay.oauth.client.persistence.exception.
 			NoSuchOAuthClientASLocalMetadataException {
 
-		return getPersistence().removeByC_L(companyId, localWellKnownURI);
+		return getPersistence().removeByLocalWellKnownURI(localWellKnownURI);
 	}
 
 	/**
-	 * Returns the number of o auth client as local metadatas where companyId = &#63; and localWellKnownURI = &#63;.
+	 * Returns the number of o auth client as local metadatas where localWellKnownURI = &#63;.
 	 *
-	 * @param companyId the company ID
 	 * @param localWellKnownURI the local well known uri
 	 * @return the number of matching o auth client as local metadatas
 	 */
-	public static int countByC_L(long companyId, String localWellKnownURI) {
-		return getPersistence().countByC_L(companyId, localWellKnownURI);
+	public static int countByLocalWellKnownURI(String localWellKnownURI) {
+		return getPersistence().countByLocalWellKnownURI(localWellKnownURI);
 	}
 
 	/**

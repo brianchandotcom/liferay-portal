@@ -60,7 +60,7 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 		throws PortalException;
 
 	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
-			long companyId, String localWellKnownURI)
+			String localWellKnownURI)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -74,7 +74,7 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
-			long companyId, String localWellKnownURI)
+			String localWellKnownURI)
 		throws PortalException;
 
 	/**

@@ -143,8 +143,7 @@ public class OAuthClientASLocalMetadataServiceHttp {
 	public static
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 				deleteOAuthClientASLocalMetadata(
-					HttpPrincipal httpPrincipal, long companyId,
-					String localWellKnownURI)
+					HttpPrincipal httpPrincipal, String localWellKnownURI)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -154,7 +153,7 @@ public class OAuthClientASLocalMetadataServiceHttp {
 				_deleteOAuthClientASLocalMetadataParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, localWellKnownURI);
+				methodKey, localWellKnownURI);
 
 			Object returnObj = null;
 
@@ -263,8 +262,7 @@ public class OAuthClientASLocalMetadataServiceHttp {
 	public static
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 				getOAuthClientASLocalMetadata(
-					HttpPrincipal httpPrincipal, long companyId,
-					String localWellKnownURI)
+					HttpPrincipal httpPrincipal, String localWellKnownURI)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -274,7 +272,7 @@ public class OAuthClientASLocalMetadataServiceHttp {
 				_getOAuthClientASLocalMetadataParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, localWellKnownURI);
+				methodKey, localWellKnownURI);
 
 			Object returnObj = null;
 
@@ -438,7 +436,7 @@ public class OAuthClientASLocalMetadataServiceHttp {
 		};
 	private static final Class<?>[]
 		_deleteOAuthClientASLocalMetadataParameterTypes2 = new Class[] {
-			long.class, String.class
+			String.class
 		};
 	private static final Class<?>[]
 		_getCompanyOAuthClientASLocalMetadataParameterTypes3 = new Class[] {
@@ -450,7 +448,7 @@ public class OAuthClientASLocalMetadataServiceHttp {
 		};
 	private static final Class<?>[]
 		_getOAuthClientASLocalMetadataParameterTypes5 = new Class[] {
-			long.class, String.class
+			String.class
 		};
 	private static final Class<?>[]
 		_getUserOAuthClientASLocalMetadataParameterTypes6 = new Class[] {

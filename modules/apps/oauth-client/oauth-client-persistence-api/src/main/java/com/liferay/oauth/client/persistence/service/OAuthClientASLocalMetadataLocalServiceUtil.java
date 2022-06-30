@@ -111,14 +111,6 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 			oAuthClientASLocalMetadataId);
 	}
 
-	public static OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
-			long companyId, String localWellKnownURI)
-		throws PortalException {
-
-		return getService().deleteOAuthClientASLocalMetadata(
-			companyId, localWellKnownURI);
-	}
-
 	/**
 	 * Deletes the o auth client as local metadata from the database. Also notifies the appropriate model listeners.
 	 *
@@ -136,6 +128,13 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 
 		return getService().deleteOAuthClientASLocalMetadata(
 			oAuthClientASLocalMetadata);
+	}
+
+	public static OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
+			String localWellKnownURI)
+		throws PortalException {
+
+		return getService().deleteOAuthClientASLocalMetadata(localWellKnownURI);
 	}
 
 	/**
@@ -241,10 +240,9 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
-		long companyId, String localWellKnownURI) {
+		String localWellKnownURI) {
 
-		return getService().fetchOAuthClientASLocalMetadata(
-			companyId, localWellKnownURI);
+		return getService().fetchOAuthClientASLocalMetadata(localWellKnownURI);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -290,11 +288,10 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
-			long companyId, String localWellKnownURI)
+			String localWellKnownURI)
 		throws PortalException {
 
-		return getService().getOAuthClientASLocalMetadata(
-			companyId, localWellKnownURI);
+		return getService().getOAuthClientASLocalMetadata(localWellKnownURI);
 	}
 
 	/**

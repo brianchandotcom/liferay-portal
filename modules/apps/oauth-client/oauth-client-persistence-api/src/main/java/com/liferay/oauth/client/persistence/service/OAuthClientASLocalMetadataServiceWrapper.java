@@ -58,12 +58,11 @@ public class OAuthClientASLocalMetadataServiceWrapper
 
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			deleteOAuthClientASLocalMetadata(
-				long companyId, String localWellKnownURI)
+			deleteOAuthClientASLocalMetadata(String localWellKnownURI)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientASLocalMetadataService.
-			deleteOAuthClientASLocalMetadata(companyId, localWellKnownURI);
+			deleteOAuthClientASLocalMetadata(localWellKnownURI);
 	}
 
 	@Override
@@ -87,12 +86,11 @@ public class OAuthClientASLocalMetadataServiceWrapper
 
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			getOAuthClientASLocalMetadata(
-				long companyId, String localWellKnownURI)
+			getOAuthClientASLocalMetadata(String localWellKnownURI)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientASLocalMetadataService.getOAuthClientASLocalMetadata(
-			companyId, localWellKnownURI);
+			localWellKnownURI);
 	}
 
 	/**

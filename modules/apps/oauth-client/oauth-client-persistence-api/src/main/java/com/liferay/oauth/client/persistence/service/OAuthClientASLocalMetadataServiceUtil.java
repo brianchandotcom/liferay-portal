@@ -55,11 +55,10 @@ public class OAuthClientASLocalMetadataServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
-			long companyId, String localWellKnownURI)
+			String localWellKnownURI)
 		throws PortalException {
 
-		return getService().deleteOAuthClientASLocalMetadata(
-			companyId, localWellKnownURI);
+		return getService().deleteOAuthClientASLocalMetadata(localWellKnownURI);
 	}
 
 	public static List<OAuthClientASLocalMetadata>
@@ -77,11 +76,10 @@ public class OAuthClientASLocalMetadataServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
-			long companyId, String localWellKnownURI)
+			String localWellKnownURI)
 		throws PortalException {
 
-		return getService().getOAuthClientASLocalMetadata(
-			companyId, localWellKnownURI);
+		return getService().getOAuthClientASLocalMetadata(localWellKnownURI);
 	}
 
 	/**

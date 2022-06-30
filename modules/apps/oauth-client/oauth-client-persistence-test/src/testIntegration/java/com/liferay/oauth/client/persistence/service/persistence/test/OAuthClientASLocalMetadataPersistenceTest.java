@@ -206,12 +206,12 @@ public class OAuthClientASLocalMetadataPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_L() throws Exception {
-		_persistence.countByC_L(RandomTestUtil.nextLong(), "");
+	public void testCountByLocalWellKnownURI() throws Exception {
+		_persistence.countByLocalWellKnownURI("");
 
-		_persistence.countByC_L(0L, "null");
+		_persistence.countByLocalWellKnownURI("null");
 
-		_persistence.countByC_L(0L, (String)null);
+		_persistence.countByLocalWellKnownURI((String)null);
 	}
 
 	@Test
@@ -553,11 +553,6 @@ public class OAuthClientASLocalMetadataPersistenceTest {
 	private void _assertOriginalValues(
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata) {
 
-		Assert.assertEquals(
-			Long.valueOf(oAuthClientASLocalMetadata.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				oAuthClientASLocalMetadata, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
 		Assert.assertEquals(
 			oAuthClientASLocalMetadata.getLocalWellKnownURI(),
 			ReflectionTestUtil.invoke(

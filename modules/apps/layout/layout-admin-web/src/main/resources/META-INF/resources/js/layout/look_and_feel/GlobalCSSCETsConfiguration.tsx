@@ -18,6 +18,7 @@ import {openSelectionModal} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {GlobalCETOptionsDropDown} from './GlobalCETOptionsDropDown';
+import {GlobalCETOrderHelpIcon} from './GlobalCETOrderHelpIcon';
 
 export default function GlobalCSSCETsConfiguration({
 	globalCSSCETSelectorURL,
@@ -114,6 +115,19 @@ export default function GlobalCSSCETsConfiguration({
 				<ClayTable>
 					<ClayTable.Head>
 						<ClayTable.Row>
+							<ClayTable.Cell headingCell>
+								<GlobalCETOrderHelpIcon
+									buttonId={`${portletNamespace}_GlobalCSSCETsConfigurationOrderHelpIcon`}
+									title={Liferay.Language.get(
+										'loading-order'
+									)}
+								>
+									{Liferay.Language.get(
+										'numbers-indicate-in-which-order-extensions-are-loaded-extensions-inherited-from-master-will-always-be-loaded-in-first-place'
+									)}
+								</GlobalCETOrderHelpIcon>
+							</ClayTable.Cell>
+
 							<ClayTable.Cell expanded headingCell>
 								{Liferay.Language.get('name')}
 							</ClayTable.Cell>
@@ -127,26 +141,30 @@ export default function GlobalCSSCETsConfiguration({
 					</ClayTable.Head>
 
 					<ClayTable.Body>
-						{globalCSSCETs.map((globalCSSCET) => (
-							<ClayTable.Row
-								key={globalCSSCET.cetExternalReferenceCode}
-							>
-								<ClayTable.Cell expanded headingTitle>
-									{globalCSSCET.name}
-								</ClayTable.Cell>
+						{globalCSSCETs.map((globalCSSCET, index) => {
+							const buttonId = getDropDownButtonId(globalCSSCET);
+							const items = getDropDownItems(globalCSSCET);
+							const order = index + 1;
 
-								<ClayTable.Cell>
-									<GlobalCETOptionsDropDown
-										dropdownItems={getDropDownItems(
-											globalCSSCET
-										)}
-										dropdownTriggerId={getDropDownButtonId(
-											globalCSSCET
-										)}
-									/>
-								</ClayTable.Cell>
-							</ClayTable.Row>
-						))}
+							return (
+								<ClayTable.Row
+									key={globalCSSCET.cetExternalReferenceCode}
+								>
+									<ClayTable.Cell>{order}</ClayTable.Cell>
+
+									<ClayTable.Cell expanded headingTitle>
+										{globalCSSCET.name}
+									</ClayTable.Cell>
+
+									<ClayTable.Cell>
+										<GlobalCETOptionsDropDown
+											dropdownItems={items}
+											dropdownTriggerId={buttonId}
+										/>
+									</ClayTable.Cell>
+								</ClayTable.Row>
+							);
+						})}
 					</ClayTable.Body>
 				</ClayTable>
 			) : (

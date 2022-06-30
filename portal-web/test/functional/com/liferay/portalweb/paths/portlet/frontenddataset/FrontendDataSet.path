@@ -113,6 +113,11 @@
 	<td>//div[@class='dropdown-menu show']//*[@type="checkbox" and @aria-label='${key_status}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RESET_FILTERS</td>
+	<td>//*[contains(@class,'management-bar')]//*[@type='button' and contains(text(), 'Reset Filters')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -756,6 +756,7 @@ public class CommercePriceListLocalServiceTest {
 		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
 		calendar.setTime(date);
+
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
 

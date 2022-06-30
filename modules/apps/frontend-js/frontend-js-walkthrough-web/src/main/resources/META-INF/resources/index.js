@@ -19,7 +19,7 @@ import Walkthrough from './Walkthrough';
 
 const DEFAULT_CONTAINER_ID = 'walkthroughContainer';
 
-const defautValue = {
+const DEFAULT_PROPS = {
 	closeOnClickOutside: false,
 	closeable: true,
 	pages: {},
@@ -40,7 +40,7 @@ const getDefaultContainer = () => {
 };
 
 function Root(props) {
-	return <Walkthrough {...defautValue} {...props} />;
+	return <Walkthrough {...DEFAULT_PROPS} {...props} />;
 }
 
 export default function main(props = {}) {

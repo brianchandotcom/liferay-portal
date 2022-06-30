@@ -45,9 +45,7 @@ export function Overlay({popoverVisible, trigger}) {
 		if (trigger) {
 			updateOverlayBounds();
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [updateOverlayBounds]);
+	}, [updateOverlayBounds, trigger]);
 
 	useObserveRect(updateOverlayBounds, trigger);
 

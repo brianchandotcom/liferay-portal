@@ -14,7 +14,6 @@
 
 package com.liferay.poshi.core.util;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -34,9 +33,7 @@ public class MathUtil {
 		return false;
 	}
 
-	public static boolean isGreaterThanOrEqualTo(
-		Long value1, Long value2) {
-
+	public static boolean isGreaterThanOrEqualTo(Long value1, Long value2) {
 		if (value1 >= value2) {
 			return true;
 		}
@@ -82,6 +79,7 @@ public class MathUtil {
 
 	public static Long randomNumber(Long maxValue) {
 		ThreadLocalRandom current = ThreadLocalRandom.current();
+
 		return current.nextLong(maxValue) + 1;
 	}
 

@@ -266,12 +266,25 @@ definition {
 	}
 
 	@description = "Verify that is possible to add new languages"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAddNewLanguages {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddNewLanguages";
 
-		// TODO CanAddNewLanguages pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.gotoManageTranslations();
+
+		ProcessBuilderKaleoDesignerReact.deleteLanguage(translationOption = "Catalan");
+
+		ProcessBuilderKaleoDesignerReact.viewLanguageOptionNotPresent(languageOption = "Catalan");
+
+		ProcessBuilderKaleoDesignerReact.addLanguage(translationOptionSelected = "ca-es");
+
+		ProcessBuilderKaleoDesignerReact.viewLanguageOptionPresent(languageOption = "Catalan");
 	}
 
 	@description = "Verify that Notification can be added"

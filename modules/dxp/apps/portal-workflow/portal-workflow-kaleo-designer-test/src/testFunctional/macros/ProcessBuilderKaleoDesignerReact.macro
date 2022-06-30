@@ -1647,5 +1647,5 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_METADATA_ELEMENT",
 			value1 = "${coordinateY}");
 	}
-
+	
 }

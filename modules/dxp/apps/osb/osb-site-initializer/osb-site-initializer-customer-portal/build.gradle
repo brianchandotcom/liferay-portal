@@ -29,7 +29,7 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
 String dateString = dateFormat.format(new Date())
 
 File extraRemoteAppDir = new File(projectDir, "extra/remote-app/")
-File fragmentsSrcDir = new File(projectDir, "src/main/resources/site-initializer/fragments/")
+File fragmentsSrcDir = new File(projectDir, "src/main/resources/site-initializer/fragments/group")
 
 String webContextPath = ""
 
@@ -103,7 +103,7 @@ processResources {
 			doLast {
 				copy {
 					from new File(fragmentsSrcDir, "build/liferay-fragments/src")
-					into new File(projectDir, "classes/site-initializer/fragments/src")
+					into new File(projectDir, "classes/site-initializer/fragments/group/src")
 				}
 			}
 		}
@@ -194,7 +194,7 @@ zipExtraRemoteApp {
 		File packageJSONFile = new File(fragmentsSrcDir, "package.json")
 
 		if (packageJSONFile.exists()) {
-			into("fragments/src") {
+			into("fragments/group/src") {
 				from(new File(fragmentsSrcDir, "build/liferay-fragments/src"))
 			}
 		}

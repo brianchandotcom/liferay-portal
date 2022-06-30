@@ -15,47 +15,49 @@
 	[/#if]
 
 	<div class="dropdown-menu">
-		[#if 10 <= input.options?size]
-			<div class="dropdown-section">
-				<div class="input-group input-group-sm">
-					<div class="input-group-item">
-						<input class="form-control forms-select-from-list-search input-group-inset input-group-inset-after" type="search" value="" />
+		[#if input.attributes?? && input.attributes.options??]
+			[#if 10 <= input.attributes.options?size]
+				<div class="dropdown-section">
+					<div class="input-group input-group-sm">
+						<div class="input-group-item">
+							<input class="form-control forms-select-from-list-search input-group-inset input-group-inset-after" type="search" value="" />
 
-						<span class="input-group-inset-item input-group-inset-item-after">
-							[@clay["icon"] symbol="search" /]
-						</span>
+							<span class="input-group-inset-item input-group-inset-item-after">
+								[@clay["icon"] symbol="search" /]
+							</span>
+						</div>
 					</div>
+
+					<p class="my-2 text-secondary">
+						${languageUtil.get(locale, "choose-an-option")}.
+					</p>
 				</div>
-
-				<p class="my-2 text-secondary">
-					${languageUtil.get(locale, "choose-an-option")}.
-				</p>
-			</div>
-		[/#if]
-
-		<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="list-unstyled" id="${fragmentEntryLinkNamespace}-listbox" role="listbox" tabindex="0">
-
-		[#list input.options as option]
-			[#if option?index == 10]
-				[#break]
 			[/#if]
 
-			<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
-				${option.label}
-			</li>
-		[/#list]
+			<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="list-unstyled" id="${fragmentEntryLinkNamespace}-listbox" role="listbox" tabindex="0">
 
-		</ul>
+			[#list input.attributes.options as option]
+				[#if option?index == 10]
+					[#break]
+				[/#if]
 
-		[#if 10 <= input.options?size]
-			<p aria-hidden="true" class="d-none forms-select-from-list-loading-results mt-3 mx-4">
-				<span class="sr-only">${languageUtil.get(locale, "loading")}.</span>
-				<span aria-hidden="true" class="loading-animation"></span>
-			</p>
+				<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
+					${option.label}
+				</li>
+			[/#list]
 
-			<p aria-hidden="true" class="d-none forms-select-from-list-no-results mt-3 mx-4 text-secondary">
-				${languageUtil.get(locale, "no-results-were-found")}
-			</p>
+			</ul>
+
+			[#if 10 <= input.attributes.options?size]
+				<p aria-hidden="true" class="d-none forms-select-from-list-loading-results mt-3 mx-4">
+					<span class="sr-only">${languageUtil.get(locale, "loading")}.</span>
+					<span aria-hidden="true" class="loading-animation"></span>
+				</p>
+
+				<p aria-hidden="true" class="d-none forms-select-from-list-no-results mt-3 mx-4 text-secondary">
+					${languageUtil.get(locale, "no-results-were-found")}
+				</p>
+			[/#if]
 		[/#if]
 	</div>
 </div>

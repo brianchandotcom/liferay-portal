@@ -1378,12 +1378,47 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Name of the Timer"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditTimerName {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTimerName";
 
-		// TODO CanEditTimerName pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			actionName = "Liferay Timer Action",
+			actionsTemplateValue = "Timer Template",
+			description = "Description of Workflow Timer",
+			durationValue = "1",
+			name = "Name of Workflow Timer",
+			newTimer = "true",
+			scaleTypeOption = "Minute",
+			singleTimer = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoTimer(
+			propertyName = "Timer",
+			propertyValue = "Duration: 1 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewTimersInfo(name = "Name of Workflow Timer");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(
+			name = "Name of Definition Timer edited",
+			singleTimer = "true");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoTimer(
+			propertyName = "Timer",
+			propertyValue = "Duration: 1 minute");
+
+		ProcessBuilderKaleoDesignerReact.viewTimersInfo(name = "Name of Definition Timer edited");
+
+		
 	}
 
 	@description = "Verify that the user can edit the Timers recurrence field"

@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import {CheckboxField} from '../../../../../../app/components/fragment-configuration-fields/CheckboxField';
 import {HideFromSearchField} from '../../../../../../app/components/fragment-configuration-fields/HideFromSearchField';
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
@@ -80,6 +81,37 @@ export default function ContainerAdvancedPanel({item}) {
 							'misusing-this-setup-might-impact-seo'
 						)}
 					</p>
+
+					{Liferay.FeatureFlags['LPS-147895'] && (
+						<CheckboxField
+							className="mb-2"
+							field={{
+								defaultValue: '',
+								label: Liferay.Language.get(
+									'set-content-visibility-to-auto'
+								),
+								name: 'contentVisibility',
+								typeOptions: {
+									customValues: {
+										checked: 'auto',
+										unchecked: '',
+									},
+								},
+							}}
+							onValueSelect={(name, value) => {
+								dispatch(
+									updateItemConfig({
+										itemConfig: {
+											[name]: value,
+										},
+										itemId: item.itemId,
+										segmentsExperienceId,
+									})
+								);
+							}}
+							value={item.config.contentVisibility}
+						/>
+					)}
 				</>
 			)}
 

@@ -94,8 +94,8 @@ public class ClientExtensionServicePreActionTest {
 	}
 
 	@Test
-	public void testProcessServicePreActionLayout() throws Exception {
-		_addClientExtensionEntry();
+	public void testProcessServicePreActionLayoutFavicon() throws Exception {
+		_addFaviconClientExtensionEntry();
 
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 			_user.getUserId(), _portal.getClassNameId(Layout.class),
@@ -106,8 +106,8 @@ public class ClientExtensionServicePreActionTest {
 	}
 
 	@Test
-	public void testProcessServicePreActionLayoutSet() throws Exception {
-		_addClientExtensionEntry();
+	public void testProcessServicePreActionLayoutSetFavicon() throws Exception {
+		_addFaviconClientExtensionEntry();
 
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 
@@ -121,8 +121,8 @@ public class ClientExtensionServicePreActionTest {
 	}
 
 	@Test
-	public void testProcessServicePreActionMasterLayout() throws Exception {
-		_addClientExtensionEntry();
+	public void testProcessServicePreActionMasterLayoutFavicon() throws Exception {
+		_addFaviconClientExtensionEntry();
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
@@ -145,7 +145,7 @@ public class ClientExtensionServicePreActionTest {
 		_assertFaviconURL();
 	}
 
-	private void _addClientExtensionEntry() throws Exception {
+	private void _addFaviconClientExtensionEntry() throws Exception {
 		_clientExtensionEntry =
 			_clientExtensionEntryLocalService.addClientExtensionEntry(
 				RandomTestUtil.randomString(), _user.getUserId(),

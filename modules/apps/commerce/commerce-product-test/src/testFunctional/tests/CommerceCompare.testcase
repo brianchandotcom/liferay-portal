@@ -118,7 +118,7 @@ definition {
 				urlAppend = "web/minium",
 				userEmailAddress = "buyer@liferay.com");
 
-			Button.click(button = "Compare");
+			Click(locator1 = "CommerceFrontStore#MINI_COMPARE_COMPARE_BUTTON");
 		}
 
 		task ("Then the buyer cannot see the fourth product in the comparison table") {
@@ -215,7 +215,7 @@ definition {
 				key_productMediaId = "${transmissionFluidImageId}",
 				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
 
-			Button.click(button = "Compare");
+			Click(locator1 = "CommerceFrontStore#MINI_COMPARE_COMPARE_BUTTON");
 
 			AssertElementNotPresent(
 				key_productName = "transmission-fluid",
@@ -258,7 +258,7 @@ definition {
 				key_productMediaId = "${transmissionFluidImageId}",
 				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
 
-			Button.click(button = "Compare");
+			Click(locator1 = "CommerceFrontStore#MINI_COMPARE_COMPARE_BUTTON");
 
 			AssertElementNotPresent(
 				key_productName = "transmission-fluid",

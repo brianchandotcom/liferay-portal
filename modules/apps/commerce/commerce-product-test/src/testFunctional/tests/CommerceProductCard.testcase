@@ -1233,7 +1233,7 @@ definition {
 				key_productMediaId = "${productImageId}",
 				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
 
-			Button.click(button = "Compare");
+			Click(locator1 = "CommerceFrontStore#MINI_COMPARE_COMPARE_BUTTON");
 
 			AssertElementNotPresent(
 				key_productName = "transmission-fluid",

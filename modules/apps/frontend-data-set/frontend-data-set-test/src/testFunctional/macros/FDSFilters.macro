@@ -27,6 +27,12 @@ definition {
 		Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 	}
 
+	macro closeFilters {
+		if (IsElementPresent(locator1 = "FrontendDataSet#FILTER_DROPDOWN")) {
+			Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
+		}
+	}
+
 	macro disableStatusFilters {
 		if (IsElementPresent(key_filter = "Status", locator1 = "FrontendDataSet#FILTER_OPTION")) {
 			Click(

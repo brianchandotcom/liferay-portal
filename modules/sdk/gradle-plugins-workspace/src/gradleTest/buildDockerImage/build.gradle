@@ -8,9 +8,10 @@ runGradleTest {
 
 		String[] inputDirFileNames = inputDir.list()
 
-		assert inputDirFileNames.length == 7
+		assert inputDirFileNames.length == 8
 
 		assert inputDirFileNames.contains("100_liferay_image_setup.sh")
+		assert inputDirFileNames.contains("client-extensions")
 		assert inputDirFileNames.contains("Dockerfile")
 		assert inputDirFileNames.contains("configs")
 		assert inputDirFileNames.contains("deploy")

@@ -17,10 +17,6 @@ gradle.taskGraph.afterTask {
 	}
 }
 
-node {
-	nodeVersion = "14.19.0"
-}
-
 runGradleTest {
 	dependsOn ":design-packs:fire:buildClientExtension"
 

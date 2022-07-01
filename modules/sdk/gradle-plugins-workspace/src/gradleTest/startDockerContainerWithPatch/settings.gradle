@@ -31,7 +31,7 @@ gradle.projectsEvaluated {
 			gradle.liferayWorkspace.dockerContainerId
 		}
 
-		String expectedLine = "[LIFERAY] Patch applied successfully."
+		String expectedLine = "[LIFERAY] ... into /mnt/liferay/patching"
 		boolean expectedLineDetected = false
 
 		sink new PrintWriter(new StringWriter()) {

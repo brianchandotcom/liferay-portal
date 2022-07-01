@@ -5058,7 +5058,9 @@ log.sanitizer.enabled=false</echo>
 								substring="gradleTest"
 							/>
 							<then>
-								<gradle-execute dir="@{gradle.plugin.dir}" task="gradleTest" />
+								<gradle-execute dir="@{gradle.plugin.dir}" forcedcacheenabled="false" task="gradleTest">
+									<arg value="-DgradleTest.exclude=${gradle.plugins.gradleTst.excludes}" />
+								</gradle-execute>
 							</then>
 						</if>
 					</sequential>

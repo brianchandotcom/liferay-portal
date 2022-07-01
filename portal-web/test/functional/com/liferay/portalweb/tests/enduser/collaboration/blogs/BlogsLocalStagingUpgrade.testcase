@@ -127,15 +127,6 @@ definition {
 
 	}
 
-	@description = "This test covers LPS-154459."
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanPublishImageInMGAfterUpgradeFrom71105Archive {
-
-		// TODO LPS-154459
-
-	}
-
 	@description = "This test covers LPS-154460."
 	@ignore = "Test Stub"
 	@priority = "4"

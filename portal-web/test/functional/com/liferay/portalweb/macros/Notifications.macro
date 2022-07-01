@@ -365,6 +365,9 @@ definition {
 	}
 
 	macro waitForNotificationFlexibly {
+
+		// We need to wait for the system time to pass by some time in order to verify the user is notified. There is currently no easy way to manipulate the system time in CI for automation.
+
 		Pause(locator1 = "${waitingTime}");
 
 		while (IsElementNotPresent(locator1 = "Notifications#PROFILE_BADGE_COUNT")) {

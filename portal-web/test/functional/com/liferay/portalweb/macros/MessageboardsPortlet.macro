@@ -255,6 +255,8 @@ definition {
 				locator1 = "MessageBoardsBannedUsers#BANNED_USERS_TABLE_UNBAN_DATE",
 				value1 = "${unbanDate}");
 
+			// We need to wait for the system time to pass by 1 minute in order to verify the auto expire is disabled. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test.
+
 			Pause(locator1 = "60000");
 
 			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");

@@ -5,6 +5,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-001",
 			"policyOwnerName": "test 1",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-001$]",
 			"startDate": "2021-01-01T00:00:00Z",
 			"termPremium": "123.00"
@@ -14,6 +16,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-002",
 			"policyOwnerName": "test 2",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-002$]",
 			"startDate": "2021-01-15T00:00:00Z",
 			"termPremium": "123.00"
@@ -23,6 +27,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-003",
 			"policyOwnerName": "test 3",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-003$]",
 			"startDate": "2021-02-01T00:00:00Z",
 			"termPremium": "123.00"
@@ -32,6 +38,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-004",
 			"policyOwnerName": "test 4",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-004$]",
 			"startDate": "2021-02-15T00:00:00Z",
 			"termPremium": "123.00"
@@ -41,6 +49,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-005",
 			"policyOwnerName": "test 5",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
 			"startDate": "2021-03-01T00:00:00Z",
 			"termPremium": "123.00"
@@ -50,6 +60,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-006",
 			"policyOwnerName": "test 6",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-006$]",
 			"startDate": "2021-03-15T00:00:00Z",
 			"termPremium": "123.00"
@@ -59,6 +71,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-007",
 			"policyOwnerName": "test 7",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-001$]",
 			"startDate": "2021-04-01T00:00:00Z",
 			"termPremium": "123.00"
@@ -68,6 +82,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-008",
 			"policyOwnerName": "test 8",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-002$]",
 			"startDate": "2021-04-15T00:00:00Z",
 			"termPremium": "123.00"
@@ -77,6 +93,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-009",
 			"policyOwnerName": "test 9",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-003$]",
 			"startDate": "2021-05-01T00:00:00Z",
 			"termPremium": "123.00"
@@ -86,6 +104,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-010",
 			"policyOwnerName": "test 10",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-004$]",
 			"startDate": "2021-05-15T00:00:00Z",
 			"termPremium": "123.00"
@@ -95,6 +115,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-011",
 			"policyOwnerName": "test 11",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
 			"startDate": "2021-12-01T00:00:00Z",
 			"termPremium": "123.00"
@@ -104,6 +126,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-012",
 			"policyOwnerName": "test 12",
+			"policyStatus": "executed",
+			"productName": "Professional Liability",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-006$]",
 			"startDate": "2021-12-15T00:00:00Z",
 			"termPremium": "123.00"
@@ -113,6 +137,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-013",
 			"policyOwnerName": "test 13",
+			"policyStatus": "executed",
+			"productName": "Professional Liability",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-001$]",
 			"startDate": "2022-01-01T00:00:00Z",
 			"termPremium": "123.00"
@@ -122,6 +148,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-014",
 			"policyOwnerName": "test 14",
+			"policyStatus": "executed",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-002$]",
 			"startDate": "2022-01-15T00:00:00Z",
 			"termPremium": "123.00"
@@ -131,6 +159,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-015",
 			"policyOwnerName": "test 15",
+			"policyStatus": "executed",
+			"productName": "Professional Liability",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-003$]",
 			"startDate": "2022-02-01T00:00:00Z",
 			"termPremium": "123.00"
@@ -140,6 +170,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-016",
 			"policyOwnerName": "test 16",
+			"policyStatus": "executed",
+			"productName": "Professional Liability",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-004$]",
 			"startDate": "2022-02-15T00:00:00Z",
 			"termPremium": "123.00"
@@ -149,6 +181,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-017",
 			"policyOwnerName": "test 17",
+			"policyStatus": "executed",
+			"productName": "Business Owners Policy",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
 			"startDate": "2022-03-01T00:00:00Z",
 			"termPremium": "123.00"
@@ -158,6 +192,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-018",
 			"policyOwnerName": "test 18",
+			"policyStatus": "executed",
+			"productName": "Business Owners Policy",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-006$]",
 			"startDate": "2022-03-15T00:00:00Z",
 			"termPremium": "123.00"
@@ -167,6 +203,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-019",
 			"policyOwnerName": "test 19",
+			"policyStatus": "executed",
+			"productName": "Business Owners Policy",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-001$]",
 			"startDate": "2022-04-01T00:00:00Z",
 			"termPremium": "123.00"
@@ -176,6 +214,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-020",
 			"policyOwnerName": "test 20",
+			"policyStatus": "declined",
+			"productName": "Professional Liability",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-002$]",
 			"startDate": "2022-04-15T00:00:00Z",
 			"termPremium": "123.00"
@@ -185,6 +225,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-021",
 			"policyOwnerName": "test 21",
+			"policyStatus": "renewed",
+			"productName": "General Liability",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-003$]",
 			"startDate": "2022-05-01T00:00:00Z",
 			"termPremium": "123.00"
@@ -194,6 +236,8 @@
 			"endDate": "2022-03-03T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-022",
 			"policyOwnerName": "test 22",
+			"policyStatus": "inApplication",
+			"productName": "Business Owners Policy",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-004$]",
 			"startDate": "2022-05-15T00:00:00Z",
 			"termPremium": "123.00"
@@ -203,6 +247,8 @@
 			"endDate": "2023-06-06T00:00:00Z",
 			"externalReferenceCode": "RAYPOL-023",
 			"policyOwnerName": "test 23",
+			"policyStatus": "expired",
+			"productName": "Workers Compensation",
 			"r_quoteToPolicies_c_raylifeQuoteId": "[$RaylifeApplication#RAYAPP-005$]",
 			"startDate": "2022-06-06T00:00:00Z",
 			"termPremium": "123.00"

@@ -22,6 +22,13 @@ public class UpgradeModulesFactory {
 	public static UpgradeModules create(
 		String[] bundleSymbolicNames, String[][] convertedLegacyModules) {
 
+		return create(bundleSymbolicNames, convertedLegacyModules, null);
+	}
+
+	public static UpgradeModules create(
+		String[] bundleSymbolicNames, String[][] convertedLegacyModules,
+		String[][] legacyServiceModules) {
+
 		return new UpgradeModules() {
 
 			@Override
@@ -42,6 +49,17 @@ public class UpgradeModulesFactory {
 				}
 
 				return convertedLegacyModules;
+			}
+
+			@Override
+			public String[][] getLegacyServiceModules() {
+				if ((legacyServiceModules == null) ||
+					(legacyServiceModules[0] == null)) {
+
+					return new String[0][0];
+				}
+
+				return legacyServiceModules;
 			}
 
 		};

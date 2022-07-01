@@ -35,6 +35,8 @@ public abstract class UpgradeModules extends UpgradeProcess {
 
 	public abstract String[][] getConvertedLegacyModules();
 
+	public abstract String[][] getLegacyServiceModules();
+
 	protected void addRelease(String... bundleSymbolicNames)
 		throws SQLException {
 
@@ -50,6 +52,8 @@ public abstract class UpgradeModules extends UpgradeProcess {
 		updateExtractedModules();
 
 		updateConvertedLegacyModules();
+
+		updateLegacyServiceModules();
 	}
 
 	protected boolean hasServiceComponent(String buildNamespace)
@@ -109,6 +113,16 @@ public abstract class UpgradeModules extends UpgradeProcess {
 	protected void updateExtractedModules() throws SQLException {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			addRelease(getBundleSymbolicNames());
+		}
+	}
+
+	protected void updateLegacyServiceModules() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			for (String[] legacyServiceModule : getLegacyServiceModules()) {
+				if (hasTable(legacyServiceModule[1])) {
+					addRelease(legacyServiceModule[0]);
+				}
+			}
 		}
 	}
 

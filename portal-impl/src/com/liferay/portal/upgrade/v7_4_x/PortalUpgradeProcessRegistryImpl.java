@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v7_4_x;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 
@@ -34,7 +35,25 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(new Version(9, 0, 0), new UpgradeAddress());
 
-		upgradeProcesses.put(new Version(9, 0, 1), new UpgradeModules());
+		upgradeProcesses.put(
+			new Version(9, 0, 1),
+			UpgradeModulesFactory.create(
+				new String[] {
+					"com.liferay.change.tracking.web",
+					"com.liferay.document.library.asset.auto.tagger.tensorflow",
+					"com.liferay.portal.bundle.blacklist.impl",
+					"com.liferay.portal.component.blacklist.impl",
+					"com.liferay.portal.search", "com.liferay.template.web"
+				},
+				new String[][] {
+					{"opensocial-portlet", "opensocial-portlet", "OpenSocial"}
+				},
+				new String[][] {
+					{
+						"com.liferay.softwarecatalog.service",
+						"SCFrameworkVersion"
+					}
+				}));
 
 		upgradeProcesses.put(new Version(9, 1, 0), new UpgradeRegion());
 

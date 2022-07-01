@@ -317,6 +317,13 @@ function handleSearchKeyup() {
 	else {
 		setListboxItems(input.attributes.options.slice(0, 10));
 
+		if (listbox.children.length) {
+			listbox.removeAttribute('aria-hidden');
+			listbox.classList.remove('d-none');
+			noResultsMessage.setAttribute('aria-hidden', 'true');
+			noResultsMessage.classList.add('d-none');
+		}
+
 		return;
 	}
 

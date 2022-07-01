@@ -55,6 +55,44 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		axisTestClassGroups.add(axisTestClassGroup);
 	}
 
+	public long getAverageDuration() {
+		Job job = getJob();
+
+		Long averageDuration = job.getAverageBatchDuration(getBatchName());
+
+		if (averageDuration == null) {
+			return 0L;
+		}
+
+		return averageDuration;
+	}
+
+	public Long getAverageOverheadDuration() {
+		Job job = getJob();
+
+		Long averageOverheadDuration = job.getAverageBatchOverheadDuration(
+			getBatchName());
+
+		if (averageOverheadDuration == null) {
+			return 0L;
+		}
+
+		return averageOverheadDuration;
+	}
+
+	public long getAverageTestDuration(String testName) {
+		Job job = getJob();
+
+		Long averageDuration = job.getAverageTestDuration(
+			getBatchName(), testName);
+
+		if (averageDuration != null) {
+			return averageDuration;
+		}
+
+		return _getDefaultTestDuration();
+	}
+
 	public int getAxisCount() {
 		JobProperty jobProperty = getJobProperty("test.batch.axis.count");
 
@@ -762,6 +800,25 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		private List<Row> _csvReportRows = new ArrayList<>();
 
+	}
+
+	private Long _getDefaultTestDuration() {
+		JobProperty jobProperty = getJobProperty(
+			"test.batch.default.test.duration");
+
+		if (jobProperty == null) {
+			return null;
+		}
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			return null;
+		}
+
+		recordJobProperty(jobProperty);
+
+		return Long.valueOf(jobPropertyValue);
 	}
 
 	private Map<String, Properties> _getJobPropertiesMap() {

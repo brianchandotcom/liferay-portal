@@ -121,10 +121,10 @@ public class UpgradeReport {
 				_getReportFile(),
 				StringUtil.merge(
 					new String[] {
-						_getDateInfo(), _getPortalVersionsInfo(),
-						_getDialectInfo(), _getPropertiesInfo(),
-						_getDLStorageInfo(), _getDatabaseTablesInfo(),
-						_getUpgradeTimeInfo(), _getUpgradeProcessesInfo(),
+						_getDateInfo(), _getUpgradeTimeInfo(),
+						_getPortalVersionsInfo(), _getDialectInfo(),
+						_getPropertiesInfo(), _getDLStorageInfo(),
+						_getDatabaseTablesInfo(), _getUpgradeProcessesInfo(),
 						_getLogEventsInfo("errors"),
 						_getLogEventsInfo("warnings"),
 						releaseManagerOSGiCommands.check()

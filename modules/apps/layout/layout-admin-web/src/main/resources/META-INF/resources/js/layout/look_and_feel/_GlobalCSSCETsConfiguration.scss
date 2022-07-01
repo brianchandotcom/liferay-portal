@@ -1,0 +1,17 @@
+@import 'atlas-variables';
+
+.global-css-cets-configuration {
+	.table tbody tr.disabled td {
+		&,
+		.table-list-title {
+			color: $text-muted;
+		}
+	}
+
+	.table.table-hover tbody tr.disabled:hover {
+		&,
+		td {
+			background-color: transparent;
+		}
+	}
+}

@@ -3,6 +3,8 @@
 @import 'miller_columns/DragPreview';
 @import 'miller_columns/MillerColumns';
 
+@import '../js/layout/look_and_feel/GlobalCSSCETsConfiguration';
+
 .portlet-layouts-admin {
 	.active.card {
 		box-shadow: 0 0 0 2px $primary-l1;

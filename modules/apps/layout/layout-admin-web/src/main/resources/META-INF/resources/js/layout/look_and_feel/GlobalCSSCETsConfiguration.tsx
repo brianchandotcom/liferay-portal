@@ -14,11 +14,17 @@
 
 import ClayButton from '@clayui/button';
 import ClayTable from '@clayui/table';
+import classNames from 'classnames';
 import {openSelectionModal} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {GlobalCETOptionsDropDown} from './GlobalCETOptionsDropDown';
 import {GlobalCETOrderHelpIcon} from './GlobalCETOrderHelpIcon';
+
+const INHERITED_LABELS: Record<IInheritedOptions, string> = {
+	'layout-set': Liferay.Language.get('layout-set'),
+	'master-layout': Liferay.Language.get('master'),
+};
 
 export default function GlobalCSSCETsConfiguration({
 	globalCSSCETSelectorURL,
@@ -26,7 +32,24 @@ export default function GlobalCSSCETsConfiguration({
 	portletNamespace,
 	selectGlobalCSSCETsEventName,
 }: IProps) {
-	const [globalCSSCETs, setGlobalCSSCETs] = useState(initialGlobalCSSCETs);
+	const fixedGlobalCSSCETs = useMemo(
+		() =>
+			initialGlobalCSSCETs.filter(
+				(globalCSSCET) => globalCSSCET.inheritedFrom
+			),
+		[initialGlobalCSSCETs]
+	);
+
+	const [globalCSSCETs, setGlobalCSSCETs] = useState(() =>
+		initialGlobalCSSCETs.filter(
+			(globalCSSCET) => !globalCSSCET.inheritedFrom
+		)
+	);
+
+	const allGlobalCSSCETs = useMemo(
+		() => [...fixedGlobalCSSCETs, ...globalCSSCETs],
+		[fixedGlobalCSSCETs, globalCSSCETs]
+	);
 
 	const deleteGlobalCSSCET = (deletedGlobalCSSCET: IGlobalCSSCET) => {
 		setGlobalCSSCETs((previousGlobalCSSCETs) =>
@@ -86,16 +109,15 @@ export default function GlobalCSSCETsConfiguration({
 	};
 
 	return (
-		<>
-			<input
-				name={`${portletNamespace}globalCSSCETExternalReferenceCodes`}
-				type="hidden"
-				value={globalCSSCETs
-					.map(
-						(globalCSSCET) => globalCSSCET.cetExternalReferenceCode
-					)
-					.join(',')}
-			/>
+		<div className="global-css-cets-configuration">
+			{globalCSSCETs.map(({cetExternalReferenceCode}) => (
+				<input
+					key={cetExternalReferenceCode}
+					name={`${portletNamespace}globalCSSCETExternalReferenceCodes`}
+					type="hidden"
+					value={cetExternalReferenceCode}
+				/>
+			))}
 
 			<h3 className="sheet-subtitle">
 				{Liferay.Language.get('css-extensions')}
@@ -111,7 +133,7 @@ export default function GlobalCSSCETsConfiguration({
 				{Liferay.Language.get('add-css-extensions')}
 			</ClayButton>
 
-			{globalCSSCETs.length ? (
+			{allGlobalCSSCETs.length ? (
 				<ClayTable>
 					<ClayTable.Head>
 						<ClayTable.Row>
@@ -132,6 +154,10 @@ export default function GlobalCSSCETsConfiguration({
 								{Liferay.Language.get('name')}
 							</ClayTable.Cell>
 
+							<ClayTable.Cell expanded headingCell>
+								{Liferay.Language.get('inherited')}
+							</ClayTable.Cell>
+
 							<ClayTable.Cell headingCell>
 								<span className="sr-only">
 									{Liferay.Language.get('options')}
@@ -141,13 +167,27 @@ export default function GlobalCSSCETsConfiguration({
 					</ClayTable.Head>
 
 					<ClayTable.Body>
-						{globalCSSCETs.map((globalCSSCET, index) => {
+						{allGlobalCSSCETs.map((globalCSSCET, index) => {
 							const buttonId = getDropDownButtonId(globalCSSCET);
 							const items = getDropDownItems(globalCSSCET);
 							const order = index + 1;
 
+							const disabled = Boolean(
+								globalCSSCET.inheritedFrom
+							);
+
+							const inheritedLabel = globalCSSCET.inheritedFrom
+								? Liferay.Util.sub(
+										Liferay.Language.get('from-x'),
+										INHERITED_LABELS[
+											globalCSSCET.inheritedFrom
+										]
+								  )
+								: '-';
+
 							return (
 								<ClayTable.Row
+									className={classNames({disabled})}
 									key={globalCSSCET.cetExternalReferenceCode}
 								>
 									<ClayTable.Cell>{order}</ClayTable.Cell>
@@ -156,11 +196,17 @@ export default function GlobalCSSCETsConfiguration({
 										{globalCSSCET.name}
 									</ClayTable.Cell>
 
+									<ClayTable.Cell expanded>
+										{inheritedLabel}
+									</ClayTable.Cell>
+
 									<ClayTable.Cell>
-										<GlobalCETOptionsDropDown
-											dropdownItems={items}
-											dropdownTriggerId={buttonId}
-										/>
+										{disabled ? null : (
+											<GlobalCETOptionsDropDown
+												dropdownItems={items}
+												dropdownTriggerId={buttonId}
+											/>
+										)}
 									</ClayTable.Cell>
 								</ClayTable.Row>
 							);
@@ -172,12 +218,15 @@ export default function GlobalCSSCETsConfiguration({
 					{Liferay.Language.get('no-css-extensions-were-loaded')}
 				</p>
 			)}
-		</>
+		</div>
 	);
 }
 
+type IInheritedOptions = 'layout-set' | 'master-layout';
+
 interface IGlobalCSSCET {
 	cetExternalReferenceCode: string;
+	inheritedFrom: IInheritedOptions | null;
 	name: string;
 }
 

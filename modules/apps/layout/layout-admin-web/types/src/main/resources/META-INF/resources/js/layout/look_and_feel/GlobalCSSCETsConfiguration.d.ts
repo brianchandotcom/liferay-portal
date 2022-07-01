@@ -20,8 +20,10 @@ export default function GlobalCSSCETsConfiguration({
 	portletNamespace,
 	selectGlobalCSSCETsEventName,
 }: IProps): JSX.Element;
+declare type IInheritedOptions = 'layout-set' | 'master-layout';
 interface IGlobalCSSCET {
 	cetExternalReferenceCode: string;
+	inheritedFrom: IInheritedOptions | null;
 	name: string;
 }
 interface IProps {

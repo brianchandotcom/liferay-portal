@@ -672,21 +672,6 @@ definition {
 		return "${value}";
 	}
 
-	macro waitForSendingRequest {
-		if (isSet(time)) {
-
-			// Pauseing for harRecording test for reuse purpose, see LRAC-10600
-
-			Pause(locator1 = "${time}");
-		}
-		else if (!(isSet(time))) {
-
-			// Pausing for harRecording tests, see LRAC-10600
-
-			Pause(locator1 = "5000");
-		}
-	}
-
 	macro launchAC {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
@@ -751,7 +736,9 @@ definition {
 				siteName = "${siteName}");
 
 			if ("${actionType}" == "View WC") {
+
 				// Pause is necessary because the web content event is sent too fast and doesn't have time to process if you navigate to another page quickly.
+
 				ACUtils.sessionPause(time = "5000");
 			}
 
@@ -1114,6 +1101,21 @@ definition {
 
 	macro waitForLoading {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
+	}
+
+	macro waitForSendingRequest {
+		if (isSet(time)) {
+
+			// Pauseing for harRecording test for reuse purpose, see LRAC-10600
+
+			Pause(locator1 = "${time}");
+		}
+		else if (!(isSet(time))) {
+
+			// Pausing for harRecording tests, see LRAC-10600
+
+			Pause(locator1 = "5000");
+		}
 	}
 
 }

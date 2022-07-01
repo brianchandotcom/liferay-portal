@@ -117,10 +117,14 @@ public class ObjectFieldDBTypeUtil {
 				NumberInfoFieldType.DECIMAL_PART_MAX_LENGTH, 16
 			).attribute(
 				NumberInfoFieldType.MAX_VALUE,
-				new BigDecimal("99999999999999.9999999999999999")
+				new BigDecimal(
+					ObjectFieldValidationConstants.
+						MAX_VALUE_BUSINESS_TYPE_PRECISION_DECIMAL)
 			).attribute(
 				NumberInfoFieldType.MIN_VALUE,
-				new BigDecimal("-99999999999999.9999999999999999")
+				new BigDecimal(
+					ObjectFieldValidationConstants.
+						MIN_VALUE_BUSINESS_TYPE_PRECISION_DECIMAL)
 			);
 		}
 

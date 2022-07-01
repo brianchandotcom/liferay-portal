@@ -23,8 +23,14 @@ public class ObjectFieldValidationConstants {
 
 	public static final long MAX_VALUE_BUSINESS_TYPE_LONG = 9007199254740991L;
 
+	public static final String MAX_VALUE_BUSINESS_TYPE_PRECISION_DECIMAL =
+		"99999999999999.9999999999999999";
+
 	public static final long MIN_VALUE_BUSINESS_TYPE_INTEGER = -2147483648;
 
 	public static final long MIN_VALUE_BUSINESS_TYPE_LONG = -9007199254740991L;
+
+	public static final String MIN_VALUE_BUSINESS_TYPE_PRECISION_DECIMAL =
+		"-99999999999999.9999999999999999";
 
 }

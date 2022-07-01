@@ -22,6 +22,9 @@ public class FileInfoFieldType implements InfoFieldType {
 	public static final Attribute<TextInfoFieldType, String>
 		ALLOWED_FILE_EXTENSIONS = new Attribute<>();
 
+	public static final Attribute<TextInfoFieldType, FileSourceType>
+		FILE_SOURCE = new Attribute<>();
+
 	public static final FileInfoFieldType INSTANCE = new FileInfoFieldType();
 
 	public static final Attribute<TextInfoFieldType, Long> MAX_FILE_SIZE =
@@ -30,6 +33,12 @@ public class FileInfoFieldType implements InfoFieldType {
 	@Override
 	public String getName() {
 		return "file";
+	}
+
+	public enum FileSourceType {
+
+		DOCUMENTS_AND_MEDIA, USER_COMPUTER
+
 	}
 
 	private FileInfoFieldType() {

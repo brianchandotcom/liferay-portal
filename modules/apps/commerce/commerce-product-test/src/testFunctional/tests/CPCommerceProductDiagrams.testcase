@@ -326,60 +326,65 @@ definition {
 	@description = "This is a test for COMMERCE-7023. EditTheDefaultSettingForPinsCreation"
 	@priority = "3"
 	test EditTheDefaultSettingForPinsCreation {
-		property portal.acceptance = "quarantine";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
+		task ("When creating a diagram product with an image") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
 
-		// TODO COMMERCE-8268 Test needs refactoring due to a failure locating the Default Diameter button.
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Diagram T-Shirt",
+				productType = "diagram");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+			CommerceProducts.openProductsAdmin();
 
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Master",
-			productName = "Diagram T-Shirt",
-			productType = "Diagram");
+			CommerceNavigator.searchEntry(entryName = "Diagram T-Shirt");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+			CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
 
-		CommerceProductImages.addDiagramImages(
-			imageTitles = "Black",
-			productType = "Diagram");
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
 
-		Button.clickPublish();
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+		}
 
-		Alert.viewSuccessMessage();
+		task ("And the pin size is set to Medium") {
+			AssertElementPresent(
+				key_text = "Medium",
+				locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE");
 
-		CommerceDiagram.addPin(
-			label = "Test",
-			pinNumber = "1",
-			quantity = "1",
-			selectType = "Not Linked to a Catalog");
+			CommerceDiagram.addPin(
+				label = "Test",
+				pinNumber = "1",
+				quantity = "1",
+				selectType = "Not Linked to a Catalog");
+			
+			Click(
+				key_text = "Default Diameter",
+				locator1 = "Button#ANY");
+			
+			AssertElementPresent(
+				key_radius = "10",
+				locator1 = "CommerceEntry#VERIFY_PIN_RADIUS");
+			
+			CommerceEntry.verifyCostumRadiusWithCostumValue(key_list = "1,2,3,4,5");
+			
+			AssertElementPresent(
+				key_radius = "15",
+				locator1 = "CommerceEntry#VERIFY_PIN_RADIUS");
+			
+			CommerceEntry.verifyCostumRadiusWithDefaultValue();
+			
+			CommerceEntry.changePinColor(color = "#FF0000");
+			
+			AssertElementPresent(
+				key_strokeColor = "#FF0000",
+				locator1 = "CommerceEntry#VERIFY_PIN_COLOR_STROKE");
+			
+			Button.clickPublish();
 
-		Click(
-			key_text = "Default Diameter",
-			locator1 = "Button#ANY");
-
-		AssertElementPresent(
-			key_radius = "10",
-			locator1 = "CommerceEntry#VERIFY_PIN_RADIUS");
-
-		CommerceEntry.verifyCostumRadiusWithCostumValue(key_list = "1,2,3,4,5");
-
-		AssertElementPresent(
-			key_radius = "15",
-			locator1 = "CommerceEntry#VERIFY_PIN_RADIUS");
-
-		CommerceEntry.verifyCostumRadiusWithDefaultValue();
-
-		CommerceEntry.changePinColor(color = "#FF0000");
-
-		AssertElementPresent(
-			key_strokeColor = "#FF0000",
-			locator1 = "CommerceEntry#VERIFY_PIN_COLOR_STROKE");
-
-		Button.clickPublish();
+		}
 	}
 
 	@description = "This is a test for COMMERCE-7126. RemoveDiagramProduct"

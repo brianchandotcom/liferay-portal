@@ -472,8 +472,8 @@ definition {
 		Click(locator1 = "Button#SUBMIT");
 
 		WaitForElementPresent(
-			key_title = "${productName}",
-			locator1 = "Header#H3_TITLE");
+		key_title = "${productName}",
+		locator1 = "Header#H3_TITLE");
 
 		AssertElementPresent(
 			key_status = "Draft",

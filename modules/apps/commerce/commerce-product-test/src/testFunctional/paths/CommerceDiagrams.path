@@ -107,6 +107,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DIAGRAM_PIN_SIZE</td>
+	<td>//*[@id="wkbq___collapse"]/div/div/div/nav[1]/div/ul/li/div/button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIAGRAM_PIN_TYPE_SELECT</td>
 	<td>//label[contains(.,'Type')]/../select[contains(@id,'typeInput')]</td>
 	<td></td>

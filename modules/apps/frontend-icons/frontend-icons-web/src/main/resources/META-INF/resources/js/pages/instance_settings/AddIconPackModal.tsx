@@ -216,7 +216,7 @@ export default function AddIconPackModal({
 											  )
 											: !iconPackName
 											? Liferay.Language.get(
-													'the-icon-pack-name-pack-is-required'
+													'the-icon-pack-name-is-required'
 											  )
 											: ''
 									}`}

@@ -3422,7 +3422,7 @@ definition {
 			var portalURL = StringUtil.replace("${portalURL}", ":8080", ":9080");
 		}
 
-		var latestVersionURL = "${portalURL}/documents/${siteId}/0/${dmDocumentFileName}";
+		var latestVersionURL = "${portalURL}/documents/d/${siteName}/${dmDocumentFileName}";
 
 		AssertElementPresent(
 			key_latestVersionURL = "${latestVersionURL}",

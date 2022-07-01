@@ -417,9 +417,6 @@ public class CTCollectionLocalServiceImpl
 		_ctMessagePersistence.removeByCtCollectionId(
 			ctCollection.getCtCollectionId());
 
-		_ctPreferencesLocalService.resetCTPreferences(
-			ctCollection.getCtCollectionId());
-
 		List<CTProcess> ctProcesses =
 			_ctProcessPersistence.findByCtCollectionId(
 				ctCollection.getCtCollectionId());

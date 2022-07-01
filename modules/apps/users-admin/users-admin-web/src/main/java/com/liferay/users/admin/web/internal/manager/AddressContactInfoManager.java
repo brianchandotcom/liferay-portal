@@ -63,7 +63,8 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 		address.setCountryId(countryId);
 		address.setRegionId(
 			ParamUtil.getLong(actionRequest, "addressRegionId"));
-		address.setListTypeId(ParamUtil.getLong(actionRequest, "addressTypeId"));
+		address.setListTypeId(
+			ParamUtil.getLong(actionRequest, "addressTypeId"));
 		address.setCity(city);
 		address.setMailing(
 			ParamUtil.getBoolean(actionRequest, "addressMailing"));
@@ -82,8 +83,9 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 		return _addressService.addAddress(
 			_className, _classPK, address.getStreet1(), address.getStreet2(),
 			address.getStreet3(), address.getCity(), address.getZip(),
-			address.getRegionId(), address.getCountryId(), address.getListTypeId(),
-			address.isMailing(), address.isPrimary(), new ServiceContext());
+			address.getRegionId(), address.getCountryId(),
+			address.getListTypeId(), address.isMailing(), address.isPrimary(),
+			new ServiceContext());
 	}
 
 	@Override
@@ -96,8 +98,8 @@ public class AddressContactInfoManager extends BaseContactInfoManager<Address> {
 		_addressService.updateAddress(
 			address.getAddressId(), address.getStreet1(), address.getStreet2(),
 			address.getStreet3(), address.getCity(), address.getZip(),
-			address.getRegionId(), address.getCountryId(), address.getListTypeId(),
-			address.isMailing(), address.isPrimary());
+			address.getRegionId(), address.getCountryId(),
+			address.getListTypeId(), address.isMailing(), address.isPrimary());
 	}
 
 	@Override

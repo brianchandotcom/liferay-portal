@@ -248,8 +248,8 @@ public class AddressLocalServiceTest {
 			address.getAddressId(), address.getName(), address.getDescription(),
 			address.getStreet1(), address.getStreet2(), address.getStreet3(),
 			address.getCity(), address.getZip(), address.getRegionId(),
-			address.getCountryId(), address.getListTypeId(), address.isMailing(),
-			address.isPrimary(), phoneNumber);
+			address.getCountryId(), address.getListTypeId(),
+			address.isMailing(), address.isPrimary(), phoneNumber);
 
 		List<Phone> phones = _phoneLocalService.getPhones(
 			address.getCompanyId(), Address.class.getName(),

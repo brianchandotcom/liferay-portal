@@ -87,8 +87,8 @@ public class WebsiteLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_website = _websiteLocalService.updateWebsite(
-			_website.getWebsiteId(), _website.getUrl(), _website.getListTypeId(),
-			false);
+			_website.getWebsiteId(), _website.getUrl(),
+			_website.getListTypeId(), false);
 
 		Assert.assertFalse(_website.isPrimary());
 	}

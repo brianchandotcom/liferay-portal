@@ -192,8 +192,8 @@ public class OrganizationStagedModelDataHandler
 				existingOrganization.getOrganizationId(), parentOrganizationId,
 				organization.getName(), organization.getType(),
 				organization.getRegionId(), organization.getCountryId(),
-				organization.getStatusListTypeId(), organization.getComments(), true,
-				null, false, serviceContext);
+				organization.getStatusListTypeId(), organization.getComments(),
+				true, null, false, serviceContext);
 		}
 
 		_importAddresses(

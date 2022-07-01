@@ -74,7 +74,8 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 				address.setClassPK(resultSet.getLong("classPK"));
 				address.setCountryId(resultSet.getLong("countryId"));
 				address.setRegionId(resultSet.getLong("regionId"));
-				address.setListTypeId(_getListTypeId(resultSet.getInt("type_")));
+				address.setListTypeId(
+					_getListTypeId(resultSet.getInt("type_")));
 				address.setCity(resultSet.getString("city"));
 				address.setDescription(resultSet.getString("description"));
 				address.setLatitude(resultSet.getDouble("latitude"));

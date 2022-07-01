@@ -132,10 +132,12 @@ public class UserResourceDTOConverter
 				givenName = user.getFirstName();
 				honorificPrefix =
 					ServiceBuilderListTypeUtil.getServiceBuilderListTypeMessage(
-						contact.getPrefixListTypeId(), dtoConverterContext.getLocale());
+						contact.getPrefixListTypeId(),
+						dtoConverterContext.getLocale());
 				honorificSuffix =
 					ServiceBuilderListTypeUtil.getServiceBuilderListTypeMessage(
-						contact.getSuffixListTypeId(), dtoConverterContext.getLocale());
+						contact.getSuffixListTypeId(),
+						dtoConverterContext.getLocale());
 				id = user.getUserId();
 				jobTitle = user.getJobTitle();
 				keywords = ListUtil.toArray(

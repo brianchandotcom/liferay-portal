@@ -1719,12 +1719,19 @@ definition {
 	}
 
 	@description = "Verify that the link to Manage Translations component is displayed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanManageTranslations {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanManageTranslations";
 
-		// TODO CanManageTranslations pending implementation
+		Workflow.openWorkflowListView();
 
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.viewManageTranslationButton();
 	}
 
 	@description = "Verify that the user can move nodes in diagram by drag&drop in the middle of node"

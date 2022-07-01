@@ -1647,5 +1647,9 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_METADATA_ELEMENT",
 			value1 = "${coordinateY}");
 	}
-	
+
+	macro viewManageTranslationButton {
+		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#MANAGE_TRANSLATIONS_BUTTON");
+	}
+
 }

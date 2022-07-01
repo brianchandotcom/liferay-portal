@@ -57,8 +57,6 @@ definition {
 
 			ACNavigation.goToSettings();
 
-			ACUtils.logInPause();
-
 			var expectedChannelId = ACSettings.getPropertyId(propertyName = "${assignedPropertyName}");
 		}
 

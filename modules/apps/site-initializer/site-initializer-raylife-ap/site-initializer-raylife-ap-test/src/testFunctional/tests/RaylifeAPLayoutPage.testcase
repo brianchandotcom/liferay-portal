@@ -50,10 +50,9 @@ definition {
 			RaylifeAP.mouseOverSidebar(menu = "policies");
 
 			AssertVisible(
-				locator1 = "RaylifeAP#MENU_SIDEBAR",
-				key_menu = "policies");
-		}	
-
+				key_menu = "policies",
+				locator1 = "RaylifeAP#MENU_SIDEBAR");
+		}
 	}
 
 	@description = "LPS-151596 - Check that the 'Applications' section is present in the sidebar"
@@ -65,12 +64,11 @@ definition {
 
 		task ("Assert Applications section in Sidebar") {
 			RaylifeAP.mouseOverSidebar(menu = "applications");
-			
-			AssertVisible(
-				locator1 = "RaylifeAP#MENU_SIDEBAR",
-				key_menu = "applications");
-		}	
 
+			AssertVisible(
+				key_menu = "applications",
+				locator1 = "RaylifeAP#MENU_SIDEBAR");
+		}
 	}
 
 }

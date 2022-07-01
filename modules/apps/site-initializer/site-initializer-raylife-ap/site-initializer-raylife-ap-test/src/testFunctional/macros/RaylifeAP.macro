@@ -8,25 +8,10 @@ definition {
 			siteTemplateName = "Raylife AP");
 	}
 
-	macro tearDownCP {
-		Site.openSitesAdmin();
-
-		PortletEntry.selectAll();
-
-		Click(locator1 = "Icon#SITES_VERTICAL_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "Delete");
-
-		Click(locator1 = "Button#MODAL_DELETE");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro mouseOverSidebar {
 		var key_menu = "${menu}";
 
 		MouseOver(locator1 = "RaylifeAP#MENU_SIDEBAR");
-			
 	}
 
 	macro signIn {
@@ -61,6 +46,20 @@ definition {
 			locator1 = "TextInput#INPUT_ID");
 
 		Click(locator1 = "Button#SIGN_IN");
+	}
+
+	macro tearDownCP {
+		Site.openSitesAdmin();
+
+		PortletEntry.selectAll();
+
+		Click(locator1 = "Icon#SITES_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		Click(locator1 = "Button#MODAL_DELETE");
+
+		Alert.viewSuccessMessage();
 	}
 
 }

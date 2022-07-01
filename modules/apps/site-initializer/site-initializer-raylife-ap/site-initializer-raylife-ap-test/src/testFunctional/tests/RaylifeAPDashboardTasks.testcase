@@ -52,8 +52,8 @@ definition {
 				section = "Review Eligibility Reports");
 
 			AssertElementPresent(
-				locator1 = "RaylifeAP#TITLE_PAGE",
-				key_titlePage = "Applications");
+				key_titlePage = "Applications",
+				locator1 = "RaylifeAP#TITLE_PAGE");
 		}
 	}
 
@@ -70,10 +70,9 @@ definition {
 				section = "Contact Expiring Policies");
 
 			AssertElementPresent(
-				locator1 = "RaylifeAP#TITLE_PAGE",
-				key_titlePage = "Policies");
+				key_titlePage = "Policies",
+				locator1 = "RaylifeAP#TITLE_PAGE");
 		}
-
 	}
 
 }

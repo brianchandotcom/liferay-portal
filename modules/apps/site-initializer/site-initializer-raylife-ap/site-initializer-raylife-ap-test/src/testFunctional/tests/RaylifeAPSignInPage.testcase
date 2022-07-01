@@ -23,7 +23,6 @@ definition {
 			TeamExtranet.addSiteTemplateCP(
 				siteName = "${testSiteName}",
 				siteTemplateName = "Raylife AP");
-		
 		}
 	}
 

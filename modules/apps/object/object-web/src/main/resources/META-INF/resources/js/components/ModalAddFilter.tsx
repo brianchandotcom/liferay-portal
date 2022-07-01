@@ -29,44 +29,16 @@ import React, {
 
 import {getPickListItems} from '../utils/api';
 import {HEADERS} from '../utils/constants';
+import {
+	DATE_OPERATORS,
+	NUMERIC_OPERATORS,
+	PICKLIST_OPERATORS,
+} from '../utils/filterOperators';
 import {defaultLanguageId, locale} from '../utils/locale';
 
 import './ModalAddFilter.scss';
 
 HEADERS.append('Accept-Language', locale!.symbol);
-
-const PICKLIST_OPERATORS: LabelValueObject[] = [
-	{
-		label: Liferay.Language.get('choose-an-option'),
-		value: '',
-	},
-	{
-		label: Liferay.Language.get('includes'),
-		value: 'includes',
-	},
-	{
-		label: Liferay.Language.get('excludes'),
-		value: 'excludes',
-	},
-];
-
-const DATE_OPERATORS: LabelValueObject[] = [
-	{
-		label: Liferay.Language.get('range'),
-		value: 'range',
-	},
-];
-
-const NUMERIC_OPERATORS: LabelValueObject[] = [
-	{
-		label: Liferay.Language.get('equals-to'),
-		value: 'eq',
-	},
-	{
-		label: Liferay.Language.get('not-equals-to'),
-		value: 'ne',
-	},
-];
 
 export function ModalAddFilter({
 	currentFilters,

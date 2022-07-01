@@ -168,6 +168,11 @@
 			.raylife-agent-portal-content) {
 		padding: 0 16px;
 	}
+
+	#Applications .lfr-layout-structure-item-container {
+		margin-left: 16px;
+		margin-right: 16px;
+	}
 }
 
 @media screen and (max-width: 992px) {

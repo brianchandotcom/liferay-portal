@@ -165,6 +165,15 @@
 																"paddingTop": "4",
 																"textAlign": ""
 															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "0",
+																		"paddingRight": "0"
+																	},
+																	"id": "tablet"
+																}
+															],
 															"indexed": true,
 															"layout": {
 																"align": "Center",

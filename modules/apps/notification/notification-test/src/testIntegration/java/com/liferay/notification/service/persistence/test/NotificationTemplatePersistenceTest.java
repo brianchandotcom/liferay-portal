@@ -139,6 +139,9 @@ public class NotificationTemplatePersistenceTest {
 
 		newNotificationTemplate.setModifiedDate(RandomTestUtil.nextDate());
 
+		newNotificationTemplate.setObjectDefinitionId(
+			RandomTestUtil.nextLong());
+
 		newNotificationTemplate.setBcc(RandomTestUtil.randomString());
 
 		newNotificationTemplate.setBody(RandomTestUtil.randomString());
@@ -190,6 +193,9 @@ public class NotificationTemplatePersistenceTest {
 			Time.getShortTimestamp(
 				existingNotificationTemplate.getModifiedDate()),
 			Time.getShortTimestamp(newNotificationTemplate.getModifiedDate()));
+		Assert.assertEquals(
+			existingNotificationTemplate.getObjectDefinitionId(),
+			newNotificationTemplate.getObjectDefinitionId());
 		Assert.assertEquals(
 			existingNotificationTemplate.getBcc(),
 			newNotificationTemplate.getBcc());
@@ -267,9 +273,10 @@ public class NotificationTemplatePersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"NotificationTemplate", "mvccVersion", true, "uuid", true,
 			"notificationTemplateId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "bcc",
-			true, "cc", true, "description", true, "from", true, "fromName",
-			true, "name", true, "subject", true, "to", true);
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"objectDefinitionId", true, "bcc", true, "cc", true, "description",
+			true, "from", true, "fromName", true, "name", true, "subject", true,
+			"to", true);
 	}
 
 	@Test
@@ -524,6 +531,8 @@ public class NotificationTemplatePersistenceTest {
 		notificationTemplate.setCreateDate(RandomTestUtil.nextDate());
 
 		notificationTemplate.setModifiedDate(RandomTestUtil.nextDate());
+
+		notificationTemplate.setObjectDefinitionId(RandomTestUtil.nextLong());
 
 		notificationTemplate.setBcc(RandomTestUtil.randomString());
 

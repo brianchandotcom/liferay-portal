@@ -53,6 +53,7 @@ public class NotificationTemplateWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("bcc", getBcc());
 		attributes.put("body", getBody());
 		attributes.put("cc", getCc());
@@ -115,6 +116,12 @@ public class NotificationTemplateWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long objectDefinitionId = (Long)attributes.get("objectDefinitionId");
+
+		if (objectDefinitionId != null) {
+			setObjectDefinitionId(objectDefinitionId);
 		}
 
 		String bcc = (String)attributes.get("bcc");
@@ -503,6 +510,16 @@ public class NotificationTemplateWrapper
 	@Override
 	public long getNotificationTemplateId() {
 		return model.getNotificationTemplateId();
+	}
+
+	/**
+	 * Returns the object definition ID of this notification template.
+	 *
+	 * @return the object definition ID of this notification template
+	 */
+	@Override
+	public long getObjectDefinitionId() {
+		return model.getObjectDefinitionId();
 	}
 
 	/**
@@ -1006,6 +1023,16 @@ public class NotificationTemplateWrapper
 	@Override
 	public void setNotificationTemplateId(long notificationTemplateId) {
 		model.setNotificationTemplateId(notificationTemplateId);
+	}
+
+	/**
+	 * Sets the object definition ID of this notification template.
+	 *
+	 * @param objectDefinitionId the object definition ID of this notification template
+	 */
+	@Override
+	public void setObjectDefinitionId(long objectDefinitionId) {
+		model.setObjectDefinitionId(objectDefinitionId);
 	}
 
 	/**

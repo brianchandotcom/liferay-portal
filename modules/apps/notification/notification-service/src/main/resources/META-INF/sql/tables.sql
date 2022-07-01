@@ -1,3 +1,19 @@
+create table NQueueEntryAttachment (
+	mvccVersion LONG default 0 not null,
+	NQueueEntryAttachmentId LONG not null primary key,
+	companyId LONG,
+	fileEntryId LONG,
+	notificationQueueEntryId LONG
+);
+
+create table NTemplateAttachment (
+	mvccVersion LONG default 0 not null,
+	NTemplateAttachmentId LONG not null primary key,
+	companyId LONG,
+	notificationTemplateId LONG,
+	objectFieldId LONG
+);
+
 create table NotificationQueueEntry (
 	mvccVersion LONG default 0 not null,
 	notificationQueueEntryId LONG not null primary key,
@@ -31,6 +47,7 @@ create table NotificationTemplate (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	objectDefinitionId LONG,
 	bcc VARCHAR(75) null,
 	body TEXT null,
 	cc VARCHAR(75) null,

@@ -85,7 +85,8 @@ public class NotificationTemplateModelImpl
 		{"notificationTemplateId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"bcc", Types.VARCHAR}, {"body", Types.CLOB}, {"cc", Types.VARCHAR},
+		{"objectDefinitionId", Types.BIGINT}, {"bcc", Types.VARCHAR},
+		{"body", Types.CLOB}, {"cc", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"from_", Types.VARCHAR},
 		{"fromName", Types.VARCHAR}, {"name", Types.VARCHAR},
 		{"subject", Types.VARCHAR}, {"to_", Types.VARCHAR}
@@ -103,6 +104,7 @@ public class NotificationTemplateModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("bcc", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("body", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("cc", Types.VARCHAR);
@@ -115,7 +117,7 @@ public class NotificationTemplateModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,bcc VARCHAR(75) null,body TEXT null,cc VARCHAR(75) null,description VARCHAR(75) null,from_ VARCHAR(75) null,fromName STRING null,name STRING null,subject STRING null,to_ STRING null)";
+		"create table NotificationTemplate (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,notificationTemplateId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,bcc VARCHAR(75) null,body TEXT null,cc VARCHAR(75) null,description VARCHAR(75) null,from_ VARCHAR(75) null,fromName STRING null,name STRING null,subject STRING null,to_ STRING null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationTemplate";
@@ -312,6 +314,12 @@ public class NotificationTemplateModelImpl
 			"modifiedDate",
 			(BiConsumer<NotificationTemplate, Date>)
 				NotificationTemplate::setModifiedDate);
+		attributeGetterFunctions.put(
+			"objectDefinitionId", NotificationTemplate::getObjectDefinitionId);
+		attributeSetterBiConsumers.put(
+			"objectDefinitionId",
+			(BiConsumer<NotificationTemplate, Long>)
+				NotificationTemplate::setObjectDefinitionId);
 		attributeGetterFunctions.put("bcc", NotificationTemplate::getBcc);
 		attributeSetterBiConsumers.put(
 			"bcc",
@@ -536,6 +544,21 @@ public class NotificationTemplateModelImpl
 		}
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public long getObjectDefinitionId() {
+		return _objectDefinitionId;
+	}
+
+	@Override
+	public void setObjectDefinitionId(long objectDefinitionId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_objectDefinitionId = objectDefinitionId;
 	}
 
 	@JSON
@@ -1381,6 +1404,7 @@ public class NotificationTemplateModelImpl
 		notificationTemplateImpl.setUserName(getUserName());
 		notificationTemplateImpl.setCreateDate(getCreateDate());
 		notificationTemplateImpl.setModifiedDate(getModifiedDate());
+		notificationTemplateImpl.setObjectDefinitionId(getObjectDefinitionId());
 		notificationTemplateImpl.setBcc(getBcc());
 		notificationTemplateImpl.setBody(getBody());
 		notificationTemplateImpl.setCc(getCc());
@@ -1417,6 +1441,8 @@ public class NotificationTemplateModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		notificationTemplateImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		notificationTemplateImpl.setObjectDefinitionId(
+			this.<Long>getColumnOriginalValue("objectDefinitionId"));
 		notificationTemplateImpl.setBcc(
 			this.<String>getColumnOriginalValue("bcc"));
 		notificationTemplateImpl.setBody(
@@ -1557,6 +1583,9 @@ public class NotificationTemplateModelImpl
 		else {
 			notificationTemplateCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
+
+		notificationTemplateCacheModel.objectDefinitionId =
+			getObjectDefinitionId();
 
 		notificationTemplateCacheModel.bcc = getBcc();
 
@@ -1733,6 +1762,7 @@ public class NotificationTemplateModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _objectDefinitionId;
 	private String _bcc;
 	private String _body;
 	private String _bodyCurrentLanguageId;
@@ -1786,6 +1816,7 @@ public class NotificationTemplateModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
 		_columnOriginalValues.put("bcc", _bcc);
 		_columnOriginalValues.put("body", _body);
 		_columnOriginalValues.put("cc", _cc);
@@ -1836,23 +1867,25 @@ public class NotificationTemplateModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("bcc", 256L);
+		columnBitmasks.put("objectDefinitionId", 256L);
 
-		columnBitmasks.put("body", 512L);
+		columnBitmasks.put("bcc", 512L);
 
-		columnBitmasks.put("cc", 1024L);
+		columnBitmasks.put("body", 1024L);
 
-		columnBitmasks.put("description", 2048L);
+		columnBitmasks.put("cc", 2048L);
 
-		columnBitmasks.put("from_", 4096L);
+		columnBitmasks.put("description", 4096L);
 
-		columnBitmasks.put("fromName", 8192L);
+		columnBitmasks.put("from_", 8192L);
 
-		columnBitmasks.put("name", 16384L);
+		columnBitmasks.put("fromName", 16384L);
 
-		columnBitmasks.put("subject", 32768L);
+		columnBitmasks.put("name", 32768L);
 
-		columnBitmasks.put("to_", 65536L);
+		columnBitmasks.put("subject", 65536L);
+
+		columnBitmasks.put("to_", 131072L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

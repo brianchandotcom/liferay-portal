@@ -78,7 +78,7 @@ public class NotificationTemplateCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,8 @@ public class NotificationTemplateCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", objectDefinitionId=");
+		sb.append(objectDefinitionId);
 		sb.append(", bcc=");
 		sb.append(bcc);
 		sb.append(", body=");
@@ -158,6 +160,8 @@ public class NotificationTemplateCacheModel
 		else {
 			notificationTemplateImpl.setModifiedDate(new Date(modifiedDate));
 		}
+
+		notificationTemplateImpl.setObjectDefinitionId(objectDefinitionId);
 
 		if (bcc == null) {
 			notificationTemplateImpl.setBcc("");
@@ -242,6 +246,8 @@ public class NotificationTemplateCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		objectDefinitionId = objectInput.readLong();
 		bcc = objectInput.readUTF();
 		body = (String)objectInput.readObject();
 		cc = objectInput.readUTF();
@@ -279,6 +285,8 @@ public class NotificationTemplateCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(objectDefinitionId);
 
 		if (bcc == null) {
 			objectOutput.writeUTF("");
@@ -352,6 +360,7 @@ public class NotificationTemplateCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long objectDefinitionId;
 	public String bcc;
 	public String body;
 	public String cc;

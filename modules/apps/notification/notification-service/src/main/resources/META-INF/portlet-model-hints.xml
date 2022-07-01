@@ -26,6 +26,13 @@
 		<field name="to" type="String" />
 		<field name="toName" type="String" />
 	</model>
+	<model name="com.liferay.notification.model.NotificationQueueEntryAttachment">
+		<field name="mvccVersion" type="long" />
+		<field name="notificationQueueEntryAttachmentId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="notificationQueueEntryId" type="long" />
+	</model>
 	<model name="com.liferay.notification.model.NotificationTemplate">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
@@ -35,6 +42,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="objectDefinitionId" type="long" />
 		<field name="bcc" type="String" />
 		<field localized="true" name="body" type="String">
 			<hint-collection name="CLOB" />
@@ -46,5 +54,12 @@
 		<field localized="true" name="name" type="String" />
 		<field localized="true" name="subject" type="String" />
 		<field localized="true" name="to" type="String" />
+	</model>
+	<model name="com.liferay.notification.model.NotificationTemplateAttachment">
+		<field name="mvccVersion" type="long" />
+		<field name="notificationTemplateAttachmentId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="notificationTemplateId" type="long" />
+		<field name="objectFieldId" type="long" />
 	</model>
 </model-hints>

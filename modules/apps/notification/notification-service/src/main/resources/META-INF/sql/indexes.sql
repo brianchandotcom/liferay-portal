@@ -1,3 +1,7 @@
+create index IX_42E60133 on NQueueEntryAttachment (notificationQueueEntryId);
+
+create unique index IX_8F1205E1 on NTemplateAttachment (notificationTemplateId, objectFieldId);
+
 create index IX_83DBCE06 on NotificationQueueEntry (notificationTemplateId);
 create index IX_654D4A1E on NotificationQueueEntry (sent);
 create index IX_3B9F9C6C on NotificationQueueEntry (sentDate);

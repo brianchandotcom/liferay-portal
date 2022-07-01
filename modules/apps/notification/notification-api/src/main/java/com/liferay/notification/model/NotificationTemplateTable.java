@@ -58,6 +58,10 @@ public class NotificationTemplateTable
 	public final Column<NotificationTemplateTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<NotificationTemplateTable, Long> objectDefinitionId =
+		createColumn(
+			"objectDefinitionId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, String> bcc = createColumn(
 		"bcc", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<NotificationTemplateTable, Clob> body = createColumn(

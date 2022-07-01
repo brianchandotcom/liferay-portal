@@ -209,6 +209,20 @@ public interface NotificationTemplateModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the object definition ID of this notification template.
+	 *
+	 * @return the object definition ID of this notification template
+	 */
+	public long getObjectDefinitionId();
+
+	/**
+	 * Sets the object definition ID of this notification template.
+	 *
+	 * @param objectDefinitionId the object definition ID of this notification template
+	 */
+	public void setObjectDefinitionId(long objectDefinitionId);
+
+	/**
 	 * Returns the bcc of this notification template.
 	 *
 	 * @return the bcc of this notification template

@@ -479,7 +479,7 @@ const ExperiencesSelectorHeader = ({
 						</ClayLink>
 					) : (
 						Liferay.Language.get(
-							'contact-your-system-administrator-to-enable-segmentation'
+							'contact-your-system-administrator-to-enable-it'
 						)
 					)}
 				</ClayAlert>

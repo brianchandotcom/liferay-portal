@@ -478,7 +478,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                 >
                   segmentation-is-disabled
                 </strong>
-                contact-your-system-administrator-to-enable-segmentation
+                contact-your-system-administrator-to-enable-it
               </div>
             </div>
           </div>

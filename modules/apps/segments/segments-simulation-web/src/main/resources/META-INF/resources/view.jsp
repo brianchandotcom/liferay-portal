@@ -50,7 +50,7 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = (SegmentsSim
 									/>
 								</c:when>
 								<c:otherwise>
-									<span><%= LanguageUtil.get(request, "contact-your-system-administrator-to-enable-segmentation") %></span>
+									<span><%= LanguageUtil.get(request, "contact-your-system-administrator-to-enable-it") %></span>
 								</c:otherwise>
 							</c:choose>
 						</clay:alert>

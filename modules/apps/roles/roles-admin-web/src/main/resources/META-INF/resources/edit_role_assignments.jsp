@@ -123,7 +123,7 @@ renderResponse.setTitle(role.getTitle(locale));
 			<c:otherwise>
 				<span><%=
 				LanguageUtil.get(
-					request, "contact-your-system-administrator-to-enable-assign-roles-segmentation") %></span>
+					request, "contact-your-system-administrator-to-enable-it") %></span>
 			</c:otherwise>
 		</c:choose>
 	</clay:stripe>

@@ -52,7 +52,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 				/>
 			</c:when>
 			<c:otherwise>
-				<span><liferay-ui:message key="contact-your-system-administrator-to-enable-segmentation" /></span>
+				<span><liferay-ui:message key="contact-your-system-administrator-to-enable-it" /></span>
 			</c:otherwise>
 		</c:choose>
 	</clay:stripe>

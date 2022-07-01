@@ -14,7 +14,9 @@
 
 package com.liferay.oauth.client.persistence.service.impl;
 
+import com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientASLocalMetadataException;
 import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataJSONException;
+import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataLocalWellKnownURIException;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.base.OAuthClientASLocalMetadataLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
@@ -57,21 +59,29 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		AuthorizationServerMetadata authorizationServerMetadata =
 			_parseAuthorizationServerMetadata(metadataJSON, wellKnownURISuffix);
 
-		User user = _userLocalService.getUser(userId);
+		String localWellKnownURI = _generateLocalWellKnownURI(
+			String.valueOf(authorizationServerMetadata.getIssuer()),
+			String.valueOf(authorizationServerMetadata.getTokenEndpointURI()),
+			wellKnownURISuffix);
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			oAuthClientASLocalMetadataPersistence.fetchByLocalWellKnownURI(
+				localWellKnownURI);
+
+		if (oAuthClientASLocalMetadata != null) {
+			throw new DuplicateOAuthClientASLocalMetadataException();
+		}
+
+		User user = _userLocalService.getUser(userId);
+
+		oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataPersistence.create(
 				counterLocalService.increment());
 
 		oAuthClientASLocalMetadata.setCompanyId(user.getCompanyId());
 		oAuthClientASLocalMetadata.setUserId(user.getUserId());
 		oAuthClientASLocalMetadata.setUserName(user.getFullName());
-		oAuthClientASLocalMetadata.setLocalWellKnownURI(
-			_generateLocalWellKnownURI(
-				String.valueOf(authorizationServerMetadata.getIssuer()),
-				String.valueOf(
-					authorizationServerMetadata.getTokenEndpointURI()),
-				wellKnownURISuffix));
+		oAuthClientASLocalMetadata.setLocalWellKnownURI(localWellKnownURI);
 		oAuthClientASLocalMetadata.setMetadataJSON(metadataJSON);
 
 		oAuthClientASLocalMetadata =
@@ -238,7 +248,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				"/local");
 		}
 		catch (Exception exception) {
-			throw new PortalException(exception);
+			throw new OAuthClientASLocalMetadataLocalWellKnownURIException(
+				exception);
 		}
 	}
 
@@ -254,7 +265,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			return AuthorizationServerMetadata.parse(metadataJSON);
 		}
 		catch (Exception exception) {
-			throw new OAuthClientASLocalMetadataJSONException(exception);
+			throw new OAuthClientASLocalMetadataJSONException(
+				exception.getMessage(), exception);
 		}
 	}
 

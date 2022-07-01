@@ -15,9 +15,10 @@
 package com.liferay.oauth.client.persistence.service.impl;
 
 import com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientEntryException;
+import com.liferay.oauth.client.persistence.exception.OAuthClientEntryAuthRequestParametersJSONException;
 import com.liferay.oauth.client.persistence.exception.OAuthClientEntryAuthServerWellKnownURIException;
 import com.liferay.oauth.client.persistence.exception.OAuthClientEntryInfoJSONException;
-import com.liferay.oauth.client.persistence.exception.OAuthClientEntryParametersJSONException;
+import com.liferay.oauth.client.persistence.exception.OAuthClientEntryTokenRequestParametersJSONException;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntryTable;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
@@ -91,14 +92,14 @@ public class OAuthClientEntryLocalServiceImpl
 			authRequestParametersJSON = "{}";
 		}
 		else {
-			_validateRequestParametersJSON(authRequestParametersJSON);
+			_validateAuthRequestParametersJSON(authRequestParametersJSON);
 		}
 
 		if (Validator.isNull(tokenRequestParametersJSON)) {
 			tokenRequestParametersJSON = "{}";
 		}
 		else {
-			_validateRequestParametersJSON(tokenRequestParametersJSON);
+			_validateTokenRequestParametersJSON(tokenRequestParametersJSON);
 		}
 
 		JSONObject clientInformationJSONObject =
@@ -243,14 +244,14 @@ public class OAuthClientEntryLocalServiceImpl
 			authRequestParametersJSON = "{}";
 		}
 		else {
-			_validateRequestParametersJSON(authRequestParametersJSON);
+			_validateAuthRequestParametersJSON(authRequestParametersJSON);
 		}
 
 		if (Validator.isNull(tokenRequestParametersJSON)) {
 			tokenRequestParametersJSON = "{}";
 		}
 		else {
-			_validateRequestParametersJSON(tokenRequestParametersJSON);
+			_validateTokenRequestParametersJSON(tokenRequestParametersJSON);
 		}
 
 		JSONObject clientInformationJSONObject =
@@ -271,36 +272,44 @@ public class OAuthClientEntryLocalServiceImpl
 			String authServerWellKnownURI, String infoJSON)
 		throws PortalException {
 
-		if (authServerWellKnownURI.contains("openid-configuration")) {
-			try {
+		try {
+			if (authServerWellKnownURI.contains("openid-configuration")) {
 				return OIDCClientInformation.parse(
 					JSONObjectUtils.parse(infoJSON));
 			}
-			catch (ParseException parseException) {
-				throw new OAuthClientEntryInfoJSONException(parseException);
-			}
+
+			return ClientInformation.parse(JSONObjectUtils.parse(infoJSON));
 		}
-		else {
-			try {
-				return ClientInformation.parse(JSONObjectUtils.parse(infoJSON));
-			}
-			catch (ParseException parseException) {
-				throw new OAuthClientEntryInfoJSONException(parseException);
-			}
+		catch (Exception exception) {
+			throw new OAuthClientEntryInfoJSONException(
+				exception.getMessage(), exception);
+		}
+	}
+
+	private void _validateAuthRequestParametersJSON(
+			String authRequestParametersJSON)
+		throws PortalException {
+
+		try {
+			_validateRequestParametersJSON(authRequestParametersJSON);
+		}
+		catch (Exception exception) {
+			throw new OAuthClientEntryAuthRequestParametersJSONException(
+				exception.getMessage(), exception);
 		}
 	}
 
 	private void _validateAuthServerWellKnownURI(String authServerWellKnownURI)
 		throws PortalException {
 
-		if (authServerWellKnownURI.endsWith("local")) {
-			_oAuthClientASLocalMetadataLocalService.
-				getOAuthClientASLocalMetadata(authServerWellKnownURI);
-
-			return;
-		}
-
 		try {
+			if (authServerWellKnownURI.endsWith("local")) {
+				_oAuthClientASLocalMetadataLocalService.
+					getOAuthClientASLocalMetadata(authServerWellKnownURI);
+
+				return;
+			}
+
 			HTTPRequest httpRequest = new HTTPRequest(
 				HTTPRequest.Method.GET, new URL(authServerWellKnownURI));
 
@@ -347,7 +356,7 @@ public class OAuthClientEntryLocalServiceImpl
 
 	private void _validateCustomRequestParameters(
 			JSONObject requestParametersJSONObject)
-		throws ParseException {
+		throws Exception {
 
 		if (requestParametersJSONObject.containsKey(
 				"custom_request_parameters")) {
@@ -370,24 +379,19 @@ public class OAuthClientEntryLocalServiceImpl
 	}
 
 	private void _validateRequestParametersJSON(String requestParametersJSON)
-		throws PortalException {
+		throws Exception {
 
-		try {
-			JSONObject requestParametersJSONObject = JSONObjectUtils.parse(
-				requestParametersJSON);
+		JSONObject requestParametersJSONObject = JSONObjectUtils.parse(
+			requestParametersJSON);
 
-			_validateSpecsRequestParameters(requestParametersJSONObject);
+		_validateSpecsRequestParameters(requestParametersJSONObject);
 
-			_validateCustomRequestParameters(requestParametersJSONObject);
-		}
-		catch (ParseException parseException) {
-			throw new OAuthClientEntryParametersJSONException(parseException);
-		}
+		_validateCustomRequestParameters(requestParametersJSONObject);
 	}
 
 	private void _validateSpecsRequestParameters(
 			JSONObject requestParametersJSONObject)
-		throws ParseException {
+		throws Exception {
 
 		if (requestParametersJSONObject.containsKey("redirect_uri")) {
 			URI.create(
@@ -419,6 +423,19 @@ public class OAuthClientEntryLocalServiceImpl
 			Scope.parse(
 				JSONObjectUtils.getString(
 					requestParametersJSONObject, "scope"));
+		}
+	}
+
+	private void _validateTokenRequestParametersJSON(
+			String tokenRequestParametersJSON)
+		throws PortalException {
+
+		try {
+			_validateRequestParametersJSON(tokenRequestParametersJSON);
+		}
+		catch (Exception exception) {
+			throw new OAuthClientEntryTokenRequestParametersJSONException(
+				exception.getMessage(), exception);
 		}
 	}
 

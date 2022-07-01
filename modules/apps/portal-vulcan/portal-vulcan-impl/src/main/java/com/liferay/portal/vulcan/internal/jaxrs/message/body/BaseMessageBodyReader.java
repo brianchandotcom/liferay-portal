@@ -187,6 +187,10 @@ public abstract class BaseMessageBodyReader
 			return (Serializable)objectMapper.readValue(
 				jsonNode.traverse(), Object.class);
 		}
+		else if (jsonNode.isArray()) {
+			return (Serializable)objectMapper.readValue(
+				jsonNode.traverse(), Object[].class);
+		}
 
 		return null;
 	}

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeFormatter;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -74,7 +75,10 @@ public class ObjectDefinitionsFieldsDisplayContext
 
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (!hasUpdateObjectDefinitionPermission()) {
+		if ((!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-135404")) &&
+			 objectDefinition.isSystem()) ||
+			!hasUpdateObjectDefinitionPermission()) {
+
 			return creationMenu;
 		}
 

@@ -54,6 +54,9 @@ public class ObjectFieldDBTypeUtil {
 				_getAcceptedFileExtensions(objectField));
 
 			finalStep.attribute(
+				FileInfoFieldType.FILE_SOURCE, _getFileSourceType(objectField));
+
+			finalStep.attribute(
 				FileInfoFieldType.MAX_FILE_SIZE,
 				_getMaximumFileSize(objectField));
 		}
@@ -137,6 +140,31 @@ public class ObjectFieldDBTypeUtil {
 		}
 
 		return acceptedFileExtensionsObjectFieldSetting.getValue();
+	}
+
+	private static FileInfoFieldType.FileSourceType _getFileSourceType(
+		ObjectField objectField) {
+
+		ObjectFieldSetting objectFieldSetting =
+			ObjectFieldSettingLocalServiceUtil.fetchObjectFieldSetting(
+				objectField.getObjectFieldId(), "fileSource");
+
+		if (objectFieldSetting == null) {
+			return null;
+		}
+
+		if (Objects.equals(
+				objectFieldSetting.getValue(), "documentsAndMedia")) {
+
+			return FileInfoFieldType.FileSourceType.DOCUMENTS_AND_MEDIA;
+		}
+		else if (Objects.equals(
+					objectFieldSetting.getValue(), "userComputer")) {
+
+			return FileInfoFieldType.FileSourceType.USER_COMPUTER;
+		}
+
+		return null;
 	}
 
 	private static long _getMaximumFileSize(ObjectField objectField) {

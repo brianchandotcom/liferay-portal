@@ -622,6 +622,15 @@ public class SourceFormatter {
 						new String[] {"**/package.json"},
 						_sourceFormatterExcludes, false));
 			}
+
+			if (recentChangesFileName.endsWith(".java")) {
+				File portalDir = SourceFormatterUtil.getPortalDir(
+					_sourceFormatterArgs.getBaseDirName(),
+					_sourceFormatterArgs.getMaxLineLength());
+
+				dependentFileNames.add(
+					portalDir + "/portal-impl/src/portal.properties");
+			}
 		}
 
 		if (_sourceFormatterArgs.isFormatCurrentBranch()) {

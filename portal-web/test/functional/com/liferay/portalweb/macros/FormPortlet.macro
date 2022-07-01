@@ -132,8 +132,6 @@ definition {
 		var key_text = "${text}";
 
 		WaitForElementPresent(locator1 = "Button#ANY_ENABLED");
-
-		Pause(locator1 = "2500");
 	}
 
 	macro waitForValidationErrorNotPresent {

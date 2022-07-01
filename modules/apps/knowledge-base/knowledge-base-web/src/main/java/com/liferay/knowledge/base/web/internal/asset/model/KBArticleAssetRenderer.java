@@ -97,14 +97,12 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String summary = _kbArticle.getDescription();
-
-		if (Validator.isNull(summary)) {
-			summary = StringUtil.shorten(
+		if (Validator.isNull(_kbArticle.getDescription())) {
+			return StringUtil.shorten(
 				_htmlParser.extractText(_kbArticle.getContent()), 200);
 		}
 
-		return summary;
+		return _kbArticle.getDescription();
 	}
 
 	@Override

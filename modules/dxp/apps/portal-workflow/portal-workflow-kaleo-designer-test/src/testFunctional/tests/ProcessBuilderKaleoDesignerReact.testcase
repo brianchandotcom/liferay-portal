@@ -2451,11 +2451,29 @@ definition {
 	}
 
 	@description = "Verify that at the Details/Revision Story sidebar Header the definition Title is present"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewDefinitionTitleAtInfoHeader {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewDefinitionTitleAtInfoHeader";
 
-		// TODO CanViewDefinitionTitleAtInfoHeader pending implementation
+        Workflow.openWorkflowListView();
+
+        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+        ProcessBuilderKaleoDesignerReact.addConnector(
+            connectorIn = "end",
+            connectorLabel = "Start-End Connector",
+            connectorOut = "start",
+            key_direction = "bottom");
+
+        PortletEntry.publish();
+
+        Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+        ProcessBuilderKaleoDesignerReact.gotoInfoWorkflowDefinition();
+
+		
+
+        ProcessBuilderKaleoDesignerReact.viewSidebarHeaderPresent(header = "New Workflow Definition");
 
 	}
 

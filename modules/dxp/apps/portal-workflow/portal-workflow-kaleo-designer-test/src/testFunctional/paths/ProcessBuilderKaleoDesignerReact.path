@@ -376,6 +376,11 @@
 	<td>//span[contains(., '${key_propertyName}')]/../..//div[@class='panel-body']/..//*[contains(@class, 'icon-trash')]</td>
 	<td></td>
 </tr>
+<tr>
+    <td>SIDEBAR_HEADER</td>
+    <td>//div[contains(@class,'sidebar-header')]//span[contains(@class,'title')]/..//span[contains(., '${key_header}')]</td>
+    <td></td>
+</tr>
 
 </tbody>
 </table>

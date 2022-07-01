@@ -1352,4 +1352,12 @@ definition {
 			value1 = "${coordinateY}");
 	}
 
+	macro viewSidebarHeaderPresent {
+        AssertElementPresent(
+            key_header = "${header}",
+            locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_HEADER");
+    }
+
+	
+
 }

@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_FILTER_BUTTON</td>
+	<td>//div[@class='dropdown-menu show']//*[@type="button" and contains(.,'Add Filter')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_FDS_TABLE_MESSAGE</td>
 	<td>//div[contains(@class,'empty-state-text') and contains(.,'Sorry, no results were found.')]</td>
 	<td></td>

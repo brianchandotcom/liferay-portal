@@ -72,10 +72,9 @@ public class ObjectFieldDBTypeUtil {
 
 			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
 		}
-
-		if (Objects.equals(
-				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_INTEGER)) {
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_INTEGER)) {
 
 			finalStep.attribute(
 				NumberInfoFieldType.MAX_VALUE,

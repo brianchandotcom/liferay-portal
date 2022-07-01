@@ -226,7 +226,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 	public List<Address> getTypeAddresses(
 		long companyId, String className, long classPK, long[] typeIds) {
 
-		return addressPersistence.findByC_C_C_T(
+		return addressPersistence.findByC_C_C_L(
 			companyId, _classNameLocalService.getClassNameId(className),
 			classPK, typeIds);
 	}
@@ -236,7 +236,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		long companyId, String className, long classPK, long[] typeIds,
 		int start, int end, OrderByComparator<Address> orderByComparator) {
 
-		return addressPersistence.findByC_C_C_T(
+		return addressPersistence.findByC_C_C_L(
 			companyId, _classNameLocalService.getClassNameId(className),
 			classPK, typeIds, start, end, orderByComparator);
 	}

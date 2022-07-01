@@ -158,10 +158,11 @@ const FrontendDataSet = ({
 			}
 		}
 
-		initialActiveView.component = getViewComponent(initialActiveView.name);
-
 		return {
-			activeView: initialActiveView,
+			activeView: {
+				component: getViewComponent(initialActiveView.contentRenderer),
+				...initialActiveView,
+			},
 			customViewsEnabled,
 			views,
 			visibleFieldNames: initialVisibleFieldNames,
@@ -822,6 +823,7 @@ FrontendDataSet.propTypes = {
 	views: PropTypes.arrayOf(
 		PropTypes.shape({
 			component: PropTypes.any,
+			contentRenderer: PropTypes.string,
 			contentRendererModuleURL: PropTypes.string,
 			label: PropTypes.string,
 			name: PropTypes.string,

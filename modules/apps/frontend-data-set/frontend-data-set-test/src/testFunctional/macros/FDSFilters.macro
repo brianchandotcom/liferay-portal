@@ -67,6 +67,12 @@ definition {
 		}
 	}
 
+	macro removeFilter {
+		Click(
+			locator1 = "FrontendDataSet#REMOVE_FILTER",
+			value1 = "${key_filter}");
+	}
+
 	macro searchFilter {
 		VerifyElementPresent(locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD");
 

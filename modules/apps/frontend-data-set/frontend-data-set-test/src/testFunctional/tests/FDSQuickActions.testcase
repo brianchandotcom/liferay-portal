@@ -103,24 +103,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-155458. Assert can be displayed on one an active row."
-	@priority = "4"
-	test CanDisplayOnOneActiveRow {
-		task ("When hover over 2nd row item") {
-			MouseOver(
-				key_itemName = "Sample2",
-				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
-		}
-
-		task ("Then quick action menu is displayed on the 2nd row") {
-			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample2");
-		}
-
-		task ("Then quick action menu is not displayed on 1st row") {
-			FDSQuickActions.viewQuickActionMenuNotPresent(title = "Sample1");
-		}
-	}
-
 	@description = "LPS-155459: When clicking on the ellipsis and hovering over another row, multiple quick action menu are displayed"
 	@priority = "3"
 	test CanDisplayOnMultipleActiveRows {
@@ -146,6 +128,24 @@ definition {
 
 		task ("Then the quick action menu is displayed on the 1st line") {
 			AssertElementPresent(locator1 = "FrontendDataSet#DROPDOWN_MENU");
+		}
+	}
+
+	@description = "LPS-155458. Assert can be displayed on one an active row."
+	@priority = "4"
+	test CanDisplayOnOneActiveRow {
+		task ("When hover over 2nd row item") {
+			MouseOver(
+				key_itemName = "Sample2",
+				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
+		}
+
+		task ("Then quick action menu is displayed on the 2nd row") {
+			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample2");
+		}
+
+		task ("Then quick action menu is not displayed on 1st row") {
+			FDSQuickActions.viewQuickActionMenuNotPresent(title = "Sample1");
 		}
 	}
 

@@ -99,7 +99,7 @@ definition {
 	}
 
 	macro assertColumnVisibleOnAddColumnModal {
-		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_ADD_COLUMNS");
+		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_ADD_COLUMNS");
 
 		AssertVisible(
 			key_columnName = "${columnOption}",

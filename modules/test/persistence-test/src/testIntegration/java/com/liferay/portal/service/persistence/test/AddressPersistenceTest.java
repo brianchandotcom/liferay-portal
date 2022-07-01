@@ -302,17 +302,17 @@ public class AddressPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_C_C_T() throws Exception {
-		_persistence.countByC_C_C_T(
+	public void testCountByC_C_C_L() throws Exception {
+		_persistence.countByC_C_C_L(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByC_C_C_T(0L, 0L, 0L, 0L);
+		_persistence.countByC_C_C_L(0L, 0L, 0L, 0L);
 	}
 
 	@Test
-	public void testCountByC_C_C_TArrayable() throws Exception {
-		_persistence.countByC_C_C_T(
+	public void testCountByC_C_C_LArrayable() throws Exception {
+		_persistence.countByC_C_C_L(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(),
 			new long[] {RandomTestUtil.nextLong(), 0L});

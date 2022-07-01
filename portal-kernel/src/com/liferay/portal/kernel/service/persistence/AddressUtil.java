@@ -1524,10 +1524,10 @@ public class AddressUtil {
 	 * @param listTypeId the list type ID
 	 * @return the matching addresses
 	 */
-	public static List<Address> findByC_C_C_T(
+	public static List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId) {
 
-		return getPersistence().findByC_C_C_T(
+		return getPersistence().findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeId);
 	}
 
@@ -1546,11 +1546,11 @@ public class AddressUtil {
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @return the range of matching addresses
 	 */
-	public static List<Address> findByC_C_C_T(
+	public static List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		int start, int end) {
 
-		return getPersistence().findByC_C_C_T(
+		return getPersistence().findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeId, start, end);
 	}
 
@@ -1570,11 +1570,11 @@ public class AddressUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching addresses
 	 */
-	public static List<Address> findByC_C_C_T(
+	public static List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		int start, int end, OrderByComparator<Address> orderByComparator) {
 
-		return getPersistence().findByC_C_C_T(
+		return getPersistence().findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeId, start, end,
 			orderByComparator);
 	}
@@ -1596,12 +1596,12 @@ public class AddressUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
-	public static List<Address> findByC_C_C_T(
+	public static List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		int start, int end, OrderByComparator<Address> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByC_C_C_T(
+		return getPersistence().findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeId, start, end,
 			orderByComparator, useFinderCache);
 	}
@@ -1617,12 +1617,12 @@ public class AddressUtil {
 	 * @return the first matching address
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
-	public static Address findByC_C_C_T_First(
+	public static Address findByC_C_C_L_First(
 			long companyId, long classNameId, long classPK, long listTypeId,
 			OrderByComparator<Address> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchAddressException {
 
-		return getPersistence().findByC_C_C_T_First(
+		return getPersistence().findByC_C_C_L_First(
 			companyId, classNameId, classPK, listTypeId, orderByComparator);
 	}
 
@@ -1636,11 +1636,11 @@ public class AddressUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching address, or <code>null</code> if a matching address could not be found
 	 */
-	public static Address fetchByC_C_C_T_First(
+	public static Address fetchByC_C_C_L_First(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		OrderByComparator<Address> orderByComparator) {
 
-		return getPersistence().fetchByC_C_C_T_First(
+		return getPersistence().fetchByC_C_C_L_First(
 			companyId, classNameId, classPK, listTypeId, orderByComparator);
 	}
 
@@ -1655,12 +1655,12 @@ public class AddressUtil {
 	 * @return the last matching address
 	 * @throws NoSuchAddressException if a matching address could not be found
 	 */
-	public static Address findByC_C_C_T_Last(
+	public static Address findByC_C_C_L_Last(
 			long companyId, long classNameId, long classPK, long listTypeId,
 			OrderByComparator<Address> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchAddressException {
 
-		return getPersistence().findByC_C_C_T_Last(
+		return getPersistence().findByC_C_C_L_Last(
 			companyId, classNameId, classPK, listTypeId, orderByComparator);
 	}
 
@@ -1674,11 +1674,11 @@ public class AddressUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching address, or <code>null</code> if a matching address could not be found
 	 */
-	public static Address fetchByC_C_C_T_Last(
+	public static Address fetchByC_C_C_L_Last(
 		long companyId, long classNameId, long classPK, long listTypeId,
 		OrderByComparator<Address> orderByComparator) {
 
-		return getPersistence().fetchByC_C_C_T_Last(
+		return getPersistence().fetchByC_C_C_L_Last(
 			companyId, classNameId, classPK, listTypeId, orderByComparator);
 	}
 
@@ -1694,12 +1694,12 @@ public class AddressUtil {
 	 * @return the previous, current, and next address
 	 * @throws NoSuchAddressException if a address with the primary key could not be found
 	 */
-	public static Address[] findByC_C_C_T_PrevAndNext(
+	public static Address[] findByC_C_C_L_PrevAndNext(
 			long addressId, long companyId, long classNameId, long classPK,
 			long listTypeId, OrderByComparator<Address> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchAddressException {
 
-		return getPersistence().findByC_C_C_T_PrevAndNext(
+		return getPersistence().findByC_C_C_L_PrevAndNext(
 			addressId, companyId, classNameId, classPK, listTypeId,
 			orderByComparator);
 	}
@@ -1717,10 +1717,10 @@ public class AddressUtil {
 	 * @param listTypeIds the list type IDs
 	 * @return the matching addresses
 	 */
-	public static List<Address> findByC_C_C_T(
+	public static List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds) {
 
-		return getPersistence().findByC_C_C_T(
+		return getPersistence().findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeIds);
 	}
 
@@ -1739,11 +1739,11 @@ public class AddressUtil {
 	 * @param end the upper bound of the range of addresses (not inclusive)
 	 * @return the range of matching addresses
 	 */
-	public static List<Address> findByC_C_C_T(
+	public static List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds,
 		int start, int end) {
 
-		return getPersistence().findByC_C_C_T(
+		return getPersistence().findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeIds, start, end);
 	}
 
@@ -1763,11 +1763,11 @@ public class AddressUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching addresses
 	 */
-	public static List<Address> findByC_C_C_T(
+	public static List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds,
 		int start, int end, OrderByComparator<Address> orderByComparator) {
 
-		return getPersistence().findByC_C_C_T(
+		return getPersistence().findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeIds, start, end,
 			orderByComparator);
 	}
@@ -1789,12 +1789,12 @@ public class AddressUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching addresses
 	 */
-	public static List<Address> findByC_C_C_T(
+	public static List<Address> findByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds,
 		int start, int end, OrderByComparator<Address> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByC_C_C_T(
+		return getPersistence().findByC_C_C_L(
 			companyId, classNameId, classPK, listTypeIds, start, end,
 			orderByComparator, useFinderCache);
 	}
@@ -1807,10 +1807,10 @@ public class AddressUtil {
 	 * @param classPK the class pk
 	 * @param listTypeId the list type ID
 	 */
-	public static void removeByC_C_C_T(
+	public static void removeByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId) {
 
-		getPersistence().removeByC_C_C_T(
+		getPersistence().removeByC_C_C_L(
 			companyId, classNameId, classPK, listTypeId);
 	}
 
@@ -1823,10 +1823,10 @@ public class AddressUtil {
 	 * @param listTypeId the list type ID
 	 * @return the number of matching addresses
 	 */
-	public static int countByC_C_C_T(
+	public static int countByC_C_C_L(
 		long companyId, long classNameId, long classPK, long listTypeId) {
 
-		return getPersistence().countByC_C_C_T(
+		return getPersistence().countByC_C_C_L(
 			companyId, classNameId, classPK, listTypeId);
 	}
 
@@ -1839,10 +1839,10 @@ public class AddressUtil {
 	 * @param listTypeIds the list type IDs
 	 * @return the number of matching addresses
 	 */
-	public static int countByC_C_C_T(
+	public static int countByC_C_C_L(
 		long companyId, long classNameId, long classPK, long[] listTypeIds) {
 
-		return getPersistence().countByC_C_C_T(
+		return getPersistence().countByC_C_C_L(
 			companyId, classNameId, classPK, listTypeIds);
 	}
 

@@ -26,12 +26,15 @@ import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory
 import java.io.File;
 import java.io.IOException;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
@@ -48,6 +51,21 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class BaseJob implements Job {
+
+	@Override
+	public Long getAverageBatchDuration(String batchName) {
+		return _getAverageBatchDuration(batchName, "averageDuration");
+	}
+
+	@Override
+	public Long getAverageBatchOverheadDuration(String batchName) {
+		return _getAverageBatchDuration(batchName, "averageOverheadDuration");
+	}
+
+	@Override
+	public Long getAverageTestDuration(String batchName, String testName) {
+		return _getAverageTestDuration(batchName, testName);
+	}
 
 	@Override
 	public int getAxisCount() {
@@ -828,6 +846,160 @@ public abstract class BaseJob implements Job {
 	protected final List<File> jobPropertiesFiles = new ArrayList<>();
 	protected JSONObject jsonObject;
 
+	private String _fixBatchName(String batchName) {
+		batchName = batchName.replace("_stable", "");
+		batchName = batchName.replace("-smoke", "");
+		batchName = batchName.replace("-upgrade", "");
+
+		return batchName;
+	}
+
+	private Long _getAverageBatchDuration(
+		String batchName, String durationKey) {
+
+		JSONObject averageDurationsJSONObject = _getAverageDurationJSONObject();
+
+		JSONArray batchesJSONArray = averageDurationsJSONObject.optJSONArray(
+			"batches");
+
+		if ((batchesJSONArray == null) || batchesJSONArray.isEmpty()) {
+			return null;
+		}
+
+		for (int i = 0; i < batchesJSONArray.length(); i++) {
+			JSONObject batchJSONObject = batchesJSONArray.getJSONObject(i);
+
+			if (!Objects.equals(
+					_fixBatchName(batchName),
+					_fixBatchName(batchJSONObject.optString("batchName")))) {
+
+				continue;
+			}
+
+			return batchJSONObject.getLong(durationKey);
+		}
+
+		return null;
+	}
+
+	private JSONObject _getAverageDurationJSONObject() {
+		if (_averageDurationJSONObject != null) {
+			return _averageDurationJSONObject;
+		}
+
+		if (!(this instanceof PortalTestClassJob)) {
+			_averageDurationJSONObject = new JSONObject();
+
+			return _averageDurationJSONObject;
+		}
+
+		PortalTestClassJob portalTestClassJob = (PortalTestClassJob)this;
+
+		PortalGitWorkingDirectory portalGitWorkingDirectory =
+			portalTestClassJob.getPortalGitWorkingDirectory();
+
+		if (portalGitWorkingDirectory == null) {
+			_averageDurationJSONObject = new JSONObject();
+
+			return _averageDurationJSONObject;
+		}
+
+		String testSuiteName = null;
+
+		if (this instanceof TestSuiteJob) {
+			TestSuiteJob testSuiteJob = (TestSuiteJob)this;
+
+			testSuiteName = testSuiteJob.getTestSuiteName();
+		}
+
+		String ciAverageDurationsJSONURLString = null;
+
+		try {
+			ciAverageDurationsJSONURLString =
+				JenkinsResultsParserUtil.getProperty(
+					JenkinsResultsParserUtil.getBuildProperties(),
+					"ci.average.durations.json.url", getJobName(),
+					testSuiteName,
+					portalGitWorkingDirectory.getUpstreamBranchName());
+		}
+		catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
+
+		if (!JenkinsResultsParserUtil.isURL(ciAverageDurationsJSONURLString)) {
+			_averageDurationJSONObject = new JSONObject();
+
+			return _averageDurationJSONObject;
+		}
+
+		File tempGzipFile = new File(
+			System.getenv("WORKSPACE"),
+			JenkinsResultsParserUtil.getDistinctTimeStamp() + ".gz");
+
+		try {
+			JenkinsResultsParserUtil.toFile(
+				new URL(ciAverageDurationsJSONURLString), tempGzipFile);
+
+			String content = JenkinsResultsParserUtil.read(tempGzipFile);
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(content)) {
+				_averageDurationJSONObject = new JSONObject(content);
+			}
+		}
+		catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
+		finally {
+			if (tempGzipFile.exists()) {
+				JenkinsResultsParserUtil.delete(tempGzipFile);
+			}
+		}
+
+		if (_averageDurationJSONObject == null) {
+			_averageDurationJSONObject = new JSONObject();
+		}
+
+		return _averageDurationJSONObject;
+	}
+
+	private Long _getAverageTestDuration(String batchName, String testName) {
+		JSONObject averageDurationsJSONObject = _getAverageDurationJSONObject();
+
+		JSONArray batchesJSONArray = averageDurationsJSONObject.optJSONArray(
+			"batches");
+
+		if ((batchesJSONArray == null) || batchesJSONArray.isEmpty()) {
+			return null;
+		}
+
+		for (int i = 0; i < batchesJSONArray.length(); i++) {
+			JSONObject batchJSONObject = batchesJSONArray.getJSONObject(i);
+
+			if (!Objects.equals(
+					_fixBatchName(batchName),
+					_fixBatchName(batchJSONObject.optString("batchName")))) {
+
+				continue;
+			}
+
+			JSONArray testsJSONArray = batchJSONObject.getJSONArray("tests");
+
+			for (int j = 0; j < testsJSONArray.length(); j++) {
+				JSONObject testJSONObject = testsJSONArray.getJSONObject(j);
+
+				if (!Objects.equals(
+						testName, testJSONObject.getString("testName"))) {
+
+					continue;
+				}
+
+				return testJSONObject.getLong("averageDuration");
+			}
+		}
+
+		return null;
+	}
+
 	private int _getDistNodeAxisCount() {
 		try {
 			String distNodeAxisCount =
@@ -937,6 +1109,7 @@ public abstract class BaseJob implements Job {
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(_THREAD_COUNT, true);
 
+	private JSONObject _averageDurationJSONObject;
 	private List<BatchTestClassGroup> _batchTestClassGroups;
 	private final BuildProfile _buildProfile;
 	private List<BatchTestClassGroup> _dependentBatchTestClassGroups;

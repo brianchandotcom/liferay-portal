@@ -6,7 +6,7 @@ definition {
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
-	
+
 	var testSiteName = "Raylife D2C";
 	var testSiteURL = "raylife-d2c";
 

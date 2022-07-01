@@ -37,8 +37,6 @@ definition {
 		SetWindowSize(value1 = "360,720");
 
 		ApplicationsMenu.gotoSite(site = "${testSiteName}");
-
-		
 	}
 
 	@description = "LPS-146557 - Verify if Continue Button is only enabled when has a valid email in 'Business Email'. Smartphone)"

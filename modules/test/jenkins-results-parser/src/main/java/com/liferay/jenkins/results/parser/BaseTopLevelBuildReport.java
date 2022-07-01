@@ -26,6 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -187,6 +188,8 @@ public abstract class BaseTopLevelBuildReport
 						batchName, buildsJSONArray.getJSONObject(j), this));
 			}
 		}
+
+		_downstreamBuildReports.removeAll(Collections.singleton(null));
 
 		return _downstreamBuildReports;
 	}

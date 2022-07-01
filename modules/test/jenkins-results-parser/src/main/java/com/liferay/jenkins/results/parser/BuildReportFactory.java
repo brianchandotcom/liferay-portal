@@ -34,6 +34,10 @@ public class BuildReportFactory {
 		String batchName, JSONObject buildReportJSONObject,
 		TopLevelBuildReport topLevelBuildReport) {
 
+		if (!buildReportJSONObject.has("buildURL")) {
+			return null;
+		}
+
 		return new DefaultDownstreamBuildReport(
 			batchName, buildReportJSONObject, topLevelBuildReport);
 	}

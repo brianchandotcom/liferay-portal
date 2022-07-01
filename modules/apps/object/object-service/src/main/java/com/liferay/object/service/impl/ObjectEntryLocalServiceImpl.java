@@ -2406,19 +2406,19 @@ public class ObjectEntryLocalServiceImpl
 						16, objectField.getName());
 				}
 				else if (value > ObjectFieldValidationConstants.
-							MAX_VALUE_BUSINESS_TYPE_LONG) {
+							BUSINESS_TYPE_LONG_VALUE_MAX) {
 
 					throw new ObjectEntryValuesException.ExceedsLongMaxSize(
 						ObjectFieldValidationConstants.
-							MAX_VALUE_BUSINESS_TYPE_LONG,
+							BUSINESS_TYPE_LONG_VALUE_MAX,
 						objectField.getName());
 				}
 				else if (value < ObjectFieldValidationConstants.
-							MIN_VALUE_BUSINESS_TYPE_LONG) {
+							BUSINESS_TYPE_LONG_VALUE_MIN) {
 
 					throw new ObjectEntryValuesException.ExceedsLongMinSize(
 						ObjectFieldValidationConstants.
-							MIN_VALUE_BUSINESS_TYPE_LONG,
+							BUSINESS_TYPE_LONG_VALUE_MIN,
 						objectField.getName());
 				}
 			}

@@ -77,12 +77,12 @@ public class ObjectFieldDBTypeUtil {
 				NumberInfoFieldType.MAX_VALUE,
 				BigDecimal.valueOf(
 					ObjectFieldValidationConstants.
-						MAX_VALUE_BUSINESS_TYPE_INTEGER)
+						BUSINESS_TYPE_INTEGER_VALUE_MAX)
 			).attribute(
 				NumberInfoFieldType.MIN_VALUE,
 				BigDecimal.valueOf(
 					ObjectFieldValidationConstants.
-						MIN_VALUE_BUSINESS_TYPE_INTEGER)
+						BUSINESS_TYPE_INTEGER_VALUE_MIN)
 			);
 		}
 		else if (Objects.equals(
@@ -92,11 +92,11 @@ public class ObjectFieldDBTypeUtil {
 			finalStep.attribute(
 				NumberInfoFieldType.MAX_VALUE,
 				BigDecimal.valueOf(
-					ObjectFieldValidationConstants.MAX_VALUE_BUSINESS_TYPE_LONG)
+					ObjectFieldValidationConstants.BUSINESS_TYPE_LONG_VALUE_MAX)
 			).attribute(
 				NumberInfoFieldType.MIN_VALUE,
 				BigDecimal.valueOf(
-					ObjectFieldValidationConstants.MIN_VALUE_BUSINESS_TYPE_LONG)
+					ObjectFieldValidationConstants.BUSINESS_TYPE_LONG_VALUE_MIN)
 			);
 		}
 		else if (Objects.equals(
@@ -118,12 +118,12 @@ public class ObjectFieldDBTypeUtil {
 				NumberInfoFieldType.MAX_VALUE,
 				new BigDecimal(
 					ObjectFieldValidationConstants.
-						MAX_VALUE_BUSINESS_TYPE_PRECISION_DECIMAL)
+						BUSINESS_TYPE_PRECISION_DECIMAL_VALUE_MAX)
 			).attribute(
 				NumberInfoFieldType.MIN_VALUE,
 				new BigDecimal(
 					ObjectFieldValidationConstants.
-						MIN_VALUE_BUSINESS_TYPE_PRECISION_DECIMAL)
+						BUSINESS_TYPE_PRECISION_DECIMAL_VALUE_MIN)
 			);
 		}
 

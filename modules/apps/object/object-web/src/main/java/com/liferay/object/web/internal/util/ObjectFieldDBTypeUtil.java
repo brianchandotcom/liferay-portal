@@ -17,7 +17,7 @@ package com.liferay.object.web.internal.util;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
-import com.liferay.info.field.type.ImageInfoFieldType;
+import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
@@ -90,7 +90,7 @@ public class ObjectFieldDBTypeUtil {
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-			return ImageInfoFieldType.INSTANCE;
+			return FileInfoFieldType.INSTANCE;
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),

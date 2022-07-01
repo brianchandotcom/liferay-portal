@@ -2455,26 +2455,23 @@ definition {
 	test CanViewDefinitionTitleAtInfoHeader {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewDefinitionTitleAtInfoHeader";
 
-        Workflow.openWorkflowListView();
+		Workflow.openWorkflowListView();
 
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-        ProcessBuilderKaleoDesignerReact.addConnector(
-            connectorIn = "end",
-            connectorLabel = "Start-End Connector",
-            connectorOut = "start",
-            key_direction = "bottom");
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector",
+			connectorOut = "start",
+			key_direction = "bottom");
 
-        PortletEntry.publish();
+		PortletEntry.publish();
 
-        Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
 
-        ProcessBuilderKaleoDesignerReact.gotoInfoWorkflowDefinition();
+		ProcessBuilderKaleoDesignerReact.gotoInfoWorkflowDefinition();
 
-		
-
-        ProcessBuilderKaleoDesignerReact.viewSidebarHeaderPresent(header = "New Workflow Definition");
-
+		ProcessBuilderKaleoDesignerReact.viewSidebarHeaderPresent(header = "New Workflow Definition");
 	}
 
 	@description = "LPS-129928 - Verify that when the user clicks on the Diagram view button the Diagram editor appears"

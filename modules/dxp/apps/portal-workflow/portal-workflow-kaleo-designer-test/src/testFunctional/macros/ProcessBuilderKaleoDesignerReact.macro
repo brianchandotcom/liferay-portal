@@ -1161,6 +1161,12 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_MESSAGE_FEEDBACK");
 	}
 
+	macro viewSidebarHeaderPresent {
+		AssertElementPresent(
+			key_header = "${header}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_HEADER");
+	}
+
 	macro viewSourceDiagramToolTipDisplayed {
 		MouseOver(
 			locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DIAGRAM_SOURCE_SWITCH",
@@ -1351,13 +1357,5 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_METADATA_ELEMENT",
 			value1 = "${coordinateY}");
 	}
-
-	macro viewSidebarHeaderPresent {
-        AssertElementPresent(
-            key_header = "${header}",
-            locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_HEADER");
-    }
-
-	
 
 }

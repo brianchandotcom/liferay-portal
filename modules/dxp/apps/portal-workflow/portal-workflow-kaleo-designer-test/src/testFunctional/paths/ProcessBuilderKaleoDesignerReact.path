@@ -377,9 +377,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>SIDEBAR_HEADER</td>
-    <td>//div[contains(@class,'sidebar-header')]//span[contains(@class,'title')]/..//span[contains(., '${key_header}')]</td>
-    <td></td>
+	<td>SIDEBAR_HEADER</td>
+	<td>//div[contains(@class,'sidebar-header')]//span[contains(@class,'title')]/..//span[contains(., '${key_header}')]</td>
+	<td></td>
 </tr>
 
 </tbody>

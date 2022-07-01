@@ -70,7 +70,7 @@ definition {
 			task ("Start Har recording") {
 				ProxyUtil.startHarRecording("blogClicked");
 
-				ACUtils.harRecordingPause();
+				ACUtils.waitForSendingRequest();
 			}
 
 			Click(
@@ -142,7 +142,7 @@ definition {
 			task ("Start Har recording") {
 				ProxyUtil.startHarRecording("blogClicked");
 
-				ACUtils.harRecordingPause();
+				ACUtils.waitForSendingRequest();
 			}
 
 			Click(
@@ -222,7 +222,7 @@ definition {
 
 			ProxyUtil.startHarRecording("blogDepthReached");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Get entryId of blog entry") {
@@ -297,7 +297,7 @@ definition {
 
 			ProxyUtil.startHarRecording("blogDepthReached");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Get entryId of blog entry") {
@@ -372,7 +372,7 @@ definition {
 
 			ProxyUtil.startHarRecording("blogDepthReached");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Get entryId of blog entry") {
@@ -447,7 +447,7 @@ definition {
 
 			ProxyUtil.startHarRecording("blogDepthReached");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Get entryId of blog entry") {
@@ -507,7 +507,7 @@ definition {
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("BlogViewed");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Go to the site page to assert the blog entry is displayed but don't visit it") {
@@ -557,7 +557,7 @@ definition {
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("blogViewed");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Go to the site page to visit the blog") {

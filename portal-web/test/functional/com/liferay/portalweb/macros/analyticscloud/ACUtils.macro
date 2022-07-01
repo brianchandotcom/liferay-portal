@@ -672,12 +672,17 @@ definition {
 		return "${value}";
 	}
 
-	macro harRecordingPause {
+	macro waitForSendingRequest {
 		if (isSet(time)) {
-			// Pauseing for harRecording test for reuse purpose
+
+			// Pauseing for harRecording test for reuse purpose, see LRAC-10600
+
 			Pause(locator1 = "${time}");
-		} else if (!(isSet(time))){
-			// Pausing for harRecording tests
+		}
+		else if (!(isSet(time))) {
+
+			// Pausing for harRecording tests, see LRAC-10600
+
 			Pause(locator1 = "5000");
 		}
 	}
@@ -732,8 +737,10 @@ definition {
 	}
 
 	macro logInPause {
+
 		// Pause is necessary because poshi logs in from one user to another very quickly.
-			Pause(locator1 = "5000");
+
+		Pause(locator1 = "5000");
 	}
 
 	@summary = "This macro access a page/document"
@@ -879,10 +886,15 @@ definition {
 
 	macro sessionPause {
 		if (isSet(time)) {
-		// Pause for reusable purpose
+
+			// Pause for reusable purpose
+
 			Pause(locator1 = "${time}");
-		} else if (!(isSet(time))){
-		// It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518
+		}
+		else if (!(isSet(time))) {
+
+			// It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518
+
 			Pause(locator1 = "30000");
 		}
 	}

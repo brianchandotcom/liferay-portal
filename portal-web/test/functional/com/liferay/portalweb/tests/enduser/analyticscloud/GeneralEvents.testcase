@@ -163,7 +163,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the Page events triggered for guest") {
@@ -204,7 +204,7 @@ definition {
 				key_content = '''//h1[normalize-space(text())="What's your favorite portal?"]''',
 				locator1 = "WCD#WEB_CONTENT_CONTENT_ANY");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "WebContent",
@@ -246,7 +246,7 @@ definition {
 		task ("View the Blog events triggered for guest") {
 			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Blog",
@@ -270,7 +270,7 @@ definition {
 				key_entryContent = "This is the blog test for AC",
 				locator1 = "BlogsEntry#CONTENT");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Blog",
@@ -306,7 +306,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the Document events triggered for guest") {
@@ -342,7 +342,7 @@ definition {
 
 			Click(locator1 = "Button#DOWNLOAD");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",
@@ -388,7 +388,7 @@ definition {
 		}
 
 		task ("View the Form events triggered for guest") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Form",
@@ -424,7 +424,7 @@ definition {
 				key_fieldName = "Text",
 				locator1 = "FormFields#TEXT_FIELD");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Form",
@@ -448,7 +448,7 @@ definition {
 				key_fieldLabel = "Text",
 				locator1 = "FormFields#LABEL");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Form",
@@ -487,7 +487,7 @@ definition {
 
 			ProxyUtil.startHarRecording("formEvents");
 
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Form",
@@ -515,7 +515,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the SocialBookmarks events triggered for guest") {

@@ -89,7 +89,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the className of posted event") {
@@ -193,7 +193,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the className of posted event") {

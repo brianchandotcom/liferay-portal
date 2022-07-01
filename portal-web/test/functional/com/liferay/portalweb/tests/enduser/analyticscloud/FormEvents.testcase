@@ -114,7 +114,7 @@ definition {
 				}
 
 				task ("Wait for sending requests") {
-					ACUtils.harRecordingPause();
+					ACUtils.waitForSendingRequest();
 				}
 
 				task ("View the fieldName of fieldFocused event") {
@@ -142,7 +142,7 @@ definition {
 				}
 
 				task ("Wait for sending requests") {
-					ACUtils.harRecordingPause();
+					ACUtils.waitForSendingRequest();
 				}
 
 				task ("View the fieldName of fieldBlurred event") {
@@ -182,7 +182,7 @@ definition {
 				}
 
 				task ("Wait for sending requests") {
-					ACUtils.harRecordingPause();
+					ACUtils.waitForSendingRequest();
 				}
 
 				task ("View the fieldName of fieldFocused event") {
@@ -216,7 +216,7 @@ definition {
 				}
 
 				task ("Wait for sending requests") {
-					ACUtils.harRecordingPause();
+					ACUtils.waitForSendingRequest();
 				}
 
 				task ("View the fieldName of fieldBlurred event") {
@@ -291,8 +291,8 @@ definition {
 				locator1 = "FormFields#TEXT_FIELD");
 		}
 
-		task ("Stay 2 seconds") {
-			ACUtils.harRecordingPause();
+		task ("Stay 5 seconds") {
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Navigate to the Submit button via Tab key") {
@@ -303,7 +303,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the formId of fieldBlurred event") {
@@ -399,8 +399,8 @@ definition {
 				locator1 = "FormFields#TEXT_FIELD");
 		}
 
-		task ("Stay 2 seconds") {
-			ACUtils.harRecordingPause();
+		task ("Stay 5 seconds") {
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Click the header title") {
@@ -410,7 +410,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the formId of fieldBlurred event") {
@@ -507,7 +507,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the formId of fieldFocused event") {
@@ -608,7 +608,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the formId of fieldFocused event") {
@@ -690,7 +690,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the formId of formSubmitted event") {
@@ -762,7 +762,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the formId of formViewed event") {
@@ -840,7 +840,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Start Har recording") {
@@ -852,7 +852,7 @@ definition {
 		}
 
 		task ("Wait for sending requests") {
-			ACUtils.harRecordingPause();
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the formId of formViewed event") {

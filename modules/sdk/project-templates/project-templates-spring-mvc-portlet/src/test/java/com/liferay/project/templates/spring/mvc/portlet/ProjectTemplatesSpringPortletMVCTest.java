@@ -55,15 +55,15 @@ public class ProjectTemplatesSpringPortletMVCTest
 				{"springportletmvc", "embedded", "jsp", "7.1.3-1"},
 				{"springportletmvc", "embedded", "jsp", "7.2.1-1"},
 				{"springportletmvc", "embedded", "jsp", "7.3.7"},
-				{"springportletmvc", "embedded", "jsp", "7.4.2-1"},
+				{"springportletmvc", "embedded", "jsp", "7.4.3.29"},
 				{"portletmvc4spring", "embedded", "jsp", "7.1.3-1"},
 				{"portletmvc4spring", "embedded", "jsp", "7.2.1-1"},
 				{"portletmvc4spring", "embedded", "jsp", "7.3.7"},
-				{"portletmvc4spring", "embedded", "jsp", "7.4.2-1"},
+				{"portletmvc4spring", "embedded", "jsp", "7.4.3.29"},
 				{"portletmvc4spring", "embedded", "thymeleaf", "7.1.3-1"},
 				{"portletmvc4spring", "embedded", "thymeleaf", "7.2.1-1"},
 				{"portletmvc4spring", "embedded", "thymeleaf", "7.3.7"},
-				{"portletmvc4spring", "embedded", "thymeleaf", "7.4.2-1"}
+				{"portletmvc4spring", "embedded", "thymeleaf", "7.4.3.29"}
 			});
 	}
 

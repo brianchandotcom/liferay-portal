@@ -71,6 +71,33 @@ public class NotificationTemplateSerDes {
 			sb.append(_toJSON(notificationTemplate.getActions()));
 		}
 
+		if (notificationTemplate.getAttachmentObjectFieldIds() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"attachmentObjectFieldIds\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < notificationTemplate.getAttachmentObjectFieldIds().length;
+				 i++) {
+
+				sb.append(
+					notificationTemplate.getAttachmentObjectFieldIds()[i]);
+
+				if ((i + 1) <
+						notificationTemplate.
+							getAttachmentObjectFieldIds().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (notificationTemplate.getBcc() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -213,6 +240,16 @@ public class NotificationTemplateSerDes {
 			sb.append(_toJSON(notificationTemplate.getName_i18n()));
 		}
 
+		if (notificationTemplate.getObjectDefinitionId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionId\": ");
+
+			sb.append(notificationTemplate.getObjectDefinitionId());
+		}
+
 		if (notificationTemplate.getSubject() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -263,6 +300,16 @@ public class NotificationTemplateSerDes {
 		else {
 			map.put(
 				"actions", String.valueOf(notificationTemplate.getActions()));
+		}
+
+		if (notificationTemplate.getAttachmentObjectFieldIds() == null) {
+			map.put("attachmentObjectFieldIds", null);
+		}
+		else {
+			map.put(
+				"attachmentObjectFieldIds",
+				String.valueOf(
+					notificationTemplate.getAttachmentObjectFieldIds()));
 		}
 
 		if (notificationTemplate.getBcc() == null) {
@@ -353,6 +400,15 @@ public class NotificationTemplateSerDes {
 				String.valueOf(notificationTemplate.getName_i18n()));
 		}
 
+		if (notificationTemplate.getObjectDefinitionId() == null) {
+			map.put("objectDefinitionId", null);
+		}
+		else {
+			map.put(
+				"objectDefinitionId",
+				String.valueOf(notificationTemplate.getObjectDefinitionId()));
+		}
+
 		if (notificationTemplate.getSubject() == null) {
 			map.put("subject", null);
 		}
@@ -394,6 +450,14 @@ public class NotificationTemplateSerDes {
 					notificationTemplate.setActions(
 						(Map)NotificationTemplateSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "attachmentObjectFieldIds")) {
+
+				if (jsonParserFieldValue != null) {
+					notificationTemplate.setAttachmentObjectFieldIds(
+						toLongs((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "bcc")) {
@@ -459,6 +523,14 @@ public class NotificationTemplateSerDes {
 					notificationTemplate.setName_i18n(
 						(Map)NotificationTemplateSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "objectDefinitionId")) {
+
+				if (jsonParserFieldValue != null) {
+					notificationTemplate.setObjectDefinitionId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "subject")) {

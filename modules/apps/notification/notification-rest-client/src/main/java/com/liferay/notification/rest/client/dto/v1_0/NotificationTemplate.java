@@ -58,6 +58,29 @@ public class NotificationTemplate implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public Long[] getAttachmentObjectFieldIds() {
+		return attachmentObjectFieldIds;
+	}
+
+	public void setAttachmentObjectFieldIds(Long[] attachmentObjectFieldIds) {
+		this.attachmentObjectFieldIds = attachmentObjectFieldIds;
+	}
+
+	public void setAttachmentObjectFieldIds(
+		UnsafeSupplier<Long[], Exception>
+			attachmentObjectFieldIdsUnsafeSupplier) {
+
+		try {
+			attachmentObjectFieldIds =
+				attachmentObjectFieldIdsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long[] attachmentObjectFieldIds;
+
 	public String getBcc() {
 		return bcc;
 	}
@@ -279,6 +302,27 @@ public class NotificationTemplate implements Cloneable, Serializable {
 	}
 
 	protected Map<String, String> name_i18n;
+
+	public Long getObjectDefinitionId() {
+		return objectDefinitionId;
+	}
+
+	public void setObjectDefinitionId(Long objectDefinitionId) {
+		this.objectDefinitionId = objectDefinitionId;
+	}
+
+	public void setObjectDefinitionId(
+		UnsafeSupplier<Long, Exception> objectDefinitionIdUnsafeSupplier) {
+
+		try {
+			objectDefinitionId = objectDefinitionIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long objectDefinitionId;
 
 	public Map<String, String> getSubject() {
 		return subject;

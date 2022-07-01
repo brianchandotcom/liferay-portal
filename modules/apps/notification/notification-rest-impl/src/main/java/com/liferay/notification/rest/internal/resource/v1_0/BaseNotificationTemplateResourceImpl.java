@@ -133,7 +133,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/notification/v1.0/notification-templates' -d $'{"bcc": ___, "body": ___, "cc": ___, "description": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/notification/v1.0/notification-templates' -d $'{"attachmentObjectFieldIds": ___, "bcc": ___, "body": ___, "cc": ___, "description": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "objectDefinitionId": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -319,7 +319,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"bcc": ___, "body": ___, "cc": ___, "description": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"attachmentObjectFieldIds": ___, "bcc": ___, "body": ___, "cc": ___, "description": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "objectDefinitionId": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -355,6 +355,11 @@ public abstract class BaseNotificationTemplateResourceImpl
 		if (notificationTemplate.getActions() != null) {
 			existingNotificationTemplate.setActions(
 				notificationTemplate.getActions());
+		}
+
+		if (notificationTemplate.getAttachmentObjectFieldIds() != null) {
+			existingNotificationTemplate.setAttachmentObjectFieldIds(
+				notificationTemplate.getAttachmentObjectFieldIds());
 		}
 
 		if (notificationTemplate.getBcc() != null) {
@@ -405,6 +410,11 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplate.getName_i18n());
 		}
 
+		if (notificationTemplate.getObjectDefinitionId() != null) {
+			existingNotificationTemplate.setObjectDefinitionId(
+				notificationTemplate.getObjectDefinitionId());
+		}
+
 		if (notificationTemplate.getSubject() != null) {
 			existingNotificationTemplate.setSubject(
 				notificationTemplate.getSubject());
@@ -423,7 +433,7 @@ public abstract class BaseNotificationTemplateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"bcc": ___, "body": ___, "cc": ___, "description": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/notification/v1.0/notification-templates/{notificationTemplateId}' -d $'{"attachmentObjectFieldIds": ___, "bcc": ___, "body": ___, "cc": ___, "description": ___, "from": ___, "fromName": ___, "name": ___, "name_i18n": ___, "objectDefinitionId": ___, "subject": ___, "to": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

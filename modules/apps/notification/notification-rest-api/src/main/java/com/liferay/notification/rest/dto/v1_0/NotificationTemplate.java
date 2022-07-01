@@ -94,6 +94,36 @@ public class NotificationTemplate implements Serializable {
 	protected Map<String, Map<String, String>> actions;
 
 	@Schema
+	public Long[] getAttachmentObjectFieldIds() {
+		return attachmentObjectFieldIds;
+	}
+
+	public void setAttachmentObjectFieldIds(Long[] attachmentObjectFieldIds) {
+		this.attachmentObjectFieldIds = attachmentObjectFieldIds;
+	}
+
+	@JsonIgnore
+	public void setAttachmentObjectFieldIds(
+		UnsafeSupplier<Long[], Exception>
+			attachmentObjectFieldIdsUnsafeSupplier) {
+
+		try {
+			attachmentObjectFieldIds =
+				attachmentObjectFieldIdsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long[] attachmentObjectFieldIds;
+
+	@Schema
 	public String getBcc() {
 		return bcc;
 	}
@@ -396,6 +426,34 @@ public class NotificationTemplate implements Serializable {
 	protected Map<String, String> name_i18n;
 
 	@Schema
+	public Long getObjectDefinitionId() {
+		return objectDefinitionId;
+	}
+
+	public void setObjectDefinitionId(Long objectDefinitionId) {
+		this.objectDefinitionId = objectDefinitionId;
+	}
+
+	@JsonIgnore
+	public void setObjectDefinitionId(
+		UnsafeSupplier<Long, Exception> objectDefinitionIdUnsafeSupplier) {
+
+		try {
+			objectDefinitionId = objectDefinitionIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long objectDefinitionId;
+
+	@Schema
 	@Valid
 	public Map<String, String> getSubject() {
 		return subject;
@@ -492,6 +550,26 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		if (attachmentObjectFieldIds != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"attachmentObjectFieldIds\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < attachmentObjectFieldIds.length; i++) {
+				sb.append(attachmentObjectFieldIds[i]);
+
+				if ((i + 1) < attachmentObjectFieldIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (bcc != null) {
@@ -630,6 +708,16 @@ public class NotificationTemplate implements Serializable {
 			sb.append("\"name_i18n\": ");
 
 			sb.append(_toJSON(name_i18n));
+		}
+
+		if (objectDefinitionId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectDefinitionId\": ");
+
+			sb.append(objectDefinitionId);
 		}
 
 		if (subject != null) {

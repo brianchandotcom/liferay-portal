@@ -967,6 +967,18 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"attachmentObjectFieldIds", additionalAssertFieldName)) {
+
+				if (notificationTemplate.getAttachmentObjectFieldIds() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("bcc", additionalAssertFieldName)) {
 				if (notificationTemplate.getBcc() == null) {
 					valid = false;
@@ -1025,6 +1037,16 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
 				if (notificationTemplate.getName_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectDefinitionId", additionalAssertFieldName)) {
+
+				if (notificationTemplate.getObjectDefinitionId() == null) {
 					valid = false;
 				}
 
@@ -1153,6 +1175,19 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"attachmentObjectFieldIds", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						notificationTemplate1.getAttachmentObjectFieldIds(),
+						notificationTemplate2.getAttachmentObjectFieldIds())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("bcc", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						notificationTemplate1.getBcc(),
@@ -1267,6 +1302,19 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				if (!equals(
 						(Map)notificationTemplate1.getName_i18n(),
 						(Map)notificationTemplate2.getName_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectDefinitionId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						notificationTemplate1.getObjectDefinitionId(),
+						notificationTemplate2.getObjectDefinitionId())) {
 
 					return false;
 				}
@@ -1399,6 +1447,11 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("attachmentObjectFieldIds")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("bcc")) {
 			sb.append("'");
 			sb.append(String.valueOf(notificationTemplate.getBcc()));
@@ -1527,6 +1580,11 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("objectDefinitionId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("subject")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1592,6 +1650,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 				from = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				objectDefinitionId = RandomTestUtil.randomLong();
 			}
 		};
 	}

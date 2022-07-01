@@ -103,6 +103,7 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -1401,14 +1402,16 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertTrue(userGroups.size() == 2);
 
-		UserGroup userGroup1 = _userGroupLocalService.fetchUserGroup(
-			group.getCompanyId(), "Test User Group 1");
+		UserGroup userGroup1 =
+			_userGroupLocalService.fetchUserGroupByExternalReferenceCode(
+				group.getCompanyId(), "TESTUSERGROUP01");
 
 		Assert.assertNotNull(userGroup1);
 		Assert.assertTrue(userGroups.contains(userGroup1));
 
-		UserGroup userGroup2 = _userGroupLocalService.fetchUserGroup(
-			group.getCompanyId(), "Test User Group 2");
+		UserGroup userGroup2 =
+			_userGroupLocalService.fetchUserGroupByExternalReferenceCode(
+				group.getCompanyId(), "TESTUSERGROUP02");
 
 		Assert.assertNotNull(userGroup2);
 		Assert.assertTrue(userGroups.contains(userGroup2));

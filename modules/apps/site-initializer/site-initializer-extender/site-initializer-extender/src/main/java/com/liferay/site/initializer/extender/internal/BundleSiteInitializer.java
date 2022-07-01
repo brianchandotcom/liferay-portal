@@ -108,6 +108,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -122,6 +123,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
@@ -3241,15 +3243,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			String name = jsonObject.getString("name");
+			String externalReferenceCode = jsonObject.getString(
+				"externalReferenceCode");
 
-			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
-				serviceContext.getCompanyId(), name);
+			UserGroup userGroup =
+				_userGroupLocalService.fetchUserGroupByExternalReferenceCode(
+					serviceContext.getCompanyId(), externalReferenceCode);
 
 			if (userGroup == null) {
-				userGroup = _userGroupLocalService.addUserGroup(
-					serviceContext.getUserId(), serviceContext.getCompanyId(),
-					name, jsonObject.getString("description"), serviceContext);
+				userGroup = _userGroupLocalService.addOrUpdateUserGroup(
+					externalReferenceCode, serviceContext.getUserId(),
+					serviceContext.getCompanyId(), jsonObject.getString("name"),
+					jsonObject.getString("description"), serviceContext);
 			}
 
 			_userGroupLocalService.addGroupUserGroup(

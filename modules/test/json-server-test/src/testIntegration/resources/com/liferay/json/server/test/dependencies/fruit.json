@@ -53,7 +53,7 @@
 			}
 		}
 	],
-	"grape/filter?merlot": [
+	"grape/filter?name=merlot": [
 		{
 			"id": 1,
 			"name": "Merlot"

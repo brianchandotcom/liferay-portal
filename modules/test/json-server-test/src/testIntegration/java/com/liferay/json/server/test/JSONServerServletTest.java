@@ -422,9 +422,9 @@ public class JSONServerServletTest {
 				"The input is invalid.", message.get("message"));
 		}
 
-		// /fruit/grape/filter?merlot
+		// /fruit/grape/filter?name=merlot
 
-		mockHttpServletRequest.setPathInfo("/fruit/grape/filter?merlot");
+		mockHttpServletRequest.setPathInfo("/fruit/grape/filter?name=merlot");
 
 		mockHttpServletResponse = new MockHttpServletResponse();
 

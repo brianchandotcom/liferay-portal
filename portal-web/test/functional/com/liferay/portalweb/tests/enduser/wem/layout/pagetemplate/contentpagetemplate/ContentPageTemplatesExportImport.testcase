@@ -613,6 +613,8 @@ definition {
 
 			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
 
+			PageEditor.assertFragmentSidebarLoaded();
+
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
 			MouseOver.mouseOverNotVisible(

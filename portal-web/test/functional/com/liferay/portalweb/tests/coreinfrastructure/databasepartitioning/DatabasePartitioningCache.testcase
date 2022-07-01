@@ -1,0 +1,178 @@
+@component-name = "portal-database-partitioning"
+definition {
+
+	property database.partition.enabled = "true";
+	property database.types = "mysql";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Portal Cache";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		PortalInstances.tearDownCP();
+	}
+
+	@priority = "5"
+	test CacheIsOnlyPopulatedToSingleCompany {
+		PortalInstances.openVirtualInstancesAdmin();
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		PortalCache.putCache(
+			cacheValue = "test.value",
+			portalInstanceName = "www.able.com");
+
+		PortalCache.getCache(cacheValue = "null");
+	}
+
+	@priority = "5"
+	test CacheOnlyClearsOnSameCompanyAcrossCluster {
+		property app.server.bundles.size = "1";
+		property cluster.enabled = "true";
+		property minimum.slave.ram = "24";
+		property remote.elasticsearch.enabled = "true";
+
+		PortalInstances.openVirtualInstancesAdmin();
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		PortalCache.putCache(cacheValue = "test.value.node.1.company.1");
+
+		PortalCache.putCache(
+			cacheValue = "test.value.node.1.company.2",
+			portalInstanceName = "www.able.com");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		PortalCache.getCache(cacheValue = "null");
+
+		PortalCache.getCache(
+			cacheValue = "null",
+			portalInstanceName = "www.able.com");
+
+		PortalCache.putCache(
+			cacheValue = "test.value.node.2.company.2",
+			portalInstanceName = "www.able.com");
+
+		User.firstLoginPG();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		PortalCache.getCache(cacheValue = "test.value.node.1.company.1");
+
+		PortalCache.getCache(
+			cacheValue = "null",
+			portalInstanceName = "www.able.com");
+	}
+
+	@priority = "4"
+	test NullCacheDoesNotBreakSiteFromAnotherPartition {
+		PortalInstances.openVirtualInstancesAdmin();
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		PortalInstances.openVirtualInstancesAdmin();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sites",
+			panel = "Control Panel",
+			portlet = "Sites");
+
+		Site.addBlankCP(siteName = "Site on Partition");
+
+		var siteId = Site.getSiteId();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPage(
+			pageName = "homepage",
+			sitePageType = "Widget Page");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "com.liferay.portal.kernel.service.GroupLocalServiceUtil.getGroup(${siteId});");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "No Group exists with the primary key");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.executeServerResourcesActions(actionsDescription = "Clear content cached across the cluster.");
+
+		User.firstLoginPG();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Server Administration");
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "com.liferay.portal.kernel.service.GroupLocalServiceUtil.getGroup(${siteId});");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "No Group exists with the primary key");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		Smoke.viewWelcomeContentPage();
+	}
+
+}

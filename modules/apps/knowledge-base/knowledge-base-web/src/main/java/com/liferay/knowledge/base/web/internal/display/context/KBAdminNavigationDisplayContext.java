@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,8 +65,6 @@ public class KBAdminNavigationDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() throws PortalException {
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -75,83 +73,72 @@ public class KBAdminNavigationDisplayContext {
 
 		String mvcPath = ParamUtil.getString(_httpServletRequest, "mvcPath");
 
-		if (PortletPermissionUtil.contains(
+		return NavigationItemListBuilder.add(
+			() -> PortletPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
-				portletDisplay.getId(), KBActionKeys.VIEW)) {
+				portletDisplay.getId(), KBActionKeys.VIEW),
+			NavigationItemBuilder.setActive(
+				() -> {
+					if (!mvcPath.equals("/admin/view_suggestions.jsp") &&
+						!mvcPath.equals("/admin/view_templates.jsp")) {
 
-			boolean active = false;
+						return true;
+					}
 
-			if (!mvcPath.equals("/admin/view_suggestions.jsp") &&
-				!mvcPath.equals("/admin/view_templates.jsp")) {
-
-				active = true;
-			}
-
-			navigationItems.add(
-				NavigationItemBuilder.setActive(
-					active
-				).setHref(
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/view.jsp"
-					).buildString()
-				).setLabel(
-					LanguageUtil.get(_httpServletRequest, "articles")
-				).build());
-		}
-
-		if (AdminPermission.contains(
+					return false;
+				}
+			).setHref(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/view.jsp"
+				).buildString()
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "articles")
+			).build()
+		).add(
+			() -> AdminPermission.contains(
 				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
-				KBActionKeys.VIEW_KB_TEMPLATES)) {
+				themeDisplay.getScopeGroupId(), KBActionKeys.VIEW_KB_TEMPLATES),
+			NavigationItemBuilder.setActive(
+				() -> {
+					if (mvcPath.equals("/admin/view_templates.jsp")) {
+						return true;
+					}
 
-			boolean active = false;
-
-			if (mvcPath.equals("/admin/view_templates.jsp")) {
-				active = true;
-			}
-
-			navigationItems.add(
-				NavigationItemBuilder.setActive(
-					active
-				).setHref(
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/view_templates.jsp"
-					).buildString()
-				).setLabel(
-					LanguageUtil.get(_httpServletRequest, "templates")
-				).build());
-		}
-
-		if (AdminPermission.contains(
+					return false;
+				}
+			).setHref(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/view_templates.jsp"
+				).buildString()
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "templates")
+			).build()
+		).add(
+			() -> AdminPermission.contains(
 				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
-				KBActionKeys.VIEW_SUGGESTIONS)) {
+				themeDisplay.getScopeGroupId(), KBActionKeys.VIEW_SUGGESTIONS),
+			NavigationItemBuilder.setActive(
+				() -> {
+					if (mvcPath.equals("/admin/view_suggestions.jsp")) {
+						return true;
+					}
 
-			boolean active = false;
-
-			if (mvcPath.equals("/admin/view_suggestions.jsp")) {
-				active = true;
-			}
-
-			navigationItems.add(
-				NavigationItemBuilder.setActive(
-					active
-				).setHref(
-					PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/view_suggestions.jsp"
-					).buildString()
-				).setLabel(
-					LanguageUtil.get(_httpServletRequest, "suggestions")
-				).build());
-		}
-
-		return navigationItems;
+					return false;
+				}
+			).setHref(
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCPath(
+					"/admin/view_suggestions.jsp"
+				).buildString()
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "suggestions")
+			).build()
+		).build();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

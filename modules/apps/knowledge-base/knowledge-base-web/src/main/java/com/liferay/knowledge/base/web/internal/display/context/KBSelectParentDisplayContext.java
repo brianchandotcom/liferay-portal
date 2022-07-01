@@ -248,7 +248,7 @@ public class KBSelectParentDisplayContext {
 
 			_populatePortletBreadcrumbEntries(
 				kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
-				currentURL);
+				portletURL);
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				_httpServletRequest, kbFolder.getName(), currentURL.toString());
@@ -259,7 +259,7 @@ public class KBSelectParentDisplayContext {
 
 			_populatePortletBreadcrumbEntries(
 				kbArticle.getParentResourceClassNameId(),
-				kbArticle.getParentResourcePrimKey(), currentURL);
+				kbArticle.getParentResourcePrimKey(), portletURL);
 
 			PortalUtil.addPortletBreadcrumbEntry(
 				_httpServletRequest, kbArticle.getTitle(),

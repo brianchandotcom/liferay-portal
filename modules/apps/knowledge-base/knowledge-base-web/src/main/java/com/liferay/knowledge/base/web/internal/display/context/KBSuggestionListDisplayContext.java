@@ -65,10 +65,12 @@ public class KBSuggestionListDisplayContext {
 		if (_navigation.equals("new")) {
 			return "there-are-no-new-suggestions";
 		}
-		else if (_navigation.equals("in-progress")) {
+
+		if (_navigation.equals("in-progress")) {
 			return "there-are-no-suggestions-in-progress";
 		}
-		else if (_navigation.equals("resolved")) {
+
+		if (_navigation.equals("resolved")) {
 			return "there-are-no-resolved-suggestions";
 		}
 
@@ -165,10 +167,12 @@ public class KBSuggestionListDisplayContext {
 		if (_navigation.equals("new")) {
 			return KBCommentConstants.STATUS_NEW;
 		}
-		else if (_navigation.equals("in-progress")) {
+
+		if (_navigation.equals("in-progress")) {
 			return KBCommentConstants.STATUS_IN_PROGRESS;
 		}
-		else if (_navigation.equals("resolved")) {
+
+		if (_navigation.equals("resolved")) {
 			return KBCommentConstants.STATUS_COMPLETED;
 		}
 

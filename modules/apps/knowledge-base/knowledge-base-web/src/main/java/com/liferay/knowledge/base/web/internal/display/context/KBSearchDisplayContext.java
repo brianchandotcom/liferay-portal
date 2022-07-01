@@ -130,15 +130,13 @@ public class KBSearchDisplayContext {
 
 			tuples.add(
 				new Tuple(
-					new Object[] {
-						document.get(Field.ENTRY_CLASS_PK),
-						document.get(Field.TITLE),
-						PortalUtil.getUserName(
-							GetterUtil.getLong(document.get(Field.USER_ID)),
-							document.get(Field.USER_NAME)),
-						document.getDate(Field.CREATE_DATE),
-						document.getDate(Field.MODIFIED_DATE)
-					}));
+					document.get(Field.ENTRY_CLASS_PK),
+					document.get(Field.TITLE),
+					PortalUtil.getUserName(
+						GetterUtil.getLong(document.get(Field.USER_ID)),
+						document.get(Field.USER_NAME)),
+					document.getDate(Field.CREATE_DATE),
+					document.getDate(Field.MODIFIED_DATE)));
 		}
 
 		_searchContainer.setResultsAndTotal(() -> tuples, hits.getLength());

@@ -1,0 +1,49 @@
+definition {
+
+	macro getCache {
+		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+
+		var getCacheGroovy = '''
+			import com.liferay.portal.kernel.cache.*;
+
+			com.liferay.portal.kernel.security.auth.CompanyThreadLocal.setCompanyId(${companyId}L);
+
+			PortalCache<String, String> testCache = PortalCacheHelperUtil.getPortalCache(PortalCacheManagerNames.MULTI_VM, "test.cache");
+
+			println testCache.get("test.key");
+		''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${getCacheGroovy}");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "${cacheValue}");
+	}
+
+	macro putCache {
+		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+
+		var putCacheGroovy = '''
+			import com.liferay.portal.kernel.cache.*;
+
+			com.liferay.portal.kernel.security.auth.CompanyThreadLocal.setCompanyId(${companyId}L);
+
+			PortalCache<String, String> testCache = PortalCacheHelperUtil.getPortalCache(PortalCacheManagerNames.MULTI_VM, "test.cache");
+
+			testCache.put("test.key", "${cacheValue}");
+
+			println testCache.get("test.key");
+		''';
+
+		ServerAdministration.executeScript(
+			language = "Groovy",
+			script = "${putCacheGroovy}");
+
+		AssertTextEquals(
+			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+			value1 = "${cacheValue}");
+	}
+
+}

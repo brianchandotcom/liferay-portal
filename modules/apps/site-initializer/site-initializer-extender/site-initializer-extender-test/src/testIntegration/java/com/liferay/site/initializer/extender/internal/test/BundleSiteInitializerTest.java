@@ -1396,24 +1396,22 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertUserGroups(Group group) {
-		List<UserGroup> groupUserGroups =
-			_userGroupLocalService.getGroupUserGroups(group.getGroupId());
+		List<UserGroup> userGroups = _userGroupLocalService.getGroupUserGroups(
+			group.getGroupId());
 
-		Assert.assertTrue(groupUserGroups.size() == 2);
+		Assert.assertTrue(userGroups.size() == 2);
 
 		UserGroup userGroup1 = _userGroupLocalService.fetchUserGroup(
 			group.getCompanyId(), "Test User Group 1");
 
 		Assert.assertNotNull(userGroup1);
-
-		Assert.assertTrue(groupUserGroups.contains(userGroup1));
+		Assert.assertTrue(userGroups.contains(userGroup1));
 
 		UserGroup userGroup2 = _userGroupLocalService.fetchUserGroup(
 			group.getCompanyId(), "Test User Group 2");
 
 		Assert.assertNotNull(userGroup2);
-
-		Assert.assertTrue(groupUserGroups.contains(userGroup2));
+		Assert.assertTrue(userGroups.contains(userGroup2));
 	}
 
 	private void _assertUserOrganizations(

@@ -112,9 +112,9 @@ public class UpgradeReport {
 		PersistenceManager persistenceManager,
 		ReleaseManagerOSGiCommands releaseManagerOSGiCommands) {
 
-		_persistenceManager = persistenceManager;
-
 		_stopWatch.stop();
+
+		_persistenceManager = persistenceManager;
 
 		try {
 			FileUtil.write(

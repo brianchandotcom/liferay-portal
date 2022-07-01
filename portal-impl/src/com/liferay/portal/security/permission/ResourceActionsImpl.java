@@ -439,7 +439,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			ClassLoader classLoader, String... sources)
 		throws ResourceActionsException {
 
-		if (sources == null) {
+		if (ArrayUtil.isEmpty(sources)) {
 			return;
 		}
 
@@ -493,7 +493,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			throw new IllegalArgumentException("Portlet must not be null");
 		}
 
-		if ((sources != null) &&
+		if (ArrayUtil.isNotEmpty(sources) &&
 			PropsValues.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES) {
 
 			for (String source : sources) {
@@ -516,7 +516,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			ClassLoader classLoader, String... sources)
 		throws ResourceActionsException {
 
-		if ((sources == null) ||
+		if (ArrayUtil.isEmpty(sources) ||
 			!PropsValues.RESOURCE_ACTIONS_READ_PORTLET_RESOURCES) {
 
 			return;

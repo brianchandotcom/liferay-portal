@@ -3249,9 +3249,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (userGroup == null) {
 				userGroup = _userGroupLocalService.addUserGroup(
 					serviceContext.getUserId(), serviceContext.getCompanyId(),
-					name,
-					jsonObject.getString("description"),
-					serviceContext);
+					name, jsonObject.getString("description"), serviceContext);
 			}
 
 			_userGroupLocalService.addGroupUserGroup(

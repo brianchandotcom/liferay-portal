@@ -168,7 +168,7 @@ public class SiteInitializerExtension {
 			siteNavigationMenuItemTypeRegistry, siteNavigationMenuLocalService,
 			structuredContentFolderResourceFactory, styleBookEntryZipProcessor,
 			taxonomyCategoryResourceFactory, taxonomyVocabularyResourceFactory,
-			themeLocalService, userAccountResourceFactory, 
+			themeLocalService, userAccountResourceFactory,
 			userGroupLocalService, userLocalService,
 			workflowDefinitionLinkLocalService,
 			workflowDefinitionResourceFactory);

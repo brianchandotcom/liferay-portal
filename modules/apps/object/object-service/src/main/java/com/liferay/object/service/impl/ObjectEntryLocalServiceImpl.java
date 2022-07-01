@@ -2405,14 +2405,20 @@ public class ObjectEntryLocalServiceImpl
 					throw new ObjectEntryValuesException.ExceedsLongSize(
 						16, objectField.getName());
 				}
-				else if (value > ObjectFieldValidationConstants.MAX_SAFE_LONG) {
+				else if (value > ObjectFieldValidationConstants.
+							MAX_VALUE_BUSINESS_TYPE_LONG) {
+
 					throw new ObjectEntryValuesException.ExceedsLongMaxSize(
-						ObjectFieldValidationConstants.MAX_SAFE_LONG,
+						ObjectFieldValidationConstants.
+							MAX_VALUE_BUSINESS_TYPE_LONG,
 						objectField.getName());
 				}
-				else if (value < ObjectFieldValidationConstants.MIN_SAFE_LONG) {
+				else if (value < ObjectFieldValidationConstants.
+							MIN_VALUE_BUSINESS_TYPE_LONG) {
+
 					throw new ObjectEntryValuesException.ExceedsLongMinSize(
-						ObjectFieldValidationConstants.MIN_SAFE_LONG,
+						ObjectFieldValidationConstants.
+							MIN_VALUE_BUSINESS_TYPE_LONG,
 						objectField.getName());
 				}
 			}

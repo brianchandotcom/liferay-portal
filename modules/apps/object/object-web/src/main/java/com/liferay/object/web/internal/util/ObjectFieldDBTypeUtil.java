@@ -89,10 +89,12 @@ public class ObjectFieldDBTypeUtil {
 
 			finalStep.attribute(
 				NumberInfoFieldType.MAX_VALUE,
-				BigDecimal.valueOf(ObjectFieldValidationConstants.MAX_SAFE_LONG)
+				BigDecimal.valueOf(
+					ObjectFieldValidationConstants.MAX_VALUE_BUSINESS_TYPE_LONG)
 			).attribute(
 				NumberInfoFieldType.MIN_VALUE,
-				BigDecimal.valueOf(ObjectFieldValidationConstants.MIN_SAFE_LONG)
+				BigDecimal.valueOf(
+					ObjectFieldValidationConstants.MIN_VALUE_BUSINESS_TYPE_LONG)
 			);
 		}
 		else if (Objects.equals(

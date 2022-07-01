@@ -556,11 +556,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}");
 
-		Pause(locator1 = "30000");
-
-		Refresh();
-
-		AssertVisible(locator1 = "Notifications#PROFILE_BADGE_COUNT");
+		WaitForVisible(locator1 = "Notifications#PROFILE_BADGE_COUNT");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 

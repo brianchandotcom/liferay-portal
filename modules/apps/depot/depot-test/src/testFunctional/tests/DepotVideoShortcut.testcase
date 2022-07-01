@@ -220,8 +220,8 @@ definition {
 	@description = "This ensures that a depot external video in the Blogs content field can be rendered correctly on a connected site when publication is enabled."
 	@priority = "4"
 	test CanViewInlineVideoWithPublication {
-		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config:com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;:enabled=B&quot;true&quot;";
+		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -376,8 +376,8 @@ definition {
 	@description = "This ensures that a depot external video in the WC content field can be rendered correctly on a connect site when publication is enabled."
 	@priority = "4"
 	test CanViewVideoInWCWithPublication {
-		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config:com.liferay.document.library.configuration.FFFriendlyURLEntryFileEntryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;:enabled=B&quot;true&quot;";
+		property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 

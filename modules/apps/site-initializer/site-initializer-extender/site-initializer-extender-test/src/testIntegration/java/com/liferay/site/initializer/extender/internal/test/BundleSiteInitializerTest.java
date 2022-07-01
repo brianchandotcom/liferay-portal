@@ -1395,6 +1395,27 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(totalCount, page.getTotalCount());
 	}
 
+	private void _assertUserGroups(Group group) {
+		List<UserGroup> groupUserGroups =
+			_userGroupLocalService.getGroupUserGroups(group.getGroupId());
+
+		Assert.assertTrue(groupUserGroups.size() == 2);
+
+		UserGroup userGroup1 = _userGroupLocalService.fetchUserGroup(
+			group.getCompanyId(), "Test User Group 1");
+
+		Assert.assertNotNull(userGroup1);
+
+		Assert.assertTrue(groupUserGroups.contains(userGroup1));
+
+		UserGroup userGroup2 = _userGroupLocalService.fetchUserGroup(
+			group.getCompanyId(), "Test User Group 2");
+
+		Assert.assertNotNull(userGroup2);
+
+		Assert.assertTrue(groupUserGroups.contains(userGroup2));
+	}
+
 	private void _assertUserOrganizations(
 			String organizationId, int totalCount,
 			UserAccountResource userAccountResource)
@@ -1406,30 +1427,6 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(page);
 		Assert.assertEquals(totalCount, page.getTotalCount());
-	}
-
-	private void _assertUserGroups(Group group) {
-		List<UserGroup> groupUserGroups =
-			_userGroupLocalService.getGroupUserGroups(group.getGroupId());
-
-		Assert.assertTrue(groupUserGroups.size() == 2);
-
-		UserGroup userGroup1 =
-			_userGroupLocalService.fetchUserGroup(group.getCompanyId(),
-				"Test User Group 1");
-
-		Assert.assertNotNull(userGroup1);
-
-		Assert.assertTrue(groupUserGroups.contains(userGroup1));
-
-		UserGroup userGroup2 =
-			_userGroupLocalService.fetchUserGroup(group.getCompanyId(),
-				"Test User Group 2");
-
-		Assert.assertNotNull(userGroup2);
-
-		Assert.assertTrue(groupUserGroups.contains(userGroup2));
-
 	}
 
 	private void _assertUserRoles(Group group) throws Exception {

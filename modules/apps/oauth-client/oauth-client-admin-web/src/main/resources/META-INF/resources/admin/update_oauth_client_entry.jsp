@@ -42,6 +42,22 @@ renderResponse.setTitle((oAuthClientEntry == null) ? LanguageUtil.get(request, "
 	>
 		<div class="sheet">
 			<aui:fieldset>
+				<liferay-ui:error exception="<%= DuplicateOAuthClientEntryException.class %>" message="oauth-client-duplicate-client" />
+
+				<liferay-ui:error exception="<%= OAuthClientEntryAuthRequestParametersJSONException.class %>">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientEntryAuthRequestParametersJSONException)errorException).getMessage()) %>" key="oauth-client-invalid-auth-request-parameters-json-x" />
+				</liferay-ui:error>
+
+				<liferay-ui:error exception="<%= OAuthClientEntryAuthServerWellKnownURIException.class %>" message="oauth-client-invalid-auth-server-well-known-uri" />
+
+				<liferay-ui:error exception="<%= OAuthClientEntryInfoJSONException.class %>">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientEntryInfoJSONException)errorException).getMessage()) %>" key="oauth-client-invalid-info-json-x" />
+				</liferay-ui:error>
+
+				<liferay-ui:error exception="<%= OAuthClientEntryTokenRequestParametersJSONException.class %>">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientEntryTokenRequestParametersJSONException)errorException).getMessage()) %>" key="oauth-client-invalid-token-request-parameters-json-x" />
+				</liferay-ui:error>
+
 				<aui:input helpMessage="oauth-client-as-well-known-uri-help" label="oauth-client-as-well-known-uri" name="authServerWellKnownURI" type="text" />
 
 				<aui:input helpMessage="oauth-client-info-json-help" label="oauth-client-info-json" name="infoJSON" style="min-height: 600px;" type="textarea" value='{"client_id":"","client_secret":"","redirect_uris":[""],"client_name":"example_client","scope":"openid email profile","subject_type":"public"}' />

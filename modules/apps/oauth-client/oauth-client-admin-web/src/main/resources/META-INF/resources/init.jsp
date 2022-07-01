@@ -28,6 +28,14 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.oauth.client.admin.web.internal.display.context.OAuthClientASLocalMetadataManagementToolbarDisplayContext" %><%@
 page import="com.liferay.oauth.client.admin.web.internal.display.context.OAuthClientEntriesManagementToolbarDisplayContext" %><%@
+page import="com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientASLocalMetadataException" %><%@
+page import="com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientEntryException" %><%@
+page import="com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataJSONException" %><%@
+page import="com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataLocalWellKnownURIException" %><%@
+page import="com.liferay.oauth.client.persistence.exception.OAuthClientEntryAuthRequestParametersJSONException" %><%@
+page import="com.liferay.oauth.client.persistence.exception.OAuthClientEntryAuthServerWellKnownURIException" %><%@
+page import="com.liferay.oauth.client.persistence.exception.OAuthClientEntryInfoJSONException" %><%@
+page import="com.liferay.oauth.client.persistence.exception.OAuthClientEntryTokenRequestParametersJSONException" %><%@
 page import="com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata" %><%@
 page import="com.liferay.oauth.client.persistence.model.OAuthClientEntry" %><%@
 page import="com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalServiceUtil" %><%@

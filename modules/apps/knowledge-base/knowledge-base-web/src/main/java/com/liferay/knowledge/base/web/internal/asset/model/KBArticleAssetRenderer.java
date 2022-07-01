@@ -118,19 +118,9 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.fetchGroup(_kbArticle.getGroupId());
-
-		if (group.isCompany()) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)liferayPortletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			group = themeDisplay.getScopeGroup();
-		}
-
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
-				liferayPortletRequest, group,
+				liferayPortletRequest, _getGroup(liferayPortletRequest),
 				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0, 0,
 				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
@@ -211,6 +201,20 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 		}
 
 		return kbArticle.getResourcePrimKey();
+	}
+
+	private Group _getGroup(LiferayPortletRequest liferayPortletRequest) {
+		Group group = GroupLocalServiceUtil.fetchGroup(_kbArticle.getGroupId());
+
+		if ((group != null) && !group.isCompany()) {
+			return group;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getScopeGroup();
 	}
 
 	private final HtmlParser _htmlParser;

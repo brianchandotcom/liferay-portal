@@ -87,4 +87,27 @@ definition {
 			staging = "true");
 	}
 
+	@description = "This test covers LPS-154460. It ensures that an image is rendered correctly in a Media Gallery widget after an upgrade from 7.0.10.15."
+	@priority = "4"
+	test CanPublishImageInMGAfterUpgradeFrom701015Archive {
+		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
+		property portal.version = "7.0.10.15";
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.gotoSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
+
+		DMDocument.viewPGViaMG(
+			mgDocumentTitle = "Commerce_White.jpg",
+			staging = "true");
+	}
+
 }

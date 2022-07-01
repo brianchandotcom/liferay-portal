@@ -32,6 +32,21 @@ import org.json.JSONObject;
 public class JUnitTestClass extends BaseTestClass {
 
 	@Override
+	public Long getAverageDuration() {
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		Long averageDuration = batchTestClassGroup.getAverageTestDuration(
+			JenkinsResultsParserUtil.combine(
+				_getPackageName(), ".", _getClassName()));
+
+		if (averageDuration != null) {
+			return averageDuration;
+		}
+
+		return super.getAverageDuration();
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 

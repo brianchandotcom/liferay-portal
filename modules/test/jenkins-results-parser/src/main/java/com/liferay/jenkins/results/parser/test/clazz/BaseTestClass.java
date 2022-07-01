@@ -59,6 +59,13 @@ public abstract class BaseTestClass implements TestClass {
 	}
 
 	@Override
+	public Long getAverageDuration() {
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		return batchTestClassGroup.getAverageTestDuration(getName());
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 

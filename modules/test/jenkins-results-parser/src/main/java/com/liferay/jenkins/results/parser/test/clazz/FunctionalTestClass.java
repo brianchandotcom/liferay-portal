@@ -50,6 +50,20 @@ public class FunctionalTestClass extends BaseTestClass {
 	}
 
 	@Override
+	public Long getAverageDuration() {
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		Long averageDuration = batchTestClassGroup.getAverageTestDuration(
+			getTestClassMethodName());
+
+		if (averageDuration != null) {
+			return averageDuration;
+		}
+
+		return super.getAverageDuration();
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 

@@ -315,7 +315,7 @@ function handleSearchKeyup() {
 		listbox.innerHTML = '';
 	}
 	else {
-		setListboxItems(input.attributes.options);
+		setListboxItems(input.attributes.options.slice(0, 10));
 
 		return;
 	}

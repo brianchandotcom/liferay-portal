@@ -1651,13 +1651,13 @@ definition {
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
-			increaseMinutes = "2");
+			increaseMinutes = "1");
 
 		Navigator.openURL();
 
 		Notifications.waitForNotificationFlexibly(
 			flexibleRefreshingTime = "3000",
-			waitingTime = "120000");
+			waitingTime = "60000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -1950,13 +1950,13 @@ definition {
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
-			increaseMinutes = "2");
+			increaseMinutes = "1");
 
 		Navigator.openURL();
 
 		Notifications.waitForNotificationFlexibly(
 			flexibleRefreshingTime = "3000",
-			waitingTime = "120000");
+			waitingTime = "60000");
 
 		Notifications.gotoNotifications();
 
@@ -2120,7 +2120,7 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		DMDocument.setReviewDate(increaseMinutes = "2");
+		DMDocument.setReviewDate(increaseMinutes = "1");
 
 		Navigator.openURL();
 
@@ -2130,7 +2130,7 @@ definition {
 
 		Notifications.waitForNotificationFlexibly(
 			flexibleRefreshingTime = "3000",
-			waitingTime = "120000");
+			waitingTime = "60000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -2177,13 +2177,13 @@ definition {
 
 		DMDocument.setReviewDate(
 			enableReviewDate = "true",
-			increaseMinutes = "2");
+			increaseMinutes = "1");
 
 		Navigator.openURL();
 
 		Notifications.waitForNotificationFlexibly(
 			flexibleRefreshingTime = "3000",
-			waitingTime = "120000");
+			waitingTime = "60000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -2229,13 +2229,13 @@ definition {
 
 		DMDocument.setReviewDate(
 			enableReviewDate = "true",
-			increaseMinutes = "2");
+			increaseMinutes = "1");
 
 		Navigator.openURL();
 
 		Notifications.waitForNotificationFlexibly(
 			flexibleRefreshingTime = "3000",
-			waitingTime = "120000");
+			waitingTime = "60000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -2470,13 +2470,13 @@ definition {
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
-			increaseMinutes = "2");
+			increaseMinutes = "1");
 
 		Navigator.openURL();
 
 		Notifications.waitForNotificationFlexibly(
 			flexibleRefreshingTime = "3000",
-			waitingTime = "120000");
+			waitingTime = "60000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 

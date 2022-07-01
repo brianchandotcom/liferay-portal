@@ -124,7 +124,7 @@ public class UpgradeReport {
 						_getDateInfo(), _getPortalVersionsInfo(),
 						_getDialectInfo(), _getPropertiesInfo(),
 						_getDLStorageInfo(), _getDatabaseTablesInfo(),
-						_getTotalUpgradeTimeInfo(), _getUpgradeProcessesInfo(),
+						_getUpgradeTimeInfo(), _getUpgradeProcessesInfo(),
 						_getLogEventsInfo("errors"),
 						_getLogEventsInfo("warnings"),
 						releaseManagerOSGiCommands.check()
@@ -549,12 +549,6 @@ public class UpgradeReport {
 		}
 	}
 
-	private String _getTotalUpgradeTimeInfo() {
-		return String.format(
-			"Liferay core upgrade process completed in %s seconds",
-			_stopWatch.getTime() / Time.SECOND);
-	}
-
 	private String _getUpgradeProcessesInfo() {
 		List<String> messages = _eventMessages.get(
 			UpgradeProcess.class.getName());
@@ -610,6 +604,12 @@ public class UpgradeReport {
 		}
 
 		return sb.toString();
+	}
+
+	private String _getUpgradeTimeInfo() {
+		return String.format(
+			"Upgrade completed in %s seconds",
+			_stopWatch.getTime() / Time.SECOND);
 	}
 
 	private Map<String, Integer> _sort(Map<String, Integer> map) {

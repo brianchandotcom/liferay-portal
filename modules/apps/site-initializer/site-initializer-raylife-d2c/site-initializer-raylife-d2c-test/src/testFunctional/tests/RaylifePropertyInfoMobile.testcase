@@ -6,12 +6,15 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 
+	var testSiteName = "Raylife D2C";
+	var testSiteURL = "raylife-d2c";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(site = "${testSiteName}");
 	}
 
 	tearDown {
@@ -32,7 +35,7 @@ definition {
 	test CanContinueFlowInSwimmingPoolPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 
@@ -90,7 +93,7 @@ definition {
 	test CanViewInformationPresentWhenReturnPageTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -122,7 +125,7 @@ definition {
 	test ClickOptionInBuildingAddressPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -154,7 +157,7 @@ definition {
 	test ClickOptionInConductBusinessPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -182,7 +185,7 @@ definition {
 	test ClickOptionInSwimmingPoolPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 
@@ -240,7 +243,7 @@ definition {
 	test EnabledContinueButtonBuildingConstrutedPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -294,7 +297,7 @@ definition {
 	test EnabledContinueButtonInSquareBuildingPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -336,7 +339,7 @@ definition {
 	test EnabledContinueButtonInStoriesBuildingPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -372,7 +375,7 @@ definition {
 	test EnabledContinueButtonInTotalSquareBuildingPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -420,7 +423,7 @@ definition {
 	test EnabledContinueButtonTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -450,7 +453,7 @@ definition {
 	test SectionDivingBoardsAppearsPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 
@@ -510,7 +513,7 @@ definition {
 	test WhenClickOptionNoContinueButtonEnabledPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 
@@ -574,7 +577,7 @@ definition {
 	test WhenClickOptionNoFlowContinuePhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.getAQuote();
 

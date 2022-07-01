@@ -6,12 +6,15 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 
+	var testSiteName = "Raylife D2C";
+	var testSiteURL = "raylife-d2c";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(site = "${testSiteName}");
 	}
 
 	tearDown {
@@ -30,7 +33,7 @@ definition {
 	@description = "LPS-146214 - Verify Loading Page is reachable after pressing Continue on Property page. (Tablet)"
 	@priority = "5"
 	test IfContinueFromPropertyGoToLoadingPageTablet {
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -58,7 +61,7 @@ definition {
 	@description = "LPS-146121 - Verify Loading Page redirects automatically to Quote Profile Page. (SmartPhone)"
 	@priority = "4"
 	test IfRedirectsToQuoteProfilePagePhone {
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 

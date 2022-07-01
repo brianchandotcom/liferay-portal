@@ -6,12 +6,15 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 
+	var testSiteName = "Raylife D2C";
+	var testSiteURL = "raylife-d2c";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(site = "${testSiteName}");
 	}
 
 	tearDown {
@@ -32,7 +35,7 @@ definition {
 	test CanSaveExitTheMenuInSectionEmployeesTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -58,7 +61,7 @@ definition {
 	test CanSaveExitTheMenuInSectionPropertyTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -88,7 +91,7 @@ definition {
 	test CanViewSaveExitOnMenuInSectionBasicsPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -104,7 +107,7 @@ definition {
 	test CanViewSaveExitOnMenuInSectionBusinessPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -124,7 +127,7 @@ definition {
 	test ClickingCloseButtonOptionsDissapearPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -144,7 +147,7 @@ definition {
 	test NoSaveExitMenuAppearLandingPagePhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		AssertElementNotPresent(locator1 = "RaylifeMobile#SAVE_EXIT_MENU");
 	}

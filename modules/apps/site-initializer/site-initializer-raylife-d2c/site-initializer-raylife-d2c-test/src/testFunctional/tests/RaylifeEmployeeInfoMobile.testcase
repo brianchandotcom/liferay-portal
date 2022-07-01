@@ -6,12 +6,15 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 
+	var testSiteName = "Raylife D2C";
+	var testSiteURL = "raylife-d2c";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(site = "${testSiteName}");
 	}
 
 	tearDown {
@@ -32,7 +35,7 @@ definition {
 	test CanBackPageWithPreviousButtonPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -74,7 +77,7 @@ definition {
 	test CanClickTheOptionsInAnnualGrossPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -128,7 +131,7 @@ definition {
 	test CanClickTheOptionsInAnnualPayrollEmployeesPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -194,7 +197,7 @@ definition {
 	test CanClickTheOptionsInAnnualPayrollPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -254,7 +257,7 @@ definition {
 	test CanClickTheOptionsInBusinessOperatePhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -298,7 +301,7 @@ definition {
 	test CanClickTheOptionsInTimeEmployeesPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -346,7 +349,7 @@ definition {
 	test CanViewAllInformationBackPageTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -374,7 +377,7 @@ definition {
 	test CanViewContinueButtonActivatedTablet {
 		SetWindowSize(value1 = "800,1024");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -400,7 +403,7 @@ definition {
 	test ContinueButtonActivatedInEmployerIdentificationPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -432,7 +435,7 @@ definition {
 	test ContinueButtonActivatedInStartYourBusinessPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -470,7 +473,7 @@ definition {
 	test ContinueButtonEnabledWhenNoOptionIsSelectedPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -498,7 +501,7 @@ definition {
 	test FieldAppearsWhenClickYesOnOptionPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -524,7 +527,7 @@ definition {
 	test FieldDoesNotAppearWhenTheNoOptionIsClickedPhone {
 		SetWindowSize(value1 = "360,720");
 
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 

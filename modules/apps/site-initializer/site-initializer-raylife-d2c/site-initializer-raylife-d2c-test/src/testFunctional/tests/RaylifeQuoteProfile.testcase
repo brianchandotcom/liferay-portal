@@ -6,12 +6,15 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 
+	var testSiteName = "Raylife D2C";
+	var testSiteURL = "raylife-d2c";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(site = "${testSiteName}");
 	}
 
 	tearDown {
@@ -30,7 +33,7 @@ definition {
 	@description = "LPS-144329 - Verify if clicking on the button to go back and edit information returns you to the property page"
 	@priority = "4"
 	test CanGoToPropertyPageByEditButton {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -64,7 +67,7 @@ definition {
 	@description = "LPS-142603 - Verify if Quote Profile Info panel is shown"
 	@priority = "4"
 	test CanViewQuoteProfileInfoPanel {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -100,7 +103,7 @@ definition {
 	@description = "LPS-143049 - Verify if the quote profile information panel has the information about Estimated Annual Gross Revenue previously entered by the user on Employee page"
 	@priority = "4"
 	test CanViewUserDataAnnualRevenue {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -136,7 +139,7 @@ definition {
 	@description = "LPS-143058 - Verify if the quote profile information panel has the information about City previously entered by the user on Basics - Contact Info page"
 	@priority = "4"
 	test CanViewUserDataCity {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -172,7 +175,7 @@ definition {
 	@description = "LPS-142604 - Verify if the quote profile information panel has the information about Primary Industry previously entered by the user on the Basics - Primary Industry page"
 	@priority = "4"
 	test CanViewUserDataPrimaryIndustry {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -208,7 +211,7 @@ definition {
 	@description = "LPS-143059 - Verify if the quote profile information panel has the information about State previously entered by the user on Basics - Contact Info page"
 	@priority = "4"
 	test CanViewUserDataState {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -244,7 +247,7 @@ definition {
 	@description = "LPS-143057 - Verify if the quote profile information panel has the information about Street Address previously entered by the user on Basics - Contact Info page"
 	@priority = "4"
 	test CanViewUserDataStreetAddress {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -280,7 +283,7 @@ definition {
 	@description = "LPS-143061 - Verify if the quote profile information panel has the information about Total Employees previously entered by the user on Employee page"
 	@priority = "4"
 	test CanViewUserDataTotalEmployees {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -316,7 +319,7 @@ definition {
 	@description = "LPS-143060 - Verify if the quote profile information panel has the information about ZipCode previously entered by the user on Basics - Contact Info page"
 	@priority = "4"
 	test CanViewUserDataZipCode {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 

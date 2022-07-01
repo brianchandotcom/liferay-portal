@@ -7,12 +7,15 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 
+	var testSiteName = "Raylife D2C";
+	var testSiteURL = "raylife-d2c";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(site = "${testSiteName}");
 	}
 
 	tearDown {
@@ -31,7 +34,7 @@ definition {
 	@description = "LPS-143993 - Check if entering a valid email address, user can retrieve all his/her quote information"
 	@priority = "4"
 	test CanRetrieveAllQuote {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -73,7 +76,7 @@ definition {
 	@description = "LPS-143994 -  Verify if entering a valid email address, the Email Sent Fragment is shown"
 	@priority = "3"
 	test CanViewEmailFragmentSent {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -99,7 +102,7 @@ definition {
 	@description = "LPS-143992 - Check if you put in a different email address, the error message appears We could not find your quote. Please start a new one."
 	@priority = "3"
 	test CanViewErrorMessageForEmailDifferent {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
 
@@ -117,7 +120,7 @@ definition {
 	@description = "LPS-143991 - Check that the error message 'Please enter a valid e-mail address' appears, when an invalid e-mail address is entered in Retrieve a Quote."
 	@priority = "3"
 	test CanViewErrorMessageForEmailInvalid {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
 
@@ -135,7 +138,7 @@ definition {
 	@description = "LPS-144000 -  Verify if on the Email Sent Fragment, the Start a New Quote link goes to Get a Quote Fragment"
 	@priority = "3"
 	test CanViewQuoteFragment {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
 
@@ -151,7 +154,7 @@ definition {
 	@description = "LPS-143983 - Verify that when clicking on Retrieve a Quote link, users will be navigated to view the Retrieve Quote Fragment on the Homepage"
 	@priority = "5"
 	test CanViewRetrieveAQuoteInHomePage {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
 
@@ -161,7 +164,7 @@ definition {
 	@description = "LPS-143984 - Verify that when clicking on Start a New Quote, users will be navigated to the home page"
 	@priority = "3"
 	test ClickingStartNewQuoteGoesHomePage {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
 
@@ -173,7 +176,7 @@ definition {
 	@description = "LPS-143998 - Verify if on the Email Sent Fragment, the user’s email is the same entered from the previous fragment"
 	@priority = "4"
 	test EmailEqualsApplication {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -199,7 +202,7 @@ definition {
 	@description = "LPS-143990 - Check that when entering a valid email address, the 'Continue Quote' button is enabled"
 	@priority = "3"
 	test IsContinueQuoteButtonEnabledOnRetrieveAQuote {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		Click(locator1 = "RaylifeRetrieveQuote#RETRIEVE_QUOTE");
 
@@ -223,7 +226,7 @@ definition {
 	@description = "LPS-143998 - Verify if on the Email Sent Fragment, the user’s first name is the same entered from their matched quote application"
 	@priority = "4"
 	test NameEqualsApplication {
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 

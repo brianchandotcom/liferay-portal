@@ -6,12 +6,15 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 
+	var testSiteName = "Raylife D2C";
+	var testSiteURL = "raylife-d2c";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(site = "${testSiteName}");
 	}
 
 	tearDown {
@@ -32,7 +35,7 @@ definition {
 	test CanViewConfirmSuccessfulPayment {
 		RaylifePaymentMethod.configurationPaypal();
 
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -64,7 +67,7 @@ definition {
 	test CanViewPaymentMethodNotSelected {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -90,7 +93,7 @@ definition {
 	test CheckRaylifeTermsAndConditionsNotSelected {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -118,7 +121,7 @@ definition {
 	test CheckSelectInstallmentPayment {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -152,7 +155,7 @@ definition {
 	test IsPayNowButtonEnabled {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -182,7 +185,7 @@ definition {
 	test ViewExtendedPaymentSection {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 
@@ -208,7 +211,7 @@ definition {
 	test ViewPaymentCollectionOptions {
 		RaylifePaymentMethod.enablePayPalPayment();
 
-		ApplicationsMenu.gotoSite(key_site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		RaylifeHomePage.startFlow();
 

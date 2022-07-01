@@ -7,6 +7,9 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 
+	var testSiteName = "Raylife D2C";
+	var testSiteURL = "raylife-d2c";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
@@ -39,13 +42,13 @@ definition {
 			key_title = "Add Site",
 			locator1 = "IFrame#MODAL_ANY");
 
-		PortletEntry.inputName(name = "Raylife");
+		PortletEntry.inputName(name = "Raylife D2C");
 
 		Click(locator1 = "Button#ADD");
 
 		Site.openSitesAdmin();
 
-		while (IsElementNotPresent(key_siteName = "Raylife", locator1 = "Sites#SITE_TABLE_NAME")) {
+		while (IsElementNotPresent(key_siteName = "Raylife D2C", locator1 = "Sites#SITE_TABLE_NAME")) {
 			Refresh();
 
 			WaitForPageLoad();
@@ -55,7 +58,7 @@ definition {
 	@description = "LPS-142178 - Verify if when Raylife is created, a Catalog in Commerce will be created for it as well."
 	@priority = "5"
 	test CatalogForRaylifeIsCreated {
-		Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -77,7 +80,7 @@ definition {
 	@description = "LPS-142180 - Verify if, when Raylife is created, Products related to Raylife are also created."
 	@priority = "5"
 	test ProductsForRaylifeIsCreated {
-		Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(siteName = "${testSiteName}");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

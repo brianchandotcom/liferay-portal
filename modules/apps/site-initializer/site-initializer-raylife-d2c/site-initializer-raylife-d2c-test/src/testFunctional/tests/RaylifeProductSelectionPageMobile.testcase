@@ -6,12 +6,15 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 
+	var testSiteName = "Raylife D2C";
+	var testSiteURL = "raylife-d2c";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(site = "${testSiteName}");
 	}
 
 	tearDown {
@@ -30,7 +33,7 @@ definition {
 	@description = "LPS-146122 - Check if I can follow the flow by clicking on the continue button (Smartphone)"
 	@priority = "5"
 	test CanClickInContinueButtonPhone {
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 
@@ -52,7 +55,7 @@ definition {
 	@description = "LPS-146126 - Check if I can follow the flow by clicking on the continue button (Tablet)"
 	@priority = "5"
 	test CanClickInContinueButtonTablet {
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -74,7 +77,7 @@ definition {
 	@description = "LPS-146704 - Check if I can go back to the previous page (Smartphone)"
 	@priority = "5"
 	test CanViewBackPagePhone {
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 
@@ -92,7 +95,7 @@ definition {
 	@description = "LPS-146705 - Check if I can go back to the previous page (Tablet)"
 	@priority = "5"
 	test CanViewBackPageTablet {
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -110,7 +113,7 @@ definition {
 	@description = "LPS-146120 - Verify that the continue button is activated when selecting a product (Smartphone)"
 	@priority = "5"
 	test CanViewContinueButtonActivatedPhone {
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 
@@ -130,7 +133,7 @@ definition {
 	@description = "LPS-146125 - Verify that the continue button is activated when selecting a product (Tablet)"
 	@priority = "5"
 	test CanViewContinueButtonActivatedTablet {
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 

@@ -6,12 +6,15 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife D2C";
 
+	var testSiteName = "Raylife D2C";
+	var testSiteURL = "raylife-d2c";
+
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(site = "${testSiteName}");
 	}
 
 	tearDown {
@@ -30,7 +33,7 @@ definition {
 	@description = "LPS-148626 - Verify if when all required fields are filled in the confirm uploads button is enabled"
 	@priority = "4"
 	test UploadDocumentButtonIsEnabledTablet {
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 
@@ -74,7 +77,7 @@ definition {
 	@description = "LPS-148623 - Verify if when users complete the upload documents section, that completed section is indicated with a green checkmark"
 	@priority = "5"
 	test UploadDocumentSectionCompletedPhone {
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		SetWindowSize(value1 = "360,720");
 
@@ -106,7 +109,7 @@ definition {
 	@description = "LPS-148625 - Verify if when users complete the upload documents section, that completed section is indicated with a green checkmark"
 	@priority = "5"
 	test UploadDocumentsSectionCompletedTablet {
-		ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "${testSiteName}");
 
 		SetWindowSize(value1 = "800,1024");
 

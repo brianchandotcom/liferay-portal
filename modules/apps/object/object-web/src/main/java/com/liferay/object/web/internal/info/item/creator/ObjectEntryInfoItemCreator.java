@@ -27,9 +27,14 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -182,7 +187,9 @@ public class ObjectEntryInfoItemCreator
 
 			throw new InfoFormValidationException.InvalidFileExtension(
 				infoFieldUniqueId,
-				objectEntryValuesException.getFileExtension());
+				_getAcceptedFileExtensions(
+					_objectDefinition.getObjectDefinitionId(),
+					objectEntryValuesException.getObjectFieldName()));
 		}
 		catch (ObjectEntryValuesException.ListTypeEntry
 					objectEntryValuesException) {
@@ -215,6 +222,23 @@ public class ObjectEntryInfoItemCreator
 
 			throw new InfoFormException();
 		}
+	}
+
+	private String _getAcceptedFileExtensions(
+		long objectDefinitionId, String objectFieldName) {
+
+		ObjectField objectField = ObjectFieldLocalServiceUtil.fetchObjectField(
+			objectDefinitionId, objectFieldName);
+
+		ObjectFieldSetting acceptedFileExtensionsObjectFieldSetting =
+			ObjectFieldSettingLocalServiceUtil.fetchObjectFieldSetting(
+				objectField.getObjectFieldId(), "acceptedFileExtensions");
+
+		if (acceptedFileExtensionsObjectFieldSetting == null) {
+			return StringPool.BLANK;
+		}
+
+		return acceptedFileExtensionsObjectFieldSetting.getValue();
 	}
 
 	private long _getGroupId(

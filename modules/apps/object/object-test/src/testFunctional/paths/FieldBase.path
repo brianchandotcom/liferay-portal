@@ -12,7 +12,7 @@
 <tbody>
 	<tr>
 		<td>ERROR_MESSAGE_REQUIRED_FIELD</td>
-		<td>//label[contains(text(), '${key_fieldLabel}')]/../div[contains(@class, 'form-feedback-group') and .='Required']</td>
+		<td>//label[contains(text(),'${key_fieldLabel}')]/../div[contains(@class, 'form-feedback-group') and contains(.,'Required')]</td>
 		<td></td>
 	</tr>
 </tbody>

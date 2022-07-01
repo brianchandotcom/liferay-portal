@@ -49,7 +49,9 @@ export function getPoliciesStatus(totalCount) {
 }
 
 export function getPolicies() {
-	return axios.get(`${DeliveryAPI}/`);
+	return axios.get(
+		`${DeliveryAPI}/?fields=policyStatus,productName&pageSize=200&aggregationTerms=policyStatus&filter=policyStatus ne 'expired' and policyStatus ne 'declined'`
+	);
 }
 
 export function getSixMonthsAgoPolicies() {

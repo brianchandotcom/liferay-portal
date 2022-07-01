@@ -49,7 +49,7 @@ const addPolicyEntryData = async ({
 		body: JSON.stringify({
 			commission: (price * 0.2).toString(),
 			currencyType: 'USD',
-			dataJSON: JSON.stringify({monthlyPremium: price / 12, productName}),
+			dataJSON: JSON.stringify({monthlyPremium: price / 12}),
 			policyCreateDate: nowDate,
 			policyOwnerEmail: email,
 			policyOwnerName: `${firstName} ${lastName}`,
@@ -57,6 +57,7 @@ const addPolicyEntryData = async ({
 				key: 'executed',
 				name: 'Executed',
 			},
+			productName,
 			r_quoteToPolicies_c_raylifeQuoteId: quoteId,
 			r_userToPolicies_userId: userId,
 			startDate: nowDate,
@@ -190,7 +191,7 @@ const main = async () => {
 		);
 	}
 	else {
-		const discountInPrice = quoteComparison.price * 0.05;
+		const discountInPrice = quoteDataJSON.price * 0.05;
 
 		const discountDescription = `You saved 5% ($${Number(
 			discountInPrice || 0

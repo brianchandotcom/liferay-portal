@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -16,11 +15,7 @@
 import React, {useEffect, useState} from 'react';
 
 import DonutChart from '../../../common/components/donut-chart';
-import {
-	getApplications,
-	getPolicies,
-	getProductQuotes,
-} from '../../../common/services';
+import {getPolicies, getProductQuotes} from '../../../common/services';
 
 export default function () {
 	const [chartTitle, setChartTitle] = useState('');
@@ -34,73 +29,59 @@ export default function () {
 	const MAX_NAME_LENGHT = 15;
 
 	useEffect(() => {
-		Promise.allSettled([
-			getProductQuotes(),
-			getPolicies(),
-			getApplications(),
-		]).then((results) => {
-			const [
-				productQuotesResult,
-				policiesResult,
-				applicationResult,
-			] = results;
+		Promise.allSettled([getProductQuotes(), getPolicies()]).then(
+			(results) => {
+				const [productQuotesResult, policiesResult] = results;
 
-			const columnsArr = [];
-			const colorsObj = {};
+				const columnsArr = [];
+				const colorsObj = {};
 
-			const applications = policiesResult?.value?.data?.items?.map(
-				(policy) => {
-					return applicationResult?.value?.data?.items?.filter(
-						(application) =>
-							policy.r_applicationToPolicies_c_raylifeApplicationId ===
-							application.id
-					)[0];
-				}
-			);
+				const activePolicies = policiesResult?.value?.data;
 
-			setChartTitle(applications?.length);
+				setChartTitle(activePolicies?.totalCount);
 
-			productQuotesResult?.value?.data?.items?.map(
-				(productQuote, index) => {
-					const countApplications = applications?.filter(
-						(application) =>
-							Number(application.productQuote) ===
-							productQuote.productId
-					).length;
+				productQuotesResult?.value?.data?.items?.map(
+					(productQuote, index) => {
+						const countActivePolicies = activePolicies?.items.filter(
+							(application) =>
+								Object.values(productQuote.name).toString() ===
+								application.productName
+						).length;
 
-					const shortDescription = Object.values(
-						productQuote.shortDescription
-					)[0];
+						const shortDescription = Object.values(
+							productQuote.shortDescription
+						)[0];
 
-					const [fullName] = Object.values(productQuote.name);
-					let productName = fullName;
+						const [fullName] = Object.values(productQuote.name);
+						let productName = fullName;
 
-					const productAbbrevation = productName
-						.split(' ')
-						.map((product) => product.charAt(0))
-						.join('');
+						const productAbbrevation = productName
+							.split(' ')
+							.map((product) => product.charAt(0))
+							.join('');
 
-					if (productName?.length > MAX_NAME_LENGHT) {
-						productName =
-							shortDescription === ''
-								? productAbbrevation
-								: shortDescription;
+						if (productName?.length > MAX_NAME_LENGHT) {
+							productName =
+								shortDescription === ''
+									? productAbbrevation
+									: shortDescription;
+						}
+
+						colorsObj[fullName] = colorsArray[index];
+						columnsArr[index] = [
+							fullName,
+							countActivePolicies,
+							productName,
+						];
 					}
+				);
 
-					colorsObj[fullName] = colorsArray[index];
-					columnsArr[index] = [
-						fullName,
-						countApplications,
-						productName,
-					];
-				}
-			);
+				setColumns(columnsArr);
+				setColors(colorsObj);
 
-			setColumns(columnsArr);
-			setColors(colorsObj);
-
-			setLoadData(true);
-		});
+				setLoadData(true);
+			}
+		);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

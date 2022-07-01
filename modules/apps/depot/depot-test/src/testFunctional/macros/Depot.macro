@@ -36,7 +36,7 @@ definition {
 		if ("${remoteStaging}" == "true") {
 			AssertConfirm(value1 = "Are you sure you want to activate remote staging for ${depotName}?");
 
-			WaitForVisible(locator1 = "Staging#PROCESS_SUCCESSFUL");
+			WaitForVisible(locator1 = "Message#SUCCESS");
 
 			AssertTextEquals(
 				locator1 = "Staging#STAGING_INDICATOR_TITLE_DEPOT",

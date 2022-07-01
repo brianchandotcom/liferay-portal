@@ -28,7 +28,12 @@ import React, {
 } from 'react';
 
 import {getPickListItems} from '../utils/api';
-import {defaultLanguageId} from '../utils/locale';
+import {HEADERS} from '../utils/constants';
+import {defaultLanguageId, locale} from '../utils/locale';
+
+import './ModalAddFilter.scss';
+
+HEADERS.append('Accept-Language', locale!.symbol);
 
 const PICKLIST_OPERATORS: LabelValueObject[] = [
 	{
@@ -42,6 +47,13 @@ const PICKLIST_OPERATORS: LabelValueObject[] = [
 	{
 		label: Liferay.Language.get('excludes'),
 		value: 'excludes',
+	},
+];
+
+const DATE_OPERATORS: LabelValueObject[] = [
+	{
+		label: Liferay.Language.get('range'),
+		value: 'range',
 	},
 ];
 
@@ -279,6 +291,8 @@ export function ModalAddFilter({
 				selectedFilterBy?.businessType === 'Workflow Status' ||
 					selectedFilterBy?.businessType === 'Picklist'
 					? checkedItems
+					: selectedFilterBy?.businessType === 'Date'
+					? items
 					: undefined,
 				value ?? undefined
 			);
@@ -323,8 +337,11 @@ export function ModalAddFilter({
 						selectedFilterBy?.businessType === 'Integer' ||
 						selectedFilterBy?.businessType === 'LongInteger'
 							? NUMERIC_OPERATORS
+							: selectedFilterBy?.businessType === 'Date'
+							? DATE_OPERATORS
 							: PICKLIST_OPERATORS
 					}
+					required
 					value={selectedFilterType?.label}
 				/>
 
@@ -351,6 +368,44 @@ export function ModalAddFilter({
 						options={items}
 						setOptions={setItems}
 					/>
+				)}
+
+				{selectedFilterBy?.businessType === 'Date' && (
+					<>
+						<Input
+							label={Liferay.Language.get('start')}
+							onChange={({target: {value}}) => {
+								setItems([
+									...items.filter(
+										(item) => item.value !== 'ge'
+									),
+									{
+										label: value,
+										value: 'ge',
+									},
+								]);
+							}}
+							required
+							type="date"
+						/>
+
+						<Input
+							label={Liferay.Language.get('end')}
+							onChange={({target: {value}}) => {
+								setItems([
+									...items.filter(
+										(item) => item.value !== 'le'
+									),
+									{
+										label: value,
+										value: 'le',
+									},
+								]);
+							}}
+							required
+							type="date"
+						/>
+					</>
 				)}
 			</ClayModal.Body>
 

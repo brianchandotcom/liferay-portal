@@ -14,6 +14,7 @@
 
 /// <reference types="react" />
 
+import './ModalAddFilter.scss';
 export declare function ModalAddFilter({
 	currentFilters,
 	editingFilter,

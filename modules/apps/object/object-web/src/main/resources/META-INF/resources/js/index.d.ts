@@ -117,7 +117,17 @@ interface ObjectFieldSetting {
 type ObjectFieldFilterSetting = {
 	filterBy?: string;
 	filterType?: string;
-	json?: {[key: string]: string | string[] | undefined};
+	json?: {
+		[key: string]:
+			| string
+			| string[]
+			| ObjectFieldDateRangeFilterSettring
+			| undefined;
+	};
+};
+
+type ObjectFieldDateRangeFilterSettring = {
+	[key: string]: string;
 };
 
 interface IItem extends LabelValueObject {

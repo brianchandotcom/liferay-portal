@@ -226,23 +226,52 @@ export default function EditObjectField({
 		);
 
 		if (filterSetting?.length === 0 && objectFieldSettings) {
-			const newObjectFieldSettings: ObjectFieldSetting[] | undefined = [
-				...objectFieldSettings,
-				{
-					name: 'filters',
-					value: [
-						{
-							filterBy: objectFieldName,
-							filterType,
-							json: {
-								[filterType as string]: value
-									? value
-									: valueList?.map(({value}) => value),
+			let newObjectFieldSettings: ObjectFieldSetting[] | undefined = [];
+
+			if (objectFieldBusinessType === 'Date') {
+				const dateJson: ObjectFieldDateRangeFilterSettring = {};
+
+				valueList?.forEach(({label, value}) => {
+					dateJson[value] = label;
+				});
+
+				newObjectFieldSettings = [
+					...objectFieldSettings,
+					{
+						name: 'filters',
+						value: [
+							{
+								filterBy: objectFieldName,
+								filterType,
+								json: {
+									[filterType as string]: value
+										? value
+										: dateJson,
+								},
 							},
-						},
-					],
-				},
-			];
+						],
+					},
+				];
+			}
+			else {
+				newObjectFieldSettings = [
+					...objectFieldSettings,
+					{
+						name: 'filters',
+						value: [
+							{
+								filterBy: objectFieldName,
+								filterType,
+								json: {
+									[filterType as string]: value
+										? value
+										: valueList?.map(({value}) => value),
+								},
+							},
+						],
+					},
+				];
+			}
 
 			setAggregatonFilters(newAggregationFilters);
 			setValues({
@@ -253,18 +282,42 @@ export default function EditObjectField({
 			if (filterSetting) {
 				const [filter] = filterSetting;
 
-				const newFilterValues: ObjectFieldFilterSetting[] = [
-					...(filter.value as ObjectFieldFilterSetting[]),
-					{
-						filterBy: objectFieldName,
-						filterType,
-						json: {
-							[filterType as string]: value
-								? value
-								: valueList?.map(({value}) => value),
+				let newFilterValues: ObjectFieldFilterSetting[] = [];
+
+				if (objectFieldBusinessType === 'Date') {
+					const dateJson: ObjectFieldDateRangeFilterSettring = {};
+
+					valueList?.forEach(({label, value}) => {
+						dateJson[value] = label;
+					});
+
+					newFilterValues = [
+						...(filter.value as ObjectFieldFilterSetting[]),
+						{
+							filterBy: objectFieldName,
+							filterType,
+							json: {
+								[filterType as string]: value
+									? value
+									: dateJson,
+							},
 						},
-					},
-				];
+					];
+				}
+				else {
+					newFilterValues = [
+						...(filter.value as ObjectFieldFilterSetting[]),
+						{
+							filterBy: objectFieldName,
+							filterType,
+							json: {
+								[filterType as string]: value
+									? value
+									: valueList?.map(({value}) => value),
+							},
+						},
+					];
+				}
 
 				const newFilter: ObjectFieldSetting = {
 					name: filter.name,

@@ -266,7 +266,7 @@ function filterLocalOptions() {
 }
 
 function fetchRemoteOptions() {
-	const url = new URL(input.attributes.autocompleteURL);
+	const url = new URL(input.attributes.optionsURL);
 	url.searchParams.set('search', currentSearch.query);
 
 	return Liferay.Util.fetch(url, {
@@ -323,7 +323,7 @@ function handleSearchKeyup() {
 	loadingResultsMessage.classList.remove('d-none');
 	loadingResultsMessage.removeAttribute('aria-hidden');
 
-	const fetcher = input.attributes.autocompleteURL
+	const fetcher = input.attributes.optionsURL
 		? fetchRemoteOptions
 		: filterLocalOptions;
 

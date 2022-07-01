@@ -58,6 +58,14 @@ export default function PredefinedValuesTable({
 			return updatedPredefinedValues;
 		};
 
+		const predefinedErrors = new Map<string, string>();
+
+		if (errors) {
+			Object.entries(errors).forEach(([key, value]) => {
+				predefinedErrors.set(key, value);
+			});
+		}
+
 		const rows = predefinedValues.map(({inputAsValue, name, value}) => {
 			return (
 				<ClayTable.Row key={name}>
@@ -119,7 +127,7 @@ export default function PredefinedValuesTable({
 						<div className="lfr-object-web__predefined-values-table-new-value">
 							<ExpressionBuilder
 								buttonDisabled={inputAsValue}
-								error={errors[name]}
+								error={predefinedErrors.get(name)}
 								hideFeedback
 								onChange={({target: {value}}: any) => {
 									setValues({

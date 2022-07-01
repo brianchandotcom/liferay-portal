@@ -32,10 +32,10 @@ import React, {useEffect, useMemo, useState} from 'react';
 import PredefinedValuesTable from '../PredefinedValuesTable';
 
 import './ActionBuilder.scss';
-import {getObjectFields} from '../../../utils/api';
+import {fetchJSON, getObjectFields} from '../../../utils/api';
 import {ActionError} from '../index';
 
-let objectsOptionsList: Array<
+type ObjectsOptionsList = Array<
 	(
 		| React.ComponentProps<typeof ClaySelect.Option>
 		| React.ComponentProps<typeof ClaySelect.OptGroup>
@@ -51,12 +51,15 @@ export default function ActionBuilder({
 	objectActionTriggers,
 	objectDefinitionsRelationshipsURL,
 	setValues,
+	setWarningAlert,
 	validateExpressionURL,
 	values,
 }: IProps) {
 	const [notificationTemplates, setNotificationTemplates] = useState<any[]>(
 		[]
 	);
+
+	const [objectsOptions, setObjectOptions] = useState<ObjectsOptionsList>([]);
 
 	const notificationTemplateId = useMemo(() => {
 		return notificationTemplates.find(
@@ -75,12 +78,13 @@ export default function ActionBuilder({
 		setCurrentObjectDefinitionFields,
 	] = useState<ObjectField[]>([]);
 
-	const [showAlert, setShowAlert] = useState(true);
+	const [infoAlert, setInfoAlert] = useState(true);
 
 	const fetchObjectDefinitions = async () => {
-		const response = await fetch(objectDefinitionsRelationshipsURL);
+		const relationships = await fetchJSON<ObjectDefinitionsRelationship[]>(
+			objectDefinitionsRelationshipsURL
+		);
 
-		const relationships = (await response.json()) as ObjectDefinitionsRelationship[];
 		const relatedObjects: SelectItem[] = [];
 		const nonRelatedObjects: SelectItem[] = [];
 
@@ -92,7 +96,7 @@ export default function ActionBuilder({
 			target.push({label, value: id});
 		});
 
-		objectsOptionsList = [];
+		const objectsOptionsList = [];
 
 		if (!values.parameters?.objectDefinitionId) {
 			objectsOptionsList.push({
@@ -115,6 +119,7 @@ export default function ActionBuilder({
 			nonRelatedObjects
 		);
 
+		setObjectOptions(objectsOptionsList);
 		setRelationships(relationships);
 	};
 
@@ -288,24 +293,29 @@ export default function ActionBuilder({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const hasEmptyValues = values.parameters?.predefinedValues?.some((item) =>
-		invalidateRequired(item.value)
-	);
+	useEffect(() => {
+		const predefinedValues = values.parameters?.predefinedValues;
 
-	const predefinedValuesAlertMessage =
-		!hasEmptyValues && Object.keys(errors).length > 1
-			? Liferay.Language.get('syntax-error')
-			: Liferay.Language.get(
-					'required-fields-must-have-predefined-values'
-			  );
+		const requiredFields = predefinedValues
+			? predefinedValues.filter(
+					({name}) => objectFieldsMap.get(name)?.required
+			  )
+			: [];
+
+		const hasEmptyValues = requiredFields?.some((item) =>
+			invalidateRequired(item.value)
+		);
+
+		setWarningAlert(hasEmptyValues);
+	}, [values.parameters?.predefinedValues, objectFieldsMap, setWarningAlert]);
 
 	return (
 		<>
-			{showAlert && (
+			{infoAlert && (
 				<ClayAlert
 					className="lfr-objects__side-panel-content-container"
 					displayType="info"
-					onClose={() => setShowAlert(false)}
+					onClose={() => setInfoAlert(false)}
 					title={`${Liferay.Language.get('info')}:`}
 				>
 					{Liferay.Language.get(
@@ -319,17 +329,6 @@ export default function ActionBuilder({
 					>
 						{Liferay.Language.get('click-here-for-documentation')}
 					</a>
-				</ClayAlert>
-			)}
-
-			{Object.keys(errors).length > 1 && (
-				<ClayAlert
-					className="lfr-objects__side-panel-content-container"
-					displayType="danger"
-					onClose={() => {}}
-					title={`${Liferay.Language.get('error')}:`}
-				>
-					{predefinedValuesAlertMessage}
 				</ClayAlert>
 			)}
 
@@ -445,7 +444,7 @@ export default function ActionBuilder({
 									)}
 									error={errors.objectDefinitionId}
 									onChange={handleSelectObject}
-									options={objectsOptionsList}
+									options={objectsOptions}
 									value={
 										values.parameters?.objectDefinitionId
 									}
@@ -517,7 +516,7 @@ export default function ActionBuilder({
 							currentObjectDefinitionFields={
 								currentObjectDefinitionFields
 							}
-							errors={errors as {[key: string]: string}}
+							errors={errors.predefinedValues as any}
 							objectFieldsMap={objectFieldsMap}
 							setValues={setValues}
 							validateExpressionURL={validateExpressionURL}
@@ -586,6 +585,7 @@ interface IProps {
 	objectActionTriggers: CustomItem[];
 	objectDefinitionsRelationshipsURL: string;
 	setValues: (values: Partial<ObjectAction>) => void;
+	setWarningAlert: (value: boolean) => void;
 	validateExpressionURL: string;
 	values: Partial<ObjectAction>;
 }

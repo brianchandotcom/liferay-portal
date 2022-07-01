@@ -7,12 +7,23 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife AP";
 
+	var testSiteName = "Raylife AP";
+	var testSiteURL = "raylife-ap";
+
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		RaylifeAP.createRaylifeAPSite(siteName = "Raylife AP");
+		task ("Create a new Raylife AP Site") {
+			Site.openSitesAdmin();
+
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Raylife AP");
+		}
 	}
 
 	tearDown {
@@ -31,29 +42,38 @@ definition {
 	@description = "LPS-152291 - Verify that when I click on the 'Review Eligibility Reports' subsection in Tasks, I am redirected to the 'Applications' section page"
 	@priority = "4"
 	test ClickSubsectionApplicationsRedirectedToApplications {
-		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
+		task ("Go to Raylife AP Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
 
-		Click(
-			locator1 = "DashboardAP#TASKS_SECTION",
-			section = "Review Eligibility Reports");
+		task ("Go to section applications through in the subsection Tasks") {
+			Click(
+				locator1 = "RaylifeAP#TASKS_SECTION",
+				section = "Review Eligibility Reports");
 
-		AssertElementPresent(
-			locator1 = "RaylifeAP#MENU_SIDEBAR",
-			menu = "applications");
+			AssertElementPresent(
+				locator1 = "RaylifeAP#TITLE_PAGE",
+				key_titlePage = "Applications");
+		}
 	}
 
 	@description = "LPS-152292 - Verify if clicking on the 'Contact Expiring Policies' subsection in Tasks, takes me to the 'Policies' section page"
 	@priority = "4"
 	test ClickSubsectionPoliciesRedirectedToPolicies {
-		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
+		task ("Go to Raylife AP Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
 
-		Click(
-			locator1 = "DashboardAP#TASKS_SECTION",
-			section = "Contact Expiring Policies");
+		task ("Go to section policies through in the subsection Tasks") {
+			Click(
+				locator1 = "RaylifeAP#TASKS_SECTION",
+				section = "Contact Expiring Policies");
 
-		AssertElementPresent(
-			locator1 = "RaylifeAP#MENU_SIDEBAR",
-			menu = "policies");
+			AssertElementPresent(
+				locator1 = "RaylifeAP#TITLE_PAGE",
+				key_titlePage = "Policies");
+		}
+
 	}
 
 }

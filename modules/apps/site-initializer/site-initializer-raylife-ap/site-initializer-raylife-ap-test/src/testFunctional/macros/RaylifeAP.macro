@@ -1,23 +1,11 @@
 definition {
 
-	macro createRaylifeAPSite {
+	macro addRaylifeAPSite {
 		Site.openSitesAdmin();
 
-		LexiconEntry.gotoAdd();
-
-		LexiconCard.clickCard(card = "Raylife AP");
-
-		SelectFrame(
-			key_title = "Add Site",
-			locator1 = "IFrame#MODAL_ANY");
-
-		PortletEntry.inputName(name = "${siteName}");
-
-		Click(locator1 = "Button#ADD");
-
-		Alert.viewSuccessMessage();
-
-		Refresh();
+		Site.addSiteTemplateCP(
+			siteName = "${siteName}",
+			siteTemplateName = "Raylife AP");
 	}
 
 	macro tearDownCP {
@@ -32,6 +20,47 @@ definition {
 		Click(locator1 = "Button#MODAL_DELETE");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro mouseOverSidebar {
+		var key_menu = "${menu}";
+
+		MouseOver(locator1 = "RaylifeAP#MENU_SIDEBAR");
+			
+	}
+
+	macro signIn {
+		if (isSet(emailAddress)) {
+			Type(
+				labelTitle = "Email Address",
+				locator1 = "RaylifeAP#SIGN_IN_FORM",
+				value1 = "${emailAddress}");
+		}
+		else {
+			Type(
+				labelTitle = "Email Address",
+				locator1 = "RaylifeAP#SIGN_IN_FORM",
+				value1 = "test@liferay.com");
+		}
+
+		if (isSet(password)) {
+			Type(
+				labelTitle = "Password",
+				locator1 = "RaylifeAP#SIGN_IN_FORM",
+				value1 = "${password}");
+		}
+		else {
+			Type(
+				labelTitle = "Password",
+				locator1 = "RaylifeAP#SIGN_IN_FORM",
+				value1 = "test");
+		}
+
+		Check(
+			inputFieldId = "rememberMe",
+			locator1 = "TextInput#INPUT_ID");
+
+		Click(locator1 = "Button#SIGN_IN");
 	}
 
 }

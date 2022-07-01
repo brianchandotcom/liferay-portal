@@ -7,10 +7,23 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife AP";
 
-	setUp {
-		TestCase.setUpPortalInstance();
+	var testSiteName = "Raylife AP";
+	var testSiteURL = "raylife-ap";
 
-		User.firstLoginPG();
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Raylife AP Site") {
+			Site.openSitesAdmin();
+
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Raylife AP");
+		}
 	}
 
 	tearDown {
@@ -29,21 +42,17 @@ definition {
 	@description = "Verify if Raylife AP can be created"
 	@priority = "5"
 	test CanRaylifeAPCreated {
-		Site.openSitesAdmin();
+		property portal.acceptance = "true";
 
-		LexiconEntry.gotoAdd();
+		task ("Go to Raylife AP Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
 
-		LexiconCard.clickCard(card = "Raylife AP");
-
-		SelectFrame(
-			key_title = "Add Site",
-			locator1 = "IFrame#MODAL_ANY");
-
-		PortletEntry.inputName(name = "Raylife AP");
-
-		Click(locator1 = "Button#ADD");
-
-		Alert.viewSuccessMessage();
+		task ("Assert the Raylife AP Welcome Page is present") {
+			AssertElementPresent(
+				key_title = "Hi, Test Test.",
+				locator1 = "RaylifeAP#DASHBOARD_HEADER");
+		}
 	}
 
 }

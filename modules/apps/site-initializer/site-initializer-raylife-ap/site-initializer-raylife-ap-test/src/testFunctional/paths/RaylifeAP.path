@@ -10,14 +10,53 @@
 </thead>
 
 <tbody>
+
+<!--DASHBOARD_PAGE-->
+
 <tr>
-	<td>RAYLIFE_LOGO</td>
-	<td>//img[contains(@src,'raylife_logo_icon.svg')]</td>
+	<td>TASKS_SECTION</td>
+	<td>//div[contains(@class, "tasks-container")]//div[contains(text(),'${section}')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>DASHBOARD_HEADER</td>
+	<td>//span[text()='Hi, Test Test.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_PAGE</td>
+	<td>//h3[contains(@class, "component-heading") and contains(text(),'${key_titlePage}')]</td>
+	<td></td>
+</tr>
+
+<!--NAVBAR-->
+
+<tr>
 	<td>MENU_SIDEBAR</td>
-	<td>//div[contains(@class, "sidebar-container")]//div[contains(@class, "middle-bar")]/div[contains(@class, "${menu}")]</td>
+	<td>//div[contains(@class, "sidebar-container")]//div[contains(@class, "${key_menu}")]</td>
+	<td></td>
+</tr>
+
+<!--SIGN_IN-->
+
+<tr>
+	<td>LOGIN_PAGE</td>
+	<td>//h3[text()='Sign in to Raylife']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN_FORM</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(text(),'${labelTitle}')]/following-sibling::input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_REQUIRED_MESSAGE</td>
+	<td>//div[contains(text(),'This field is required.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_INVALID_MESSAGE</td>
+	<td>//div[contains(text(),'Please enter a valid email address.')]</td>
 	<td></td>
 </tr>
 </tbody>

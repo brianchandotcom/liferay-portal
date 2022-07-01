@@ -7,12 +7,23 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife AP";
 
+	var testSiteName = "Raylife AP";
+	var testSiteURL = "raylife-ap";
+
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		RaylifeAP.createRaylifeAPSite(siteName = "Raylife AP");
+		task ("Create a new Raylife AP Site") {
+			Site.openSitesAdmin();
+
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Raylife AP");
+		}
 	}
 
 	tearDown {
@@ -31,29 +42,35 @@ definition {
 	@description = "LPS-151595 - Check if the left sidebar it should is expand is present"
 	@priority = "4"
 	test CanViewSideBarExpand {
-		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
+		task ("Go to Raylife AP Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
 
-		MouseOver(
-			locator1 = "RaylifeAP#MENU_SIDEBAR",
-			menu = "policies");
+		task ("Assert Sidebar is Expanded") {
+			RaylifeAP.mouseOverSidebar(menu = "policies");
 
-		AssertElementPresent(
-			locator1 = "RaylifeAP#MENU_SIDEBAR",
-			menu = "policies");
+			AssertVisible(
+				locator1 = "RaylifeAP#MENU_SIDEBAR",
+				key_menu = "policies");
+		}	
+
 	}
 
 	@description = "LPS-151596 - Check that the 'Applications' section is present in the sidebar"
 	@priority = "4"
 	test SectionApplicationsInTheSidebar {
-		ApplicationsMenu.gotoSite(key_site = "Raylife AP");
+		task ("Go to Raylife AP Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
 
-		MouseOver(
-			locator1 = "RaylifeAP#MENU_SIDEBAR",
-			menu = "applications");
+		task ("Assert Applications section in Sidebar") {
+			RaylifeAP.mouseOverSidebar(menu = "applications");
+			
+			AssertVisible(
+				locator1 = "RaylifeAP#MENU_SIDEBAR",
+				key_menu = "applications");
+		}	
 
-		AssertElementPresent(
-			locator1 = "RaylifeAP#MENU_SIDEBAR",
-			menu = "applications");
 	}
 
 }

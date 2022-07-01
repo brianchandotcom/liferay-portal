@@ -27,9 +27,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
 
-import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.as.AuthorizationServerMetadata;
-import com.nimbusds.oauth2.sdk.util.JSONObjectUtils;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 
 import java.net.URI;
@@ -37,8 +35,6 @@ import java.net.URI;
 import java.security.MessageDigest;
 
 import java.util.List;
-
-import net.minidev.json.JSONObject;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,9 +54,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			long userId, String metadataJSON, String wellKnownURISuffix)
 		throws PortalException {
 
-		JSONObject metadataJSONObject = _getMetadataJSONObject(metadataJSON);
-
-		_validateMetadataJSON(metadataJSONObject, wellKnownURISuffix);
+		AuthorizationServerMetadata authorizationServerMetadata =
+			_parseAuthorizationServerMetadata(metadataJSON, wellKnownURISuffix);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -73,8 +68,9 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		oAuthClientASLocalMetadata.setUserName(user.getFullName());
 		oAuthClientASLocalMetadata.setLocalWellKnownURI(
 			_generateLocalWellKnownURI(
-				metadataJSONObject.getAsString("issuer"),
-				metadataJSONObject.getAsString("token_endpoint"),
+				String.valueOf(authorizationServerMetadata.getIssuer()),
+				String.valueOf(
+					authorizationServerMetadata.getTokenEndpointURI()),
 				wellKnownURISuffix));
 		oAuthClientASLocalMetadata.setMetadataJSON(metadataJSON);
 
@@ -189,31 +185,35 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			String wellKnownURISuffix)
 		throws PortalException {
 
-		JSONObject metadataJSONObject = _getMetadataJSONObject(metadataJSON);
-
-		_validateMetadataJSON(metadataJSONObject, wellKnownURISuffix);
+		AuthorizationServerMetadata authorizationServerMetadata =
+			_parseAuthorizationServerMetadata(metadataJSON, wellKnownURISuffix);
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataLocalService.
 				getOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId);
 
+		AuthorizationServerMetadata currentAuthorizationServerMetadata =
+			_parseAuthorizationServerMetadata(
+				oAuthClientASLocalMetadata.getMetadataJSON(),
+				wellKnownURISuffix);
+
 		oAuthClientASLocalMetadata.setMetadataJSON(metadataJSON);
 
-		JSONObject currentMetadataJSONObject = _getMetadataJSONObject(
-			oAuthClientASLocalMetadata.getMetadataJSON());
-
-		String currentIssuer = currentMetadataJSONObject.getAsString("issuer");
+		String currentIssuer = String.valueOf(
+			currentAuthorizationServerMetadata.getIssuer());
 
 		String currentLocalWellKnownURI =
 			oAuthClientASLocalMetadata.getLocalWellKnownURI();
 
-		if (!currentIssuer.equals(metadataJSONObject.getAsString("issuer")) ||
+		if (!currentIssuer.equals(
+				String.valueOf(authorizationServerMetadata.getIssuer())) ||
 			!currentLocalWellKnownURI.contains(wellKnownURISuffix)) {
 
 			oAuthClientASLocalMetadata.setLocalWellKnownURI(
 				_generateLocalWellKnownURI(
-					metadataJSONObject.getAsString("issuer"),
-					metadataJSONObject.getAsString("token_endpoint"),
+					String.valueOf(authorizationServerMetadata.getIssuer()),
+					String.valueOf(
+						authorizationServerMetadata.getTokenEndpointURI()),
 					wellKnownURISuffix));
 		}
 
@@ -242,28 +242,16 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		}
 	}
 
-	private JSONObject _getMetadataJSONObject(String metadataJSON)
-		throws PortalException {
-
-		try {
-			return JSONObjectUtils.parse(metadataJSON);
-		}
-		catch (ParseException parseException) {
-			throw new OAuthClientASLocalMetadataJSONException(parseException);
-		}
-	}
-
-	private void _validateMetadataJSON(
-			JSONObject metadataJSONObject, String wellKnownURISuffix)
+	private AuthorizationServerMetadata _parseAuthorizationServerMetadata(
+			String metadataJSON, String wellKnownURISuffix)
 		throws PortalException {
 
 		try {
 			if (wellKnownURISuffix.equals("openid-configuration")) {
-				OIDCProviderMetadata.parse(metadataJSONObject);
+				return OIDCProviderMetadata.parse(metadataJSON);
 			}
-			else {
-				AuthorizationServerMetadata.parse(metadataJSONObject);
-			}
+
+			return AuthorizationServerMetadata.parse(metadataJSON);
 		}
 		catch (Exception exception) {
 			throw new OAuthClientASLocalMetadataJSONException(exception);

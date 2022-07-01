@@ -106,28 +106,28 @@ definition {
 	@description = "LPS-155459: When clicking on the ellipsis and hovering over another row, multiple quick action menu are displayed"
 	@priority = "3"
 	test CanDisplayOnMultipleActiveRows {
-		task ("When click on Elipsis button 1st") {
+		task ("When click on ellipsis button 2nd row item") {
 			Click(
-				key_title = "Sample1",
+				key_title = "Sample2",
 				locator1 = "FrontendDataSet#VERTICAL_ELLIPSIS_BUTTON");
 		}
 
-		task ("Then the quick action menu is displayed on the 1st line") {
-			AssertElementPresent(locator1 = "FrontendDataSet#DROPDOWN_MENU");
-		}
-
-		task ("When hovering over the 2nd line item") {
-			MouseOver(
-				key_itemName = "Sample2",
-				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
-		}
-
-		task ("Then the quick action menu is displayed on the 2nd line") {
+		task ("Then the quick action menu is displayed on the 2nd row") {
 			FDSQuickActions.viewQuickActionMenuIsPresent(title = "Sample2");
 		}
 
-		task ("Then the quick action menu is displayed on the 1st line") {
-			AssertElementPresent(locator1 = "FrontendDataSet#DROPDOWN_MENU");
+		task ("When hovering over the 1st row item") {
+			MouseOver(
+				key_itemName = "Sample1",
+				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
+		}
+
+		task ("Then the quick action menu is displayed on the 1st row") {
+			FDSQuickActions.viewQuickActionMenuIsPresent(title = "Sample1");
+		}
+
+		task ("And Then the quick action menu is not displayed on the 2nd row") {
+			FDSQuickActions.viewQuickActionMenuNotPresent(title = "Sample2");
 		}
 	}
 

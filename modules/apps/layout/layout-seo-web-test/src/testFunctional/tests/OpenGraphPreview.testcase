@@ -55,7 +55,7 @@ definition {
 
 		Page.viewPreview(
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
-			key_imageName = "Document_1.png",
+			key_imageName = "document_1",
 			openGraph = "true",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
@@ -68,12 +68,12 @@ definition {
 
 		Page.viewPreview(
 			htmlTitle = "Test Page Name - Test Site Name - ${siteName}",
-			key_imageName = "Document_2.jpeg",
+			key_imageName = "document_2",
 			openGraph = "true",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
 
-		OpenGraph.viewNoPreviewImage(imageName = "Document_1.png");
+		OpenGraph.viewNoPreviewImage(imageName = "document_1");
 
 		Button.click(button = "Save");
 
@@ -333,7 +333,7 @@ definition {
 		Page.viewPreview(
 			description = "Custom Description",
 			htmlTitle = "Custom Title",
-			key_imageName = "Document_1.jpg",
+			key_imageName = "document_1",
 			openGraph = "true",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");
@@ -343,7 +343,7 @@ definition {
 		Page.viewPreview(
 			description = "Custom Description",
 			htmlTitle = "Custom Title",
-			key_imageName = "Document_1.jpg",
+			key_imageName = "Document_1",
 			openGraph = "true",
 			portalURL = "${portalURL}",
 			siteNameURL = "test-site-name");

@@ -310,7 +310,7 @@ definition {
 		ItemSelector.uploadFile(uploadFileName = "Document_2.jpg");
 
 		AssertElementPresent(
-			key_imageFileName = "Document_2",
+			key_imageFileName = "document_2",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_PREDEFINED_IMAGE");
 
 		PortletEntry.save();
@@ -322,7 +322,7 @@ definition {
 		PortletEntry.inputTitle(title = "DM Document Title");
 
 		AssertElementPresent(
-			key_imageFileName = "Document_2",
+			key_imageFileName = "document_2",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_PREDEFINED_IMAGE");
 	}
 

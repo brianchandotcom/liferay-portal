@@ -1545,10 +1545,6 @@ definition {
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Documents and Media");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
 		DMDocument.addPG(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.jpg",
@@ -1576,13 +1572,6 @@ definition {
 			pageName = "Staging DM Page",
 			siteName = "Remote Site");
 
-		var siteId = Site.getSiteId();
-
-		Navigator.gotoSitePage(
-			baseURL = "http://localhost:9080",
-			pageName = "Staging DM Page",
-			siteName = "Remote Site");
-
 		DMDocument.viewPG(
 			averageRatingStarCount = "0.0",
 			dmDocumentDescription = "DM Document Description",
@@ -1600,9 +1589,9 @@ definition {
 			tagNameList = "tag1");
 
 		DMDocument.viewLatestVersionURL(
-			dmDocumentFileName = "Document_1.jpg",
+			dmDocumentFileName = "document_1",
 			remoteStaging = "true",
-			siteId = "${siteId}");
+			siteName = "remote-site");
 
 		DMDocument.viewWebDAVURL(
 			dmDocumentFileName = "Document_1.jpg",
@@ -1664,9 +1653,9 @@ definition {
 			tagNameList = "tag1");
 
 		DMDocument.viewLatestVersionURL(
-			dmDocumentFileName = "Document_3Edit.png",
+			dmDocumentFileName = "document_1",
 			remoteStaging = "true",
-			siteId = "${siteId}");
+			siteName = "remote-site");
 
 		DMDocument.viewWebDAVURL(
 			dmDocumentFileName = "Document_3Edit.png",

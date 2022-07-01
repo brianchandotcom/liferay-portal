@@ -90,6 +90,8 @@ public class DDMFormInstanceRecordXLSWriter
 			for (Map<String, String> ddmFormFieldsValue :
 					ddmFormFieldsValueList) {
 
+				rowCellStyle.setQuotePrefixed(true);
+
 				createRow(
 					rowIndex++, rowCellStyle, ddmFormFieldsValue.values(),
 					sheet);

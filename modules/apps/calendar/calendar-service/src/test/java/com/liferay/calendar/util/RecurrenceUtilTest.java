@@ -423,11 +423,9 @@ public class RecurrenceUtilTest {
 		CalendarBooking calendarBooking = Mockito.mock(
 			CalendarBookingImpl.class, Mockito.CALLS_REAL_METHODS);
 
+		calendarBooking.setStartTime(startTimeJCalendar.getTimeInMillis());
 		calendarBooking.setEndTime(
 			startTimeJCalendar.getTimeInMillis() + Time.HOUR);
-
-		calendarBooking.setStartTime(startTimeJCalendar.getTimeInMillis());
-
 		calendarBooking.setRecurrence(recurrence);
 
 		Mockito.doReturn(

@@ -162,8 +162,6 @@ definition {
 				key_configurationName = "Asset Auto Tagging",
 				key_configurationScope = "Virtual Instance Scope",
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-
-			FormFields.enableCheckbox(fieldName = "Update Auto Tags");
 		}
 		else if ("${enableUpdateAutoTagsFor}" == "Instance Settings") {
 			AutoTagging.openToAssetAutoTagging(configurationScope = "Instance Settings");
@@ -172,23 +170,9 @@ definition {
 				key_configurationName = "Asset Auto Tagging",
 				key_configurationScope = "Virtual Instance Scope",
 				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-
-			FormFields.enableCheckbox(fieldName = "Update Auto Tags");
 		}
-		else if ("${enableUpdateAutoTagsFor}" == "Site Settings") {
-			ProductMenu.gotoPortlet(
-				category = "Configuration",
-				portlet = "Site Settings",
-				site = "${site}");
 
-			Click(
-				key_itemName = "Assets",
-				locator1 = "ListGroupItem#ITEM_TEXT");
-
-			Navigator.gotoNavTab(navTab = "Asset Auto Tagging");
-
-			Check.checkToggleSwitch(locator1 = "Checkbox#ENABLE_AUTO_TAGGING");
-		}
+		FormFields.enableCheckbox(fieldName = "Update Auto Tags");
 
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			PortletEntry.update();

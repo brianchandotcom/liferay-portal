@@ -199,7 +199,6 @@ public class AssetPublisherPortletToolbarContributor
 				_language.format(
 					themeDisplay.getLocale(), "new-x", message, false)
 			).build());
-
 		urlMenuItem.setLabel(message);
 
 		long curGroupId = groupId;

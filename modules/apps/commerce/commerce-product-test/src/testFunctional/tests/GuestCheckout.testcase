@@ -80,8 +80,6 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		Pause(locator1 = "5000");
-
 		CommerceNavigator.gotoMiniCart();
 
 		FrontStore.viewMiniCart(
@@ -182,8 +180,6 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		Pause(locator1 = "5000");
-
 		CommerceNavigator.gotoMiniCart();
 
 		FrontStore.viewMiniCart(
@@ -206,8 +202,6 @@ definition {
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "5");
-
-		Pause(locator1 = "5000");
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -310,8 +304,6 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		Pause(locator1 = "5000");
-
 		CommerceNavigator.gotoMiniCart();
 
 		FrontStore.viewMiniCart(
@@ -334,8 +326,6 @@ definition {
 		FrontStore.addInitializerProductToCart(
 			productName = "Transmission Cooler Line Assembly",
 			productQuantity = "5");
-
-		Pause(locator1 = "5000");
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -410,8 +400,6 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		Pause(locator1 = "5000");
-
 		CommerceNavigator.gotoMiniCart();
 
 		Button.click(button = "Submit");
@@ -460,8 +448,6 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		Pause(locator1 = "5000");
-
 		CommerceNavigator.gotoMiniCart();
 
 		Button.click(button = "Submit");
@@ -488,8 +474,6 @@ definition {
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
-
-		Pause(locator1 = "5000");
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -574,8 +558,6 @@ definition {
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
-
-		Pause(locator1 = "5000");
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -687,8 +669,6 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		Pause(locator1 = "5000");
-
 		CommerceNavigator.gotoMiniCart();
 
 		Button.click(button = "Submit");
@@ -714,8 +694,6 @@ definition {
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
-
-		Pause(locator1 = "5000");
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -850,8 +828,6 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		Pause(locator1 = "5000");
-
 		CommerceNavigator.gotoMiniCart();
 
 		Button.click(button = "Submit");
@@ -906,8 +882,6 @@ definition {
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
-
-		Pause(locator1 = "5000");
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -979,8 +953,6 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		Pause(locator1 = "5000");
-
 		CommerceNavigator.gotoMiniCart();
 
 		Button.click(button = "Submit");
@@ -1040,8 +1012,6 @@ definition {
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
-
-		Pause(locator1 = "5000");
 
 		CommerceNavigator.gotoMiniCart();
 
@@ -1123,8 +1093,6 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1");
 
-		Pause(locator1 = "5000");
-
 		CommerceNavigator.gotoMiniCart();
 
 		Button.click(button = "Submit");
@@ -1151,8 +1119,6 @@ definition {
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "1");
-
-		Pause(locator1 = "5000");
 
 		CommerceNavigator.gotoMiniCart();
 

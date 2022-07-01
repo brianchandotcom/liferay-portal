@@ -143,8 +143,6 @@ definition {
 
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Price High to Low");
 
-		Pause(locator1 = "3000");
-
 		var indexProductArray = "1;Cams,2;Timing Belt,3;Oil Filter,4;Drive Shafts,5;Differential Ring and Pinion - Universal,6;Pulley Kit";
 
 		for (var i : list "${indexProductArray}") {
@@ -182,8 +180,6 @@ definition {
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Price Low to High");
-
-		Pause(locator1 = "3000");
 
 		var indexProductArray = "1;Mount,2;Wheel Seal - Front,3;Valve Cover Grommets,4;Exhaust Clamps,5;Piston,6;Transmission Cooler Line Assembly";
 

@@ -23,7 +23,6 @@ import getDropTargetPosition from './getDropTargetPosition';
 import getTargetData from './getTargetData';
 import getTargetPositions from './getTargetPositions';
 import itemIsAncestor from './itemIsAncestor';
-import {initialDragDrop} from './useDragAndDrop';
 
 const ELEVATION_BORDER_SIZE = 15;
 const MAXIMUM_ELEVATION_STEPS = 3;
@@ -46,15 +45,6 @@ export default function defaultComputeHover({
 
 	if (!monitor.isOver({shallow: true})) {
 		return;
-	}
-
-	// Dragging over itself or a descendant
-
-	if (itemIsAncestor(sourceItem, targetItem, layoutDataRef)) {
-		return dispatch({
-			...initialDragDrop.state,
-			type: DRAG_DROP_TARGET_TYPE.DRAGGING_TO_ITSELF,
-		});
 	}
 
 	// Apparently valid drag, calculate position and
@@ -99,7 +89,11 @@ export default function defaultComputeHover({
 		);
 	})();
 
-	if (!siblingItem && validDropInsideTarget) {
+	if (
+		!siblingItem &&
+		validDropInsideTarget &&
+		!itemIsAncestor(sourceItem, targetItem, layoutDataRef)
+	) {
 		return dispatch({
 			dropItem: sourceItem,
 			dropTargetItem: targetItem,
@@ -120,7 +114,8 @@ export default function defaultComputeHover({
 	if (
 		siblingItem &&
 		checkAllowedChild(sourceItem, targetItem) &&
-		validElevation(siblingItem, orientation, layoutDataRef)
+		validElevation(siblingItem, orientation, layoutDataRef) &&
+		!itemIsAncestor(sourceItem, siblingItem, layoutDataRef)
 	) {
 		return dispatch({
 			dropItem: sourceItem,

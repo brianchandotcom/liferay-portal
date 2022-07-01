@@ -1,23 +1,51 @@
 definition {
 
-	macro createRaylifeAPSite {
+	macro addRaylifeAPSite {
 		Site.openSitesAdmin();
 
-		LexiconEntry.gotoAdd();
+		Site.addSiteTemplateCP(
+			siteName = "${siteName}",
+			siteTemplateName = "Raylife AP");
+	}
 
-		LexiconCard.clickCard(card = "Raylife AP");
+	macro mouseOverSidebar {
+		var key_menu = "${menu}";
 
-		SelectFrame(
-			key_title = "Add Site",
-			locator1 = "IFrame#MODAL_ANY");
+		MouseOver(locator1 = "RaylifeAP#MENU_SIDEBAR");
+	}
 
-		PortletEntry.inputName(name = "${siteName}");
+	macro signIn {
+		if (isSet(emailAddress)) {
+			Type(
+				labelTitle = "Email Address",
+				locator1 = "RaylifeAP#SIGN_IN_FORM",
+				value1 = "${emailAddress}");
+		}
+		else {
+			Type(
+				labelTitle = "Email Address",
+				locator1 = "RaylifeAP#SIGN_IN_FORM",
+				value1 = "test@liferay.com");
+		}
 
-		Click(locator1 = "Button#ADD");
+		if (isSet(password)) {
+			Type(
+				labelTitle = "Password",
+				locator1 = "RaylifeAP#SIGN_IN_FORM",
+				value1 = "${password}");
+		}
+		else {
+			Type(
+				labelTitle = "Password",
+				locator1 = "RaylifeAP#SIGN_IN_FORM",
+				value1 = "test");
+		}
 
-		Alert.viewSuccessMessage();
+		Check(
+			inputFieldId = "rememberMe",
+			locator1 = "TextInput#INPUT_ID");
 
-		Refresh();
+		Click(locator1 = "Button#SIGN_IN");
 	}
 
 	macro tearDownCP {

@@ -70,7 +70,6 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		httpServletRequest.setAttribute(
 			AnalyticsWebKeys.ANALYTICS_CLIENT_CHANNEL_ID,
 			_getLiferayAnalyticsChannelId(httpServletRequest, themeDisplay));
-
 		httpServletRequest.setAttribute(
 			AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG,
 			_serialize(
@@ -84,7 +83,6 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 					"projectId",
 					_getLiferayAnalyticsProjectId(themeDisplay.getCompany())
 				).build()));
-
 		httpServletRequest.setAttribute(
 			AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS,
 			_serialize(

@@ -21,6 +21,12 @@ import org.json.JSONObject;
  */
 public class TestReportFactory {
 
+	public static TestClassReport newTestClassReport(
+		DownstreamBuildReport downstreamBuildReport, String testClassName) {
+
+		return new DefaultTestClassReport(downstreamBuildReport, testClassName);
+	}
+
 	public static TestReport newTestReport(
 		DownstreamBuildReport downstreamBuildReport, JSONObject jsonObject) {
 

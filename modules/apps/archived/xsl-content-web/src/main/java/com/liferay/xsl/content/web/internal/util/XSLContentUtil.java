@@ -96,7 +96,6 @@ public class XSLContentUtil {
 		documentBuilderFactory.setFeature(
 			"http://xml.org/sax/features/external-parameter-entities",
 			xslContentConfiguration.xmlExternalGeneralEntitiesAllowed());
-
 		documentBuilderFactory.setNamespaceAware(true);
 
 		return documentBuilderFactory.newDocumentBuilder();

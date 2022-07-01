@@ -331,6 +331,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPAND</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-expand')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SECONDARY_BY_TITLE</td>
 	<td>//button[contains(@class,'btn-secondary') and contains (@title,'${key_value}')]</td>
 	<td></td>

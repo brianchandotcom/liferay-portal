@@ -1,0 +1,109 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "quarantine";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Name";
+	var testSiteURL = "customer-portal-name";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			Site.openSitesAdmin();
+
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+		}
+
+		task ("Create CP2.0 objects") {
+			CustomerPortal.createCPSiteObjects();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
+			CustomerPortal.customerPortalTearDown();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-146292 - Check if there is a 'Cancel' button if the user wants to leave the process."
+	@priority = "4"
+	test CancelButtonIsPresent {
+		property portal.upstream = "quarantine";
+
+		CustomerPortal.changeUserRole(
+			accountName = "Test Account 01",
+			accountRoleTitle = "Partner Manager",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		CustomerPortal.selectNavigatorWindow(navigatorWidow = "Home - Customer Portal - Liferay DXP");
+
+		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+
+		CP2NavigationMenu.goToTeamMembers();
+
+		CP2TeamMembers.clickInviteMembers();
+
+		CP2NavigationMenu.cancelTeamMembersInvitation();
+
+		CP2TeamMembers.viewTeamMembersPage();
+	}
+
+	@description = "LPS-146292 - Verify if after inviting member, the screen goes back to previous screen (Team Members page)."
+	@priority = "4"
+	test CanGoBackOnTeamMembersPage {
+		property portal.upstream = "quarantine";
+
+		CustomerPortal.changeUserRole(
+			accountName = "Test Account 01",
+			accountRoleTitle = "Partner Manager",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		CustomerPortal.selectNavigatorWindow(navigatorWidow = "Home - Customer Portal Name - Liferay DXP");
+
+		CustomerPortal.enterOnProject(projectName = "Test Account 01");
+
+		CP2NavigationMenu.goToTeamMembers();
+
+		CP2TeamMembers.clickInviteMembers();
+
+		CP2TeamMembers.addFieldsTeamMembersExtra(
+			position = "0",
+			positionNumber = "0",
+			rowEmail = "test1@liferay.com",
+			rowRole = "User");
+
+		CP2TeamMembers.clickTeamMembersSendInvitation();
+
+		CP2TeamMembers.viewTeamMembersPage();
+	}
+
+}

@@ -29,7 +29,7 @@ import {DefaultSortScreen} from './DefaultSortScreen/DefaultSortScreen';
 import {FilterScreen} from './FilterScreen/FilterScreen';
 import ViewBuilderScreen from './ViewBuilderScreen/ViewBuilderScreen';
 import ViewContext, {TYPES, ViewContextProvider} from './context';
-import {TObjectField, TObjectView, TWorkflowStatus} from './types';
+import {TObjectView, TWorkflowStatus} from './types';
 
 const TABS = [
 	{
@@ -106,8 +106,10 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			const {
 				items: objectFields,
 			}: {
-				items: TObjectField[];
-			} = (await objectFieldsResponse.json()) as any;
+				items: ObjectField[];
+			} = (await objectFieldsResponse.json()) as {
+				items: ObjectField[];
+			};
 
 			dispatch({
 				payload: {

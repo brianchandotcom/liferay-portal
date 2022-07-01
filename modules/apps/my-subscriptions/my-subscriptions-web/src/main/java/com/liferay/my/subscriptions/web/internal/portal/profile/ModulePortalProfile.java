@@ -16,7 +16,7 @@ package com.liferay.my.subscriptions.web.internal.portal.profile;
 
 import com.liferay.my.subscriptions.web.internal.application.list.MySubscriptionPanelApp;
 import com.liferay.my.subscriptions.web.internal.portlet.MySubscriptionsPortlet;
-import com.liferay.my.subscriptions.web.internal.upgrade.MySubscriptionsWebUpgrade;
+import com.liferay.my.subscriptions.web.internal.upgrade.registry.MySubscriptionsWebUpgradeStepRegistrator;
 import com.liferay.portal.profile.BaseDSModulePortalProfile;
 import com.liferay.portal.profile.PortalProfile;
 
@@ -41,7 +41,7 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 				PortalProfile.PORTAL_PROFILE_NAME_DXP),
 			MySubscriptionPanelApp.class.getName(),
 			MySubscriptionsPortlet.class.getName(),
-			MySubscriptionsWebUpgrade.class.getName());
+			MySubscriptionsWebUpgradeStepRegistrator.class.getName());
 	}
 
 }

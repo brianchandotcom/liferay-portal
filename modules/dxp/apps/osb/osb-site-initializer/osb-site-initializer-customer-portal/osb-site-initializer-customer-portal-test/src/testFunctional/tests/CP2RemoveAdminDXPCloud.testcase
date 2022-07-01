@@ -1,0 +1,84 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Name";
+	var testSiteURL = "customer-portal-name";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			Site.openSitesAdmin();
+
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+		}
+
+		task ("Create CP2.0 objects") {
+			CustomerPortal.createCPSiteObjects();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
+			CustomerPortal.customerPortalTearDown();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-150058 - Verify if the user is allowed to remove the additional admin(s) added before continuing"
+	@priority = "5"
+	test IfAddedAdminCanBeRemoved {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CP2TeamMembers.addFieldsTeamMembersExtra(
+			addMembers = "false",
+			position = "0",
+			positionNumber = "0",
+			rowEmail = "test01@project.com",
+			rowRole = "User");
+
+		CP2TeamMembers.clickTeamMembersSendInvitation();
+
+		CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields();
+
+		CP2DXPCloudSetup.clickOnAddAnotherAdminButton();
+
+		CP2DXPCloudSetup.clickOnRemoveThisAdminButton();
+
+		CP2DXPCloudSetup.notViewSetupDXPCloufEXtraInfo();
+	}
+
+}

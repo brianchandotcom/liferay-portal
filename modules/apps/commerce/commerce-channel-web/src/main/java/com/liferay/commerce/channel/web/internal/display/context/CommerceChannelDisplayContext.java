@@ -212,7 +212,6 @@ public class CommerceChannelDisplayContext
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("backURL", portletURL.toString());
-
 		portletURL.setParameter(
 			"commerceChannelId",
 			String.valueOf(commerceChannel.getCommerceChannelId()));

@@ -23,7 +23,7 @@ type CodeProps = {
 const Code: React.FC<CodeProps> = ({children, className}) => (
 	<code
 		className={classNames(
-			'bg-light font-italic p-2 text-secondary',
+			'bg-light break-text font-italic p-2 text-secondary w-100',
 			className
 		)}
 	>

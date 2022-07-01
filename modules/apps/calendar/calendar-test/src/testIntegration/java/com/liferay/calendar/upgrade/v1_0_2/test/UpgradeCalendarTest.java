@@ -132,7 +132,7 @@ public class UpgradeCalendarTest {
 	private UpgradeProcess _upgradeProcess;
 
 	@Inject(
-		filter = "component.name=com.liferay.calendar.internal.upgrade.CalendarServiceUpgrade"
+		filter = "component.name=com.liferay.calendar.internal.upgrade.registry.CalendarServiceUpgradeStepRegistrator"
 	)
 	private UpgradeStepRegistrator _upgradeStepRegistrator;
 

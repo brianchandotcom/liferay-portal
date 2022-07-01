@@ -15,7 +15,6 @@
 import React from 'react';
 import './BuilderListItem.scss';
 interface IProps {
-	aliasColumnText?: string;
 	disableEdit?: boolean;
 	hasDragAndDrop?: boolean;
 	index: number;
@@ -26,7 +25,8 @@ interface IProps {
 	onEditing?: (boolean: boolean) => void;
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
 	onVisibleEditModal?: (boolean: boolean) => void;
-	thirdColumnValues?: TThirdColumnValues[];
+	secondColumnValue?: string;
+	thirdColumnValues?: TThirdColumnValues[] | string;
 }
 declare type TThirdColumnValues = {
 	label: string;

@@ -89,7 +89,6 @@ public class CommerceChannelTableFDSView
 					PortletRequest.RENDER_PHASE);
 
 				portletURL.setParameter("backURL", portletURL.toString());
-
 				portletURL.setParameter(
 					"commerceChannelId",
 					String.valueOf(channel.getChannelId()));

@@ -55,7 +55,6 @@ public class BookmarksEntryModelIndexerWriterContributor
 							WorkflowConstants.STATUS_IN_TRASH
 						}));
 			});
-
 		batchIndexingActionable.setPerformActionMethod(
 			(BookmarksEntry bookmarksEntry) -> {
 				batchIndexingActionable.addDocuments(

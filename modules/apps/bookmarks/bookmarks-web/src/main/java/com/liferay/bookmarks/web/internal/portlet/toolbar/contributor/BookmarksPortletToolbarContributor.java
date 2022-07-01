@@ -122,7 +122,6 @@ public class BookmarksPortletToolbarContributor
 		urlMenuItem.setLabel(
 			LanguageUtil.get(
 				_portal.getHttpServletRequest(portletRequest), "bookmark"));
-
 		urlMenuItem.setURL(
 			PortletURLBuilder.create(
 				_portal.getControlPanelPortletURL(
@@ -167,7 +166,6 @@ public class BookmarksPortletToolbarContributor
 		urlMenuItem.setLabel(
 			LanguageUtil.get(
 				_portal.getHttpServletRequest(portletRequest), "folder"));
-
 		urlMenuItem.setURL(
 			PortletURLBuilder.create(
 				_portal.getControlPanelPortletURL(

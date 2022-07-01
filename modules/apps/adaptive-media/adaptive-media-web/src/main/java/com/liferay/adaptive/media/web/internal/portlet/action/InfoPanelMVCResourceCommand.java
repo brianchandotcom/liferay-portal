@@ -54,12 +54,11 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		throws Exception {
 
 		resourceRequest.setAttribute(
-			AMWebKeys.SELECTED_CONFIGURATION_ENTRIES,
-			_getSelectedAMImageConfigurationEntries(resourceRequest));
-
-		resourceRequest.setAttribute(
 			AMWebKeys.CONFIGURATION_ENTRIES_LIST,
 			_getAMImageConfigurationEntries(resourceRequest));
+		resourceRequest.setAttribute(
+			AMWebKeys.SELECTED_CONFIGURATION_ENTRIES,
+			_getSelectedAMImageConfigurationEntries(resourceRequest));
 
 		include(
 			resourceRequest, resourceResponse,

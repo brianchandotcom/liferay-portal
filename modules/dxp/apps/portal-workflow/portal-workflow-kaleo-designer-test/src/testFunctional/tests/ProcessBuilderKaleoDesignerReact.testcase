@@ -2587,12 +2587,19 @@ definition {
 	}
 
 	@description = "Verify that the user can view the Timer required fields"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanViewTimersRequiredFields {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewTimersRequiredFields";
 
-		// TODO CanViewTimersRequiredFields pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillTimers(newTimer = "true");
+
+		ProcessBuilderKaleoDesignerReact.viewTimersRequiredFields();
 	}
 
 	@description = "Verify that on the Details tab, the Total Modifications field follows the number of times the definition was updated"

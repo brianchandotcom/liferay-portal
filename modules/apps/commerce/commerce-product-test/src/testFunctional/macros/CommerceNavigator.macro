@@ -114,6 +114,8 @@ definition {
 			category = "${category}",
 			panel = "Commerce",
 			portlet = "${portlet}");
+
+		WaitForPageLoad();
 	}
 
 	macro gotoProductDetails {

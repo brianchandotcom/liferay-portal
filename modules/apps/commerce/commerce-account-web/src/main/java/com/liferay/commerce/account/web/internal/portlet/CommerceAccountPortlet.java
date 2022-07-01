@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.account.web.internal.portlet;
 
+import com.liferay.commerce.account.web.internal.constants.CommerceAccountPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -29,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.display-category=category.hidden",
-		"javax.portlet.name=com_liferay_commerce_account_web_internal_portlet_CommerceAccountPortlet",
+		"javax.portlet.name=" + CommerceAccountPortletKeys.COMMERCE_ACCOUNT,
 		"javax.portlet.version=3.0"
 	},
 	service = {CommerceAccountPortlet.class, Portlet.class}

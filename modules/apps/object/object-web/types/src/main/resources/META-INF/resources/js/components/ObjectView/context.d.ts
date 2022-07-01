@@ -20,19 +20,21 @@ interface IViewContextProps extends Array<TState | Function> {
 }
 declare const ViewContext: React.Context<IViewContextProps>;
 export declare const METADATA: {
+	DBType: string;
 	businessType: string;
 	checked: boolean;
 	filtered: boolean;
 	id: number;
 	indexed: boolean;
 	indexedAsKeyword: boolean;
-	indexedLanguageId: string;
+	indexedLanguageId: null;
 	label: {
 		[x: string]: string;
 	};
-	listTypeDefinitionId: boolean;
+	listTypeDefinitionId: number;
 	name: string;
 	required: boolean;
+	state: boolean;
 	type: string;
 }[];
 export declare enum TYPES {

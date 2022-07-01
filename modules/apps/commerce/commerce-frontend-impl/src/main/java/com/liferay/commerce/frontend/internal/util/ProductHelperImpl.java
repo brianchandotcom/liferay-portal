@@ -303,7 +303,6 @@ public class ProductHelperImpl implements ProductHelper {
 		priceModel.setDiscountPercentages(
 			_getFormattedDiscountPercentages(
 				commerceDiscountValue.getPercentages(), locale));
-
 		priceModel.setFinalPrice(finalPriceCommerceMoney.format(locale));
 
 		return priceModel;

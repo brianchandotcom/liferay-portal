@@ -34,6 +34,8 @@ definition {
 		Button.click(button = "View Details");
 
 		Button.click(button = "Checkout");
+
+		WaitForPageLoad();
 	}
 
 	macro gotoCheckoutViaMiniCart {
@@ -42,6 +44,8 @@ definition {
 		CommerceNavigator.gotoMiniCart();
 
 		Button.click(button = "Submit");
+
+		WaitForPageLoad();
 	}
 
 	macro initializersCheckout {

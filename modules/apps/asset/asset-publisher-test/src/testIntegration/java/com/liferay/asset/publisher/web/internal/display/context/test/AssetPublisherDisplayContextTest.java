@@ -162,7 +162,6 @@ public class AssetPublisherDisplayContextTest {
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.COMPANY_ID,
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
-
 		mockLiferayPortletRenderRequest.setAttribute(
 			StringBundler.concat(
 				mockLiferayPortletRenderRequest.getPortletName(), "-",
@@ -172,7 +171,6 @@ public class AssetPublisherDisplayContextTest {
 		String path = "/view.jsp";
 
 		mockLiferayPortletRenderRequest.setParameter("mvcPath", path);
-
 		mockLiferayPortletRenderRequest.setAttribute(
 			MVCRenderConstants.
 				PORTLET_CONTEXT_OVERRIDE_REQUEST_ATTIBUTE_NAME_PREFIX + path,

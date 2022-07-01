@@ -64,7 +64,7 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
 
 		CPCommerceCatalog.newProductsEntry(
 			productCatalog = "Master",

@@ -68,7 +68,6 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 					modifiedTimeProperty.gt(
 						_syncDLObjectLocalService.getLatestModifiedTime()));
 			});
-
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLSyncEvent dlSyncEvent) -> {
 				try {

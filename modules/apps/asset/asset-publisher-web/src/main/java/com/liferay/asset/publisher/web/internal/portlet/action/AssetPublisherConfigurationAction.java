@@ -162,11 +162,9 @@ public class AssetPublisherConfigurationAction
 
 		httpServletRequest.setAttribute(
 			AssetPublisherWebKeys.ASSET_PUBLISHER_HELPER, assetPublisherHelper);
-
 		httpServletRequest.setAttribute(
 			AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_HELPER,
 			assetPublisherWebHelper);
-
 		httpServletRequest.setAttribute(
 			AssetPublisherWebKeys.ITEM_SELECTOR, itemSelector);
 

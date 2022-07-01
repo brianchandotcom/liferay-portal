@@ -212,7 +212,6 @@ public class PanelAppTag extends BasePanelTag {
 
 		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-app:id", _id);
-
 		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-app:label", _label);
 
@@ -226,7 +225,6 @@ public class PanelAppTag extends BasePanelTag {
 		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-app:notificationsCount",
 			notificationsCount);
-
 		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-app:panelApp", _panelApp);
 

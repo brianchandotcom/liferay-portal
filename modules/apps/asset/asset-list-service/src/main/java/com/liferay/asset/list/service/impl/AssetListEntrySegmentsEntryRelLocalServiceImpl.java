@@ -66,12 +66,11 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 		assetListEntrySegmentsEntryRel.setCreateDate(new Date());
 		assetListEntrySegmentsEntryRel.setModifiedDate(new Date());
 		assetListEntrySegmentsEntryRel.setAssetListEntryId(assetListEntryId);
-		assetListEntrySegmentsEntryRel.setSegmentsEntryId(segmentsEntryId);
-		assetListEntrySegmentsEntryRel.setTypeSettings(typeSettings);
-
 		assetListEntrySegmentsEntryRel.setPriority(
 			assetListEntrySegmentsEntryRelPersistence.countByAssetListEntryId(
 				assetListEntryId));
+		assetListEntrySegmentsEntryRel.setSegmentsEntryId(segmentsEntryId);
+		assetListEntrySegmentsEntryRel.setTypeSettings(typeSettings);
 
 		return assetListEntrySegmentsEntryRelPersistence.update(
 			assetListEntrySegmentsEntryRel);

@@ -33,6 +33,9 @@ public class SelectInfoFieldType implements InfoFieldType {
 	public static final Attribute<SelectInfoFieldType, Collection<Option>>
 		OPTIONS = new Attribute<>();
 
+	public static final Attribute<SelectInfoFieldType, String> OPTIONS_URL =
+		new Attribute<>();
+
 	@Override
 	public String getName() {
 		return "select";

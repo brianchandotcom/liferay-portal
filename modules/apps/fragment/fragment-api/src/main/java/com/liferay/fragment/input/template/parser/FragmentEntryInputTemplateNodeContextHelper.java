@@ -86,6 +86,8 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 			errorMessage = infoFormValidationException.getLocalizedMessage(
 				locale);
+
+			SessionErrors.remove(httpServletRequest, infoField.getUniqueId());
 		}
 
 		String inputHelpText = GetterUtil.getString(
@@ -198,16 +200,26 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				minValue -> inputTemplateNode.addAttribute("min", minValue));
 		}
 		else if (infoField.getInfoFieldType() instanceof SelectInfoFieldType) {
+			Optional<String> autocompleteURLOptional =
+				infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS_URL);
+
+			inputTemplateNode.addAttribute(
+				"optionsURL", autocompleteURLOptional.orElse(null));
+
+			List<InputTemplateNode.Option> options = new ArrayList<>();
+
 			Optional<List<SelectInfoFieldType.Option>> optionsOptional =
 				infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS);
 
-			List<SelectInfoFieldType.Option> options = optionsOptional.orElse(
-				new ArrayList<>());
+			for (SelectInfoFieldType.Option option :
+					optionsOptional.orElse(Collections.emptyList())) {
 
-			for (SelectInfoFieldType.Option option : options) {
-				inputTemplateNode.addOption(
-					option.getLabel(locale), option.getValue());
+				options.add(
+					new InputTemplateNode.Option(
+						option.getLabel(locale), option.getValue()));
 			}
+
+			inputTemplateNode.addAttribute("options", options);
 		}
 
 		return inputTemplateNode;

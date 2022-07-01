@@ -70,7 +70,6 @@ public abstract class BaseAssetsInfoCollectionProvider {
 
 		assetEntryQuery.setOrderByCol1(orderByCol);
 		assetEntryQuery.setOrderByType1(orderByType);
-
 		assetEntryQuery.setOrderByCol2(Field.CREATE_DATE);
 		assetEntryQuery.setOrderByType2("DESC");
 

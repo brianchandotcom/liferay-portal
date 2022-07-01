@@ -46,7 +46,9 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 
 	return (
 		<form
-			className="page-editor__form"
+			className={classNames('page-editor__form', {
+				'page-editor__form--success': showMessagePreview,
+			})}
 			onSubmit={(event) => event.preventDefault()}
 			ref={ref}
 		>

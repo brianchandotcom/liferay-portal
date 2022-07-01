@@ -140,7 +140,6 @@ public class AssetTagsSelectorDisplayContext {
 		tagsSearchContainer.setOrderByComparator(
 			new AssetTagNameComparator(orderByAsc));
 		tagsSearchContainer.setOrderByType(orderByType);
-
 		tagsSearchContainer.setResultsAndTotal(
 			() -> AssetTagServiceUtil.getTags(
 				_getGroupIds(), _getKeywords(), tagsSearchContainer.getStart(),

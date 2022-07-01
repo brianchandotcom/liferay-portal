@@ -117,7 +117,6 @@ public class OAuthApplicationLocalServiceImpl
 		}
 
 		oAuthApplication.setConsumerKey(consumerKey);
-
 		oAuthApplication.setConsumerSecret(token);
 		oAuthApplication.setAccessLevel(accessLevel);
 		oAuthApplication.setShareableAccessToken(shareableAccessToken);

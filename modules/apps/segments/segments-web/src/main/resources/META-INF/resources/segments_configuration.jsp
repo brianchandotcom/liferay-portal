@@ -151,7 +151,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 		<div class="sheet-footer">
 			<div class="btn-group-item">
 				<c:choose>
-					<c:when test="<%= true %>">
+					<c:when test="<%= segmentsCompanyConfigurationDisplayContext.isSegmentsCompanyConfigurationDefined() %>">
 						<clay:button
 							cssClass="submit-btn"
 							displayType="primary"

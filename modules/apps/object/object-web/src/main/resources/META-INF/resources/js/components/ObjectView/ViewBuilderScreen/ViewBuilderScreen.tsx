@@ -19,7 +19,6 @@ import React, {useContext, useState} from 'react';
 import {defaultLanguageId} from '../../../utils/locale';
 import {ModalEditViewColumn} from '../ModalEditViewColumn/ModalEditViewColumn';
 import ViewContext, {TYPES} from '../context';
-import {TObjectField} from '../types';
 
 const ViewBuilderScreen: React.FC<{}> = () => {
 	const [visibleEditModal, setVisibleEditModal] = useState(false);
@@ -49,10 +48,10 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 		const parentWindow = Liferay.Util.getOpener();
 
 		parentWindow.Liferay.fire('openModalAddColumns', {
-			getName: ({label}: TObjectField) => label[defaultLanguageId],
+			getName: ({label}: ObjectField) => label[defaultLanguageId],
 			header: Liferay.Language.get('add-columns'),
 			items: objectFields,
-			onSave: (selectedObjectFields: TObjectField[]) =>
+			onSave: (selectedObjectFields: ObjectField[]) =>
 				dispatch({
 					payload: {
 						selectedObjectFields,

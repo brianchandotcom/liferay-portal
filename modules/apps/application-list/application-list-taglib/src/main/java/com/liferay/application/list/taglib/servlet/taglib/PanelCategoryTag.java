@@ -190,7 +190,6 @@ public class PanelCategoryTag extends BasePanelTag {
 		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category:notificationsCount",
 			notificationsCount);
-
 		httpServletRequest.setAttribute(
 			"liferay-application-list:panel-category:panelApps", panelApps);
 		httpServletRequest.setAttribute(

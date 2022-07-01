@@ -226,7 +226,7 @@ public class UpgradePortalPreferencesTest {
 	private UpgradeProcess _upgradeProcess;
 
 	@Inject(
-		filter = "component.name=com.liferay.calendar.web.internal.upgrade.CalendarWebUpgrade"
+		filter = "component.name=com.liferay.calendar.web.internal.upgrade.registry.CalendarWebUpgradeStepRegistrator"
 	)
 	private UpgradeStepRegistrator _upgradeStepRegistrator;
 

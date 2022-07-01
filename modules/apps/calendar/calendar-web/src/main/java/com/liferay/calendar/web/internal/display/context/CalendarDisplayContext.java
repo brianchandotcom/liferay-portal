@@ -149,7 +149,6 @@ public class CalendarDisplayContext {
 					_renderResponse.createRenderURL(), "mvcPath",
 					"/edit_calendar_resource.jsp", "redirect",
 					PortalUtil.getCurrentURL(httpServletRequest));
-
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest, "add-calendar-resource"));

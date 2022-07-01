@@ -30,9 +30,9 @@ export const CreateRequirementCaseBatch = gql`
 `;
 
 export const DeleteRequirementCase = gql`
-	mutation deleteRequirementCase($id: Long) {
+	mutation deleteRequirementsCases($id: Long) {
 		c {
-			deleteRequirementCase(requirementId: $id)
+			deleteRequirementsCases(requirementsCasesId: $id)
 		}
 	}
 `;

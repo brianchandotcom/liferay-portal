@@ -95,7 +95,6 @@ public class BatchPlannerPlanTemplateManagementToolbarDisplayContext
 					).buildString());
 
 				labelItem.setDismissible(true);
-
 				labelItem.setLabel(
 					String.format(
 						"%s: %s",

@@ -238,7 +238,6 @@ public class BlogsEntryActionDropdownItemsProvider {
 				"mvcRenderCommandName", "/blogs/edit_entry", "redirect",
 				_getRedirectURL(), "portletResource", portletResource,
 				"entryId", blogsEntry.getEntryId());
-
 			dropdownItem.setIcon("edit");
 			dropdownItem.setLabel(LanguageUtil.get(_resourceBundle, "edit"));
 		};

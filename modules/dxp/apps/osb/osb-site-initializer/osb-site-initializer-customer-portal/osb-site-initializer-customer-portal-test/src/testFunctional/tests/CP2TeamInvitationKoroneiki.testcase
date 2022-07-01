@@ -1,0 +1,85 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal Name";
+	var testSiteURL = "customer-portal-name";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			Site.openSitesAdmin();
+
+			TeamExtranet.addSiteTemplateCP(
+				siteName = "${testSiteName}",
+				siteTemplateName = "Liferay OSB Site Initializer Customer Portal");
+		}
+
+		task ("Create CP2.0 objects") {
+			CustomerPortal.createCPSiteObjects();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "${testSiteName}");
+
+			CustomerPortal.customerPortalTearDown();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-148181 - Verify if when the user types a email at Invite Your Team Members the same email appears at Accounts - Details - Project that you are testing"
+	@priority = "5"
+	test IfInvitedIsSeenOnAccountRoles {
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Accounts.addAssigneeToRoleViaUsersTab(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "Test Test");
+
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal Name");
+
+		CustomerPortal.enterOnProject(title = "Test Account 01");
+
+		CustomerPortal.clickOnStartProjectSetup();
+
+		CP2TeamMembers.addFieldsTeamMembersExtra(
+			position = "0",
+			positionNumber = "0",
+			rowEmail = "test01@liferay.com",
+			rowRole = "User");
+
+		CP2TeamMembers.clickTeamMembersSendInvitation();
+
+		Accounts.openAccountsAdmin();
+
+		CustomerPortal.accountTableProject(title = "Test Account 01");
+
+		Navigator.gotoNavTab(navTab = "Users");
+
+		AssertElementPresent(
+			email = "test01@liferay.com",
+			locator1 = "CP2TeamMembers#ACCOUNT_USER_NAME");
+	}
+
+}

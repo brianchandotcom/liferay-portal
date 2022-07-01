@@ -1317,18 +1317,15 @@ definition {
 
 	macro viewNoTag {
 		var key_entryTitle = "${entryTitle}";
+		var key_tagName = "${tagName}";
 
-		if (isSet(tagNameList)) {
-			for (var tagName : list "${tagNameList}") {
-				AssertElementNotPresent(
-					key_tagName = "${tagName}",
-					locator1 = "BlogsEntry#TAG",
-					tagName = StringUtil.lowerCase("${tagName}"));
-			}
+		if (isSet(duplicate)) {
+			AssertElementNotPresent(
+				locator1 = "BlogsEntry#TAG_2",
+				tagName = StringUtil.lowerCase("${tagName}"));
 		}
 		else {
 			AssertElementNotPresent(
-				key_tagName = "${tagName}",
 				locator1 = "BlogsEntry#TAG",
 				tagName = StringUtil.lowerCase("${tagName}"));
 		}

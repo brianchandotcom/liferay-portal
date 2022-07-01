@@ -4,5 +4,7 @@
 	<source-check>
 		<suppress checks="CDNCheck" files="build.gradle" />
 		<suppress checks="JSONPackageJSONDependencyVersionCheck" files="extra/remote-app/package\.json" />
+		<suppress checks="PoshiPauseUsageCheck" files="osb-site-initializer-customer-portal-test/src/testFunctional/macros/CustomerPortal\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="osb-site-initializer-customer-portal-test/src/testFunctional/tests/CustomerPortalSite\.testcase" />
 	</source-check>
 </suppressions>

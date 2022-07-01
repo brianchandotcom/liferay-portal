@@ -72,6 +72,25 @@ export const bodySerializers: RestLink.Serializers = {
 			},
 			headers
 		),
+	requirementcase: (
+		requirementCases: {caseId: number; requirementId: number}[],
+		headers
+	) =>
+		serialize(
+			requirementCases.map(
+				({
+					caseId: r_caseToRequirementsCases_c_caseId,
+					requirementId: r_requiremenToRequirementsCases_c_requirementId,
+				}) => ({
+					name:
+						r_caseToRequirementsCases_c_caseId +
+						r_requiremenToRequirementsCases_c_requirementId,
+					r_caseToRequirementsCases_c_caseId,
+					r_requiremenToRequirementsCases_c_requirementId,
+				})
+			),
+			headers
+		),
 	routine: ({projectId: r_routineToProjects_c_projectId, ...data}, headers) =>
 		serialize(
 			{

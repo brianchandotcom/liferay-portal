@@ -143,8 +143,8 @@ public class SiteInitializerExtender
 				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _themeLocalService,
-				_userAccountResourceFactory, _userLocalService,
-				_workflowDefinitionLinkLocalService,
+				_userAccountResourceFactory, _userGroupLocalService,
+				_userLocalService, _workflowDefinitionLinkLocalService,
 				_workflowDefinitionResourceFactory);
 
 		siteInitializerExtension.start();
@@ -255,8 +255,8 @@ public class SiteInitializerExtender
 				_structuredContentFolderResourceFactory,
 				_styleBookEntryZipProcessor, _taxonomyCategoryResourceFactory,
 				_taxonomyVocabularyResourceFactory, _themeLocalService,
-				_userAccountResourceFactory, _userLocalService,
-				_workflowDefinitionLinkLocalService,
+				_userAccountResourceFactory, _userGroupLocalService,
+				_userLocalService, _workflowDefinitionLinkLocalService,
 				_workflowDefinitionResourceFactory);
 
 		siteInitializerExtension.start();
@@ -430,6 +430,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private UserAccountResource.Factory _userAccountResourceFactory;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

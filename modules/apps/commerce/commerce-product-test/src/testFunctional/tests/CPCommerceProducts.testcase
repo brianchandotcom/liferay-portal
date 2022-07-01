@@ -1283,7 +1283,7 @@ definition {
 			key_filterOption = "Add",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 
-		Pause(locator1 = "3000");
+		WaitForElementNotPresent(locator1 = "CommerceEntry#ANY_IFRAME");
 
 		if (IsElementPresent(key_contentType = "Base Information", locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED")) {
 			Click(
@@ -1798,7 +1798,7 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
-		Pause(locator1 = "2000");
+		WaitForElementPresent(locator1 = "CommerceNavigation#SEARCH_FIELD");
 
 		CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
 

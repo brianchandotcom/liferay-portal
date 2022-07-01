@@ -111,6 +111,10 @@ public class PanelAppRegistry {
 			panelApp -> {
 				Portlet portlet = panelApp.getPortlet();
 
+				if (portlet == null) {
+					return false;
+				}
+
 				long portletCompanyId = portlet.getCompanyId();
 
 				if ((portletCompanyId != CompanyConstants.SYSTEM) &&

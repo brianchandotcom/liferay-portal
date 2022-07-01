@@ -15,8 +15,12 @@
 package com.liferay.portlet.configuration.web.internal.portlet;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,6 +48,7 @@ import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -100,6 +105,8 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -544,9 +551,21 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 				roleId, _getActionIds(actionRequest, roleId, false));
 		}
 
-		_resourcePermissionService.setIndividualResourcePermissions(
-			resourceGroupId, themeDisplay.getCompanyId(), selResource,
-			resourcePrimKey, roleIdsToActionIds);
+		if (_serviceTrackerMap.containsKey(selResource)) {
+			_resourcePermissionService.setIndividualResourcePermissions(
+				resourceGroupId, themeDisplay.getCompanyId(), selResource,
+				resourcePrimKey, roleIdsToActionIds);
+		}
+		else {
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
+				_resourcePermissionService.setIndividualResourcePermissions(
+					resourceGroupId, themeDisplay.getCompanyId(), selResource,
+					resourcePrimKey, roleIdsToActionIds);
+			}
+		}
 
 		if (PropsValues.PERMISSIONS_PROPAGATION_ENABLED) {
 			Portlet portlet = _portletLocalService.getPortletById(
@@ -571,6 +590,20 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 			portletPreferences.store();
 		}
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, (Class<CTService<?>>)(Class<?>)CTService.class, null,
+			(serviceReference, emitter) -> {
+				CTService<?> ctService = bundleContext.getService(
+					serviceReference);
+
+				Class<?> modelClass = ctService.getModelClass();
+
+				emitter.emit(modelClass.getName());
+			});
 	}
 
 	@Override
@@ -1093,6 +1126,8 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 	@Reference
 	private RoleTypeContributorProvider _roleTypeContributorProvider;
+
+	private ServiceTrackerMap<String, CTService<?>> _serviceTrackerMap;
 
 	private class PortletConfigurationPortletPortletConfig
 		extends LiferayPortletConfigWrapper {

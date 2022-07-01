@@ -315,7 +315,7 @@ function SuccessMessageOptions({item, onValueSelect}) {
 					</ClayForm.Group>
 
 					<ClayToggle
-						label={Liferay.Language.get('preview-in-edit-mode')}
+						label={Liferay.Language.get('preview-success-state')}
 						onToggle={(checked) => {
 							setShowMessagePreview(checked);
 

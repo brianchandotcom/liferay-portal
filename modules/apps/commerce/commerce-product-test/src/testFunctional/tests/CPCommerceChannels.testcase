@@ -1741,8 +1741,6 @@ definition {
 
 		CommerceCheckout.gotoCheckout();
 
-		Pause(locator1 = "3000");
-
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",
 			newAddressCity = "Test City",
@@ -1943,7 +1941,7 @@ definition {
 
 		Click(locator1 = "Icon#CLOSE");
 
-		Pause(locator1 = "3000");
+		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 
 		SelectFrameTop();
 
@@ -2804,8 +2802,6 @@ definition {
 			productQuantity = "1");
 
 		CommerceCheckout.gotoCheckout();
-
-		Pause(locator1 = "3000");
 
 		CommerceCheckout.initializersCheckout(
 			newAddressAddress = "Test Address",

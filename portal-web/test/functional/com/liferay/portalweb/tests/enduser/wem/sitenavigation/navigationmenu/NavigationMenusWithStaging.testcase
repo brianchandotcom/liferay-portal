@@ -1409,7 +1409,7 @@ definition {
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar minimally styled");
 
 			AssertSelectedLabel(
-				locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
+				locator1 = "Select#DISPLAY_TEMPLATE",
 				value1 = "Bar minimally styled");
 
 			Portlet.saveAndCloseConfig();

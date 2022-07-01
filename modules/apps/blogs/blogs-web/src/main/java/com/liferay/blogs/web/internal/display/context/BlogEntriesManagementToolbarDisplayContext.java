@@ -216,7 +216,6 @@ public class BlogEntriesManagementToolbarDisplayContext
 		portletURL.setParameter("orderBycol", searchContainer.getOrderByCol());
 		portletURL.setParameter(
 			"orderByType", searchContainer.getOrderByType());
-
 		portletURL.setParameter("entriesNavigation", getNavigation());
 
 		if (searchContainer.getCur() > 0) {

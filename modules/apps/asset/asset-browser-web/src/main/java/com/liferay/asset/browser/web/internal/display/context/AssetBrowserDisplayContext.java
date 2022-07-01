@@ -574,7 +574,6 @@ public class AssetBrowserDisplayContext {
 
 		breadcrumbEntry.setTitle(
 			LanguageUtil.get(_httpServletRequest, "sites-and-libraries"));
-
 		breadcrumbEntry.setURL(
 			PortletURLBuilder.create(
 				PortletURLUtil.clone(

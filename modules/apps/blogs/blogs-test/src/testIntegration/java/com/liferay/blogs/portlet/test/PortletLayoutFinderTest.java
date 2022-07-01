@@ -189,12 +189,10 @@ public class PortletLayoutFinderTest {
 	protected ThemeDisplay getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-
 		themeDisplay.setPlid(_assetLayout.getPlid());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 
 		return themeDisplay;
 	}

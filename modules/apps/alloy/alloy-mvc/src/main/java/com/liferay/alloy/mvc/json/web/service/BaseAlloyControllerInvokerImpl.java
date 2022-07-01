@@ -223,14 +223,12 @@ public abstract class BaseAlloyControllerInvokerImpl
 		}
 
 		request.setAttribute(
+			BaseAlloyControllerImpl.VIEW_PATH, StringPool.BLANK);
+		request.setAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST, portletRequest);
 		request.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE, portletResponse);
-
 		request.setAttribute(PortletRequest.LIFECYCLE_PHASE, lifecycle);
-
-		request.setAttribute(
-			BaseAlloyControllerImpl.VIEW_PATH, StringPool.BLANK);
 
 		return request;
 	}

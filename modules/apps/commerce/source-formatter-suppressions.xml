@@ -20,8 +20,8 @@
 		<suppress checks="JavaHelperUtilCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/cart/CommerceCartResourceUtil\.java" />
 		<suppress checks="JavaHelperUtilCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/search/util/CommerceSearchUtil\.java" />
 		<suppress checks="JavaHelperUtilCheck" files="commerce-product-asset-categories-web/src/main/java/com/liferay/commerce/product/asset/categories/web/internal/util/CPAssetCategoryWebPortletUtil\.java" />
-		<suppress checks="JavaUpgradeVersionCheck" files="commerce-product-type-virtual-service/src/main/java/com/liferay/commerce/product/type/virtual/internal/upgrade/CommerceProductTypeVirtualUpgradeStepRegistrator\.java" />
-		<suppress checks="JavaUpgradeVersionCheck" files="commerce-shipping-engine-fixed-service/src/main/java/com/liferay/commerce/shipping/engine/fixed/internal/upgrade/CommerceShippingEngineFixedUpgradeStepRegistrator\.java" />
+		<suppress checks="JavaUpgradeVersionCheck" files="commerce-product-type-virtual-service/src/main/java/com/liferay/commerce/product/type/virtual/internal/upgrade/registry/CommerceProductTypeVirtualServiceUpgradeStepRegistrator\.java" />
+		<suppress checks="JavaUpgradeVersionCheck" files="commerce-shipping-engine-fixed-service/src/main/java/com/liferay/commerce/shipping/engine/fixed/internal/upgrade/registry/CommerceShippingEngineFixedServiceUpgradeStepRegistrator\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="commerce-product-api/src/main/java/com/liferay/commerce/product/option/CommerceOptionValue\.java" />
 		<suppress checks="JSONPackageJSONCheck" files="commerce-cart-taglib/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="commerce-frontend-js/package\.json" />
@@ -29,27 +29,9 @@
 		<suppress checks="JSONPackageJSONCheck" files="commerce-product-content-web/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="commerce-product-options-web/package\.json" />
 		<suppress checks="JSONPackageJSONCheck" files="commerce-theme-minium/commerce-theme-minium-impl/package\.json" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/macros/CommerceAcceleratorsInitializer\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/macros/CommerceDiagram\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/macros/CommerceEntry\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/macros/CommerceRelations\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/macros/CPCommerceCatalog\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CommerceAccelerators\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CommerceFrontStore\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CommerceMiniCart\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CommercePayments\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CommerceProductCard\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CommerceProductDetails\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CommerceSort\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CPCommerceChannels\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CPCommerceDiscounts\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CPCommerceOrders\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CPCommercePriceLists\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CPCommerceProductProductRelations\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CPCommerceProducts\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CPCommercePromotions\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/CPCommerceShipments\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="commerce-product-test/src/testFunctional/tests/GuestCheckout\.testcase" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="commerce-theme-minium/commerce-theme-minium/src/WEB-INF/liferay-plugin-package\.properties" />
 		<suppress checks="PropertiesLiferayPluginPackageLiferayVersionsCheck" files="commerce-theme-speedwell/commerce-theme-speedwell/src/WEB-INF/liferay-plugin-package\.properties" />
 		<suppress checks="XMLCustomSQLStylingCheck" files="commerce-inventory-service/src/main/resources/META-INF/custom-sql/default\.xml" />

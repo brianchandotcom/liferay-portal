@@ -165,7 +165,6 @@ public class EditAssetVocabularyMVCActionCommand extends BaseMVCActionCommand {
 
 		vocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
 			classNameIds, classTypePKs, requireds);
-
 		vocabularySettingsHelper.setMultiValued(
 			ParamUtil.getBoolean(actionRequest, "multiValued"));
 

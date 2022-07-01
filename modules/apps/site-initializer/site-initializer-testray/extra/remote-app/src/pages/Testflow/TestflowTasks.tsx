@@ -22,7 +22,7 @@ import Code from '../../components/Code';
 import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView/ListView';
 import Loading from '../../components/Loading';
-import ProgressBar from '../../components/ProgressBar';
+import TaskbarProgress from '../../components/ProgressBar/TaskbarProgress';
 import StatusBadge from '../../components/StatusBadge';
 import QATable from '../../components/Table/QATable';
 import useCaseResultGroupBy from '../../data/useCaseResultGroupBy';
@@ -30,9 +30,30 @@ import {getSubTasks} from '../../graphql/queries/testraySubTask';
 import {TestrayTask, getTask} from '../../graphql/queries/testrayTask';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
-import {SUBTASK_STATUS} from '../../util/constants';
+import {
+	SUBTASK_STATUS,
+	StatusesProgressScore,
+	chartClassNames,
+} from '../../util/constants';
 import {getTimeFromNow} from '../../util/date';
 import {assigned} from '../../util/mock';
+
+export const progressScoreItems = [
+	[StatusesProgressScore.SELF, 7000],
+	[StatusesProgressScore.OTHER, 8967],
+	[StatusesProgressScore.INCOMPLETE, 1000],
+];
+function getTotalCompletedScore(scores: [string, number][]) {
+	let totalCompleted = 0;
+
+	for (const [scoreName, score] of scores) {
+		if (scoreName !== StatusesProgressScore.INCOMPLETE) {
+			totalCompleted += score;
+		}
+	}
+
+	return totalCompleted;
+}
 
 const ShortcutIcon = () => (
 	<ClayIcon className="ml-2" fontSize={12} symbol="shortcut" />
@@ -47,9 +68,9 @@ const TestFlowTasks = () => {
 
 	const testrayTask = data?.task;
 
-	const {status: testrayCaseResultOverview} = useCaseResultGroupBy(
-		testrayTask?.build?.id
-	);
+	const {
+		donut: {columns},
+	} = useCaseResultGroupBy(testrayTask?.build?.id);
 
 	const {setHeading, setTabs} = useHeader();
 
@@ -162,10 +183,11 @@ const TestFlowTasks = () => {
 						/>
 
 						<div className="pb-4">
-							<ProgressBar
+							<TaskbarProgress
 								displayTotalCompleted={false}
-								items={testrayCaseResultOverview}
-								legend
+								items={columns as any}
+								legend={true}
+								taskbarClassNames={chartClassNames}
 							/>
 						</div>
 					</div>
@@ -178,13 +200,14 @@ const TestFlowTasks = () => {
 				title={i18n.translate('progress-score')}
 			>
 				<div className="pb-5">
-					<ProgressBar
-						items={{
-							incomplete: 3517,
-							other: 4115,
-							self: 0,
-						}}
+					<TaskbarProgress
+						displayTotalCompleted
+						items={progressScoreItems as any}
 						legend
+						taskbarClassNames={chartClassNames}
+						totalCompleted={getTotalCompletedScore(
+							progressScoreItems as any
+						)}
 					/>
 				</div>
 			</Container>

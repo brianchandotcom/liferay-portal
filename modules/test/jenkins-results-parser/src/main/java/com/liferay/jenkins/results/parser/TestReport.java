@@ -25,8 +25,8 @@ public interface TestReport {
 
 	public String getErrorDetails();
 
-	public String getName();
-
 	public String getStatus();
+
+	public String getTestName();
 
 }

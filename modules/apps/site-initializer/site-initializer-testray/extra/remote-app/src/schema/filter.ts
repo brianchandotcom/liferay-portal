@@ -255,6 +255,21 @@ const filters = {
 			type: 'textarea',
 		},
 	],
+	requirementCase: [
+		baseFilters.priority,
+		baseFilters.caseType,
+		{
+			label: 'Case Name',
+			name: 'caseName',
+			type: 'text',
+		},
+		baseFilters.team,
+		{
+			label: 'Component',
+			name: 'component',
+			type: 'text',
+		},
+	],
 	routines: [baseFilters.priority, baseFilters.caseType, baseFilters.team],
 };
 

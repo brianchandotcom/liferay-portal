@@ -16,9 +16,9 @@ import React, {createContext, useReducer} from 'react';
 
 import {defaultLanguageId} from '../../utils/locale';
 import {
+	ObjectFieldView,
 	TAction,
 	TName,
-	TObjectField,
 	TObjectView,
 	TObjectViewColumn,
 	TObjectViewFilterColumn,
@@ -40,77 +40,87 @@ const ViewContext = createContext({} as IViewContextProps);
 
 export const METADATA = [
 	{
+		DBType: 'String',
 		businessType: 'Author',
 		checked: false,
 		filtered: true,
 		id: 1,
 		indexed: true,
 		indexedAsKeyword: true,
-		indexedLanguageId: '',
+		indexedLanguageId: null,
 		label: {[defaultLanguageId]: Liferay.Language.get('author')},
-		listTypeDefinitionId: true,
+		listTypeDefinitionId: 0,
 		name: 'creator',
 		required: false,
+		state: false,
 		type: 'metadata',
 	},
 	{
+		DBType: 'Date',
 		businessType: 'Creation Date',
 		checked: false,
 		filtered: true,
 		id: 2,
 		indexed: true,
 		indexedAsKeyword: true,
-		indexedLanguageId: '',
+		indexedLanguageId: null,
 		label: {[defaultLanguageId]: Liferay.Language.get('creation-date')},
-		listTypeDefinitionId: true,
+		listTypeDefinitionId: 0,
 		name: 'dateCreated',
 		required: false,
+		state: false,
 		type: 'metadata',
 	},
 	{
+		DBType: 'Date',
 		businessType: 'Modified Date',
 		checked: false,
 		filtered: true,
 		id: 3,
 		indexed: true,
 		indexedAsKeyword: true,
-		indexedLanguageId: '',
+		indexedLanguageId: null,
 		label: {[defaultLanguageId]: Liferay.Language.get('modified-date')},
-		listTypeDefinitionId: true,
+		listTypeDefinitionId: 0,
 		name: 'dateModified',
 		required: false,
+		state: false,
 		type: 'metadata',
 	},
 	{
+		DBType: 'Long',
 		businessType: 'Workflow Status',
 		checked: false,
 		filtered: true,
 		id: 4,
 		indexed: true,
 		indexedAsKeyword: true,
-		indexedLanguageId: '',
+		indexedLanguageId: null,
 		label: {
 			[defaultLanguageId]: Liferay.Language.get(
 				'workflow-status[object]'
 			),
 		},
-		listTypeDefinitionId: true,
+		listTypeDefinitionId: 0,
 		name: 'status',
 		required: false,
+		state: false,
 		type: 'metadata',
 	},
 	{
+		DBType: 'Integer',
 		businessType: 'Id',
 		checked: false,
 		filtered: true,
 		id: 5,
 		indexed: true,
 		indexedAsKeyword: true,
-		indexedLanguageId: '',
+		indexedLanguageId: null,
 		label: {[defaultLanguageId]: Liferay.Language.get('id')},
-		listTypeDefinitionId: true,
+		listTypeDefinitionId: 0,
 		name: 'id',
 		required: false,
+		state: false,
 		type: 'metadata',
 	},
 ];
@@ -136,7 +146,7 @@ export enum TYPES {
 }
 
 const initialState = {
-	objectFields: [] as TObjectField[],
+	objectFields: [] as ObjectField[],
 	objectView: {} as TObjectView,
 } as TState;
 
@@ -205,7 +215,7 @@ const viewReducer = (state: TState, action: TAction) => {
 			let objectFieldBusinessType;
 			const {objectFields} = state;
 
-			objectFields.forEach((objectField: TObjectField) => {
+			objectFields.forEach((objectField: ObjectFieldView) => {
 				if (objectField.name === objectFieldName) {
 					labels.push(objectField.label);
 					objectField.hasFilter = true;
@@ -285,7 +295,7 @@ const viewReducer = (state: TState, action: TAction) => {
 			});
 
 			const labels: TName[] = [];
-			objectFields.forEach((objectField: TObjectField) => {
+			objectFields.forEach((objectField: ObjectField) => {
 				if (objectField.name === objectFieldName) {
 					labels.push(objectField.label);
 				}
@@ -355,7 +365,7 @@ const viewReducer = (state: TState, action: TAction) => {
 			const {ffUseMetadataAsSystemFields} = state;
 
 			const objectFieldsWithCheck = objectFields.map(
-				(field: TObjectField) => {
+				(field: ObjectField) => {
 					return {
 						...field,
 						checked: false,
@@ -364,7 +374,7 @@ const viewReducer = (state: TState, action: TAction) => {
 				}
 			);
 
-			const newObjectFields: TObjectField[] = [];
+			const newObjectFields: ObjectFieldView[] = [];
 
 			if (!ffUseMetadataAsSystemFields) {
 				METADATA.map((field) => {
@@ -372,7 +382,7 @@ const viewReducer = (state: TState, action: TAction) => {
 				});
 			}
 
-			objectFieldsWithCheck.map((field: TObjectField) => {
+			objectFieldsWithCheck.map((field: ObjectField) => {
 				newObjectFields.push(field);
 			});
 
@@ -400,12 +410,14 @@ const viewReducer = (state: TState, action: TAction) => {
 			const newObjectViewSortColumns: TObjectViewSortColumn[] = [];
 
 			objectViewColumns.forEach((viewColumn: TObjectViewColumn) => {
-				newObjectFields.forEach((objectField: TObjectField) => {
+				newObjectFields.forEach((objectField: ObjectField) => {
 					if (objectField.name === viewColumn.objectFieldName) {
 						newObjectViewColumns.push({
 							...viewColumn,
 							defaultSort: false,
-							fieldLabel: objectField.label[defaultLanguageId],
+							fieldLabel: objectField.label[
+								defaultLanguageId
+							] as string,
 							label: viewColumn.label,
 						});
 					}
@@ -413,11 +425,13 @@ const viewReducer = (state: TState, action: TAction) => {
 			});
 
 			objectViewSortColumns.forEach((sortColumn: TObjectViewColumn) => {
-				newObjectFields.forEach((objectField: TObjectField) => {
+				newObjectFields.forEach((objectField: ObjectField) => {
 					if (objectField.name === sortColumn.objectFieldName) {
 						newObjectViewSortColumns.push({
 							...sortColumn,
-							fieldLabel: objectField.label[defaultLanguageId],
+							fieldLabel: objectField.label[
+								defaultLanguageId
+							] as string,
 						});
 					}
 				});
@@ -445,7 +459,7 @@ const viewReducer = (state: TState, action: TAction) => {
 					const filterType = filterColumn.filterType;
 					const objectFieldName = filterColumn.objectFieldName;
 					const objectField = newObjectFields.find(
-						(field: TObjectField) => {
+						(field: ObjectField) => {
 							if (field.name === objectFieldName) {
 								return field;
 							}
@@ -573,7 +587,7 @@ const viewReducer = (state: TState, action: TAction) => {
 				};
 			});
 
-			objectFields.forEach((field) => {
+			objectFields.forEach((field: ObjectFieldView) => {
 				if (objectFieldName === field.name) {
 					field.checked = false;
 				}
@@ -596,7 +610,7 @@ const viewReducer = (state: TState, action: TAction) => {
 			const {objectViewFilterColumns} = state.objectView;
 			const {objectFields} = state;
 
-			objectFields.forEach((objectField) => {
+			objectFields.forEach((objectField: ObjectFieldView) => {
 				if (objectField.name === objectFieldName) {
 					objectField.hasFilter = false;
 				}

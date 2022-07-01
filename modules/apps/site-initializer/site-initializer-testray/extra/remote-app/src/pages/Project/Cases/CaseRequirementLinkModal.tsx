@@ -21,18 +21,16 @@ import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {RequirementListView} from '../Requirements';
 
-export type State = {};
-
-export const initialState = {};
-
 type CaseRequirementLinkModalProps = {
 	modal: FormModalOptions;
 };
 
+export type State = number[];
+
 const CaseRequirementLinkModal: React.FC<CaseRequirementLinkModalProps> = ({
 	modal: {observer, onClose, onSave, visible},
 }) => {
-	const [state] = useState<State>(initialState);
+	const [state, setState] = useState<State>([]);
 
 	return (
 		<Modal
@@ -54,6 +52,7 @@ const CaseRequirementLinkModal: React.FC<CaseRequirementLinkModalProps> = ({
 					managementToolbarProps: {
 						title: i18n.translate('requirements'),
 					},
+					onContextChange: ({selectedRows}) => setState(selectedRows),
 				}}
 				tableProps={{navigateTo: undefined, rowSelectable: true}}
 			/>

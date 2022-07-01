@@ -3337,7 +3337,6 @@ public class CalendarBookingLocalServiceTest {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(_user.getCompanyId());
-
 		serviceContext.setUserId(_user.getUserId());
 
 		return serviceContext;

@@ -58,7 +58,6 @@ public class BlogsEntryAbstractInfoItemRenderer
 			httpServletRequest.setAttribute(
 				WebKeys.ASSET_RENDERER,
 				assetRendererFactory.getAssetRenderer(entry.getEntryId()));
-
 			httpServletRequest.setAttribute(WebKeys.BLOGS_ENTRY, entry);
 
 			RequestDispatcher requestDispatcher =

@@ -590,7 +590,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 
 		assetEntryQuery.setEnd(end);
-
 		assetEntryQuery.setExcludeZeroViewCount(false);
 
 		int start = 0;

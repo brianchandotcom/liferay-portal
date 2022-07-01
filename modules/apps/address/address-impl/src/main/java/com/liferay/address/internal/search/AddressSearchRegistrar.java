@@ -41,7 +41,6 @@ public class AddressSearchRegistrar {
 					Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
 					Field.ENTRY_CLASS_PK, Field.MODIFIED_DATE, Field.NAME,
 					Field.TYPE, Field.UID);
-
 				modelSearchDefinition.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
 				modelSearchDefinition.setSearchResultPermissionFilterSuppressed(

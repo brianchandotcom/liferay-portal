@@ -1005,7 +1005,6 @@ public class AssetListAssetEntryProviderImpl
 
 		searchContext.setAttribute(
 			Field.ASSET_ENTRY_IDS, ArrayUtil.toLongArray(assetEntryIds));
-
 		searchContext.setBooleanClauses(
 			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
 		searchContext.setCompanyId(companyId);

@@ -23,10 +23,10 @@ import com.liferay.info.item.renderer.InfoItemRendererTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.taglib.servlet.PipingServletResponseFactory;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
@@ -49,7 +49,8 @@ public class AvailabilityLabelTag extends IncludeTag {
 				CPDefinitionLocalServiceUtil.getCPDefinition(
 					_cpCatalogEntry.getCPDefinitionId()),
 				(HttpServletRequest)pageContext.getRequest(),
-				(HttpServletResponse)pageContext.getResponse());
+				PipingServletResponseFactory.createPipingServletResponse(
+					pageContext));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -59,7 +60,7 @@ public class AvailabilityLabelTag extends IncludeTag {
 			return SKIP_BODY;
 		}
 
-		return super.doStartTag();
+		return SKIP_BODY;
 	}
 
 	public CPCatalogEntry getCPCatalogEntry() {

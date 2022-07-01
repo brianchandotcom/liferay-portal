@@ -6,7 +6,7 @@
 	"type": "input",
 	"typeOptions": {
 		"fieldTypes": [
-			"image"
+			"file"
 		]
 	}
 }

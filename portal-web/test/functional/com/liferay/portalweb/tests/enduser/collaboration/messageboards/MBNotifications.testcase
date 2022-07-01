@@ -540,8 +540,6 @@ definition {
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject GMMB1");
 
-		Pause(locator1 = "15000");
-
 		Gmail.login(
 			userEmailAddress = PropsUtil.get("email.address.3"),
 			userPassword = PropsUtil.get("email.password.3"));

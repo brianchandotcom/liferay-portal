@@ -78,9 +78,15 @@ public class ObjectFieldDBTypeUtil {
 				ObjectFieldConstants.BUSINESS_TYPE_INTEGER)) {
 
 			finalStep.attribute(
-				NumberInfoFieldType.MAX_VALUE, BigDecimal.valueOf(2147483647)
+				NumberInfoFieldType.MAX_VALUE,
+				BigDecimal.valueOf(
+					ObjectFieldValidationConstants.
+						MAX_VALUE_BUSINESS_TYPE_INTEGER)
 			).attribute(
-				NumberInfoFieldType.MIN_VALUE, BigDecimal.valueOf(-2147483648)
+				NumberInfoFieldType.MIN_VALUE,
+				BigDecimal.valueOf(
+					ObjectFieldValidationConstants.
+						MIN_VALUE_BUSINESS_TYPE_INTEGER)
 			);
 		}
 		else if (Objects.equals(

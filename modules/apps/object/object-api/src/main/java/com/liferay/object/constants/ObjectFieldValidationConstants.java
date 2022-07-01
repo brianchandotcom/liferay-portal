@@ -19,7 +19,11 @@ package com.liferay.object.constants;
  */
 public class ObjectFieldValidationConstants {
 
+	public static final long MAX_VALUE_BUSINESS_TYPE_INTEGER = 2147483647;
+
 	public static final long MAX_VALUE_BUSINESS_TYPE_LONG = 9007199254740991L;
+
+	public static final long MIN_VALUE_BUSINESS_TYPE_INTEGER = -2147483648;
 
 	public static final long MIN_VALUE_BUSINESS_TYPE_LONG = -9007199254740991L;
 

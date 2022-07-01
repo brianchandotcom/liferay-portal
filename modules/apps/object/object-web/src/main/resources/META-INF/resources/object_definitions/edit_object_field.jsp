@@ -36,8 +36,6 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		).put(
 			"isDefaultStorageType", objectDefinition.isDefaultStorageType()
 		).put(
-			"isSystemObject", objectDefinition.isSystem()
-		).put(
 			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
 		).put(
 			"objectField", objectDefinitionsFieldsDisplayContext.getObjectFieldJSONObject(objectField)

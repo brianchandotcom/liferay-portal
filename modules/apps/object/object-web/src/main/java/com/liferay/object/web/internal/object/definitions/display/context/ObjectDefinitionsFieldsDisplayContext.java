@@ -74,9 +74,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 
 		CreationMenu creationMenu = new CreationMenu();
 
-		if (objectDefinition.isSystem() ||
-			!hasUpdateObjectDefinitionPermission()) {
-
+		if (!hasUpdateObjectDefinitionPermission()) {
 			return creationMenu;
 		}
 

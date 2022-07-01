@@ -64,7 +64,6 @@ export default function EditObjectField({
 	forbiddenNames,
 	isApproved,
 	isDefaultStorageType,
-	isSystemObject,
 	objectDefinitionId,
 	objectField: initialValues,
 	objectFieldTypes,
@@ -318,7 +317,7 @@ export default function EditObjectField({
 			className="lfr-objects__edit-object-field"
 			onSubmit={handleSubmit}
 			readOnly={
-				isSystemObject && objectName !== 'AccountEntry'
+				values.system && objectName !== 'AccountEntry'
 					? disabled
 					: readOnly
 			}
@@ -328,7 +327,7 @@ export default function EditObjectField({
 				<InputLocalized
 					defaultLanguageId={defaultLanguageId}
 					disabled={
-						isSystemObject && objectName !== 'AccountEntry'
+						values.system && objectName !== 'AccountEntry'
 							? disabled
 							: readOnly
 					}
@@ -369,12 +368,12 @@ export default function EditObjectField({
 						values.businessType === 'LongText') && (
 						<MaxLengthProperties
 							disabled={
-								isSystemObject && objectName !== 'AccountEntry'
+								values.system && objectName !== 'AccountEntry'
 									? disabled
 									: readOnly
 							}
 							errors={errors}
-							isSystemObject={isSystemObject}
+							isSystemObjectField={!!values.system}
 							objectField={values}
 							objectFieldSettings={
 								values.objectFieldSettings as ObjectFieldSetting[]
@@ -557,7 +556,7 @@ function SearchableContainer({
 function MaxLengthProperties({
 	disabled,
 	errors,
-	isSystemObject,
+	isSystemObjectField,
 	objectField,
 	objectFieldSettings,
 	onSettingsChange,
@@ -591,7 +590,7 @@ function MaxLengthProperties({
 		<>
 			<ClayForm.Group>
 				<Toggle
-					disabled={isSystemObject ?? disabled}
+					disabled={isSystemObjectField ?? disabled}
 					label={Liferay.Language.get('limit-characters')}
 					name="showCounter"
 					onToggle={(value) => {
@@ -737,7 +736,7 @@ interface IAttachmentPropertiesProps {
 interface IMaxLengthPropertiesProps {
 	disabled: boolean;
 	errors: ObjectFieldErrors;
-	isSystemObject: boolean;
+	isSystemObjectField: boolean;
 	objectField: Partial<ObjectField>;
 	objectFieldSettings: ObjectFieldSetting[];
 	onSettingsChange: (setting: ObjectFieldSetting) => void;
@@ -750,7 +749,6 @@ interface IProps {
 	forbiddenNames: string[];
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
-	isSystemObject: boolean;
 	objectDefinitionId: number;
 	objectField: ObjectField;
 	objectFieldTypes: ObjectFieldType[];

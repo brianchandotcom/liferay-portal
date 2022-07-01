@@ -65,10 +65,7 @@ public class ObjectFieldDBTypeUtil {
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_DECIMAL) ||
-				 Objects.equals(
-					 objectField.getBusinessType(),
-					 ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
+					ObjectFieldConstants.BUSINESS_TYPE_DECIMAL)) {
 
 			finalStep.attribute(NumberInfoFieldType.DECIMAL, true);
 		}
@@ -114,6 +111,8 @@ public class ObjectFieldDBTypeUtil {
 					ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL)) {
 
 			finalStep.attribute(
+				NumberInfoFieldType.DECIMAL, true
+			).attribute(
 				NumberInfoFieldType.DECIMAL_PART_MAX_LENGTH, 16
 			).attribute(
 				NumberInfoFieldType.MAX_VALUE,

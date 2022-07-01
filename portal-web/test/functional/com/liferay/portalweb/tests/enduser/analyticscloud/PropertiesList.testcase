@@ -15,6 +15,15 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
 		ACUtils.tearDownAC();
 	}
 
@@ -154,6 +163,18 @@ definition {
 	@description = "Bug: LRAC-11142 | Automation ID: LRAC-11162 | Test Summary: New property created when reconnect and old property remains"
 	@priority = "4"
 	test OnlyAvailablePropertiesAppearInDXP {
+		task ("Go to properties page and add 2 new properties") {
+			var propertyList = "Property Name 1,Property Name 2";
+
+			ACNavigation.goToSettings();
+
+			for (var propertyName : list "${propertyList}") {
+				ACSettings.goToProperties();
+
+				ACProperties.addNewProperty(propertyName = "${propertyName}");
+			}
+		}
+
 		task ("Copy the token from AC") {
 			ACSettings.takeTokenFromAnalyticsCloud();
 		}
@@ -162,6 +183,8 @@ definition {
 			TestCase.setUpPortalInstance();
 
 			ACUtils.launchDXP();
+
+			ACUtils.addSiteAndPage();
 		}
 
 		task ("Connect the DXP to AC") {
@@ -173,7 +196,13 @@ definition {
 
 			ACDXPSettings.navToSyncedSitesMenu();
 
-			ACUtils.assertItemsName(itemList = "Liferay DXP");
+			ACUtils.assertItemsName(itemList = "Property Name 1");
+
+			ACUtils.assertItemsName(itemList = "Property Name 2");
+
+			ACDXPSettings.assignSiteToExistingProperty(
+				assignedPropertyName = "Property Name 1",
+				siteName = "Site Name");
 		}
 
 		task ("Disconnect DXP from AC") {
@@ -199,9 +228,9 @@ definition {
 
 			ACDXPSettings.navToSyncedSitesMenu();
 
-			ACUtils.assertItemsName(itemList = "Liferay DXP");
+			ACUtils.assertItemsName(itemList = "Property Name 1");
 
-			ACUtils.assertItemsName(itemList = "Liferay DXP (1)");
+			ACUtils.assertItemsName(itemList = "Property Name 2");
 		}
 	}
 

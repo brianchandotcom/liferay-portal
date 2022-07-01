@@ -118,13 +118,28 @@ definition {
 		BlogsEntry.viewInlineImage(uploadFileName = "Document_4");
 	}
 
-	@description = "This test covers LPS-154448."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154448. It ensures that an image in the Blogs content field can be published and rendered correctly after an upgrade from 7.0.10.15."
 	@priority = "5"
 	test CanPublishImageFromContentFieldAfterUpgradeFrom701015Archive {
+		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
+		property portal.version = "7.0.10.15";
 
-		// TODO LPS-154448
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title With Inline Image",
+			layoutName = "Staging Test Page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewInlineImage(
+			entryContent = "Blogs Entry Content 2",
+			uploadFileName = "Document_4");
 	}
 
 	@description = "This test covers LPS-154460."

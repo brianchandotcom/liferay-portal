@@ -133,6 +133,11 @@
 	<td>//*[contains(@class,'management-bar')]//*[@type='button' and contains(text(), 'Reset Filters')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FILTER_DATE_RANGE</td>
+	<td>//div[@class='dropdown-menu show']//div[@class='data-set-filter']//input[contains(@id,'${key_dateId}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

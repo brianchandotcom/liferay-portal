@@ -143,6 +143,11 @@
 	<td>//div[@class='dropdown-menu show']//*[@type="button" and contains(@class,'btn-filter-navigation')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REMOVE_FILTER</td>
+	<td>//span[contains(@class,'label dropdown-toggle') and contains(.,'${key_filter}')]//button[@class='filter-resume-close close']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

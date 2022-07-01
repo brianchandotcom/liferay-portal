@@ -44,12 +44,12 @@ public class NotificationQueueEntryLocalServiceWrapper
 				long userId, long notificationTemplateId, String bcc,
 				String body, String cc, String className, long classPK,
 				String from, String fromName, double priority, String subject,
-				String to, String toName)
+				String to, String toName, java.util.List<Long> fileEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationQueueEntryLocalService.addNotificationQueueEntry(
 			userId, notificationTemplateId, bcc, body, cc, className, classPK,
-			from, fromName, priority, subject, to, toName);
+			from, fromName, priority, subject, to, toName, fileEntryIds);
 	}
 
 	/**
@@ -135,12 +135,14 @@ public class NotificationQueueEntryLocalServiceWrapper
 	 *
 	 * @param notificationQueueEntry the notification queue entry
 	 * @return the notification queue entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.notification.model.NotificationQueueEntry
-		deleteNotificationQueueEntry(
-			com.liferay.notification.model.NotificationQueueEntry
-				notificationQueueEntry) {
+			deleteNotificationQueueEntry(
+				com.liferay.notification.model.NotificationQueueEntry
+					notificationQueueEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationQueueEntryLocalService.deleteNotificationQueueEntry(
 			notificationQueueEntry);

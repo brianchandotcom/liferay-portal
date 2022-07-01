@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -53,10 +54,11 @@ public interface NotificationTemplateService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationTemplateServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the notification template remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link NotificationTemplateServiceUtil} if injection and service tracking are not available.
 	 */
 	public NotificationTemplate addNotificationTemplate(
-			long userId, String bcc, Map<Locale, String> bodyMap, String cc,
-			String description, String from, Map<Locale, String> fromNameMap,
-			String name, Map<Locale, String> subjectMap,
-			Map<Locale, String> toMap)
+			long userId, long objectDefinitionId, String bcc,
+			Map<Locale, String> bodyMap, String cc, String description,
+			String from, Map<Locale, String> fromNameMap, String name,
+			Map<Locale, String> subjectMap, Map<Locale, String> toMap,
+			List<Long> attachmentObjectFieldIds)
 		throws PortalException;
 
 	public NotificationTemplate deleteNotificationTemplate(
@@ -80,10 +82,11 @@ public interface NotificationTemplateService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public NotificationTemplate updateNotificationTemplate(
-			long notificationTemplateId, String bcc,
+			long notificationTemplateId, long objectDefinitionId, String bcc,
 			Map<Locale, String> bodyMap, String cc, String description,
 			String from, Map<Locale, String> fromNameMap, String name,
-			Map<Locale, String> subjectMap, Map<Locale, String> toMap)
+			Map<Locale, String> subjectMap, Map<Locale, String> toMap,
+			List<Long> attachmentObjectFieldIds)
 		throws PortalException;
 
 }

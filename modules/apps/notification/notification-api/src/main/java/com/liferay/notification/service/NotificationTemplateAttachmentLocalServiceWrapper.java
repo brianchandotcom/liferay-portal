@@ -39,6 +39,17 @@ public class NotificationTemplateAttachmentLocalServiceWrapper
 			notificationTemplateAttachmentLocalService;
 	}
 
+	@Override
+	public com.liferay.notification.model.NotificationTemplateAttachment
+			addNotificationTemplateAttachment(
+				long companyId, long notificationTemplateId, long objectFieldId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationTemplateAttachmentLocalService.
+			addNotificationTemplateAttachment(
+				companyId, notificationTemplateId, objectFieldId);
+	}
+
 	/**
 	 * Adds the notification template attachment to the database. Also notifies the appropriate model listeners.
 	 *
@@ -309,6 +320,15 @@ public class NotificationTemplateAttachmentLocalServiceWrapper
 
 		return _notificationTemplateAttachmentLocalService.
 			getNotificationTemplateAttachments(start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.notification.model.NotificationTemplateAttachment>
+			getNotificationTemplateAttachments(long notificationTemplateId) {
+
+		return _notificationTemplateAttachmentLocalService.
+			getNotificationTemplateAttachments(notificationTemplateId);
 	}
 
 	/**

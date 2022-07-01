@@ -44,6 +44,14 @@ public class NotificationQueueEntryAttachmentLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationQueueEntryAttachmentLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static NotificationQueueEntryAttachment
+			addNotificationQueueEntryAttachment(
+				long companyId, long fileEntryId, long notificationQueueEntryId)
+		throws PortalException {
+
+		return getService().addNotificationQueueEntryAttachment(
+			companyId, fileEntryId, notificationQueueEntryId);
+	}
 
 	/**
 	 * Adds the notification queue entry attachment to the database. Also notifies the appropriate model listeners.
@@ -123,6 +131,14 @@ public class NotificationQueueEntryAttachmentLocalServiceUtil {
 
 		return getService().deleteNotificationQueueEntryAttachment(
 			notificationQueueEntryAttachment);
+	}
+
+	public static void deleteNotificationQueueEntryAttachments(
+			long notificationQueueEntryId)
+		throws PortalException {
+
+		getService().deleteNotificationQueueEntryAttachments(
+			notificationQueueEntryId);
 	}
 
 	/**

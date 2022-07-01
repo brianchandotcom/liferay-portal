@@ -141,11 +141,13 @@ public abstract class NotificationQueueEntryLocalServiceBaseImpl
 	 *
 	 * @param notificationQueueEntry the notification queue entry
 	 * @return the notification queue entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public NotificationQueueEntry deleteNotificationQueueEntry(
-		NotificationQueueEntry notificationQueueEntry) {
+			NotificationQueueEntry notificationQueueEntry)
+		throws PortalException {
 
 		return notificationQueueEntryPersistence.remove(notificationQueueEntry);
 	}

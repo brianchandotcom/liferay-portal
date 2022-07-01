@@ -61,6 +61,9 @@ public interface NotificationTemplateAttachmentLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationTemplateAttachmentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the notification template attachment local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link NotificationTemplateAttachmentLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public NotificationTemplateAttachment addNotificationTemplateAttachment(
+			long companyId, long notificationTemplateId, long objectFieldId)
+		throws PortalException;
 
 	/**
 	 * Adds the notification template attachment to the database. Also notifies the appropriate model listeners.
@@ -237,6 +240,10 @@ public interface NotificationTemplateAttachmentLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<NotificationTemplateAttachment>
 		getNotificationTemplateAttachments(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<NotificationTemplateAttachment>
+		getNotificationTemplateAttachments(long notificationTemplateId);
 
 	/**
 	 * Returns the number of notification template attachments.

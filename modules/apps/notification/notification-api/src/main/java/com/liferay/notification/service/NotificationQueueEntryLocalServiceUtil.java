@@ -48,12 +48,12 @@ public class NotificationQueueEntryLocalServiceUtil {
 			long userId, long notificationTemplateId, String bcc, String body,
 			String cc, String className, long classPK, String from,
 			String fromName, double priority, String subject, String to,
-			String toName)
+			String toName, List<Long> fileEntryIds)
 		throws PortalException {
 
 		return getService().addNotificationQueueEntry(
 			userId, notificationTemplateId, bcc, body, cc, className, classPK,
-			from, fromName, priority, subject, to, toName);
+			from, fromName, priority, subject, to, toName, fileEntryIds);
 	}
 
 	/**
@@ -129,9 +129,11 @@ public class NotificationQueueEntryLocalServiceUtil {
 	 *
 	 * @param notificationQueueEntry the notification queue entry
 	 * @return the notification queue entry that was removed
+	 * @throws PortalException
 	 */
 	public static NotificationQueueEntry deleteNotificationQueueEntry(
-		NotificationQueueEntry notificationQueueEntry) {
+			NotificationQueueEntry notificationQueueEntry)
+		throws PortalException {
 
 		return getService().deleteNotificationQueueEntry(
 			notificationQueueEntry);

@@ -68,7 +68,7 @@ public interface NotificationQueueEntryLocalService
 			long userId, long notificationTemplateId, String bcc, String body,
 			String cc, String className, long classPK, String from,
 			String fromName, double priority, String subject, String to,
-			String toName)
+			String toName, List<Long> fileEntryIds)
 		throws PortalException;
 
 	/**
@@ -129,11 +129,13 @@ public interface NotificationQueueEntryLocalService
 	 *
 	 * @param notificationQueueEntry the notification queue entry
 	 * @return the notification queue entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public NotificationQueueEntry deleteNotificationQueueEntry(
-		NotificationQueueEntry notificationQueueEntry);
+			NotificationQueueEntry notificationQueueEntry)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException

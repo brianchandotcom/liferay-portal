@@ -46,16 +46,18 @@ public class NotificationTemplateLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationTemplateLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static NotificationTemplate addNotificationTemplate(
-			long userId, String bcc, Map<java.util.Locale, String> bodyMap,
-			String cc, String description, String from,
+			long userId, long objectDefinitionId, String bcc,
+			Map<java.util.Locale, String> bodyMap, String cc,
+			String description, String from,
 			Map<java.util.Locale, String> fromNameMap, String name,
 			Map<java.util.Locale, String> subjectMap,
-			Map<java.util.Locale, String> toMap)
+			Map<java.util.Locale, String> toMap,
+			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
 		return getService().addNotificationTemplate(
-			userId, bcc, bodyMap, cc, description, from, fromNameMap, name,
-			subjectMap, toMap);
+			userId, objectDefinitionId, bcc, bodyMap, cc, description, from,
+			fromNameMap, name, subjectMap, toMap, attachmentObjectFieldIds);
 	}
 
 	/**
@@ -354,17 +356,19 @@ public class NotificationTemplateLocalServiceUtil {
 	}
 
 	public static NotificationTemplate updateNotificationTemplate(
-			long notificationTemplateId, String bcc,
+			long notificationTemplateId, long objectDefinitionId, String bcc,
 			Map<java.util.Locale, String> bodyMap, String cc,
 			String description, String from,
 			Map<java.util.Locale, String> fromNameMap, String name,
 			Map<java.util.Locale, String> subjectMap,
-			Map<java.util.Locale, String> toMap)
+			Map<java.util.Locale, String> toMap,
+			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
 		return getService().updateNotificationTemplate(
-			notificationTemplateId, bcc, bodyMap, cc, description, from,
-			fromNameMap, name, subjectMap, toMap);
+			notificationTemplateId, objectDefinitionId, bcc, bodyMap, cc,
+			description, from, fromNameMap, name, subjectMap, toMap,
+			attachmentObjectFieldIds);
 	}
 
 	/**

@@ -44,6 +44,14 @@ public class NotificationTemplateAttachmentLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationTemplateAttachmentLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static NotificationTemplateAttachment
+			addNotificationTemplateAttachment(
+				long companyId, long notificationTemplateId, long objectFieldId)
+		throws PortalException {
+
+		return getService().addNotificationTemplateAttachment(
+			companyId, notificationTemplateId, objectFieldId);
+	}
 
 	/**
 	 * Adds the notification template attachment to the database. Also notifies the appropriate model listeners.
@@ -272,6 +280,13 @@ public class NotificationTemplateAttachmentLocalServiceUtil {
 		getNotificationTemplateAttachments(int start, int end) {
 
 		return getService().getNotificationTemplateAttachments(start, end);
+	}
+
+	public static List<NotificationTemplateAttachment>
+		getNotificationTemplateAttachments(long notificationTemplateId) {
+
+		return getService().getNotificationTemplateAttachments(
+			notificationTemplateId);
 	}
 
 	/**

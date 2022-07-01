@@ -40,17 +40,18 @@ public class NotificationTemplateServiceWrapper
 	@Override
 	public com.liferay.notification.model.NotificationTemplate
 			addNotificationTemplate(
-				long userId, String bcc,
+				long userId, long objectDefinitionId, String bcc,
 				java.util.Map<java.util.Locale, String> bodyMap, String cc,
 				String description, String from,
 				java.util.Map<java.util.Locale, String> fromNameMap,
 				String name, java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> toMap)
+				java.util.Map<java.util.Locale, String> toMap,
+				java.util.List<Long> attachmentObjectFieldIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationTemplateService.addNotificationTemplate(
-			userId, bcc, bodyMap, cc, description, from, fromNameMap, name,
-			subjectMap, toMap);
+			userId, objectDefinitionId, bcc, bodyMap, cc, description, from,
+			fromNameMap, name, subjectMap, toMap, attachmentObjectFieldIds);
 	}
 
 	@Override
@@ -95,17 +96,19 @@ public class NotificationTemplateServiceWrapper
 	@Override
 	public com.liferay.notification.model.NotificationTemplate
 			updateNotificationTemplate(
-				long notificationTemplateId, String bcc,
-				java.util.Map<java.util.Locale, String> bodyMap, String cc,
-				String description, String from,
+				long notificationTemplateId, long objectDefinitionId,
+				String bcc, java.util.Map<java.util.Locale, String> bodyMap,
+				String cc, String description, String from,
 				java.util.Map<java.util.Locale, String> fromNameMap,
 				String name, java.util.Map<java.util.Locale, String> subjectMap,
-				java.util.Map<java.util.Locale, String> toMap)
+				java.util.Map<java.util.Locale, String> toMap,
+				java.util.List<Long> attachmentObjectFieldIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _notificationTemplateService.updateNotificationTemplate(
-			notificationTemplateId, bcc, bodyMap, cc, description, from,
-			fromNameMap, name, subjectMap, toMap);
+			notificationTemplateId, objectDefinitionId, bcc, bodyMap, cc,
+			description, from, fromNameMap, name, subjectMap, toMap,
+			attachmentObjectFieldIds);
 	}
 
 	@Override

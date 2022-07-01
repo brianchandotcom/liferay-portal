@@ -61,6 +61,9 @@ public interface NotificationQueueEntryAttachmentLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationQueueEntryAttachmentLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the notification queue entry attachment local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link NotificationQueueEntryAttachmentLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public NotificationQueueEntryAttachment addNotificationQueueEntryAttachment(
+			long companyId, long fileEntryId, long notificationQueueEntryId)
+		throws PortalException;
 
 	/**
 	 * Adds the notification queue entry attachment to the database. Also notifies the appropriate model listeners.
@@ -124,6 +127,10 @@ public interface NotificationQueueEntryAttachmentLocalService
 	public NotificationQueueEntryAttachment
 		deleteNotificationQueueEntryAttachment(
 			NotificationQueueEntryAttachment notificationQueueEntryAttachment);
+
+	public void deleteNotificationQueueEntryAttachments(
+			long notificationQueueEntryId)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException

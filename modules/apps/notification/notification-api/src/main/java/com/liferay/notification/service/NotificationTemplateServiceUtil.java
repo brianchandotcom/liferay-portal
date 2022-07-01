@@ -17,6 +17,7 @@ package com.liferay.notification.service;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,16 +40,18 @@ public class NotificationTemplateServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.notification.service.impl.NotificationTemplateServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static NotificationTemplate addNotificationTemplate(
-			long userId, String bcc, Map<java.util.Locale, String> bodyMap,
-			String cc, String description, String from,
+			long userId, long objectDefinitionId, String bcc,
+			Map<java.util.Locale, String> bodyMap, String cc,
+			String description, String from,
 			Map<java.util.Locale, String> fromNameMap, String name,
 			Map<java.util.Locale, String> subjectMap,
-			Map<java.util.Locale, String> toMap)
+			Map<java.util.Locale, String> toMap,
+			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
 		return getService().addNotificationTemplate(
-			userId, bcc, bodyMap, cc, description, from, fromNameMap, name,
-			subjectMap, toMap);
+			userId, objectDefinitionId, bcc, bodyMap, cc, description, from,
+			fromNameMap, name, subjectMap, toMap, attachmentObjectFieldIds);
 	}
 
 	public static NotificationTemplate deleteNotificationTemplate(
@@ -82,17 +85,19 @@ public class NotificationTemplateServiceUtil {
 	}
 
 	public static NotificationTemplate updateNotificationTemplate(
-			long notificationTemplateId, String bcc,
+			long notificationTemplateId, long objectDefinitionId, String bcc,
 			Map<java.util.Locale, String> bodyMap, String cc,
 			String description, String from,
 			Map<java.util.Locale, String> fromNameMap, String name,
 			Map<java.util.Locale, String> subjectMap,
-			Map<java.util.Locale, String> toMap)
+			Map<java.util.Locale, String> toMap,
+			List<Long> attachmentObjectFieldIds)
 		throws PortalException {
 
 		return getService().updateNotificationTemplate(
-			notificationTemplateId, bcc, bodyMap, cc, description, from,
-			fromNameMap, name, subjectMap, toMap);
+			notificationTemplateId, objectDefinitionId, bcc, bodyMap, cc,
+			description, from, fromNameMap, name, subjectMap, toMap,
+			attachmentObjectFieldIds);
 	}
 
 	public static NotificationTemplateService getService() {

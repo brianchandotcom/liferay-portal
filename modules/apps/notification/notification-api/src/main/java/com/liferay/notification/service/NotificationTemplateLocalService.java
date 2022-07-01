@@ -69,10 +69,11 @@ public interface NotificationTemplateLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public NotificationTemplate addNotificationTemplate(
-			long userId, String bcc, Map<Locale, String> bodyMap, String cc,
-			String description, String from, Map<Locale, String> fromNameMap,
-			String name, Map<Locale, String> subjectMap,
-			Map<Locale, String> toMap)
+			long userId, long objectDefinitionId, String bcc,
+			Map<Locale, String> bodyMap, String cc, String description,
+			String from, Map<Locale, String> fromNameMap, String name,
+			Map<Locale, String> subjectMap, Map<Locale, String> toMap,
+			List<Long> attachmentObjectFieldIds)
 		throws PortalException;
 
 	/**
@@ -312,10 +313,11 @@ public interface NotificationTemplateLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public NotificationTemplate updateNotificationTemplate(
-			long notificationTemplateId, String bcc,
+			long notificationTemplateId, long objectDefinitionId, String bcc,
 			Map<Locale, String> bodyMap, String cc, String description,
 			String from, Map<Locale, String> fromNameMap, String name,
-			Map<Locale, String> subjectMap, Map<Locale, String> toMap)
+			Map<Locale, String> subjectMap, Map<Locale, String> toMap,
+			List<Long> attachmentObjectFieldIds)
 		throws PortalException;
 
 	/**

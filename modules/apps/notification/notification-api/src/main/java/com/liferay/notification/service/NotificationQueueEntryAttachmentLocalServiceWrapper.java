@@ -39,6 +39,17 @@ public class NotificationQueueEntryAttachmentLocalServiceWrapper
 			notificationQueueEntryAttachmentLocalService;
 	}
 
+	@Override
+	public com.liferay.notification.model.NotificationQueueEntryAttachment
+			addNotificationQueueEntryAttachment(
+				long companyId, long fileEntryId, long notificationQueueEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _notificationQueueEntryAttachmentLocalService.
+			addNotificationQueueEntryAttachment(
+				companyId, fileEntryId, notificationQueueEntryId);
+	}
+
 	/**
 	 * Adds the notification queue entry attachment to the database. Also notifies the appropriate model listeners.
 	 *
@@ -129,6 +140,15 @@ public class NotificationQueueEntryAttachmentLocalServiceWrapper
 		return _notificationQueueEntryAttachmentLocalService.
 			deleteNotificationQueueEntryAttachment(
 				notificationQueueEntryAttachment);
+	}
+
+	@Override
+	public void deleteNotificationQueueEntryAttachments(
+			long notificationQueueEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_notificationQueueEntryAttachmentLocalService.
+			deleteNotificationQueueEntryAttachments(notificationQueueEntryId);
 	}
 
 	/**

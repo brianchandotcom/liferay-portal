@@ -18,13 +18,38 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This test covers LPS-154447."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154447. It ensures that an image in the Blogs content field can be published and rendered correctly after an upgrade from 7.1.10.5."
 	@priority = "5"
 	test CanPublishImageFromContentFieldAfterUpgradeFrom71105Archive {
+		property data.archive.type = "data-archive-local-staging-with-blogs-entries";
+		property portal.version = "7.1.10.5";
 
-		// TODO LPS-154447
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Test Page",
+			siteName = "Site Name");
 
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title With Video",
+			layoutName = "Staging Test Page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewEntryPG(
+			embedVideo = "true",
+			entryContent = "video",
+			entryTitle = "Blogs Entry Title With Video");
+
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title With Inline Image",
+			layoutName = "Staging Test Page",
+			siteURLKey = "site-name");
+
+		BlogsEntry.viewInlineImage(
+			entryContent = "Blogs Entry Content 2",
+			uploadFileName = "Document_4");
 	}
 
 	@description = "This test covers LPS-154446. It ensures that an image in the Blogs content field can be published and rendered correctly after an upgrade from 7.2.10.4."

@@ -45,44 +45,19 @@ public class KBArticleURLHelper {
 	public PortletURL createViewURL(KBArticle kbArticle)
 		throws PortalException {
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
 		String portletId = PortalUtil.getPortletId(_renderRequest);
 
 		if (portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) ||
-			portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SEARCH) ||
-			portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
+			portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SEARCH)) {
 
-			portletURL.setParameter(
-				"mvcPath", _templatePath + "view_article.jsp");
+			return _createKBAdminViewURL(kbArticle);
 		}
 
-		if (Validator.isNull(kbArticle.getUrlTitle()) ||
-			portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) ||
-			portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SEARCH)) {
-
-			portletURL.setParameter(
-				"resourceClassNameId",
-				String.valueOf(kbArticle.getClassNameId()));
-			portletURL.setParameter(
-				"resourcePrimKey",
-				String.valueOf(kbArticle.getResourcePrimKey()));
-		}
-		else {
-			portletURL.setParameter("urlTitle", kbArticle.getUrlTitle());
-
-			if (kbArticle.getKbFolderId() !=
-					KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-				KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
-					kbArticle.getKbFolderId());
-
-				portletURL.setParameter(
-					"kbFolderUrlTitle", kbFolder.getUrlTitle());
-			}
+		if (portletId.startsWith(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
+			return _createKBSectionViewURL(kbArticle);
 		}
 
-		return portletURL;
+		return _createKBDisplayViewURL(kbArticle);
 	}
 
 	public PortletURL createViewWithCommentsURL(KBArticle kbArticle)
@@ -99,13 +74,82 @@ public class KBArticleURLHelper {
 			KBArticle kbArticle, String redirect)
 		throws PortalException {
 
-		PortletURL portletURL = createViewURL(kbArticle);
-
-		if (Validator.isNotNull(redirect)) {
-			portletURL.setParameter("redirect", redirect);
+		if (Validator.isNull(redirect)) {
+			return createViewURL(kbArticle);
 		}
 
-		return portletURL;
+		return PortletURLBuilder.create(
+			createViewURL(kbArticle)
+		).setRedirect(
+			redirect
+		).buildPortletURL();
+	}
+
+	private PortletURL _createKBAdminViewURL(KBArticle kbArticle) {
+		return PortletURLBuilder.create(
+			_renderResponse.createRenderURL()
+		).setMVCPath(
+			_templatePath + "view_article.jsp"
+		).setParameter(
+			"resourceClassNameId", kbArticle.getClassNameId()
+		).setParameter(
+			"resourcePrimKey", kbArticle.getResourcePrimKey()
+		).buildPortletURL();
+	}
+
+	private PortletURL _createKBDisplayViewURL(KBArticle kbArticle)
+		throws PortalException {
+
+		if (Validator.isNull(kbArticle.getUrlTitle())) {
+			return PortletURLBuilder.create(
+				_renderResponse.createRenderURL()
+			).setParameter(
+				"resourceClassNameId", kbArticle.getClassNameId()
+			).setParameter(
+				"resourcePrimKey", kbArticle.getResourcePrimKey()
+			).buildPortletURL();
+		}
+
+		return PortletURLBuilder.create(
+			_renderResponse.createRenderURL()
+		).setParameter(
+			"urlTitle", kbArticle.getUrlTitle()
+		).setParameter(
+			"kbFolderUrlTitle", _getKBFolderURLTitle(kbArticle), false
+		).buildPortletURL();
+	}
+
+	private PortletURL _createKBSectionViewURL(KBArticle kbArticle)
+		throws PortalException {
+
+		if (Validator.isNull(kbArticle.getUrlTitle())) {
+			return _createKBAdminViewURL(kbArticle);
+		}
+
+		return PortletURLBuilder.create(
+			_renderResponse.createRenderURL()
+		).setMVCPath(
+			_templatePath + "view_article.jsp"
+		).setParameter(
+			"urlTitle", kbArticle.getUrlTitle()
+		).setParameter(
+			"kbFolderUrlTitle", _getKBFolderURLTitle(kbArticle), false
+		).buildPortletURL();
+	}
+
+	private String _getKBFolderURLTitle(KBArticle kbArticle)
+		throws PortalException {
+
+		if (kbArticle.getKbFolderId() ==
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+			return null;
+		}
+
+		KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
+			kbArticle.getKbFolderId());
+
+		return kbFolder.getUrlTitle();
 	}
 
 	private final RenderRequest _renderRequest;

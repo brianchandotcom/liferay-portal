@@ -86,6 +86,8 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 			errorMessage = infoFormValidationException.getLocalizedMessage(
 				locale);
+
+			SessionErrors.remove(httpServletRequest, infoField.getUniqueId());
 		}
 
 		String inputHelpText = GetterUtil.getString(

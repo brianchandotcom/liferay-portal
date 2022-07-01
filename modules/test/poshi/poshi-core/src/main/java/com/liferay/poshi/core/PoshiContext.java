@@ -520,10 +520,8 @@ public class PoshiContext {
 
 			long groupSize = MathUtil.quotient(testCount, groupCount, true);
 
-			int groupSizeInt = GetterUtil.getInteger(groupSize);
-
 			List<List<String>> testBatchGroups = Lists.partition(
-				classCommandNameGroup, groupSizeInt);
+				classCommandNameGroup, GetterUtil.getInteger(groupSize));
 
 			for (List<String> testBatchGroup : testBatchGroups) {
 				orderedTestBatchGroups.put(

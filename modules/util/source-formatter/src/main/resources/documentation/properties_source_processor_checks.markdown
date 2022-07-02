@@ -9,6 +9,7 @@ PropertiesDefinitionKeysCheck | [Styling](styling_checks.markdown#styling-checks
 PropertiesDependenciesFileCheck | [Styling](styling_checks.markdown#styling-checks) | Sorts the properties in `dependencies.properties` file. |
 PropertiesEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary empty lines. |
 PropertiesEnvironmentVariablesCheck | [Documentation](documentation_checks.markdown#documentation-checks) | Verifies that the environment property in the documentation matches the property name. |
+PropertiesFeatureFlagsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Generate feature flags in `portlet.properties` file. |
 PropertiesImportedFilesContentCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `imported-files.properties` file. |
 [PropertiesLanguageKeysCheck](check/properties_language_keys_check.markdown#propertieslanguagekeyscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that there is no HTML markup in language keys. |
 PropertiesLanguageKeysOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Sort language keys in `Language.properties` file. |

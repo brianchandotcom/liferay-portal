@@ -93,7 +93,7 @@ public class NotificationTemplateResourceTest
 					RandomTestUtil.randomLocaleStringMap());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				objectDefinitionId = 0;
+				objectDefinitionId = 0L;
 				subject = LocalizedMapUtil.getI18nMap(
 					RandomTestUtil.randomLocaleStringMap());
 			}

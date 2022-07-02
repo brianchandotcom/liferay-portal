@@ -54,14 +54,13 @@ public class ObjectFieldDBTypeUtil {
 
 			finalStep.attribute(
 				FileInfoFieldType.ALLOWED_FILE_EXTENSIONS,
-				_getAcceptedFileExtensions(objectField));
-
-			finalStep.attribute(
-				FileInfoFieldType.FILE_SOURCE, _getFileSourceType(objectField));
-
-			finalStep.attribute(
+				_getAcceptedFileExtensions(objectField)
+			).attribute(
+				FileInfoFieldType.FILE_SOURCE, _getFileSourceType(objectField)
+			).attribute(
 				FileInfoFieldType.MAX_FILE_SIZE,
-				_getMaximumFileSize(objectField));
+				_getMaximumFileSize(objectField)
+			);
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),

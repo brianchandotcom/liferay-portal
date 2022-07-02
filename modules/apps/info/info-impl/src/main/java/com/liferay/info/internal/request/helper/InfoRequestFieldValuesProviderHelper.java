@@ -20,7 +20,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
-import com.liferay.info.field.type.ImageInfoFieldType;
+import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -104,11 +104,11 @@ public class InfoRequestFieldValuesProviderHelper {
 				infoField.getName());
 
 			if ((multipartParameters != null) &&
-				(infoField.getInfoFieldType() instanceof ImageInfoFieldType)) {
+				(infoField.getInfoFieldType() instanceof FileInfoFieldType)) {
 
 				for (FileItem fileItem : multipartParameters) {
 					infoFieldValues.add(
-						_getImageInfoFieldValue(
+						_getFileInfoFieldValue(
 							fileItem, infoField, themeDisplay));
 				}
 			}
@@ -154,7 +154,7 @@ public class InfoRequestFieldValuesProviderHelper {
 		return null;
 	}
 
-	private InfoFieldValue<Object> _getImageInfoFieldValue(
+	private InfoFieldValue<Object> _getFileInfoFieldValue(
 			FileItem fileItem, InfoField infoField, ThemeDisplay themeDisplay)
 		throws InfoFormFileUploadException {
 
@@ -250,7 +250,7 @@ public class InfoRequestFieldValuesProviderHelper {
 			return _getNumberInfoFieldValue(infoField, locale, value);
 		}
 
-		if (infoField.getInfoFieldType() instanceof ImageInfoFieldType ||
+		if (infoField.getInfoFieldType() instanceof FileInfoFieldType ||
 			infoField.getInfoFieldType() instanceof SelectInfoFieldType ||
 			infoField.getInfoFieldType() instanceof TextInfoFieldType) {
 

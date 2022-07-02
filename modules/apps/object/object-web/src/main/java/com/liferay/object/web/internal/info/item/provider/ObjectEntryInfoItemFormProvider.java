@@ -50,8 +50,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -487,6 +489,23 @@ public class ObjectEntryInfoItemFormProvider
 
 		return PortalUtil.getPortalURL(serviceContext.getRequest()) +
 			restContextPath;
+	}
+
+	private boolean _isDefaultUser() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return true;
+		}
+
+		User user = UserLocalServiceUtil.fetchUser(serviceContext.getUserId());
+
+		if ((user == null) || user.isDefaultUser()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

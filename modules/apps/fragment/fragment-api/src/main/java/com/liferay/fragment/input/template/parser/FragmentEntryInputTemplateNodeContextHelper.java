@@ -27,14 +27,15 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -165,9 +166,27 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				infoField.getAttributeOptional(
 					FileInfoFieldType.ALLOWED_FILE_EXTENSIONS);
 
+			String allowedFileExtensions =
+				acceptedFileExtensionsOptional.orElse(StringPool.BLANK);
+
+			if (Validator.isNotNull(allowedFileExtensions)) {
+				StringBundler sb = new StringBundler();
+
+				for (String allowedFileExtension :
+						StringUtil.split(allowedFileExtensions)) {
+
+					sb.append(StringPool.PERIOD);
+					sb.append(allowedFileExtension.trim());
+					sb.append(StringPool.COMMA);
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				allowedFileExtensions = sb.toString();
+			}
+
 			inputTemplateNode.addAttribute(
-				"allowedFileExtensions",
-				acceptedFileExtensionsOptional.orElse(StringPool.BLANK));
+				"allowedFileExtensions", allowedFileExtensions);
 
 			Optional<Long> maximumFileSizeOptional =
 				infoField.getAttributeOptional(FileInfoFieldType.MAX_FILE_SIZE);

@@ -19,15 +19,15 @@ package com.liferay.info.field.type;
  */
 public class FileInfoFieldType implements InfoFieldType {
 
-	public static final Attribute<TextInfoFieldType, String>
+	public static final Attribute<FileInfoFieldType, String>
 		ALLOWED_FILE_EXTENSIONS = new Attribute<>();
 
-	public static final Attribute<TextInfoFieldType, FileSourceType>
+	public static final Attribute<FileInfoFieldType, FileSourceType>
 		FILE_SOURCE = new Attribute<>();
 
 	public static final FileInfoFieldType INSTANCE = new FileInfoFieldType();
 
-	public static final Attribute<TextInfoFieldType, Long> MAX_FILE_SIZE =
+	public static final Attribute<FileInfoFieldType, Long> MAX_FILE_SIZE =
 		new Attribute<>();
 
 	@Override

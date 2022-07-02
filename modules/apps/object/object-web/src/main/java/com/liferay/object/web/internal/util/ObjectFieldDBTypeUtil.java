@@ -32,7 +32,6 @@ import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -130,12 +129,9 @@ public class ObjectFieldDBTypeUtil {
 	}
 
 	public static InfoFieldType getInfoFieldType(ObjectField objectField) {
-		if (Validator.isNotNull(objectField.getRelationshipType())) {
-			return TextInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
+		if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
 
 			return BooleanInfoFieldType.INSTANCE;
 		}

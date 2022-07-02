@@ -19,6 +19,20 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+JSONObject metadataTemplateJSONObject = JSONUtil.put(
+	"authorization_endpoint", ""
+).put(
+	"issuer", ""
+).put(
+	"jwks_uri", ""
+).put(
+	"subject_types_supported", JSONUtil.put("public")
+).put(
+	"token_endpoint", ""
+).put(
+	"userinfo_endpoint", ""
+);
+
 OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetadata)request.getAttribute(OAuthClientASLocalMetadata.class.getName());
 
 portletDisplay.setShowBackIcon(true);
@@ -54,7 +68,7 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 
 				<aui:input helpMessage='<%= LanguageUtil.format(request, "oauth-client-as-local-well-known-uri-suffix-help", "openid-configuration", false) %>' label="oauth-client-as-local-well-known-uri-suffix" name="oAuthClientASLocalWellKnowURISuffix" readonly="true" type="text" value="openid-configuration" />
 
-				<aui:input helpMessage="oauth-client-as-local-metadata-json-help" label="oauth-client-as-local-metadata-json" name="metadataJSON" style="min-height: 600px;" type="textarea" value='{"issuer":"","authorization_endpoint":"","jwks_uri":"","subject_types_supported":["public"],"token_endpoint":"","userinfo_endpoint":""}' />
+				<aui:input helpMessage="oauth-client-as-local-metadata-json-help" label="oauth-client-as-local-metadata-json" name="metadataJSON" style="min-height: 600px;" type="textarea" value="<%= metadataTemplateJSONObject.toString() %>" />
 
 				<aui:button-row>
 					<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "doSubmit();" %>' type="submit" />

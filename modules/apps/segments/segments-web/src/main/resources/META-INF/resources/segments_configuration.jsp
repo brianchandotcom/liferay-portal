@@ -83,7 +83,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 						/>
 					</c:when>
 					<c:otherwise>
-						<span><liferay-ui:message key="contact-your-system-administrator-to-enable-segmentation" /></span>
+						<span><liferay-ui:message key="contact-your-system-administrator-to-enable-it" /></span>
 					</c:otherwise>
 				</c:choose>
 			</clay:alert>
@@ -112,7 +112,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 					<c:otherwise>
 				<span><%=
 				LanguageUtil.get(
-					request, "contact-your-system-administrator-to-enable-segmentation") %></span>
+					request, "contact-your-system-administrator-to-enable-it") %></span>
 					</c:otherwise>
 				</c:choose>
 			</clay:alert>

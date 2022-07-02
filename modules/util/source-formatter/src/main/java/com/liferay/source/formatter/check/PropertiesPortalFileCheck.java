@@ -19,36 +19,18 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.processor.PropertiesSourceProcessor;
-import com.liferay.source.formatter.util.FileUtil;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.net.URL;
 
-import java.nio.file.FileVisitOption;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 
@@ -67,7 +49,6 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 			(!isPortalSource() && !isSubrepository() &&
 			 fileName.endsWith("portal.properties"))) {
 
-			content = _generateFeatureFlags(content);
 			content = _sortPortalProperties(absolutePath, content);
 
 			content = _formatPortalProperties(absolutePath, content);
@@ -112,103 +93,6 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 		if (content.endsWith("\n")) {
 			content = content.substring(0, content.length() - 1);
-		}
-
-		return content;
-	}
-
-	private String _generateFeatureFlags(String content) throws IOException {
-		List<File> javaFiles = new ArrayList<>();
-
-		File portalDir = getPortalDir();
-
-		Files.walkFileTree(
-			portalDir.toPath(), EnumSet.noneOf(FileVisitOption.class), 25,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult preVisitDirectory(
-						Path dirPath, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					if (ArrayUtil.contains(
-							_SKIP_DIR_NAMES,
-							String.valueOf(dirPath.getFileName()))) {
-
-						return FileVisitResult.SKIP_SUBTREE;
-					}
-
-					return FileVisitResult.CONTINUE;
-				}
-
-				@Override
-				public FileVisitResult visitFile(
-					Path filePath, BasicFileAttributes basicFileAttributes) {
-
-					String absolutePath = SourceUtil.getAbsolutePath(filePath);
-
-					if (!absolutePath.endsWith(".java")) {
-						return FileVisitResult.CONTINUE;
-					}
-
-					javaFiles.add(filePath.toFile());
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-
-		List<String> featureFlags = new ArrayList<>();
-
-		Matcher matcher = null;
-
-		for (File javafile : javaFiles) {
-			String javaContent = FileUtil.read(javafile);
-
-			if (!javaContent.contains("\"feature.flag.")) {
-				continue;
-			}
-
-			matcher = _featureFlagPattern.matcher(javaContent);
-
-			while (matcher.find()) {
-				featureFlags.add(matcher.group(1));
-			}
-		}
-
-		if (featureFlags.isEmpty()) {
-			return content;
-		}
-
-		ListUtil.distinct(featureFlags, new NaturalOrderStringComparator());
-
-		matcher = _featureFlagsPattern.matcher(content);
-
-		if (matcher.find()) {
-			StringBundler sb = new StringBundler(featureFlags.size() * 14);
-
-			for (String featureFlag : featureFlags) {
-				String environmentVariable =
-					ToolsUtil.encodeEnvironmentProperty(featureFlag);
-
-				sb.append(StringPool.NEW_LINE);
-				sb.append(StringPool.NEW_LINE);
-				sb.append(StringPool.FOUR_SPACES);
-				sb.append(StringPool.POUND);
-				sb.append(StringPool.NEW_LINE);
-				sb.append("    # Env: ");
-				sb.append(environmentVariable);
-				sb.append(StringPool.NEW_LINE);
-				sb.append(StringPool.FOUR_SPACES);
-				sb.append(StringPool.POUND);
-				sb.append(StringPool.NEW_LINE);
-				sb.append(StringPool.FOUR_SPACES);
-				sb.append(featureFlag);
-				sb.append("=false");
-			}
-
-			content = StringUtil.replaceFirst(
-				content, matcher.group(2), sb.toString(), matcher.start(2));
 		}
 
 		return content;
@@ -431,18 +315,6 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 	private static final String _ALLOWED_SINGLE_LINE_PROPERTY_KEYS =
 		"allowedSingleLinePropertyKeys";
-
-	private static final String[] _SKIP_DIR_NAMES = {
-		".git", ".gradle", ".idea", ".m2", ".releng", ".settings", "bin",
-		"build", "classes", "node_modules", "node_modules_cache", "sdk",
-		"poshi", "sql", "source-formatter", "test", "test-classes",
-		"test-coverage", "test-results", "tmp"
-	};
-
-	private static final Pattern _featureFlagPattern = Pattern.compile(
-		"\"(feature\\.flag\\..+?)\"");
-	private static final Pattern _featureFlagsPattern = Pattern.compile(
-		"(\n|\\A)##\n## Feature Flag\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
 
 	private String _portalPortalPropertiesContent;
 

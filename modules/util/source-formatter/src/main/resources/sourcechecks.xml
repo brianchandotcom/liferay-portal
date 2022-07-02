@@ -1268,6 +1268,10 @@
 			<category name="Documentation" />
 			<description name="Verifies that the environment property in the documentation matches the property name." />
 		</check>
+		<check name="PropertiesFeatureFlagsCheck">
+			<category name="Bug Prevention" />
+			<description name="Generate feature flags in `portlet.properties` file." />
+		</check>
 		<check name="PropertiesImportedFilesContentCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `imported-files.properties` file." />

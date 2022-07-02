@@ -44,6 +44,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
+import com.liferay.object.web.internal.util.ObjectConfigurationUtil;
 import com.liferay.object.web.internal.util.ObjectFieldDBTypeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -356,11 +357,23 @@ public class ObjectEntryInfoItemFormProvider
 			ObjectFieldSettingLocalServiceUtil.fetchObjectFieldSetting(
 				objectField.getObjectFieldId(), "maximumFileSize");
 
+		long maximumFileSizeForGuestUsers =
+			ObjectConfigurationUtil.maximumFileSizeForGuestUsers();
+
 		if (objectFieldSetting == null) {
-			return 0;
+			return maximumFileSizeForGuestUsers;
 		}
 
-		return GetterUtil.getLong(objectFieldSetting.getValue());
+		long maximumFileSize = GetterUtil.getLong(
+			objectFieldSetting.getValue());
+
+		if ((maximumFileSizeForGuestUsers < maximumFileSize) &&
+			_isDefaultUser()) {
+
+			maximumFileSize = maximumFileSizeForGuestUsers;
+		}
+
+		return maximumFileSize;
 	}
 
 	private InfoFieldSet _getObjectDefinitionInfoFieldSet(

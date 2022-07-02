@@ -26,7 +26,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.list.type.model.ListTypeEntry;
-import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
@@ -41,7 +41,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.object.web.internal.util.ObjectConfigurationUtil;
@@ -54,7 +54,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -78,22 +78,28 @@ public class ObjectEntryInfoItemFormProvider
 	public ObjectEntryInfoItemFormProvider(
 		ObjectDefinition objectDefinition,
 		InfoItemFieldReaderFieldSetProvider infoItemFieldReaderFieldSetProvider,
+		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
+		ObjectFieldSettingLocalService objectFieldSettingLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		RESTContextPathResolverRegistry restContextPathResolverRegistry,
-		TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider) {
+		TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider,
+		UserLocalService userLocalService) {
 
 		_objectDefinition = objectDefinition;
 		_infoItemFieldReaderFieldSetProvider =
 			infoItemFieldReaderFieldSetProvider;
+		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
+		_objectFieldSettingLocalService = objectFieldSettingLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_restContextPathResolverRegistry = restContextPathResolverRegistry;
 		_templateInfoItemFieldSetProvider = templateInfoItemFieldSetProvider;
+		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -235,7 +241,7 @@ public class ObjectEntryInfoItemFormProvider
 
 	private String _getAcceptedFileExtensions(ObjectField objectField) {
 		ObjectFieldSetting acceptedFileExtensionsObjectFieldSetting =
-			ObjectFieldSettingLocalServiceUtil.fetchObjectFieldSetting(
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
 				objectField.getObjectFieldId(), "acceptedFileExtensions");
 
 		if (acceptedFileExtensionsObjectFieldSetting == null) {
@@ -279,7 +285,7 @@ public class ObjectEntryInfoItemFormProvider
 		ObjectField objectField) {
 
 		ObjectFieldSetting objectFieldSetting =
-			ObjectFieldSettingLocalServiceUtil.fetchObjectFieldSetting(
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
 				objectField.getObjectFieldId(), "fileSource");
 
 		if (objectFieldSetting == null) {
@@ -354,7 +360,7 @@ public class ObjectEntryInfoItemFormProvider
 
 	private long _getMaximumFileSize(ObjectField objectField) {
 		ObjectFieldSetting objectFieldSetting =
-			ObjectFieldSettingLocalServiceUtil.fetchObjectFieldSetting(
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
 				objectField.getObjectFieldId(), "maximumFileSize");
 
 		long maximumFileSizeForGuestUsers =
@@ -459,7 +465,7 @@ public class ObjectEntryInfoItemFormProvider
 		List<SelectInfoFieldType.Option> options = new ArrayList<>();
 
 		List<ListTypeEntry> listTypeEntries =
-			ListTypeEntryLocalServiceUtil.getListTypeEntries(
+			_listTypeEntryLocalService.getListTypeEntries(
 				objectField.getListTypeDefinitionId());
 
 		for (ListTypeEntry listTypeEntry : listTypeEntries) {
@@ -512,7 +518,7 @@ public class ObjectEntryInfoItemFormProvider
 			return true;
 		}
 
-		User user = UserLocalServiceUtil.fetchUser(serviceContext.getUserId());
+		User user = _userLocalService.fetchUser(serviceContext.getUserId());
 
 		if ((user == null) || user.isDefaultUser()) {
 			return true;
@@ -526,9 +532,12 @@ public class ObjectEntryInfoItemFormProvider
 
 	private final InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
+	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectFieldSettingLocalService
+		_objectFieldSettingLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
@@ -536,5 +545,6 @@ public class ObjectEntryInfoItemFormProvider
 		_restContextPathResolverRegistry;
 	private final TemplateInfoItemFieldSetProvider
 		_templateInfoItemFieldSetProvider;
+	private final UserLocalService _userLocalService;
 
 }

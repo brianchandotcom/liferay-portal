@@ -103,7 +103,13 @@ AUI.add(
 					instance.set('timestamp');
 
 					if (event.src === SRC) {
-						Liferay.Util.fetch(URL_BASE + 'extend_session');
+						Liferay.Util.fetch(URL_BASE + 'extend_session').then(
+							(response) => {
+								if (response.status === 500) {
+									instance.expire();
+								}
+							}
+						);
 					}
 				},
 

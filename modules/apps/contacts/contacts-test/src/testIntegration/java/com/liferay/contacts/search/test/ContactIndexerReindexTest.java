@@ -95,6 +95,7 @@ public class ContactIndexerReindexTest {
 		contactFixture = new ContactFixture(contactLocalService);
 
 		contactFixture.setUp();
+
 		contactFixture.setUser(user);
 		contactFixture.setGroup(group);
 

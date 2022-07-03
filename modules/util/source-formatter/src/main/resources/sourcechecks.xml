@@ -1270,7 +1270,7 @@
 		</check>
 		<check name="PropertiesFeatureFlagsCheck">
 			<category name="Bug Prevention" />
-			<description name="Generate feature flags in `portlet.properties` file." />
+			<description name="Generate feature flags in `portal.properties` file." />
 		</check>
 		<check name="PropertiesImportedFilesContentCheck">
 			<category name="Bug Prevention" />

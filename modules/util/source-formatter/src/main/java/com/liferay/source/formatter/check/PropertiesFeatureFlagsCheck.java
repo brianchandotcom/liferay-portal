@@ -156,8 +156,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 	private static final String[] _SKIP_DIR_NAMES = {
 		".git", ".gradle", ".idea", ".m2", ".releng", ".settings", "bin",
-		"build", "classes", "node_modules", "node_modules_cache", "sdk",
-		"poshi", "sql", "source-formatter", "test", "test-classes",
+		"build", "classes", "node_modules", "node_modules_cache", "poshi",
+		"sdk", "source-formatter", "sql", "test", "test-classes",
 		"test-coverage", "test-results", "tmp"
 	};
 

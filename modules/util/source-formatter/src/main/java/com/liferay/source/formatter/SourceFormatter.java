@@ -622,23 +622,14 @@ public class SourceFormatter {
 						new String[] {"**/package.json"},
 						_sourceFormatterExcludes, false));
 			}
-
-			if (recentChangesFileName.endsWith(".java")) {
-				File portalDir = SourceFormatterUtil.getPortalDir(
-					_sourceFormatterArgs.getBaseDirName(),
-					_sourceFormatterArgs.getMaxLineLength());
-
-				dependentFileNames.add(
-					portalDir + "/portal-impl/src/portal.properties");
-			}
 		}
 
 		if (_sourceFormatterArgs.isFormatCurrentBranch()) {
-			if (!buildPropertiesAdded) {
-				List<String> fileNames = GitUtil.getCurrentBranchFileNames(
-					_sourceFormatterArgs.getBaseDirName(),
-					_sourceFormatterArgs.getGitWorkingBranchName(), true);
+			List<String> fileNames = GitUtil.getCurrentBranchFileNames(
+				_sourceFormatterArgs.getBaseDirName(),
+				_sourceFormatterArgs.getGitWorkingBranchName(), true);
 
+			if (!buildPropertiesAdded) {
 				for (String fileName : fileNames) {
 					if (!buildPropertiesAdded &&
 						fileName.endsWith(".lfrbuild-portal")) {
@@ -665,6 +656,34 @@ public class SourceFormatter {
 							"**/source-formatter-suppressions.xml"
 						},
 						_sourceFormatterExcludes, false));
+			}
+
+			String currentBranchDiff = GitUtil.getCurrentBranchDiff(
+				_sourceFormatterArgs.getBaseDirName(),
+				_sourceFormatterArgs.getGitWorkingBranchName());
+
+			for (String fileName : fileNames) {
+				if (!fileName.endsWith(".java")) {
+					continue;
+				}
+
+				for (String line : StringUtil.split(currentBranchDiff, "\n")) {
+					if ((line.startsWith(StringPool.MINUS) ||
+						 line.startsWith(StringPool.PLUS)) &&
+						line.contains("\"feature.flag.")) {
+
+						File portalDir = SourceFormatterUtil.getPortalDir(
+							_sourceFormatterArgs.getBaseDirName(),
+							_sourceFormatterArgs.getMaxLineLength());
+
+						dependentFileNames.add(
+							portalDir + "/portal-impl/src/portal.properties");
+
+						break;
+					}
+				}
+
+				break;
 			}
 		}
 

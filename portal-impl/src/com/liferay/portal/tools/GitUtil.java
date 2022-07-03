@@ -81,6 +81,35 @@ public class GitUtil {
 		return deleteFileNames;
 	}
 
+	public static String getCurrentBranchDiff(
+			String baseDirName, String gitWorkingBranchName)
+		throws Exception {
+
+		String gitWorkingBranchLatestCommitId = _getLatestCommitId(
+			gitWorkingBranchName, "origin/" + gitWorkingBranchName,
+			"upstream/" + gitWorkingBranchName);
+
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+				"git diff " + gitWorkingBranchLatestCommitId + "..HEAD")) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				sb.append(line);
+
+				sb.append("\n");
+			}
+		}
+
+		if (sb.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
+	}
+
 	public static List<String> getCurrentBranchFileNames(
 			String baseDirName, String gitWorkingBranchName)
 		throws Exception {

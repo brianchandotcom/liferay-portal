@@ -2529,7 +2529,7 @@ definition {
 
 		MockMock.viewMail(
 			asset = "${portalURL}: Your New Account",
-			content = "Your can setup your password here: ${portalURL}/c/portal/update_password?",
+			content = "You can setup your password here: ${portalURL}/c/portal/update_password?",
 			recipient = "userfn userln",
 			sender = "Joe Bloggs",
 			subject = "${portalURL}: Your New Account");

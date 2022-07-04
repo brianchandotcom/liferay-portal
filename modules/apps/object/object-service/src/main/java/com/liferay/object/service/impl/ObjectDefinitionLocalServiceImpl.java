@@ -768,6 +768,14 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 
 			_objectFieldLocalService.addSystemObjectField(
+				userId, objectDefinition.getObjectDefinitionId(), "Text",
+				ObjectEntryTable.INSTANCE.userName.getName(), dbTableName,
+				"String", null, false, false, null,
+				LocalizedMapUtil.getLocalizedMap(
+					LanguageUtil.get(LocaleUtil.getDefault(), "author")),
+				"creator", false, false);
+
+			_objectFieldLocalService.addSystemObjectField(
 				userId, objectDefinition.getObjectDefinitionId(), "Date",
 				ObjectEntryTable.INSTANCE.status.getName(), dbTableName, "Date",
 				null, false, false, null,
@@ -799,14 +807,6 @@ public class ObjectDefinitionLocalServiceImpl
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "status")),
 				"status", false, false);
-
-			_objectFieldLocalService.addSystemObjectField(
-				userId, objectDefinition.getObjectDefinitionId(), "Text",
-				ObjectEntryTable.INSTANCE.userName.getName(), dbTableName,
-				"String", null, false, false, null,
-				LocalizedMapUtil.getLocalizedMap(
-					LanguageUtil.get(LocaleUtil.getDefault(), "author")),
-				"userName", false, false);
 		}
 
 		if (objectFields != null) {

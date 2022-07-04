@@ -37,7 +37,7 @@ const States = {
 	 * When there no permission to access the module
 	 */
 
-	NO_ACCESS: `${Liferay.ThemeDisplay.getPathThemeImages()}/states/app_builder/illustration_locker.svg`,
+	NO_ACCESS: `${Liferay.ThemeDisplay.getPathThemeImages()}/app_builder/illustration_locker.svg`,
 
 	/**
 	 * The user has emptied the dataset for a good cause.

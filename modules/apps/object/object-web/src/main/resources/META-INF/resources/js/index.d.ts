@@ -63,7 +63,7 @@ interface ObjectField {
 	businessType: ObjectFieldBusinessType | string;
 	defaultValue?: string;
 	externalReferenceCode?: string;
-	id?: number;
+	id: number;
 	indexed: boolean;
 	indexedAsKeyword: boolean;
 	indexedLanguageId: Locale | null;
@@ -96,6 +96,7 @@ interface ObjectDefinition {
 	objectLayouts: [];
 	objectViews: [];
 	panelCategoryKey: string;
+	parameterRequired?: boolean;
 	pluralLabel: LocalizedValue<string>;
 	portlet: boolean;
 	scope: string;
@@ -156,8 +157,9 @@ interface ObjectRelationship {
 	name: string;
 	objectDefinitionId1: number;
 	objectDefinitionId2: number;
-	objectDefinitionName2: string;
+	readonly objectDefinitionName2: string;
 	objectRelationshipId: number;
+	parameterObjectFieldId?: number;
 	reverse?: boolean;
 	type: ObjectRelationshipType;
 }

@@ -14,18 +14,17 @@
 
 /// <reference types="react" />
 
-export default function AddRelationship({
-	apiURL,
-	ffOneToOneRelationshipConfigurationEnabled,
+export default function SelectRelationship({
+	error,
 	objectDefinitionId,
-	parameterRequired,
+	onChange,
+	value,
+	...otherProps
 }: IProps): JSX.Element;
 interface IProps {
-	apiURL: string;
-	ffOneToOneRelationshipConfigurationEnabled: boolean;
-	objectDefinitionId: number;
-	observer: any;
-	onClose: () => void;
-	parameterRequired: boolean;
+	error?: string;
+	objectDefinitionId?: number;
+	onChange?: (objectFieldId: number) => void;
+	value?: number;
 }
 export {};

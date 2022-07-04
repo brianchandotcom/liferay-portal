@@ -16,6 +16,7 @@ import ClayAlert from '@clayui/alert';
 import {
 	Card,
 	FormCustomSelect,
+	Input,
 	InputLocalized,
 	SidePanelForm,
 	closeSidePanel,
@@ -32,13 +33,17 @@ import {
 import {firstLetterUppercase} from '../../utils/string';
 import {
 	ObjectRelationshipFormBase,
+	ObjectRelationshipType,
 	useObjectRelationshipForm,
 } from './ObjectRelationshipFormBase';
+import SelectRelationship from './SelectRelationship';
 
 export default function EditRelationship({
 	deletionTypes,
 	hasUpdateObjectDefinitionPermission,
 	objectRelationship: initialValues,
+	parameterEndpoint,
+	parameterRequired,
 }: IProps) {
 	const [selectedLocale, setSelectedLocale] = useState(
 		defaultLocale as {
@@ -72,6 +77,7 @@ export default function EditRelationship({
 	} = useObjectRelationshipForm({
 		initialValues,
 		onSubmit,
+		parameterRequired,
 	});
 
 	const readOnly = !hasUpdateObjectDefinitionPermission || values.reverse;
@@ -126,6 +132,27 @@ export default function EditRelationship({
 					value={firstLetterUppercase(values.deletionType as string)}
 				/>
 			</Card>
+
+			{Liferay.FeatureFlags['LPS-155537'] &&
+				parameterRequired &&
+				values.type === ObjectRelationshipType.ONE_TO_MANY && (
+					<Card title={Liferay.Language.get('parameters')}>
+						<Input
+							label={Liferay.Language.get('api-endpoint')}
+							readOnly
+							value={parameterEndpoint}
+						/>
+
+						<SelectRelationship
+							error={errors.parameterObjectFieldId}
+							objectDefinitionId={values.objectDefinitionId2}
+							onChange={(parameterObjectFieldId) =>
+								setValues({parameterObjectFieldId})
+							}
+							value={values.parameterObjectFieldId}
+						/>
+					</Card>
+				)}
 		</SidePanelForm>
 	);
 }
@@ -134,6 +161,8 @@ interface IProps {
 	deletionTypes: TDeletionType[];
 	hasUpdateObjectDefinitionPermission: boolean;
 	objectRelationship: ObjectRelationship;
+	parameterEndpoint: string;
+	parameterRequired: boolean;
 }
 
 type TDeletionType = {

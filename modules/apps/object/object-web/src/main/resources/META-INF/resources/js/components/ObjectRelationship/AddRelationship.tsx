@@ -24,8 +24,10 @@ import {defaultLanguageId} from '../../utils/locale';
 import {toCamelCase} from '../../utils/string';
 import {
 	ObjectRelationshipFormBase,
+	ObjectRelationshipType,
 	useObjectRelationshipForm,
 } from './ObjectRelationshipFormBase';
+import SelectRelationship from './SelectRelationship';
 
 function ModalAddObjectRelationship({
 	apiURL,
@@ -33,6 +35,7 @@ function ModalAddObjectRelationship({
 	objectDefinitionId,
 	observer,
 	onClose,
+	parameterRequired,
 }: IProps) {
 	const [error, setError] = useState<string>('');
 
@@ -66,7 +69,7 @@ function ModalAddObjectRelationship({
 		handleSubmit,
 		setValues,
 		values,
-	} = useObjectRelationshipForm({initialValues, onSubmit});
+	} = useObjectRelationshipForm({initialValues, onSubmit, parameterRequired});
 
 	return (
 		<ClayModal observer={observer}>
@@ -106,6 +109,19 @@ function ModalAddObjectRelationship({
 								),
 						}}
 					/>
+
+					{Liferay.FeatureFlags['LPS-155537'] &&
+						parameterRequired &&
+						values.type === ObjectRelationshipType.ONE_TO_MANY && (
+							<SelectRelationship
+								error={errors.parameterObjectFieldId}
+								objectDefinitionId={values.objectDefinitionId2}
+								onChange={(parameterObjectFieldId) =>
+									setValues({parameterObjectFieldId})
+								}
+								value={values.parameterObjectFieldId}
+							/>
+						)}
 				</ClayModal.Body>
 
 				<ClayModal.Footer
@@ -133,6 +149,7 @@ export default function AddRelationship({
 	apiURL,
 	ffOneToOneRelationshipConfigurationEnabled,
 	objectDefinitionId,
+	parameterRequired,
 }: IProps) {
 	const [visibleModal, setVisibleModal] = useState<boolean>(false);
 	const {observer, onClose} = useModal({
@@ -158,6 +175,7 @@ export default function AddRelationship({
 					objectDefinitionId={objectDefinitionId}
 					observer={observer}
 					onClose={onClose}
+					parameterRequired={parameterRequired}
 				/>
 			)}
 		</ClayModalProvider>
@@ -170,4 +188,5 @@ interface IProps {
 	objectDefinitionId: number;
 	observer: any;
 	onClose: () => void;
+	parameterRequired: boolean;
 }

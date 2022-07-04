@@ -58,6 +58,7 @@ const REQUIRED_MSG = Liferay.Language.get('required');
 export function useObjectRelationshipForm({
 	initialValues,
 	onSubmit,
+	parameterRequired,
 }: IUseObjectRelationshipForm) {
 	const validate = (relationship: Partial<ObjectRelationship>) => {
 		const errors: FormError<ObjectRelationship> = {};
@@ -78,6 +79,14 @@ export function useObjectRelationshipForm({
 
 		if (!relationship.objectDefinitionId2) {
 			errors.objectDefinitionId2 = REQUIRED_MSG;
+		}
+
+		if (
+			parameterRequired &&
+			relationship.type === ObjectRelationshipType.ONE_TO_MANY &&
+			!relationship.parameterObjectFieldId
+		) {
+			errors.parameterObjectFieldId = REQUIRED_MSG;
 		}
 
 		return errors;
@@ -121,13 +130,13 @@ export function ObjectRelationshipFormBase({
 				({id}) => values.objectDefinitionId1 === id
 			)!;
 
-			let objectDefinitions = Liferay.FeatureFlags['LPS-135430']
-				? items.filter(({storageType}) => storageType === 'default')
-				: items;
-
-			if (currentObjectDefinition.system) {
-				objectDefinitions = items.filter(({system}) => !system);
-			}
+			const objectDefinitions = items.filter(
+				({parameterRequired, storageType, system}) =>
+					(!currentObjectDefinition.system || !system) &&
+					(!Liferay.FeatureFlags['LPS-135430'] ||
+						storageType === 'default') &&
+					(!Liferay.FeatureFlags['LPS-155537'] || !parameterRequired)
+			);
 
 			setObjectDefinitions(objectDefinitions);
 		};
@@ -201,6 +210,7 @@ export function ObjectRelationshipFormBase({
 interface IUseObjectRelationshipForm {
 	initialValues: Partial<ObjectRelationship>;
 	onSubmit: (relationship: ObjectRelationship) => void;
+	parameterRequired: boolean;
 }
 
 interface IPros {

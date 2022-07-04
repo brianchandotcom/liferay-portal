@@ -22,6 +22,7 @@ export declare enum ObjectRelationshipType {
 export declare function useObjectRelationshipForm({
 	initialValues,
 	onSubmit,
+	parameterRequired,
 }: IUseObjectRelationshipForm): {
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -40,6 +41,7 @@ export declare function ObjectRelationshipFormBase({
 interface IUseObjectRelationshipForm {
 	initialValues: Partial<ObjectRelationship>;
 	onSubmit: (relationship: ObjectRelationship) => void;
+	parameterRequired: boolean;
 }
 interface IPros {
 	errors: FormError<ObjectRelationship>;

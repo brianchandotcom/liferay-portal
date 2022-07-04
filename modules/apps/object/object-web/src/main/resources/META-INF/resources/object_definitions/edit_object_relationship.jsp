@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+ObjectDefinition objectDefinition = (ObjectDefinition)request.getAttribute(ObjectWebKeys.OBJECT_DEFINITION);
 ObjectDefinitionsRelationshipsDisplayContext objectDefinitionsRelationshipsDisplayContext = (ObjectDefinitionsRelationshipsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute(ObjectWebKeys.OBJECT_RELATIONSHIP);
 %>
@@ -30,6 +31,10 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 			"hasUpdateObjectDefinitionPermission", objectDefinitionsRelationshipsDisplayContext.hasUpdateObjectDefinitionPermission()
 		).put(
 			"objectRelationship", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipJSONObject(objectRelationship)
+		).put(
+			"parameterEndpoint", objectDefinitionsRelationshipsDisplayContext.getRESTContextPath(objectDefinition)
+		).put(
+			"parameterRequired", objectDefinitionsRelationshipsDisplayContext.isParameterRequired(objectDefinition)
 		).build()
 	%>'
 />

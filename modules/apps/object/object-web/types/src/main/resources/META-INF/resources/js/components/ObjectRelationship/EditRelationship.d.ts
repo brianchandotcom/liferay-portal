@@ -18,11 +18,15 @@ export default function EditRelationship({
 	deletionTypes,
 	hasUpdateObjectDefinitionPermission,
 	objectRelationship: initialValues,
+	parameterEndpoint,
+	parameterRequired,
 }: IProps): JSX.Element;
 interface IProps {
 	deletionTypes: TDeletionType[];
 	hasUpdateObjectDefinitionPermission: boolean;
 	objectRelationship: ObjectRelationship;
+	parameterEndpoint: string;
+	parameterRequired: boolean;
 }
 declare type TDeletionType = {
 	label: string;

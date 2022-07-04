@@ -335,9 +335,10 @@ public class JSONServerServletTest {
 				"Missing model name in path /fruit", message.get("message"));
 		}
 
-		// /fruit/plantae/tracheophyta/magnoliopsida/vitales/vitaceae/vitis?filter=name+eq+merlot
+		// /fruit/plantae/tracheophyta/vitis?filter=name+eq+merlot
 
-		mockHttpServletRequest.setPathInfo("/fruit/plantae/tracheophyta/magnoliopsida/vitales/vitaceae/vitis?filter=name+eq+merlot");
+		mockHttpServletRequest.setPathInfo(
+			"/fruit/plantae/tracheophyta/vitis?filter=name+eq+merlot");
 
 		mockHttpServletResponse = new MockHttpServletResponse();
 

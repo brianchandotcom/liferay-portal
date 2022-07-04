@@ -38,6 +38,11 @@ public class CPDefinitionSystemObjectDefinitionMetadata
 	extends BaseSystemObjectDefinitionMetadata {
 
 	@Override
+	public String getIdPropertyName() {
+		return "productId";
+	}
+
+	@Override
 	public Map<Locale, String> getLabelMap() {
 		return createLabelMap("cp-definition");
 	}

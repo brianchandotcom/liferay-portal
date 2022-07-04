@@ -44,6 +44,15 @@ import getSelectedField from '../../../../../app/utils/getSelectedField';
 import PageStructureSidebarSection from './PageStructureSidebarSection';
 import StructureTreeNode from './StructureTreeNode';
 
+const EDITABLE_LABEL = {
+	[EDITABLE_TYPES.backgroundImage]: Liferay.Language.get('background-image'),
+	[EDITABLE_TYPES.html]: Liferay.Language.get('html'),
+	[EDITABLE_TYPES.image]: Liferay.Language.get('image'),
+	[EDITABLE_TYPES.link]: Liferay.Language.get('link'),
+	[EDITABLE_TYPES['rich-text']]: Liferay.Language.get('rich-text'),
+	[EDITABLE_TYPES.text]: Liferay.Language.get('text'),
+};
+
 const EDITABLE_TYPE_ICONS = {
 	[EDITABLE_TYPES.backgroundImage]: 'picture',
 	[EDITABLE_TYPES.html]: 'code',
@@ -417,7 +426,6 @@ function visit(
 					children: [],
 					dragAndDropHoveredItemId,
 					draggable: false,
-					editableType: type,
 					expanded: childId === activeItemId,
 					hidable: false,
 					hidden: false,
@@ -431,6 +439,7 @@ function visit(
 					onHoverNode,
 					parentId: item.parentId,
 					removable: false,
+					tooltipTitle: EDITABLE_LABEL[type],
 				});
 			}
 			else {
@@ -546,6 +555,9 @@ function visit(
 		onHoverNode,
 		parentItemId: item.parentId,
 		removable: !itemInMasterLayout && isRemovable(item, layoutData),
+		tooltipTitle: selectLayoutDataItemLabel({fragmentEntryLinks}, item, {
+			useCustomName: false,
+		}),
 		type: item.type,
 	};
 }

@@ -15,8 +15,16 @@
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
-export default function selectLayoutDataItemLabel({fragmentEntryLinks}, item) {
-	if (Liferay.FeatureFlags['LPS-147895'] && item.config?.name) {
+export default function selectLayoutDataItemLabel(
+	{fragmentEntryLinks},
+	item,
+	{useCustomName = true} = {}
+) {
+	if (
+		useCustomName &&
+		Liferay.FeatureFlags['LPS-147895'] &&
+		item.config?.name
+	) {
 		return item.config.name;
 	}
 

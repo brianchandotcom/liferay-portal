@@ -427,16 +427,19 @@ public class ObjectActionLocalServiceTest {
 		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true,
-			"Able Condition Expression", "Able Description", "Able",
+			"equals(firstName, \"John\")", "Able Description", "Able",
 			ObjectActionExecutorConstants.KEY_WEBHOOK,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			UnicodePropertiesBuilder.put(
 				"secret", "0123456789"
+			).put(
+				"url", "https://onafteradd.com"
 			).build());
 
 		Assert.assertTrue(objectAction.isActive());
 		Assert.assertEquals(
-			"Able Condition Expression", objectAction.getConditionExpression());
+			"equals(firstName, \"John\")",
+			objectAction.getConditionExpression());
 		Assert.assertEquals("Able Description", objectAction.getDescription());
 		Assert.assertEquals("Able", objectAction.getName());
 		Assert.assertEquals(
@@ -448,6 +451,8 @@ public class ObjectActionLocalServiceTest {
 		Assert.assertEquals(
 			UnicodePropertiesBuilder.put(
 				"secret", "0123456789"
+			).put(
+				"url", "https://onafteradd.com"
 			).build(),
 			objectAction.getParametersUnicodeProperties());
 		Assert.assertEquals(
@@ -455,16 +460,18 @@ public class ObjectActionLocalServiceTest {
 
 		objectAction = _objectActionLocalService.updateObjectAction(
 			objectAction.getObjectActionId(), false,
-			"Baker Condition Expression", "Baker Description", "Baker",
+			"equals(firstName, \"João\")", "Baker Description", "Baker",
 			ObjectActionExecutorConstants.KEY_GROOVY,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
 			UnicodePropertiesBuilder.put(
 				"secret", "30624700"
+			).put(
+				"url", "https://onafterdelete.com"
 			).build());
 
 		Assert.assertFalse(objectAction.isActive());
 		Assert.assertEquals(
-			"Baker Condition Expression",
+			"equals(firstName, \"João\")",
 			objectAction.getConditionExpression());
 		Assert.assertEquals("Baker Description", objectAction.getDescription());
 		Assert.assertEquals("Baker", objectAction.getName());
@@ -477,6 +484,8 @@ public class ObjectActionLocalServiceTest {
 		Assert.assertEquals(
 			UnicodePropertiesBuilder.put(
 				"secret", "30624700"
+			).put(
+				"url", "https://onafterdelete.com"
 			).build(),
 			objectAction.getParametersUnicodeProperties());
 		Assert.assertEquals(

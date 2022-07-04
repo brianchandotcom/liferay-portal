@@ -1,0 +1,118 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-157239 - Verify if As an Administrator I should be able to add and delete a Factor Category"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddAndDeleteFactorCategory {
+
+		// TODO LPS-157239 AdminCanAddAndDeleteFactorCategory pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157327 - Verify if As an Administrator I should be able to add and delete a Factor Option"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddAndDeleteFactorOption {
+
+		// TODO LPS-157327 AdminCanAddAndDeleteFactorOption pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157231 - Verify if as an Administrator I am able to add Factor Categories"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddCategory {
+
+		// TODO LPS-157231 AdminCanAddCategory pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157309 - Verify if as an Administrator I am able to add Options"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddOptions {
+
+		// TODO LPS-157309 AdminCanAddOptions pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157321 - Verify if as an Administrator I am able to configure Default Environment Factors for a Routine"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanConfigureDefaultEnvironmentFactorsForRoutine {
+
+		// TODO LPS-157321 AdminCanConfigureDefaultEnvironmentFactorsForRoutine pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157237 - Verify if as an Administrator I am able to delete Factor Categories"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanDeleteCategory {
+
+		// TODO LPS-157237 AdminCanDeleteCategory pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157307 - Verify if as an Administrator I am able to edit Factor Categories"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanEditFactorCategories {
+
+		// TODO LPS-157307 AdminCanEditFactorCategories pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157326 - Verify if as an Administrator I am able to edit the Option by changing the Category"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanEditOptionChangingCategory {
+
+		// TODO LPS-157326 AdminCanEditOptionChangingCategory pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157323 - Verify if as an Administrator I am able to edit the Option Name"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanEditOptionName {
+
+		// TODO LPS-157323 AdminCanEditOptionName pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157328 - Verify if As an Administrator I should not be able to add a duplicate Factor Category"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanNotAddCuplicateFactorCategory {
+
+		// TODO LPS-157328 AdminCanNotAddCuplicateFactorCategory pending implementation
+
+	}
+
+}

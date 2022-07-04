@@ -88,6 +88,14 @@ html#{$cadmin-selector} {
 				color: $cadmin-dark;
 				margin-left: 4px;
 
+				input {
+					width: 0;
+					&:active,
+					&:focus {
+						outline-color: $cadmin-primary-l1;
+					}
+				}
+
 				.lexicon-icon {
 					margin-right: 8px;
 				}

@@ -416,14 +416,19 @@ public class JSONServerServlet extends HttpServlet {
 					"Unknown application name " + parts.get(0));
 			}
 
-			_modelName = parts.get(1);
+			long id = -1;
+			String modelName = parts.get(1);
 
-			if (parts.size() > 2) {
-				_id = GetterUtil.getLongStrict(parts.get(2));
+			if (parts.size()>2){
+				try {
+					id = GetterUtil.getLongStrict(parts.get(2));
+				}
+				catch (IllegalArgumentException illegalArgumentException) {
+					modelName = path.replace('/' + parts.get(0) + '/', "");
+				}
 			}
-			else {
-				_id = -1;
-			}
+			_id = id;
+			_modelName = modelName;
 
 			byte[] bytes = StreamUtil.toByteArray(
 				httpServletRequest.getInputStream());

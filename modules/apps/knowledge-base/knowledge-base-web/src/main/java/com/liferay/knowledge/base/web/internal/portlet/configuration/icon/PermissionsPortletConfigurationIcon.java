@@ -17,7 +17,7 @@ package com.liferay.knowledge.base.web.internal.portlet.configuration.icon;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -25,17 +25,11 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -56,31 +50,20 @@ public class PermissionsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)),
-			"home-folder-permissions");
-	}
-
-	@Override
-	public ResourceBundle getResourceBundle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return new AggregateResourceBundle(
-			resourceBundle, super.getResourceBundle(locale));
+		return _language.get(
+			getLocale(portletRequest), "home-folder-permissions");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String url = StringPool.BLANK;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
-			url = PermissionsURLTag.doTag(
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			return PermissionsURLTag.doTag(
 				StringPool.BLANK, KBConstants.RESOURCE_NAME_ADMIN,
 				themeDisplay.getScopeGroupName(), null,
 				String.valueOf(themeDisplay.getScopeGroupId()),
@@ -91,9 +74,9 @@ public class PermissionsPortletConfigurationIcon
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
-		}
 
-		return url;
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
@@ -103,28 +86,25 @@ public class PermissionsPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		User user = themeDisplay.getUser();
-
-		if (user.isDefaultUser()) {
-			return false;
-		}
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		try {
-			if (!_portletResourcePermission.contains(
-					permissionChecker, themeDisplay.getScopeGroup(),
-					ActionKeys.PERMISSIONS) ||
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			User user = themeDisplay.getUser();
+
+			if (user.isDefaultUser() ||
+				!_portletResourcePermission.contains(
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroup(), ActionKeys.PERMISSIONS) ||
 				!_groupPermission.contains(
-					permissionChecker, themeDisplay.getScopeGroup(),
-					ActionKeys.PERMISSIONS)) {
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroup(), ActionKeys.PERMISSIONS)) {
 
 				return false;
 			}
+
+			return true;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -133,8 +113,6 @@ public class PermissionsPortletConfigurationIcon
 
 			return false;
 		}
-
-		return true;
 	}
 
 	@Override
@@ -147,6 +125,9 @@ public class PermissionsPortletConfigurationIcon
 
 	@Reference
 	private GroupPermission _groupPermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(resource.name=" + KBConstants.RESOURCE_NAME_ADMIN + ")"

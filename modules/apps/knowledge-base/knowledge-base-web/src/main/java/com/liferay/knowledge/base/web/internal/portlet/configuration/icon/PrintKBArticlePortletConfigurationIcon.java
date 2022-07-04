@@ -19,7 +19,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,8 +49,7 @@ public class PrintKBArticlePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "print");
+		return _language.get(getLocale(portletRequest), "print");
 	}
 
 	@Override
@@ -63,27 +61,24 @@ public class PrintKBArticlePortletConfigurationIcon
 
 			sb.append("window.open('");
 
-			PortletURL portletURL = PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-					PortletRequest.RENDER_PHASE)
-			).setMVCPath(
-				"/admin/print_article.jsp"
-			).buildPortletURL();
-
 			KBArticle kbArticle = getKBArticle(portletRequest);
 
-			portletURL.setParameter(
-				"resourceClassNameId",
-				String.valueOf(kbArticle.getClassNameId()));
-			portletURL.setParameter(
-				"resourcePrimKey",
-				String.valueOf(kbArticle.getResourcePrimKey()));
-
-			portletURL.setParameter("viewMode", Constants.PRINT);
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-			sb.append(portletURL.toString());
+			sb.append(
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+						PortletRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/admin/print_article.jsp"
+				).setParameter(
+					"resourceClassNameId", kbArticle.getClassNameId()
+				).setParameter(
+					"resourcePrimKey", kbArticle.getResourcePrimKey()
+				).setParameter(
+					"viewMode", Constants.PRINT
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
 
 			sb.append("', '', 'directories=no,height=640,location=no,");
 			sb.append("menubar=no,resizable=yes,scrollbars=yes,status=0,");
@@ -95,9 +90,9 @@ public class PrintKBArticlePortletConfigurationIcon
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
-		}
 
-		return StringPool.BLANK;
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
@@ -119,6 +114,9 @@ public class PrintKBArticlePortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PrintKBArticlePortletConfigurationIcon.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

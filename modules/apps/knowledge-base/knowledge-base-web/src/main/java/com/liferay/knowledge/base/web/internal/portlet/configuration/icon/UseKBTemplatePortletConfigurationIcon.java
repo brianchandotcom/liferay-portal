@@ -20,16 +20,13 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -53,10 +50,7 @@ public class UseKBTemplatePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getLocale(portletRequest), getClass());
-
-		return LanguageUtil.get(resourceBundle, "use-this-template");
+		return _language.get(getLocale(portletRequest), "use-this-template");
 	}
 
 	@Override
@@ -96,6 +90,9 @@ public class UseKBTemplatePortletConfigurationIcon
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
 			KBActionKeys.ADD_KB_ARTICLE);
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

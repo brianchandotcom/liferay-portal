@@ -20,13 +20,13 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -54,39 +54,34 @@ public class KBFolderPermissionsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "permissions");
+		return LanguageUtil.get(getLocale(portletRequest), "permissions");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String url = StringPool.BLANK;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
-
 		try {
-			String modelResource = KBFolder.class.getName();
-			String modelResourceDescription = kbFolder.getName();
-			String resourcePrimKey = String.valueOf(kbFolder.getKbFolderId());
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-			url = PermissionsURLTag.doTag(
-				StringPool.BLANK, modelResource, modelResourceDescription, null,
-				resourcePrimKey, LiferayWindowState.POP_UP.toString(), null,
+			KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
+
+			return PermissionsURLTag.doTag(
+				StringPool.BLANK, KBFolder.class.getName(), kbFolder.getName(),
+				null, String.valueOf(kbFolder.getKbFolderId()),
+				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
-		}
 
-		return url;
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
@@ -96,26 +91,25 @@ public class KBFolderPermissionsPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
+
 			return _kbFolderModelResourcePermission.contains(
-				permissionChecker, kbFolder, KBActionKeys.PERMISSIONS);
+				themeDisplay.getPermissionChecker(), kbFolder,
+				KBActionKeys.PERMISSIONS);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
-		}
 
-		return false;
+			return false;
+		}
 	}
 
 	@Override
@@ -130,5 +124,8 @@ public class KBFolderPermissionsPortletConfigurationIcon
 		target = "(model.class.name=com.liferay.knowledge.base.model.KBFolder)"
 	)
 	private ModelResourcePermission<KBFolder> _kbFolderModelResourcePermission;
+
+	@Reference
+	private Language _language;
 
 }

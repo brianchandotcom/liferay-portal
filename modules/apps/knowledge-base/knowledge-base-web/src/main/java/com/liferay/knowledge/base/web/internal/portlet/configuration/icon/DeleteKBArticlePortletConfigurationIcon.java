@@ -20,7 +20,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,44 +52,35 @@ public class DeleteKBArticlePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "delete");
+		return _language.get(getLocale(portletRequest), "delete");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		KBArticle kbArticle = getKBArticle(portletRequest);
+
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"deleteKBArticle"
-		).buildPortletURL();
-
-		String mvcPath = ParamUtil.getString(portletRequest, "mvcPath");
-
-		portletURL.setParameter("mvcPath", mvcPath);
-
-		KBArticle kbArticle = getKBArticle(portletRequest);
-
-		PortletURL redirectURL = _portal.getControlPanelPortletURL(
-			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirect", redirectURL.toString());
-
-		portletURL.setParameter(
-			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
-		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
-		portletURL.setParameter(
+		).setMVCPath(
+			ParamUtil.getString(portletRequest, "mvcPath")
+		).setRedirect(
+			_portal.getControlPanelPortletURL(
+				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"resourceClassNameId", kbArticle.getClassNameId()
+		).setParameter(
+			"resourcePrimKey", kbArticle.getResourcePrimKey()
+		).setParameter(
 			"status",
-			String.valueOf(
-				portletRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS)));
-
-		return portletURL.toString();
+			portletRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS)
+		).buildString();
 	}
 
 	@Override
@@ -100,23 +90,22 @@ public class DeleteKBArticlePortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		KBArticle kbArticle = getKBArticle(portletRequest);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			return _kbArticleModelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), kbArticle,
-				KBActionKeys.DELETE);
+				themeDisplay.getPermissionChecker(),
+				getKBArticle(portletRequest), KBActionKeys.DELETE);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
-		}
 
-		return false;
+			return false;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -127,6 +116,9 @@ public class DeleteKBArticlePortletConfigurationIcon
 	)
 	private ModelResourcePermission<KBArticle>
 		_kbArticleModelResourcePermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

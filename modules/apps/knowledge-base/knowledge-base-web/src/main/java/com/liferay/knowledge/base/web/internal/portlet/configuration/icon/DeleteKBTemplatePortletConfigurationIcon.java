@@ -20,12 +20,11 @@ import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,15 +52,14 @@ public class DeleteKBTemplatePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "delete");
+		return _language.get(getLocale(portletRequest), "delete");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.ACTION_PHASE)
@@ -70,21 +67,19 @@ public class DeleteKBTemplatePortletConfigurationIcon
 			"deleteKBTemplate"
 		).setMVCPath(
 			"/admin/view_template.jsp"
-		).buildPortletURL();
+		).setRedirect(
+			_portal.getControlPanelPortletURL(
+				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"kbTemplateId",
+			() -> {
+				KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(
+					KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
 
-		KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
-
-		PortletURL redirectURL = _portal.getControlPanelPortletURL(
-			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirect", redirectURL.toString());
-
-		portletURL.setParameter(
-			"kbTemplateId", String.valueOf(kbTemplate.getKbTemplateId()));
-
-		return portletURL.toString();
+				return kbTemplate.getKbTemplateId();
+			}
+		).buildString();
 	}
 
 	@Override
@@ -94,26 +89,25 @@ public class DeleteKBTemplatePortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
+
 			return _kbTemplateModelResourcePermission.contains(
-				permissionChecker, kbTemplate, KBActionKeys.DELETE);
+				themeDisplay.getPermissionChecker(), kbTemplate,
+				KBActionKeys.DELETE);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
-		}
 
-		return false;
+			return false;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -124,6 +118,9 @@ public class DeleteKBTemplatePortletConfigurationIcon
 	)
 	private ModelResourcePermission<KBTemplate>
 		_kbTemplateModelResourcePermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -20,12 +20,11 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,15 +52,14 @@ public class DeleteKBFolderPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "delete");
+		return _language.get(getLocale(portletRequest), "delete");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.ACTION_PHASE)
@@ -70,21 +67,19 @@ public class DeleteKBFolderPortletConfigurationIcon
 			"deleteKBFolder"
 		).setMVCPath(
 			"/admin/view_folders.jsp"
-		).buildPortletURL();
+		).setRedirect(
+			_portal.getControlPanelPortletURL(
+				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"kbFolderId",
+			() -> {
+				KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
+					KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
-		PortletURL redirectURL = _portal.getControlPanelPortletURL(
-			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("redirect", redirectURL.toString());
-
-		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
-
-		portletURL.setParameter(
-			"kbFolderId", String.valueOf(kbFolder.getKbFolderId()));
-
-		return portletURL.toString();
+				return kbFolder.getKbFolderId();
+			}
+		).buildString();
 	}
 
 	@Override
@@ -94,26 +89,25 @@ public class DeleteKBFolderPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
+
 			return _kbFolderModelResourcePermission.contains(
-				permissionChecker, kbFolder, KBActionKeys.DELETE);
+				themeDisplay.getPermissionChecker(), kbFolder,
+				KBActionKeys.DELETE);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
-		}
 
-		return false;
+			return false;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -123,6 +117,9 @@ public class DeleteKBFolderPortletConfigurationIcon
 		target = "(model.class.name=com.liferay.knowledge.base.model.KBFolder)"
 	)
 	private ModelResourcePermission<KBFolder> _kbFolderModelResourcePermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

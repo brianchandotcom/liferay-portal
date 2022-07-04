@@ -20,12 +20,11 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -53,8 +52,7 @@ public class EditKBFolderPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "edit");
+		return _language.get(getLocale(portletRequest), "edit");
 	}
 
 	@Override
@@ -87,26 +85,25 @@ public class EditKBFolderPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
+
 			return _kbFolderModelResourcePermission.contains(
-				permissionChecker, kbFolder, KBActionKeys.UPDATE);
+				themeDisplay.getPermissionChecker(), kbFolder,
+				KBActionKeys.UPDATE);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
-		}
 
-		return false;
+			return false;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -116,6 +113,9 @@ public class EditKBFolderPortletConfigurationIcon
 		target = "(model.class.name=com.liferay.knowledge.base.model.KBFolder)"
 	)
 	private ModelResourcePermission<KBFolder> _kbFolderModelResourcePermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -19,7 +19,7 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -51,39 +51,34 @@ public class KBArticlePermissionsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "permissions");
+		return _language.get(getLocale(portletRequest), "permissions");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String url = StringPool.BLANK;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		KBArticle kbArticle = getKBArticle(portletRequest);
-
 		try {
-			String modelResource = KBArticle.class.getName();
-			String modelResourceDescription = kbArticle.getTitle();
-			String resourcePrimKey = String.valueOf(
-				kbArticle.getResourcePrimKey());
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-			url = PermissionsURLTag.doTag(
-				StringPool.BLANK, modelResource, modelResourceDescription, null,
-				resourcePrimKey, LiferayWindowState.POP_UP.toString(), null,
+			KBArticle kbArticle = getKBArticle(portletRequest);
+
+			return PermissionsURLTag.doTag(
+				StringPool.BLANK, KBArticle.class.getName(),
+				kbArticle.getTitle(), null,
+				String.valueOf(kbArticle.getResourcePrimKey()),
+				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
-		}
 
-		return url;
+			return StringPool.BLANK;
+		}
 	}
 
 	@Override
@@ -93,12 +88,13 @@ public class KBArticlePermissionsPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		KBArticle kbArticle = getKBArticle(portletRequest);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			KBArticle kbArticle = getKBArticle(portletRequest);
+
 			if (kbArticle.isRoot() &&
 				_kbArticleModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), kbArticle,
@@ -106,14 +102,16 @@ public class KBArticlePermissionsPortletConfigurationIcon
 
 				return true;
 			}
+
+			return false;
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
-		}
 
-		return false;
+			return false;
+		}
 	}
 
 	@Override
@@ -129,5 +127,8 @@ public class KBArticlePermissionsPortletConfigurationIcon
 	)
 	private ModelResourcePermission<KBArticle>
 		_kbArticleModelResourcePermission;
+
+	@Reference
+	private Language _language;
 
 }

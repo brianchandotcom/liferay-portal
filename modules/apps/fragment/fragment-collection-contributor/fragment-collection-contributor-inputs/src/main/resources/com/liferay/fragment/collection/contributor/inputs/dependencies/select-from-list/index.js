@@ -87,16 +87,23 @@ function setActiveDescendant(item) {
 		previousItem.removeAttribute('aria-selected');
 	}
 
-	buttonLabel.textContent = item.textContent;
-	listbox.setAttribute('aria-activedescendant', item.id);
-	inputElement.value = item.dataset.optionValue;
+	if (item) {
+		buttonLabel.textContent = item.textContent;
+		listbox.setAttribute('aria-activedescendant', item.id);
+		inputElement.value = item.dataset.optionValue;
 
-	item.classList.add('active');
-	item.setAttribute('aria-selected', 'true');
+		item.classList.add('active');
+		item.setAttribute('aria-selected', 'true');
 
-	item.scrollIntoView({
-		block: 'nearest',
-	});
+		item.scrollIntoView({
+			block: 'nearest',
+		});
+	}
+	else {
+		buttonLabel.textContent = '';
+		listbox.removeAttribute('aria-activedescendant');
+		inputElement.value = '';
+	}
 }
 
 function handleButtonClick() {

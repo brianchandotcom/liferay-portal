@@ -594,7 +594,7 @@ const ManageCollaborators = ({
 				  );
 
 		openConfirmModal({
-			message: Liferay.Util.sub(
+			message: sub(
 				langKey,
 				publicationsUserRoleEmailAddresses.join(', ')
 			),

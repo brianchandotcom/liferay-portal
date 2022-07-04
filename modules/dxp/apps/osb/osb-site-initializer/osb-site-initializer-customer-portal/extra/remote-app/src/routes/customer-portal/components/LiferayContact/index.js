@@ -12,32 +12,32 @@
 import i18n from '../../../../common/I18n';
 import getKebabCase from '../../../../common/utils/getKebabCase';
 
-const LiferayContact = ({project}) => {
-	return (
-		<>
-			<h5 className="mb-4 rounded-sm text-neutral-10">
-				{i18n.translate('liferay-contact')}
-			</h5>
+const LiferayContact = ({koroneikiAccount}) => (
+	<div>
+		<h5 className="mb-4 rounded-sm text-neutral-10">
+			{i18n.translate('liferay-contact')}
+		</h5>
 
-			{project.liferayContactName && (
-				<div className="font-weight-bold rounded-sm text-neutral-8 text-paragraph">
-					{project.liferayContactName}
-				</div>
-			)}
+		{koroneikiAccount.liferayContactName && (
+			<div className="font-weight-bold rounded-sm text-neutral-8 text-paragraph">
+				{koroneikiAccount.liferayContactName}
+			</div>
+		)}
 
-			{project.liferayContactRole && (
-				<div className="rounded-sm text-neutral-10 text-paragraph">
-					{i18n.translate(getKebabCase(project.liferayContactRole))}
-				</div>
-			)}
+		{koroneikiAccount.liferayContactRole && (
+			<div className="rounded-sm text-neutral-10 text-paragraph">
+				{i18n.translate(
+					getKebabCase(koroneikiAccount.liferayContactRole)
+				)}
+			</div>
+		)}
 
-			{project.liferayContactEmailAddress && (
-				<div className="rounded-sm text-neutral-10 text-paragraph-sm">
-					{project.liferayContactEmailAddress}
-				</div>
-			)}
-		</>
-	);
-};
+		{koroneikiAccount.liferayContactEmailAddress && (
+			<div className="rounded-sm text-neutral-10 text-paragraph-sm">
+				{koroneikiAccount.liferayContactEmailAddress}
+			</div>
+		)}
+	</div>
+);
 
 export default LiferayContact;

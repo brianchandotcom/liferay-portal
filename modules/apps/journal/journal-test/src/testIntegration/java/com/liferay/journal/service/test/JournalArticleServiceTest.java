@@ -208,17 +208,18 @@ public class JournalArticleServiceTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, articleId, false);
 
+		String externalReferenceCode = _article.getExternalReferenceCode();
+
 		Assert.assertNotNull(_article);
 		Assert.assertEquals(articleId, _article.getArticleId());
-		Assert.assertEquals(articleId, _article.getExternalReferenceCode());
+		Assert.assertEquals(externalReferenceCode, _article.getUuid());
 
 		_latestArticle =
 			JournalArticleServiceUtil.fetchLatestArticleByExternalReferenceCode(
-				_group.getGroupId(), articleId);
+				_group.getGroupId(), externalReferenceCode);
 
 		Assert.assertNotNull(_latestArticle);
-		Assert.assertEquals(
-			articleId, _latestArticle.getExternalReferenceCode());
+		Assert.assertEquals(_article, _latestArticle);
 	}
 
 	@Test(expected = StructureDefinitionException.class)

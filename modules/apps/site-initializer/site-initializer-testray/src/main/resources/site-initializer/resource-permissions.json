@@ -2,6 +2,237 @@
 	{
 		"actionId": "VIEW",
 		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Build$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Build$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Build$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Build$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseType$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseType$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseType$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:CaseType$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Component$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Component$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Component$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Component$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Factor$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorOption$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorOption$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorOption$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:FactorOption$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProductVersion$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProductVersion$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProductVersion$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ProductVersion$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
 		"roleName": "Testray Administrator",
 		"scope": 1
@@ -23,8 +254,778 @@
 	{
 		"actionId": "ADD_OBJECT_ENTRY",
 		"primKey": "0",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Project$]",
 		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Routine$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Routine$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Routine$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Routine$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Run$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Run$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Run$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Run$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Suite$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Suite$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Suite$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Suite$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Task$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Team$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Team$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Team$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Team$]",
+		"roleName": "Testray Administrator",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Build$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Component$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com_liferay_product_navigation_applications_menu_web_internal_portlet_ProductNavigationApplicationsMenuPortlet",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Routine$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Run$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Suite$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
+		"roleName": "Testray Analyst",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Build$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Build$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Build$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Build$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Component$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Component$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Component$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Component$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Factor$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorCategory$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorOption$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorOption$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:FactorOption$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:FactorOption$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProductVersion$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProductVersion$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ProductVersion$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:ProductVersion$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Routine$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Routine$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Run$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Run$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Run$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Run$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Subtask$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Suite$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Suite$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Suite$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Suite$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Task$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Task$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Team$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "UPDATE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Team$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "DELETE",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Team$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "ADD_OBJECT_ENTRY",
+		"primKey": "0",
+		"resourceName": "com.liferay.object#[$OBJECT_DEFINITION_ID:Team$]",
+		"roleName": "Testray Lead",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Build$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Case$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:CaseResult$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Component$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Project$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Requirement$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Routine$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Run$]",
+		"roleName": "Testray User",
+		"scope": 1
+	},
+	{
+		"actionId": "VIEW",
+		"primKey": "0",
+		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Suite$]",
+		"roleName": "Testray User",
 		"scope": 1
 	}
 ]

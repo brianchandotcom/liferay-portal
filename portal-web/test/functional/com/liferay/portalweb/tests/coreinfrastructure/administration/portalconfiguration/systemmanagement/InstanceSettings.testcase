@@ -1419,16 +1419,10 @@ definition {
 
 			PortletEntry.save();
 
-			PortalSettings.openInstanceSettingsAdmin();
-
-			Click(
-				key_itemName = "Email",
-				locator1 = "ListGroupItem#ITEM_TEXT");
-
-			Click(
-				key_configurationName = "Mail Settings",
-				key_configurationScope = "Virtual Instance Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Email",
+				configurationName = "Mail Settings",
+				configurationScope = "Virtual Instance Scope");
 
 			FormFields.editText(
 				fieldName = "pop3Host",
@@ -1454,16 +1448,11 @@ definition {
 		}
 
 		task ("Then assert the value of mail setting for new instance is inherited from server level") {
-			PortalSettings.openInstanceSettingsAdmin(baseURL = "http://www.able.com:8080");
-
-			Click(
-				key_itemName = "Email",
-				locator1 = "ListGroupItem#ITEM_TEXT");
-
-			Click(
-				key_configurationName = "Mail Settings",
-				key_configurationScope = "Virtual Instance Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+			PortalSettings.gotoConfiguration(
+				baseURL = "http://www.able.com:8080",
+				configurationCategory = "Email",
+				configurationName = "Mail Settings",
+				configurationScope = "Virtual Instance Scope");
 
 			FormFields.viewTextValue(
 				fieldName = "pop3Host",

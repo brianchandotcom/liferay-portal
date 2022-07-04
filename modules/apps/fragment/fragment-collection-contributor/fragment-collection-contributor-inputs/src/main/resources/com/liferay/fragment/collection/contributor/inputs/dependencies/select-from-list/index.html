@@ -15,49 +15,51 @@
 	[/#if]
 
 	<div class="dropdown-menu">
-		[#if input.attributes?? && input.attributes.options??]
-			[#if 10 < input.attributes.options?size]
-				<div class="dropdown-section">
-					<div class="input-group input-group-sm">
-						<div class="input-group-item">
-							<input class="form-control forms-select-from-list-search input-group-inset input-group-inset-after" type="search" value="" />
+		[#assign options=(input.attributes.options)![]]
+		[#assign optionsURL=(input.attributes.optionsURL)!""]
+		[#assign showSearchInput=(10 < options?size) || optionsURL?has_content]
 
-							<span class="input-group-inset-item input-group-inset-item-after">
-								[@clay["icon"] symbol="search" /]
-							</span>
-						</div>
+		[#if showSearchInput]
+			<div class="dropdown-section">
+				<div class="input-group input-group-sm">
+					<div class="input-group-item">
+						<input class="form-control forms-select-from-list-search input-group-inset input-group-inset-after" type="search" value="" />
+
+						<span class="input-group-inset-item input-group-inset-item-after">
+							[@clay["icon"] symbol="search" /]
+						</span>
 					</div>
-
-					<p class="my-2 text-secondary">
-						${languageUtil.get(locale, "choose-an-option")}.
-					</p>
 				</div>
+
+				<p class="my-2 text-secondary">
+					${languageUtil.get(locale, "choose-an-option")}.
+				</p>
+			</div>
+		[/#if]
+
+		<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="list-unstyled" id="${fragmentEntryLinkNamespace}-listbox" role="listbox" tabindex="0">
+
+		[#list options as option]
+			[#if option?index == 10]
+				[#break]
 			[/#if]
 
-			<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="list-unstyled" id="${fragmentEntryLinkNamespace}-listbox" role="listbox" tabindex="0">
+			<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
+				${option.label}
+			</li>
+		[/#list]
 
-			[#list input.attributes.options as option]
-				[#if option?index == 10]
-					[#break]
-				[/#if]
+		</ul>
 
-				<li class="dropdown-item" data-option-value="${option.value}" id="${fragmentEntryLinkNamespace}-option-${option.value}" role="option">
-					${option.label}
-				</li>
-			[/#list]
+		[#if showSearchInput]
+			<p aria-hidden="true" class="d-none forms-select-from-list-loading-results mt-3 mx-4">
+				<span class="sr-only">${languageUtil.get(locale, "loading")}.</span>
+				<span aria-hidden="true" class="loading-animation"></span>
+			</p>
 
-			</ul>
-
-			[#if 10 < input.attributes.options?size]
-				<p aria-hidden="true" class="d-none forms-select-from-list-loading-results mt-3 mx-4">
-					<span class="sr-only">${languageUtil.get(locale, "loading")}.</span>
-					<span aria-hidden="true" class="loading-animation"></span>
-				</p>
-
-				<p aria-hidden="true" class="d-none forms-select-from-list-no-results mt-3 mx-4 text-secondary">
-					${languageUtil.get(locale, "no-results-were-found")}
-				</p>
-			[/#if]
+			<p aria-hidden="true" class="d-none forms-select-from-list-no-results mt-3 mx-4 text-secondary">
+				${languageUtil.get(locale, "no-results-were-found")}
+			</p>
 		[/#if]
 	</div>
 </div>

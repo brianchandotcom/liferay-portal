@@ -196,7 +196,7 @@ export function openConfirmModal({
 }: {
 	message: string;
 	onConfirm: (confirmed: boolean) => void;
-	title: string;
+	title?: string;
 }): void;
 
 export function openModal(props: Object): void;

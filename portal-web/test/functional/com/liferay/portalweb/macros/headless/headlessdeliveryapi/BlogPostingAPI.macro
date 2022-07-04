@@ -1,0 +1,82 @@
+definition {
+
+	macro _createBlogPosting {
+		Variables.assertDefined(parameterList = "${headline},${articleBody}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+            -d
+					{
+     "headline": "${headline}",
+     "articleBody": "${articleBody}"
+	}
+		''';
+
+		var curl = JSONCurlUtil.post("${curl}");
+
+		return "${curl}";
+	}
+
+	macro _deleteBlogPosting {
+		Variables.assertDefined(parameterList = "${blogPostingId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		var curl = JSONCurlUtil.delete("${curl}");
+
+		return "${curl}";
+	}
+
+	macro _getBlogPostings {
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/sites/${siteId}/blog-postings \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
+	macro deleteAllBlogPostings {
+		var response = BlogPostingAPI._getBlogPostings();
+
+		var blogPostingIdsList = JSONUtil.getWithJSONPath("${response}", "$.items.[*].id");
+
+		for (var blogPostingId : list "${blogPostingIdsList}") {
+			BlogPostingAPI._deleteBlogPosting(blogPostingId = "${blogPostingId}");
+		}
+	}
+
+	macro getIdOfCreatedBlogPosting {
+		var response = BlogPostingAPI._createBlogPosting(
+			articleBody = "${articleBody}",
+			headline = "${headline}");
+
+		var blogPostingId = JSONUtil.getWithJSONPath("${response}", "$.['id']");
+
+		return "${blogPostingId}";
+	}
+
+}

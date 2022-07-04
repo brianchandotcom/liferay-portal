@@ -1,0 +1,86 @@
+definition {
+
+	macro _createNCommentsInBlogPosting {
+		Variables.assertDefined(parameterList = "${blogPostingId},${numberOfCommentsToCreate},${createStrategy}");
+
+		var size = ${numberOfCommentsToCreate} + 1;
+		var i = "1";
+		var body = '''
+		[
+				''';
+
+		while ("${i}" != "${size}" && (maxIterations = "100")) {
+			var commentBody = '''
+					{
+					"text": "commentText${i}"
+					}
+			''';
+			var j = ${i} + 1;
+
+			if ("${j}" == "${size}") {
+				var body = StringUtil.replace("${body}", "${body}", "${body}${commentBody}]");
+			}
+			else {
+				var commentBody = StringUtil.replace("${commentBody}", "${commentBody}", "${commentBody},");
+
+				var body = StringUtil.replace("${body}", "${body}", "${body}${commentBody}");
+			}
+
+			var i = ${i} + 1;
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}/comments/batch?createStrategy=${createStrategy} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+            -d ${body}
+		''';
+
+		var curl = JSONCurlUtil.post("${curl}");
+
+		return "${curl}";
+	}
+
+	macro _getCommentsOfBlogPosting {
+		Variables.assertDefined(parameterList = "${blogPostingId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}/comments \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+	}
+	''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
+	macro getBlogCommentsText {
+		var response = CommentAPI._getCommentsOfBlogPosting(blogPostingId = "${blogPostingId}");
+
+		var commentsText = JSONUtil.getWithJSONPath("${response}", "$..text");
+
+		return "${commentsText}";
+	}
+
+	macro getIdOfCreateNCommentsInBlogPostingBatchEngineImportTask {
+		var response = CommentAPI._createNCommentsInBlogPosting(
+			blogPostingId = "${blogPostingId}",
+			createStrategy = "${createStrategy}",
+			numberOfCommentsToCreate = "${numberOfCommentsToCreate}");
+
+		var importTask = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+		return "${importTask}";
+	}
+
+}

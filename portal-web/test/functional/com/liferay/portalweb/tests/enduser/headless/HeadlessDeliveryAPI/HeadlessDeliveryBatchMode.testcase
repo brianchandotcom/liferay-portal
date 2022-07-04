@@ -1,0 +1,49 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	tearDown {
+		BlogPostingAPI.deleteAllBlogPostings();
+	}
+
+	@disable-webdriver = "true"
+	@priority = "5"
+	test CanCreateStructuredContentWithDefinedPriorityValue {
+		property portal.acceptance = "true";
+
+		task ("Given a blogPosting created") {
+			var blogPostingId = BlogPostingAPI.getIdOfCreatedBlogPosting(
+				articleBody = "myArticleBody",
+				headline = "headline of my blog posting");
+		}
+
+		task ("And Given I use BATCH headless-delivery/v1.0/blog-postings/{blogPostingId}/comments/batch?createStrategy=INSERT to create two base comments") {
+			var importTaskId = CommentAPI.getIdOfCreateNCommentsInBlogPostingBatchEngineImportTask(
+				blogPostingId = "${blogPostingId}",
+				createStrategy = "INSERT",
+				numberOfCommentsToCreate = "2");
+		}
+
+		task ("When I check the status of the task with its id in the batch engine") {
+			var response = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+		}
+
+		task ("Then I receive executeStatus: completed") {
+			TestUtils.assertEquals(
+				actual = "${response}",
+				expected = "COMPLETED");
+		}
+
+		task ("And Then the blog comments are created properly") {
+			var blogCommentsText = CommentAPI.getBlogCommentsText(blogPostingId = "${blogPostingId}");
+
+			TestUtils.assertEquals(
+				actual = "${blogCommentsText}",
+				expected = "<p>commentText1</p>,<p>commentText2</p>");
+		}
+	}
+
+}

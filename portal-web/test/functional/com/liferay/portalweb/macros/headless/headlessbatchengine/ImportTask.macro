@@ -1,0 +1,29 @@
+definition {
+
+	macro _getImportTaskById {
+		Variables.assertDefined(parameterList = "${importTaskId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+		var curl = '''
+			${portalURL}/o/headless-batch-engine/v1.0/import-task/${importTaskId} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
+	macro getStatusOfImportTaskById {
+		var response = ImportTask._getImportTaskById(importTaskId = "${importTaskId}");
+
+		var importTaskStatus = JSONUtil.getWithJSONPath("${response}", "$.executeStatus");
+
+		return "${importTaskStatus}";
+	}
+
+}

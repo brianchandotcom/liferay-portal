@@ -71,7 +71,6 @@ const ContainerWithControls = React.forwardRef(({children, item}, ref) => {
 			>
 				<Container
 					className={classNames({
-						'empty': !item.children.length && !height,
 						'page-editor__container': canUpdateItemConfiguration,
 					})}
 					item={item}

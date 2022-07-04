@@ -1,17 +1,4 @@
 {
 	"fieldSets": [
-		{
-			"fields": [
-				{
-					"defaultValue": true,
-					"label": "show-supported-file-info",
-					"name": "showSupportedFileInfo",
-					"type": "checkbox",
-					"typeOptions": {
-						"displayType": "toggle"
-					}
-				}
-			]
-		}
 	]
 }

@@ -16,6 +16,10 @@ import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTy
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 export default function selectLayoutDataItemLabel({fragmentEntryLinks}, item) {
+	if (Liferay.FeatureFlags['LPS-147895'] && item.config?.name) {
+		return item.config.name;
+	}
+
 	if (
 		item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
 		fragmentEntryLinks[item.config?.fragmentEntryLinkId]?.name

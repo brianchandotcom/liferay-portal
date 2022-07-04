@@ -158,6 +158,38 @@ definition {
 		return "${curl}";
 	}
 
+	macro _createStructuredContentInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${data},${label},${name},${ddmStructureId},${title},${priority},${externalReferenceCode}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/structured-contents/ \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+            -d {
+    "contentFields": [{
+        "contentFieldValue": {
+            "data": "${data}"
+        },
+        "dataType": "string",
+        "label": "${label}",
+        "name": "${name}",
+        "nestedContentFields": [],
+        "repeatable": false
+    }],
+    "contentStructureId": "${ddmStructureId}",
+    "title": "${title}",
+	"priority": "${priority}",
+	"externalReferenceCode": "${externalReferenceCode}"
+	}
+		''';
+
+		var curl = JSONCurlUtil.post("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _editStructuredContent {
 		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title},${priority},${structuredContentId}");
 
@@ -248,6 +280,14 @@ definition {
 		return "${curl}";
 	}
 
+	macro assertExternalReferenceCodeWithCorrectValue {
+		var actualExternalReferenceCodeValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..externalReferenceCode");
+
+		TestUtils.assertEquals(
+			actual = "${actualExternalReferenceCodeValue}",
+			expected = "${expectedactualExternalReferenceCodeValueValue}");
+	}
+
 	macro assertPriorityFieldWithCorrectValue {
 		var actualPriorityValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..priority");
 
@@ -297,6 +337,28 @@ definition {
 		var response = HeadlessWebcontentAPI._createStructuredContentDraft(
 			data = "${data}",
 			ddmStructureId = "${ddmStructureId}",
+			label = "${label}",
+			name = "${name}",
+			priority = "${priority}",
+			title = "${title}");
+
+		return "${response}";
+	}
+
+	macro createStructuredContentInAssetLibrary {
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		if (!(isSet(priority))) {
+			var priority = "";
+		}
+
+		var response = HeadlessWebcontentAPI._createStructuredContentInAssetLibrary(
+			assetLibraryId = "${assetLibraryId}",
+			data = "${data}",
+			ddmStructureId = "${ddmStructureId}",
+			externalReferenceCode = "${externalReferenceCode}",
 			label = "${label}",
 			name = "${name}",
 			priority = "${priority}",

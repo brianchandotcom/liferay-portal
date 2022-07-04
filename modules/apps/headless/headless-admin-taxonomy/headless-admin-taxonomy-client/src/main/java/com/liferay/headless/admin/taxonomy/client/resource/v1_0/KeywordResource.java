@@ -23,6 +23,7 @@ import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.KeywordSerDes;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -44,13 +45,13 @@ public interface KeywordResource {
 	}
 
 	public Page<Keyword> getAssetLibraryKeywordsPage(
-			Long assetLibraryId, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long assetLibraryId, String search, List<String> aggregations,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getAssetLibraryKeywordsPageHttpResponse(
-			Long assetLibraryId, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long assetLibraryId, String search, List<String> aggregations,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public Keyword postAssetLibraryKeyword(Long assetLibraryId, Keyword keyword)
@@ -137,13 +138,13 @@ public interface KeywordResource {
 		throws Exception;
 
 	public Page<Keyword> getSiteKeywordsPage(
-			Long siteId, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long siteId, String search, List<String> aggregations,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteKeywordsPageHttpResponse(
-			Long siteId, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long siteId, String search, List<String> aggregations,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public Keyword postSiteKeyword(Long siteId, Keyword keyword)
@@ -256,14 +257,14 @@ public interface KeywordResource {
 	public static class KeywordResourceImpl implements KeywordResource {
 
 		public Page<Keyword> getAssetLibraryKeywordsPage(
-				Long assetLibraryId, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long assetLibraryId, String search, List<String> aggregations,
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getAssetLibraryKeywordsPageHttpResponse(
-					assetLibraryId, search, filterString, pagination,
-					sortString);
+					assetLibraryId, search, aggregations, filterString,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -303,8 +304,8 @@ public interface KeywordResource {
 		}
 
 		public HttpInvoker.HttpResponse getAssetLibraryKeywordsPageHttpResponse(
-				Long assetLibraryId, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long assetLibraryId, String search, List<String> aggregations,
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1350,13 +1351,14 @@ public interface KeywordResource {
 		}
 
 		public Page<Keyword> getSiteKeywordsPage(
-				Long siteId, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long siteId, String search, List<String> aggregations,
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteKeywordsPageHttpResponse(
-					siteId, search, filterString, pagination, sortString);
+					siteId, search, aggregations, filterString, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -1396,8 +1398,8 @@ public interface KeywordResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteKeywordsPageHttpResponse(
-				Long siteId, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long siteId, String search, List<String> aggregations,
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

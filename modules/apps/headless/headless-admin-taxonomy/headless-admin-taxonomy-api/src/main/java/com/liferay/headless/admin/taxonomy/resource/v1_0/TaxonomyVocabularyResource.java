@@ -60,8 +60,9 @@ public interface TaxonomyVocabularyResource {
 	}
 
 	public Page<TaxonomyVocabulary> getAssetLibraryTaxonomyVocabulariesPage(
-			Long assetLibraryId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long assetLibraryId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public TaxonomyVocabulary postAssetLibraryTaxonomyVocabulary(
@@ -99,8 +100,9 @@ public interface TaxonomyVocabularyResource {
 		throws Exception;
 
 	public Page<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
-			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			Long siteId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public TaxonomyVocabulary postSiteTaxonomyVocabulary(

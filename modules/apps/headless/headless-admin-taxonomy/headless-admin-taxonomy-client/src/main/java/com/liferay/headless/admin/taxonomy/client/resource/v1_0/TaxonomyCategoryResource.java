@@ -23,6 +23,7 @@ import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyCategorySerDes;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -52,14 +53,16 @@ public interface TaxonomyCategoryResource {
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			String parentTaxonomyCategoryId, String search, String filterString,
+			String parentTaxonomyCategoryId, String search,
+			List<String> aggregations, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getTaxonomyCategoryTaxonomyCategoriesPageHttpResponse(
 				String parentTaxonomyCategoryId, String search,
-				String filterString, Pagination pagination, String sortString)
+				List<String> aggregations, String filterString,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
@@ -135,13 +138,14 @@ public interface TaxonomyCategoryResource {
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
-			Long taxonomyVocabularyId, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long taxonomyVocabularyId, String search, List<String> aggregations,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getTaxonomyVocabularyTaxonomyCategoriesPageHttpResponse(
-				Long taxonomyVocabularyId, String search, String filterString,
+				Long taxonomyVocabularyId, String search,
+				List<String> aggregations, String filterString,
 				Pagination pagination, String sortString)
 		throws Exception;
 
@@ -367,13 +371,14 @@ public interface TaxonomyCategoryResource {
 
 		public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
 				String parentTaxonomyCategoryId, String search,
-				String filterString, Pagination pagination, String sortString)
+				List<String> aggregations, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getTaxonomyCategoryTaxonomyCategoriesPageHttpResponse(
-					parentTaxonomyCategoryId, search, filterString, pagination,
-					sortString);
+					parentTaxonomyCategoryId, search, aggregations,
+					filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -415,8 +420,8 @@ public interface TaxonomyCategoryResource {
 		public HttpInvoker.HttpResponse
 				getTaxonomyCategoryTaxonomyCategoriesPageHttpResponse(
 					String parentTaxonomyCategoryId, String search,
-					String filterString, Pagination pagination,
-					String sortString)
+					List<String> aggregations, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1230,14 +1235,14 @@ public interface TaxonomyCategoryResource {
 		public Page<TaxonomyCategory>
 				getTaxonomyVocabularyTaxonomyCategoriesPage(
 					Long taxonomyVocabularyId, String search,
-					String filterString, Pagination pagination,
-					String sortString)
+					List<String> aggregations, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getTaxonomyVocabularyTaxonomyCategoriesPageHttpResponse(
-					taxonomyVocabularyId, search, filterString, pagination,
-					sortString);
+					taxonomyVocabularyId, search, aggregations, filterString,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -1279,8 +1284,8 @@ public interface TaxonomyCategoryResource {
 		public HttpInvoker.HttpResponse
 				getTaxonomyVocabularyTaxonomyCategoriesPageHttpResponse(
 					Long taxonomyVocabularyId, String search,
-					String filterString, Pagination pagination,
-					String sortString)
+					List<String> aggregations, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

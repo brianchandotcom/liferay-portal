@@ -64,8 +64,9 @@ public interface TaxonomyCategoryResource {
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyCategoryTaxonomyCategoriesPage(
-			String parentTaxonomyCategoryId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			String parentTaxonomyCategoryId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public TaxonomyCategory postTaxonomyCategoryTaxonomyCategory(
@@ -105,8 +106,9 @@ public interface TaxonomyCategoryResource {
 		throws Exception;
 
 	public Page<TaxonomyCategory> getTaxonomyVocabularyTaxonomyCategoriesPage(
-			Long taxonomyVocabularyId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long taxonomyVocabularyId, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public TaxonomyCategory postTaxonomyVocabularyTaxonomyCategory(

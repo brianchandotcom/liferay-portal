@@ -226,7 +226,7 @@ public abstract class BaseKeywordResourceTestCase {
 			testGetAssetLibraryKeywordsPage_getIrrelevantAssetLibraryId();
 
 		Page<Keyword> page = keywordResource.getAssetLibraryKeywordsPage(
-			assetLibraryId, null, null, Pagination.of(1, 10), null);
+			assetLibraryId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -236,7 +236,7 @@ public abstract class BaseKeywordResourceTestCase {
 					irrelevantAssetLibraryId, randomIrrelevantKeyword());
 
 			page = keywordResource.getAssetLibraryKeywordsPage(
-				irrelevantAssetLibraryId, null, null, Pagination.of(1, 2),
+				irrelevantAssetLibraryId, null, null, null, Pagination.of(1, 2),
 				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -254,7 +254,7 @@ public abstract class BaseKeywordResourceTestCase {
 			assetLibraryId, randomKeyword());
 
 		page = keywordResource.getAssetLibraryKeywordsPage(
-			assetLibraryId, null, null, Pagination.of(1, 10), null);
+			assetLibraryId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -288,7 +288,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> page = keywordResource.getAssetLibraryKeywordsPage(
-				assetLibraryId, null,
+				assetLibraryId, null, null,
 				getFilterString(entityField, "between", keyword1),
 				Pagination.of(1, 2), null);
 
@@ -321,7 +321,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> page = keywordResource.getAssetLibraryKeywordsPage(
-				assetLibraryId, null,
+				assetLibraryId, null, null,
 				getFilterString(entityField, "eq", keyword1),
 				Pagination.of(1, 2), null);
 
@@ -354,7 +354,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> page = keywordResource.getAssetLibraryKeywordsPage(
-				assetLibraryId, null,
+				assetLibraryId, null, null,
 				getFilterString(entityField, "eq", keyword1),
 				Pagination.of(1, 2), null);
 
@@ -381,14 +381,14 @@ public abstract class BaseKeywordResourceTestCase {
 			assetLibraryId, randomKeyword());
 
 		Page<Keyword> page1 = keywordResource.getAssetLibraryKeywordsPage(
-			assetLibraryId, null, null, Pagination.of(1, 2), null);
+			assetLibraryId, null, null, null, Pagination.of(1, 2), null);
 
 		List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
 
 		Assert.assertEquals(keywords1.toString(), 2, keywords1.size());
 
 		Page<Keyword> page2 = keywordResource.getAssetLibraryKeywordsPage(
-			assetLibraryId, null, null, Pagination.of(2, 2), null);
+			assetLibraryId, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -397,7 +397,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
 
 		Page<Keyword> page3 = keywordResource.getAssetLibraryKeywordsPage(
-			assetLibraryId, null, null, Pagination.of(1, 3), null);
+			assetLibraryId, null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(keyword1, keyword2, keyword3),
@@ -524,7 +524,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> ascPage = keywordResource.getAssetLibraryKeywordsPage(
-				assetLibraryId, null, null, Pagination.of(1, 2),
+				assetLibraryId, null, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -533,7 +533,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 			Page<Keyword> descPage =
 				keywordResource.getAssetLibraryKeywordsPage(
-					assetLibraryId, null, null, Pagination.of(1, 2),
+					assetLibraryId, null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(
@@ -892,7 +892,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Long irrelevantSiteId = testGetSiteKeywordsPage_getIrrelevantSiteId();
 
 		Page<Keyword> page = keywordResource.getSiteKeywordsPage(
-			siteId, null, null, Pagination.of(1, 10), null);
+			siteId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -901,7 +901,7 @@ public abstract class BaseKeywordResourceTestCase {
 				irrelevantSiteId, randomIrrelevantKeyword());
 
 			page = keywordResource.getSiteKeywordsPage(
-				irrelevantSiteId, null, null, Pagination.of(1, 2), null);
+				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -918,7 +918,7 @@ public abstract class BaseKeywordResourceTestCase {
 			siteId, randomKeyword());
 
 		page = keywordResource.getSiteKeywordsPage(
-			siteId, null, null, Pagination.of(1, 10), null);
+			siteId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -950,7 +950,8 @@ public abstract class BaseKeywordResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> page = keywordResource.getSiteKeywordsPage(
-				siteId, null, getFilterString(entityField, "between", keyword1),
+				siteId, null, null,
+				getFilterString(entityField, "between", keyword1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -981,7 +982,8 @@ public abstract class BaseKeywordResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> page = keywordResource.getSiteKeywordsPage(
-				siteId, null, getFilterString(entityField, "eq", keyword1),
+				siteId, null, null,
+				getFilterString(entityField, "eq", keyword1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1012,7 +1014,8 @@ public abstract class BaseKeywordResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> page = keywordResource.getSiteKeywordsPage(
-				siteId, null, getFilterString(entityField, "eq", keyword1),
+				siteId, null, null,
+				getFilterString(entityField, "eq", keyword1),
 				Pagination.of(1, 2), null);
 
 			assertEquals(
@@ -1035,14 +1038,14 @@ public abstract class BaseKeywordResourceTestCase {
 			siteId, randomKeyword());
 
 		Page<Keyword> page1 = keywordResource.getSiteKeywordsPage(
-			siteId, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, null, Pagination.of(1, 2), null);
 
 		List<Keyword> keywords1 = (List<Keyword>)page1.getItems();
 
 		Assert.assertEquals(keywords1.toString(), 2, keywords1.size());
 
 		Page<Keyword> page2 = keywordResource.getSiteKeywordsPage(
-			siteId, null, null, Pagination.of(2, 2), null);
+			siteId, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -1051,7 +1054,7 @@ public abstract class BaseKeywordResourceTestCase {
 		Assert.assertEquals(keywords2.toString(), 1, keywords2.size());
 
 		Page<Keyword> page3 = keywordResource.getSiteKeywordsPage(
-			siteId, null, null, Pagination.of(1, 3), null);
+			siteId, null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(keyword1, keyword2, keyword3),
@@ -1167,7 +1170,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<Keyword> ascPage = keywordResource.getSiteKeywordsPage(
-				siteId, null, null, Pagination.of(1, 2),
+				siteId, null, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":asc");
 
 			assertEquals(
@@ -1175,7 +1178,7 @@ public abstract class BaseKeywordResourceTestCase {
 				(List<Keyword>)ascPage.getItems());
 
 			Page<Keyword> descPage = keywordResource.getSiteKeywordsPage(
-				siteId, null, null, Pagination.of(1, 2),
+				siteId, null, null, null, Pagination.of(1, 2),
 				entityField.getName() + ":desc");
 
 			assertEquals(

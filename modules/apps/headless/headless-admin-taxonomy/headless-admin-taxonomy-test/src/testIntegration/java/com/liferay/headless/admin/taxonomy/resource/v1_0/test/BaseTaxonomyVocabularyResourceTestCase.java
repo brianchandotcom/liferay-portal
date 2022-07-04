@@ -233,7 +233,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page =
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
-				assetLibraryId, null, null, Pagination.of(1, 10), null);
+				assetLibraryId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -246,7 +246,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			page =
 				taxonomyVocabularyResource.
 					getAssetLibraryTaxonomyVocabulariesPage(
-						irrelevantAssetLibraryId, null, null,
+						irrelevantAssetLibraryId, null, null, null,
 						Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -267,7 +267,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		page =
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
-				assetLibraryId, null, null, Pagination.of(1, 10), null);
+				assetLibraryId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -307,7 +307,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			Page<TaxonomyVocabulary> page =
 				taxonomyVocabularyResource.
 					getAssetLibraryTaxonomyVocabulariesPage(
-						assetLibraryId, null,
+						assetLibraryId, null, null,
 						getFilterString(
 							entityField, "between", taxonomyVocabulary1),
 						Pagination.of(1, 2), null);
@@ -345,7 +345,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			Page<TaxonomyVocabulary> page =
 				taxonomyVocabularyResource.
 					getAssetLibraryTaxonomyVocabulariesPage(
-						assetLibraryId, null,
+						assetLibraryId, null, null,
 						getFilterString(entityField, "eq", taxonomyVocabulary1),
 						Pagination.of(1, 2), null);
 
@@ -382,7 +382,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			Page<TaxonomyVocabulary> page =
 				taxonomyVocabularyResource.
 					getAssetLibraryTaxonomyVocabulariesPage(
-						assetLibraryId, null,
+						assetLibraryId, null, null,
 						getFilterString(entityField, "eq", taxonomyVocabulary1),
 						Pagination.of(1, 2), null);
 
@@ -413,7 +413,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page1 =
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
-				assetLibraryId, null, null, Pagination.of(1, 2), null);
+				assetLibraryId, null, null, null, Pagination.of(1, 2), null);
 
 		List<TaxonomyVocabulary> taxonomyVocabularies1 =
 			(List<TaxonomyVocabulary>)page1.getItems();
@@ -423,7 +423,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page2 =
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
-				assetLibraryId, null, null, Pagination.of(2, 2), null);
+				assetLibraryId, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -435,7 +435,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page3 =
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
-				assetLibraryId, null, null, Pagination.of(1, 3), null);
+				assetLibraryId, null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
@@ -573,7 +573,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			Page<TaxonomyVocabulary> ascPage =
 				taxonomyVocabularyResource.
 					getAssetLibraryTaxonomyVocabulariesPage(
-						assetLibraryId, null, null, Pagination.of(1, 2),
+						assetLibraryId, null, null, null, Pagination.of(1, 2),
 						entityField.getName() + ":asc");
 
 			assertEquals(
@@ -583,7 +583,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			Page<TaxonomyVocabulary> descPage =
 				taxonomyVocabularyResource.
 					getAssetLibraryTaxonomyVocabulariesPage(
-						assetLibraryId, null, null, Pagination.of(1, 2),
+						assetLibraryId, null, null, null, Pagination.of(1, 2),
 						entityField.getName() + ":desc");
 
 			assertEquals(
@@ -952,7 +952,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page =
 			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-				siteId, null, null, Pagination.of(1, 10), null);
+				siteId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -962,7 +962,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 					irrelevantSiteId, randomIrrelevantTaxonomyVocabulary());
 
 			page = taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-				irrelevantSiteId, null, null, Pagination.of(1, 2), null);
+				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -981,7 +981,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				siteId, randomTaxonomyVocabulary());
 
 		page = taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-			siteId, null, null, Pagination.of(1, 10), null);
+			siteId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -1019,7 +1019,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyVocabulary> page =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					siteId, null,
+					siteId, null, null,
 					getFilterString(
 						entityField, "between", taxonomyVocabulary1),
 					Pagination.of(1, 2), null);
@@ -1055,7 +1055,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyVocabulary> page =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					siteId, null,
+					siteId, null, null,
 					getFilterString(entityField, "eq", taxonomyVocabulary1),
 					Pagination.of(1, 2), null);
 
@@ -1090,7 +1090,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyVocabulary> page =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					siteId, null,
+					siteId, null, null,
 					getFilterString(entityField, "eq", taxonomyVocabulary1),
 					Pagination.of(1, 2), null);
 
@@ -1120,7 +1120,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page1 =
 			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-				siteId, null, null, Pagination.of(1, 2), null);
+				siteId, null, null, null, Pagination.of(1, 2), null);
 
 		List<TaxonomyVocabulary> taxonomyVocabularies1 =
 			(List<TaxonomyVocabulary>)page1.getItems();
@@ -1130,7 +1130,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page2 =
 			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-				siteId, null, null, Pagination.of(2, 2), null);
+				siteId, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -1142,7 +1142,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Page<TaxonomyVocabulary> page3 =
 			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-				siteId, null, null, Pagination.of(1, 3), null);
+				siteId, null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
@@ -1278,7 +1278,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<TaxonomyVocabulary> ascPage =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					siteId, null, null, Pagination.of(1, 2),
+					siteId, null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -1287,7 +1287,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 			Page<TaxonomyVocabulary> descPage =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					siteId, null, null, Pagination.of(1, 2),
+					siteId, null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(

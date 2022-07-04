@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import FrontendTokenSet from './FrontendTokenSet';
 import {config} from './config';
@@ -92,12 +92,27 @@ function ThemeInformation() {
 }
 
 function FrontendTokenCategories() {
+	const frontendTokensValues = useFrontendTokensValues();
+
 	const frontendTokenCategories =
 		config.frontendTokenDefinition.frontendTokenCategories;
 	const [active, setActive] = useState(false);
 	const [selectedCategory, setSelectedCategory] = useState(
 		frontendTokenCategories[0]
 	);
+
+	const tokenValues = useMemo(() => {
+		const nextTokenValues = {...config.frontendTokens};
+
+		for (const [name, {value}] of Object.entries(frontendTokensValues)) {
+			nextTokenValues[name] = {
+				...nextTokenValues[name],
+				value: value || nextTokenValues[name].defaultValue,
+			};
+		}
+
+		return nextTokenValues;
+	}, [frontendTokensValues]);
 
 	return (
 		<>
@@ -150,6 +165,7 @@ function FrontendTokenCategories() {
 						key={name}
 						label={label}
 						open={index === 0}
+						tokenValues={tokenValues}
 					/>
 				)
 			)}

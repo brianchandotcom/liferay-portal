@@ -72,6 +72,7 @@ export default function ({
 	initializeConfig({
 		fragmentCollectionPreviewURL,
 		frontendTokenDefinition,
+		frontendTokens: getFrontendTokens(frontendTokenDefinition),
 		isPrivateLayoutsEnabled,
 		namespace,
 		previewOptions,
@@ -117,3 +118,25 @@ function getMostRecentLayout(previewOptions) {
 
 	return null;
 }
+
+const getFrontendTokens = ({frontendTokenCategories}) => {
+	let tokens = {};
+
+	for (const category of frontendTokenCategories) {
+		for (const tokenSet of category.frontendTokenSets) {
+			for (const token of tokenSet.frontendTokens) {
+				tokens = {
+					...tokens,
+					[token.name]: {
+						...token,
+						tokenCategoryLabel: category.label,
+						tokenSetLabel: tokenSet.label,
+						value: token.defaultValue,
+					},
+				};
+			}
+		}
+	}
+
+	return tokens;
+};

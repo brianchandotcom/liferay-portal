@@ -14,9 +14,8 @@
 
 import {Collapse} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useMemo, useRef} from 'react';
+import React, {useCallback} from 'react';
 
-import {config} from './config';
 import {FRONTEND_TOKEN_TYPES} from './constants/frontendTokenTypes';
 import {
 	useFrontendTokensValues,
@@ -27,73 +26,14 @@ import ColorFrontendToken from './frontend_tokens/ColorFrontendToken';
 import SelectFrontendToken from './frontend_tokens/SelectFrontendToken';
 import TextFrontendToken from './frontend_tokens/TextFrontendToken';
 
-const getColorFrontendTokens = (
-	{frontendTokenCategories},
-	frontendTokensValues
-) => {
-	let tokens = {};
-
-	for (const category of frontendTokenCategories) {
-		for (const tokenSet of category.frontendTokenSets) {
-			for (const token of tokenSet.frontendTokens) {
-				tokens = {
-					...tokens,
-					[token.name]: {
-						editorType: token.editorType,
-						label: token.label,
-						name: token.name,
-						tokenCategoryLabel: category.label,
-						tokenSetLabel: tokenSet.label,
-						value:
-							frontendTokensValues[token.name]?.value ||
-							token.defaultValue,
-						[token.mappings[0].type]: token.mappings[0].value,
-					},
-				};
-			}
-		}
-	}
-
-	return tokens;
-};
-
-export default function FrontendTokenSet({frontendTokens, label, open}) {
+export default function FrontendTokenSet({
+	frontendTokens,
+	label,
+	open,
+	tokenValues,
+}) {
 	const frontendTokensValues = useFrontendTokensValues();
 	const saveTokenValue = useSaveTokenValue();
-	const tokenNameRef = useRef(null);
-	const tokenValuesRef = useRef({});
-
-	const tokenValues = useMemo(() => {
-		if (!Object.values(tokenValuesRef.current).length) {
-			tokenValuesRef.current = getColorFrontendTokens(
-				config.frontendTokenDefinition,
-				frontendTokensValues
-			);
-
-			return tokenValuesRef.current;
-		}
-
-		const newTokenValues = Object.entries(frontendTokensValues).reduce(
-			(acc, frontendTokenValue) => {
-				const [name, {value}] = frontendTokenValue;
-
-				if (value !== tokenValuesRef.current[name]?.value) {
-					return {
-						...acc,
-						[name]: {
-							...tokenValuesRef.current[name],
-							value,
-						},
-					};
-				}
-
-				return acc;
-			},
-			{}
-		);
-
-		return {...tokenValuesRef.current, ...newTokenValues};
-	}, [frontendTokensValues]);
 
 	const updateFrontendTokensValues = useCallback(
 		(frontendToken, value) => {
@@ -139,11 +79,8 @@ export default function FrontendTokenSet({frontendTokens, label, open}) {
 					props = {
 						...props,
 						frontendTokensValues,
-						onValueSelect: (name, value) => {
-							tokenNameRef.current = name;
-
-							updateFrontendTokensValues(frontendToken, value);
-						},
+						onValueSelect: (name, value) =>
+							updateFrontendTokensValues(frontendToken, value),
 						tokenValues,
 					};
 				}

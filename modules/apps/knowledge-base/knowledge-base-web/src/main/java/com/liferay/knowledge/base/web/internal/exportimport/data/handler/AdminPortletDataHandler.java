@@ -36,7 +36,6 @@ import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.service.KBTemplateLocalService;
 import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -286,39 +285,6 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		kbCommentActionableDynamicQuery.performCount();
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
-
-		_kbArticleLocalService = kbArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBCommentLocalService(
-		KBCommentLocalService kbCommentLocalService) {
-
-		_kbCommentLocalService = kbCommentLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBFolderLocalService(
-		KBFolderLocalService kbFolderLocalService) {
-
-		_kbFolderLocalService = kbFolderLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBTemplateLocalService(
-		KBTemplateLocalService kbTemplateLocalService) {
-
-		_kbTemplateLocalService = kbTemplateLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
 	private ActionableDynamicQuery _getKBArticleActionableDynamicQuery(
 			PortletDataContext portletDataContext)
 		throws Exception {
@@ -332,18 +298,13 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 				exportActionableDynamicQuery.getAddOrderCriteriaMethod();
 
 		exportActionableDynamicQuery.setAddOrderCriteriaMethod(
-			new ActionableDynamicQuery.AddOrderCriteriaMethod() {
-
-				@Override
-				public void addOrderCriteria(DynamicQuery dynamicQuery) {
-					if (addOrderCriteriaMethod != null) {
-						addOrderCriteriaMethod.addOrderCriteria(dynamicQuery);
-					}
-
-					OrderFactoryUtil.addOrderByComparator(
-						dynamicQuery, new KBArticleVersionComparator(true));
+			dynamicQuery -> {
+				if (addOrderCriteriaMethod != null) {
+					addOrderCriteriaMethod.addOrderCriteria(dynamicQuery);
 				}
 
+				OrderFactoryUtil.addOrderByComparator(
+					dynamicQuery, new KBArticleVersionComparator(true));
 			});
 
 		return exportActionableDynamicQuery;
@@ -365,10 +326,19 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 		return exportActionableDynamicQuery;
 	}
 
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
+
+	@Reference
 	private KBCommentLocalService _kbCommentLocalService;
+
+	@Reference
 	private KBFolderLocalService _kbFolderLocalService;
+
+	@Reference
 	private KBTemplateLocalService _kbTemplateLocalService;
+
+	@Reference
 	private Portal _portal;
 
 	@Reference

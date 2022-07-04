@@ -119,16 +119,10 @@ public class KBArticleExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	@Reference(unbind = "-")
-	protected void seKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
-
-		_kbArticleLocalService = kbArticleLocalService;
-	}
-
 	@Reference(target = "(name=ReferencedStagedModelImporter)")
 	private Capability _capability;
 
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
 
 }

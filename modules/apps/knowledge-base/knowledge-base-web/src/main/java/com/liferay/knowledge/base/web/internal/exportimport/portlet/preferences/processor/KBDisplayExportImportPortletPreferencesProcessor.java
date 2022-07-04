@@ -211,27 +211,16 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
-	@Reference(unbind = "-")
-	protected void seKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
-
-		_kbArticleLocalService = kbArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void seKBFolderLocalService(
-		KBFolderLocalService kbFolderLocalService) {
-
-		_kbFolderLocalService = kbFolderLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBDisplayExportImportPortletPreferencesProcessor.class);
 
 	@Reference(target = "(name=ReferencedStagedModelImporter)")
 	private Capability _capability;
 
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
+
+	@Reference
 	private KBFolderLocalService _kbFolderLocalService;
 
 	@Reference

@@ -196,7 +196,7 @@ definition {
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
 
-		Pause(locator1 = "1000");
+		
 
 		Refresh();
 
@@ -308,7 +308,7 @@ definition {
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
 
-		Pause(locator1 = "1000");
+		
 
 		Refresh();
 
@@ -322,7 +322,7 @@ definition {
 
 		Button.clickDone();
 
-		Pause(locator1 = "1000");
+		
 
 		Refresh();
 
@@ -682,7 +682,7 @@ definition {
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
 
-		Pause(locator1 = "1000");
+		
 
 		Refresh();
 

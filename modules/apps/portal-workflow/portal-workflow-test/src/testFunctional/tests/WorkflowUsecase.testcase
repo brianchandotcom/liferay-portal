@@ -981,8 +981,6 @@ definition {
 				panel = "Site Administration",
 				portlet = "Blogs");
 
-			Pause(locator1 = "3000");
-
 			Blogs.addWithWorkflow(
 				entryContent = "Blogs Entry Content ${number}",
 				entrySubtitle = "Subtitle ${number}",
@@ -1202,8 +1200,6 @@ definition {
 				panel = "Site Administration",
 				portlet = "Blogs");
 
-			Pause(locator1 = "3000");
-
 			Blogs.addWithWorkflow(
 				entryContent = "User ${n} Blog Content Approved",
 				entrySubtitle = "User ${n} Blog Subtitle Approved",
@@ -1215,8 +1211,6 @@ definition {
 				category = "Content & Data",
 				panel = "Site Administration",
 				portlet = "Blogs");
-
-			Pause(locator1 = "3000");
 
 			Blogs.addWithWorkflow(
 				entryContent = "User ${n} Blog Content Pending",

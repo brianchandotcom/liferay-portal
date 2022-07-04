@@ -116,20 +116,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AdminPortlet extends BaseKBPortlet {
 
-	public void deleteKBArticles(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			KBWebKeys.THEME_DISPLAY);
-
-		long[] resourcePrimKeys = StringUtil.split(
-			ParamUtil.getString(actionRequest, "resourcePrimKeys"), 0L);
-
-		kbArticleService.deleteKBArticles(
-			themeDisplay.getScopeGroupId(), resourcePrimKeys);
-	}
-
 	public void deleteKBArticlesAndFolders(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {

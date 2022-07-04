@@ -408,6 +408,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addSiteConfiguration(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
+			_invoke(() -> _addUserGroups(serviceContext));
 
 			Map<String, String> taxonomyCategoryIdsStringUtilReplaceValues =
 				_invoke(
@@ -484,8 +485,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					taxonomyCategoryIdsStringUtilReplaceValues));
 
 			_invoke(() -> _addWorkflowDefinitions(serviceContext));
-
-			_invoke(() -> _addUserGroups(serviceContext));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

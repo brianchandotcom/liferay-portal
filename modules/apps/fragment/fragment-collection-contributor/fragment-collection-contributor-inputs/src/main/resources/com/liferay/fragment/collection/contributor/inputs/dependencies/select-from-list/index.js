@@ -7,6 +7,9 @@ const wrapper = fragmentElement;
 
 const button = wrapper.querySelector('.form-control');
 const buttonLabel = button.querySelector('.forms-select-from-list-label');
+const defaultOptionLabel = document.getElementById(
+	`${fragmentNamespace}-option--`
+).textContent;
 const dropdown = wrapper.querySelector('.dropdown-menu');
 const inputElement = wrapper.querySelector('input');
 const listbox = wrapper.querySelector('.list-unstyled');
@@ -18,12 +21,9 @@ const noResultsMessage = wrapper.querySelector(
 );
 const searchInput = wrapper.querySelector('.forms-select-from-list-search');
 
-let currentSearch = {
-	abortController: new AbortController(),
-	query: null,
-};
-
 let defaultOptions = (input.attributes.options || []).slice(0, 10);
+let lastSearchAbortController = new AbortController();
+let lastSearchQuery = null;
 
 function debounce(fn, delay) {
 	let debounceId = null;
@@ -32,6 +32,16 @@ function debounce(fn, delay) {
 		clearTimeout(debounceId);
 		debounceId = setTimeout(() => fn(...args), delay);
 	};
+}
+
+function hideElement(element) {
+	element.classList.add('d-none');
+	element.setAttribute('aria-hidden', 'true');
+}
+
+function showElement(element) {
+	element.classList.remove('d-none');
+	element.removeAttribute('aria-hidden');
 }
 
 function repositionDropdown() {
@@ -74,8 +84,24 @@ function showDropdown() {
 	}
 
 	if (canFetchOptions && !defaultOptions.length) {
-		searchInput.value = '';
-		handleSearchKeyup(new KeyboardEvent('keyup'));
+		showElement(loadingResultsMessage);
+
+		fetchRemoteOptions('', lastSearchAbortController)
+			.then((items) => {
+				defaultOptions = items;
+
+				if (items.length > 10) {
+					showElement(searchInput);
+				}
+				else {
+					hideElement(searchInput);
+				}
+
+				setListboxItems(defaultOptions);
+			})
+			.finally(() => {
+				hideElement(loadingResultsMessage);
+			});
 	}
 }
 
@@ -90,23 +116,29 @@ function getActiveDesdendant() {
 	);
 }
 
-function setActiveDescendant(item) {
+function setActiveDescendant(element) {
 	const previousItem = getActiveDesdendant();
 
-	if (previousItem && previousItem !== item) {
+	if (previousItem && previousItem !== element) {
 		previousItem.classList.remove('active');
 		previousItem.removeAttribute('aria-selected');
 	}
 
-	if (item) {
-		buttonLabel.textContent = item.textContent;
-		listbox.setAttribute('aria-activedescendant', item.id);
-		inputElement.value = item.dataset.optionValue;
+	if (element) {
+		buttonLabel.textContent = element.textContent;
 
-		item.classList.add('active');
-		item.setAttribute('aria-selected', 'true');
+		buttonLabel.classList.toggle(
+			'text-muted',
+			!element.dataset.optionValue
+		);
 
-		item.scrollIntoView({
+		listbox.setAttribute('aria-activedescendant', element.id);
+		inputElement.value = element.dataset.optionValue;
+
+		element.classList.add('active');
+		element.setAttribute('aria-selected', 'true');
+
+		element.scrollIntoView({
 			block: 'nearest',
 		});
 	}
@@ -219,7 +251,7 @@ function handleKeydown(event) {
 }
 
 function handleListboxClick(event) {
-	if (event.target.dataset?.optionValue) {
+	if (event.target.dataset?.optionValue !== undefined) {
 		setActiveDescendant(event.target);
 		hideDropdown();
 		button.focus();
@@ -256,7 +288,7 @@ function handleWindowResizeOrScroll() {
 	}
 }
 
-function filterLocalOptions() {
+function filterLocalOptions(query) {
 	const preferedItems = [];
 	const restItems = [];
 
@@ -267,25 +299,26 @@ function filterLocalOptions() {
 
 		const label = item.label.trim().toLowerCase();
 
-		if (label.startsWith(currentSearch.query)) {
+		if (label.startsWith(query)) {
 			preferedItems.push(item);
 		}
-		else if (label.includes(currentSearch.query)) {
+		else if (label.includes(query)) {
 			restItems.push(item);
 		}
 	}
 
 	return Promise.resolve({
-		items: [...preferedItems, ...restItems].slice(0, 10).map((item) => ({
-			key: item.value,
-			name: item.label,
-		})),
+		items: [...preferedItems, ...restItems].slice(0, 10),
 	});
 }
 
-function fetchRemoteOptions() {
+function fetchRemoteOptions(query, abortController) {
+	if (!input.attributes.optionsURL) {
+		return Promise.resolve({items: []});
+	}
+
 	const url = new URL(input.attributes.optionsURL);
-	url.searchParams.set('search', currentSearch.query);
+	url.searchParams.set('search', query);
 
 	return Liferay.Util.fetch(url, {
 		headers: new Headers({
@@ -293,94 +326,76 @@ function fetchRemoteOptions() {
 			'Content-Type': 'application/json',
 		}),
 		method: 'GET',
-		signal: currentSearch.abortController.signal,
-	}).then((response) => response.json());
+		signal: abortController.signal,
+	})
+		.then((response) => response.json())
+		.then((result) => {
+			return result.items.map((entry) => ({
+				label: entry.name || entry.id,
+				value: entry.key || entry.id,
+			}));
+		});
+}
+
+function setListboxItems(items) {
+	listbox.innerHTML = '';
+
+	if (items.length) {
+		showElement(listbox);
+		hideElement(noResultsMessage);
+	}
+	else {
+		hideElement(listbox);
+		showElement(noResultsMessage);
+	}
+
+	[{label: defaultOptionLabel, value: ''}, ...items].forEach((item) => {
+		const element = document.createElement('li');
+
+		element.classList.add('dropdown-item');
+
+		if (!item.value) {
+			element.classList.add('text-muted');
+		}
+
+		element.dataset.optionValue = item.value;
+		element.id = `${fragmentNamespace}-option-${item.value}`;
+		element.setAttribute('role', 'option');
+		element.textContent = item.label;
+
+		listbox.appendChild(element);
+	});
+
+	setActiveDescendant(listbox.firstElementChild);
 }
 
 function handleSearchKeyup() {
-	if (searchInput.value === currentSearch.query) {
+	if (searchInput.value === lastSearchQuery) {
 		return;
 	}
 
-	currentSearch.abortController.abort();
+	lastSearchAbortController.abort();
+	lastSearchAbortController = new AbortController();
+	lastSearchQuery = searchInput.value;
 
-	currentSearch = {
-		abortController: new AbortController(),
-		query: searchInput.value,
-	};
-
-	const setListboxItems = (items) => {
-		listbox.innerHTML = '';
-
-		items.forEach((item) => {
-			const element = document.createElement('li');
-
-			element.classList.add('dropdown-item');
-			element.dataset.optionValue = item.value;
-			element.id = `${fragmentNamespace}-option-${item.value}`;
-			element.setAttribute('role', 'option');
-			element.textContent = item.label;
-
-			listbox.appendChild(element);
-		});
-
-		if (items.length) {
-			setActiveDescendant(listbox.firstElementChild);
-		}
-	};
-
-	if (currentSearch.query || !defaultOptions.length) {
-		listbox.innerHTML = '';
-	}
-	else {
+	if (!lastSearchQuery) {
 		setListboxItems(defaultOptions);
 
-		if (listbox.children.length) {
-			listbox.removeAttribute('aria-hidden');
-			listbox.classList.remove('d-none');
-			noResultsMessage.setAttribute('aria-hidden', 'true');
-			noResultsMessage.classList.add('d-none');
-		}
-
 		return;
 	}
 
-	loadingResultsMessage.classList.remove('d-none');
-	loadingResultsMessage.removeAttribute('aria-hidden');
+	showElement(loadingResultsMessage);
 
 	const fetcher = input.attributes.optionsURL
 		? fetchRemoteOptions
 		: filterLocalOptions;
 
-	fetcher()
-		.then((result) => {
-			const items = result.items.map((entry) => ({
-				label: entry.name,
-				value: entry.key,
-			}));
-
-			if (!defaultOptions.length && !currentSearch.query) {
-				defaultOptions = items;
-			}
-
+	fetcher(lastSearchQuery, lastSearchAbortController)
+		.then((items) => {
 			setListboxItems(items);
-
-			if (listbox.children.length) {
-				listbox.removeAttribute('aria-hidden');
-				listbox.classList.remove('d-none');
-				noResultsMessage.setAttribute('aria-hidden', 'true');
-				noResultsMessage.classList.add('d-none');
-			}
-			else {
-				listbox.setAttribute('aria-hidden', 'true');
-				listbox.classList.add('d-none');
-				noResultsMessage.removeAttribute('aria-hidden');
-				noResultsMessage.classList.remove('d-none');
-			}
 		})
 		.finally(() => {
-			loadingResultsMessage.classList.add('d-none');
-			loadingResultsMessage.setAttribute('aria-hidden', 'true');
+			hideElement(loadingResultsMessage);
 		});
 }
 
@@ -390,9 +405,11 @@ listbox.addEventListener('keydown', handleKeydown);
 listbox.addEventListener('click', handleListboxClick);
 document.addEventListener('click', handleDocumentClick);
 
-if (searchInput) {
-	searchInput.addEventListener('keydown', handleMovementKeys);
-	searchInput.addEventListener('keyup', debounce(handleSearchKeyup, 500));
+searchInput.addEventListener('keydown', handleMovementKeys);
+searchInput.addEventListener('keyup', debounce(handleSearchKeyup, 500));
+
+if ((input.attributes.options || []).length > 10) {
+	showElement(searchInput);
 }
 
 window.addEventListener('resize', handleWindowResizeOrScroll, {

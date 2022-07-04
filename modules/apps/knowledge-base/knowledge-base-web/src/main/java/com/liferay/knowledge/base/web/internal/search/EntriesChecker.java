@@ -73,79 +73,61 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		HttpServletRequest httpServletRequest, boolean checked,
 		boolean disabled, String primaryKey) {
 
-		KBArticle kbArticle = null;
-		KBFolder kbFolder = null;
-
-		long entryId = GetterUtil.getLong(primaryKey);
-
 		try {
-			kbArticle = KBArticleServiceUtil.getLatestKBArticle(
-				entryId, WorkflowConstants.STATUS_ANY);
-		}
-		catch (Exception exception1) {
-			if (exception1 instanceof NoSuchArticleException) {
-				try {
-					kbFolder = KBFolderServiceUtil.getKBFolder(entryId);
-				}
-				catch (Exception exception2) {
+			KBArticle kbArticle = null;
+			KBFolder kbFolder = null;
+
+			long entryId = GetterUtil.getLong(primaryKey);
+
+			try {
+				kbArticle = KBArticleServiceUtil.getLatestKBArticle(
+					entryId, WorkflowConstants.STATUS_ANY);
+			}
+			catch (NoSuchArticleException noSuchArticleException) {
+				kbFolder = KBFolderServiceUtil.getKBFolder(entryId);
+			}
+
+			String name = null;
+
+			if (kbArticle != null) {
+				name = KBArticle.class.getSimpleName();
+
+				if (KBArticlePermission.contains(
+						_permissionChecker, kbArticle, ActionKeys.DELETE)) {
+
 					return StringPool.BLANK;
 				}
 			}
 			else {
-				return StringPool.BLANK;
-			}
-		}
+				name = KBFolder.class.getSimpleName();
 
-		boolean showInput = false;
-
-		String name = null;
-
-		if (kbArticle != null) {
-			name = KBArticle.class.getSimpleName();
-
-			try {
-				if (KBArticlePermission.contains(
-						_permissionChecker, kbArticle, ActionKeys.DELETE)) {
-
-					showInput = true;
-				}
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
-		else {
-			name = KBFolder.class.getSimpleName();
-
-			try {
 				if (KBFolderPermission.contains(
 						_permissionChecker, kbFolder, ActionKeys.DELETE)) {
 
-					showInput = true;
+					return StringPool.BLANK;
 				}
 			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
 
-		if (!showInput) {
+			String checkBoxRowIds = _getEntryRowIds();
+			String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
+			String checkBoxPostOnClick =
+				_liferayPortletResponse.getNamespace() +
+					"toggleActionsButton();";
+
+			return getRowCheckBox(
+				httpServletRequest, checked, disabled,
+				_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS +
+					name,
+				primaryKey, checkBoxRowIds, checkBoxAllRowIds,
+				checkBoxPostOnClick);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
 			return StringPool.BLANK;
 		}
-
-		String checkBoxRowIds = _getEntryRowIds();
-		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
-		String checkBoxPostOnClick =
-			_liferayPortletResponse.getNamespace() + "toggleActionsButton();";
-
-		return getRowCheckBox(
-			httpServletRequest, checked, disabled,
-			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
-			primaryKey, checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick);
 	}
 
 	private String _getEntryRowIds() {

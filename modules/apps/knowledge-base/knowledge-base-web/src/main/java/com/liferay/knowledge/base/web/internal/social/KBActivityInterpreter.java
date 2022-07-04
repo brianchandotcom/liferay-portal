@@ -223,32 +223,12 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
-
-		_kbArticleLocalService = kbArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBCommentLocalService(
-		KBCommentLocalService kbCommentLocalService) {
-
-		_kbCommentLocalService = kbCommentLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBTemplateLocalService(
-		KBTemplateLocalService kbTemplateLocalService) {
-
-		_kbTemplateLocalService = kbTemplateLocalService;
-	}
-
 	private static final String[] _CLASS_NAMES = {
 		KBArticle.class.getName(), KBComment.class.getName(),
 		KBTemplate.class.getName()
 	};
 
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
 
 	@Reference(
@@ -257,7 +237,10 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 	private ModelResourcePermission<KBArticle>
 		_kbArticleModelResourcePermission;
 
+	@Reference
 	private KBCommentLocalService _kbCommentLocalService;
+
+	@Reference
 	private KBTemplateLocalService _kbTemplateLocalService;
 
 	@Reference(

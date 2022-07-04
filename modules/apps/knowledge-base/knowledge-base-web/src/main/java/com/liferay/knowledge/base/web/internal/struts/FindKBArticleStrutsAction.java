@@ -137,37 +137,6 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 		return null;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAdminUtilHelper(AdminHelper adminHelper) {
-		_adminHelper = adminHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
-
-		_kbArticleLocalService = kbArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBFolderLocalService(
-		KBFolderLocalService kbFolderLocalService) {
-
-		_kbFolderLocalService = kbFolderLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
 	private List<Layout> _getCandidateLayouts(
 			long plid, boolean privateLayout, KBArticle kbArticle)
 		throws Exception {
@@ -497,10 +466,19 @@ public class FindKBArticleStrutsAction implements StrutsAction {
 			PropsUtil.get(
 				PropsKeys.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_ENABLED));
 
+	@Reference
 	private AdminHelper _adminHelper;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
+
+	@Reference
 	private KBFolderLocalService _kbFolderLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference

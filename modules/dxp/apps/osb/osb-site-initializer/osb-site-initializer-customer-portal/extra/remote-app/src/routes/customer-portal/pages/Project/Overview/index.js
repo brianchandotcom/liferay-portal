@@ -46,7 +46,7 @@ const Overview = () => {
 	] = useState([]);
 
 	const parseAccountSubscriptionGroupERC = (subscriptionName) => {
-		return subscriptionName.toLowerCase().replace(' ', '-');
+		return subscriptionName.toLowerCase().replaceAll(' ', '-');
 	};
 
 	const subscriptionsCards = accountSubscriptions.filter(

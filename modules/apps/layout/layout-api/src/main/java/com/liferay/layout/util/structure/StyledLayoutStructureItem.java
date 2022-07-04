@@ -149,6 +149,8 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		).put(
 			"customCSS", _customCSS
 		).put(
+			"name", _name
+		).put(
 			"styles", stylesJSONObject
 		);
 
@@ -207,6 +209,10 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 
 	public String getMinWidth() {
 		return GetterUtil.getString(_getStyleProperty("minWidth"));
+	}
+
+	public String getName() {
+		return _name;
 	}
 
 	public String getOpacity() {
@@ -270,6 +276,10 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		_customCSSViewports.put(viewportSizeId, customCSS);
 	}
 
+	public void setName(String name) {
+		_name = name;
+	}
+
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
 		if (itemConfigJSONObject.has("cssClasses")) {
@@ -283,6 +293,10 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 
 		if (itemConfigJSONObject.has("customCSS")) {
 			setCustomCSS(itemConfigJSONObject.getString("customCSS"));
+		}
+
+		if (itemConfigJSONObject.has("name")) {
+			setName(itemConfigJSONObject.getString("name"));
 		}
 
 		try {
@@ -500,5 +514,6 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	private Set<String> _cssClasses;
 	private String _customCSS;
 	private final Map<String, String> _customCSSViewports = new HashMap<>();
+	private String _name;
 
 }

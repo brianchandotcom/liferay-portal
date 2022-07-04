@@ -18,13 +18,17 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
+import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdException;
 import com.liferay.object.exception.ObjectRelationshipTypeException;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.service.test.util.system.TestSystemObjectDefinitionMetadata;
+import com.liferay.object.system.SystemObjectDefinitionMetadata;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
@@ -34,20 +38,30 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.sql.Connection;
 
 import java.util.Arrays;
+import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,6 +73,49 @@ public class ObjectRelationshipLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_systemObjectDefinition1 =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY, 1,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						"Text", "String", RandomTestUtil.randomString(),
+						StringUtil.randomId())));
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			ObjectRelationshipLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		bundleContext.registerService(
+			SystemObjectDefinitionMetadata.class,
+			new TestSystemObjectDefinitionMetadata(
+				_systemObjectDefinition1.getName()),
+			new HashMapDictionary<>());
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-155537", "true"
+			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_systemObjectDefinition1);
+
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-155537", "false"
+			).build());
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -86,7 +143,7 @@ public class ObjectRelationshipLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition2.getObjectDefinitionId());
 
-		_systemObjectDefinition =
+		_systemObjectDefinition2 =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				null,
@@ -259,6 +316,25 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(),
 				objectFieldNamePrefix +
 					_objectDefinition1.getPKObjectFieldName()));
+
+		try {
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition2.getObjectDefinitionId(),
+				RandomTestUtil.randomLong(),
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				name, type);
+		}
+		catch (ObjectRelationshipParameterObjectFieldIdException
+					objectRelationshipParameterObjectFieldIdException) {
+
+			Assert.assertEquals(
+				"Object definition " + _objectDefinition1.getName() +
+					" does not allow a parameter object field ID",
+				objectRelationshipParameterObjectFieldIdException.getMessage());
+		}
 	}
 
 	private ObjectRelationship _testAddSystemObjectRelationship(String type)
@@ -266,7 +342,7 @@ public class ObjectRelationshipLocalServiceTest {
 
 		return _objectRelationshipLocalService.addObjectRelationship(
 			TestPropsValues.getUserId(),
-			_systemObjectDefinition.getObjectDefinitionId(),
+			_systemObjectDefinition2.getObjectDefinitionId(),
 			_objectDefinition1.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -286,7 +362,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectRelationshipLocalService.addObjectRelationship(
 					TestPropsValues.getUserId(),
 					_objectDefinition1.getObjectDefinitionId(),
-					_systemObjectDefinition.getObjectDefinitionId(), 0,
+					_systemObjectDefinition2.getObjectDefinitionId(), 0,
 					deletionType,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
@@ -297,7 +373,7 @@ public class ObjectRelationshipLocalServiceTest {
 				StringBundler.concat(
 					"R_", objectRelationship.getCompanyId(),
 					_objectDefinition1.getShortName(), "_",
-					_systemObjectDefinition.getShortName(), "_",
+					_systemObjectDefinition2.getShortName(), "_",
 					relationshipName),
 				objectRelationship.getDBTableName());
 			Assert.assertTrue(
@@ -307,7 +383,7 @@ public class ObjectRelationshipLocalServiceTest {
 			Assert.assertTrue(
 				_hasColumn(
 					objectRelationship.getDBTableName(),
-					_systemObjectDefinition.getPKObjectFieldDBColumnName()));
+					_systemObjectDefinition2.getPKObjectFieldDBColumnName()));
 
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				objectRelationship);
@@ -335,6 +411,27 @@ public class ObjectRelationshipLocalServiceTest {
 		try {
 			_objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
+				_systemObjectDefinition1.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				RandomTestUtil.randomLong(),
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		}
+		catch (ObjectRelationshipParameterObjectFieldIdException
+					objectRelationshipParameterObjectFieldIdException) {
+
+			Assert.assertEquals(
+				"Object relationship type " +
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY +
+						" does not allow a parameter object field ID",
+				objectRelationshipParameterObjectFieldIdException.getMessage());
+		}
+
+		try {
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
 				_objectDefinition1.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
@@ -353,8 +450,8 @@ public class ObjectRelationshipLocalServiceTest {
 		try {
 			_objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
-				_systemObjectDefinition.getObjectDefinitionId(),
-				_systemObjectDefinition.getObjectDefinitionId(), 0,
+				_systemObjectDefinition2.getObjectDefinitionId(),
+				_systemObjectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
@@ -371,7 +468,7 @@ public class ObjectRelationshipLocalServiceTest {
 		_objectRelationshipLocalService.addObjectRelationship(
 			TestPropsValues.getUserId(),
 			_objectDefinition1.getObjectDefinitionId(),
-			_systemObjectDefinition.getObjectDefinitionId(), 0,
+			_systemObjectDefinition2.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(),
@@ -383,7 +480,7 @@ public class ObjectRelationshipLocalServiceTest {
 			_objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),
-				_systemObjectDefinition.getObjectDefinitionId(), 0,
+				_systemObjectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(),
@@ -394,12 +491,12 @@ public class ObjectRelationshipLocalServiceTest {
 
 		Assert.assertTrue(
 			_hasColumn(
-				_systemObjectDefinition.getExtensionDBTableName(),
+				_systemObjectDefinition2.getExtensionDBTableName(),
 				objectFieldNamePrefix +
 					_objectDefinition1.getPKObjectFieldName()));
 		Assert.assertNotNull(
 			_objectFieldLocalService.fetchObjectField(
-				_systemObjectDefinition.getObjectDefinitionId(),
+				_systemObjectDefinition2.getObjectDefinitionId(),
 				objectFieldNamePrefix +
 					_objectDefinition1.getPKObjectFieldName()));
 
@@ -408,10 +505,138 @@ public class ObjectRelationshipLocalServiceTest {
 
 		Assert.assertNull(
 			_objectFieldLocalService.fetchObjectField(
-				_systemObjectDefinition.getObjectDefinitionId(),
+				_systemObjectDefinition2.getObjectDefinitionId(),
 				objectFieldNamePrefix +
 					_objectDefinition1.getPKObjectFieldName()));
+
+		try {
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_systemObjectDefinition1.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		}
+		catch (ObjectRelationshipParameterObjectFieldIdException
+					objectRelationshipParameterObjectFieldIdException) {
+
+			Assert.assertEquals(
+				"Object definition " + _systemObjectDefinition1.getName() +
+					" requires a parameter object field ID",
+				objectRelationshipParameterObjectFieldIdException.getMessage());
+		}
+
+		long randomParameterObjectFieldId = RandomTestUtil.randomLong();
+
+		try {
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_systemObjectDefinition1.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				randomParameterObjectFieldId,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		}
+		catch (ObjectRelationshipParameterObjectFieldIdException
+					objectRelationshipParameterObjectFieldIdException) {
+
+			Assert.assertEquals(
+				"Parameter object field ID " + randomParameterObjectFieldId +
+					" does not exist",
+				objectRelationshipParameterObjectFieldIdException.getMessage());
+		}
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				_objectDefinition2.getObjectDefinitionId());
+
+		ObjectField objectField = objectFields.get(0);
+
+		try {
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_systemObjectDefinition1.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				objectField.getObjectFieldId(),
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		}
+		catch (ObjectRelationshipParameterObjectFieldIdException
+					objectRelationshipParameterObjectFieldIdException) {
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Parameter object field ID ",
+					objectField.getObjectFieldId(),
+					" does not belong to object definition ",
+					_objectDefinition1.getName()),
+				objectRelationshipParameterObjectFieldIdException.getMessage());
+		}
+
+		objectFields = _objectFieldLocalService.getObjectFields(
+			_objectDefinition1.getObjectDefinitionId());
+
+		objectField = objectFields.get(0);
+
+		try {
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_systemObjectDefinition1.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				objectField.getObjectFieldId(),
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		}
+		catch (ObjectRelationshipParameterObjectFieldIdException
+					objectRelationshipParameterObjectFieldIdException) {
+
+			Assert.assertEquals(
+				"Parameter object field ID " + objectField.getObjectFieldId() +
+					" does not belong to a relationship object field",
+				objectRelationshipParameterObjectFieldIdException.getMessage());
+		}
+
+		String objectRelationshipName = StringUtil.lowerCase(
+			RandomTestUtil.randomString());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			objectRelationshipName,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		objectField = _objectFieldLocalService.getObjectField(
+			_objectDefinition2.getObjectDefinitionId(),
+			StringBundler.concat(
+				"r_", objectRelationshipName, "_",
+				_objectDefinition1.getPKObjectFieldName()));
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			_systemObjectDefinition1.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(),
+			objectField.getObjectFieldId(),
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
+
+	@Inject
+	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private static ObjectDefinition _systemObjectDefinition1;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;
@@ -420,15 +645,12 @@ public class ObjectRelationshipLocalServiceTest {
 	private ObjectDefinition _objectDefinition2;
 
 	@Inject
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@DeleteAfterTestRun
-	private ObjectDefinition _systemObjectDefinition;
+	private ObjectDefinition _systemObjectDefinition2;
 
 }

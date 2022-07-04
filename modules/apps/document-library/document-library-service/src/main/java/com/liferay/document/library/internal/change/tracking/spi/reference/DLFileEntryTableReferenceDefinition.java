@@ -24,6 +24,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
 import com.liferay.document.library.kernel.model.DLFolderTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
+import com.liferay.friendly.url.model.FriendlyURLEntryTable;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.ImageTable;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -74,6 +75,21 @@ public class DLFileEntryTableReferenceDefinition
 				ClassNameTable.INSTANCE,
 				ClassNameTable.INSTANCE.classNameId.eq(
 					AssetDisplayPageEntryTable.INSTANCE.classNameId
+				).and(
+					ClassNameTable.INSTANCE.value.eq(FileEntry.class.getName())
+				)
+			)
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				FriendlyURLEntryTable.INSTANCE
+			).innerJoinON(
+				DLFileEntryTable.INSTANCE,
+				DLFileEntryTable.INSTANCE.fileEntryId.eq(
+					FriendlyURLEntryTable.INSTANCE.classPK)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					FriendlyURLEntryTable.INSTANCE.classNameId
 				).and(
 					ClassNameTable.INSTANCE.value.eq(FileEntry.class.getName())
 				)

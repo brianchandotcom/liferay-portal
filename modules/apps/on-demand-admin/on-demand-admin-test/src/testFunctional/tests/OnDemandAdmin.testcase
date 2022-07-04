@@ -27,6 +27,8 @@ definition {
 	@description = "This test covers LPS-156154 and asserts that the portlet for On-Demand Admin is not available when accessing through a non-default instance."
 	@priority = "5"
 	test OnDemandAdminUnavailableInNonDefaultInstance {
+		property test.name.skip.portal.instance = "OnDemandAdmin#OnDemandAdminUnavailableInNonDefaultInstance";
+
 		task ("Given a new Virtual Instance is created") {
 			ApplicationsMenu.gotoPortlet(
 				category = "System",

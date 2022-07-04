@@ -132,11 +132,7 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 		if (required && !source?.trim()) {
 			error = Liferay.Language.get('required');
 		}
-		else if (
-			Liferay.FeatureFlags['LPS-152735'] &&
-			source?.trim() &&
-			validateExpressionURL
-		) {
+		else if (source?.trim() && validateExpressionURL) {
 			const response = await fetch(
 				createResourceURL(validateExpressionURL, {
 					expression: source,

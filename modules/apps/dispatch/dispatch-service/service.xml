@@ -69,6 +69,7 @@
 		<column name="overlapAllowed" type="boolean" />
 		<column name="startDate" type="Date" />
 		<column name="system" type="boolean" />
+		<column name="timeZoneId" type="String" />
 
 		<!-- Order -->
 

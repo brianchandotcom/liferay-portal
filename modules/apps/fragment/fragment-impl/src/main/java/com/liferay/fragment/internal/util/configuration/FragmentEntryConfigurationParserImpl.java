@@ -158,7 +158,7 @@ public class FragmentEntryConfigurationParserImpl
 
 			Object object = configurationValuesJSONObject.get(name);
 
-			if (Validator.isNull(object)) {
+			if (object == null) {
 				continue;
 			}
 
@@ -244,7 +244,7 @@ public class FragmentEntryConfigurationParserImpl
 					"Unable to parse configuration value JSON", jsonException);
 			}
 		}
-		else if (Validator.isNull(value)) {
+		else if (value == null) {
 			value = fragmentConfigurationField.getDefaultValue();
 		}
 

@@ -654,9 +654,15 @@ public class DLReferencesExportImportContentProcessor
 					continue;
 				}
 
+				boolean appendVersion = false;
+
+				if (!content.contains("$include-friendly-url=true$")) {
+					appendVersion = true;
+				}
+
 				String url = _dlURLHelper.getPreviewURL(
 					importedFileEntry, importedFileEntry.getFileVersion(), null,
-					StringPool.BLANK, false, false);
+					StringPool.BLANK, appendVersion, false);
 
 				if (url.contains(StringPool.QUESTION)) {
 					url = url.substring(

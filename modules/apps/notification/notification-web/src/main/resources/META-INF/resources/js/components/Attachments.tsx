@@ -48,7 +48,7 @@ export function Attachments({setValues, values}: IProps) {
 	const [query, setQuery] = useState<string>('');
 
 	const filteredObjectDefinitions = useMemo(() => {
-		if (objectDefinitions && objectDefinitions.length) {
+		if (objectDefinitions?.length) {
 			return objectDefinitions.filter(({label}) => {
 				return label[defaultLanguageId]
 					?.toLowerCase()
@@ -60,15 +60,13 @@ export function Attachments({setValues, values}: IProps) {
 	const parseFields = (fields: ObjectField[]) => {
 		const parsedFields: CustomItem[] = [];
 
+		const attachmentObjectFieldIds = new Set(
+			values?.attachmentObjectFieldIds as number[]
+		);
+
 		fields.forEach(({id, label}) => {
-			const attachmentObjectFieldIds = values?.attachmentObjectFieldIds as number[];
-
-			const isChecked = !!attachmentObjectFieldIds?.find(
-				(index) => index === id
-			);
-
 			parsedFields.push({
-				checked: isChecked,
+				checked: attachmentObjectFieldIds.has(id as number),
 				label: label[defaultLanguageId] as string,
 				value: id?.toString(),
 			});

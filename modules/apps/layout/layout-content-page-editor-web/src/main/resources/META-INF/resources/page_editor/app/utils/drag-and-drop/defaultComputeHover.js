@@ -106,10 +106,11 @@ export default function defaultComputeHover({
 	}
 
 	// Valid elevation:
-	// - dropItem should be child of dropTargetItem
-	// - dropItem should be sibling of siblingItem
+	// - sourceItem should be child of dropTargetItem
+	// - sourceItem should be sibling of siblingItem
 	// - siblingItem should have flex parent for horizontal elevation
 	//   and no-flex parent for vertical elevation
+	// - sourceItem should not be ancestor of siblingItem
 
 	if (
 		siblingItem &&

@@ -467,7 +467,7 @@ public class CPDefinitionInfoItemFields {
 		shipSeparatelyPriceInfoField = BuilderHolder._builder.infoFieldType(
 			BooleanInfoFieldType.INSTANCE
 		).name(
-			"shipSeperately"
+			"shipSeparately"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				CPDefinitionInfoItemFields.class, "ship-separately")

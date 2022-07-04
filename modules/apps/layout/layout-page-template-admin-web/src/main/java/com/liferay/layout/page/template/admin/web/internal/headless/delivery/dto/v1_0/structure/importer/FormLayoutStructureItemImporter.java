@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.HashSet;
@@ -34,7 +33,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -111,7 +109,7 @@ public class FormLayoutStructureItemImporter
 			}
 			else {
 				formStyledLayoutStructureItem.setClassNameId(
-					_portal.getClassNameId(
+					portal.getClassNameId(
 						(String)itemReferenceMap.get("className")));
 
 				Integer subtypeId = (Integer)itemReferenceMap.get("subtypeId");
@@ -232,8 +230,5 @@ public class FormLayoutStructureItemImporter
 
 		return null;
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

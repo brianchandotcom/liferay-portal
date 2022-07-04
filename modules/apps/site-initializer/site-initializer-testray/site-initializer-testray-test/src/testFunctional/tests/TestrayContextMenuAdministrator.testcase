@@ -1,0 +1,271 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-157141 - Verify if as an administrator I can Assign to Me in the context menu in the Results"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanAssignToMeResults {
+
+		// TODO LPS-157141 AdminCanAssignToMeResults pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157140 - Verify if as an administrator I can click on Assign in the context menu in the Results"
+	@ignore = "Test Stub"
+	@priority
+	test AdminCanClickAssignResults {
+
+		// TODO LPS-157140 AdminCanClickAssignResults pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157125 - Verify if as an administrator I can click on Edit in the context menu in the Builds"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanClickEditBuilds {
+
+		// TODO LPS-157125 AdminCanClickEditBuilds pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157091 - Verify if as an administrator I can click on Import Cases in the context menu in the Project"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanClickImportCasesProject {
+
+		// TODO LPS-157091 AdminCanClickImportCasesProject pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157093 - Verify if as an administrator I can click on Manage Components in the context menu in the Project"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanClickManageComponentsProject {
+
+		// TODO LPS-157093 AdminCanClickManageComponentsProject pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157097 - Verify if as an administrator I can click on Manage Product Versions in the context menu in the Project"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanClickManageProductVersionsProject {
+
+		// TODO LPS-157097 AdminCanClickManageProductVersionsProject pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157094 - Verify if as an administrator I can click on Manage Teams in the context menu in the Project"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanClickManageTeamsProject {
+
+		// TODO LPS-157094 AdminCanClickManageTeamsProject pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157139 - Verify if as an administrator I can click on Select Environment Factors in the context menu in the Runs "
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanClickSelectEnvironmentRuns {
+
+		// TODO LPS-157139 AdminCanClickSelectEnvironmentRuns pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157126 - Verify if as an administrator I can Delete in the context menu in the Build"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanDeleteBuild {
+
+		// TODO LPS-157126 AdminCanDeleteBuild pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157116 - Verify if as an administrator I can Delete in the context menu in the Cases tab"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanDeleteCasesTab {
+
+		// TODO LPS-157116 AdminCanDeleteCasesTab pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157100 - Verify if as an administrator I can Delete in the context menu in the Project"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanDeleteProject {
+
+		// TODO LPS-157100 AdminCanDeleteProject pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157135 - Verify if as an administrator I can Delete in the context menu in the Results"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanDeleteResults {
+
+		// TODO LPS-157135 AdminCanDeleteResults pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157122 - Verify if as an administrator I can Delete in the context menu in the Routine"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanDeleteRoutine {
+
+		// TODO LPS-157122 AdminCanDeleteRoutine pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157138 - Verify if as an administrator I can Delete in the context menu in the Runs"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanDeleteRuns {
+
+		// TODO LPS-157138 AdminCanDeleteRuns pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157102 - Verify if as an administrator I can Edit in the context menu in the Cases tab"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanEditCasesTab {
+
+		// TODO LPS-157102 AdminCanEditCasesTab pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157090 - Verify if as an administrator I can Edit in the context menu in the Project"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanEditProject {
+
+		// TODO LPS-157090 AdminCanEditProject pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157129 - Verify if as an administrator I can Edit in the context menu in the Runs"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanEditRuns {
+
+		// TODO LPS-157129 AdminCanEditRuns pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157124 - Verify if as an administrator I can Promoted in the context menu in the Builds"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanPromotedBuilds {
+
+		// TODO LPS-157124 AdminCanPromotedBuilds pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157119 - Verify if as an administrator I can Select Default Environment Factors in the context menu in the Routines"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanSelectDefaultEnvironmentRoutines {
+
+		// TODO LPS-157119 AdminCanSelectDefaultEnvironmentRoutines pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157142 - Verify if as an administrator I can Unassign Myself in the context menu in the Results"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanUnassignResults {
+
+		// TODO LPS-157142 AdminCanUnassignResults pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157127 - Verify if as an administrator I can View in the context menu in the Builds"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanViewBuilds {
+
+		// TODO LPS-157127 AdminCanViewBuilds pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157101 - Verify if as an administrator I can View in the context menu in the Cases tab"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanViewCasesTab {
+
+		// TODO LPS-157101 AdminCanViewCasesTab pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157114 - Verify if as an administrator I can View Latest Results in the context menu in the Cases tab"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanViewLastedResultsCasesTab {
+
+		// TODO LPS-157114 AdminCanViewLastedResultsCasesTab pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157118 - Verify if as an administrator I can View in the context menu in the Routines"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanViewLastedResultsRoutines {
+
+		// TODO LPS-157118 AdminCanViewLastedResultsRoutines pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157081 - Verify if as an administrator I can View in the context menu in the Project"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanViewProject {
+
+		// TODO LPS-157081 AdminCanViewProject pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157137 - Verify if as an administrator I can View in the context menu in the Results"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanViewResults {
+
+		// TODO LPS-157137 AdminCanViewResults pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157128 - Verify if as an administrator I can View in the context menu in the Runs"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test AdminCanViewRuns {
+
+		// TODO LPS-157128 AdminCanViewRuns pending implementation
+
+	}
+
+}

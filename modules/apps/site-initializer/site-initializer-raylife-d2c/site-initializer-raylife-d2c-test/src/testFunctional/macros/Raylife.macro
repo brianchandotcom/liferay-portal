@@ -1,5 +1,63 @@
 definition {
 
+	macro assertAllObjectsForRaylifeD2c {
+		ObjectAdmin.openObjectAdmin();
+
+		Raylife.waitForObject(key_object = "Raylife Application");
+
+		ObjectPortlet.selectCustomObject(label = "Raylife Application");
+
+		CreateObject.assertObjectLabel(labelName = "Raylife Application");
+
+		Navigator.gotoBack();
+
+		ObjectPortlet.selectCustomObject(label = "Raylife Claim");
+
+		CreateObject.assertObjectLabel(labelName = "Raylife Claim");
+
+		Navigator.gotoBack();
+
+		ObjectPortlet.selectCustomObject(label = "Raylife Document");
+
+		CreateObject.assertObjectLabel(labelName = "Raylife Document");
+
+		Navigator.gotoBack();
+
+		ObjectPortlet.selectCustomObject(label = "Raylife Goal");
+
+		CreateObject.assertObjectLabel(labelName = "Raylife Goal");
+
+		Navigator.gotoBack();
+
+		ObjectPortlet.selectCustomObject(label = "Raylife Policy");
+
+		CreateObject.assertObjectLabel(labelName = "Raylife Policy");
+
+		Navigator.gotoBack();
+
+		ObjectPortlet.selectCustomObject(label = "Quote Comparison");
+
+		CreateObject.assertObjectLabel(labelName = "Quote Comparison");
+
+		Navigator.gotoBack();
+
+		ObjectPortlet.selectCustomObject(label = "Quote Retrieve");
+
+		CreateObject.assertObjectLabel(labelName = "Quote Retrieve");
+
+		Navigator.gotoBack();
+
+		ObjectPortlet.selectCustomObject(label = "Raylife Quote");
+
+		CreateObject.assertObjectLabel(labelName = "Raylife Quote");
+
+		Navigator.gotoBack();
+
+		ObjectPortlet.selectCustomObject(label = "Raylife Sales Goal");
+
+		CreateObject.assertObjectLabel(labelName = "Raylife Sales Goal");
+	}
+
 	macro commerceApisTearDowm {
 		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
 
@@ -106,83 +164,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro waitForObject {
-
-		while (IsElementNotPresent(locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT", label = "${key_object}")) {
-			Refresh();
-
-			WaitForPageLoad();
-		}
-
-	}
-
-	macro assertAllObjectsForRaylifeD2c {
-
-			ObjectAdmin.openObjectAdmin();
-
-			Raylife.waitForObject(key_object = "Raylife Application");
-
-			ObjectPortlet.selectCustomObject(label = "Raylife Application");
-
-			CreateObject.assertObjectLabel(labelName = "Raylife Application");
-
-			Navigator.gotoBack();
-
-			ObjectPortlet.selectCustomObject(label = "Raylife Claim");
-
-			CreateObject.assertObjectLabel(labelName = "Raylife Claim");
-
-			Navigator.gotoBack();
-
-			ObjectPortlet.selectCustomObject(label = "Raylife Document");
-
-			CreateObject.assertObjectLabel(labelName = "Raylife Document");
-
-			Navigator.gotoBack();
-
-			ObjectPortlet.selectCustomObject(label = "Raylife Goal");
-
-			CreateObject.assertObjectLabel(labelName = "Raylife Goal");
-
-			Navigator.gotoBack();
-
-			ObjectPortlet.selectCustomObject(label = "Raylife Policy");
-
-			CreateObject.assertObjectLabel(labelName = "Raylife Policy");
-
-			Navigator.gotoBack();
-
-			ObjectPortlet.selectCustomObject(label = "Quote Comparison");
-
-			CreateObject.assertObjectLabel(labelName = "Quote Comparison");
-
-			Navigator.gotoBack();
-
-			ObjectPortlet.selectCustomObject(label = "Quote Retrieve");
-
-			CreateObject.assertObjectLabel(labelName = "Quote Retrieve");
-
-			Navigator.gotoBack();
-
-			ObjectPortlet.selectCustomObject(label = "Raylife Quote");
-
-			CreateObject.assertObjectLabel(labelName = "Raylife Quote");
-
-			Navigator.gotoBack();
-
-			ObjectPortlet.selectCustomObject(label = "Raylife Sales Goal");
-
-			CreateObject.assertObjectLabel(labelName = "Raylife Sales Goal");
-
-
-	}	
-
 	macro viewProductsList {
 		for (var productsName : list "${productList}") {
 			AssertElementPresent(
 				key_productsName = "${productsList}",
 				locator1 = "Raylife#PRODUCTS_NAME",
 				value1 = "${productsName}");
+		}
+	}
+
+	macro waitForObject {
+		while (IsElementNotPresent(label = "${key_object}", locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT")) {
+			Refresh();
+
+			WaitForPageLoad();
 		}
 	}
 

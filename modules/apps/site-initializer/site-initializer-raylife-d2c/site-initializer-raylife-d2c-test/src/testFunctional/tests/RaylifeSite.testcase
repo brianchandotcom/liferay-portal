@@ -29,6 +29,18 @@ definition {
 		}
 	}
 
+	@description = "LPS-155319 - Verify that when Raylife D2C is created, the Objects APIs are created"
+	@priority = "5"
+	test AllObjectsIsCreatedForRaylifeD2c {
+		task ("Add site Raylife D2C") {
+			Raylife.createRaylifeSite(siteName = "${testSiteName}");
+		}
+
+		task ("Assert all object for Raylife D2C") {
+			Raylife.assertAllObjectsForRaylifeD2c();
+		}
+	}
+
 	@description = "Verify if Raylife can be created"
 	@priority = "5"
 	test CanRaylifeBeCreated {
@@ -93,19 +105,6 @@ definition {
 		}
 
 		Raylife.viewProductsList(productList = "General Liability,Professional Liability,Workers Compensation,Business Owners Policy");
-	}
-
-	@description = "LPS-155319 - Verify that when Raylife D2C is created, the Objects APIs are created"
-	@priority = "5"
-	test AllObjectsIsCreatedForRaylifeD2c {
-		task ("Add site Raylife D2C") {
-			Raylife.createRaylifeSite(siteName = "${testSiteName}");
-		}
-
-		task ("Assert all object for Raylife D2C") {
-			Raylife.assertAllObjectsForRaylifeD2c();
-		}
-	
 	}
 
 }

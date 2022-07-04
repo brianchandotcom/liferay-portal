@@ -1,0 +1,55 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-156676 - Verify if the Administrator can Add Case Types"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddCaseTypes {
+
+		// TODO LPS-156676 AdminCanAddCaseTypes pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156679 - Verify that as an Administrator I can delete Case Types"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanDeleteCaseTypes {
+
+		// TODO LPS-156679 AdminCanDeleteCaseTypes pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156681 - Verify if the Administrator can Edit Case Types"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanEditCaseTypes {
+
+		// TODO LPS-156681 AdminCanEditCaseTypes pending implementation
+
+	}
+
+}

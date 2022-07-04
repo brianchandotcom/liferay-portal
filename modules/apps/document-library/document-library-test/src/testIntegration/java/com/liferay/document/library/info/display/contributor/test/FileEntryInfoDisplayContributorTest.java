@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -95,7 +96,8 @@ public class FileEntryInfoDisplayContributorTest {
 						"/", locale.getLanguage(), "/web/",
 						StringUtil.lowerCase(_group.getGroupKey()),
 						FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
-						fileEntry.getFileEntryId());
+						_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+							fileEntry.getTitle()));
 
 					ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -134,7 +136,8 @@ public class FileEntryInfoDisplayContributorTest {
 					String expectedURL = StringBundler.concat(
 						"/web/", StringUtil.lowerCase(_group.getGroupKey()),
 						FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
-						fileEntry.getFileEntryId());
+						_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+							fileEntry.getTitle()));
 
 					ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -174,7 +177,8 @@ public class FileEntryInfoDisplayContributorTest {
 						"/", locale.getLanguage(), "/web/",
 						StringUtil.lowerCase(_group.getGroupKey()),
 						FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
-						fileEntry.getFileEntryId());
+						_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+							fileEntry.getTitle()));
 
 					ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -213,7 +217,8 @@ public class FileEntryInfoDisplayContributorTest {
 					String expectedURL = StringBundler.concat(
 						"/web/", StringUtil.lowerCase(_group.getGroupKey()),
 						FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY,
-						fileEntry.getFileEntryId());
+						_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+							fileEntry.getTitle()));
 
 					ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -295,6 +300,9 @@ public class FileEntryInfoDisplayContributorTest {
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@DeleteAfterTestRun
 	private Group _group;

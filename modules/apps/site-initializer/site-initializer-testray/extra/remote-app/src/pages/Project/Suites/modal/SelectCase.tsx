@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import i18n from '../../../../i18n';
 import {CaseListView} from '../../Cases';
 
 type SelectCaseParametersProps = {
@@ -22,16 +23,28 @@ type SelectCaseParametersProps = {
 
 const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 	setState,
-}) => {
-	return (
-		<CaseListView
-			listViewProps={{
-				managementToolbarProps: {addButton: undefined},
-				onContextChange: ({selectedRows}) => setState(selectedRows),
-			}}
-			tableProps={{rowSelectable: true}}
-		/>
-	);
-};
+}) => (
+	<CaseListView
+		listViewProps={{
+			managementToolbarProps: {
+				addButton: undefined,
+				title: i18n.translate('cases'),
+			},
+			onContextChange: ({selectedRows}) => setState(selectedRows),
+		}}
+		tableProps={{
+			columns: [
+				{key: 'priority', value: i18n.translate('priority')},
+				{
+					key: 'component',
+					render: (component) => component.name,
+					value: i18n.translate('component'),
+				},
+				{key: 'name', value: i18n.translate('name')},
+			],
+			rowSelectable: true,
+		}}
+	/>
+);
 
 export default SelectCaseParameters;

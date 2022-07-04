@@ -50,8 +50,8 @@ const SuiteForm = () => {
 	const [createSuiteCaseBatch] = useMutation(CreateSuiteCaseBatch);
 
 	const {setTabs} = useHeader({shouldUpdate: false});
+	const [cases, setCases] = useState<number[]>([]);
 	const {projectId} = useParams();
-	const [cases, setCases] = useState([]);
 	const context: {
 		testrayProject?: any;
 		testraySuite?: TestraySuite;
@@ -120,7 +120,7 @@ const SuiteForm = () => {
 				return setValue('caseParameters', JSON.stringify(value));
 			}
 
-			setCases(value);
+			setCases((prevCases) => [...new Set([...prevCases, ...value])]);
 		},
 	});
 

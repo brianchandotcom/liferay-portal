@@ -116,27 +116,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AdminPortlet extends BaseKBPortlet {
 
-	public void deleteKBArticlesAndFolders(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		long[] deleteKBArticleResourcePrimKeys = ParamUtil.getLongValues(
-			actionRequest, "rowIdsKBArticle");
-
-		for (long deleteKBArticleResourcePrimKey :
-				deleteKBArticleResourcePrimKeys) {
-
-			kbArticleService.deleteKBArticle(deleteKBArticleResourcePrimKey);
-		}
-
-		long[] deleteKBFolderIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsKBFolder");
-
-		for (long deleteKBFolderId : deleteKBFolderIds) {
-			kbFolderService.deleteKBFolder(deleteKBFolderId);
-		}
-	}
-
 	public void deleteKBFolder(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {

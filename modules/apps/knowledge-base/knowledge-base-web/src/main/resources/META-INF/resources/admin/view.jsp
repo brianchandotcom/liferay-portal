@@ -84,7 +84,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 			showParentGroups="<%= false %>"
 		/>
 
-		<liferay-portlet:actionURL name="deleteKBArticlesAndFolders" varImpl="deleteKBArticlesAndFoldersURL" />
+		<liferay-portlet:actionURL name="/knowledge_base/delete_kb_articles_and_folders" varImpl="deleteKBArticlesAndFoldersURL" />
 
 		<aui:form action="<%= deleteKBArticlesAndFoldersURL %>" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

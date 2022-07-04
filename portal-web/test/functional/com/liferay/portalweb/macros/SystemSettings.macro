@@ -231,12 +231,6 @@ definition {
 			key_itemName = "${configurationCategory}",
 			locator1 = "ListGroupItem#ITEM_TEXT");
 
-		var browserType = PropsUtil.get("browser.type");
-
-		if ("${browserType}" == "chrome") {
-			Pause(locator1 = "3000");
-		}
-
 		Click(
 			key_configurationName = "${configurationName}",
 			key_configurationScope = "${configurationScope}",

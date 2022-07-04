@@ -29,33 +29,3 @@ exports[`Footer > renders with success 1`] = `
   </div>
 </DocumentFragment>
 `;
-
-exports[`Footer renders with success 1`] = `
-<DocumentFragment>
-  <div
-    class="btn-group"
-    role="group"
-  >
-    <div
-      class="btn-group-item"
-    >
-      <button
-        class="btn btn-primary"
-        type="button"
-      >
-        Save
-      </button>
-    </div>
-    <div
-      class="btn-group-item"
-    >
-      <button
-        class="btn btn-secondary"
-        type="button"
-      >
-        Cancel
-      </button>
-    </div>
-  </div>
-</DocumentFragment>
-`;

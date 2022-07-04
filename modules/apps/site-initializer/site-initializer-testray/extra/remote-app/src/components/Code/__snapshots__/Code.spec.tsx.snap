@@ -3,17 +3,7 @@
 exports[`Code > renders code with children 1`] = `
 <DocumentFragment>
   <code
-    class="bg-light font-italic p-2 text-secondary"
-  >
-    com.liferay.testray.user
-  </code>
-</DocumentFragment>
-`;
-
-exports[`Code renders code with children 1`] = `
-<DocumentFragment>
-  <code
-    class="bg-light font-italic p-2 text-secondary"
+    class="bg-light break-text font-italic p-2 text-secondary w-100"
   >
     com.liferay.testray.user
   </code>

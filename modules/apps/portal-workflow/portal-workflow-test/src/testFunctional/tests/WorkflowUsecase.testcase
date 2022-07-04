@@ -940,33 +940,18 @@ definition {
 
 	@priority = "3"
 	test ViewTaskCount {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Workflow");
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
 		for (var number : list "1,2,3") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				panel = "Site Administration",
-				portlet = "Web Content");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 			Workflow.webContentGoToAddCP();
 
@@ -974,23 +959,13 @@ definition {
 				webContentContent = "WC WebContent Content ${number}",
 				webContentTitle = "WC WebContent Title ${number}");
 
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				panel = "Site Administration",
-				portlet = "Blogs");
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 			Blogs.addWithWorkflow(
 				entryContent = "Blogs Entry Content ${number}",
 				entrySubtitle = "Subtitle ${number}",
 				entryTitle = "Blogs Entry Title ${number}");
 		}
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -1124,93 +1099,50 @@ definition {
 	@description = "This is a use case for LRQA-13519."
 	@priority = "5"
 	test ViewWorkflowSubmissionsFromDifferentUsers {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
-
-		Navigator.gotoNavItem(navItem = "Configuration");
+		Workflow.openWorkflowProcessBuilderConfiguration();
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX",
-			permissionDefinitionValue = "Access in Site and Asset Library Administration",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_blogs_web_portlet_BlogsAdminPortlet",
 			roleTitle = "Site Member",
-			roleType = "Site");
+			roleType = "site");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.definePermissionCP(
-			permissionDefinitionKey = "SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX",
-			permissionDefinitionValue = "Add Entry",
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ENTRY",
+			resourceName = "com.liferay.blogs",
 			roleTitle = "Site Member",
-			roleType = "Site");
+			roleType = "site");
 
 		for (var n : list "1,2") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.addCP(
+			JSONUser.addUser(
 				userEmailAddress = "usersn${n}@liferay.com",
 				userFirstName = "userfn${n}",
 				userLastName = "userln${n}",
 				userScreenName = "usersn${n}");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
+			JSONUser.addUserToSite(
+				groupName = "Guest",
+				userEmailAddress = "usersn${n}@liferay.com");
 
-			User.editUserSiteCP(
-				siteName = "${siteName}",
-				userScreenName = "usersn${n}");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.editPasswordCP(
-				userEmailAddress = "usersn${n}@liferay.com",
-				userScreenName = "usersn${n}");
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "usersn${n}@liferay.com");
 
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "usersn${n}@liferay.com",
 				userScreenName = "usersn${n}");
 
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				panel = "Site Administration",
-				portlet = "Blogs");
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 			Blogs.addWithWorkflow(
 				entryContent = "User ${n} Blog Content Approved",
 				entrySubtitle = "User ${n} Blog Subtitle Approved",
 				entryTitle = "User ${n} Blog Title Approved");
-
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				panel = "Site Administration",
-				portlet = "Blogs");
 
 			Blogs.addWithWorkflow(
 				entryContent = "User ${n} Blog Content Pending",
@@ -1220,8 +1152,6 @@ definition {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",
 				userScreenName = "Test Test");
-
-			Navigator.openURL();
 
 			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -1239,8 +1169,6 @@ definition {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "usersn1@liferay.com",
 			userScreenName = "usersn1");
-
-		Navigator.openURL();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 
@@ -1263,8 +1191,6 @@ definition {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "usersn2@liferay.com",
 			userScreenName = "usersn2");
-
-		Navigator.openURL();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Submissions");
 

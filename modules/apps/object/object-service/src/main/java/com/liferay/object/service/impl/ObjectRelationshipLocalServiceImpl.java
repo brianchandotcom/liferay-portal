@@ -637,7 +637,7 @@ public class ObjectRelationshipLocalServiceImpl
 						" does not allow a parameter object field ID");
 			}
 
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 				parameterObjectFieldId);
 
 			if (objectField == null) {

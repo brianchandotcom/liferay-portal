@@ -237,7 +237,7 @@ function FragmentContentInteractionsFilter({
 				) {
 					requestAnimationFrame(() => {
 						activeEditable.element.addEventListener(
-							'dblclick',
+							'click',
 							enableProcessor
 						);
 					});
@@ -256,7 +256,7 @@ function FragmentContentInteractionsFilter({
 		return () => {
 			if (activeEditable) {
 				activeEditable.element.removeEventListener(
-					'dblclick',
+					'click',
 					enableProcessor
 				);
 			}

@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "org.apache.commons", name: "commons-lang3", version: "3.11"
+	testIntegrationCompile group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationCompile project(":apps:asset:asset-api")
 	testIntegrationCompile project(":apps:depot:depot-api")
 	testIntegrationCompile project(":apps:list-type:list-type-api")

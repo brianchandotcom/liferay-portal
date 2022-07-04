@@ -26,6 +26,11 @@
 			"objectActionTriggerKey": "onAfterAdd",
 			"parameters": {
 				"url": "www.liferay.com"
+			},
+			"status": {
+				"code": 0,
+				"label": "never-ran",
+				"label_i18n": "Never Ran"
 			}
 		}
 	],
@@ -41,6 +46,8 @@
 				"en_US": "Text Field 1"
 			},
 			"name": "textField1",
+			"objectFieldSettings": [
+			],
 			"required": false,
 			"system": false,
 			"type": "String"
@@ -56,6 +63,8 @@
 				"en_US": "Text Field 2"
 			},
 			"name": "textField2",
+			"objectFieldSettings": [
+			],
 			"required": false,
 			"system": false,
 			"type": "String"

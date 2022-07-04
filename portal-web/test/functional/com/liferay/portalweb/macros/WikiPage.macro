@@ -837,7 +837,7 @@ definition {
 			locator1 = "Link#WIKI_EDIT",
 			value1 = "Edit");
 
-		WaitForElementPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+		WaitForVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

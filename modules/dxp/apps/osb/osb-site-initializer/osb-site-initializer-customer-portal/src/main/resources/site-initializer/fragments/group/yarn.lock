@@ -955,15 +955,15 @@
     "@clayui/icon" "^3.56.0"
     classnames "^2.2.6"
 
-"@clayui/css@3.63.0":
-  version "3.63.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.63.0.tgz#97e4762bc930233ee9d08c9a262972a4095e6ce6"
-  integrity sha512-8QTrsvN8hx0FdjnmBRkU03fiX1dKwPFbpCCbGo6dhgqbtk5Q1TdN8/NUURJXBbUWxmEyFLqKeTri4H0KOP/1Qw==
+"@clayui/css@3.64.0":
+  version "3.64.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.64.0.tgz#036108048bcd473ea7e6db258fed5a56544d4729"
+  integrity sha512-ee5TfnTkHumLmydRN5YVsloOtqvou3RYGNBWu0gTjwppQk8WLsa6xpEjzqOFiNTutX4TBL2zXKMDQG/Xi+7xsg==
 
-"@clayui/drop-down@3.62.0":
-  version "3.62.0"
-  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.62.0.tgz#71919fca633dd57ba8533e15829a75ee661fdc15"
-  integrity sha512-JxmebiNDWqu7Sunobn8uPJ8t+I4Pm5BSIyY5VOfMuhlKIVlRB2HUB+q6pwiVKfAMMgRFq36yRBC/6bB/sHK/2g==
+"@clayui/drop-down@3.64.0":
+  version "3.64.0"
+  resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.64.0.tgz#a1f82cfb80ca2f009efb6a750a726351064c594c"
+  integrity sha512-YioFLtXWi+LhYBGSdNXeWNcdSR9mFYsbMeTYhItzanOcv8gpBb7AuFbUAzXdVqKxu55uzW8LkAZ90Ty1bI6RIA==
   dependencies:
     "@clayui/button" "^3.56.0"
     "@clayui/form" "^3.58.0"

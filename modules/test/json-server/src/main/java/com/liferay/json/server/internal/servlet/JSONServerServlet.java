@@ -419,7 +419,7 @@ public class JSONServerServlet extends HttpServlet {
 			long id = -1;
 			String modelName = parts.get(1);
 
-			if (parts.size()>2){
+			if (parts.size() > 2) {
 				try {
 					id = GetterUtil.getLongStrict(parts.get(2));
 				}
@@ -427,6 +427,7 @@ public class JSONServerServlet extends HttpServlet {
 					modelName = path.replace('/' + parts.get(0) + '/', "");
 				}
 			}
+
 			_id = id;
 			_modelName = modelName;
 

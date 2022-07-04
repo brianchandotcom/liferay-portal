@@ -13,7 +13,6 @@
  */
 
 import {PortletBase, createPortletURL} from 'frontend-js-web';
-import {Config} from 'metal-state';
 
 /**
  * Handles actions to display user name field for a given locale.
@@ -33,7 +32,14 @@ class UserNameFields extends PortletBase {
 	/**
 	 * @inheritDoc
 	 */
-	created() {
+	created(props) {
+		this.baseURL = props.baseURL;
+		this.formNode = this._setElement(props.formNode);
+		this.languageIdSelectNode = this._setElement(
+			props.languageIdSelectNode
+		);
+		this.userNameFieldsNode = this._setElement(props.userNameFieldsNode);
+
 		this._handleSelectChange = this._handleSelectChange.bind(this);
 
 		this._formDataCache = {};
@@ -243,40 +249,5 @@ class UserNameFields extends PortletBase {
 		this._createLoadingIndicator();
 	}
 }
-
-UserNameFields.STATE = {
-
-	/**
-	 * Uri to return the user name data.
-	 * @instance
-	 * @memberof UserNameFields
-	 * @type {String}
-	 */
-	baseURL: Config.required().string().writeOnce(),
-
-	/**
-	 * Form node.
-	 * @instance
-	 * @memberof UserNameFields
-	 * @type {String}
-	 */
-	formNode: Config.required().setter('_setElement').writeOnce(),
-
-	/**
-	 * Language id select field.
-	 * @instance
-	 * @memberof UserNameFields
-	 * @type {String}
-	 */
-	languageIdSelectNode: Config.required().setter('_setElement').writeOnce(),
-
-	/**
-	 * HTML element containing the user name fields.
-	 * @instance
-	 * @memberof UserNameFields
-	 * @type {String}
-	 */
-	userNameFieldsNode: Config.required().setter('_setElement').writeOnce(),
-};
 
 export default UserNameFields;

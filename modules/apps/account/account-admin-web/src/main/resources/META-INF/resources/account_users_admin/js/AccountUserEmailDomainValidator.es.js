@@ -13,7 +13,6 @@
  */
 
 import {PortletBase, sub} from 'frontend-js-web';
-import {Config} from 'metal-state';
 
 class AccountUserEmailDomainValidator extends PortletBase {
 	attached() {
@@ -216,12 +215,5 @@ class AccountUserEmailDomainValidator extends PortletBase {
 		);
 	}
 }
-
-AccountUserEmailDomainValidator.STATE = {
-	accountEntryNames: Config.string,
-	blockedDomains: Config.string,
-	validDomains: Config.string,
-	viewValidDomainsURL: Config.string,
-};
 
 export default AccountUserEmailDomainValidator;

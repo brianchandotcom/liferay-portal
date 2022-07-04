@@ -29,10 +29,14 @@ function toElementHelper(elementOrSelector) {
  * compatibility for classes extending PortletBase.
  */
 class LifeCycles {
-	constructor() {
-		this.created();
+	constructor(props) {
+		const {portletNamespace} = props;
 
-		this.attached();
+		this.portletNamespace = portletNamespace;
+		this.rootNode = document.getElementById(`p_p_id${portletNamespace}`);
+
+		this.created(props);
+		this.attached(props);
 	}
 	dispose() {
 		this.disposeInternal();
@@ -55,12 +59,6 @@ class LifeCycles {
  * @abstract
  */
 class PortletBase extends LifeCycles {
-	constructor({portletNamespace}) {
-		super();
-
-		this.portletNamespace = portletNamespace;
-		this.rootNode = document.getElementById(`p_p_id${portletNamespace}`);
-	}
 
 	/**
 	 * Returns a Node List containing all the matching element nodes within the

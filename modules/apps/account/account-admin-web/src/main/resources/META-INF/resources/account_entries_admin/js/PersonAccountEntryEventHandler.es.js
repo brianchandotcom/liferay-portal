@@ -13,7 +13,6 @@
  */
 
 import {PortletBase, delegate, openSelectionModal} from 'frontend-js-web';
-import {Config} from 'metal-state';
 
 class PersonAccountEntryEventHandler extends PortletBase {
 
@@ -37,7 +36,16 @@ class PersonAccountEntryEventHandler extends PortletBase {
 	/**
 	 * @inheritDoc
 	 */
-	created() {
+	created(props) {
+		this.container = this._setElement(props.container);
+		this.removeUserIconMarkup = props.removeUserIconMarkup;
+		this.removeUserLinkSelector = props.removeUserLinkSelector;
+		this.searchContainer = this._setSearchContainer(props.searchContainer);
+		this.selectUserButton = this._setElement(props.selectUserButton);
+		this.selectUserEventName = props.selectUserEventName;
+		this.selectUserURL = props.selectUserURL;
+		this.userIdInput = this._setElement(props.userIdInput);
+
 		this._handleSelectUserButtonClicked = this._handleSelectUserButtonClicked.bind(
 			this
 		);
@@ -110,16 +118,5 @@ class PersonAccountEntryEventHandler extends PortletBase {
 		return this.one(selector);
 	}
 }
-
-PersonAccountEntryEventHandler.STATE = {
-	container: Config.string().setter('_setElement'),
-	removeUserIconMarkup: Config.string(),
-	removeUserLinkSelector: Config.string(),
-	searchContainer: Config.string().setter('_setSearchContainer'),
-	selectUserButton: Config.string().setter('_setElement'),
-	selectUserEventName: Config.string(),
-	selectUserURL: Config.string(),
-	userIdInput: Config.string().setter('_setElement'),
-};
 
 export default PersonAccountEntryEventHandler;

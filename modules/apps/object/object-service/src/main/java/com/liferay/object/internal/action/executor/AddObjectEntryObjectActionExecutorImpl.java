@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.io.Serializable;
@@ -203,6 +204,10 @@ public class AddObjectEntryObjectActionExecutorImpl
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			Serializable value = (Serializable)jsonObject.get("value");
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
 
 			if (!jsonObject.getBoolean("inputAsValue")) {
 				value = _evaluateExpression(value.toString(), variables);

@@ -1,0 +1,19 @@
+.bar-chart{
+  flex-wrap: wrap;
+}
+
+.bar-chart .bar-chart-title{
+  text-transform: uppercase;
+}
+
+.bar-chart .bb-chart-text{
+	color: #272833;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.bar-chart .bb-axis{
+	color: #5C5E5E;
+	font-size: 10px;
+	text-transform: uppercase;
+}

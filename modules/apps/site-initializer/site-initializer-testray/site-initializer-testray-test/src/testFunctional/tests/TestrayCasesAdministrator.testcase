@@ -1,0 +1,118 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-156790 - Verify if as an Administrator I am able to add Cases without Subcomponents"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddCase {
+
+		// TODO LPS-156790 AdminCanAddCase pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156933 - Verify if as an Administrator I should not be able to add a duplicate case"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddDuplicateCase {
+
+		// TODO LPS-156933 AdminCanAddDuplicateCase pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156791 - Verify if as an Administrator I am able to delete Cases without Subcomponents"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanDeleteCase {
+
+		// TODO LPS-156791 AdminCanDeleteCase pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156793 - Verify if as an Administrator I am able to edit Cases without Subcomponents"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanEditCasee {
+
+		// TODO LPS-156793 AdminCanEditCase pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156916 - Verify if as an Administrator I am able to Import Cases from another Project"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AdminCanImportCase {
+
+		// TODO LPS-156916 AdminCanImportCase pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156919 - Verify if as an Administrator, I should be able to link Requirements to a Case"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AdminCanLinkRequirements {
+
+		// TODO LPS-156919 AdminCanLinkRequirements pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156950 - Verify if as an Administrator I should be able to Sort by Errors"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AdminCanSortErros {
+
+		// TODO LPS-156950 AdminCanSortErros pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156947 - Verify if as an Administrator I should be able to Sort by Product Version"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AdminCanSortProductVersion {
+
+		// TODO LPS-156947 AdminCanSortProductVersion pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156949 - Verify if as an Administrator I should be able to Sort by Status"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AdminCanSortStatus {
+
+		// TODO LPS-156949 AdminCanSortStatus pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156923 - Verify if as an Administrator, I should be able to unlink Requirements to a Case"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AdminCanUnlinkRequirements {
+
+		// TODO LPS-156923 AdminCanUnlinkRequirements pending implementation
+
+	}
+
+}

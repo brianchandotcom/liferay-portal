@@ -15,7 +15,6 @@ import classNames from 'classnames';
 import React from 'react';
 import i18n from '../../../../../../common/I18n';
 import {SLA_TYPES} from '../../../../../../common/utils/constants';
-import getKebabCase from '../../../../../../common/utils/getKebabCase';
 
 const SlaCard = ({
 	slaDateEnd,
@@ -52,7 +51,7 @@ const SlaCard = ({
 							'text-neutral-7': slaTitle === SLA_TYPES.platinum,
 						})}
 					>
-						{i18n.translate(getKebabCase(slaTitle))}
+						{i18n.translate(slaTitle)}
 					</div>
 
 					<div>

@@ -16,7 +16,15 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
+import com.liferay.info.exception.NoSuchFormVariationException;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -26,6 +34,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -172,7 +181,11 @@ public abstract class BaseLayoutStructureItemImporter {
 				ContextReference.ContextSource.DISPLAY_PAGE_ITEM.getValue(),
 				contextSource)) {
 
-			jsonObject.put("mappedField", fieldKey);
+			if (_isValidDisplayPageItem(
+					fieldKey, layoutStructureItemImporterContext)) {
+
+				jsonObject.put("mappedField", fieldKey);
+			}
 
 			return;
 		}
@@ -465,7 +478,14 @@ public abstract class BaseLayoutStructureItemImporter {
 	protected GroupLocalService groupLocalService;
 
 	@Reference
+	protected InfoItemServiceTracker infoItemServiceTracker;
+
+	@Reference
 	protected LayoutLocalService layoutLocalService;
+
+	@Reference
+	protected LayoutPageTemplateEntryLocalService
+		layoutPageTemplateEntryLocalService;
 
 	@Reference
 	protected Portal portal;
@@ -499,6 +519,67 @@ public abstract class BaseLayoutStructureItemImporter {
 		).put(
 			"value", layout.getFriendlyURL()
 		);
+	}
+
+	private boolean _isValidDisplayPageItem(
+		String fieldKey,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
+
+		Layout layout = layoutStructureItemImporterContext.getLayout();
+
+		if (!layout.isTypeAssetDisplay()) {
+			return false;
+		}
+
+		if (layout.isDraftLayout()) {
+			layout = layoutLocalService.fetchLayout(layout.getClassPK());
+		}
+
+		if (layout == null) {
+			return false;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry == null) {
+			return false;
+		}
+
+		String className = portal.getClassName(
+			layoutPageTemplateEntry.getClassNameId());
+
+		if (Objects.equals(DLFileEntryConstants.getClassName(), className)) {
+			className = FileEntry.class.getName();
+		}
+
+		InfoItemFormProvider<Object> infoItemFormProvider =
+			infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFormProvider.class, className);
+
+		if (infoItemFormProvider == null) {
+			return false;
+		}
+
+		try {
+			InfoForm infoForm = infoItemFormProvider.getInfoForm(
+				String.valueOf(layoutPageTemplateEntry.getClassTypeId()),
+				layout.getGroupId());
+
+			InfoField<?> infoField = infoForm.getInfoField(fieldKey);
+
+			if (infoField != null) {
+				return true;
+			}
+		}
+		catch (NoSuchFormVariationException noSuchFormVariationException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(noSuchFormVariationException);
+			}
+		}
+
+		return false;
 	}
 
 	private static final String[] _ALIGN_KEYS = {

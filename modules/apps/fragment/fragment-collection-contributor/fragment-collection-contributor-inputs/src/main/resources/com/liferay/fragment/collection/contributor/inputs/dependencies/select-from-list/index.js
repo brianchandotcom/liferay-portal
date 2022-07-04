@@ -20,8 +20,10 @@ const searchInput = wrapper.querySelector('.forms-select-from-list-search');
 
 let currentSearch = {
 	abortController: new AbortController(),
-	query: '',
+	query: null,
 };
+
+let defaultOptions = (input.attributes.options || []).slice(0, 10);
 
 function debounce(fn, delay) {
 	let debounceId = null;
@@ -63,9 +65,18 @@ function repositionDropdown() {
 }
 
 function showDropdown() {
-	repositionDropdown();
-	button.setAttribute('aria-expanded', 'true');
-	dropdown.classList.add('show');
+	const canFetchOptions = input.attributes.optionsURL && searchInput;
+
+	if (canFetchOptions || defaultOptions.length) {
+		repositionDropdown();
+		button.setAttribute('aria-expanded', 'true');
+		dropdown.classList.add('show');
+	}
+
+	if (canFetchOptions && !defaultOptions.length) {
+		searchInput.value = '';
+		handleSearchKeyup(new KeyboardEvent('keyup'));
+	}
 }
 
 function hideDropdown() {
@@ -318,11 +329,11 @@ function handleSearchKeyup() {
 		}
 	};
 
-	if (currentSearch.query) {
+	if (currentSearch.query || !defaultOptions.length) {
 		listbox.innerHTML = '';
 	}
 	else {
-		setListboxItems(input.attributes.options.slice(0, 10));
+		setListboxItems(defaultOptions);
 
 		if (listbox.children.length) {
 			listbox.removeAttribute('aria-hidden');
@@ -343,12 +354,16 @@ function handleSearchKeyup() {
 
 	fetcher()
 		.then((result) => {
-			setListboxItems(
-				result.items.map((entry) => ({
-					label: entry.name,
-					value: entry.key,
-				}))
-			);
+			const items = result.items.map((entry) => ({
+				label: entry.name,
+				value: entry.key,
+			}));
+
+			if (!defaultOptions.length && !currentSearch.query) {
+				defaultOptions = items;
+			}
+
+			setListboxItems(items);
 
 			if (listbox.children.length) {
 				listbox.removeAttribute('aria-hidden');

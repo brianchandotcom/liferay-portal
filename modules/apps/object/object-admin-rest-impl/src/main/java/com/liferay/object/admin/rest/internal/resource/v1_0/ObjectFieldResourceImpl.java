@@ -232,7 +232,8 @@ public class ObjectFieldResourceImpl
 				() -> {
 					if (!updateable ||
 						Validator.isNotNull(
-							objectField.getRelationshipType())) {
+							objectField.getRelationshipType()) ||
+						objectField.isSystem()) {
 
 						return null;
 					}

@@ -1,0 +1,118 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-156998 - Verify if as an Administrator I should be able to add and delete a Component that doesn't have a Team"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddAndDeleteComponentWithoutTeam {
+
+		// TODO LPS-156998 AdminCanAddAndDeleteComponentWithoutTeam pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156997 - Verify if as an Administrator I should be able to add and delete a Component that has a Team"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddAndDeleteComponentWithTeam {
+
+		// TODO LPS-156997 AdminCanAddAndDeleteComponentWithTeam pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156982 - Verify if as an Administrator I am able to add Components"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddComponent {
+
+		// TODO LPS-156982 AdminCanAddComponent pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156987 - Verify if as an Administrator I am able to add Components with a Team"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddComponentTeam {
+
+		// TODO LPS-156987 AdminCanAddComponentTeam pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156989 - Verify if as an Administrator I am able to edit Components while connecting a Team"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanDeleteComponent {
+
+		// TODO LPS-156989 AdminCanDeleteComponentpending implementation
+
+	}
+
+	@description = "This is a test for LPS-156994 - Verify if as an Administrator I am able to edit Components and change the assigned Team"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AdminCanEditChangeComponent {
+
+		// TODO LPS-156994 AdminCanEditChangeComponent pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156988 - Verify that as an Administrator I am able to edit Components while connecting a Team"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanEditComponent {
+
+		// TODO LPS-156988 AdminCanEditComponent pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156992 - Verify if as an Administrator I am able to edit Components while connecting a Team"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AdminCanEditConnectComponent {
+
+		// TODO LPS-156992 AdminCanEditConnectComponent pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156995 - Verify if as an Administrator when I search for a Component the system should return that component"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AdminCanSearchComponent {
+
+		// TODO LPS-156995 AdminCanSearchComponent pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156996 - Verify if as an Administrator when I search for a Component that does not exist the system should not return that component"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AdminCanSearchComponentNonExistent {
+
+		// TODO LPS-156996 AdminCanSearchComponentNonExistent pending implementation
+
+	}
+
+}

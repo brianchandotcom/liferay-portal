@@ -93,7 +93,7 @@ const CaseForm = () => {
 	}, [setTabs, testrayProject]);
 
 	const {
-		form: {onClose, onSubmit},
+		form: {onClose, onSubmitAndSave},
 	} = useFormActions();
 
 	const {projectId} = useParams();
@@ -110,12 +110,14 @@ const CaseForm = () => {
 					caseTypeId: testrayCase.caseType?.id,
 					componentId: testrayCase.component?.id,
 			  }
-			: {},
+			: {
+					estimatedDuration: 0,
+			  },
 		resolver: yupResolver(yupSchema.case),
 	});
 
 	const _onSubmit = (form: CaseFormData) => {
-		onSubmit(
+		onSubmitAndSave(
 			{...form, projectId},
 			{
 				createMutation: CreateCase,
@@ -192,6 +194,7 @@ const CaseForm = () => {
 						label={i18n.translate('estimated-duration')}
 						name="estimatedDuration"
 						required={false}
+						type="number"
 					/>
 				</Form.BaseRow>
 

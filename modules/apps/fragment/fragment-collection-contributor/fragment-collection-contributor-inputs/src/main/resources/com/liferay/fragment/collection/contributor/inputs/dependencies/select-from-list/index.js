@@ -369,31 +369,29 @@ function handleSearchKeyup() {
 		});
 }
 
-if (listbox.children.length) {
-	button.addEventListener('click', handleButtonClick);
-	button.addEventListener('keydown', handleKeydown);
-	listbox.addEventListener('keydown', handleKeydown);
-	listbox.addEventListener('click', handleListboxClick);
-	document.addEventListener('click', handleDocumentClick);
+button.addEventListener('click', handleButtonClick);
+button.addEventListener('keydown', handleKeydown);
+listbox.addEventListener('keydown', handleKeydown);
+listbox.addEventListener('click', handleListboxClick);
+document.addEventListener('click', handleDocumentClick);
 
-	if (searchInput) {
-		searchInput.addEventListener('keydown', handleMovementKeys);
-		searchInput.addEventListener('keyup', debounce(handleSearchKeyup, 500));
-	}
-
-	window.addEventListener('resize', handleWindowResizeOrScroll, {
-		passive: true,
-	});
-	window.addEventListener('scroll', handleWindowResizeOrScroll, {
-		passive: true,
-	});
-
-	if (!getActiveDesdendant()) {
-		setActiveDescendant(listbox.firstElementChild);
-	}
-
-	dropdown.style.left = '0';
-	dropdown.style.top = '0';
-
-	repositionDropdown();
+if (searchInput) {
+	searchInput.addEventListener('keydown', handleMovementKeys);
+	searchInput.addEventListener('keyup', debounce(handleSearchKeyup, 500));
 }
+
+window.addEventListener('resize', handleWindowResizeOrScroll, {
+	passive: true,
+});
+window.addEventListener('scroll', handleWindowResizeOrScroll, {
+	passive: true,
+});
+
+if (!getActiveDesdendant()) {
+	setActiveDescendant(listbox.firstElementChild);
+}
+
+dropdown.style.left = '0';
+dropdown.style.top = '0';
+
+repositionDropdown();

@@ -503,6 +503,10 @@ public class JournalArticleModelValidator
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
 		List<JournalArticle> articles = _journalArticlePersistence.findByG_ERC(
 			groupId, externalReferenceCode);
 

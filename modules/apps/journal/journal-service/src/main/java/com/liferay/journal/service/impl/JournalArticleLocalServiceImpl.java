@@ -531,10 +531,6 @@ public class JournalArticleLocalServiceImpl
 			articleId = String.valueOf(counterLocalService.increment());
 		}
 
-		if (Validator.isNull(externalReferenceCode)) {
-			externalReferenceCode = articleId;
-		}
-
 		sanitize(user.getCompanyId(), groupId, userId, classPK, descriptionMap);
 
 		if (validate) {

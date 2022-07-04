@@ -77,8 +77,6 @@ definition {
 
 		PortletEntry.save();
 
-		DMDocument.enableActionsMenuOnPortlet();
-
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");

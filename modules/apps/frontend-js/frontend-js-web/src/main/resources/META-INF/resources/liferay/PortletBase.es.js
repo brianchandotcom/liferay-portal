@@ -22,6 +22,12 @@ function toElementHelper(elementOrSelector) {
 	return elementOrSelector;
 }
 
+/**
+ * The purpose of this class is to mimic the lifecycles from metal-state.
+ * There are several classes that extend PortletBase and expect some of these
+ * lifecycles to exist. This pseudo-lifecycle class is meant to provide backwards
+ * compatibility for classes extending PortletBase.
+ */
 class LifeCycles {
 	constructor() {
 		this.created();

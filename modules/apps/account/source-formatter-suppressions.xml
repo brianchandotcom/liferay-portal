@@ -5,11 +5,5 @@
 		<suppress checks="JavaConfigurationCategoryCheck" files="account-api/src/main/java/com/liferay/account/configuration/AccountEntryEmailDomainsConfiguration\.java" />
 		<suppress checks="JavaConfigurationCategoryCheck" files="account-service/src/main/java/com/liferay/account/internal/configuration/AccountEntryGroupConfiguration\.java" />
 		<suppress checks="JavaUpgradeVersionCheck" files="account-service/src/main/java/com/liferay/account/internal/upgrade/registry/AccountServiceUpgradeStepRegistrator\.java" />
-		<suppress checks="PoshiPauseUsageCheck" files="account-test/src/testFunctional/macros/AccountGroups\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="account-test/src/testFunctional/macros/Accounts\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="account-test/src/testFunctional/macros/AccountUsers\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="account-test/src/testFunctional/tests/AccountGroups\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="account-test/src/testFunctional/tests/Accounts\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="account-test/src/testFunctional/tests/AccountUsers\.testcase" />
 	</source-check>
 </suppressions>

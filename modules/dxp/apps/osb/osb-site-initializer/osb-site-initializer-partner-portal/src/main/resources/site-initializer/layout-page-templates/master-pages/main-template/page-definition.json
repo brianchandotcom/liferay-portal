@@ -49,25 +49,29 @@
 						"pageElements": [
 							{
 								"definition": {
-									"fragmentLink" : {
-										"href" : {
-										  "mapping" : {
-											"itemReference" : {
-											  "className" : "com.liferay.portal.kernel.model.Layout",
-											  "fields" : [ {
-												"fieldName" : "friendlyURL",
-												"fieldValue" : "/home"
-											  }, {
-												"fieldName" : "privatePage",
-												"fieldValue" : "false"
-											  }, {
-												"fieldName" : "siteKey",
-												"fieldValue" : "test-bug"
-											  } ]
+									"fragmentLink": {
+										"href": {
+											"mapping": {
+												"itemReference": {
+													"className": "com.liferay.portal.kernel.model.Layout",
+													"fields": [
+														{
+															"fieldName": "friendlyURL",
+															"fieldValue": "/home"
+														},
+														{
+															"fieldName": "privatePage",
+															"fieldValue": "false"
+														},
+														{
+															"fieldName": "siteKey",
+															"fieldValue": "test-bug"
+														}
+													]
+												}
 											}
-										  }
 										}
-									  },
+									},
 									"fragmentStyle": {
 										"borderWidth": "0",
 										"marginRight": "2",

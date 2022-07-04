@@ -41,7 +41,7 @@ List<KBFolder> kbFolders = KBUtil.getAlternateRootKBFolders(scopeGroupId, kbDisp
 %>
 
 <c:if test="<%= !kbFolders.isEmpty() %>">
-	<liferay-portlet:actionURL name="updateRootKBFolderId" var="updateRootKBFolderIdURL">
+	<liferay-portlet:actionURL name="/knowledge_base/update_root_kb_folder_id" var="updateRootKBFolderIdURL">
 		<c:if test="<%= kbArticle != null %>">
 			<portlet:param name="urlTitle" value="<%= kbArticle.getUrlTitle() %>" />
 		</c:if>

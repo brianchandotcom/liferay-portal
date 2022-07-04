@@ -299,6 +299,46 @@
 			"quantity": 1,
 			"startDate": "2021-10-01 00:00:00.0",
 			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-011",
+			"accountSubscriptionGroupERC": "ERC-011_liferay-experience-cloud",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-011",
+			"accountSubscriptionGroupERC": "ERC-011_dxp-cloud",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-011",
+			"accountSubscriptionGroupERC": "ERC-011_partnership",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
+		},
+		{
+			"accountKey": "ERC-011",
+			"accountSubscriptionGroupERC": "ERC-011_portal",
+			"endDate": "2024-01-31 00:00:00.0",
+			"instanceSize": "1",
+			"name": "Production",
+			"quantity": 1,
+			"startDate": "2021-10-01 00:00:00.0",
+			"subscriptionStatus": "Active"
 		}
 	],
 	"objectDefinitionName": "AccountSubscription"

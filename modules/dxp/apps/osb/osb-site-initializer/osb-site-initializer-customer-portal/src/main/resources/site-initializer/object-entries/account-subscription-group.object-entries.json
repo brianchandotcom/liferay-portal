@@ -5,7 +5,7 @@
 			"hasActivation": true,
 			"menuOrder": 2,
 			"name": "DXP Cloud",
-			"tabOrder": 1
+			"tabOrder": 2
 		},
 		{
 			"accountKey": "ERC-001",
@@ -152,6 +152,34 @@
 			"menuOrder": 100000,
 			"name": "Partnership",
 			"tabOrder": 1
+		},
+		{
+			"accountKey": "ERC-011",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Liferay Experience Cloud",
+			"tabOrder": 1
+		},
+		{
+			"accountKey": "ERC-011",
+			"hasActivation": true,
+			"menuOrder": 100000,
+			"name": "Partnership",
+			"tabOrder": 3
+		},
+		{
+			"accountKey": "ERC-011",
+			"hasActivation": true,
+			"menuOrder": 2,
+			"name": "DXP Cloud",
+			"tabOrder": 2
+		},
+		{
+			"accountKey": "ERC-011",
+			"hasActivation": true,
+			"menuOrder": 7,
+			"name": "Portal",
+			"tabOrder": 4
 		}
 	],
 	"objectDefinitionName": "AccountSubscriptionGroup"

@@ -1725,28 +1725,30 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Fork",
-			nodePosition = "100,-300");
+			nodePosition = "100,-250");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "100,-200");
+			nodePosition = "-200,-250");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "State",
-			nodePosition = "60,-500");
+			nodePosition = "60,-550");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Join");
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Join",
+			nodePosition = "60,50");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.addConnector(
-			connectorIn = "task",
+			connectorIn = "fork",
 			connectorLabel = "Connector",
 			connectorOut = "start",
 			key_direction = "right");
@@ -1833,13 +1835,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Fork",
-			nodePosition = "600,-300");
+			nodePosition = "100,-250");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
 			nodeLabel = "Task",
-			nodePosition = "300,-80");
+			nodePosition = "-200,-250");
 
 		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
 			infoOption = "Label",
@@ -1855,11 +1857,13 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.dragAndDropDiagramNode(
 			nodeLabel = "Task2",
-			nodePosition = "-40,-500");
+			nodePosition = "60,-550");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Join XOR");
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Join XOR",
+			nodePosition = "60,50");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 

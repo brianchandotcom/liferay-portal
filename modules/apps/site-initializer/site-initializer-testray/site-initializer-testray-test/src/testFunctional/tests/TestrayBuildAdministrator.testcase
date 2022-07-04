@@ -1,0 +1,154 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "site-initializer-testray";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "Site Initializer Testray";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a test for LPS-156438 - Verify if as an Administrator can Add a Build"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAddBuild {
+
+		// TODO LPS-156438 AdminCanAddBuild pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157540 - Verify if as an Administrator I should be able to archive a build "
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanArchiveBuild {
+
+		// TODO LPS-157540 AdminCanArchiveBuild pending implementation
+
+	}
+
+	@description = "This is a test for LPS-157539 - Verify if as an Administrator I should be able to Autoanalyze Builds in a Routine and assert that the Assignee, Comments, Issues have been copied"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanAutoanalyzeBuildsInRoutine {
+
+		// TODO LPS-157539 AdminCanAutoanalyzeBuildsInRoutine pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156513 - Verify if as an Administrator I can delete Builds"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanDeleteBuild {
+
+		// TODO LPS-156513 AdminCanDeleteBuild pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156575 - Verify if as an Administrator I should be able to delete a build that contains runs"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanDeleteBuildContainsRuns {
+
+		// TODO LPS-156575 pending AdminCanDeleteBuildContainsRuns implementation
+
+	}
+
+	@description = "This is a test for LPS-156543 - Verify if as an Administrator I am able to edit Builds"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanEditBuild {
+
+		// TODO LPS-156543 AdminCanEditRoutine pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156546 - Verify if as an Administrator I should not be able to add a duplicate build"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanNotAddDuplicateBuild {
+
+		// TODO LPS-156546 AdminCanNotAddDuplicateBuild pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156455 - Verify if as an Administrator cannot archive Build"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanNotArchiveBuild {
+
+		// TODO LPS-156455 AdminCanNotArchiveBuild pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156557 - Verify if as an Administrator I should not be able to archive a build where its task is in analysis using"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanNotArchiveBuildInAnalysis {
+
+		// TODO LPS-156557 AdminCanNotArchivedBuildInAnalysis pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156583 - Verify if as an Administrator I should be able to promote a build"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanPromoteBuild {
+
+		// TODO LPS-156583 AdminCanPromoteBuild pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156585 - Verify if as an Administrator I should be able to sort the Builds Index"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AdminCanSortBuildByName {
+
+		// TODO LPS-156585 AdminCanSortCompilationBuildName pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156588 - Verify if as an Administrator I should be able to sort the Builds Index"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AdminCanSortCompilationBuildProductVersion {
+
+		// TODO LPS-156588 AdminCanSortCompilationBuildProductVersion pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156580 - Verify if as an Administrator I should be able to specify a start and end parameter when fetching a build index "
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanSpecifyStartAndEndParameter {
+
+		// TODO LPS-156580 AdminCanSpecifyStartAndEndParameter pending implementation
+
+	}
+
+	@description = "This is a test for LPS-156592 - Verify if as an Administrator I should be able to unarchive a build"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AdminCanUnarchiveBuilds {
+
+		// TODO LPS-156592 AdminCanUnarchiveBuilds pending implementation
+
+	}
+
+}

@@ -37,7 +37,11 @@ const ImportModal = ({closeModal, formDataQuerySelector, formImportURL}) => {
 		importStatus,
 		fetchErrorReportFile
 	);
-	const {observer} = useModal();
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			closeModal();
+		},
+	});
 
 	let modalStatus;
 	let title;
@@ -88,7 +92,7 @@ const ImportModal = ({closeModal, formDataQuerySelector, formImportURL}) => {
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton displayType={null} onClick={closeModal}>
+						<ClayButton displayType={null} onClick={onClose}>
 							{Liferay.Language.get('back-to-the-list')}
 						</ClayButton>
 

@@ -1137,6 +1137,12 @@ AUI.add(
 								instance._showEmptyResultsMessage();
 							}
 						}
+						else {
+							instance._showFolderUploadComplete(
+								undefined,
+								currentUploadData
+							);
+						}
 
 						const openToastErrorProps = {
 							message: TPL_ERROR_NOTIFICATION.parse({

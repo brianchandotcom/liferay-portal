@@ -65,7 +65,9 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			WebContent.tearDownCP();
+			var response = HeadlessWebcontentAPI.returnAllstructuredContentId();
+
+			HeadlessWebcontentAPI.deleteAllStructuredContent(structuredContentId = "${response}");
 
 			WebContentStructures.tearDownCP();
 		}

@@ -23,6 +23,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -138,25 +139,21 @@ public class ArticlePortlet extends BaseKBPortlet {
 
 			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
 		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchArticleException ||
-				exception instanceof PrincipalException) {
+		catch (NoSuchArticleException | PrincipalException exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
 
-				SessionErrors.add(renderRequest, exception.getClass());
-
-				SessionMessages.add(
-					renderRequest,
-					portal.getPortletId(renderRequest) +
-						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
-			}
-			else {
-				throw new PortletException(exception);
-			}
+			SessionMessages.add(
+				renderRequest,
+				portal.getPortletId(renderRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 
 	protected long getResourcePrimKey(RenderRequest renderRequest)
-		throws Exception {
+		throws PortalException {
 
 		PortletPreferences preferences = renderRequest.getPreferences();
 
@@ -200,13 +197,6 @@ public class ArticlePortlet extends BaseKBPortlet {
 		return defaultValue;
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
-
-		_kbArticleLocalService = kbArticleLocalService;
-	}
-
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=2.0.0))))",
 		unbind = "-"
@@ -215,7 +205,7 @@ public class ArticlePortlet extends BaseKBPortlet {
 	}
 
 	private long _getResourcePrimKeyFromUrlTitle(RenderRequest renderRequest)
-		throws Exception {
+		throws PortalException {
 
 		String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
 
@@ -246,6 +236,7 @@ public class ArticlePortlet extends BaseKBPortlet {
 		return 0;
 	}
 
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
 
 	@Reference(

@@ -118,7 +118,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 	public void deleteKBArticles(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			KBWebKeys.THEME_DISPLAY);
@@ -162,7 +162,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 	public void deleteKBTemplate(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		long kbTemplateId = ParamUtil.getLong(actionRequest, "kbTemplateId");
 
@@ -171,7 +171,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 	public void deleteKBTemplates(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			KBWebKeys.THEME_DISPLAY);
@@ -274,8 +274,8 @@ public class AdminPortlet extends BaseKBPortlet {
 				portletRequestDispatcher.include(
 					resourceRequest, resourceResponse);
 			}
-			catch (Exception exception) {
-				throw new PortletException(exception);
+			catch (PortalException portalException) {
+				throw new PortletException(portalException);
 			}
 		}
 		else {
@@ -285,7 +285,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 	public void subscribeGroupKBArticles(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			KBWebKeys.THEME_DISPLAY);
@@ -297,7 +297,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 	public void unsubscribeGroupKBArticles(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			KBWebKeys.THEME_DISPLAY);
@@ -309,7 +309,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 	public void updateKBArticlesPriorities(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			KBWebKeys.THEME_DISPLAY);
@@ -519,23 +519,19 @@ public class AdminPortlet extends BaseKBPortlet {
 
 			renderRequest.setAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS, status);
 		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchArticleException ||
-				exception instanceof NoSuchFolderException ||
-				exception instanceof NoSuchTemplateException ||
-				exception instanceof PrincipalException) {
+		catch (NoSuchArticleException | NoSuchFolderException |
+			   NoSuchTemplateException | PrincipalException exception) {
 
-				SessionErrors.add(renderRequest, exception.getClass());
-			}
-			else {
-				throw new PortletException(exception);
-			}
+			SessionErrors.add(renderRequest, exception.getClass());
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 
 	protected List<KBArticle> getKBArticles(
 			HttpServletRequest httpServletRequest)
-		throws Exception {
+		throws PortalException {
 
 		long[] kbArticleResourcePrimKeys = ParamUtil.getLongValues(
 			httpServletRequest, "rowIdsKBArticle");
@@ -574,7 +570,7 @@ public class AdminPortlet extends BaseKBPortlet {
 	}
 
 	private List<KBFolder> _getKBFolders(HttpServletRequest httpServletRequest)
-		throws Exception {
+		throws PortalException {
 
 		long[] kbFolderIds = ParamUtil.getLongValues(
 			httpServletRequest, "rowIdsKBFolder");

@@ -42,8 +42,7 @@ import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -80,13 +79,10 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import javax.servlet.ServletException;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -120,22 +116,13 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 				themeDisplay.getScopeGroupId(), resourcePrimKey, sourceFileName,
 				KBWebKeys.TEMP_FOLDER_NAME, inputStream, mimeType);
 		}
-		catch (Exception exception) {
-			if (exception instanceof AntivirusScannerException ||
-				exception instanceof DuplicateFileEntryException ||
-				exception instanceof FileExtensionException ||
-				exception instanceof FileNameException ||
-				exception instanceof FileSizeException ||
-				exception instanceof UploadRequestSizeException) {
+		catch (AntivirusScannerException | DuplicateFileEntryException |
+			   FileExtensionException | FileNameException | FileSizeException |
+			   UploadRequestSizeException exception) {
 
-				JSONObject jsonObject = uploadResponseHandler.onFailure(
-					actionRequest, (PortalException)exception);
-
-				writeJSON(actionRequest, actionResponse, jsonObject);
-			}
-			else {
-				throw exception;
-			}
+			writeJSON(
+				actionRequest, actionResponse,
+				uploadResponseHandler.onFailure(actionRequest, exception));
 		}
 	}
 
@@ -195,35 +182,34 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long resourcePrimKey = ParamUtil.getLong(
-			actionRequest, "resourcePrimKey");
-		String fileName = ParamUtil.getString(actionRequest, "fileName");
-
-		JSONObject jsonObject = jsonFactory.createJSONObject();
-
 		try {
+			long resourcePrimKey = ParamUtil.getLong(
+				actionRequest, "resourcePrimKey");
+			String fileName = ParamUtil.getString(actionRequest, "fileName");
+
 			kbArticleService.deleteTempAttachment(
 				themeDisplay.getScopeGroupId(), resourcePrimKey, fileName,
 				KBWebKeys.TEMP_FOLDER_NAME);
 
-			jsonObject.put("deleted", Boolean.TRUE);
+			writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put("deleted", Boolean.TRUE));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
 
-			String errorMessage = themeDisplay.translate(
-				"an-unexpected-error-occurred-while-deleting-the-file");
-
-			jsonObject.put(
-				"deleted", Boolean.FALSE
-			).put(
-				"errorMessage", errorMessage
-			);
+			writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"deleted", Boolean.FALSE
+				).put(
+					"errorMessage",
+					themeDisplay.translate(
+						"an-unexpected-error-occurred-while-deleting-the-file")
+				));
 		}
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	public void moveKBObject(
@@ -318,60 +304,44 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			String resourceID = resourceRequest.getResourceID();
 
 			if (resourceID.equals("compareVersions")) {
-				long resourcePrimKey = ParamUtil.getLong(
-					resourceRequest, "resourcePrimKey");
-				double sourceVersion = ParamUtil.getDouble(
-					resourceRequest, "filterSourceVersion");
-				double targetVersion = ParamUtil.getDouble(
-					resourceRequest, "filterTargetVersion");
-
-				String diffHtmlResults = null;
-
 				try {
-					diffHtmlResults = adminHelper.getKBArticleDiff(
+					long resourcePrimKey = ParamUtil.getLong(
+						resourceRequest, "resourcePrimKey");
+					double sourceVersion = ParamUtil.getDouble(
+						resourceRequest, "filterSourceVersion");
+					double targetVersion = ParamUtil.getDouble(
+						resourceRequest, "filterTargetVersion");
+
+					String diffHtmlResults = adminHelper.getKBArticleDiff(
 						resourcePrimKey, GetterUtil.getInteger(sourceVersion),
 						GetterUtil.getInteger(targetVersion), "content");
+
+					resourceRequest.setAttribute(
+						WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
+
+					PortletContext portletContext =
+						resourceRequest.getPortletContext();
+
+					PortletRequestDispatcher portletRequestDispatcher =
+						portletContext.getRequestDispatcher(
+							"/admin/common/compare_versions_diff_html.jsp");
+
+					portletRequestDispatcher.include(
+						resourceRequest, resourceResponse);
 				}
 				catch (Exception exception) {
-					try {
-						PortalUtil.sendError(
-							exception,
-							PortalUtil.getHttpServletRequest(resourceRequest),
-							PortalUtil.getHttpServletResponse(
-								resourceResponse));
-					}
-					catch (ServletException servletException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(servletException);
-						}
-					}
+					PortalUtil.sendError(
+						exception,
+						PortalUtil.getHttpServletRequest(resourceRequest),
+						PortalUtil.getHttpServletResponse(resourceResponse));
 				}
-
-				resourceRequest.setAttribute(
-					WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
-
-				PortletSession portletSession =
-					resourceRequest.getPortletSession();
-
-				PortletContext portletContext =
-					portletSession.getPortletContext();
-
-				PortletRequestDispatcher portletRequestDispatcher =
-					portletContext.getRequestDispatcher(
-						"/admin/common/compare_versions_diff_html.jsp");
-
-				portletRequestDispatcher.include(
-					resourceRequest, resourceResponse);
 			}
 			else if (resourceID.equals("kbArticleRSS")) {
 				serveKBArticleRSS(resourceRequest, resourceResponse);
 			}
 		}
-		catch (IOException ioException) {
-			throw ioException;
-		}
-		catch (PortletException portletException) {
-			throw portletException;
+		catch (IOException | PortletException exception) {
+			throw exception;
 		}
 		catch (Exception exception) {
 			throw new PortletException(exception);
@@ -635,63 +605,28 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAdminUtilHelper(AdminHelper adminHelper) {
-		this.adminHelper = adminHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		this.jsonFactory = jsonFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBArticleService(KBArticleService kbArticleService) {
-		this.kbArticleService = kbArticleService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBCommentLocalService(
-		KBCommentLocalService kbCommentLocalService) {
-
-		this.kbCommentLocalService = kbCommentLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBCommentService(KBCommentService kbCommentService) {
-		this.kbCommentService = kbCommentService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBFolderService(KBFolderService kbFolderService) {
-		this.kbFolderService = kbFolderService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBTemplateService(KBTemplateService kbTemplateService) {
-		this.kbTemplateService = kbTemplateService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		this.portal = portal;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUploadResponseHandler(
-		UploadResponseHandler uploadResponseHandler) {
-
-		this.uploadResponseHandler = uploadResponseHandler;
-	}
-
+	@Reference
 	protected AdminHelper adminHelper;
-	protected JSONFactory jsonFactory;
+
+	@Reference
 	protected KBArticleService kbArticleService;
+
+	@Reference
 	protected KBCommentLocalService kbCommentLocalService;
+
+	@Reference
 	protected KBCommentService kbCommentService;
+
+	@Reference
 	protected KBFolderService kbFolderService;
+
+	@Reference
 	protected KBTemplateService kbTemplateService;
+
+	@Reference
 	protected Portal portal;
+
+	@Reference
 	protected UploadResponseHandler uploadResponseHandler;
 
 	private void _compareVersions(RenderRequest renderRequest)

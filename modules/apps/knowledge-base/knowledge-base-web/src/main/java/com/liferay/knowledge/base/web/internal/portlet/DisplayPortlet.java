@@ -250,7 +250,8 @@ public class DisplayPortlet extends BaseKBPortlet {
 		throws IOException, PortletException {
 
 		try {
-			KBArticleSelection kbArticleSelection = getKBArticle(renderRequest);
+			KBArticleSelection kbArticleSelection = _getKBArticle(
+				renderRequest);
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_EXACT_MATCH,
@@ -289,24 +290,60 @@ public class DisplayPortlet extends BaseKBPortlet {
 				httpServletResponse.setStatus(404);
 			}
 		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchArticleException ||
-				exception instanceof PrincipalException) {
+		catch (NoSuchArticleException | PrincipalException exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
 
-				SessionErrors.add(renderRequest, exception.getClass());
-
-				SessionMessages.add(
-					renderRequest,
-					_portal.getPortletId(renderRequest) +
-						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
-			}
-			else {
-				throw new PortletException(exception);
-			}
+			SessionMessages.add(
+				renderRequest,
+				_portal.getPortletId(renderRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 
-	protected KBArticleSelection getKBArticle(RenderRequest renderRequest)
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=2.0.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
+	}
+
+	private KBArticle _findClosestMatchingKBArticle(
+			long groupId, String oldKBFolderURLTitle, long newKBFolderId,
+			String urlTitle)
+		throws PortalException {
+
+		KBArticle oldKBArticle =
+			_kbArticleLocalService.fetchKBArticleByUrlTitle(
+				groupId, oldKBFolderURLTitle, urlTitle);
+
+		KBArticle kbArticle = null;
+
+		while ((kbArticle == null) && (oldKBArticle != null)) {
+			kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
+				groupId, newKBFolderId, oldKBArticle.getUrlTitle());
+
+			if (kbArticle == null) {
+				oldKBArticle = oldKBArticle.getParentKBArticle();
+			}
+		}
+
+		if (kbArticle == null) {
+			List<KBArticle> kbArticles = _kbArticleLocalService.getKBArticles(
+				groupId, newKBFolderId, WorkflowConstants.STATUS_APPROVED, 0, 1,
+				new KBArticlePriorityComparator(true));
+
+			if (!kbArticles.isEmpty()) {
+				kbArticle = kbArticles.get(0);
+			}
+		}
+
+		return kbArticle;
+	}
+
+	private KBArticleSelection _getKBArticle(RenderRequest renderRequest)
 		throws PortalException {
 
 		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
@@ -375,46 +412,6 @@ public class DisplayPortlet extends BaseKBPortlet {
 		return kbArticleSelector.findByResourcePrimKey(
 			_portal.getScopeGroupId(renderRequest), preferredKBFolderURLTitle,
 			parentResourcePrimKey, resourcePrimKey);
-	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
-	private KBArticle _findClosestMatchingKBArticle(
-			long groupId, String oldKBFolderURLTitle, long newKBFolderId,
-			String urlTitle)
-		throws PortalException {
-
-		KBArticle oldKBArticle =
-			_kbArticleLocalService.fetchKBArticleByUrlTitle(
-				groupId, oldKBFolderURLTitle, urlTitle);
-
-		KBArticle kbArticle = null;
-
-		while ((kbArticle == null) && (oldKBArticle != null)) {
-			kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
-				groupId, newKBFolderId, oldKBArticle.getUrlTitle());
-
-			if (kbArticle == null) {
-				oldKBArticle = oldKBArticle.getParentKBArticle();
-			}
-		}
-
-		if (kbArticle == null) {
-			List<KBArticle> kbArticles = _kbArticleLocalService.getKBArticles(
-				groupId, newKBFolderId, WorkflowConstants.STATUS_APPROVED, 0, 1,
-				new KBArticlePriorityComparator(true));
-
-			if (!kbArticles.isEmpty()) {
-				kbArticle = kbArticles.get(0);
-			}
-		}
-
-		return kbArticle;
 	}
 
 	private String _getPreferredKBFolderUrlTitle(

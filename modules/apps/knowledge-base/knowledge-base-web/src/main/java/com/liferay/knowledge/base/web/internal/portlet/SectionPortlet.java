@@ -98,28 +98,30 @@ public class SectionPortlet extends BaseKBPortlet {
 		throws IOException, PortletException {
 
 		try {
-			KBArticle kbArticle = getKBArticle(renderRequest);
-
 			renderRequest.setAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE,
+				_getKBArticle(renderRequest));
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_STATUS,
 				WorkflowConstants.STATUS_APPROVED);
 		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchArticleException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, exception.getClass());
-			}
-			else {
-				throw new PortletException(exception);
-			}
+		catch (NoSuchArticleException | PrincipalException exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 
-	protected KBArticle getKBArticle(RenderRequest renderRequest)
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=2.0.0))))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
+	}
+
+	private KBArticle _getKBArticle(RenderRequest renderRequest)
 		throws PortalException {
 
 		long resourcePrimKey = ParamUtil.getLong(
@@ -150,20 +152,7 @@ public class SectionPortlet extends BaseKBPortlet {
 			groupId, KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, urlTitle);
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
-
-		_kbArticleLocalService = kbArticleLocalService;
-	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(&(release.schema.version>=1.2.0)(!(release.schema.version>=2.0.0))))",
-		unbind = "-"
-	)
-	protected void setRelease(Release release) {
-	}
-
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
 
 }

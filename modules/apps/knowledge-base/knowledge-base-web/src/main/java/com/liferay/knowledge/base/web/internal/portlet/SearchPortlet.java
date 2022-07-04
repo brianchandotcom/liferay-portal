@@ -20,6 +20,7 @@ import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -108,32 +109,19 @@ public class SearchPortlet extends BaseKBPortlet {
 		throws IOException, PortletException {
 
 		try {
-			KBArticle kbArticle = null;
-
-			long resourcePrimKey = ParamUtil.getLong(
-				renderRequest, "resourcePrimKey");
-
-			if (resourcePrimKey > 0) {
-				kbArticle = kbArticleService.getLatestKBArticle(
-					resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
-			}
-
 			renderRequest.setAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE,
+				_getKBArticle(renderRequest));
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_STATUS,
 				WorkflowConstants.STATUS_APPROVED);
 		}
-		catch (Exception exception) {
-			if (exception instanceof NoSuchArticleException ||
-				exception instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, exception.getClass());
-			}
-			else {
-				throw new PortletException(exception);
-			}
+		catch (NoSuchArticleException | PrincipalException exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 	}
 
@@ -142,6 +130,20 @@ public class SearchPortlet extends BaseKBPortlet {
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {
+	}
+
+	private KBArticle _getKBArticle(RenderRequest renderRequest)
+		throws PortalException {
+
+		long resourcePrimKey = ParamUtil.getLong(
+			renderRequest, "resourcePrimKey");
+
+		if (resourcePrimKey > 0) {
+			return kbArticleService.getLatestKBArticle(
+				resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+		}
+
+		return null;
 	}
 
 }

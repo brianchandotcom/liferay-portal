@@ -2975,7 +2975,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		Page<TaxonomyCategory> taxonomyCategoryPage =
 			taxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
-				parentTaxonomyCategoryId, "",
+				parentTaxonomyCategoryId, "", null,
 				taxonomyCategoryResource.toFilter(
 					StringBundler.concat(
 						"name eq '", taxonomyCategory.getName(), "'")),
@@ -3043,7 +3043,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			Page<TaxonomyVocabulary> taxonomyVocabularyPage =
 				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-					groupId, "",
+					groupId, "", null,
 					taxonomyVocabularyResource.toFilter(
 						StringBundler.concat(
 							"name eq '", taxonomyVocabulary.getName(), "'")),
@@ -3111,7 +3111,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Page<TaxonomyCategory> taxonomyCategoryPage =
 			taxonomyCategoryResource.
 				getTaxonomyVocabularyTaxonomyCategoriesPage(
-					vocabularyId, "",
+					vocabularyId, "", null,
 					taxonomyCategoryResource.toFilter(
 						StringBundler.concat(
 							"name eq '", taxonomyCategory.getName(), "'")),

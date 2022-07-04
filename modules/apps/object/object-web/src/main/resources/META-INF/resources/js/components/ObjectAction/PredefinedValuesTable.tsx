@@ -270,7 +270,10 @@ export default function PredefinedValuesTable({
 
 	return (
 		<>
-			<Card title={Liferay.Language.get('predefined-values')}>
+			<Card
+				title={Liferay.Language.get('predefined-values')}
+				viewMode="no-margin"
+			>
 				<div className="lfr-object-web__predefined-values-table-add-modal-button">
 					<ClayButtonWithIcon
 						className="add-modal-button"

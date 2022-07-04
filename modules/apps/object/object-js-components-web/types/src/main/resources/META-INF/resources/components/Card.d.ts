@@ -25,7 +25,7 @@ export declare function Card({
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	title: string;
 	tooltip?: ITooltip | null;
-	viewMode?: 'inline' | 'no-children' | 'no-padding';
+	viewMode?: 'inline' | 'no-children' | 'no-margin' | 'no-padding';
 }
 interface ITooltip {
 	content: string;

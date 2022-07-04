@@ -28,6 +28,7 @@ export function Card({
 }: IProps) {
 	const inline = viewMode === 'inline';
 	const noChildren = viewMode === 'no-children';
+	const noMargin = viewMode === 'no-margin';
 	const noPadding = viewMode === 'no-padding';
 
 	return (
@@ -35,7 +36,7 @@ export function Card({
 			{...otherProps}
 			className={classNames(className, 'lfr-objects__card', {
 				'lfr-objects__card--inline': inline,
-				'lfr-objects__card--no-margin': noChildren,
+				'lfr-objects__card--no-margin': noChildren || noMargin,
 			})}
 		>
 			{noChildren ? (
@@ -82,7 +83,7 @@ export function Card({
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 	title: string;
 	tooltip?: ITooltip | null;
-	viewMode?: 'inline' | 'no-children' | 'no-padding';
+	viewMode?: 'inline' | 'no-children' | 'no-margin' | 'no-padding';
 }
 
 interface ITooltip {

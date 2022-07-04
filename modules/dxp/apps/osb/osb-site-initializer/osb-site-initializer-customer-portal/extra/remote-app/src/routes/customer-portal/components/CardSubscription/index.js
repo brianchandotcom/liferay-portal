@@ -31,6 +31,7 @@ const SUBSCRIPTION_IMAGE_FILE = {
 	'DXP': 'dxp_icon.svg',
 	'DXP Cloud': 'dxp_icon.svg',
 	'Enterprise Search': 'enterprise_icon.svg',
+	'Liferay Experience Cloud': 'dxp_icon.svg',
 	'Portal': 'portal_icon.svg',
 };
 

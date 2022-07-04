@@ -36,6 +36,71 @@ definition {
 		}
 	}
 
+	@description = "LPS-94874 Bug: Can't edit segment if the segment has a select input"
+	@priority = "5"
+	@uitest
+	test CanEditSegmentIfHaveASelectInput {
+		property portal.acceptance = "true";
+
+		task ("Go to segments portlet") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Edit the segment with a select input") {
+			Segmentation.editSegment(entry = "EditSegment Test");
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+
+			Segmentation.deleteProperties();
+
+			Segmentation.addProperties(propertyOption = "Regular Role");
+
+			Segmentation.fillProperty(selectCheckbox = "Administrator");
+
+			Segmentation.fillTitle(titleField = "EditSegmentIfHaveASelectInput Test");
+
+			Segmentation.viewMembers(memberName = "Test Test");
+
+			Button.clickSave();
+		}
+
+		task ("Assert segment edited") {
+			Segmentation.editSegment(entry = "EditSegmentIfHaveASelectInput Test");
+
+			Segmentation.viewSegment(
+				criterion = "select-input",
+				value = "Administrator");
+
+			Segmentation.fillProperty(selectCheckbox = "Power User");
+
+			Button.clickSave();
+
+			Segmentation.editSegment(entry = "EditSegmentIfHaveASelectInput Test");
+
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+
+			Segmentation.viewSegment(
+				criterion = "select-input",
+				value = "Power User");
+		}
+
+		task ("Assert the segment cannot be edited with the toggle off") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+
+			AssertElementNotPresent(locator1 = "Button#SELECT");
+		}
+	}
+
 	@description = "LPS-102740 Validate if the user can edit a segment with Properties Country"
 	@priority = "5"
 	@uitest

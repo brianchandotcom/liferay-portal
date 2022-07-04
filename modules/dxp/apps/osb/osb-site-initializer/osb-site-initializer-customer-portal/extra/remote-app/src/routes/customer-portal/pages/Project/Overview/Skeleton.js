@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-import ProjectSupport from '../../../components/ProjectSupport';
+import SupportOverview from '../../../components/SupportOverview';
 
 const OverviewSkeleton = () => {
-	return <ProjectSupport.Skeleton />;
+	return <SupportOverview.Skeleton />;
 };
 
 export default OverviewSkeleton;

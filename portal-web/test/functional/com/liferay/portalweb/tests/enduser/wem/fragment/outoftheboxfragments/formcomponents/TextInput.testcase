@@ -457,6 +457,60 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-151400. The required field has an asterisk symbol on dropdown menu of mapping field selector."
+	@priority = "4"
+	test ViewAsteriskSymbolOfRequiredField {
+		property test.name.skip.portal.instance = "TextInput#ViewAsteriskSymbolOfRequiredField";
+
+		task ("Given a page creator has a Form Container with a Text Input fragment") {
+			task ("Add a required Text field to object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Name",
+					fieldName = "name",
+					fieldType = "String",
+					isRequired = "true",
+					objectName = "PurchaseOrder");
+			}
+
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add a Text Input into Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Text Input");
+			}
+		}
+
+		task ("When the page creator accesses to the General panel of Text Input") {
+			PageEditor.gotoConfiguration(fragmentName = "Text Input");
+		}
+
+		task ("Then the page creator sees the asterisk symbol of Text field in mapping field selector") {
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_value = "Name*",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+		}
+	}
+
 	@description = "This is a test for LPS-150278. View warning modal when hiding and publishing a layout elements that contains a required Text Input fragment on content page."
 	@priority = "4"
 	test ViewWarningWhenHideRequiredTextInputOnContentPage {

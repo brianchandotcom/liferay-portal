@@ -196,8 +196,6 @@ definition {
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
 
-		
-
 		Refresh();
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSIGNEE_HEADER");
@@ -308,8 +306,6 @@ definition {
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
 
-		
-
 		Refresh();
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_ASSIGNEE_HEADER");
@@ -321,8 +317,6 @@ definition {
 		Click(locator1 = "WorkflowAllItems#REJECT_DROPDOWN");
 
 		Button.clickDone();
-
-		
 
 		Refresh();
 
@@ -681,8 +675,6 @@ definition {
 		WorkflowMetrics.goToReassignSelectTask();
 
 		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry 1");
-
-		
 
 		Refresh();
 

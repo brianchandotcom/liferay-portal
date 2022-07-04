@@ -1,17 +1,5 @@
 definition {
 
-	macro addBasicTableView {
-		AppBuilderAdmin.switchTab(tabName = "Table Views");
-
-		AppBuilderAdmin.add();
-
-		TableViewBuilder.addColumnByDoubleClick(fieldType = "${fieldType}");
-
-		TableViewBuilder.setName(tableViewName = "${tableViewName}");
-
-		TableViewBuilder.save();
-	}
-
 	macro addColumnByDoubleClick {
 		var key_fieldLabel = "${fieldType}";
 
@@ -68,10 +56,6 @@ definition {
 		Click(
 			key_columnLabel = "${columnLabel}",
 			locator1 = "TableViewBuilder#FILTER_DROPDOWN");
-	}
-
-	macro save {
-		AppBuilderAdmin.save();
 	}
 
 	macro searchByItem {

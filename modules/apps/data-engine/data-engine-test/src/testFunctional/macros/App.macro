@@ -26,26 +26,6 @@ definition {
 		Button.click(button = "Previous");
 	}
 
-	macro editSiteDeployed {
-		AppBuilderAdmin.openItem(itemName = "${appTitle}");
-
-		App.toggleUndeploy(deployOption = "Product Menu");
-
-		App.toggleDeploy(deployOption = "Product Menu");
-
-		App.selectProductMenuPlaceItDropdownOption(menuOption = "${menuOption}");
-
-		App.openProductMenuSiteOption();
-
-		for (var siteOption : list "${siteOptionList}") {
-			App.selectProductMenuSiteOption(siteOption = "${siteOption}");
-		}
-
-		App.saveApp();
-
-		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
-	}
-
 	macro openProductMenuPlaceItDropdown {
 		Click(locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN");
 	}
@@ -56,10 +36,6 @@ definition {
 
 	macro refreshWorkflowList {
 		Click(locator1 = "AppBuilder#REFRESH_WORKFLOW_BUTTON");
-	}
-
-	macro saveApp {
-		AppBuilderAdmin.save();
 	}
 
 	macro selectFormView {

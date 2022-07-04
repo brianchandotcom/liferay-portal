@@ -62,52 +62,6 @@ definition {
 		FormViewBuilder.validateFieldInObject(fieldLabel = "${fieldName}");
 	}
 
-	macro addFormView {
-		while ((IsElementNotPresent(locator1 = "AppBuilder#NAVBAR")) || (IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_FIELDS_TAB"))) {
-			Pause(locator1 = "1000");
-		}
-
-		if (IsElementPresent(locator1 = "AppBuilder#NAVBAR")) {
-			FormViewBuilder.switchToFormViewTab();
-
-			AppBuilderAdmin.add();
-		}
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setName(formViewName = "${formViewName}");
-
-		FormViewBuilder.save();
-	}
-
-	macro addFormViewAndValidateFieldLabel {
-		FormViewBuilder.addFormView(
-			fieldType = "${fieldType}",
-			formViewName = "${formViewName}");
-
-		AppBuilderAdmin.validateItemNameOnTable(itemName = "${formViewName}");
-
-		AppBuilderAdmin.openItem(itemName = "${formViewName}");
-
-		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldType}");
-
-		AppBuilderAdmin.gotoBack();
-	}
-
-	macro addFormViewSameFields {
-		if (IsElementPresent(locator1 = "AppBuilder#NAVBAR")) {
-			FormViewBuilder.switchToFormViewTab();
-
-			AppBuilderAdmin.add();
-		}
-
-		FormViewBuilder.addFieldByDoubleClickFromObjectSidebar(fieldLabel = "${fieldLabel}");
-
-		FormViewBuilder.setName(formViewName = "${formViewName}");
-
-		FormViewBuilder.save();
-	}
-
 	macro addObjectByDragAndDrop {
 		Pause(locator1 = "10000");
 
@@ -606,10 +560,6 @@ definition {
 
 	macro ruleSave {
 		Click(locator1 = "FormViewBuilder#RULE_BUILDER_SAVE_BUTTON");
-	}
-
-	macro save {
-		AppBuilderAdmin.save();
 	}
 
 	macro saveButtonFieldset {

@@ -382,6 +382,12 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: fields
                   schema:
                       type: string
@@ -511,6 +517,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: fields
                   schema:
@@ -879,6 +891,12 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: fields
                   schema:
                       type: string
@@ -1012,6 +1030,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: fields
                   schema:
@@ -1276,6 +1300,12 @@ paths:
                   required: true
                   schema:
                       type: string
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: fields
                   schema:
@@ -1646,6 +1676,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: fields
                   schema:

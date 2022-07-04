@@ -335,6 +335,24 @@ public class JSONServerServletTest {
 				"Missing model name in path /fruit", message.get("message"));
 		}
 
+		// /fruit/plantae/tracheophyta/magnoliopsida/vitales/vitaceae/vitis?filter=name+eq+merlot
+
+		mockHttpServletRequest.setPathInfo("/fruit/plantae/tracheophyta/magnoliopsida/vitales/vitaceae/vitis?filter=name+eq+merlot");
+
+		mockHttpServletResponse = new MockHttpServletResponse();
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		List<Map<String, Object>> grapes = _objectMapper.readValue(
+			mockHttpServletResponse.getContentAsString(), List.class);
+
+		Assert.assertEquals(grapes.toString(), 1, grapes.size());
+
+		Map<String, Object> grape = grapes.get(0);
+
+		Assert.assertEquals(1, grape.get("id"));
+		Assert.assertEquals("Merlot", grape.get("name"));
+
 		// /fruit/apple with color/green
 
 		mockHttpServletRequest.setContent("{\"color\": \"green\"}".getBytes());

@@ -63,6 +63,12 @@
 			"name": "Blood Orange"
 		}
 	],
+	"plantae/tracheophyta/magnoliopsida/vitales/vitaceae/vitis?filter=name+eq+merlot": [
+		{
+			"id": 1,
+			"name": "Merlot"
+		}
+	],
 	"raspberry": [
 		{
 			"id": 1,

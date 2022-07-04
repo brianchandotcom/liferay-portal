@@ -121,12 +121,12 @@ type ObjectFieldFilterSetting = {
 		[key: string]:
 			| string
 			| string[]
-			| ObjectFieldDateRangeFilterSettring
+			| ObjectFieldDateRangeFilterSettings
 			| undefined;
 	};
 };
 
-type ObjectFieldDateRangeFilterSettring = {
+type ObjectFieldDateRangeFilterSettings = {
 	[key: string]: string;
 };
 

@@ -46,9 +46,7 @@ definition {
 	@priority = "3"
 	test AddFormTemplate {
 		task ("Create a Data Definition containing a boolean field and a text field") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 			DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
 
@@ -66,9 +64,7 @@ definition {
 		}
 
 		task ("Go to Manage Templates of the created Data Definition") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 			DDLNavigator.gotoManageDataDefinitions();
 
@@ -128,9 +124,7 @@ definition {
 		}
 
 		task ("Add a new dynamic data list") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 			DDLList.addCP();
 

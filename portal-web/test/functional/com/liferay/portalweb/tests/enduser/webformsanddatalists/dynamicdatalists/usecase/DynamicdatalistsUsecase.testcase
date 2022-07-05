@@ -1722,16 +1722,9 @@ definition {
 	@description = "This is a use case for LPS-50557."
 	@priority = "3"
 	test CreateSiteAndViewDefaultDataDefinitions {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "site-name");
 
 		DDLNavigator.gotoManageDataDefinitions();
 
@@ -2080,9 +2073,7 @@ definition {
 	@priority = "4"
 	test FormTemplateUniqueField {
 		task ("Create a Data Definition containing a boolean field and a text field") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 			DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
 
@@ -2100,9 +2091,7 @@ definition {
 		}
 
 		task ("Go to Manage Templates of the created Data Definition") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 			DDLNavigator.gotoManageDataDefinitions();
 
@@ -2557,9 +2546,7 @@ definition {
 	@priority = "3"
 	test TemplateAddDeletedField {
 		task ("Create a Data Definition containing a boolean field and a text field") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 			DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
 
@@ -2577,9 +2564,7 @@ definition {
 		}
 
 		task ("Go to Manage Templates of the created Data Definition") {
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Dynamic Data Lists");
+			DDLList.openDynamicDataListsAdmin(siteURLKey = "guest");
 
 			DDLNavigator.gotoManageDataDefinitions();
 

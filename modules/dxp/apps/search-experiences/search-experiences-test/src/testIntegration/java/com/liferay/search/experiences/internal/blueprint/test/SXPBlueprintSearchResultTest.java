@@ -108,7 +108,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import org.apache.commons.lang.StringUtils;
@@ -618,8 +617,6 @@ public class SXPBlueprintSearchResultTest {
 
 	@Test
 	public void testBoostFreshness() throws Exception {
-		_addJournalArticleSleep = 3;
-
 		_setUpJournalArticles(
 			new String[] {"Created", ""},
 			new String[] {"First Created", "Second Created"});
@@ -1147,8 +1144,6 @@ public class SXPBlueprintSearchResultTest {
 	@Test
 	public void testLimitSearchToContentsCreatedWithinAPeriodOfTime()
 		throws Exception {
-
-		_addJournalArticleSleep = 2;
 
 		_setUpJournalArticles(
 			new String[] {"cola cola", ""},
@@ -2171,8 +2166,6 @@ public class SXPBlueprintSearchResultTest {
 				new String[] {_assetTag.getName()});
 		}
 
-		TimeUnit.SECONDS.sleep(_addJournalArticleSleep);
-
 		long journalFolderId = 0;
 
 		if (_journalFolder != null) {
@@ -2273,7 +2266,6 @@ public class SXPBlueprintSearchResultTest {
 	@Inject
 	private static UserLocalService _userLocalService;
 
-	private int _addJournalArticleSleep;
 	private AssetCategory _assetCategory;
 	private AssetTag _assetTag;
 	private AssetVocabulary _assetVocabulary;

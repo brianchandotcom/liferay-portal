@@ -291,6 +291,20 @@ public class CommerceInventoryReplenishmentItemLocalServiceWrapper
 				commerceInventoryReplenishmentItemId);
 	}
 
+	@Override
+	public
+		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
+			fetchCommerceInventoryReplenishmentItem(
+				long companyId, String sku,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.commerce.inventory.model.
+						CommerceInventoryReplenishmentItem> orderByComparator) {
+
+		return _commerceInventoryReplenishmentItemLocalService.
+			fetchCommerceInventoryReplenishmentItem(
+				companyId, sku, orderByComparator);
+	}
+
 	/**
 	 * Returns the commerce inventory replenishment item with the matching external reference code and company.
 	 *

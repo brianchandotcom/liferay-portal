@@ -123,6 +123,8 @@ definition {
 				key_dmDocumentTitle = "${documentsAndMediaField}",
 				locator1 = "WC#ICON_DOCUMENT_TITLE",
 				value1 = "${documentsAndMediaField}");
+
+			SelectFrameTop();
 		}
 
 		if (isSet(linkedPageName)) {

@@ -1277,6 +1277,8 @@ definition {
 			key_filterOption = "Add",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 
+		SelectFrameTop();
+
 		WaitForElementNotPresent(locator1 = "CommerceEntry#ANY_IFRAME");
 
 		if (IsElementPresent(key_contentType = "Base Information", locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED")) {

@@ -273,7 +273,7 @@ definition {
 	}
 
 	macro addTabFieldsOnLayout {
-		LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAddNoSelectFrame();
 
 		Click(
 			key_type = "Fields",
@@ -342,7 +342,7 @@ definition {
 	}
 
 	macro addTabRelationshipsOnLayout {
-		LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAddNoSelectFrame();
 
 		Click(
 			key_type = "Relationships",

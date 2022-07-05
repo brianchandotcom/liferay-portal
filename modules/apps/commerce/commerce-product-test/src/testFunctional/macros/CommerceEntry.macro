@@ -417,7 +417,7 @@ definition {
 			locator1 = "CommerceEntry#FIELD_TYPE_SELECT",
 			value1 = "${optionFieldType}");
 
-		Button.click(button = "Submit");
+		Button.clickSubmitButton();
 
 		Type(
 			locator1 = "CommerceEntry#DESCRIPTION_FIELD",
@@ -478,7 +478,7 @@ definition {
 			entryName = "${productCatalog}",
 			label = "Catalog");
 
-		Click(locator1 = "Button#SUBMIT");
+		Button.clickSubmitButton();
 
 		WaitForElementPresent(
 			key_title = "${productName}",

@@ -8,6 +8,8 @@ definition {
 
 	macro clickAdd {
 		Button.click(button = "Add");
+
+		SelectFrameTop();
 	}
 
 	macro clickAddRow {
@@ -24,6 +26,8 @@ definition {
 
 	macro clickCancel {
 		Button.click(button = "Cancel");
+
+		SelectFrameTop();
 	}
 
 	macro clickCheckOut {

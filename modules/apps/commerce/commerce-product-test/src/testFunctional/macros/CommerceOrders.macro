@@ -233,6 +233,8 @@ definition {
 
 		Button.clickSubmitButton();
 
+		WaitForPageLoad();
+
 		for (var productSku : list "${productSkuList}") {
 			CommerceNavigator.gotoEntry(entryName = "${productSku}");
 

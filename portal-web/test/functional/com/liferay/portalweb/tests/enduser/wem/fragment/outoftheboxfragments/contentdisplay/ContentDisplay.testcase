@@ -513,6 +513,8 @@ definition {
 				locator1 = "LexiconList#LIST_ENTRY_TITLE",
 				value1 = "Web Content Title");
 
+			SelectFrameTop();
+
 			AssertTextEquals.assertPartialText(
 				fragmentName = "wc",
 				index = "1",

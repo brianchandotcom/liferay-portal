@@ -156,6 +156,8 @@ definition {
 			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 			Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+
+			SelectFrameTop();
 		}
 
 		if (isSet(tagName)) {
@@ -509,8 +511,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "CKEditor#BODY",
 				value1 = "${threadBody}");
-
-			SelectFrameTop();
 		}
 
 		if ("${threadAttachmentRemove}" == "true") {
@@ -576,6 +576,8 @@ definition {
 				Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
 			}
 		}
+
+		SelectFrameTop();
 	}
 
 	macro editPG {

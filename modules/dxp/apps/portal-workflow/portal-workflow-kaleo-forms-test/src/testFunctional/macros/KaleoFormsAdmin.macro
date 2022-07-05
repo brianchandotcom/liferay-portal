@@ -26,7 +26,7 @@ definition {
 	macro addForm {
 		SelectFrame(locator1 = "DDMEditStructure#IFRAME");
 
-		LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAddNoSelectFrame();
 
 		Click(locator1 = "DDMEditStructure#NAME_FIELD");
 

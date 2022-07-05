@@ -104,6 +104,8 @@ definition {
 			Navigator.gotoNavItem(navItem = "Documents and Media");
 
 			LexiconCard.clickCard(card = "${dmDocumentTitle}");
+
+			SelectFrameTop();
 		}
 		else if (isSet(pageName)) {
 			Navigator.gotoNavItem(navItem = "Pages");
@@ -113,6 +115,8 @@ definition {
 			Click(
 				key_nodeName = "${pageName}",
 				locator1 = "Treeview#NODE_UNSELECTED");
+
+			SelectFrameTop();
 		}
 
 		if (isSet(entryExternalURL)) {

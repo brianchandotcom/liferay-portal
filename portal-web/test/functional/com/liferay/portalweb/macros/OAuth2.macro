@@ -241,6 +241,8 @@ definition {
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
 			value1 = "${clientSecret}");
 
+		SelectFrameTop();
+
 		Button.click(button = "Obtain OAuth2 Access");
 	}
 

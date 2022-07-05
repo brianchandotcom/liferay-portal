@@ -19,7 +19,7 @@ definition {
 				valueName = "${optionValue}",
 				valuePosition = "${optionPosition}");
 
-			Button.click(button = "Submit");
+			Button.clickSubmitButton();
 		}
 	}
 

@@ -43,6 +43,8 @@ definition {
 		AssertClick(
 			locator1 = "ItemSelector#ADD_BUTTON",
 			value1 = "Add");
+
+		SelectFrameTop();
 	}
 
 }

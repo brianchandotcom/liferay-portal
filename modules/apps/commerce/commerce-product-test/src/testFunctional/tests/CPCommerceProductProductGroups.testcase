@@ -71,7 +71,7 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "PG1");
 
-		Button.click(button = "Submit");
+		Button.clickSubmitButton();
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

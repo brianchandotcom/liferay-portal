@@ -37,7 +37,7 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
 
-		WaitForElementPresent(locator1 = "OneDrive#DOCUMENTS_CONTENT");
+		WaitForPageLoad();
 
 		if (isSet(dmDocumentContent)) {
 			Type.sendKeys(

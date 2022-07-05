@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.google.common.collect.Lists;
-
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
@@ -155,7 +153,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		if (testRelevantChanges) {
 			modifiedFilesList.addAll(
-				getRequiredModuleDirs(Lists.newArrayList(modifiedFilesList)));
+				getRequiredModuleDirs(new ArrayList<>(modifiedFilesList)));
 		}
 
 		List<JobProperty> includesJobProperties = new ArrayList<>();

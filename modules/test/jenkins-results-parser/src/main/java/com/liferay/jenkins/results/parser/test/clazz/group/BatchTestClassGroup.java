@@ -914,7 +914,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			}
 		}
 
-		return Lists.newArrayList(requiredModuleDirs);
+		return new ArrayList<>(requiredModuleDirs);
 	}
 
 	private List<List<AxisTestClassGroup>> _partitionByMaxChildren(

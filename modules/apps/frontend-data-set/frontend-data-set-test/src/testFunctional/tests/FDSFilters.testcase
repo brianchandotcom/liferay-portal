@@ -224,24 +224,23 @@ definition {
 	@description = "LPS-155308. Assert one filter can be removed."
 	@priority = "4"
 	test OneFilterCanBeRemoved {
-		task ("there are several filters already established") {
-			FDSFilters.addDateRangeFilters(
-				key_customDate1 = "2020-01-01",
-				key_customDate2 = "2021-01-01",
-				key_dateId = "from-date,to-date");
+		task ("When there are several filters already established") {
+			FDSFilters.openFilters();
 
-			AssertElementPresent(
+			FDSFilters.addDateRangeFilters(
+				key_fromDate = "01/01/1901",
+				key_toDate = "02/02/1901");
+
+			VerifyElementPresent(
 				key_filter = "Status: Approved, Draft",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 
-			AssertElementPresent(
-				key_filter = "Date Range: 2/2/1901 - 2/2/1901",
+			VerifyElementPresent(
+				key_filter = "Date Range: 1/1/1901 - 2/2/1901",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 		}
 
 		task ("Then it can be removed one by one") {
-			ClickNoError(locator1 = "FrontendDataSet#FILTER_NAVIGATION");
-
 			FDSFilters.closeFilters();
 
 			FDSFilters.removeFilter(key_filter = "Status");

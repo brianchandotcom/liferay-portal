@@ -636,6 +636,9 @@ public class JournalConverterImpl implements JournalConverter {
 				"instance-id",
 				_getFieldInstanceId(ddmFields, fieldName, count + i));
 
+			childDynamicElementElement.addAttribute(
+				"field-reference", ddmFormField.getFieldReference());
+
 			childDynamicElementElement.addAttribute("name", fieldName);
 			childDynamicElementElement.addAttribute(
 				"type", ddmFormField.getType());

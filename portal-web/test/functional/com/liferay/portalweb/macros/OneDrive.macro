@@ -37,11 +37,9 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
 
-		Pause(locator1 = "10000");
+		WaitForElementPresent(locator1 = "OneDrive#DOCUMENTS_CONTENT");
 
 		if (isSet(dmDocumentContent)) {
-			WaitForElementPresent(locator1 = "OneDrive#DOCUMENTS_CONTENT");
-
 			Type.sendKeys(
 				locator1 = "OneDrive#DOCUMENTS_CONTENT",
 				value1 = "${dmDocumentContent}");
@@ -178,7 +176,7 @@ definition {
 	macro goToOneDrive {
 		Navigator.openSpecificURL(url = "https://liferaycolab-my.sharepoint.com/personal/sharepoint_liferaycolab_onmicrosoft_com/_layouts/15/onedrive.aspx");
 
-		Pause(locator1 = "10000");
+		WaitForPageLoad();
 
 		MicrosoftLogin.accountSignIn(
 			userEmail = "${userName}",
@@ -187,7 +185,7 @@ definition {
 
 		MicrosoftLogin.confirmMicrosoftApp();
 
-		Pause(locator1 = "30000");
+		WaitForPageLoad();
 
 		SelectWindow.selectPopUp(locator1 = "null");
 	}

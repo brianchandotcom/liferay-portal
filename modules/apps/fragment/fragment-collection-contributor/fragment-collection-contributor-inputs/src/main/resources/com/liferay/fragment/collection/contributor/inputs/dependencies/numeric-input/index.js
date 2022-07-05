@@ -15,7 +15,7 @@ function handleOnKeyUp(event) {
 		event.target.setCustomValidity('');
 
 		if (event.target.checkValidity()) {
-			const numDecimals = event.target.getAttribute('step').length - 2;
+			const numDecimals = input.attributes.step.length - 2;
 			const [, decimalPart = ''] = event.target.value.split(/[.,]/);
 
 			if (decimalPart.length > numDecimals) {

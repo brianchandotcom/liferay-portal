@@ -220,6 +220,18 @@ definition {
 			PortletEntry.save();
 		}
 
+		task ("When the site designer accesses to the Look and Feel settings") {
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+		}
+
 		task ("Then the site designer could clear the favicon extension selection") {
 			AssertTextEquals(
 				faviconName = "Google Favicon",

@@ -131,7 +131,10 @@ export function BuilderScreen({
 
 							<DndProvider backend={HTML5Backend}>
 								<BuilderListItem
-									disableEdit={disableEdit}
+									disableEdit={
+										disableEdit ||
+										(filter && viewColumn.disableEdit)
+									}
 									hasDragAndDrop={hasDragAndDrop}
 									index={index}
 									label={viewColumn.fieldLabel}
@@ -202,6 +205,7 @@ type TLabelValueObject = {
 
 type TBuilderScreenColumn = {
 	defaultSort?: boolean;
+	disableEdit?: boolean;
 	fieldLabel?: string;
 	filterBy?: string;
 	label: TName;

@@ -42,6 +42,7 @@ declare type TLabelValueObject = {
 };
 declare type TBuilderScreenColumn = {
 	defaultSort?: boolean;
+	disableEdit?: boolean;
 	fieldLabel?: string;
 	filterBy?: string;
 	label: TName;

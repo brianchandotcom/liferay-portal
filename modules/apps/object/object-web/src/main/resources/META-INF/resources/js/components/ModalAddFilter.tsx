@@ -240,6 +240,16 @@ export function ModalAddFilter({
 		workflowStatusJSONArray,
 	]);
 
+	useEffect(() => {
+		if (editingFilter) {
+			const editingObjectFieldFilter = objectFields.find(
+				(objectField) => objectField.name === editingObjectFieldName
+			);
+
+			setSelectedFilterBy(editingObjectFieldFilter);
+		}
+	}, [editingFilter, editingObjectFieldName, objectFields]);
+
 	const validate = (checkedItems: IItem[]) => {
 		setErrors({});
 		const currentErrors: TErrors = {};
@@ -247,7 +257,13 @@ export function ModalAddFilter({
 		if (!selectedFilterBy) {
 			currentErrors.selectedFilterBy = REQUIRED_MSG;
 		}
-		if (!selectedFilterType) {
+		if (
+			!(
+				selectedFilterBy?.businessType === 'Modified Date' ||
+				selectedFilterBy?.businessType === 'Creation Date'
+			) &&
+			!selectedFilterType
+		) {
 			currentErrors.selectedFilterType = REQUIRED_MSG;
 		}
 		if (
@@ -361,23 +377,28 @@ export function ModalAddFilter({
 					</AutoComplete>
 				)}
 
-				<FormCustomSelect
-					error={errors.selectedFilterType}
-					label={Liferay.Language.get('filter-type')}
-					onChange={(target: LabelValueObject) =>
-						setSelectedFilterType(target)
-					}
-					options={
-						selectedFilterBy?.businessType === 'Integer' ||
-						selectedFilterBy?.businessType === 'LongInteger'
-							? NUMERIC_OPERATORS
-							: selectedFilterBy?.businessType === 'Date'
-							? DATE_OPERATORS
-							: PICKLIST_OPERATORS
-					}
-					required
-					value={selectedFilterType?.label ?? ''}
-				/>
+				{!(
+					selectedFilterBy?.businessType === 'Modified Date' ||
+					selectedFilterBy?.businessType === 'Creation Date'
+				) && (
+					<FormCustomSelect
+						error={errors.selectedFilterType}
+						label={Liferay.Language.get('filter-type')}
+						onChange={(target: LabelValueObject) =>
+							setSelectedFilterType(target)
+						}
+						options={
+							selectedFilterBy?.businessType === 'Integer' ||
+							selectedFilterBy?.businessType === 'LongInteger'
+								? NUMERIC_OPERATORS
+								: selectedFilterBy?.businessType === 'Date'
+								? DATE_OPERATORS
+								: PICKLIST_OPERATORS
+						}
+						required
+						value={selectedFilterType?.label ?? ''}
+					/>
+				)}
 
 				{(selectedFilterBy?.businessType === 'Integer' ||
 					selectedFilterBy?.businessType === 'LongInteger') && (

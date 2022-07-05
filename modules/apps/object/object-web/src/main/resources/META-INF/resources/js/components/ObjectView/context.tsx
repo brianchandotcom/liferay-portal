@@ -699,7 +699,7 @@ const viewReducer = (state: TState, action: TAction) => {
 
 			let filterTypeValue = filterType || null;
 
-			if (!valueList.length) {
+			if (!valueList) {
 				filterTypeValue = null;
 			}
 

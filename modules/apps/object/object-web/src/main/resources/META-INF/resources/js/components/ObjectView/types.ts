@@ -55,6 +55,7 @@ export type TObjectViewSortColumn = {
 
 export type TObjectViewFilterColumn = {
 	definition: {[key: string]: string[]} | null;
+	disableEdit?: boolean;
 	fieldLabel: string;
 	filterBy: string;
 	filterType: string | null;

@@ -225,6 +225,13 @@ public interface CommerceInventoryReplenishmentItemLocalService
 		fetchCommerceInventoryReplenishmentItem(
 			long commerceInventoryReplenishmentItemId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceInventoryReplenishmentItem
+		fetchCommerceInventoryReplenishmentItem(
+			long companyId, String sku,
+			OrderByComparator<CommerceInventoryReplenishmentItem>
+				orderByComparator);
+
 	/**
 	 * Returns the commerce inventory replenishment item with the matching external reference code and company.
 	 *

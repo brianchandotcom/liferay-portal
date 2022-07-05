@@ -39,7 +39,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9121 | Test Summary: Settings page properties list is searchable"
 	@priority = "3"
 	test CanSearchForPagePropertiesList {
-		var propertyList = "Property Name 1,Property Name 2,Property Name 3,Property Name 4";
+		var propertyList = "Property CanSearchForPagePropertiesList 1,Property CanSearchForPagePropertiesList 2,Property CanSearchForPagePropertiesList 3,Property CanSearchForPagePropertiesList 4";
 
 		task ("go to property and add new  properties") {
 			ACNavigation.goToSettings();
@@ -65,7 +65,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9122 | Test Summary: Search for a property"
 	@priority = "5"
 	test CanSearchForProperty {
-		var propertyList = "Property Name 1,Property Name 2,Property Name 3,Property Name 4";
+		var propertyList = "Property CanSearchForProperty 1,Property CanSearchForProperty 2,Property CanSearchForProperty 3,Property CanSearchForProperty 4";
 
 		task ("go to property and add new  properties") {
 			ACNavigation.goToSettings();
@@ -89,7 +89,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9117 | Test Summary: User selecting a property from the drop down by 1st time"
 	@priority = "3"
 	test CanUserSelectPropertyFromTheDropDownByFirstTime {
-		var propertyName = "Property Name 1";
+		var propertyName = "Property CanUserSelectPropertyFromTheDropDownByFirstTime 1";
 
 		task ("go to properties and add a new property") {
 			ACNavigation.goToSettings();
@@ -110,7 +110,7 @@ definition {
 	@priority = "2"
 	test DeletedPropertiesNotAppearAsOptionInSyncSites {
 		task ("Go to properties page and add 2 new properties") {
-			var propertyList = "Property Name 1,Property Name 2";
+			var propertyList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 1,Property DeletedPropertiesNotAppearAsOptionInSyncSites 2";
 
 			ACNavigation.goToSettings();
 
@@ -124,7 +124,7 @@ definition {
 		task ("Delete a property") {
 			ACSettings.goToProperties();
 
-			ACSettings.deletePropertyByCheckbox(propertyName = "Property Name 2");
+			ACSettings.deletePropertyByCheckbox(propertyName = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 2");
 		}
 
 		task ("Copy the token from AC") {
@@ -148,11 +148,11 @@ definition {
 		}
 
 		task ("Check that the existing properties in the AC appear in the list") {
-			ACUtils.assertItemsName(itemList = "Property Name 1");
+			ACUtils.assertItemsName(itemList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 1");
 		}
 
 		task ("Check that the deleted AC properties do not appear in the list") {
-			ACUtils.assertItemsNameNotPresent(itemList = "Property Name 2");
+			ACUtils.assertItemsNameNotPresent(itemList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 2");
 		}
 
 		task ("Disconnect the DXP to AC") {
@@ -266,7 +266,7 @@ definition {
 		task ("go to properties and add 2 new properties") {
 			ACNavigation.goToSettings();
 
-			var propertyList = "Property Name 1,Property Name 2";
+			var propertyList = "Property ViewSettingInfoAreGlobalAndDontDependOfProperty 1,Property ViewSettingInfoAreGlobalAndDontDependOfProperty 2";
 
 			for (var n : list "${propertyList}") {
 				ACSettings.goToProperties();
@@ -297,7 +297,7 @@ definition {
 	@priority = "3"
 	test ViewTheDropdownTransition {
 		task ("go to properties page and add 2 new properties") {
-			var propertyList = "Property Name 1,Property Name 2";
+			var propertyList = "Property ViewTheDropdownTransition 1,Property ViewTheDropdownTransition 2";
 
 			ACNavigation.goToSettings();
 

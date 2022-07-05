@@ -26,6 +26,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.StyledLayoutS
 import com.liferay.layout.page.template.util.AlignConverter;
 import com.liferay.layout.page.template.util.BorderRadiusConverter;
 import com.liferay.layout.page.template.util.ContentDisplayConverter;
+import com.liferay.layout.page.template.util.ContentVisibilityConverter;
 import com.liferay.layout.page.template.util.FlexWrapConverter;
 import com.liferay.layout.page.template.util.HtmlTagConverter;
 import com.liferay.layout.page.template.util.JustifyConverter;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -81,6 +83,26 @@ public class ContainerLayoutStructureItemMapper
 							containerStyledLayoutStructureItem.isIndexed();
 						layout = _toLayout(containerStyledLayoutStructureItem);
 
+						setContentVisibility(
+							() -> {
+								if (!GetterUtil.getBoolean(
+										PropsUtil.get(
+											"feature.flag.LPS-147895"))) {
+
+									return null;
+								}
+
+								String contentVisibility =
+									containerStyledLayoutStructureItem.
+										getContentVisibility();
+
+								if (Validator.isNull(contentVisibility)) {
+									return null;
+								}
+
+								return ContentVisibilityConverter.
+									convertToExternalValue(contentVisibility);
+							});
 						setFragmentStyle(
 							() -> {
 								JSONObject itemConfigJSONObject =

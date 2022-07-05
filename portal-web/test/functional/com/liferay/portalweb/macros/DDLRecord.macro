@@ -259,7 +259,7 @@ definition {
 		}
 
 		while (IsElementNotPresent(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME")) {
-			Pause(locator1 = "1000");
+			WaitForElementPresent(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME");
 		}
 
 		SelectFrame(locator1 = "DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME");
@@ -273,8 +273,6 @@ definition {
 			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
 				value1 = "${document}");
-
-			Pause(locator1 = "3000");
 
 			AssertElementPresent.pauseAssertVisible(
 				locator1 = "ItemSelector#ADD_BUTTON",
@@ -295,9 +293,7 @@ definition {
 			locator1 = "DDLEditRecord#FIELD_LABEL",
 			value1 = "${fieldName}");
 
-		Pause(locator1 = "2000");
-
-		AssertElementPresent(locator1 = "DDLEditRecord#GEOLOCATION_GOOGLE_MAP");
+		WaitForElementPresent(locator1 = "DDLEditRecord#GEOLOCATION_GOOGLE_MAP");
 	}
 
 	macro populateFieldHTML {

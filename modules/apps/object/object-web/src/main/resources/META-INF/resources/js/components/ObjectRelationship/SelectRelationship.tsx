@@ -59,6 +59,9 @@ export default function SelectRelationship({
 			}}
 			options={options}
 			required
+			tooltip={Liferay.Language.get(
+				'choose-a-relationship-field-from-the-selected-object'
+			)}
 			value={selectedValue}
 			{...otherProps}
 		/>

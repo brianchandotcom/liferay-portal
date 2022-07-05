@@ -116,15 +116,23 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 			}
 		}
 
-		if (featureFlags.isEmpty()) {
-			return content;
-		}
-
 		ListUtil.distinct(featureFlags, new NaturalOrderStringComparator());
 
 		matcher = _featureFlagsPattern.matcher(content);
 
 		if (matcher.find()) {
+			String matchedFeatureFlags = matcher.group(2);
+
+			if (featureFlags.isEmpty()) {
+				if (matchedFeatureFlags.contains("feature.flag.")) {
+					return StringUtil.replaceFirst(
+						content, matchedFeatureFlags, StringPool.BLANK,
+						matcher.start(2));
+				}
+
+				return content;
+			}
+
 			StringBundler sb = new StringBundler(featureFlags.size() * 14);
 
 			for (String featureFlag : featureFlags) {
@@ -147,8 +155,15 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				sb.append("=false");
 			}
 
-			content = StringUtil.replaceFirst(
-				content, matcher.group(2), sb.toString(), matcher.start(2));
+			if (matchedFeatureFlags.contains("feature.flag.")) {
+				content = StringUtil.replaceFirst(
+					content, matchedFeatureFlags, sb.toString(),
+					matcher.start(2));
+			}
+			else {
+				content = StringUtil.insert(
+					content, sb.toString(), matcher.start(2));
+			}
 		}
 
 		return content;

@@ -29,11 +29,53 @@ function toElementHelper(elementOrSelector) {
  * compatibility for classes extending PortletBase.
  */
 class LifeCycles {
-	constructor(props) {
-		const {portletNamespace} = props;
+	_STATE_ = {
+		namespace: null,
+		portletNamespace: null,
+		rootNode: null,
+	};
+	get namespace() {
+		return this._STATE_.namespace;
+	}
+	get portletNamespace() {
+		return this._STATE_.portletNamespace;
+	}
+	get rootNode() {
+		return this._STATE_.rootNode;
+	}
+	set portletNamespace(portletNamespace) {
+		this.rootNode = `#p_p_id${portletNamespace}`;
 
-		this.portletNamespace = portletNamespace;
-		this.rootNode = document.getElementById(`p_p_id${portletNamespace}`);
+		this._STATE_.portletNamespace = portletNamespace;
+	}
+	set namespace(namespace) {
+		this.rootNode = `#p_p_id${namespace}`;
+
+		this._STATE_.namespace = namespace;
+	}
+	set rootNode(rootNode) {
+		if (typeof rootNode === 'string') {
+			rootNode = document.getElementById(
+				rootNode[0] === '#' ? rootNode.slice(1) : rootNode
+			);
+		}
+
+		this._STATE_.rootNode = rootNode;
+	}
+	constructor(props) {
+		const {namespace, portletNamespace, rootNode} = props;
+
+		if (namespace) {
+			this.namespace = namespace;
+		}
+
+		if (portletNamespace) {
+			this.portletNamespace = portletNamespace;
+		}
+
+		if (rootNode) {
+			this.rootNode = rootNode;
+		}
 
 		this.created(props);
 		this.attached(props);
@@ -76,7 +118,10 @@ class PortletBase extends LifeCycles {
 		root = toElementHelper(root) || this.rootNode || document;
 
 		return root.querySelectorAll(
-			this.namespaceSelectors_(this.portletNamespace, selectors)
+			this.namespaceSelectors_(
+				this.portletNamespace || this.namespace,
+				selectors
+			)
 		);
 	}
 
@@ -148,7 +193,7 @@ class PortletBase extends LifeCycles {
 	 *         the portlet namespace or a namespaced string.
 	 */
 	ns(object) {
-		return Liferay.Util.ns(this.portletNamespace, object);
+		return Liferay.Util.ns(this.portletNamespace || this.namespace, object);
 	}
 
 	/**
@@ -166,7 +211,10 @@ class PortletBase extends LifeCycles {
 		root = toElementHelper(root) || this.rootNode || document;
 
 		return root.querySelector(
-			this.namespaceSelectors_(this.portletNamespace, selectors)
+			this.namespaceSelectors_(
+				this.portletNamespace || this.namespace,
+				selectors
+			)
 		);
 	}
 }

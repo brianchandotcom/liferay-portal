@@ -624,6 +624,13 @@ public class SXPBlueprintSearchResultTest {
 			new String[] {"Created", ""},
 			new String[] {"First Created", "Second Created"});
 
+		JournalArticle journalArticle = _journalArticles.get(0);
+
+		journalArticle.setModifiedDate(
+			DateUtil.newDate(System.currentTimeMillis() - Time.HOUR));
+
+		_journalArticleLocalService.updateJournalArticle(journalArticle);
+
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(

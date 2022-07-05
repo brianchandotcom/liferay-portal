@@ -50,10 +50,7 @@ import com.liferay.upload.UploadHandler;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -148,35 +145,6 @@ public class AdminPortlet extends BaseKBPortlet {
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
 		}
-	}
-
-	public void updateKBArticlesPriorities(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			KBWebKeys.THEME_DISPLAY);
-
-		Enumeration<String> enumeration = actionRequest.getParameterNames();
-
-		Map<Long, Double> resourcePrimKeyToPriorityMap = new HashMap<>();
-
-		while (enumeration.hasMoreElements()) {
-			String name = enumeration.nextElement();
-
-			if (!name.startsWith("priority")) {
-				continue;
-			}
-
-			double priority = ParamUtil.getDouble(actionRequest, name);
-
-			long resourcePrimKey = GetterUtil.getLong(name.substring(8));
-
-			resourcePrimKeyToPriorityMap.put(resourcePrimKey, priority);
-		}
-
-		kbArticleService.updateKBArticlesPriorities(
-			themeDisplay.getScopeGroupId(), resourcePrimKeyToPriorityMap);
 	}
 
 	public void updateKBFolder(

@@ -18,19 +18,6 @@ import serviceFetch from './serviceFetch';
 export default {
 
 	/**
-	 * Get available form providers
-	 * @param {object} options
-	 * @param {function} options.onNetworkStatus
-	 */
-	getAvailableEditPageInfoItemFormProviders() {
-		return serviceFetch(
-			config.getAvailableEditPageInfoItemFormProvidersURL,
-			{},
-			() => {}
-		);
-	},
-
-	/**
 	 * Get available form mapping fields
 	 * @param {object} options
 	 * @param {string} options.classNameId Form classNameId

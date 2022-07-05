@@ -13,24 +13,22 @@
  */
 
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import updateItemLocalConfig from '../../../../../../app/actions/updateItemLocalConfig';
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {FORM_MAPPING_SOURCES} from '../../../../../../app/config/constants/formMappingSources';
+import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
-import FormService from '../../../../../../app/services/FormService';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
-import {CACHE_KEYS} from '../../../../../../app/utils/cache';
 import {formIsMapped} from '../../../../../../app/utils/formIsMapped';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
-import useCache from '../../../../../../app/utils/useCache';
 import {useId} from '../../../../../../app/utils/useId';
 import Collapse from '../../../../../../common/components/Collapse';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
@@ -68,30 +66,17 @@ export function FormGeneralPanel({item}) {
 }
 
 function FormOptions({item, onValueSelect}) {
-	const formTypes = useCache({
-		fetcher: () => FormService.getAvailableEditPageInfoItemFormProviders(),
-		key: [CACHE_KEYS.formTypes],
-	});
-
-	const availableFormTypes = useMemo(
-		() =>
-			formTypes
-				? [
-						{
-							label: Liferay.Language.get('none'),
-							value: '',
-						},
-						...formTypes,
-				  ]
-				: [],
-		[formTypes]
-	);
+	const formTypes = [
+		{
+			label: Liferay.Language.get('none'),
+			value: '',
+		},
+		...config.formTypes,
+	];
 
 	const {classNameId, classTypeId} = item.config;
 
-	const selectedType = availableFormTypes.find(
-		({value}) => value === classNameId
-	);
+	const selectedType = formTypes.find(({value}) => value === classNameId);
 
 	const selectedSubtype = selectedType?.subtypes.find(
 		({value}) => value === classTypeId
@@ -100,18 +85,18 @@ function FormOptions({item, onValueSelect}) {
 	return (
 		<div className="mb-3">
 			<Collapse label={Liferay.Language.get('form-options')} open>
-				{!!availableFormTypes.length && (
+				{!!formTypes.length && (
 					<SelectField
-						disabled={!availableFormTypes.length}
+						disabled={!formTypes.length}
 						field={{
 							label: Liferay.Language.get('content-type'),
 							name: 'classNameId',
 							typeOptions: {
-								validValues: availableFormTypes,
+								validValues: formTypes,
 							},
 						}}
 						onValueSelect={(_name, classNameId) => {
-							const type = availableFormTypes.find(
+							const type = formTypes.find(
 								({value}) => value === classNameId
 							);
 
@@ -128,7 +113,7 @@ function FormOptions({item, onValueSelect}) {
 
 				{selectedType?.subtypes?.length > 0 && (
 					<SelectField
-						disabled={!availableFormTypes.length}
+						disabled={!formTypes.length}
 						field={{
 							label: Liferay.Language.get('subtype'),
 							name: 'classTypeId',

@@ -12,16 +12,12 @@
  * details.
  */
 
-import {CACHE_KEYS, getCacheItem, getCacheKey} from './cache';
+import {config} from '../config/index';
 
 export function formIsMapped(item) {
 	const {classNameId, classTypeId} = item.config;
 
-	const formTypes = getCacheItem(getCacheKey([CACHE_KEYS.formTypes])).data;
-
-	if (!formTypes) {
-		return classNameId && classNameId !== '0' ? true : false;
-	}
+	const {formTypes} = config;
 
 	const type = formTypes.find(({value}) => value === classNameId);
 

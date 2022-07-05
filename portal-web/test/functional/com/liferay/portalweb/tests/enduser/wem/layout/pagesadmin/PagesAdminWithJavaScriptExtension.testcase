@@ -1,0 +1,218 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-153457=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Upload two JavaScript extension files to Documents and Media") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "First JavaScript Extension",
+				groupName = "Test Site Name",
+				mimeType = "application/javascript",
+				sourceFileName = "TextColor.js");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Second JavaScript Extension",
+				groupName = "Test Site Name",
+				mimeType = "application/javascript",
+				sourceFileName = "InnerText.js");
+		}
+
+		task ("Get the latest version URL of two documents") {
+			var firstURL = JSONDocument.getLatestVersionURL(
+				dmDocumentTitle = "First JavaScript Extension",
+				groupName = "Test Site Name");
+			var secondURL = JSONDocument.getLatestVersionURL(
+				dmDocumentTitle = "Second JavaScript Extension",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add two remote apps for JavaScript extension") {
+			JSONRemoteApp.addRemoteAppEntry(
+				name = "TextColor",
+				type = "globalJS",
+				url = "${firstURL}");
+
+			JSONRemoteApp.addRemoteAppEntry(
+				name = "InnerText",
+				type = "globalJS",
+				url = "${secondURL}");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			RemoteApps.tearDown();
+		}
+	}
+
+	@description = "This is a test for LPS-153655. The site designer could add JavaScript extension to page, page template, and group of pages."
+	@priority = "5"
+	test AddJavaScriptExtension {
+		task ("Given a site designer has a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("When the site designer accesses to Advanced settings of widget page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			AssertTextEquals(
+				key_sectionTitle = "JavaScript Extensions",
+				locator1 = "PagesAdmin#SECTION_SUBTITLE",
+				value1 = "No JavaScript extensions were loaded.");
+		}
+
+		task ("Then the site designer could add a JavaScript Extension to widget page") {
+			PagesAdmin.addJavaScriptExtensions(extensionNameList = "InnerText");
+
+			AssertVisible(
+				key_tableEntry = "InnerText",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Test Page Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Welcome");
+		}
+
+		task ("Given a site designer has a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Page Template Name",
+				pageTemplateType = "Content Page Template");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("When the site designer accesses to Advanced settings of content page template") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			AssertTextEquals(
+				key_sectionTitle = "JavaScript Extensions",
+				locator1 = "PagesAdmin#SECTION_SUBTITLE",
+				value1 = "No JavaScript extensions were loaded.");
+		}
+
+		task ("Then the site designer could add a JavaScript Extension to widget page") {
+			PagesAdmin.addJavaScriptExtensions(extensionNameList = "InnerText");
+
+			AssertVisible(
+				key_tableEntry = "InnerText",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Welcome");
+		}
+
+		task ("When the site designer accesses to Advanced settings of Pages") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			WaitForPageLoad();
+
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Configuration");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			AssertTextEquals(
+				key_sectionTitle = "JavaScript Extensions",
+				locator1 = "PagesAdmin#SECTION_SUBTITLE",
+				value1 = "No JavaScript extensions were loaded.");
+		}
+
+		task ("Then the site designer could add a JavaScript Extension to Pages") {
+			PagesAdmin.addJavaScriptExtensions(extensionNameList = "TextColor");
+
+			AssertVisible(
+				key_tableEntry = "TextColor",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+
+			PortletEntry.save();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Edit",
+				pageName = "Content Page Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Content Page Name *");
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "color",
+				value1 = "rgba(255, 0, 0, 1)");
+
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Test Page Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Welcome");
+		}
+	}
+
+}

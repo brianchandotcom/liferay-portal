@@ -67,6 +67,10 @@ public class ContainerStyledLayoutStructureItem
 		return _contentDisplay;
 	}
 
+	public String getContentVisibility() {
+		return _contentVisibility;
+	}
+
 	public String getHtmlTag() {
 		return _htmlTag;
 	}
@@ -79,6 +83,8 @@ public class ContainerStyledLayoutStructureItem
 			"align", _align
 		).put(
 			"contentDisplay", _contentDisplay
+		).put(
+			"contentVisibility", _contentVisibility
 		).put(
 			"flexWrap", _flexWrap
 		).put(
@@ -124,6 +130,10 @@ public class ContainerStyledLayoutStructureItem
 		_contentDisplay = contentDisplay;
 	}
 
+	public void setContentVisibility(String contentVisibility) {
+		_contentVisibility = contentVisibility;
+	}
+
 	public void setFlexWrap(String flexWrap) {
 		_flexWrap = flexWrap;
 	}
@@ -160,6 +170,11 @@ public class ContainerStyledLayoutStructureItem
 
 		if (itemConfigJSONObject.has("contentDisplay")) {
 			setContentDisplay(itemConfigJSONObject.getString("contentDisplay"));
+		}
+
+		if (itemConfigJSONObject.has("contentVisibility")) {
+			setContentVisibility(
+				itemConfigJSONObject.getString("contentVisibility"));
 		}
 
 		if (itemConfigJSONObject.has("flexWrap")) {
@@ -278,6 +293,7 @@ public class ContainerStyledLayoutStructureItem
 
 	private String _align = "";
 	private String _contentDisplay = "";
+	private String _contentVisibility = "";
 	private String _flexWrap = "";
 	private String _htmlTag = "";
 	private boolean _indexed = true;

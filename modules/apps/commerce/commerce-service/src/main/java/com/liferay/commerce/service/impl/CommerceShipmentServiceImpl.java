@@ -382,11 +382,37 @@ public class CommerceShipmentServiceImpl
 
 	@Override
 	public CommerceShipment updateCommerceShipment(
-			long commerceShipmentId, String carrier, String trackingNumber,
-			int status, int shippingDateMonth, int shippingDateDay,
-			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
-			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
-			int expectedDateHour, int expectedDateMinute,
+			long commerceShipmentId, long commerceShippingMethodId,
+			String carrier, int expectedDateMonth, int expectedDateDay,
+			int expectedDateYear, int expectedDateHour, int expectedDateMinute,
+			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
+			int shippingDateHour, int shippingDateMinute, String trackingNumber,
+			String trackingURL, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+
+		return commerceShipmentLocalService.updateCommerceShipment(
+			commerceShipmentId, commerceShippingMethodId, carrier,
+			expectedDateMonth, expectedDateDay, expectedDateYear,
+			expectedDateHour, expectedDateMinute, shippingDateMonth,
+			shippingDateDay, shippingDateYear, shippingDateHour,
+			shippingDateMinute, trackingNumber, trackingURL, status,
+			serviceContext);
+	}
+
+	@Override
+	public CommerceShipment updateCommerceShipment(
+			long commerceShipmentId, long commerceShippingMethodId,
+			String carrier, int expectedDateMonth, int expectedDateDay,
+			int expectedDateYear, int expectedDateHour, int expectedDateMinute,
+			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
+			int shippingDateHour, int shippingDateMinute, String trackingNumber,
+			String trackingURL, int status, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long regionId, long countryId, String phoneNumber,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -395,36 +421,13 @@ public class CommerceShipmentServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentLocalService.updateCommerceShipment(
-			commerceShipmentId, carrier, trackingNumber, status,
-			shippingDateMonth, shippingDateDay, shippingDateYear,
-			shippingDateHour, shippingDateMinute, expectedDateMonth,
-			expectedDateDay, expectedDateYear, expectedDateHour,
-			expectedDateMinute, serviceContext);
-	}
-
-	@Override
-	public CommerceShipment updateCommerceShipment(
-			long commerceShipmentId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber,
-			String carrier, String trackingNumber, int status,
-			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
-			int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
-			int expectedDateDay, int expectedDateYear, int expectedDateHour,
-			int expectedDateMinute, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.contains(
-			getPermissionChecker(), null,
-			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
-
-		return commerceShipmentLocalService.updateCommerceShipment(
-			commerceShipmentId, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber, carrier,
-			trackingNumber, status, shippingDateMonth, shippingDateDay,
-			shippingDateYear, shippingDateHour, shippingDateMinute,
+			commerceShipmentId, commerceShippingMethodId, carrier,
 			expectedDateMonth, expectedDateDay, expectedDateYear,
-			expectedDateHour, expectedDateMinute, serviceContext);
+			expectedDateHour, expectedDateMinute, shippingDateMonth,
+			shippingDateDay, shippingDateYear, shippingDateHour,
+			shippingDateMinute, trackingNumber, trackingURL, status, name,
+			description, street1, street2, street3, city, zip, regionId,
+			countryId, phoneNumber, serviceContext);
 	}
 
 	@Override

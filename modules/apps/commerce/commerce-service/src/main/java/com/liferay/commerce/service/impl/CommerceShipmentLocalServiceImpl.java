@@ -26,6 +26,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.base.CommerceShipmentLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -168,8 +169,19 @@ public class CommerceShipmentLocalServiceImpl
 		commerceShipment.setUserName(user.getFullName());
 		commerceShipment.setCommerceAccountId(commerceAccountId);
 		commerceShipment.setCommerceAddressId(commerceAddressId);
-		commerceShipment.setCommerceShippingMethodId(commerceShippingMethodId);
-		commerceShipment.setShippingOptionName(commerceShippingOptionName);
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceShippingMethodLocalService.fetchCommerceShippingMethod(
+				commerceShippingMethodId);
+
+		if (commerceShippingMethod != null) {
+			commerceShipment.setCommerceShippingMethodId(
+				commerceShippingMethodId);
+			commerceShipment.setShippingOptionName(commerceShippingOptionName);
+			commerceShipment.setTrackingURL(
+				commerceShippingMethod.getTrackingURL());
+		}
+
 		commerceShipment.setStatus(
 			CommerceShipmentConstants.SHIPMENT_STATUS_PROCESSING);
 		commerceShipment.setExpandoBridgeAttributes(serviceContext);
@@ -472,12 +484,12 @@ public class CommerceShipmentLocalServiceImpl
 
 	@Override
 	public CommerceShipment updateCommerceShipment(
-			long commerceShipmentId, String carrier, String trackingNumber,
-			int status, int shippingDateMonth, int shippingDateDay,
-			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
-			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
-			int expectedDateHour, int expectedDateMinute,
-			ServiceContext serviceContext)
+			long commerceShipmentId, long commerceShippingMethodId,
+			String carrier, int expectedDateMonth, int expectedDateDay,
+			int expectedDateYear, int expectedDateHour, int expectedDateMinute,
+			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
+			int shippingDateHour, int shippingDateMinute, String trackingNumber,
+			String trackingURL, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		String name = null;
@@ -511,25 +523,27 @@ public class CommerceShipmentLocalServiceImpl
 		}
 
 		return commerceShipmentLocalService.updateCommerceShipment(
-			commerceShipmentId, name, description, street1, street2, street3,
-			city, zip, regionId, countryId, phoneNumber, carrier,
-			trackingNumber, status, shippingDateMonth, shippingDateDay,
-			shippingDateYear, shippingDateHour, shippingDateMinute,
+			commerceShipmentId, commerceShippingMethodId, carrier,
 			expectedDateMonth, expectedDateDay, expectedDateYear,
-			expectedDateHour, expectedDateMinute, serviceContext);
+			expectedDateHour, expectedDateMinute, shippingDateMonth,
+			shippingDateDay, shippingDateYear, shippingDateHour,
+			shippingDateMinute, trackingNumber, trackingURL, status, name,
+			description, street1, street2, street3, city, zip, regionId,
+			countryId, phoneNumber, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceShipment updateCommerceShipment(
-			long commerceShipmentId, String name, String description,
+			long commerceShipmentId, long commerceShippingMethodId,
+			String carrier, int expectedDateMonth, int expectedDateDay,
+			int expectedDateYear, int expectedDateHour, int expectedDateMinute,
+			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
+			int shippingDateHour, int shippingDateMinute, String trackingNumber,
+			String trackingURL, int status, String name, String description,
 			String street1, String street2, String street3, String city,
 			String zip, long regionId, long countryId, String phoneNumber,
-			String carrier, String trackingNumber, int status,
-			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
-			int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
-			int expectedDateDay, int expectedDateYear, int expectedDateHour,
-			int expectedDateMinute, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceShipment commerceShipment =

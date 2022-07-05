@@ -29,14 +29,29 @@ jest.mock(
 	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
 	() => jest.fn()
 );
+
 jest.mock(
-	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/FormService',
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
-		getAvailableEditPageInfoItemFormProviders: jest.fn(() =>
-			Promise.resolve([
-				{label: 'Pablo', subtypes: [], value: 'classNameId'},
-			])
-		),
+		config: {
+			availableLanguages: {
+				en_US: {
+					default: false,
+					displayName: 'English (United States)',
+					languageIcon: 'en-us',
+					languageId: 'en_US',
+					w3cLanguageId: 'en-US',
+				},
+			},
+			commonStyles: [],
+			formTypes: [
+				{
+					label: 'Type',
+					subtypes: [],
+					value: 'classNameId',
+				},
+			],
+		},
 	})
 );
 

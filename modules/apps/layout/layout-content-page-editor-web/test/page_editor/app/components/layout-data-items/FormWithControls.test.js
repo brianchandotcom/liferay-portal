@@ -30,8 +30,23 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/useCache',
-	() => jest.fn(() => {})
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({
+		config: {
+			formTypes: [
+				{
+					label: 'Type',
+					subtypes: [
+						{
+							label: 'Subtype',
+							value: '1234',
+						},
+					],
+					value: '1234',
+				},
+			],
+		},
+	})
 );
 
 describe('FormWithControls', () => {

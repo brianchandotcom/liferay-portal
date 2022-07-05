@@ -96,6 +96,31 @@ jest.mock(
 	() => jest.fn(({key}) => MOCK_CACHE[key.join('-')])
 );
 
+jest.mock(
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({
+		config: {
+			availableLanguages: {
+				en_US: {
+					default: false,
+					displayName: 'English (United States)',
+					languageIcon: 'en-us',
+					languageId: 'en_US',
+					w3cLanguageId: 'en-US',
+				},
+			},
+			commonStyles: [],
+			formTypes: [
+				{
+					label: 'Type',
+					subtypes: [],
+					value: 'classNameId',
+				},
+			],
+		},
+	})
+);
+
 const renderComponent = ({
 	fragmentEntryKey = 'textFragment',
 	mappedFieldId,

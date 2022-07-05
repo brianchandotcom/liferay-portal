@@ -20,9 +20,15 @@ export default function GlobalJSCETsConfiguration({
 	portletNamespace,
 	selectGlobalJSCETsEventName,
 }: IProps): JSX.Element;
+declare type IInheritedOptions = 'layout-set' | 'master-layout';
+declare type ILoadTypeOptions = 'default' | 'async' | 'defer';
+declare type IScriptLocationOptions = 'head' | 'page-bottom';
 interface IGlobalJSCET {
 	cetExternalReferenceCode: string;
+	inheritedFrom: IInheritedOptions | null;
+	loadType?: ILoadTypeOptions;
 	name: string;
+	scriptLocation?: IScriptLocationOptions;
 }
 interface IProps {
 	globalJSCETSelectorURL: string;

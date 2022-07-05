@@ -130,18 +130,21 @@ public class CommerceShipmentGenerator {
 
 		_commerceShipmentLocalService.updateCommerceShipment(
 			commerceShipment.getCommerceShipmentId(),
-			commerceShipment.getCarrier(), commerceShipment.getTrackingNumber(),
-			_getRandomCommerceShipmentStatus(),
+			commerceShipment.getCommerceShippingMethodId(),
+			commerceShipment.getCarrier(),
+			expectedDateCalendar.get(Calendar.MONTH),
+			expectedDateCalendar.get(Calendar.DAY_OF_MONTH),
+			expectedDateCalendar.get(Calendar.YEAR),
+			expectedDateCalendar.get(Calendar.HOUR),
+			expectedDateCalendar.get(Calendar.MINUTE),
 			shippingDateCalendar.get(Calendar.MONTH),
 			shippingDateCalendar.get(Calendar.DAY_OF_MONTH),
 			shippingDateCalendar.get(Calendar.YEAR),
 			shippingDateCalendar.get(Calendar.HOUR),
 			shippingDateCalendar.get(Calendar.MINUTE),
-			expectedDateCalendar.get(Calendar.MONTH),
-			expectedDateCalendar.get(Calendar.DAY_OF_MONTH),
-			expectedDateCalendar.get(Calendar.YEAR),
-			expectedDateCalendar.get(Calendar.HOUR),
-			expectedDateCalendar.get(Calendar.MINUTE), serviceContext);
+			commerceShipment.getTrackingNumber(),
+			commerceShipment.getTrackingURL(),
+			_getRandomCommerceShipmentStatus(), serviceContext);
 	}
 
 	private void _generateCommerceShipmentItems(

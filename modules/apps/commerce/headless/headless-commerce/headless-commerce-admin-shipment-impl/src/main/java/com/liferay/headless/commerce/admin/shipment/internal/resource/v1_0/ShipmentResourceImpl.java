@@ -444,13 +444,17 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 		_commerceShipmentService.updateCommerceShipment(
 			commerceShipment.getCommerceShipmentId(),
 			GetterUtil.get(
+				shipment.getShippingMethodId(),
+				commerceShipment.getCommerceShippingMethodId()),
+			GetterUtil.get(
 				shipment.getCarrier(), commerceShipment.getCarrier()),
+			expectedMonth, expectedDay, expectedYear, expectedHour,
+			expectedMinute, shippingMonth, shippingDay, shippingYear,
+			shippingHour, shippingMinute,
 			GetterUtil.get(
 				shipment.getTrackingNumber(),
 				commerceShipment.getTrackingNumber()),
-			commerceShipment.getStatus(), shippingMonth, shippingDay,
-			shippingYear, shippingHour, shippingMinute, expectedMonth,
-			expectedDay, expectedYear, expectedHour, expectedMinute,
+			commerceShipment.getTrackingURL(), commerceShipment.getStatus(),
 			serviceContext);
 	}
 

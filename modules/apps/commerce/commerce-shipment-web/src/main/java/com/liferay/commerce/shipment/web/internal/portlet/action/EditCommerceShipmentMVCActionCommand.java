@@ -290,13 +290,19 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 				expectedDateHour += 12;
 			}
 
+			commerceShipment = _commerceShipmentService.getCommerceShipment(
+				commerceShipmentId);
+
 			commerceShipment = _commerceShipmentService.updateCommerceShipment(
-				commerceShipmentId, name, description, street1, street2,
-				street3, city, zip, regionId, countryId, phoneNumber, carrier,
-				trackingNumber, status, shippingDateMonth, shippingDateDay,
-				shippingDateYear, shippingDateHour, shippingDateMinute,
+				commerceShipmentId,
+				commerceShipment.getCommerceShippingMethodId(), carrier,
 				expectedDateMonth, expectedDateDay, expectedDateYear,
-				expectedDateHour, expectedDateMinute, serviceContext);
+				expectedDateHour, expectedDateMinute, shippingDateMonth,
+				shippingDateDay, shippingDateYear, shippingDateHour,
+				shippingDateMinute, trackingNumber,
+				commerceShipment.getTrackingURL(), status, name, description,
+				street1, street2, street3, city, zip, regionId, countryId,
+				phoneNumber, serviceContext);
 		}
 		else {
 			long commerceOrderId = ParamUtil.getLong(

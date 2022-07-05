@@ -378,21 +378,6 @@ public class PropsUtil {
 			PropsKeys.LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR,
 			portalShieldedContainerLibDir);
 
-		// Portal web directory
-
-		String portalWebDir = portalShieldedContainerLibDir;
-
-		if (portalWebDir.endsWith("/WEB-INF/shielded-container-lib/")) {
-			portalWebDir = portalWebDir.substring(
-				0, portalWebDir.length() - 31);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Portal web directory " + portalWebDir);
-		}
-
-		SystemProperties.set(PropsKeys.LIFERAY_WEB_PORTAL_DIR, portalWebDir);
-
 		// Liferay home directory
 
 		_configuration = ConfigurationFactoryImpl.CONFIGURATION_PORTAL;

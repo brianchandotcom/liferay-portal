@@ -342,6 +342,13 @@ public class PortalRelease {
 		sb.append(".");
 		sb.append(matcher.group("fixVersion"));
 
+		String dxpVersion = matcher.group("dxpVersion");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(dxpVersion)) {
+			sb.append("-dxp-");
+			sb.append(dxpVersion);
+		}
+
 		String updateVersion = matcher.group("updateVersion");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(updateVersion)) {
@@ -674,7 +681,8 @@ public class PortalRelease {
 	};
 
 	private static final String _PORTAL_VERSION_REGEX =
-		"(?<portalVersion>\\d\\.([u\\d\\.]+)(-ee)?(\\-(ep|ga|rc|sp)\\d+)?)";
+		"(?<portalVersion>\\d\\.([u\\d\\.]+)(-ee)?(-dxp-\\d+)?" +
+			"(\\-(ep|ga|rc|sp)\\d+)?)";
 
 	private static final Pattern _bundleFileNamePattern = Pattern.compile(
 		".+\\-" + _PORTAL_VERSION_REGEX + ".*\\.(7z|tar.gz|zip)");
@@ -716,7 +724,8 @@ public class PortalRelease {
 				"\\.zip)\\\"");
 	private static final Pattern _portalVersionPattern = Pattern.compile(
 		"(?<majorVersion>\\d)\\.(?<minorVersion>\\d)\\.(?<fixVersion>\\d+)" +
-			"([-\\.](?<updatePrefix>u)?(?<updateVersion>\\d+))?.*");
+			"([-\\.](?<updatePrefix>u)?(?<updateVersion>\\d+))?" +
+				"(-dxp-(?<dxpVersion>\\d+))?.*");
 	private static final Pattern _portalWarFileNamePattern = Pattern.compile(
 		"href=\\\"[^\\\"]*(?<fileName>liferay-[^\\\"]+\\.war)\\\"");
 

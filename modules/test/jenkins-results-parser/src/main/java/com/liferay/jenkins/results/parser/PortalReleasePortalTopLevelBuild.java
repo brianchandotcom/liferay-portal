@@ -95,6 +95,8 @@ public class PortalReleasePortalTopLevelBuild
 				URL portalReleaseTomcatURL = new URL(tomcatURLString);
 
 				_portalRelease = new PortalRelease(portalReleaseTomcatURL);
+
+				_portalRelease.setPortalBundleTomcatURL(portalReleaseTomcatURL);
 			}
 
 			String portalDependenciesZipURLString = getParameterValue(

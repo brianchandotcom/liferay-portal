@@ -113,7 +113,7 @@ public class FormLayoutStructureItemMapper
 				{
 					className = _portal.getClassName(
 						formStyledLayoutStructureItem.getClassNameId());
-					subtypeId = formStyledLayoutStructureItem.getClassTypeId();
+					classType = formStyledLayoutStructureItem.getClassTypeId();
 				}
 			};
 		}

@@ -39,6 +39,7 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -114,8 +115,18 @@ public class StartupHelperUtil {
 	public static void updateIndexes(boolean dropIndexes) {
 		DB db = DBManagerUtil.getDB();
 
-		try (Connection connection = DataAccess.getConnection()) {
-			updateIndexes(db, connection, dropIndexes);
+		try {
+			db.process(
+				companyId -> {
+					try (Connection connection = DataAccess.getConnection()) {
+						updateIndexes(db, connection, dropIndexes);
+					}
+					catch (SQLException sqlException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(sqlException);
+						}
+					}
+				});
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -125,28 +136,22 @@ public class StartupHelperUtil {
 	}
 
 	public static void updateIndexes(
-		DB db, Connection connection, boolean dropIndexes) {
+			DB db, Connection connection, boolean dropIndexes)
+		throws Exception {
 
-		try {
-			Thread currentThread = Thread.currentThread();
+		Thread currentThread = Thread.currentThread();
 
-			ClassLoader classLoader = currentThread.getContextClassLoader();
+		ClassLoader classLoader = currentThread.getContextClassLoader();
 
-			String tablesSQL = StringUtil.read(
-				classLoader,
-				"com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
+		String tablesSQL = StringUtil.read(
+			classLoader,
+			"com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
 
-			String indexesSQL = StringUtil.read(
-				classLoader,
-				"com/liferay/portal/tools/sql/dependencies/indexes.sql");
+		String indexesSQL = StringUtil.read(
+			classLoader,
+			"com/liferay/portal/tools/sql/dependencies/indexes.sql");
 
-			db.updateIndexes(connection, tablesSQL, indexesSQL, dropIndexes);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-		}
+		db.updateIndexes(connection, tablesSQL, indexesSQL, dropIndexes);
 	}
 
 	public static void upgradeProcess(int buildNumber) throws UpgradeException {

@@ -32,4 +32,6 @@ public interface TestClassGroup {
 
 	public List<File> getTestClassFiles();
 
+	public boolean hasTestClasses();
+
 }

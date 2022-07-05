@@ -11,7 +11,7 @@ definition {
 
 	@disable-webdriver = "true"
 	@priority = "5"
-	test CanCreateStructuredContentWithDefinedPriorityValue {
+	test CanCreateBaseCommentWithBatchPostCreateStrategyInsert {
 		property portal.acceptance = "true";
 
 		task ("Given a blogPosting created") {

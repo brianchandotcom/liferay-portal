@@ -135,8 +135,7 @@ public class InfoFormValidationException extends InfoFormException {
 		public String getLocalizedMessage(String fieldLabel, Locale locale) {
 			return LanguageUtil.format(
 				locale,
-				"x-file-size-is-larger-than-the-allowed-overall-maximum-" +
-					"upload-request-size-x",
+				"x-file-size-is-larger-than-the-allowed-maximum-upload-size-x",
 				new String[] {fieldLabel, _maximumSizeAllowed}, false);
 		}
 

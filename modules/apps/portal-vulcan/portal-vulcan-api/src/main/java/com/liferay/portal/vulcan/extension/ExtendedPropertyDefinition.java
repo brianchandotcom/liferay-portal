@@ -23,31 +23,31 @@ import com.liferay.portal.vulcan.extension.validation.ExtendedPropertyValidator;
 public class ExtendedPropertyDefinition {
 
 	public ExtendedPropertyDefinition(
-		String name, boolean required, FieldType type) {
+		FieldType fieldType, String name, boolean required) {
 
+		_fieldType = fieldType;
 		_name = name;
 		_required = required;
-		_type = type;
 
-		_validator = new DefaultExtendedPropertyValidator(type);
+		_validator = new DefaultExtendedPropertyValidator(fieldType);
 	}
 
 	public ExtendedPropertyDefinition(
-		String name, boolean required, FieldType type,
+		FieldType fieldType, String name, boolean required,
 		ExtendedPropertyValidator validator) {
 
+		_fieldType = fieldType;
 		_name = name;
 		_required = required;
-		_type = type;
 		_validator = validator;
+	}
+
+	public FieldType getFieldType() {
+		return _fieldType;
 	}
 
 	public String getName() {
 		return _name;
-	}
-
-	public FieldType getType() {
-		return _type;
 	}
 
 	public ExtendedPropertyValidator getValidator() {
@@ -64,9 +64,9 @@ public class ExtendedPropertyDefinition {
 
 	}
 
+	private final FieldType _fieldType;
 	private final String _name;
 	private final boolean _required;
-	private final FieldType _type;
 	private final ExtendedPropertyValidator _validator;
 
 }

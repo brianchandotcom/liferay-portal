@@ -35,15 +35,9 @@ public class JUnitTestClass extends BaseTestClass {
 	public Long getAverageDuration() {
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-		Long averageDuration = batchTestClassGroup.getAverageTestDuration(
+		return batchTestClassGroup.getAverageTestDuration(
 			JenkinsResultsParserUtil.combine(
 				_getPackageName(), ".", _getClassName()));
-
-		if (averageDuration != null) {
-			return averageDuration;
-		}
-
-		return super.getAverageDuration();
 	}
 
 	@Override

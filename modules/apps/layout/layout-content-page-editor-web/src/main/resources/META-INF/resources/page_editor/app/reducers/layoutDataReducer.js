@@ -60,7 +60,9 @@ export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 					[itemId]: {
 						...nextItem,
 						config: {
-							...previousItem.config,
+							...(action.overridePreviousConfig
+								? {}
+								: previousItem.config),
 							...nextItem.config,
 						},
 					},

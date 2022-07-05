@@ -38,7 +38,13 @@ function undoAction({action, store}) {
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
 		}).then(() => {
-			dispatch(updateItemConfig({itemId, layoutData: nextLayoutData}));
+			dispatch(
+				updateItemConfig({
+					itemId,
+					layoutData: nextLayoutData,
+					overridePreviousConfig: true,
+				})
+			);
 		});
 	};
 }

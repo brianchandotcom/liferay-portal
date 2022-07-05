@@ -88,8 +88,7 @@ else {
 		</c:if>
 
 		<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.DELETE) %>">
-			<liferay-portlet:actionURL name="deleteKBFolder" var="deleteURL">
-				<portlet:param name="mvcPath" value='<%= ParamUtil.getString(request, "mvcPath") %>' />
+			<liferay-portlet:actionURL name="/knowledge_base/delete_kb_folder" var="deleteURL">
 				<portlet:param name="redirect" value="<%= (row == null) ? redirect : currentURL %>" />
 				<portlet:param name="kbFolderId" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
 			</liferay-portlet:actionURL>

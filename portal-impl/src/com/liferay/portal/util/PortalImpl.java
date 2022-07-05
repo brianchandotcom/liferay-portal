@@ -4195,11 +4195,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public String getPortalWebDir() {
-		return PropsValues.LIFERAY_WEB_PORTAL_DIR;
-	}
-
-	@Override
 	public PortletConfig getPortletConfig(
 			long companyId, String portletId, ServletContext servletContext)
 		throws PortletException {

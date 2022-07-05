@@ -1351,10 +1351,6 @@ public class PortalUtil {
 		return _portal.getPortalURL(themeDisplay);
 	}
 
-	public static String getPortalWebDir() {
-		return _portal.getPortalWebDir();
-	}
-
 	public static PortletConfig getPortletConfig(
 			long companyId, String portletId, ServletContext servletContext)
 		throws PortletException {

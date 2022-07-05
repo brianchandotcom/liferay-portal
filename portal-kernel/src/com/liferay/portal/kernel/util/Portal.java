@@ -881,8 +881,6 @@ public interface Portal {
 	public String getPortalURL(ThemeDisplay themeDisplay)
 		throws PortalException;
 
-	public String getPortalWebDir();
-
 	public PortletConfig getPortletConfig(
 			long companyId, String portletId, ServletContext servletContext)
 		throws PortletException;

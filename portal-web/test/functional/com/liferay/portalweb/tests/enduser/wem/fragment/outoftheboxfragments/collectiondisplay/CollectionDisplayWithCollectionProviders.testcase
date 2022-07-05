@@ -1083,13 +1083,9 @@ definition {
 				navTab = "Blog Images",
 				uploadFileName = "Document_1.jpg");
 
-			Pause(locator1 = "3000");
-
 			Panel.expandPanel(panel = "Configuration");
 
 			BlogsEntry.addCustomAbstract(entryAbstractDescription = "This is a description for blogs entry");
-
-			Pause(locator1 = "3000");
 
 			PortletEntry.publish();
 
@@ -1617,8 +1613,6 @@ definition {
 				entryTitle = "Blogs Entry Title",
 				navTab = "Blog Images",
 				uploadFileName = "Document_1.jpg");
-
-			Pause(locator1 = "3000");
 
 			PortletEntry.publish();
 
@@ -2471,8 +2465,6 @@ definition {
 				entry = "First Web Content",
 				menuItem = "View History");
 
-			Pause(locator1 = "3000");
-
 			var firstModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -2481,8 +2473,6 @@ definition {
 				entry = "Second Web Content",
 				menuItem = "View History");
 
-			Pause(locator1 = "3000");
-
 			var secondModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -2490,8 +2480,6 @@ definition {
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Third Web Content",
 				menuItem = "View History");
-
-			Pause(locator1 = "3000");
 
 			var thirdModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 		}
@@ -2619,8 +2607,6 @@ definition {
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "First Web Content",
 				menuItem = "View History");
-
-			Pause(locator1 = "3000");
 
 			var firstModifiedDate = selenium.getAttribute("//tr[2]//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 		}

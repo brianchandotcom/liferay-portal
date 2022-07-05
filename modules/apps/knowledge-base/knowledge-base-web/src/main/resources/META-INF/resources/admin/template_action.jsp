@@ -17,8 +17,6 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String mvcPath = ParamUtil.getString(request, "mvcPath");
-
 ResultRow row = (ResultRow)request.getAttribute(KBWebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 KBTemplate kbTemplate = (KBTemplate)row.getObject();
@@ -74,8 +72,7 @@ KBTemplate kbTemplate = (KBTemplate)row.getObject();
 	</c:if>
 
 	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, KBActionKeys.DELETE) %>">
-		<liferay-portlet:actionURL name="deleteKBTemplate" var="deleteURL">
-			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
+		<liferay-portlet:actionURL name="/knowledge_base/delete_kb_template" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
 		</liferay-portlet:actionURL>

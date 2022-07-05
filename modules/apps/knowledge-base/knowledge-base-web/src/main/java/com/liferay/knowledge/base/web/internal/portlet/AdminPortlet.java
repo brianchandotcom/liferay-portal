@@ -116,15 +116,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AdminPortlet extends BaseKBPortlet {
 
-	public void deleteKBTemplate(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		long kbTemplateId = ParamUtil.getLong(actionRequest, "kbTemplateId");
-
-		kbTemplateService.deleteKBTemplate(kbTemplateId);
-	}
-
 	public void deleteKBTemplates(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {

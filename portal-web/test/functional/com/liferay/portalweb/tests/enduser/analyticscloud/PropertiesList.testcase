@@ -164,7 +164,7 @@ definition {
 	@priority = "4"
 	test OnlyAvailablePropertiesAppearInDXP {
 		task ("Go to properties page and add 2 new properties") {
-			var propertyList = "Property Name 1,Property Name 2";
+			var propertyList = "Property OnlyAvailablePropertiesAppearInDXP 1,Property OnlyAvailablePropertiesAppearInDXP 2";
 
 			ACNavigation.goToSettings();
 
@@ -196,12 +196,12 @@ definition {
 
 			ACDXPSettings.navToSyncedSitesMenu();
 
-			ACUtils.assertItemsName(itemList = "Property Name 1");
+			ACUtils.assertItemsName(itemList = "Property OnlyAvailablePropertiesAppearInDXP 1");
 
-			ACUtils.assertItemsName(itemList = "Property Name 2");
+			ACUtils.assertItemsName(itemList = "Property OnlyAvailablePropertiesAppearInDXP 2");
 
 			ACDXPSettings.assignSiteToExistingProperty(
-				assignedPropertyName = "Property Name 1",
+				assignedPropertyName = "Property OnlyAvailablePropertiesAppearInDXP 1",
 				siteName = "Site Name");
 		}
 
@@ -228,9 +228,9 @@ definition {
 
 			ACDXPSettings.navToSyncedSitesMenu();
 
-			ACUtils.assertItemsName(itemList = "Property Name 1");
+			ACUtils.assertItemsName(itemList = "Property OnlyAvailablePropertiesAppearInDXP 1");
 
-			ACUtils.assertItemsName(itemList = "Property Name 2");
+			ACUtils.assertItemsName(itemList = "Property OnlyAvailablePropertiesAppearInDXP 2");
 		}
 	}
 

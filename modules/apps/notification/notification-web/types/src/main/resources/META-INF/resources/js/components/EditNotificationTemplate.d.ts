@@ -34,7 +34,7 @@ export declare type TNotificationTemplate = {
 	from: string;
 	fromName: LocalizedValue<string>;
 	name: string;
-	objectDefinitionId: number;
+	objectDefinitionId: number | null;
 	subject: LocalizedValue<string>;
 	to: LocalizedValue<string>;
 };

@@ -1,34 +1,32 @@
 definition {
 
 	macro addDateRangeFilters {
-		FDSFilters.openFilters();
-
 		if (IsElementPresent(key_filter = "Date Range", locator1 = "FrontendDataSet#FILTER_OPTION")) {
 			Click(
 				key_filter = "Date Range",
 				locator1 = "FrontendDataSet#FILTER_OPTION");
 		}
 
-		for (var date : list "${key_dateId}") {
-			if ("${date}" == "from-date") {
-				Type.clickAtType(
-					key_dateId = "${date}",
-					locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
-					value1 = "${key_customDate1}");
-			}
-			else if ("${date}" == "to-date") {
-				Type.clickAtType(
-					key_dateId = "${date}",
-					locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
-					value1 = "${key_customDate2}");
-			}
-		}
+		Type(
+			key_dateId = "from-date",
+			locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
+			value1 = "${key_fromDate}");
+
+		Type(
+			key_dateId = "to-date",
+			locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
+			value1 = "${key_toDate}");
 
 		Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 	}
 
 	macro closeFilters {
-		if (IsElementPresent(locator1 = "FrontendDataSet#FILTER_DROPDOWN")) {
+		if (IsElementNotPresent(locator1 = "FrontendDataSet#FILTER_DROPDOWN")) {
+			ClickNoError(locator1 = "FrontendDataSet#FILTER_BACK_NAVIGATION");
+
+			Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
+		}
+		else if (IsElementPresent(locator1 = "FrontendDataSet#FILTER_DROPDOWN")) {
 			Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
 		}
 	}

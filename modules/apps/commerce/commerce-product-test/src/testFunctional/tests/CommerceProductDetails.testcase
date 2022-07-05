@@ -595,7 +595,7 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		CommerceEntry.addOptionValue(
 			valueName = "Black",
@@ -607,7 +607,7 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		CommerceEntry.addOptionValue(
 			valueName = "Blue",
@@ -732,7 +732,7 @@ definition {
 
 		Button.click(button = "Publish");
 
-		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
 		Refresh();
 
@@ -766,7 +766,7 @@ definition {
 
 		Button.click(button = "Publish");
 
-		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
+		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 
 		Refresh();
 

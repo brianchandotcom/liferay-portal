@@ -42,7 +42,7 @@ definition {
 			completionVelocityDateRange = "Custom Range",
 			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_DATE_RANGE_DROPDOWN_OPTION");
 
-		Pause(locator1 = "1000");
+		WaitForElementPresent(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_FROM");
 
 		AssertElementPresent(
 			key_dateFormat = "Default date format is MM/DD/YYYY.",

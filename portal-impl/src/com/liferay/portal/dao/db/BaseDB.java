@@ -594,37 +594,27 @@ public abstract class BaseDB implements DB {
 			boolean dropIndexes)
 		throws Exception {
 
-		process(
-			companyId -> {
-				if (Validator.isNotNull(companyId) && _log.isInfoEnabled()) {
-					_log.info(
-						"Updating database indexes for company " + companyId);
-				}
+		List<Index> indexes = getIndexes(connection);
 
-				List<Index> indexes = getIndexes(connection);
+		Set<String> validIndexNames = null;
 
-				Set<String> validIndexNames = null;
+		if (dropIndexes) {
+			validIndexNames = dropIndexes(
+				connection, tablesSQL, indexesSQL, indexes);
+		}
+		else {
+			validIndexNames = new HashSet<>();
 
-				if (dropIndexes) {
-					validIndexNames = dropIndexes(
-						connection, tablesSQL, indexesSQL, indexes);
-				}
-				else {
-					validIndexNames = new HashSet<>();
+			for (Index index : indexes) {
+				String indexName = StringUtil.toUpperCase(index.getIndexName());
 
-					for (Index index : indexes) {
-						String indexName = StringUtil.toUpperCase(
-							index.getIndexName());
+				validIndexNames.add(indexName);
+			}
+		}
 
-						validIndexNames.add(indexName);
-					}
-				}
-
-				_addIndexes(
-					connection,
-					_applyMaxStringIndexLengthLimitation(indexesSQL),
-					validIndexNames);
-			});
+		_addIndexes(
+			connection, _applyMaxStringIndexLengthLimitation(indexesSQL),
+			validIndexNames);
 	}
 
 	protected BaseDB(DBType dbType, int majorVersion, int minorVersion) {
@@ -996,7 +986,7 @@ public abstract class BaseDB implements DB {
 	private void _addIndexes(
 			Connection connection, String indexesSQL,
 			Set<String> validIndexNames)
-		throws IOException {
+		throws Exception {
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Adding indexes");

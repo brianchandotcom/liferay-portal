@@ -1275,6 +1275,7 @@
 						"CollectionItem",
 						"Column",
 						"DropZone",
+						"Form",
 						"Fragment",
 						"FragmentDropZone",
 						"Root",

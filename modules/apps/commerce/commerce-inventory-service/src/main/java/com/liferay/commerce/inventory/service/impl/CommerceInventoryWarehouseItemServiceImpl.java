@@ -384,6 +384,18 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	}
 
 	@Override
+	public int getStockQuantity(long companyId, long groupId, String sku) {
+		return commerceInventoryWarehouseItemFinder.countStockQuantityByC_G_S(
+			companyId, groupId, sku, true);
+	}
+
+	@Override
+	public int getStockQuantity(long companyId, String sku) {
+		return commerceInventoryWarehouseItemFinder.countStockQuantityByC_S(
+			companyId, sku, true);
+	}
+
+	@Override
 	public CommerceInventoryWarehouseItem
 			increaseCommerceInventoryWarehouseItemQuantity(
 				long commerceInventoryWarehouseItemId, int quantity)

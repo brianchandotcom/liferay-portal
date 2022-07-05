@@ -139,11 +139,11 @@ definition {
 
 		Alert.viewInfoMessageSpecific(infoMessage = "The TensorFlow model is being downloaded in the background. No tags will be created until the model is fully downloaded");
 
-		while (IsElementPresent(key_infoMessage = "The TensorFlow model is being downloaded in the background. No tags will be created until the model is fully downloaded", locator1 = "Message#INFO_SPECIFIC")) {
-			Pause(locator1 = "20000");
+		WaitForConsoleTextPresent(value1 = "Downloaded https://repository-cdn.liferay.com/nexus/service/local/repositories/public/content/com/liferay/org.tensorflow.models.inception/5h/org.tensorflow.models.inception-5h.jar");
 
-			Refresh();
-		}
+		WaitForConsoleTextPresent(value1 = "Downloaded https://repository-cdn.liferay.com/nexus/service/local/repositories/public/content/org/tensorflow/libtensorflow_jni/1.15.0/libtensorflow_jni-1.15.0.jar");
+
+		Refresh();
 
 		AssertElementNotPresent(
 			key_infoMessage = "The TensorFlow model will be downloaded in the background. No tags will be created until the model is fully downloaded",

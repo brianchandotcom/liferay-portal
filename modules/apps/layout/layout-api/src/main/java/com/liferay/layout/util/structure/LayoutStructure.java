@@ -251,6 +251,24 @@ public class LayoutStructure {
 		_layoutStructureItems.put(
 			layoutStructureItem.getItemId(), layoutStructureItem);
 
+		if (layoutStructureItem instanceof FormStyledLayoutStructureItem) {
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+				(FormStyledLayoutStructureItem)layoutStructureItem;
+
+			_formStyledLayoutStructureItems.add(formStyledLayoutStructureItem);
+		}
+		else if (layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem) {
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			_fragmentLayoutStructureItems.put(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
+				fragmentStyledLayoutStructureItem);
+		}
+
 		return layoutStructureItem;
 	}
 

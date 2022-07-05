@@ -58,6 +58,18 @@ public interface WikiPageAttachmentResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public void
+			deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode(
+				Long siteId, String wikiPageExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public WikiPageAttachment
+			getSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode(
+				Long siteId, String wikiPageExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
 	public void deleteWikiPageAttachment(Long wikiPageAttachmentId)
 		throws Exception;
 

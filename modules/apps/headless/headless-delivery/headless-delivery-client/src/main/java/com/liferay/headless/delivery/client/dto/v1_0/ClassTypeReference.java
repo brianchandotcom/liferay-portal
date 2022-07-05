@@ -55,26 +55,26 @@ public class ClassTypeReference implements Cloneable, Serializable {
 
 	protected String className;
 
-	public Long getSubtypeId() {
-		return subtypeId;
+	public Long getClassType() {
+		return classType;
 	}
 
-	public void setSubtypeId(Long subtypeId) {
-		this.subtypeId = subtypeId;
+	public void setClassType(Long classType) {
+		this.classType = classType;
 	}
 
-	public void setSubtypeId(
-		UnsafeSupplier<Long, Exception> subtypeIdUnsafeSupplier) {
+	public void setClassType(
+		UnsafeSupplier<Long, Exception> classTypeUnsafeSupplier) {
 
 		try {
-			subtypeId = subtypeIdUnsafeSupplier.get();
+			classType = classTypeUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long subtypeId;
+	protected Long classType;
 
 	@Override
 	public ClassTypeReference clone() throws CloneNotSupportedException {

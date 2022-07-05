@@ -89,20 +89,20 @@ public class ClassTypeReference implements Serializable {
 	protected String className;
 
 	@Schema
-	public Long getSubtypeId() {
-		return subtypeId;
+	public Long getClassType() {
+		return classType;
 	}
 
-	public void setSubtypeId(Long subtypeId) {
-		this.subtypeId = subtypeId;
+	public void setClassType(Long classType) {
+		this.classType = classType;
 	}
 
 	@JsonIgnore
-	public void setSubtypeId(
-		UnsafeSupplier<Long, Exception> subtypeIdUnsafeSupplier) {
+	public void setClassType(
+		UnsafeSupplier<Long, Exception> classTypeUnsafeSupplier) {
 
 		try {
-			subtypeId = subtypeIdUnsafeSupplier.get();
+			classType = classTypeUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -114,7 +114,7 @@ public class ClassTypeReference implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long subtypeId;
+	protected Long classType;
 
 	@Override
 	public boolean equals(Object object) {
@@ -157,14 +157,14 @@ public class ClassTypeReference implements Serializable {
 			sb.append("\"");
 		}
 
-		if (subtypeId != null) {
+		if (classType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"subtypeId\": ");
+			sb.append("\"classType\": ");
 
-			sb.append(subtypeId);
+			sb.append(classType);
 		}
 
 		sb.append("}");

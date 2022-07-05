@@ -69,14 +69,14 @@ public class ClassTypeReferenceSerDes {
 			sb.append("\"");
 		}
 
-		if (classTypeReference.getSubtypeId() != null) {
+		if (classTypeReference.getClassType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"subtypeId\": ");
+			sb.append("\"classType\": ");
 
-			sb.append(classTypeReference.getSubtypeId());
+			sb.append(classTypeReference.getClassType());
 		}
 
 		sb.append("}");
@@ -108,12 +108,12 @@ public class ClassTypeReferenceSerDes {
 				"className", String.valueOf(classTypeReference.getClassName()));
 		}
 
-		if (classTypeReference.getSubtypeId() == null) {
-			map.put("subtypeId", null);
+		if (classTypeReference.getClassType() == null) {
+			map.put("classType", null);
 		}
 		else {
 			map.put(
-				"subtypeId", String.valueOf(classTypeReference.getSubtypeId()));
+				"classType", String.valueOf(classTypeReference.getClassType()));
 		}
 
 		return map;
@@ -143,9 +143,9 @@ public class ClassTypeReferenceSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "subtypeId")) {
+			else if (Objects.equals(jsonParserFieldName, "classType")) {
 				if (jsonParserFieldValue != null) {
-					classTypeReference.setSubtypeId(
+					classTypeReference.setClassType(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

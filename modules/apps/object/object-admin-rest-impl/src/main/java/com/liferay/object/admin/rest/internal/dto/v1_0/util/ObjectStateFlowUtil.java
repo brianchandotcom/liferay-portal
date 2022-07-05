@@ -86,7 +86,7 @@ public class ObjectStateFlowUtil {
 
 		ObjectState targetObjectState =
 			ObjectStateLocalServiceUtil.
-				findByListTypeEntryIdAndObjectStateFlowId(
+				getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
 					nextObjectState.getListTypeEntryId(), objectStateFlowId);
 
 		objectStateTransition.setTargetObjectStateId(

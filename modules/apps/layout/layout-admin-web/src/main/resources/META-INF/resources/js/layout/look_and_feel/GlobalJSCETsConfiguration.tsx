@@ -14,10 +14,17 @@
 
 import ClayButton from '@clayui/button';
 import ClayTable from '@clayui/table';
+import classNames from 'classnames';
 import {openSelectionModal} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {GlobalCETOptionsDropDown} from './GlobalCETOptionsDropDown';
+import {GlobalCETOrderHelpIcon} from './GlobalCETOrderHelpIcon';
+
+const INHERITED_LABELS: Record<IInheritedOptions, string> = {
+	'layout-set': Liferay.Language.get('layout-set'),
+	'master-layout': Liferay.Language.get('master'),
+};
 
 export default function GlobalJSCETsConfiguration({
 	globalJSCETSelectorURL,
@@ -25,7 +32,22 @@ export default function GlobalJSCETsConfiguration({
 	portletNamespace,
 	selectGlobalJSCETsEventName,
 }: IProps) {
-	const [globalJSCETs, setGlobalJSCETs] = useState(initialGlobalJSCETs);
+	const fixedGlobalJSCETs = useMemo(
+		() =>
+			initialGlobalJSCETs.filter(
+				(globalJSCET) => globalJSCET.inheritedFrom
+			),
+		[initialGlobalJSCETs]
+	);
+
+	const [globalJSCETs, setGlobalJSCETs] = useState(() =>
+		initialGlobalJSCETs.filter((globalJSCET) => !globalJSCET.inheritedFrom)
+	);
+
+	const allGlobalJSCETs = useMemo(
+		() => [...fixedGlobalJSCETs, ...globalJSCETs],
+		[fixedGlobalJSCETs, globalJSCETs]
+	);
 
 	const deleteGlobalJSCET = (deletedGlobalJSCET: IGlobalJSCET) => {
 		setGlobalJSCETs((previousGlobalJSCETs) =>
@@ -86,13 +108,14 @@ export default function GlobalJSCETsConfiguration({
 
 	return (
 		<>
-			<input
-				name={`${portletNamespace}globalJSCETExternalReferenceCodes`}
-				type="hidden"
-				value={globalJSCETs
-					.map((globalJSCET) => globalJSCET.cetExternalReferenceCode)
-					.join(',')}
-			/>
+			{globalJSCETs.map(({cetExternalReferenceCode}) => (
+				<input
+					key={cetExternalReferenceCode}
+					name={`${portletNamespace}globalJSCETExternalReferenceCodes`}
+					type="hidden"
+					value={cetExternalReferenceCode}
+				/>
+			))}
 
 			<h3 className="sheet-subtitle">
 				{Liferay.Language.get('javascript-extensions')}
@@ -112,8 +135,25 @@ export default function GlobalJSCETsConfiguration({
 				<ClayTable>
 					<ClayTable.Head>
 						<ClayTable.Row>
+							<ClayTable.Cell headingCell>
+								<GlobalCETOrderHelpIcon
+									buttonId={`${portletNamespace}_GlobalJSCETsConfigurationOrderHelpIcon`}
+									title={Liferay.Language.get(
+										'loading-order'
+									)}
+								>
+									{Liferay.Language.get(
+										'numbers-indicate-in-which-order-extensions-are-loaded-extensions-inherited-from-master-will-always-be-loaded-in-first-place'
+									)}
+								</GlobalCETOrderHelpIcon>
+							</ClayTable.Cell>
+
 							<ClayTable.Cell expanded headingCell>
 								{Liferay.Language.get('name')}
+							</ClayTable.Cell>
+
+							<ClayTable.Cell expanded headingCell>
+								{Liferay.Language.get('inherited')}
 							</ClayTable.Cell>
 
 							<ClayTable.Cell headingCell>
@@ -125,26 +165,48 @@ export default function GlobalJSCETsConfiguration({
 					</ClayTable.Head>
 
 					<ClayTable.Body>
-						{globalJSCETs.map((globalJSCET) => (
-							<ClayTable.Row
-								key={globalJSCET.cetExternalReferenceCode}
-							>
-								<ClayTable.Cell expanded headingTitle>
-									{globalJSCET.name}
-								</ClayTable.Cell>
+						{allGlobalJSCETs.map((globalJSCET, index) => {
+							const buttonId = getDropDownButtonId(globalJSCET);
+							const items = getDropDownItems(globalJSCET);
+							const order = index + 1;
 
-								<ClayTable.Cell>
-									<GlobalCETOptionsDropDown
-										dropdownItems={getDropDownItems(
-											globalJSCET
+							const disabled = Boolean(globalJSCET.inheritedFrom);
+
+							const inheritedLabel = globalJSCET.inheritedFrom
+								? Liferay.Util.sub(
+										Liferay.Language.get('from-x'),
+										INHERITED_LABELS[
+											globalJSCET.inheritedFrom
+										]
+								  )
+								: '-';
+
+							return (
+								<ClayTable.Row
+									className={classNames({disabled})}
+									key={globalJSCET.cetExternalReferenceCode}
+								>
+									<ClayTable.Cell>{order}</ClayTable.Cell>
+
+									<ClayTable.Cell expanded headingTitle>
+										{globalJSCET.name}
+									</ClayTable.Cell>
+
+									<ClayTable.Cell expanded>
+										{inheritedLabel}
+									</ClayTable.Cell>
+
+									<ClayTable.Cell>
+										{disabled ? null : (
+											<GlobalCETOptionsDropDown
+												dropdownItems={items}
+												dropdownTriggerId={buttonId}
+											/>
 										)}
-										dropdownTriggerId={getDropDownButtonId(
-											globalJSCET
-										)}
-									/>
-								</ClayTable.Cell>
-							</ClayTable.Row>
-						))}
+									</ClayTable.Cell>
+								</ClayTable.Row>
+							);
+						})}
 					</ClayTable.Body>
 				</ClayTable>
 			) : (
@@ -158,8 +220,11 @@ export default function GlobalJSCETsConfiguration({
 	);
 }
 
+type IInheritedOptions = 'layout-set' | 'master-layout';
+
 interface IGlobalJSCET {
 	cetExternalReferenceCode: string;
+	inheritedFrom: IInheritedOptions | null;
 	name: string;
 }
 

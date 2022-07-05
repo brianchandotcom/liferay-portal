@@ -936,17 +936,24 @@ definition {
 		}
 
 		task ("Verify Test Expired Application") {
+
+			// Pausing 20 seconds due to assert the authorization is not yet expired. See LPS-105156 for more details.
+
 			Pause(locator1 = "20000");
 
 			Refresh();
 
 			OAuth2.viewUserConnectedExpirationValue(expirationValue = "Within");
 
+			// Pausing 30 seconds due to assert the authorization has expired. See LPS-105156 for more details.
+
 			Pause(locator1 = "30000");
 
 			Refresh();
 
 			OAuth2.viewUserConnectedExpirationValue(expirationValue = "Seconds Ago");
+
+			// Pausing 30 seconds due to assert the authorization is deleted. See LPS-105156 for more details.
 
 			Pause(locator1 = "30000");
 

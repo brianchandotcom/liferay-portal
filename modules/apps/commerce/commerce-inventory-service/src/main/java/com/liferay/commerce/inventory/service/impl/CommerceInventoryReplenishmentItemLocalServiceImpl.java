@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
@@ -83,6 +84,16 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 
 		commerceInventoryReplenishmentItemPersistence.
 			removeByCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
+	}
+
+	public CommerceInventoryReplenishmentItem
+		fetchCommerceInventoryReplenishmentItem(
+			long companyId, String sku,
+			OrderByComparator<CommerceInventoryReplenishmentItem>
+				orderByComparator) {
+
+		return commerceInventoryReplenishmentItemPersistence.fetchByC_S_First(
+			companyId, sku, orderByComparator);
 	}
 
 	@Override

@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -115,20 +114,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class AdminPortlet extends BaseKBPortlet {
-
-	public void deleteKBTemplates(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			KBWebKeys.THEME_DISPLAY);
-
-		long[] kbTemplateIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "kbTemplateIds"), 0L);
-
-		kbTemplateService.deleteKBTemplates(
-			themeDisplay.getScopeGroupId(), kbTemplateIds);
-	}
 
 	public void importFile(
 			ActionRequest actionRequest, ActionResponse actionResponse)

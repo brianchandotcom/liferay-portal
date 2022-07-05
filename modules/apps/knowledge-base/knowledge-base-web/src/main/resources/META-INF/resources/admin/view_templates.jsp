@@ -22,8 +22,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 
-<liferay-portlet:actionURL name="deleteKBTemplates" var="deleteKBTemplatesURL">
-	<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
+<liferay-portlet:actionURL name="/knowledge_base/delete_kb_templates" var="deleteKBTemplatesURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </liferay-portlet:actionURL>
 

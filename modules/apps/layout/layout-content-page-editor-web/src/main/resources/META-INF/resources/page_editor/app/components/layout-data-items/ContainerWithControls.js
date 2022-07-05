@@ -45,8 +45,6 @@ const ContainerWithControls = React.forwardRef(({children, item}, ref) => {
 
 	const {widthType} = itemConfig;
 
-	const {height} = itemConfig.styles;
-
 	return (
 		<>
 			<HoverHandler

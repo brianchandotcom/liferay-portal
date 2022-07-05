@@ -51,7 +51,7 @@ public class ListTypeEntryModelListener
 
 		for (ObjectField objectField : objectFields) {
 			ObjectStateFlow objectStateFlow =
-				_objectStateFlowLocalService.fetchByObjectFieldId(
+				_objectStateFlowLocalService.getObjectFieldObjectStateFlow(
 					objectField.getObjectFieldId());
 
 			try {
@@ -70,7 +70,7 @@ public class ListTypeEntryModelListener
 	public void onAfterRemove(ListTypeEntry listTypeEntry)
 		throws ModelListenerException {
 
-		_objectStateLocalService.deleteByListTypeEntryId(
+		_objectStateLocalService.deleteListTypeEntryObjectStates(
 			listTypeEntry.getListTypeEntryId());
 	}
 

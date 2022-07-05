@@ -678,7 +678,7 @@ public class ObjectFieldLocalServiceImpl
 		objectField = objectFieldPersistence.remove(objectField);
 
 		if (objectField.isState()) {
-			_objectStateFlowLocalService.deleteByObjectFieldId(
+			_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
 				objectField.getObjectFieldId());
 		}
 

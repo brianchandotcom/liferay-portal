@@ -64,43 +64,29 @@ public class ObjectStateLocalServiceImpl
 	}
 
 	@Override
-	public void deleteByListTypeEntryId(long listTypeEntryId) {
+	public void deleteListTypeEntryObjectStates(long listTypeEntryId) {
 		List<ObjectState> objectStates =
 			objectStatePersistence.findByListTypeEntryId(listTypeEntryId);
 
 		for (ObjectState objectState : objectStates) {
-			_objectStateTransitionLocalService.deleteByObjectStateId(
-				objectState.getObjectStateId());
+			_objectStateTransitionLocalService.
+				deleteObjectStateObjectStateTransitions(
+					objectState.getObjectStateId());
 		}
 
 		objectStatePersistence.removeByListTypeEntryId(listTypeEntryId);
 	}
 
 	@Override
-	public void deleteByObjectStateFlowId(long objectStateFlowId) {
+	public void deleteObjectStateFlowObjectStates(long objectStateFlowId) {
 		objectStatePersistence.removeByObjectStateFlowId(objectStateFlowId);
-	}
-
-	@Override
-	public ObjectState findByListTypeEntryIdAndObjectStateFlowId(
-			long listTypeEntryId, long objectStateFlowId)
-		throws NoSuchObjectStateException {
-
-		return objectStatePersistence.findByLTEI_OSFI(
-			listTypeEntryId, objectStateFlowId);
-	}
-
-	@Override
-	public List<ObjectState> findByObjectStateFlowId(long objectStateFlowId) {
-		return objectStatePersistence.findByObjectStateFlowId(
-			objectStateFlowId);
 	}
 
 	@Override
 	public List<ObjectState> getNextObjectStates(long sourceObjectStateId) {
 		return Stream.of(
-			_objectStateTransitionLocalService.findBySourceObjectStateId(
-				sourceObjectStateId)
+			_objectStateTransitionLocalService.
+				getObjectStateObjectStateTransitions(sourceObjectStateId)
 		).flatMap(
 			List::stream
 		).map(
@@ -112,17 +98,34 @@ public class ObjectStateLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectState> getObjectStateFlowObjectStates(
+		long objectStateFlowId) {
+
+		return objectStatePersistence.findByObjectStateFlowId(
+			objectStateFlowId);
+	}
+
+	@Override
+	public ObjectState getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
+			long listTypeEntryId, long objectStateFlowId)
+		throws NoSuchObjectStateException {
+
+		return objectStatePersistence.findByLTEI_OSFI(
+			listTypeEntryId, objectStateFlowId);
+	}
+
+	@Override
 	public void updateObjectStateTransitions(
 			long objectStateId,
 			List<ObjectStateTransition> objectStateTransitions)
 		throws PortalException {
 
 		List<ObjectStateTransition> persistedObjectStateTransitions =
-			_objectStateTransitionLocalService.findBySourceObjectStateId(
-				objectStateId);
+			_objectStateTransitionLocalService.
+				getObjectStateObjectStateTransitions(objectStateId);
 
 		if (persistedObjectStateTransitions.isEmpty()) {
-			_objectStateTransitionLocalService.createObjectStateTransitions(
+			_objectStateTransitionLocalService.addObjectStateTransitions(
 				objectStateTransitions);
 
 			return;
@@ -149,7 +152,7 @@ public class ObjectStateLocalServiceImpl
 			persistedObjectStateTransitions,
 			ObjectStateTransitionModel::getTargetObjectStateId);
 
-		_objectStateTransitionLocalService.createObjectStateTransitions(
+		_objectStateTransitionLocalService.addObjectStateTransitions(
 			ListUtil.filter(
 				objectStateTransitions,
 				objectStateTransition ->

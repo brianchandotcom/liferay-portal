@@ -75,7 +75,7 @@ public class ObjectFieldDTOConverter
 					ObjectFieldSettingUtil::toObjectFieldSetting,
 					ObjectFieldSetting.class);
 				objectStateFlow = _toObjectStateFlowDTO(
-					_objectStateFlowLocalService.fetchByObjectFieldId(
+					_objectStateFlowLocalService.getObjectFieldObjectStateFlow(
 						objectField.getObjectFieldId()));
 				relationshipType = ObjectField.RelationshipType.create(
 					objectField.getRelationshipType());
@@ -126,7 +126,7 @@ public class ObjectFieldDTOConverter
 			{
 				id = objectStateFlow.getObjectStateFlowId();
 				objectStates = TransformUtil.transformToArray(
-					_objectStateLocalService.findByObjectStateFlowId(
+					_objectStateLocalService.getObjectStateFlowObjectStates(
 						objectStateFlow.getObjectStateFlowId()),
 					objectState -> _toObjectStateDTO(objectState),
 					com.liferay.object.admin.rest.dto.v1_0.ObjectState.class);

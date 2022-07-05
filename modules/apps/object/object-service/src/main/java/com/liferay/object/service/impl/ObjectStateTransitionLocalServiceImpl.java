@@ -62,7 +62,7 @@ public class ObjectStateTransitionLocalServiceImpl
 	}
 
 	@Override
-	public void createObjectStateTransitions(
+	public void addObjectStateTransitions(
 			List<ObjectStateTransition> objectStateTransitions)
 		throws PortalException {
 
@@ -84,13 +84,15 @@ public class ObjectStateTransitionLocalServiceImpl
 	}
 
 	@Override
-	public void deleteByObjectStateFlowId(long objectStateFlowId) {
+	public void deleteObjectStateFlowObjectStateTransitions(
+		long objectStateFlowId) {
+
 		objectStateTransitionPersistence.removeByObjectStateFlowId(
 			objectStateFlowId);
 	}
 
 	@Override
-	public void deleteByObjectStateId(long objectStateId) {
+	public void deleteObjectStateObjectStateTransitions(long objectStateId) {
 		objectStateTransitionPersistence.removeBySourceObjectStateId(
 			objectStateId);
 
@@ -116,7 +118,7 @@ public class ObjectStateTransitionLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectStateTransition> findByObjectStateFlowId(
+	public List<ObjectStateTransition> getObjectStateFlowObjectStateTransitions(
 		long objectStateFlowId) {
 
 		return objectStateTransitionPersistence.findByObjectStateFlowId(
@@ -124,7 +126,7 @@ public class ObjectStateTransitionLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectStateTransition> findBySourceObjectStateId(
+	public List<ObjectStateTransition> getObjectStateObjectStateTransitions(
 		long sourceObjectStateId) {
 
 		return objectStateTransitionPersistence.findBySourceObjectStateId(

@@ -133,12 +133,12 @@ public class PicklistObjectFieldBusinessType
 					objectField.getListTypeDefinitionId(), listEntryKey);
 
 			ObjectStateFlow objectStateFlow =
-				_objectStateFlowLocalService.fetchByObjectFieldId(
+				_objectStateFlowLocalService.getObjectFieldObjectStateFlow(
 					objectField.getObjectFieldId());
 
 			ObjectState currentObjectState =
 				_objectStateLocalService.
-					findByListTypeEntryIdAndObjectStateFlowId(
+					getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
 						listTypeEntry.getListTypeEntryId(),
 						objectStateFlow.getObjectStateFlowId());
 

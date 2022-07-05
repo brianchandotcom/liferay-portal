@@ -60,15 +60,15 @@ definition {
 		task ("And Given I repeat the same request again changing the headline") {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
-				numberOfBlogPostingsToCreate = "2",
-				hadline = "new headline");	
+				hadline = "new headline",
+				numberOfBlogPostingsToCreate = "2");
 		}
 
-		task("When I check the status of the task with its id in batch engine"){
+		task ("When I check the status of the task with its id in batch engine") {
 			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
 		}
 
-		task("Then I receive executeStatus: FAILED"){
+		task ("Then I receive executeStatus: FAILED") {
 			TestUtils.assertEquals(
 				actual = "${executeStatus}",
 				expected = "FAILED");
@@ -90,8 +90,8 @@ definition {
 			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
 				createStrategy = "INSERT",
 				numberOfBlogPostingsToCreate = "2",
-				testCase = "LPS-157601")
-			}
+				testCase = "LPS-157601");
+		}
 
 		task ("When I check the status of the task with its id in batch engine") {
 			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
@@ -103,4 +103,5 @@ definition {
 				expected = "FAILED");
 		}
 	}
+
 }

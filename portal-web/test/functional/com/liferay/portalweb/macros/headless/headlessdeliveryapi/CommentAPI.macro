@@ -30,7 +30,7 @@ definition {
 		}
 
 		var portalURL = JSONCompany.getPortalURL();
-		
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}/comments/batch?createStrategy=${createStrategy} \
 			-u test@liferay.com:test \

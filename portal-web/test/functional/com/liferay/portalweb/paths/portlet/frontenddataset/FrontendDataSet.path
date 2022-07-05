@@ -135,11 +135,11 @@
 </tr>
 <tr>
 	<td>FILTER_DATE_RANGE</td>
-	<td>//div[@class='dropdown-menu show']//div[@class='data-set-filter']//input[contains(@id,'${key_dateId}')]</td>
+	<td>//div[@class='dropdown-menu show']//input[contains(@id,'${key_dateId}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FILTER_NAVIGATION</td>
+	<td>FILTER_BACK_NAVIGATION</td>
 	<td>//div[@class='dropdown-menu show']//*[@type="button" and contains(@class,'btn-filter-navigation')]</td>
 	<td></td>
 </tr>

@@ -20,6 +20,7 @@ import React, {useMemo} from 'react';
 import {FRAGMENT_ENTRY_TYPES} from '../../../../../../app/config/constants/fragmentEntryTypes';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
+import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
@@ -273,7 +274,11 @@ export function FormInputGeneralPanel({item}) {
 
 			editableValues = setIn(
 				editableValues,
-				[FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, LABEL_CONFIGURATION_KEY],
+				[
+					FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					LABEL_CONFIGURATION_KEY,
+					config.defaultLanguageId,
+				],
 				getFieldLabel(value, formFields)
 			);
 

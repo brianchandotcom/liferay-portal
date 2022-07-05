@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.persistence.internal.upgrade.v1_2_0;
+package com.liferay.portal.security.sso.openid.connect.persistence.internal.upgrade.v2_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;

@@ -36,7 +36,7 @@ public class OpenIdConnectSessionServiceUpgradeStepRegistrator
 				internal.upgrade.v1_1_0.OpenIdConnectSessionUpgradeProcess());
 
 		registry.register(
-			"1.1.0", "1.2.0",
+			"1.1.0", "2.0.0",
 			UpgradeStepFactory.addColumns(
 				"OpenIdConnectSession",
 				"authServerWellKnownURI VARCHAR(256) null",
@@ -44,7 +44,7 @@ public class OpenIdConnectSessionServiceUpgradeStepRegistrator
 			UpgradeStepFactory.dropColumns(
 				"OpenIdConnectSession", "providerName"),
 			new com.liferay.portal.security.sso.openid.connect.persistence.
-				internal.upgrade.v1_2_0.OpenIdConnectSessionUpgradeProcess(
+				internal.upgrade.v2_0_0.OpenIdConnectSessionUpgradeProcess(
 					_configurationAdmin),
 			UpgradeStepFactory.dropColumns(
 				"OpenIdConnectSession", "configurationPid"));

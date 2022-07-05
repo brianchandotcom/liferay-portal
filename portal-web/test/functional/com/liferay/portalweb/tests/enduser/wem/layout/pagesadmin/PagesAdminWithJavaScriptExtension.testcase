@@ -215,4 +215,66 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153655. The site designer could delete the JavaScript extenion selection."
+	@priority = "4"
+	test ClearJavaScriptExtensionSelection {
+		task ("Given a site designer has a content page with a JavaScript extension") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			PagesAdmin.addJavaScriptExtensions(extensionNameList = "InnerText");
+
+			PortletEntry.save();
+		}
+
+		task ("When the site designer accesses to the Advanced settings") {
+			Navigator.gotoBack();
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Welcome");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the site designer could clear the JavaScript extension selection") {
+			Click(
+				key_tableEntry = "InnerText",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Delete");
+
+			AssertTextEquals(
+				key_sectionTitle = "JavaScript Extensions",
+				locator1 = "PagesAdmin#SECTION_SUBTITLE",
+				value1 = "No JavaScript extensions were loaded.");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+		}
+	}
+
 }

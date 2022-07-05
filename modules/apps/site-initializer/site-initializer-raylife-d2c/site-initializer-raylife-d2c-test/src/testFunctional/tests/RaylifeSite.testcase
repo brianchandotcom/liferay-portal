@@ -54,13 +54,13 @@ definition {
 			key_title = "Add Site",
 			locator1 = "IFrame#MODAL_ANY");
 
-		PortletEntry.inputName(name = "Raylife D2C");
+		PortletEntry.inputName(name = "${testSiteName}");
 
 		Click(locator1 = "Button#ADD");
 
 		Site.openSitesAdmin();
 
-		while (IsElementNotPresent(key_siteName = "Raylife D2C", locator1 = "Sites#SITE_TABLE_NAME")) {
+		while (IsElementNotPresent(key_siteName = "${testSiteName}", locator1 = "Sites#SITE_TABLE_NAME")) {
 			Refresh();
 
 			WaitForPageLoad();

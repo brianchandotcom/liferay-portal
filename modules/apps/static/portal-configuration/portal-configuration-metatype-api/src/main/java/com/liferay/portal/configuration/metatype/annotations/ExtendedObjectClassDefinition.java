@@ -76,7 +76,7 @@ public @interface ExtendedObjectClassDefinition {
 
 	public enum Scope {
 
-		COMPANY("companyKey", "companyId", "company"),
+		COMPANY("companyWebId", "companyId", "company"),
 		GROUP("groupKey", "groupId", "group"),
 		PORTLET_INSTANCE(
 			"portletInstanceKey", "portletInstanceId", "portlet-instance"),

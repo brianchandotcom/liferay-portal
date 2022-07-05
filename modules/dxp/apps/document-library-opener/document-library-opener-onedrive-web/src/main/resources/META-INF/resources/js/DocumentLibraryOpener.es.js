@@ -107,7 +107,7 @@ class DocumentLibraryOpener {
 		openSimpleInputModal({
 			alert: {
 				message: Liferay.Language.get(
-					'the-document-has-been-checked-out-please-on-finish-editing-check-in-the-document-to-save-changes-into-the-document-library'
+					'the-document-has-been-checked-out-.please-check-in-the-document-after-edits-are-made-to-save-the-changes-into-the-document-library'
 				),
 				style: 'info',
 				title: Liferay.Language.get('info'),

@@ -31,10 +31,10 @@ import java.util.Set;
 public class ExtensionProviders {
 
 	public ExtensionProviders(
-		String className, List<ExtensionProvider> extensionProviderList) {
+		String className, List<ExtensionProvider> extensionProviders) {
 
 		_className = className;
-		_extensionProviderList = extensionProviderList;
+		_extensionProviders = extensionProviders;
 	}
 
 	public Map<String, Serializable> getExtendedProperties(
@@ -43,7 +43,7 @@ public class ExtensionProviders {
 
 		Map<String, Serializable> extendedProperties = new HashMap<>();
 
-		for (ExtensionProvider extensionProvider : _extensionProviderList) {
+		for (ExtensionProvider extensionProvider : _extensionProviders) {
 			extendedProperties.putAll(
 				extensionProvider.getExtendedProperties(companyId, entity));
 		}
@@ -54,7 +54,7 @@ public class ExtensionProviders {
 	public Set<String> getFilteredPropertyNames(long companyId, Object entity) {
 		Set<String> filteredPropertyNames = new HashSet<>();
 
-		for (ExtensionProvider extensionProvider : _extensionProviderList) {
+		for (ExtensionProvider extensionProvider : _extensionProviders) {
 			filteredPropertyNames.addAll(
 				extensionProvider.getFilteredPropertyNames(companyId, entity));
 		}
@@ -67,7 +67,7 @@ public class ExtensionProviders {
 			Map<String, Serializable> extendedProperties)
 		throws Exception {
 
-		for (ExtensionProvider extensionProvider : _extensionProviderList) {
+		for (ExtensionProvider extensionProvider : _extensionProviders) {
 			Map<String, ExtendedPropertyDefinition>
 				extendedPropertyDefinitionMap =
 					extensionProvider.getExtendedPropertyDefinitions(
@@ -103,6 +103,6 @@ public class ExtensionProviders {
 	}
 
 	private final String _className;
-	private final List<ExtensionProvider> _extensionProviderList;
+	private final List<ExtensionProvider> _extensionProviders;
 
 }

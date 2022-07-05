@@ -78,6 +78,7 @@ describe('GlobalJSCETsConfiguration', () => {
 					{
 						cetExternalReferenceCode: 'anotherNiceId',
 						inheritedFrom: null,
+						loadType: 'defer',
 						name: 'Nice Global JS v2',
 					},
 				]}
@@ -86,8 +87,8 @@ describe('GlobalJSCETsConfiguration', () => {
 			/>
 		);
 
-		await screen.findByDisplayValue('niceId');
-		await screen.findByDisplayValue('anotherNiceId');
+		await screen.findByDisplayValue('niceId_default');
+		await screen.findByDisplayValue('anotherNiceId_defer');
 	});
 
 	it('opens a selection modal when "add" button is pressed', async () => {
@@ -164,8 +165,8 @@ describe('GlobalJSCETsConfiguration', () => {
 			});
 		});
 
-		await screen.findByDisplayValue('niceId');
-		await screen.findByDisplayValue('someNiceId');
+		await screen.findByDisplayValue('niceId_default');
+		await screen.findByDisplayValue('someNiceId_default');
 	});
 
 	it('allows removing extensions by pressing dropdown "remove" button', async () => {

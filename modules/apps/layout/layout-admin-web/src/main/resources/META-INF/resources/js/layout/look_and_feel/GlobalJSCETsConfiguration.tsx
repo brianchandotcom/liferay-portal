@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {ClaySelectWithOption} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {openSelectionModal} from 'frontend-js-web';
@@ -24,6 +25,17 @@ import {GlobalCETOrderHelpIcon} from './GlobalCETOrderHelpIcon';
 const INHERITED_LABELS: Record<IInheritedOptions, string> = {
 	'layout-set': Liferay.Language.get('layout-set'),
 	'master-layout': Liferay.Language.get('master'),
+};
+
+const DEFAULT_LOAD_TYPE_OPTION: ILoadTypeOptions = 'default';
+
+const LOAD_TYPE_OPTIONS: Record<
+	ILoadTypeOptions,
+	React.OptionHTMLAttributes<HTMLOptionElement>
+> = {
+	async: {label: 'async', value: 'async'},
+	default: {label: 'default', value: 'default'},
+	defer: {label: 'defer', value: 'defer'},
 };
 
 export default function GlobalJSCETsConfiguration({
@@ -55,6 +67,20 @@ export default function GlobalJSCETsConfiguration({
 				(globalJSCET) =>
 					globalJSCET.cetExternalReferenceCode !==
 					deletedGlobalJSCET.cetExternalReferenceCode
+			)
+		);
+	};
+
+	const updateGlobalJSCET = <T extends keyof IGlobalJSCET>(
+		globalJSCET: IGlobalJSCET,
+		propName: T,
+		value: IGlobalJSCET[T]
+	) => {
+		setGlobalJSCETs((previousGlobalJSCETs) =>
+			previousGlobalJSCETs.map((oldGlobalJSCET) =>
+				oldGlobalJSCET === globalJSCET
+					? {...globalJSCET, [propName]: value}
+					: oldGlobalJSCET
 			)
 		);
 	};
@@ -108,12 +134,14 @@ export default function GlobalJSCETsConfiguration({
 
 	return (
 		<>
-			{globalJSCETs.map(({cetExternalReferenceCode}) => (
+			{globalJSCETs.map(({cetExternalReferenceCode, loadType}) => (
 				<input
 					key={cetExternalReferenceCode}
 					name={`${portletNamespace}globalJSCETExternalReferenceCodes`}
 					type="hidden"
-					value={cetExternalReferenceCode}
+					value={`${cetExternalReferenceCode}_${
+						loadType || DEFAULT_LOAD_TYPE_OPTION
+					}`}
 				/>
 			))}
 
@@ -153,6 +181,10 @@ export default function GlobalJSCETsConfiguration({
 							</ClayTable.Cell>
 
 							<ClayTable.Cell expanded headingCell>
+								{Liferay.Language.get('load-type')}
+							</ClayTable.Cell>
+
+							<ClayTable.Cell headingCell noWrap>
 								{Liferay.Language.get('inherited')}
 							</ClayTable.Cell>
 
@@ -193,6 +225,27 @@ export default function GlobalJSCETsConfiguration({
 									</ClayTable.Cell>
 
 									<ClayTable.Cell expanded>
+										<ClaySelectWithOption
+											defaultValue={
+												globalJSCET.loadType ||
+												DEFAULT_LOAD_TYPE_OPTION
+											}
+											onChange={(event) =>
+												updateGlobalJSCET(
+													globalJSCET,
+													'loadType',
+													event.target
+														.value as ILoadTypeOptions
+												)
+											}
+											options={Object.values(
+												LOAD_TYPE_OPTIONS
+											)}
+											sizing="sm"
+										/>
+									</ClayTable.Cell>
+
+									<ClayTable.Cell noWrap>
 										{inheritedLabel}
 									</ClayTable.Cell>
 
@@ -221,10 +274,12 @@ export default function GlobalJSCETsConfiguration({
 }
 
 type IInheritedOptions = 'layout-set' | 'master-layout';
+type ILoadTypeOptions = 'default' | 'async' | 'defer';
 
 interface IGlobalJSCET {
 	cetExternalReferenceCode: string;
 	inheritedFrom: IInheritedOptions | null;
+	loadType?: ILoadTypeOptions;
 	name: string;
 }
 

@@ -150,18 +150,6 @@ public class AdminPortlet extends BaseKBPortlet {
 		}
 	}
 
-	public void unsubscribeGroupKBArticles(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			KBWebKeys.THEME_DISPLAY);
-
-		kbArticleService.unsubscribeGroupKBArticles(
-			themeDisplay.getScopeGroupId(),
-			_portal.getPortletId(actionRequest));
-	}
-
 	public void updateKBArticlesPriorities(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {

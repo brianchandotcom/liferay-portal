@@ -69,7 +69,7 @@ public class KBArticleGroupSubscriptionPortletConfigurationIcon
 		).setActionName(
 			() -> {
 				if (_isSubscribed(portletRequest)) {
-					return "unsubscribeGroupKBArticles";
+					return "/knowledge_base/unsubscribe_group_kb_articles";
 				}
 
 				return "/knowledge_base/subscribe_group_kb_articles";

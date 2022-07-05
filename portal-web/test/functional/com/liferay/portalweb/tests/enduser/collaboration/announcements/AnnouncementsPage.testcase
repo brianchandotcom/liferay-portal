@@ -83,7 +83,7 @@ definition {
 
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry Title");
 
-		Pause(locator1 = "120000");
+		Pause(locator1 = "60000");
 
 		Navigator.gotoPage(pageName = "Announcements Page");
 

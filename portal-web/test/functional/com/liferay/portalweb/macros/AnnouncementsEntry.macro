@@ -48,7 +48,7 @@ definition {
 		var displayDateAmpm = StringUtil.replace("${displayDateAmpm}", "1", "PM");
 		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
 
-		var displayDateMinuteFuture = ${displayDateMinute} + 2;
+		var displayDateMinuteFuture = ${displayDateMinute} + 1;
 
 		var displayDateMinuteFutureLength = StringUtil.length("${displayDateMinuteFuture}");
 

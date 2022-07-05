@@ -602,11 +602,12 @@
 		<column name="commerceAccountId" type="long" />
 		<column name="commerceAddressId" type="long" />
 		<column name="commerceShippingMethodId" type="long" />
-		<column name="shippingOptionName" type="String" />
 		<column name="carrier" type="String" />
-		<column name="trackingNumber" type="String" />
-		<column name="shippingDate" type="Date" />
 		<column name="expectedDate" type="Date" />
+		<column name="shippingDate" type="Date" />
+		<column name="shippingOptionName" type="String" />
+		<column name="trackingNumber" type="String" />
+		<column name="trackingURL" type="String" />
 		<column name="status" type="int" />
 
 		<!-- Order -->
@@ -703,10 +704,11 @@
 
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
-		<column name="imageId" type="long" />
-		<column name="engineKey" type="String" />
-		<column name="priority" type="double" />
 		<column name="active" type="boolean" />
+		<column name="engineKey" type="String" />
+		<column name="imageId" type="long" />
+		<column name="priority" type="double" />
+		<column name="trackingURL" type="String" />
 
 		<!-- Order -->
 
@@ -719,13 +721,13 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="G_E" return-type="CommerceShippingMethod" unique="true">
-			<finder-column name="groupId" />
-			<finder-column name="engineKey" />
-		</finder>
 		<finder name="G_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="active" />
+		</finder>
+		<finder name="G_E" return-type="CommerceShippingMethod" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="engineKey" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceShippingOptionAccountEntryRel" remote-service="true" table="CSOptionAccountEntryRel">

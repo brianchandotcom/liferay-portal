@@ -34,28 +34,20 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.upload.UploadHandler;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -114,63 +106,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class AdminPortlet extends BaseKBPortlet {
-
-	public void importFile(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		try {
-			UploadPortletRequest uploadPortletRequest =
-				_portal.getUploadPortletRequest(actionRequest);
-
-			checkExceededSizeLimit(actionRequest);
-
-			String fileName = uploadPortletRequest.getFileName("file");
-
-			if (Validator.isNull(fileName)) {
-				throw new KBArticleImportException("File name is null");
-			}
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			long parentKBFolderId = ParamUtil.getLong(
-				uploadPortletRequest, "parentKBFolderId",
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-			boolean prioritizeByNumericalPrefix = ParamUtil.getBoolean(
-				uploadPortletRequest, "prioritizeByNumericalPrefix");
-
-			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-					"file")) {
-
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
-						AdminPortlet.class.getName(), actionRequest);
-
-				ModelPermissions modelPermissions =
-					serviceContext.getModelPermissions();
-
-				modelPermissions.addRolePermissions(
-					RoleConstants.GUEST, ActionKeys.VIEW);
-
-				int importedKBArticlesCount =
-					kbArticleService.addKBArticlesMarkdown(
-						themeDisplay.getScopeGroupId(), parentKBFolderId,
-						fileName, prioritizeByNumericalPrefix, inputStream,
-						serviceContext);
-
-				SessionMessages.add(
-					actionRequest, "importedKBArticlesCount",
-					importedKBArticlesCount);
-			}
-		}
-		catch (KBArticleImportException kbArticleImportException) {
-			SessionErrors.add(
-				actionRequest, kbArticleImportException.getClass(),
-				kbArticleImportException);
-		}
-	}
 
 	@Override
 	public void serveResource(

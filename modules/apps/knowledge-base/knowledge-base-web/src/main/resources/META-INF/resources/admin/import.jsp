@@ -25,7 +25,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 %>
 
-<portlet:actionURL name="importFile" var="importFileURL">
+<portlet:actionURL name="/knowledge_base/import_file" var="importFileURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 

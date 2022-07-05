@@ -69,6 +69,32 @@ definition {
 	}
 
 	@priority = "3"
+	test AssertReplicationWithSynonyms {
+		property test.name.skip.portal.instance = "CrossClusterReplicationES7#AssertReplicationWithSynonyms";
+
+		CrossClusterReplication.setupCrossClusterReplication();
+
+		var ccrStatsInitial = CrossClusterReplication.getSuccessfulWriteRequestsFromCCRStats();
+
+		for (var title : list "banana,red apple") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "${title}");
+		}
+
+		SearchTuning.openSynonymsAdmin();
+
+		SearchTuning.addSynonymSet(synonyms = "banana,red apple,fruit");
+
+		AssertElementPresent(
+			key_synonyms = "banana, red apple, fruit",
+			locator1 = "SearchTuning#SYNONYMS_ENTRY");
+
+		CrossClusterReplication.compareSuccessfulWriteRequests(ccrStatsInitial = "${ccrStatsInitial}");
+	}
+
+	@priority = "3"
 	test BreakWorkflowSLA {
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#BreakWorkflowSLA";
 
@@ -454,32 +480,6 @@ definition {
 		SearchResultPortlet.viewSearchResultNotPresent(
 			searchAssetTitle = "WC Title 2",
 			searchAssetType = "Web Content Article");
-	}
-
-	@priority = "3"
-	test SearchWithSynonyms {
-		property test.name.skip.portal.instance = "CrossClusterReplicationES7#SearchWithSynonyms";
-
-		CrossClusterReplication.setupCrossClusterReplication();
-
-		var ccrStatsInitial = CrossClusterReplication.getSuccessfulWriteRequestsFromCCRStats();
-
-		for (var title : list "banana,red apple") {
-			JSONWebcontent.addWebContent(
-				content = "WC Content",
-				groupName = "Guest",
-				title = "${title}");
-		}
-
-		SearchTuning.openSynonymsAdmin();
-
-		SearchTuning.addSynonymSet(synonyms = "banana,red apple,fruit");
-
-		AssertElementPresent(
-			key_synonyms = "banana, red apple, fruit",
-			locator1 = "SearchTuning#SYNONYMS_ENTRY");
-
-		CrossClusterReplication.compareSuccessfulWriteRequests(ccrStatsInitial = "${ccrStatsInitial}");
 	}
 
 	@priority = "3"

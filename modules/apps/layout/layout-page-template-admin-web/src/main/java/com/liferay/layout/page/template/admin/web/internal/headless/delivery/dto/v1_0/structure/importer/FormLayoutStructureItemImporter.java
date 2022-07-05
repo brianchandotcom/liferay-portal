@@ -119,6 +119,9 @@ public class FormLayoutStructureItemImporter
 				if (classType != null) {
 					formStyledLayoutStructureItem.setClassTypeId(classType);
 				}
+
+				formStyledLayoutStructureItem.setFormConfig(
+					FormStyledLayoutStructureItem.FORM_CONFIG_OTHER_ITEM_TYPE);
 			}
 
 			if (GetterUtil.getBoolean(

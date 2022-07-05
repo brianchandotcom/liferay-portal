@@ -153,7 +153,7 @@ public class PortalK8sAgentImplTest {
 					StringUtil.read(
 						PortalK8sAgentImplTest.class, "dependencies/ca.crt")
 				).put(
-					"namespace", "test"
+					"namespace", _kubernetesMockClient.getNamespace()
 				).put(
 					"saToken", "saToken"
 				).build());
@@ -236,7 +236,7 @@ public class PortalK8sAgentImplTest {
 					StringUtil.read(
 						PortalK8sAgentImplTest.class, "dependencies/ca.crt")
 				).put(
-					"namespace", "test"
+					"namespace", _kubernetesMockClient.getNamespace()
 				).put(
 					"saToken", "saToken"
 				).build());
@@ -304,7 +304,7 @@ public class PortalK8sAgentImplTest {
 					StringUtil.read(
 						PortalK8sAgentImplTest.class, "dependencies/ca.crt")
 				).put(
-					"namespace", "default"
+					"namespace", _kubernetesMockClient.getNamespace()
 				).put(
 					"saToken", "saToken"
 				).build());
@@ -338,7 +338,7 @@ public class PortalK8sAgentImplTest {
 					StringUtil.read(
 						PortalK8sAgentImplTest.class, "dependencies/ca.crt")
 				).put(
-					"namespace", "test"
+					"namespace", _kubernetesMockClient.getNamespace()
 				).put(
 					"saToken", "saToken"
 				).build());
@@ -379,14 +379,15 @@ public class PortalK8sAgentImplTest {
 				).endMetadata(
 				).addToData(
 					"foo.client-extension-config.json",
-					"{\"test.pid\": {\"test.key\": \"test.value\"}}"
+					"{\"testListenForExtProvisionMetadata\": {\"test.key\": " +
+						"\"test.value\"}}"
 				).build()
 			);
 
 			try (ConfigurationHolder configurationHolder2 =
 					new AwaitingConfigurationHolder(
-						_bundleContext, "test.pid", 10000,
-						TimeUnit.MILLISECONDS)) {
+						_bundleContext, "testListenForExtProvisionMetadata",
+						10000, TimeUnit.MILLISECONDS)) {
 
 				Dictionary<String, Object> properties =
 					configurationHolder2.getProperties();

@@ -48,12 +48,12 @@ public class AnnotationsPortalK8sConfigurationPropertiesMutatorTest {
 			).build(),
 			properties);
 
-		Assert.assertArrayEquals(
-			domains, (String[])properties.get("com.liferay.lxc.ext.domains"));
+		Assert.assertEquals(
+			StringUtil.merge(domains, "\n"),
+			(String)properties.get("com.liferay.lxc.ext.domains"));
 	}
 
 	@Rule
-	private LiferayUnitTestRule _liferayUnitTestRule =
-		new LiferayUnitTestRule();
+	public LiferayUnitTestRule liferayUnitTestRule = new LiferayUnitTestRule();
 
 }

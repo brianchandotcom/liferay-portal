@@ -372,6 +372,40 @@ definition {
 		return "${fileEntryUuid}";
 	}
 
+	macro getLatestVersionURL {
+		Variables.assertDefined(parameterList = "${dmDocumentTitle},${groupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
+			site = "${site}");
+
+		if (!(isSet(folderId))) {
+			var folderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlapp/get-file-entry \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d folderId=${folderId} \
+				-d title=${dmDocumentTitle}
+		''';
+
+		var fileName = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${dmDocumentTitle}')]['fileName']");
+		var externalReferenceCode = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${dmDocumentTitle}')]['externalReferenceCode']");
+		var modifiedDate = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${dmDocumentTitle}')]['modifiedDate']");
+
+		return "${portalURL}/documents/${groupId}/${folderId}/${fileName}/${externalReferenceCode}?t=${modifiedDate}";
+	}
+
 	@summary = "This calls the JSON WS API to move a document to a folder"
 	macro moveFileEntryToFolder {
 		var fileEntryId = JSONDocument.getFileEntryId(

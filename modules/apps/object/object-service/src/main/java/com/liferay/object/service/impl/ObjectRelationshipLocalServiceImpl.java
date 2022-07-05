@@ -665,9 +665,8 @@ public class ObjectRelationshipLocalServiceImpl
 					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
 				throw new ObjectRelationshipParameterObjectFieldIdException(
-					StringBundler.concat(
-						"Parameter object field ID ", parameterObjectFieldId,
-						" does not belong to a relationship object field"));
+					"Parameter object field ID " + parameterObjectFieldId +
+						" does not belong to a relationship object field");
 			}
 		}
 	}

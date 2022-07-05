@@ -1,7 +1,7 @@
 definition {
 
 	macro AddDocument {
-		Alert.viewInfoMessageSpecific(infoMessage = "The document has been checked out, please on finish editing check in the document to save changes into the document library.");
+		Alert.viewInfoMessageSpecific(infoMessage = "The document has been checked out. Please check in the document after edits are made to save the changes into the document library.");
 
 		Type(
 			locator1 = "TextInput#TITLE",

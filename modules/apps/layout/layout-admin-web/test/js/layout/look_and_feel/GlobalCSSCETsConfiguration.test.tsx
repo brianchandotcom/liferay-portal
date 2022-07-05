@@ -86,7 +86,8 @@ describe('GlobalCSSCETsConfiguration', () => {
 			/>
 		);
 
-		await screen.findByDisplayValue('niceId,anotherNiceId');
+		await screen.findByDisplayValue('niceId');
+		await screen.findByDisplayValue('anotherNiceId');
 	});
 
 	it('opens a selection modal when "add" button is pressed', async () => {
@@ -161,7 +162,8 @@ describe('GlobalCSSCETsConfiguration', () => {
 			});
 		});
 
-		await screen.findByDisplayValue('niceId,someNiceId');
+		await screen.findByDisplayValue('niceId');
+		await screen.findByDisplayValue('someNiceId');
 	});
 
 	it('allows removing extensions by pressing dropdown "remove" button', async () => {

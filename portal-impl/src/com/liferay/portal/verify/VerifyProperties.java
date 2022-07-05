@@ -1863,7 +1863,7 @@ public class VerifyProperties {
 		"layout.view.page[link_to_layout]", "layout.view.page[panel]",
 		"layout.view.page[url]", "library.download.url.resin.jar",
 		"library.download.url.script-10.jar", "liferay.lib.global.shared.dir",
-		"look.and.feel.modifiable", "lucene.analyzer",
+		"liferay.web.portal.dir", "look.and.feel.modifiable", "lucene.analyzer",
 		"lucene.cluster.index.loading.sync.timeout", "lucene.file.extractor",
 		"lucene.file.extractor.regexp.strip", "lucene.replicate.write",
 		"lucene.store.jdbc.auto.clean.up",

@@ -1426,9 +1426,6 @@ public interface PropsKeys {
 	public static final String LIFERAY_SHIELDED_CONTAINER_LIB_PORTAL_DIR =
 		"liferay.shielded.container.lib.portal.dir";
 
-	public static final String LIFERAY_WEB_PORTAL_DIR =
-		"liferay.web.portal.dir";
-
 	/**
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */

@@ -1185,9 +1185,6 @@ public class PropsValues {
 
 	public static String LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR;
 
-	public static final String LIFERAY_WEB_PORTAL_DIR = PropsUtil.get(
-		PropsKeys.LIFERAY_WEB_PORTAL_DIR);
-
 	/**
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.kernel;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -77,6 +78,20 @@ public class DDMFormFieldValue implements Serializable {
 		return _ddmFormValues;
 	}
 
+	public String getFieldReference() {
+		if (Validator.isNotNull(_fieldReference)) {
+			return _fieldReference;
+		}
+
+		DDMFormField ddmFormField = getDDMFormField();
+
+		if (ddmFormField == null) {
+			return _name;
+		}
+
+		return ddmFormField.getFieldReference();
+	}
+
 	public String getInstanceId() {
 		return _instanceId;
 	}
@@ -136,6 +151,33 @@ public class DDMFormFieldValue implements Serializable {
 		return HashUtil.hash(hash, _value);
 	}
 
+	public void populateNestedDDMFormFieldValuesReferencesMap(
+		Map<String, List<DDMFormFieldValue>>
+			nestedDDMFormFieldValuesReferencesMap) {
+
+		for (DDMFormFieldValue nestedDDMFormFieldValue :
+				_nestedDDMFormFieldValues) {
+
+			List<DDMFormFieldValue> nestedDDMFormFieldValues =
+				nestedDDMFormFieldValuesReferencesMap.get(
+					nestedDDMFormFieldValue.getFieldReference());
+
+			if (nestedDDMFormFieldValues == null) {
+				nestedDDMFormFieldValues = new ArrayList<>();
+
+				nestedDDMFormFieldValuesReferencesMap.put(
+					nestedDDMFormFieldValue.getFieldReference(),
+					nestedDDMFormFieldValues);
+			}
+
+			nestedDDMFormFieldValues.add(nestedDDMFormFieldValue);
+
+			nestedDDMFormFieldValue.
+				populateNestedDDMFormFieldValuesReferencesMap(
+					nestedDDMFormFieldValuesReferencesMap);
+		}
+	}
+
 	public void setDDMFormValues(DDMFormValues ddmFormValues) {
 		for (DDMFormFieldValue nestedDDMFormFieldValue :
 				_nestedDDMFormFieldValues) {
@@ -144,6 +186,10 @@ public class DDMFormFieldValue implements Serializable {
 		}
 
 		_ddmFormValues = ddmFormValues;
+	}
+
+	public void setFieldReference(String fieldReference) {
+		_fieldReference = fieldReference;
 	}
 
 	public void setInstanceId(String instanceId) {
@@ -165,6 +211,7 @@ public class DDMFormFieldValue implements Serializable {
 	}
 
 	private DDMFormValues _ddmFormValues;
+	private String _fieldReference;
 	private String _instanceId = StringUtil.randomString();
 	private String _name;
 	private List<DDMFormFieldValue> _nestedDDMFormFieldValues =

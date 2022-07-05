@@ -294,12 +294,6 @@ definition {
 	@description = "LPS-155304. Assert filter is preloaded when entering on a FDS page for first time."
 	@priority = "5"
 	test WillRenderAsInitialState {
-		task ("And when it is the first time the user enters") {
- 			AssertElementNotPresent(
-				key_filter = "Status: Pending",
-				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
-		}
-
 		task ("Then a filter is preloaded") {
 			VerifyElementPresent(
 				key_filter = "Status: Approved, Draft",

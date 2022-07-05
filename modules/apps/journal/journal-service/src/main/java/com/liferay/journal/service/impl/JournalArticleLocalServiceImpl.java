@@ -5772,7 +5772,6 @@ public class JournalArticleLocalServiceImpl
 			article.setUserId(latestArticle.getUserId());
 			article.setUserName(latestArticle.getUserName());
 			article.setCreateDate(latestArticle.getCreateDate());
-			article.setModifiedDate(serviceContext.getModifiedDate(date));
 			article.setExternalReferenceCode(
 				latestArticle.getExternalReferenceCode());
 			article.setClassNameId(latestArticle.getClassNameId());
@@ -5780,9 +5779,6 @@ public class JournalArticleLocalServiceImpl
 			article.setArticleId(articleId);
 			article.setVersion(version);
 			article.setSmallImageId(latestArticle.getSmallImageId());
-			article.setStatusByUserId(user.getUserId());
-			article.setStatusByUserName(user.getFullName());
-			article.setStatusDate(serviceContext.getModifiedDate(date));
 
 			serviceContext.setAttribute("version", version);
 
@@ -5795,6 +5791,11 @@ public class JournalArticleLocalServiceImpl
 				article.getCompanyId(), article.getId(), titleMap,
 				descriptionMap);
 		}
+
+		article.setModifiedDate(serviceContext.getModifiedDate(date));
+		article.setStatusByUserId(user.getUserId());
+		article.setStatusByUserName(user.getFullName());
+		article.setStatusDate(serviceContext.getModifiedDate(date));
 
 		Locale locale = getArticleDefaultLocale(content);
 

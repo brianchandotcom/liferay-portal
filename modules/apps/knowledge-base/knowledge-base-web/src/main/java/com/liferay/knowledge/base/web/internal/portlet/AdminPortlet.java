@@ -36,10 +36,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -143,32 +140,6 @@ public class AdminPortlet extends BaseKBPortlet {
 		}
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
-		}
-	}
-
-	public void updateKBTemplate(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		String title = ParamUtil.getString(actionRequest, "title");
-		String content = ParamUtil.getString(actionRequest, "content");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			KBTemplate.class.getName(), actionRequest);
-
-		if (cmd.equals(Constants.ADD)) {
-			kbTemplateService.addKBTemplate(
-				_portal.getPortletId(actionRequest), title, content,
-				serviceContext);
-		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			long kbTemplateId = ParamUtil.getLong(
-				actionRequest, "kbTemplateId");
-
-			kbTemplateService.updateKBTemplate(
-				kbTemplateId, title, content, serviceContext);
 		}
 	}
 

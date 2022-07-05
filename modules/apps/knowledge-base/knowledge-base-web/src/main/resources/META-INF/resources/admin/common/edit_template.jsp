@@ -30,7 +30,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-template") : kbTemplate.getTitle());
 %>
 
-<liferay-portlet:actionURL name="updateKBTemplate" var="updateKBTemplateURL" />
+<liferay-portlet:actionURL name="/knowledge_base/update_kb_template" var="updateKBTemplateURL" />
 
 <clay:container-fluid
 	cssClass="container-form-lg"

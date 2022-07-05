@@ -177,9 +177,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public FileEntry addPortletFileEntry(
-			long groupId, long userId, String className, long classPK,
-			String portletId, long folderId, InputStream inputStream,
-			String fileName, String mimeType, boolean indexingEnabled)
+			String externalReferenceCode, long groupId, long userId,
+			String className, long classPK, String portletId, long folderId,
+			InputStream inputStream, String fileName, String mimeType,
+			boolean indexingEnabled)
 		throws PortalException {
 
 		if (inputStream == null) {
@@ -551,6 +552,18 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			_repositoryProvider.getLocalRepository(groupId);
 
 		return localRepository.getFileEntryByUuid(uuid);
+	}
+
+	@Override
+	public FileEntry getPortletFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			_repositoryProvider.getLocalRepository(groupId);
+
+		return localRepository.getFileEntryByExternalReferenceCode(
+			externalReferenceCode);
 	}
 
 	@Override

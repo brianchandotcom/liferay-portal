@@ -61,17 +61,6 @@ public class PortletFileRepositoryUtil {
 
 	public static FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
-			String portletId, long folderId, File file, String fileName,
-			String mimeType, boolean indexingEnabled)
-		throws PortalException {
-
-		return _portletFileRepository.addPortletFileEntry(
-			groupId, userId, className, classPK, portletId, folderId, file,
-			fileName, mimeType, indexingEnabled);
-	}
-
-	public static FileEntry addPortletFileEntry(
-			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, InputStream inputStream,
 			String fileName, String mimeType, boolean indexingEnabled)
 		throws PortalException {
@@ -79,6 +68,31 @@ public class PortletFileRepositoryUtil {
 		return _portletFileRepository.addPortletFileEntry(
 			groupId, userId, className, classPK, portletId, folderId,
 			inputStream, fileName, mimeType, indexingEnabled);
+	}
+
+	public static FileEntry addPortletFileEntry(
+			String externalReferenceCode, long groupId, long userId,
+			String className, long classPK, String portletId, long folderId,
+			File file, String fileName, String mimeType,
+			boolean indexingEnabled)
+		throws PortalException {
+
+		return _portletFileRepository.addPortletFileEntry(
+			externalReferenceCode, groupId, userId, className, classPK,
+			portletId, folderId, file, fileName, mimeType, indexingEnabled);
+	}
+
+	public static FileEntry addPortletFileEntry(
+			String externalReferenceCode, long groupId, long userId,
+			String className, long classPK, String portletId, long folderId,
+			InputStream inputStream, String fileName, String mimeType,
+			boolean indexingEnabled)
+		throws PortalException {
+
+		return _portletFileRepository.addPortletFileEntry(
+			externalReferenceCode, groupId, userId, className, classPK,
+			portletId, folderId, inputStream, fileName, mimeType,
+			indexingEnabled);
 	}
 
 	public static Folder addPortletFolder(
@@ -261,6 +275,15 @@ public class PortletFileRepositoryUtil {
 		throws PortalException {
 
 		return _portletFileRepository.getPortletFileEntry(uuid, groupId);
+	}
+
+	public static FileEntry getPortletFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return _portletFileRepository.
+			getPortletFileEntryByExternalReferenceCode(
+				groupId, externalReferenceCode);
 	}
 
 	public static String getPortletFileEntryURL(

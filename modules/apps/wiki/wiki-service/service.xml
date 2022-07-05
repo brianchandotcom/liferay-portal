@@ -304,6 +304,7 @@
 		<exception>DuplicatePageExternalReferenceCode</exception>
 		<exception>ImportFiles</exception>
 		<exception>NodeName</exception>
+		<exception>PageAttachment</exception>
 		<exception>PageContent</exception>
 		<exception>PageTitle</exception>
 		<exception>PageVersion</exception>

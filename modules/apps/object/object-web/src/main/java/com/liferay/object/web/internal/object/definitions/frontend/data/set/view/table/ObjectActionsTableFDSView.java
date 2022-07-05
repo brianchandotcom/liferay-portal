@@ -20,8 +20,6 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsFDSNames;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Locale;
 
@@ -43,7 +41,7 @@ public class ObjectActionsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		fdsTableSchemaBuilder = fdsTableSchemaBuilder.add(
+		return fdsTableSchemaBuilder.add(
 			"name", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
@@ -53,16 +51,11 @@ public class ObjectActionsTableFDSView extends BaseTableFDSView {
 			"active", "active",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"boolean")
-		);
-
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152180"))) {
-			fdsTableSchemaBuilder.add(
-				"status", "last-execution",
-				fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-					"objectActionStatusDataRenderer"));
-		}
-
-		return fdsTableSchemaBuilder.build();
+		).add(
+			"status", "last-execution",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"objectActionStatusDataRenderer")
+		).build();
 	}
 
 	@Reference

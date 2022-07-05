@@ -306,25 +306,23 @@ export default function ActionBuilder({
 
 	return (
 		<>
-			{Liferay.FeatureFlags['LPS-152180'] && (
-				<ClayAlert
-					className="lfr-objects__side-panel-content-container"
-					displayType="info"
-					title={`${Liferay.Language.get('info')}:`}
-				>
-					{Liferay.Language.get(
-						'create-conditions-and-predefined-values-using-expressions'
-					) + ' '}
+			<ClayAlert
+				className="lfr-objects__side-panel-content-container"
+				displayType="info"
+				title={`${Liferay.Language.get('info')}:`}
+			>
+				{Liferay.Language.get(
+					'create-conditions-and-predefined-values-using-expressions'
+				) + ' '}
 
-					<a
-						className="alert-link"
-						href="https://learn.liferay.com/dxp/latest/en/building-applications/objects/creating-and-managing-objects/expression-builder-validations-reference.html"
-						target="_blank"
-					>
-						{Liferay.Language.get('click-here-for-documentation')}
-					</a>
-				</ClayAlert>
-			)}
+				<a
+					className="alert-link"
+					href="https://learn.liferay.com/dxp/latest/en/building-applications/objects/creating-and-managing-objects/expression-builder-validations-reference.html"
+					target="_blank"
+				>
+					{Liferay.Language.get('click-here-for-documentation')}
+				</a>
+			</ClayAlert>
 
 			{Object.keys(errors).length > 1 && (
 				<ClayAlert

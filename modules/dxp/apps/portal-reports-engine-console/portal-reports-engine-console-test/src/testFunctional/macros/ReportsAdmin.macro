@@ -46,8 +46,6 @@ definition {
 			value1 = "Generate");
 
 		Alert.viewSuccessMessage();
-
-		Pause(locator1 = "5000");
 	}
 
 	macro addScheduleEntry {
@@ -104,8 +102,6 @@ definition {
 			value1 = "Schedule");
 
 		Alert.viewSuccessMessage();
-
-		Pause(locator1 = "5000");
 	}
 
 	macro addSource {
@@ -256,8 +252,6 @@ definition {
 		AssertClick(
 			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DOWNLOAD",
 			value1 = "Download");
-
-		Pause(locator1 = "2000");
 
 		takeScreenshot();
 	}

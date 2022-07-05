@@ -199,6 +199,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SECTION_SUBTITLE</td>
+	<td>//div[contains(@class,'sheet-section')]//h3[normalize-space(text())='${key_sectionTitle}']//following-sibling::p</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STYLE_BOOK_NAME</td>
 	<td>//div[contains(@class,'sheet-section')]//p[contains(.,'Style Book Name:')][normalize-space(text())='${key_styleBookName}']</td>
 	<td></td>

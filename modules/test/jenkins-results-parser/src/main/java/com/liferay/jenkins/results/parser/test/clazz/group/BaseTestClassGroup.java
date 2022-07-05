@@ -50,7 +50,11 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 	public boolean hasTestClasses() {
 		List<TestClass> testClasses = getTestClasses();
 
-		return ((testClasses != null) && !testClasses.isEmpty());
+		if ((testClasses != null) && !testClasses.isEmpty()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void addTestClass(TestClass testClass) {

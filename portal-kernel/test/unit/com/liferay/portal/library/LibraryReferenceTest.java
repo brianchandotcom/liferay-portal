@@ -132,9 +132,7 @@ public class LibraryReferenceTest {
 			}
 		}
 
-		String errorMessage = sb.toString();
-
-		Assert.assertEquals(errorMessage, StringPool.BLANK, errorMessage);
+		Assert.assertEquals(sb.toString(), 0, sb.index());
 	}
 
 	@Test

@@ -89,10 +89,10 @@ public class ObjectStateFlowLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteByObjectFieldId(long objectFieldId)
+	public static void deleteObjectFieldObjectStateFlow(long objectFieldId)
 		throws com.liferay.object.exception.NoSuchObjectStateFlowException {
 
-		getService().deleteByObjectFieldId(objectFieldId);
+		getService().deleteObjectFieldObjectStateFlow(objectFieldId);
 	}
 
 	/**
@@ -223,10 +223,6 @@ public class ObjectStateFlowLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static ObjectStateFlow fetchByObjectFieldId(long objectFieldId) {
-		return getService().fetchByObjectFieldId(objectFieldId);
-	}
-
 	public static ObjectStateFlow fetchObjectStateFlow(long objectStateFlowId) {
 		return getService().fetchObjectStateFlow(objectStateFlowId);
 	}
@@ -264,6 +260,12 @@ public class ObjectStateFlowLocalServiceUtil {
 			getIndexableActionableDynamicQuery() {
 
 		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static ObjectStateFlow getObjectFieldObjectStateFlow(
+		long objectFieldId) {
+
+		return getService().getObjectFieldObjectStateFlow(objectFieldId);
 	}
 
 	/**

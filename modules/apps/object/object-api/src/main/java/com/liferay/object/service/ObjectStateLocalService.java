@@ -97,9 +97,7 @@ public interface ObjectStateLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteByListTypeEntryId(long listTypeEntryId);
-
-	public void deleteByObjectStateFlowId(long objectStateFlowId);
+	public void deleteListTypeEntryObjectStates(long listTypeEntryId);
 
 	/**
 	 * Deletes the object state with the primary key from the database. Also notifies the appropriate model listeners.
@@ -128,6 +126,8 @@ public interface ObjectStateLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public ObjectState deleteObjectState(ObjectState objectState);
+
+	public void deleteObjectStateFlowObjectStates(long objectStateFlowId);
 
 	/**
 	 * @throws PortalException
@@ -222,12 +222,6 @@ public interface ObjectStateLocalService
 	public ObjectState fetchObjectStateByUuidAndCompanyId(
 		String uuid, long companyId);
 
-	public ObjectState findByListTypeEntryIdAndObjectStateFlowId(
-			long listTypeEntryId, long objectStateFlowId)
-		throws NoSuchObjectStateException;
-
-	public List<ObjectState> findByObjectStateFlowId(long objectStateFlowId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -265,6 +259,10 @@ public interface ObjectStateLocalService
 			String uuid, long companyId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectState> getObjectStateFlowObjectStates(
+		long objectStateFlowId);
+
 	/**
 	 * Returns a range of all the object states.
 	 *
@@ -278,6 +276,11 @@ public interface ObjectStateLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectState> getObjectStates(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectState getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
+			long listTypeEntryId, long objectStateFlowId)
+		throws NoSuchObjectStateException;
 
 	/**
 	 * Returns the number of object states.

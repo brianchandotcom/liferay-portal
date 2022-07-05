@@ -89,10 +89,11 @@ public class ObjectStateFlowLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteByObjectFieldId(long objectFieldId)
+	public void deleteObjectFieldObjectStateFlow(long objectFieldId)
 		throws com.liferay.object.exception.NoSuchObjectStateFlowException {
 
-		_objectStateFlowLocalService.deleteByObjectFieldId(objectFieldId);
+		_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
+			objectFieldId);
 	}
 
 	/**
@@ -249,13 +250,6 @@ public class ObjectStateFlowLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.object.model.ObjectStateFlow fetchByObjectFieldId(
-		long objectFieldId) {
-
-		return _objectStateFlowLocalService.fetchByObjectFieldId(objectFieldId);
-	}
-
-	@Override
 	public com.liferay.object.model.ObjectStateFlow fetchObjectStateFlow(
 		long objectStateFlowId) {
 
@@ -301,6 +295,14 @@ public class ObjectStateFlowLocalServiceWrapper
 
 		return _objectStateFlowLocalService.
 			getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectStateFlow
+		getObjectFieldObjectStateFlow(long objectFieldId) {
+
+		return _objectStateFlowLocalService.getObjectFieldObjectStateFlow(
+			objectFieldId);
 	}
 
 	/**

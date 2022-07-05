@@ -70,6 +70,13 @@ public class ObjectStateTransitionLocalServiceUtil {
 		return getService().addObjectStateTransition(objectStateTransition);
 	}
 
+	public static void addObjectStateTransitions(
+			List<ObjectStateTransition> objectStateTransitions)
+		throws PortalException {
+
+		getService().addObjectStateTransitions(objectStateTransitions);
+	}
+
 	/**
 	 * Creates a new object state transition with the primary key. Does not add the object state transition to the database.
 	 *
@@ -83,13 +90,6 @@ public class ObjectStateTransitionLocalServiceUtil {
 			objectStateTransitionId);
 	}
 
-	public static void createObjectStateTransitions(
-			List<ObjectStateTransition> objectStateTransitions)
-		throws PortalException {
-
-		getService().createObjectStateTransitions(objectStateTransitions);
-	}
-
 	/**
 	 * @throws PortalException
 	 */
@@ -100,12 +100,17 @@ public class ObjectStateTransitionLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteByObjectStateFlowId(long objectStateFlowId) {
-		getService().deleteByObjectStateFlowId(objectStateFlowId);
+	public static void deleteObjectStateFlowObjectStateTransitions(
+		long objectStateFlowId) {
+
+		getService().deleteObjectStateFlowObjectStateTransitions(
+			objectStateFlowId);
 	}
 
-	public static void deleteByObjectStateId(long objectStateId) {
-		getService().deleteByObjectStateId(objectStateId);
+	public static void deleteObjectStateObjectStateTransitions(
+		long objectStateId) {
+
+		getService().deleteObjectStateObjectStateTransitions(objectStateId);
 	}
 
 	/**
@@ -267,18 +272,6 @@ public class ObjectStateTransitionLocalServiceUtil {
 			uuid, companyId);
 	}
 
-	public static List<ObjectStateTransition> findByObjectStateFlowId(
-		long objectStateFlowId) {
-
-		return getService().findByObjectStateFlowId(objectStateFlowId);
-	}
-
-	public static List<ObjectStateTransition> findBySourceObjectStateId(
-		long sourceObjectStateId) {
-
-		return getService().findBySourceObjectStateId(sourceObjectStateId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -298,6 +291,20 @@ public class ObjectStateTransitionLocalServiceUtil {
 			getIndexableActionableDynamicQuery() {
 
 		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static List<ObjectStateTransition>
+		getObjectStateFlowObjectStateTransitions(long objectStateFlowId) {
+
+		return getService().getObjectStateFlowObjectStateTransitions(
+			objectStateFlowId);
+	}
+
+	public static List<ObjectStateTransition>
+		getObjectStateObjectStateTransitions(long sourceObjectStateId) {
+
+		return getService().getObjectStateObjectStateTransitions(
+			sourceObjectStateId);
 	}
 
 	/**

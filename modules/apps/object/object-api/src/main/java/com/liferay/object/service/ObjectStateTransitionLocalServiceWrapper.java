@@ -69,6 +69,16 @@ public class ObjectStateTransitionLocalServiceWrapper
 			objectStateTransition);
 	}
 
+	@Override
+	public void addObjectStateTransitions(
+			java.util.List<com.liferay.object.model.ObjectStateTransition>
+				objectStateTransitions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectStateTransitionLocalService.addObjectStateTransitions(
+			objectStateTransitions);
+	}
+
 	/**
 	 * Creates a new object state transition with the primary key. Does not add the object state transition to the database.
 	 *
@@ -81,16 +91,6 @@ public class ObjectStateTransitionLocalServiceWrapper
 
 		return _objectStateTransitionLocalService.createObjectStateTransition(
 			objectStateTransitionId);
-	}
-
-	@Override
-	public void createObjectStateTransitions(
-			java.util.List<com.liferay.object.model.ObjectStateTransition>
-				objectStateTransitions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_objectStateTransitionLocalService.createObjectStateTransitions(
-			objectStateTransitions);
 	}
 
 	/**
@@ -106,14 +106,17 @@ public class ObjectStateTransitionLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteByObjectStateFlowId(long objectStateFlowId) {
-		_objectStateTransitionLocalService.deleteByObjectStateFlowId(
-			objectStateFlowId);
+	public void deleteObjectStateFlowObjectStateTransitions(
+		long objectStateFlowId) {
+
+		_objectStateTransitionLocalService.
+			deleteObjectStateFlowObjectStateTransitions(objectStateFlowId);
 	}
 
 	@Override
-	public void deleteByObjectStateId(long objectStateId) {
-		_objectStateTransitionLocalService.deleteByObjectStateId(objectStateId);
+	public void deleteObjectStateObjectStateTransitions(long objectStateId) {
+		_objectStateTransitionLocalService.
+			deleteObjectStateObjectStateTransitions(objectStateId);
 	}
 
 	/**
@@ -308,22 +311,6 @@ public class ObjectStateTransitionLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.object.model.ObjectStateTransition>
-		findByObjectStateFlowId(long objectStateFlowId) {
-
-		return _objectStateTransitionLocalService.findByObjectStateFlowId(
-			objectStateFlowId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.object.model.ObjectStateTransition>
-		findBySourceObjectStateId(long sourceObjectStateId) {
-
-		return _objectStateTransitionLocalService.findBySourceObjectStateId(
-			sourceObjectStateId);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -346,6 +333,22 @@ public class ObjectStateTransitionLocalServiceWrapper
 
 		return _objectStateTransitionLocalService.
 			getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectStateTransition>
+		getObjectStateFlowObjectStateTransitions(long objectStateFlowId) {
+
+		return _objectStateTransitionLocalService.
+			getObjectStateFlowObjectStateTransitions(objectStateFlowId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectStateTransition>
+		getObjectStateObjectStateTransitions(long sourceObjectStateId) {
+
+		return _objectStateTransitionLocalService.
+			getObjectStateObjectStateTransitions(sourceObjectStateId);
 	}
 
 	/**

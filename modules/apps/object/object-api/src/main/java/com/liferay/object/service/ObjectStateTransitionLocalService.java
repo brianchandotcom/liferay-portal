@@ -83,6 +83,10 @@ public interface ObjectStateTransitionLocalService
 	public ObjectStateTransition addObjectStateTransition(
 		ObjectStateTransition objectStateTransition);
 
+	public void addObjectStateTransitions(
+			List<ObjectStateTransition> objectStateTransitions)
+		throws PortalException;
+
 	/**
 	 * Creates a new object state transition with the primary key. Does not add the object state transition to the database.
 	 *
@@ -93,19 +97,16 @@ public interface ObjectStateTransitionLocalService
 	public ObjectStateTransition createObjectStateTransition(
 		long objectStateTransitionId);
 
-	public void createObjectStateTransitions(
-			List<ObjectStateTransition> objectStateTransitions)
-		throws PortalException;
-
 	/**
 	 * @throws PortalException
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteByObjectStateFlowId(long objectStateFlowId);
+	public void deleteObjectStateFlowObjectStateTransitions(
+		long objectStateFlowId);
 
-	public void deleteByObjectStateId(long objectStateId);
+	public void deleteObjectStateObjectStateTransitions(long objectStateId);
 
 	/**
 	 * Deletes the object state transition with the primary key from the database. Also notifies the appropriate model listeners.
@@ -235,12 +236,6 @@ public interface ObjectStateTransitionLocalService
 	public ObjectStateTransition fetchObjectStateTransitionByUuidAndCompanyId(
 		String uuid, long companyId);
 
-	public List<ObjectStateTransition> findByObjectStateFlowId(
-		long objectStateFlowId);
-
-	public List<ObjectStateTransition> findBySourceObjectStateId(
-		long sourceObjectStateId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -250,6 +245,14 @@ public interface ObjectStateTransitionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectStateTransition> getObjectStateFlowObjectStateTransitions(
+		long objectStateFlowId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectStateTransition> getObjectStateObjectStateTransitions(
+		long sourceObjectStateId);
 
 	/**
 	 * Returns the object state transition with the primary key.

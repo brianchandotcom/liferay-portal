@@ -96,7 +96,7 @@ public interface ObjectStateFlowLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteByObjectFieldId(long objectFieldId)
+	public void deleteObjectFieldObjectStateFlow(long objectFieldId)
 		throws NoSuchObjectStateFlowException;
 
 	/**
@@ -208,9 +208,6 @@ public interface ObjectStateFlowLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ObjectStateFlow fetchByObjectFieldId(long objectFieldId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectStateFlow fetchObjectStateFlow(long objectStateFlowId);
 
 	/**
@@ -233,6 +230,9 @@ public interface ObjectStateFlowLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectStateFlow getObjectFieldObjectStateFlow(long objectFieldId);
 
 	/**
 	 * Returns the object state flow with the primary key.

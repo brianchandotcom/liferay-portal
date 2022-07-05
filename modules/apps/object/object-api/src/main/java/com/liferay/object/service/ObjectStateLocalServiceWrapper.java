@@ -88,13 +88,9 @@ public class ObjectStateLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteByListTypeEntryId(long listTypeEntryId) {
-		_objectStateLocalService.deleteByListTypeEntryId(listTypeEntryId);
-	}
-
-	@Override
-	public void deleteByObjectStateFlowId(long objectStateFlowId) {
-		_objectStateLocalService.deleteByObjectStateFlowId(objectStateFlowId);
+	public void deleteListTypeEntryObjectStates(long listTypeEntryId) {
+		_objectStateLocalService.deleteListTypeEntryObjectStates(
+			listTypeEntryId);
 	}
 
 	/**
@@ -131,6 +127,12 @@ public class ObjectStateLocalServiceWrapper
 		com.liferay.object.model.ObjectState objectState) {
 
 		return _objectStateLocalService.deleteObjectState(objectState);
+	}
+
+	@Override
+	public void deleteObjectStateFlowObjectStates(long objectStateFlowId) {
+		_objectStateLocalService.deleteObjectStateFlowObjectStates(
+			objectStateFlowId);
 	}
 
 	/**
@@ -269,25 +271,6 @@ public class ObjectStateLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.object.model.ObjectState
-			findByListTypeEntryIdAndObjectStateFlowId(
-				long listTypeEntryId, long objectStateFlowId)
-		throws com.liferay.object.exception.NoSuchObjectStateException {
-
-		return _objectStateLocalService.
-			findByListTypeEntryIdAndObjectStateFlowId(
-				listTypeEntryId, objectStateFlowId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.object.model.ObjectState>
-		findByObjectStateFlowId(long objectStateFlowId) {
-
-		return _objectStateLocalService.findByObjectStateFlowId(
-			objectStateFlowId);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -351,6 +334,14 @@ public class ObjectStateLocalServiceWrapper
 			uuid, companyId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectState>
+		getObjectStateFlowObjectStates(long objectStateFlowId) {
+
+		return _objectStateLocalService.getObjectStateFlowObjectStates(
+			objectStateFlowId);
+	}
+
 	/**
 	 * Returns a range of all the object states.
 	 *
@@ -367,6 +358,17 @@ public class ObjectStateLocalServiceWrapper
 		int start, int end) {
 
 		return _objectStateLocalService.getObjectStates(start, end);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectState
+			getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
+				long listTypeEntryId, long objectStateFlowId)
+		throws com.liferay.object.exception.NoSuchObjectStateException {
+
+		return _objectStateLocalService.
+			getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
+				listTypeEntryId, objectStateFlowId);
 	}
 
 	/**

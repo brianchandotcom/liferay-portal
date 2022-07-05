@@ -86,12 +86,8 @@ public class ObjectStateLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteByListTypeEntryId(long listTypeEntryId) {
-		getService().deleteByListTypeEntryId(listTypeEntryId);
-	}
-
-	public static void deleteByObjectStateFlowId(long objectStateFlowId) {
-		getService().deleteByObjectStateFlowId(objectStateFlowId);
+	public static void deleteListTypeEntryObjectStates(long listTypeEntryId) {
+		getService().deleteListTypeEntryObjectStates(listTypeEntryId);
 	}
 
 	/**
@@ -123,6 +119,12 @@ public class ObjectStateLocalServiceUtil {
 	 */
 	public static ObjectState deleteObjectState(ObjectState objectState) {
 		return getService().deleteObjectState(objectState);
+	}
+
+	public static void deleteObjectStateFlowObjectStates(
+		long objectStateFlowId) {
+
+		getService().deleteObjectStateFlowObjectStates(objectStateFlowId);
 	}
 
 	/**
@@ -237,20 +239,6 @@ public class ObjectStateLocalServiceUtil {
 		return getService().fetchObjectStateByUuidAndCompanyId(uuid, companyId);
 	}
 
-	public static ObjectState findByListTypeEntryIdAndObjectStateFlowId(
-			long listTypeEntryId, long objectStateFlowId)
-		throws com.liferay.object.exception.NoSuchObjectStateException {
-
-		return getService().findByListTypeEntryIdAndObjectStateFlowId(
-			listTypeEntryId, objectStateFlowId);
-	}
-
-	public static List<ObjectState> findByObjectStateFlowId(
-		long objectStateFlowId) {
-
-		return getService().findByObjectStateFlowId(objectStateFlowId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -306,6 +294,12 @@ public class ObjectStateLocalServiceUtil {
 		return getService().getObjectStateByUuidAndCompanyId(uuid, companyId);
 	}
 
+	public static List<ObjectState> getObjectStateFlowObjectStates(
+		long objectStateFlowId) {
+
+		return getService().getObjectStateFlowObjectStates(objectStateFlowId);
+	}
+
 	/**
 	 * Returns a range of all the object states.
 	 *
@@ -319,6 +313,16 @@ public class ObjectStateLocalServiceUtil {
 	 */
 	public static List<ObjectState> getObjectStates(int start, int end) {
 		return getService().getObjectStates(start, end);
+	}
+
+	public static ObjectState
+			getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
+				long listTypeEntryId, long objectStateFlowId)
+		throws com.liferay.object.exception.NoSuchObjectStateException {
+
+		return getService().
+			getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
+				listTypeEntryId, objectStateFlowId);
 	}
 
 	/**

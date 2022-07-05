@@ -90,6 +90,8 @@ html#{$cadmin-selector} {
 
 				input {
 					width: 0;
+					z-index: 1;
+
 					&:active,
 					&:focus {
 						outline-color: $cadmin-primary-l1;

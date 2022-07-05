@@ -82,7 +82,9 @@ public abstract class BaseDBPartitionTestCase {
 				CurrentConnectionUtil.class, "_currentConnection",
 				currentConnection);
 
-			DBPartitionUtil.addDBPartition(COMPANY_ID);
+			for (long companyId : COMPANY_IDS) {
+				DBPartitionUtil.addDBPartition(companyId);
+			}
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -115,11 +117,13 @@ public abstract class BaseDBPartitionTestCase {
 
 	protected static void deleteCompanyAndDefaultUser() throws Exception {
 		try (Statement statement = connection.createStatement()) {
-			statement.execute(
-				"delete from Company where companyId = " + COMPANY_ID);
+			for (long companyId : COMPANY_IDS) {
+				statement.execute(
+					"delete from Company where companyId = " + companyId);
 
-			statement.execute(
-				"delete from User_ where companyId = " + COMPANY_ID);
+				statement.execute(
+					"delete from User_ where companyId = " + companyId);
+			}
 		}
 	}
 
@@ -152,7 +156,9 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected static void dropSchema() throws Exception {
-		db.runSQL("drop schema if exists " + getSchemaName(COMPANY_ID));
+		for (long companyId : COMPANY_IDS) {
+			db.runSQL("drop schema if exists " + getSchemaName(companyId));
+		}
 	}
 
 	protected static void dropTable(String tableName) throws Exception {
@@ -223,29 +229,33 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected static void insertCompanyAndDefaultUser() throws Exception {
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(COMPANY_ID);
-			PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"insert into Company (companyId, webId) values (?, ?)");
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"insert into User_ (userId, companyId, defaultUser, " +
-					"screenName, emailAddress, languageId, timeZoneId) " +
-						"values (?, ?, ?, ?, ?, ?, ?)")) {
+		for (long companyId : COMPANY_IDS) {
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(companyId);
+				PreparedStatement preparedStatement1 =
+					connection.prepareStatement(
+						"insert into Company (companyId, webId) values (?, ?)");
+				PreparedStatement preparedStatement2 =
+					connection.prepareStatement(
+						"insert into User_ (userId, companyId, defaultUser, " +
+							"screenName, emailAddress, languageId, " +
+								"timeZoneId) values (?, ?, ?, ?, ?, ?, ?)")) {
 
-			preparedStatement1.setLong(1, COMPANY_ID);
-			preparedStatement1.setString(2, "Test");
+				preparedStatement1.setLong(1, companyId);
+				preparedStatement1.setString(2, "Test" + companyId);
 
-			preparedStatement1.executeUpdate();
+				preparedStatement1.executeUpdate();
 
-			preparedStatement2.setLong(1, 1);
-			preparedStatement2.setLong(2, COMPANY_ID);
-			preparedStatement2.setBoolean(3, true);
-			preparedStatement2.setString(4, "Test");
-			preparedStatement2.setString(5, "test@test.com");
-			preparedStatement2.setString(6, "en_US");
-			preparedStatement2.setString(7, "UTC");
+				preparedStatement2.setLong(1, 1);
+				preparedStatement2.setLong(2, companyId);
+				preparedStatement2.setBoolean(3, true);
+				preparedStatement2.setString(4, "Test");
+				preparedStatement2.setString(5, "test@test.com");
+				preparedStatement2.setString(6, "en_US");
+				preparedStatement2.setString(7, "UTC");
 
-			preparedStatement2.executeUpdate();
+				preparedStatement2.executeUpdate();
+			}
 		}
 	}
 
@@ -263,7 +273,9 @@ public abstract class BaseDBPartitionTestCase {
 				CurrentConnectionUtil.class, "_currentConnection",
 				currentConnection);
 
-			DBPartitionUtil.removeDBPartition(COMPANY_ID);
+			for (long companyId : COMPANY_IDS) {
+				DBPartitionUtil.removeDBPartition(companyId);
+			}
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -295,7 +307,7 @@ public abstract class BaseDBPartitionTestCase {
 		}
 	}
 
-	protected static final long COMPANY_ID = 123456789L;
+	protected static final long[] COMPANY_IDS = {123456789L, 987654321L};
 
 	protected static final String TEST_CONTROL_TABLE_NAME = "TestControlTable";
 

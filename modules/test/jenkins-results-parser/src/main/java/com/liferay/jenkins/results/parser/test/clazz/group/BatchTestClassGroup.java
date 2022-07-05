@@ -597,6 +597,21 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return _SEGMENT_MAX_CHILDREN_DEFAULT;
 	}
 
+	protected long getTargetAxisDuration() {
+		JobProperty jobProperty = getJobProperty(
+			"test.batch.target.axis.duration");
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if ((jobPropertyValue == null) || !jobPropertyValue.matches("\\d+")) {
+			return 0L;
+		}
+
+		recordJobProperty(jobProperty);
+
+		return Long.parseLong(jobPropertyValue);
+	}
+
 	protected String getTestSuiteName() {
 		return testSuiteName;
 	}

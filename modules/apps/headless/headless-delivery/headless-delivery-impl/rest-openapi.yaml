@@ -3737,6 +3737,11 @@ components:
                                 - $ref: "#/components/schemas/FragmentInlineValue"
                                 - $ref: "#/components/schemas/FragmentMappedValue"
                     type: object
+                contentVisibility:
+                    # @review
+                    description:
+                        Defines the content visibility of the container.
+                    type: string
                 cssClasses:
                     # @review
                     description:

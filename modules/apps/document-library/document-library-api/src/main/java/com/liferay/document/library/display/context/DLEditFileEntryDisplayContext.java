@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Locale;
+
 /**
  * @author Iván Zaera
  */
@@ -27,6 +29,9 @@ public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
 
 	public DLFilePicker getDLFilePicker(String onFilePickCallback)
 		throws PortalException;
+
+	public String getDocumentTypeLanguageId(
+		DDMStructure ddmStructure, Locale locale);
 
 	public default String getFriendlyURLBase() throws PortalException {
 		return null;

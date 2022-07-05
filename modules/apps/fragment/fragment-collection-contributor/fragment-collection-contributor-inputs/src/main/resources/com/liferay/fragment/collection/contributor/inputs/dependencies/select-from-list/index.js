@@ -20,6 +20,9 @@ const noResultsMessage = wrapper.querySelector(
 	'.forms-select-from-list-no-results'
 );
 const searchInput = wrapper.querySelector('.forms-select-from-list-search');
+const searchInputWrapper = wrapper.querySelector(
+	'.forms-select-from-list-search-wrapper'
+);
 
 let defaultOptions = (input.attributes.options || []).slice(0, 10);
 let lastSearchAbortController = new AbortController();
@@ -37,6 +40,10 @@ function debounce(fn, delay) {
 function hideElement(element) {
 	element.classList.add('d-none');
 	element.setAttribute('aria-hidden', 'true');
+}
+
+function isVisible(element) {
+	return !element.hasAttribute('aria-hidden');
 }
 
 function showElement(element) {
@@ -91,10 +98,10 @@ function showDropdown() {
 				defaultOptions = items;
 
 				if (items.length > 10) {
-					showElement(searchInput);
+					showElement(searchInputWrapper);
 				}
 				else {
-					hideElement(searchInput);
+					hideElement(searchInputWrapper);
 				}
 
 				setListboxItems(defaultOptions);
@@ -157,12 +164,9 @@ function handleButtonClick() {
 	else {
 		showDropdown();
 
-		if (searchInput) {
+		if (isVisible(searchInputWrapper)) {
 			searchInput.focus();
-
-			if (searchInput) {
-				searchInput.setSelectionRange(0, searchInput.value.length);
-			}
+			searchInput.setSelectionRange(0, searchInput.value.length);
 		}
 		else {
 			listbox.focus();
@@ -409,7 +413,7 @@ searchInput.addEventListener('keydown', handleMovementKeys);
 searchInput.addEventListener('keyup', debounce(handleSearchKeyup, 500));
 
 if ((input.attributes.options || []).length > 10) {
-	showElement(searchInput);
+	showElement(searchInputWrapper);
 }
 
 window.addEventListener('resize', handleWindowResizeOrScroll, {

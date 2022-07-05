@@ -252,6 +252,30 @@ definition {
 			value1 = "Save");
 	}
 
+	macro addJavaScriptExtensions {
+		WaitForEditable(
+			key_text = "Add JavaScript Extensions",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_text = "Add JavaScript Extensions",
+			locator1 = "Button#ANY");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		for (var extensionName : list "${extensionNameList}") {
+			Check(
+				key_listEntry = "${extensionName}",
+				locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
+		}
+
+		SelectFrameTop();
+
+		Click(
+			key_text = "Add",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+	}
+
 	macro addLocalizedCanonicalURL {
 		Navigator.gotoNavTab(navTab = "SEO");
 

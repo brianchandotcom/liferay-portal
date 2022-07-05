@@ -43,6 +43,7 @@ import com.liferay.commerce.internal.upgrade.v7_2_0.util.CommerceOrderTypeTable;
 import com.liferay.commerce.internal.upgrade.v8_2_0.CommerceShipmentExternalReferenceCodeUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v8_4_0.util.CommerceShippingOptionAccountEntryRelTable;
 import com.liferay.commerce.internal.upgrade.v8_5_0.CommerceAddressTypeUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v8_7_0.CommerceShipmentUpgradeProcess;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -327,6 +328,11 @@ public class CommerceServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"8.6.1", "8.7.0", new CommerceShipmentUpgradeProcess(),
+			new com.liferay.commerce.internal.upgrade.v8_7_0.
+				CommerceShippingMethodUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

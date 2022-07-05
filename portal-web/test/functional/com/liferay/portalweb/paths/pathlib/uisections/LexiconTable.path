@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_ELLIPSIS</td>
-	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//button[contains(@class,'dropdown-toggle')] | //tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//button[contains(@class,'dropdown-toggle')] | //tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//a[contains(@class,'dropdown-toggle')] | //tr[.//*[normalize-space(text())='${key_tableEntry}']]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

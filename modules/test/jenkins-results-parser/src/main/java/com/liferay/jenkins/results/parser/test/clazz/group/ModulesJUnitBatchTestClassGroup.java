@@ -114,11 +114,16 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		excludesJobProperties.addAll(getDefaultExcludesJobProperties());
 
-		for (File modifiedModuleDir : modifiedModuleDirsList) {
-			excludesJobProperties.add(
-				getJobProperty(
-					"modules.includes.required.test.batch.class.names.excludes",
-					modifiedModuleDir, JobProperty.Type.MODULE_EXCLUDE_GLOB));
+		Set<File> traversedModulesProperties = new HashSet<>();
+
+		for (File modifiedFile :
+				portalGitWorkingDirectory.getModifiedFilesList()) {
+
+			_concatProperties(
+				modifiedFile, "",
+				"modules.includes.required.test.batch.class.names.excludes",
+				JobProperty.Type.MODULE_EXCLUDE_GLOB, excludesJobProperties,
+				traversedModulesProperties);
 		}
 
 		return excludesJobProperties;
@@ -130,10 +135,11 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			return super.getRelevantIncludesJobProperties();
 		}
 
-		Set<File> modifiedModuleDirsList = new HashSet<>();
+		List<File> modifiedFilesList =
+			portalGitWorkingDirectory.getModifiedFilesList();
 
 		try {
-			modifiedModuleDirsList.addAll(
+			modifiedFilesList.addAll(
 				portalGitWorkingDirectory.getModifiedModuleDirsList());
 		}
 		catch (IOException ioException) {
@@ -148,9 +154,8 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		}
 
 		if (testRelevantChanges) {
-			modifiedModuleDirsList.addAll(
-				getRequiredModuleDirs(
-					Lists.newArrayList(modifiedModuleDirsList)));
+			modifiedFilesList.addAll(
+				getRequiredModuleDirs(Lists.newArrayList(modifiedFilesList)));
 		}
 
 		List<JobProperty> includesJobProperties = new ArrayList<>();
@@ -163,9 +168,12 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			moduleName = matcher.group("moduleName");
 		}
 
-		for (File modifiedModuleDir : modifiedModuleDirsList) {
+		Set<File> traversedTestBatchProperties = new HashSet<>();
+		Set<File> traversedModulesProperties = new HashSet<>();
+
+		for (File modifiedFile : modifiedFilesList) {
 			String modifiedModuleAbsolutePath =
-				JenkinsResultsParserUtil.getCanonicalPath(modifiedModuleDir);
+				JenkinsResultsParserUtil.getCanonicalPath(modifiedFile);
 
 			if ((moduleName != null) &&
 				!modifiedModuleAbsolutePath.contains("/" + moduleName)) {
@@ -173,15 +181,16 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 				continue;
 			}
 
-			includesJobProperties.add(
-				getJobProperty(
-					"test.batch.class.names.includes.modules",
-					modifiedModuleDir, JobProperty.Type.INCLUDE_GLOB));
+			_concatProperties(
+				modifiedFile, "", "test.batch.class.names.includes.modules",
+				JobProperty.Type.MODULE_INCLUDE_GLOB, includesJobProperties,
+				traversedTestBatchProperties);
 
-			includesJobProperties.add(
-				getJobProperty(
-					"modules.includes.required.test.batch.class.names.includes",
-					modifiedModuleDir, JobProperty.Type.MODULE_INCLUDE_GLOB));
+			_concatProperties(
+				modifiedFile, "",
+				"modules.includes.required.test.batch.class.names.includes",
+				JobProperty.Type.MODULE_INCLUDE_GLOB, includesJobProperties,
+				traversedModulesProperties);
 		}
 
 		return includesJobProperties;

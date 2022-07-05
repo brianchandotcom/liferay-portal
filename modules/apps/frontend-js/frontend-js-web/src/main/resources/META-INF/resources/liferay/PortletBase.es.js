@@ -169,17 +169,6 @@ class PortletBase extends LifeCycles {
 			this.namespaceSelectors_(this.portletNamespace, selectors)
 		);
 	}
-
-	/**
-	 * Returns the default portlet root node element. By default, this is the
-	 * element with ID <code>p_p_id{portletNamespace}</code>.
-	 *
-	 * @protected
-	 * @return {Element} The portlet's default root node element.
-	 */
-	rootNodeValueFn_() {
-		return document.getElementById(`p_p_id${this.portletNamespace}`);
-	}
 }
 
 export default PortletBase;

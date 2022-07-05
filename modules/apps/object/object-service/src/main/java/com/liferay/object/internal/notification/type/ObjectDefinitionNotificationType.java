@@ -15,7 +15,7 @@
 package com.liferay.object.internal.notification.type;
 
 import com.liferay.notification.type.NotificationType;
-import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectDefinition;
 
 import java.util.Locale;
 import java.util.Map;
@@ -25,14 +25,13 @@ import java.util.Map;
  */
 public class ObjectDefinitionNotificationType implements NotificationType {
 
-	public ObjectDefinitionNotificationType(String key, String label) {
-		_key = key;
-		_label = label;
+	public ObjectDefinitionNotificationType(ObjectDefinition objectDefinition) {
+		_objectDefinition = objectDefinition;
 	}
 
 	@Override
 	public String getClassName(Object object) {
-		return ObjectEntry.class.getName();
+		return _objectDefinition.getClassName();
 	}
 
 	@Override
@@ -49,15 +48,14 @@ public class ObjectDefinitionNotificationType implements NotificationType {
 
 	@Override
 	public String getKey() {
-		return _key;
+		return _objectDefinition.getClassName();
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _label;
+		return _objectDefinition.getShortName();
 	}
 
-	private final String _key;
-	private final String _label;
+	private final ObjectDefinition _objectDefinition;
 
 }

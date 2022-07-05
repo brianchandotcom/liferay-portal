@@ -213,9 +213,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()),
 			_bundleContext.registerService(
 				NotificationType.class,
-				new ObjectDefinitionNotificationType(
-					objectDefinition.getClassName(),
-					objectDefinition.getShortName()),
+				new ObjectDefinitionNotificationType(objectDefinition),
 				HashMapDictionaryBuilder.<String, Object>put(
 
 					// TODO Will commerce order need more than one notification

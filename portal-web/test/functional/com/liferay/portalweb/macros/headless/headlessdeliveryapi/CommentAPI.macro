@@ -30,9 +30,7 @@ definition {
 		}
 
 		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByName(
-			groupName = "Guest",
-			site = "true");
+		
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/blog-postings/${blogPostingId}/comments/batch?createStrategy=${createStrategy} \
 			-u test@liferay.com:test \
@@ -78,9 +76,9 @@ definition {
 			createStrategy = "${createStrategy}",
 			numberOfCommentsToCreate = "${numberOfCommentsToCreate}");
 
-		var importTask = JSONUtil.getWithJSONPath("${response}", "$.id");
+		var importTaskId = JSONUtil.getWithJSONPath("${response}", "$.id");
 
-		return "${importTask}";
+		return "${importTaskId}";
 	}
 
 }

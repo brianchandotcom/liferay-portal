@@ -20,7 +20,7 @@ definition {
 				headline = "headline of my blog posting");
 		}
 
-		task ("And Given I use BATCH headless-delivery/v1.0/blog-postings/{blogPostingId}/comments/batch?createStrategy=INSERT to create two base comments") {
+		task ("And Given I use POST headless-delivery/v1.0/blog-postings/{blogPostingId}/comments/batch?createStrategy=INSERT to create two base comments") {
 			var importTaskId = CommentAPI.getIdOfCreateNCommentsInBlogPostingBatchEngineImportTask(
 				blogPostingId = "${blogPostingId}",
 				createStrategy = "INSERT",
@@ -28,12 +28,12 @@ definition {
 		}
 
 		task ("When I check the status of the task with its id in the batch engine") {
-			var response = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
 		}
 
 		task ("Then I receive executeStatus: completed") {
 			TestUtils.assertEquals(
-				actual = "${response}",
+				actual = "${executeStatus}",
 				expected = "COMPLETED");
 		}
 
@@ -46,4 +46,61 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CannotCreateTwoSameBlogPostingsWithBatchPostCreateStrategyInsert {
+		property portal.acceptance = "true";
+
+		task ("Given I use POST with parameter createStrategy set to INSERT to create two blog posts") {
+			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+				createStrategy = "INSERT",
+				numberOfBlogPostingsToCreate = "2");
+		}
+
+		task ("And Given I repeat the same request again changing the headline") {
+			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+				createStrategy = "INSERT",
+				numberOfBlogPostingsToCreate = "2",
+				hadline = "new headline");	
+		}
+
+		task("When I check the status of the task with its id in batch engine"){
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+		}
+
+		task("Then I receive executeStatus: FAILED"){
+			TestUtils.assertEquals(
+				actual = "${executeStatus}",
+				expected = "FAILED");
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = "4"
+	test CannotCreateTwoSameBlogPostingsWithBatchPostCreateStrategyInsertWhenOneOfThemAlreadyExisting {
+		property portal.acceptance = "true";
+
+		task ("Given I use POST with parameter createStrategy set to INSERT to create two blog posts") {
+			BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+				createStrategy = "INSERT",
+				numberOfBlogPostingsToCreate = "2");
+		}
+
+		task ("And Given I repeat the same request again changing all the data of second comment") {
+			var importTaskId = BlogPostingAPI.getIdOfCreateNBlogPostingBatchEngineImportTask(
+				createStrategy = "INSERT",
+				numberOfBlogPostingsToCreate = "2",
+				testCase = "LPS-157601")
+			}
+
+		task ("When I check the status of the task with its id in batch engine") {
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+		}
+
+		task ("Then I receive executeStatus: FAILED") {
+			TestUtils.assertEquals(
+				actual = "${executeStatus}",
+				expected = "FAILED");
+		}
+	}
 }

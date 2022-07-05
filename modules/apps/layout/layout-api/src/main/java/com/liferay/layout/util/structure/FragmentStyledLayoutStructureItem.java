@@ -14,15 +14,10 @@
 
 package com.liferay.layout.util.structure;
 
-import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Objects;
 
@@ -98,31 +93,6 @@ public class FragmentStyledLayoutStructureItem
 
 	public void setFragmentEntryLinkId(long fragmentEntryLinkId) {
 		_fragmentEntryLinkId = fragmentEntryLinkId;
-
-		FragmentEntryLink fragmentEntryLink =
-			FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
-				fragmentEntryLinkId);
-
-		if (fragmentEntryLink != null) {
-			try {
-				JSONObject editablesJSONObject =
-					JSONFactoryUtil.createJSONObject(
-						fragmentEntryLink.getEditableValues());
-
-				_fragmentConfigurationJSONObject =
-					editablesJSONObject.getJSONObject(
-						FragmentEntryProcessorConstants.
-							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
-
-				if (_fragmentConfigurationJSONObject == null) {
-					_fragmentConfigurationJSONObject =
-						JSONFactoryUtil.createJSONObject();
-				}
-			}
-			catch (Exception exception) {
-				_log.error("Unable to parse editable values", exception);
-			}
-		}
 	}
 
 	public void setIndexed(boolean indexed) {
@@ -143,10 +113,6 @@ public class FragmentStyledLayoutStructureItem
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentStyledLayoutStructureItem.class);
-
-	private JSONObject _fragmentConfigurationJSONObject;
 	private long _fragmentEntryLinkId;
 	private boolean _indexed = true;
 

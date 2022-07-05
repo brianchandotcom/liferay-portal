@@ -311,9 +311,7 @@ function filterLocalOptions(query) {
 		}
 	}
 
-	return Promise.resolve({
-		items: [...preferedItems, ...restItems].slice(0, 10),
-	});
+	return Promise.resolve([...preferedItems, ...restItems].slice(0, 10));
 }
 
 function fetchRemoteOptions(query, abortController) {

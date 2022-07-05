@@ -451,7 +451,7 @@ const NameLabel = React.forwardRef(
 						value={name}
 					/>
 				) : (
-					name || Liferay.Language.get('element')
+					name || defaultName || Liferay.Language.get('element')
 				)}
 
 				{!editingName && nameInfo && (

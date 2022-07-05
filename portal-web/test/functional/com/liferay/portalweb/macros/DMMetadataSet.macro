@@ -76,8 +76,6 @@ definition {
 	}
 
 	macro editFieldLabel {
-		Pause(locator1 = "1000");
-
 		Type(
 			key_fieldName = "label",
 			locator1 = "FormFields#TEXT_FIELD",

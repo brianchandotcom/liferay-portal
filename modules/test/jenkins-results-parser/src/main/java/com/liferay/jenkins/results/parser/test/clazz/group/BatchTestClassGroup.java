@@ -67,7 +67,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return averageDuration;
 	}
 
-	public Long getAverageOverheadDuration() {
+	public long getAverageOverheadDuration() {
 		Job job = getJob();
 
 		Long averageOverheadDuration = job.getAverageBatchOverheadDuration(

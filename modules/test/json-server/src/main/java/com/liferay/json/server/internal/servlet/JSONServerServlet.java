@@ -409,11 +409,13 @@ public class JSONServerServlet extends HttpServlet {
 					"Missing model name in path " + path);
 			}
 
-			_applicationMap = _applicationMaps.get(parts.get(0));
+			String applicationName = parts.get(0);
+
+			_applicationMap = _applicationMaps.get(applicationName);
 
 			if (_applicationMap == null) {
 				throw new IllegalArgumentException(
-					"Unknown application name " + parts.get(0));
+					"Unknown application name " + applicationName);
 			}
 
 			long id = -1;
@@ -424,7 +426,7 @@ public class JSONServerServlet extends HttpServlet {
 					id = GetterUtil.getLongStrict(parts.get(2));
 				}
 				catch (IllegalArgumentException illegalArgumentException) {
-					modelName = path.replace('/' + parts.get(0) + '/', "");
+					modelName = path.substring(applicationName.length() + 2);
 				}
 			}
 

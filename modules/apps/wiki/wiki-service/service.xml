@@ -306,6 +306,7 @@
 		<exception>NodeName</exception>
 		<exception>NoSuchNode</exception>
 		<exception>NoSuchPage</exception>
+		<exception>NoSuchWikiAttachment</exception>
 		<exception>PageContent</exception>
 		<exception>PageTitle</exception>
 		<exception>PageVersion</exception>

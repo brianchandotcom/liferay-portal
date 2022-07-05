@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.wiki.constants.WikiConstants;
+import com.liferay.wiki.exception.NoSuchWikiAttachmentException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -167,6 +168,28 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 		return PortletFileRepositoryUtil.getPortletFileEntriesCount(
 			getGroupId(), attachmentsFolderId, mimeTypes,
 			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public FileEntry getAttachmentsFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		FileEntry portletFileEntryByExternalReferenceCode =
+			PortletFileRepositoryUtil.
+				getPortletFileEntryByExternalReferenceCode(
+					groupId, externalReferenceCode);
+
+		long attachmentsFolderId = getAttachmentsFolderId();
+
+		if (attachmentsFolderId ==
+				portletFileEntryByExternalReferenceCode.getFolderId()) {
+
+			return portletFileEntryByExternalReferenceCode;
+		}
+
+		throw new NoSuchWikiAttachmentException(
+			"This file attachment does not belong to this wiki page");
 	}
 
 	@Override

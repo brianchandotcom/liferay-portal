@@ -14,7 +14,6 @@
 
 package com.liferay.knowledge.base.web.internal.portlet;
 
-import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
@@ -29,7 +28,6 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
-import com.liferay.knowledge.base.web.internal.upload.KBArticleAttachmentKBUploadFileEntryHandler;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,7 +39,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.upload.UploadHandler;
 
 import java.io.IOException;
 
@@ -141,15 +138,6 @@ public class AdminPortlet extends BaseKBPortlet {
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
 		}
-	}
-
-	public void uploadKBArticleAttachments(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		_uploadHandler.upload(
-			_kbArticleAttachmentKBUploadFileEntryHandler,
-			_itemSelectorUploadResponseHandler, actionRequest, actionResponse);
 	}
 
 	@Override
@@ -332,17 +320,6 @@ public class AdminPortlet extends BaseKBPortlet {
 	}
 
 	@Reference
-	private ItemSelectorUploadResponseHandler
-		_itemSelectorUploadResponseHandler;
-
-	@Reference
-	private KBArticleAttachmentKBUploadFileEntryHandler
-		_kbArticleAttachmentKBUploadFileEntryHandler;
-
-	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UploadHandler _uploadHandler;
 
 }

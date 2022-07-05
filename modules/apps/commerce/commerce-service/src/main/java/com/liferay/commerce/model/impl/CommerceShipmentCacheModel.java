@@ -78,7 +78,7 @@ public class CommerceShipmentCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -106,16 +106,18 @@ public class CommerceShipmentCacheModel
 		sb.append(commerceAddressId);
 		sb.append(", commerceShippingMethodId=");
 		sb.append(commerceShippingMethodId);
-		sb.append(", shippingOptionName=");
-		sb.append(shippingOptionName);
 		sb.append(", carrier=");
 		sb.append(carrier);
-		sb.append(", trackingNumber=");
-		sb.append(trackingNumber);
-		sb.append(", shippingDate=");
-		sb.append(shippingDate);
 		sb.append(", expectedDate=");
 		sb.append(expectedDate);
+		sb.append(", shippingDate=");
+		sb.append(shippingDate);
+		sb.append(", shippingOptionName=");
+		sb.append(shippingOptionName);
+		sb.append(", trackingNumber=");
+		sb.append(trackingNumber);
+		sb.append(", trackingURL=");
+		sb.append(trackingURL);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -175,13 +177,6 @@ public class CommerceShipmentCacheModel
 		commerceShipmentImpl.setCommerceShippingMethodId(
 			commerceShippingMethodId);
 
-		if (shippingOptionName == null) {
-			commerceShipmentImpl.setShippingOptionName("");
-		}
-		else {
-			commerceShipmentImpl.setShippingOptionName(shippingOptionName);
-		}
-
 		if (carrier == null) {
 			commerceShipmentImpl.setCarrier("");
 		}
@@ -189,11 +184,11 @@ public class CommerceShipmentCacheModel
 			commerceShipmentImpl.setCarrier(carrier);
 		}
 
-		if (trackingNumber == null) {
-			commerceShipmentImpl.setTrackingNumber("");
+		if (expectedDate == Long.MIN_VALUE) {
+			commerceShipmentImpl.setExpectedDate(null);
 		}
 		else {
-			commerceShipmentImpl.setTrackingNumber(trackingNumber);
+			commerceShipmentImpl.setExpectedDate(new Date(expectedDate));
 		}
 
 		if (shippingDate == Long.MIN_VALUE) {
@@ -203,11 +198,25 @@ public class CommerceShipmentCacheModel
 			commerceShipmentImpl.setShippingDate(new Date(shippingDate));
 		}
 
-		if (expectedDate == Long.MIN_VALUE) {
-			commerceShipmentImpl.setExpectedDate(null);
+		if (shippingOptionName == null) {
+			commerceShipmentImpl.setShippingOptionName("");
 		}
 		else {
-			commerceShipmentImpl.setExpectedDate(new Date(expectedDate));
+			commerceShipmentImpl.setShippingOptionName(shippingOptionName);
+		}
+
+		if (trackingNumber == null) {
+			commerceShipmentImpl.setTrackingNumber("");
+		}
+		else {
+			commerceShipmentImpl.setTrackingNumber(trackingNumber);
+		}
+
+		if (trackingURL == null) {
+			commerceShipmentImpl.setTrackingURL("");
+		}
+		else {
+			commerceShipmentImpl.setTrackingURL(trackingURL);
 		}
 
 		commerceShipmentImpl.setStatus(status);
@@ -241,11 +250,12 @@ public class CommerceShipmentCacheModel
 		commerceAddressId = objectInput.readLong();
 
 		commerceShippingMethodId = objectInput.readLong();
-		shippingOptionName = (String)objectInput.readObject();
 		carrier = objectInput.readUTF();
-		trackingNumber = objectInput.readUTF();
-		shippingDate = objectInput.readLong();
 		expectedDate = objectInput.readLong();
+		shippingDate = objectInput.readLong();
+		shippingOptionName = (String)objectInput.readObject();
+		trackingNumber = objectInput.readUTF();
+		trackingURL = objectInput.readUTF();
 
 		status = objectInput.readInt();
 	}
@@ -292,18 +302,21 @@ public class CommerceShipmentCacheModel
 
 		objectOutput.writeLong(commerceShippingMethodId);
 
-		if (shippingOptionName == null) {
-			objectOutput.writeObject("");
-		}
-		else {
-			objectOutput.writeObject(shippingOptionName);
-		}
-
 		if (carrier == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(carrier);
+		}
+
+		objectOutput.writeLong(expectedDate);
+		objectOutput.writeLong(shippingDate);
+
+		if (shippingOptionName == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(shippingOptionName);
 		}
 
 		if (trackingNumber == null) {
@@ -313,8 +326,12 @@ public class CommerceShipmentCacheModel
 			objectOutput.writeUTF(trackingNumber);
 		}
 
-		objectOutput.writeLong(shippingDate);
-		objectOutput.writeLong(expectedDate);
+		if (trackingURL == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(trackingURL);
+		}
 
 		objectOutput.writeInt(status);
 	}
@@ -332,11 +349,12 @@ public class CommerceShipmentCacheModel
 	public long commerceAccountId;
 	public long commerceAddressId;
 	public long commerceShippingMethodId;
-	public String shippingOptionName;
 	public String carrier;
-	public String trackingNumber;
-	public long shippingDate;
 	public long expectedDate;
+	public long shippingDate;
+	public String shippingOptionName;
+	public String trackingNumber;
+	public String trackingURL;
 	public int status;
 
 }

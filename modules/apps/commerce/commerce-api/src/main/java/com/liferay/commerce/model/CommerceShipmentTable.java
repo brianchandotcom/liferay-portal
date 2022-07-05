@@ -69,20 +69,23 @@ public class CommerceShipmentTable extends BaseTable<CommerceShipmentTable> {
 		createColumn(
 			"commerceShippingMethodId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceShipmentTable, Clob> shippingOptionName =
-		createColumn(
-			"shippingOptionName", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<CommerceShipmentTable, String> carrier = createColumn(
 		"carrier", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceShipmentTable, String> trackingNumber =
-		createColumn(
-			"trackingNumber", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceShipmentTable, Date> shippingDate =
-		createColumn(
-			"shippingDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CommerceShipmentTable, Date> expectedDate =
 		createColumn(
 			"expectedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CommerceShipmentTable, Date> shippingDate =
+		createColumn(
+			"shippingDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CommerceShipmentTable, Clob> shippingOptionName =
+		createColumn(
+			"shippingOptionName", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<CommerceShipmentTable, String> trackingNumber =
+		createColumn(
+			"trackingNumber", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceShipmentTable, String> trackingURL =
+		createColumn(
+			"trackingURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommerceShipmentTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 

@@ -78,7 +78,7 @@ public class CommerceShippingMethodCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,14 +100,16 @@ public class CommerceShippingMethodCacheModel
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", imageId=");
-		sb.append(imageId);
-		sb.append(", engineKey=");
-		sb.append(engineKey);
-		sb.append(", priority=");
-		sb.append(priority);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", engineKey=");
+		sb.append(engineKey);
+		sb.append(", imageId=");
+		sb.append(imageId);
+		sb.append(", priority=");
+		sb.append(priority);
+		sb.append(", trackingURL=");
+		sb.append(trackingURL);
 		sb.append("}");
 
 		return sb.toString();
@@ -160,7 +162,7 @@ public class CommerceShippingMethodCacheModel
 			commerceShippingMethodImpl.setDescription(description);
 		}
 
-		commerceShippingMethodImpl.setImageId(imageId);
+		commerceShippingMethodImpl.setActive(active);
 
 		if (engineKey == null) {
 			commerceShippingMethodImpl.setEngineKey("");
@@ -169,8 +171,15 @@ public class CommerceShippingMethodCacheModel
 			commerceShippingMethodImpl.setEngineKey(engineKey);
 		}
 
+		commerceShippingMethodImpl.setImageId(imageId);
 		commerceShippingMethodImpl.setPriority(priority);
-		commerceShippingMethodImpl.setActive(active);
+
+		if (trackingURL == null) {
+			commerceShippingMethodImpl.setTrackingURL("");
+		}
+		else {
+			commerceShippingMethodImpl.setTrackingURL(trackingURL);
+		}
 
 		commerceShippingMethodImpl.resetOriginalValues();
 
@@ -194,12 +203,13 @@ public class CommerceShippingMethodCacheModel
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 
-		imageId = objectInput.readLong();
+		active = objectInput.readBoolean();
 		engineKey = objectInput.readUTF();
 
-		priority = objectInput.readDouble();
+		imageId = objectInput.readLong();
 
-		active = objectInput.readBoolean();
+		priority = objectInput.readDouble();
+		trackingURL = objectInput.readUTF();
 	}
 
 	@Override
@@ -238,7 +248,7 @@ public class CommerceShippingMethodCacheModel
 			objectOutput.writeUTF(description);
 		}
 
-		objectOutput.writeLong(imageId);
+		objectOutput.writeBoolean(active);
 
 		if (engineKey == null) {
 			objectOutput.writeUTF("");
@@ -247,9 +257,16 @@ public class CommerceShippingMethodCacheModel
 			objectOutput.writeUTF(engineKey);
 		}
 
+		objectOutput.writeLong(imageId);
+
 		objectOutput.writeDouble(priority);
 
-		objectOutput.writeBoolean(active);
+		if (trackingURL == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(trackingURL);
+		}
 	}
 
 	public long mvccVersion;
@@ -262,9 +279,10 @@ public class CommerceShippingMethodCacheModel
 	public long modifiedDate;
 	public String name;
 	public String description;
-	public long imageId;
-	public String engineKey;
-	public double priority;
 	public boolean active;
+	public String engineKey;
+	public long imageId;
+	public double priority;
+	public String trackingURL;
 
 }

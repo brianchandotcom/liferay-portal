@@ -62,17 +62,20 @@ public class CommerceShippingMethodTable
 	public final Column<CommerceShippingMethodTable, String> description =
 		createColumn(
 			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceShippingMethodTable, Long> imageId =
-		createColumn("imageId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CommerceShippingMethodTable, String> engineKey =
-		createColumn(
-			"engineKey", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CommerceShippingMethodTable, Double> priority =
-		createColumn(
-			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<CommerceShippingMethodTable, Boolean> active =
 		createColumn(
 			"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<CommerceShippingMethodTable, String> engineKey =
+		createColumn(
+			"engineKey", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceShippingMethodTable, Long> imageId =
+		createColumn("imageId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CommerceShippingMethodTable, Double> priority =
+		createColumn(
+			"priority", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CommerceShippingMethodTable, String> trackingURL =
+		createColumn(
+			"trackingURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private CommerceShippingMethodTable() {
 		super("CommerceShippingMethod", CommerceShippingMethodTable::new);

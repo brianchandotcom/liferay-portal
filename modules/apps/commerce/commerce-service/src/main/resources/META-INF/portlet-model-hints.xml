@@ -316,13 +316,16 @@
 		<field name="commerceAccountId" type="long" />
 		<field name="commerceAddressId" type="long" />
 		<field name="commerceShippingMethodId" type="long" />
+		<field name="carrier" type="String" />
+		<field name="expectedDate" type="Date" />
+		<field name="shippingDate" type="Date" />
 		<field name="shippingOptionName" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="carrier" type="String" />
 		<field name="trackingNumber" type="String" />
-		<field name="shippingDate" type="Date" />
-		<field name="expectedDate" type="Date" />
+		<field name="trackingURL" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceShipmentItem">
@@ -354,12 +357,15 @@
 			<validator name="required" />
 		</field>
 		<field localized="true" name="description" type="String" />
-		<field name="imageId" type="long" />
+		<field name="active" type="boolean" />
 		<field name="engineKey" type="String" />
+		<field name="imageId" type="long" />
 		<field name="priority" type="double">
 			<validator name="number" />
 		</field>
-		<field name="active" type="boolean" />
+		<field name="trackingURL" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 	</model>
 	<model name="com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel">
 		<field name="mvccVersion" type="long" />

@@ -55,10 +55,11 @@ public class CommerceShippingMethodWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
-		attributes.put("imageId", getImageId());
-		attributes.put("engineKey", getEngineKey());
-		attributes.put("priority", getPriority());
 		attributes.put("active", isActive());
+		attributes.put("engineKey", getEngineKey());
+		attributes.put("imageId", getImageId());
+		attributes.put("priority", getPriority());
+		attributes.put("trackingURL", getTrackingURL());
 
 		return attributes;
 	}
@@ -126,10 +127,10 @@ public class CommerceShippingMethodWrapper
 			setDescription(description);
 		}
 
-		Long imageId = (Long)attributes.get("imageId");
+		Boolean active = (Boolean)attributes.get("active");
 
-		if (imageId != null) {
-			setImageId(imageId);
+		if (active != null) {
+			setActive(active);
 		}
 
 		String engineKey = (String)attributes.get("engineKey");
@@ -138,16 +139,22 @@ public class CommerceShippingMethodWrapper
 			setEngineKey(engineKey);
 		}
 
+		Long imageId = (Long)attributes.get("imageId");
+
+		if (imageId != null) {
+			setImageId(imageId);
+		}
+
 		Double priority = (Double)attributes.get("priority");
 
 		if (priority != null) {
 			setPriority(priority);
 		}
 
-		Boolean active = (Boolean)attributes.get("active");
+		String trackingURL = (String)attributes.get("trackingURL");
 
-		if (active != null) {
-			setActive(active);
+		if (trackingURL != null) {
+			setTrackingURL(trackingURL);
 		}
 	}
 
@@ -433,6 +440,16 @@ public class CommerceShippingMethodWrapper
 	@Override
 	public double getPriority() {
 		return model.getPriority();
+	}
+
+	/**
+	 * Returns the tracking url of this commerce shipping method.
+	 *
+	 * @return the tracking url of this commerce shipping method
+	 */
+	@Override
+	public String getTrackingURL() {
+		return model.getTrackingURL();
 	}
 
 	/**
@@ -733,6 +750,16 @@ public class CommerceShippingMethodWrapper
 	@Override
 	public void setPriority(double priority) {
 		model.setPriority(priority);
+	}
+
+	/**
+	 * Sets the tracking url of this commerce shipping method.
+	 *
+	 * @param trackingURL the tracking url of this commerce shipping method
+	 */
+	@Override
+	public void setTrackingURL(String trackingURL) {
+		model.setTrackingURL(trackingURL);
 	}
 
 	/**

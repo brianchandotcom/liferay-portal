@@ -305,11 +305,12 @@ create table CommerceShipment (
 	commerceAccountId LONG,
 	commerceAddressId LONG,
 	commerceShippingMethodId LONG,
-	shippingOptionName TEXT null,
 	carrier VARCHAR(75) null,
-	trackingNumber VARCHAR(75) null,
-	shippingDate DATE null,
 	expectedDate DATE null,
+	shippingDate DATE null,
+	shippingOptionName TEXT null,
+	trackingNumber VARCHAR(75) null,
+	trackingURL STRING null,
 	status INTEGER
 );
 
@@ -341,10 +342,11 @@ create table CommerceShippingMethod (
 	modifiedDate DATE null,
 	name STRING null,
 	description STRING null,
-	imageId LONG,
+	active_ BOOLEAN,
 	engineKey VARCHAR(75) null,
+	imageId LONG,
 	priority DOUBLE,
-	active_ BOOLEAN
+	trackingURL STRING null
 );
 
 create table CommerceSubscriptionEntry (

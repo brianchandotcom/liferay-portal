@@ -104,9 +104,9 @@ public class CommerceShippingMethodLocalServiceImpl
 			commerceShippingMethod.setImageId(counterLocalService.increment());
 		}
 
+		commerceShippingMethod.setActive(active);
 		commerceShippingMethod.setEngineKey(engineKey);
 		commerceShippingMethod.setPriority(priority);
-		commerceShippingMethod.setActive(active);
 
 		commerceShippingMethod = commerceShippingMethodPersistence.update(
 			commerceShippingMethod);
@@ -307,8 +307,8 @@ public class CommerceShippingMethodLocalServiceImpl
 			commerceShippingMethod.setImageId(counterLocalService.increment());
 		}
 
-		commerceShippingMethod.setPriority(priority);
 		commerceShippingMethod.setActive(active);
+		commerceShippingMethod.setPriority(priority);
 
 		commerceShippingMethod = commerceShippingMethodPersistence.update(
 			commerceShippingMethod);

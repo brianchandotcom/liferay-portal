@@ -930,12 +930,13 @@ public class CommerceShipmentServiceHttp {
 	public static com.liferay.commerce.model.CommerceShipment
 			updateCommerceShipment(
 				HttpPrincipal httpPrincipal, long commerceShipmentId,
-				String carrier, String trackingNumber, int status,
-				int shippingDateMonth, int shippingDateDay,
-				int shippingDateYear, int shippingDateHour,
-				int shippingDateMinute, int expectedDateMonth,
-				int expectedDateDay, int expectedDateYear, int expectedDateHour,
-				int expectedDateMinute,
+				long commerceShippingMethodId, String carrier,
+				int expectedDateMonth, int expectedDateDay,
+				int expectedDateYear, int expectedDateHour,
+				int expectedDateMinute, int shippingDateMonth,
+				int shippingDateDay, int shippingDateYear, int shippingDateHour,
+				int shippingDateMinute, String trackingNumber,
+				String trackingURL, int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -945,11 +946,12 @@ public class CommerceShipmentServiceHttp {
 				_updateCommerceShipmentParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceShipmentId, carrier, trackingNumber, status,
-				shippingDateMonth, shippingDateDay, shippingDateYear,
-				shippingDateHour, shippingDateMinute, expectedDateMonth,
-				expectedDateDay, expectedDateYear, expectedDateHour,
-				expectedDateMinute, serviceContext);
+				methodKey, commerceShipmentId, commerceShippingMethodId,
+				carrier, expectedDateMonth, expectedDateDay, expectedDateYear,
+				expectedDateHour, expectedDateMinute, shippingDateMonth,
+				shippingDateDay, shippingDateYear, shippingDateHour,
+				shippingDateMinute, trackingNumber, trackingURL, status,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -982,14 +984,15 @@ public class CommerceShipmentServiceHttp {
 	public static com.liferay.commerce.model.CommerceShipment
 			updateCommerceShipment(
 				HttpPrincipal httpPrincipal, long commerceShipmentId,
-				String name, String description, String street1, String street2,
-				String street3, String city, String zip, long regionId,
-				long countryId, String phoneNumber, String carrier,
-				String trackingNumber, int status, int shippingDateMonth,
+				long commerceShippingMethodId, String carrier,
+				int expectedDateMonth, int expectedDateDay,
+				int expectedDateYear, int expectedDateHour,
+				int expectedDateMinute, int shippingDateMonth,
 				int shippingDateDay, int shippingDateYear, int shippingDateHour,
-				int shippingDateMinute, int expectedDateMonth,
-				int expectedDateDay, int expectedDateYear, int expectedDateHour,
-				int expectedDateMinute,
+				int shippingDateMinute, String trackingNumber,
+				String trackingURL, int status, String name, String description,
+				String street1, String street2, String street3, String city,
+				String zip, long regionId, long countryId, String phoneNumber,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -999,13 +1002,13 @@ public class CommerceShipmentServiceHttp {
 				_updateCommerceShipmentParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceShipmentId, name, description, street1,
-				street2, street3, city, zip, regionId, countryId, phoneNumber,
-				carrier, trackingNumber, status, shippingDateMonth,
+				methodKey, commerceShipmentId, commerceShippingMethodId,
+				carrier, expectedDateMonth, expectedDateDay, expectedDateYear,
+				expectedDateHour, expectedDateMinute, shippingDateMonth,
 				shippingDateDay, shippingDateYear, shippingDateHour,
-				shippingDateMinute, expectedDateMonth, expectedDateDay,
-				expectedDateYear, expectedDateHour, expectedDateMinute,
-				serviceContext);
+				shippingDateMinute, trackingNumber, trackingURL, status, name,
+				description, street1, street2, street3, city, zip, regionId,
+				countryId, phoneNumber, serviceContext);
 
 			Object returnObj = null;
 
@@ -1290,19 +1293,19 @@ public class CommerceShipmentServiceHttp {
 		new Class[] {com.liferay.commerce.model.CommerceShipment.class};
 	private static final Class<?>[] _updateCommerceShipmentParameterTypes21 =
 		new Class[] {
-			long.class, String.class, String.class, int.class, int.class,
+			long.class, long.class, String.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class,
+			int.class, int.class, String.class, String.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCommerceShipmentParameterTypes22 =
 		new Class[] {
-			long.class, String.class, String.class, String.class, String.class,
-			String.class, String.class, String.class, long.class, long.class,
-			String.class, String.class, String.class, int.class, int.class,
+			long.class, long.class, String.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			int.class, int.class, String.class, String.class, int.class,
+			String.class, String.class, String.class, String.class,
+			String.class, String.class, String.class, long.class, long.class,
+			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateExpectedDateParameterTypes23 =
 		new Class[] {

@@ -150,16 +150,18 @@ public class CommerceShipmentPersistenceTest {
 		newCommerceShipment.setCommerceShippingMethodId(
 			RandomTestUtil.nextLong());
 
-		newCommerceShipment.setShippingOptionName(
-			RandomTestUtil.randomString());
-
 		newCommerceShipment.setCarrier(RandomTestUtil.randomString());
 
-		newCommerceShipment.setTrackingNumber(RandomTestUtil.randomString());
+		newCommerceShipment.setExpectedDate(RandomTestUtil.nextDate());
 
 		newCommerceShipment.setShippingDate(RandomTestUtil.nextDate());
 
-		newCommerceShipment.setExpectedDate(RandomTestUtil.nextDate());
+		newCommerceShipment.setShippingOptionName(
+			RandomTestUtil.randomString());
+
+		newCommerceShipment.setTrackingNumber(RandomTestUtil.randomString());
+
+		newCommerceShipment.setTrackingURL(RandomTestUtil.randomString());
 
 		newCommerceShipment.setStatus(RandomTestUtil.nextInt());
 
@@ -207,20 +209,23 @@ public class CommerceShipmentPersistenceTest {
 			existingCommerceShipment.getCommerceShippingMethodId(),
 			newCommerceShipment.getCommerceShippingMethodId());
 		Assert.assertEquals(
-			existingCommerceShipment.getShippingOptionName(),
-			newCommerceShipment.getShippingOptionName());
-		Assert.assertEquals(
 			existingCommerceShipment.getCarrier(),
 			newCommerceShipment.getCarrier());
 		Assert.assertEquals(
-			existingCommerceShipment.getTrackingNumber(),
-			newCommerceShipment.getTrackingNumber());
+			Time.getShortTimestamp(existingCommerceShipment.getExpectedDate()),
+			Time.getShortTimestamp(newCommerceShipment.getExpectedDate()));
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingCommerceShipment.getShippingDate()),
 			Time.getShortTimestamp(newCommerceShipment.getShippingDate()));
 		Assert.assertEquals(
-			Time.getShortTimestamp(existingCommerceShipment.getExpectedDate()),
-			Time.getShortTimestamp(newCommerceShipment.getExpectedDate()));
+			existingCommerceShipment.getShippingOptionName(),
+			newCommerceShipment.getShippingOptionName());
+		Assert.assertEquals(
+			existingCommerceShipment.getTrackingNumber(),
+			newCommerceShipment.getTrackingNumber());
+		Assert.assertEquals(
+			existingCommerceShipment.getTrackingURL(),
+			newCommerceShipment.getTrackingURL());
 		Assert.assertEquals(
 			existingCommerceShipment.getStatus(),
 			newCommerceShipment.getStatus());
@@ -334,8 +339,8 @@ public class CommerceShipmentPersistenceTest {
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "commerceAccountId",
 			true, "commerceAddressId", true, "commerceShippingMethodId", true,
-			"carrier", true, "trackingNumber", true, "shippingDate", true,
-			"expectedDate", true, "status", true);
+			"carrier", true, "expectedDate", true, "shippingDate", true,
+			"trackingNumber", true, "trackingURL", true, "status", true);
 	}
 
 	@Test
@@ -660,15 +665,17 @@ public class CommerceShipmentPersistenceTest {
 
 		commerceShipment.setCommerceShippingMethodId(RandomTestUtil.nextLong());
 
-		commerceShipment.setShippingOptionName(RandomTestUtil.randomString());
-
 		commerceShipment.setCarrier(RandomTestUtil.randomString());
 
-		commerceShipment.setTrackingNumber(RandomTestUtil.randomString());
+		commerceShipment.setExpectedDate(RandomTestUtil.nextDate());
 
 		commerceShipment.setShippingDate(RandomTestUtil.nextDate());
 
-		commerceShipment.setExpectedDate(RandomTestUtil.nextDate());
+		commerceShipment.setShippingOptionName(RandomTestUtil.randomString());
+
+		commerceShipment.setTrackingNumber(RandomTestUtil.randomString());
+
+		commerceShipment.setTrackingURL(RandomTestUtil.randomString());
 
 		commerceShipment.setStatus(RandomTestUtil.nextInt());
 

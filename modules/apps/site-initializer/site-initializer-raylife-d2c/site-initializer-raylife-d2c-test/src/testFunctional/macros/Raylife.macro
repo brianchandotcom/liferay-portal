@@ -83,7 +83,6 @@ definition {
 	}
 
 	macro createRaylifeSite {
-
 		var testSiteName = "Raylife D2C";
 		var testSiteURL = "raylife-d2c";
 

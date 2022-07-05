@@ -28,8 +28,8 @@ public interface ExtensionProvider {
 			long companyId, Object entity)
 		throws Exception;
 
-	public Map<String, ExtendedPropertyDefinition>
-		getExtendedPropertyDefinitions(long companyId, String className);
+	public Map<String, PropertyDefinition> getExtendedPropertyDefinitions(
+		long companyId, String className);
 
 	public Collection<String> getFilteredPropertyNames(
 		long companyId, Object entity);
@@ -38,7 +38,7 @@ public interface ExtensionProvider {
 
 	public void setExtendedProperties(
 			long companyId, Object entity,
-			Map<String, Serializable> extensionProviderExtendedProperties)
+			Map<String, Serializable> extendedProperties)
 		throws Exception;
 
 }

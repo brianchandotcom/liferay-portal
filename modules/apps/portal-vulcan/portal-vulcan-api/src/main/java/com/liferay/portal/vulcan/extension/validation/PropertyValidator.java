@@ -17,8 +17,8 @@ package com.liferay.portal.vulcan.extension.validation;
 /**
  * @author Carlos Correa
  */
-public interface ExtendedPropertyValidator {
+public interface PropertyValidator {
 
-	public void validate(String fieldName, Object fieldValue);
+	public void validate(String propertyName, Object propertyValue);
 
 }

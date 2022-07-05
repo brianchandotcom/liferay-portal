@@ -14,8 +14,8 @@
 
 package com.liferay.portal.vulcan.internal.extension;
 
-import com.liferay.portal.vulcan.extension.ExtendedPropertyDefinition;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
+import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.io.Serializable;
 
@@ -68,13 +68,12 @@ public class EntityExtensionHandler {
 		throws Exception {
 
 		for (ExtensionProvider extensionProvider : _extensionProviders) {
-			Map<String, ExtendedPropertyDefinition>
-				extendedPropertyDefinitionMap =
-					extensionProvider.getExtendedPropertyDefinitions(
-						companyId, _className);
+			Map<String, PropertyDefinition> extendedPropertyDefinitions =
+				extensionProvider.getExtendedPropertyDefinitions(
+					companyId, _className);
 
 			Set<String> extendedPropertyNames =
-				extendedPropertyDefinitionMap.keySet();
+				extendedPropertyDefinitions.keySet();
 
 			Set<Map.Entry<String, Serializable>> entries =
 				extendedProperties.entrySet();

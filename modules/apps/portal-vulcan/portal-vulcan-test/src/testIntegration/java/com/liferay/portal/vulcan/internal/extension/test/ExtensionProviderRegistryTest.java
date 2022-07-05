@@ -17,9 +17,9 @@ package com.liferay.portal.vulcan.internal.extension.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.vulcan.extension.ExtendedPropertyDefinition;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
+import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
 import java.io.Serializable;
 
@@ -108,8 +108,8 @@ public class ExtensionProviderRegistryTest {
 		}
 
 		@Override
-		public Map<String, ExtendedPropertyDefinition>
-			getExtendedPropertyDefinitions(long companyId, String className) {
+		public Map<String, PropertyDefinition> getExtendedPropertyDefinitions(
+			long companyId, String className) {
 
 			return null;
 		}
@@ -135,7 +135,7 @@ public class ExtensionProviderRegistryTest {
 		@Override
 		public void setExtendedProperties(
 			long companyId, Object entity,
-			Map<String, Serializable> extensionProviderExtendedProperties) {
+			Map<String, Serializable> extendedProperties) {
 		}
 
 	}

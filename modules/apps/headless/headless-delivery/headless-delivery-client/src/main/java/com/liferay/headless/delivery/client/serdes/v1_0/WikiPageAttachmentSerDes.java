@@ -97,6 +97,20 @@ public class WikiPageAttachmentSerDes {
 			sb.append("\"");
 		}
 
+		if (wikiPageAttachment.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(wikiPageAttachment.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (wikiPageAttachment.getFileExtension() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -193,6 +207,15 @@ public class WikiPageAttachmentSerDes {
 				String.valueOf(wikiPageAttachment.getEncodingFormat()));
 		}
 
+		if (wikiPageAttachment.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(wikiPageAttachment.getExternalReferenceCode()));
+		}
+
 		if (wikiPageAttachment.getFileExtension() == null) {
 			map.put("fileExtension", null);
 		}
@@ -261,6 +284,14 @@ public class WikiPageAttachmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
 				if (jsonParserFieldValue != null) {
 					wikiPageAttachment.setEncodingFormat(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					wikiPageAttachment.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}

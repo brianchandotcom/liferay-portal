@@ -14356,6 +14356,7 @@ paths:
             # @review
             description:
                 Delete the wiki page attachment by wiki page's and wiki page attachment's external reference codes.
+            operationId: deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -14383,6 +14384,7 @@ paths:
             # @review
             description:
                 Retrieves the wiki page attachment by wiki page's and wiki page attachment's external reference codes.
+            operationId: getSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId

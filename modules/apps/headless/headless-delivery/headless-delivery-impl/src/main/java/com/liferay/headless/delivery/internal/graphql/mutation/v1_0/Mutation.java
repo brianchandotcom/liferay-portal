@@ -4349,6 +4349,30 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Delete the wiki page attachment by wiki page's and wiki page attachment's external reference codes."
+	)
+	public boolean
+			deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("wikiPageExternalReferenceCode") String
+					wikiPageExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_wikiPageAttachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			wikiPageAttachmentResource ->
+				wikiPageAttachmentResource.
+					deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode(
+						Long.valueOf(siteKey), wikiPageExternalReferenceCode,
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Deletes the wiki page attachment and returns a 204 if the operation succeeds."
 	)
 	public boolean deleteWikiPageAttachment(

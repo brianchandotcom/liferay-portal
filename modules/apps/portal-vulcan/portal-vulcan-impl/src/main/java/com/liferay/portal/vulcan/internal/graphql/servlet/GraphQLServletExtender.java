@@ -2025,6 +2025,10 @@ public class GraphQLServletExtender {
 							HashMapBuilder.<String, Serializable>put(
 								"companyId", CompanyThreadLocal.getCompanyId()
 							).put(
+								"filter",
+								(String)dataFetchingEnvironment.getArgument(
+									"filter")
+							).put(
 								"scopeKey",
 								(String)dataFetchingEnvironment.getArgument(
 									"scopeKey")

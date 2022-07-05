@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -208,8 +207,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 				aggregation, dtoConverterContext, pagination,
 				PredicateUtil.toPredicate(
 					_filterParserProvider,
-					ParamUtil.getString(
-						dtoConverterContext.getHttpServletRequest(), "filter"),
+					(String)dtoConverterContext.getAttribute("filter"),
 					_objectDefinition.getObjectDefinitionId(),
 					_objectFieldLocalService),
 				search, sorts);

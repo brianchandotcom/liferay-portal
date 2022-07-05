@@ -61,11 +61,13 @@ import com.liferay.layout.content.page.editor.web.internal.constants.ContentPage
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.MappingTypesUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
@@ -342,6 +344,11 @@ public class ContentPageEditorDisplayContext {
 				"featureFlagLps150277",
 				GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150277"))
 			).put(
+				"formTypes",
+				MappingTypesUtil.getMappingTypesJSONArray(
+					infoItemServiceTracker, EditPageInfoItemCapability.KEY,
+					themeDisplay.getScopeGroupId(), themeDisplay.getLocale())
+			).put(
 				"fragmentCompositionDescriptionMaxLength",
 				() -> ModelHintsUtil.getMaxLength(
 					FragmentComposition.class.getName(), "description")
@@ -368,11 +375,6 @@ public class ContentPageEditorDisplayContext {
 						frontendTokenDefinition, themeDisplay.getLocale(),
 						_getDefaultStyleBookEntry());
 				}
-			).put(
-				"getAvailableEditPageInfoItemFormProvidersURL",
-				_getResourceURL(
-					"/layout_content_page_editor" +
-						"/get_available_edit_page_info_item_form_providers")
 			).put(
 				"getAvailableImageConfigurationsURL",
 				_getResourceURL(

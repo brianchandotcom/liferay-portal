@@ -72,7 +72,7 @@ public class KBArticleGroupSubscriptionPortletConfigurationIcon
 					return "unsubscribeGroupKBArticles";
 				}
 
-				return "subscribeGroupKBArticles";
+				return "/knowledge_base/subscribe_group_kb_articles";
 			}
 		).setRedirect(
 			_portal.getCurrentURL(portletRequest)

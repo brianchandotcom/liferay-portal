@@ -114,8 +114,6 @@ definition {
 			locator1 = "TextInput#ANY",
 			value1 = "${videoURL}");
 
-		Pause(locator1 = "5000");
-
 		if (isSet(videoShortcutPreview)) {
 			AssertVisible(
 				key_videoShortcutPreview = "${videoShortcutPreview}",

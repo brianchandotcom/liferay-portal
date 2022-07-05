@@ -3,11 +3,9 @@ definition {
 	macro gotoDrive {
 		AssertElementPresent.pauseAssertVisible(locator1 = "Button#SELECT_FILE");
 
-		AssertClick(
+		AssertClick.assertTextClickAtWaitForLastScript(
 			locator1 = "Button#SELECT_FILE",
 			value1 = "Select File");
-
-		Pause(locator1 = "3000");
 
 		if (isSet(windowTitle)) {
 			SelectWindow(locator1 = "GoogleLogin#PAGE_TITLE");
@@ -33,8 +31,6 @@ definition {
 			Click(locator1 = "GoogleLogin#LOGIN_NEXT_BUTTON");
 
 			SelectWindow.selectWindowNoSPARefresh(locator1 = "title=${windowTitle}");
-
-			Pause(locator1 = "3000");
 		}
 
 		if (IsElementNotPresent(locator1 = "GoogleDrive#GOOGLE_DRIVE_IFRAME")) {

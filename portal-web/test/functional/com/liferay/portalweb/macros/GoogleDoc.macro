@@ -67,7 +67,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Pause(locator1 = "5000");
+		WaitForPageLoad();
 
 		if (IsElementNotPresent(key_text = "Save and Return to ${siteName}", locator1 = "Button#ANY")) {
 			Refresh();

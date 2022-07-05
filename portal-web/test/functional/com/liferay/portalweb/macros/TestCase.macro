@@ -42,6 +42,11 @@ definition {
 		var testFilePath = RegexUtil.replace("${testFilePaths}", "\[(.*)\]", "1");
 
 		var testFilePath = StringUtil.extractLast("${testFilePath}", "file:");
+		var os = OSDetector.isWindows();
+
+		if (("${os}" == "true") && contains("${testFilePath}", ":")) {
+			var testFilePath = StringUtil.replaceFirst("${testFilePath}", "/", "");
+		}
 
 		var testFileParentDir = StringUtil.extractFirst("${testFilePath}", "${testName}.testcase");
 

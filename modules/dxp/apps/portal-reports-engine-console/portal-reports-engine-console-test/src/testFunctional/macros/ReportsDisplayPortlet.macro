@@ -12,8 +12,6 @@ definition {
 		AssertClick(
 			locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DOWNLOAD",
 			value1 = "Download");
-
-		Pause(locator1 = "2000");
 	}
 
 	macro viewReportEntry {

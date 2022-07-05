@@ -249,6 +249,16 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 			commerceInventoryReplenishmentItemId);
 	}
 
+	public static CommerceInventoryReplenishmentItem
+		fetchCommerceInventoryReplenishmentItem(
+			long companyId, String sku,
+			OrderByComparator<CommerceInventoryReplenishmentItem>
+				orderByComparator) {
+
+		return getService().fetchCommerceInventoryReplenishmentItem(
+			companyId, sku, orderByComparator);
+	}
+
 	/**
 	 * Returns the commerce inventory replenishment item with the matching external reference code and company.
 	 *

@@ -2465,6 +2465,10 @@ definition {
 				entry = "First Web Content",
 				menuItem = "View History");
 
+			WaitForElementPresent(
+				key_webContentTitle = "First Web Content",
+				locator1 = "WCEditWebContent#VIEW_HISTORY_VERSION_TITLE");
+
 			var firstModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -2473,6 +2477,10 @@ definition {
 				entry = "Second Web Content",
 				menuItem = "View History");
 
+			WaitForElementPresent(
+				key_webContentTitle = "Second Web Content",
+				locator1 = "WCEditWebContent#VIEW_HISTORY_VERSION_TITLE");
+
 			var secondModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -2480,6 +2488,10 @@ definition {
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Third Web Content",
 				menuItem = "View History");
+
+			WaitForElementPresent(
+				key_webContentTitle = "Third Web Content",
+				locator1 = "WCEditWebContent#VIEW_HISTORY_VERSION_TITLE");
 
 			var thirdModifiedDate = selenium.getAttribute("//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 		}
@@ -2607,6 +2619,10 @@ definition {
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "First Web Content",
 				menuItem = "View History");
+
+			WaitForElementPresent(
+				key_webContentTitle = "First Web Content",
+				locator1 = "WCEditWebContent#VIEW_HISTORY_VERSION_TITLE");
 
 			var firstModifiedDate = selenium.getAttribute("//tr[2]//td[contains(@class,'modified-date')]/span[contains(@class,'tooltip')]@title");
 		}

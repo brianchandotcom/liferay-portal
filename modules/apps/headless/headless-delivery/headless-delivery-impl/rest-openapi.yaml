@@ -5269,6 +5269,10 @@ components:
                         The file's media format (e.g., application/pdf, etc.).
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    description:
+                        The wiki page attachment's external reference code.
+                    type: string
                 fileExtension:
                     description:
                         The file's extension.
@@ -14548,6 +14552,67 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/WikiPage"
             tags: ["WikiPage"]
+    "/sites/{siteId}/wiki-pages/by-external-reference-code/{wikiPageExternalReferenceCode}/wiki-page-attachments/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Delete the wiki page attachment by wiki page's and wiki page attachment's external reference codes.
+            operationId: deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: wikiPageExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["WikiPageAttachment"]
+        get:
+            # @review
+            description:
+                Retrieves the wiki page attachment by wiki page's and wiki page attachment's external reference codes.
+            operationId: getSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: wikiPageExternalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WikiPageAttachment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WikiPageAttachment"
+            tags: ["WikiPageAttachment"]
     "/structured-content-folder/{structuredContentFolderId}/permissions":
         get:
             operationId: getStructuredContentFolderPermissionsPage

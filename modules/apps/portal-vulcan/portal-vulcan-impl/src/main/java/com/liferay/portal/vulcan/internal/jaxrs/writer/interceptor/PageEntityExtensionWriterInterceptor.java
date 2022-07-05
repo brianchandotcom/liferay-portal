@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.vulcan.internal.extension.ExtensionProviders;
+import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.internal.jaxrs.extension.ExtendedEntity;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -57,12 +57,13 @@ public class PageEntityExtensionWriterInterceptor implements WriterInterceptor {
 
 			Type entityType = parameterizedType.getActualTypeArguments()[0];
 
-			ExtensionProviders extensionProviders = _getExtensionProviders(
-				(Class)entityType, writerInterceptorContext.getMediaType());
+			EntityExtensionHandler entityExtensionHandler =
+				_getEntityExtensionHandler(
+					(Class)entityType, writerInterceptorContext.getMediaType());
 
-			if (extensionProviders != null) {
+			if (entityExtensionHandler != null) {
 				_extendPageEntities(
-					extensionProviders, writerInterceptorContext);
+					entityExtensionHandler, writerInterceptorContext);
 			}
 		}
 
@@ -70,7 +71,7 @@ public class PageEntityExtensionWriterInterceptor implements WriterInterceptor {
 	}
 
 	private void _extendPageEntities(
-		ExtensionProviders extensionProviders,
+		EntityExtensionHandler entityExtensionHandler,
 		WriterInterceptorContext writerInterceptorContext) {
 
 		Page<?> page = (Page<?>)writerInterceptorContext.getEntity();
@@ -82,9 +83,9 @@ public class PageEntityExtensionWriterInterceptor implements WriterInterceptor {
 				extendedEntities.add(
 					ExtendedEntity.extend(
 						item,
-						extensionProviders.getExtendedProperties(
+						entityExtensionHandler.getExtendedProperties(
 							_company.getCompanyId(), item),
-						extensionProviders.getFilteredPropertyNames(
+						entityExtensionHandler.getFilteredPropertyNames(
 							_company.getCompanyId(), item)));
 			}
 		}
@@ -108,17 +109,18 @@ public class PageEntityExtensionWriterInterceptor implements WriterInterceptor {
 			}.getType());
 	}
 
-	private ExtensionProviders _getExtensionProviders(
+	private EntityExtensionHandler _getEntityExtensionHandler(
 		Class<?> clazz, MediaType mediaType) {
 
-		ContextResolver<ExtensionProviders> extensionProvidersContextResolver =
-			_providers.getContextResolver(ExtensionProviders.class, mediaType);
+		ContextResolver<EntityExtensionHandler> contextResolver =
+			_providers.getContextResolver(
+				EntityExtensionHandler.class, mediaType);
 
-		if (extensionProvidersContextResolver == null) {
+		if (contextResolver == null) {
 			return null;
 		}
 
-		return extensionProvidersContextResolver.getContext(clazz);
+		return contextResolver.getContext(clazz);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

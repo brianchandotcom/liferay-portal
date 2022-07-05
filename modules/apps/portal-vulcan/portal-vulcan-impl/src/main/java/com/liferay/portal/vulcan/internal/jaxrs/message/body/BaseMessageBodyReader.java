@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.ObjectReader;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.internal.extension.EntityExtensionThreadLocal;
-import com.liferay.portal.vulcan.internal.extension.ExtensionProviders;
 import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidationUtil;
 
 import java.io.IOException;
@@ -84,13 +84,13 @@ public abstract class BaseMessageBodyReader
 
 		ObjectReader objectReader = objectMapper.readerFor(clazz);
 
-		ExtensionProviders extensionProviders = _getExtensionProviders(
-			clazz, mediaType);
+		EntityExtensionHandler entityExtensionHandler =
+			_getEntityExtensionHandler(clazz, mediaType);
 
 		Object object;
 
 		if (_isUpdateOrCreateMethod(_httpServletRequest.getMethod()) &&
-			(extensionProviders != null)) {
+			(entityExtensionHandler != null)) {
 
 			JsonNode jsonNode = objectReader.readTree(inputStream);
 
@@ -102,7 +102,7 @@ public abstract class BaseMessageBodyReader
 			Map<String, Serializable> extendedProperties =
 				_getExtendedProperties(clazz, jsonNode, objectMapper);
 
-			extensionProviders.validate(
+			entityExtensionHandler.validate(
 				_company.getCompanyId(), extendedProperties,
 				Objects.equals(
 					_httpServletRequest.getMethod(), HttpMethod.PATCH));
@@ -121,6 +121,20 @@ public abstract class BaseMessageBodyReader
 		}
 
 		return object;
+	}
+
+	private EntityExtensionHandler _getEntityExtensionHandler(
+		Class<?> clazz, MediaType mediaType) {
+
+		ContextResolver<EntityExtensionHandler> contextResolver =
+			_providers.getContextResolver(
+				EntityExtensionHandler.class, mediaType);
+
+		if (contextResolver == null) {
+			return null;
+		}
+
+		return contextResolver.getContext(clazz);
 	}
 
 	private Map<String, Serializable> _getExtendedProperties(
@@ -149,15 +163,6 @@ public abstract class BaseMessageBodyReader
 		}
 
 		return extendedProperties;
-	}
-
-	private ExtensionProviders _getExtensionProviders(
-		Class<?> clazz, MediaType mediaType) {
-
-		ContextResolver<ExtensionProviders> extensionProvidersContextResolver =
-			_providers.getContextResolver(ExtensionProviders.class, mediaType);
-
-		return extensionProvidersContextResolver.getContext(clazz);
 	}
 
 	private Serializable _getJsonNodeValue(

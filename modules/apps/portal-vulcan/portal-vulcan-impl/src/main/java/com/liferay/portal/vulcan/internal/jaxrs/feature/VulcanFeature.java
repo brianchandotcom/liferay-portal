@@ -46,7 +46,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.context.provider.PaginationConte
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.RestrictFieldsQueryParamContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.UserContextProvider;
-import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ExtensionProvidersContextResolver;
+import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.EntityExtensionHandlerContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ObjectMapperContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.XmlMapperContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.dynamic.feature.StatusDynamicFeature;
@@ -150,7 +150,8 @@ public class VulcanFeature implements Feature {
 				_roleLocalService, _getScopeChecker(),
 				_vulcanBatchEngineImportTaskResource));
 		featureContext.register(
-			new ExtensionProvidersContextResolver(_extensionProviderRegistry));
+			new EntityExtensionHandlerContextResolver(
+				_extensionProviderRegistry));
 		featureContext.register(
 			new FilterContextProvider(
 				_expressionConvert, _filterParserProvider, _language, _portal));

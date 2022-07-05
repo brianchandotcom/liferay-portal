@@ -38,7 +38,7 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Javier de Arcos
  */
-public class ExtensionProvidersTest {
+public class EntityExtensionHandlerTest {
 
 	@ClassRule
 	@Rule
@@ -49,7 +49,7 @@ public class ExtensionProvidersTest {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		_extensionProviders = new ExtensionProviders(
+		_entityExtensionHandler = new EntityExtensionHandler(
 			_CLASS_NAME_TEST,
 			Arrays.asList(
 				_mockedExtensionProvider1, _mockedExtensionProvider2));
@@ -76,7 +76,7 @@ public class ExtensionProvidersTest {
 		);
 
 		Map<String, Serializable> extendedProperties =
-			_extensionProviders.getExtendedProperties(
+			_entityExtensionHandler.getExtendedProperties(
 				_COMPANY_ID_TEST, _OBJECT_TEST);
 
 		Mockito.verify(
@@ -117,7 +117,7 @@ public class ExtensionProvidersTest {
 		);
 
 		Set<String> filteredProperties =
-			_extensionProviders.getFilteredPropertyNames(
+			_entityExtensionHandler.getFilteredPropertyNames(
 				_COMPANY_ID_TEST, _OBJECT_TEST);
 
 		Mockito.verify(
@@ -159,7 +159,7 @@ public class ExtensionProvidersTest {
 			Collections.singletonMap("test2", null)
 		);
 
-		_extensionProviders.setExtendedProperties(
+		_entityExtensionHandler.setExtendedProperties(
 			_COMPANY_ID_TEST, _OBJECT_TEST, testExtendedProperties);
 
 		Mockito.verify(
@@ -193,7 +193,7 @@ public class ExtensionProvidersTest {
 
 	private static final Object _OBJECT_TEST = new Object();
 
-	private ExtensionProviders _extensionProviders;
+	private EntityExtensionHandler _entityExtensionHandler;
 
 	@Mock
 	private ExtensionProvider _mockedExtensionProvider1;

@@ -17,9 +17,9 @@ package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
 import com.liferay.portal.vulcan.internal.extension.EntityExtensionThreadLocal;
-import com.liferay.portal.vulcan.internal.extension.ExtensionProviders;
-import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ExtensionProvidersContextResolver;
+import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.EntityExtensionHandlerContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.extension.ExtendedEntity;
 
 import java.io.Serializable;
@@ -76,16 +76,16 @@ public class EntityExtensionWriterInterceptorTest {
 			_COMPANY_ID_TEST
 		);
 		Mockito.when(
-			_extensionProvidersContextResolver.getContext(Mockito.any())
+			_entityExtensionHandlerContextResolver.getContext(Mockito.any())
 		).thenReturn(
-			_extensionProviders
+			_entityExtensionHandler
 		);
 		Mockito.when(
 			_providers.getContextResolver(
-				Mockito.eq(ExtensionProviders.class),
+				Mockito.eq(EntityExtensionHandler.class),
 				Mockito.any(MediaType.class))
 		).thenReturn(
-			_extensionProvidersContextResolver
+			_entityExtensionHandlerContextResolver
 		);
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -109,30 +109,30 @@ public class EntityExtensionWriterInterceptorTest {
 		EntityExtensionThreadLocal.setExtendedProperties(null);
 
 		Mockito.verify(
-			_extensionProviders
+			_entityExtensionHandler
 		).setExtendedProperties(
 			Mockito.eq(_COMPANY_ID_TEST), Mockito.eq(_ENTITY_TEST),
 			Mockito.eq(extendedProperties)
 		);
 		Mockito.verify(
-			_extensionProviders
+			_entityExtensionHandler
 		).getExtendedProperties(
 			Mockito.eq(_COMPANY_ID_TEST), Mockito.eq(_ENTITY_TEST)
 		);
 		Mockito.verify(
-			_extensionProviders
+			_entityExtensionHandler
 		).getFilteredPropertyNames(
 			Mockito.eq(_COMPANY_ID_TEST), Mockito.eq(_ENTITY_TEST)
 		);
 		Mockito.verify(
-			_extensionProvidersContextResolver
+			_entityExtensionHandlerContextResolver
 		).getContext(
 			Mockito.eq(TestEntity.class)
 		);
 		Mockito.verify(
 			_providers
 		).getContextResolver(
-			Mockito.eq(ExtensionProviders.class),
+			Mockito.eq(EntityExtensionHandler.class),
 			Mockito.eq(MediaType.APPLICATION_JSON_TYPE)
 		);
 		Mockito.verify(
@@ -145,6 +145,37 @@ public class EntityExtensionWriterInterceptorTest {
 		).setEntity(
 			Mockito.any(ExtendedEntity.class)
 		);
+	}
+
+	@Test
+	public void testAroundWriteWithNoEntityExtensionHandler() throws Exception {
+		Mockito.when(
+			_writerInterceptorContext.getMediaType()
+		).thenReturn(
+			MediaType.APPLICATION_JSON_TYPE
+		);
+		Mockito.when(
+			_writerInterceptorContext.getType()
+		).thenReturn(
+			(Class)TestEntity.class
+		);
+
+		_entityExtensionWriterInterceptor.aroundWriteTo(
+			_writerInterceptorContext);
+
+		Mockito.verify(
+			_writerInterceptorContext, Mockito.never()
+		).setGenericType(
+			Mockito.any()
+		);
+		Mockito.verify(
+			_writerInterceptorContext, Mockito.never()
+		).setEntity(
+			Mockito.any()
+		);
+		Mockito.verify(
+			_writerInterceptorContext
+		).proceed();
 	}
 
 	@Test
@@ -157,16 +188,16 @@ public class EntityExtensionWriterInterceptorTest {
 			_COMPANY_ID_TEST
 		);
 		Mockito.when(
-			_extensionProvidersContextResolver.getContext(Mockito.any())
+			_entityExtensionHandlerContextResolver.getContext(Mockito.any())
 		).thenReturn(
-			_extensionProviders
+			_entityExtensionHandler
 		);
 		Mockito.when(
 			_providers.getContextResolver(
-				Mockito.eq(ExtensionProviders.class),
+				Mockito.eq(EntityExtensionHandler.class),
 				Mockito.any(MediaType.class))
 		).thenReturn(
-			_extensionProvidersContextResolver
+			_entityExtensionHandlerContextResolver
 		);
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -188,29 +219,29 @@ public class EntityExtensionWriterInterceptorTest {
 			_writerInterceptorContext);
 
 		Mockito.verify(
-			_extensionProviders, Mockito.never()
+			_entityExtensionHandler, Mockito.never()
 		).setExtendedProperties(
 			Mockito.anyLong(), Mockito.any(), Mockito.any()
 		);
 		Mockito.verify(
-			_extensionProviders
+			_entityExtensionHandler
 		).getExtendedProperties(
 			Mockito.eq(_COMPANY_ID_TEST), Mockito.eq(_ENTITY_TEST)
 		);
 		Mockito.verify(
-			_extensionProviders
+			_entityExtensionHandler
 		).getFilteredPropertyNames(
 			Mockito.eq(_COMPANY_ID_TEST), Mockito.eq(_ENTITY_TEST)
 		);
 		Mockito.verify(
-			_extensionProvidersContextResolver
+			_entityExtensionHandlerContextResolver
 		).getContext(
 			Mockito.eq(TestEntity.class)
 		);
 		Mockito.verify(
 			_providers
 		).getContextResolver(
-			Mockito.eq(ExtensionProviders.class),
+			Mockito.eq(EntityExtensionHandler.class),
 			Mockito.eq(MediaType.APPLICATION_JSON_TYPE)
 		);
 		Mockito.verify(
@@ -228,37 +259,6 @@ public class EntityExtensionWriterInterceptorTest {
 		);
 	}
 
-	@Test
-	public void testAroundWriteWithNoExtensionProviders() throws Exception {
-		Mockito.when(
-			_writerInterceptorContext.getMediaType()
-		).thenReturn(
-			MediaType.APPLICATION_JSON_TYPE
-		);
-		Mockito.when(
-			_writerInterceptorContext.getType()
-		).thenReturn(
-			(Class)TestEntity.class
-		);
-
-		_entityExtensionWriterInterceptor.aroundWriteTo(
-			_writerInterceptorContext);
-
-		Mockito.verify(
-			_writerInterceptorContext, Mockito.never()
-		).setGenericType(
-			Mockito.any()
-		);
-		Mockito.verify(
-			_writerInterceptorContext, Mockito.never()
-		).setEntity(
-			Mockito.any()
-		);
-		Mockito.verify(
-			_writerInterceptorContext
-		).proceed();
-	}
-
 	private static final long _COMPANY_ID_TEST = 11111;
 
 	private static final TestEntity _ENTITY_TEST = new TestEntity();
@@ -266,14 +266,14 @@ public class EntityExtensionWriterInterceptorTest {
 	@Mock
 	private Company _company;
 
+	@Mock
+	private EntityExtensionHandler _entityExtensionHandler;
+
+	@Mock
+	private EntityExtensionHandlerContextResolver
+		_entityExtensionHandlerContextResolver;
+
 	private EntityExtensionWriterInterceptor _entityExtensionWriterInterceptor;
-
-	@Mock
-	private ExtensionProviders _extensionProviders;
-
-	@Mock
-	private ExtensionProvidersContextResolver
-		_extensionProvidersContextResolver;
 
 	@Mock
 	private Providers _providers;

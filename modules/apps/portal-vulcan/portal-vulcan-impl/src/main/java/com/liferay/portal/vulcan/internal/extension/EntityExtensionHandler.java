@@ -28,9 +28,9 @@ import java.util.Set;
 /**
  * @author Javier de Arcos
  */
-public class ExtensionProviders {
+public class EntityExtensionHandler {
 
-	public ExtensionProviders(
+	public EntityExtensionHandler(
 		String className, List<ExtensionProvider> extensionProviders) {
 
 		_className = className;

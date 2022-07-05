@@ -17,7 +17,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.resolver;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
-import com.liferay.portal.vulcan.internal.extension.ExtensionProviders;
+import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
 
 import java.util.List;
 
@@ -29,30 +29,30 @@ import javax.ws.rs.ext.Provider;
  * @author Javier de Arcos
  */
 @Provider
-public class ExtensionProvidersContextResolver
-	implements ContextResolver<ExtensionProviders> {
+public class EntityExtensionHandlerContextResolver
+	implements ContextResolver<EntityExtensionHandler> {
 
-	public ExtensionProvidersContextResolver(
+	public EntityExtensionHandlerContextResolver(
 		ExtensionProviderRegistry extensionProviderRegistry) {
 
 		_extensionProviderRegistry = extensionProviderRegistry;
 	}
 
 	@Override
-	public ExtensionProviders getContext(Class<?> clazz) {
+	public EntityExtensionHandler getContext(Class<?> clazz) {
 		List<ExtensionProvider> extensionProviders =
 			_extensionProviderRegistry.getExtensionProviders(
-				_companyCompany.getCompanyId(), clazz.getName());
+				_company.getCompanyId(), clazz.getName());
 
 		if (extensionProviders.isEmpty()) {
 			return null;
 		}
 
-		return new ExtensionProviders(clazz.getName(), extensionProviders);
+		return new EntityExtensionHandler(clazz.getName(), extensionProviders);
 	}
 
 	@Context
-	private Company _companyCompany;
+	private Company _company;
 
 	private final ExtensionProviderRegistry _extensionProviderRegistry;
 

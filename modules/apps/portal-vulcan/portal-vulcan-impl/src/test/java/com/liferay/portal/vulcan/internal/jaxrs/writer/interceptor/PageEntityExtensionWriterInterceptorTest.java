@@ -17,8 +17,8 @@ package com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.vulcan.internal.extension.ExtensionProviders;
-import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.ExtensionProvidersContextResolver;
+import com.liferay.portal.vulcan.internal.extension.EntityExtensionHandler;
+import com.liferay.portal.vulcan.internal.jaxrs.context.resolver.EntityExtensionHandlerContextResolver;
 import com.liferay.portal.vulcan.internal.jaxrs.extension.ExtendedEntity;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -84,22 +84,22 @@ public class PageEntityExtensionWriterInterceptorTest {
 			_COMPANY_ID_TEST
 		);
 		Mockito.when(
-			_extensionProviders.getExtendedProperties(
+			_entityExtensionHandler.getExtendedProperties(
 				Mockito.anyLong(), Mockito.any())
 		).thenReturn(
 			extendedProperties
 		);
 		Mockito.when(
-			_extensionProvidersContextResolver.getContext(Mockito.any())
+			_entityExtensionHandlerContextResolver.getContext(Mockito.any())
 		).thenReturn(
-			_extensionProviders
+			_entityExtensionHandler
 		);
 		Mockito.when(
 			_providers.getContextResolver(
-				Mockito.eq(ExtensionProviders.class),
+				Mockito.eq(EntityExtensionHandler.class),
 				Mockito.any(MediaType.class))
 		).thenReturn(
-			_extensionProvidersContextResolver
+			_entityExtensionHandlerContextResolver
 		);
 		Mockito.when(
 			_writerInterceptorContext.getEntity()
@@ -127,24 +127,24 @@ public class PageEntityExtensionWriterInterceptorTest {
 			_writerInterceptorContext);
 
 		Mockito.verify(
-			_extensionProviders
+			_entityExtensionHandler
 		).getExtendedProperties(
 			Mockito.eq(_COMPANY_ID_TEST), Mockito.eq(_ENTITY_TEST)
 		);
 		Mockito.verify(
-			_extensionProviders
+			_entityExtensionHandler
 		).getFilteredPropertyNames(
 			Mockito.eq(_COMPANY_ID_TEST), Mockito.eq(_ENTITY_TEST)
 		);
 		Mockito.verify(
-			_extensionProvidersContextResolver
+			_entityExtensionHandlerContextResolver
 		).getContext(
 			Mockito.eq(TestEntity.class)
 		);
 		Mockito.verify(
 			_providers
 		).getContextResolver(
-			Mockito.eq(ExtensionProviders.class),
+			Mockito.eq(EntityExtensionHandler.class),
 			Mockito.eq(MediaType.APPLICATION_JSON_TYPE)
 		);
 		Mockito.verify(
@@ -187,7 +187,7 @@ public class PageEntityExtensionWriterInterceptorTest {
 	}
 
 	@Test
-	public void testAroundWriteNoExtensionProviders() throws Exception {
+	public void testAroundWriteWithNoEntityExtensionHandler() throws Exception {
 		Mockito.when(
 			_writerInterceptorContext.getGenericType()
 		).thenReturn(
@@ -211,7 +211,7 @@ public class PageEntityExtensionWriterInterceptorTest {
 		Mockito.verify(
 			_providers
 		).getContextResolver(
-			Mockito.eq(ExtensionProviders.class),
+			Mockito.eq(EntityExtensionHandler.class),
 			Mockito.eq(MediaType.APPLICATION_JSON_TYPE)
 		);
 		Mockito.verify(
@@ -232,7 +232,7 @@ public class PageEntityExtensionWriterInterceptorTest {
 	}
 
 	@Test
-	public void testAroundWriteNoPageType() throws Exception {
+	public void testAroundWriteWithNoPageType() throws Exception {
 		Mockito.when(
 			_writerInterceptorContext.getType()
 		).thenReturn(
@@ -267,11 +267,11 @@ public class PageEntityExtensionWriterInterceptorTest {
 	private Company _company;
 
 	@Mock
-	private ExtensionProviders _extensionProviders;
+	private EntityExtensionHandler _entityExtensionHandler;
 
 	@Mock
-	private ExtensionProvidersContextResolver
-		_extensionProvidersContextResolver;
+	private EntityExtensionHandlerContextResolver
+		_entityExtensionHandlerContextResolver;
 
 	private PageEntityExtensionWriterInterceptor
 		_pageEntityExtensionWriterInterceptor;

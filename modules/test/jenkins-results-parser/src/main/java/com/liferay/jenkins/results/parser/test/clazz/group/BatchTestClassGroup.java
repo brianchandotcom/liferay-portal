@@ -802,18 +802,18 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	}
 
-	private Long _getDefaultTestDuration() {
+	private long _getDefaultTestDuration() {
 		JobProperty jobProperty = getJobProperty(
 			"test.batch.default.test.duration");
 
 		if (jobProperty == null) {
-			return null;
+			return 0L;
 		}
 
 		String jobPropertyValue = jobProperty.getValue();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
-			return null;
+			return 0L;
 		}
 
 		recordJobProperty(jobProperty);

@@ -181,7 +181,7 @@ public abstract class BaseLayoutStructureItemImporter {
 				ContextReference.ContextSource.DISPLAY_PAGE_ITEM.getValue(),
 				contextSource)) {
 
-			if (_isValidDisplayPageItem(
+			if (_isValidInfoField(
 					fieldKey, layoutStructureItemImporterContext)) {
 
 				jsonObject.put("mappedField", fieldKey);
@@ -521,7 +521,7 @@ public abstract class BaseLayoutStructureItemImporter {
 		);
 	}
 
-	private boolean _isValidDisplayPageItem(
+	private boolean _isValidInfoField(
 		String fieldKey,
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
 

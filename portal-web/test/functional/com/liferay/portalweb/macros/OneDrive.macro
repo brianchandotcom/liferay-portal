@@ -9,8 +9,6 @@ definition {
 
 		Click(locator1 = "Button#SAVE");
 
-		Pause(locator1 = "10000");
-
 		SelectWindow.waitForSelectPopUp(
 			locator1 = "null",
 			value1 = "60000");
@@ -31,8 +29,6 @@ definition {
 				value1 = "${dmDocumentTitle}");
 
 			Click(locator1 = "Button#SAVE");
-
-			Pause(locator1 = "10000");
 
 			SelectWindow.waitForSelectPopUp(
 				locator1 = "null",
@@ -104,8 +100,6 @@ definition {
 	}
 
 	macro editTitle {
-		Pause(locator1 = "10000");
-
 		WaitForPageLoad();
 
 		SelectWindow.waitForSelectPopUp(

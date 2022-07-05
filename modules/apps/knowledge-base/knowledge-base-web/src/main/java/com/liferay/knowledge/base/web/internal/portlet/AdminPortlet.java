@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -144,40 +143,6 @@ public class AdminPortlet extends BaseKBPortlet {
 		}
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
-		}
-	}
-
-	public void updateKBFolder(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		long parentResourceClassNameId = ParamUtil.getLong(
-			actionRequest, "parentResourceClassNameId");
-		long parentResourcePrimKey = ParamUtil.getLong(
-			actionRequest, "parentResourcePrimKey");
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			KBFolder.class.getName(), actionRequest);
-
-		if (cmd.equals(Constants.ADD)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(
-					KBWebKeys.THEME_DISPLAY);
-
-			kbFolderService.addKBFolder(
-				null, themeDisplay.getScopeGroupId(), parentResourceClassNameId,
-				parentResourcePrimKey, name, description, serviceContext);
-		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			long kbFolderId = ParamUtil.getLong(actionRequest, "kbFolderId");
-
-			kbFolderService.updateKBFolder(
-				parentResourceClassNameId, parentResourcePrimKey, kbFolderId,
-				name, description, serviceContext);
 		}
 	}
 

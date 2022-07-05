@@ -39,7 +39,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle((kbFolder == null) ? LanguageUtil.get(resourceBundle, "new-folder") : kbFolder.getName());
 %>
 
-<liferay-portlet:actionURL name="updateKBFolder" var="updateKBFolderURL" />
+<liferay-portlet:actionURL name="/knowledge_base/update_kb_folder" var="updateKBFolderURL" />
 
 <clay:container-fluid
 	cssClass="container-form-lg"

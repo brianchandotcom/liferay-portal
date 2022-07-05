@@ -96,6 +96,12 @@ definition {
 			value = "${displayDate}");
 	}
 
+	macro checkSegmentationDisabledWarning {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_3",
+			value1 = "Segmentation is disabled");
+	}
+
 	macro clickAssignSiteRolesOption {
 		Click(locator1 = "Segmentation#SEGMENT_OPTIONS_MENU");
 
@@ -106,6 +112,18 @@ definition {
 		AssertTextPresent(
 			locator1 = "Segmentation#ASSIGN_SITE_ROLES_MODAL_TITLE",
 			value1 = "Assign Site Roles");
+	}
+
+	macro closeSegmentationDisabledWarning {
+		Segmentation.checkSegmentationDisabledWarning();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		if (IsElementPresent(locator1 = "Message#ERROR_3")) {
+			AssertTextNotEquals.assertNotPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "Segmentation is disabled");
+		}
 	}
 
 	macro createExperienceWithSegment {
@@ -166,6 +184,29 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX");
+	}
+
+	macro disableSegmentationAtInstanceSettings {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Segments",
+			configurationName = "Segments Service",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.disableCheckbox(fieldName = "Enable Segmentation");
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro editSegment {
@@ -326,6 +367,26 @@ definition {
 
 	macro openSegmentsAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_segments_web_internal_portlet_SegmentsPortlet");
+	}
+
+	macro resetSegmentationAtInstanceSettings {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Segments",
+			configurationName = "Segments Service",
+			configurationScope = "Virtual Instance Scope");
+
+		Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Reset Default Values");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro selectTag {

@@ -1,0 +1,527 @@
+@component-name = "portal-segmentation"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Segmentation";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		Navigator.openURL();
+
+		Segmentation.disableSegmentationAtInstanceSettings();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Segmentation.resetSegmentationAtInstanceSettings();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Dynamic Collection Editor page
+    When user clicks at Close button
+    Then the alert disappears from page"
+	@priority = "4"
+	test CloseDisabledSegmentationAlertAtDynamicCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Experience page
+    When user clicks at Close button
+    Then the alert disappears from page"
+	@priority = "4"
+	test CloseDisabledSegmentationAlertAtExperiencesMenu {
+		task ("Create and navigate to the page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Experience Content Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Open Experiences menu") {
+			PageEditor.openExperienceMenu();
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Manual Collection Editor page
+    When user clicks at Close button
+    Then the alert disappears from page"
+	@priority = "4"
+	test CloseDisabledSegmentationAlertAtManualCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to Manual Collection Editor") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Segments page
+    When user clicks at Close button
+    Then the alert disappears from page"
+	@priority = "4"
+	test CloseDisabledSegmentationAlertAtSegments {
+		task ("Navigate to Segments Admin") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Go to segments editor") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Simulation page
+    When user clicks at Close button
+    Then the alert disappears from page"
+	@priority = "4"
+	test CloseDisabledSegmentationAlertAtSimulationPanel {
+		task ("Create a layout page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Experience Content Page",
+				type = "content");
+		}
+
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With User3",
+				text = "userfn3");
+		}
+
+		task ("Navigate o simulation panel") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			MobileDevice.previewPG();
+
+			SelectFrameTop();
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
+    When user clicks at Close button at Dynamic Collection Editor Page And the page is reloaded
+    Then the alert reappears"
+	@priority = "3"
+	test DisabledAlertAfterRefreshAtDynamicCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Refresh and check if warning reappears") {
+			Refresh();
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
+    When user clicks at Close button at Segments Page And the page is reloaded
+    Then the alert reappears"
+	@priority = "3"
+	test DisabledAlertAfterRefreshAtExperiences {
+		task ("Navigate to Segments Admin") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Refresh and check if warning reappears") {
+			Refresh();
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+
+		task ("Go to segments editor") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Refresh and check if warning reappears") {
+			Refresh();
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
+    When user clicks at Close button at Experience menu And the page is reloaded
+    Then the alert reappears"
+	@priority = "3"
+	test DisabledAlertAfterRefreshAtExperiencesMenu {
+		task ("Create and navigate to the page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Experience Content Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Open Experiences menu") {
+			PageEditor.openExperienceMenu();
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Refresh and check if warning reappears") {
+			Refresh();
+
+			PageEditor.openExperienceMenu();
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
+    When user clicks at Close button at Manual Collection Editor Page And the page is reloaded
+    Then the alert reappears"
+	@priority = "3"
+	test DisabledAlertAfterRefreshAtManualCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Refresh and check if warning reappears") {
+			Refresh();
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
+    When user clicks at Close button at Simulation panel And the page is reloaded
+    Then the alert reappears"
+	@priority = "3"
+	test DisabledAlertAfterRefreshAtSimulationPanel {
+		task ("Create a layout page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Experience Content Page",
+				type = "content");
+		}
+
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With User3",
+				text = "userfn3");
+		}
+
+		task ("Navigate o simulation panel") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			MobileDevice.previewPG();
+
+			SelectFrameTop();
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Refresh and check if warning reappears") {
+			Refresh();
+
+			MobileDevice.previewPG();
+
+			SelectFrameTop();
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
+    When user clicks at Close button at Dynamic Collection Editor Page And user leaves and returns to page
+    Then the alert reappears"
+	@priority = "3"
+	test DisabledAlertAfterReturnsAtDynamicCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Leave then return to page and check if warning reappears") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
+    When user clicks at Close button at Segments Page And user leaves and returns to page
+    Then the alert reappears"
+	@priority = "3"
+	test DisabledAlertAfterReturnsAtExperiences {
+		task ("Navigate to Segments Admin") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Leave then return to page and check if warning reappears") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+
+		task ("Go to segments editor") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Leave then return to page and check if warning reappears") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
+    When user clicks at Close button at Experience menu And user leaves and returns to page
+    Then the alert reappears"
+	@priority = "3"
+	test DisabledAlertAfterReturnsAtExperiencesMenu {
+		task ("Create and navigate to the page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Experience Content Page",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+		}
+
+		task ("Open Experiences menu") {
+			PageEditor.openExperienceMenu();
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Leave then return to page and check if warning reappears") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.openExperienceMenu();
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
+    When user clicks at Close button at Manual Collection Editor Page And user leaves and returns to page
+    Then the alert reappears"
+	@priority = "3"
+	test DisabledAlertAfterReturnsAtManualCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Leave then return to page and check if warning reappears") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled
+    When user clicks at Close button at Simulation panel And user leaves and returns to page
+    Then the alert reappears"
+	@priority = "3"
+	test DisabledAlertAfterReturnsAtSimulationPanel {
+		task ("Create a layout page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Experience Content Page",
+				type = "content");
+		}
+
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With User3",
+				text = "userfn3");
+		}
+
+		task ("Navigate o simulation panel") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			MobileDevice.previewPG();
+
+			SelectFrameTop();
+		}
+
+		task ("Close warning message") {
+			Segmentation.closeSegmentationDisabledWarning();
+		}
+
+		task ("Leave then return to page and check if warning reappears") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			MobileDevice.previewPG();
+
+			SelectFrameTop();
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+}

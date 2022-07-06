@@ -18,31 +18,139 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This test covers LPS-154493."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154493. It ensures that a blog small image can be published and rendered correctly after upgrading from 7.3.10.1."
 	@priority = "5"
 	test CanPublishBlogSmallImageAfterUpgradeFrom73101Archive {
+		property data.archive.type = "data-archive-depot-remote-staging-with-image";
+		property portal.version = "7.3.10.1";
 
-		// TODO LPS-154493
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addSmallImage(
+			depotName = "Test Depot Name",
+			imageFileName = "Document_1.jpg",
+			navTab = "Documents and Media");
+
+		PortletEntry.publish();
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page DM",
+			widgetName = "Blogs");
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Remote Site");
+
+		BlogsEntry.viewSmallImage(uploadFileName = "Document_1");
 	}
 
-	@description = "This test covers LPS-154489."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154489. It ensures that an image from an asset library can be published in a blog content field and correctly rendered after upgrading from 7.3.10.1."
 	@priority = "5"
 	test CanPublishImageInBlogContentFieldAfterUpgradeFrom73101Archive {
+		property data.archive.type = "data-archive-depot-remote-staging-with-image";
+		property portal.version = "7.3.10.1";
 
-		// TODO LPS-154489
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addContentWithInlineImage(
+			depotName = "Test Depot Name",
+			entryContent = "Blogs Entry Content",
+			imageFileName = "Document_1.jpg",
+			navTab = "Documents and Media");
+
+		PortletEntry.publish();
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page DM",
+			widgetName = "Blogs");
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Remote Site");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.viewInlineImage(uploadFileName = "Document_1.jpg");
 	}
 
-	@description = "This test covers LPS-154497."
-	@ignore = "Test Stub"
+	@description = "This test covers LPS-154497. It ensures that an image from an asset library can be rendered correctly in a Media Gallery widget after upgrading from 7.3.10.1."
 	@priority = "5"
 	test CanPublishImageInMGAfterUpgradeFrom73101Archive {
+		property data.archive.type = "data-archive-depot-remote-staging-with-image";
+		property portal.version = "7.3.10.1";
 
-		// TODO LPS-154497
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Test Page DM",
+			widgetName = "Media Gallery");
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name");
+
+		MGPortlet.setRootFolder(
+			depotName = "Test Depot Name",
+			selectRootFolder = "true");
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.openSitePage(
+			pageName = "Test Page DM",
+			siteName = "Remote Site");
+
+		DMDocument.viewPGViaMG(
+			mgDocumentTitle = "Document_1.jpg",
+			staging = "true");
 	}
 
 }

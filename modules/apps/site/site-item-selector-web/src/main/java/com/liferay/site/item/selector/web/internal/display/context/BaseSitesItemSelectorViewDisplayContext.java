@@ -18,13 +18,14 @@ import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCrite
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.item.selector.display.context.SitesItemSelectorViewDisplayContext;
+import com.liferay.site.item.selector.web.internal.constants.SitesItemSelectorWebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -56,8 +57,9 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 			return _displayStyle;
 		}
 
-		_displayStyle = ParamUtil.getString(
-			httpServletRequest, "displayStyle", "icon");
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			httpServletRequest, SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR,
+			"icon");
 
 		return _displayStyle;
 	}

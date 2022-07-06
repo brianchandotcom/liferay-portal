@@ -50,10 +50,14 @@ public class SandboxHelper {
 
 	public void sandbox(CTPreferences ctPreferences) throws PortalException {
 		if ((ctPreferences == null) ||
-			(ctPreferences.getCtCollectionId() !=
-				CTConstants.CT_COLLECTION_ID_PRODUCTION) ||
 			!_ctSettingsConfigurationHelper.isSandboxEnabled(
 				ctPreferences.getCompanyId())) {
+
+			return;
+		}
+
+		if (ctPreferences.getCtCollectionId() !=
+				CTConstants.CT_COLLECTION_ID_PRODUCTION) {
 
 			CTCollection ctCollection =
 				_ctCollectionLocalService.fetchCTCollection(

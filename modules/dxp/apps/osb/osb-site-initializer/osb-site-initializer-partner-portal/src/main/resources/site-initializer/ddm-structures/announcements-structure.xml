@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>Announcements-Structure</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{
+					"availableLanguageIds": [
+						"en_US"
+					],
+					"defaultLanguageId": "en_US",
+					"fields": [
+						{
+							"dataType": "string",
+							"indexType": "text",
+							"label": {
+								"en_US": "Announcement Content"
+							},
+							"localizable": true,
+							"name": "AnnouncementContent",
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"type": "rich_text"
+						}
+					],
+					"successPage": {
+						"body": {
+						},
+						"enabled": false,
+						"title": {
+						}
+					}
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": [
+												"AnnouncementContent"
+											],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "Announcements Structure"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
+</root>

@@ -1,0 +1,93 @@
+@component-name = "portal-logging"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Logging";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Any logs that would appear in specifically company A should never appear in the logs of company B"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AssertCompanyLogsIsolated {
+
+		// TODO LRQA-75859
+
+	}
+
+	@description = "If company.log.enabled=false, there should not be additional logging files created for each company and the UI access point should be unavailable"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompanyLoggingDisabled {
+
+		// TODO LRQA-75853
+
+	}
+
+	@description = "An Omniadmin can get log names from all companies and download logs from all companies though the UI"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test GetAllCompanyLogs {
+
+		// TODO LRQA-75854
+
+	}
+
+	@description = "A company admin should only be able to see the logs from the company they are an admin of"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test GetCompanyAdminLogs {
+
+		// TODO LRQA-75855
+
+	}
+
+	@description = "A company admin that tries to directly download the logs of a company they do not have access to should get a permissions error"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test GetCompanyAdminLogsFromDifferentCompany {
+
+		// TODO LRQA-75856
+
+	}
+
+	@description = "A non-administrative user should get a permissions denied error when trying to access the UI to get company logging information"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test GetCompanyLogsAsGuest {
+
+		// TODO LRQA-75857
+
+	}
+
+	@description = "If there are no logs available for a company, there should be some kind of message to notify the user when they try to check the available log names"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test GetEmptyCompanyLogs {
+
+		// TODO LRQA-75858
+
+	}
+
+	@description = "If a user tries to download a logging file or company that doesn’t exist it should fail and throw a suitable error message"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test GetInvalidCompanyLogs {
+
+		// TODO LRQA-75860
+
+	}
+
+}

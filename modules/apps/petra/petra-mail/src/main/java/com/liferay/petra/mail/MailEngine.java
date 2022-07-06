@@ -79,10 +79,6 @@ import javax.mail.internet.MimeMultipart;
  */
 public class MailEngine {
 
-	public static Session getSession() {
-		return getSession(false);
-	}
-
 	public static Session getSession(Account account) {
 		Session session = Session.getInstance(_getProperties(account));
 
@@ -97,7 +93,7 @@ public class MailEngine {
 		return session;
 	}
 
-	public static Session getSession(boolean cache) {
+	public static Session getSession() {
 		Session session = null;
 
 		try {

@@ -17,14 +17,20 @@ package com.liferay.portal.upgrade;
 import com.liferay.counter.kernel.model.Counter;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.counter.kernel.service.persistence.CounterFinder;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.spring.aop.AopInvocationHandler;
 
 import java.io.Closeable;
+import java.io.IOException;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 
 import java.util.List;
 
@@ -54,19 +60,60 @@ public abstract class Pre7UpgradeProcess extends UpgradeProcess {
 			Object springServiceProxy, String fieldName, Class<?> wrapperClass)
 		throws Exception {
 
-		// TODO LPS-157670
+		AopInvocationHandler aopInvocationHandler =
+			ProxyUtil.fetchInvocationHandler(
+				springServiceProxy, AopInvocationHandler.class);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(springServiceProxy);
-			_log.debug(fieldName);
-			_log.debug(wrapperClass);
+		Object target = aopInvocationHandler.getTarget();
+
+		Class<?> clazz = target.getClass();
+
+		Field field = null;
+
+		while (clazz != null) {
+			try {
+				field = ReflectionUtil.getDeclaredField(clazz, fieldName);
+
+				break;
+			}
+			catch (NoSuchFieldException noSuchFieldException) {
+				clazz = clazz.getSuperclass();
+			}
 		}
 
-		return null;
-	}
+		if (field == null) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"Unable to locate field ", fieldName, " in ", target));
+		}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		Pre7UpgradeProcess.class);
+		final Field finalField = field;
+
+		Object previousValue = finalField.get(target);
+
+		Constructor<?> constructor = wrapperClass.getDeclaredConstructor(
+			finalField.getType());
+
+		constructor.setAccessible(true);
+
+		finalField.set(target, constructor.newInstance(previousValue));
+
+		return new Closeable() {
+
+			@Override
+			public void close() throws IOException {
+				try {
+					finalField.set(target, previousValue);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new IOException(reflectiveOperationException);
+				}
+			}
+
+		};
+	}
 
 	private static class Pre7CounterFinderImpl implements CounterFinder {
 

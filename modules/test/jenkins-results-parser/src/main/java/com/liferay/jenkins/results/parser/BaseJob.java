@@ -849,7 +849,6 @@ public abstract class BaseJob implements Job {
 	private String _fixBatchName(String batchName) {
 		batchName = batchName.replace("_stable", "");
 		batchName = batchName.replace("-smoke", "");
-		batchName = batchName.replace("-upgrade", "");
 
 		return batchName;
 	}

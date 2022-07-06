@@ -386,7 +386,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return Integer.parseInt(jobPropertyValue);
 		}
 
-		return _AXES_SIZE_MAX_DEFAULT;
+		return AXES_SIZE_MAX_DEFAULT;
 	}
 
 	protected List<String> getGlobs(List<JobProperty> jobProperties) {
@@ -1059,7 +1059,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		testRelevantIntegrationUnitOnly = false;
 	}
 
-	private static final int _AXES_SIZE_MAX_DEFAULT = 5000;
+	protected static final int AXES_SIZE_MAX_DEFAULT = 5000;
 
 	private static final int _SEGMENT_MAX_CHILDREN_DEFAULT = 25;
 

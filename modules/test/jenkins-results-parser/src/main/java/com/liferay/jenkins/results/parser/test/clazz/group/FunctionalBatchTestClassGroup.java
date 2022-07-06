@@ -230,6 +230,17 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	@Override
+	protected int getAxisMaxSize() {
+		long targetAxisDuration = getTargetAxisDuration();
+
+		if (targetAxisDuration > 0) {
+			return AXES_SIZE_MAX_DEFAULT;
+		}
+
+		return super.getAxisMaxSize();
+	}
+
+	@Override
 	protected void setAxisTestClassGroups() {
 		if (!axisTestClassGroups.isEmpty()) {
 			return;
@@ -245,31 +256,69 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			List<List<String>> poshiTestClassGroups = getPoshiTestClassGroups(
 				testBaseDir);
 
+			long targetAxisDuration = getTargetAxisDuration();
+
 			for (List<String> poshiTestClassGroup : poshiTestClassGroups) {
 				if (poshiTestClassGroup.isEmpty()) {
 					continue;
 				}
 
-				AxisTestClassGroup axisTestClassGroup =
-					TestClassGroupFactory.newAxisTestClassGroup(
-						this, testBaseDir);
+				if (targetAxisDuration > 0) {
+					AxisTestClassGroup axisTestClassGroup =
+						TestClassGroupFactory.newAxisTestClassGroup(this);
 
-				for (String testClassMethodName : poshiTestClassGroup) {
-					Matcher matcher = _poshiTestCasePattern.matcher(
-						testClassMethodName);
+					axisTestClassGroups.add(axisTestClassGroup);
 
-					if (!matcher.find()) {
-						throw new RuntimeException(
-							"Invalid test class method name " +
-								testClassMethodName);
+					for (String testClassMethodName : poshiTestClassGroup) {
+						TestClass testClass = TestClassFactory.newTestClass(
+							this, testClassMethodName);
+
+						if (!axisTestClassGroup.hasTestClasses()) {
+							axisTestClassGroup.addTestClass(testClass);
+
+							continue;
+						}
+
+						long estimatedAxisDuration =
+							axisTestClassGroup.getAverageDuration() +
+								testClass.getAverageDuration();
+
+						if (estimatedAxisDuration < targetAxisDuration) {
+							axisTestClassGroup.addTestClass(testClass);
+
+							continue;
+						}
+
+						axisTestClassGroup =
+							TestClassGroupFactory.newAxisTestClassGroup(this);
+
+						axisTestClassGroup.addTestClass(testClass);
+
+						axisTestClassGroups.add(axisTestClassGroup);
+					}
+				}
+				else {
+					AxisTestClassGroup axisTestClassGroup =
+						TestClassGroupFactory.newAxisTestClassGroup(
+							this, testBaseDir);
+
+					for (String testClassMethodName : poshiTestClassGroup) {
+						Matcher matcher = _poshiTestCasePattern.matcher(
+							testClassMethodName);
+
+						if (!matcher.find()) {
+							throw new RuntimeException(
+								"Invalid test class method name " +
+									testClassMethodName);
+						}
+
+						axisTestClassGroup.addTestClass(
+							TestClassFactory.newTestClass(
+								this, testClassMethodName));
 					}
 
-					axisTestClassGroup.addTestClass(
-						TestClassFactory.newTestClass(
-							this, testClassMethodName));
+					axisTestClassGroups.add(axisTestClassGroup);
 				}
-
-				axisTestClassGroups.add(axisTestClassGroup);
 			}
 		}
 	}

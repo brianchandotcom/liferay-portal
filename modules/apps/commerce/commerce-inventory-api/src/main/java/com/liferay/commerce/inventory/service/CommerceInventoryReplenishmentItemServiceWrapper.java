@@ -43,13 +43,15 @@ public class CommerceInventoryReplenishmentItemServiceWrapper
 	public
 		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
 				addCommerceInventoryReplenishmentItem(
+					String externalReferenceCode,
 					long commerceInventoryWarehouseId, String sku,
 					java.util.Date availabilityDate, int quantity)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryReplenishmentItemService.
 			addCommerceInventoryReplenishmentItem(
-				commerceInventoryWarehouseId, sku, availabilityDate, quantity);
+				externalReferenceCode, commerceInventoryWarehouseId, sku,
+				availabilityDate, quantity);
 	}
 
 	@Override
@@ -65,6 +67,18 @@ public class CommerceInventoryReplenishmentItemServiceWrapper
 	@Override
 	public
 		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
+				fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
+					String externalReferenceCode, long companyId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryReplenishmentItemService.
+			fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	@Override
+	public
+		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
 				getCommerceInventoryReplenishmentItem(
 					long commerceInventoryReplenishmentItemId)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -72,6 +86,19 @@ public class CommerceInventoryReplenishmentItemServiceWrapper
 		return _commerceInventoryReplenishmentItemService.
 			getCommerceInventoryReplenishmentItem(
 				commerceInventoryReplenishmentItemId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.
+			CommerceInventoryReplenishmentItem>
+					getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseId(
+						long commerceInventoryWarehouseId, int start, int end)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryReplenishmentItemService.
+			getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseId(
+				commerceInventoryWarehouseId, start, end);
 	}
 
 	@Override
@@ -95,6 +122,17 @@ public class CommerceInventoryReplenishmentItemServiceWrapper
 		return _commerceInventoryReplenishmentItemService.
 			getCommerceInventoryReplenishmentItemsCount(
 				commerceInventoryWarehouseId, sku);
+	}
+
+	@Override
+	public int
+			getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseId(
+				long commerceInventoryWarehouseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryReplenishmentItemService.
+			getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseId(
+				commerceInventoryWarehouseId);
 	}
 
 	@Override
@@ -122,6 +160,7 @@ public class CommerceInventoryReplenishmentItemServiceWrapper
 	public
 		com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem
 				updateCommerceInventoryReplenishmentItem(
+					String externalReferenceCode,
 					long commerceInventoryReplenishmentItemId,
 					java.util.Date availabilityDate, int quantity,
 					long mvccVersion)
@@ -129,8 +168,8 @@ public class CommerceInventoryReplenishmentItemServiceWrapper
 
 		return _commerceInventoryReplenishmentItemService.
 			updateCommerceInventoryReplenishmentItem(
-				commerceInventoryReplenishmentItemId, availabilityDate,
-				quantity, mvccVersion);
+				externalReferenceCode, commerceInventoryReplenishmentItemId,
+				availabilityDate, quantity, mvccVersion);
 	}
 
 	@Override

@@ -71,25 +71,6 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 				userId, commerceInventoryWarehouseId, sku, quantity);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addCommerceInventoryWarehouseItem(String, long, long,
-	 String, int)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
-			addCommerceInventoryWarehouseItem(
-				long userId, long commerceInventoryWarehouseId,
-				String externalReferenceCode, String sku, int quantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceInventoryWarehouseItemLocalService.
-			addCommerceInventoryWarehouseItem(
-				userId, commerceInventoryWarehouseId, externalReferenceCode,
-				sku, quantity);
-	}
-
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 			addCommerceInventoryWarehouseItem(
@@ -440,6 +421,17 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 			getCommerceInventoryWarehouseItem(commerceInventoryWarehouseItemId);
 	}
 
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+			getCommerceInventoryWarehouseItem(
+				long commerceInventoryWarehouseId, String sku)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseItemLocalService.
+			getCommerceInventoryWarehouseItem(
+				commerceInventoryWarehouseId, sku);
+	}
+
 	/**
 	 * Returns the commerce inventory warehouse item with the matching external reference code and company.
 	 *
@@ -456,23 +448,6 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 
 		return _commerceInventoryWarehouseItemLocalService.
 			getCommerceInventoryWarehouseItemByExternalReferenceCode(
-				companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #getCommerceInventoryWarehouseItemByReferenceCode(String,
-	 long)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
-			getCommerceInventoryWarehouseItemByReferenceCode(
-				long companyId, String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceInventoryWarehouseItemLocalService.
-			getCommerceInventoryWarehouseItemByReferenceCode(
 				companyId, externalReferenceCode);
 	}
 
@@ -756,25 +731,6 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 			updateCommerceInventoryWarehouseItem(
 				userId, commerceInventoryWarehouseItemId, quantity,
 				mvccVersion);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOrUpdateCommerceInventoryWarehouseItem(String,
-	 long, long, long, String, int)}
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
-			upsertCommerceInventoryWarehouseItem(
-				long companyId, long userId, long commerceInventoryWarehouseId,
-				String externalReferenceCode, String sku, int quantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceInventoryWarehouseItemLocalService.
-			upsertCommerceInventoryWarehouseItem(
-				companyId, userId, commerceInventoryWarehouseId,
-				externalReferenceCode, sku, quantity);
 	}
 
 	@Override

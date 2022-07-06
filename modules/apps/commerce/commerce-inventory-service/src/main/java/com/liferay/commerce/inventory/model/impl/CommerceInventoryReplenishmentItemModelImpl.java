@@ -18,6 +18,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItemModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -72,10 +74,11 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	public static final String TABLE_NAME = "CIReplenishmentItem";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"CIReplenishmentItemId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"externalReferenceCode", Types.VARCHAR},
+		{"CIReplenishmentItemId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"commerceInventoryWarehouseId", Types.BIGINT}, {"sku", Types.VARCHAR},
 		{"availabilityDate", Types.TIMESTAMP}, {"quantity", Types.INTEGER}
 	};
@@ -85,6 +88,8 @@ public class CommerceInventoryReplenishmentItemModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CIReplenishmentItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -98,7 +103,7 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CIReplenishmentItem (mvccVersion LONG default 0 not null,CIReplenishmentItemId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceInventoryWarehouseId LONG,sku VARCHAR(75) null,availabilityDate DATE null,quantity INTEGER)";
+		"create table CIReplenishmentItem (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CIReplenishmentItemId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceInventoryWarehouseId LONG,sku VARCHAR(75) null,availabilityDate DATE null,quantity INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CIReplenishmentItem";
@@ -155,7 +160,19 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SKU_COLUMN_BITMASK = 8L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long SKU_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -163,7 +180,7 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	 */
 	@Deprecated
 	public static final long
-		COMMERCEINVENTORYREPLENISHMENTITEMID_COLUMN_BITMASK = 16L;
+		COMMERCEINVENTORYREPLENISHMENTITEMID_COLUMN_BITMASK = 64L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.commerce.inventory.service.util.ServiceProps.get(
@@ -283,6 +300,19 @@ public class CommerceInventoryReplenishmentItemModelImpl
 			(BiConsumer<CommerceInventoryReplenishmentItem, Long>)
 				CommerceInventoryReplenishmentItem::setMvccVersion);
 		attributeGetterFunctions.put(
+			"uuid", CommerceInventoryReplenishmentItem::getUuid);
+		attributeSetterBiConsumers.put(
+			"uuid",
+			(BiConsumer<CommerceInventoryReplenishmentItem, String>)
+				CommerceInventoryReplenishmentItem::setUuid);
+		attributeGetterFunctions.put(
+			"externalReferenceCode",
+			CommerceInventoryReplenishmentItem::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<CommerceInventoryReplenishmentItem, String>)
+				CommerceInventoryReplenishmentItem::setExternalReferenceCode);
+		attributeGetterFunctions.put(
 			"commerceInventoryReplenishmentItemId",
 			CommerceInventoryReplenishmentItem::
 				getCommerceInventoryReplenishmentItemId);
@@ -370,6 +400,64 @@ public class CommerceInventoryReplenishmentItemModelImpl
 		}
 
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -597,6 +685,13 @@ public class CommerceInventoryReplenishmentItemModelImpl
 		_quantity = quantity;
 	}
 
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(
+				CommerceInventoryReplenishmentItem.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -657,6 +752,9 @@ public class CommerceInventoryReplenishmentItemModelImpl
 				new CommerceInventoryReplenishmentItemImpl();
 
 		commerceInventoryReplenishmentItemImpl.setMvccVersion(getMvccVersion());
+		commerceInventoryReplenishmentItemImpl.setUuid(getUuid());
+		commerceInventoryReplenishmentItemImpl.setExternalReferenceCode(
+			getExternalReferenceCode());
 		commerceInventoryReplenishmentItemImpl.
 			setCommerceInventoryReplenishmentItemId(
 				getCommerceInventoryReplenishmentItemId());
@@ -686,6 +784,10 @@ public class CommerceInventoryReplenishmentItemModelImpl
 
 		commerceInventoryReplenishmentItemImpl.setMvccVersion(
 			this.<Long>getColumnOriginalValue("mvccVersion"));
+		commerceInventoryReplenishmentItemImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
+		commerceInventoryReplenishmentItemImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		commerceInventoryReplenishmentItemImpl.
 			setCommerceInventoryReplenishmentItemId(
 				this.<Long>getColumnOriginalValue("CIReplenishmentItemId"));
@@ -791,6 +893,27 @@ public class CommerceInventoryReplenishmentItemModelImpl
 
 		commerceInventoryReplenishmentItemCacheModel.mvccVersion =
 			getMvccVersion();
+
+		commerceInventoryReplenishmentItemCacheModel.uuid = getUuid();
+
+		String uuid = commerceInventoryReplenishmentItemCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			commerceInventoryReplenishmentItemCacheModel.uuid = null;
+		}
+
+		commerceInventoryReplenishmentItemCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			commerceInventoryReplenishmentItemCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			commerceInventoryReplenishmentItemCacheModel.externalReferenceCode =
+				null;
+		}
 
 		commerceInventoryReplenishmentItemCacheModel.
 			commerceInventoryReplenishmentItemId =
@@ -954,6 +1077,8 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	}
 
 	private long _mvccVersion;
+	private String _uuid;
+	private String _externalReferenceCode;
 	private long _commerceInventoryReplenishmentItemId;
 	private long _companyId;
 	private long _userId;
@@ -996,6 +1121,9 @@ public class CommerceInventoryReplenishmentItemModelImpl
 		_columnOriginalValues = new HashMap<String, Object>();
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
+		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put(
 			"CIReplenishmentItemId", _commerceInventoryReplenishmentItemId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -1015,6 +1143,7 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	static {
 		Map<String, String> attributeNames = new HashMap<>();
 
+		attributeNames.put("uuid_", "uuid");
 		attributeNames.put(
 			"CIReplenishmentItemId", "commerceInventoryReplenishmentItemId");
 
@@ -1034,25 +1163,29 @@ public class CommerceInventoryReplenishmentItemModelImpl
 
 		columnBitmasks.put("mvccVersion", 1L);
 
-		columnBitmasks.put("CIReplenishmentItemId", 2L);
+		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("userId", 8L);
+		columnBitmasks.put("CIReplenishmentItemId", 8L);
 
-		columnBitmasks.put("userName", 16L);
+		columnBitmasks.put("companyId", 16L);
 
-		columnBitmasks.put("createDate", 32L);
+		columnBitmasks.put("userId", 32L);
 
-		columnBitmasks.put("modifiedDate", 64L);
+		columnBitmasks.put("userName", 64L);
 
-		columnBitmasks.put("commerceInventoryWarehouseId", 128L);
+		columnBitmasks.put("createDate", 128L);
 
-		columnBitmasks.put("sku", 256L);
+		columnBitmasks.put("modifiedDate", 256L);
 
-		columnBitmasks.put("availabilityDate", 512L);
+		columnBitmasks.put("commerceInventoryWarehouseId", 512L);
 
-		columnBitmasks.put("quantity", 1024L);
+		columnBitmasks.put("sku", 1024L);
+
+		columnBitmasks.put("availabilityDate", 2048L);
+
+		columnBitmasks.put("quantity", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

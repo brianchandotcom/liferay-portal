@@ -85,17 +85,6 @@ public interface CommerceInventoryWarehouseItemLocalService
 			int quantity)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addCommerceInventoryWarehouseItem(String, long, long,
-	 String, int)}
-	 */
-	@Deprecated
-	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
-			long userId, long commerceInventoryWarehouseId,
-			String externalReferenceCode, String sku, int quantity)
-		throws PortalException;
-
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			String externalReferenceCode, long userId,
 			long commerceInventoryWarehouseId, String sku, int quantity)
@@ -305,6 +294,11 @@ public interface CommerceInventoryWarehouseItemLocalService
 			long commerceInventoryWarehouseItemId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceInventoryWarehouseItem getCommerceInventoryWarehouseItem(
+			long commerceInventoryWarehouseId, String sku)
+		throws PortalException;
+
 	/**
 	 * Returns the commerce inventory warehouse item with the matching external reference code and company.
 	 *
@@ -316,18 +310,6 @@ public interface CommerceInventoryWarehouseItemLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceInventoryWarehouseItem
 			getCommerceInventoryWarehouseItemByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #getCommerceInventoryWarehouseItemByReferenceCode(String,
-	 long)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceInventoryWarehouseItem
-			getCommerceInventoryWarehouseItemByReferenceCode(
 				long companyId, String externalReferenceCode)
 		throws PortalException;
 
@@ -484,17 +466,6 @@ public interface CommerceInventoryWarehouseItemLocalService
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
 			long userId, long commerceInventoryWarehouseItemId, int quantity,
 			long mvccVersion)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addOrUpdateCommerceInventoryWarehouseItem(String,
-	 long, long, long, String, int)}
-	 */
-	@Deprecated
-	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
-			long companyId, long userId, long commerceInventoryWarehouseId,
-			String externalReferenceCode, String sku, int quantity)
 		throws PortalException;
 
 }

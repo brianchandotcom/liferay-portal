@@ -105,16 +105,9 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 			long commerceInventoryWarehouseItemId)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #getCommerceInventoryWarehouseItemByReferenceCode(String,
-	 long)}
-	 */
-	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceInventoryWarehouseItem
-			getCommerceInventoryWarehouseItemByReferenceCode(
-				long companyId, String externalReferenceCode)
+	public CommerceInventoryWarehouseItem getCommerceInventoryWarehouseItem(
+			long commerceInventoryWarehouseId, String sku)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

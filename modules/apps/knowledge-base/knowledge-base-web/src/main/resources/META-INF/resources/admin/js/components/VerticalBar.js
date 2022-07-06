@@ -20,7 +20,7 @@ const VerticalNavigationBar = ({actions}) => {
 	return (
 		<VerticalBar absolute className="kbVerticalBar" position="left">
 			<VerticalBar.Bar displayType="light">
-				<VerticalBar.Item key="artice">
+				<VerticalBar.Item key="article">
 					<ClayButtonWithIcon
 						displayType="unstyled"
 						onClick={() => {
@@ -50,6 +50,28 @@ const VerticalNavigationBar = ({actions}) => {
 					/>
 				</VerticalBar.Item>
 			</VerticalBar.Bar>
+
+			<VerticalBar.Content>
+				<VerticalBar.Panel key="article">
+					<div className="sidebar-header">
+						<div className="component-title">Article Tree View</div>
+					</div>
+				</VerticalBar.Panel>
+
+				<VerticalBar.Panel key="template">
+					<div className="sidebar-header">
+						<div className="component-title">
+							template Tree View
+						</div>
+					</div>
+				</VerticalBar.Panel>
+
+				<VerticalBar.Panel key="suggestion">
+					<div className="sidebar-header">
+						<div className="component-title">suggestion</div>
+					</div>
+				</VerticalBar.Panel>
+			</VerticalBar.Content>
 		</VerticalBar>
 	);
 };

@@ -33,7 +33,7 @@ const HEADERS = [
 		value: 'Date',
 	},
 	{
-		key: 'product',
+		key: 'productName',
 		value: 'Product',
 	},
 	{
@@ -61,17 +61,13 @@ type RecentApplication = {
 	applicationStatus: {name: string};
 	dateCreated: Date;
 	externalReferenceCode: string;
-	product: string;
+	productName: string;
 };
 
 type TableContent = {[keys: string]: string};
 
 const RecentApplications = () => {
 	const [applications, setApplications] = useState<TableContent[]>([]);
-
-	const handleAddApplication = () => {
-		alert('Add Application Action');
-	};
 
 	const handleDeleteApplication = (externalReferenceCode: string) => {
 		deleteApplicationByExternalReferenceCode(externalReferenceCode);
@@ -104,14 +100,14 @@ const RecentApplications = () => {
 					applicationStatus: {name},
 					dateCreated,
 					externalReferenceCode,
-					product,
+					productName,
 				}: RecentApplication) =>
 					applicationsList.push({
 						dateCreated: formatDate(new Date(dateCreated)),
 						externalReferenceCode,
 						key: externalReferenceCode,
 						name,
-						product,
+						productName,
 					})
 			);
 
@@ -124,7 +120,7 @@ const RecentApplications = () => {
 			<Header className="mb-5 pt-3" title="Recent Applications">
 				<button
 					className="btn btn-outline-primary text-paragraph text-uppercase"
-					onClick={handleAddApplication}
+					onClick={() => redirectTo('app-edit')}
 				>
 					<ClayIcon className="mr-md-2" symbol="plus" />
 

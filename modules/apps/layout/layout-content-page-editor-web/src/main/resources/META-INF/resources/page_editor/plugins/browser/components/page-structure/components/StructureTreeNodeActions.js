@@ -54,6 +54,8 @@ export default function StructureTreeNodeActions({
 	return (
 		<>
 			<ClayButton
+				aria-expanded={active}
+				aria-haspopup="true"
 				className={classNames(
 					'page-editor__page-structure__tree-node__actions-button',
 					{

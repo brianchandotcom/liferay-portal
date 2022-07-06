@@ -34,8 +34,8 @@ import duplicateItem from '../../../../../app/thunks/duplicateItem';
 import canBeDuplicated from '../../../../../app/utils/canBeDuplicated';
 import canBeRemoved from '../../../../../app/utils/canBeRemoved';
 import canBeSaved from '../../../../../app/utils/canBeSaved';
-import hideFragment from '../../../../../app/utils/hideFragment';
 import openWarningModal from '../../../../../app/utils/openWarningModal';
+import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
 export default function StructureTreeNodeActions({item, visible}) {
@@ -109,6 +109,8 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		fragmentEntryLinks[item.config.fragmentEntryLinkId]
 			.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input;
 
+	const isHidden = item.config.styles.display === 'none';
+
 	const dropdownItems = useMemo(() => {
 		const items = [];
 
@@ -122,26 +124,32 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 					if (hasRequiredChild()) {
 						openWarningModal({
 							action: () =>
-								hideFragment({
+								updateItemStyle({
 									dispatch,
 									itemId: item.itemId,
 									segmentsExperienceId,
 									selectedViewportSize,
+									styleName: 'display',
+									styleValue: isHidden ? 'block' : 'none',
 								}),
 							...REQUIRED_FIELD_DATA,
 						});
 					}
 					else {
-						hideFragment({
+						updateItemStyle({
 							dispatch,
 							itemId: item.itemId,
 							segmentsExperienceId,
 							selectedViewportSize,
+							styleName: 'display',
+							styleValue: isHidden ? 'block' : 'none',
 						});
 					}
 				},
-				icon: 'hidden',
-				label: Liferay.Language.get('hide-fragment'),
+				icon: isHidden ? 'view' : 'hidden',
+				label: isHidden
+					? Liferay.Language.get('show-fragment')
+					: Liferay.Language.get('hide-fragment'),
 			});
 		}
 
@@ -205,6 +213,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		selectItem,
 		widgets,
 		setOpenSaveModal,
+		isHidden,
 	]);
 
 	return (

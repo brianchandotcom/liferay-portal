@@ -485,4 +485,63 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153656. The order of CSS extensions loading on page are same with the order of addition."
+	@priority = "4"
+	test ViewOrderOfCSSExtensionLoading {
+		task ("Given a site designer has a content page with two CSS extensions") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily,BackgroundColor");
+
+			AssertVisible(
+				index = "1",
+				key_tableEntry = "FontFamily",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
+
+			AssertVisible(
+				index = "2",
+				key_tableEntry = "BackgroundColor",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
+
+			PortletEntry.save();
+		}
+
+		task ("When the site designer backs to the page editor") {
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("Then the order of CSS extension loading should be same with the order of addition") {
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "font-family",
+				value1 = "&quot;Times New Roman&quot;");
+
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "background-color",
+				value1 = "rgba(128, 128, 0, 1)");
+
+			AssertElementPresent(locator1 = "xpath=(//link[contains(@href,'documents')])[1][contains(@href,'FontFamily')]");
+
+			AssertElementPresent(locator1 = "xpath=(//link[contains(@href,'documents')])[2][contains(@href,'BackgroundColor')]");
+		}
+	}
+
 }

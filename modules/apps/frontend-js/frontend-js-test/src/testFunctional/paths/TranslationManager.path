@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>SELECT_TRANSLATION_LANGUAGE_MENU</td>
-	<td>//div[h3='${key_title}']//button[@*='select-translation-language']//*[name()='svg'][contains(@class,'lexicon-icon-${key_currentLocale}')]</td>
+	<td>//div[h3='${key_title}']//button[contains(@class,'input-localized-trigger')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_currentLocale}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -27,7 +27,7 @@
 </tr>
 <tr>
 	<td>MANAGE_TRANSLATIONS</td>
-	<td>//button[contains(@class,'dropdown-item')]//div[contains(@class,'autofit-section')and text()='Manage Translations']</td>
+	<td>//button[contains(@class,'dropdown-item') and @id='manage-translations']</td>
 	<td></td>
 </tr>
 <tr>

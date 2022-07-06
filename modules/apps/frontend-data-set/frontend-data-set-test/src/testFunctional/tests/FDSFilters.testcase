@@ -228,15 +228,15 @@ definition {
 			FDSFilters.openFilters();
 
 			FDSFilters.addDateRangeFilters(
-				key_fromDate = "01/01/1901",
-				key_toDate = "02/02/1901");
+				key_fromDate = "01/01/2021",
+				key_toDate = "02/02/2021");
 
 			VerifyElementPresent(
 				key_filter = "Status: Approved, Draft",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 
 			VerifyElementPresent(
-				key_filter = "Date Range: 1/1/1901 - 2/2/1901",
+				key_filter = "Date Range: 1/1/2021 - 2/2/2021",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 		}
 

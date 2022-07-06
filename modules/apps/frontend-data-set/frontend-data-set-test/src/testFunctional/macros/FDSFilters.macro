@@ -1,18 +1,21 @@
 definition {
 
 	macro addDateRangeFilters {
+		var key_fromDate = StringUtil.extractDigits("${key_fromDate}");
+		var key_toDate = StringUtil.extractDigits("${key_toDate}");
+
 		if (IsElementPresent(key_filter = "Date Range", locator1 = "FrontendDataSet#FILTER_OPTION")) {
 			Click(
 				key_filter = "Date Range",
 				locator1 = "FrontendDataSet#FILTER_OPTION");
 		}
 
-		Type(
+		Type.sendKeys(
 			key_dateId = "from-date",
 			locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
 			value1 = "${key_fromDate}");
 
-		Type(
+		Type.sendKeys(
 			key_dateId = "to-date",
 			locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
 			value1 = "${key_toDate}");

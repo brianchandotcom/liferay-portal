@@ -24,6 +24,66 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-157342."
+	@priority = "4"
+	test UserPlacedInLastOwnedPublicationIfCurrentPublicationIsDeleted {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addRegularRole(
+			roleKey = "Regrole Name",
+			roleTitle = "Regrole Name");
+
+		for (var resourceActionIndex : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "${resourceActionIndex}",
+				resourceName = "com_liferay_change_tracking_web_portlet_PublicationsPortlet",
+				roleTitle = "Regrole Name");
+		}
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_PUBLICATION",
+			resourceName = "com.liferay.change.tracking",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Regrole Name");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com");
+
+		Publications.enablePublications(enableSandboxOnly = "true");
+
+		SignOut.signOut();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		var sandboxedPublicationName = Publications.getPublicationName();
+
+		Publications.createNewPublication(publicationName = "Publication Name");
+
+		Publications.deletePublication(publicationName = "Publication Name");
+
+		var currentPublicationName = Publications.getPublicationName();
+
+		if ("${sandboxedPublicationName}" != "${currentPublicationName}") {
+			fail("User was not placed back into last owned publication when current publication was deleted.");
+		}
+	}
+
 	@description = "All users with access to publications (view and access in control panel) will be sandboxed."
 	@priority = "4"
 	test UserWithAccessToPublicationsPermissionsCanbeSandboxed {

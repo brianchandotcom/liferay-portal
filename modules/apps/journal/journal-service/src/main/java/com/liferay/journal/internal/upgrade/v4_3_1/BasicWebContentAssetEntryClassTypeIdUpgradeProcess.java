@@ -14,8 +14,6 @@
 
 package com.liferay.journal.internal.upgrade.v4_3_1;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -31,7 +29,6 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -92,73 +89,20 @@ public class BasicWebContentAssetEntryClassTypeIdUpgradeProcess
 			return;
 		}
 
-		long basicWebContentStructureId = ddmStructure.getStructureId();
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update AssetEntry set classTypeId = ? where classNameId = ? " +
+					"and companyId = ? and classTypeId = ?")) {
 
-		if (hasColumnType(
-				AssetEntryTable.INSTANCE.getName(), "classTypeId",
-				"LONG null") &&
-			hasColumnType(
-				AssetEntryTable.INSTANCE.getName(), "companyId", "LONG null") &&
-			hasColumnType(
-				AssetEntryTable.INSTANCE.getName(), "classNameId",
-				"LONG null")) {
+			preparedStatement.setLong(1, ddmStructure.getStructureId());
+			preparedStatement.setLong(2, classNameId);
+			preparedStatement.setLong(3, companyId);
+			preparedStatement.setLong(4, 0);
 
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						StringBundler.concat(
-							"update AssetEntry set classTypeId = ? where ",
-							"classTypeId = ? and companyId = ? and ",
-							"classNameId = ?"))) {
-
-				preparedStatement.setLong(1, basicWebContentStructureId);
-				preparedStatement.setLong(2, 0);
-				preparedStatement.setLong(3, companyId);
-				preparedStatement.setLong(4, classNameId);
-
-				preparedStatement.executeUpdate();
-			}
-			catch (SQLException sqlException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(sqlException);
-				}
-			}
+			preparedStatement.executeUpdate();
 		}
-		else {
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						StringBundler.concat(
-							"select resourcePrimKey, indexable from ",
-							"JournalArticle where companyId = ", companyId,
-							" and ddmtemplatekey = 'BASIC-WEB-CONTENT' "));
-				ResultSet resultSet = preparedStatement.executeQuery()) {
-
-				while (resultSet.next()) {
-					long resourcePrimKey = resultSet.getLong("resourcePrimKey");
-
-					AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-						JournalArticle.class.getName(), resourcePrimKey);
-
-					if (assetEntry == null) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								StringBundler.concat(
-									"Journal article with resource ",
-									"primary key ", resourcePrimKey,
-									" does not have associated asset ",
-									"entry"));
-						}
-
-						continue;
-					}
-
-					long classTypeId = assetEntry.getClassTypeId();
-
-					if (classTypeId != basicWebContentStructureId) {
-						assetEntry.setClassTypeId(basicWebContentStructureId);
-
-						_assetEntryLocalService.updateAssetEntry(assetEntry);
-					}
-				}
+		catch (SQLException sqlException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(sqlException);
 			}
 		}
 	}

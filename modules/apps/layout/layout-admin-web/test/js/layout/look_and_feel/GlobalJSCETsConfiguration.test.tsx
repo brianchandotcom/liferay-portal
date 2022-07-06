@@ -183,7 +183,7 @@ describe('GlobalJSCETsConfiguration', () => {
 		userEvent.click(
 			await findByRole(
 				await screen.findByRole('menu', {name: 'show-options'}),
-				'button',
+				'menuitem',
 				{name: 'delete'}
 			)
 		);

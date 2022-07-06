@@ -25,7 +25,9 @@ export function GlobalCETOptionsDropDown({
 	return (
 		<ClayDropDownWithItems
 			active={active}
-			items={dropdownItems}
+			items={[
+				...dropdownItems.map((item) => ({...item, role: 'menuitem'})),
+			]}
 			menuElementAttrs={{
 				'aria-labelledby': dropdownTriggerId,
 				'role': 'menu',

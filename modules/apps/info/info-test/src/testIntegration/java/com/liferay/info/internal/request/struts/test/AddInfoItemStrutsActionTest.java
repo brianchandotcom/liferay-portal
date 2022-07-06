@@ -105,6 +105,48 @@ public class AddInfoItemStrutsActionTest {
 			_portal.getClassNameId(
 				"com.liferay.object.model.ObjectDefinition#" +
 					_objectDefinition.getObjectDefinitionId()));
+
+		_layout = _addLayout();
+	}
+
+	private Layout _addLayout() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		Layout layout = _layoutLocalService.addLayout(
+			_user.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap(),
+			LayoutConstants.TYPE_CONTENT,
+			UnicodePropertiesBuilder.put(
+				"published", "true"
+			).buildString(),
+			false, false, Collections.emptyMap(), 0, serviceContext);
+
+		_defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem formStyledLayoutStructureItem =
+			layoutStructure.addFormStyledLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		_formItemId = formStyledLayoutStructureItem.getItemId();
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), layout.getPlid(),
+				_defaultSegmentsExperienceId, layoutStructure.toString());
+
+		return layout;
 	}
 
 	private ObjectDefinition _addObjectDefinition() throws Exception {

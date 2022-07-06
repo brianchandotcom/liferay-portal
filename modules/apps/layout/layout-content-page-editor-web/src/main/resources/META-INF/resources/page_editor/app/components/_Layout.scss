@@ -1,4 +1,5 @@
 $editablesBorderWidth: 1px;
+$editableTypes: 'link', 'rich-text', 'text';
 $emptyItemMinHeight: 180px;
 $emptyCollectionItemMinWidth: 124px;
 $emptyColumnMinWidth: 48px;
@@ -193,6 +194,15 @@ html#{$cadmin-selector} {
 
 			&--active {
 				box-shadow: inset 0 0 0 $editablesBorderWidth $cadmin-primary;
+
+				&:not(.page-editor__editable--mapped) {
+					@each $type in $editableTypes {
+						&[type='#{$type}'],
+						&[data-lfr-editable-type='#{$type}'] {
+							cursor: text;
+						}
+					}
+				}
 			}
 		}
 

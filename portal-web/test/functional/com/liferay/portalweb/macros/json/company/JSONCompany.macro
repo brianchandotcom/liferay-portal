@@ -1,5 +1,42 @@
 definition {
 
+	macro getCompanyIdNoSelenium {
+		if (!(isSet(portalInstanceName))) {
+			var portalInstanceName = JSONCompany.getPortalInstanceNameNoSelenium();
+		}
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(creatorEmailAddress))) {
+			if ("${authenticationMethod}" == "By Screen Name") {
+				if (!(isSet(userScreenName))) {
+					var creatorEmailAddress = "test";
+				}
+				else {
+					var creatorEmailAddress = "${userScreenName}";
+				}
+			}
+			else {
+				var creatorEmailAddress = "test@liferay.com";
+			}
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
+				-u ${creatorEmailAddress}:${creatorPassword}
+		''';
+
+		var companyId = JSONCurlUtil.get("${curl}", "$['companyId']");
+
+		return "${companyId}";
+	}
+
 	macro getCompanyId {
 		if (!(isSet(portalInstanceName))) {
 			var portalInstanceName = JSONCompany.getPortalInstanceName();
@@ -52,6 +89,21 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if (("${testPortalInstance}" == "true") && !(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}"))) {
+			var portalURL = JSONCompany.getPortalURL();
+
+			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = "${portalURL}");
+
+			return "${portalInstanceName}";
+		}
+		else {
+			return "localhost";
+		}
+	}
+
+	macro getPortalInstanceNameNoSelenium {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if (("${testPortalInstance}" == "true")) {
 			var portalURL = JSONCompany.getPortalURL();
 
 			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = "${portalURL}");

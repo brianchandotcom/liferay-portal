@@ -231,6 +231,35 @@ definition {
 		return "${groupId}";
 	}
 
+	@summary = "Get the groupId from any existing site by using groupName but not invoking selenium methods"
+	macro _getGroupIdByNameNoSelenium {
+		Variables.assertDefined(parameterList = "${groupName},${site}");
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var companyId = JSONCompany.getCompanyIdNoSelenium(portalURL = "${portalURL}");
+		var parentGroupId = JSONGroupSetter.setParentGroupId(
+			grandParentGroupName = "${grandParentGroupName}",
+			parentGroupName = "${parentGroupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/${parentGroupId}/site/${site} \
+				-u test@liferay.com:test
+		''';
+
+		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
+
+		if ("${groupId}" == "") {
+			fail("FAIL. Cannot find group.");
+		}
+
+		echo("## * GroupId: ${groupId}");
+
+		return "${groupId}";
+	}
+
 	@summary = "Get the groupName from any group by using groupId"
 	macro _getGroupName {
 		Variables.assertDefined(parameterList = "${groupId}");

@@ -4,7 +4,7 @@ definition {
 		Variables.assertDefined(parameterList = "${headline},${articleBody}");
 
 		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByName(
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
 
@@ -35,7 +35,7 @@ definition {
 			numberOfBlogPostingsToCreate = "${numberOfBlogPostingsToCreate}",
 			testCase = "${testCase}");
 		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByName(
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
 
@@ -127,7 +127,7 @@ definition {
 		Variables.assertDefined(parameterList = "${blogPostingId}");
 
 		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByName(
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
 		var curl = '''
@@ -149,7 +149,7 @@ definition {
 
 	macro _getBlogPostings {
 		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByName(
+		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
 			site = "true");
 

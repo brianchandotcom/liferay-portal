@@ -5,6 +5,11 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Headless Frontend Infrastructure";
 
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+	}
+
 	tearDown {
 		BlogPostingAPI.deleteAllBlogPostings();
 	}

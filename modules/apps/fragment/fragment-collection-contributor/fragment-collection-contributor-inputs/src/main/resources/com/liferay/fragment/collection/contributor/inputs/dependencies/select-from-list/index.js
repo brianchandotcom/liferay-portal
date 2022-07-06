@@ -371,7 +371,7 @@ function setListboxItems(items) {
 	setActiveDescendant(listbox.firstElementChild);
 }
 
-function handleSearchKeyup() {
+function handleSearchInput() {
 	if (searchInput.value === lastSearchQuery) {
 		return;
 	}
@@ -408,7 +408,7 @@ listbox.addEventListener('click', handleListboxClick);
 document.addEventListener('click', handleDocumentClick);
 
 searchInput.addEventListener('keydown', handleMovementKeys);
-searchInput.addEventListener('keyup', debounce(handleSearchKeyup, 500));
+searchInput.addEventListener('input', debounce(handleSearchInput, 500));
 
 if ((input.attributes.options || []).length > 10) {
 	showElement(searchInputWrapper);

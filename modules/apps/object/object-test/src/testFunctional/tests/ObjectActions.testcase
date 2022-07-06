@@ -48,6 +48,8 @@ definition {
 	@description = "LPS-139008 - Verify it is possible to cancel the update of an Action"
 	@priority = "4"
 	test CanCancelActionUpdate {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 182",
 			objectName = "CustomObject182",
@@ -81,7 +83,7 @@ definition {
 	@description = "LPS-139008 - Verify it is possible to create an Action"
 	@priority = "5"
 	test CanCreateAction {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 183",
@@ -108,7 +110,7 @@ definition {
 	@description = "LPS-139008 - Verify it is possible to delete an Action"
 	@priority = "5"
 	test CanDeleteAction {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 184",
@@ -141,6 +143,8 @@ definition {
 	@description = "LPS-139008 - Verify that it is possible to inactivate an Action"
 	@priority = "4"
 	test CanInactivateAction {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 185",
 			objectName = "CustomObject185",
@@ -170,6 +174,8 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the Action Name field blank"
 	@priority = "3"
 	test CannotLeaveActionNameBlank {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 186",
 			objectName = "CustomObject186",
@@ -225,6 +231,8 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the Action When field blank"
 	@priority = "3"
 	test CannotLeaveActionWhenBlank {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 188",
 			objectName = "CustomObject188",
@@ -251,6 +259,8 @@ definition {
 	@description = "LPS-139008 - Verify it is not possible to leave the URL field blank when Webhook is selected"
 	@priority = "3"
 	test CannotLeaveURLBlank {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 189",
 			objectName = "CustomObject189",
@@ -277,6 +287,8 @@ definition {
 	@description = "LPS-139008 - Verify that it is possible to reactivate an Action"
 	@priority = "4"
 	test CanReactivateAction {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 190",
 			objectName = "CustomObject190",
@@ -307,6 +319,8 @@ definition {
 	@description = "LPS-139008 - Verify it is possible to search for an Action"
 	@priority = "4"
 	test CanSearchAction {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 191",
 			objectName = "CustomObject191",
@@ -340,6 +354,8 @@ definition {
 	@description = "LPS-139008 - Verify it is possible to update an Action"
 	@priority = "4"
 	test CanUpdateAction {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 192",
 			objectName = "CustomObject192",

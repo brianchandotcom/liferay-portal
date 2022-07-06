@@ -172,9 +172,10 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = "${authenticationMethod}");
-			if ("${testPortalInstance}" == "true") {
-				SignIn.signInPortalInstanceSetUp();
-			}
+
+		if ("${testPortalInstance}" == "true") {
+			SignIn.signInPortalInstanceSetUp();
+		}
 	}
 
 }

@@ -1,8 +1,8 @@
 definition {
 
-	macro getCompanyIdNoSelenium {
+	macro getCompanyId {
 		if (!(isSet(portalInstanceName))) {
-			var portalInstanceName = JSONCompany.getPortalInstanceNameNoSelenium();
+			var portalInstanceName = JSONCompany.getPortalInstanceName();
 		}
 
 		if (!(isSet(portalURL))) {
@@ -37,9 +37,9 @@ definition {
 		return "${companyId}";
 	}
 
-	macro getCompanyId {
+	macro getCompanyIdNoSelenium {
 		if (!(isSet(portalInstanceName))) {
-			var portalInstanceName = JSONCompany.getPortalInstanceName();
+			var portalInstanceName = JSONCompany.getPortalInstanceNameNoSelenium();
 		}
 
 		if (!(isSet(portalURL))) {
@@ -103,7 +103,7 @@ definition {
 	macro getPortalInstanceNameNoSelenium {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if (("${testPortalInstance}" == "true")) {
+		if ("${testPortalInstance}" == "true") {
 			var portalURL = JSONCompany.getPortalURL();
 
 			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = "${portalURL}");

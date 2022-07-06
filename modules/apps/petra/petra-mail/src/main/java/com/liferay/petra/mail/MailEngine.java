@@ -118,78 +118,6 @@ public class MailEngine {
 		return session;
 	}
 
-	public static void send(byte[] bytes) throws MailEngineException {
-		try {
-			Session session = getSession();
-
-			Message message = new MimeMessage(
-				session, new UnsyncByteArrayInputStream(bytes));
-
-			_send(session, message, null, _BATCH_SIZE);
-		}
-		catch (Exception exception) {
-			throw new MailEngineException(exception);
-		}
-	}
-
-	public static void send(
-			InternetAddress from, InternetAddress to, String subject,
-			String body)
-		throws MailEngineException {
-
-		send(
-			from, new InternetAddress[] {to}, null, null, subject, body, false,
-			null, null, null);
-	}
-
-	public static void send(
-			InternetAddress from, InternetAddress to, String subject,
-			String body, boolean htmlFormat)
-		throws MailEngineException {
-
-		send(
-			from, new InternetAddress[] {to}, null, null, subject, body,
-			htmlFormat, null, null, null);
-	}
-
-	public static void send(
-			InternetAddress from, InternetAddress[] to, InternetAddress[] cc,
-			InternetAddress[] bcc, InternetAddress[] bulkAddresses,
-			String subject, String body, boolean htmlFormat,
-			InternetAddress[] replyTo, String messageId, String inReplyTo)
-		throws MailEngineException {
-
-		send(
-			from, to, cc, bcc, bulkAddresses, subject, body, htmlFormat,
-			replyTo, messageId, inReplyTo, null);
-	}
-
-	public static void send(
-			InternetAddress from, InternetAddress[] to, InternetAddress[] cc,
-			InternetAddress[] bcc, InternetAddress[] bulkAddresses,
-			String subject, String body, boolean htmlFormat,
-			InternetAddress[] replyTo, String messageId, String inReplyTo,
-			List<FileAttachment> fileAttachments)
-		throws MailEngineException {
-
-		send(
-			from, to, cc, bcc, bulkAddresses, subject, body, htmlFormat,
-			replyTo, messageId, inReplyTo, fileAttachments, null);
-	}
-
-	public static void send(
-			InternetAddress from, InternetAddress[] to, InternetAddress[] cc,
-			InternetAddress[] bcc, InternetAddress[] bulkAddresses,
-			String subject, String body, boolean htmlFormat,
-			InternetAddress[] replyTo, String messageId, String inReplyTo,
-			List<FileAttachment> fileAttachments, SMTPAccount smtpAccount)
-		throws MailEngineException {
-
-		send(
-			from, to, cc, bcc, bulkAddresses, subject, body, htmlFormat,
-			replyTo, messageId, inReplyTo, fileAttachments, smtpAccount, null);
-	}
-
 	public static void send(
 			InternetAddress from, InternetAddress[] to, InternetAddress[] cc,
 			InternetAddress[] bcc, InternetAddress[] bulkAddresses,
@@ -405,58 +333,6 @@ public class MailEngine {
 		}
 	}
 
-	public static void send(
-			InternetAddress from, InternetAddress[] to, InternetAddress[] cc,
-			InternetAddress[] bcc, String subject, String body)
-		throws MailEngineException {
-
-		send(from, to, cc, bcc, subject, body, false, null, null, null);
-	}
-
-	public static void send(
-			InternetAddress from, InternetAddress[] to, InternetAddress[] cc,
-			InternetAddress[] bcc, String subject, String body,
-			boolean htmlFormat, InternetAddress[] replyTo, String messageId,
-			String inReplyTo)
-		throws MailEngineException {
-
-		send(
-			from, to, cc, bcc, null, subject, body, htmlFormat, replyTo,
-			messageId, inReplyTo, null);
-	}
-
-	public static void send(
-			InternetAddress from, InternetAddress[] to, InternetAddress[] cc,
-			String subject, String body)
-		throws MailEngineException {
-
-		send(from, to, cc, null, subject, body, false, null, null, null);
-	}
-
-	public static void send(
-			InternetAddress from, InternetAddress[] to, InternetAddress[] cc,
-			String subject, String body, boolean htmlFormat)
-		throws MailEngineException {
-
-		send(from, to, cc, null, subject, body, htmlFormat, null, null, null);
-	}
-
-	public static void send(
-			InternetAddress from, InternetAddress[] to, String subject,
-			String body)
-		throws MailEngineException {
-
-		send(from, to, null, null, subject, body, false, null, null, null);
-	}
-
-	public static void send(
-			InternetAddress from, InternetAddress[] to, String subject,
-			String body, boolean htmlFormat)
-		throws MailEngineException {
-
-		send(from, to, null, null, subject, body, htmlFormat, null, null, null);
-	}
-
 	public static void send(MailMessage mailMessage)
 		throws MailEngineException {
 
@@ -468,19 +344,6 @@ public class MailEngine {
 			mailMessage.getMessageId(), mailMessage.getInReplyTo(),
 			mailMessage.getFileAttachments(), mailMessage.getSMTPAccount(),
 			mailMessage.getInternetHeaders());
-	}
-
-	public static void send(String from, String to, String subject, String body)
-		throws MailEngineException {
-
-		try {
-			send(
-				new InternetAddress(from), new InternetAddress(to), subject,
-				body);
-		}
-		catch (AddressException addressException) {
-			throw new MailEngineException(addressException);
-		}
 	}
 
 	private static Address[] _getBatchAddresses(

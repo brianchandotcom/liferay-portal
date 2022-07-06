@@ -220,8 +220,6 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
-		Pause(locator1 = "60000");
-
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Navigator.gotoNavItem(navItem = "Performance");
@@ -287,10 +285,6 @@ definition {
 			entryTitle = "Blogs Entry Title");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-		Pause(locator1 = "60000");
-
-		Refresh();
 
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = "1",
@@ -373,10 +367,6 @@ definition {
 			portlet = "Metrics");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-		Pause(locator1 = "50000");
-
-		Refresh();
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#WARNING_SLA_BLOCKED");
 
@@ -1028,10 +1018,6 @@ definition {
 		while (IsElementNotPresent(key_slaName = "${slaName}", locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_ENGLISH_HOUR_FORMAT")) {
 			Click(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
 
-			Pause(locator1 = "2000");
-
-			Refresh();
-
 			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 		}
 
@@ -1362,8 +1348,6 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Pause(locator1 = "50000");
-
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
@@ -1388,8 +1372,6 @@ definition {
 			slaDefinitionName = "Test");
 
 		Button.clickUpdate();
-
-		Pause(locator1 = "35000");
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 

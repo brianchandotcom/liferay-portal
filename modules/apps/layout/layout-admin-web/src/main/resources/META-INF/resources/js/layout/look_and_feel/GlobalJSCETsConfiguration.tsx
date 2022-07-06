@@ -120,7 +120,7 @@ export default function GlobalJSCETsConfiguration({
 	};
 
 	return (
-		<>
+		<div className="global-js-cets-configuration">
 			{globalJSCETs.map(({cetExternalReferenceCode, loadType}) => (
 				<input
 					key={cetExternalReferenceCode}
@@ -203,7 +203,7 @@ export default function GlobalJSCETsConfiguration({
 					)}
 				</p>
 			)}
-		</>
+		</div>
 	);
 }
 

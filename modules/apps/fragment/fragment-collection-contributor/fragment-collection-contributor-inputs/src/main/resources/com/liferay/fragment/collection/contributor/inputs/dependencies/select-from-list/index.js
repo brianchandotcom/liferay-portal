@@ -24,7 +24,9 @@ const searchInputWrapper = wrapper.querySelector(
 	'.forms-select-from-list-search-wrapper'
 );
 
-let defaultOptions = (input.attributes.options || []).slice(0, 10);
+const MAX_ITEMS = 10;
+
+let defaultOptions = (input.attributes.options || []).slice(0, MAX_ITEMS);
 let lastSearchAbortController = new AbortController();
 let lastSearchQuery = null;
 
@@ -95,9 +97,9 @@ function showDropdown() {
 
 		fetchRemoteOptions('', lastSearchAbortController)
 			.then((items) => {
-				defaultOptions = items;
+				defaultOptions = items.slice(0, MAX_ITEMS);
 
-				if (items.length > 10) {
+				if (items.length > MAX_ITEMS) {
 					showElement(searchInputWrapper);
 				}
 				else {
@@ -297,7 +299,7 @@ function filterLocalOptions(query) {
 	const restItems = [];
 
 	for (const item of input.attributes.options) {
-		if (preferedItems.length + restItems.length === 10) {
+		if (preferedItems.length + restItems.length === MAX_ITEMS) {
 			break;
 		}
 
@@ -311,7 +313,9 @@ function filterLocalOptions(query) {
 		}
 	}
 
-	return Promise.resolve([...preferedItems, ...restItems].slice(0, 10));
+	return Promise.resolve(
+		[...preferedItems, ...restItems].slice(0, MAX_ITEMS)
+	);
 }
 
 function fetchRemoteOptions(query, abortController) {
@@ -394,7 +398,7 @@ function handleSearchKeyup() {
 
 	fetcher(lastSearchQuery, lastSearchAbortController)
 		.then((items) => {
-			setListboxItems(items);
+			setListboxItems(items.slice(0, MAX_ITEMS));
 		})
 		.finally(() => {
 			hideElement(loadingResultsMessage);
@@ -410,7 +414,7 @@ document.addEventListener('click', handleDocumentClick);
 searchInput.addEventListener('keydown', handleMovementKeys);
 searchInput.addEventListener('keyup', debounce(handleSearchKeyup, 500));
 
-if ((input.attributes.options || []).length > 10) {
+if ((input.attributes.options || []).length > MAX_ITEMS) {
 	showElement(searchInputWrapper);
 }
 

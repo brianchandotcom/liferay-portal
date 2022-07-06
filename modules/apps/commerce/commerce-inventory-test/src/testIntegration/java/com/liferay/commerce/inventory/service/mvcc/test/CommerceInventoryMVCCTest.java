@@ -81,13 +81,14 @@ public class CommerceInventoryMVCCTest {
 		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
 			_commerceInventoryReplenishmentItemLocalService.
 				addCommerceInventoryReplenishmentItem(
-					_user.getUserId(),
+					null, _user.getUserId(),
 					commerceInventoryWarehouse.
 						getCommerceInventoryWarehouseId(),
 					cpInstance.getSku(), new Date(), 10);
 
 		_commerceInventoryReplenishmentItemLocalService.
 			updateCommerceInventoryReplenishmentItem(
+				null,
 				commerceInventoryReplenishmentItem.
 					getCommerceInventoryReplenishmentItemId(),
 				commerceInventoryReplenishmentItem.getAvailabilityDate(), 15,
@@ -95,6 +96,7 @@ public class CommerceInventoryMVCCTest {
 
 		_commerceInventoryReplenishmentItemLocalService.
 			updateCommerceInventoryReplenishmentItem(
+				null,
 				commerceInventoryReplenishmentItem.
 					getCommerceInventoryReplenishmentItemId(),
 				commerceInventoryReplenishmentItem.getAvailabilityDate(), 20,

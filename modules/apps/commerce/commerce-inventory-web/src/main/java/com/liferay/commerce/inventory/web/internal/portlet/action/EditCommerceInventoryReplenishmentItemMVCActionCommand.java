@@ -103,7 +103,7 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 
 		_commerceInventoryReplenishmentItemService.
 			addCommerceInventoryReplenishmentItem(
-				commerceInventoryWarehouseId, sku, calendar.getTime(),
+				null, commerceInventoryWarehouseId, sku, calendar.getTime(),
 				quantity);
 	}
 
@@ -140,7 +140,7 @@ public class EditCommerceInventoryReplenishmentItemMVCActionCommand
 
 		_commerceInventoryReplenishmentItemService.
 			updateCommerceInventoryReplenishmentItem(
-				commerceInventoryReplenishmentItemId, calendar.getTime(),
+				null, commerceInventoryReplenishmentItemId, calendar.getTime(),
 				quantity, mvccVersion);
 	}
 

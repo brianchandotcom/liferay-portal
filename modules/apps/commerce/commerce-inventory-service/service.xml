@@ -75,7 +75,7 @@
 			<finder-column name="sku" />
 		</finder>
 	</entity>
-	<entity local-service="true" mvcc-enabled="true" name="CommerceInventoryReplenishmentItem" remote-service="true" table="CIReplenishmentItem">
+	<entity external-reference-code="true" local-service="true" mvcc-enabled="true" name="CommerceInventoryReplenishmentItem" remote-service="true" table="CIReplenishmentItem" uuid="true">
 
 		<!-- PK fields -->
 
@@ -210,9 +210,12 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>CommerceInventoryReplenishmentQuantity</exception>
+		<exception>CommerceInventoryReplenishmentSku</exception>
 		<exception>CommerceInventoryWarehouseActive</exception>
 		<exception>CommerceInventoryWarehouseItemQuantity</exception>
 		<exception>CommerceInventoryWarehouseName</exception>
+		<exception>DuplicateCommerceInventoryReplenishmentItem</exception>
 		<exception>DuplicateCommerceInventoryWarehouseItem</exception>
 		<exception>MVCC</exception>
 	</exceptions>

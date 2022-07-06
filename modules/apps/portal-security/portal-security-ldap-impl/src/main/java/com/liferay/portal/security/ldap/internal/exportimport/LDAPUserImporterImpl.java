@@ -956,7 +956,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			role.getRoleId(), new long[] {group.getGroupId()});
 	}
 
-	private void _addUserGroupsNotBelongingToLDAPServer(
+	private void _addUserGroupsNotAddedByLDAPImport(
 			long userId, Set<Long> ldapServerGroupIds, Set<Long> userGroupIds)
 		throws Exception {
 
@@ -1389,7 +1389,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
-		_addUserGroupsNotBelongingToLDAPServer(
+		_addUserGroupsNotAddedByLDAPImport(
 			user.getUserId(), ldapServerGroupIds, newUserGroupIds);
 
 		Set<Long> oldUserGroupIds = new LinkedHashSet<>();

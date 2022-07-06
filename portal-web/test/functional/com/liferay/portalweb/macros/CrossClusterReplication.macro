@@ -16,11 +16,11 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
 	}
 
-	macro getSuccessfulWriteRequestsFromCCRStats {
-		var index = JSONCompany.getCompanyId();
+	macro getNumberOfSuccessfulWriteRequests {
+		var companyId = JSONCompany.getCompanyId();
 		var portalHostname = PropsUtil.get("portal.hostname");
 
-		var curl = "http://${portalHostname}:9202/liferay-${index}-search-tuning-synonyms/_ccr/stats?pretty";
+		var curl = "http://${portalHostname}:9202/liferay-${companyId}-${indexName}/_ccr/stats?pretty";
 
 		var ccrSynonymInfo = JSONCurlUtil.get("${curl}");
 

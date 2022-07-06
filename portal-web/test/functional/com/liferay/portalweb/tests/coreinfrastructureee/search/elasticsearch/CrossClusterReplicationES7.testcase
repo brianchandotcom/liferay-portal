@@ -74,8 +74,6 @@ definition {
 
 		CrossClusterReplication.setupCrossClusterReplication();
 
-		var ccrStatsInitial = CrossClusterReplication.getSuccessfulWriteRequestsFromCCRStats();
-
 		for (var title : list "banana,red apple") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
@@ -85,11 +83,15 @@ definition {
 
 		SearchTuning.openSynonymsAdmin();
 
+		var ccrStatsInitial = CrossClusterReplication.getNumberOfSuccessfulWriteRequests(indexName = "search-tuning-synonyms");
+
 		SearchTuning.addSynonymSet(synonyms = "banana,red apple,fruit");
 
 		AssertElementPresent(
 			key_synonyms = "banana, red apple, fruit",
 			locator1 = "SearchTuning#SYNONYMS_ENTRY");
+
+		var ccrStatsCurrent = CrossClusterReplication.getNumberOfSuccessfulWriteRequests(indexName = "search-tuning-synonyms");
 
 		var ccrStatsIncrement = MathUtil.isGreaterThan("${ccrStatsCurrent}", "${ccrStatsInitial}");
 

@@ -360,7 +360,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			}
 
 			JSONObject dataJSONObject = _processDataJSONObject(
-				data, targetLayout, fragmentEntryLinksMap, entry.getValue());
+				LayoutStructure.of(data), targetLayout, fragmentEntryLinksMap,
+				entry.getValue());
 
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
@@ -409,7 +410,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		}
 
 		JSONObject dataJSONObject = _processDataJSONObject(
-			layoutStructure.toString(), targetLayout, fragmentEntryLinksMap,
+			layoutStructure, targetLayout, fragmentEntryLinksMap,
 			targetSegmentsExperienceId);
 
 		_layoutPageTemplateStructureLocalService.
@@ -762,15 +763,13 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 	}
 
 	private JSONObject _processDataJSONObject(
-			String data, Layout targetLayout,
+			LayoutStructure layoutStructure, Layout targetLayout,
 			Map<Long, FragmentEntryLink> fragmentEntryLinksMap,
 			long targetSegmentsExperienceId)
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
-
-		LayoutStructure layoutStructure = LayoutStructure.of(data);
 
 		for (LayoutStructureItem layoutStructureItem :
 				layoutStructure.getLayoutStructureItems()) {

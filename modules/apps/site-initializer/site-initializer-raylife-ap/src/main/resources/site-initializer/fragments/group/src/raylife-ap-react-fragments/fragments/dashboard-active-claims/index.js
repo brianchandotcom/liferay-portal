@@ -16,7 +16,11 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
+import formatDate from '../../../../../../../../../../extra/remote-app/src/common/utils/dateFormater';
 import BarChart from '../../../common/components/bar-chart';
+import Table from '../../../common/components/table';
+import ClayIconProvider from '../../../common/context/ClayIconProvider';
+import {redirectTo} from '../../../common/utils/liferay';
 
 export default function () {
 	const [dataColumns] = useState([58, 32, 19, 24, 20]);
@@ -45,6 +49,40 @@ export default function () {
 		'#9ACD32',
 	];
 
+	const headers = [
+		{
+			key: 'date',
+			value: 'Date',
+		},
+		{
+			key: 'product',
+			value: 'Product',
+		},
+		{
+			key: 'claimNumber',
+			value: 'Claim Number',
+		},
+	];
+
+	const dateCreated = 'Dec 10, 2021';
+
+	const dataTable = [
+		{
+			claimNumber: '993212',
+			date: formatDate(new Date(dateCreated)),
+			product: 'Auto',
+		},
+		{
+			claimNumber: '448323',
+			date: formatDate(new Date(dateCreated)),
+			product: 'Home',
+		},
+		{
+			claimNumber: '566323',
+			date: formatDate(new Date(dateCreated)),
+			product: 'Life',
+		},
+	];
 	const [titleTotal] = useState(true);
 
 	const reducer = (accumulator, curr) => accumulator + curr;
@@ -52,16 +90,14 @@ export default function () {
 	const totalSum = dataColumns.filter(Number.isInteger).reduce(reducer);
 
 	return (
-		<>
-			<div className="active-claims-container d-flex flex-column flex-shrink-0 pb-4 pt-2 px-3">
-				<div className="justify-content-between p-2 row">
-					<div className="active-claims-title font-weight-bold h4">
-						<div>Active Claims</div>
-					</div>
+		<ClayIconProvider>
+			<div className="active-claims-container d-flex flex-column px-3">
+				<div className="active-claims-title align-items-center d-flex font-weight-bold h4 justify-content-between mt-3">
+					<div>Active Claims</div>
 
-					<ClayButton className="btn btn-outline-primary text-uppercase">
+					<ClayButton className="btn btn-active-claims-title btn-outline-primary text-uppercase">
 						<span className="outline-primary text-paragraph">
-							<ClayIcon symbol="plus" />
+							<ClayIcon className="mr-2" symbol="plus" />
 						</span>
 						Claims
 					</ClayButton>
@@ -74,7 +110,19 @@ export default function () {
 					titleTotal={titleTotal}
 					totalSum={totalSum}
 				/>
+
+				<Table data={dataTable} headers={headers} />
+
+				<div className="align-items-center bottom-container d-flex justify-content-end pb-3 px-3">
+					<ClayButton
+						className="bg-neutral-0 border-neutral-0 btn btn-inverted btn-solid btn-style-primary text-paragraph text-uppercase"
+						onClick={() => redirectTo('claims')}
+					>
+						All Claims
+						<ClayIcon className="ml-2" symbol="order-arrow-right" />
+					</ClayButton>
+				</div>
 			</div>
-		</>
+		</ClayIconProvider>
 	);
 }

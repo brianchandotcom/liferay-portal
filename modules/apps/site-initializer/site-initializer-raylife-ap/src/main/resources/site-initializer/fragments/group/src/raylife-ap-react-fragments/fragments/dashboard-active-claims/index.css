@@ -3,8 +3,12 @@
 	content: '';
 	display: block;
 	height: 1px;
-	margin-top: 6px;
+	margin-top: 38px;
 	position: absolute;
 	width: 19px;
+}
+
+.active-claims-container .btn-active-claims-title .lexicon-icon {
+	font-size: 10px;
 }
 

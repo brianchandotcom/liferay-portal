@@ -25,5 +25,6 @@ ViewNotificationQueueEntriesDisplayContext viewNotificationQueueEntriesDisplayCo
 	fdsActionDropdownItems="<%= viewNotificationQueueEntriesDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
 	id="<%= NotificationFDSNames.NOTIFICATION_QUEUE_ENTRIES %>"
+	propsTransformer="js/NotificationQueueEntryFDSPropsTransformer"
 	style="fluid"
 />

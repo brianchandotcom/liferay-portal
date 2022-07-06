@@ -63,6 +63,7 @@ import openWarningModal from '../../../../../app/utils/openWarningModal';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 import useControlledState from '../../../../../core/hooks/useControlledState';
+import StructureTreeNodeActions from './StructureTreeNodeActions';
 
 const HOVER_EXPAND_DELAY = 1000;
 
@@ -370,12 +371,23 @@ function StructureTreeNodeContent({
 						/>
 					)}
 
-					{node.removable && canUpdatePageStructure && (
-						<RemoveButton
-							node={node}
-							visible={isHovered || isSelected}
-						/>
-					)}
+					{!Liferay.FeatureFlags['LPS-147895'] &&
+						node.removable &&
+						canUpdatePageStructure && (
+							<RemoveButton
+								node={node}
+								visible={isHovered || isSelected}
+							/>
+						)}
+
+					{Liferay.FeatureFlags['LPS-147895'] &&
+						canUpdatePageStructure &&
+						node.itemType !== ITEM_TYPES.editable && (
+							<StructureTreeNodeActions
+								item={item}
+								visible={node.hidden || isHovered || isSelected}
+							/>
+						)}
 				</div>
 			)}
 		</div>

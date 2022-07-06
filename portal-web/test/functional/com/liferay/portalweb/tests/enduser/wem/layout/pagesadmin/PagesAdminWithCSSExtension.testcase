@@ -219,4 +219,73 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153656. The site designer could delete the CSS extenion selection."
+	@priority = "4"
+	test ClearCSSExtensionSelection {
+		task ("Given a site designer has a content page with a CSS extension") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily");
+
+			AssertVisible(
+				key_tableEntry = "FontFamily",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("When the site designer accesses to the Look and Feel settings") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the site designer could clear the CSS extension selection") {
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			Click(
+				key_tableEntry = "FontFamily",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Delete");
+
+			AssertTextEquals(
+				key_sectionTitle = "CSS Extensions",
+				locator1 = "PagesAdmin#SECTION_SUBTITLE",
+				value1 = "No CSS extensions were loaded.");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "font-family",
+				value1 = "system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;");
+		}
+	}
+
 }

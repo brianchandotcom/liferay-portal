@@ -40,7 +40,10 @@ import {evaluate} from '../../utils/evaluation.es';
 import * as Fields from '../../utils/fields.es';
 import {getFormId, getFormNode} from '../../utils/formId.es';
 import {parseProps} from '../../utils/parseProps.es';
-import {paginationReducer} from './reducers/index.es';
+import {
+	objectRelationshipReducer,
+	paginationReducer,
+} from './reducers/index.es';
 
 const DDM_FORM_PORTLET_NAMESPACE =
 	'_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_';
@@ -414,6 +417,7 @@ export const FormView = React.forwardRef((props, ref) => {
 					activePageReducer,
 					fieldReducer,
 					languageReducer,
+					objectRelationshipReducer,
 					pagesStructureReducer,
 					pageValidationReducer,
 					paginationReducer,

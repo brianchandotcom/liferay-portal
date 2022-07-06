@@ -12,34 +12,19 @@
  * details.
  */
 
-export declare const EVENT_TYPES: {
-	FORM_BUILDER: {
-		FOCUSED_FIELD: {
-			CHANGE: string;
-		};
-		PAGES: {
-			UPDATE: string;
-		};
+export default function objectRelationshipReducer(
+	state: State,
+	{payload, type}: Action
+): State;
+interface Action {
+	payload: {
+		[key: string]: number;
 	};
-	OBJECT: {
-		FIELDS_CHANGE: string;
-		RELATIONSHIPS_CHANGE: string;
+	type: string;
+}
+interface State {
+	objectRelationships: {
+		[key: string]: number;
 	};
-	PAGE: {
-		ADD: string;
-		DELETE: string;
-		DESCRIPTION_CHANGE: string;
-		RESET: string;
-		SWAP: string;
-		TITLE_CHANGE: string;
-	};
-	PAGINATION: {
-		CHANGE: string;
-		NEXT: string;
-		PREVIOUS: string;
-	};
-	RULES: {
-		UPDATE: string;
-	};
-	SUCCESS_PAGE: string;
-};
+}
+export {};

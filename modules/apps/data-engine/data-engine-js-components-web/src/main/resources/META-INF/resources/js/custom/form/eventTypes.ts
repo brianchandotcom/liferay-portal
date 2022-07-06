@@ -23,6 +23,7 @@ const FORM_BUILDER = {
 
 const OBJECT = {
 	FIELDS_CHANGE: 'object_fields_change',
+	RELATIONSHIPS_CHANGE: 'object_relationships_change',
 };
 
 const PAGE = {

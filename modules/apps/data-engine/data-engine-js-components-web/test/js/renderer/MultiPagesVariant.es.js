@@ -21,7 +21,7 @@ import {
 	useFormState,
 } from '../../../src/main/resources/META-INF/resources/js/core/hooks/useForm.es';
 import {PageProvider} from '../../../src/main/resources/META-INF/resources/js/core/hooks/usePage.es';
-import {EVENT_TYPES} from '../../../src/main/resources/META-INF/resources/js/custom/form/eventTypes.es';
+import {EVENT_TYPES} from '../../../src/main/resources/META-INF/resources/js/custom/form/eventTypes';
 import {pageReducer} from '../../../src/main/resources/META-INF/resources/js/custom/form/reducers/index.es';
 import {PageHeader} from '../../../src/main/resources/META-INF/resources/js/custom/form/renderer/MultiPagesVariant.es';
 import mockPages from '../__mock__/mockPages.es';

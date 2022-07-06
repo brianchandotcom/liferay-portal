@@ -14,6 +14,7 @@
 
 export {default as formBuilderReducer} from './formBuilderReducer.es';
 export {default as objectFieldsReducer} from './objectFieldsReducer.es';
+export {default as objectRelationshipReducer} from './objectRelationshipReducer';
 export {default as pageReducer} from './pageReducer.es';
 export {default as paginationReducer} from './paginationReducer.es';
 export {default as rulesReducer} from './rulesReducer.es';

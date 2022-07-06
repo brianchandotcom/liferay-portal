@@ -233,7 +233,13 @@ public class ObjectEntryInfoItemFormProvider
 					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
 			finalStep.attribute(
-				SelectInfoFieldType.OPTIONS_URL, _getOptionsURL(objectField));
+				SelectInfoFieldType.OPTIONS_LABEL_FIELD_NAME,
+				_getOptionsLabelFieldName(objectField)
+			).attribute(
+				SelectInfoFieldType.OPTIONS_URL, _getOptionsURL(objectField)
+			).attribute(
+				SelectInfoFieldType.OPTIONS_VALUE_FIELD_NAME, "id"
+			);
 		}
 
 		return finalStep.build();
@@ -476,6 +482,31 @@ public class ObjectEntryInfoItemFormProvider
 		}
 
 		return options;
+	}
+
+	private String _getOptionsLabelFieldName(ObjectField objectField) {
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.
+				fetchObjectRelationshipByObjectFieldId2(
+					objectField.getObjectFieldId());
+
+		ObjectDefinition relatedObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+
+		if (relatedObjectDefinition == null) {
+			return StringPool.BLANK;
+		}
+
+		ObjectField titleObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				relatedObjectDefinition.getTitleObjectFieldId());
+
+		if (titleObjectField == null) {
+			return StringPool.BLANK;
+		}
+
+		return titleObjectField.getName();
 	}
 
 	private String _getOptionsURL(ObjectField objectField) {

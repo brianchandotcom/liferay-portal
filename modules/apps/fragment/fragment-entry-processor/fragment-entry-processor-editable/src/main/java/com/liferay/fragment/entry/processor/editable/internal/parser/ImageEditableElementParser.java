@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -232,6 +233,12 @@ public class ImageEditableElementParser implements EditableElementParser {
 		if (Validator.isNotNull(alt)) {
 			replaceableElement.attr(
 				"alt", StringUtil.trim(_html.unescape(alt)));
+		}
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147895")) &&
+			configJSONObject.getBoolean("lazyLoading")) {
+
+			replaceableElement.attr("loading", "lazy");
 		}
 
 		String imageLink = configJSONObject.getString("imageLink");

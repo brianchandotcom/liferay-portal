@@ -18,7 +18,7 @@ import React from 'react';
 
 const VerticalNavigationBar = ({actions}) => {
 	return (
-		<VerticalBar absolute position="left">
+		<VerticalBar absolute className="kbVerticalBar" position="left">
 			<VerticalBar.Bar displayType="light">
 				<VerticalBar.Item key="artice">
 					<ClayButtonWithIcon

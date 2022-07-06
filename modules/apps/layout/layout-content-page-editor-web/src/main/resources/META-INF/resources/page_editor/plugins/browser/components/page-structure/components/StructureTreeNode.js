@@ -270,6 +270,14 @@ function StructureTreeNodeContent({
 		};
 	}, [isOverTarget, node]);
 
+	const showOptions =
+		Liferay.FeatureFlags['LPS-147895'] &&
+		canUpdatePageStructure &&
+		node.itemType !== ITEM_TYPES.editable &&
+		node.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
+		node.activable &&
+		!node.isMasterItem;
+
 	return (
 		<div
 			aria-disabled={node.isMasterItem || !node.activable}
@@ -374,15 +382,13 @@ function StructureTreeNodeContent({
 							/>
 						)}
 
-					{Liferay.FeatureFlags['LPS-147895'] &&
-						canUpdatePageStructure &&
-						node.itemType !== ITEM_TYPES.editable && (
-							<StructureTreeNodeActions
-								item={item}
-								setEditingName={setEditingName}
-								visible={node.hidden || isHovered || isSelected}
-							/>
-						)}
+					{showOptions && (
+						<StructureTreeNodeActions
+							item={item}
+							setEditingName={setEditingName}
+							visible={node.hidden || isHovered || isSelected}
+						/>
+					)}
 				</div>
 			)}
 		</div>

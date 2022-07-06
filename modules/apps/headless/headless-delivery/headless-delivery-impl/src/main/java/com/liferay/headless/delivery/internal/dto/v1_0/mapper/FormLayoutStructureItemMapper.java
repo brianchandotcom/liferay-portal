@@ -18,6 +18,7 @@ import com.liferay.headless.delivery.dto.v1_0.ClassTypeReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.FormConfig;
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
+import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.MessageFormSubmissionResult;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageFormDefinition;
@@ -26,11 +27,17 @@ import com.liferay.headless.delivery.dto.v1_0.URLFormSubmissionResult;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.FragmentMappedValueUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.LocalizedValueUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.StyledLayoutStructureItemUtil;
+import com.liferay.layout.page.template.util.AlignConverter;
+import com.liferay.layout.page.template.util.ContentDisplayConverter;
+import com.liferay.layout.page.template.util.FlexWrapConverter;
+import com.liferay.layout.page.template.util.JustifyConverter;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -80,6 +87,7 @@ public class FormLayoutStructureItemMapper
 							}
 						};
 						indexed = formStyledLayoutStructureItem.isIndexed();
+						layout = _toLayout(formStyledLayoutStructureItem);
 
 						setFragmentStyle(
 							() -> {
@@ -191,6 +199,75 @@ public class FormLayoutStructureItemMapper
 		return new FragmentInlineValue() {
 			{
 				value_i18n = LocalizedValueUtil.toLocalizedValues(jsonObject);
+			}
+		};
+	}
+
+	private Layout _toLayout(
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
+
+		return new Layout() {
+			{
+				setAlign(
+					() -> {
+						String align = formStyledLayoutStructureItem.getAlign();
+
+						if (Validator.isNull(align)) {
+							return null;
+						}
+
+						return Align.create(
+							AlignConverter.convertToExternalValue(align));
+					});
+				setContentDisplay(
+					() -> {
+						String contentDisplay =
+							formStyledLayoutStructureItem.getContentDisplay();
+
+						if (Validator.isNull(contentDisplay)) {
+							return null;
+						}
+
+						return ContentDisplay.create(
+							ContentDisplayConverter.convertToExternalValue(
+								contentDisplay));
+					});
+				setFlexWrap(
+					() -> {
+						String flexWrap =
+							formStyledLayoutStructureItem.getFlexWrap();
+
+						if (Validator.isNull(flexWrap)) {
+							return null;
+						}
+
+						return FlexWrap.create(
+							FlexWrapConverter.convertToExternalValue(flexWrap));
+					});
+				setJustify(
+					() -> {
+						String justify =
+							formStyledLayoutStructureItem.getJustify();
+
+						if (Validator.isNull(justify)) {
+							return null;
+						}
+
+						return Justify.create(
+							JustifyConverter.convertToExternalValue(justify));
+					});
+				setWidthType(
+					() -> {
+						String widthType =
+							formStyledLayoutStructureItem.getWidthType();
+
+						if (Validator.isNotNull(widthType)) {
+							return WidthType.create(
+								StringUtil.upperCaseFirstLetter(widthType));
+						}
+
+						return null;
+					});
 			}
 		};
 	}

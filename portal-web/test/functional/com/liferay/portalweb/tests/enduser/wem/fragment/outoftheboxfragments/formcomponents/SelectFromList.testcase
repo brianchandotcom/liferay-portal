@@ -131,7 +131,7 @@ definition {
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
-			MenuItem.viewOrder(menuItemList = "Reserved,Giveaways,Members");
+			MenuItem.viewOrder(menuItemList = "Choose an Option,Reserved,Giveaways,Members");
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
@@ -155,7 +155,7 @@ definition {
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
-			MenuItem.viewOrder(menuItemList = "Reserved,Giveaways,Members");
+			MenuItem.viewOrder(menuItemList = "Choose an Option,Reserved,Giveaways,Members");
 		}
 	}
 
@@ -212,7 +212,7 @@ definition {
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
-			MenuItem.viewOrder(menuItemList = "Reserved,Giveaways,Members");
+			MenuItem.viewOrder(menuItemList = "Choose an Option,Reserved,Giveaways,Members");
 		}
 
 		task ("When the page designer marks the display page template as default") {
@@ -247,7 +247,7 @@ definition {
 				locator1 = "Fragment#INPUT_TOGGLE",
 				type = "select-from-list");
 
-			MenuItem.viewOrder(menuItemList = "Reserved,Giveaways,Members");
+			MenuItem.viewOrder(menuItemList = "Choose an Option,Reserved,Giveaways,Members");
 		}
 	}
 

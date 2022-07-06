@@ -29,10 +29,14 @@ definition {
 			CookieConsentPanel.editCookieConsentConsent(
 				functionalCookies = "true",
 				performanceCookies = "true");
+
+			CookieConsentPanel.cookiesConfirmSelected();
 		}
 
 		task ("Then: Only selected cookie category related cookies are saved, and nothing more") {
-			CookieConsentPanel.verifyCookiesAreNotPresent();
+			CookieHelper.checkEachCookiesSavedValue(
+				cookieNameListWithFalseValue = "CONSENT_TYPE_PERSONALIZATION",
+				cookieNameListWithTrueValue = "CONSENT_TYPE_FUNCTIONAL,CONSENT_TYPE_NECESSARY,CONSENT_TYPE_PERFORMANCE");
 		}
 	}
 

@@ -82,7 +82,9 @@ definition {
 
 		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#PERSONALIZATION_COOKIES_TOGGLE");
 
-		Click(locator1 = "CookieConsentPanel#CONFIRM_BUTTON");
+		AssertClick(
+			locator1 = "CookieConsentPanel#CONFIRM_BUTTON",
+			value1 = "Confirm");
 	}
 
 	@description = "Verify that all Cookie Consent portlet elements are present on the Cookie Consent Popup"

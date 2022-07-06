@@ -273,6 +273,35 @@ public class PageFormDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
 
+	@Schema(description = "the page section's layout.")
+	@Valid
+	public Layout getLayout() {
+		return layout;
+	}
+
+	public void setLayout(Layout layout) {
+		this.layout = layout;
+	}
+
+	@JsonIgnore
+	public void setLayout(
+		UnsafeSupplier<Layout, Exception> layoutUnsafeSupplier) {
+
+		try {
+			layout = layoutUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "the page section's layout.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Layout layout;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -406,6 +435,16 @@ public class PageFormDefinition implements Serializable {
 			sb.append("\"indexed\": ");
 
 			sb.append(indexed);
+		}
+
+		if (layout != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"layout\": ");
+
+			sb.append(String.valueOf(layout));
 		}
 
 		sb.append("}");

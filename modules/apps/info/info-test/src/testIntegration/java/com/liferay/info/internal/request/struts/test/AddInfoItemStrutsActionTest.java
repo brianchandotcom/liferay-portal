@@ -302,6 +302,51 @@ public class AddInfoItemStrutsActionTest {
 
 		_addInfoItemStrutsAction.execute(
 			uploadPortletRequest, pipingServletResponse);
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Object object = SessionErrors.get(uploadPortletRequest, _formItemId);
+
+		Assert.assertNull(object);
+
+		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
+
+		ObjectEntry objectEntry = objectEntries.get(0);
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		if (doubleValueInput != null) {
+			DecimalFormat decimalFormat = new DecimalFormat("0");
+
+			decimalFormat.setMaximumFractionDigits(16);
+
+			Assert.assertEquals(
+				doubleValueExpected,
+				decimalFormat.format(values.get("myDecimal")));
+		}
+
+		if (integerValueInput != null) {
+			Assert.assertEquals(
+				integerValueExpected, String.valueOf(values.get("myInteger")));
+		}
+
+		if (longValueInput != null) {
+			Assert.assertEquals(
+				longValueExpected, String.valueOf(values.get("myLongInteger")));
+		}
+
+		if (bigDecimalValueInput != null) {
+			Assert.assertEquals(
+				bigDecimalValueExpected,
+				String.valueOf(values.get("myPrecisionDecimal")));
+		}
+
+		if (stringValue != null) {
+			Assert.assertEquals(stringValue, values.get("myText"));
+		}
 	}
 
 	@Inject(filter = "component.name=*.AddInfoItemStrutsAction")

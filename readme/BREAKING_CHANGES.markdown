@@ -1017,3 +1017,31 @@ If you want to maintain the old sort behavior, you will have to customize the El
 If you need to retrieve data from these fields, you can get the same information from the _source field of Elasticsearch https://www.elastic.co/guide/en/elasticsearch/reference/7.17/mapping-source-field.html or you can also remove the `icu_collation_keyword` as it is explained in the previous paragraph.
 
 ---------------------------------------
+
+## Replaced Clay Data Set Display With Frontend Data Set
+- **Date:** 2022-Jul-06
+- **JIRA Ticket:** [LPS-143847](https://issues.liferay.com/browse/LPS-143847)
+
+### What changed?
+
+Clay Data Set Display component, implemented in `frontend-taglib-clay`, has been replaced with the standalone `frontend-data-set` app. This includes tags and API Java classes.
+
+Tags:
+  - `<clay:data-set-display>` tag has been replaced by the `<frontend-data-set:classic-display>` tag.
+  - `<clay:headless-data-set-display>` tag has been replaced by `<frontend-data-set:headless-display>` tag.
+
+API classes consist of a large set of `ClayDataSet*` Java classes, used to prepare values of tag attributes. They have been replaced by `FDS*` classes, in the `frontend-data-set-api` module. For example, `ClayDataSetDisplayView.java` has been replaced by `FDSView.java`.
+
+### Who is affected?
+
+This affects you if you are using `<clay:data-set-display>` or `<clay:headless-data-set-display>` tags.
+
+### How should I update my code?
+
+Replace tags with their respective `<frontend-data-set>` tag. If you were using API classes, replace them with their equivalent from the `frontend-data-set-api` module.
+
+### Why was this change made?
+
+This is a heavy component, unrelated to Clay, so it fits in a dedicated app. Within the new set of app modules, we are applying standard DXP architectural patterns and conventions.
+
+---------------------------------------

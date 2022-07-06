@@ -55,6 +55,8 @@ if (commerceShippingMethod != null) {
 
 		<aui:model-context bean="<%= commerceShippingMethod %>" model="<%= CommerceShippingMethod.class %>" />
 
+		<aui:input label="tracking-url" name="trackingURL" type="text" value='<%= (commerceShippingMethod == null) ? "" : HtmlUtil.escape(commerceShippingMethod.getTrackingURL()) %>' />
+
 		<%
 		String thumbnailSrc = StringPool.BLANK;
 

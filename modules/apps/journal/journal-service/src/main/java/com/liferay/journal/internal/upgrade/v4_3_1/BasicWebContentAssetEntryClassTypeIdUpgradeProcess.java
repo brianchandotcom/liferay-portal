@@ -37,10 +37,10 @@ import java.sql.SQLException;
 /**
  * @author Georgel Pop
  */
-public class ArticleAssetsBasicWebContentClassTypeIdUpgradeProcess
+public class BasicWebContentAssetEntryClassTypeIdUpgradeProcess
 	extends UpgradeProcess {
 
-	public ArticleAssetsBasicWebContentClassTypeIdUpgradeProcess(
+	public BasicWebContentAssetEntryClassTypeIdUpgradeProcess(
 		AssetEntryLocalService assetEntryLocalService,
 		CompanyLocalService companyLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
@@ -54,7 +54,7 @@ public class ArticleAssetsBasicWebContentClassTypeIdUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_updateDefaultDraftArticleAssets();
+		_updateBasicWebContentAssetEntries();
 	}
 
 	private boolean _isUpgradeNeeded(long classNameId) throws Exception {
@@ -86,14 +86,14 @@ public class ArticleAssetsBasicWebContentClassTypeIdUpgradeProcess
 		return false;
 	}
 
-	private void _updateDefaultDraftArticleAssets() throws Exception {
+	private void _updateBasicWebContentAssetEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long classNameId = PortalUtil.getClassNameId(
 				JournalArticle.class.getName());
 
 			if (_isUpgradeNeeded(classNameId)) {
 				_companyLocalService.forEachCompanyId(
-					companyId -> _updateDefaultDraftArticleAssets(
+					companyId -> _updateBasicWebContentAssetEntries(
 						companyId, classNameId));
 			}
 			else {
@@ -108,7 +108,7 @@ public class ArticleAssetsBasicWebContentClassTypeIdUpgradeProcess
 		}
 	}
 
-	private void _updateDefaultDraftArticleAssets(
+	private void _updateBasicWebContentAssetEntries(
 			long companyId, long classNameId)
 		throws Exception {
 
@@ -211,7 +211,7 @@ public class ArticleAssetsBasicWebContentClassTypeIdUpgradeProcess
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ArticleAssetsBasicWebContentClassTypeIdUpgradeProcess.class);
+		BasicWebContentAssetEntryClassTypeIdUpgradeProcess.class);
 
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final CompanyLocalService _companyLocalService;

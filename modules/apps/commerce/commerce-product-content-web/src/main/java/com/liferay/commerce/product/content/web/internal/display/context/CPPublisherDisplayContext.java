@@ -14,20 +14,28 @@
 
 package com.liferay.commerce.product.content.web.internal.display.context;
 
+import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.media.CommerceCatalogDefaultImage;
+import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
+import com.liferay.commerce.product.content.util.CPMedia;
 import com.liferay.commerce.product.content.web.internal.helper.CPPublisherWebHelper;
+import com.liferay.commerce.product.content.web.internal.util.CPMediaUtil;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.url.CPFriendlyURL;
@@ -51,6 +59,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -75,24 +84,36 @@ import javax.servlet.http.HttpServletRequest;
 public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 	public CPPublisherDisplayContext(
+			AMImageHTMLTagFactory amImageHTMLTagFactory,
+			CommerceCatalogDefaultImage commerceCatalogDefaultImage,
+			CommerceMediaResolver commerceMediaResolver,
+			CPAttachmentFileEntryLocalService cpAttachmentFileEntryLocalService,
 			CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
 			CPDataSourceRegistry cpDataSourceRegistry,
-			CPDefinitionHelper cpDefinitionHelper, CPFriendlyURL cpFriendlyURL,
+			CPDefinitionHelper cpDefinitionHelper,
+			CPDefinitionLocalService cpDefinitionLocalService,
+			CPFriendlyURL cpFriendlyURL,
 			CPPublisherWebHelper cpPublisherWebHelper,
 			CPTypeServicesTracker cpTypeServicesTracker,
 			FriendlyURLEntryLocalService friendlyURLEntryLocalService,
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, Portal portal)
 		throws PortalException {
 
 		super(
 			contentListEntryRendererRegistry, cpContentListRendererRegistry,
 			cpPublisherWebHelper, cpTypeServicesTracker, httpServletRequest);
 
+		_amImageHTMLTagFactory = amImageHTMLTagFactory;
+		_commerceCatalogDefaultImage = commerceCatalogDefaultImage;
+		_commerceMediaResolver = commerceMediaResolver;
+		_cpAttachmentFileEntryLocalService = cpAttachmentFileEntryLocalService;
 		_cpDataSourceRegistry = cpDataSourceRegistry;
 		_cpDefinitionHelper = cpDefinitionHelper;
+		_cpDefinitionLocalService = cpDefinitionLocalService;
 		_cpFriendlyURL = cpFriendlyURL;
 		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
+		_portal = portal;
 
 		_cProductId = _getCProductId();
 		_delta = ParamUtil.getInteger(
@@ -151,6 +172,30 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		}
 
 		return cpDataSourceResult;
+	}
+
+	public List<CPMedia> getCPMedias(
+			long cpDefinitionId, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return CPMediaUtil.getAttachmentCPMedias(
+			_portal.getClassNameId(CPDefinition.class.getName()),
+			cpDefinitionId, _cpAttachmentFileEntryLocalService, themeDisplay);
+	}
+
+	public List<CPMedia> getImages(
+			long cpDefinitionId, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionId);
+
+		return CPMediaUtil.getImageCPMedias(
+			_amImageHTMLTagFactory,
+			_portal.getClassNameId(CPDefinition.class.getName()),
+			cpDefinition.getCPDefinitionId(), _commerceCatalogDefaultImage,
+			_commerceMediaResolver, _cpAttachmentFileEntryLocalService,
+			cpDefinition.getGroupId(), themeDisplay);
 	}
 
 	public PortletURL getPortletURL() {
@@ -343,12 +388,19 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPPublisherDisplayContext.class);
 
+	private final AMImageHTMLTagFactory _amImageHTMLTagFactory;
+	private final CommerceCatalogDefaultImage _commerceCatalogDefaultImage;
+	private final CommerceMediaResolver _commerceMediaResolver;
+	private final CPAttachmentFileEntryLocalService
+		_cpAttachmentFileEntryLocalService;
 	private final CPDataSourceRegistry _cpDataSourceRegistry;
 	private final CPDefinitionHelper _cpDefinitionHelper;
+	private final CPDefinitionLocalService _cpDefinitionLocalService;
 	private final CPFriendlyURL _cpFriendlyURL;
 	private final long _cProductId;
 	private final int _delta;
 	private final FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+	private final Portal _portal;
 	private SearchContainer<CPCatalogEntry> _searchContainer;
 
 }

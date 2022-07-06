@@ -1351,6 +1351,63 @@
 					"title": "The indexed Schema",
 					"type": "boolean"
 				},
+				"layout": {
+					"additionalProperties": false,
+					"properties": {
+						"align": {
+							"enum": [
+								"Baseline",
+								"Center",
+								"End",
+								"None",
+								"Start",
+								"Stretch"
+							],
+							"title": "The align Schema",
+							"type": "string"
+						},
+						"contentDisplay": {
+							"enum": [
+								"Block",
+								"FlexColumn",
+								"FlexRow"
+							],
+							"title": "The contentDisplay Schema",
+							"type": "string"
+						},
+						"flexWrap": {
+							"enum": [
+								"NoWrap",
+								"Wrap",
+								"WrapReverse"
+							],
+							"title": "The flexWrap Schema",
+							"type": "string"
+						},
+						"justify": {
+							"enum": [
+								"Center",
+								"End",
+								"None",
+								"SpaceAround",
+								"SpaceBetween",
+								"Start"
+							],
+							"title": "The justify Schema",
+							"type": "string"
+						},
+						"widthType": {
+							"enum": [
+								"Fixed",
+								"Fluid"
+							],
+							"title": "The widthType Schema",
+							"type": "string"
+						}
+					},
+					"title": "The layout Schema",
+					"type": "object"
+				},
 				"name": {
 					"items": {
 						"type": "string"

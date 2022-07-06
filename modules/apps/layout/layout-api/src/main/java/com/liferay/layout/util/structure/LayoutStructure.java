@@ -74,29 +74,9 @@ public class LayoutStructure {
 
 				layoutStructureItems.put(key, layoutStructureItem);
 
-				if (layoutStructureItem instanceof
-						FormStyledLayoutStructureItem) {
-
-					FormStyledLayoutStructureItem
-						formStyledLayoutStructureItem =
-							(FormStyledLayoutStructureItem)layoutStructureItem;
-
-					formStyledLayoutStructureItems.add(
-						formStyledLayoutStructureItem);
-				}
-				else if (layoutStructureItem instanceof
-							FragmentStyledLayoutStructureItem) {
-
-					FragmentStyledLayoutStructureItem
-						fragmentStyledLayoutStructureItem =
-							(FragmentStyledLayoutStructureItem)
-								layoutStructureItem;
-
-					fragmentLayoutStructureItems.put(
-						fragmentStyledLayoutStructureItem.
-							getFragmentEntryLinkId(),
-						fragmentStyledLayoutStructureItem);
-				}
+				_updateLayoutStructureItemMaps(
+					layoutStructureItem, formStyledLayoutStructureItems,
+					fragmentLayoutStructureItems);
 			}
 
 			JSONArray deletedLayoutStructureItemJSONArray = Optional.ofNullable(
@@ -251,23 +231,9 @@ public class LayoutStructure {
 		_layoutStructureItems.put(
 			layoutStructureItem.getItemId(), layoutStructureItem);
 
-		if (layoutStructureItem instanceof FormStyledLayoutStructureItem) {
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-				(FormStyledLayoutStructureItem)layoutStructureItem;
-
-			_formStyledLayoutStructureItems.add(formStyledLayoutStructureItem);
-		}
-		else if (layoutStructureItem instanceof
-					FragmentStyledLayoutStructureItem) {
-
-			FragmentStyledLayoutStructureItem
-				fragmentStyledLayoutStructureItem =
-					(FragmentStyledLayoutStructureItem)layoutStructureItem;
-
-			_fragmentLayoutStructureItems.put(
-				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
-				fragmentStyledLayoutStructureItem);
-		}
+		_updateLayoutStructureItemMaps(
+			layoutStructureItem, _formStyledLayoutStructureItems,
+			_fragmentLayoutStructureItems);
 
 		return layoutStructureItem;
 	}
@@ -716,6 +682,30 @@ public class LayoutStructure {
 		}
 
 		return deletedLayoutStructureItems;
+	}
+
+	private static void _updateLayoutStructureItemMaps(
+		LayoutStructureItem layoutStructureItem,
+		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems,
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems) {
+
+		if (layoutStructureItem instanceof FormStyledLayoutStructureItem) {
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+				(FormStyledLayoutStructureItem)layoutStructureItem;
+
+			formStyledLayoutStructureItems.add(formStyledLayoutStructureItem);
+		}
+		else if (layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem) {
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			fragmentLayoutStructureItems.put(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
+				fragmentStyledLayoutStructureItem);
+		}
 	}
 
 	private LayoutStructure(

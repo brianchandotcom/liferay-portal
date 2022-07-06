@@ -13,21 +13,21 @@ import {render, screen} from '@testing-library/react';
 import LiferayContact from '../LiferayContact';
 
 describe('LiferayContact', () => {
-	const project = {
+	const koroneikiAccount = {
 		liferayContactEmailAddress: 'janedoe@company.com',
 		liferayContactName: 'Jane Doe',
 		liferayContactRole: 'Administrator',
 	};
 
 	it('displays project support liferay contact name', () => {
-		render(<LiferayContact project={project} />);
+		render(<LiferayContact koroneikiAccount={koroneikiAccount} />);
 		const linkElementContactName = screen.getByText('Jane Doe');
 
 		expect(linkElementContactName).toBeInTheDocument();
 	});
 
 	it('displays project support liferay contact email address', () => {
-		render(<LiferayContact project={project} />);
+		render(<LiferayContact koroneikiAccount={koroneikiAccount} />);
 
 		const linkElementContactEmailAddress = screen.getByText(
 			/janedoe@company/i,
@@ -38,7 +38,7 @@ describe('LiferayContact', () => {
 	});
 
 	it('displays project support liferay contact role', () => {
-		render(<LiferayContact project={project} />);
+		render(<LiferayContact koroneikiAccount={koroneikiAccount} />);
 
 		const linkElementContactRole = screen.getByText(/administrator/i);
 

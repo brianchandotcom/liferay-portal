@@ -19,7 +19,7 @@ describe('SwitchSlaCardButton', () => {
 		const functionMock = jest.fn();
 		const user = userEvent.setup();
 
-		render(<SwitchSlaCardButton handleSlaCardClick={functionMock} />);
+		render(<SwitchSlaCardButton handleClick={functionMock} />);
 
 		expect(screen.getByRole('button')).toBeInTheDocument();
 		await user.click(screen.getByRole('button'));

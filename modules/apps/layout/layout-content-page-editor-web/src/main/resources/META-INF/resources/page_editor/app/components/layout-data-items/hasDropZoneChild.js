@@ -18,6 +18,10 @@ export default function hasDropZoneChild(item, layoutData) {
 	return item.children.some((childrenId) => {
 		const children = layoutData.items[childrenId];
 
+		if (!children) {
+			return false;
+		}
+
 		return children.type === LAYOUT_DATA_ITEM_TYPES.dropZone
 			? true
 			: hasDropZoneChild(children, layoutData);

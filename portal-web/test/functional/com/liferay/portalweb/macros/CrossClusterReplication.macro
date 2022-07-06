@@ -16,20 +16,6 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
 	}
 
-	macro compareSuccessfulWriteRequests {
-		var ccrStatsInitial = "${ccrStatsInitial}";
-		var ccrStatsSubsequent = CrossClusterReplication.getSuccessfulWriteRequestsFromCCRStats();
-
-		var result = MathUtil.isLessThan("${ccrStatsInitial}", "${ccrStatsSubsequent}");
-
-		if ("${result}" == "true") {
-			echo("PASSED: ccrStatsInitial:'${ccrStatsInitial} 'is less than ccrStatsSubsequent:'${ccrStatsSubsequent}'");
-		}
-		else {
-			TestUtils.fail(message = "FAILED: ccrStatsInitial:'${ccrStatsInitial}' is greater than or equals to ccrStatsSubsequent:'${ccrStatsRetry}'");
-		}
-	}
-
 	macro getSuccessfulWriteRequestsFromCCRStats {
 		var index = JSONCompany.getCompanyId();
 		var portalHostname = PropsUtil.get("portal.hostname");

@@ -91,7 +91,11 @@ definition {
 			key_synonyms = "banana, red apple, fruit",
 			locator1 = "SearchTuning#SYNONYMS_ENTRY");
 
-		CrossClusterReplication.compareSuccessfulWriteRequests(ccrStatsInitial = "${ccrStatsInitial}");
+		var ccrStatsIncrement = MathUtil.isGreaterThan("${ccrStatsCurrent}", "${ccrStatsInitial}");
+
+		if ("${ccrStatsIncrement}" == "false") {
+			fail("Synonyms index was not successfully replicated from write cluster to read cluster.");
+		}
 	}
 
 	@priority = "3"

@@ -38,7 +38,7 @@ definition {
 
 			Button.clickSave();
 
-			Pause(locator1 = "5000");
+			Alert.viewSuccessMessage();
 		}
 	}
 

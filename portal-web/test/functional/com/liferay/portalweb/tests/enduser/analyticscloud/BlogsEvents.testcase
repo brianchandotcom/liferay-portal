@@ -69,7 +69,6 @@ definition {
 
 			task ("Start Har recording") {
 				ProxyUtil.startHarRecording("blogClicked");
-
 			}
 
 			Click(

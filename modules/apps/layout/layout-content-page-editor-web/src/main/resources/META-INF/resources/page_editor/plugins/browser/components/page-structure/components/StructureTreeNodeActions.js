@@ -1,0 +1,236 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
+import React, {useMemo, useRef, useState} from 'react';
+
+import SaveFragmentCompositionModal from '../../../../../app/components/SaveFragmentCompositionModal';
+import hasDropZoneChild from '../../../../../app/components/layout-data-items/hasDropZoneChild';
+import {REQUIRED_FIELD_DATA} from '../../../../../app/config/constants/formModalData';
+import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragmentEntryTypes';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
+import {useSelectItem} from '../../../../../app/contexts/ControlsContext';
+import {
+	useDispatch,
+	useSelector,
+} from '../../../../../app/contexts/StoreContext';
+import {useWidgets} from '../../../../../app/contexts/WidgetsContext';
+import deleteItem from '../../../../../app/thunks/deleteItem';
+import duplicateItem from '../../../../../app/thunks/duplicateItem';
+import canBeDuplicated from '../../../../../app/utils/canBeDuplicated';
+import canBeRemoved from '../../../../../app/utils/canBeRemoved';
+import canBeSaved from '../../../../../app/utils/canBeSaved';
+import hideFragment from '../../../../../app/utils/hideFragment';
+import openWarningModal from '../../../../../app/utils/openWarningModal';
+import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
+
+export default function StructureTreeNodeActions({item, visible}) {
+	const [active, setActive] = useState(false);
+
+	const [openSaveModal, setOpenSaveModal] = useState(false);
+
+	const alignElementRef = useRef();
+	const dropdownRef = useRef();
+
+	return (
+		<>
+			<ClayButton
+				className={classNames(
+					'page-editor__page-structure__tree-node__actions-button',
+					{
+						'page-editor__page-structure__tree-node__actions-button--visible': visible,
+					}
+				)}
+				displayType="unstyled"
+				onClick={() => setActive((active) => !active)}
+				ref={alignElementRef}
+				small
+				title={Liferay.Language.get('options')}
+			>
+				<ClayIcon symbol="ellipsis-v" />
+			</ClayButton>
+
+			<ClayDropDown.Menu
+				active={active}
+				alignElementRef={alignElementRef}
+				containerProps={{
+					className: 'cadmin',
+				}}
+				onSetActive={setActive}
+				ref={dropdownRef}
+			>
+				{active && (
+					<ActionList
+						item={item}
+						setActive={setActive}
+						setOpenSaveModal={setOpenSaveModal}
+					/>
+				)}
+			</ClayDropDown.Menu>
+
+			{openSaveModal && (
+				<SaveFragmentCompositionModal
+					onCloseModal={() => setOpenSaveModal(false)}
+				/>
+			)}
+		</>
+	);
+}
+
+const ActionList = ({item, setActive, setOpenSaveModal}) => {
+	const dispatch = useDispatch();
+	const hasRequiredChild = useHasRequiredChild(item.itemId);
+	const selectItem = useSelectItem();
+	const widgets = useWidgets();
+
+	const {
+		fragmentEntryLinks,
+		layoutData,
+		segmentsExperienceId,
+		selectedViewportSize,
+	} = useSelector((state) => state);
+
+	const isInputFragment =
+		item.type === LAYOUT_DATA_ITEM_TYPES.fragment &&
+		fragmentEntryLinks[item.config.fragmentEntryLinkId]
+			.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input;
+
+	const dropdownItems = useMemo(() => {
+		const items = [];
+
+		if (
+			item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
+			!hasDropZoneChild(item, layoutData) &&
+			!isInputFragment
+		) {
+			items.push({
+				action: () => {
+					if (hasRequiredChild()) {
+						openWarningModal({
+							action: () =>
+								hideFragment({
+									dispatch,
+									itemId: item.itemId,
+									segmentsExperienceId,
+									selectedViewportSize,
+								}),
+							...REQUIRED_FIELD_DATA,
+						});
+					}
+					else {
+						hideFragment({
+							dispatch,
+							itemId: item.itemId,
+							segmentsExperienceId,
+							selectedViewportSize,
+						});
+					}
+				},
+				icon: 'hidden',
+				label: Liferay.Language.get('hide-fragment'),
+			});
+		}
+
+		if (canBeSaved(item, layoutData)) {
+			items.push({
+				action: () => setOpenSaveModal(true),
+				icon: 'disk',
+				label: Liferay.Language.get('save-composition'),
+			});
+		}
+
+		if (items.length) {
+			items.push({
+				type: 'separator',
+			});
+		}
+
+		if (canBeDuplicated(fragmentEntryLinks, item, layoutData, widgets)) {
+			items.push({
+				action: () =>
+					dispatch(
+						duplicateItem({
+							itemId: item.itemId,
+							segmentsExperienceId,
+							selectItem,
+						})
+					),
+				icon: 'copy',
+				label: Liferay.Language.get('duplicate'),
+			});
+
+			items.push({
+				type: 'separator',
+			});
+		}
+
+		if (canBeRemoved(item, layoutData)) {
+			items.push({
+				action: () =>
+					dispatch(
+						deleteItem({
+							itemId: item.itemId,
+							selectItem,
+						})
+					),
+				icon: 'trash',
+				label: Liferay.Language.get('delete'),
+			});
+		}
+
+		return items;
+	}, [
+		dispatch,
+		fragmentEntryLinks,
+		hasRequiredChild,
+		isInputFragment,
+		item,
+		layoutData,
+		segmentsExperienceId,
+		selectedViewportSize,
+		selectItem,
+		widgets,
+		setOpenSaveModal,
+	]);
+
+	return (
+		<ClayDropDown.ItemList>
+			{dropdownItems.map((dropdownItem, index, array) =>
+				dropdownItem.type === 'separator' ? (
+					index !== array.length - 1 && (
+						<ClayDropDown.Divider key={index} />
+					)
+				) : (
+					<React.Fragment key={index}>
+						<ClayDropDown.Item
+							onClick={() => {
+								setActive(false);
+
+								dropdownItem.action();
+							}}
+							symbolLeft={dropdownItem.icon}
+						>
+							<p className="d-inline-block m-0 ml-4">
+								{dropdownItem.label}
+							</p>
+						</ClayDropDown.Item>
+					</React.Fragment>
+				)
+			)}
+		</ClayDropDown.ItemList>
+	);
+};

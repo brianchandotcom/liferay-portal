@@ -50,11 +50,13 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 	};
 
 	const exportTranslation = ({exportTranslationURL}) => {
-		const url = new URL(exportTranslationURL);
-
 		const keys = Array.from(
-			document.querySelectorAll(`[name=${portletNamespace}]:checked`)
+			document.querySelectorAll(
+				`[name=${portletNamespace}rowIds]:checked`
+			)
 		).map(({value}) => value);
+
+		const url = new URL(exportTranslationURL);
 
 		navigate(
 			addParams(

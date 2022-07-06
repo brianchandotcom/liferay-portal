@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portlet.PortalPreferencesImpl;
 import com.liferay.portlet.PortalPreferencesWrapper;
 
@@ -58,50 +56,6 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 				ownerId, ownerType, xml);
 
 		return new PortalPreferencesWrapper(portalPreferencesImpl);
-	}
-
-	protected PortletPreferences getPortletPreferences(
-			long ownerId, int ownerType, long plid, String portletId)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("select portletPreferencesId, ownerId, ownerType, plid, ");
-		sb.append("portletId, preferences from PortletPreferences where ");
-		sb.append("ownerId = ?, ownerType = ?, plid = ?, portletId = ?");
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
-
-			preparedStatement.setLong(1, ownerId);
-			preparedStatement.setInt(2, ownerType);
-			preparedStatement.setLong(3, plid);
-			preparedStatement.setString(4, portletId);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (!resultSet.next()) {
-					return null;
-				}
-
-				PortletPreferences portletPreferences =
-					new PortletPreferencesImpl();
-
-				portletPreferences.setPortletPreferencesId(
-					resultSet.getLong("portletPreferencesId"));
-				portletPreferences.setOwnerId(resultSet.getLong("ownerId"));
-				portletPreferences.setOwnerType(resultSet.getInt("ownerType"));
-				portletPreferences.setPlid(resultSet.getLong("plid"));
-				portletPreferences.setPortletId(
-					resultSet.getString("portletId"));
-
-				// TODO LPS-157670
-
-				//portletPreferences.setPreferences(
-				//	resultSet.getString("preferences"));
-
-				return portletPreferences;
-			}
-		}
 	}
 
 	protected void upgradeCustomizablePreferences() throws Exception {

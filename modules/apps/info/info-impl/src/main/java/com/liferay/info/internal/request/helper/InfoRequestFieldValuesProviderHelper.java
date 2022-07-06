@@ -89,6 +89,7 @@ public class InfoRequestFieldValuesProviderHelper {
 			ParamUtil.getLong(uploadServletRequest, "classNameId"));
 		String classTypeId = ParamUtil.getString(
 			uploadServletRequest, "classTypeId");
+		long groupId = ParamUtil.getLong(uploadServletRequest, "groupId");
 
 		Map<String, FileItem[]> multipartParameterMap =
 			uploadServletRequest.getMultipartParameterMap();
@@ -97,8 +98,7 @@ public class InfoRequestFieldValuesProviderHelper {
 			uploadServletRequest.getRegularParameterMap();
 
 		for (InfoField<?> infoField :
-				_getInfoFields(
-					className, classTypeId, themeDisplay.getScopeGroupId())) {
+				_getInfoFields(className, classTypeId, groupId)) {
 
 			FileItem[] multipartParameters = multipartParameterMap.get(
 				infoField.getName());
@@ -109,7 +109,7 @@ public class InfoRequestFieldValuesProviderHelper {
 				for (FileItem fileItem : multipartParameters) {
 					infoFieldValues.add(
 						_getFileInfoFieldValue(
-							fileItem, infoField, themeDisplay));
+							fileItem, groupId, infoField, themeDisplay));
 				}
 			}
 
@@ -155,7 +155,8 @@ public class InfoRequestFieldValuesProviderHelper {
 	}
 
 	private InfoFieldValue<Object> _getFileInfoFieldValue(
-			FileItem fileItem, InfoField infoField, ThemeDisplay themeDisplay)
+			FileItem fileItem, long groupId, InfoField infoField,
+			ThemeDisplay themeDisplay)
 		throws InfoFormFileUploadException {
 
 		try (InputStream inputStream = fileItem.getInputStream()) {
@@ -170,7 +171,7 @@ public class InfoRequestFieldValuesProviderHelper {
 			}
 
 			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				groupId, themeDisplay.getUserId(),
 				InfoRequestFieldValuesProviderHelper.class.getName(),
 				TempFileEntryUtil.getTempFileName(fileItem.getFileName()), file,
 				fileItem.getContentType());

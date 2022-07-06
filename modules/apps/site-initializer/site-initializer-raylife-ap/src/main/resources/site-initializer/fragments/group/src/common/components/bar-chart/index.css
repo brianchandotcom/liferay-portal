@@ -2,14 +2,13 @@
   flex-wrap: wrap;
 }
 
-.bar-chart .bar-chart-title{
-  text-transform: uppercase;
-}
-
 .bar-chart .bb-chart-text{
 	color: #272833;
-	font-size: 30px;
+	font-size: 25px;
 	font-weight: bold;
+}
+.bar-chart .bar-chart-title{
+  text-transform: uppercase;
 }
 
 .bar-chart .bb-axis{

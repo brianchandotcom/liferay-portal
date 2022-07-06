@@ -40,6 +40,7 @@ import java.net.URI;
 import java.security.MessageDigest;
 
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -50,7 +51,8 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * A workaround to convert OIDC provider configuration during grace period. An
- * upgrade will replace this workaround when grace period ends.
+ * upgrade will replace this workaround when grace period ends. Also helps
+ * backward compatible with a popular custom code during grace period.
  *
  * @author     Arthur Chan
  * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
@@ -77,16 +79,44 @@ public class OpenIdConnectProviderManagedServiceFactory
 		long companyId = GetterUtil.getLong(properties.get("companyId"));
 
 		if (companyId == CompanyConstants.SYSTEM) {
-			_deleteOAuthClientEntries(properties);
+			_deleteOAuthClientEntries(
+				GetterUtil.getString(properties.get("providerName")),
+				properties);
 		}
 		else {
-			_deleteOAuthClientEntry(companyId, properties);
+			_deleteOAuthClientEntry(
+				companyId, GetterUtil.getString(properties.get("providerName")),
+				properties);
 		}
 	}
 
 	@Override
 	public String getName() {
 		return "OpenId Connect Provider Managed Service Factory";
+	}
+
+	public long getOAuthClientEntryId(long companyId, String providerName) {
+		Map<String, Long> providerNameOAuthClientEntryIds =
+			_companyIdProviderNameOAuthClientEntryIds.get(companyId);
+
+		if (providerNameOAuthClientEntryIds == null) {
+			providerNameOAuthClientEntryIds =
+				_companyIdProviderNameOAuthClientEntryIds.get(
+					CompanyConstants.SYSTEM);
+		}
+
+		if (providerNameOAuthClientEntryIds == null) {
+			return 0;
+		}
+
+		Long oAuthClientEntryId = providerNameOAuthClientEntryIds.get(
+			providerName);
+
+		if (oAuthClientEntryId == null) {
+			return 0;
+		}
+
+		return oAuthClientEntryId;
 	}
 
 	@Override
@@ -96,22 +126,29 @@ public class OpenIdConnectProviderManagedServiceFactory
 				if (GetterUtil.getLong(properties.get("companyId")) ==
 						CompanyConstants.SYSTEM) {
 
-					_updateOAuthClientEntry(company.getCompanyId(), properties);
+					_updateOAuthClientEntry(
+						company.getCompanyId(), "", properties);
 				}
 			});
 	}
 
 	@Override
 	public void updated(String pid, Dictionary<String, ?> properties) {
+		Dictionary<String, ?> oldProperties = _configurationPidsProperties.put(
+			pid, properties);
+
 		long companyId = GetterUtil.getLong(properties.get("companyId"));
 
+		String oldProviderName = (oldProperties != null) ?
+			GetterUtil.getString(oldProperties.get("providerName")) : "";
+
 		if (companyId == CompanyConstants.SYSTEM) {
-			_updateOAuthClientEntries(properties);
+			_updateOAuthClientEntries(oldProviderName, properties);
 
 			return;
 		}
 
-		_updateOAuthClientEntry(companyId, properties);
+		_updateOAuthClientEntry(companyId, oldProviderName, properties);
 	}
 
 	private String _deleteOAuthClientASLocalMetadata(
@@ -135,10 +172,13 @@ public class OpenIdConnectProviderManagedServiceFactory
 		return discoveryEndPoint;
 	}
 
-	private void _deleteOAuthClientEntries(Dictionary<String, ?> properties) {
+	private void _deleteOAuthClientEntries(
+		String oldProviderName, Dictionary<String, ?> properties) {
+
 		try {
 			_companyLocalService.forEachCompanyId(
-				companyId -> _deleteOAuthClientEntry(companyId, properties));
+				companyId -> _deleteOAuthClientEntry(
+					companyId, oldProviderName, properties));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -148,7 +188,15 @@ public class OpenIdConnectProviderManagedServiceFactory
 	}
 
 	private void _deleteOAuthClientEntry(
-		long companyId, Dictionary<String, ?> properties) {
+		long companyId, String oldProviderName,
+		Dictionary<String, ?> properties) {
+
+		Map<String, Long> providerNameOAuthClientEntryIds =
+			_companyIdProviderNameOAuthClientEntryIds.get(companyId);
+
+		if (providerNameOAuthClientEntryIds != null) {
+			providerNameOAuthClientEntryIds.remove(oldProviderName);
+		}
 
 		try {
 			String authServerWellKnownURI = _deleteOAuthClientASLocalMetadata(
@@ -400,6 +448,25 @@ public class OpenIdConnectProviderManagedServiceFactory
 		return requestParametersJSONObject.toString();
 	}
 
+	private void _updateCompanyIdProviderNameOAuthClientEntryIds(
+		long companyId, String oldProviderName, String providerName,
+		long oAuthClientEntryId) {
+
+		Map<String, Long> providerNameOAuthClientEntryIds =
+			_companyIdProviderNameOAuthClientEntryIds.get(companyId);
+
+		if (providerNameOAuthClientEntryIds == null) {
+			providerNameOAuthClientEntryIds = new HashMap<>();
+
+			_companyIdProviderNameOAuthClientEntryIds.put(
+				companyId, providerNameOAuthClientEntryIds);
+		}
+
+		providerNameOAuthClientEntryIds.remove(oldProviderName);
+
+		providerNameOAuthClientEntryIds.put(providerName, oAuthClientEntryId);
+	}
+
 	private String _updateOAuthClientASLocalMetadata(
 			long defaultUserId, Dictionary<String, ?> properties)
 		throws Exception {
@@ -436,10 +503,13 @@ public class OpenIdConnectProviderManagedServiceFactory
 		return discoveryEndPoint;
 	}
 
-	private void _updateOAuthClientEntries(Dictionary<String, ?> properties) {
+	private void _updateOAuthClientEntries(
+		String oldProviderName, Dictionary<String, ?> properties) {
+
 		try {
 			_companyLocalService.forEachCompanyId(
-				companyId -> _updateOAuthClientEntry(companyId, properties));
+				companyId -> _updateOAuthClientEntry(
+					companyId, oldProviderName, properties));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -449,7 +519,8 @@ public class OpenIdConnectProviderManagedServiceFactory
 	}
 
 	private void _updateOAuthClientEntry(
-		long companyId, Dictionary<String, ?> properties) {
+		long companyId, String oldProviderName,
+		Dictionary<String, ?> properties) {
 
 		long defaultUserId = 0;
 
@@ -476,23 +547,30 @@ public class OpenIdConnectProviderManagedServiceFactory
 					companyId, authServerWellKnownURI, openIdConnectClientId);
 
 			if (oAuthClientEntry == null) {
-				_oAuthClientEntryLocalService.addOAuthClientEntry(
-					defaultUserId,
-					_generateAuthRequestParametersJSON(
-						properties, "customAuthorizationRequestParameters"),
-					authServerWellKnownURI, _generateInfoJSON(properties),
-					_generateTokenRequestParametersJSON(
-						properties, "customTokenRequestParameters"));
+				oAuthClientEntry =
+					_oAuthClientEntryLocalService.addOAuthClientEntry(
+						defaultUserId,
+						_generateAuthRequestParametersJSON(
+							properties, "customAuthorizationRequestParameters"),
+						authServerWellKnownURI, _generateInfoJSON(properties),
+						_generateTokenRequestParametersJSON(
+							properties, "customTokenRequestParameters"));
 			}
 			else {
-				_oAuthClientEntryLocalService.updateOAuthClientEntry(
-					oAuthClientEntry.getOAuthClientEntryId(),
-					_generateAuthRequestParametersJSON(
-						properties, "customAuthorizationRequestParameters"),
-					authServerWellKnownURI, _generateInfoJSON(properties),
-					_generateTokenRequestParametersJSON(
-						properties, "customTokenRequestParameters"));
+				oAuthClientEntry =
+					_oAuthClientEntryLocalService.updateOAuthClientEntry(
+						oAuthClientEntry.getOAuthClientEntryId(),
+						_generateAuthRequestParametersJSON(
+							properties, "customAuthorizationRequestParameters"),
+						authServerWellKnownURI, _generateInfoJSON(properties),
+						_generateTokenRequestParametersJSON(
+							properties, "customTokenRequestParameters"));
 			}
+
+			_updateCompanyIdProviderNameOAuthClientEntryIds(
+				companyId, oldProviderName,
+				GetterUtil.getString(properties.get("providerName")),
+				oAuthClientEntry.getOAuthClientEntryId());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -503,6 +581,9 @@ public class OpenIdConnectProviderManagedServiceFactory
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdConnectProviderManagedServiceFactory.class);
+
+	private final Map<Long, Map<String, Long>>
+		_companyIdProviderNameOAuthClientEntryIds = new ConcurrentHashMap<>();
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

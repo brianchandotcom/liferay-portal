@@ -428,43 +428,47 @@ export function ModalAddFilter({
 				)}
 
 				{selectedFilterBy?.businessType === 'Date' && (
-					<>
-						<Input
-							error={errors.startDate}
-							label={Liferay.Language.get('start')}
-							onChange={({target: {value}}) => {
-								setItems([
-									...items.filter(
-										(item) => item.value !== 'ge'
-									),
-									{
-										label: value,
-										value: 'ge',
-									},
-								]);
-							}}
-							required
-							type="date"
-						/>
+					<div className="row">
+						<div className="col-lg-6">
+							<Input
+								error={errors.startDate}
+								label={Liferay.Language.get('start')}
+								onChange={({target: {value}}) => {
+									setItems([
+										...items.filter(
+											(item) => item.value !== 'ge'
+										),
+										{
+											label: value,
+											value: 'ge',
+										},
+									]);
+								}}
+								required
+								type="date"
+							/>
+						</div>
 
-						<Input
-							error={errors.endDate}
-							label={Liferay.Language.get('end')}
-							onChange={({target: {value}}) => {
-								setItems([
-									...items.filter(
-										(item) => item.value !== 'le'
-									),
-									{
-										label: value,
-										value: 'le',
-									},
-								]);
-							}}
-							required
-							type="date"
-						/>
-					</>
+						<div className="col-lg-6">
+							<Input
+								error={errors.endDate}
+								label={Liferay.Language.get('end')}
+								onChange={({target: {value}}) => {
+									setItems([
+										...items.filter(
+											(item) => item.value !== 'le'
+										),
+										{
+											label: value,
+											value: 'le',
+										},
+									]);
+								}}
+								required
+								type="date"
+							/>
+						</div>
+					</div>
 				)}
 			</ClayModal.Body>
 

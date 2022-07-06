@@ -82,10 +82,14 @@ public class CommerceInventoryReplenishmentItemCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", uuid=");
+		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", commerceInventoryReplenishmentItemId=");
 		sb.append(commerceInventoryReplenishmentItemId);
 		sb.append(", companyId=");
@@ -118,6 +122,22 @@ public class CommerceInventoryReplenishmentItemCacheModel
 				new CommerceInventoryReplenishmentItemImpl();
 
 		commerceInventoryReplenishmentItemImpl.setMvccVersion(mvccVersion);
+
+		if (uuid == null) {
+			commerceInventoryReplenishmentItemImpl.setUuid("");
+		}
+		else {
+			commerceInventoryReplenishmentItemImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			commerceInventoryReplenishmentItemImpl.setExternalReferenceCode("");
+		}
+		else {
+			commerceInventoryReplenishmentItemImpl.setExternalReferenceCode(
+				externalReferenceCode);
+		}
+
 		commerceInventoryReplenishmentItemImpl.
 			setCommerceInventoryReplenishmentItemId(
 				commerceInventoryReplenishmentItemId);
@@ -175,6 +195,8 @@ public class CommerceInventoryReplenishmentItemCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		commerceInventoryReplenishmentItemId = objectInput.readLong();
 
@@ -195,6 +217,20 @@ public class CommerceInventoryReplenishmentItemCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(commerceInventoryReplenishmentItemId);
 
@@ -227,6 +263,8 @@ public class CommerceInventoryReplenishmentItemCacheModel
 	}
 
 	public long mvccVersion;
+	public String uuid;
+	public String externalReferenceCode;
 	public long commerceInventoryReplenishmentItemId;
 	public long companyId;
 	public long userId;

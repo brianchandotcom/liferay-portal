@@ -138,21 +138,15 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 			getCommerceInventoryWarehouseItem(commerceInventoryWarehouseItemId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #getCommerceInventoryWarehouseItemByReferenceCode(String,
-	 long)}
-	 */
-	@Deprecated
 	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
-			getCommerceInventoryWarehouseItemByReferenceCode(
-				long companyId, String externalReferenceCode)
+			getCommerceInventoryWarehouseItem(
+				long commerceInventoryWarehouseId, String sku)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryWarehouseItemService.
-			getCommerceInventoryWarehouseItemByReferenceCode(
-				companyId, externalReferenceCode);
+			getCommerceInventoryWarehouseItem(
+				commerceInventoryWarehouseId, sku);
 	}
 
 	@Override

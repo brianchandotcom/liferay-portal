@@ -66,13 +66,14 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 
 	public static CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
+				String externalReferenceCode, long userId,
+				long commerceInventoryWarehouseId, String sku,
 				java.util.Date availabilityDate, int quantity)
 		throws PortalException {
 
 		return getService().addCommerceInventoryReplenishmentItem(
-			userId, commerceInventoryWarehouseId, sku, availabilityDate,
-			quantity);
+			externalReferenceCode, userId, commerceInventoryWarehouseId, sku,
+			availabilityDate, quantity);
 	}
 
 	/**
@@ -136,6 +137,13 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 
 		return getService().deleteCommerceInventoryReplenishmentItem(
 			commerceInventoryReplenishmentItemId);
+	}
+
+	public static void deleteCommerceInventoryReplenishmentItems(
+		long commerceInventoryWarehouseId) {
+
+		getService().deleteCommerceInventoryReplenishmentItems(
+			commerceInventoryWarehouseId);
 	}
 
 	/**
@@ -241,6 +249,51 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 			commerceInventoryReplenishmentItemId);
 	}
 
+	/**
+	 * Returns the commerce inventory replenishment item with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce inventory replenishment item's external reference code
+	 * @return the matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
+	 */
+	public static CommerceInventoryReplenishmentItem
+		fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return getService().
+			fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	public static CommerceInventoryReplenishmentItem
+		fetchCommerceInventoryReplenishmentItemByReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return getService().
+			fetchCommerceInventoryReplenishmentItemByReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce inventory replenishment item with the matching UUID and company.
+	 *
+	 * @param uuid the commerce inventory replenishment item's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
+	 */
+	public static CommerceInventoryReplenishmentItem
+		fetchCommerceInventoryReplenishmentItemByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return getService().
+			fetchCommerceInventoryReplenishmentItemByUuidAndCompanyId(
+				uuid, companyId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -264,6 +317,42 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	}
 
 	/**
+	 * Returns the commerce inventory replenishment item with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce inventory replenishment item's external reference code
+	 * @return the matching commerce inventory replenishment item
+	 * @throws PortalException if a matching commerce inventory replenishment item could not be found
+	 */
+	public static CommerceInventoryReplenishmentItem
+			getCommerceInventoryReplenishmentItemByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().
+			getCommerceInventoryReplenishmentItemByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce inventory replenishment item with the matching UUID and company.
+	 *
+	 * @param uuid the commerce inventory replenishment item's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce inventory replenishment item
+	 * @throws PortalException if a matching commerce inventory replenishment item could not be found
+	 */
+	public static CommerceInventoryReplenishmentItem
+			getCommerceInventoryReplenishmentItemByUuidAndCompanyId(
+				String uuid, long companyId)
+		throws PortalException {
+
+		return getService().
+			getCommerceInventoryReplenishmentItemByUuidAndCompanyId(
+				uuid, companyId);
+	}
+
+	/**
 	 * Returns a range of all the commerce inventory replenishment items.
 	 *
 	 * <p>
@@ -278,6 +367,15 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 		getCommerceInventoryReplenishmentItems(int start, int end) {
 
 		return getService().getCommerceInventoryReplenishmentItems(start, end);
+	}
+
+	public static List<CommerceInventoryReplenishmentItem>
+		getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseId(
+			long commerceInventoryWarehouseId, int start, int end) {
+
+		return getService().
+			getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseId(
+				commerceInventoryWarehouseId, start, end);
 	}
 
 	public static List<CommerceInventoryReplenishmentItem>
@@ -306,12 +404,29 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 	}
 
 	public static int
+		getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseId(
+			long commerceInventoryWarehouseId) {
+
+		return getService().
+			getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseId(
+				commerceInventoryWarehouseId);
+	}
+
+	public static int
 		getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
 			long companyId, String sku) {
 
 		return getService().
 			getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
 				companyId, sku);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static
@@ -360,13 +475,14 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 
 	public static CommerceInventoryReplenishmentItem
 			updateCommerceInventoryReplenishmentItem(
+				String externalReferenceCode,
 				long commerceInventoryReplenishmentItemId,
 				java.util.Date availabilityDate, int quantity, long mvccVersion)
 		throws PortalException {
 
 		return getService().updateCommerceInventoryReplenishmentItem(
-			commerceInventoryReplenishmentItemId, availabilityDate, quantity,
-			mvccVersion);
+			externalReferenceCode, commerceInventoryReplenishmentItemId,
+			availabilityDate, quantity, mvccVersion);
 	}
 
 	public static CommerceInventoryReplenishmentItemLocalService getService() {

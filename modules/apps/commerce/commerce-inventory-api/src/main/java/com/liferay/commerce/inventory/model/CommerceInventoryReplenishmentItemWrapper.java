@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.inventory.model;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -46,6 +47,8 @@ public class CommerceInventoryReplenishmentItemWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put(
 			"commerceInventoryReplenishmentItemId",
 			getCommerceInventoryReplenishmentItemId());
@@ -69,6 +72,19 @@ public class CommerceInventoryReplenishmentItemWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long commerceInventoryReplenishmentItemId = (Long)attributes.get(
@@ -198,6 +214,16 @@ public class CommerceInventoryReplenishmentItemWrapper
 	}
 
 	/**
+	 * Returns the external reference code of this commerce inventory replenishment item.
+	 *
+	 * @return the external reference code of this commerce inventory replenishment item
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
+	}
+
+	/**
 	 * Returns the modified date of this commerce inventory replenishment item.
 	 *
 	 * @return the modified date of this commerce inventory replenishment item
@@ -277,6 +303,16 @@ public class CommerceInventoryReplenishmentItemWrapper
 		return model.getUserUuid();
 	}
 
+	/**
+	 * Returns the uuid of this commerce inventory replenishment item.
+	 *
+	 * @return the uuid of this commerce inventory replenishment item
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -335,6 +371,16 @@ public class CommerceInventoryReplenishmentItemWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the external reference code of this commerce inventory replenishment item.
+	 *
+	 * @param externalReferenceCode the external reference code of this commerce inventory replenishment item
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -415,6 +461,21 @@ public class CommerceInventoryReplenishmentItemWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	/**
+	 * Sets the uuid of this commerce inventory replenishment item.
+	 *
+	 * @param uuid the uuid of this commerce inventory replenishment item
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return model.getStagedModelType();
 	}
 
 	@Override

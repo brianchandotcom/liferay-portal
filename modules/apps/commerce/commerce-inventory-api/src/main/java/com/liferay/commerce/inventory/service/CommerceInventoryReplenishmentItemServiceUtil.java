@@ -40,12 +40,13 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 	 */
 	public static CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
-				long commerceInventoryWarehouseId, String sku,
-				java.util.Date availabilityDate, int quantity)
+				String externalReferenceCode, long commerceInventoryWarehouseId,
+				String sku, java.util.Date availabilityDate, int quantity)
 		throws PortalException {
 
 		return getService().addCommerceInventoryReplenishmentItem(
-			commerceInventoryWarehouseId, sku, availabilityDate, quantity);
+			externalReferenceCode, commerceInventoryWarehouseId, sku,
+			availabilityDate, quantity);
 	}
 
 	public static void deleteCommerceInventoryReplenishmentItem(
@@ -57,12 +58,32 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 	}
 
 	public static CommerceInventoryReplenishmentItem
+			fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().
+			fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
+				externalReferenceCode, companyId);
+	}
+
+	public static CommerceInventoryReplenishmentItem
 			getCommerceInventoryReplenishmentItem(
 				long commerceInventoryReplenishmentItemId)
 		throws PortalException {
 
 		return getService().getCommerceInventoryReplenishmentItem(
 			commerceInventoryReplenishmentItemId);
+	}
+
+	public static List<CommerceInventoryReplenishmentItem>
+			getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseId(
+				long commerceInventoryWarehouseId, int start, int end)
+		throws PortalException {
+
+		return getService().
+			getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseId(
+				commerceInventoryWarehouseId, start, end);
 	}
 
 	public static List<CommerceInventoryReplenishmentItem>
@@ -81,6 +102,16 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 
 		return getService().getCommerceInventoryReplenishmentItemsCount(
 			commerceInventoryWarehouseId, sku);
+	}
+
+	public static int
+			getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseId(
+				long commerceInventoryWarehouseId)
+		throws PortalException {
+
+		return getService().
+			getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseId(
+				commerceInventoryWarehouseId);
 	}
 
 	public static int
@@ -104,13 +135,14 @@ public class CommerceInventoryReplenishmentItemServiceUtil {
 
 	public static CommerceInventoryReplenishmentItem
 			updateCommerceInventoryReplenishmentItem(
+				String externalReferenceCode,
 				long commerceInventoryReplenishmentItemId,
 				java.util.Date availabilityDate, int quantity, long mvccVersion)
 		throws PortalException {
 
 		return getService().updateCommerceInventoryReplenishmentItem(
-			commerceInventoryReplenishmentItemId, availabilityDate, quantity,
-			mvccVersion);
+			externalReferenceCode, commerceInventoryReplenishmentItemId,
+			availabilityDate, quantity, mvccVersion);
 	}
 
 	public static CommerceInventoryReplenishmentItemService getService() {

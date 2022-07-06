@@ -85,7 +85,7 @@ definition {
 
 		task ("Then the response body only includes items with priority 1.0") {
 			HeadlessWebcontentAPI.assertTitleFieldWithCorrectName(
-				expectedTitleName = "Web Content 2,Web Content 1",
+				expectedTitleName = "Web Content 1,Web Content 2",
 				responseToParse = "${response}");
 		}
 	}

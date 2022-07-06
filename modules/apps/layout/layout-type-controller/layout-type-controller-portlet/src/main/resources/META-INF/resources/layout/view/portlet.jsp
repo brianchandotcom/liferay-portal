@@ -59,7 +59,7 @@
 		%>
 
 		<liferay-layout:render-layout-structure
-			layoutStructure="<%= portletLayoutDisplayContext.getLayoutStructure(themeDisplay.getScopeGroupId(), themeDisplay.getLayout()) %>"
+			layoutStructure="<%= portletLayoutDisplayContext.getLayoutStructure(themeDisplay.getLayout()) %>"
 		/>
 	</c:otherwise>
 </c:choose>

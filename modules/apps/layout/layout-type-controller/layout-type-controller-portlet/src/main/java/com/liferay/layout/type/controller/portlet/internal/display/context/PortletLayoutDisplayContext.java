@@ -39,7 +39,7 @@ public class PortletLayoutDisplayContext {
 			layoutPageTemplateStructureLocalService;
 	}
 
-	public LayoutStructure getLayoutStructure(long groupId, Layout layout) {
+	public LayoutStructure getLayoutStructure(Layout layout) {
 		if (_layoutStructure != null) {
 			return _layoutStructure;
 		}

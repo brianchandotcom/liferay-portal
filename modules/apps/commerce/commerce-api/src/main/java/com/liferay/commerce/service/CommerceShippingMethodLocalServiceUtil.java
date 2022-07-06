@@ -87,14 +87,14 @@ public class CommerceShippingMethodLocalServiceUtil {
 
 	public static CommerceShippingMethod addCommerceShippingMethod(
 			long userId, long groupId, Map<java.util.Locale, String> nameMap,
-			Map<java.util.Locale, String> descriptionMap,
-			java.io.File imageFile, String engineKey, double priority,
-			boolean active)
+			Map<java.util.Locale, String> descriptionMap, boolean active,
+			String engineKey, java.io.File imageFile, double priority,
+			String trackingURL)
 		throws PortalException {
 
 		return getService().addCommerceShippingMethod(
-			userId, groupId, nameMap, descriptionMap, imageFile, engineKey,
-			priority, active);
+			userId, groupId, nameMap, descriptionMap, active, engineKey,
+			imageFile, priority, trackingURL);
 	}
 
 	/**
@@ -429,13 +429,13 @@ public class CommerceShippingMethodLocalServiceUtil {
 	public static CommerceShippingMethod updateCommerceShippingMethod(
 			long commerceShippingMethodId,
 			Map<java.util.Locale, String> nameMap,
-			Map<java.util.Locale, String> descriptionMap,
-			java.io.File imageFile, double priority, boolean active)
+			Map<java.util.Locale, String> descriptionMap, boolean active,
+			java.io.File imageFile, double priority, String trackingURL)
 		throws PortalException {
 
 		return getService().updateCommerceShippingMethod(
-			commerceShippingMethodId, nameMap, descriptionMap, imageFile,
-			priority, active);
+			commerceShippingMethodId, nameMap, descriptionMap, active,
+			imageFile, priority, trackingURL);
 	}
 
 	public static CommerceShippingMethodLocalService getService() {

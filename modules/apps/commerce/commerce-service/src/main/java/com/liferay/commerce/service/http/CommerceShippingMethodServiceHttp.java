@@ -144,8 +144,8 @@ public class CommerceShippingMethodServiceHttp {
 				HttpPrincipal httpPrincipal, long groupId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				java.io.File imageFile, String engineKey, double priority,
-				boolean active)
+				boolean active, String engineKey, java.io.File imageFile,
+				double priority, String trackingURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -155,8 +155,8 @@ public class CommerceShippingMethodServiceHttp {
 				_addCommerceShippingMethodParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, nameMap, descriptionMap, imageFile,
-				engineKey, priority, active);
+				methodKey, groupId, nameMap, descriptionMap, active, engineKey,
+				imageFile, priority, trackingURL);
 
 			Object returnObj = null;
 
@@ -741,7 +741,8 @@ public class CommerceShippingMethodServiceHttp {
 				HttpPrincipal httpPrincipal, long commerceShippingMethodId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				java.io.File imageFile, double priority, boolean active)
+				boolean active, java.io.File imageFile, double priority,
+				String trackingURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -752,7 +753,7 @@ public class CommerceShippingMethodServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceShippingMethodId, nameMap, descriptionMap,
-				imageFile, priority, active);
+				active, imageFile, priority, trackingURL);
 
 			Object returnObj = null;
 
@@ -796,8 +797,8 @@ public class CommerceShippingMethodServiceHttp {
 		};
 	private static final Class<?>[] _addCommerceShippingMethodParameterTypes2 =
 		new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class,
-			java.io.File.class, String.class, double.class, boolean.class
+			long.class, java.util.Map.class, java.util.Map.class, boolean.class,
+			String.class, java.io.File.class, double.class, String.class
 		};
 	private static final Class<?>[]
 		_createCommerceShippingMethodParameterTypes3 = new Class[] {long.class};
@@ -849,8 +850,8 @@ public class CommerceShippingMethodServiceHttp {
 	};
 	private static final Class<?>[]
 		_updateCommerceShippingMethodParameterTypes16 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class,
-			java.io.File.class, double.class, boolean.class
+			long.class, java.util.Map.class, java.util.Map.class, boolean.class,
+			java.io.File.class, double.class, String.class
 		};
 
 }

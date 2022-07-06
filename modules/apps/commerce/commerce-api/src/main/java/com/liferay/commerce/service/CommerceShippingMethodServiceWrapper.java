@@ -67,13 +67,13 @@ public class CommerceShippingMethodServiceWrapper
 			addCommerceShippingMethod(
 				long groupId, java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				java.io.File imageFile, String engineKey, double priority,
-				boolean active)
+				boolean active, String engineKey, java.io.File imageFile,
+				double priority, String trackingURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShippingMethodService.addCommerceShippingMethod(
-			groupId, nameMap, descriptionMap, imageFile, engineKey, priority,
-			active);
+			groupId, nameMap, descriptionMap, active, engineKey, imageFile,
+			priority, trackingURL);
 	}
 
 	@Override
@@ -219,12 +219,13 @@ public class CommerceShippingMethodServiceWrapper
 				long commerceShippingMethodId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				java.io.File imageFile, double priority, boolean active)
+				boolean active, java.io.File imageFile, double priority,
+				String trackingURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShippingMethodService.updateCommerceShippingMethod(
-			commerceShippingMethodId, nameMap, descriptionMap, imageFile,
-			priority, active);
+			commerceShippingMethodId, nameMap, descriptionMap, active,
+			imageFile, priority, trackingURL);
 	}
 
 	@Override

@@ -98,8 +98,9 @@ public interface CommerceShippingMethodLocalService
 
 	public CommerceShippingMethod addCommerceShippingMethod(
 			long userId, long groupId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile,
-			String engineKey, double priority, boolean active)
+			Map<Locale, String> descriptionMap, boolean active,
+			String engineKey, File imageFile, double priority,
+			String trackingURL)
 		throws PortalException;
 
 	/**
@@ -350,8 +351,8 @@ public interface CommerceShippingMethodLocalService
 
 	public CommerceShippingMethod updateCommerceShippingMethod(
 			long commerceShippingMethodId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile, double priority,
-			boolean active)
+			Map<Locale, String> descriptionMap, boolean active, File imageFile,
+			double priority, String trackingURL)
 		throws PortalException;
 
 }

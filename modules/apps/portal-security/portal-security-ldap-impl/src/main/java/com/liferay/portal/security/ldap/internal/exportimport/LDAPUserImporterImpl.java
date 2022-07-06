@@ -1168,6 +1168,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			SafeLdapName userGroupDNSafeLdapName)
 		throws Exception {
 
+		UserGroup userGroup = null;
 		Long userGroupId = null;
 		String userGroupIdKey = null;
 
@@ -1190,40 +1191,40 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					"Skipping reimport of full group DN " +
 						userGroupDNSafeLdapName);
 			}
-
-			return _userGroupLocalService.fetchUserGroup(userGroupId);
 		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Importing full group DN " + userGroupDNSafeLdapName);
+			}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Importing full group DN " + userGroupDNSafeLdapName);
-		}
+			Attributes groupAttributes = null;
 
-		Attributes groupAttributes = null;
+			try {
+				groupAttributes = _safePortalLDAP.getGroupAttributes(
+					ldapImportContext.getLdapServerId(),
+					ldapImportContext.getCompanyId(),
+					ldapImportContext.getSafeLdapContext(),
+					userGroupDNSafeLdapName);
+			}
+			catch (NameNotFoundException nameNotFoundException) {
+				_log.error(
+					"LDAP group not found with full group DN " +
+						userGroupDNSafeLdapName,
+					nameNotFoundException);
+			}
 
-		try {
-			groupAttributes = _safePortalLDAP.getGroupAttributes(
-				ldapImportContext.getLdapServerId(),
-				ldapImportContext.getCompanyId(),
-				ldapImportContext.getSafeLdapContext(),
-				userGroupDNSafeLdapName);
-		}
-		catch (NameNotFoundException nameNotFoundException) {
-			_log.error(
-				"LDAP group not found with full group DN " +
-					userGroupDNSafeLdapName,
-				nameNotFoundException);
-		}
+			userGroup = _importUserGroup(
+				ldapImportContext.getCompanyId(), groupAttributes,
+				ldapImportContext.getGroupMappings());
 
-		UserGroup userGroup = _importUserGroup(
-			ldapImportContext.getCompanyId(), groupAttributes,
-			ldapImportContext.getGroupMappings());
+			if (userGroup == null) {
+				return null;
+			}
 
-		if (userGroup == null) {
-			return null;
-		}
-
-		if (ldapImportConfiguration.importGroupCacheEnabled()) {
-			_portalCache.put(userGroupIdKey, userGroup.getUserGroupId());
+			if (ldapImportConfiguration.importGroupCacheEnabled()) {
+				_portalCache.put(userGroupIdKey, userGroup.getUserGroupId());
+			}
 		}
 
 		return userGroup;

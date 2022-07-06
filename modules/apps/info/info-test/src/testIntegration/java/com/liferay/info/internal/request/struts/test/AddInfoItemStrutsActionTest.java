@@ -193,6 +193,117 @@ public class AddInfoItemStrutsActionTest {
 			_user.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
+	private void _processEvents(
+			UploadPortletRequest uploadPortletRequest,
+			MockHttpServletResponse mockHttpServletResponse, User user)
+		throws Exception {
+
+		uploadPortletRequest.setAttribute(
+			WebKeys.CURRENT_URL, "/portal/add_info_item");
+
+		uploadPortletRequest.setAttribute(WebKeys.USER, user);
+
+		EventsProcessorUtil.process(
+			PropsKeys.SERVLET_SERVICE_EVENTS_PRE,
+			PropsValues.SERVLET_SERVICE_EVENTS_PRE, uploadPortletRequest,
+			mockHttpServletResponse);
+	}
+
+	private void _testAddInfoItem(
+			String bigDecimalValueInput, String bigDecimalValueExpected,
+			String doubleValueInput, String doubleValueExpected,
+			String integerValueInput, String integerValueExpected,
+			String longValueInput, String longValueExpected, String stringValue,
+			boolean errorExpected)
+		throws Exception {
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		mockMultipartHttpServletRequest.addHeader(
+			HttpHeaders.REFERER, "https://example.com/error");
+
+		UploadPortletRequest uploadPortletRequest =
+			new UploadPortletRequestImpl(
+				new UploadServletRequestImpl(
+					mockMultipartHttpServletRequest, null,
+					HashMapBuilder.put(
+						"classNameId", Collections.singletonList(_classNameId)
+					).put(
+						"classTypeId", Collections.singletonList("0")
+					).put(
+						"formItemId", Collections.singletonList(_formItemId)
+					).put(
+						"groupId",
+						Collections.singletonList(
+							String.valueOf(_group.getGroupId()))
+					).put(
+						"myDecimal",
+						() -> {
+							if (doubleValueInput == null) {
+								return null;
+							}
+
+							return Collections.singletonList(doubleValueInput);
+						}
+					).put(
+						"myInteger",
+						() -> {
+							if (integerValueInput == null) {
+								return null;
+							}
+
+							return Collections.singletonList(integerValueInput);
+						}
+					).put(
+						"myLongInteger",
+						() -> {
+							if (longValueInput == null) {
+								return null;
+							}
+
+							return Collections.singletonList(longValueInput);
+						}
+					).put(
+						"myPrecisionDecimal",
+						() -> {
+							if (bigDecimalValueInput == null) {
+								return null;
+							}
+
+							return Collections.singletonList(
+								bigDecimalValueInput);
+						}
+					).put(
+						"myText", Collections.singletonList(stringValue)
+					).put(
+						"plid",
+						Collections.singletonList(
+							String.valueOf(_layout.getPlid()))
+					).put(
+						"redirect",
+						Collections.singletonList("https://example.com/")
+					).put(
+						"segmentsExperienceId",
+						Collections.singletonList(
+							String.valueOf(_defaultSegmentsExperienceId))
+					).build()),
+				null, RandomTestUtil.randomString());
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			mockHttpServletResponse, unsyncStringWriter);
+
+		_processEvents(uploadPortletRequest, mockHttpServletResponse, _user);
+
+		_addInfoItemStrutsAction.execute(
+			uploadPortletRequest, pipingServletResponse);
+	}
+
 	@Inject(filter = "component.name=*.AddInfoItemStrutsAction")
 	private StrutsAction _addInfoItemStrutsAction;
 

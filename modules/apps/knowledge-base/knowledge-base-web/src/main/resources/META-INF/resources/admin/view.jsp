@@ -29,6 +29,12 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 %>
 
+<div class="kbVerticalBar">
+	<react:component
+		module="admin/js/components/VerticalBar"
+	/>
+</div>
+
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 
 <clay:management-toolbar

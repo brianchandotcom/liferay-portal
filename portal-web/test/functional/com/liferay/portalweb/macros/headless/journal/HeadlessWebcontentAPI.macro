@@ -244,6 +244,24 @@ definition {
 		return "${curl}";
 	}
 
+	macro _filterStructuredContentInAssetLibrary {
+		Variables.assertDefined(parameterList = "${filtervalue}");
+
+		var portalURL = JSONCompany.getPortalURL();
+		var siteId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/structured-contents?filter=${filtervalue} \
+			-u test@liferay.com:test \
+			-H accept: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _sortStructureContent {
 		Variables.assertDefined(parameterList = "${sortvalue}");
 
@@ -281,11 +299,15 @@ definition {
 	}
 
 	macro assertExternalReferenceCodeWithCorrectValue {
+		if (!(isSet(expectedExternalReferenceCodeValue))) {
+			var expectedExternalReferenceCodeValue = JSONUtil.getWithJSONPath("${responseToParse}", "$.['uuid']");
+		}
+
 		var actualExternalReferenceCodeValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..externalReferenceCode");
 
 		TestUtils.assertEquals(
 			actual = "${actualExternalReferenceCodeValue}",
-			expected = "${expectedactualExternalReferenceCodeValueValue}");
+			expected = "${expectedExternalReferenceCodeValue}");
 	}
 
 	macro assertPriorityFieldWithCorrectValue {
@@ -390,6 +412,14 @@ definition {
 
 	macro filterStructuredContent {
 		var response = HeadlessWebcontentAPI._filterStructuredContent(filtervalue = "${filtervalue}");
+
+		return "${response}";
+	}
+
+	macro filterStructuredContentInAssetLibrary {
+		var response = HeadlessWebcontentAPI._filterStructuredContentInAssetLibrary(
+			assetLibraryId = "${assetLibraryId}",
+			filtervalue = "${filtervalue}");
 
 		return "${response}";
 	}

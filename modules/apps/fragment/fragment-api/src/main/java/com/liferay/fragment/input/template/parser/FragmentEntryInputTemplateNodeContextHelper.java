@@ -293,11 +293,11 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				"optionsLabelFieldName",
 				optionsLabelFieldNameOptional.orElse(null));
 
-			Optional<String> autocompleteURLOptional =
+			Optional<String> optionsURLOptional =
 				infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS_URL);
 
 			inputTemplateNode.addAttribute(
-				"optionsURL", autocompleteURLOptional.orElse(null));
+				"optionsURL", optionsURLOptional.orElse(null));
 
 			Optional<String> optionsValueFieldNameOptional =
 				infoField.getAttributeOptional(

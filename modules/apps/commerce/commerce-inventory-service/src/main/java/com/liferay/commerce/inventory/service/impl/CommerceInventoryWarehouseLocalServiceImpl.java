@@ -60,30 +60,6 @@ import java.util.List;
 public class CommerceInventoryWarehouseLocalServiceImpl
 	extends CommerceInventoryWarehouseLocalServiceBaseImpl {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addCommerceInventoryWarehouse(String,
-	 *             String, String, String, boolean, String, String, String,
-	 *             String, String, String, String, double, double,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceInventoryWarehouse addCommerceInventoryWarehouse(
-			String name, String description, boolean active, String street1,
-			String street2, String street3, String city, String zip,
-			String commerceRegionCode, String commerceCountryCode,
-			double latitude, double longitude, String externalReferenceCode,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addCommerceInventoryWarehouse(
-			externalReferenceCode, name, description, active, street1, street2,
-			street3, city, zip, commerceRegionCode, commerceCountryCode,
-			latitude, longitude, serviceContext);
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceInventoryWarehouse addCommerceInventoryWarehouse(
@@ -160,21 +136,20 @@ public class CommerceInventoryWarehouseLocalServiceImpl
 			CommerceInventoryWarehouse commerceInventoryWarehouse)
 		throws PortalException {
 
-		commerceInventoryWarehousePersistence.remove(
-			commerceInventoryWarehouse);
-
-		// Commerce warehouse items
+		commerceInventoryWarehouse =
+			commerceInventoryWarehousePersistence.remove(
+				commerceInventoryWarehouse);
 
 		commerceInventoryWarehouseItemLocalService.
 			deleteCommerceInventoryWarehouseItems(
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 
-		// Expando
+		commerceInventoryReplenishmentItemLocalService.
+			deleteCommerceInventoryReplenishmentItems(
+				commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
 
 		_expandoRowLocalService.deleteRows(
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId());
-
-		// Resources
 
 		resourceLocalService.deleteResource(
 			commerceInventoryWarehouse, ResourceConstants.SCOPE_INDIVIDUAL);

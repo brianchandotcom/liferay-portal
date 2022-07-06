@@ -257,7 +257,7 @@ public class DDMFormReportDataUtil {
 
 	private static String _getValue(Value value) {
 		Set<Locale> availableLocales = value.getAvailableLocales();
-        Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
 		if (availableLocales.contains(locale)) {
 			return value.getString(locale);

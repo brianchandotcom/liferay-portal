@@ -109,9 +109,10 @@ public class EditCommerceShippingMethodMVCActionCommand
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "descriptionMapAsXML");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		File imageFile = uploadPortletRequest.getFile("imageFile");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
-		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+		String trackingURL = ParamUtil.getString(actionRequest, "trackingURL");
 
 		CommerceShippingMethod commerceShippingMethod = null;
 
@@ -128,14 +129,14 @@ public class EditCommerceShippingMethodMVCActionCommand
 			commerceShippingMethod =
 				_commerceShippingMethodService.addCommerceShippingMethod(
 					commerceChannel.getGroupId(), nameMap, descriptionMap,
-					imageFile, commerceShippingMethodEngineKey, priority,
-					active);
+					active, commerceShippingMethodEngineKey, imageFile,
+					priority, trackingURL);
 		}
 		else {
 			commerceShippingMethod =
 				_commerceShippingMethodService.updateCommerceShippingMethod(
-					commerceShippingMethodId, nameMap, descriptionMap,
-					imageFile, priority, active);
+					commerceShippingMethodId, nameMap, descriptionMap, active,
+					imageFile, priority, trackingURL);
 		}
 
 		return commerceShippingMethod;

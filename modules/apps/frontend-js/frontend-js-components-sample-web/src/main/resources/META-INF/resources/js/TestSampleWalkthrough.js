@@ -12,22 +12,30 @@
  * details.
  */
 
-import {Walkthrough} from 'frontend-js-components-web';
+import Walkthrough from '@liferay/frontend-js-walkthrough-web/Walkthrough';
 import React from 'react';
 
 const TEST_WALKTHROUGH_CONFIG = {
 	closeOnClickOutside: false,
 	closeable: true,
+	pages: {
+		[themeDisplay.getPathContext() +
+		location.pathname +
+		location.search +
+		location.hash]: ['teststep1', 'teststep2'],
+	},
 	skippable: true,
 	steps: [
 		{
 			content: '<span>Content 1</span><br/><code>Hello1</code>',
 			darkbg: true,
+			id: 'teststep1',
 			nodeToHighlight: '#teststep1',
 			title: 'Title 1',
 		},
 		{
 			content: '<span>Content 2</span><br/><code>Hello2</code>',
+			id: 'teststep2',
 			nodeToHighlight: '#teststep2',
 			title: 'Title 2',
 		},

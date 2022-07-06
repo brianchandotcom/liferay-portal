@@ -444,7 +444,7 @@ definition {
 
 		// It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518
 
-		ACUtils.sessionPause();
+		Pause(locator1 = "30000");
 	}
 
 	macro closeModal {
@@ -723,7 +723,7 @@ definition {
 
 	macro logInPause {
 
-		// Pause is necessary because poshi logs in from one user to another very quickly.
+		// Pause is necessary because poshi logs in from one user to another quickly. For more information about pause see LRAC-9514
 
 		Pause(locator1 = "5000");
 	}
@@ -739,7 +739,7 @@ definition {
 
 				// Pause is necessary because the web content event is sent too fast and doesn't have time to process if you navigate to another page quickly.
 
-				ACUtils.sessionPause(time = "5000");
+				Pause(locator1 = "5000");
 			}
 
 			if ("${actionType}" == "View Blog") {
@@ -868,21 +868,6 @@ definition {
 			KeyPress(
 				locator1 = "ACSettings#SEARCH_BAR",
 				value1 = "\ENTER");
-		}
-	}
-
-	macro sessionPause {
-		if (isSet(time)) {
-
-			// Pause for reusable purpose
-
-			Pause(locator1 = "${time}");
-		}
-		else if (!(isSet(time))) {
-
-			// It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518
-
-			Pause(locator1 = "30000");
 		}
 	}
 

@@ -70,12 +70,15 @@ definition {
 			task ("Start Har recording") {
 				ProxyUtil.startHarRecording("blogClicked");
 
-				ACUtils.waitForSendingRequest();
 			}
 
 			Click(
 				key_entryContent = "This is the blog test for AC",
 				locator1 = "BlogsEntry#CONTENT");
+
+			task ("Wait for sending requests") {
+				ACUtils.waitForSendingRequest();
+			}
 		}
 
 		task ("Get entryId of blog entry") {
@@ -141,13 +144,15 @@ definition {
 
 			task ("Start Har recording") {
 				ProxyUtil.startHarRecording("blogClicked");
-
-				ACUtils.waitForSendingRequest();
 			}
 
 			Click(
 				key_entryTitle = "Blogs AC Title",
 				locator1 = "BlogsEntry#TITLE");
+
+			task ("Wait for sending requests") {
+				ACUtils.waitForSendingRequest();
+			}
 		}
 
 		task ("Get entryId of blog entry") {
@@ -506,8 +511,6 @@ definition {
 
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("BlogViewed");
-
-			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Go to the site page to assert the blog entry is displayed but don't visit it") {
@@ -518,6 +521,10 @@ definition {
 			BlogsEntry.viewEntryPG(
 				entryContent = "This is the blog test for AC",
 				entryTitle = "Blogs AC Title");
+		}
+
+		task ("Wait for sending requests") {
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("View the BlogViewed event not triggered") {
@@ -556,8 +563,6 @@ definition {
 
 		task ("Start Har recording") {
 			ProxyUtil.startHarRecording("blogViewed");
-
-			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Go to the site page to visit the blog") {
@@ -566,6 +571,10 @@ definition {
 				documentTitleList = "Blogs AC Title",
 				pageName = "AC Page",
 				siteName = "Site Name");
+		}
+
+		task ("Wait for sending requests") {
+			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Get entryId of blog entry") {

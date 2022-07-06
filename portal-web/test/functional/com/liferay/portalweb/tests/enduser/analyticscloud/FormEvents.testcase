@@ -291,7 +291,7 @@ definition {
 				locator1 = "FormFields#TEXT_FIELD");
 		}
 
-		task ("Stay 5 seconds") {
+		task ("Wait for sending requests") {
 			ACUtils.waitForSendingRequest();
 		}
 
@@ -399,7 +399,7 @@ definition {
 				locator1 = "FormFields#TEXT_FIELD");
 		}
 
-		task ("Stay 5 seconds") {
+		task ("Wait for sending requests") {
 			ACUtils.waitForSendingRequest();
 		}
 
@@ -837,10 +837,6 @@ definition {
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
-		}
-
-		task ("Wait for sending requests") {
-			ACUtils.waitForSendingRequest();
 		}
 
 		task ("Start Har recording") {

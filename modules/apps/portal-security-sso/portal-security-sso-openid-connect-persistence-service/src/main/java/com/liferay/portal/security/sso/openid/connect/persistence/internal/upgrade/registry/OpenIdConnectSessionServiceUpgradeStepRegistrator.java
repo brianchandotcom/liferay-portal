@@ -33,6 +33,12 @@ public class OpenIdConnectSessionServiceUpgradeStepRegistrator
 			"1.0.0", "1.1.0",
 			new com.liferay.portal.security.sso.openid.connect.persistence.
 				internal.upgrade.v1_1_0.OpenIdConnectSessionUpgradeProcess());
+
+		registry.register(
+			"1.1.0", "2.0.0",
+			new com.liferay.portal.security.sso.openid.connect.persistence.
+				internal.upgrade.v2_0_0.OpenIdConnectSessionUpgradeProcess(
+					_configurationAdmin));
 	}
 
 	@Reference

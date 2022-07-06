@@ -520,8 +520,6 @@ definition {
 			locator1 = "Calendar#VIEW_DAY_BUTTON",
 			value1 = "${viewTypeLocalized}");
 
-		Pause(locator1 = "10000");
-
 		var key_messageLocalized = "${messageLocalized}";
 
 		if (!(IsElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_DAY_SHOW_MORE_LOCALIZED"))) {
@@ -542,8 +540,6 @@ definition {
 			locator1 = "Calendar#VIEW_MONTH_BUTTON",
 			value1 = "${viewTypeLocalized}");
 
-		Pause(locator1 = "5000");
-
 		var key_messageLocalized = "${messageLocalized}";
 
 		AssertTextEquals(
@@ -555,8 +551,6 @@ definition {
 		AssertClick(
 			locator1 = "Calendar#VIEW_WEEK_BUTTON",
 			value1 = "${viewTypeLocalized}");
-
-		Pause(locator1 = "5000");
 
 		var key_messageLocalized = "${messageLocalized}";
 

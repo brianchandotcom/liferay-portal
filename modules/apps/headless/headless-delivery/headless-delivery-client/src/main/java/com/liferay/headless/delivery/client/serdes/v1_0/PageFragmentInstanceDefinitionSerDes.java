@@ -240,6 +240,20 @@ public class PageFragmentInstanceDefinitionSerDes {
 			sb.append(pageFragmentInstanceDefinition.getIndexed());
 		}
 
+		if (pageFragmentInstanceDefinition.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageFragmentInstanceDefinition.getName()));
+
+			sb.append("\"");
+		}
+
 		if (pageFragmentInstanceDefinition.getWidgetInstances() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -376,6 +390,15 @@ public class PageFragmentInstanceDefinitionSerDes {
 				String.valueOf(pageFragmentInstanceDefinition.getIndexed()));
 		}
 
+		if (pageFragmentInstanceDefinition.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put(
+				"name",
+				String.valueOf(pageFragmentInstanceDefinition.getName()));
+		}
+
 		if (pageFragmentInstanceDefinition.getWidgetInstances() == null) {
 			map.put("widgetInstances", null);
 		}
@@ -483,6 +506,12 @@ public class PageFragmentInstanceDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageFragmentInstanceDefinition.setIndexed(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					pageFragmentInstanceDefinition.setName(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "widgetInstances")) {

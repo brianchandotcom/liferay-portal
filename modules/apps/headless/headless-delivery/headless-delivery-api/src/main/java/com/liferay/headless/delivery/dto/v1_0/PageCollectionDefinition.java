@@ -311,6 +311,32 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String listStyle;
 
+	@Schema(description = "The custom name of a Page Collection.")
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The custom name of a Page Collection.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String name;
+
 	@Schema(description = "The number of columns in the page collection.")
 	public Integer getNumberOfColumns() {
 		return numberOfColumns;
@@ -668,6 +694,20 @@ public class PageCollectionDefinition implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(listStyle));
+
+			sb.append("\"");
+		}
+
+		if (name != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(name));
 
 			sb.append("\"");
 		}

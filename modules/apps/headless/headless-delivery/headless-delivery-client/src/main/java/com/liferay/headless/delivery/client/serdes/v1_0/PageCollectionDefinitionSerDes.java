@@ -186,6 +186,20 @@ public class PageCollectionDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (pageCollectionDefinition.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageCollectionDefinition.getName()));
+
+			sb.append("\"");
+		}
+
 		if (pageCollectionDefinition.getNumberOfColumns() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -359,6 +373,13 @@ public class PageCollectionDefinitionSerDes {
 				String.valueOf(pageCollectionDefinition.getListStyle()));
 		}
 
+		if (pageCollectionDefinition.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(pageCollectionDefinition.getName()));
+		}
+
 		if (pageCollectionDefinition.getNumberOfColumns() == null) {
 			map.put("numberOfColumns", null);
 		}
@@ -507,6 +528,12 @@ public class PageCollectionDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "listStyle")) {
 				if (jsonParserFieldValue != null) {
 					pageCollectionDefinition.setListStyle(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					pageCollectionDefinition.setName(
 						(String)jsonParserFieldValue);
 				}
 			}

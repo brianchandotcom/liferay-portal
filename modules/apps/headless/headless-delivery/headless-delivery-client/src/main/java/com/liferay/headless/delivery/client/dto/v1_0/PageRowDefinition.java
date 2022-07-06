@@ -204,6 +204,25 @@ public class PageRowDefinition implements Cloneable, Serializable {
 
 	protected Integer modulesPerRow;
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String name;
+
 	public Integer getNumberOfColumns() {
 		return numberOfColumns;
 	}

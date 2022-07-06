@@ -110,6 +110,36 @@ public class AddInfoItemStrutsActionTest {
 	}
 
 	@Test
+	public void testAddInfoItemInvalidBigDecimalTooBig() throws Exception {
+		_testAddInfoItemBigDecimal("100000000000000", null, true);
+	}
+
+	@Test
+	public void testAddInfoItemInvalidBigDecimalTooSmall() throws Exception {
+		_testAddInfoItemBigDecimal("-100000000000000", null, true);
+	}
+
+	@Test
+	public void testAddInfoItemInvalidIntegerTooBig() throws Exception {
+		_testAddInfoItemInteger("2147483648", true);
+	}
+
+	@Test
+	public void testAddInfoItemInvalidIntegerTooSmall() throws Exception {
+		_testAddInfoItemInteger("-2147483649", true);
+	}
+
+	@Test
+	public void testAddInfoItemInvalidLongTooBig() throws Exception {
+		_testAddInfoItemLong("9007199254740992", true);
+	}
+
+	@Test
+	public void testAddInfoItemInvalidLongTooSmall() throws Exception {
+		_testAddInfoItemLong("-9007199254740992", true);
+	}
+
+	@Test
 	public void testAddInfoItemMaxValues() throws Exception {
 		_testAddInfoItem(
 			"99999999999999.9999999999999999", "9999999999999998", "999999999",

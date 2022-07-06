@@ -424,6 +424,14 @@ definition {
 		return "${response}";
 	}
 
+	macro getWebContentIdFromResponse {
+		Variables.assertDefined(parameterList = "${responseToParse}");
+
+		var idFromResponse = JSONUtil.getWithJSONPath("${responseToParse}", "$.['id']");
+
+		return "${idFromResponse}";
+	}
+
 	macro sortStructureContent {
 		var response = HeadlessWebcontentAPI._sortStructureContent(sortvalue = "${sortvalue}");
 

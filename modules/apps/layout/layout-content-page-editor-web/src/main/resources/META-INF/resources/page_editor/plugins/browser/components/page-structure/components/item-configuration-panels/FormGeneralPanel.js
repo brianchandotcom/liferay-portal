@@ -35,6 +35,7 @@ import CurrentLanguageFlag from '../../../../../../common/components/CurrentLang
 import {LayoutSelector} from '../../../../../../common/components/LayoutSelector';
 import useControlledState from '../../../../../../core/hooks/useControlledState';
 import {CommonStyles} from './CommonStyles';
+import ContainerDisplayOptions from './ContainerDisplayOptions';
 
 export function FormGeneralPanel({item}) {
 	const dispatch = useDispatch();
@@ -140,10 +141,14 @@ function FormOptions({item, onValueSelect}) {
 				)}
 
 				{formIsMapped(item) && (
-					<SuccessMessageOptions
-						item={item}
-						onValueSelect={onValueSelect}
-					/>
+					<>
+						<SuccessMessageOptions
+							item={item}
+							onValueSelect={onValueSelect}
+						/>
+
+						<ContainerDisplayOptions item={item} />
+					</>
 				)}
 			</Collapse>
 		</div>

@@ -8,8 +8,6 @@ definition {
 		while ((IsElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB")) && ("${iterator}" != "${maxRetryNumber}")) {
 			DoubleClick(locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL");
 
-			Pause(locator1 = "1000");
-
 			if ("${iterator}" == "${maxRetryNumber}") {
 				echo("Couldn't add the field by double-click action, maximum retries number reached: ${iterator}");
 			}
@@ -28,30 +26,6 @@ definition {
 		FormViewBuilder.validateFieldLabel(fieldLabel = "${fieldLabel}");
 	}
 
-	macro addFieldByDragAndDrop {
-		Pause(locator1 = "10000");
-
-		var key_fieldLabel = "${fieldType}";
-
-		DragAndDrop.javaScriptDragAndDropToObject(
-			locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL",
-			locator2 = "Form#ADD_FIELD_POSITION",
-			value1 = "${fieldType}");
-
-		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
-	}
-
-	macro addFieldSetByDragAndDrop {
-		Pause(locator1 = "10000");
-
-		var key_fieldLabel = "${fieldType}";
-
-		DragAndDrop.dragAndDropToObject(
-			locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL",
-			locator2 = "FormViewBuilder#EMPTY_FORM_FIELD",
-			value1 = "${fieldType}");
-	}
-
 	macro addFieldToObject {
 		Click(locator1 = "FormViewBuilder#OBJECT_FIELD_PLUS");
 
@@ -60,17 +34,6 @@ definition {
 			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
 
 		FormViewBuilder.validateFieldInObject(fieldLabel = "${fieldName}");
-	}
-
-	macro addObjectByDragAndDrop {
-		Pause(locator1 = "10000");
-
-		var key_fieldLabel = "${fieldType}";
-
-		DragAndDrop.javaScriptDragAndDropToObject(
-			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL",
-			locator2 = "FormViewBuilder#EMPTY_FORM_FIELD",
-			value1 = "${fieldType}");
 	}
 
 	macro addRule {
@@ -627,8 +590,6 @@ definition {
 
 		for (var selectOption : list "${selectOptionsList}") {
 			FormViewBuilder.enableCheckboxPredefined(fieldName = "${selectOption}");
-
-			Pause(locator1 = "500");
 		}
 	}
 
@@ -698,94 +659,6 @@ definition {
 		Type(
 			locator1 = "FormViewBuilder#RULE_NAME_TEXT_FIELD",
 			value1 = "${ruleName}");
-	}
-
-	macro setUpFieldSet {
-		var key_fieldType = "${fieldType}";
-		var key_fieldSetName = "${fieldSetName}";
-		var key_fieldLabel = "${fieldLabel}";
-
-		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
-
-		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType}");
-
-		FormViewBuilder.setFieldLabel(fieldLabel = "${fieldLabel}");
-
-		Type(
-			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "${fieldSetName}");
-
-		Click(locator1 = "FormViewBuilder#SIDEBAR_GO_BACK");
-
-		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
-	}
-
-	macro setUpFieldSetOptions {
-		var key_fieldType = "${fieldType}";
-		var key_fieldSetName = "${fieldSetName}";
-
-		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
-
-		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType1}");
-
-		for (var number : list "1,2,3") {
-			FormViewBuilder.editOptionsRow(
-				optionName = "Single${number}",
-				optionValue = "Single ${number}",
-				rowNumber = "${number}");
-		}
-
-		Type(
-			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "${fieldSetName}");
-
-		Click(locator1 = "FormViewBuilder#SIDEBAR_GO_BACK");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType2}");
-
-		for (var number : list "1,2,3") {
-			FormViewBuilder.editOptionsRow(
-				optionName = "Option${number}",
-				optionValue = "Option ${number}",
-				rowNumber = "${number}");
-		}
-
-		Click(locator1 = "FormViewBuilder#SIDEBAR_GO_BACK");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType3}");
-
-		for (var number : list "1,2,3") {
-			FormViewBuilder.editOptionsRow(
-				optionName = "Option${number}",
-				optionValue = "Option ${number}",
-				rowNumber = "${number}");
-		}
-
-		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
-	}
-
-	macro setUpTwoFieldSets {
-		var key_fieldSetName = "${fieldSetName}";
-
-		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
-
-		Click(locator1 = "FormViewBuilder#CREATE_NEW_FIELD_SETS");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType1}");
-
-		Type(
-			locator1 = "FormViewBuilder#FIELD_SET_NAME",
-			value1 = "${fieldSetName}");
-
-		Click(locator1 = "FormViewBuilder#SIDEBAR_GO_BACK");
-
-		FormViewBuilder.addFieldByDoubleClick(fieldType = "${fieldType2}");
-
-		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
 	}
 
 	macro switchLocalization {

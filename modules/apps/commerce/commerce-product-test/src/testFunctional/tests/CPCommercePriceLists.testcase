@@ -1197,9 +1197,14 @@ definition {
 		}
 
 		task ("When the first price entry expires and the buyer views the U-Joint product") {
-			Pause(locator1 = "90000");
+			while (IsElementPresent(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "20.00")) {
 
-			Refresh();
+				// We need this pause for waiting for the Price List to expire
+
+				Pause(locator1 = "5000");
+
+				Refresh();
+			}
 		}
 
 		task ("Then the U-Joint price is the base price (24.00)") {
@@ -1210,9 +1215,14 @@ definition {
 		}
 
 		task ("When the second price entry is published and the buyer views the U-Joint product") {
-			Pause(locator1 = "30000");
+			while (IsElementPresent(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "24.00")) {
 
-			Refresh();
+				// We need this pause for waiting for the second price entry to be published
+
+				Pause(locator1 = "5000");
+
+				Refresh();
+			}
 		}
 
 		task ("Then the U-Joint price is the second price entry price (10.00)") {
@@ -1929,9 +1939,14 @@ definition {
 			panel = "Commerce",
 			portlet = "Price Lists");
 
-		Pause(locator1 = "180000");
+		while (IsElementPresent(key_name = "Test Price List", locator1 = "CommerceEntry#ASSERT_PRICE_LIST_STATUS", value1 = "APPROVED")) {
 
-		Refresh();
+			// We need this pause for waiting for the Price List to expire
+
+			Pause(locator1 = "5000");
+
+			Refresh();
+		}
 
 		AssertTextEquals(
 			key_name = "Test Price List",
@@ -2077,9 +2092,14 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
 			value1 = "$ 30.00");
 
-		Pause(locator1 = "180000");
+		while (IsElementPresent(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "$ 30.00")) {
 
-		Refresh();
+			// We need this pause for waiting for the Price List to expire
+
+			Pause(locator1 = "5000");
+
+			Refresh();
+		}
 
 		AssertTextEquals(
 			key_productName = "U-Joint",
@@ -2272,6 +2292,8 @@ definition {
 
 		Click(locator1 = "Icon#DELETE");
 
+		// We need this pause in order to wait for a Tier Price to expire
+
 		Pause(locator1 = "120000");
 
 		Refresh();
@@ -2442,9 +2464,14 @@ definition {
 
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Relevance");
 
-		Pause(locator1 = "180000");
+		while (IsElementPresent(key_productName = "U-Joint", locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE", value1 = "$ 30.00")) {
 
-		Refresh();
+			// We need this pause for waiting for the Price List to expire
+
+			Pause(locator1 = "5000");
+
+			Refresh();
+		}
 
 		for (var productNamePrice : list "U-Joint;24,ABS Sensor;50") {
 			var productName = StringUtil.extractFirst("${productNamePrice}", ";");

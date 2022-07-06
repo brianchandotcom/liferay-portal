@@ -862,9 +862,14 @@ definition {
 
 		Button.clickPublish();
 
-		Pause(locator1 = "180000");
+		while (IsElementPresent(locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD", value1 = "Approved")) {
 
-		Refresh();
+			// We need this pause for waiting for the Discount to expire
+
+			Pause(locator1 = "5000");
+
+			Refresh();
+		}
 
 		AssertTextEquals(
 			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD",

@@ -30,11 +30,9 @@ import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Wade Cao
@@ -49,7 +47,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 	}
 
 	private String _getElementInstancesJSON(
-		String elementInstancesJSON, List<SXPElement> sxpElements) {
+		String elementInstancesJSON, Map<Long, SXPElement> sxpElements) {
 
 		ElementInstance[] elementInstances =
 			ElementInstanceUtil.toElementInstances(elementInstancesJSON);
@@ -59,21 +57,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		}
 
 		for (ElementInstance elementInstance : elementInstances) {
-			SXPElement sxpElement = null;
-
 			com.liferay.search.experiences.rest.dto.v1_0.SXPElement
 				sxpElementDTO = elementInstance.getSxpElement();
 
-			for (SXPElement currSXPElement : sxpElements) {
-				if (Objects.equals(
-						currSXPElement.getSXPElementId(),
-						sxpElementDTO.getId())) {
-
-					sxpElement = currSXPElement;
-
-					break;
-				}
-			}
+			SXPElement sxpElement = sxpElements.get(sxpElementDTO.getId());
 
 			if (sxpElement == null) {
 				continue;
@@ -174,7 +161,7 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			alterTableDropColumn("SXPBlueprint", "key_");
 		}
 
-		List<SXPElement> sxpElements = new ArrayList<>();
+		Map<Long, SXPElement> sxpElements = new HashMap<>();
 
 		StringBundler sb = new StringBundler(2);
 
@@ -195,7 +182,8 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 					resultSet.getLong("sxpElementId"));
 				sxpElementImpl.setVersion(resultSet.getString("version"));
 
-				sxpElements.add(sxpElementImpl);
+				sxpElements.put(
+					sxpElementImpl.getSXPElementId(), sxpElementImpl);
 			}
 		}
 

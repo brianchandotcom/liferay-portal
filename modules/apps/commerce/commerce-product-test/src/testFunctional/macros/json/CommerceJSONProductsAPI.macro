@@ -481,7 +481,13 @@ definition {
 			-H 'accept: application/json' \
 		''';
 
-		var productId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'].['en_US'] == '${productName}')].['productId']");
+		if (isSet(productSKU)) {
+			var productId = JSONCurlUtil.get("${curl}", "$..['productId']");
+		}
+
+		if (isSet(productName)) {
+			var productId = JSONCurlUtil.get("${curl}", "$.items[?(@['name'].['en_US'] == '${productName}')].['productId']");
+		}
 
 		return "${productId}";
 	}

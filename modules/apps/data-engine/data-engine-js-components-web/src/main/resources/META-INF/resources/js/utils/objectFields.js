@@ -70,7 +70,7 @@ export async function addObjectFields(dispatch) {
 
 		dispatch({
 			payload: {objectFields},
-			type: EVENT_TYPES.OBJECT_FIELDS.ADD,
+			type: EVENT_TYPES.OBJECT.FIELDS_CHANGE,
 		});
 	}
 }
@@ -84,13 +84,13 @@ export async function updateObjectFields(dispatch) {
 
 		dispatch({
 			payload: {objectFields},
-			type: EVENT_TYPES.OBJECT_FIELDS.ADD,
+			type: EVENT_TYPES.OBJECT.FIELDS_CHANGE,
 		});
 	}
 	else {
 		dispatch({
 			payload: {objectFields: []},
-			type: EVENT_TYPES.OBJECT_FIELDS.ADD,
+			type: EVENT_TYPES.OBJECT.FIELDS_CHANGE,
 		});
 	}
 }

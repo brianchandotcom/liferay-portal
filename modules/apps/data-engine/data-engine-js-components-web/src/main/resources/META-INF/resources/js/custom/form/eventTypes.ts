@@ -21,8 +21,8 @@ const FORM_BUILDER = {
 	},
 };
 
-const OBJECT_FIELDS = {
-	ADD: 'object_fields_add',
+const OBJECT = {
+	FIELDS_CHANGE: 'object_fields_change',
 };
 
 const PAGE = {
@@ -46,7 +46,7 @@ const RULES = {
 
 export const EVENT_TYPES = {
 	FORM_BUILDER,
-	OBJECT_FIELDS,
+	OBJECT,
 	PAGE,
 	PAGINATION,
 	RULES,

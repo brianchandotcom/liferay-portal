@@ -21,8 +21,8 @@ export declare const EVENT_TYPES: {
 			UPDATE: string;
 		};
 	};
-	OBJECT_FIELDS: {
-		ADD: string;
+	OBJECT: {
+		FIELDS_CHANGE: string;
 	};
 	PAGE: {
 		ADD: string;

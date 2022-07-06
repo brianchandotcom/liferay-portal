@@ -74,7 +74,7 @@ const StateSync = ({
 	useEffect(() => {
 		dispatch({
 			payload: {objectFields},
-			type: EVENT_TYPES.OBJECT_FIELDS.ADD,
+			type: EVENT_TYPES.OBJECT.FIELDS_CHANGE,
 		});
 	}, [dispatch, objectFields]);
 

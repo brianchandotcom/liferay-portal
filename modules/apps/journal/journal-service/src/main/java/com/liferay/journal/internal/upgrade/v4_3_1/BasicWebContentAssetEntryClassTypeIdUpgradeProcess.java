@@ -14,7 +14,6 @@
 
 package com.liferay.journal.internal.upgrade.v4_3_1;
 
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
@@ -38,12 +37,10 @@ public class BasicWebContentAssetEntryClassTypeIdUpgradeProcess
 	extends UpgradeProcess {
 
 	public BasicWebContentAssetEntryClassTypeIdUpgradeProcess(
-		AssetEntryLocalService assetEntryLocalService,
 		CompanyLocalService companyLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		GroupLocalService groupLocalService) {
 
-		_assetEntryLocalService = assetEntryLocalService;
 		_companyLocalService = companyLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_groupLocalService = groupLocalService;
@@ -110,7 +107,6 @@ public class BasicWebContentAssetEntryClassTypeIdUpgradeProcess
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasicWebContentAssetEntryClassTypeIdUpgradeProcess.class);
 
-	private final AssetEntryLocalService _assetEntryLocalService;
 	private final CompanyLocalService _companyLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final GroupLocalService _groupLocalService;

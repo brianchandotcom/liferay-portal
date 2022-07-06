@@ -321,8 +321,8 @@ public class JournalServiceUpgradeStepRegistrator
 		registry.register(
 			"4.3.0", "4.3.1",
 			new BasicWebContentAssetEntryClassTypeIdUpgradeProcess(
-				_assetEntryLocalService, _companyLocalService,
-				_ddmStructureLocalService, _groupLocalService));
+				_companyLocalService, _ddmStructureLocalService,
+				_groupLocalService));
 	}
 
 	@Reference(unbind = "-")

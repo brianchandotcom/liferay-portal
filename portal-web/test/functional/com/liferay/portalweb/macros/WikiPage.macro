@@ -841,6 +841,8 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
+		WaitForElementPresent(locator1 = "CKEditor#BODY");
+
 		Type(
 			locator1 = "CKEditor#BODY",
 			value1 = "${wikiPageContentEdit}");

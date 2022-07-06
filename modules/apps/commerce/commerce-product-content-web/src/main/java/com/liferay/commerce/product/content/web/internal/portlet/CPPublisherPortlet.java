@@ -14,12 +14,17 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet;
 
+import com.liferay.adaptive.media.image.html.AMImageHTMLTagFactory;
+import com.liferay.commerce.media.CommerceCatalogDefaultImage;
+import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.display.context.CPPublisherDisplayContext;
 import com.liferay.commerce.product.content.web.internal.helper.CPPublisherWebHelper;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
+import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.url.CPFriendlyURL;
@@ -77,11 +82,14 @@ public class CPPublisherPortlet extends MVCPortlet {
 		try {
 			CPPublisherDisplayContext cpPublisherDisplayContext =
 				new CPPublisherDisplayContext(
+					_amImageHTMLTagFactory, _commerceCatalogDefaultImage,
+					_commerceMediaResolver, _cpAttachmentFileEntryLocalService,
 					_cpContentListEntryRendererRegistry,
 					_cpContentListRendererRegistry, _cpDataSourceRegistry,
-					_cpDefinitionHelper, _cpFriendlyURL, _cpPublisherWebHelper,
+					_cpDefinitionHelper, _cpDefinitionLocalService,
+					_cpFriendlyURL, _cpPublisherWebHelper,
 					_cpTypeServicesTracker, _friendlyURLEntryLocalService,
-					_portal.getHttpServletRequest(renderRequest));
+					_portal.getHttpServletRequest(renderRequest), _portal);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpPublisherDisplayContext);
@@ -97,6 +105,19 @@ public class CPPublisherPortlet extends MVCPortlet {
 		CPPublisherPortlet.class);
 
 	@Reference
+	private AMImageHTMLTagFactory _amImageHTMLTagFactory;
+
+	@Reference
+	private CommerceCatalogDefaultImage _commerceCatalogDefaultImage;
+
+	@Reference
+	private CommerceMediaResolver _commerceMediaResolver;
+
+	@Reference
+	private CPAttachmentFileEntryLocalService
+		_cpAttachmentFileEntryLocalService;
+
+	@Reference
 	private CPContentListEntryRendererRegistry
 		_cpContentListEntryRendererRegistry;
 
@@ -108,6 +129,9 @@ public class CPPublisherPortlet extends MVCPortlet {
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

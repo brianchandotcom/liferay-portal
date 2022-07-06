@@ -627,6 +627,161 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	public int countByObjectDefinitionId(long objectDefinitionId);
 
 	/**
+	 * Returns all the object fields where listTypeDefinitionId = &#63; and state = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param state the state
+	 * @return the matching object fields
+	 */
+	public java.util.List<ObjectField> findByLTDI_S(
+		long listTypeDefinitionId, boolean state);
+
+	/**
+	 * Returns a range of all the object fields where listTypeDefinitionId = &#63; and state = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param state the state
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @return the range of matching object fields
+	 */
+	public java.util.List<ObjectField> findByLTDI_S(
+		long listTypeDefinitionId, boolean state, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object fields where listTypeDefinitionId = &#63; and state = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param state the state
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object fields
+	 */
+	public java.util.List<ObjectField> findByLTDI_S(
+		long listTypeDefinitionId, boolean state, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the object fields where listTypeDefinitionId = &#63; and state = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectFieldModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param state the state
+	 * @param start the lower bound of the range of object fields
+	 * @param end the upper bound of the range of object fields (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object fields
+	 */
+	public java.util.List<ObjectField> findByLTDI_S(
+		long listTypeDefinitionId, boolean state, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first object field in the ordered set where listTypeDefinitionId = &#63; and state = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param state the state
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object field
+	 * @throws NoSuchObjectFieldException if a matching object field could not be found
+	 */
+	public ObjectField findByLTDI_S_First(
+			long listTypeDefinitionId, boolean state,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+				orderByComparator)
+		throws NoSuchObjectFieldException;
+
+	/**
+	 * Returns the first object field in the ordered set where listTypeDefinitionId = &#63; and state = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param state the state
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object field, or <code>null</code> if a matching object field could not be found
+	 */
+	public ObjectField fetchByLTDI_S_First(
+		long listTypeDefinitionId, boolean state,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+			orderByComparator);
+
+	/**
+	 * Returns the last object field in the ordered set where listTypeDefinitionId = &#63; and state = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param state the state
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object field
+	 * @throws NoSuchObjectFieldException if a matching object field could not be found
+	 */
+	public ObjectField findByLTDI_S_Last(
+			long listTypeDefinitionId, boolean state,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+				orderByComparator)
+		throws NoSuchObjectFieldException;
+
+	/**
+	 * Returns the last object field in the ordered set where listTypeDefinitionId = &#63; and state = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param state the state
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object field, or <code>null</code> if a matching object field could not be found
+	 */
+	public ObjectField fetchByLTDI_S_Last(
+		long listTypeDefinitionId, boolean state,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+			orderByComparator);
+
+	/**
+	 * Returns the object fields before and after the current object field in the ordered set where listTypeDefinitionId = &#63; and state = &#63;.
+	 *
+	 * @param objectFieldId the primary key of the current object field
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param state the state
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object field
+	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
+	 */
+	public ObjectField[] findByLTDI_S_PrevAndNext(
+			long objectFieldId, long listTypeDefinitionId, boolean state,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectField>
+				orderByComparator)
+		throws NoSuchObjectFieldException;
+
+	/**
+	 * Removes all the object fields where listTypeDefinitionId = &#63; and state = &#63; from the database.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param state the state
+	 */
+	public void removeByLTDI_S(long listTypeDefinitionId, boolean state);
+
+	/**
+	 * Returns the number of object fields where listTypeDefinitionId = &#63; and state = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param state the state
+	 * @return the number of matching object fields
+	 */
+	public int countByLTDI_S(long listTypeDefinitionId, boolean state);
+
+	/**
 	 * Returns all the object fields where objectDefinitionId = &#63; and dbTableName = &#63;.
 	 *
 	 * @param objectDefinitionId the object definition ID

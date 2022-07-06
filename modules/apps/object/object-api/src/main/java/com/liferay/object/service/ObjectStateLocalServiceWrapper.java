@@ -87,6 +87,12 @@ public class ObjectStateLocalServiceWrapper
 		return _objectStateLocalService.createPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void deleteListTypeEntryObjectStates(long listTypeEntryId) {
+		_objectStateLocalService.deleteListTypeEntryObjectStates(
+			listTypeEntryId);
+	}
+
 	/**
 	 * Deletes the object state with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -121,6 +127,12 @@ public class ObjectStateLocalServiceWrapper
 		com.liferay.object.model.ObjectState objectState) {
 
 		return _objectStateLocalService.deleteObjectState(objectState);
+	}
+
+	@Override
+	public void deleteObjectStateFlowObjectStates(long objectStateFlowId) {
+		_objectStateLocalService.deleteObjectStateFlowObjectStates(
+			objectStateFlowId);
 	}
 
 	/**
@@ -282,6 +294,14 @@ public class ObjectStateLocalServiceWrapper
 		return _objectStateLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectState>
+		getNextObjectStates(long sourceObjectStateId) {
+
+		return _objectStateLocalService.getNextObjectStates(
+			sourceObjectStateId);
+	}
+
 	/**
 	 * Returns the object state with the primary key.
 	 *
@@ -314,6 +334,14 @@ public class ObjectStateLocalServiceWrapper
 			uuid, companyId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectState>
+		getObjectStateFlowObjectStates(long objectStateFlowId) {
+
+		return _objectStateLocalService.getObjectStateFlowObjectStates(
+			objectStateFlowId);
+	}
+
 	/**
 	 * Returns a range of all the object states.
 	 *
@@ -330,6 +358,17 @@ public class ObjectStateLocalServiceWrapper
 		int start, int end) {
 
 		return _objectStateLocalService.getObjectStates(start, end);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectState
+			getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
+				long listTypeEntryId, long objectStateFlowId)
+		throws com.liferay.object.exception.NoSuchObjectStateException {
+
+		return _objectStateLocalService.
+			getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
+				listTypeEntryId, objectStateFlowId);
 	}
 
 	/**
@@ -378,6 +417,17 @@ public class ObjectStateLocalServiceWrapper
 		com.liferay.object.model.ObjectState objectState) {
 
 		return _objectStateLocalService.updateObjectState(objectState);
+	}
+
+	@Override
+	public void updateObjectStateTransitions(
+			long objectStateId,
+			java.util.List<com.liferay.object.model.ObjectStateTransition>
+				objectStateTransitions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectStateLocalService.updateObjectStateTransitions(
+			objectStateId, objectStateTransitions);
 	}
 
 	@Override

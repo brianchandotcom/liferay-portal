@@ -565,6 +565,8 @@ public class ObjectEntryDisplayContext {
 		if (objectEntry != null) {
 			objectFieldRenderingContext.setExternalReferenceCode(
 				objectEntry.getExternalReferenceCode());
+			objectFieldRenderingContext.setProperties(
+				objectEntry.getProperties());
 		}
 
 		objectFieldRenderingContext.setPortletId(

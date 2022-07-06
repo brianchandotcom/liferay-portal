@@ -178,6 +178,11 @@ public class ObjectStateFlowWrapper
 		return model.getObjectStateFlowId();
 	}
 
+	@Override
+	public java.util.List<ObjectState> getObjectStates() {
+		return model.getObjectStates();
+	}
+
 	/**
 	 * Returns the primary key of this object state flow.
 	 *
@@ -291,6 +296,11 @@ public class ObjectStateFlowWrapper
 	@Override
 	public void setObjectStateFlowId(long objectStateFlowId) {
 		model.setObjectStateFlowId(objectStateFlowId);
+	}
+
+	@Override
+	public void setObjectStates(java.util.List<ObjectState> objectStates) {
+		model.setObjectStates(objectStates);
 	}
 
 	/**

@@ -14,8 +14,27 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.model.ObjectStateTransition;
+
+import java.util.List;
+
 /**
  * @author Marco Leo
  */
 public class ObjectStateImpl extends ObjectStateBaseImpl {
+
+	@Override
+	public List<ObjectStateTransition> getObjectStateTransitions() {
+		return _objectStateTransitions;
+	}
+
+	@Override
+	public void setObjectStateTransitions(
+		List<ObjectStateTransition> objectStateTransitions) {
+
+		_objectStateTransitions = objectStateTransitions;
+	}
+
+	private List<ObjectStateTransition> _objectStateTransitions;
+
 }

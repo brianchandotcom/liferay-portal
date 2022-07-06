@@ -86,14 +86,15 @@ public class ObjectFieldServiceWrapper
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			boolean required, boolean state,
 			java.util.List<com.liferay.object.model.ObjectFieldSetting>
-				objectFieldSettings)
+				objectFieldSettings,
+			com.liferay.object.model.ObjectStateFlow objectStateFlow)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldService.updateObjectField(
 			objectFieldId, externalReferenceCode, listTypeDefinitionId,
 			businessType, dbType, defaultValue, indexed, indexedAsKeyword,
 			indexedLanguageId, labelMap, name, required, state,
-			objectFieldSettings);
+			objectFieldSettings, objectStateFlow);
 	}
 
 	@Override

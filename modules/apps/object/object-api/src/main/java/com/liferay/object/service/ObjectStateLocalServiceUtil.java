@@ -86,6 +86,10 @@ public class ObjectStateLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
+	public static void deleteListTypeEntryObjectStates(long listTypeEntryId) {
+		getService().deleteListTypeEntryObjectStates(listTypeEntryId);
+	}
+
 	/**
 	 * Deletes the object state with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -115,6 +119,12 @@ public class ObjectStateLocalServiceUtil {
 	 */
 	public static ObjectState deleteObjectState(ObjectState objectState) {
 		return getService().deleteObjectState(objectState);
+	}
+
+	public static void deleteObjectStateFlowObjectStates(
+		long objectStateFlowId) {
+
+		getService().deleteObjectStateFlowObjectStates(objectStateFlowId);
 	}
 
 	/**
@@ -250,6 +260,12 @@ public class ObjectStateLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static List<ObjectState> getNextObjectStates(
+		long sourceObjectStateId) {
+
+		return getService().getNextObjectStates(sourceObjectStateId);
+	}
+
 	/**
 	 * Returns the object state with the primary key.
 	 *
@@ -278,6 +294,12 @@ public class ObjectStateLocalServiceUtil {
 		return getService().getObjectStateByUuidAndCompanyId(uuid, companyId);
 	}
 
+	public static List<ObjectState> getObjectStateFlowObjectStates(
+		long objectStateFlowId) {
+
+		return getService().getObjectStateFlowObjectStates(objectStateFlowId);
+	}
+
 	/**
 	 * Returns a range of all the object states.
 	 *
@@ -291,6 +313,16 @@ public class ObjectStateLocalServiceUtil {
 	 */
 	public static List<ObjectState> getObjectStates(int start, int end) {
 		return getService().getObjectStates(start, end);
+	}
+
+	public static ObjectState
+			getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
+				long listTypeEntryId, long objectStateFlowId)
+		throws com.liferay.object.exception.NoSuchObjectStateException {
+
+		return getService().
+			getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
+				listTypeEntryId, objectStateFlowId);
 	}
 
 	/**
@@ -332,6 +364,16 @@ public class ObjectStateLocalServiceUtil {
 	 */
 	public static ObjectState updateObjectState(ObjectState objectState) {
 		return getService().updateObjectState(objectState);
+	}
+
+	public static void updateObjectStateTransitions(
+			long objectStateId,
+			List<com.liferay.object.model.ObjectStateTransition>
+				objectStateTransitions)
+		throws PortalException {
+
+		getService().updateObjectStateTransitions(
+			objectStateId, objectStateTransitions);
 	}
 
 	public static ObjectStateLocalService getService() {

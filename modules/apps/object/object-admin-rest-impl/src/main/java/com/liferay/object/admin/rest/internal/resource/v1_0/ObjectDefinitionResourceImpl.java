@@ -21,6 +21,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
+import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectFieldDTOConverter;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectViewDTOConverter;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectLayoutUtil;
@@ -297,8 +298,12 @@ public class ObjectDefinitionResourceImpl
 				objectFields = transformToArray(
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId()),
-					objectField -> ObjectFieldUtil.toObjectField(
-						null, objectField),
+					objectField -> _objectFieldDTOConverter.toDTO(
+						new DefaultDTOConverterContext(
+							false, null, null, null,
+							contextAcceptLanguage.getPreferredLocale(), null,
+							null),
+						objectField),
 					ObjectField.class);
 				objectLayouts = transformToArray(
 					_objectLayoutLocalService.getObjectLayouts(
@@ -381,6 +386,9 @@ public class ObjectDefinitionResourceImpl
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
+
+	@Reference
+	private ObjectFieldDTOConverter _objectFieldDTOConverter;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

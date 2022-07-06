@@ -468,6 +468,182 @@ public class ObjectStateUtil {
 	}
 
 	/**
+	 * Returns all the object states where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @return the matching object states
+	 */
+	public static List<ObjectState> findByListTypeEntryId(
+		long listTypeEntryId) {
+
+		return getPersistence().findByListTypeEntryId(listTypeEntryId);
+	}
+
+	/**
+	 * Returns a range of all the object states where listTypeEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param start the lower bound of the range of object states
+	 * @param end the upper bound of the range of object states (not inclusive)
+	 * @return the range of matching object states
+	 */
+	public static List<ObjectState> findByListTypeEntryId(
+		long listTypeEntryId, int start, int end) {
+
+		return getPersistence().findByListTypeEntryId(
+			listTypeEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object states where listTypeEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param start the lower bound of the range of object states
+	 * @param end the upper bound of the range of object states (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object states
+	 */
+	public static List<ObjectState> findByListTypeEntryId(
+		long listTypeEntryId, int start, int end,
+		OrderByComparator<ObjectState> orderByComparator) {
+
+		return getPersistence().findByListTypeEntryId(
+			listTypeEntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the object states where listTypeEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param start the lower bound of the range of object states
+	 * @param end the upper bound of the range of object states (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object states
+	 */
+	public static List<ObjectState> findByListTypeEntryId(
+		long listTypeEntryId, int start, int end,
+		OrderByComparator<ObjectState> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByListTypeEntryId(
+			listTypeEntryId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first object state in the ordered set where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object state
+	 * @throws NoSuchObjectStateException if a matching object state could not be found
+	 */
+	public static ObjectState findByListTypeEntryId_First(
+			long listTypeEntryId,
+			OrderByComparator<ObjectState> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectStateException {
+
+		return getPersistence().findByListTypeEntryId_First(
+			listTypeEntryId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first object state in the ordered set where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object state, or <code>null</code> if a matching object state could not be found
+	 */
+	public static ObjectState fetchByListTypeEntryId_First(
+		long listTypeEntryId,
+		OrderByComparator<ObjectState> orderByComparator) {
+
+		return getPersistence().fetchByListTypeEntryId_First(
+			listTypeEntryId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object state in the ordered set where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object state
+	 * @throws NoSuchObjectStateException if a matching object state could not be found
+	 */
+	public static ObjectState findByListTypeEntryId_Last(
+			long listTypeEntryId,
+			OrderByComparator<ObjectState> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectStateException {
+
+		return getPersistence().findByListTypeEntryId_Last(
+			listTypeEntryId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last object state in the ordered set where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object state, or <code>null</code> if a matching object state could not be found
+	 */
+	public static ObjectState fetchByListTypeEntryId_Last(
+		long listTypeEntryId,
+		OrderByComparator<ObjectState> orderByComparator) {
+
+		return getPersistence().fetchByListTypeEntryId_Last(
+			listTypeEntryId, orderByComparator);
+	}
+
+	/**
+	 * Returns the object states before and after the current object state in the ordered set where listTypeEntryId = &#63;.
+	 *
+	 * @param objectStateId the primary key of the current object state
+	 * @param listTypeEntryId the list type entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object state
+	 * @throws NoSuchObjectStateException if a object state with the primary key could not be found
+	 */
+	public static ObjectState[] findByListTypeEntryId_PrevAndNext(
+			long objectStateId, long listTypeEntryId,
+			OrderByComparator<ObjectState> orderByComparator)
+		throws com.liferay.object.exception.NoSuchObjectStateException {
+
+		return getPersistence().findByListTypeEntryId_PrevAndNext(
+			objectStateId, listTypeEntryId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the object states where listTypeEntryId = &#63; from the database.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 */
+	public static void removeByListTypeEntryId(long listTypeEntryId) {
+		getPersistence().removeByListTypeEntryId(listTypeEntryId);
+	}
+
+	/**
+	 * Returns the number of object states where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @return the number of matching object states
+	 */
+	public static int countByListTypeEntryId(long listTypeEntryId) {
+		return getPersistence().countByListTypeEntryId(listTypeEntryId);
+	}
+
+	/**
 	 * Returns all the object states where objectStateFlowId = &#63;.
 	 *
 	 * @param objectStateFlowId the object state flow ID
@@ -641,6 +817,80 @@ public class ObjectStateUtil {
 	 */
 	public static int countByObjectStateFlowId(long objectStateFlowId) {
 		return getPersistence().countByObjectStateFlowId(objectStateFlowId);
+	}
+
+	/**
+	 * Returns the object state where listTypeEntryId = &#63; and objectStateFlowId = &#63; or throws a <code>NoSuchObjectStateException</code> if it could not be found.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param objectStateFlowId the object state flow ID
+	 * @return the matching object state
+	 * @throws NoSuchObjectStateException if a matching object state could not be found
+	 */
+	public static ObjectState findByLTEI_OSFI(
+			long listTypeEntryId, long objectStateFlowId)
+		throws com.liferay.object.exception.NoSuchObjectStateException {
+
+		return getPersistence().findByLTEI_OSFI(
+			listTypeEntryId, objectStateFlowId);
+	}
+
+	/**
+	 * Returns the object state where listTypeEntryId = &#63; and objectStateFlowId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param objectStateFlowId the object state flow ID
+	 * @return the matching object state, or <code>null</code> if a matching object state could not be found
+	 */
+	public static ObjectState fetchByLTEI_OSFI(
+		long listTypeEntryId, long objectStateFlowId) {
+
+		return getPersistence().fetchByLTEI_OSFI(
+			listTypeEntryId, objectStateFlowId);
+	}
+
+	/**
+	 * Returns the object state where listTypeEntryId = &#63; and objectStateFlowId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param objectStateFlowId the object state flow ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object state, or <code>null</code> if a matching object state could not be found
+	 */
+	public static ObjectState fetchByLTEI_OSFI(
+		long listTypeEntryId, long objectStateFlowId, boolean useFinderCache) {
+
+		return getPersistence().fetchByLTEI_OSFI(
+			listTypeEntryId, objectStateFlowId, useFinderCache);
+	}
+
+	/**
+	 * Removes the object state where listTypeEntryId = &#63; and objectStateFlowId = &#63; from the database.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param objectStateFlowId the object state flow ID
+	 * @return the object state that was removed
+	 */
+	public static ObjectState removeByLTEI_OSFI(
+			long listTypeEntryId, long objectStateFlowId)
+		throws com.liferay.object.exception.NoSuchObjectStateException {
+
+		return getPersistence().removeByLTEI_OSFI(
+			listTypeEntryId, objectStateFlowId);
+	}
+
+	/**
+	 * Returns the number of object states where listTypeEntryId = &#63; and objectStateFlowId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param objectStateFlowId the object state flow ID
+	 * @return the number of matching object states
+	 */
+	public static int countByLTEI_OSFI(
+		long listTypeEntryId, long objectStateFlowId) {
+
+		return getPersistence().countByLTEI_OSFI(
+			listTypeEntryId, objectStateFlowId);
 	}
 
 	/**

@@ -126,26 +126,32 @@ public class ObjectStateTransitionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SOURCEOBJECTSTATEID_COLUMN_BITMASK = 2L;
+	public static final long OBJECTSTATEFLOWID_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TARGETOBJECTSTATEID_COLUMN_BITMASK = 4L;
+	public static final long SOURCEOBJECTSTATEID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long TARGETOBJECTSTATEID_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTSTATETRANSITIONID_COLUMN_BITMASK = 16L;
+	public static final long OBJECTSTATETRANSITIONID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -512,6 +518,16 @@ public class ObjectStateTransitionModelImpl
 		}
 
 		_objectStateFlowId = objectStateFlowId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalObjectStateFlowId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("objectStateFlowId"));
 	}
 
 	@Override

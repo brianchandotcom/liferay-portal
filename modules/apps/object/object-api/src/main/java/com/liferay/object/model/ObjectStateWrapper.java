@@ -195,6 +195,11 @@ public class ObjectStateWrapper
 		return model.getObjectStateId();
 	}
 
+	@Override
+	public java.util.List<ObjectStateTransition> getObjectStateTransitions() {
+		return model.getObjectStateTransitions();
+	}
+
 	/**
 	 * Returns the primary key of this object state.
 	 *
@@ -318,6 +323,13 @@ public class ObjectStateWrapper
 	@Override
 	public void setObjectStateId(long objectStateId) {
 		model.setObjectStateId(objectStateId);
+	}
+
+	@Override
+	public void setObjectStateTransitions(
+		java.util.List<ObjectStateTransition> objectStateTransitions) {
+
+		model.setObjectStateTransitions(objectStateTransitions);
 	}
 
 	/**

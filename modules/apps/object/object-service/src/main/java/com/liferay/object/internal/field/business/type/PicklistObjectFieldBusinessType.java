@@ -23,10 +23,19 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectState;
+import com.liferay.object.model.ObjectStateFlow;
+import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.service.ObjectStateFlowLocalService;
+import com.liferay.object.service.ObjectStateLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -81,14 +90,13 @@ public class PicklistObjectFieldBusinessType
 
 	@Override
 	public Map<String, Object> getProperties(
-		ObjectField objectField,
-		ObjectFieldRenderingContext objectFieldRenderingContext) {
+			ObjectField objectField,
+			ObjectFieldRenderingContext objectFieldRenderingContext)
+		throws PortalException {
 
 		return HashMapBuilder.<String, Object>put(
 			"options",
-			_getDDMFormFieldOptions(
-				GetterUtil.getLong(objectField.getListTypeDefinitionId()),
-				objectFieldRenderingContext.getLocale())
+			_getDDMFormFieldOptions(objectField, objectFieldRenderingContext)
 		).put(
 			"predefinedValue",
 			_getDDMFormFieldPredefinedValue(
@@ -97,18 +105,62 @@ public class PicklistObjectFieldBusinessType
 	}
 
 	private DDMFormFieldOptions _getDDMFormFieldOptions(
-		long listTypeDefinitionId, Locale locale) {
+			ObjectField objectField,
+			ObjectFieldRenderingContext objectFieldRenderingContext)
+		throws PortalException {
 
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
 		List<ListTypeEntry> listTypeEntries =
-			_listTypeEntryLocalService.getListTypeEntries(listTypeDefinitionId);
+			_listTypeEntryLocalService.getListTypeEntries(
+				objectField.getListTypeDefinitionId());
+
+		if (objectField.isState()) {
+			String listEntryKey = objectField.getDefaultValue();
+
+			if (MapUtil.isNotEmpty(
+					objectFieldRenderingContext.getProperties())) {
+
+				ListEntry listEntry =
+					(ListEntry)objectFieldRenderingContext.getProperty(
+						objectField.getName());
+
+				listEntryKey = listEntry.getKey();
+			}
+
+			ListTypeEntry listTypeEntry =
+				_listTypeEntryLocalService.fetchListTypeEntry(
+					objectField.getListTypeDefinitionId(), listEntryKey);
+
+			ObjectStateFlow objectStateFlow =
+				_objectStateFlowLocalService.getObjectFieldObjectStateFlow(
+					objectField.getObjectFieldId());
+
+			ObjectState currentObjectState =
+				_objectStateLocalService.
+					getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
+						listTypeEntry.getListTypeEntryId(),
+						objectStateFlow.getObjectStateFlowId());
+
+			List<Long> listTypeEntryIds = ListUtil.toList(
+				_objectStateLocalService.getNextObjectStates(
+					currentObjectState.getObjectStateId()),
+				ObjectState::getListTypeEntryId);
+
+			listTypeEntryIds.add(currentObjectState.getListTypeEntryId());
+
+			listTypeEntries = TransformUtil.transform(
+				listTypeEntryIds,
+				listTypeEntryId -> _listTypeEntryLocalService.getListTypeEntry(
+					listTypeEntryId));
+		}
 
 		for (ListTypeEntry listTypeEntry : listTypeEntries) {
 			ddmFormFieldOptions.addOptionLabel(
-				listTypeEntry.getKey(), locale,
+				listTypeEntry.getKey(), objectFieldRenderingContext.getLocale(),
 				GetterUtil.getString(
-					listTypeEntry.getName(locale),
+					listTypeEntry.getName(
+						objectFieldRenderingContext.getLocale()),
 					listTypeEntry.getName(
 						listTypeEntry.getDefaultLanguageId())));
 		}
@@ -134,5 +186,11 @@ public class PicklistObjectFieldBusinessType
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
+	private ObjectStateFlowLocalService _objectStateFlowLocalService;
+
+	@Reference
+	private ObjectStateLocalService _objectStateLocalService;
 
 }

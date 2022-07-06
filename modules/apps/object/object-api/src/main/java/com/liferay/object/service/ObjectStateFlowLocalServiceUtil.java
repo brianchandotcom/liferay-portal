@@ -44,11 +44,11 @@ public class ObjectStateFlowLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectStateFlowLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static ObjectStateFlow addObjectStateFlow(
-			long userId, long objectFieldId)
+	public static ObjectStateFlow addDefaultObjectStateFlow(
+			com.liferay.object.model.ObjectField objectField)
 		throws PortalException {
 
-		return getService().addObjectStateFlow(userId, objectFieldId);
+		return getService().addDefaultObjectStateFlow(objectField);
 	}
 
 	/**
@@ -87,6 +87,12 @@ public class ObjectStateFlowLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deleteObjectFieldObjectStateFlow(long objectFieldId)
+		throws com.liferay.object.exception.NoSuchObjectStateFlowException {
+
+		getService().deleteObjectFieldObjectStateFlow(objectFieldId);
 	}
 
 	/**
@@ -256,6 +262,12 @@ public class ObjectStateFlowLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static ObjectStateFlow getObjectFieldObjectStateFlow(
+		long objectFieldId) {
+
+		return getService().getObjectFieldObjectStateFlow(objectFieldId);
+	}
+
 	/**
 	 * Returns the object state flow with the primary key.
 	 *
@@ -343,6 +355,13 @@ public class ObjectStateFlowLocalServiceUtil {
 		ObjectStateFlow objectStateFlow) {
 
 		return getService().updateObjectStateFlow(objectStateFlow);
+	}
+
+	public static void updateObjectStateTransitions(
+			ObjectStateFlow objectStateFlow)
+		throws PortalException {
+
+		getService().updateObjectStateTransitions(objectStateFlow);
 	}
 
 	public static ObjectStateFlowLocalService getService() {

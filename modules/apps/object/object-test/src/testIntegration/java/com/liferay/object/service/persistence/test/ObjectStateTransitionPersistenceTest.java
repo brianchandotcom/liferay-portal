@@ -212,6 +212,13 @@ public class ObjectStateTransitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByObjectStateFlowId() throws Exception {
+		_persistence.countByObjectStateFlowId(RandomTestUtil.nextLong());
+
+		_persistence.countByObjectStateFlowId(0L);
+	}
+
+	@Test
 	public void testCountBySourceObjectStateId() throws Exception {
 		_persistence.countBySourceObjectStateId(RandomTestUtil.nextLong());
 

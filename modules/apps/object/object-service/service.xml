@@ -226,6 +226,10 @@
 		<finder name="ObjectDefinitionId" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 		</finder>
+		<finder name="LTDI_S" return-type="Collection">
+			<finder-column name="listTypeDefinitionId" />
+			<finder-column name="state" />
+		</finder>
 		<finder name="ODI_DTN" return-type="Collection">
 			<finder-column name="objectDefinitionId" />
 			<finder-column name="dbTableName" />
@@ -504,7 +508,14 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ListTypeEntryId" return-type="Collection">
+			<finder-column name="listTypeEntryId" />
+		</finder>
 		<finder name="ObjectStateFlowId" return-type="Collection">
+			<finder-column name="objectStateFlowId" />
+		</finder>
+		<finder name="LTEI_OSFI" return-type="ObjectState">
+			<finder-column name="listTypeEntryId" />
 			<finder-column name="objectStateFlowId" />
 		</finder>
 	</entity>
@@ -554,6 +565,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ObjectStateFlowId" return-type="Collection">
+			<finder-column name="objectStateFlowId" />
+		</finder>
 		<finder name="SourceObjectStateId" return-type="Collection">
 			<finder-column name="sourceObjectStateId" />
 		</finder>

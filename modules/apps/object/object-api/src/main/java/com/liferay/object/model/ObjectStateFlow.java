@@ -56,4 +56,8 @@ public interface ObjectStateFlow extends ObjectStateFlowModel, PersistedModel {
 
 		};
 
+	public java.util.List<ObjectState> getObjectStates();
+
+	public void setObjectStates(java.util.List<ObjectState> objectStates);
+
 }

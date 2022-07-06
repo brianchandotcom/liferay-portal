@@ -15,7 +15,6 @@
 package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
-import com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.util.Map;
 
 /**
  * @author Gabriel Albuquerque
@@ -44,49 +41,6 @@ public class ObjectFieldUtil {
 		}
 
 		return dbType;
-	}
-
-	public static ObjectField toObjectField(
-		Map<String, Map<String, String>> actions,
-		com.liferay.object.model.ObjectField serviceBuilderObjectField) {
-
-		ObjectField objectField = new ObjectField() {
-			{
-				businessType = ObjectField.BusinessType.create(
-					serviceBuilderObjectField.getBusinessType());
-				DBType = ObjectField.DBType.create(
-					serviceBuilderObjectField.getDBType());
-				defaultValue = serviceBuilderObjectField.getDefaultValue();
-				externalReferenceCode =
-					serviceBuilderObjectField.getExternalReferenceCode();
-				id = serviceBuilderObjectField.getObjectFieldId();
-				indexed = serviceBuilderObjectField.getIndexed();
-				indexedAsKeyword =
-					serviceBuilderObjectField.getIndexedAsKeyword();
-				indexedLanguageId =
-					serviceBuilderObjectField.getIndexedLanguageId();
-				label = LocalizedMapUtil.getLanguageIdMap(
-					serviceBuilderObjectField.getLabelMap());
-				listTypeDefinitionId =
-					serviceBuilderObjectField.getListTypeDefinitionId();
-				name = serviceBuilderObjectField.getName();
-				objectFieldSettings = TransformUtil.transformToArray(
-					serviceBuilderObjectField.getObjectFieldSettings(),
-					ObjectFieldSettingUtil::toObjectFieldSetting,
-					ObjectFieldSetting.class);
-				relationshipType = ObjectField.RelationshipType.create(
-					serviceBuilderObjectField.getRelationshipType());
-				required = serviceBuilderObjectField.isRequired();
-				state = serviceBuilderObjectField.getState();
-				system = serviceBuilderObjectField.getSystem();
-				type = ObjectField.Type.create(
-					serviceBuilderObjectField.getDBType());
-			}
-		};
-
-		objectField.setActions(actions);
-
-		return objectField;
 	}
 
 	public static com.liferay.object.model.ObjectField toObjectField(

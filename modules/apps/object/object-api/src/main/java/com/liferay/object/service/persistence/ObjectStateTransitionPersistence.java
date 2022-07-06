@@ -340,6 +340,150 @@ public interface ObjectStateTransitionPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns all the object state transitions where objectStateFlowId = &#63;.
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 * @return the matching object state transitions
+	 */
+	public java.util.List<ObjectStateTransition> findByObjectStateFlowId(
+		long objectStateFlowId);
+
+	/**
+	 * Returns a range of all the object state transitions where objectStateFlowId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @return the range of matching object state transitions
+	 */
+	public java.util.List<ObjectStateTransition> findByObjectStateFlowId(
+		long objectStateFlowId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object state transitions where objectStateFlowId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object state transitions
+	 */
+	public java.util.List<ObjectStateTransition> findByObjectStateFlowId(
+		long objectStateFlowId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectStateTransition>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the object state transitions where objectStateFlowId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object state transitions
+	 */
+	public java.util.List<ObjectStateTransition> findByObjectStateFlowId(
+		long objectStateFlowId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectStateTransition>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first object state transition in the ordered set where objectStateFlowId = &#63;.
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object state transition
+	 * @throws NoSuchObjectStateTransitionException if a matching object state transition could not be found
+	 */
+	public ObjectStateTransition findByObjectStateFlowId_First(
+			long objectStateFlowId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<ObjectStateTransition> orderByComparator)
+		throws NoSuchObjectStateTransitionException;
+
+	/**
+	 * Returns the first object state transition in the ordered set where objectStateFlowId = &#63;.
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object state transition, or <code>null</code> if a matching object state transition could not be found
+	 */
+	public ObjectStateTransition fetchByObjectStateFlowId_First(
+		long objectStateFlowId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectStateTransition>
+			orderByComparator);
+
+	/**
+	 * Returns the last object state transition in the ordered set where objectStateFlowId = &#63;.
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object state transition
+	 * @throws NoSuchObjectStateTransitionException if a matching object state transition could not be found
+	 */
+	public ObjectStateTransition findByObjectStateFlowId_Last(
+			long objectStateFlowId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<ObjectStateTransition> orderByComparator)
+		throws NoSuchObjectStateTransitionException;
+
+	/**
+	 * Returns the last object state transition in the ordered set where objectStateFlowId = &#63;.
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object state transition, or <code>null</code> if a matching object state transition could not be found
+	 */
+	public ObjectStateTransition fetchByObjectStateFlowId_Last(
+		long objectStateFlowId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectStateTransition>
+			orderByComparator);
+
+	/**
+	 * Returns the object state transitions before and after the current object state transition in the ordered set where objectStateFlowId = &#63;.
+	 *
+	 * @param objectStateTransitionId the primary key of the current object state transition
+	 * @param objectStateFlowId the object state flow ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object state transition
+	 * @throws NoSuchObjectStateTransitionException if a object state transition with the primary key could not be found
+	 */
+	public ObjectStateTransition[] findByObjectStateFlowId_PrevAndNext(
+			long objectStateTransitionId, long objectStateFlowId,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<ObjectStateTransition> orderByComparator)
+		throws NoSuchObjectStateTransitionException;
+
+	/**
+	 * Removes all the object state transitions where objectStateFlowId = &#63; from the database.
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 */
+	public void removeByObjectStateFlowId(long objectStateFlowId);
+
+	/**
+	 * Returns the number of object state transitions where objectStateFlowId = &#63;.
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 * @return the number of matching object state transitions
+	 */
+	public int countByObjectStateFlowId(long objectStateFlowId);
+
+	/**
 	 * Returns all the object state transitions where sourceObjectStateId = &#63;.
 	 *
 	 * @param sourceObjectStateId the source object state ID

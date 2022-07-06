@@ -15,7 +15,9 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.object.exception.NoSuchObjectStateException;
 import com.liferay.object.model.ObjectState;
+import com.liferay.object.model.ObjectStateTransition;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -95,6 +97,8 @@ public interface ObjectStateLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void deleteListTypeEntryObjectStates(long listTypeEntryId);
+
 	/**
 	 * Deletes the object state with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
@@ -122,6 +126,8 @@ public interface ObjectStateLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public ObjectState deleteObjectState(ObjectState objectState);
+
+	public void deleteObjectStateFlowObjectStates(long objectStateFlowId);
 
 	/**
 	 * @throws PortalException
@@ -226,6 +232,9 @@ public interface ObjectStateLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectState> getNextObjectStates(long sourceObjectStateId);
+
 	/**
 	 * Returns the object state with the primary key.
 	 *
@@ -250,6 +259,10 @@ public interface ObjectStateLocalService
 			String uuid, long companyId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectState> getObjectStateFlowObjectStates(
+		long objectStateFlowId);
+
 	/**
 	 * Returns a range of all the object states.
 	 *
@@ -263,6 +276,11 @@ public interface ObjectStateLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectState> getObjectStates(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectState getObjectStatesByListTypeEntryIdAndObjectStateFlowId(
+			long listTypeEntryId, long objectStateFlowId)
+		throws NoSuchObjectStateException;
 
 	/**
 	 * Returns the number of object states.
@@ -299,5 +317,10 @@ public interface ObjectStateLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectState updateObjectState(ObjectState objectState);
+
+	public void updateObjectStateTransitions(
+			long objectStateId,
+			List<ObjectStateTransition> objectStateTransitions)
+		throws PortalException;
 
 }

@@ -14,8 +14,25 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.model.ObjectState;
+
+import java.util.List;
+
 /**
  * @author Marco Leo
  */
 public class ObjectStateFlowImpl extends ObjectStateFlowBaseImpl {
+
+	@Override
+	public List<ObjectState> getObjectStates() {
+		return _objectStates;
+	}
+
+	@Override
+	public void setObjectStates(List<ObjectState> objectStates) {
+		_objectStates = objectStates;
+	}
+
+	private List<ObjectState> _objectStates;
+
 }

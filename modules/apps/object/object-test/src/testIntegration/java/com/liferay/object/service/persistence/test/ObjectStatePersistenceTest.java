@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -192,10 +194,25 @@ public class ObjectStatePersistenceTest {
 	}
 
 	@Test
+	public void testCountByListTypeEntryId() throws Exception {
+		_persistence.countByListTypeEntryId(RandomTestUtil.nextLong());
+
+		_persistence.countByListTypeEntryId(0L);
+	}
+
+	@Test
 	public void testCountByObjectStateFlowId() throws Exception {
 		_persistence.countByObjectStateFlowId(RandomTestUtil.nextLong());
 
 		_persistence.countByObjectStateFlowId(0L);
+	}
+
+	@Test
+	public void testCountByLTEI_OSFI() throws Exception {
+		_persistence.countByLTEI_OSFI(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByLTEI_OSFI(0L, 0L);
 	}
 
 	@Test
@@ -436,6 +453,69 @@ public class ObjectStatePersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		ObjectState newObjectState = addObjectState();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(newObjectState.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		ObjectState newObjectState = addObjectState();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			ObjectState.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"objectStateId", newObjectState.getObjectStateId()));
+
+		List<ObjectState> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(ObjectState objectState) {
+		Assert.assertEquals(
+			Long.valueOf(objectState.getListTypeEntryId()),
+			ReflectionTestUtil.<Long>invoke(
+				objectState, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "listTypeEntryId"));
+		Assert.assertEquals(
+			Long.valueOf(objectState.getObjectStateFlowId()),
+			ReflectionTestUtil.<Long>invoke(
+				objectState, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "objectStateFlowId"));
 	}
 
 	protected ObjectState addObjectState() throws Exception {

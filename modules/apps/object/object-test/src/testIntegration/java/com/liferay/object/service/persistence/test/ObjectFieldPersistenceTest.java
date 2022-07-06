@@ -276,6 +276,14 @@ public class ObjectFieldPersistenceTest {
 	}
 
 	@Test
+	public void testCountByLTDI_S() throws Exception {
+		_persistence.countByLTDI_S(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByLTDI_S(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByODI_DTN() throws Exception {
 		_persistence.countByODI_DTN(RandomTestUtil.nextLong(), "");
 

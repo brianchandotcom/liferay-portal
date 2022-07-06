@@ -16,7 +16,7 @@ create index IX_49B9450D on ObjectEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_5AF9AACF on ObjectEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_8BEECA97 on ObjectField (companyId, externalReferenceCode[$COLUMN_LENGTH:75$], objectDefinitionId);
-create index IX_736807B on ObjectField (listTypeDefinitionId);
+create index IX_6DCE835D on ObjectField (listTypeDefinitionId, state_);
 create index IX_5DDCF209 on ObjectField (objectDefinitionId, dbTableName[$COLUMN_LENGTH:75$]);
 create index IX_979A9013 on ObjectField (objectDefinitionId, dbType[$COLUMN_LENGTH:75$], indexed);
 create index IX_A59C5981 on ObjectField (objectDefinitionId, name[$COLUMN_LENGTH:75$]);
@@ -51,12 +51,14 @@ create index IX_DE3EBEF8 on ObjectRelationship (objectDefinitionId2);
 create index IX_F1DC092D on ObjectRelationship (objectFieldId2);
 create index IX_11DAE1F1 on ObjectRelationship (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_C34F0F9E on ObjectState (listTypeEntryId, objectStateFlowId);
 create index IX_F9D4BA53 on ObjectState (objectStateFlowId);
 create index IX_FBD0BBAC on ObjectState (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_AE828160 on ObjectStateFlow (objectFieldId);
 create index IX_C6174FA on ObjectStateFlow (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_DB56B27E on ObjectStateTransition (objectStateFlowId);
 create index IX_9C3FAB55 on ObjectStateTransition (sourceObjectStateId);
 create index IX_FB9AC71F on ObjectStateTransition (targetObjectStateId);
 create index IX_4D699221 on ObjectStateTransition (uuid_[$COLUMN_LENGTH:75$], companyId);

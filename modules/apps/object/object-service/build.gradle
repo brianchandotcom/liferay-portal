@@ -28,6 +28,7 @@ dependencies {
 	compileOnly project(":apps:notification:notification-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:object:object-dynamic-data-mapping-form-field-type-api")
+	compileOnly project(":apps:object:object-rest-api")
 	compileOnly project(":apps:object:object-runtime-api")
 	compileOnly project(":apps:portal-search:portal-search-api")
 	compileOnly project(":apps:portal-search:portal-search-spi")

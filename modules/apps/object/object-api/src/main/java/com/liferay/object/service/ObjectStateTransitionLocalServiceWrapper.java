@@ -69,6 +69,16 @@ public class ObjectStateTransitionLocalServiceWrapper
 			objectStateTransition);
 	}
 
+	@Override
+	public void addObjectStateTransitions(
+			java.util.List<com.liferay.object.model.ObjectStateTransition>
+				objectStateTransitions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectStateTransitionLocalService.addObjectStateTransitions(
+			objectStateTransitions);
+	}
+
 	/**
 	 * Creates a new object state transition with the primary key. Does not add the object state transition to the database.
 	 *
@@ -93,6 +103,20 @@ public class ObjectStateTransitionLocalServiceWrapper
 
 		return _objectStateTransitionLocalService.createPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public void deleteObjectStateFlowObjectStateTransitions(
+		long objectStateFlowId) {
+
+		_objectStateTransitionLocalService.
+			deleteObjectStateFlowObjectStateTransitions(objectStateFlowId);
+	}
+
+	@Override
+	public void deleteObjectStateObjectStateTransitions(long objectStateId) {
+		_objectStateTransitionLocalService.
+			deleteObjectStateObjectStateTransitions(objectStateId);
 	}
 
 	/**
@@ -133,6 +157,17 @@ public class ObjectStateTransitionLocalServiceWrapper
 
 		return _objectStateTransitionLocalService.deleteObjectStateTransition(
 			objectStateTransition);
+	}
+
+	@Override
+	public void deleteObjectStateTransitions(
+			java.util.List<com.liferay.object.model.ObjectStateTransition>
+				objectStateTransitions)
+		throws com.liferay.object.exception.
+			NoSuchObjectStateTransitionException {
+
+		_objectStateTransitionLocalService.deleteObjectStateTransitions(
+			objectStateTransitions);
 	}
 
 	/**
@@ -298,6 +333,22 @@ public class ObjectStateTransitionLocalServiceWrapper
 
 		return _objectStateTransitionLocalService.
 			getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectStateTransition>
+		getObjectStateFlowObjectStateTransitions(long objectStateFlowId) {
+
+		return _objectStateTransitionLocalService.
+			getObjectStateFlowObjectStateTransitions(objectStateFlowId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectStateTransition>
+		getObjectStateObjectStateTransitions(long sourceObjectStateId) {
+
+		return _objectStateTransitionLocalService.
+			getObjectStateObjectStateTransitions(sourceObjectStateId);
 	}
 
 	/**

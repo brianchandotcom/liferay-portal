@@ -38,12 +38,12 @@ public class ObjectStateFlowLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.object.model.ObjectStateFlow addObjectStateFlow(
-			long userId, long objectFieldId)
+	public com.liferay.object.model.ObjectStateFlow addDefaultObjectStateFlow(
+			com.liferay.object.model.ObjectField objectField)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _objectStateFlowLocalService.addObjectStateFlow(
-			userId, objectFieldId);
+		return _objectStateFlowLocalService.addDefaultObjectStateFlow(
+			objectField);
 	}
 
 	/**
@@ -86,6 +86,14 @@ public class ObjectStateFlowLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectStateFlowLocalService.createPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public void deleteObjectFieldObjectStateFlow(long objectFieldId)
+		throws com.liferay.object.exception.NoSuchObjectStateFlowException {
+
+		_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
+			objectFieldId);
 	}
 
 	/**
@@ -289,6 +297,14 @@ public class ObjectStateFlowLocalServiceWrapper
 			getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectStateFlow
+		getObjectFieldObjectStateFlow(long objectFieldId) {
+
+		return _objectStateFlowLocalService.getObjectFieldObjectStateFlow(
+			objectFieldId);
+	}
+
 	/**
 	 * Returns the object state flow with the primary key.
 	 *
@@ -386,6 +402,15 @@ public class ObjectStateFlowLocalServiceWrapper
 		com.liferay.object.model.ObjectStateFlow objectStateFlow) {
 
 		return _objectStateFlowLocalService.updateObjectStateFlow(
+			objectStateFlow);
+	}
+
+	@Override
+	public void updateObjectStateTransitions(
+			com.liferay.object.model.ObjectStateFlow objectStateFlow)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectStateFlowLocalService.updateObjectStateTransitions(
 			objectStateFlow);
 	}
 

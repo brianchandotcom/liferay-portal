@@ -15,6 +15,8 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.object.exception.NoSuchObjectStateFlowException;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -63,7 +65,7 @@ public interface ObjectStateFlowLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectStateFlowLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object state flow local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectStateFlowLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public ObjectStateFlow addObjectStateFlow(long userId, long objectFieldId)
+	public ObjectStateFlow addDefaultObjectStateFlow(ObjectField objectField)
 		throws PortalException;
 
 	/**
@@ -93,6 +95,9 @@ public interface ObjectStateFlowLocalService
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void deleteObjectFieldObjectStateFlow(long objectFieldId)
+		throws NoSuchObjectStateFlowException;
 
 	/**
 	 * Deletes the object state flow with the primary key from the database. Also notifies the appropriate model listeners.
@@ -226,6 +231,9 @@ public interface ObjectStateFlowLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectStateFlow getObjectFieldObjectStateFlow(long objectFieldId);
+
 	/**
 	 * Returns the object state flow with the primary key.
 	 *
@@ -300,5 +308,8 @@ public interface ObjectStateFlowLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectStateFlow updateObjectStateFlow(
 		ObjectStateFlow objectStateFlow);
+
+	public void updateObjectStateTransitions(ObjectStateFlow objectStateFlow)
+		throws PortalException;
 
 }

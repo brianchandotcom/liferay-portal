@@ -340,6 +340,209 @@ public interface ListTypeEntryPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns all the list type entries where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @return the matching list type entries
+	 */
+	public java.util.List<ListTypeEntry> findByListTypeEntryId(
+		long listTypeEntryId);
+
+	/**
+	 * Returns a range of all the list type entries where listTypeEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @return the range of matching list type entries
+	 */
+	public java.util.List<ListTypeEntry> findByListTypeEntryId(
+		long listTypeEntryId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the list type entries where listTypeEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type entries
+	 */
+	public java.util.List<ListTypeEntry> findByListTypeEntryId(
+		long listTypeEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ListTypeEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the list type entries where listTypeEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching list type entries
+	 */
+	public java.util.List<ListTypeEntry> findByListTypeEntryId(
+		long listTypeEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ListTypeEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first list type entry in the ordered set where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching list type entry
+	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
+	 */
+	public ListTypeEntry findByListTypeEntryId_First(
+			long listTypeEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator<ListTypeEntry>
+				orderByComparator)
+		throws NoSuchListTypeEntryException;
+
+	/**
+	 * Returns the first list type entry in the ordered set where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	public ListTypeEntry fetchByListTypeEntryId_First(
+		long listTypeEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<ListTypeEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last list type entry in the ordered set where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching list type entry
+	 * @throws NoSuchListTypeEntryException if a matching list type entry could not be found
+	 */
+	public ListTypeEntry findByListTypeEntryId_Last(
+			long listTypeEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator<ListTypeEntry>
+				orderByComparator)
+		throws NoSuchListTypeEntryException;
+
+	/**
+	 * Returns the last list type entry in the ordered set where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	public ListTypeEntry fetchByListTypeEntryId_Last(
+		long listTypeEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<ListTypeEntry>
+			orderByComparator);
+
+	/**
+	 * Returns all the list type entries where listTypeEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryIds the list type entry IDs
+	 * @return the matching list type entries
+	 */
+	public java.util.List<ListTypeEntry> findByListTypeEntryId(
+		long[] listTypeEntryIds);
+
+	/**
+	 * Returns a range of all the list type entries where listTypeEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryIds the list type entry IDs
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @return the range of matching list type entries
+	 */
+	public java.util.List<ListTypeEntry> findByListTypeEntryId(
+		long[] listTypeEntryIds, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the list type entries where listTypeEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryIds the list type entry IDs
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type entries
+	 */
+	public java.util.List<ListTypeEntry> findByListTypeEntryId(
+		long[] listTypeEntryIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ListTypeEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the list type entries where listTypeEntryId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching list type entries
+	 */
+	public java.util.List<ListTypeEntry> findByListTypeEntryId(
+		long[] listTypeEntryIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ListTypeEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Removes all the list type entries where listTypeEntryId = &#63; from the database.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 */
+	public void removeByListTypeEntryId(long listTypeEntryId);
+
+	/**
+	 * Returns the number of list type entries where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @return the number of matching list type entries
+	 */
+	public int countByListTypeEntryId(long listTypeEntryId);
+
+	/**
+	 * Returns the number of list type entries where listTypeEntryId = any &#63;.
+	 *
+	 * @param listTypeEntryIds the list type entry IDs
+	 * @return the number of matching list type entries
+	 */
+	public int countByListTypeEntryId(long[] listTypeEntryIds);
+
+	/**
 	 * Returns all the list type entries where listTypeDefinitionId = &#63;.
 	 *
 	 * @param listTypeDefinitionId the list type definition ID

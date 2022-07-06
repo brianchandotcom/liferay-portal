@@ -17,6 +17,7 @@ package com.liferay.object.service;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -276,6 +277,10 @@ public interface ObjectFieldLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectField> getListTypeDefinitionObjectFields(
+		long listTypeDefinitionId, boolean state);
+
 	/**
 	 * Returns the object field with the primary key.
 	 *
@@ -366,7 +371,8 @@ public interface ObjectFieldLocalService
 			String defaultValue, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId, Map<Locale, String> labelMap, String name,
 			boolean required, boolean state,
-			List<ObjectFieldSetting> objectFieldSettings)
+			List<ObjectFieldSetting> objectFieldSettings,
+			ObjectStateFlow objectStateFlow)
 		throws PortalException;
 
 	public ObjectField updateObjectField(
@@ -377,7 +383,8 @@ public interface ObjectFieldLocalService
 			boolean indexedAsKeyword, String indexedLanguageId,
 			Map<Locale, String> labelMap, String name, boolean required,
 			boolean state, boolean system,
-			List<ObjectFieldSetting> objectFieldSettings)
+			List<ObjectFieldSetting> objectFieldSettings,
+			ObjectStateFlow objectStateFlow)
 		throws PortalException;
 
 	/**

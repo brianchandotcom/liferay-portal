@@ -70,6 +70,13 @@ public class ObjectStateTransitionLocalServiceUtil {
 		return getService().addObjectStateTransition(objectStateTransition);
 	}
 
+	public static void addObjectStateTransitions(
+			List<ObjectStateTransition> objectStateTransitions)
+		throws PortalException {
+
+		getService().addObjectStateTransitions(objectStateTransitions);
+	}
+
 	/**
 	 * Creates a new object state transition with the primary key. Does not add the object state transition to the database.
 	 *
@@ -91,6 +98,19 @@ public class ObjectStateTransitionLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deleteObjectStateFlowObjectStateTransitions(
+		long objectStateFlowId) {
+
+		getService().deleteObjectStateFlowObjectStateTransitions(
+			objectStateFlowId);
+	}
+
+	public static void deleteObjectStateObjectStateTransitions(
+		long objectStateId) {
+
+		getService().deleteObjectStateObjectStateTransitions(objectStateId);
 	}
 
 	/**
@@ -126,6 +146,14 @@ public class ObjectStateTransitionLocalServiceUtil {
 		ObjectStateTransition objectStateTransition) {
 
 		return getService().deleteObjectStateTransition(objectStateTransition);
+	}
+
+	public static void deleteObjectStateTransitions(
+			List<ObjectStateTransition> objectStateTransitions)
+		throws com.liferay.object.exception.
+			NoSuchObjectStateTransitionException {
+
+		getService().deleteObjectStateTransitions(objectStateTransitions);
 	}
 
 	/**
@@ -263,6 +291,20 @@ public class ObjectStateTransitionLocalServiceUtil {
 			getIndexableActionableDynamicQuery() {
 
 		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static List<ObjectStateTransition>
+		getObjectStateFlowObjectStateTransitions(long objectStateFlowId) {
+
+		return getService().getObjectStateFlowObjectStateTransitions(
+			objectStateFlowId);
+	}
+
+	public static List<ObjectStateTransition>
+		getObjectStateObjectStateTransitions(long sourceObjectStateId) {
+
+		return getService().getObjectStateObjectStateTransitions(
+			sourceObjectStateId);
 	}
 
 	/**

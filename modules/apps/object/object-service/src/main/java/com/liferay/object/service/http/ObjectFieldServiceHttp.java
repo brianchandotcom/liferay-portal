@@ -185,7 +185,8 @@ public class ObjectFieldServiceHttp {
 			java.util.Map<java.util.Locale, String> labelMap, String name,
 			boolean required, boolean state,
 			java.util.List<com.liferay.object.model.ObjectFieldSetting>
-				objectFieldSettings)
+				objectFieldSettings,
+			com.liferay.object.model.ObjectStateFlow objectStateFlow)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -197,7 +198,7 @@ public class ObjectFieldServiceHttp {
 				methodKey, objectFieldId, externalReferenceCode,
 				listTypeDefinitionId, businessType, dbType, defaultValue,
 				indexed, indexedAsKeyword, indexedLanguageId, labelMap, name,
-				required, state, objectFieldSettings);
+				required, state, objectFieldSettings, objectStateFlow);
 
 			Object returnObj = null;
 
@@ -245,7 +246,7 @@ public class ObjectFieldServiceHttp {
 			long.class, String.class, long.class, String.class, String.class,
 			String.class, boolean.class, boolean.class, String.class,
 			java.util.Map.class, String.class, boolean.class, boolean.class,
-			java.util.List.class
+			java.util.List.class, com.liferay.object.model.ObjectStateFlow.class
 		};
 
 }

@@ -35,7 +35,9 @@ import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.base.ObjectFieldLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
@@ -126,6 +128,8 @@ public class ObjectFieldLocalServiceImpl
 				DynamicObjectDefinitionTable.getAlterTableAddColumnSQL(
 					dbTableName, objectField.getDBColumnName(), dbType));
 		}
+
+		_objectStateFlowLocalService.addDefaultObjectStateFlow(objectField);
 
 		_addOrUpdateObjectFieldSettings(objectField, objectFieldSettings);
 
@@ -296,6 +300,13 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectField> getListTypeDefinitionObjectFields(
+		long listTypeDefinitionId, boolean state) {
+
+		return objectFieldPersistence.findByLTDI_S(listTypeDefinitionId, state);
+	}
+
+	@Override
 	public ObjectField getObjectField(long objectFieldId)
 		throws PortalException {
 
@@ -411,7 +422,8 @@ public class ObjectFieldLocalServiceImpl
 			String defaultValue, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId, Map<Locale, String> labelMap, String name,
 			boolean required, boolean state,
-			List<ObjectFieldSetting> objectFieldSettings)
+			List<ObjectFieldSetting> objectFieldSettings,
+			ObjectStateFlow objectStateFlow)
 		throws PortalException {
 
 		ObjectField objectField = objectFieldPersistence.findByPrimaryKey(
@@ -437,6 +449,9 @@ public class ObjectFieldLocalServiceImpl
 			objectField = objectFieldPersistence.update(objectField);
 
 			_addOrUpdateObjectFieldSettings(objectField, objectFieldSettings);
+
+			_objectStateFlowLocalService.updateObjectStateTransitions(
+				objectStateFlow);
 
 			return objectField;
 		}
@@ -475,6 +490,9 @@ public class ObjectFieldLocalServiceImpl
 
 		_addOrUpdateObjectFieldSettings(objectField, objectFieldSettings);
 
+		_objectStateFlowLocalService.updateObjectStateTransitions(
+			objectStateFlow);
+
 		return objectField;
 	}
 
@@ -487,7 +505,8 @@ public class ObjectFieldLocalServiceImpl
 			boolean indexedAsKeyword, String indexedLanguageId,
 			Map<Locale, String> labelMap, String name, boolean required,
 			boolean state, boolean system,
-			List<ObjectFieldSetting> objectFieldSettings)
+			List<ObjectFieldSetting> objectFieldSettings,
+			ObjectStateFlow objectStateFlow)
 		throws PortalException {
 
 		if (system) {
@@ -501,7 +520,7 @@ public class ObjectFieldLocalServiceImpl
 			objectFieldId, externalReferenceCode, listTypeDefinitionId,
 			businessType, dbType, defaultValue, indexed, indexedAsKeyword,
 			indexedLanguageId, labelMap, name, required, state,
-			objectFieldSettings);
+			objectFieldSettings, objectStateFlow);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -657,6 +676,11 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		objectField = objectFieldPersistence.remove(objectField);
+
+		if (objectField.isState()) {
+			_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
+				objectField.getObjectFieldId());
+		}
 
 		if (objectDefinition.getAccountEntryRestrictedObjectFieldId() ==
 				objectField.getObjectFieldId()) {
@@ -931,6 +955,9 @@ public class ObjectFieldLocalServiceImpl
 
 	@Reference
 	private ObjectRelationshipPersistence _objectRelationshipPersistence;
+
+	@Reference
+	private ObjectStateFlowLocalService _objectStateFlowLocalService;
 
 	@Reference
 	private ObjectViewLocalService _objectViewLocalService;

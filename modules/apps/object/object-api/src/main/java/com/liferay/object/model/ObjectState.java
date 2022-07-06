@@ -56,4 +56,9 @@ public interface ObjectState extends ObjectStateModel, PersistedModel {
 
 		};
 
+	public java.util.List<ObjectStateTransition> getObjectStateTransitions();
+
+	public void setObjectStateTransitions(
+		java.util.List<ObjectStateTransition> objectStateTransitions);
+
 }

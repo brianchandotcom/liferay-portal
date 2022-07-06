@@ -37,6 +37,12 @@ public class CommerceInventoryReplenishmentItemTable
 	public final Column<CommerceInventoryReplenishmentItemTable, Long>
 		mvccVersion = createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CommerceInventoryReplenishmentItemTable, String> uuid =
+		createColumn("uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceInventoryReplenishmentItemTable, String>
+		externalReferenceCode = createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceInventoryReplenishmentItemTable, Long>
 		commerceInventoryReplenishmentItemId = createColumn(
 			"CIReplenishmentItemId", Long.class, Types.BIGINT,

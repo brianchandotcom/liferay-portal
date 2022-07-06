@@ -31,6 +31,8 @@
 	</model>
 	<model name="com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem">
 		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="commerceInventoryReplenishmentItemId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

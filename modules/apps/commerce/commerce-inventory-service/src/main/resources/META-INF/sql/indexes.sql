@@ -8,8 +8,12 @@ create index IX_EC1719EE on CIBookedQuantity (sku[$COLUMN_LENGTH:75$]);
 
 create index IX_F588314 on CIReplenishmentItem (availabilityDate);
 create index IX_967CACA8 on CIReplenishmentItem (commerceInventoryWarehouseId);
+create index IX_C4760B6E on CIReplenishmentItem (companyId, availabilityDate);
+create index IX_FD9E7E02 on CIReplenishmentItem (companyId, commerceInventoryWarehouseId);
+create unique index IX_3462AACC on CIReplenishmentItem (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_1B681B5C on CIReplenishmentItem (companyId, sku[$COLUMN_LENGTH:75$]);
 create index IX_6C8E22D3 on CIReplenishmentItem (sku[$COLUMN_LENGTH:75$], availabilityDate);
+create index IX_F48BBEAB on CIReplenishmentItem (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_8427A055 on CIWarehouse (active_, countryTwoLettersISOCode[$COLUMN_LENGTH:75$]);
 create index IX_331A3FD3 on CIWarehouse (companyId, active_, countryTwoLettersISOCode[$COLUMN_LENGTH:75$]);

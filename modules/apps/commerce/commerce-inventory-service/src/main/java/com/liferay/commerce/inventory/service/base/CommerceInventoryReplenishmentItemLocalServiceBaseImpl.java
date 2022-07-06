@@ -24,6 +24,11 @@ import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWareh
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemFinder;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehouseItemPersistence;
 import com.liferay.commerce.inventory.service.persistence.CommerceInventoryWarehousePersistence;
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -34,6 +39,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -275,6 +281,69 @@ public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce inventory replenishment item with the matching UUID and company.
+	 *
+	 * @param uuid the commerce inventory replenishment item's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
+	 */
+	@Override
+	public CommerceInventoryReplenishmentItem
+		fetchCommerceInventoryReplenishmentItemByUuidAndCompanyId(
+			String uuid, long companyId) {
+
+		return commerceInventoryReplenishmentItemPersistence.
+			fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
+	 * Returns the commerce inventory replenishment item with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce inventory replenishment item's external reference code
+	 * @return the matching commerce inventory replenishment item, or <code>null</code> if a matching commerce inventory replenishment item could not be found
+	 */
+	@Override
+	public CommerceInventoryReplenishmentItem
+		fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return commerceInventoryReplenishmentItemPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CommerceInventoryReplenishmentItem
+		fetchCommerceInventoryReplenishmentItemByReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce inventory replenishment item with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce inventory replenishment item's external reference code
+	 * @return the matching commerce inventory replenishment item
+	 * @throws PortalException if a matching commerce inventory replenishment item could not be found
+	 */
+	@Override
+	public CommerceInventoryReplenishmentItem
+			getCommerceInventoryReplenishmentItemByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return commerceInventoryReplenishmentItemPersistence.findByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the commerce inventory replenishment item with the primary key.
 	 *
 	 * @param commerceInventoryReplenishmentItemId the primary key of the commerce inventory replenishment item
@@ -340,6 +409,76 @@ public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 			"commerceInventoryReplenishmentItemId");
 	}
 
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
+			new ExportActionableDynamicQuery() {
+
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(
+						stagedModelType, modelAdditionCount);
+
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
+
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
+				}
+
+			});
+
+		exportActionableDynamicQuery.setCompanyId(
+			portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<CommerceInventoryReplenishmentItem>() {
+
+				@Override
+				public void performAction(
+						CommerceInventoryReplenishmentItem
+							commerceInventoryReplenishmentItem)
+					throws PortalException {
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, commerceInventoryReplenishmentItem);
+				}
+
+			});
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
+				PortalUtil.getClassNameId(
+					CommerceInventoryReplenishmentItem.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -379,6 +518,24 @@ public abstract class CommerceInventoryReplenishmentItemLocalServiceBaseImpl
 
 		return commerceInventoryReplenishmentItemPersistence.findByPrimaryKey(
 			primaryKeyObj);
+	}
+
+	/**
+	 * Returns the commerce inventory replenishment item with the matching UUID and company.
+	 *
+	 * @param uuid the commerce inventory replenishment item's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching commerce inventory replenishment item
+	 * @throws PortalException if a matching commerce inventory replenishment item could not be found
+	 */
+	@Override
+	public CommerceInventoryReplenishmentItem
+			getCommerceInventoryReplenishmentItemByUuidAndCompanyId(
+				String uuid, long companyId)
+		throws PortalException {
+
+		return commerceInventoryReplenishmentItemPersistence.findByUuid_C_First(
+			uuid, companyId, null);
 	}
 
 	/**

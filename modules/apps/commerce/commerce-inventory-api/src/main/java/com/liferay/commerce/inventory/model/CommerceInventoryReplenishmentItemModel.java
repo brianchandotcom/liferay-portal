@@ -15,10 +15,10 @@
 package com.liferay.commerce.inventory.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 
 import java.util.Date;
 
@@ -37,8 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceInventoryReplenishmentItemModel
-	extends AuditedModel, BaseModel<CommerceInventoryReplenishmentItem>,
-			MVCCModel, ShardedModel {
+	extends BaseModel<CommerceInventoryReplenishmentItem>, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -75,6 +75,38 @@ public interface CommerceInventoryReplenishmentItemModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the uuid of this commerce inventory replenishment item.
+	 *
+	 * @return the uuid of this commerce inventory replenishment item
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this commerce inventory replenishment item.
+	 *
+	 * @param uuid the uuid of this commerce inventory replenishment item
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this commerce inventory replenishment item.
+	 *
+	 * @return the external reference code of this commerce inventory replenishment item
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this commerce inventory replenishment item.
+	 *
+	 * @param externalReferenceCode the external reference code of this commerce inventory replenishment item
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the commerce inventory replenishment item ID of this commerce inventory replenishment item.

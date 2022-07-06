@@ -28,6 +28,8 @@ create table CIBookedQuantity (
 
 create table CIReplenishmentItem (
 	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	CIReplenishmentItemId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

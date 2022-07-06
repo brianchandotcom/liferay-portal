@@ -62,8 +62,8 @@ public interface CommerceInventoryReplenishmentItemService extends BaseService {
 	 */
 	public CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
-				long commerceInventoryWarehouseId, String sku,
-				Date availabilityDate, int quantity)
+				String externalReferenceCode, long commerceInventoryWarehouseId,
+				String sku, Date availabilityDate, int quantity)
 		throws PortalException;
 
 	public void deleteCommerceInventoryReplenishmentItem(
@@ -72,8 +72,20 @@ public interface CommerceInventoryReplenishmentItemService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceInventoryReplenishmentItem
+			fetchCommerceInventoryReplenishmentItemByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceInventoryReplenishmentItem
 			getCommerceInventoryReplenishmentItem(
 				long commerceInventoryReplenishmentItemId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceInventoryReplenishmentItem>
+			getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseId(
+				long commerceInventoryWarehouseId, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -85,6 +97,12 @@ public interface CommerceInventoryReplenishmentItemService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getCommerceInventoryReplenishmentItemsCount(
 			long commerceInventoryWarehouseId, String sku)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int
+			getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseId(
+				long commerceInventoryWarehouseId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -101,6 +119,7 @@ public interface CommerceInventoryReplenishmentItemService extends BaseService {
 
 	public CommerceInventoryReplenishmentItem
 			updateCommerceInventoryReplenishmentItem(
+				String externalReferenceCode,
 				long commerceInventoryReplenishmentItemId,
 				Date availabilityDate, int quantity, long mvccVersion)
 		throws PortalException;

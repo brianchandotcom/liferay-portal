@@ -74,8 +74,9 @@ public class CommerceShippingMethodLocalServiceImpl
 	@Override
 	public CommerceShippingMethod addCommerceShippingMethod(
 			long userId, long groupId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile,
-			String engineKey, double priority, boolean active)
+			Map<Locale, String> descriptionMap, boolean active,
+			String engineKey, File imageFile, double priority,
+			String trackingURL)
 		throws PortalException {
 
 		// Commerce shipping method
@@ -107,6 +108,7 @@ public class CommerceShippingMethodLocalServiceImpl
 		commerceShippingMethod.setActive(active);
 		commerceShippingMethod.setEngineKey(engineKey);
 		commerceShippingMethod.setPriority(priority);
+		commerceShippingMethod.setTrackingURL(trackingURL);
 
 		commerceShippingMethod = commerceShippingMethodPersistence.update(
 			commerceShippingMethod);
@@ -286,8 +288,8 @@ public class CommerceShippingMethodLocalServiceImpl
 	@Override
 	public CommerceShippingMethod updateCommerceShippingMethod(
 			long commerceShippingMethodId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile, double priority,
-			boolean active)
+			Map<Locale, String> descriptionMap, boolean active, File imageFile,
+			double priority, String trackingURL)
 		throws PortalException {
 
 		// Commerce shipping method
@@ -309,6 +311,7 @@ public class CommerceShippingMethodLocalServiceImpl
 
 		commerceShippingMethod.setActive(active);
 		commerceShippingMethod.setPriority(priority);
+		commerceShippingMethod.setTrackingURL(trackingURL);
 
 		commerceShippingMethod = commerceShippingMethodPersistence.update(
 			commerceShippingMethod);

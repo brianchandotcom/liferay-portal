@@ -69,15 +69,16 @@ public class CommerceShippingMethodServiceImpl
 	@Override
 	public CommerceShippingMethod addCommerceShippingMethod(
 			long groupId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile,
-			String engineKey, double priority, boolean active)
+			Map<Locale, String> descriptionMap, boolean active,
+			String engineKey, File imageFile, double priority,
+			String trackingURL)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.addCommerceShippingMethod(
-			getUserId(), groupId, nameMap, descriptionMap, imageFile, engineKey,
-			priority, active);
+			getUserId(), groupId, nameMap, descriptionMap, active, engineKey,
+			imageFile, priority, trackingURL);
 	}
 
 	@Override
@@ -269,8 +270,8 @@ public class CommerceShippingMethodServiceImpl
 	@Override
 	public CommerceShippingMethod updateCommerceShippingMethod(
 			long commerceShippingMethodId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile, double priority,
-			boolean active)
+			Map<Locale, String> descriptionMap, boolean active, File imageFile,
+			double priority, String trackingURL)
 		throws PortalException {
 
 		CommerceShippingMethod commerceShippingMethod =
@@ -281,7 +282,7 @@ public class CommerceShippingMethodServiceImpl
 
 		return commerceShippingMethodLocalService.updateCommerceShippingMethod(
 			commerceShippingMethod.getCommerceShippingMethodId(), nameMap,
-			descriptionMap, imageFile, priority, active);
+			descriptionMap, active, imageFile, priority, trackingURL);
 	}
 
 	private void _checkCommerceChannel(long groupId) throws PortalException {

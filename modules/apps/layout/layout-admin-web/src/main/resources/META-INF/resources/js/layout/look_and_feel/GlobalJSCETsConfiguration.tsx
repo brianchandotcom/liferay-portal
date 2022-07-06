@@ -85,19 +85,6 @@ export default function GlobalJSCETsConfiguration({
 		);
 	};
 
-	const getDropDownButtonId = (globalJSCET: IGlobalJSCET) =>
-		`${portletNamespace}_GlobalJSCETsConfigurationOptionsButton_${globalJSCET.cetExternalReferenceCode}`;
-
-	const getDropDownItems = (globalJSCET: IGlobalJSCET) => {
-		return [
-			{
-				label: Liferay.Language.get('delete'),
-				onClick: () => deleteGlobalJSCET(globalJSCET),
-				symbolLeft: 'trash',
-			},
-		];
-	};
-
 	const handleClick = () => {
 		openSelectionModal<{value: string[]}>({
 			multiple: true,
@@ -197,69 +184,16 @@ export default function GlobalJSCETsConfiguration({
 					</ClayTable.Head>
 
 					<ClayTable.Body>
-						{allGlobalJSCETs.map((globalJSCET, index) => {
-							const buttonId = getDropDownButtonId(globalJSCET);
-							const items = getDropDownItems(globalJSCET);
-							const order = index + 1;
-
-							const disabled = Boolean(globalJSCET.inheritedFrom);
-
-							const inheritedLabel = globalJSCET.inheritedFrom
-								? Liferay.Util.sub(
-										Liferay.Language.get('from-x'),
-										INHERITED_LABELS[
-											globalJSCET.inheritedFrom
-										]
-								  )
-								: '-';
-
-							return (
-								<ClayTable.Row
-									className={classNames({disabled})}
-									key={globalJSCET.cetExternalReferenceCode}
-								>
-									<ClayTable.Cell>{order}</ClayTable.Cell>
-
-									<ClayTable.Cell expanded headingTitle>
-										{globalJSCET.name}
-									</ClayTable.Cell>
-
-									<ClayTable.Cell expanded>
-										<ClaySelectWithOption
-											defaultValue={
-												globalJSCET.loadType ||
-												DEFAULT_LOAD_TYPE_OPTION
-											}
-											onChange={(event) =>
-												updateGlobalJSCET(
-													globalJSCET,
-													'loadType',
-													event.target
-														.value as ILoadTypeOptions
-												)
-											}
-											options={Object.values(
-												LOAD_TYPE_OPTIONS
-											)}
-											sizing="sm"
-										/>
-									</ClayTable.Cell>
-
-									<ClayTable.Cell noWrap>
-										{inheritedLabel}
-									</ClayTable.Cell>
-
-									<ClayTable.Cell>
-										{disabled ? null : (
-											<GlobalCETOptionsDropDown
-												dropdownItems={items}
-												dropdownTriggerId={buttonId}
-											/>
-										)}
-									</ClayTable.Cell>
-								</ClayTable.Row>
-							);
-						})}
+						{allGlobalJSCETs.map((globalJSCET, index) => (
+							<ExtensionRow
+								deleteGlobalJSCET={deleteGlobalJSCET}
+								globalJSCET={globalJSCET}
+								key={globalJSCET.cetExternalReferenceCode}
+								order={index + 1}
+								portletNamespace={portletNamespace}
+								updateGlobalJSCET={updateGlobalJSCET}
+							/>
+						))}
 					</ClayTable.Body>
 				</ClayTable>
 			) : (
@@ -270,6 +204,85 @@ export default function GlobalJSCETsConfiguration({
 				</p>
 			)}
 		</>
+	);
+}
+
+interface IExtensionRowProps {
+	deleteGlobalJSCET: (globalJSCET: IGlobalJSCET) => unknown;
+	globalJSCET: IGlobalJSCET;
+	order: number;
+	portletNamespace: string;
+	updateGlobalJSCET: <T extends keyof IGlobalJSCET>(
+		globalJSCET: IGlobalJSCET,
+		propName: T,
+		value: IGlobalJSCET[T]
+	) => unknown;
+}
+
+function ExtensionRow({
+	deleteGlobalJSCET,
+	globalJSCET,
+	order,
+	portletNamespace,
+	updateGlobalJSCET,
+}: IExtensionRowProps) {
+	const disabled = Boolean(globalJSCET.inheritedFrom);
+	const dropdownTriggerId = `${portletNamespace}_GlobalJSCETsConfigurationOptionsButton_${globalJSCET.cetExternalReferenceCode}`;
+
+	const dropdownItems = [
+		{
+			label: Liferay.Language.get('delete'),
+			onClick: () => deleteGlobalJSCET(globalJSCET),
+			symbolLeft: 'trash',
+		},
+	];
+
+	const inheritedLabel = globalJSCET.inheritedFrom
+		? Liferay.Util.sub(
+				Liferay.Language.get('from-x'),
+				INHERITED_LABELS[globalJSCET.inheritedFrom]
+		  )
+		: '-';
+
+	return (
+		<ClayTable.Row
+			className={classNames({disabled})}
+			key={globalJSCET.cetExternalReferenceCode}
+		>
+			<ClayTable.Cell>{order}</ClayTable.Cell>
+
+			<ClayTable.Cell expanded headingTitle>
+				{globalJSCET.name}
+			</ClayTable.Cell>
+
+			<ClayTable.Cell expanded>
+				<ClaySelectWithOption
+					defaultValue={
+						globalJSCET.loadType || DEFAULT_LOAD_TYPE_OPTION
+					}
+					onChange={(event) =>
+						updateGlobalJSCET(
+							globalJSCET,
+							'loadType',
+							event.target.value as ILoadTypeOptions
+						)
+					}
+					options={Object.values(LOAD_TYPE_OPTIONS)}
+					sizing="sm"
+				/>
+			</ClayTable.Cell>
+
+			<ClayTable.Cell noWrap>{inheritedLabel}</ClayTable.Cell>
+
+			<ClayTable.Cell>
+				{disabled ? null : (
+					<GlobalCETOptionsDropDown
+						dropdownItems={dropdownItems}
+						dropdownTriggerId={dropdownTriggerId}
+					/>
+				)}
+			</ClayTable.Cell>
+		</ClayTable.Row>
 	);
 }
 

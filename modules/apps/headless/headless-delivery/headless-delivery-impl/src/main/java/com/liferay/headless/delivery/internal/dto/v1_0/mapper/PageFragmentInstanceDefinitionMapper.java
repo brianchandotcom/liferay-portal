@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -131,6 +132,17 @@ public class PageFragmentInstanceDefinitionMapper {
 					pageFragmentInstanceDefinitionFragmentViewports;
 				indexed = fragmentStyledLayoutStructureItem.isIndexed();
 				widgetInstances = _getWidgetInstances(fragmentEntryLink);
+
+				setName(
+					() -> {
+						if (!GetterUtil.getBoolean(
+								PropsUtil.get("feature.flag.LPS-147895"))) {
+
+							return null;
+						}
+
+						return fragmentStyledLayoutStructureItem.getName();
+					});
 			}
 		};
 	}

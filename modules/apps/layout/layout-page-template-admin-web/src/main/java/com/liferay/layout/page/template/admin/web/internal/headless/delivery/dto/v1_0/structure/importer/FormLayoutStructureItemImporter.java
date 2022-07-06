@@ -167,6 +167,13 @@ public class FormLayoutStructureItemImporter
 				GetterUtil.getBoolean(definitionMap.get("indexed")));
 		}
 
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147895")) &&
+			definitionMap.containsKey("name")) {
+
+			formStyledLayoutStructureItem.setName(
+				GetterUtil.getString(definitionMap.get("name")));
+		}
+
 		return formStyledLayoutStructureItem;
 	}
 

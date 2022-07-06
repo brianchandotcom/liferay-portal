@@ -386,6 +386,15 @@ public class ContainerLayoutStructureItemImporter
 				GetterUtil.getBoolean(definitionMap.get("indexed")));
 		}
 
+		if (GetterUtil.getBoolean(
+				com.liferay.portal.kernel.util.PropsUtil.get(
+					"feature.flag.LPS-147895")) &&
+			definitionMap.containsKey("name")) {
+
+			containerStyledLayoutStructureItem.setName(
+				GetterUtil.getString(definitionMap.get("name")));
+		}
+
 		return containerStyledLayoutStructureItem;
 	}
 

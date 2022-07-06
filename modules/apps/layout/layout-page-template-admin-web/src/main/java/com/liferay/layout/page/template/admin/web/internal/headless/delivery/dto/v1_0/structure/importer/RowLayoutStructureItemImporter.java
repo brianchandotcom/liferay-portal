@@ -98,6 +98,13 @@ public class RowLayoutStructureItemImporter
 				GetterUtil.getBoolean(definitionMap.get("indexed")));
 		}
 
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147895")) &&
+			definitionMap.containsKey("name")) {
+
+			rowStyledLayoutStructureItem.setName(
+				GetterUtil.getString(definitionMap.get("name")));
+		}
+
 		rowStyledLayoutStructureItem.setNumberOfColumns(
 			(Integer)definitionMap.get("numberOfColumns"));
 

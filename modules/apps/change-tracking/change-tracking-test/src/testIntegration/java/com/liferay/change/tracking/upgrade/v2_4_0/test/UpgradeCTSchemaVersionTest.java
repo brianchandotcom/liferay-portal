@@ -37,6 +37,9 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.sql.Connection;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -80,13 +83,8 @@ public class UpgradeCTSchemaVersionTest {
 					String toSchemaVersionString, UpgradeStep... upgradeSteps) {
 
 					for (UpgradeStep upgradeStep : upgradeSteps) {
-						Class<?> clazz = upgradeStep.getClass();
-
-						String className = clazz.getName();
-
-						if (className.contains(_CLASS_NAME)) {
-							_upgradeCTSchemaVersion =
-								(UpgradeProcess)upgradeStep;
+						if (fromSchemaVersionString.equals("2.3.0")) {
+							_upgradeSteps.add((UpgradeProcess)upgradeStep);
 						}
 					}
 				}
@@ -117,7 +115,9 @@ public class UpgradeCTSchemaVersionTest {
 			}
 		}
 
-		_upgradeCTSchemaVersion.upgrade();
+		for (UpgradeProcess upgradeProcess : _upgradeSteps) {
+			upgradeProcess.upgrade();
+		}
 
 		CacheRegistryUtil.clear();
 
@@ -138,10 +138,6 @@ public class UpgradeCTSchemaVersionTest {
 			_ctPreferences.getPreviousCtCollectionId());
 	}
 
-	private static final String _CLASS_NAME =
-		"com.liferay.change.tracking.internal.upgrade.v2_4_0." +
-			"CTSchemaVersionUpgradeProcess";
-
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;
 
@@ -159,6 +155,6 @@ public class UpgradeCTSchemaVersionTest {
 	@DeleteAfterTestRun
 	private CTPreferences _ctPreferences;
 
-	private UpgradeProcess _upgradeCTSchemaVersion;
+	private final List<UpgradeProcess> _upgradeSteps = new ArrayList<>();
 
 }

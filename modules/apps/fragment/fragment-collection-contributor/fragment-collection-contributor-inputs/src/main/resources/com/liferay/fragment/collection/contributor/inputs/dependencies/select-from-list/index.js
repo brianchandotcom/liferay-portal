@@ -315,7 +315,11 @@ function filterLocalOptions(query) {
 }
 
 function fetchRemoteOptions(query, abortController) {
-	if (!input.attributes.optionsURL) {
+	if (
+		!input.attributes.optionsLabelFieldName ||
+		!input.attributes.optionsURL ||
+		!input.attributes.optionsValueFieldName
+	) {
 		return Promise.resolve({items: []});
 	}
 
@@ -333,8 +337,8 @@ function fetchRemoteOptions(query, abortController) {
 		.then((response) => response.json())
 		.then((result) => {
 			return result.items.map((entry) => ({
-				label: entry.name || entry.id,
-				value: entry.key || entry.id,
+				label: entry[input.attributes.optionsLabelFieldName],
+				value: entry[input.attributes.optionsValueFieldName],
 			}));
 		});
 }

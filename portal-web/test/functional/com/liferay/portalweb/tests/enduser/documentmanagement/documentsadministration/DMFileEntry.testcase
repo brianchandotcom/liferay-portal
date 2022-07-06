@@ -1770,7 +1770,10 @@ definition {
 			siteURLKey = "guest");
 
 		while (IsElementPresent(key_infoMessage = "Generating preview will take a few minutes.", locator1 = "Message#INFO_SPECIFIC")) {
-			Pause(locator1 = "10000");
+
+			// We need to wait for a few minutes to get the preview, since the pdf is a large one, we need to wait for a longer time.
+
+			Pause(locator1 = "5000");
 
 			Refresh();
 		}
@@ -2527,6 +2530,8 @@ definition {
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
 			increaseMinutes = "1");
+
+		// We need to wait for the system time to pass by 2 minutes in order to verify the document is expired. There is currently no easy way to manipulate the system time in CI for automation. 2 minutes is the shortest value we can set while ensuring the stability of the test.
 
 		Pause(locator1 = "120000");
 

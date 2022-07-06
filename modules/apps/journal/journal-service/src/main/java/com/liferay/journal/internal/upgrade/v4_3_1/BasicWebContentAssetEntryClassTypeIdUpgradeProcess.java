@@ -57,54 +57,14 @@ public class BasicWebContentAssetEntryClassTypeIdUpgradeProcess
 		_updateBasicWebContentAssetEntries();
 	}
 
-	private boolean _isUpgradeNeeded(long classNameId) throws Exception {
-		if (hasColumnType(
-				AssetEntryTable.INSTANCE.getName(), "companyId", "LONG null") &&
-			hasColumnType(
-				AssetEntryTable.INSTANCE.getName(), "classNameId",
-				"LONG null")) {
-
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						StringBundler.concat(
-							"select count(*) from AssetEntry where ",
-							"classTypeId = 0 and classNameId = ", classNameId));
-				ResultSet resultSet = preparedStatement.executeQuery()) {
-
-				if (resultSet.next()) {
-					int count = resultSet.getInt(1);
-
-					if (count > 0) {
-						return true;
-					}
-				}
-
-				return false;
-			}
-		}
-
-		return false;
-	}
-
 	private void _updateBasicWebContentAssetEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long classNameId = PortalUtil.getClassNameId(
 				JournalArticle.class.getName());
 
-			if (_isUpgradeNeeded(classNameId)) {
-				_companyLocalService.forEachCompanyId(
-					companyId -> _updateBasicWebContentAssetEntries(
-						companyId, classNameId));
-			}
-			else {
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"No need to upgrade asset entries with ",
-							"classNameId = ", classNameId,
-							" and classTypeId = 0"));
-				}
-			}
+			_companyLocalService.forEachCompanyId(
+				companyId -> _updateBasicWebContentAssetEntries(
+					companyId, classNameId));
 		}
 	}
 

@@ -310,6 +310,17 @@ public class AddInfoItemStrutsActionTest {
 
 		Object object = SessionErrors.get(uploadPortletRequest, _formItemId);
 
+		if (errorExpected) {
+			Assert.assertNotNull(object);
+
+			Assert.assertTrue(object instanceof InfoFormException);
+
+			Assert.assertEquals(
+				objectEntries.toString(), 0, objectEntries.size());
+
+			return;
+		}
+
 		Assert.assertNull(object);
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());

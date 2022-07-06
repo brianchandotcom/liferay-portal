@@ -862,7 +862,7 @@ definition {
 
 		Button.clickPublish();
 
-		while (IsElementPresent(locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD", value1 = "Approved")) {
+		while (IsElementPresent(locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD", value1 = "Approved")  && (maxIterations = "40")) {
 
 			// We need this pause for waiting for the Discount to expire
 

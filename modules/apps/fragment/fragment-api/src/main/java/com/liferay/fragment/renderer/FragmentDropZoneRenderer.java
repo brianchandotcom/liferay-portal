@@ -26,8 +26,8 @@ public interface FragmentDropZoneRenderer {
 
 	public String renderDropZone(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long groupId, long plid,
-			String mainItemId, String mode, boolean showPreview)
+			HttpServletResponse httpServletResponse, String mainItemId,
+			String mode, boolean showPreview)
 		throws PortalException;
 
 }

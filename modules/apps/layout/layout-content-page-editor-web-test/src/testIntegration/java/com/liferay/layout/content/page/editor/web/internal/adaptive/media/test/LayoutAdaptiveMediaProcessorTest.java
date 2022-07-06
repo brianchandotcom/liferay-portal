@@ -123,9 +123,6 @@ public class LayoutAdaptiveMediaProcessorTest {
 		RenderFragmentLayoutTag renderFragmentLayoutTag =
 			new RenderFragmentLayoutTag();
 
-		renderFragmentLayoutTag.setGroupId(_group.getGroupId());
-		renderFragmentLayoutTag.setPlid(_layout.getPlid());
-
 		MockHttpServletRequest httpServletRequest =
 			new MockHttpServletRequest();
 
@@ -190,9 +187,6 @@ public class LayoutAdaptiveMediaProcessorTest {
 		RenderFragmentLayoutTag renderFragmentLayoutTag =
 			new RenderFragmentLayoutTag();
 
-		renderFragmentLayoutTag.setGroupId(_group.getGroupId());
-		renderFragmentLayoutTag.setPlid(_layout.getPlid());
-
 		MockHttpServletRequest httpServletRequest =
 			new MockHttpServletRequest();
 
@@ -229,7 +223,7 @@ public class LayoutAdaptiveMediaProcessorTest {
 	}
 
 	private void _addLayout() throws Exception {
-		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		FragmentEntry fragmentEntry =
 			_fragmentCollectionContributorTracker.getFragmentEntry(
@@ -237,7 +231,7 @@ public class LayoutAdaptiveMediaProcessorTest {
 
 		long defaultSegmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
+				layout.getPlid());
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -261,7 +255,7 @@ public class LayoutAdaptiveMediaProcessorTest {
 
 		_fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
 			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
-			defaultSegmentsExperienceId, _layout.getPlid(),
+			defaultSegmentsExperienceId, layout.getPlid(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			editableValuesJSONObject.toString(), StringPool.BLANK, 0, null,
@@ -284,16 +278,16 @@ public class LayoutAdaptiveMediaProcessorTest {
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), _layout.getPlid(),
+				_group.getGroupId(), layout.getPlid(),
 				defaultSegmentsExperienceId, layoutStructure.toString());
 
-		_themeDisplay.setLayout(_layout);
-		_themeDisplay.setLayoutSet(_layout.getLayoutSet());
+		_themeDisplay.setLayout(layout);
+		_themeDisplay.setLayoutSet(layout.getLayoutSet());
 		_themeDisplay.setLayoutTypePortlet(
-			(LayoutTypePortlet)_layout.getLayoutType());
+			(LayoutTypePortlet)layout.getLayoutType());
 		_themeDisplay.setLookAndFeel(
-			_layout.getTheme(), _layout.getColorScheme());
-		_themeDisplay.setPlid(_layout.getPlid());
+			layout.getTheme(), layout.getColorScheme());
+		_themeDisplay.setPlid(layout.getPlid());
 	}
 
 	@Inject
@@ -316,8 +310,6 @@ public class LayoutAdaptiveMediaProcessorTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private Layout _layout;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

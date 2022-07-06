@@ -178,24 +178,12 @@
 		<tag-class>com.liferay.layout.taglib.servlet.taglib.RenderFragmentLayoutTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Deprecated as of 7.3.0, with no direct replacement.</description>
-			<name>groupId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>mainItemId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>mode</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Deprecated as of 7.3.0, with no direct replacement.</description>
-			<name>plid</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

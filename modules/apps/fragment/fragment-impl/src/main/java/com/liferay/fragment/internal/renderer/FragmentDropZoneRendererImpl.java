@@ -35,8 +35,8 @@ public class FragmentDropZoneRendererImpl implements FragmentDropZoneRenderer {
 	@Override
 	public String renderDropZone(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, long groupId, long plid,
-			String mainItemId, String mode, boolean showPreview)
+			HttpServletResponse httpServletResponse, String mainItemId,
+			String mode, boolean showPreview)
 		throws PortalException {
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -48,10 +48,8 @@ public class FragmentDropZoneRendererImpl implements FragmentDropZoneRenderer {
 			RenderFragmentLayoutTag renderFragmentLayoutTag =
 				new RenderFragmentLayoutTag();
 
-			renderFragmentLayoutTag.setGroupId(groupId);
 			renderFragmentLayoutTag.setMainItemId(mainItemId);
 			renderFragmentLayoutTag.setMode(mode);
-			renderFragmentLayoutTag.setPlid(plid);
 			renderFragmentLayoutTag.setShowPreview(showPreview);
 
 			renderFragmentLayoutTag.doTag(

@@ -288,4 +288,75 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153656. Page should inherit the CSS extension from page template."
+	@priority = "5"
+	test ViewInheritedCSSExtensionFromPageTemplate {
+		task ("Given a site designer has a content page template with a CSS extension") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Content Page Template",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			PagesAdmin.addCSSExtensions(extensionNameList = "FontFamily");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.publish();
+		}
+
+		task ("When the site designer adds a content page based on content page template") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				collectionName = "Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Content Page Template");
+		}
+
+		task ("Then the site designer could see the inherited CSS extension") {
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "font-family",
+				value1 = "&quot;Times New Roman&quot;");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertVisible(
+				key_tableEntry = "FontFamily",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+		}
+	}
+
 }

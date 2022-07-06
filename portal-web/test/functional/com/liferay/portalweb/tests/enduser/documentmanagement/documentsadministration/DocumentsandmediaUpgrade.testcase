@@ -18,6 +18,62 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
+	@priority = "4"
+	test FileUploadLimitIsPreservedAfterUpgradeFrom70105 {
+		property data.archive.type = "data-archive-documents-and-media-file-size-limit";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.0.10.15";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "Commerce_Blue.jpg",
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 10 KB");
+	}
+
+	@priority = "4"
+	test FileUploadLimitIsPreservedAfterUpgradeFrom71105 {
+		property data.archive.type = "data-archive-documents-and-media-file-size-limit";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.1.10.5";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "Commerce_Blue.jpg",
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 10 KB");
+	}
+
+	@priority = "4"
+	test FileUploadLimitIsPreservedAfterUpgradeFrom72104 {
+		property data.archive.type = "data-archive-documents-and-media-file-size-limit";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.10.4";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "Commerce_Blue.jpg",
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 10 KB");
+	}
+
+	@priority = "4"
+	test FileUploadLimitIsPreservedAfterUpgradeFrom73101 {
+		property data.archive.type = "data-archive-documents-and-media-file-size-limit";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.10.1";
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentFile = "Commerce_Blue.jpg",
+			dmDocumentTitle = "Commerce_Blue.jpg",
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 10 KB");
+	}
+
 	@priority = "5"
 	@refactorneeded
 	test ViewDMArchive625 {

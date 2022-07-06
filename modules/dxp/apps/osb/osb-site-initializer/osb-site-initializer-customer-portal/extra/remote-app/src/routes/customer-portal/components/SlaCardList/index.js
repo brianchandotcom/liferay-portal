@@ -52,7 +52,7 @@ const SlaCardsList = ({koroneikiAccount}) => {
 
 					{slaCards.length > 1 && (
 						<SwitchSlaCardsButton
-							handleClick={changePosition(slaCards)}
+							handleClick={() => changePosition(slaCards)}
 						/>
 					)}
 				</div>

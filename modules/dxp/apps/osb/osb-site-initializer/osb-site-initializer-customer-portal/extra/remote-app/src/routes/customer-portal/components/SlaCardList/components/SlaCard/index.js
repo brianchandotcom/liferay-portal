@@ -16,46 +16,35 @@ import React from 'react';
 import i18n from '../../../../../../common/I18n';
 import {SLA_TYPES} from '../../../../../../common/utils/constants';
 
-const SlaCard = ({
-	slaDateEnd,
-	slaDateStart,
-	slaLabel,
-	slaSelected,
-	slaTitle,
-}) => {
-	const slaDate = `${slaDateStart} - ${slaDateEnd}`;
+const SlaCard = ({endDate, label, selected, startDate, title}) => {
+	const slaDate = `${startDate} - ${endDate}`;
 
 	return (
 		<div
 			className={classNames('align-items-center d-flex', {
-				'cp-sla-card': slaLabel !== slaSelected,
-				'cp-sla-card-active': slaLabel === slaSelected,
+				'cp-sla-card': !selected,
+				'cp-sla-card-active': selected,
 			})}
 		>
 			<ClayCard
-				className={classNames(
-					'm-0 p-3 rounded-lg border cp-sla-min-width',
-					{
-						'bg-brand-secondary-lighten-6 border-brand-secondary-lighten-4':
-							slaTitle === SLA_TYPES.gold,
-						'bg-neutral-0 border-brand-primary-darken-2 ':
-							slaTitle === SLA_TYPES.limited,
-						'bg-neutral-0 border-neutral-2 ':
-							slaTitle === SLA_TYPES.platinum,
-					}
-				)}
+				className={classNames('m-0 p-3 rounded-lg', {
+					'bg-brand-secondary-lighten-6 cp-sla-gold':
+						title === SLA_TYPES.gold,
+					'bg-neutral-0 cp-sla-limited': title === SLA_TYPES.limited,
+					'cp-sla-platinum': title === SLA_TYPES.platinum,
+				})}
 			>
 				<ClayCard.Row className="align-items-center d-flex justify-content-between">
 					<div
 						className={classNames('h5 mb-0', {
 							'text-brand-primary-darken-2':
-								slaTitle === SLA_TYPES.limited,
+								title === SLA_TYPES.limited,
 							'text-brand-secondary-darken-3':
-								slaTitle === SLA_TYPES.gold,
-							'text-neutral-7': slaTitle === SLA_TYPES.platinum,
+								title === SLA_TYPES.gold,
+							'text-neutral-7': title === SLA_TYPES.platinum,
 						})}
 					>
-						{i18n.translate(slaTitle)}
+						{i18n.translate(title)}
 					</div>
 
 					<div>
@@ -65,16 +54,16 @@ const SlaCard = ({
 									'mr-0 p-0 text-small-caps cp-sla-label',
 									{
 										'label-borderless-dark text-neutral-7':
-											slaTitle === SLA_TYPES.platinum,
+											title === SLA_TYPES.platinum,
 										'label-borderless-primary text-brand-primary-darken-2':
-											slaTitle === SLA_TYPES.limited,
+											title === SLA_TYPES.limited,
 										'label-borderless-secondary text-brand-secondary-darken-3':
-											slaTitle === SLA_TYPES.gold,
+											title === SLA_TYPES.gold,
 									}
 								)}
 								displayType="secundary"
 							>
-								{i18n.translate(slaLabel).toUpperCase()}
+								{i18n.translate(label).toUpperCase()}
 							</ClayLabel>
 						</ClayCard.Caption>
 					</div>
@@ -83,10 +72,10 @@ const SlaCard = ({
 				<ClayCard.Description
 					className={classNames('', {
 						'text-brand-primary-darken-2':
-							slaTitle === SLA_TYPES.limited,
+							title === SLA_TYPES.limited,
 						'text-brand-secondary-darken-3':
-							slaTitle === SLA_TYPES.gold,
-						'text-neutral-6': slaTitle === SLA_TYPES.platinum,
+							title === SLA_TYPES.gold,
+						'text-neutral-6': title === SLA_TYPES.platinum,
 					})}
 					displayType="text"
 					truncate={false}

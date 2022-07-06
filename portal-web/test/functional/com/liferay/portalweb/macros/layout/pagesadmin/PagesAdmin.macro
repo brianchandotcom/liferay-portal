@@ -229,6 +229,30 @@ definition {
 			sitePageType = "${sitePageType}");
 	}
 
+	macro addCSSExtensions {
+		WaitForEditable(
+			key_text = "Add CSS Extensions",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_text = "Add CSS Extensions",
+			locator1 = "Button#ANY");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		for (var extensionName : list "${extensionNameList}") {
+			Check(
+				key_listEntry = "${extensionName}",
+				locator1 = "LexiconList#LIST_ENTRY_CHECKBOX");
+		}
+
+		SelectFrameTop();
+
+		Click(
+			key_text = "Add",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+	}
+
 	macro addJavaScript {
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",

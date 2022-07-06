@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.admin.inventory.internal.jaxrs.exception.mapper;
 
-import com.liferay.commerce.inventory.exception.NoSuchInventoryWarehouseItemException;
+import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryReplenishmentItemException;
 import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
@@ -24,29 +24,30 @@ import javax.ws.rs.ext.Provider;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Andrea Sbarra
+ * @author Crescenzo Rega
  */
 @Component(
 	enabled = false,
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory.NoSuchInventoryWarehouseItemExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Admin.Inventory.DuplicateCommerceInventoryReplenishmentItemExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class NoSuchInventoryWarehouseItemExceptionMapper
-	extends BaseExceptionMapper<NoSuchInventoryWarehouseItemException> {
+public class DuplicateCommerceInventoryReplenishmentItemExceptionMapper
+	extends BaseExceptionMapper
+		<DuplicateCommerceInventoryReplenishmentItemException> {
 
 	@Override
 	public String getErrorDescription() {
-		return "Warehouse item not found";
+		return "Duplicated replenishment item";
 	}
 
 	@Override
 	public Response.Status getStatus() {
-		return Response.Status.NOT_FOUND;
+		return Response.Status.BAD_REQUEST;
 	}
 
 }

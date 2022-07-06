@@ -32,19 +32,15 @@ import org.json.JSONObject;
 public class AxisTestClassGroup extends BaseTestClassGroup {
 
 	public long getAverageDuration() {
-		long averageDuration = 0;
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
+
+		long averageDuration = batchTestClassGroup.getAverageOverheadDuration();
 
 		for (TestClass testClass : getTestClasses()) {
 			averageDuration += testClass.getAverageDuration();
 		}
 
 		return averageDuration;
-	}
-
-	public long getAverageOverheadDuration() {
-		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
-
-		return batchTestClassGroup.getAverageOverheadDuration();
 	}
 
 	public String getAxisName() {

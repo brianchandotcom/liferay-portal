@@ -326,7 +326,7 @@ definition {
 	@description = "This is a test for COMMERCE-7023. EditTheDefaultSettingForPinsCreation"
 	@priority = "3"
 	test EditTheDefaultSettingForPinsCreation {
-		task ("When creating a diagram product with an image") {
+		task ("Given a diagram product with an image") {
 			CommerceNavigator.gotoPortlet(
 				category = "Product Management",
 				portlet = "Products");
@@ -347,43 +347,54 @@ definition {
 			CommerceProductImages.addDiagramImages(
 				imageTitles = "Black",
 				productType = "Diagram");
+
+			SelectFrame(locator1 = "relative=top");
+
+			Button.clickPublish();
 		}
 
-		task ("And the pin size is set to Medium") {
-			AssertElementPresent(
-				key_text = "Medium",
-				locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE");
+		task ("When a user navigates to the product and adds a pin") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceNavigator.gotoEntry(entryName = "Diagram T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceDiagram.selectPinSize(pinSize = "Small");
 
 			CommerceDiagram.addPin(
 				label = "Test",
 				pinNumber = "1",
 				quantity = "1",
 				selectType = "Not Linked to a Catalog");
-			
-			Click(
-				key_text = "Default Diameter",
-				locator1 = "Button#ANY");
-			
-			AssertElementPresent(
-				key_radius = "10",
-				locator1 = "CommerceEntry#VERIFY_PIN_RADIUS");
-			
-			CommerceEntry.verifyCostumRadiusWithCostumValue(key_list = "1,2,3,4,5");
-			
-			AssertElementPresent(
-				key_radius = "15",
-				locator1 = "CommerceEntry#VERIFY_PIN_RADIUS");
-			
-			CommerceEntry.verifyCostumRadiusWithDefaultValue();
-			
-			CommerceEntry.changePinColor(color = "#FF0000");
-			
-			AssertElementPresent(
-				key_strokeColor = "#FF0000",
-				locator1 = "CommerceEntry#VERIFY_PIN_COLOR_STROKE");
-			
+
+			SelectFrame(locator1 = "relative=top");
+
 			Button.clickPublish();
 
+			Refresh();
+		}
+
+		task ("Then the user can change and assert the pin size") {
+			CommerceDiagram.assertPinSize(pinSize = "Small");
+
+			CommerceDiagram.selectPinSize(pinSize = "Medium");
+
+			Button.clickPublish();
+
+			Refresh();
+
+			CommerceDiagram.assertPinSize(pinSize = "Medium");
+
+			CommerceDiagram.selectPinSize(pinSize = "Large");
+
+			Button.clickPublish();
+
+			Refresh();
+
+			CommerceDiagram.assertPinSize(pinSize = "Large");
 		}
 	}
 

@@ -44,6 +44,9 @@ definition {
 		}
 
 		task ("Wait for expiration time") {
+
+			// This pause is required to allow the test to wait for the warning message of a session expiring soon.
+
 			Pause(locator1 = "60000");
 		}
 
@@ -52,6 +55,9 @@ definition {
 		}
 
 		task ("Wait and sign in") {
+
+			// This pause is required to allow the test to wait for the session to expire.
+
 			Pause(locator1 = "60000");
 
 			User.viewSignInPresent();
@@ -75,6 +81,9 @@ definition {
 		}
 
 		task ("Wait for expiration time") {
+
+			// This pause is required to allow the test to wait for the session to expire.
+
 			Pause(locator1 = "120000");
 		}
 
@@ -95,6 +104,8 @@ definition {
 
 		task ("Wait for session expired") {
 			Navigator.openURL();
+
+			// This pause is required to allow the test to wait for the session to expire.
 
 			Pause(locator1 = "120000");
 
@@ -118,6 +129,9 @@ definition {
 		}
 
 		task ("Wait for session expired") {
+
+			// This pause is required to allow the test to wait for the session to expire.
+
 			Pause(locator1 = "120000");
 
 			User.viewExpiredSessionErrorMessage(message = "Danger:Due to inactivity, your session has expired. Before you continue, make sure your entered data is saved locally.");

@@ -102,6 +102,27 @@ public class PageSectionDefinition implements Cloneable, Serializable {
 
 	protected BackgroundImage backgroundImage;
 
+	public String getContentVisibility() {
+		return contentVisibility;
+	}
+
+	public void setContentVisibility(String contentVisibility) {
+		this.contentVisibility = contentVisibility;
+	}
+
+	public void setContentVisibility(
+		UnsafeSupplier<String, Exception> contentVisibilityUnsafeSupplier) {
+
+		try {
+			contentVisibility = contentVisibilityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String contentVisibility;
+
 	public String[] getCssClasses() {
 		return cssClasses;
 	}

@@ -95,6 +95,20 @@ public class PageSectionDefinitionSerDes {
 				String.valueOf(pageSectionDefinition.getBackgroundImage()));
 		}
 
+		if (pageSectionDefinition.getContentVisibility() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentVisibility\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageSectionDefinition.getContentVisibility()));
+
+			sb.append("\"");
+		}
+
 		if (pageSectionDefinition.getCssClasses() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -288,6 +302,15 @@ public class PageSectionDefinitionSerDes {
 				String.valueOf(pageSectionDefinition.getBackgroundImage()));
 		}
 
+		if (pageSectionDefinition.getContentVisibility() == null) {
+			map.put("contentVisibility", null);
+		}
+		else {
+			map.put(
+				"contentVisibility",
+				String.valueOf(pageSectionDefinition.getContentVisibility()));
+		}
+
 		if (pageSectionDefinition.getCssClasses() == null) {
 			map.put("cssClasses", null);
 		}
@@ -408,6 +431,12 @@ public class PageSectionDefinitionSerDes {
 					pageSectionDefinition.setBackgroundImage(
 						BackgroundImageSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "contentVisibility")) {
+				if (jsonParserFieldValue != null) {
+					pageSectionDefinition.setContentVisibility(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "cssClasses")) {

@@ -162,6 +162,36 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BackgroundImage backgroundImage;
 
+	@Schema(description = "Defines the content visibility of the container.")
+	public String getContentVisibility() {
+		return contentVisibility;
+	}
+
+	public void setContentVisibility(String contentVisibility) {
+		this.contentVisibility = contentVisibility;
+	}
+
+	@JsonIgnore
+	public void setContentVisibility(
+		UnsafeSupplier<String, Exception> contentVisibilityUnsafeSupplier) {
+
+		try {
+			contentVisibility = contentVisibilityUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "Defines the content visibility of the container."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String contentVisibility;
+
 	@Schema(
 		description = "A list of CSS Classes that are applied to the element."
 	)
@@ -495,6 +525,20 @@ public class PageSectionDefinition implements Serializable {
 			sb.append("\"backgroundImage\": ");
 
 			sb.append(String.valueOf(backgroundImage));
+		}
+
+		if (contentVisibility != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentVisibility\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(contentVisibility));
+
+			sb.append("\"");
 		}
 
 		if (cssClasses != null) {

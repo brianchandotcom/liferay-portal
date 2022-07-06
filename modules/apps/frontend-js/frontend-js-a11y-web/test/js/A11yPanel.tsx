@@ -301,7 +301,7 @@ describe('A11yPanel', () => {
 
 			expect(occurrences.length).toBe(3);
 
-			expect(getAllByText('occurrence-x').length).toBe(3);
+			expect(getAllByText(/occurrence-[1-3]{1}$/).length).toBe(3);
 		});
 
 		it('navigates to the desired occurrence when clicking', () => {
@@ -327,9 +327,9 @@ describe('A11yPanel', () => {
 				)
 			).toBeInTheDocument();
 
-			expect(getAllByText('occurrence-x')[0]).toBeInTheDocument();
+			expect(getAllByText('occurrence-1')[0]).toBeInTheDocument();
 
-			expect(getAllByText('occurrence-x')[2]).toBeUndefined();
+			expect(getAllByText('occurrence-1')[2]).toBeUndefined();
 		});
 	});
 

@@ -4,11 +4,6 @@
 		"axe-core": "4.2.0",
 		"crypto": "1.0.1"
 	},
-	"jest": {
-		"setupFilesAfterEnv": [
-			"<rootDir>/jest-setup.config.js"
-		]
-	},
 	"main": "index.js",
 	"name": "@liferay/frontend-js-a11y-web",
 	"scripts": {

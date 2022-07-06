@@ -94,6 +94,7 @@ definition {
 			FDSQuickActions.viewQuickActionMenuNotPresent(title = "Sample1");
 		}
 	}
+
 	@description = "LPS-155455: When hovering over the first line item and the quick action menu is displayed on the 1st line"
 	@priority = "5"
 	test CanDisplayOnHover {

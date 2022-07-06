@@ -77,10 +77,12 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		String description = ParamUtil.getString(actionRequest, "description");
+		String externalReferenceCode = ParamUtil.getString(
+			actionRequest, "externalReferenceCode");
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		return _accountGroupService.addAccountGroup(
-			themeDisplay.getUserId(), description, name);
+			themeDisplay.getUserId(), description, externalReferenceCode, name);
 	}
 
 	private void _updateAccountGroup(ActionRequest actionRequest)
@@ -90,10 +92,12 @@ public class EditAccountGroupMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "accountGroupId");
 
 		String description = ParamUtil.getString(actionRequest, "description");
+		String externalReferenceCode = ParamUtil.getString(
+			actionRequest, "externalReferenceCode");
 		String name = ParamUtil.getString(actionRequest, "name");
 
 		_accountGroupService.updateAccountGroup(
-			accountGroupId, description, name);
+			accountGroupId, description, externalReferenceCode, name);
 	}
 
 	@Reference

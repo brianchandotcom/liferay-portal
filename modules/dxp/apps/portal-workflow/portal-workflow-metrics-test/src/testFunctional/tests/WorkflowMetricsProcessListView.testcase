@@ -415,14 +415,19 @@ definition {
 			entrySubtitle = "Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Pause(locator1 = "120000");
-
+		
+		
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Metrics");
 
-		WaitForElementPresent(
+		while (IsElementNotPresent(key_value = "down", locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER") && (maxIterations = "20")) {
+			Refresh();
+		}
+
+
+		AssertElementPresent(
 			key_value = "down",
 			locator1 = "WorkflowMetricsProcessListView#ANY_ARROW_ORDER");
 	}

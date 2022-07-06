@@ -153,6 +153,20 @@ public class AddInfoItemStrutsActionTest {
 			"-999999999", "-9007199254740991", RandomTestUtil.randomString());
 	}
 
+	@Test
+	public void testAddInfoItemRoundedBigDecimalTooLong() throws Exception {
+		_testAddInfoItem(
+			"99999999999999.99999999999999991",
+			"99999999999999.9999999999999999", null, null, null, null, null,
+			null, null, false);
+	}
+
+	@Test
+	public void testAddInfoItemRoundedDoubleTooLong() throws Exception {
+		_testAddInfoItemDouble(
+			"999.99999999999991", "999.9999999999999", false);
+	}
+
 	private Layout _addLayout() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

@@ -180,8 +180,7 @@ public class FormLayoutStructureItemImporter
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		Map<String, Object> map = (Map<String, Object>)propertiesMap.get(
-			"message");
+		Map<String, Object> map = (Map<String, Object>)propertiesMap.get(key);
 
 		if (MapUtil.isEmpty(map)) {
 			return jsonObject;

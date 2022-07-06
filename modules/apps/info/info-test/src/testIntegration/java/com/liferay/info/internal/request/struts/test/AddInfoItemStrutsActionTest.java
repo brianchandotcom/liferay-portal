@@ -210,6 +210,17 @@ public class AddInfoItemStrutsActionTest {
 	}
 
 	private void _testAddInfoItem(
+			String bigDecimalValue, String doubleValue, String integerValue,
+			String longValue, String stringValue)
+		throws Exception {
+
+		_testAddInfoItem(
+			bigDecimalValue, bigDecimalValue, doubleValue, doubleValue,
+			integerValue, integerValue, longValue, longValue, stringValue,
+			false);
+	}
+
+	private void _testAddInfoItem(
 			String bigDecimalValueInput, String bigDecimalValueExpected,
 			String doubleValueInput, String doubleValueExpected,
 			String integerValueInput, String integerValueExpected,
@@ -358,6 +369,44 @@ public class AddInfoItemStrutsActionTest {
 		if (stringValue != null) {
 			Assert.assertEquals(stringValue, values.get("myText"));
 		}
+	}
+
+	private void _testAddInfoItemBigDecimal(
+			String bigDecimalValueInput, String bigDecimalValueExpected,
+			boolean errorExpected)
+		throws Exception {
+
+		_testAddInfoItem(
+			bigDecimalValueInput, bigDecimalValueExpected, null, null, null,
+			null, null, null, null, errorExpected);
+	}
+
+	private void _testAddInfoItemDouble(
+			String doubleValueInput, String doubleValueExpected,
+			boolean errorExpected)
+		throws Exception {
+
+		_testAddInfoItem(
+			null, null, doubleValueInput, doubleValueExpected, null, null, null,
+			null, null, errorExpected);
+	}
+
+	private void _testAddInfoItemInteger(
+			String integerValueInput, boolean errorExpected)
+		throws Exception {
+
+		_testAddInfoItem(
+			null, null, null, null, integerValueInput, null, null, null, null,
+			errorExpected);
+	}
+
+	private void _testAddInfoItemLong(
+			String longValueInput, boolean errorExpected)
+		throws Exception {
+
+		_testAddInfoItem(
+			null, null, null, null, null, null, longValueInput, null, null,
+			errorExpected);
 	}
 
 	@Inject(filter = "component.name=*.AddInfoItemStrutsAction")

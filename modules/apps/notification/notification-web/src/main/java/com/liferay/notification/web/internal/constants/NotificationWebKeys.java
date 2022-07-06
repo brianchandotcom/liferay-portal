@@ -19,6 +19,9 @@ package com.liferay.notification.web.internal.constants;
  */
 public class NotificationWebKeys {
 
+	public static final String NOTIFICATION_QUEUE_ENTRIES =
+		"NOTIFICATION_QUEUE_ENTRIES";
+
 	public static final String NOTIFICATION_TEMPLATES =
 		"NOTIFICATION_TEMPLATES";
 

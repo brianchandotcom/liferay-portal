@@ -21,6 +21,10 @@ import com.liferay.notification.constants.NotificationPortletKeys;
  */
 public class NotificationFDSNames {
 
+	public static final String NOTIFICATION_QUEUE_ENTRIES =
+		NotificationPortletKeys.NOTIFICATION_QUEUE_ENTRIES +
+			"-notificationQueueEntries";
+
 	public static final String NOTIFICATION_TEMPLATES =
 		NotificationPortletKeys.NOTIFICATION_TEMPLATES +
 			"-notificationTemplates";

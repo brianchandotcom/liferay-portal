@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.notification.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Gabriel Albuquerque
- */
-public class NotificationPortletKeys {
+<%
+ViewNotificationQueueEntriesDisplayContext viewNotificationQueueEntriesDisplayContext = (ViewNotificationQueueEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+%>
 
-	public static final String NOTIFICATION_QUEUE_ENTRIES =
-		"com_liferay_notification_web_internal_portlet" +
-			"_NotificationQueueEntriesPortlet";
-
-	public static final String NOTIFICATION_TEMPLATES =
-		"com_liferay_notification_web_internal_portlet" +
-			"_NotificationTemplatesPortlet";
-
-}
+<frontend-data-set:headless-display
+	apiURL="<%= viewNotificationQueueEntriesDisplayContext.getAPIURL() %>"
+	fdsActionDropdownItems="<%= viewNotificationQueueEntriesDisplayContext.getFDSActionDropdownItems() %>"
+	formName="fm"
+	id="<%= NotificationFDSNames.NOTIFICATION_QUEUE_ENTRIES %>"
+	style="fluid"
+/>

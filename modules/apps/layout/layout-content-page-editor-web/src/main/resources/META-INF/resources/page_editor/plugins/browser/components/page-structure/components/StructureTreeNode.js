@@ -379,6 +379,7 @@ function StructureTreeNodeContent({
 						node.itemType !== ITEM_TYPES.editable && (
 							<StructureTreeNodeActions
 								item={item}
+								setEditingName={setEditingName}
 								visible={node.hidden || isHovered || isSelected}
 							/>
 						)}

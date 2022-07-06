@@ -33,12 +33,17 @@ import deleteItem from '../../../../../app/thunks/deleteItem';
 import duplicateItem from '../../../../../app/thunks/duplicateItem';
 import canBeDuplicated from '../../../../../app/utils/canBeDuplicated';
 import canBeRemoved from '../../../../../app/utils/canBeRemoved';
+import canBeRenamed from '../../../../../app/utils/canBeRenamed';
 import canBeSaved from '../../../../../app/utils/canBeSaved';
 import openWarningModal from '../../../../../app/utils/openWarningModal';
 import updateItemStyle from '../../../../../app/utils/updateItemStyle';
 import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
-export default function StructureTreeNodeActions({item, visible}) {
+export default function StructureTreeNodeActions({
+	item,
+	setEditingName,
+	visible,
+}) {
 	const [active, setActive] = useState(false);
 
 	const [openSaveModal, setOpenSaveModal] = useState(false);
@@ -77,6 +82,7 @@ export default function StructureTreeNodeActions({item, visible}) {
 					<ActionList
 						item={item}
 						setActive={setActive}
+						setEditingName={setEditingName}
 						setOpenSaveModal={setOpenSaveModal}
 					/>
 				)}
@@ -91,7 +97,7 @@ export default function StructureTreeNodeActions({item, visible}) {
 	);
 }
 
-const ActionList = ({item, setActive, setOpenSaveModal}) => {
+const ActionList = ({item, setActive, setEditingName, setOpenSaveModal}) => {
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.itemId);
 	const selectItem = useSelectItem();
@@ -180,11 +186,20 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 				icon: 'copy',
 				label: Liferay.Language.get('duplicate'),
 			});
+		}
 
+		if (canBeRenamed(item)) {
 			items.push({
-				type: 'separator',
+				action: () => {
+					setEditingName(true);
+				},
+				label: Liferay.Language.get('rename'),
 			});
 		}
+
+		items.push({
+			type: 'separator',
+		});
 
 		if (canBeRemoved(item, layoutData)) {
 			items.push({
@@ -214,6 +229,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		widgets,
 		setOpenSaveModal,
 		isHidden,
+		setEditingName,
 	]);
 
 	return (

@@ -98,6 +98,57 @@ public class AddInfoItemStrutsActionTest {
 		_user = UserTestUtil.getAdminUser(_group.getCompanyId());
 
 		UserTestUtil.setUser(_user);
+
+		_objectDefinition = _addObjectDefinition();
+
+		_classNameId = String.valueOf(
+			_portal.getClassNameId(
+				"com.liferay.object.model.ObjectDefinition#" +
+					_objectDefinition.getObjectDefinitionId()));
+	}
+
+	private ObjectDefinition _addObjectDefinition() throws Exception {
+		List<ObjectField> objectFields = Arrays.asList(
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
+				ObjectFieldConstants.DB_TYPE_DOUBLE,
+				RandomTestUtil.randomString(), "myDecimal", false),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
+				ObjectFieldConstants.DB_TYPE_INTEGER,
+				RandomTestUtil.randomString(), "myInteger", false),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+				ObjectFieldConstants.DB_TYPE_LONG,
+				RandomTestUtil.randomString(), "myLongInteger", false),
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_PRECISION_DECIMAL,
+				ObjectFieldConstants.DB_TYPE_BIG_DECIMAL,
+				RandomTestUtil.randomString(), "myPrecisionDecimal", false));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				_user.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
+
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+			_user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, null, true, true, null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"myText", false, false, Collections.emptyList());
+
+		objectDefinition.setTitleObjectFieldId(objectField.getObjectFieldId());
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		return _objectDefinitionLocalService.publishCustomObjectDefinition(
+			_user.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
 	@Inject(filter = "component.name=*.AddInfoItemStrutsAction")

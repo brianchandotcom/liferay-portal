@@ -77,7 +77,6 @@ export default function EditObjectField({
 	const [aggregationFilters, setAggregatonFilters] = useState<
 		AggregationFilters[]
 	>([]);
-
 	const [visibleModal, setVisibleModal] = useState(false);
 
 	const {observer, onClose} = useModal({
@@ -364,6 +363,121 @@ export default function EditObjectField({
 			makeFetch();
 		}
 	}, [values.businessType, objectDefinitionId2]);
+
+	useEffect(() => {
+		if (values.businessType === 'Aggregation') {
+			const filters = values.objectFieldSettings?.find(
+				(settings) => settings.name === 'filters'
+			);
+
+			const filterValues = filters?.value as ObjectFieldFilterSetting[];
+
+			if (!filterValues.length) {
+				setAggregatonFilters([]);
+
+				return;
+			}
+
+			if (
+				values.objectFieldSettings &&
+				objectFields &&
+				filterValues.length !== 0
+			) {
+				const newAggregationFilters = filterValues.map(
+					(parsedFilter) => {
+						const objectField = objectFields?.find(
+							(objectField) =>
+								objectField.name === parsedFilter.filterBy
+						);
+
+						const filterType = parsedFilter.filterType as string;
+
+						if (objectField && filterType) {
+							const aggregationFilter: AggregationFilters = {
+								fieldLabel:
+									objectField.label[defaultLanguageId],
+								filterBy: parsedFilter.filterBy,
+								filterType,
+								label: objectField.label,
+								objectFieldBusinessType:
+									objectField.businessType,
+								objectFieldName: objectField.name,
+								value:
+									objectField.businessType === 'Integer' ||
+									objectField.businessType === 'LongInteger'
+										? // @ts-ignore
+
+										  parsedFilter.json[filterType]
+										: undefined,
+							};
+
+							if (
+								objectField.businessType === 'Date' &&
+								parsedFilter.filterType === 'range'
+							) {
+								const dateRangeFilterValues: ObjectFieldDateRangeFilterSettings =
+
+									// @ts-ignore
+
+									parsedFilter.json[filterType];
+
+								const aggregationFilterDateRangeValues: LabelValueObject[] = [
+									{
+										label: dateRangeFilterValues['ge'],
+										value: 'ge',
+									},
+									{
+										label: dateRangeFilterValues['le'],
+										value: 'le',
+									},
+								];
+
+								const dateRangeAggregationFilter: AggregationFilters = {
+									...aggregationFilter,
+									valueList: aggregationFilterDateRangeValues,
+								};
+
+								return dateRangeAggregationFilter;
+							}
+
+							if (objectField.businessType === 'Picklist') {
+								const picklistFilterValues: string[] =
+
+									// @ts-ignore
+
+									parsedFilter.json[filterType];
+
+								const picklistValueList: LabelValueObject[] = picklistFilterValues.map(
+									(picklistFilterValue) => {
+										return {
+											checked: true,
+											label: picklistFilterValue,
+											value: picklistFilterValue,
+										};
+									}
+								);
+
+								const picklistAggregationFilter: AggregationFilters = {
+									...aggregationFilter,
+									valueList: picklistValueList,
+								};
+
+								return picklistAggregationFilter;
+							}
+
+							return aggregationFilter;
+						}
+					}
+				);
+
+				setAggregatonFilters(
+					newAggregationFilters as AggregationFilters[]
+				);
+			}
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [objectFields]);
 
 	return (
 		<SidePanelForm
@@ -767,6 +881,7 @@ interface AggregationFilters {
 	defaultSort?: boolean;
 	fieldLabel?: string;
 	filterBy?: string;
+	filterType?: string;
 	label: LocalizedValue<string>;
 	objectFieldBusinessType?: string;
 	objectFieldName: string;

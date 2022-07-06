@@ -118,13 +118,15 @@ interface ObjectFieldSetting {
 type ObjectFieldFilterSetting = {
 	filterBy?: string;
 	filterType?: string;
-	json?: {
-		[key: string]:
-			| string
-			| string[]
-			| ObjectFieldDateRangeFilterSettings
-			| undefined;
-	};
+	json:
+		| {
+				[key: string]:
+					| string
+					| string[]
+					| ObjectFieldDateRangeFilterSettings
+					| undefined;
+		  }
+		| string;
 };
 
 type ObjectFieldDateRangeFilterSettings = {

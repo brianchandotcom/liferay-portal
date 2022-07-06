@@ -595,10 +595,6 @@ function AggregationSourceProperty({
 		setSelectRelatedObjectRelationship(objectRelationship);
 		setSelectedSummarizeField('');
 
-		if (onRelationshipChange) {
-			onRelationshipChange(objectRelationship.objectDefinitionId2);
-		}
-
 		const relatedFields = await getObjectFields(
 			objectRelationship.objectDefinitionId2
 		);
@@ -626,6 +622,10 @@ function AggregationSourceProperty({
 				name: 'relationship',
 				value: objectRelationship.name,
 			},
+			{
+				name: 'filters',
+				value: [],
+			},
 		];
 
 		if (onAggregationFilterChange) {
@@ -635,6 +635,10 @@ function AggregationSourceProperty({
 		setValues({
 			objectFieldSettings: newObjectFieldSettings,
 		});
+
+		if (onRelationshipChange) {
+			onRelationshipChange(objectRelationship.objectDefinitionId2);
+		}
 	};
 
 	const handleAggregationFunctionChange = ({

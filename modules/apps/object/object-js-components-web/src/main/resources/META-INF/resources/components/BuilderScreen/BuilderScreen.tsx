@@ -56,7 +56,7 @@ export function BuilderScreen({
 
 	const newFilteredItems = filteredItems.filter(
 		(objectColumns: TBuilderScreenColumn) =>
-			objectColumns.fieldLabel
+			objectColumns?.fieldLabel
 				?.toLowerCase()
 				.includes(query.toLowerCase())
 	);
@@ -85,7 +85,7 @@ export function BuilderScreen({
 			{tableItems.length ? (
 				<ClayList>
 					{tableItems.map((viewColumn, index) => (
-						<React.Fragment key={viewColumn.objectFieldName}>
+						<React.Fragment key={viewColumn?.objectFieldName}>
 							{index === 0 && (
 								<ClayList.Item flex>
 									<ClayList.ItemField
@@ -133,12 +133,14 @@ export function BuilderScreen({
 								<BuilderListItem
 									disableEdit={
 										disableEdit ||
-										(filter && viewColumn.disableEdit)
+										(filter && viewColumn?.disableEdit)
 									}
 									hasDragAndDrop={hasDragAndDrop}
 									index={index}
-									label={viewColumn.fieldLabel}
-									objectFieldName={viewColumn.objectFieldName}
+									label={viewColumn?.fieldLabel}
+									objectFieldName={
+										viewColumn?.objectFieldName
+									}
 									onChangeColumnOrder={onChangeColumnOrder}
 									onDeleteColumn={onDeleteColumn}
 									onEditing={onEditing}
@@ -156,13 +158,14 @@ export function BuilderScreen({
 														'descending'
 												  )
 											: filter
-											? viewColumn.objectFieldBusinessType
-											: viewColumn.label[
+											? viewColumn?.objectFieldBusinessType
+											: viewColumn?.label[
 													defaultLanguageId
 											  ]
 									}
 									thirdColumnValues={
-										viewColumn.valueList ?? viewColumn.value
+										viewColumn?.valueList ??
+										viewColumn?.value
 									}
 								/>
 							</DndProvider>

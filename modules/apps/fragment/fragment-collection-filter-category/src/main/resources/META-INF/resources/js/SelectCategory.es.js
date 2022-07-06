@@ -81,7 +81,6 @@ export default function SelectCategory({
 	const items = singleSelection
 		? [
 				{
-					checked: selectedCategoryIds?.[0],
 					items: filteredCategories.map((category) => ({
 						label: category.label,
 						type: 'radio',
@@ -90,6 +89,7 @@ export default function SelectCategory({
 					name: 'categoryId',
 					onChange: (categoryId) => onSelectedClick(true, categoryId),
 					type: 'radiogroup',
+					value: selectedCategoryIds?.[0],
 				},
 		  ]
 		: filteredCategories.map((category) => ({

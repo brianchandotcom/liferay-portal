@@ -22,13 +22,13 @@ definition {
 				dmDocumentTitle = "First CSS Extension",
 				groupName = "Test Site Name",
 				mimeType = "text/css",
-				sourceFileName = "FontFamily.css");
+				sourceFileName = "font_family.css");
 
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentTitle = "Second CSS Extension",
 				groupName = "Test Site Name",
 				mimeType = "text/css",
-				sourceFileName = "BackgroundColor.css");
+				sourceFileName = "background_color.css");
 		}
 
 		task ("Get the latest version URL of two documents") {

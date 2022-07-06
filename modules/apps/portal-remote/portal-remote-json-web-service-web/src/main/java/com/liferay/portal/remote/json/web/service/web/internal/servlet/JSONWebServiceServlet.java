@@ -26,6 +26,8 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
+import java.net.URLDecoder;
+
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -108,8 +110,11 @@ public class JSONWebServiceServlet extends JSONServlet {
 		return jsonWebServiceServiceAction;
 	}
 
-	private String _getPathInfo(HttpServletRequest httpServletRequest) {
-		String currentURL = _portal.getCurrentURL(httpServletRequest);
+	private String _getPathInfo(HttpServletRequest httpServletRequest)
+		throws IOException {
+
+		String currentURL = URLDecoder.decode(
+			_portal.getCurrentURL(httpServletRequest), StringPool.UTF8);
 
 		Matcher matcher = _pathInfoPattern.matcher(currentURL);
 

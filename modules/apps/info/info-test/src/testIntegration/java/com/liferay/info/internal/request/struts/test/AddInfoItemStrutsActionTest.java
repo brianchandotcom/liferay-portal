@@ -109,6 +109,20 @@ public class AddInfoItemStrutsActionTest {
 		_layout = _addLayout();
 	}
 
+	@Test
+	public void testAddInfoItemMaxValues() throws Exception {
+		_testAddInfoItem(
+			"99999999999999.9999999999999999", "9999999999999998", "999999999",
+			"9007199254740991", RandomTestUtil.randomString());
+	}
+
+	@Test
+	public void testAddInfoItemMinValues() throws Exception {
+		_testAddInfoItem(
+			"-99999999999999.9999999999999999", "-9999999999999998",
+			"-999999999", "-9007199254740991", RandomTestUtil.randomString());
+	}
+
 	private Layout _addLayout() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

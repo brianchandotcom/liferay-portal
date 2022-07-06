@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.inventory.service.impl;
 
+import com.liferay.commerce.inventory.exception.CommerceInventoryReplenishmentQuantityException;
+import com.liferay.commerce.inventory.exception.CommerceInventoryReplenishmentSkuException;
+import com.liferay.commerce.inventory.exception.DuplicateCommerceInventoryReplenishmentItemException;
 import com.liferay.commerce.inventory.exception.MVCCException;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryReplenishmentItemLocalServiceBaseImpl;
@@ -38,15 +41,19 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 	@Override
 	public CommerceInventoryReplenishmentItem
 			addCommerceInventoryReplenishmentItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
+				String externalReferenceCode, long userId,
+				long commerceInventoryWarehouseId, String sku,
 				Date availabilityDate, int quantity)
 		throws PortalException {
 
-		if (Validator.isNull(sku)) {
-			throw new PortalException("SKU code is null");
-		}
-
 		User user = userLocalService.getUser(userId);
+
+		long companyId = user.getCompanyId();
+
+		_validateExternalReferenceCode(0, companyId, externalReferenceCode);
+
+		_validateQuantity(quantity);
+		_validateSku(sku);
 
 		long commerceInventoryReplenishmentItemId =
 			counterLocalService.increment();
@@ -55,7 +62,10 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 			commerceInventoryReplenishmentItemPersistence.create(
 				commerceInventoryReplenishmentItemId);
 
-		commerceInventoryReplenishmentItem.setCompanyId(user.getCompanyId());
+		commerceInventoryReplenishmentItem.setExternalReferenceCode(
+			externalReferenceCode);
+
+		commerceInventoryReplenishmentItem.setCompanyId(companyId);
 		commerceInventoryReplenishmentItem.setUserId(userId);
 		commerceInventoryReplenishmentItem.setUserName(user.getFullName());
 		commerceInventoryReplenishmentItem.setCommerceInventoryWarehouseId(
@@ -67,6 +77,24 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 
 		return commerceInventoryReplenishmentItemPersistence.update(
 			commerceInventoryReplenishmentItem);
+	}
+
+	@Override
+	public void deleteCommerceInventoryReplenishmentItems(
+		long commerceInventoryWarehouseId) {
+
+		commerceInventoryReplenishmentItemPersistence.
+			removeByCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public List<CommerceInventoryReplenishmentItem>
+		getCommerceInventoryReplenishmentItemsByCommerceInventoryWarehouseId(
+			long commerceInventoryWarehouseId, int start, int end) {
+
+		return commerceInventoryReplenishmentItemPersistence.
+			findByCommerceInventoryWarehouseId(
+				commerceInventoryWarehouseId, start, end);
 	}
 
 	@Override
@@ -110,6 +138,15 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 	}
 
 	@Override
+	public int
+		getCommerceInventoryReplenishmentItemsCountByCommerceInventoryWarehouseId(
+			long commerceInventoryWarehouseId) {
+
+		return commerceInventoryReplenishmentItemPersistence.
+			countByCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
+	}
+
+	@Override
 	public int getCommerceInventoryReplenishmentItemsCountByCompanyIdAndSku(
 		long companyId, String sku) {
 
@@ -120,6 +157,7 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 	@Override
 	public CommerceInventoryReplenishmentItem
 			updateCommerceInventoryReplenishmentItem(
+				String externalReferenceCode,
 				long commerceInventoryReplenishmentItemId,
 				Date availabilityDate, int quantity, long mvccVersion)
 		throws PortalException {
@@ -128,18 +166,71 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 			commerceInventoryReplenishmentItemPersistence.findByPrimaryKey(
 				commerceInventoryReplenishmentItemId);
 
+		_validateExternalReferenceCode(
+			commerceInventoryReplenishmentItemId,
+			commerceInventoryReplenishmentItem.getCompanyId(),
+			externalReferenceCode);
+
+		_validateQuantity(quantity);
+
 		if (commerceInventoryReplenishmentItem.getMvccVersion() !=
 				mvccVersion) {
 
 			throw new MVCCException();
 		}
 
+		commerceInventoryReplenishmentItem.setExternalReferenceCode(
+			externalReferenceCode);
 		commerceInventoryReplenishmentItem.setAvailabilityDate(
 			availabilityDate);
 		commerceInventoryReplenishmentItem.setQuantity(quantity);
 
 		return commerceInventoryReplenishmentItemPersistence.update(
 			commerceInventoryReplenishmentItem);
+	}
+
+	private void _validateExternalReferenceCode(
+			long commerceInventoryReplenishmentItemId, long companyId,
+			String externalReferenceCode)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
+			commerceInventoryReplenishmentItemPersistence.fetchByC_ERC(
+				companyId, externalReferenceCode);
+
+		if (commerceInventoryReplenishmentItem == null) {
+			return;
+		}
+
+		long oldCommerceInventoryReplenishmentItemId =
+			commerceInventoryReplenishmentItem.
+				getCommerceInventoryReplenishmentItemId();
+
+		if (oldCommerceInventoryReplenishmentItemId !=
+				commerceInventoryReplenishmentItemId) {
+
+			throw new DuplicateCommerceInventoryReplenishmentItemException(
+				"There is another commerce inventory replenishment item with " +
+					"external reference code " + externalReferenceCode);
+		}
+	}
+
+	private void _validateQuantity(int quantity) throws PortalException {
+		if (quantity <= 0) {
+			throw new CommerceInventoryReplenishmentQuantityException(
+				"Enter a quantity greater than or equal to 1");
+		}
+	}
+
+	private void _validateSku(String sku) throws PortalException {
+		if (Validator.isNull(sku)) {
+			throw new CommerceInventoryReplenishmentSkuException(
+				"SKU code is null");
+		}
 	}
 
 }

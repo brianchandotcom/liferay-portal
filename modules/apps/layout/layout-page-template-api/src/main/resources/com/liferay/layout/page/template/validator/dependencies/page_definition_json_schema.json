@@ -940,6 +940,13 @@
 					"title": "The listStyle Schema",
 					"type": "string"
 				},
+				"name": {
+					"items": {
+						"type": "string"
+					},
+					"title": "The name Schema",
+					"type": "array"
+				},
 				"numberOfColumns": {
 					"minimum": 0,
 					"title": "The numberOfColumns Schema",
@@ -1343,6 +1350,13 @@
 				"indexed": {
 					"title": "The indexed Schema",
 					"type": "boolean"
+				},
+				"name": {
+					"items": {
+						"type": "string"
+					},
+					"title": "The name Schema",
+					"type": "array"
 				}
 			},
 			"title": "The PageFormDefinition Schema",
@@ -1410,6 +1424,13 @@
 					"title": "The indexed Schema",
 					"type": "boolean"
 				},
+				"name": {
+					"items": {
+						"type": "string"
+					},
+					"title": "The name Schema",
+					"type": "array"
+				},
 				"widgetInstances": {
 					"items": {
 						"$ref": "#/definitions/WidgetInstance"
@@ -1468,6 +1489,13 @@
 				"modulesPerRow": {
 					"title": "The modulesPerRow Schema",
 					"type": "integer"
+				},
+				"name": {
+					"items": {
+						"type": "string"
+					},
+					"title": "The name Schema",
+					"type": "array"
 				},
 				"numberOfColumns": {
 					"maximum": 6,
@@ -1879,6 +1907,13 @@
 					},
 					"title": "The layout Schema",
 					"type": "object"
+				},
+				"name": {
+					"items": {
+						"type": "string"
+					},
+					"title": "The name Schema",
+					"type": "array"
 				}
 			},
 			"title": "The PageSectionDefinition Schema",

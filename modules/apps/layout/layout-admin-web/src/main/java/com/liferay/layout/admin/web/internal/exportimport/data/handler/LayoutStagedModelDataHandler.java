@@ -2502,18 +2502,9 @@ public class LayoutStagedModelDataHandler
 
 				importedLayout.setTypeSettingsProperties(
 					typeSettingsUnicodeProperties);
-
-				_layoutLocalService.updateLayout(
-					importedLayout.getGroupId(),
-					importedLayout.isPrivateLayout(),
-					importedLayout.getLayoutId(),
-					importedLayout.getTypeSettings());
 			}
 
-			_layoutLocalService.updateLookAndFeel(
-				importedLayout.getGroupId(), importedLayout.isPrivateLayout(),
-				importedLayout.getLayoutId(), layout.getThemeId(),
-				layout.getColorSchemeId(), importedLayout.getCss());
+			importedLayout.persist();
 		}
 	}
 

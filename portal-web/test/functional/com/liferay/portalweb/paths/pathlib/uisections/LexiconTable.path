@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_TITLE_INDEXED</td>
-	<td>xpath=(//tr[@data-qa-id='row'])[${index}]//td[contains(@class,'title')][normalize-space()='${key_tableEntry}']</td>
+	<td>xpath=(//tr[@data-qa-id='row'])[${index}]//td[contains(@class,'title')][normalize-space()='${key_tableEntry}'] | (//tbody//tr)[${index}][.//*[normalize-space(text())='${key_tableEntry}']]</td>
 	<td></td>
 </tr>
 <tr>

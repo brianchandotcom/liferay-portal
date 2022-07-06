@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
 import React, {ReactNode, useState} from 'react';
 
@@ -25,21 +25,27 @@ export function GlobalCETOrderHelpIcon({buttonId, children, title}: IProps) {
 
 			<ClayPopover
 				alignPosition="top"
-				closeOnClickOutside
+				className="position-fixed"
+				disableScroll
 				header={title}
+				id={buttonId}
 				onShowChange={setShow}
+				role="tooltip"
 				show={show}
 				trigger={
-					<ClayButtonWithIcon
-						aria-expanded={show}
-						aria-haspopup="true"
-						aria-label={Liferay.Language.get('show-help')}
-						className="h-auto mb-1 ml-1 text-secondary w-auto"
-						displayType="unstyled"
-						id={buttonId}
-						small
-						symbol="info-circle"
-					/>
+					<span
+						aria-describedby={buttonId}
+						onBlur={() => setShow(false)}
+						onFocus={() => setShow(true)}
+						onMouseEnter={() => setShow(true)}
+						onMouseLeave={() => setShow(false)}
+						tabIndex={0}
+					>
+						<ClayIcon
+							className="text-secondary"
+							symbol="info-circle"
+						/>
+					</span>
 				}
 			>
 				{children}

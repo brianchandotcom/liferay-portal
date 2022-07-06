@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -206,19 +205,13 @@ public class NotificationTemplateResourceImpl
 						serviceBuilderNotificationTemplate.
 							getNotificationTemplateId())
 				).build();
-
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-155663"))) {
-
-					attachmentObjectFieldIds = transformToArray(
-						_notificationTemplateAttachmentLocalService.
-							getNotificationTemplateAttachments(
-								serviceBuilderNotificationTemplate.
-									getNotificationTemplateId()),
-						NotificationTemplateAttachment::getObjectFieldId,
-						Long.class);
-				}
-
+				attachmentObjectFieldIds = transformToArray(
+					_notificationTemplateAttachmentLocalService.
+						getNotificationTemplateAttachments(
+							serviceBuilderNotificationTemplate.
+								getNotificationTemplateId()),
+					NotificationTemplateAttachment::getObjectFieldId,
+					Long.class);
 				bcc = serviceBuilderNotificationTemplate.getBcc();
 				body = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderNotificationTemplate.getBodyMap());
@@ -238,15 +231,8 @@ public class NotificationTemplateResourceImpl
 				name = serviceBuilderNotificationTemplate.getName();
 				name_i18n = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderNotificationTemplate.getNameMap());
-
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-155663"))) {
-
-					objectDefinitionId =
-						serviceBuilderNotificationTemplate.
-							getObjectDefinitionId();
-				}
-
+				objectDefinitionId =
+					serviceBuilderNotificationTemplate.getObjectDefinitionId();
 				subject = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderNotificationTemplate.getSubjectMap());
 				to = LocalizedMapUtil.getLanguageIdMap(

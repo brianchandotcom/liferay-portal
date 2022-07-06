@@ -390,12 +390,7 @@ export default function EditNotificationTemplate({
 
 						<DefinitionOfTerms baseResourceURL={baseResourceURL} />
 
-						{Liferay.FeatureFlags['LPS-155663'] && (
-							<Attachments
-								setValues={setValues}
-								values={values}
-							/>
-						)}
+						<Attachments setValues={setValues} values={values} />
 					</Card>
 				</div>
 			</div>

@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.EmailAddressValidatorFactory;
@@ -516,13 +515,6 @@ public class NotificationTemplateLocalServiceImpl
 
 		if (Validator.isNull(from)) {
 			throw new NotificationTemplateFromException("From is null");
-		}
-
-		if (((objectDefinitionId > 0) ||
-			 ListUtil.isNotEmpty(attachmentObjectFieldIds)) &&
-			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-155663"))) {
-
-			throw new UnsupportedOperationException();
 		}
 
 		if (objectDefinitionId > 0) {

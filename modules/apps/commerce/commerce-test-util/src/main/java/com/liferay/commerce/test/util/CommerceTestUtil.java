@@ -386,8 +386,8 @@ public class CommerceTestUtil {
 
 		return CommerceShippingMethodLocalServiceUtil.addCommerceShippingMethod(
 			userId, groupId, RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), null, "fixedPrice", 1,
-			true);
+			RandomTestUtil.randomLocaleStringMap(), true, "fixedPrice", null, 1,
+			RandomTestUtil.randomString());
 	}
 
 	public static CommerceShippingMethod addFixedRateCommerceShippingMethod(

@@ -902,7 +902,7 @@ public class MiniumSiteInitializer implements SiteInitializer {
 				HashMapBuilder.put(
 					locale, commerceShippingEngine.getDescription(locale)
 				).build(),
-				null, shippingMethod, 0, true);
+				true, shippingMethod, null, 0, StringPool.BLANK);
 
 		_setCommerceShippingOption(
 			commerceShippingMethod, "Standard Delivery", StringPool.BLANK,

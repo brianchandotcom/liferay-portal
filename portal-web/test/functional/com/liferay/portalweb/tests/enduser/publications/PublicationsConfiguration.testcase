@@ -74,10 +74,10 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		var sandboxedPublicationName1 = Publications.getSandboxedPublicationName(userScreenName = "usersn");
+		var sandboxedPublicationName = Publications.getPublicationName();
 
 		Publications.viewSandboxedPublication(
-			sandboxedPublicationName = "${sandboxedPublicationName1}",
+			sandboxedPublicationName = "${sandboxedPublicationName}",
 			sandboxedUser = "true");
 
 		User.logoutAndLoginPG(

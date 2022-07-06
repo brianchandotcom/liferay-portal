@@ -42,6 +42,7 @@ import CollectionService from '../../../../../app/services/CollectionService';
 import deleteItem from '../../../../../app/thunks/deleteItem';
 import moveItem from '../../../../../app/thunks/moveItem';
 import updateItemConfig from '../../../../../app/thunks/updateItemConfig';
+import canBeRenamed from '../../../../../app/utils/canBeRenamed';
 import {deepEqual} from '../../../../../app/utils/checkDeepEqual';
 import checkAllowedChild from '../../../../../app/utils/drag-and-drop/checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from '../../../../../app/utils/drag-and-drop/constants/dragDropTargetType';
@@ -169,14 +170,6 @@ const MemoizedStructureTreeNodeContent = React.memo(
 			{...nextProps, node: {...nextProps.node, children: []}}
 		)
 );
-
-const RENAMABLE_ITEM_TYPES = [
-	LAYOUT_DATA_ITEM_TYPES.collection,
-	LAYOUT_DATA_ITEM_TYPES.container,
-	LAYOUT_DATA_ITEM_TYPES.form,
-	LAYOUT_DATA_ITEM_TYPES.fragment,
-	LAYOUT_DATA_ITEM_TYPES.row,
-];
 
 function StructureTreeNodeContent({
 	activationOrigin,
@@ -334,10 +327,7 @@ function StructureTreeNodeContent({
 				onDoubleClick={(event) => {
 					event.stopPropagation();
 
-					if (
-						Liferay.FeatureFlags['LPS-147895'] &&
-						RENAMABLE_ITEM_TYPES.includes(item.type)
-					) {
+					if (canBeRenamed(item)) {
 						setEditingName(true);
 					}
 				}}

@@ -149,9 +149,15 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Pause(locator1 = "90000");
+		while (IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_OVERDUE_ITEMS_VALUE", value1 = "1") && (maxIterations = "45")) {
+			Refresh();
+		}
 
-		Refresh();
+		WorkflowMetrics.checkPendingWorkflowValues(
+			key_ontime = "0",
+			key_overdue = "1",
+			key_pending = "1",
+			key_untracked = "0");
 
 		WorkflowMetricsWorkloadByStep.viewWorkloadByStepOntimeValue(
 			ontimeValue = "0",
@@ -200,9 +206,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		Pause(locator1 = "40000");
-
-		Refresh();
+		while (IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1") && (maxIterations = "45")) {
+			Refresh();
+		}
 
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = "1",
@@ -213,6 +219,14 @@ definition {
 		WorkflowMetricsWorkloadByStep.viewWorkloadByStepOntimeValue(
 			ontimeValue = "1",
 			stepName = "Review");
+
+		WorkflowMetricsWorkloadByStep.viewWorkloadByStepOverdueValue(
+			overdueValue = "0",
+			stepName = "Review");
+
+		WorkflowMetricsWorkloadByStep.viewWorkloadByStepTotalPendingValue(
+			stepName = "Review",
+			totalPendingValue = "1");
 	}
 
 	@description = "LPS-86642 - Verify that when are parallel branches on the workflow, the sum of all pending items of the steps will be greater than the total pending items"

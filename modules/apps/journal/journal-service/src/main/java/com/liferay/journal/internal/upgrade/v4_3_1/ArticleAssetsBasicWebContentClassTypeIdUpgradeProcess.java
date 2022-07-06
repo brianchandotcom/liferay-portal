@@ -43,13 +43,13 @@ public class ArticleAssetsBasicWebContentClassTypeIdUpgradeProcess
 	public ArticleAssetsBasicWebContentClassTypeIdUpgradeProcess(
 		AssetEntryLocalService assetEntryLocalService,
 		CompanyLocalService companyLocalService,
-		GroupLocalService groupLocalService,
-		DDMStructureLocalService ddmStructureLocalService) {
+		DDMStructureLocalService ddmStructureLocalService,
+		GroupLocalService groupLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_companyLocalService = companyLocalService;
-		_groupLocalService = groupLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
+		_groupLocalService = groupLocalService;
 	}
 
 	@Override

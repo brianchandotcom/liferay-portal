@@ -322,7 +322,7 @@ public class JournalServiceUpgradeStepRegistrator
 			"4.3.0", "4.3.1",
 			new ArticleAssetsBasicWebContentClassTypeIdUpgradeProcess(
 				_assetEntryLocalService, _companyLocalService,
-				_groupLocalService, _ddmStructureLocalService));
+				_ddmStructureLocalService, _groupLocalService));
 	}
 
 	@Reference(unbind = "-")

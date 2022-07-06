@@ -1858,10 +1858,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@47.5.1":
-  version "47.5.1"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-47.5.1.tgz#a5aa923cd11e19d9764d6b7b4ad2cbc986c39f73"
-  integrity sha512-UD2NUkfFfwvWlwxAwoEhIiVydx0b4Dfcx1w7zw+19qr+6urnT2tOHZc3l3wSSnCTLuwxda9sbJ6x5TTjmX/qJA==
+"@liferay/npm-scripts@47.6.1":
+  version "47.6.1"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-47.6.1.tgz#80749cc19e85af04a167fde467fa2b72a7684a17"
+  integrity sha512-pNOLoNIxF+hsgRG0ZfWD2EzC+YLKqfl5wuQsXJJhDlqTPDEy8rUaoeAmqAZYn39TR3chclur8pweno9y2Iz1yQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -1916,7 +1916,7 @@
     liferay-npm-bundler-plugin-namespace-packages "2.24.2"
     liferay-npm-bundler-plugin-replace-browser-modules "2.24.2"
     liferay-npm-bundler-plugin-resolve-linked-dependencies "2.24.2"
-    liferay-theme-tasks "11.2.2"
+    liferay-theme-tasks "11.3.0"
     metal-tools-soy "4.3.2"
     mini-css-extract-plugin "0.11.2"
     minimist "^1.2.0"
@@ -10361,10 +10361,10 @@ liferay-npm-bundler@2.24.2:
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-liferay-theme-tasks@11.2.2:
-  version "11.2.2"
-  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-11.2.2.tgz#c247945f4efc63c7d7f0a6829f445218964ba3ab"
-  integrity sha512-MdUSJd5T+GzQwo8Gbh6yGaSxdqb4439dkD6O7PXjQWqAxyCMj2Nm8IgZUTpRAhyxZSwCvxUE6PBLCX53kG0sTg==
+liferay-theme-tasks@11.3.0:
+  version "11.3.0"
+  resolved "https://registry.yarnpkg.com/liferay-theme-tasks/-/liferay-theme-tasks-11.3.0.tgz#68e7e9ae4d82f5cae2aed484f41bc77089a9bbcb"
+  integrity sha512-f390NqYWiFpE3FlipiibZIrffQwKPSoZ2R3RhSBsU0IjRqoDROpg7ScZh1mIV3cSWuapb6egsLifFuDyulzihw==
   dependencies:
     ansi-colors "^4.1.1"
     async "^2.6.1"

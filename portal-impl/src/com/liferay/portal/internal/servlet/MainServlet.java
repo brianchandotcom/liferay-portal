@@ -139,14 +139,17 @@ public class MainServlet extends HttpServlet {
 			_log.debug("Destroy plugins");
 		}
 
-		_portalInitializedModuleServiceLifecycleServiceRegistration.
-			unregister();
-		_portalPortletsInitializedModuleServiceLifecycleServiceRegistration.
-			unregister();
-		_servletContextServiceRegistration.unregister();
+		_licenseInstallModuleServiceLifecycleServiceRegistration.unregister();
+
 		_systemCheckModuleServiceLifecycleServiceRegistration.unregister();
 
-		_licenseInstallModuleServiceLifecycleServiceRegistration.unregister();
+		_servletContextServiceRegistration.unregister();
+
+		_portalPortletsInitializedModuleServiceLifecycleServiceRegistration.
+			unregister();
+
+		_portalInitializedModuleServiceLifecycleServiceRegistration.
+			unregister();
 
 		PortalLifecycleUtil.flushDestroys();
 

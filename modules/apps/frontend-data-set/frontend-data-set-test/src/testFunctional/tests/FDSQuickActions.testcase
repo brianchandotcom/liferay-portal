@@ -94,6 +94,41 @@ definition {
 			FDSQuickActions.viewQuickActionMenuNotPresent(title = "Sample1");
 		}
 	}
+	@description = "LPS-155455: When hovering over the first line item and the quick action menu is displayed on the 1st line"
+	@priority = "5"
+	test CanDisplayOnHover {
+		task ("Then the quick action menu is displayed on the 1st line") {
+			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample1");
+		}
+	}
+
+	@description = "LPS-155459: When clicking on the ellipsis and hovering over another row, multiple quick action menu are displayed"
+	@priority = "3"
+	test CanDisplayOnMultipleActiveRows {
+		task ("When click on ellipsis button 2nd row item") {
+			Click(
+				key_title = "Sample2",
+				locator1 = "FrontendDataSet#VERTICAL_ELLIPSIS_BUTTON");
+		}
+
+		task ("Then the quick action menu is displayed on the 2nd row") {
+			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample2");
+		}
+
+		task ("When hovering over the 1st row item") {
+			MouseOver(
+				key_itemName = "Sample1",
+				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
+		}
+
+		task ("Then the quick action menu is displayed on the 1st row") {
+			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample1");
+		}
+
+		task ("And Then the quick action menu is not displayed on the 2nd row") {
+			FDSQuickActions.viewQuickActionMenuNotPresent(title = "Sample2");
+		}
+	}
 
 	@description = "LPS-155458. Assert can be displayed on one an active row."
 	@priority = "4"

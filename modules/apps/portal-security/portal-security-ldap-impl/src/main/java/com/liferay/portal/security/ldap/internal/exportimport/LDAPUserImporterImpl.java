@@ -1168,9 +1168,11 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			SafeLdapName userGroupDNSafeLdapName)
 		throws Exception {
 
-		UserGroup userGroup = null;
-		Long userGroupId = null;
 		String userGroupIdKey = null;
+
+		Long userGroupId = null;
+
+		UserGroup userGroup = null;
 
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(

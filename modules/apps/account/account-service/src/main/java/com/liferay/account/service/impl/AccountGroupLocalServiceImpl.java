@@ -15,6 +15,7 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeException;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.base.AccountGroupLocalServiceBaseImpl;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.LinkedHashMap;
@@ -61,10 +63,25 @@ import org.osgi.service.component.annotations.Reference;
 public class AccountGroupLocalServiceImpl
 	extends AccountGroupLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 			#addAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AccountGroup addAccountGroup(
 			long userId, String description, String name)
+		throws PortalException {
+
+		return addAccountGroup(userId, description, null, name);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public AccountGroup addAccountGroup(
+			long userId, String description, String externalReferenceCode,
+			String name)
 		throws PortalException {
 
 		long accountGroupId = counterLocalService.increment();
@@ -78,8 +95,11 @@ public class AccountGroupLocalServiceImpl
 		accountGroup.setUserId(user.getUserId());
 		accountGroup.setUserName(user.getFullName());
 
+		_validateExternalReferenceCode(accountGroup, externalReferenceCode);
+
 		accountGroup.setDefaultAccountGroup(false);
 		accountGroup.setDescription(description);
+		accountGroup.setExternalReferenceCode(externalReferenceCode);
 		accountGroup.setName(name);
 		accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
 
@@ -228,16 +248,38 @@ public class AccountGroupLocalServiceImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 			#updateAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AccountGroup updateAccountGroup(
 			long accountGroupId, String description, String name)
 		throws PortalException {
 
+		AccountGroup accountGroup = getAccountGroup(accountGroupId);
+
+		return updateAccountGroup(
+			accountGroupId, description,
+			accountGroup.getExternalReferenceCode(), name);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public AccountGroup updateAccountGroup(
+			long accountGroupId, String description,
+			String externalReferenceCode, String name)
+		throws PortalException {
+
 		AccountGroup accountGroup = accountGroupPersistence.fetchByPrimaryKey(
 			accountGroupId);
 
+		_validateExternalReferenceCode(accountGroup, externalReferenceCode);
+
 		accountGroup.setDescription(description);
+		accountGroup.setExternalReferenceCode(externalReferenceCode);
 		accountGroup.setName(name);
 
 		return accountGroupPersistence.update(accountGroup);
@@ -311,6 +353,28 @@ public class AccountGroupLocalServiceImpl
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
+	}
+
+	private void _validateExternalReferenceCode(
+			AccountGroup accountGroup, String externalReferenceCode)
+		throws PortalException {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		AccountGroup accountGroup2 = fetchAccountGroupByExternalReferenceCode(
+			accountGroup.getCompanyId(), externalReferenceCode);
+
+		if (accountGroup2 == null) {
+			return;
+		}
+
+		if (accountGroup.getAccountGroupId() !=
+				accountGroup2.getAccountGroupId()) {
+
+			throw new DuplicateAccountGroupExternalReferenceCodeException();
+		}
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES = {

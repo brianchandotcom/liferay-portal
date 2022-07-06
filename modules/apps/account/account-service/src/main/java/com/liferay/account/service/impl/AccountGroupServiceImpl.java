@@ -42,6 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 			#addAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public AccountGroup addAccountGroup(
 			long userId, String description, String name)
@@ -52,6 +57,19 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 
 		return accountGroupLocalService.addAccountGroup(
 			userId, description, name);
+	}
+
+	@Override
+	public AccountGroup addAccountGroup(
+			long userId, String description, String externalReferenceCode,
+			String name)
+		throws PortalException {
+
+		_portalPermission.check(
+			getPermissionChecker(), AccountActionKeys.ADD_ACCOUNT_GROUP);
+
+		return accountGroupLocalService.addAccountGroup(
+			userId, description, externalReferenceCode, name);
 	}
 
 	@Override
@@ -89,6 +107,11 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 			start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * 			#updateAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public AccountGroup updateAccountGroup(
 			long accountGroupId, String description, String name)
@@ -99,6 +122,19 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 
 		return accountGroupLocalService.updateAccountGroup(
 			accountGroupId, description, name);
+	}
+
+	@Override
+	public AccountGroup updateAccountGroup(
+			long accountGroupId, String description,
+			String externalReferenceCode, String name)
+		throws PortalException {
+
+		_accountGroupModelResourcePermission.check(
+			getPermissionChecker(), accountGroupId, ActionKeys.UPDATE);
+
+		return accountGroupLocalService.updateAccountGroup(
+			accountGroupId, description, externalReferenceCode, name);
 	}
 
 	@Reference(

@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {addMappingFields} from '../../../../../app/actions/index';
 import {fromControlsId} from '../../../../../app/components/layout-data-items/Collection';
@@ -200,16 +200,20 @@ function StructureTreeNodeContent({
 
 	const [editingName, setEditingName] = useState(false);
 
-	const item = {
-		children: node.children,
-		config: layoutDataRef.current.items[node.id]?.config,
-		icon: node.icon,
-		itemId: node.id,
-		name: node.name,
-		origin: ITEM_ACTIVATION_ORIGINS.sidebar,
-		parentId: node.parentItemId,
-		type: node.type || node.itemType,
-	};
+	const item = useMemo(
+		() => ({
+			children:
+				node.itemType === ITEM_TYPES.editable ? [] : node.children,
+			config: layoutDataRef.current.items[node.id]?.config,
+			icon: node.icon,
+			itemId: node.id,
+			name: node.name,
+			origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+			parentId: node.parentItemId,
+			type: node.type || node.itemType,
+		}),
+		[layoutDataRef, node]
+	);
 
 	const {isOverTarget, targetPosition, targetRef} = useDropTarget(
 		item,

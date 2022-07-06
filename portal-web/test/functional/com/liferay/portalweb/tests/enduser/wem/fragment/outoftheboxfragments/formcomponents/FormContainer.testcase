@@ -67,6 +67,8 @@ definition {
 	@description = "This is a test for LPS-149984. The page editor cannot add fragment into Form Container without mapping entity."
 	@priority = "4"
 	test CannotAddFragmentToFormContainerWithoutMappingEntity {
+		property test.name.skip.portal.instance = "FormContainer#CannotAddFragmentToFormContainerWithoutMappingEntity";
+
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -138,6 +140,8 @@ definition {
 	@description = "This is a test for LPS-151867 and LPS-149984. The page editor could add Form Container fragment from Form Components set to page. The page editor could map entity to Form Container in content page."
 	@priority = "5"
 	test MapEntityToFormContainerInContentPage {
+		property test.name.skip.portal.instance = "FormContainer#MapEntityToFormContainerInContentPage";
+
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -186,6 +190,7 @@ definition {
 	@description = "This is a test for LPS-149984. The page editor could map entity to Form Container in display page template."
 	@priority = "5"
 	test MapEntityToFormContainerInDisplayPageTemplate {
+		property test.name.skip.portal.instance = "FormContainer#MapEntityToFormContainerInDisplayPageTemplate";
 		property testray.component.names = "Display Pages,Fragments";
 
 		task ("Given a page creator has a display page template for Web Content Article and Basic Web Content") {
@@ -241,6 +246,8 @@ definition {
 	@description = "This is a test for LPS-149984. The Form Container has all capabilities of Container."
 	@priority = "4"
 	test ViewCapabilitiesOfFormContainer {
+		property test.name.skip.portal.instance = "FormContainer#ViewCapabilitiesOfFormContainer";
+
 		task ("Given a page creator has a content page with a Form Container fragment") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

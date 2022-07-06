@@ -256,11 +256,11 @@ public class DDMFormReportDataUtil {
 	}
 
 	private static String _getValue(Value value) {
-		Locale portalUserLanguage = LocaleThreadLocal.getThemeDisplayLocale();
-		Map<Locale, String> languages = value.getValues();
+		Set<Locale> availableLocales = value.getAvailableLocales();
+        Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
-		if (languages.containsKey(portalUserLanguage)) {
-			return value.getString(portalUserLanguage);
+		if (availableLocales.contains(locale)) {
+			return value.getString(locale);
 		}
 
 		return value.getString(value.getDefaultLocale());

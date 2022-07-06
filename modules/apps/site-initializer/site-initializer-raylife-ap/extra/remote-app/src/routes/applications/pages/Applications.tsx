@@ -12,10 +12,15 @@
  * details.
  */
 
-const Applications = () => (
-	<div className="m-5">
-		<h1>Applications</h1>
-	</div>
-);
+import DriverInfo from '../forms/steps/DriverInfo';
+import NewApplication from './NewApplications';
+
+const Applications = () => {
+	return (
+		<NewApplication>
+			<DriverInfo />
+		</NewApplication>
+	);
+};
 
 export default Applications;

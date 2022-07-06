@@ -15,6 +15,7 @@
 liferay-remote-app-raylife-ap {
 	@import 'variables';
 
+	@import 'apps/application/edit-applications';
 	@import 'apps/dashboard/index';
 	@import 'components/header';
 	@import 'components/table';

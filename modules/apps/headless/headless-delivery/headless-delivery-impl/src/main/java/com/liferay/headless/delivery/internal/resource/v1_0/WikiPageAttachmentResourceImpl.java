@@ -18,6 +18,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.delivery.dto.v1_0.WikiPageAttachment;
 import com.liferay.headless.delivery.dto.v1_0.util.ContentValueUtil;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageAttachmentResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -35,6 +36,7 @@ import com.liferay.wiki.service.WikiPageService;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,10 +53,58 @@ public class WikiPageAttachmentResourceImpl
 	extends BaseWikiPageAttachmentResourceImpl {
 
 	@Override
+	public void
+			deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode(
+				Long siteId, String wikiPageExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception {
+
+		WikiPage wikiPage =
+			_wikiPageService.fetchLatestPageByExternalReferenceCode(
+				siteId, wikiPageExternalReferenceCode);
+
+		if (wikiPage == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("No wiki page exists with external reference code ");
+			sb.append(wikiPageExternalReferenceCode);
+			sb.append(" and site ID ");
+			sb.append(siteId);
+
+			throw new NotFoundException(sb.toString());
+		}
+
+		FileEntry fileEntry =
+			wikiPage.getAttachmentsFileEntryByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		_portletFileRepository.deletePortletFileEntry(
+			fileEntry.getFileEntryId());
+	}
+
+	@Override
 	public void deleteWikiPageAttachment(Long wikiPageAttachmentId)
 		throws Exception {
 
 		_portletFileRepository.deletePortletFileEntry(wikiPageAttachmentId);
+	}
+
+	@Override
+	public WikiPageAttachment
+			getSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode(
+				Long siteId, String wikiPageExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception {
+
+		WikiPage wikiPage =
+			_wikiPageService.getLatestPageByExternalReferenceCode(
+				siteId, wikiPageExternalReferenceCode);
+
+		FileEntry fileEntry =
+			wikiPage.getAttachmentsFileEntryByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		return _toWikiPageAttachment(fileEntry);
 	}
 
 	@Override
@@ -95,15 +145,25 @@ public class WikiPageAttachmentResourceImpl
 			throw new BadRequestException("No file found in body");
 		}
 
+		Optional<WikiPageAttachment> wikiPageAttachmentOptional =
+			multipartBody.getValueAsInstanceOptional(
+				"wikiPageAttachment", WikiPageAttachment.class);
+
+		String externalReferenceCode = wikiPageAttachmentOptional.map(
+			WikiPageAttachment::getExternalReferenceCode
+		).orElse(
+			null
+		);
+
 		Folder folder = wikiPage.addAttachmentsFolder();
 
 		return _toWikiPageAttachment(
 			_portletFileRepository.addPortletFileEntry(
-				wikiPage.getGroupId(), contextUser.getUserId(),
-				WikiPage.class.getName(), wikiPage.getResourcePrimKey(),
-				WikiConstants.SERVICE_NAME, folder.getFolderId(),
-				binaryFile.getInputStream(), binaryFile.getFileName(),
-				binaryFile.getFileName(), false));
+				externalReferenceCode, wikiPage.getGroupId(),
+				contextUser.getUserId(), WikiPage.class.getName(),
+				wikiPage.getResourcePrimKey(), WikiConstants.SERVICE_NAME,
+				folder.getFolderId(), binaryFile.getInputStream(),
+				binaryFile.getFileName(), binaryFile.getFileName(), false));
 	}
 
 	private WikiPageAttachment _toWikiPageAttachment(FileEntry fileEntry)
@@ -118,6 +178,7 @@ public class WikiPageAttachmentResourceImpl
 					"contentValue", fileEntry::getContentStream,
 					Optional.of(contextUriInfo));
 				encodingFormat = fileEntry.getMimeType();
+				externalReferenceCode = fileEntry.getExternalReferenceCode();
 				fileExtension = fileEntry.getExtension();
 				id = fileEntry.getFileEntryId();
 				sizeInBytes = fileEntry.getSize();

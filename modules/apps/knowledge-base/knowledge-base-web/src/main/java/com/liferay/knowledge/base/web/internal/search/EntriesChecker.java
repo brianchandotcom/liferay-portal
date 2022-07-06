@@ -92,7 +92,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			if (kbArticle != null) {
 				name = KBArticle.class.getSimpleName();
 
-				if (KBArticlePermission.contains(
+				if (!KBArticlePermission.contains(
 						_permissionChecker, kbArticle, ActionKeys.DELETE)) {
 
 					return StringPool.BLANK;
@@ -101,7 +101,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			else {
 				name = KBFolder.class.getSimpleName();
 
-				if (KBFolderPermission.contains(
+				if (!KBFolderPermission.contains(
 						_permissionChecker, kbFolder, ActionKeys.DELETE)) {
 
 					return StringPool.BLANK;

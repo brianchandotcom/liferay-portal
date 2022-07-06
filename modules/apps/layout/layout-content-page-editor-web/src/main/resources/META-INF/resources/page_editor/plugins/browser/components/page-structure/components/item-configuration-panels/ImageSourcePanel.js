@@ -15,6 +15,7 @@
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import React, {useCallback, useState} from 'react';
 
+import {CheckboxField} from '../../../../../../app/components/fragment-configuration-fields/CheckboxField';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
@@ -128,6 +129,38 @@ export default function ImageSourcePanel({item}) {
 			)}
 
 			{ConfigurationPanel && <ConfigurationPanel item={item} />}
+
+			{Liferay.FeatureFlags['LPS-147895'] &&
+				item.type === EDITABLE_TYPES.image && (
+					<CheckboxField
+						field={{
+							defaultValue: false,
+							label: Liferay.Language.get('enable-lazy-loading'),
+							name: 'lazyLoading',
+						}}
+						onValueSelect={(name, value) => {
+							dispatch(
+								updateEditableValuesThunk({
+									editableValues: setIn(
+										editableValues,
+										[
+											EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+											item.editableId,
+											'config',
+											name,
+										],
+										value
+									),
+									fragmentEntryLinkId:
+										item.fragmentEntryLinkId,
+									languageId,
+									segmentsExperienceId,
+								})
+							);
+						}}
+						value={editableValue.config.lazyLoading}
+					/>
+				)}
 		</>
 	);
 }

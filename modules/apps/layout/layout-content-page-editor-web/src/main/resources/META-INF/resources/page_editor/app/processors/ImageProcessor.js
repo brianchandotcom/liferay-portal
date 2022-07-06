@@ -90,6 +90,10 @@ function render(element, value, editableConfig = {}, languageId) {
 		if (imageValue) {
 			image.src = imageValue;
 		}
+
+		if (editableConfig.lazyLoading) {
+			image.loading = 'lazy';
+		}
 	}
 }
 

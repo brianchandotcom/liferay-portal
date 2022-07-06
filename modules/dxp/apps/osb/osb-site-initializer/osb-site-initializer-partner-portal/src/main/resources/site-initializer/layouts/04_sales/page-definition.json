@@ -57,7 +57,19 @@
 										},
 										"text": {
 											"value_i18n": {
-												"en_US": "Sales"
+												"ar_SA": "Sales",
+												"ca_ES": "Sales",
+												"de_DE": "Sales",
+												"en_US": "Sales",
+												"es_ES": "Sales",
+												"fi_FI": "Sales",
+												"fr_FR": "Sales",
+												"hu_HU": "Sales",
+												"ja_JP": "Sales",
+												"nl_NL": "Sales",
+												"pt_BR": "Sales",
+												"sv_SE": "Sales",
+												"zh_CN": "Sales"
 											}
 										}
 									}
@@ -222,7 +234,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "PDF"
+																						"ar_SA": "PDF",
+																						"ca_ES": "PDF",
+																						"de_DE": "PDF",
+																						"en_US": "PDF",
+																						"es_ES": "PDF",
+																						"fi_FI": "PDF",
+																						"fr_FR": "PDF",
+																						"hu_HU": "PDF",
+																						"ja_JP": "PDF",
+																						"nl_NL": "PDF",
+																						"pt_BR": "PDF",
+																						"sv_SE": "PDF",
+																						"zh_CN": "PDF"
 																					}
 																				}
 																			}
@@ -256,7 +280,19 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "Referral Program Guide"
+																				"ar_SA": "Referral Program Guide",
+																				"ca_ES": "Referral Program Guide",
+																				"de_DE": "Referral Program Guide",
+																				"en_US": "Referral Program Guide",
+																				"es_ES": "Referral Program Guide",
+																				"fi_FI": "Referral Program Guide",
+																				"fr_FR": "Referral Program Guide",
+																				"hu_HU": "Referral Program Guide",
+																				"ja_JP": "Referral Program Guide",
+																				"nl_NL": "Referral Program Guide",
+																				"pt_BR": "Referral Program Guide",
+																				"sv_SE": "Referral Program Guide",
+																				"zh_CN": "Referral Program Guide"
 																			}
 																		}
 																	}
@@ -402,7 +438,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "PDF"
+																						"ar_SA": "PDF",
+																						"ca_ES": "PDF",
+																						"de_DE": "PDF",
+																						"en_US": "PDF",
+																						"es_ES": "PDF",
+																						"fi_FI": "PDF",
+																						"fr_FR": "PDF",
+																						"hu_HU": "PDF",
+																						"ja_JP": "PDF",
+																						"nl_NL": "PDF",
+																						"pt_BR": "PDF",
+																						"sv_SE": "PDF",
+																						"zh_CN": "PDF"
 																					}
 																				}
 																			}
@@ -436,7 +484,20 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "Reseller Program Guide"
+																				"ar_SA": "Reseller Program Guide",
+																				"ca_ES": "Reseller Program Guide",
+																				"de_DE": "Reseller Program Guide",
+																				"en_US": "Reseller Program Guide",
+																				"es_ES": "Reseller Program Guide",
+																				"fi_FI": "Reseller Program Guide",
+																				"fr_FR": "Reseller Program Guide",
+																				"hu_HU": "Reseller Program Guide",
+																				"ja_JP": "Reseller Program Guide",
+																				"nl_NL": "Reseller Program Guide",
+																				"pt_BR": "Reseller Program Guide",
+																				"sv_SE": "Reseller Program Guide",
+																				"zh_CN": "Reseller Program Guide"
+
 																			}
 																		}
 																	}
@@ -582,7 +643,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "PDF"
+																						"ar_SA": "PDF",
+																						"ca_ES": "PDF",
+																						"de_DE": "PDF",
+																						"en_US": "PDF",
+																						"es_ES": "PDF",
+																						"fi_FI": "PDF",
+																						"fr_FR": "PDF",
+																						"hu_HU": "PDF",
+																						"ja_JP": "PDF",
+																						"nl_NL": "PDF",
+																						"pt_BR": "PDF",
+																						"sv_SE": "PDF",
+																						"zh_CN": "PDF"
 																					}
 																				}
 																			}
@@ -616,7 +689,19 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "Rules of Engagement Guide"
+																				"ar_SA": "Rules of Engagement Guide",
+																				"ca_ES": "Rules of Engagement Guide",
+																				"de_DE": "Rules of Engagement Guide",
+																				"en_US": "Rules of Engagement Guide",
+																				"es_ES": "Rules of Engagement Guide",
+																				"fi_FI": "Rules of Engagement Guide",
+																				"fr_FR": "Rules of Engagement Guide",
+																				"hu_HU": "Rules of Engagement Guide",
+																				"ja_JP": "Rules of Engagement Guide",
+																				"nl_NL": "Rules of Engagement Guide",
+																				"pt_BR": "Rules of Engagement Guide",
+																				"sv_SE": "Rules of Engagement Guide",
+																				"zh_CN": "Rules of Engagement Guide"
 																			}
 																		}
 																	}
@@ -697,7 +782,19 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "Quick Links"
+														"ar_SA": "Quick Links",
+														"ca_ES": "Quick Links",
+														"de_DE": "Quick Links",
+														"en_US": "Quick Links",
+														"es_ES": "Quick Links",
+														"fi_FI": "Quick Links",
+														"fr_FR": "Quick Links",
+														"hu_HU": "Quick Links",
+														"ja_JP": "Quick Links",
+														"nl_NL": "Quick Links",
+														"pt_BR": "Quick Links",
+														"sv_SE": "Quick Links",
+														"zh_CN": "Quick Links"
 													}
 												}
 											}
@@ -934,7 +1031,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "QSP Tools &amp; Revenue Dashboard"
+																						"ar_SA": "QSP Tools &amp; Revenue Dashboard",
+																						"ca_ES": "QSP Tools &amp; Revenue Dashboard",
+																						"de_DE": "QSP Tools &amp; Revenue Dashboard",
+																						"en_US": "QSP Tools &amp; Revenue Dashboard",
+																						"es_ES": "QSP Tools &amp; Revenue Dashboard",
+																						"fi_FI": "QSP Tools &amp; Revenue Dashboard",
+																						"fr_FR": "QSP Tools &amp; Revenue Dashboard",
+																						"hu_HU": "QSP Tools &amp; Revenue Dashboard",
+																						"ja_JP": "QSP Tools &amp; Revenue Dashboard",
+																						"nl_NL": "QSP Tools &amp; Revenue Dashboard",
+																						"pt_BR": "QSP Tools &amp; Revenue Dashboard",
+																						"sv_SE": "QSP Tools &amp; Revenue Dashboard",
+																						"zh_CN": "QSP Tools &amp; Revenue Dashboard"
 																					}
 																				}
 																			}
@@ -985,7 +1094,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal."
+																						"ar_SA": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"ca_ES": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"de_DE": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"en_US": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"es_ES": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"fi_FI": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"fr_FR": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"hu_HU": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"ja_JP": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"nl_NL": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"pt_BR": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"sv_SE": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"zh_CN": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal."
 																					}
 																				}
 																			}
@@ -1060,7 +1181,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "View Dashboard"
+																								"ar_SA": "View Dashboard",
+																								"ca_ES": "View Dashboard",
+																								"de_DE": "View Dashboard",
+																								"en_US": "View Dashboard",
+																								"es_ES": "View Dashboard",
+																								"fi_FI": "View Dashboard",
+																								"fr_FR": "View Dashboard",
+																								"hu_HU": "View Dashboard",
+																								"ja_JP": "View Dashboard",
+																								"nl_NL": "View Dashboard",
+																								"pt_BR": "View Dashboard",
+																								"sv_SE": "View Dashboard",
+																								"zh_CN": "View Dashboard"
 																							}
 																						}
 																					}
@@ -1280,7 +1413,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Deal Registration"
+																						"ar_SA": "Deal Registration",
+																						"ca_ES": "Deal Registration",
+																						"de_DE": "Deal Registration",
+																						"en_US": "Deal Registration",
+																						"es_ES": "Deal Registration",
+																						"fi_FI": "Deal Registration",
+																						"fr_FR": "Deal Registration",
+																						"hu_HU": "Deal Registration",
+																						"ja_JP": "Deal Registration",
+																						"nl_NL": "Deal Registration",
+																						"pt_BR": "Deal Registration",
+																						"sv_SE": "Deal Registration",
+																						"zh_CN": "Deal Registration"
 																					}
 																				}
 																			}
@@ -1321,7 +1466,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?"
+																						"ar_SA": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"ca_ES": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"de_DE": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"en_US": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"es_ES": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"fi_FI": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"fr_FR": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"hu_HU": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"ja_JP": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"nl_NL": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"pt_BR": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"sv_SE": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"zh_CN": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?"
 																					}
 																				}
 																			}
@@ -1406,7 +1563,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Opportunity Registration"
+																								"ar_SA": "Opportunity Registration",
+																								"ca_ES": "Opportunity Registration",
+																								"de_DE": "Opportunity Registration",
+																								"en_US": "Opportunity Registration",
+																								"es_ES": "Opportunity Registration",
+																								"fi_FI": "Opportunity Registration",
+																								"fr_FR": "Opportunity Registration",
+																								"hu_HU": "Opportunity Registration",
+																								"ja_JP": "Opportunity Registration",
+																								"nl_NL": "Opportunity Registration",
+																								"pt_BR": "Opportunity Registration",
+																								"sv_SE": "Opportunity Registration",
+																								"zh_CN": "Opportunity Registration"
 																							}
 																						}
 																					}
@@ -1635,7 +1804,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Partner Level Qualification Form"
+																						"ar_SA": "Partner Level Qualification Form",
+																						"ca_ES": "Partner Level Qualification Form",
+																						"de_DE": "Partner Level Qualification Form",
+																						"en_US": "Partner Level Qualification Form",
+																						"es_ES": "Partner Level Qualification Form",
+																						"fi_FI": "Partner Level Qualification Form",
+																						"fr_FR": "Partner Level Qualification Form",
+																						"hu_HU": "Partner Level Qualification Form",
+																						"ja_JP": "Partner Level Qualification Form",
+																						"nl_NL": "Partner Level Qualification Form",
+																						"pt_BR": "Partner Level Qualification Form",
+																						"sv_SE": "Partner Level Qualification Form",
+																						"zh_CN": "Partner Level Qualification Form"
 																					}
 																				}
 																			}
@@ -1678,7 +1859,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Request your new partner level through our online Partner Level Qualification Form (PLQF)."
+																						"ar_SA": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"ca_ES": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"de_DE": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"en_US": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"es_ES": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"fi_FI": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"fr_FR": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"hu_HU": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"ja_JP": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"nl_NL": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"pt_BR": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"sv_SE": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"zh_CN": "Request your new partner level through our online Partner Level Qualification Form (PLQF)."
 																					}
 																				}
 																			}
@@ -1755,7 +1948,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Submit a Request"
+																								"ar_SA": "Submit a Request",
+																								"ca_ES": "Submit a Request",
+																								"de_DE": "Submit a Request",
+																								"en_US": "Submit a Request",
+																								"es_ES": "Submit a Request",
+																								"fi_FI": "Submit a Request",
+																								"fr_FR": "Submit a Request",
+																								"hu_HU": "Submit a Request",
+																								"ja_JP": "Submit a Request",
+																								"nl_NL": "Submit a Request",
+																								"pt_BR": "Submit a Request",
+																								"sv_SE": "Submit a Request",
+																								"zh_CN": "Submit a Request"
 																							}
 																						}
 																					}
@@ -1967,7 +2172,20 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Renewals"
+																						"ar_SA": "Renewals",
+																						"ca_ES": "Renewals",
+																						"de_DE": "Renewals",
+																						"en_US": "Renewals",
+																						"es_ES": "Renewals",
+																						"fi_FI": "Renewals",
+																						"fr_FR": "Renewals",
+																						"hu_HU": "Renewals",
+																						"ja_JP": "Renewals",
+																						"nl_NL": "Renewals",
+																						"pt_BR": "Renewals",
+																						"sv_SE": "Renewals",
+																						"zh_CN": "Renewals"
+																					
 																					}
 																				}
 																			}
@@ -2006,7 +2224,20 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience."
+																						"ar_SA": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"ca_ES": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"de_DE": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"en_US": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"es_ES": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"fi_FI": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"fr_FR": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"hu_HU": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"ja_JP": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"nl_NL": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"pt_BR": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"sv_SE": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"zh_CN": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience."
+																					
 																					}
 																				}
 																			}
@@ -2082,7 +2313,20 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "View Renewals"
+																								"ar_SA": "View Renewals",
+																								"ca_ES": "View Renewals",
+																								"de_DE": "View Renewals",
+																								"en_US": "View Renewals",
+																								"es_ES": "View Renewals",
+																								"fi_FI": "View Renewals",
+																								"fr_FR": "View Renewals",
+																								"hu_HU": "View Renewals",
+																								"ja_JP": "View Renewals",
+																								"nl_NL": "View Renewals",
+																								"pt_BR": "View Renewals",
+																								"sv_SE": "View Renewals",
+																								"zh_CN": "View Renewals"
+																							
 																							}
 																						}
 																					}
@@ -2312,7 +2556,20 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Rebate Form"
+																						"ar_SA": "Rebate Form",
+																						"ca_ES": "Rebate Form",
+																						"de_DE": "Rebate Form",
+																						"en_US": "Rebate Form",
+																						"es_ES": "Rebate Form",
+																						"fi_FI": "Rebate Form",
+																						"fr_FR": "Rebate Form",
+																						"hu_HU": "Rebate Form",
+																						"ja_JP": "Rebate Form",
+																						"nl_NL": "Rebate Form",
+																						"pt_BR": "Rebate Form",
+																						"sv_SE": "Rebate Form",
+																						"zh_CN": "Rebate Form"
+																					
 																					}
 																				}
 																			}
@@ -2352,7 +2609,20 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Fill out your rebate payment form to get proper reimbursement."
+																						"ar_SA": "Fill out your rebate payment form to get proper reimbursement.",
+																						"ca_ES": "Fill out your rebate payment form to get proper reimbursement.",
+																						"de_DE": "Fill out your rebate payment form to get proper reimbursement.",
+																						"en_US": "Fill out your rebate payment form to get proper reimbursement.",
+																						"es_ES": "Fill out your rebate payment form to get proper reimbursement.",
+																						"fi_FI": "Fill out your rebate payment form to get proper reimbursement.",
+																						"fr_FR": "Fill out your rebate payment form to get proper reimbursement.",
+																						"hu_HU": "Fill out your rebate payment form to get proper reimbursement.",
+																						"ja_JP": "Fill out your rebate payment form to get proper reimbursement.",
+																						"nl_NL": "Fill out your rebate payment form to get proper reimbursement.",
+																						"pt_BR": "Fill out your rebate payment form to get proper reimbursement.",
+																						"sv_SE": "Fill out your rebate payment form to get proper reimbursement.",
+																						"zh_CN": "Fill out your rebate payment form to get proper reimbursement."
+																					
 																					}
 																				}
 																			}
@@ -2429,7 +2699,20 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Request Reimbursement"
+																								"ar_SA": "Request Reimbursement",
+																								"ca_ES": "Request Reimbursement",
+																								"de_DE": "Request Reimbursement",
+																								"en_US": "Request Reimbursement",
+																								"es_ES": "Request Reimbursement",
+																								"fi_FI": "Request Reimbursement",
+																								"fr_FR": "Request Reimbursement",
+																								"hu_HU": "Request Reimbursement",
+																								"ja_JP": "Request Reimbursement",
+																								"nl_NL": "Request Reimbursement",
+																								"pt_BR": "Request Reimbursement",
+																								"sv_SE": "Request Reimbursement",
+																								"zh_CN": "Request Reimbursement"
+																							
 																							}
 																						}
 																					}
@@ -2643,7 +2926,20 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Sales Operations"
+																						"ar_SA": "Sales Operations",
+																						"ca_ES": "Sales Operations",
+																						"de_DE": "Sales Operations",
+																						"en_US": "Sales Operations",
+																						"es_ES": "Sales Operations",
+																						"fi_FI": "Sales Operations",
+																						"fr_FR": "Sales Operations",
+																						"hu_HU": "Sales Operations",
+																						"ja_JP": "Sales Operations",
+																						"nl_NL": "Sales Operations",
+																						"pt_BR": "Sales Operations",
+																						"sv_SE": "Sales Operations",
+																						"zh_CN": "Sales Operations"
+																					
 																					}
 																				}
 																			}
@@ -2682,7 +2978,20 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle."
+																						"ar_SA": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"ca_ES": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"de_DE": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"en_US": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"es_ES": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"fi_FI": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"fr_FR": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"hu_HU": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"ja_JP": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"nl_NL": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"pt_BR": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"sv_SE": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"zh_CN": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle."
+																					
 																					}
 																				}
 																			}
@@ -2759,7 +3068,20 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "See Resources"
+																								"ar_SA": "See Resources",
+																								"ca_ES": "See Resources",
+																								"de_DE": "See Resources",
+																								"en_US": "See Resources",
+																								"es_ES": "See Resources",
+																								"fi_FI": "See Resources",
+																								"fr_FR": "See Resources",
+																								"hu_HU": "See Resources",
+																								"ja_JP": "See Resources",
+																								"nl_NL": "See Resources",
+																								"pt_BR": "See Resources",
+																								"sv_SE": "See Resources",
+																								"zh_CN": "See Resources"
+																							
 																							}
 																						}
 																					}
@@ -2884,7 +3206,20 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "Quick Links"
+														"ar_SA": "Quick Links",
+														"ca_ES": "Quick Links",
+														"de_DE": "Quick Links",
+														"en_US": "Quick Links",
+														"es_ES": "Quick Links",
+														"fi_FI": "Quick Links",
+														"fr_FR": "Quick Links",
+														"hu_HU": "Quick Links",
+														"ja_JP": "Quick Links",
+														"nl_NL": "Quick Links",
+														"pt_BR": "Quick Links",
+														"sv_SE": "Quick Links",
+														"zh_CN": "Quick Links"
+													
 													}
 												}
 											}
@@ -3149,7 +3484,20 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "QSP Tools &amp; Revenue Dashboard"
+																						"ar_SA": "QSP Tools &amp; Revenue Dashboard",
+																						"ca_ES": "QSP Tools &amp; Revenue Dashboard",
+																						"de_DE": "QSP Tools &amp; Revenue Dashboard",
+																						"en_US": "QSP Tools &amp; Revenue Dashboard",
+																						"es_ES": "QSP Tools &amp; Revenue Dashboard",
+																						"fi_FI": "QSP Tools &amp; Revenue Dashboard",
+																						"fr_FR": "QSP Tools &amp; Revenue Dashboard",
+																						"hu_HU": "QSP Tools &amp; Revenue Dashboard",
+																						"ja_JP": "QSP Tools &amp; Revenue Dashboard",
+																						"nl_NL": "QSP Tools &amp; Revenue Dashboard",
+																						"pt_BR": "QSP Tools &amp; Revenue Dashboard",
+																						"sv_SE": "QSP Tools &amp; Revenue Dashboard",
+																						"zh_CN": "QSP Tools &amp; Revenue Dashboard"
+																					
 																					}
 																				}
 																			}
@@ -3198,7 +3546,20 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal."
+																						"ar_SA": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"ca_ES": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"de_DE": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"en_US": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"es_ES": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"fi_FI": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"fr_FR": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"hu_HU": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"ja_JP": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"nl_NL": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"pt_BR": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"sv_SE": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal.",
+																						"zh_CN": "See a revenue snapshot of your new business and renewal as well as projections. Keep of your QSP accrual and goal."
+																					
 																					}
 																				}
 																			}
@@ -3271,7 +3632,20 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "View Dashboard"
+																								"ar_SA": "View Dashboard",
+																								"ca_ES": "View Dashboard",
+																								"de_DE": "View Dashboard",
+																								"en_US": "View Dashboard",
+																								"es_ES": "View Dashboard",
+																								"fi_FI": "View Dashboard",
+																								"fr_FR": "View Dashboard",
+																								"hu_HU": "View Dashboard",
+																								"ja_JP": "View Dashboard",
+																								"nl_NL": "View Dashboard",
+																								"pt_BR": "View Dashboard",
+																								"sv_SE": "View Dashboard",
+																								"zh_CN": "View Dashboard"
+																							
 																							}
 																						}
 																					}
@@ -3506,7 +3880,20 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Deal Registration"
+																						"ar_SA": "Deal Registration",
+																						"ca_ES": "Deal Registration",
+																						"de_DE": "Deal Registration",
+																						"en_US": "Deal Registration",
+																						"es_ES": "Deal Registration",
+																						"fi_FI": "Deal Registration",
+																						"fr_FR": "Deal Registration",
+																						"hu_HU": "Deal Registration",
+																						"ja_JP": "Deal Registration",
+																						"nl_NL": "Deal Registration",
+																						"pt_BR": "Deal Registration",
+																						"sv_SE": "Deal Registration",
+																						"zh_CN": "Deal Registration"
+																					
 																					}
 																				}
 																			}
@@ -3545,7 +3932,20 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?"
+																						"ar_SA": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"ca_ES": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"de_DE": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"en_US": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"es_ES": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"fi_FI": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"fr_FR": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"hu_HU": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"ja_JP": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"nl_NL": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"pt_BR": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"sv_SE": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?",
+																						"zh_CN": "Do you have a new partner opportunity to register? Want to check on the status of an existing deal?"
+																					
 																					}
 																				}
 																			}
@@ -3629,7 +4029,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Opportunity Registration"
+																								"ar_SA": "Opportunity Registration",
+																								"ca_ES": "Opportunity Registration",
+																								"de_DE": "Opportunity Registration",
+																								"en_US": "Opportunity Registration",
+																								"es_ES": "Opportunity Registration",
+																								"fi_FI": "Opportunity Registration",
+																								"fr_FR": "Opportunity Registration",
+																								"hu_HU": "Opportunity Registration",
+																								"ja_JP": "Opportunity Registration",
+																								"nl_NL": "Opportunity Registration",
+																								"pt_BR": "Opportunity Registration",
+																								"sv_SE": "Opportunity Registration",
+																								"zh_CN": "Opportunity Registration"																							
 																							}
 																						}
 																					}
@@ -3874,7 +4286,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Partner Level Qualification Form"
+																						"ar_SA": "Partner Level Qualification Form",
+																						"ca_ES": "Partner Level Qualification Form",
+																						"de_DE": "Partner Level Qualification Form",
+																						"en_US": "Partner Level Qualification Form",
+																						"es_ES": "Partner Level Qualification Form",
+																						"fi_FI": "Partner Level Qualification Form",
+																						"fr_FR": "Partner Level Qualification Form",
+																						"hu_HU": "Partner Level Qualification Form",
+																						"ja_JP": "Partner Level Qualification Form",
+																						"nl_NL": "Partner Level Qualification Form",
+																						"pt_BR": "Partner Level Qualification Form",
+																						"sv_SE": "Partner Level Qualification Form",
+																						"zh_CN": "Partner Level Qualification Form"	
 																					}
 																				}
 																			}
@@ -3916,7 +4340,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Request your new partner level through our online Partner Level Qualification Form (PLQF)."
+																						"ar_SA": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"ca_ES": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"de_DE": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"en_US": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"es_ES": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"fi_FI": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"fr_FR": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"hu_HU": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"ja_JP": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"nl_NL": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"pt_BR": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"sv_SE": "Request your new partner level through our online Partner Level Qualification Form (PLQF).",
+																						"zh_CN": "Request your new partner level through our online Partner Level Qualification Form (PLQF)."	
 																					}
 																				}
 																			}
@@ -3992,7 +4428,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Submit a Request"
+																								"ar_SA": "Submit a Request",
+																								"ca_ES": "Submit a Request",
+																								"de_DE": "Submit a Request",
+																								"en_US": "Submit a Request",
+																								"es_ES": "Submit a Request",
+																								"fi_FI": "Submit a Request",
+																								"fr_FR": "Submit a Request",
+																								"hu_HU": "Submit a Request",
+																								"ja_JP": "Submit a Request",
+																								"nl_NL": "Submit a Request",
+																								"pt_BR": "Submit a Request",
+																								"sv_SE": "Submit a Request",
+																								"zh_CN": "Submit a Request"
 																							}
 																						}
 																					}
@@ -4228,7 +4676,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Renewals"
+																						"ar_SA": "Renewals",
+																						"ca_ES": "Renewals",
+																						"de_DE": "Renewals",
+																						"en_US": "Renewals",
+																						"es_ES": "Renewals",
+																						"fi_FI": "Renewals",
+																						"fr_FR": "Renewals",
+																						"hu_HU": "Renewals",
+																						"ja_JP": "Renewals",
+																						"nl_NL": "Renewals",
+																						"pt_BR": "Renewals",
+																						"sv_SE": "Renewals",
+																						"zh_CN": "Renewals"
 																					}
 																				}
 																			}
@@ -4267,7 +4727,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience."
+																						"ar_SA": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"ca_ES": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"de_DE": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"en_US": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"es_ES": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"fi_FI": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"fr_FR": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"hu_HU": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"ja_JP": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"nl_NL": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"pt_BR": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"sv_SE": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience.",
+																						"zh_CN": "Visit the Renewals page to check on upcoming renewal opportunities, and ensure your clients have a seamless Liferay experience."
 																					}
 																				}
 																			}
@@ -4342,7 +4814,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "View Renewals"
+																								"ar_SA": "View Renewals",
+																								"ca_ES": "View Renewals",
+																								"de_DE": "View Renewals",
+																								"en_US": "View Renewals",
+																								"es_ES": "View Renewals",
+																								"fi_FI": "View Renewals",
+																								"fr_FR": "View Renewals",
+																								"hu_HU": "View Renewals",
+																								"ja_JP": "View Renewals",
+																								"nl_NL": "View Renewals",
+																								"pt_BR": "View Renewals",
+																								"sv_SE": "View Renewals",
+																								"zh_CN": "View Renewals"
 																							}
 																						}
 																					}
@@ -4587,7 +5071,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Rebate Form"
+																						"ar_SA": "Rebate Form",
+																						"ca_ES": "Rebate Form",
+																						"de_DE": "Rebate Form",
+																						"en_US": "Rebate Form",
+																						"es_ES": "Rebate Form",
+																						"fi_FI": "Rebate Form",
+																						"fr_FR": "Rebate Form",
+																						"hu_HU": "Rebate Form",
+																						"ja_JP": "Rebate Form",
+																						"nl_NL": "Rebate Form",
+																						"pt_BR": "Rebate Form",
+																						"sv_SE": "Rebate Form",
+																						"zh_CN": "Rebate Form"
 																					}
 																				}
 																			}
@@ -4626,7 +5122,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Fill out your rebate payment form to get proper reimbursement."
+																						"ar_SA": "Fill out your rebate payment form to get proper reimbursement.",
+																						"ca_ES": "Fill out your rebate payment form to get proper reimbursement.",
+																						"de_DE": "Fill out your rebate payment form to get proper reimbursement.",
+																						"en_US": "Fill out your rebate payment form to get proper reimbursement.",
+																						"es_ES": "Fill out your rebate payment form to get proper reimbursement.",
+																						"fi_FI": "Fill out your rebate payment form to get proper reimbursement.",
+																						"fr_FR": "Fill out your rebate payment form to get proper reimbursement.",
+																						"hu_HU": "Fill out your rebate payment form to get proper reimbursement.",
+																						"ja_JP": "Fill out your rebate payment form to get proper reimbursement.",
+																						"nl_NL": "Fill out your rebate payment form to get proper reimbursement.",
+																						"pt_BR": "Fill out your rebate payment form to get proper reimbursement.",
+																						"sv_SE": "Fill out your rebate payment form to get proper reimbursement.",
+																						"zh_CN": "Fill out your rebate payment form to get proper reimbursement."
 																					}
 																				}
 																			}
@@ -4702,7 +5210,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Request Reimbursement"
+																								"ar_SA": "Request Reimbursement",
+																								"ca_ES": "Request Reimbursement",
+																								"de_DE": "Request Reimbursement",
+																								"en_US": "Request Reimbursement",
+																								"es_ES": "Request Reimbursement",
+																								"fi_FI": "Request Reimbursement",
+																								"fr_FR": "Request Reimbursement",
+																								"hu_HU": "Request Reimbursement",
+																								"ja_JP": "Request Reimbursement",
+																								"nl_NL": "Request Reimbursement",
+																								"pt_BR": "Request Reimbursement",
+																								"sv_SE": "Request Reimbursement",
+																								"zh_CN": "Request Reimbursement"
 																							}
 																						}
 																					}
@@ -4940,7 +5460,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Sales Operations"
+																						"ar_SA": "Sales Operations",
+																						"ca_ES": "Sales Operations",
+																						"de_DE": "Sales Operations",
+																						"en_US": "Sales Operations",
+																						"es_ES": "Sales Operations",
+																						"fi_FI": "Sales Operations",
+																						"fr_FR": "Sales Operations",
+																						"hu_HU": "Sales Operations",
+																						"ja_JP": "Sales Operations",
+																						"nl_NL": "Sales Operations",
+																						"pt_BR": "Sales Operations",
+																						"sv_SE": "Sales Operations",
+																						"zh_CN": "Sales Operations"
 																					}
 																				}
 																			}
@@ -4979,7 +5511,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"en_US": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle."
+																						"ar_SA": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"ca_ES": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"de_DE": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"en_US": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"es_ES": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"fi_FI": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"fr_FR": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"hu_HU": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"ja_JP": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"nl_NL": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"pt_BR": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"sv_SE": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle.",
+																						"zh_CN": "Find the tools and resources to support your Liferay sales strategy and activities for new business opportunity creation and throughout a successful sales cycle."
 																					}
 																				}
 																			}
@@ -5055,7 +5599,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "See Resources"
+																								"ar_SA": "See Resources",
+																								"ca_ES": "See Resources",
+																								"de_DE": "See Resources",
+																								"en_US": "See Resources",
+																								"es_ES": "See Resources",
+																								"fi_FI": "See Resources",
+																								"fr_FR": "See Resources",
+																								"hu_HU": "See Resources",
+																								"ja_JP": "See Resources",
+																								"nl_NL": "See Resources",
+																								"pt_BR": "See Resources",
+																								"sv_SE": "See Resources",
+																								"zh_CN": "See Resources"
 																							}
 																						}
 																					}

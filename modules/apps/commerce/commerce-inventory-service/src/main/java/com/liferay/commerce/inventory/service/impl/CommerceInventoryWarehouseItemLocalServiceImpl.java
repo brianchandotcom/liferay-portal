@@ -58,23 +58,6 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 				quantity);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addCommerceInventoryWarehouseItem(String, long, long,
-	 *             String, int)}
-	 */
-	@Deprecated
-	@Override
-	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
-			long userId, long commerceInventoryWarehouseId,
-			String externalReferenceCode, String sku, int quantity)
-		throws PortalException {
-
-		return addCommerceInventoryWarehouseItem(
-			externalReferenceCode, userId, commerceInventoryWarehouseId, sku,
-			quantity);
-	}
-
 	@Override
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			String externalReferenceCode, long userId,
@@ -205,20 +188,13 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			commerceInventoryWarehouseId, sku);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getCommerceInventoryWarehouseItemByReferenceCode(String,
-	 *             long)}
-	 */
-	@Deprecated
 	@Override
-	public CommerceInventoryWarehouseItem
-			getCommerceInventoryWarehouseItemByReferenceCode(
-				long companyId, String externalReferenceCode)
+	public CommerceInventoryWarehouseItem getCommerceInventoryWarehouseItem(
+			long commerceInventoryWarehouseId, String sku)
 		throws PortalException {
 
-		return getCommerceInventoryWarehouseItemByReferenceCode(
-			externalReferenceCode, companyId);
+		return commerceInventoryWarehouseItemPersistence.findByC_S(
+			commerceInventoryWarehouseId, sku);
 	}
 
 	@Override
@@ -548,23 +524,6 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 			quantity);
 
 		return commerceInventoryWarehouseItem;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addOrUpdateCommerceInventoryWarehouseItem(String,
-	 *             long, long, long, String, int)}
-	 */
-	@Deprecated
-	@Override
-	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
-			long companyId, long userId, long commerceInventoryWarehouseId,
-			String externalReferenceCode, String sku, int quantity)
-		throws PortalException {
-
-		return addOrUpdateCommerceInventoryWarehouseItem(
-			externalReferenceCode, companyId, userId,
-			commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	protected void validate(long commerceInventoryWarehouseId, String sku)

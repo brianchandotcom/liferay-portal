@@ -193,28 +193,18 @@ public class CommerceInventoryWarehouseItemServiceImpl
 				commerceInventoryWarehouseItemId);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getCommerceInventoryWarehouseItemByReferenceCode(String,
-	 *             long)}
-	 */
-	@Deprecated
 	@Override
-	public CommerceInventoryWarehouseItem
-			getCommerceInventoryWarehouseItemByReferenceCode(
-				long companyId, String externalReferenceCode)
+	public CommerceInventoryWarehouseItem getCommerceInventoryWarehouseItem(
+			long commerceInventoryWarehouseId, String sku)
 		throws PortalException {
 
-		PortletResourcePermission portletResourcePermission =
-			_commerceInventoryWarehouseModelResourcePermission.
-				getPortletResourcePermission();
+		_commerceInventoryWarehouseModelResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.VIEW);
 
-		portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
-
-		return getCommerceInventoryWarehouseItemByReferenceCode(
-			externalReferenceCode, companyId);
+		return commerceInventoryWarehouseItemLocalService.
+			getCommerceInventoryWarehouseItem(
+				commerceInventoryWarehouseId, sku);
 	}
 
 	@Override

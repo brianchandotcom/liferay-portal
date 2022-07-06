@@ -38,6 +38,13 @@ const LOAD_TYPE_OPTIONS: Record<
 	defer: {label: 'defer', value: 'defer'},
 };
 
+const SCRIPT_LOCATION_LABELS: Record<IScriptLocationOptions, string> = {
+	'head': Liferay.Language.get('page-head-js-extensions'),
+	'page-bottom': Liferay.Language.get('page-bottom-js-extensions'),
+};
+
+const DEFAULT_SCRIPT_LOCATION_OPTION: IScriptLocationOptions = 'page-bottom';
+
 export default function GlobalJSCETsConfiguration({
 	globalJSCETSelectorURL,
 	globalJSCETs: initialGlobalJSCETs,
@@ -56,10 +63,31 @@ export default function GlobalJSCETsConfiguration({
 		initialGlobalJSCETs.filter((globalJSCET) => !globalJSCET.inheritedFrom)
 	);
 
-	const allGlobalJSCETs = useMemo(
-		() => [...fixedGlobalJSCETs, ...globalJSCETs],
-		[fixedGlobalJSCETs, globalJSCETs]
-	);
+	const allGlobalJSCETs = useMemo(() => {
+		const globalJSCETsGroups = new Map<
+			IScriptLocationOptions,
+			Array<{globalJSCET: IGlobalJSCET; order: number}>
+		>();
+
+		let order = 1;
+
+		[...fixedGlobalJSCETs, ...globalJSCETs].forEach((globalJSCET) => {
+			const groupId =
+				globalJSCET.scriptLocation || DEFAULT_SCRIPT_LOCATION_OPTION;
+
+			if (!globalJSCETsGroups.has(groupId)) {
+				globalJSCETsGroups.set(groupId, []);
+			}
+
+			const list = globalJSCETsGroups.get(groupId)!;
+
+			list.push({globalJSCET, order});
+
+			order = order + 1;
+		});
+
+		return globalJSCETsGroups;
+	}, [fixedGlobalJSCETs, globalJSCETs]);
 
 	const deleteGlobalJSCET = (deletedGlobalJSCET: IGlobalJSCET) => {
 		setGlobalJSCETs((previousGlobalJSCETs) =>
@@ -121,16 +149,18 @@ export default function GlobalJSCETsConfiguration({
 
 	return (
 		<div className="global-js-cets-configuration">
-			{globalJSCETs.map(({cetExternalReferenceCode, loadType}) => (
-				<input
-					key={cetExternalReferenceCode}
-					name={`${portletNamespace}globalJSCETExternalReferenceCodes`}
-					type="hidden"
-					value={`${cetExternalReferenceCode}_${
-						loadType || DEFAULT_LOAD_TYPE_OPTION
-					}`}
-				/>
-			))}
+			{globalJSCETs.map(
+				({cetExternalReferenceCode, loadType, scriptLocation}) => (
+					<input
+						key={cetExternalReferenceCode}
+						name={`${portletNamespace}globalJSCETExternalReferenceCodes`}
+						type="hidden"
+						value={`${cetExternalReferenceCode}_${
+							loadType || DEFAULT_LOAD_TYPE_OPTION
+						}_${scriptLocation || DEFAULT_SCRIPT_LOCATION_OPTION}`}
+					/>
+				)
+			)}
 
 			<h3 className="sheet-subtitle">
 				{Liferay.Language.get('javascript-extensions')}
@@ -160,6 +190,10 @@ export default function GlobalJSCETsConfiguration({
 									{Liferay.Language.get(
 										'numbers-indicate-in-which-order-extensions-are-loaded-extensions-inherited-from-master-will-always-be-loaded-in-first-place'
 									)}
+
+									{Liferay.Language.get(
+										'also-head-insertions-will-be-loaded-before-body-bottom-ones'
+									)}
 								</GlobalCETOrderHelpIcon>
 							</ClayTable.Cell>
 
@@ -184,16 +218,47 @@ export default function GlobalJSCETsConfiguration({
 					</ClayTable.Head>
 
 					<ClayTable.Body>
-						{allGlobalJSCETs.map((globalJSCET, index) => (
-							<ExtensionRow
-								deleteGlobalJSCET={deleteGlobalJSCET}
-								globalJSCET={globalJSCET}
-								key={globalJSCET.cetExternalReferenceCode}
-								order={index + 1}
-								portletNamespace={portletNamespace}
-								updateGlobalJSCET={updateGlobalJSCET}
-							/>
-						))}
+						{[...allGlobalJSCETs.entries()].map(
+							([scriptLocation, globalJSCETs]) => {
+								return (
+									<React.Fragment key={scriptLocation}>
+										<ClayTable.Row>
+											<ClayTable.Cell
+												className="list-group-header-title py-2"
+												colSpan={5}
+											>
+												{
+													SCRIPT_LOCATION_LABELS[
+														scriptLocation
+													]
+												}
+											</ClayTable.Cell>
+										</ClayTable.Row>
+
+										{globalJSCETs.map(
+											({globalJSCET, order}) => (
+												<ExtensionRow
+													deleteGlobalJSCET={
+														deleteGlobalJSCET
+													}
+													globalJSCET={globalJSCET}
+													key={
+														globalJSCET.cetExternalReferenceCode
+													}
+													order={order}
+													portletNamespace={
+														portletNamespace
+													}
+													updateGlobalJSCET={
+														updateGlobalJSCET
+													}
+												/>
+											)
+										)}
+									</React.Fragment>
+								);
+							}
+						)}
 					</ClayTable.Body>
 				</ClayTable>
 			) : (
@@ -288,12 +353,14 @@ function ExtensionRow({
 
 type IInheritedOptions = 'layout-set' | 'master-layout';
 type ILoadTypeOptions = 'default' | 'async' | 'defer';
+type IScriptLocationOptions = 'head' | 'page-bottom';
 
 interface IGlobalJSCET {
 	cetExternalReferenceCode: string;
 	inheritedFrom: IInheritedOptions | null;
 	loadType?: ILoadTypeOptions;
 	name: string;
+	scriptLocation?: IScriptLocationOptions;
 }
 
 interface IProps {

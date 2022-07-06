@@ -14,4 +14,12 @@
 			background-color: transparent;
 		}
 	}
+
+	.table.table-hover tbody td.list-group-header-title {
+		&,
+		&:hover {
+			background-color: $light-l1;
+			color: $secondary;
+		}
+	}
 }

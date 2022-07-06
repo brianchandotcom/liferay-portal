@@ -156,10 +156,15 @@ public class EditServerMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (!permissionChecker.isOmniadmin()) {
+		if (!permissionChecker.isOmniadmin() &&
+			(!permissionChecker.isCompanyAdmin() ||
+			 !cmd.equals("updateMail"))) {
+
 			SessionErrors.add(
 				actionRequest,
 				PrincipalException.MustBeOmniadmin.class.getName());
@@ -171,8 +176,6 @@ public class EditServerMVCActionCommand
 
 		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			ParamUtil.getLong(actionRequest, "preferencesCompanyId"));
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 

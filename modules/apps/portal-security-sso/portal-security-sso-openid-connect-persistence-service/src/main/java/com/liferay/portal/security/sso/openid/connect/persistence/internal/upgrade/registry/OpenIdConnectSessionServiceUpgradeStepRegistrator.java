@@ -15,7 +15,6 @@
 package com.liferay.portal.security.sso.openid.connect.persistence.internal.upgrade.registry;
 
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -34,20 +33,6 @@ public class OpenIdConnectSessionServiceUpgradeStepRegistrator
 			"1.0.0", "1.1.0",
 			new com.liferay.portal.security.sso.openid.connect.persistence.
 				internal.upgrade.v1_1_0.OpenIdConnectSessionUpgradeProcess());
-
-		registry.register(
-			"1.1.0", "2.0.0",
-			UpgradeStepFactory.addColumns(
-				"OpenIdConnectSession",
-				"authServerWellKnownURI VARCHAR(256) null",
-				"clientId VARCHAR(256) null"),
-			UpgradeStepFactory.dropColumns(
-				"OpenIdConnectSession", "providerName"),
-			new com.liferay.portal.security.sso.openid.connect.persistence.
-				internal.upgrade.v2_0_0.OpenIdConnectSessionUpgradeProcess(
-					_configurationAdmin),
-			UpgradeStepFactory.dropColumns(
-				"OpenIdConnectSession", "configurationPid"));
 	}
 
 	@Reference

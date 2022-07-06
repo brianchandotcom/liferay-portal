@@ -3285,6 +3285,11 @@ components:
                     description:
                         The style of a list in the page collection.
                     type: string
+                name:
+                    # @review
+                    description:
+                        The custom name of a Page Collection.
+                    type: string
                 numberOfColumns:
                     # @review
                     description:
@@ -3523,6 +3528,11 @@ components:
                     description:
                         A flag that indicates whether the page fragment instance is indexed or not.
                     type: boolean
+                name:
+                    # @review
+                    description:
+                        The custom name of of a Page form.
+                    type: string
             type: object
         PageFragmentInstanceDefinition:
             # @review
@@ -3586,6 +3596,11 @@ components:
                     description:
                         A flag that indicates whether the page fragment instance is indexed or not.
                     type: boolean
+                name:
+                    # @review
+                    description:
+                        The custom name of a Page Fragment Instance.
+                    type: string
                 widgetInstances:
                     # @review
                     description:
@@ -3651,6 +3666,11 @@ components:
                     description:
                         The page row's modules per row.
                     type: integer
+                name:
+                    # @review
+                    description:
+                        The custom name of a Page row.
+                    type: string
                 numberOfColumns:
                     # @review
                     description:
@@ -3866,6 +3886,11 @@ components:
                             enum: [Fixed, Fluid]
                             type: string
                     type: object
+                name:
+                    # @review
+                    description:
+                        The custom name of a Page section.
+                    type: string
             type: object
         PageSettings:
             # @review
@@ -4063,6 +4088,11 @@ components:
                     items:
                         $ref: "#/components/schemas/FragmentViewport"
                     type: array
+                name:
+                    # @review
+                    description:
+                        The custom name of a Page Widget instance.
+                    type: string
                 widgetInstance:
                     allOf:
                         - $ref: "#/components/schemas/WidgetInstance"

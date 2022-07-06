@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClaySelectWithOption} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
@@ -39,8 +40,8 @@ const LOAD_TYPE_OPTIONS: Record<
 };
 
 const SCRIPT_LOCATION_LABELS: Record<IScriptLocationOptions, string> = {
-	'head': Liferay.Language.get('page-head-js-extensions'),
-	'page-bottom': Liferay.Language.get('page-bottom-js-extensions'),
+	'head': Liferay.Language.get('page-head'),
+	'page-bottom': Liferay.Language.get('page-bottom'),
 };
 
 const DEFAULT_SCRIPT_LOCATION_OPTION: IScriptLocationOptions = 'page-bottom';
@@ -113,7 +114,7 @@ export default function GlobalJSCETsConfiguration({
 		);
 	};
 
-	const handleClick = () => {
+	const addGlobalJSCET = (scriptLocation: IScriptLocationOptions) => {
 		openSelectionModal<{value: string[]}>({
 			multiple: true,
 			onSelect(selectedItems) {
@@ -121,25 +122,22 @@ export default function GlobalJSCETsConfiguration({
 					return;
 				}
 
-				const items = selectedItems.value.map((selectedItem) =>
-					JSON.parse(selectedItem)
-				);
+				const items = selectedItems.value.map((selectedItem) => ({
+					...JSON.parse(selectedItem),
+					scriptLocation,
+				}));
 
-				setGlobalJSCETs((previousGlobalJSCETs) => {
-					const nextGlobalJSCETs = [
-						...previousGlobalJSCETs,
-						...items,
-					];
-
-					return nextGlobalJSCETs.filter(
-						(globalJSCET, index) =>
-							nextGlobalJSCETs.findIndex(
-								({cetExternalReferenceCode}) =>
+				setGlobalJSCETs((previousGlobalJSCETs) => [
+					...previousGlobalJSCETs.filter(
+						(previousGlobalJSCET) =>
+							!items.some(
+								(globalJSCET) =>
 									globalJSCET.cetExternalReferenceCode ===
-									cetExternalReferenceCode
-							) === index
-					);
-				});
+									previousGlobalJSCET.cetExternalReferenceCode
+							)
+					),
+					...items,
+				]);
 			},
 			selectEventName: selectGlobalJSCETsEventName,
 			title: Liferay.Language.get('select-javascript-extensions'),
@@ -166,15 +164,10 @@ export default function GlobalJSCETsConfiguration({
 				{Liferay.Language.get('javascript-extensions')}
 			</h3>
 
-			<ClayButton
-				className="mb-3"
-				displayType="secondary"
-				onClick={handleClick}
-				small
-				type="button"
-			>
-				{Liferay.Language.get('add-javascript-extensions')}
-			</ClayButton>
+			<AddExtensionButton
+				addGlobalJSCET={addGlobalJSCET}
+				portletNamespace={portletNamespace}
+			/>
 
 			{globalJSCETs.length ? (
 				<ClayTable>
@@ -227,11 +220,14 @@ export default function GlobalJSCETsConfiguration({
 												className="list-group-header-title py-2"
 												colSpan={5}
 											>
-												{
+												{Liferay.Util.sub(
+													Liferay.Language.get(
+														'x-js-extensions'
+													),
 													SCRIPT_LOCATION_LABELS[
 														scriptLocation
 													]
-												}
+												)}
 											</ClayTable.Cell>
 										</ClayTable.Row>
 
@@ -269,6 +265,55 @@ export default function GlobalJSCETsConfiguration({
 				</p>
 			)}
 		</div>
+	);
+}
+
+interface IAddExtensionButton {
+	addGlobalJSCET: (scriptLocation: IScriptLocationOptions) => unknown;
+	portletNamespace: string;
+}
+
+function AddExtensionButton({
+	addGlobalJSCET,
+	portletNamespace,
+}: IAddExtensionButton) {
+	const [active, setActive] = useState(false);
+	const dropdownTriggerId = `${portletNamespace}_GlobalJSCETsConfigurationAddExtensionButton`;
+
+	return (
+		<ClayDropDownWithItems
+			active={active}
+			items={[...Object.entries(SCRIPT_LOCATION_LABELS)].map(
+				([scriptLocation, label]) => ({
+					label: Liferay.Util.sub(
+						Liferay.Language.get('in-x'),
+						label
+					),
+					onClick: () =>
+						addGlobalJSCET(
+							scriptLocation as IScriptLocationOptions
+						),
+					role: 'menuitem',
+				})
+			)}
+			menuElementAttrs={{
+				'aria-labelledby': dropdownTriggerId,
+				'role': 'menu',
+			}}
+			onActiveChange={setActive}
+			trigger={
+				<ClayButton
+					aria-expanded={active}
+					aria-haspopup="true"
+					className="mb-3"
+					displayType="secondary"
+					small
+					type="button"
+				>
+					{Liferay.Language.get('add-javascript-extensions')}
+				</ClayButton>
+			}
+		/>
 	);
 }
 

@@ -21,7 +21,7 @@ import React, {useEffect, useState} from 'react';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.es';
 import {useForm, useFormState} from '../../../core/hooks/useForm.es';
 import {setValue} from '../../../utils/i18n.es';
-import {EVENT_TYPES} from '../eventTypes.es';
+import {EVENT_TYPES} from '../eventTypes';
 
 export function Container({children, pages, strings = {}}) {
 	const {editingLanguageId} = useFormState();

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {EVENT_TYPES} from '../eventTypes.es';
+import {EVENT_TYPES} from '../eventTypes';
 
 /**
  * This reducer was created to consume datafrom

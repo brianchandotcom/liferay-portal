@@ -14,7 +14,7 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {EVENT_TYPES} from '../custom/form/eventTypes.es';
+import {EVENT_TYPES} from '../custom/form/eventTypes';
 
 const HEADERS = {
 	'Accept': 'application/json',

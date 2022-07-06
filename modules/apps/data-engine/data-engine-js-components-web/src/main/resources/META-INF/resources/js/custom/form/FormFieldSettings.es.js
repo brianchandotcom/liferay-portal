@@ -27,7 +27,7 @@ import {
 	pagesStructureReducer,
 } from '../../core/reducers/index.es';
 import {parseProps} from '../../utils/parseProps.es';
-import {EVENT_TYPES} from './eventTypes.es';
+import {EVENT_TYPES} from './eventTypes';
 import {
 	formBuilderReducer,
 	objectFieldsReducer,

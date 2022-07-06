@@ -14,7 +14,7 @@
 
 import * as FormSupport from '../../../utils/FormSupport.es';
 import {getUid} from '../../../utils/formId.es';
-import {EVENT_TYPES} from '../eventTypes.es';
+import {EVENT_TYPES} from '../eventTypes';
 
 const getLocalizedValue = (languageId, key, value) => {
 	return {

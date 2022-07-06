@@ -21,7 +21,7 @@ import {EVENT_TYPES as CORE_EVENT_TYPES} from '../../../core/actions/eventTypes.
 import {useForm, useFormState} from '../../../core/hooks/useForm.es';
 import {usePage} from '../../../core/hooks/usePage.es';
 import {sub} from '../../../utils/strings';
-import {EVENT_TYPES} from '../eventTypes.es';
+import {EVENT_TYPES} from '../eventTypes';
 
 export function Container({children, empty, pageIndex, pages}) {
 	const {editingLanguageId, successPageSettings} = useFormState();

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {EVENT_TYPES} from '../eventTypes.es';
+import {EVENT_TYPES} from '../eventTypes';
 
 /**
  * NOTE: This is a literal copy of the old LayoutProvider logic. Small changes

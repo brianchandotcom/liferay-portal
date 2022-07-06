@@ -12,7 +12,7 @@
  * details.
  */
 
-import {EVENT_TYPES} from '../eventTypes.es';
+import {EVENT_TYPES} from '../eventTypes';
 
 export default function rulesReducer(state, action) {
 	switch (action.type) {

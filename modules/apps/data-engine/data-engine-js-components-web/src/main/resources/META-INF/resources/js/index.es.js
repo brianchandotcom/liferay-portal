@@ -64,7 +64,7 @@ export {default as PartialResults} from './custom/form/components/PartialResults
 
 // Custom Form
 
-export {EVENT_TYPES as FORM_EVENT_TYPES} from './custom/form/eventTypes.es';
+export {EVENT_TYPES as FORM_EVENT_TYPES} from './custom/form/eventTypes';
 
 // Custom Form Report
 

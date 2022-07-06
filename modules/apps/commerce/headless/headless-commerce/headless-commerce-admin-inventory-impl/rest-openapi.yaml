@@ -28,6 +28,30 @@ components:
                 - message
                 - status
             type: object
+        ReplenishmentItem:
+            properties:
+                availabilityDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                id:
+                    example: 30130
+                    format: int64
+                    type: integer
+                quantity:
+                    example: 1
+                    format: int32
+                    type: integer
+                sku:
+                    example: SKU
+                    type: string
+                warehouseId:
+                    example: 30130
+                    format: int64
+                    type: integer
         Warehouse:
             properties:
                 active:
@@ -152,6 +176,437 @@ info:
     version: v1.0
 openapi: 3.0.0
 paths:
+    "/replenishment-items/by-externalReferenceCode/{externalReferenceCode}":
+        delete:
+            operationId: deleteReplenishmentItemByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            responses:
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Authentication information is missing or invalid"
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: "Deletes a Replenishment Item by external reference code."
+            tags:
+                - ReplenishmentItem
+        get:
+            operationId: getReplenishmentItemByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ReplenishmentItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ReplenishmentItem"
+                    description:
+                        "Successful operation"
+                "400":
+                    description:
+                        "Invalid input"
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Authentication information is missing or invalid"
+                "404":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "The specified resource was not found"
+                "500":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Unexpected error"
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: "Gets a Replenishment Item by external reference code."
+            tags:
+                - ReplenishmentItem
+        patch:
+            operationId: patchReplenishmentItemByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ReplenishmentItem"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ReplenishmentItem"
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ReplenishmentItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ReplenishmentItem"
+                    description:
+                        "Successful operation"
+                "400":
+                    description:
+                        "Invalid input"
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Authentication information is missing or invalid"
+                "404":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "The specified resource was not found"
+                "500":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Unexpected error"
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: "Updates a Replenishment Item by external reference code."
+            tags:
+                - ReplenishmentItem
+    "/replenishment-items/{replenishmentItemId}":
+        delete:
+            operationId: deleteReplenishmentItem
+            parameters:
+                - in: path
+                  name: replenishmentItemId
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Authentication information is missing or invalid"
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: "Deletes a Replenishment Item by ID."
+            tags:
+                - ReplenishmentItem
+        get:
+            operationId: getReplenishmentItem
+            parameters:
+                - in: path
+                  name: replenishmentItemId
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ReplenishmentItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ReplenishmentItem"
+                    description:
+                        "Successful operation"
+                "400":
+                    description:
+                        "Invalid input"
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Authentication information is missing or invalid"
+                "404":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "The specified resource was not found"
+                "500":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Unexpected error"
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: "Gets a Replenishment Item by ID."
+            tags:
+                - ReplenishmentItem
+        patch:
+            operationId: patchReplenishmentItem
+            parameters:
+                - in: path
+                  name: replenishmentItemId
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ReplenishmentItem"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ReplenishmentItem"
+                required: true
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ReplenishmentItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ReplenishmentItem"
+                    description:
+                        "Successful operation"
+                "400":
+                    description:
+                        "Invalid input"
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Authentication information is missing or invalid"
+                "404":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "The specified resource was not found"
+                "500":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Unexpected error"
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: "Updates a Replenishment Item by ID."
+            tags:
+                - ReplenishmentItem
+    "/skus/by-sku/{sku}/replenishment-items":
+        get:
+            operationId: getReplenishmentItemsPage
+            parameters:
+                - in: path
+                  name: sku
+                  required: true
+                  schema:
+                      example: SKU
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ReplenishmentItem"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ReplenishmentItem"
+                                type: array
+                    description:
+                        "Successful operation"
+                "400":
+                    description:
+                        "Invalid input"
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Authentication information is missing or invalid"
+                "404":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "The specified resource was not found"
+                "500":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Unexpected error"
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: "Gets a list of Replenishment Items related to a SKU."
+            tags:
+                - ReplenishmentItem
     "/warehouseItems/by-externalReferenceCode/{externalReferenceCode}":
         delete:
             operationId: deleteWarehouseItemByExternalReferenceCode
@@ -1235,6 +1690,172 @@ paths:
             summary: "Creates or updates an Warehouse Item."
             tags:
                 - WarehouseItem
+    "/warehouses/{warehouseId}/replenishment-items":
+        get:
+            operationId: getWarehouseIdReplenishmentItemsPage
+            parameters:
+                - in: path
+                  name: warehouseId
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ReplenishmentItem"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ReplenishmentItem"
+                                type: array
+                    description:
+                        "Successful operation"
+                "400":
+                    description:
+                        "Invalid input"
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Authentication information is missing or invalid"
+                "404":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "The specified resource was not found"
+                "500":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Unexpected error"
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.read
+            summary: "Gets a list of Replenishment Items related to a Warehouse."
+            tags:
+                - ReplenishmentItem
+    "/warehouses/{warehouseId}/skus/by-sku/{sku}/replenishment-items":
+        post:
+            operationId: postReplenishmentItem
+            parameters:
+                - in: path
+                  name: warehouseId
+                  required: true
+                  schema:
+                      description:
+                          "The resource Id"
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                - in: path
+                  name: sku
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ReplenishmentItem"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ReplenishmentItem"
+                required: true
+            responses:
+                "201":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ReplenishmentItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ReplenishmentItem"
+                    description:
+                        Created
+                "202":
+                    description:
+                        "Accepted - Async"
+                "204":
+                    description:
+                        Updated
+                "400":
+                    description:
+                        "Invalid input"
+                "401":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Authentication information is missing or invalid"
+                "404":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "The specified resource was not found"
+                "500":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Unexpected error"
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: "Creates a Replenishment Item by warehouse ID and SKU."
+            tags:
+                - ReplenishmentItem
     /warehouseItems/updated:
         get:
             operationId: getWarehouseItemsUpdatedPage

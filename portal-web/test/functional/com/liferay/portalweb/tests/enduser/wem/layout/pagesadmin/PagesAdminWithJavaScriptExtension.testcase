@@ -215,6 +215,125 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153655. The site designer could change JavaScript extension selection to an inheritor page from page template."
+	@priority = "5"
+	test ChangeJavaScriptExtensionOfInheritorPage {
+		task ("Given a site designer has a content page template with a JavaScript extension") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Content Page Template",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			PagesAdmin.addJavaScriptExtensions(extensionNameList = "InnerText");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.publish();
+		}
+
+		task ("When the site designer adds a content page based on content page template") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				collectionName = "Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Content Page Template");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Welcome");
+		}
+
+		task ("Then the site designer could change the JavaScript extension of content page") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			AssertVisible(
+				key_tableEntry = "InnerText",
+				locator1 = "LexiconTable#TABLE_ENTRY");
+
+			PagesAdmin.addJavaScriptExtensions(extensionNameList = "TextColor");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Welcome");
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "color",
+				value1 = "rgba(255, 0, 0, 1)");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			Panel.expandPanel(panel = "JavaScript");
+
+			for (var extensionName : list "InnerText,TextColor") {
+				Click(
+					key_tableEntry = "${extensionName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+				DropdownMenuItem.click(menuItem = "Delete");
+			}
+
+			AssertTextEquals(
+				key_sectionTitle = "JavaScript Extensions",
+				locator1 = "PagesAdmin#SECTION_SUBTITLE",
+				value1 = "No JavaScript extensions were loaded.");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Test Page Name *");
+
+			AssertCssValue(
+				locator1 = "ControlMenu#HEADING",
+				locator2 = "color",
+				value1 = "rgba(255, 255, 255, 1)");
+		}
+	}
+
 	@description = "This is a test for LPS-153655. The site designer could delete the JavaScript extenion selection."
 	@priority = "4"
 	test ClearJavaScriptExtensionSelection {

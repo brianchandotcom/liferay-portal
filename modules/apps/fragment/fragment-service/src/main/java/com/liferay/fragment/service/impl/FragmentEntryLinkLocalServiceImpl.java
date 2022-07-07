@@ -176,11 +176,6 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		fragmentEntryLinkPersistence.remove(fragmentEntryLink);
 
-		// Fragment entry processor registry
-
-		_fragmentEntryProcessorRegistry.deleteFragmentEntryLinkData(
-			fragmentEntryLink);
-
 		return fragmentEntryLink;
 	}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.internal.processor;
 
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
@@ -46,22 +45,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = FragmentEntryProcessorRegistry.class)
 public class FragmentEntryProcessorRegistryImpl
 	implements FragmentEntryProcessorRegistry {
-
-	@Override
-	public void deleteFragmentEntryLinkData(
-		FragmentEntryLink fragmentEntryLink) {
-
-		if (ExportImportThreadLocal.isImportInProcess()) {
-			return;
-		}
-
-		for (FragmentEntryProcessor fragmentEntryProcessor :
-				_serviceTrackerList) {
-
-			fragmentEntryProcessor.deleteFragmentEntryLinkData(
-				fragmentEntryLink);
-		}
-	}
 
 	@Override
 	public JSONArray getAvailableTagsJSONArray() {

@@ -78,6 +78,19 @@ public class RandomTestUtil {
 		return enumConstants[_random.nextInt(enumConstants.length)];
 	}
 
+	public static float randomFloat() {
+		float value = _random.nextFloat();
+
+		if (value > 0) {
+			return value;
+		}
+		else if (value == 0) {
+			return randomFloat();
+		}
+
+		return -value;
+	}
+
 	public static int randomInt() {
 		return randomInt(1, Integer.MAX_VALUE);
 	}

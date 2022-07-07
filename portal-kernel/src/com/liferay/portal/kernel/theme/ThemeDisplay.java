@@ -560,6 +560,15 @@ public class ThemeDisplay
 			getRequest(), getPathThemeJavaScript() + "/main.js");
 	}
 
+	public List<NavItem> getNavItems() throws PortalException {
+		if (_navItems == null) {
+			_navItems = NavItem.fromLayouts(
+				_httpServletRequest, _layouts, this);
+		}
+
+		return _navItems;
+	}
+
 	public String getPathApplet() {
 		return _pathApplet;
 	}
@@ -1496,6 +1505,10 @@ public class ThemeDisplay
 		_mainJSURL = mainJSURL;
 	}
 
+	public void setNavItems(List<NavItem> navItems) {
+		_navItems = navItems;
+	}
+
 	public void setPathApplet(String pathApplet) {
 		_pathApplet = pathApplet;
 	}
@@ -1937,6 +1950,7 @@ public class ThemeDisplay
 	private Locale _locale;
 	private String _mainCSSURL;
 	private String _mainJSURL;
+	private List<NavItem> _navItems;
 	private String _pathApplet = StringPool.BLANK;
 	private String _pathCms = StringPool.BLANK;
 	private String _pathColorSchemeImages = StringPool.BLANK;

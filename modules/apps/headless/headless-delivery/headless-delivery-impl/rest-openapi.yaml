@@ -1464,6 +1464,7 @@ components:
                         The folder's description.
                     type: string
                 externalReferenceCode:
+                    # @review
                     description:
                         The document folder's external reference code.
                     type: string
@@ -11831,6 +11832,7 @@ paths:
             # @review
             description:
                 Deletes the site's document folder by external reference code returns a 204 if the operation succeeds.
+            operationId: deleteSiteDocumentsFolderByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -11853,6 +11855,7 @@ paths:
             # @review
             description:
                 Retrieves the site's document folder by external reference code.
+            operationId: getSiteDocumentsFolderByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -11876,6 +11879,11 @@ paths:
                                 $ref: "#/components/schemas/DocumentFolder"
             tags: ["DocumentFolder"]
         put:
+            # @review
+            description:
+                Replaces the document folder by external reference code with the information sent in the request body,
+                or replaces it if it not exists.
+            operationId: putSiteDocumentsFolderByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId

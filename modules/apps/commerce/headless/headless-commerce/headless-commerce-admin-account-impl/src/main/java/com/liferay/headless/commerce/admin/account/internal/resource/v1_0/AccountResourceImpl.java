@@ -57,6 +57,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
@@ -213,10 +215,16 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				public void accept(Object object) throws Exception {
 					SearchContext searchContext = (SearchContext)object;
 
-					searchContext.setAttribute(
-						"organizationIds",
-						_organizationLocalService.getUserOrganizationIds(
-							contextUser.getUserId(), true));
+					PermissionChecker permissionChecker =
+						PermissionThreadLocal.getPermissionChecker();
+
+					if (!permissionChecker.isOmniadmin()) {
+						searchContext.setAttribute(
+							"organizationIds",
+							_organizationLocalService.getUserOrganizationIds(
+								contextUser.getUserId(), true));
+					}
+
 					searchContext.setCompanyId(contextCompany.getCompanyId());
 				}
 

@@ -332,6 +332,14 @@ public class DefaultObjectEntryManagerImpl
 				accountEntries, AccountEntry::getAccountEntryId);
 		}
 
+		int start = QueryUtil.ALL_POS;
+		int end = QueryUtil.ALL_POS;
+
+		if (pagination != null) {
+			start = pagination.getStartPosition();
+			end = pagination.getEndPosition();
+		}
+
 		List<Facet> facets = new ArrayList<>();
 
 		if ((aggregation != null) &&
@@ -348,9 +356,7 @@ public class DefaultObjectEntryManagerImpl
 				Map<Object, Long> aggregationCounts =
 					_objectEntryLocalService.getAggregationCounts(
 						objectDefinition.getObjectDefinitionId(),
-						entry1.getKey(), predicate,
-						pagination.getStartPosition(),
-						pagination.getEndPosition());
+						entry1.getKey(), predicate, start, end);
 
 				for (Map.Entry<Object, Long> entry2 :
 						aggregationCounts.entrySet()) {
@@ -388,8 +394,7 @@ public class DefaultObjectEntryManagerImpl
 			TransformUtil.transform(
 				_objectEntryLocalService.getValuesList(
 					objectDefinition.getObjectDefinitionId(), groupId,
-					accountEntryIds, predicate, search,
-					pagination.getStartPosition(), pagination.getEndPosition()),
+					accountEntryIds, predicate, search, start, end),
 				values -> getObjectEntry(
 					dtoConverterContext, objectDefinition,
 					GetterUtil.getLong(

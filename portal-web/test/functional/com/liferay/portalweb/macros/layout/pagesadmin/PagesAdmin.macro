@@ -66,6 +66,8 @@ definition {
 			PagesAdmin.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
 		}
 
+		Navigator.gotoNavUnderline(navUnderline = "General");
+
 		AssertVisible(locator1 = "TextInput#NAME");
 
 		if (isSet(openGraph)) {

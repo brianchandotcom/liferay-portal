@@ -12,8 +12,7 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
-import ClayForm, {ClayCheckbox} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import {useIsMounted, usePrevious} from '@liferay/frontend-js-react-web';
@@ -28,6 +27,7 @@ import {
 import React, {useCallback, useEffect, useState} from 'react';
 
 import CodeMirrorEditor from './CodeMirrorEditor';
+import {FieldTypeSelector} from './FieldTypeSelector';
 import FragmentPreview from './FragmentPreview';
 
 const CHANGES_STATUS = {
@@ -400,10 +400,14 @@ const FragmentEditor = ({
 							{showFieldTypes && (
 								<FieldTypeSelector
 									availableFieldTypes={availableFieldTypes}
+									description={Liferay.Language.get(
+										'specify-which-field-types-this-fragment-supports'
+									)}
 									fieldTypes={fieldTypes}
 									onAddFieldType={onAddFieldType}
 									onRemoveFieldType={onRemoveFieldType}
 									readOnly={readOnly}
+									title={Liferay.Language.get('field-types')}
 								/>
 							)}
 
@@ -435,67 +439,5 @@ const FragmentEditor = ({
 		</div>
 	);
 };
-
-function FieldTypeSelector({
-	availableFieldTypes,
-	fieldTypes,
-	onAddFieldType,
-	onRemoveFieldType,
-	readOnly,
-}) {
-	return (
-		<ClayForm.Group>
-			<div className="sheet-section">
-				<h2 className="sheet-subtitle">
-					{Liferay.Language.get('field-types')}
-				</h2>
-
-				{readOnly ? (
-					fieldTypes.length ? (
-						fieldTypes.map((fieldType) => {
-							const label = availableFieldTypes.find(
-								({key}) => key === fieldType
-							).label;
-
-							return (
-								<p className="mb-1" key={fieldType}>
-									{label}
-								</p>
-							);
-						})
-					) : (
-						<ClayAlert displayType="info">
-							{Liferay.Language.get(
-								'no-field-type-is-defined-for-this-fragment'
-							)}
-						</ClayAlert>
-					)
-				) : (
-					<>
-						<p>
-							{Liferay.Language.get(
-								'specify-which-field-types-this-fragment-supports'
-							)}
-						</p>
-
-						{availableFieldTypes.map(({key, label}) => (
-							<ClayCheckbox
-								aria-label={label}
-								checked={fieldTypes.includes(key)}
-								key={key}
-								label={label}
-								onChange={(event) =>
-									event.target.checked
-										? onAddFieldType(key)
-										: onRemoveFieldType(key)
-								}
-							/>
-						))}
-					</>
-				)}
-			</div>
-		</ClayForm.Group>
-	);
-}
 
 export default FragmentEditor;

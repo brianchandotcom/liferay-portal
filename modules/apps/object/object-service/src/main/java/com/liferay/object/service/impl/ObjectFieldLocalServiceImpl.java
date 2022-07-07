@@ -229,8 +229,9 @@ public class ObjectFieldLocalServiceImpl
 
 			objectFieldPersistence.remove(objectField);
 
-			_objectFieldSettingPersistence.removeByObjectFieldId(
-				objectField.getObjectFieldId());
+			_objectFieldSettingLocalService.
+				deleteObjectFieldSettingByObjectFieldId(
+					objectField.getObjectFieldId());
 		}
 	}
 
@@ -619,7 +620,8 @@ public class ObjectFieldLocalServiceImpl
 				).findFirst();
 
 			if (!objectFieldSettingOptional.isPresent()) {
-				_objectFieldSettingPersistence.remove(oldObjectFieldSetting);
+				_objectFieldSettingLocalService.deleteObjectFieldSetting(
+					oldObjectFieldSetting.getObjectFieldSettingId());
 			}
 		}
 
@@ -724,7 +726,7 @@ public class ObjectFieldLocalServiceImpl
 			objectFieldSettingFileSource = objectFieldSetting.getValue();
 		}
 
-		_objectFieldSettingPersistence.removeByObjectFieldId(
+		_objectFieldSettingLocalService.deleteObjectFieldSettingByObjectFieldId(
 			objectField.getObjectFieldId());
 
 		_objectLayoutColumnPersistence.removeByObjectFieldId(

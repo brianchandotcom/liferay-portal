@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,6 +57,18 @@ public class ObjectFilterLocalServiceImpl
 		objectFilter.setJson(json);
 
 		return objectFilterPersistence.update(objectFilter);
+	}
+
+	@Override
+	public void deleteObjectFilterByObjectFieldId(long objectFieldId) {
+		objectFilterPersistence.removeByObjectFieldId(objectFieldId);
+	}
+
+	@Override
+	public List<ObjectFilter> getObjectFiltersByObjectFieldId(
+		long objectFieldId) {
+
+		return objectFilterPersistence.findByObjectFieldId(objectFieldId);
 	}
 
 	@Reference

@@ -85,21 +85,33 @@ public class ObjectFieldSettingLocalServiceImpl
 		return objectFieldSettingPersistence.update(objectFieldSetting);
 	}
 
+	@Override
+	public ObjectFieldSetting deleteObjectFieldSetting(
+			long objectFieldSettingId)
+		throws PortalException {
+
 		ObjectFieldSetting objectFieldSetting =
-			objectFieldSettingPersistence.create(
-				counterLocalService.increment());
+			objectFieldSettingPersistence.findByPrimaryKey(
+				objectFieldSettingId);
 
-		User user = _userLocalService.getUser(userId);
+		return objectFieldSettingPersistence.remove(objectFieldSetting);
+	}
 
-		objectFieldSetting.setCompanyId(user.getCompanyId());
-		objectFieldSetting.setUserId(user.getUserId());
-		objectFieldSetting.setUserName(user.getFullName());
+	public void deleteObjectFieldSettingByObjectFieldId(long objectFieldId)
+		throws PortalException {
 
-		objectFieldSetting.setObjectFieldId(objectFieldId);
-		objectFieldSetting.setName(name);
-		objectFieldSetting.setValue(value);
+		objectFieldSettingPersistence.removeByObjectFieldId(objectFieldId);
 
-		return objectFieldSettingPersistence.update(objectFieldSetting);
+		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
+			objectFieldId);
+
+		if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
+			_objectFilterLocalService.deleteObjectFilterByObjectFieldId(
+				objectField.getObjectFieldId());
+		}
 	}
 
 	@Override

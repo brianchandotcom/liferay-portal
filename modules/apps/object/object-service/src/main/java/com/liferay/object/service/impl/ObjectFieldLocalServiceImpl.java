@@ -805,7 +805,7 @@ public class ObjectFieldLocalServiceImpl
 			throw new ObjectFieldDefaultValueException(
 				StringBundler.concat(
 					"Default value \"", defaultValue, "\" is not a list entry ",
-					"in list definition " + listTypeDefinitionId));
+					"in list definition ", listTypeDefinitionId));
 		}
 
 		if (!state) {

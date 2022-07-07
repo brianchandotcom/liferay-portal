@@ -376,6 +376,143 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-155529. The page designer can submit a Form Container with page success message."
+	@priority = "4"
+	test SubmitFormContainerWithPageSuccessMessage {
+		property test.name.skip.portal.instance = "FormContainer#SubmitFormContainerWithPageSuccessMessage";
+
+		task ("Given a page designer has mapped Form Container with Page as success message") {
+			task ("Add two content pages") {
+				for (var pageName : list "Test Page Name,Thank you page") {
+					JSONLayout.addPublicLayout(
+						groupName = "Test Site Name",
+						layoutName = "${pageName}",
+						type = "content");
+
+					JSONLayout.publishLayout(
+						groupName = "Test Site Name",
+						layoutName = "${pageName}");
+				}
+			}
+
+			task ("Add Form Container to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Select second page of current site as success message") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					pageName = "Thank you page",
+					panel = "General",
+					successMessage = "Page");
+			}
+
+			task ("Add Text Input and Submit Button inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Text Input");
+
+				PageEditor.editInput(
+					field = "Region",
+					fragmentName = "Text Input");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "Text Input");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the page designer submits the Form Container on content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Type(
+				key_text = "Region",
+				locator1 = "TextInput#ANY",
+				value1 = "Brazil");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the page designer is redirected to associated page on current site") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Thank you page");
+
+			Page.viewCurrentPage(pageName = "Thank you page");
+
+			AssertTextEquals(
+				locator1 = "Home#SITE_NAME",
+				value1 = "Test Site Name");
+		}
+
+		task ("When the page designer deletes associated success message page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.deletePage(pageName = "Thank you page");
+		}
+
+		task ("Then the page designer can see default success text after submit Form Container on content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Type(
+				key_text = "Region",
+				locator1 = "TextInput#ANY",
+				value1 = "China");
+
+			Button.clickSubmitButton();
+
+			AssertTextEquals(
+				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
+				value1 = "Thank you. Your information was successfully received.");
+		}
+
+		task ("When the page designer selects a page from another site as success message on page editor") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.editFormContainer(
+				changePage = "true",
+				pageName = "Home",
+				panel = "General",
+				siteName = "Liferay DXP");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page designer is redirected to associated page on second site after submit Form Container on content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Type(
+				key_text = "Region",
+				locator1 = "TextInput#ANY",
+				value1 = "Spain");
+
+			Button.clickSubmitButton();
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Home");
+
+			Page.viewCurrentPage(pageName = "Home");
+
+			AssertTextEquals(
+				locator1 = "Home#SITE_NAME",
+				value1 = "Liferay DXP");
+		}
+	}
+
 	@description = "This is a test for LPS-149984. The Form Container has all capabilities of Container."
 	@priority = "4"
 	test ViewCapabilitiesOfFormContainer {

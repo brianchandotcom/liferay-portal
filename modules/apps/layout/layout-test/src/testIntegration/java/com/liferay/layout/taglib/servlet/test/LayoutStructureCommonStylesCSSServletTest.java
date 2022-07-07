@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -117,24 +116,19 @@ public class LayoutStructureCommonStylesCSSServletTest {
 
 	@Test
 	public void testRenderCommonStylesWithCustomCSS() throws Exception {
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147511", Boolean.TRUE.toString())) {
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), _layout.getPlid(),
+				_read("layout_structure_with_custom_css.json"));
 
-			_layoutPageTemplateStructureLocalService.
-				updateLayoutPageTemplateStructureData(
-					_group.getGroupId(), _layout.getPlid(),
-					_read("layout_structure_with_custom_css.json"));
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
 
-			MockHttpServletResponse mockHttpServletResponse =
-				new MockHttpServletResponse();
+		_servlet.service(_getHttpServletRequest(), mockHttpServletResponse);
 
-			_servlet.service(_getHttpServletRequest(), mockHttpServletResponse);
-
-			Assert.assertEquals(
-				_normalize(mockHttpServletResponse.getContentAsString()),
-				_normalize(_read("expected_style_with_custom_css.css")));
-		}
+		Assert.assertEquals(
+			_normalize(mockHttpServletResponse.getContentAsString()),
+			_normalize(_read("expected_style_with_custom_css.css")));
 	}
 
 	@Test

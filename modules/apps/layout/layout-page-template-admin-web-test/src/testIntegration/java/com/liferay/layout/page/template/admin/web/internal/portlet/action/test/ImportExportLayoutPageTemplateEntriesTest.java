@@ -294,38 +294,28 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerCssClasses()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147511", Boolean.TRUE.toString())) {
+		_addTextFragmentEntry();
 
-			_addTextFragmentEntry();
+		File expectedFile = _generateZipFile(
+			"container/css_classes/expected", null, null);
+		File inputFile = _generateZipFile(
+			"container/css_classes/input", null, null);
 
-			File expectedFile = _generateZipFile(
-				"container/css_classes/expected", null, null);
-			File inputFile = _generateZipFile(
-				"container/css_classes/input", null, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
 	public void testImportExportLayoutPageTemplateEntryContainerCustomCSS()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147511", Boolean.TRUE.toString())) {
+		_addTextFragmentEntry();
 
-			_addTextFragmentEntry();
+		File expectedFile = _generateZipFile(
+			"container/custom_css/expected", null, null);
+		File inputFile = _generateZipFile(
+			"container/custom_css/input", null, null);
 
-			File expectedFile = _generateZipFile(
-				"container/custom_css/expected", null, null);
-			File inputFile = _generateZipFile(
-				"container/custom_css/input", null, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -567,38 +557,28 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryFragmentCssClasses()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147511", Boolean.TRUE.toString())) {
+		_addTextFragmentEntry();
 
-			_addTextFragmentEntry();
+		File expectedFile = _generateZipFile(
+			"fragment/css_classes/expected", null, null);
+		File inputFile = _generateZipFile(
+			"fragment/css_classes/input", null, null);
 
-			File expectedFile = _generateZipFile(
-				"fragment/css_classes/expected", null, null);
-			File inputFile = _generateZipFile(
-				"fragment/css_classes/input", null, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
 	public void testImportExportLayoutPageTemplateEntryFragmentCustomCSS()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147511", Boolean.TRUE.toString())) {
+		_addTextFragmentEntry();
 
-			_addTextFragmentEntry();
+		File expectedFile = _generateZipFile(
+			"fragment/custom_css/expected", null, null);
+		File inputFile = _generateZipFile(
+			"fragment/custom_css/input", null, null);
 
-			File expectedFile = _generateZipFile(
-				"fragment/custom_css/expected", null, null);
-			File inputFile = _generateZipFile(
-				"fragment/custom_css/input", null, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
@@ -969,36 +949,25 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryRowCssClasses()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147511", Boolean.TRUE.toString())) {
+		_addTextFragmentEntry();
 
-			_addTextFragmentEntry();
+		File expectedFile = _generateZipFile(
+			"container/css_classes/expected", null, null);
+		File inputFile = _generateZipFile(
+			"container/css_classes/input", null, null);
 
-			File expectedFile = _generateZipFile(
-				"container/css_classes/expected", null, null);
-			File inputFile = _generateZipFile(
-				"container/css_classes/input", null, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test
 	public void testImportExportLayoutPageTemplateEntryRowCustomCSS()
 		throws Exception {
 
-		try (PropsTemporarySwapper propsTemporarySwapper =
-				new PropsTemporarySwapper(
-					"feature.flag.LPS-147511", Boolean.TRUE.toString())) {
+		File expectedFile = _generateZipFile(
+			"row/custom_css/expected", null, null);
+		File inputFile = _generateZipFile("row/custom_css/input", null, null);
 
-			File expectedFile = _generateZipFile(
-				"row/custom_css/expected", null, null);
-			File inputFile = _generateZipFile(
-				"row/custom_css/input", null, null);
-
-			_validateImportExport(expectedFile, inputFile);
-		}
+		_validateImportExport(expectedFile, inputFile);
 	}
 
 	@Test

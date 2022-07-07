@@ -73,6 +73,27 @@ public class SiteBrief implements Cloneable, Serializable {
 
 	protected String name;
 
+	public String getName_descriptive() {
+		return name_descriptive;
+	}
+
+	public void setName_descriptive(String name_descriptive) {
+		this.name_descriptive = name_descriptive;
+	}
+
+	public void setName_descriptive(
+		UnsafeSupplier<String, Exception> name_descriptiveUnsafeSupplier) {
+
+		try {
+			name_descriptive = name_descriptiveUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String name_descriptive;
+
 	public Map<String, String> getName_i18n() {
 		return name_i18n;
 	}

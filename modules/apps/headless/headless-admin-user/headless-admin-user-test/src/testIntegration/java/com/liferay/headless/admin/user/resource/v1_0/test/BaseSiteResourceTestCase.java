@@ -185,6 +185,7 @@ public abstract class BaseSiteResourceTestCase {
 		site.setKey(regex);
 		site.setMembershipType(regex);
 		site.setName(regex);
+		site.setName_descriptive(regex);
 
 		String json = SiteSerDes.toJSON(site);
 
@@ -197,6 +198,7 @@ public abstract class BaseSiteResourceTestCase {
 		Assert.assertEquals(regex, site.getKey());
 		Assert.assertEquals(regex, site.getMembershipType());
 		Assert.assertEquals(regex, site.getName());
+		Assert.assertEquals(regex, site.getName_descriptive());
 	}
 
 	@Test
@@ -530,6 +532,14 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("name_descriptive", additionalAssertFieldName)) {
+				if (site.getName_descriptive() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
 				if (site.getName_i18n() == null) {
 					valid = false;
@@ -733,6 +743,17 @@ public abstract class BaseSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("name_descriptive", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						site1.getName_descriptive(),
+						site2.getName_descriptive())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
 				if (!equals(
 						(Map)site1.getName_i18n(), (Map)site2.getName_i18n())) {
@@ -918,6 +939,14 @@ public abstract class BaseSiteResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("name_descriptive")) {
+			sb.append("'");
+			sb.append(String.valueOf(site.getName_descriptive()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("name_i18n")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -986,6 +1015,8 @@ public abstract class BaseSiteResourceTestCase {
 				membershipType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				name_descriptive = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				parentSiteId = RandomTestUtil.randomLong();
 			}
 		};

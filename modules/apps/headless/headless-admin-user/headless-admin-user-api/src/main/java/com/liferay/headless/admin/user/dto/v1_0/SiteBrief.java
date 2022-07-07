@@ -112,6 +112,34 @@ public class SiteBrief implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
+	@Schema(description = "The site's descriptive name.")
+	public String getName_descriptive() {
+		return name_descriptive;
+	}
+
+	public void setName_descriptive(String name_descriptive) {
+		this.name_descriptive = name_descriptive;
+	}
+
+	@JsonIgnore
+	public void setName_descriptive(
+		UnsafeSupplier<String, Exception> name_descriptiveUnsafeSupplier) {
+
+		try {
+			name_descriptive = name_descriptiveUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The site's descriptive name.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String name_descriptive;
+
 	@Schema
 	@Valid
 	public Map<String, String> getName_i18n() {
@@ -189,6 +217,20 @@ public class SiteBrief implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		if (name_descriptive != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name_descriptive\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(name_descriptive));
 
 			sb.append("\"");
 		}

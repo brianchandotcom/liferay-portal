@@ -50,7 +50,7 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.BIG_DECIMAL,
 			defaultPropertyValidator, RandomTestUtil.randomBoolean());
 
@@ -64,7 +64,7 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.BOOLEAN, defaultPropertyValidator,
 			RandomTestUtil.randomBoolean());
 
@@ -79,6 +79,8 @@ public class DefaultPropertyValidatorTest {
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
 			String.class, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.DATE_TIME, defaultPropertyValidator,
 			RandomTestUtil.randomBoolean());
 
@@ -92,7 +94,7 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.DECIMAL, defaultPropertyValidator,
 			RandomTestUtil.randomBoolean());
 
@@ -106,7 +108,7 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.DOUBLE, defaultPropertyValidator,
 			RandomTestUtil.randomBoolean());
 
@@ -120,7 +122,7 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.INTEGER, defaultPropertyValidator,
 			RandomTestUtil.randomBoolean());
 
@@ -134,7 +136,7 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.BIG_DECIMAL,
 			defaultPropertyValidator, RandomTestUtil.randomBoolean());
 
@@ -149,6 +151,8 @@ public class DefaultPropertyValidatorTest {
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
 			String.class, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.DATE_TIME, defaultPropertyValidator,
 			RandomTestUtil.randomBoolean());
 
@@ -163,6 +167,8 @@ public class DefaultPropertyValidatorTest {
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
 			TestInvalidClass.class, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.MULTIPLE_ELEMENT,
 			defaultPropertyValidator, RandomTestUtil.randomBoolean());
 
@@ -178,6 +184,8 @@ public class DefaultPropertyValidatorTest {
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
 			TestInvalidClass.class, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.SINGLE_ELEMENT,
 			defaultPropertyValidator, RandomTestUtil.randomBoolean());
 
@@ -191,7 +199,7 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.BOOLEAN, defaultPropertyValidator,
 			RandomTestUtil.randomBoolean());
 
@@ -205,8 +213,9 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			RandomTestUtil.randomString(), PropertyDefinition.PropertyType.LONG,
-			defaultPropertyValidator, RandomTestUtil.randomBoolean());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			PropertyDefinition.PropertyType.LONG, defaultPropertyValidator,
+			RandomTestUtil.randomBoolean());
 
 		defaultPropertyValidator.validate(
 			propertyDefinition, RandomTestUtil.randomLong());
@@ -219,6 +228,8 @@ public class DefaultPropertyValidatorTest {
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
 			TestClass.class, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.MULTIPLE_ELEMENT,
 			defaultPropertyValidator, RandomTestUtil.randomBoolean());
 
@@ -233,7 +244,8 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			null, RandomTestUtil.randomString(),
+			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.BOOLEAN, defaultPropertyValidator,
 			RandomTestUtil.randomBoolean());
 
@@ -248,6 +260,8 @@ public class DefaultPropertyValidatorTest {
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
 			TestClass.class, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(),
 			PropertyDefinition.PropertyType.SINGLE_ELEMENT,
 			defaultPropertyValidator, RandomTestUtil.randomBoolean());
 
@@ -261,8 +275,9 @@ public class DefaultPropertyValidatorTest {
 			new DefaultPropertyValidator();
 
 		PropertyDefinition propertyDefinition = new PropertyDefinition(
-			RandomTestUtil.randomString(), PropertyDefinition.PropertyType.TEXT,
-			defaultPropertyValidator, RandomTestUtil.randomBoolean());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			PropertyDefinition.PropertyType.TEXT, defaultPropertyValidator,
+			RandomTestUtil.randomBoolean());
 
 		defaultPropertyValidator.validate(
 			propertyDefinition, RandomTestUtil.randomString());

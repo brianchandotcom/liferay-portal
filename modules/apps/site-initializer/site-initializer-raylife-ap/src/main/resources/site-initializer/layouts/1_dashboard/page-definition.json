@@ -790,11 +790,10 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "fake-content"
+																								"key": "dashboard-active-claims"
 																							},
 																							"fragmentConfig": {
-																								"fakeContentId": "fake content",
-																								"height": "257px"
+																								"textColor": ""
 																							},
 																							"fragmentFields": [
 																							],

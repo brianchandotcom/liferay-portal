@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"borderWidth": "0"
+						"borderWidth": "0",
+						"textAlign": ""
 					},
 					"indexed": true,
 					"layout": {
@@ -69,6 +70,19 @@
 								"type": "FragmentDropZone"
 							},
 							{
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"properties": "route=applications"
+												},
+												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_RAYLIFEAGENTPORTAL001"
+											}
+										},
+										"type": "Widget"
+									}
+								],
 								"type": "FragmentDropZone"
 							}
 						],

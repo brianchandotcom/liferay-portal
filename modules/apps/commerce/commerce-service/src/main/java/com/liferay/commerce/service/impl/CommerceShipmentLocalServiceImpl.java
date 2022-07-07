@@ -470,14 +470,24 @@ public class CommerceShipmentLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceShipment updateCarrierDetails(
-			long commerceShipmentId, String carrier, String trackingNumber)
+			long commerceShipmentId, long commerceShippingMethodId,
+			String carrier, String trackingNumber, String trackingURL)
 		throws PortalException {
 
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
+		if (commerceShipment.getCommerceShippingMethodId() !=
+				commerceShippingMethodId) {
+
+			commerceShipment.setCommerceShippingMethodId(
+				commerceShippingMethodId);
+			commerceShipment.setShippingOptionName(null);
+		}
+
 		commerceShipment.setCarrier(carrier);
 		commerceShipment.setTrackingNumber(trackingNumber);
+		commerceShipment.setTrackingURL(trackingURL);
 
 		return commerceShipmentPersistence.update(commerceShipment);
 	}
@@ -555,6 +565,14 @@ public class CommerceShipmentLocalServiceImpl
 
 		_validateStatus(status, oldStatus);
 
+		if (commerceShipment.getCommerceShippingMethodId() !=
+				commerceShippingMethodId) {
+
+			commerceShipment.setCommerceShippingMethodId(
+				commerceShippingMethodId);
+			commerceShipment.setShippingOptionName(null);
+		}
+
 		CommerceAddress commerceAddress = updateCommerceShipmentAddress(
 			commerceShipment, name, description, street1, street2, street3,
 			city, zip, regionId, countryId, phoneNumber, serviceContext);
@@ -564,6 +582,7 @@ public class CommerceShipmentLocalServiceImpl
 
 		commerceShipment.setCarrier(carrier);
 		commerceShipment.setTrackingNumber(trackingNumber);
+		commerceShipment.setTrackingURL(trackingURL);
 
 		Date shippingDate = _getDate(
 			shippingDateMonth, shippingDateDay, shippingDateYear,

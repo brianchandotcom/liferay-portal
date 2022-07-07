@@ -225,6 +225,105 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-153653. The site designer could delete inherited theme CSS extension from page template."
+	@priority = "4"
+	test ClearInheritedThemeCSSExtensionFromPageTemplate {
+		task ("Given a site designer has a content page template with a theme CSS extension") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Content Page Template",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Content Page Template");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.publish();
+		}
+
+		task ("When the site designer adds a content page based on content page template") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				collectionName = "Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Content Page Template");
+		}
+
+		task ("Then the site designer could clear inherited theme CSS extension") {
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "font-family",
+				value1 = "&quot;Times New Roman&quot;");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertTextEquals(
+				key_text = "Extension",
+				locator1 = "TextInput#ANY",
+				value1 = "FontFamily");
+
+			Click(
+				key_fieldLabel = "Extension",
+				key_text = "trash",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+			AssertTextEquals(
+				key_text = "Extension",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				key_text = "Extension",
+				locator1 = "TextInput#ANY",
+				value1 = "No theme CSS extension was loaded.");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "font-family",
+				value1 = "system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen-Sans, Ubuntu, Cantarell, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;");
+		}
+	}
+
 	@description = "This is a test for LPS-153653. The site designer could delete the theme CSS extenion selection."
 	@priority = "4"
 	test ClearThemeCSSExtensionSelection {

@@ -43,16 +43,16 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 		createControlTable(TEST_CONTROL_TABLE_NAME);
 
-		addDBPartition();
+		addDBPartitions();
 
-		insertCompanyAndDefaultUser();
+		insertPartitionRequiredData();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		deleteCompanyAndDefaultUser();
+		deletePartitionRequiredData();
 
-		dropSchema();
+		dropSchemas();
 
 		dropTable(TEST_CONTROL_TABLE_NAME);
 

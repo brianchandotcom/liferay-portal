@@ -74,7 +74,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		dropSchema();
+		dropSchemas();
 	}
 
 	@Test
@@ -113,7 +113,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testAddDBPartition() throws Exception {
-		addDBPartition();
+		addDBPartitions();
 
 		try (Statement statement = connection.createStatement()) {
 			for (long companyId : COMPANY_IDS) {
@@ -132,7 +132,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				"com.liferay.portal.db.partition.DBPartitionUtil",
 				LoggerTestUtil.INFO)) {
 
-			addDBPartition();
+			addDBPartitions();
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -157,9 +157,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	@Test
 	public void testForEachCompanyId() throws Exception {
 		try {
-			addDBPartition();
+			addDBPartitions();
 
-			insertCompanyAndDefaultUser();
+			insertPartitionRequiredData();
 
 			Set<Long> companyIds = new ConcurrentSkipListSet<>();
 			Set<Long> threadIds = new ConcurrentSkipListSet<>();
@@ -184,13 +184,13 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			Assert.assertEquals(threadIds.toString(), 3, threadIds.size());
 		}
 		finally {
-			deleteCompanyAndDefaultUser();
+			deletePartitionRequiredData();
 		}
 	}
 
 	@Test
 	public void testMigrateDBPartition() throws Exception {
-		addDBPartition();
+		addDBPartitions();
 
 		HashMap<Long, List<String>> viewNames = new HashMap<>();
 		HashMap<Long, Integer> tablesCount = new HashMap<>();
@@ -205,7 +205,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			tablesCount.put(companyId, _getTablesCount(companyId));
 		}
 
-		removeDBPartition(true);
+		removeDBPartitions(true);
 
 		for (long companyId : COMPANY_IDS) {
 			List<String> views = viewNames.get(companyId);
@@ -226,7 +226,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testMigrateDBPartitionRollback() throws Exception {
-		addDBPartition();
+		addDBPartitions();
 
 		for (long companyId : COMPANY_IDS) {
 			int tablesCount = _getTablesCount(companyId);
@@ -240,7 +240,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				createAndPopulateControlTable(fullTestTableName);
 
 				try {
-					removeDBPartition(true);
+					removeDBPartitions(true);
 
 					Assert.fail("Should throw an exception");
 				}
@@ -259,9 +259,9 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@Test
 	public void testRemoveDBPartition() throws Exception {
-		addDBPartition();
+		addDBPartitions();
 
-		removeDBPartition(false);
+		removeDBPartitions(false);
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 

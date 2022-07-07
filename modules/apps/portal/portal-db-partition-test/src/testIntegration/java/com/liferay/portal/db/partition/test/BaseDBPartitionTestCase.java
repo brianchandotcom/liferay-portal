@@ -71,7 +71,7 @@ public abstract class BaseDBPartitionTestCase {
 		Assume.assumeTrue(db.getDBType() == DBType.MYSQL);
 	}
 
-	protected static void addDBPartition() throws Exception {
+	protected static void addDBPartitions() throws Exception {
 		CurrentConnection defaultCurrentConnection =
 			CurrentConnectionUtil.getCurrentConnection();
 
@@ -115,7 +115,7 @@ public abstract class BaseDBPartitionTestCase {
 				" (testColumn)"));
 	}
 
-	protected static void deleteCompanyAndDefaultUser() throws Exception {
+	protected static void deletePartitionRequiredData() throws Exception {
 		try (Statement statement = connection.createStatement()) {
 			for (long companyId : COMPANY_IDS) {
 				statement.execute(
@@ -155,7 +155,7 @@ public abstract class BaseDBPartitionTestCase {
 				"drop index ", TEST_INDEX_NAME, " on ", tableName));
 	}
 
-	protected static void dropSchema() throws Exception {
+	protected static void dropSchemas() throws Exception {
 		for (long companyId : COMPANY_IDS) {
 			db.runSQL("drop schema if exists " + getSchemaName(companyId));
 		}
@@ -228,7 +228,7 @@ public abstract class BaseDBPartitionTestCase {
 		return _DB_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 	}
 
-	protected static void insertCompanyAndDefaultUser() throws Exception {
+	protected static void insertPartitionRequiredData() throws Exception {
 		for (long companyId : COMPANY_IDS) {
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setWithSafeCloseable(companyId);
@@ -259,7 +259,7 @@ public abstract class BaseDBPartitionTestCase {
 		}
 	}
 
-	protected static void removeDBPartition(boolean migrate) throws Exception {
+	protected static void removeDBPartitions(boolean migrate) throws Exception {
 		CurrentConnection defaultCurrentConnection =
 			CurrentConnectionUtil.getCurrentConnection();
 

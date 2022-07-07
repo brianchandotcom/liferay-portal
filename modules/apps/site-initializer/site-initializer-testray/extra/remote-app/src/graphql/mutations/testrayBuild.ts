@@ -14,40 +14,50 @@
 
 import {gql} from '@apollo/client';
 
-export const CreateRoutine = gql`
-	mutation createRoutine($data: InputC_Routine!) {
-		createRoutine(Routine: $data)
+export const CreateBuild = gql`
+	mutation createBuild($data: InputC_Build!) {
+		createBuild(Build: $data)
 			@rest(
-				bodyKey: "Routine"
-				bodySerializer: "routine"
+				bodyKey: "Build"
+				bodySerializer: "build"
 				method: "POST"
-				path: "routines"
-				type: "C_Routine"
+				path: "builds"
+				type: "C_Build"
 			) {
 			id
+			name
+			description
+			gitHash
+			name
+			productVersionId
 		}
 	}
 `;
 
-export const DeleteRoutine = gql`
-	mutation deleteRoutine($id: Long) {
+export const DeleteBuild = gql`
+	mutation deleteBuild($id: Long) {
 		c {
-			deleteRoutine(routineId: $id)
+			deleteBuild(buildId: $id)
 		}
 	}
 `;
 
-export const UpdateRoutine = gql`
-	mutation updateRoutine($data: InputC_Routine!, $id: Long) {
-		updateRoutine(Routine: $data, routineId: $id)
+export const UpdateBuild = gql`
+	mutation updateBuild($data: InputC_Build!, $id: Long) {
+		updateBuild(Build: $data, buildId: $id)
 			@rest(
-				bodyKey: "Routine"
-				bodySerializer: "routine"
+				bodyKey: "Build"
+				bodySerializer: "build"
 				method: "PUT"
-				path: "routines/{args.routineId}"
-				type: "C_Routine"
+				path: "builds/{args.buildId}"
+				type: "C_Build"
 			) {
 			id
+			name
+			description
+			gitHash
+			name
+			productVersionId
 		}
 	}
 `;

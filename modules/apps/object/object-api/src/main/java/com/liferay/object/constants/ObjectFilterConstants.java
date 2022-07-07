@@ -15,12 +15,14 @@
 package com.liferay.object.constants;
 
 /**
- * @author Feliphe Marinho
+ * @author Marcela Cunha
  */
-public class ObjectFieldSettingConstants {
+public class ObjectFilterConstants {
 
-	public static final String FILTERS = "filters";
+	public static final String FILTER_BY = "filterBy";
 
-	public static final String NAME_STATE_FLOW = "stateFlow";
+	public static final String FILTER_TYPE = "filterType";
+
+	public static final String JSON = "json";
 
 }

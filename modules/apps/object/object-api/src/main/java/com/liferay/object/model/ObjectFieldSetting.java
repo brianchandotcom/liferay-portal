@@ -58,4 +58,8 @@ public interface ObjectFieldSetting
 
 			};
 
+	public java.util.List<ObjectFilter> getObjectFilters();
+
+	public void setObjectFilters(java.util.List<ObjectFilter> objectFilters);
+
 }

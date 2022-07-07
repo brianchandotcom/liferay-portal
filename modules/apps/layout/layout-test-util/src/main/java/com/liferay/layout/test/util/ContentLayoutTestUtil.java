@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
@@ -71,6 +72,18 @@ public class ContentLayoutTestUtil {
 			String editableValues, String rendererKey, int type)
 		throws Exception {
 
+		return addFragmentEntryLinkToLayout(
+			layout, fragmentEntryId, segmentsExperienceId, css, html, js,
+			configuration, editableValues, rendererKey, type, null, 0);
+	}
+
+	public static FragmentEntryLink addFragmentEntryLinkToLayout(
+			Layout layout, long fragmentEntryId, long segmentsExperienceId,
+			String css, String html, String js, String configuration,
+			String editableValues, String rendererKey, int type,
+			String parentItemId, int position)
+		throws Exception {
+
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkServiceUtil.addFragmentEntryLink(
 				layout.getGroupId(), 0, fragmentEntryId, segmentsExperienceId,
@@ -87,9 +100,16 @@ public class ContentLayoutTestUtil {
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 
-		layoutStructure.addFragmentStyledLayoutStructureItem(
-			fragmentEntryLink.getFragmentEntryLinkId(),
-			layoutStructure.getMainItemId(), 0);
+		if (Validator.isNull(parentItemId)) {
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				layoutStructure.getMainItemId(), position);
+		}
+		else {
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				fragmentEntryLink.getFragmentEntryLinkId(), parentItemId,
+				position);
+		}
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(
@@ -101,6 +121,15 @@ public class ContentLayoutTestUtil {
 
 	public static FragmentEntryLink addFragmentEntryLinkToLayout(
 			Layout layout, long segmentsExperienceId, String editableValues)
+		throws Exception {
+
+		return addFragmentEntryLinkToLayout(
+			layout, segmentsExperienceId, editableValues, null, 0);
+	}
+
+	public static FragmentEntryLink addFragmentEntryLinkToLayout(
+			Layout layout, long segmentsExperienceId, String editableValues,
+			String parentItemId, int position)
 		throws Exception {
 
 		FragmentEntry fragmentEntry =
@@ -119,7 +148,7 @@ public class ContentLayoutTestUtil {
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			editableValues, fragmentEntry.getFragmentEntryKey(),
-			fragmentEntry.getType());
+			fragmentEntry.getType(), parentItemId, position);
 	}
 
 	public static JSONObject addItemToLayout(

@@ -350,8 +350,6 @@ renderResponse.setTitle(headerTitle);
 											"initialValue", fileVersion.getFileName()
 										).put(
 											"required", Validator.isNotNull(fileVersion.getExtension())
-										).put(
-											"visible", dlEditFileEntryDisplayContext.isFileNameVisible()
 										).build()
 									%>'
 								/>

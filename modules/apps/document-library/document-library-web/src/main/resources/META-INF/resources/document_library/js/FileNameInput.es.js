@@ -39,7 +39,7 @@ const Feedback = ({message, warning}) => (
 	</ClayForm.FeedbackGroup>
 );
 
-const FileNameInput = ({initialValue, portletNamespace, required, visible}) => {
+const FileNameInput = ({initialValue, portletNamespace, required}) => {
 	const inputId = portletNamespace + 'fileName';
 	const [inputValue, setInputValue] = useState(initialValue);
 	const valueChanged = initialValue !== inputValue;
@@ -66,7 +66,7 @@ const FileNameInput = ({initialValue, portletNamespace, required, visible}) => {
 				name={inputId}
 				onChange={({target: {value}}) => setInputValue(value)}
 				required={required}
-				type={visible ? 'text' : 'hidden'}
+				type="text"
 				value={inputValue}
 			/>
 
@@ -92,7 +92,6 @@ FileNameInput.propTypes = {
 	initialValue: PropTypes.string,
 	portletNamespace: PropTypes.string,
 	required: PropTypes.bool,
-	visible: PropTypes.bool,
 };
 
 export default FileNameInput;

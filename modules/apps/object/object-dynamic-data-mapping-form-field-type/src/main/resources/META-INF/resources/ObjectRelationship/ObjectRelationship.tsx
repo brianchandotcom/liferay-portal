@@ -22,7 +22,7 @@ import {
 } from 'data-engine-js-components-web';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type';
 import {fetch} from 'frontend-js-web';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
@@ -38,11 +38,8 @@ async function fetchOptions<T>(url: string) {
 	return (await response.json()) as T;
 }
 
-function getLabel<T extends {[key: string]: any}>(
-	item: T | undefined,
-	key: keyof T
-) {
-	const value = item?.[key];
+function getLabel<T extends ObjectMap<any>>(item: T, key: keyof T) {
+	const value = item[key];
 
 	const label = typeof value === 'object' ? value[defaultLanguageId] : value;
 
@@ -51,30 +48,30 @@ function getLabel<T extends {[key: string]: any}>(
 
 function LoadingWithDebounce({
 	labelKey,
+	list,
 	loading,
 	onSelect,
-	resource,
 	searchTerm,
 }: {
 	labelKey: string;
-	loading: boolean;
+	list?: Item[];
+	loading?: boolean;
 	onSelect: (item: Item) => void;
-	resource?: Resource;
 	searchTerm?: string;
 }) {
 	const debouncedLoadingChange = useDebounce(loading, 500);
 
 	if (loading || debouncedLoadingChange) {
 		return (
-			<ClayDropDown.Item className="disabled">
+			<ClayDropDown.Item disabled>
 				{Liferay.Language.get('loading')}
 			</ClayDropDown.Item>
 		);
 	}
 
-	if (!resource || !resource.items.length) {
+	if (!list?.length) {
 		return (
-			<ClayDropDown.Item className="disabled">
+			<ClayDropDown.Item disabled>
 				{Liferay.Language.get('no-results-found')}
 			</ClayDropDown.Item>
 		);
@@ -82,7 +79,7 @@ function LoadingWithDebounce({
 
 	return (
 		<>
-			{resource.items.map((item) => (
+			{list.map((item) => (
 				<ClayAutocomplete.Item
 					key={item.id}
 					match={searchTerm}
@@ -111,34 +108,21 @@ export default function ObjectRelationship({
 	valueKey = 'value',
 	...otherProps
 }: IProps) {
-	const [active, setActive] = useState(false);
-	const [label, setLabel] = useState('');
-	const [loading, setLoading] = useState(false);
-	const [resource, setResource] = useState<Resource>();
 	const autocompleteRef = useRef<HTMLDivElement>(null);
 	const dropdownRef = useRef<HTMLDivElement>(null);
+	const [
+		{active, list, loading, searchTerm, selected, url},
+		setState,
+	] = useState<State>({url: null});
 
 	const dispatch = useForm();
 	const {
 		objectRelationships,
-	}: {objectRelationships?: {[key: string]: number}} = useFormState();
+	}: {objectRelationships?: ObjectMap<number>} = useFormState();
 
-	const parameterObjectFieldId = useMemo(
-		() =>
-			parameterObjectFieldName &&
-			objectRelationships?.[parameterObjectFieldName],
-		[objectRelationships, parameterObjectFieldName]
-	);
-
-	const url = useMemo(() => {
-		if (parameterObjectFieldName && !parameterObjectFieldId) {
-			return;
-		}
-
-		return parameterObjectFieldId
-			? apiURL.replace(/{\w+}/, parameterObjectFieldId.toString())
-			: `${apiURL}?page=1&pageSize=10${label ? `&search=${label}` : ''}`;
-	}, [apiURL, label, parameterObjectFieldId, parameterObjectFieldName]);
+	const parameterObjectFieldId = parameterObjectFieldName
+		? objectRelationships?.[parameterObjectFieldName]
+		: null;
 
 	/**
 	 * Provides selected value for dependant relationships
@@ -146,55 +130,86 @@ export default function ObjectRelationship({
 	useEffect(() => {
 		dispatch({
 			payload: {
-				[fieldName]: value,
+				[fieldName]: Number(value),
 			},
 			type: FORM_EVENT_TYPES.OBJECT.RELATIONSHIPS_CHANGE,
 		});
 	}, [dispatch, fieldName, value]);
 
 	/**
-	 * Cleans up value and label case the relationship it relies on had its value reset
-	 */
-	useEffect(() => {
-		if (parameterObjectFieldName && !parameterObjectFieldId && value) {
-			onChange({target: {value: null}});
-			setLabel('');
-		}
-	}, [onChange, parameterObjectFieldName, parameterObjectFieldId, value]);
-
-	/**
-	 * Retrieves the label from the apiURL and the relationship value
-	 */
-	useEffect(() => {
-		if (!value) {
-			return;
-		}
-
-		if (!parameterObjectFieldName) {
-			fetchOptions<{[key: string]: unknown}>(
-				`${apiURL}/${value}`
-			).then((item) => setLabel(getLabel(item, labelKey)));
-		}
-		else if (resource) {
-			const item = resource.items.find(({id}) => id === Number(value));
-
-			setLabel(getLabel(item, labelKey));
-		}
-	}, [apiURL, labelKey, parameterObjectFieldName, resource, value]);
-
-	/**
 	 * Fetches the data to populate the dropdown items
 	 */
 	useEffect(() => {
-		if (!url) {
-			return;
-		}
+		const fetchData = async () => {
+			let newURL: string | null = null;
 
-		setLoading(true);
-		fetchOptions<Resource>(url)
-			.then(setResource)
-			.finally(() => setLoading(false));
-	}, [url]);
+			if (!parameterObjectFieldName || parameterObjectFieldId) {
+				newURL = parameterObjectFieldId
+					? apiURL.replace(/{\w+}/, String(parameterObjectFieldId))
+					: `${apiURL}?page=1&pageSize=10${
+							searchTerm ? `&search=${searchTerm}` : ''
+					  }`;
+			}
+
+			if (!newURL || newURL === url) {
+				return;
+			}
+
+			setState((prevState) => ({...prevState, loading: true}));
+
+			try {
+				const {items} = await fetchOptions<Resource>(newURL);
+				const state: State = {
+					list: items,
+					loading: false,
+					url: newURL,
+				};
+
+				if (value) {
+					let selected: Item | void = items.find(
+						({id}) => id === Number(value)
+					);
+
+					if (!selected && !parameterObjectFieldName) {
+						selected = await fetchOptions<Item>(
+							`${apiURL}/${value}`
+						);
+					}
+
+					if (selected) {
+						state.selected = selected;
+					}
+					else {
+						onChange({target: {value: null}});
+					}
+				}
+				setState(({active, searchTerm}) => ({
+					active,
+					searchTerm,
+					...state,
+				}));
+			}
+			catch (error) {
+				setState(({active, searchTerm}) => ({
+					active,
+					loading: false,
+					searchTerm,
+					url,
+				}));
+				console.error(error);
+			}
+		};
+
+		fetchData();
+	}, [
+		apiURL,
+		onChange,
+		parameterObjectFieldId,
+		parameterObjectFieldName,
+		searchTerm,
+		value,
+		url,
+	]);
 
 	/**
 	 * Deactivates the dropdown on outside click
@@ -208,7 +223,7 @@ export default function ObjectRelationship({
 			) {
 				return;
 			}
-			setActive(false);
+			setState((prevState) => ({...prevState, active: false}));
 		};
 
 		if (active) {
@@ -220,13 +235,13 @@ export default function ObjectRelationship({
 		};
 	}, [active]);
 
+	const label = (selected && getLabel(selected, labelKey)) ?? searchTerm;
+
 	return (
 		<FieldBase
 			name={name}
-			onChange={onChange}
 			readOnly={readOnly}
 			required={required}
-			value={value}
 			{...otherProps}
 		>
 			<ClayAutocomplete ref={autocompleteRef}>
@@ -237,31 +252,48 @@ export default function ObjectRelationship({
 					name={inputName}
 					onBlur={onBlur}
 					onChange={({target: {value}}) => {
-						if (value === '') {
-							onChange({target: {value: null}});
-						}
-						else {
-							const selected = resource?.items.find(
+						let selected: Item | undefined;
+
+						if (value) {
+							selected = list?.find(
 								(item) => getLabel(item, labelKey) === value
 							);
-
-							onChange({
-								target: {
-									value: selected
-										? String(selected[valueKey])
-										: null,
-								},
-							});
 						}
 
-						setLabel(value);
+						setState((prevState) => {
+							const state = {...prevState};
+
+							if (selected) {
+								state.selected = selected;
+								delete state.searchTerm;
+							}
+							else {
+								state.searchTerm = value;
+								delete state.selected;
+							}
+
+							return state;
+						});
+
+						onChange({
+							target: {
+								value: selected
+									? String(selected[valueKey])
+									: null,
+							},
+						});
 					}}
 					onFocus={(event) => {
 						onFocus?.(event);
-						setActive(true);
+						setState((prevState) => ({...prevState, active: true}));
 					}}
-					onKeyUp={(event) => {
-						setActive(event.keyCode !== 27);
+					onKeyPress={(event) => {
+						if (event.key === 'Escape') {
+							setState((prevState) => ({
+								...prevState,
+								active: false,
+							}));
+						}
 					}}
 					placeholder={placeholder}
 					readOnly={readOnly}
@@ -269,22 +301,25 @@ export default function ObjectRelationship({
 					value={label}
 				/>
 
-				<ClayAutocomplete.DropDown
-					active={!readOnly && resource && active}
-				>
+				<ClayAutocomplete.DropDown active={!readOnly && list && active}>
 					<div ref={dropdownRef}>
 						<ClayDropDown.ItemList>
 							<LoadingWithDebounce
 								labelKey={labelKey}
+								list={list}
 								loading={loading}
-								onSelect={(item) => {
+								onSelect={(selected) => {
 									onChange({
-										target: {value: String(item[valueKey])},
+										target: {
+											value: String(selected[valueKey]),
+										},
 									});
-									setActive(false);
-									setLabel(getLabel(item, labelKey));
+									setState((prevState) => ({
+										...prevState,
+										active: false,
+										selected,
+									}));
 								}}
-								resource={resource}
 								searchTerm={label}
 							/>
 						</ClayDropDown.ItemList>
@@ -294,7 +329,7 @@ export default function ObjectRelationship({
 				{loading && <ClayAutocomplete.LoadingIndicator />}
 			</ClayAutocomplete>
 
-			<input name={name} type="hidden" value={value} />
+			<input name={name} type="hidden" value={selected?.id} />
 		</FieldBase>
 	);
 }
@@ -316,11 +351,23 @@ interface IProps {
 	valueKey?: string;
 }
 
-interface Item {
+interface Item extends ObjectMap {
 	id: number;
-	[key: string]: unknown;
+}
+
+interface ObjectMap<T = unknown> {
+	[key: string]: T;
 }
 
 interface Resource {
 	items: Item[];
+}
+
+interface State {
+	active?: boolean;
+	list?: Item[];
+	loading?: boolean;
+	searchTerm?: string;
+	selected?: Item;
+	url: string | null;
 }

@@ -25,6 +25,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -144,8 +145,10 @@ public class ObjectFieldResourceImpl
 						objectField.getObjectFieldSettings(),
 						objectFieldSetting ->
 							ObjectFieldSettingUtil.toObjectFieldSetting(
+								objectField.getBusinessTypeAsString(),
 								objectFieldSetting,
-								_objectFieldSettingLocalService))));
+								_objectFieldSettingLocalService,
+								_objectFilterLocalService))));
 		}
 
 		return _toObjectField(
@@ -165,8 +168,9 @@ public class ObjectFieldResourceImpl
 					objectField.getObjectFieldSettings(),
 					objectFieldSetting ->
 						ObjectFieldSettingUtil.toObjectFieldSetting(
-							objectFieldSetting,
-							_objectFieldSettingLocalService))));
+							objectField.getBusinessTypeAsString(),
+							objectFieldSetting, _objectFieldSettingLocalService,
+							_objectFilterLocalService))));
 	}
 
 	@Override
@@ -192,8 +196,10 @@ public class ObjectFieldResourceImpl
 						objectField.getObjectFieldSettings(),
 						objectFieldSetting ->
 							ObjectFieldSettingUtil.toObjectFieldSetting(
+								objectField.getBusinessTypeAsString(),
 								objectFieldSetting,
-								_objectFieldSettingLocalService)),
+								_objectFieldSettingLocalService,
+								_objectFilterLocalService)),
 					null));
 		}
 
@@ -215,8 +221,9 @@ public class ObjectFieldResourceImpl
 					objectField.getObjectFieldSettings(),
 					objectFieldSetting ->
 						ObjectFieldSettingUtil.toObjectFieldSetting(
-							objectFieldSetting,
-							_objectFieldSettingLocalService)),
+							objectField.getBusinessTypeAsString(),
+							objectFieldSetting, _objectFieldSettingLocalService,
+							_objectFilterLocalService)),
 				ObjectStateFlowUtil.toObjectStateFlow(
 					objectFieldId, objectField.getObjectStateFlow())));
 	}
@@ -302,5 +309,8 @@ public class ObjectFieldResourceImpl
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Reference
+	private ObjectFilterLocalService _objectFilterLocalService;
 
 }

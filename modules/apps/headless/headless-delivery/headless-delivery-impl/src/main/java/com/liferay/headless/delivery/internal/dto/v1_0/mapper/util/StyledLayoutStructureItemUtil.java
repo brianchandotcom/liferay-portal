@@ -18,11 +18,9 @@ import com.liferay.headless.delivery.dto.v1_0.CustomCSSViewport;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +35,6 @@ public class StyledLayoutStructureItemUtil {
 	public static String[] getCssClasses(
 		StyledLayoutStructureItem styledLayoutStructureItem) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147511"))) {
-			return null;
-		}
-
 		Set<String> cssClasses = styledLayoutStructureItem.getCssClasses();
 
 		if (SetUtil.isEmpty(cssClasses)) {
@@ -53,10 +47,6 @@ public class StyledLayoutStructureItemUtil {
 	public static String getCustomCSS(
 		StyledLayoutStructureItem styledLayoutStructureItem) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147511"))) {
-			return null;
-		}
-
 		String customCSS = styledLayoutStructureItem.getCustomCSS();
 
 		if (Validator.isNotNull(customCSS)) {
@@ -68,10 +58,6 @@ public class StyledLayoutStructureItemUtil {
 
 	public static CustomCSSViewport[] getCustomCSSViewports(
 		StyledLayoutStructureItem styledLayoutStructureItem) {
-
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147511"))) {
-			return null;
-		}
 
 		Map<String, String> customCSSViewportsMap =
 			styledLayoutStructureItem.getCustomCSSViewports();

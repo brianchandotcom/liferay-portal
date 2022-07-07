@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
@@ -151,20 +150,16 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 						frontendTokensJSONObject, styledLayoutStructureItem,
 						viewportSize));
 
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-147511"))) {
+				String customCSS = _getCustomCSS(
+					styledLayoutStructureItem, viewportSize);
 
-					String customCSS = _getCustomCSS(
-						styledLayoutStructureItem, viewportSize);
-
-					if (Validator.isNotNull(customCSS)) {
-						cssSB.append(
-							StringUtil.replace(
-								customCSS, _FRAGMENT_CLASS_PLACEHOLDER,
-								LayoutStructureItemCSSUtil.
-									getLayoutStructureItemUniqueCssClass(
-										styledLayoutStructureItem)));
-					}
+				if (Validator.isNotNull(customCSS)) {
+					cssSB.append(
+						StringUtil.replace(
+							customCSS, _FRAGMENT_CLASS_PLACEHOLDER,
+							LayoutStructureItemCSSUtil.
+								getLayoutStructureItemUniqueCssClass(
+									styledLayoutStructureItem)));
 				}
 			}
 

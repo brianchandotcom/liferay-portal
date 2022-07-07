@@ -81,6 +81,12 @@ export declare function normalizeFieldSettings(
 		| boolean
 		| ObjectFieldFilterSetting[]
 		| undefined;
+	stateFlow?:
+		| string
+		| number
+		| boolean
+		| ObjectFieldFilterSetting[]
+		| undefined;
 };
 export declare function updateFieldSettings(
 	objectFieldSettings: ObjectFieldSetting[] | undefined,

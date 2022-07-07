@@ -119,7 +119,7 @@ public class StartupHelperUtil {
 			db.process(
 				companyId -> {
 					try (Connection connection = DataAccess.getConnection()) {
-						updateIndexes(db, connection, dropIndexes);
+						_updateIndexes(db, connection, dropIndexes);
 					}
 					catch (SQLException sqlException) {
 						if (_log.isWarnEnabled()) {
@@ -133,25 +133,6 @@ public class StartupHelperUtil {
 				_log.warn(exception);
 			}
 		}
-	}
-
-	public static void updateIndexes(
-			DB db, Connection connection, boolean dropIndexes)
-		throws Exception {
-
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader classLoader = currentThread.getContextClassLoader();
-
-		String tablesSQL = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
-
-		String indexesSQL = StringUtil.read(
-			classLoader,
-			"com/liferay/portal/tools/sql/dependencies/indexes.sql");
-
-		db.updateIndexes(connection, tablesSQL, indexesSQL, dropIndexes);
 	}
 
 	public static void upgradeProcess(int buildNumber) throws UpgradeException {
@@ -216,6 +197,25 @@ public class StartupHelperUtil {
 
 			throw new RuntimeException(msg);
 		}
+	}
+
+	private static void _updateIndexes(
+			DB db, Connection connection, boolean dropIndexes)
+		throws Exception {
+
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader classLoader = currentThread.getContextClassLoader();
+
+		String tablesSQL = StringUtil.read(
+			classLoader,
+			"com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
+
+		String indexesSQL = StringUtil.read(
+			classLoader,
+			"com/liferay/portal/tools/sql/dependencies/indexes.sql");
+
+		db.updateIndexes(connection, tablesSQL, indexesSQL, dropIndexes);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

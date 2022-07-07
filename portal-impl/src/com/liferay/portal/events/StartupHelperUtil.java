@@ -118,17 +118,17 @@ public class StartupHelperUtil {
 		try {
 			db.process(
 				companyId -> {
+					String message = new String(
+						"Updating portal database indexes");
+
 					if (Validator.isNotNull(companyId) &&
 						_log.isInfoEnabled()) {
 
-						_log.info(
-							"Updating portal database indexes for company " +
-								companyId);
+						message += " for company " + companyId;
 					}
 
 					try (Connection connection = DataAccess.getConnection();
-						LoggingTimer loggingTimer = new LoggingTimer(
-							"Updating portal database indexes")) {
+						LoggingTimer loggingTimer = new LoggingTimer(message)) {
 
 						_updateIndexes(db, connection, dropIndexes);
 					}

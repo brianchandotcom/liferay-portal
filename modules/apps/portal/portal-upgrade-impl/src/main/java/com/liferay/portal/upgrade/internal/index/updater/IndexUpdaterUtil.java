@@ -93,19 +93,18 @@ public class IndexUpdaterUtil {
 
 		DB db = DBManagerUtil.getDB();
 
-		String loggingTimerName =
-			"Updating database indexes for " + bundle.getSymbolicName();
-
 		db.process(
 			companyId -> {
+				String message = new String(
+					"Updating database indexes for " +
+						bundle.getSymbolicName());
+
 				if (Validator.isNotNull(companyId) && _log.isInfoEnabled()) {
-					_log.info(
-						"Updating database indexes for company " + companyId);
+					message += " and company " + companyId;
 				}
 
 				try (Connection connection = DataAccess.getConnection();
-					LoggingTimer loggingTimer = new LoggingTimer(
-						loggingTimerName)) {
+					LoggingTimer loggingTimer = new LoggingTimer(message)) {
 
 					db.updateIndexes(connection, tablesSQL, indexesSQL, true);
 				}

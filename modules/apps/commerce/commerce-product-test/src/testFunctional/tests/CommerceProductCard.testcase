@@ -275,25 +275,69 @@ definition {
 
 		// TODO Review
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("Given a minium site with a Commerce Account and buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
 
-		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+			ApplicationsMenu.gotoSite(site = "Minium");
+		}
 
-		AssertElementNotPresent(
-			key_productName = "Brake Fluid",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
+		task ("When as an admin, the user is unable to view product SKUs on a product card that has multiple SKUs") {
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 
-		AssertElementNotPresent(
-			key_productName = "Brake Fluid",
-			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+			AssertElementNotPresent(
+				key_productName = "Brake Fluid",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
 
-		AssertElementNotPresent(
-			key_productName = "Brake Fluid",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABILITY_LABEL");
+			AssertElementNotPresent(
+				key_productName = "Brake Fluid",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
 
-		AssertElementNotPresent(
-			key_productSku = "MIN93016A",
-			locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
+			AssertElementNotPresent(
+				key_productName = "Brake Fluid",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABILITY_LABEL");
+
+			AssertElementNotPresent(
+				key_productSku = "MIN93016A",
+				locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
+		}
+
+		task ("Then as a buyer, the user is unable to view product SKUs on a product card that has multiple SKUs ") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			AssertElementNotPresent(
+				key_productName = "Brake Fluid",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
+
+			AssertElementNotPresent(
+				key_productName = "Brake Fluid",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+
+			AssertElementNotPresent(
+				key_productName = "Brake Fluid",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABILITY_LABEL");
+
+			AssertElementNotPresent(
+				key_productSku = "MIN93016A",
+				locator1 = "CommerceEntry#PRODUCT_CARD_SKU");
+		}
 	}
 
 	@description = "COMMERCE-6160. As a buyer, I want to be able to select only the allowed quantities of a product, if set"

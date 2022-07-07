@@ -446,11 +446,11 @@ public class OrganizationResourceImpl
 
 		long countryId = _getCountryId(organization);
 
-		long statusId = ListTypeConstants.ORGANIZATION_STATUS_DEFAULT;
+		long statusListTypeId = ListTypeConstants.ORGANIZATION_STATUS_DEFAULT;
 		boolean site = false;
 
 		if (serviceBuilderOrganization != null) {
-			statusId = serviceBuilderOrganization.getStatusListTypeId();
+			statusListTypeId = serviceBuilderOrganization.getStatusListTypeId();
 
 			Group group = serviceBuilderOrganization.getGroup();
 
@@ -462,7 +462,7 @@ public class OrganizationResourceImpl
 				externalReferenceCode,
 				_getDefaultParentOrganizationId(organization),
 				organization.getName(), type,
-				_getRegionId(organization, countryId), countryId, statusId,
+				_getRegionId(organization, countryId), countryId, statusListTypeId,
 				organization.getComment(), false, null, site,
 				_getAddresses(organization), _getEmailAddresses(organization),
 				_getOrgLabors(organization), _getPhones(organization),
@@ -771,17 +771,17 @@ public class OrganizationResourceImpl
 	}
 
 	private OrgLabor _toOrgLabor(Service service) {
-		long typeId = ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
+		long listTypeId = ServiceBuilderListTypeUtil.toServiceBuilderListTypeId(
 			"administrative", service.getServiceType(),
 			ListTypeConstants.ORGANIZATION_SERVICE);
 
-		if (typeId == -1) {
+		if (listTypeId == -1) {
 			return null;
 		}
 
 		OrgLabor orgLabor = _orgLaborLocalService.createOrgLabor(0);
 
-		orgLabor.setListTypeId(typeId);
+		orgLabor.setListTypeId(listTypeId);
 
 		HoursAvailable[] hoursAvailableArray = service.getHoursAvailable();
 

@@ -422,8 +422,8 @@ public class UserAccountResourceImpl
 				userAccount.getAlternateName(), userAccount.getEmailAddress(),
 				contextAcceptLanguage.getPreferredLocale(),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
-				userAccount.getFamilyName(), _getPrefixId(userAccount),
-				_getSuffixId(userAccount), userAccount.getJobTitle(),
+				userAccount.getFamilyName(), _getPrefixListTypeId(userAccount),
+				_getSuffixListTypeId(userAccount), userAccount.getJobTitle(),
 				ServiceContextFactory.getInstance(contextHttpServletRequest));
 
 		User user = accountEntryUserRel.getUser();
@@ -596,8 +596,8 @@ public class UserAccountResourceImpl
 				userAccount.getEmailAddress(),
 				contextAcceptLanguage.getPreferredLocale(),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
-				userAccount.getFamilyName(), _getPrefixId(userAccount),
-				_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
+				userAccount.getFamilyName(), _getPrefixListTypeId(userAccount),
+				_getSuffixListTypeId(userAccount), true, _getBirthdayMonth(userAccount),
 				_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
 				userAccount.getJobTitle(), new long[0], new long[0],
 				new long[0], new long[0], false,
@@ -632,8 +632,8 @@ public class UserAccountResourceImpl
 				userAccount.getEmailAddress(),
 				contextAcceptLanguage.getPreferredLocale(),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
-				userAccount.getFamilyName(), _getPrefixId(userAccount),
-				_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
+				userAccount.getFamilyName(), _getPrefixListTypeId(userAccount),
+				_getSuffixListTypeId(userAccount), true, _getBirthdayMonth(userAccount),
 				_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
 				userAccount.getJobTitle(), new long[0], new long[0],
 				new long[0], new long[0], _getAddresses(userAccount),
@@ -729,8 +729,8 @@ public class UserAccountResourceImpl
 				true, null, user.getLanguageId(), user.getTimeZoneId(),
 				user.getGreeting(), user.getComments(),
 				userAccount.getGivenName(), userAccount.getAdditionalName(),
-				userAccount.getFamilyName(), _getPrefixId(userAccount),
-				_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
+				userAccount.getFamilyName(), _getPrefixListTypeId(userAccount),
+				_getSuffixListTypeId(userAccount), true, _getBirthdayMonth(userAccount),
 				_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
 				sms, facebook, jabber, skype, twitter,
 				userAccount.getJobTitle(), user.getGroupIds(), organizationIds,
@@ -775,8 +775,8 @@ public class UserAccountResourceImpl
 			userAccount.getEmailAddress(),
 			contextAcceptLanguage.getPreferredLocale(),
 			userAccount.getGivenName(), userAccount.getAdditionalName(),
-			userAccount.getFamilyName(), _getPrefixId(userAccount),
-			_getSuffixId(userAccount), true, _getBirthdayMonth(userAccount),
+			userAccount.getFamilyName(), _getPrefixListTypeId(userAccount),
+			_getSuffixListTypeId(userAccount), true, _getBirthdayMonth(userAccount),
 			_getBirthdayDay(userAccount), _getBirthdayYear(userAccount),
 			userAccount.getJobTitle(), _getAddresses(userAccount),
 			_getServiceBuilderEmailAddresses(userAccount),
@@ -1043,7 +1043,7 @@ public class UserAccountResourceImpl
 		return actions;
 	}
 
-	private long _getPrefixId(UserAccount userAccount) {
+	private long _getPrefixListTypeId(UserAccount userAccount) {
 		return Optional.ofNullable(
 			userAccount.getHonorificPrefix()
 		).map(
@@ -1093,7 +1093,7 @@ public class UserAccountResourceImpl
 		);
 	}
 
-	private long _getSuffixId(UserAccount userAccount) {
+	private long _getSuffixListTypeId(UserAccount userAccount) {
 		return Optional.ofNullable(
 			userAccount.getHonorificSuffix()
 		).map(

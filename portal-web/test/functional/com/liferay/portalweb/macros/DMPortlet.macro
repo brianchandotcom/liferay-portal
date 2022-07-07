@@ -7,7 +7,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Pause(locator = "1000");
+		WaitForElementPresent.waitForLastScript();
 
 		if (IsElementPresent(locator1 = "DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DROPDOWN_COLLAPSED")) {
 			AssertClick(

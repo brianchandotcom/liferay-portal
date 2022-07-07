@@ -262,6 +262,22 @@ definition {
 		return "${curl}";
 	}
 
+	macro _getStructuredContentsByErcInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/structured-contents/by-external-reference-code/${externalReferenceCode} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _sortStructureContent {
 		Variables.assertDefined(parameterList = "${sortvalue}");
 
@@ -420,6 +436,16 @@ definition {
 		var response = HeadlessWebcontentAPI._filterStructuredContentInAssetLibrary(
 			assetLibraryId = "${assetLibraryId}",
 			filtervalue = "${filtervalue}");
+
+		return "${response}";
+	}
+
+	macro getStructuredContentsByErcInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
+
+		var response = HeadlessWebcontentAPI._getStructuredContentsByErcInAssetLibrary(
+			assetLibraryId = "${assetLibraryId}",
+			externalReferenceCode = "${externalReferenceCode}");
 
 		return "${response}";
 	}

@@ -15,10 +15,13 @@
 package com.liferay.layout.test.util;
 
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.util.LayoutStructureUtil;
@@ -82,7 +85,8 @@ public class ContentLayoutTestUtil {
 
 	public static JSONObject addFormToLayout(
 			Layout layout, String classNameId, String classTypeId,
-			String inputHTML, long segmentsExperienceId, String... fieldTypes)
+			String inputHTML, long segmentsExperienceId,
+			InfoField... infoFields)
 		throws Exception {
 
 		JSONObject jsonObject = addItemToLayout(
@@ -99,8 +103,10 @@ public class ContentLayoutTestUtil {
 				layout.getGroupId(), TestPropsValues.getUserId());
 		String parentItemId = jsonObject.getString("addedItemId");
 
-		for (int i = 0; i < fieldTypes.length; i++) {
-			String fieldType = fieldTypes[i];
+		for (int i = 0; i < infoFields.length; i++) {
+			InfoField infoField = infoFields[i];
+
+			InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
 			FragmentEntry fragmentEntry =
 				FragmentEntryLocalServiceUtil.addFragmentEntry(
@@ -110,7 +116,7 @@ public class ContentLayoutTestUtil {
 					RandomTestUtil.randomString(), false, "{fieldSets: []}",
 					null, 0, FragmentConstants.TYPE_INPUT,
 					JSONUtil.put(
-						"fieldTypes", JSONUtil.put(fieldType)
+						"fieldTypes", JSONUtil.put(infoFieldType.getName())
 					).toString(),
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -118,7 +124,12 @@ public class ContentLayoutTestUtil {
 				layout, fragmentEntry.getFragmentEntryId(),
 				segmentsExperienceId, fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				fragmentEntry.getConfiguration(), "{}",
+				fragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put("inputFieldId", infoField.getUniqueId())
+				).toString(),
 				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
 				parentItemId, i);
 		}

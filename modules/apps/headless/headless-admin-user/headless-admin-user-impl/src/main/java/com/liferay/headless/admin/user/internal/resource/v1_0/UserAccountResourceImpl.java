@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.captcha.CaptchaSettings;
 import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListTypeConstants;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager;
 import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -1183,6 +1185,26 @@ public class UserAccountResourceImpl
 		_userService.updatePassword(
 			user.getUserId(), password, password,
 			_isPasswordResetRequired(user));
+
+		if (contextUser.getUserId() == user.getUserId()) {
+			String login = null;
+
+			String authType = contextCompany.getAuthType();
+
+			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+				login = user.getEmailAddress();
+			}
+			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+				login = user.getScreenName();
+			}
+			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+				login = String.valueOf(user.getUserId());
+			}
+
+			_authenticatedSessionManager.login(
+				contextHttpServletRequest, contextHttpServletResponse, login,
+				password, false, null);
+		}
 	}
 
 	private static final EntityModel _entityModel =
@@ -1209,6 +1231,9 @@ public class UserAccountResourceImpl
 	@Reference
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
+
+	@Reference
+	private AuthenticatedSessionManager _authenticatedSessionManager;
 
 	@Reference
 	private CaptchaSettings _captchaSettings;

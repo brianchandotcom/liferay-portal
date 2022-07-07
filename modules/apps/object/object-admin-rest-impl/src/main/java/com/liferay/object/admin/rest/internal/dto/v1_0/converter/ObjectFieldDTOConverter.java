@@ -67,7 +67,9 @@ public class ObjectFieldDTOConverter
 				name = objectField.getName();
 				objectFieldSettings = TransformUtil.transformToArray(
 					objectField.getObjectFieldSettings(),
-					ObjectFieldSettingUtil::toObjectFieldSetting,
+					objectFieldSetting ->
+						ObjectFieldSettingUtil.toObjectFieldSetting(
+							objectField.getBusinessType(), objectFieldSetting),
 					ObjectFieldSetting.class);
 				relationshipType = ObjectField.RelationshipType.create(
 					objectField.getRelationshipType());

@@ -42,9 +42,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Javier de Arcos
@@ -58,8 +56,6 @@ public class PageEntityExtensionWriterInterceptorTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_pageEntityExtensionWriterInterceptor =
 			new PageEntityExtensionWriterInterceptor();
 
@@ -256,7 +252,7 @@ public class PageEntityExtensionWriterInterceptorTest {
 		_pageEntityExtensionWriterInterceptor.aroundWriteTo(
 			_writerInterceptorContext);
 
-		Mockito.verifyZeroInteractions(_providers);
+		Mockito.verifyNoInteractions(_providers);
 
 		Mockito.verify(
 			_writerInterceptorContext, Mockito.never()
@@ -279,24 +275,17 @@ public class PageEntityExtensionWriterInterceptorTest {
 
 	private static final TestEntity _TEST_ENTITY = new TestEntity();
 
-	@Mock
-	private Company _company;
-
-	@Mock
-	private EntityExtensionHandler _entityExtensionHandler;
-
-	@Mock
-	private EntityExtensionHandlerContextResolver
-		_entityExtensionHandlerContextResolver;
-
+	private final Company _company = Mockito.mock(Company.class);
+	private final EntityExtensionHandler _entityExtensionHandler = Mockito.mock(
+		EntityExtensionHandler.class);
+	private final EntityExtensionHandlerContextResolver
+		_entityExtensionHandlerContextResolver = Mockito.mock(
+			EntityExtensionHandlerContextResolver.class);
 	private PageEntityExtensionWriterInterceptor
 		_pageEntityExtensionWriterInterceptor;
-
-	@Mock
-	private Providers _providers;
-
-	@Mock
-	private WriterInterceptorContext _writerInterceptorContext;
+	private final Providers _providers = Mockito.mock(Providers.class);
+	private final WriterInterceptorContext _writerInterceptorContext =
+		Mockito.mock(WriterInterceptorContext.class);
 
 	private static final class TestEntity {
 	}

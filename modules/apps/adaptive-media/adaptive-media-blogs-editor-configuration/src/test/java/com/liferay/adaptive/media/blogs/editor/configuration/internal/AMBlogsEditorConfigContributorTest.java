@@ -290,7 +290,7 @@ public class AMBlogsEditorConfigContributorTest {
 		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
-				Mockito.anyString(), Mockito.<ItemSelectorCriterion>anyVararg())
+				Mockito.anyString(), Mockito.<ItemSelectorCriterion>any())
 		).thenReturn(
 			_portletURL
 		);

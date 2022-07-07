@@ -48,7 +48,7 @@ public class WorkflowStatusDisplayContextTest {
 		BeanProperties beanProperties = Mockito.mock(BeanProperties.class);
 
 		Mockito.when(
-			beanProperties.getInteger(Mockito.anyObject(), Mockito.eq("status"))
+			beanProperties.getInteger(Mockito.any(), Mockito.eq("status"))
 		).thenReturn(
 			2
 		);

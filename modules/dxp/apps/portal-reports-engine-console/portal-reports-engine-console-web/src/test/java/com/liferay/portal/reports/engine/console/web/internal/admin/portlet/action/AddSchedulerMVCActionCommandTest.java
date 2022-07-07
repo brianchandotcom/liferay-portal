@@ -31,7 +31,6 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -196,7 +195,7 @@ public class AddSchedulerMVCActionCommandTest {
 		String parameterValue) {
 
 		Mockito.when(
-			actionRequest.getParameter(Matchers.eq(parameterName))
+			actionRequest.getParameter(Mockito.eq(parameterName))
 		).thenReturn(
 			parameterValue
 		);

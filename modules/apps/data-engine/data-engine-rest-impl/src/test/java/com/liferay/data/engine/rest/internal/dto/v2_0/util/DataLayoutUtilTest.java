@@ -189,8 +189,7 @@ public class DataLayoutUtilTest {
 			DDMFormRuleDeserializer.class);
 
 		Mockito.when(
-			ddmFormRuleDeserializer.deserialize(
-				Mockito.anyObject(), Mockito.anyObject())
+			ddmFormRuleDeserializer.deserialize(Mockito.any(), Mockito.any())
 		).thenReturn(
 			new ArrayList<>()
 		);

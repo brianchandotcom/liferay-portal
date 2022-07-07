@@ -47,10 +47,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author André de Oliveira
@@ -66,7 +63,6 @@ public class SearchResultUtilJournalArticleTest
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
 		super.setUp();
 	}
 
@@ -86,8 +82,8 @@ public class SearchResultUtilJournalArticleTest
 		).when(
 			_indexer
 		).getSummary(
-			(Document)Matchers.any(), Matchers.anyString(),
-			(PortletRequest)Matchers.any(), (PortletResponse)Matchers.any()
+			(Document)Mockito.any(), Mockito.anyString(),
+			(PortletRequest)Mockito.any(), (PortletResponse)Mockito.any()
 		);
 
 		Mockito.when(
@@ -184,10 +180,8 @@ public class SearchResultUtilJournalArticleTest
 	private static final String _DOCUMENT_VERSION = String.valueOf(
 		RandomTestUtil.randomInt());
 
-	@Mock
-	private Indexer<Object> _indexer;
-
-	@Mock
-	private IndexerRegistry _indexerRegistry;
+	private final Indexer<Object> _indexer = Mockito.mock(Indexer.class);
+	private final IndexerRegistry _indexerRegistry = Mockito.mock(
+		IndexerRegistry.class);
 
 }

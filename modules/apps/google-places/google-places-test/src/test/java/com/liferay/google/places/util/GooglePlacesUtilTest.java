@@ -28,7 +28,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -83,7 +82,7 @@ public class GooglePlacesUtilTest {
 
 		Mockito.when(
 			portletPreferences.getValue(
-				Matchers.anyString(), Matchers.anyString())
+				Mockito.nullable(String.class), Mockito.nullable(String.class))
 		).thenReturn(
 			_COMPANY_GOOGLE_PLACES_API_KEY
 		);
@@ -99,7 +98,7 @@ public class GooglePlacesUtilTest {
 		PortletPreferences portletPreferences = _mockPortletPreferences();
 
 		Mockito.when(
-			prefsProps.getPreferences(Matchers.anyLong())
+			prefsProps.getPreferences(Mockito.anyLong())
 		).thenReturn(
 			portletPreferences
 		);
@@ -130,7 +129,7 @@ public class GooglePlacesUtilTest {
 		}
 		else {
 			Mockito.when(
-				group.getTypeSettingsProperty(Matchers.anyString())
+				group.getTypeSettingsProperty(Mockito.anyString())
 			).thenReturn(
 				googlePlacesAPIKey
 			);
@@ -150,7 +149,7 @@ public class GooglePlacesUtilTest {
 				stagingGroup, _GROUP_GOOGLE_PLACES_API_KEY);
 
 			Mockito.when(
-				groupLocalService.fetchGroup(Matchers.anyLong())
+				groupLocalService.fetchGroup(Mockito.anyLong())
 			).thenReturn(
 				group
 			);

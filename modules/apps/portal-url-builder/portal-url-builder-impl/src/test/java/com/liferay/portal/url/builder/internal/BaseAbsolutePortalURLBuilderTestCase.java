@@ -61,7 +61,7 @@ public abstract class BaseAbsolutePortalURLBuilderTestCase {
 
 		Mockito.doAnswer(
 			invocationOnMock -> {
-				StringBundler sb = invocationOnMock.getArgumentAt(
+				StringBundler sb = invocationOnMock.getArgument(
 					0, StringBundler.class);
 
 				sb.append("mac=aG9saQ==");
@@ -147,10 +147,10 @@ public abstract class BaseAbsolutePortalURLBuilderTestCase {
 
 		Mockito.doAnswer(
 			invocationOnMock -> {
-				String uri = invocationOnMock.getArgumentAt(1, String.class);
-				String queryString = invocationOnMock.getArgumentAt(
+				String uri = invocationOnMock.getArgument(1, String.class);
+				String queryString = invocationOnMock.getArgument(
 					2, String.class);
-				Long timestamp = invocationOnMock.getArgumentAt(3, Long.class);
+				Long timestamp = invocationOnMock.getArgument(3, Long.class);
 
 				return StringBundler.concat(
 					uri, StringPool.QUESTION, queryString, "&t=", timestamp);

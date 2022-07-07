@@ -29,7 +29,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.mule.runtime.api.connection.ConnectionException;
@@ -62,7 +61,7 @@ public class MetadataKeysBuilderTest {
 		).when(
 			metadataKeysBuilder
 		).getOASJsonNode(
-			Matchers.anyObject()
+			Mockito.any()
 		);
 	}
 

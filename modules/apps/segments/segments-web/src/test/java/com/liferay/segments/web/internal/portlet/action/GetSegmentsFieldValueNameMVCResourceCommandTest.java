@@ -31,16 +31,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author David Arques
  */
-@RunWith(MockitoJUnitRunner.class)
 public class GetSegmentsFieldValueNameMVCResourceCommandTest {
 
 	@ClassRule
@@ -128,8 +124,8 @@ public class GetSegmentsFieldValueNameMVCResourceCommandTest {
 	private final GetSegmentsFieldValueNameMVCResourceCommand
 		_getSegmentsFieldValueNameMVCResourceCommand =
 			new GetSegmentsFieldValueNameMVCResourceCommand();
-
-	@Mock
-	private SegmentsFieldCustomizerRegistry _segmentsFieldCustomizerRegistry;
+	private final SegmentsFieldCustomizerRegistry
+		_segmentsFieldCustomizerRegistry = Mockito.mock(
+			SegmentsFieldCustomizerRegistry.class);
 
 }

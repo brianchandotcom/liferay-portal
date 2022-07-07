@@ -287,7 +287,7 @@ public class FileEntryMetadataOpenGraphTagsProviderTest {
 		Mockito.when(
 			_ddmStructureLocalService.getClassStructures(
 				Mockito.anyLong(), Mockito.anyLong(),
-				Mockito.any(OrderByComparator.class))
+				Mockito.nullable(OrderByComparator.class))
 		).thenReturn(
 			Collections.singletonList(Mockito.mock(DDMStructure.class))
 		);
@@ -322,7 +322,7 @@ public class FileEntryMetadataOpenGraphTagsProviderTest {
 		String expectedValue = StringUtil.randomString();
 
 		Mockito.when(
-			_value.getString(Mockito.any(Locale.class))
+			_value.getString(Mockito.nullable(Locale.class))
 		).thenReturn(
 			expectedValue
 		);

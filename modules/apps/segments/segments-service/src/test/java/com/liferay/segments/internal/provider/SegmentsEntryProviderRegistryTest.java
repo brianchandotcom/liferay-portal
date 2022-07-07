@@ -37,17 +37,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author David Arques
  */
-@RunWith(MockitoJUnitRunner.class)
 public class SegmentsEntryProviderRegistryTest {
 
 	@ClassRule
@@ -74,7 +69,7 @@ public class SegmentsEntryProviderRegistryTest {
 		).when(
 			_segmentsEntryLocalService
 		).getSegmentsEntry(
-			Matchers.anyLong()
+			Mockito.anyLong()
 		);
 	}
 
@@ -288,16 +283,13 @@ public class SegmentsEntryProviderRegistryTest {
 		return segmentsEntryProvider;
 	}
 
-	@Mock
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
-
+	private final SegmentsEntryLocalService _segmentsEntryLocalService =
+		Mockito.mock(SegmentsEntryLocalService.class);
 	private final SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry =
 		new SegmentsEntryProviderRegistryImpl();
-
-	@Mock
-	private ServiceTrackerList<SegmentsEntryProvider> _serviceTrackerList;
-
-	@Mock
-	private ServiceTrackerMap<String, SegmentsEntryProvider> _serviceTrackerMap;
+	private final ServiceTrackerList<SegmentsEntryProvider>
+		_serviceTrackerList = Mockito.mock(ServiceTrackerList.class);
+	private final ServiceTrackerMap<String, SegmentsEntryProvider>
+		_serviceTrackerMap = Mockito.mock(ServiceTrackerMap.class);
 
 }

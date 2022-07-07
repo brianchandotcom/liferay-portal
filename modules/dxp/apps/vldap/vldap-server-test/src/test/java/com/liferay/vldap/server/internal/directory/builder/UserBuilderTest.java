@@ -423,7 +423,7 @@ public class UserBuilderTest extends BaseVLDAPTestCase {
 				Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
 				Mockito.anyInt(), Mockito.any(LinkedHashMap.class),
 				Mockito.anyBoolean(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.any(UserScreenNameComparator.class))
+				Mockito.nullable(UserScreenNameComparator.class))
 		).thenReturn(
 			_users
 		);

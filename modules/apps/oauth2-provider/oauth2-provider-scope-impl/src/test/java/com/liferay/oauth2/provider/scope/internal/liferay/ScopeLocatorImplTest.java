@@ -48,7 +48,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
@@ -584,15 +583,15 @@ public class ScopeLocatorImplTest {
 				new TestScopedServiceTrackerMap<>(defaultService);
 
 			Answer<T> answer = invocation -> {
-				long companyId = invocation.getArgumentAt(0, Long.class);
-				String key = invocation.getArgumentAt(1, String.class);
+				long companyId = invocation.getArgument(0, Long.class);
+				String key = invocation.getArgument(1, String.class);
 
 				return testScopedServiceTrackerMap.getService(companyId, key);
 			};
 
 			Mockito.when(
 				scopedServiceTrackerMap.getService(
-					Matchers.anyLong(), Matchers.anyString())
+					Mockito.anyLong(), Mockito.anyString())
 			).thenAnswer(
 				answer
 			);

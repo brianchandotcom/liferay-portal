@@ -23,18 +23,13 @@ import java.util.Collections;
 import java.util.Dictionary;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
 import org.osgi.service.cm.Configuration;
@@ -43,18 +38,12 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Michael C. Han
  */
-@RunWith(MockitoJUnitRunner.class)
 public class SchedulerHelperPropertiesVerifyProcessTest {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-	}
 
 	@Test
 	public void testNoVerify() throws Exception {
@@ -138,7 +127,7 @@ public class SchedulerHelperPropertiesVerifyProcessTest {
 					AUDIT_SCHEDULER_JOB_ENABLED));
 	}
 
-	@Captor
-	private ArgumentCaptor<Dictionary<String, Object>> _argumentCaptor;
+	private final ArgumentCaptor<Dictionary<String, Object>> _argumentCaptor =
+		ArgumentCaptor.forClass(Dictionary.class);
 
 }

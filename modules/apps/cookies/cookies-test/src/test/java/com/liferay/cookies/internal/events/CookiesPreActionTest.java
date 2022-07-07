@@ -37,11 +37,8 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -49,7 +46,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Carol Alonso
  */
-@RunWith(MockitoJUnitRunner.class)
 public class CookiesPreActionTest {
 
 	@ClassRule
@@ -382,13 +378,10 @@ public class CookiesPreActionTest {
 		CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION
 	};
 
-	@Mock
-	private ConfigurationProvider _configurationProvider;
-
+	private final ConfigurationProvider _configurationProvider = Mockito.mock(
+		ConfigurationProvider.class);
 	private final CookiesManager _cookiesManager = new CookiesManagerImpl();
 	private final CookiesPreAction _cookiesPreAction = new CookiesPreAction();
-
-	@Mock
-	private Portal _portal;
+	private final Portal _portal = Mockito.mock(Portal.class);
 
 }

@@ -36,9 +36,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Lourdes Fernández Besada
@@ -52,8 +50,6 @@ public class JournalEditArticleDisplayContextTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		Mockito.when(
 			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
@@ -127,7 +123,7 @@ public class JournalEditArticleDisplayContextTest {
 			_httpServletRequest, "home"
 		);
 
-		Mockito.verifyZeroInteractions(_journalFolderLocalService);
+		Mockito.verifyNoInteractions(_journalFolderLocalService);
 	}
 
 	@Test
@@ -174,7 +170,7 @@ public class JournalEditArticleDisplayContextTest {
 			folderId
 		);
 
-		Mockito.verifyZeroInteractions(_language);
+		Mockito.verifyNoInteractions(_language);
 	}
 
 	@Test
@@ -329,27 +325,18 @@ public class JournalEditArticleDisplayContextTest {
 	private static final String _UNEXPECTED_FOLDER_NAME_MESSAGE =
 		"Unexpected folder name";
 
-	@Mock
-	private BeanProperties _beanProperties;
-
-	@Mock
-	private HttpServletRequest _httpServletRequest;
-
-	@Mock
-	private JournalArticle _journalArticle;
-
+	private final BeanProperties _beanProperties = Mockito.mock(
+		BeanProperties.class);
+	private final HttpServletRequest _httpServletRequest = Mockito.mock(
+		HttpServletRequest.class);
+	private final JournalArticle _journalArticle = Mockito.mock(
+		JournalArticle.class);
 	private JournalEditArticleDisplayContext _journalEditArticleDisplayContext;
-
-	@Mock
-	private JournalFolderLocalService _journalFolderLocalService;
-
-	@Mock
-	private Language _language;
-
-	@Mock
-	private LiferayPortletResponse _liferayPortletResponse;
-
-	@Mock
-	private ThemeDisplay _themeDisplay;
+	private final JournalFolderLocalService _journalFolderLocalService =
+		Mockito.mock(JournalFolderLocalService.class);
+	private final Language _language = Mockito.mock(Language.class);
+	private final LiferayPortletResponse _liferayPortletResponse = Mockito.mock(
+		LiferayPortletResponse.class);
+	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

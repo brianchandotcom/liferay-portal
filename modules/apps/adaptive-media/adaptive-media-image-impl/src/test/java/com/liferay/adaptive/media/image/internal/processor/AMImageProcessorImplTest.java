@@ -160,7 +160,7 @@ public class AMImageProcessorImplTest {
 
 		Mockito.when(
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
-				Mockito.anyLong(), Mockito.anyString())
+				Mockito.anyLong(), Mockito.nullable(String.class))
 		).thenReturn(
 			Optional.of(
 				new AMImageConfigurationEntryImpl(

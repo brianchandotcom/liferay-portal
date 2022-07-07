@@ -31,7 +31,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.mule.metadata.api.builder.BaseTypeBuilder;
@@ -78,7 +77,7 @@ public class MetadataTypeBuilderTest {
 		).when(
 			metadataTypeBuilder
 		).getObjectTypeBuilder(
-			Matchers.anyObject(), Matchers.anyString()
+			Mockito.any(), Mockito.anyString()
 		);
 
 		Mockito.doReturn(
@@ -86,7 +85,7 @@ public class MetadataTypeBuilderTest {
 		).when(
 			metadataTypeBuilder
 		).getArrayTypeBuilder(
-			Matchers.anyObject(), Matchers.anyString()
+			Mockito.any(), Mockito.anyString()
 		);
 
 		Mockito.doReturn(
@@ -94,7 +93,7 @@ public class MetadataTypeBuilderTest {
 		).when(
 			metadataTypeBuilder
 		).getOASJsonNode(
-			Matchers.anyObject()
+			Mockito.any()
 		);
 
 		Mockito.doReturn(
@@ -102,7 +101,7 @@ public class MetadataTypeBuilderTest {
 		).when(
 			metadataTypeBuilder
 		).resolveAnyMetadataType(
-			Matchers.anyObject()
+			Mockito.any()
 		);
 	}
 
@@ -365,7 +364,7 @@ public class MetadataTypeBuilderTest {
 		Mockito.verify(
 			metadataTypeBuilder, Mockito.times(1)
 		).resolveAnyMetadataType(
-			Matchers.anyObject()
+			Mockito.anyObject()
 		);
 	}
 

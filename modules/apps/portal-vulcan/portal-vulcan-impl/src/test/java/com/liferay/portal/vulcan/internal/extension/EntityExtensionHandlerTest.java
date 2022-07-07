@@ -35,9 +35,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Javier de Arcos
@@ -51,8 +49,6 @@ public class EntityExtensionHandlerTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_entityExtensionHandler = new EntityExtensionHandler(
 			_CLASS_NAME,
 			Arrays.asList(
@@ -71,7 +67,7 @@ public class EntityExtensionHandlerTest {
 
 		Mockito.when(
 			_mockedExtensionProvider1.getExtendedProperties(
-				Mockito.anyLong(), Mockito.anyObject())
+				Mockito.anyLong(), Mockito.any())
 		).thenReturn(
 			testMap1
 		);
@@ -81,7 +77,7 @@ public class EntityExtensionHandlerTest {
 
 		Mockito.when(
 			_mockedExtensionProvider2.getExtendedProperties(
-				Mockito.anyLong(), Mockito.anyObject())
+				Mockito.anyLong(), Mockito.any())
 		).thenReturn(
 			testMap2
 		);
@@ -121,7 +117,7 @@ public class EntityExtensionHandlerTest {
 		).when(
 			_mockedExtensionProvider1
 		).getFilteredPropertyNames(
-			Mockito.anyLong(), Mockito.anyObject()
+			Mockito.anyLong(), Mockito.any()
 		);
 
 		Set<String> testSet2 = Collections.singleton(propertyName2);
@@ -131,7 +127,7 @@ public class EntityExtensionHandlerTest {
 		).when(
 			_mockedExtensionProvider2
 		).getFilteredPropertyNames(
-			Mockito.anyLong(), Mockito.anyObject()
+			Mockito.anyLong(), Mockito.any()
 		);
 
 		Set<String> filteredProperties =
@@ -590,11 +586,9 @@ public class EntityExtensionHandlerTest {
 	private static final Object _OBJECT = new Object();
 
 	private EntityExtensionHandler _entityExtensionHandler;
-
-	@Mock
-	private ExtensionProvider _mockedExtensionProvider1;
-
-	@Mock
-	private ExtensionProvider _mockedExtensionProvider2;
+	private final ExtensionProvider _mockedExtensionProvider1 = Mockito.mock(
+		ExtensionProvider.class);
+	private final ExtensionProvider _mockedExtensionProvider2 = Mockito.mock(
+		ExtensionProvider.class);
 
 }

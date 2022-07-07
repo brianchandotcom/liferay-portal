@@ -700,7 +700,7 @@ public class JournalArticleContentDashboardItemTest {
 			Mockito.when(
 				contentDashboardItemActionProviderTracker.
 					getContentDashboardItemActionProviderOptional(
-						Mockito.anyString(), Mockito.anyObject())
+						Mockito.anyString(), Mockito.any())
 			).thenReturn(
 				Optional.empty()
 			);

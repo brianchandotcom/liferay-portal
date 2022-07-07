@@ -700,7 +700,7 @@ public class QuartzSchedulerEngineTest {
 		);
 
 		Mockito.when(
-			_jsonFactory.serialize(Mockito.anyObject())
+			_jsonFactory.serialize(Mockito.any())
 		).then(
 			new Answer<String>() {
 

@@ -56,7 +56,7 @@ public class HTMLImageAttachmentElementReplacerTest {
 
 		Mockito.when(
 			_portletFileRepository.getPortletFileEntryURL(
-				Mockito.isNull(ThemeDisplay.class), Mockito.eq(_fileEntry),
+				Mockito.nullable(ThemeDisplay.class), Mockito.eq(_fileEntry),
 				Mockito.eq(StringPool.BLANK))
 		).thenReturn(
 			_FILE_ENTRY_IMAGE_URL

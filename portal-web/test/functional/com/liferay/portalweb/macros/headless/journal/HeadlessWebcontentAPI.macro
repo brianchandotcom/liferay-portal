@@ -450,6 +450,14 @@ definition {
 		return "${response}";
 	}
 
+	macro getUuidOfStructuredContent {
+		Variables.assertDefined(parameterList = "${responseToParse}");
+
+		var uuid = JSONUtil.getWithJSONPath("${responseToParse}", "$.['uuid']");
+
+		return "${uuid}";
+	}
+
 	macro getWebContentIdFromResponse {
 		Variables.assertDefined(parameterList = "${responseToParse}");
 

@@ -328,26 +328,17 @@ export function FormInputGeneralPanel({item}) {
 					)}
 					open
 				>
-					{filteredFormFields.flatMap((fieldSet) => fieldSet.fields)
-						.length ? (
-						<FormInputMappingOptions
-							allowedInputTypes={allowedInputTypes}
-							configurationValues={configurationValues}
-							form={{
-								classNameId,
-								classTypeId,
-								fields: filteredFormFields,
-							}}
-							item={item}
-							onValueSelect={handleValueSelect}
-						/>
-					) : (
-						<ClayAlert displayType="info">
-							{Liferay.Language.get(
-								'there-are-no-suitable-fields-in-the-item-to-be-mapped-to-the-fragment'
-							)}
-						</ClayAlert>
-					)}
+					<FormInputMappingOptions
+						allowedInputTypes={allowedInputTypes}
+						configurationValues={configurationValues}
+						form={{
+							classNameId,
+							classTypeId,
+							fields: filteredFormFields,
+						}}
+						item={item}
+						onValueSelect={handleValueSelect}
+					/>
 
 					{configurationValues[FIELD_ID_CONFIGURATION_KEY] && (
 						<>
@@ -388,7 +379,11 @@ function FormInputMappingOptions({configurationValues, form, onValueSelect}) {
 		return null;
 	}
 
-	return fields ? (
+	if (!fields) {
+		return <ClayLoadingIndicator />;
+	}
+
+	return fields.flatMap((fieldSet) => fieldSet.fields).length ? (
 		<>
 			<MappingFieldSelector
 				fields={fields}
@@ -431,6 +426,10 @@ function FormInputMappingOptions({configurationValues, form, onValueSelect}) {
 			)}
 		</>
 	) : (
-		<ClayLoadingIndicator />
+		<ClayAlert displayType="info">
+			{Liferay.Language.get(
+				'there-are-no-suitable-fields-in-the-item-to-be-mapped-to-the-fragment'
+			)}
+		</ClayAlert>
 	);
 }

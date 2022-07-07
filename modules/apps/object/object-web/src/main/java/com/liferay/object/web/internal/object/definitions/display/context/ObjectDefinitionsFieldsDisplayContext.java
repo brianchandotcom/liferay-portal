@@ -17,11 +17,13 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.util.ObjectFilterUtil;
 import com.liferay.object.web.internal.util.ObjectFieldBusinessTypeUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -222,7 +224,16 @@ public class ObjectDefinitionsFieldsDisplayContext
 		String businessType, ObjectFieldSetting objectFieldSetting) {
 
 		if (Objects.equals(
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT, businessType)) {
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION, businessType) &&
+			Objects.equals(
+				objectFieldSetting.getName(), ObjectFilterConstants.FILTERS)) {
+
+			return ObjectFilterUtil.getObjectFiltersJSONArray(
+				objectFieldSetting.getObjectFilters());
+		}
+		else if (Objects.equals(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+					businessType)) {
 
 			if (Objects.equals(
 					objectFieldSetting.getName(), "maximumFileSize")) {

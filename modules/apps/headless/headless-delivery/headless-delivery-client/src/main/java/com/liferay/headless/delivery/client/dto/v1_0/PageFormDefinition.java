@@ -183,6 +183,27 @@ public class PageFormDefinition implements Cloneable, Serializable {
 
 	protected Boolean indexed;
 
+	public Layout getLayout() {
+		return layout;
+	}
+
+	public void setLayout(Layout layout) {
+		this.layout = layout;
+	}
+
+	public void setLayout(
+		UnsafeSupplier<Layout, Exception> layoutUnsafeSupplier) {
+
+		try {
+			layout = layoutUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Layout layout;
+
 	public String getName() {
 		return name;
 	}

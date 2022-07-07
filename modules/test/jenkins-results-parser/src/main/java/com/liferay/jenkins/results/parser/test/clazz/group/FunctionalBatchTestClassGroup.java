@@ -266,7 +266,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 				if (targetAxisDuration > 0) {
 					AxisTestClassGroup axisTestClassGroup =
-						TestClassGroupFactory.newAxisTestClassGroup(this);
+						TestClassGroupFactory.newAxisTestClassGroup(
+							this, testBaseDir);
 
 					axisTestClassGroups.add(axisTestClassGroup);
 
@@ -291,7 +292,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 						}
 
 						axisTestClassGroup =
-							TestClassGroupFactory.newAxisTestClassGroup(this);
+							TestClassGroupFactory.newAxisTestClassGroup(
+								this, testBaseDir);
 
 						axisTestClassGroup.addTestClass(testClass);
 

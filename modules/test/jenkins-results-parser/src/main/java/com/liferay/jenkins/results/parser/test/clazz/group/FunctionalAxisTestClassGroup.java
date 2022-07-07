@@ -49,11 +49,9 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		if ((_testBaseDir != null) && _testBaseDir.exists()) {
-			jsonObject.put(
-				"test_base_dir",
-				JenkinsResultsParserUtil.getCanonicalPath(_testBaseDir));
-		}
+		jsonObject.put(
+			"test_base_dir",
+			JenkinsResultsParserUtil.getCanonicalPath(_testBaseDir));
 
 		return jsonObject;
 	}

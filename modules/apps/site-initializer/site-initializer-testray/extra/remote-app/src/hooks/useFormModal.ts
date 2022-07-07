@@ -120,7 +120,8 @@ const useFormModal = ({
 			});
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 
 			throw error;

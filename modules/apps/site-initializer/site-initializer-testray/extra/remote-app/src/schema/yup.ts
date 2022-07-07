@@ -38,6 +38,11 @@ const yupSchema = {
 		steps: yup.string(),
 		stepsType: yup.string(),
 	}),
+	caseResult: yup.object({
+		comment: yup.string(),
+		dueStatus: yup.string().required(),
+		issues: yup.string(),
+	}),
 	caseType: yup.object({
 		name: yup.string().required(),
 	}),

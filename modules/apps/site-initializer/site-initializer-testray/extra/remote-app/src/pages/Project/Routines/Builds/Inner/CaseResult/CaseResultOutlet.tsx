@@ -16,20 +16,25 @@ import {useQuery} from '@apollo/client';
 import {useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
-import {getCaseResult} from '../../../../../../graphql/queries';
+import {
+	TestrayCaseResult,
+	getCaseResult,
+} from '../../../../../../graphql/queries';
 import useHeader from '../../../../../../hooks/useHeader';
 import i18n from '../../../../../../i18n';
-import CaseResultHeaderActions from './CaseResultHeaderActions';
 
 const CaseResultOutlet = () => {
 	const {pathname} = useLocation();
 	const {buildId, caseResultId, projectId, routineId} = useParams();
 
-	const {data, refetch} = useQuery(getCaseResult, {
-		variables: {
-			caseResultId,
-		},
-	});
+	const {data, refetch} = useQuery<{caseResult: TestrayCaseResult}>(
+		getCaseResult,
+		{
+			variables: {
+				caseResultId,
+			},
+		}
+	);
 
 	const caseResult = data?.caseResult;
 
@@ -71,16 +76,7 @@ const CaseResultOutlet = () => {
 	}, [basePath, pathname, setTabs]);
 
 	if (caseResult) {
-		return (
-			<>
-				<CaseResultHeaderActions
-					caseResult={caseResult}
-					refetch={refetch}
-				/>
-
-				<Outlet context={{caseResult, projectId, refetch}} />
-			</>
-		);
+		return <Outlet context={{caseResult, projectId, refetch}} />;
 	}
 
 	return null;

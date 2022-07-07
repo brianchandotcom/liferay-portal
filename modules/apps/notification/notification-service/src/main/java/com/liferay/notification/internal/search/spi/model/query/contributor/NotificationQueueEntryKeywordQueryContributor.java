@@ -47,9 +47,6 @@ public class NotificationQueueEntryKeywordQueryContributor
 		_queryHelper.addSearchTerm(
 			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
 			"toName", false);
-		_queryHelper.addSearchTerm(
-			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
-			"className", false);
 	}
 
 	@Reference

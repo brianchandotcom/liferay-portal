@@ -104,11 +104,6 @@ const FragmentEditor = ({
 		js,
 	]);
 
-	const onAddFieldType = (type) => setFieldTypes([...fieldTypes, type]);
-
-	const onRemoveFieldType = (type) =>
-		setFieldTypes(fieldTypes.filter((fieldType) => fieldType !== type));
-
 	const publish = () => {
 		const formData = new FormData();
 
@@ -404,8 +399,7 @@ const FragmentEditor = ({
 										'specify-which-field-types-this-fragment-supports'
 									)}
 									fieldTypes={fieldTypes}
-									onAddFieldType={onAddFieldType}
-									onRemoveFieldType={onRemoveFieldType}
+									onChangeFieldTypes={setFieldTypes}
 									readOnly={readOnly}
 									title={Liferay.Language.get('field-types')}
 								/>

@@ -21,12 +21,24 @@ export function FieldTypeSelector({
 	availableFieldTypes,
 	description,
 	fieldTypes,
-	onAddFieldType,
-	onRemoveFieldType,
+	onChangeFieldTypes,
 	readOnly,
 	small,
 	title,
 }) {
+	const handleChange = (key, checked) => {
+		const filteredFieldTypes = fieldTypes.filter(
+			(fieldTypeKey) => fieldTypeKey !== key
+		);
+
+		if (checked) {
+			onChangeFieldTypes([...filteredFieldTypes, key]);
+		}
+		else {
+			onChangeFieldTypes(filteredFieldTypes);
+		}
+	};
+
 	return (
 		<ClayForm.Group className={classNames({'form-group-sm': small})}>
 			<div className="sheet-section">
@@ -63,9 +75,7 @@ export function FieldTypeSelector({
 								key={key}
 								label={label}
 								onChange={(event) =>
-									event.target.checked
-										? onAddFieldType(key)
-										: onRemoveFieldType(key)
+									handleChange(key, event.target.checked)
 								}
 							/>
 						))}

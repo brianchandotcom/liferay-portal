@@ -552,7 +552,7 @@ definition {
 				userEmailAddress = "${userEmailAddress}");
 		}
 
-		Pause(locator1 = "1000");
+		WaitForPageLoad();
 
 		AssertLocation.assertPartialLocation(value1 = "${spURL}");
 	}
@@ -581,7 +581,7 @@ definition {
 				userEmailAddress = "test@liferay.com");
 		}
 
-		Pause(locator1 = "1000");
+		WaitForPageLoad();
 
 		AssertLocation.assertPartialLocation(value1 = "${spURL}");
 	}
@@ -852,6 +852,9 @@ definition {
 	}
 
 	macro viewSessionExpired {
+
+		// This pause is required to allow the test to wait for the session to expire.
+
 		Pause(locator1 = "${timer}");
 
 		AssertTextEquals(

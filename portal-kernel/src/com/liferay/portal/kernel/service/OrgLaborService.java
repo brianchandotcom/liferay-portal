@@ -51,7 +51,7 @@ public interface OrgLaborService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.OrgLaborServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the org labor remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OrgLaborServiceUtil} if injection and service tracking are not available.
 	 */
 	public OrgLabor addOrgLabor(
-			long organizationId, long typeId, int sunOpen, int sunClose,
+			long organizationId, long listTypeId, int sunOpen, int sunClose,
 			int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
 			int wedClose, int thuOpen, int thuClose, int friOpen, int friClose,
 			int satOpen, int satClose)
@@ -74,7 +74,7 @@ public interface OrgLaborService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public OrgLabor updateOrgLabor(
-			long orgLaborId, long typeId, int sunOpen, int sunClose,
+			long orgLaborId, long listTypeId, int sunOpen, int sunClose,
 			int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
 			int wedClose, int thuOpen, int thuClose, int friOpen, int friClose,
 			int satOpen, int satClose)

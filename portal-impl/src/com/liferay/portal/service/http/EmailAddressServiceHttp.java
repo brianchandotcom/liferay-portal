@@ -52,7 +52,7 @@ public class EmailAddressServiceHttp {
 
 	public static com.liferay.portal.kernel.model.EmailAddress addEmailAddress(
 			HttpPrincipal httpPrincipal, String className, long classPK,
-			String address, long typeId, boolean primary,
+			String address, long listTypeId, boolean primary,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -62,7 +62,7 @@ public class EmailAddressServiceHttp {
 				_addEmailAddressParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, className, classPK, address, typeId, primary,
+				methodKey, className, classPK, address, listTypeId, primary,
 				serviceContext);
 
 			Object returnObj = null;
@@ -254,7 +254,7 @@ public class EmailAddressServiceHttp {
 	public static com.liferay.portal.kernel.model.EmailAddress
 			updateEmailAddress(
 				HttpPrincipal httpPrincipal, long emailAddressId,
-				String address, long typeId, boolean primary)
+				String address, long listTypeId, boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -263,7 +263,7 @@ public class EmailAddressServiceHttp {
 				_updateEmailAddressParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, emailAddressId, address, typeId, primary);
+				methodKey, emailAddressId, address, listTypeId, primary);
 
 			Object returnObj = null;
 

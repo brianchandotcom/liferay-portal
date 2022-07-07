@@ -82,7 +82,7 @@ public interface OrganizationService extends BaseService {
 	 * @param type the organization's type
 	 * @param regionId the primary key of the organization's region
 	 * @param countryId the primary key of the organization's country
-	 * @param statusId the organization's workflow status
+	 * @param statusListTypeId the organization's workflow status
 	 * @param comments the comments about the organization
 	 * @param site whether the organization is to be associated with a main
 	 site
@@ -98,10 +98,11 @@ public interface OrganizationService extends BaseService {
 	 */
 	public Organization addOrganization(
 			long parentOrganizationId, String name, String type, long regionId,
-			long countryId, long statusId, String comments, boolean site,
-			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<OrgLabor> orgLabors, List<Phone> phones,
-			List<Website> websites, ServiceContext serviceContext)
+			long countryId, long statusListTypeId, String comments,
+			boolean site, List<Address> addresses,
+			List<EmailAddress> emailAddresses, List<OrgLabor> orgLabors,
+			List<Phone> phones, List<Website> websites,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -118,7 +119,7 @@ public interface OrganizationService extends BaseService {
 	 * @param type the organization's type
 	 * @param regionId the primary key of the organization's region
 	 * @param countryId the primary key of the organization's country
-	 * @param statusId the organization's workflow status
+	 * @param statusListTypeId the organization's workflow status
 	 * @param comments the comments about the organization
 	 * @param site whether the organization is to be associated with a main
 	 site
@@ -129,8 +130,8 @@ public interface OrganizationService extends BaseService {
 	 */
 	public Organization addOrganization(
 			long parentOrganizationId, String name, String type, long regionId,
-			long countryId, long statusId, String comments, boolean site,
-			ServiceContext serviceContext)
+			long countryId, long statusListTypeId, String comments,
+			boolean site, ServiceContext serviceContext)
 		throws PortalException;
 
 	public User addOrganizationUserByEmailAddress(
@@ -141,8 +142,8 @@ public interface OrganizationService extends BaseService {
 	public Organization addOrUpdateOrganization(
 			String externalReferenceCode, long parentOrganizationId,
 			String name, String type, long regionId, long countryId,
-			long statusId, String comments, boolean hasLogo, byte[] logoBytes,
-			boolean site, List<Address> addresses,
+			long statusListTypeId, String comments, boolean hasLogo,
+			byte[] logoBytes, boolean site, List<Address> addresses,
 			List<EmailAddress> emailAddresses, List<OrgLabor> orgLabors,
 			List<Phone> phones, List<Website> websites,
 			ServiceContext serviceContext)
@@ -348,7 +349,7 @@ public interface OrganizationService extends BaseService {
 	 * @param type the organization's type
 	 * @param regionId the primary key of the organization's region
 	 * @param countryId the primary key of the organization's country
-	 * @param statusId the organization's workflow status
+	 * @param statusListTypeId the organization's workflow status
 	 * @param comments the comments about the organization
 	 * @param hasLogo if the organization has a custom logo
 	 * @param logoBytes the new logo image data
@@ -367,7 +368,7 @@ public interface OrganizationService extends BaseService {
 	 */
 	public Organization updateOrganization(
 			long organizationId, long parentOrganizationId, String name,
-			String type, long regionId, long countryId, long statusId,
+			String type, long regionId, long countryId, long statusListTypeId,
 			String comments, boolean hasLogo, byte[] logoBytes, boolean site,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
 			List<OrgLabor> orgLabors, List<Phone> phones,
@@ -384,7 +385,7 @@ public interface OrganizationService extends BaseService {
 	 * @param type the organization's type
 	 * @param regionId the primary key of the organization's region
 	 * @param countryId the primary key of the organization's country
-	 * @param statusId the organization's workflow status
+	 * @param statusListTypeId the organization's workflow status
 	 * @param comments the comments about the organization
 	 * @param site whether the organization is to be associated with a main
 	 site
@@ -396,7 +397,7 @@ public interface OrganizationService extends BaseService {
 	 */
 	public Organization updateOrganization(
 			long organizationId, long parentOrganizationId, String name,
-			String type, long regionId, long countryId, long statusId,
+			String type, long regionId, long countryId, long statusListTypeId,
 			String comments, boolean site, ServiceContext serviceContext)
 		throws PortalException;
 

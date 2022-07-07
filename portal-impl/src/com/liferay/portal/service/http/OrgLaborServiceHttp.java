@@ -51,7 +51,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class OrgLaborServiceHttp {
 
 	public static com.liferay.portal.kernel.model.OrgLabor addOrgLabor(
-			HttpPrincipal httpPrincipal, long organizationId, long typeId,
+			HttpPrincipal httpPrincipal, long organizationId, long listTypeId,
 			int sunOpen, int sunClose, int monOpen, int monClose, int tueOpen,
 			int tueClose, int wedOpen, int wedClose, int thuOpen, int thuClose,
 			int friOpen, int friClose, int satOpen, int satClose)
@@ -63,9 +63,9 @@ public class OrgLaborServiceHttp {
 				_addOrgLaborParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, organizationId, typeId, sunOpen, sunClose, monOpen,
-				monClose, tueOpen, tueClose, wedOpen, wedClose, thuOpen,
-				thuClose, friOpen, friClose, satOpen, satClose);
+				methodKey, organizationId, listTypeId, sunOpen, sunClose,
+				monOpen, monClose, tueOpen, tueClose, wedOpen, wedClose,
+				thuOpen, thuClose, friOpen, friClose, satOpen, satClose);
 
 			Object returnObj = null;
 
@@ -213,7 +213,7 @@ public class OrgLaborServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
-			HttpPrincipal httpPrincipal, long orgLaborId, long typeId,
+			HttpPrincipal httpPrincipal, long orgLaborId, long listTypeId,
 			int sunOpen, int sunClose, int monOpen, int monClose, int tueOpen,
 			int tueClose, int wedOpen, int wedClose, int thuOpen, int thuClose,
 			int friOpen, int friClose, int satOpen, int satClose)
@@ -225,7 +225,7 @@ public class OrgLaborServiceHttp {
 				_updateOrgLaborParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, orgLaborId, typeId, sunOpen, sunClose, monOpen,
+				methodKey, orgLaborId, listTypeId, sunOpen, sunClose, monOpen,
 				monClose, tueOpen, tueClose, wedOpen, wedClose, thuOpen,
 				thuClose, friOpen, friClose, satOpen, satClose);
 

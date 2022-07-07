@@ -29,7 +29,7 @@ public class OrgLaborServiceImpl extends OrgLaborServiceBaseImpl {
 
 	@Override
 	public OrgLabor addOrgLabor(
-			long organizationId, long typeId, int sunOpen, int sunClose,
+			long organizationId, long listTypeId, int sunOpen, int sunClose,
 			int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
 			int wedClose, int thuOpen, int thuClose, int friOpen, int friClose,
 			int satOpen, int satClose)
@@ -39,7 +39,7 @@ public class OrgLaborServiceImpl extends OrgLaborServiceBaseImpl {
 			getPermissionChecker(), organizationId, ActionKeys.UPDATE);
 
 		return orgLaborLocalService.addOrgLabor(
-			organizationId, typeId, sunOpen, sunClose, monOpen, monClose,
+			organizationId, listTypeId, sunOpen, sunClose, monOpen, monClose,
 			tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose, friOpen,
 			friClose, satOpen, satClose);
 	}
@@ -78,7 +78,7 @@ public class OrgLaborServiceImpl extends OrgLaborServiceBaseImpl {
 
 	@Override
 	public OrgLabor updateOrgLabor(
-			long orgLaborId, long typeId, int sunOpen, int sunClose,
+			long orgLaborId, long listTypeId, int sunOpen, int sunClose,
 			int monOpen, int monClose, int tueOpen, int tueClose, int wedOpen,
 			int wedClose, int thuOpen, int thuClose, int friOpen, int friClose,
 			int satOpen, int satClose)
@@ -91,7 +91,7 @@ public class OrgLaborServiceImpl extends OrgLaborServiceBaseImpl {
 			ActionKeys.UPDATE);
 
 		return orgLaborLocalService.updateOrgLabor(
-			orgLaborId, typeId, sunOpen, sunClose, monOpen, monClose, tueOpen,
+			orgLaborId, listTypeId, sunOpen, sunClose, monOpen, monClose, tueOpen,
 			tueClose, wedOpen, wedClose, thuOpen, thuClose, friOpen, friClose,
 			satOpen, satClose);
 	}

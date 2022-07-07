@@ -274,8 +274,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			screenName = screenName + i;
 		}
 
-		long prefixId = 0;
-		long suffixId = 0;
+		long prefixListTypeId = 0;
+		long suffixListTypeId = 0;
 		boolean male = true;
 		int birthdayMonth = Calendar.JANUARY;
 		int birthdayDay = 1;
@@ -309,7 +309,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		User defaultAdminUser = addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
 			roleIds, userGroupIds, sendEmail, serviceContext);
 
@@ -644,7 +644,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			boolean autoPassword, String password1, String password2,
 			boolean autoScreenName, String screenName, String emailAddress,
 			Locale locale, String firstName, String middleName, String lastName,
-			long prefixId, long suffixId, boolean male, int birthdayMonth,
+			long prefixListTypeId, long suffixListTypeId, boolean male, int birthdayMonth,
 			int birthdayDay, int birthdayYear, String jobTitle,
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
@@ -656,7 +656,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user = addUserWithWorkflow(
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, locale, firstName,
-				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+				middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 				birthdayDay, birthdayYear, jobTitle, new long[0], new long[0],
 				new long[0], new long[0], sendEmail, serviceContext);
 
@@ -678,8 +678,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				user.getReminderQueryQuestion(), user.getReminderQueryAnswer(),
 				screenName, emailAddress, hasPortrait, null,
 				user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(),
-				user.getComments(), firstName, middleName, lastName, prefixId,
-				suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+				user.getComments(), firstName, middleName, lastName, prefixListTypeId,
+				suffixListTypeId, male, birthdayMonth, birthdayDay, birthdayYear,
 				contact.getSmsSn(), contact.getFacebookSn(),
 				contact.getJabberSn(), contact.getSkypeSn(),
 				contact.getTwitterSn(), jobTitle, user.getGroupIds(),
@@ -866,8 +866,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  firstName the user's first name
 	 * @param  middleName the user's middle name
 	 * @param  lastName the user's last name
-	 * @param  prefixId the user's name prefix ID
-	 * @param  suffixId the user's name suffix ID
+	 * @param  prefixListTypeId the user's name prefix ID
+	 * @param  suffixListTypeId the user's name suffix ID
 	 * @param  male whether the user is male
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
@@ -891,8 +891,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long creatorUserId, long companyId, boolean autoPassword,
 			String password1, String password2, boolean autoScreenName,
 			String screenName, String emailAddress, Locale locale,
-			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+			String firstName, String middleName, String lastName, long prefixListTypeId,
+			long suffixListTypeId, boolean male, int birthdayMonth, int birthdayDay,
 			int birthdayYear, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds, long[] userGroupIds,
 			boolean sendEmail, ServiceContext serviceContext)
@@ -917,7 +917,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return addUserWithWorkflow(
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, locale, firstName,
-				middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+				middleName, lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
 				birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
 				roleIds, userGroupIds, sendEmail, serviceContext);
 		}
@@ -1018,8 +1018,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  firstName the user's first name
 	 * @param  middleName the user's middle name
 	 * @param  lastName the user's last name
-	 * @param  prefixId the user's name prefix ID
-	 * @param  suffixId the user's name suffix ID
+	 * @param  prefixListTypeId the user's name prefix ID
+	 * @param  suffixListTypeId the user's name suffix ID
 	 * @param  male whether the user is male
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
@@ -1043,8 +1043,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long creatorUserId, long companyId, boolean autoPassword,
 			String password1, String password2, boolean autoScreenName,
 			String screenName, String emailAddress, Locale locale,
-			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+			String firstName, String middleName, String lastName, long prefixListTypeId,
+			long suffixListTypeId, boolean male, int birthdayMonth, int birthdayDay,
 			int birthdayYear, String jobTitle, long[] groupIds,
 			long[] organizationIds, long[] roleIds, long[] userGroupIds,
 			boolean sendEmail, ServiceContext serviceContext)
@@ -1201,8 +1201,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setFirstName(firstName);
 		contact.setMiddleName(middleName);
 		contact.setLastName(lastName);
-		contact.setPrefixListTypeId(prefixId);
-		contact.setSuffixListTypeId(suffixId);
+		contact.setPrefixListTypeId(prefixListTypeId);
+		contact.setSuffixListTypeId(suffixListTypeId);
 		contact.setMale(male);
 		contact.setBirthday(
 			getBirthday(birthdayMonth, birthdayDay, birthdayYear));
@@ -4397,8 +4397,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  firstName the user's first name
 	 * @param  middleName the user's middle name
 	 * @param  lastName the user's last name
-	 * @param  prefixId the user's name prefix ID
-	 * @param  suffixId the user's name suffix ID
+	 * @param  prefixListTypeId the user's name prefix ID
+	 * @param  suffixListTypeId the user's name suffix ID
 	 * @param  male whether the user is male
 	 * @param  birthdayMonth the user's birthday month (0-based, meaning 0 for
 	 *         January)
@@ -4418,8 +4418,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long creatorUserId, long companyId, boolean autoPassword,
 			String password1, String password2, boolean autoScreenName,
 			String screenName, String emailAddress, Locale locale,
-			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+			String firstName, String middleName, String lastName, long prefixListTypeId,
+			long suffixListTypeId, boolean male, int birthdayMonth, int birthdayDay,
 			int birthdayYear, String jobTitle, boolean updateUserInformation,
 			boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException {
@@ -4499,8 +4499,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			contact.setFirstName(firstName);
 			contact.setMiddleName(middleName);
 			contact.setLastName(lastName);
-			contact.setPrefixListTypeId(prefixId);
-			contact.setSuffixListTypeId(suffixId);
+			contact.setPrefixListTypeId(prefixListTypeId);
+			contact.setSuffixListTypeId(suffixListTypeId);
 			contact.setMale(male);
 			contact.setBirthday(birthday);
 			contact.setJobTitle(jobTitle);
@@ -5111,8 +5111,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  firstName the user's new first name
 	 * @param  middleName the user's new middle name
 	 * @param  lastName the user's new last name
-	 * @param  prefixId the user's new name prefix ID
-	 * @param  suffixId the user's new name suffix ID
+	 * @param  prefixListTypeId the user's new name prefix ID
+	 * @param  suffixListTypeId the user's new name suffix ID
 	 * @param  male whether user is male
 	 * @param  birthdayMonth the user's new birthday month (0-based, meaning 0
 	 *         for January)
@@ -5143,7 +5143,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String screenName, String emailAddress, boolean hasPortrait,
 			byte[] portraitBytes, String languageId, String timeZoneId,
 			String greeting, String comments, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId,
+			String middleName, String lastName, long prefixListTypeId, long suffixListTypeId,
 			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
 			String smsSn, String facebookSn, String jabberSn, String skypeSn,
 			String twitterSn, String jobTitle, long[] groupIds,
@@ -5290,8 +5290,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setFirstName(firstName);
 		contact.setMiddleName(middleName);
 		contact.setLastName(lastName);
-		contact.setPrefixListTypeId(prefixId);
-		contact.setSuffixListTypeId(suffixId);
+		contact.setPrefixListTypeId(prefixListTypeId);
+		contact.setSuffixListTypeId(suffixListTypeId);
 		contact.setMale(male);
 		contact.setBirthday(
 			getBirthday(birthdayMonth, birthdayDay, birthdayYear));

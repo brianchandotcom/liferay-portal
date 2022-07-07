@@ -32,7 +32,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 
 	@Override
 	public EmailAddress addEmailAddress(
-			String className, long classPK, String address, long typeId,
+			String className, long classPK, String address, long listTypeId,
 			boolean primary, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -40,7 +40,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
 
 		return emailAddressLocalService.addEmailAddress(
-			getUserId(), className, classPK, address, typeId, primary,
+			getUserId(), className, classPK, address, listTypeId, primary,
 			serviceContext);
 	}
 
@@ -109,7 +109,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 
 	@Override
 	public EmailAddress updateEmailAddress(
-			long emailAddressId, String address, long typeId, boolean primary)
+			long emailAddressId, String address, long listTypeId, boolean primary)
 		throws PortalException {
 
 		EmailAddress emailAddress = emailAddressPersistence.findByPrimaryKey(
@@ -120,7 +120,7 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 			emailAddress.getClassPK(), ActionKeys.UPDATE);
 
 		return emailAddressLocalService.updateEmailAddress(
-			emailAddressId, address, typeId, primary);
+			emailAddressId, address, listTypeId, primary);
 	}
 
 }

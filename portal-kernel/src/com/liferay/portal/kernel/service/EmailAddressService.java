@@ -51,7 +51,7 @@ public interface EmailAddressService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.EmailAddressServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the email address remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link EmailAddressServiceUtil} if injection and service tracking are not available.
 	 */
 	public EmailAddress addEmailAddress(
-			String className, long classPK, String address, long typeId,
+			String className, long classPK, String address, long listTypeId,
 			boolean primary, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -85,7 +85,8 @@ public interface EmailAddressService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public EmailAddress updateEmailAddress(
-			long emailAddressId, String address, long typeId, boolean primary)
+			long emailAddressId, String address, long listTypeId,
+			boolean primary)
 		throws PortalException;
 
 }

@@ -60,8 +60,8 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 	@Override
 	public Contact addContact(
 			long userId, String className, long classPK, String emailAddress,
-			String firstName, String middleName, String lastName, long prefixId,
-			long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+			String firstName, String middleName, String lastName, long prefixListTypeId,
+			long suffixListTypeId, boolean male, int birthdayMonth, int birthdayDay,
 			int birthdayYear, String smsSn, String facebookSn, String jabberSn,
 			String skypeSn, String twitterSn, String jobTitle)
 		throws PortalException {
@@ -88,8 +88,8 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		contact.setFirstName(firstName);
 		contact.setMiddleName(middleName);
 		contact.setLastName(lastName);
-		contact.setPrefixListTypeId(prefixId);
-		contact.setSuffixListTypeId(suffixId);
+		contact.setPrefixListTypeId(prefixListTypeId);
+		contact.setSuffixListTypeId(suffixListTypeId);
 		contact.setMale(male);
 		contact.setBirthday(birthday);
 		contact.setSmsSn(smsSn);
@@ -193,7 +193,7 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 	@Override
 	public Contact updateContact(
 			long contactId, String emailAddress, String firstName,
-			String middleName, String lastName, long prefixId, long suffixId,
+			String middleName, String lastName, long prefixListTypeId, long suffixListTypeId,
 			boolean male, int birthdayMonth, int birthdayDay, int birthdayYear,
 			String smsSn, String facebookSn, String jabberSn, String skypeSn,
 			String twitterSn, String jobTitle)
@@ -211,8 +211,8 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 		contact.setFirstName(firstName);
 		contact.setMiddleName(middleName);
 		contact.setLastName(lastName);
-		contact.setPrefixListTypeId(prefixId);
-		contact.setSuffixListTypeId(suffixId);
+		contact.setPrefixListTypeId(prefixListTypeId);
+		contact.setSuffixListTypeId(suffixListTypeId);
 		contact.setMale(male);
 		contact.setBirthday(birthday);
 		contact.setSmsSn(smsSn);

@@ -196,7 +196,7 @@ components:
                     format: int64
                     type: integer
                 value:
-                    type: string
+                    type: object
         ObjectLayout:
             properties:
                 actions:

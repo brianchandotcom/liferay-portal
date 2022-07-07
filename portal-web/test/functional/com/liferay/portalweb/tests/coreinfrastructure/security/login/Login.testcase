@@ -221,6 +221,8 @@ definition {
 			while ((IsElementNotPresent(locator1 = "TextInput#TEXT")) && ("${pauseCount}" != "20")) {
 				Refresh();
 
+				// Wait for OpenAM configuration to finish. See LRQA-28959 for more details.
+
 				Pause(locator1 = "30000");
 
 				var pauseCount = ${pauseCount} + 1;

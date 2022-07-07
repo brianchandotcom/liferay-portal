@@ -216,33 +216,44 @@ public class PortletPathsUtil {
 				headerJavaScriptSet.add(headerPortalJavaScript);
 			}
 
-			for (String headerPortletCss : portlet.getHeaderPortletCss()) {
-				if (!HttpComponentsUtil.hasProtocol(headerPortletCss)) {
-					headerPortletCss =
-						portlet.getStaticResourcePath() + headerPortletCss;
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-					headerPortletCss = PortalUtil.getStaticResourceURL(
-						httpServletRequest, headerPortletCss,
-						rootPortlet.getTimestamp());
+			if (!themeDisplay.isThemeCssFastLoad()) {
+				for (String headerPortletCss : portlet.getHeaderPortletCss()) {
+					if (!HttpComponentsUtil.hasProtocol(headerPortletCss)) {
+						headerPortletCss =
+							portlet.getStaticResourcePath() + headerPortletCss;
+
+						headerPortletCss = PortalUtil.getStaticResourceURL(
+							httpServletRequest, headerPortletCss,
+							rootPortlet.getTimestamp());
+					}
+
+					headerCssSet.add(headerPortletCss);
 				}
-
-				headerCssSet.add(headerPortletCss);
 			}
 
-			for (String headerPortletJavaScript :
-					portlet.getHeaderPortletJavaScript()) {
+			if (!themeDisplay.isThemeJsFastLoad()) {
+				for (String headerPortletJavaScript :
+						portlet.getHeaderPortletJavaScript()) {
 
-				if (!HttpComponentsUtil.hasProtocol(headerPortletJavaScript)) {
-					headerPortletJavaScript =
-						portlet.getStaticResourcePath() +
-							headerPortletJavaScript;
+					if (!HttpComponentsUtil.hasProtocol(
+							headerPortletJavaScript)) {
 
-					headerPortletJavaScript = PortalUtil.getStaticResourceURL(
-						httpServletRequest, headerPortletJavaScript,
-						rootPortlet.getTimestamp());
+						headerPortletJavaScript =
+							portlet.getStaticResourcePath() +
+								headerPortletJavaScript;
+
+						headerPortletJavaScript =
+							PortalUtil.getStaticResourceURL(
+								httpServletRequest, headerPortletJavaScript,
+								rootPortlet.getTimestamp());
+					}
+
+					headerJavaScriptSet.add(headerPortletJavaScript);
 				}
-
-				headerJavaScriptSet.add(headerPortletJavaScript);
 			}
 		}
 

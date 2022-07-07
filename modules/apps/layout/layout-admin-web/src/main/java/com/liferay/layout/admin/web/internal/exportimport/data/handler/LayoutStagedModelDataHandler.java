@@ -2506,8 +2506,6 @@ public class LayoutStagedModelDataHandler
 				importedLayout.setTypeSettingsProperties(
 					importedLayoutTypeSettingsUnicodeProperties);
 			}
-
-			importedLayout.persist();
 		}
 	}
 

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author David Arques
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class SegmentsExperienceModelResourcePermissionRegistrar {
 
 	@Activate

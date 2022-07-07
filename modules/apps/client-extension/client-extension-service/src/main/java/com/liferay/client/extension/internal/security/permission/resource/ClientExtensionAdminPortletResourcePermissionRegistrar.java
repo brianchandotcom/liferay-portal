@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Javier de Arcos
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ClientExtensionAdminPortletResourcePermissionRegistrar {
 
 	@Activate

@@ -563,7 +563,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		if (Validator.isNull(originalUrlTitle) ||
 			currentUrlTitle.equals(
-				_friendlyURLNormalizer.normalizeWithEncoding(
+				_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
 					originalUrlTitle))) {
 
 			return;

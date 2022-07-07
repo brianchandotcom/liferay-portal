@@ -203,6 +203,61 @@ public class AddInfoItemStrutsActionValidationTest {
 		}
 	}
 
+	@Test
+	public void testAddInfoItemStrutsActionInfoFormValidationException()
+		throws Exception {
+
+		InfoField<TextInfoFieldType> infoField = _getInfoField();
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField)
+						).build(),
+						_editPageInfoItemCapability)) {
+
+			MockInfoItemCreator mockInfoItemCreator =
+				mockInfoServiceRegistrationHolder.getMockInfoItemCreator();
+
+			InfoFormValidationException.RequiredInfoField infoFormException =
+				new InfoFormValidationException.RequiredInfoField(
+					infoField.getUniqueId());
+
+			mockInfoItemCreator.setInfoFormException(infoFormException);
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
+				layout, false,
+				String.valueOf(
+					_portal.getClassNameId(MockObject.class.getName())),
+				"0", infoField);
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(layout, formItemId);
+
+			_addInfoItemStrutsAction.execute(
+				mockHttpServletRequest, new MockHttpServletResponse());
+
+			Assert.assertTrue(
+				SessionErrors.contains(mockHttpServletRequest, formItemId));
+			Assert.assertTrue(
+				SessionErrors.contains(
+					mockHttpServletRequest, infoField.getUniqueId()));
+			Assert.assertEquals(
+				infoFormException,
+				SessionErrors.get(mockHttpServletRequest, formItemId));
+			Assert.assertEquals(
+				infoFormException,
+				SessionErrors.get(
+					mockHttpServletRequest, infoField.getUniqueId()));
+			Assert.assertFalse(
+				SessionMessages.contains(mockHttpServletRequest, formItemId));
+		}
+	}
+
 	private InfoField<TextInfoFieldType> _getInfoField() {
 		return InfoField.builder(
 		).infoFieldType(

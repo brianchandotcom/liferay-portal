@@ -188,7 +188,7 @@ public class FieldConstants {
 			return values.toArray(new String[0]);
 		}
 		else if (type.equals(FieldConstants.DOUBLE)) {
-			return values.toArray(new Double[0]);
+			return values.toArray(new Number[0]);
 		}
 		else if (type.equals(FieldConstants.FLOAT)) {
 			return values.toArray(new Float[0]);

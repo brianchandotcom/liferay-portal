@@ -712,6 +712,8 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                descriptiveName:
+                    type: string
                 friendlyUrlPath:
                     type: string
                 id:
@@ -739,6 +741,11 @@ components:
             description:
                 Represents a site's basic information.
             properties:
+                descriptiveName:
+                    description:
+                        The site's descriptive name.
+                    readOnly: true
+                    type: string
                 id:
                     description:
                         The site's ID.

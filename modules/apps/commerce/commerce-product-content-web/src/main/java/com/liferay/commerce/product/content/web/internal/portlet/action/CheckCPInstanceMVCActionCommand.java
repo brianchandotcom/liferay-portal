@@ -24,6 +24,7 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.option.CommerceOptionValueHelper;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
@@ -115,6 +116,12 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				).put(
 					"sku", cpInstance.getSku()
 				);
+
+				String incomingQuantityLabel =
+					_cpContentHelper.getIncomingQuantityLabel(
+						themeDisplay.getRequest(), cpInstance.getSku());
+
+				jsonObject.put("incomingQuantityLabel", incomingQuantityLabel);
 
 				CommercePriceConfiguration commercePriceConfiguration =
 					_configurationProvider.getConfiguration(
@@ -210,6 +217,9 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CPContentContributorRegistry _cpContentContributorRegistry;
+
+	@Reference
+	private CPContentHelper _cpContentHelper;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

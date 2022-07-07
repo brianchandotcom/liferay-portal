@@ -64,4 +64,8 @@ export function updateProductFields(data) {
 	document.querySelector(
 		'[data-text-cp-instance-delivery-subscription-info]'
 	).innerHTML = cpInstance.deliverySubscriptionInfo || '';
+
+	document.querySelector(
+		'[data-text-cp-instance-incoming-quantity-label]'
+	).innerHTML = cpInstance.incomingQuantityLabel || '';
 }

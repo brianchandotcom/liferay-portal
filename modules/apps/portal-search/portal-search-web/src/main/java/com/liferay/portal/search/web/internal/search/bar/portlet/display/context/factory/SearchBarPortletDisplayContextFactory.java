@@ -277,7 +277,6 @@ public class SearchBarPortletDisplayContextFactory {
 
 	protected SearchScopePreference getSearchScopePreference(
 		PortletPreferencesLookup portletPreferencesLookup,
-		String scopeParameterValue,
 		SearchBarPrecedenceHelper searchBarPrecedenceHelper,
 		SearchBarPortletPreferences searchBarPortletPreferences,
 		SearchSettings searchSettings, ThemeDisplay themeDisplay) {
@@ -301,11 +300,6 @@ public class SearchBarPortletDisplayContextFactory {
 						optional.get());
 				}
 			}
-		}
-
-		if (scopeParameterValue != null) {
-			return SearchScopePreference.getSearchScopePreference(
-				scopeParameterValue);
 		}
 
 		SearchScopePreference searchScopePreference =
@@ -427,19 +421,33 @@ public class SearchBarPortletDisplayContextFactory {
 		SearchSettings searchSettings, ThemeDisplay themeDisplay) {
 
 		SearchScopePreference searchScopePreference = getSearchScopePreference(
-			portletPreferencesLookup, scopeParameterValue,
-			searchBarPrecedenceHelper, searchBarPortletPreferences,
-			searchSettings, themeDisplay);
-
-		if (searchScopePreference == SearchScopePreference.EVERYTHING) {
-			searchBarPortletDisplayContext.setSelectedEverythingSearchScope(
-				true);
-		}
+			portletPreferencesLookup, searchBarPrecedenceHelper,
+			searchBarPortletPreferences, searchSettings, themeDisplay);
 
 		if (searchScopePreference ==
 				SearchScopePreference.LET_THE_USER_CHOOSE) {
 
 			searchBarPortletDisplayContext.setLetTheUserChooseTheSearchScope(
+				true);
+
+			if (scopeParameterValue != null) {
+				SearchScope searchScope = SearchScope.getSearchScope(
+					scopeParameterValue);
+
+				if (searchScope == SearchScope.EVERYTHING) {
+					searchBarPortletDisplayContext.
+						setSelectedEverythingSearchScope(true);
+				}
+
+				if (searchScope == SearchScope.THIS_SITE) {
+					searchBarPortletDisplayContext.
+						setSelectedCurrentSiteSearchScope(true);
+				}
+			}
+		}
+
+		if (searchScopePreference == SearchScopePreference.EVERYTHING) {
+			searchBarPortletDisplayContext.setSelectedEverythingSearchScope(
 				true);
 		}
 

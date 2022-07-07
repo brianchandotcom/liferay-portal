@@ -414,6 +414,27 @@ public class Shipment implements Cloneable, Serializable {
 
 	protected String trackingNumber;
 
+	public String getTrackingURL() {
+		return trackingURL;
+	}
+
+	public void setTrackingURL(String trackingURL) {
+		this.trackingURL = trackingURL;
+	}
+
+	public void setTrackingURL(
+		UnsafeSupplier<String, Exception> trackingURLUnsafeSupplier) {
+
+		try {
+			trackingURL = trackingURLUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String trackingURL;
+
 	public String getUserName() {
 		return userName;
 	}

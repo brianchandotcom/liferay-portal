@@ -489,7 +489,7 @@ public class Shipment implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long shippingMethodId;
 
 	@Schema(example = "Standard Delivery")
@@ -576,6 +576,34 @@ public class Shipment implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String trackingNumber;
+
+	@Schema(example = "Standard Delivery")
+	public String getTrackingURL() {
+		return trackingURL;
+	}
+
+	public void setTrackingURL(String trackingURL) {
+		this.trackingURL = trackingURL;
+	}
+
+	@JsonIgnore
+	public void setTrackingURL(
+		UnsafeSupplier<String, Exception> trackingURLUnsafeSupplier) {
+
+		try {
+			trackingURL = trackingURLUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String trackingURL;
 
 	@Schema(example = "John")
 	public String getUserName() {
@@ -863,6 +891,20 @@ public class Shipment implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(trackingNumber));
+
+			sb.append("\"");
+		}
+
+		if (trackingURL != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"trackingURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(trackingURL));
 
 			sb.append("\"");
 		}

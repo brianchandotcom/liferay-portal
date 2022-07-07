@@ -190,6 +190,7 @@ public abstract class BaseShipmentResourceTestCase {
 		shipment.setExternalReferenceCode(regex);
 		shipment.setShippingOptionName(regex);
 		shipment.setTrackingNumber(regex);
+		shipment.setTrackingURL(regex);
 		shipment.setUserName(regex);
 
 		String json = ShipmentSerDes.toJSON(shipment);
@@ -202,6 +203,7 @@ public abstract class BaseShipmentResourceTestCase {
 		Assert.assertEquals(regex, shipment.getExternalReferenceCode());
 		Assert.assertEquals(regex, shipment.getShippingOptionName());
 		Assert.assertEquals(regex, shipment.getTrackingNumber());
+		Assert.assertEquals(regex, shipment.getTrackingURL());
 		Assert.assertEquals(regex, shipment.getUserName());
 	}
 
@@ -1224,6 +1226,14 @@ public abstract class BaseShipmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("trackingURL", additionalAssertFieldName)) {
+				if (shipment.getTrackingURL() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("userName", additionalAssertFieldName)) {
 				if (shipment.getUserName() == null) {
 					valid = false;
@@ -1512,6 +1522,17 @@ public abstract class BaseShipmentResourceTestCase {
 				if (!Objects.deepEquals(
 						shipment1.getTrackingNumber(),
 						shipment2.getTrackingNumber())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("trackingURL", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						shipment1.getTrackingURL(),
+						shipment2.getTrackingURL())) {
 
 					return false;
 				}
@@ -1832,6 +1853,14 @@ public abstract class BaseShipmentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("trackingURL")) {
+			sb.append("'");
+			sb.append(String.valueOf(shipment.getTrackingURL()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("userName")) {
 			sb.append("'");
 			sb.append(String.valueOf(shipment.getUserName()));
@@ -1899,6 +1928,8 @@ public abstract class BaseShipmentResourceTestCase {
 				shippingOptionName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				trackingNumber = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				trackingURL = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				userName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

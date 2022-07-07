@@ -210,23 +210,16 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	}
 
 	@Test
-	public void testSearchScope() throws ReadOnlyException {
+	public void testSearchScopePreference() throws ReadOnlyException {
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
 				_createSearchBarPortletDisplayContextFactory(null);
 
-		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayContextFactory.create(
-				_portletPreferencesLookup, _portletSharedSearchRequest,
-				_searchBarPrecedenceHelper);
-
 		Assert.assertEquals(
-			SearchScope.EVERYTHING,
-			searchBarPortletDisplayContextFactory.getSearchScope(
-				_portletPreferencesLookup,
-				searchBarPortletDisplayContext.getScopeParameterValue(),
-				_searchBarPrecedenceHelper, SearchScopePreference.THIS_SITE,
-				_searchSettings, _themeDisplay));
+			SearchScopePreference.THIS_SITE,
+			searchBarPortletDisplayContextFactory.getSearchScopePreference(
+				_portletPreferencesLookup, _searchBarPrecedenceHelper,
+				_searchBarPortletPreferences, _searchSettings, _themeDisplay));
 	}
 
 	protected HttpServletRequest getHttpServletRequest() {
@@ -433,6 +426,8 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		Mockito.mock(PortletPreferencesLookup.class);
 	private final PortletSharedSearchRequest _portletSharedSearchRequest =
 		Mockito.mock(PortletSharedSearchRequest.class);
+	private final SearchBarPortletPreferences _searchBarPortletPreferences =
+		Mockito.mock(SearchBarPortletPreferences.class);
 	private final SearchBarPrecedenceHelper _searchBarPrecedenceHelper =
 		Mockito.mock(SearchBarPrecedenceHelper.class);
 	private final SearchSettings _searchSettings = Mockito.mock(

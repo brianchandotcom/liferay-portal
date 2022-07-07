@@ -24,6 +24,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.util.LayoutStructureUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -71,7 +72,17 @@ public class ContentLayoutTestUtil {
 
 	public static JSONObject addFormToLayout(
 			Layout layout, String classNameId, String classTypeId,
-			long segmentsExperienceId, String... fieldTypes)
+			long segmentsExperienceId, InfoField... infoFields)
+		throws Exception {
+
+		return addFormToLayout(
+			layout, classNameId, classTypeId, _DEFAULT_INPUT_HTML,
+			segmentsExperienceId, infoFields);
+	}
+
+	public static JSONObject addFormToLayout(
+			Layout layout, String classNameId, String classTypeId,
+			String inputHTML, long segmentsExperienceId, String... fieldTypes)
 		throws Exception {
 
 		JSONObject jsonObject = addItemToLayout(
@@ -95,8 +106,7 @@ public class ContentLayoutTestUtil {
 				FragmentEntryLocalServiceUtil.addFragmentEntry(
 					TestPropsValues.getUserId(), layout.getGroupId(), 0,
 					StringUtil.randomString(), StringUtil.randomString(),
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), inputHTML,
 					RandomTestUtil.randomString(), false, "{fieldSets: []}",
 					null, 0, FragmentConstants.TYPE_INPUT,
 					JSONUtil.put(
@@ -411,5 +421,11 @@ public class ContentLayoutTestUtil {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
+
+	private static final String _DEFAULT_INPUT_HTML = StringBundler.concat(
+		"<div class=\"${fragmentEntryLinkNamespace}-input\">",
+		"<div id=\"${fragmentEntryLinkNamespace}-inputTemplateNode\">",
+		"<p>InputName:${input.name}</p>",
+		"<p>InputJSONObject:${input.toJSONObject()}</p></div></div>");
 
 }

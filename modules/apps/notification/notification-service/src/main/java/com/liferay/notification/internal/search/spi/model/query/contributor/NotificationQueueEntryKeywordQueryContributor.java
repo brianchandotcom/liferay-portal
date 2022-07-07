@@ -40,10 +40,10 @@ public class NotificationQueueEntryKeywordQueryContributor
 
 		_queryHelper.addSearchTerm(
 			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
-			"subject", false);
+			"fromName", false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
-			"fromName", false);
+			"subject", false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
 			"toName", false);

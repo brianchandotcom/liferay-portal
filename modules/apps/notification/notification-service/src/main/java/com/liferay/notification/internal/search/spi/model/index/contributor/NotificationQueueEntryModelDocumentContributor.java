@@ -35,12 +35,12 @@ public class NotificationQueueEntryModelDocumentContributor
 	public void contribute(
 		Document document, NotificationQueueEntry notificationQueueEntry) {
 
-		document.addText("subject", notificationQueueEntry.getSubject());
 		document.addText("fromName", notificationQueueEntry.getFrom());
+		document.addText("subject", notificationQueueEntry.getSubject());
 		document.addText("toName", notificationQueueEntry.getToName());
 		document.addText("triggerBy", notificationQueueEntry.getToName());
-		document.addKeyword("subject", notificationQueueEntry.getSubject());
 		document.addKeyword("fromName", notificationQueueEntry.getFromName());
+		document.addKeyword("subject", notificationQueueEntry.getSubject());
 		document.addKeyword("toName", notificationQueueEntry.getToName());
 		document.addKeyword("triggerBy", notificationQueueEntry.getToName());
 	}

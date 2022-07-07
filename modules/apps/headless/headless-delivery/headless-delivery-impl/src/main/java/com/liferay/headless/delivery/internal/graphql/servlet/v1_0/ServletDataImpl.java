@@ -588,6 +588,16 @@ public class ServletDataImpl implements ServletData {
 							DocumentFolderResourceImpl.class,
 							"putSiteDocumentFolderPermissionsPage"));
 					put(
+						"mutation#deleteSiteDocumentsFolderByExternalReferenceCode",
+						new ObjectValuePair<>(
+							DocumentFolderResourceImpl.class,
+							"deleteSiteDocumentsFolderByExternalReferenceCode"));
+					put(
+						"mutation#updateSiteDocumentsFolderByExternalReferenceCode",
+						new ObjectValuePair<>(
+							DocumentFolderResourceImpl.class,
+							"putSiteDocumentsFolderByExternalReferenceCode"));
+					put(
 						"mutation#deleteKnowledgeBaseArticle",
 						new ObjectValuePair<>(
 							KnowledgeBaseArticleResourceImpl.class,
@@ -1675,6 +1685,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							DocumentFolderResourceImpl.class,
 							"getSiteDocumentFolderPermissionsPage"));
+					put(
+						"query#documentsFolderByExternalReferenceCode",
+						new ObjectValuePair<>(
+							DocumentFolderResourceImpl.class,
+							"getSiteDocumentsFolderByExternalReferenceCode"));
 					put(
 						"query#knowledgeBaseArticle",
 						new ObjectValuePair<>(

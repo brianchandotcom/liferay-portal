@@ -151,6 +151,19 @@ public interface DocumentFolderResource {
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
+	public void deleteSiteDocumentsFolderByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public DocumentFolder getSiteDocumentsFolderByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public DocumentFolder putSiteDocumentsFolderByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			DocumentFolder documentFolder)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

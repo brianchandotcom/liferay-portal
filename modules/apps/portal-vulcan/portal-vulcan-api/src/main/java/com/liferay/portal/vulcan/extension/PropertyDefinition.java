@@ -20,6 +20,7 @@ import com.liferay.portal.vulcan.extension.validation.PropertyValidator;
 
 import java.math.BigDecimal;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,10 +29,15 @@ import java.util.Map;
 public class PropertyDefinition {
 
 	public PropertyDefinition(
-		Class<?> propertyClass, String propertyName, PropertyType propertyType,
+		Class<?> propertyClass, String propertyClassDescription,
+		String propertyClassName, String propertyDescription,
+		String propertyName, PropertyType propertyType,
 		PropertyValidator propertyValidator, boolean required) {
 
 		_propertyClass = propertyClass;
+		_propertyClassDescription = propertyClassDescription;
+		_propertyClassName = propertyClassName;
+		_propertyDescription = propertyDescription;
 		_propertyName = propertyName;
 		_propertyType = propertyType;
 		_propertyValidator = propertyValidator;
@@ -39,8 +45,10 @@ public class PropertyDefinition {
 	}
 
 	public PropertyDefinition(
-		String propertyName, PropertyType propertyType, boolean required) {
+		String propertyDescription, String propertyName,
+		PropertyType propertyType, boolean required) {
 
+		_propertyDescription = propertyDescription;
 		_propertyName = propertyName;
 		_propertyType = propertyType;
 		_required = required;
@@ -50,9 +58,11 @@ public class PropertyDefinition {
 	}
 
 	public PropertyDefinition(
-		String propertyName, PropertyType propertyType,
-		PropertyValidator propertyValidator, boolean required) {
+		String propertyDescription, String propertyName,
+		PropertyType propertyType, PropertyValidator propertyValidator,
+		boolean required) {
 
+		_propertyDescription = propertyDescription;
 		_propertyName = propertyName;
 		_propertyType = propertyType;
 		_propertyValidator = propertyValidator;
@@ -63,6 +73,22 @@ public class PropertyDefinition {
 
 	public Class<?> getPropertyClass() {
 		return _propertyClass;
+	}
+
+	public String getPropertyClassDescription() {
+		return _propertyClassDescription;
+	}
+
+	public String getPropertyClassName() {
+		return _propertyClassName;
+	}
+
+	public List<PropertyDefinition> getPropertyDefinitions() {
+		return _propertyDefinitions;
+	}
+
+	public String getPropertyDescription() {
+		return _propertyDescription;
 	}
 
 	public String getPropertyName() {
@@ -79,6 +105,12 @@ public class PropertyDefinition {
 
 	public boolean isRequired() {
 		return _required;
+	}
+
+	public void setPropertyDefinitions(
+		List<PropertyDefinition> propertyDefinitions) {
+
+		_propertyDefinitions = propertyDefinitions;
 	}
 
 	public enum PropertyType {
@@ -106,6 +138,10 @@ public class PropertyDefinition {
 		).build();
 
 	private final Class<?> _propertyClass;
+	private String _propertyClassDescription;
+	private String _propertyClassName;
+	private List<PropertyDefinition> _propertyDefinitions;
+	private final String _propertyDescription;
 	private final String _propertyName;
 	private final PropertyType _propertyType;
 	private final PropertyValidator _propertyValidator;

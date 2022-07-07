@@ -227,13 +227,17 @@ public class EntityExtensionHandlerTest {
 		String propertyName4 = RandomTestUtil.randomString();
 
 		PropertyDefinition propertyDefinition1 = new PropertyDefinition(
-			propertyName1, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName1,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition2 = new PropertyDefinition(
-			propertyName2, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName2,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition3 = new PropertyDefinition(
-			propertyName3, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName3,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition4 = new PropertyDefinition(
-			propertyName4, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName4,
+			PropertyDefinition.PropertyType.TEXT, false);
 
 		Mockito.when(
 			extensionProviderMock1.getExtendedPropertyDefinitions(
@@ -301,13 +305,17 @@ public class EntityExtensionHandlerTest {
 		String propertyName4 = RandomTestUtil.randomString();
 
 		PropertyDefinition propertyDefinition1 = new PropertyDefinition(
-			propertyName1, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName1,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition2 = new PropertyDefinition(
-			propertyName2, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName2,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition3 = new PropertyDefinition(
-			propertyName3, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName3,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition4 = new PropertyDefinition(
-			propertyName4, PropertyDefinition.PropertyType.TEXT, true);
+			RandomTestUtil.randomString(), propertyName4,
+			PropertyDefinition.PropertyType.TEXT, true);
 
 		Mockito.when(
 			extensionProviderMock1.getExtendedPropertyDefinitions(
@@ -375,13 +383,17 @@ public class EntityExtensionHandlerTest {
 		String propertyName4 = RandomTestUtil.randomString();
 
 		PropertyDefinition propertyDefinition1 = new PropertyDefinition(
-			propertyName1, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName1,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition2 = new PropertyDefinition(
-			propertyName2, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName2,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition3 = new PropertyDefinition(
-			propertyName3, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName3,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition4 = new PropertyDefinition(
-			propertyName4, PropertyDefinition.PropertyType.TEXT, true);
+			RandomTestUtil.randomString(), propertyName4,
+			PropertyDefinition.PropertyType.TEXT, true);
 
 		Mockito.when(
 			extensionProviderMock1.getExtendedPropertyDefinitions(
@@ -447,13 +459,17 @@ public class EntityExtensionHandlerTest {
 		String propertyName4 = RandomTestUtil.randomString();
 
 		PropertyDefinition propertyDefinition1 = new PropertyDefinition(
-			propertyName1, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName1,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition2 = new PropertyDefinition(
-			propertyName2, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName2,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition3 = new PropertyDefinition(
-			propertyName3, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName3,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition4 = new PropertyDefinition(
-			propertyName4, PropertyDefinition.PropertyType.TEXT, true);
+			RandomTestUtil.randomString(), propertyName4,
+			PropertyDefinition.PropertyType.TEXT, true);
 
 		Mockito.when(
 			extensionProviderMock1.getExtendedPropertyDefinitions(
@@ -519,13 +535,17 @@ public class EntityExtensionHandlerTest {
 		String propertyName4 = RandomTestUtil.randomString();
 
 		PropertyDefinition propertyDefinition1 = new PropertyDefinition(
-			propertyName1, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName1,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition2 = new PropertyDefinition(
-			propertyName2, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName2,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition3 = new PropertyDefinition(
-			propertyName3, PropertyDefinition.PropertyType.TEXT, false);
+			RandomTestUtil.randomString(), propertyName3,
+			PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition4 = new PropertyDefinition(
-			propertyName4, PropertyDefinition.PropertyType.TEXT, true);
+			RandomTestUtil.randomString(), propertyName4,
+			PropertyDefinition.PropertyType.TEXT, true);
 
 		Mockito.when(
 			extensionProviderMock1.getExtendedPropertyDefinitions(

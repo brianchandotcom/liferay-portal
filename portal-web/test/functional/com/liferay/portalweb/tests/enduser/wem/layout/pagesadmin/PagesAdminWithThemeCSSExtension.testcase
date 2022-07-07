@@ -1,0 +1,228 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-153457=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Upload two CSS extension files to Documents and Media") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "First CSS Extension",
+				groupName = "Test Site Name",
+				mimeType = "text/css",
+				sourceFileName = "font_family.css");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Second CSS Extension",
+				groupName = "Test Site Name",
+				mimeType = "text/css",
+				sourceFileName = "background_color.css");
+		}
+
+		task ("Get the latest version URL of two documents") {
+			var firstURL = JSONDocument.getLatestVersionURL(
+				dmDocumentTitle = "First CSS Extension",
+				groupName = "Test Site Name");
+			var secondURL = JSONDocument.getLatestVersionURL(
+				dmDocumentTitle = "Second CSS Extension",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add two remote apps for CSS extension") {
+			JSONRemoteApp.addRemoteAppEntry(
+				mainURL = "${firstURL}",
+				name = "FontFamily",
+				type = "themeCSS");
+
+			JSONRemoteApp.addRemoteAppEntry(
+				mainURL = "${secondURL}",
+				name = "BackgroundColor",
+				type = "themeCSS");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			RemoteApps.tearDown();
+		}
+	}
+
+	@description = "This is a test for LPS-153653. The site designer could add theme CSS extension to page, page template, and group of pages."
+	@priority = "5"
+	test AddThemeCSSExtension {
+		task ("Given a site designer has a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("When the site designer accesses to Look and Feel settings of widget page") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Page Name");
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				key_text = "Extension",
+				locator1 = "TextInput#ANY",
+				value1 = "No theme CSS extension was loaded.");
+		}
+
+		task ("Then the site designer could add a theme CSS Extension to widget page") {
+			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
+
+			AssertTextEquals(
+				key_text = "Extension",
+				locator1 = "TextInput#ANY",
+				value1 = "FontFamily");
+
+			PortletEntry.save();
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "font-family",
+				value1 = "&quot;Times New Roman&quot;");
+		}
+
+		task ("Given a site designer has a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Page Template Name",
+				pageTemplateType = "Content Page Template");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("When the site designer accesses to Look and Feel settings of content page template") {
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Click(locator1 = "PageEditor#MORE_LINK");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				key_text = "Extension",
+				locator1 = "TextInput#ANY",
+				value1 = "No theme CSS extension was loaded.");
+		}
+
+		task ("Then the site designer could add a theme CSS Extension to widget page") {
+			PagesAdmin.addThemeCSSExtension(extensionName = "FontFamily");
+
+			AssertTextEquals(
+				key_text = "Extension",
+				locator1 = "TextInput#ANY",
+				value1 = "FontFamily");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "font-family",
+				value1 = "&quot;Times New Roman&quot;");
+		}
+
+		task ("When the site designer accesses to Look and Feel settings of Pages") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			WaitForPageLoad();
+
+			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			DropdownMenuItem.click(menuItem = "Configuration");
+
+			WaitForPageLoad();
+
+			Navigator.gotoNavTab(navTab = "Look and Feel");
+
+			Panel.expandPanel(panel = "Look and Feel");
+
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				key_text = "Extension",
+				locator1 = "TextInput#ANY",
+				value1 = "No theme CSS extension was loaded.");
+		}
+
+		task ("Then the site designer could add a theme CSS Extension to Pages") {
+			PagesAdmin.addThemeCSSExtension(extensionName = "BackgroundColor");
+
+			AssertTextEquals(
+				key_text = "Extension",
+				locator1 = "TextInput#ANY",
+				value1 = "BackgroundColor");
+
+			PortletEntry.save();
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "background-color",
+				value1 = "rgba(128, 128, 0, 1)");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "font-family",
+				value1 = "&quot;Times New Roman&quot;");
+
+			AssertCssValue(
+				locator1 = "//body",
+				locator2 = "background-color",
+				value1 = "rgba(255, 255, 255, 1)");
+		}
+	}
+
+}

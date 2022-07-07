@@ -254,11 +254,13 @@ public class CommerceShipmentServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceShipment updateCarrierDetails(
-			long commerceShipmentId, String carrier, String trackingNumber)
+			long commerceShipmentId, long commerceShippingMethodId,
+			String carrier, String trackingNumber, String trackingURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentService.updateCarrierDetails(
-			commerceShipmentId, carrier, trackingNumber);
+			commerceShipmentId, commerceShippingMethodId, carrier,
+			trackingNumber, trackingURL);
 	}
 
 	@Override

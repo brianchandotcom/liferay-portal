@@ -219,11 +219,13 @@ public class CommerceShipmentServiceUtil {
 	}
 
 	public static CommerceShipment updateCarrierDetails(
-			long commerceShipmentId, String carrier, String trackingNumber)
+			long commerceShipmentId, long commerceShippingMethodId,
+			String carrier, String trackingNumber, String trackingURL)
 		throws PortalException {
 
 		return getService().updateCarrierDetails(
-			commerceShipmentId, carrier, trackingNumber);
+			commerceShipmentId, commerceShippingMethodId, carrier,
+			trackingNumber, trackingURL);
 	}
 
 	public static CommerceShipment updateCommerceShipment(

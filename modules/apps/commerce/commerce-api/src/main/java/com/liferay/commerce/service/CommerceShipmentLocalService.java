@@ -467,7 +467,8 @@ public interface CommerceShipmentLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceShipment updateCarrierDetails(
-			long commerceShipmentId, String carrier, String trackingNumber)
+			long commerceShipmentId, long commerceShippingMethodId,
+			String carrier, String trackingNumber, String trackingURL)
 		throws PortalException;
 
 	/**

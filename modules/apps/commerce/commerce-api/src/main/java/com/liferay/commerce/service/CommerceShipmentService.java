@@ -171,7 +171,8 @@ public interface CommerceShipmentService extends BaseService {
 		throws PortalException;
 
 	public CommerceShipment updateCarrierDetails(
-			long commerceShipmentId, String carrier, String trackingNumber)
+			long commerceShipmentId, long commerceShippingMethodId,
+			String carrier, String trackingNumber, String trackingURL)
 		throws PortalException;
 
 	public CommerceShipment updateCommerceShipment(

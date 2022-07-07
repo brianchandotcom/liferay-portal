@@ -846,7 +846,8 @@ public class CommerceShipmentServiceHttp {
 	public static com.liferay.commerce.model.CommerceShipment
 			updateCarrierDetails(
 				HttpPrincipal httpPrincipal, long commerceShipmentId,
-				String carrier, String trackingNumber)
+				long commerceShippingMethodId, String carrier,
+				String trackingNumber, String trackingURL)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -855,7 +856,8 @@ public class CommerceShipmentServiceHttp {
 				_updateCarrierDetailsParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commerceShipmentId, carrier, trackingNumber);
+				methodKey, commerceShipmentId, commerceShippingMethodId,
+				carrier, trackingNumber, trackingURL);
 
 			Object returnObj = null;
 
@@ -1288,7 +1290,9 @@ public class CommerceShipmentServiceHttp {
 			String.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCarrierDetailsParameterTypes19 =
-		new Class[] {long.class, String.class, String.class};
+		new Class[] {
+			long.class, long.class, String.class, String.class, String.class
+		};
 	private static final Class<?>[] _updateCommerceShipmentParameterTypes20 =
 		new Class[] {com.liferay.commerce.model.CommerceShipment.class};
 	private static final Class<?>[] _updateCommerceShipmentParameterTypes21 =

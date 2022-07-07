@@ -48,6 +48,7 @@ import com.liferay.portal.language.override.web.internal.display.LanguageItemDis
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -219,6 +220,8 @@ public class ViewDisplayContextFactory {
 		if (ListUtil.isEmpty(languageIds)) {
 			return StringPool.BLANK;
 		}
+
+		Collections.sort(languageIds);
 
 		StringBundler sb = new StringBundler((2 * languageIds.size()) - 1);
 

@@ -990,9 +990,9 @@ public class LayoutStagedModelDataHandler
 		_updateLastMergeLayoutModifiedTime(
 			layoutElement, importedLayout, portletDataContext);
 
-		importedLayout = _layoutLocalService.updateLayout(importedLayout);
-
 		_importTheme(portletDataContext, layout, importedLayout);
+
+		importedLayout = _layoutLocalService.updateLayout(importedLayout);
 
 		if ((Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
 			 Validator.isNotNull(layout.getTypeSettings())) ||

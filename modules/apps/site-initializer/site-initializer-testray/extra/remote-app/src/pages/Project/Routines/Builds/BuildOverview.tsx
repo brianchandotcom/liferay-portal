@@ -115,7 +115,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({
 				title={i18n.translate('total-test-cases')}
 			>
 				<div className="row">
-					{totalTestCasesGroup.ready && (
+					{Boolean(totalTestCasesGroup.ready) && (
 						<div className="col-2">
 							<ClayChart
 								data={{

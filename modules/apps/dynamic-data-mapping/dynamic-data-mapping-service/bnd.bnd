@@ -39,3 +39,4 @@ Import-Package:\
 Liferay-Require-SchemaVersion: 5.1.4
 Liferay-Service: true
 -dsannotations-options: inherit
+-fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning

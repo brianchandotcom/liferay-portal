@@ -10,3 +10,4 @@ Import-Package:\
 	\
 	*
 Web-ContextPath: /data-engine-rest-impl
+-fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning

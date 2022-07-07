@@ -17,3 +17,4 @@ Import-Package:\
 	!org.joda.convert,\
 	\
 	*
+-fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning

@@ -15,6 +15,7 @@ Import-Package:\
 Require-Capability:\
 	osgi.extender;\
 		filter := "(&(osgi.extender=osgi.configurator)(version>=1.0)(!(version>=2.0)))"
+-fixupmessages: "^Classes found in the wrong directory: \\\\{META-INF/versions/9/";is:=warning
 -includeresource:\
 	OSGI-INF/configurator=configurator,\
 	@com.liferay.petra.apache.http.components-[0-9.]*.jar,\

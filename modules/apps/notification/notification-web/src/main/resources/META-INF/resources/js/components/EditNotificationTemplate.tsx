@@ -125,7 +125,7 @@ export default function EditNotificationTemplate({
 				type: 'success',
 			});
 
-			window.history.back();
+			window.location.assign(document.referrer);
 		}
 		else if (response.status === 404) {
 			openToast({

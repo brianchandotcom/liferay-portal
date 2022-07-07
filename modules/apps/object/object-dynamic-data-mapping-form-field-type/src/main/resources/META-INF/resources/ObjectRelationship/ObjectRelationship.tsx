@@ -24,55 +24,85 @@ import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type'
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 
-const HEADERS = new Headers({
-	'Accept': 'application/json',
-	'Content-Type': 'application/json',
-});
-
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-async function fetchOptions(url) {
+async function fetchOptions<T>(url: string) {
 	const response = await fetch(url, {
-		headers: HEADERS,
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+		},
 		method: 'GET',
 	});
 
-	return await response.json();
+	return (await response.json()) as T;
 }
 
-function getLabel(item, labelKey) {
-	const objectLabel = item?.[labelKey];
+function getLabel<T extends {[key: string]: any}>(
+	item: T | undefined,
+	key: keyof T
+) {
+	const value = item?.[key];
 
-	const label =
-		typeof objectLabel === 'object'
-			? objectLabel[defaultLanguageId]
-			: objectLabel;
+	const label = typeof value === 'object' ? value[defaultLanguageId] : value;
 
 	return label ? String(label) : '';
 }
 
-function LoadingWithDebounce({loading, render}) {
+function LoadingWithDebounce({
+	labelKey,
+	loading,
+	onSelect,
+	resource,
+	searchTerm,
+}: {
+	labelKey: string;
+	loading: boolean;
+	onSelect: (item: Item) => void;
+	resource?: Resource;
+	searchTerm?: string;
+}) {
 	const debouncedLoadingChange = useDebounce(loading, 500);
 
-	return loading || debouncedLoadingChange ? (
-		<ClayDropDown.Item className="disabled">
-			{Liferay.Language.get('loading')}
-		</ClayDropDown.Item>
-	) : (
-		render
+	if (loading || debouncedLoadingChange) {
+		return (
+			<ClayDropDown.Item className="disabled">
+				{Liferay.Language.get('loading')}
+			</ClayDropDown.Item>
+		);
+	}
+
+	if (!resource || !resource.items.length) {
+		return (
+			<ClayDropDown.Item className="disabled">
+				{Liferay.Language.get('no-results-found')}
+			</ClayDropDown.Item>
+		);
+	}
+
+	return (
+		<>
+			{resource.items.map((item) => (
+				<ClayAutocomplete.Item
+					key={item.id}
+					match={searchTerm}
+					onClick={() => onSelect(item)}
+					value={getLabel(item, labelKey)}
+				/>
+			))}
+		</>
 	);
 }
 
-export function ObjectRelationship({
+export default function ObjectRelationship({
 	apiURL,
 	fieldName,
-	id,
 	inputName,
 	labelKey = 'label',
 	name,
-	onBlur = () => {},
+	onBlur,
 	onChange,
-	onFocus = () => {},
+	onFocus,
 	parameterObjectFieldName,
 	placeholder = Liferay.Language.get('search'),
 	readOnly,
@@ -80,19 +110,23 @@ export function ObjectRelationship({
 	value,
 	valueKey = 'value',
 	...otherProps
-}) {
+}: IProps) {
 	const [active, setActive] = useState(false);
 	const [label, setLabel] = useState('');
 	const [loading, setLoading] = useState(false);
-	const [resource, setResource] = useState([]);
-	const autocompleteRef = useRef();
-	const dropdownRef = useRef();
+	const [resource, setResource] = useState<Resource>();
+	const autocompleteRef = useRef<HTMLDivElement>(null);
+	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	const dispatch = useForm();
-	const {objectRelationships} = useFormState();
+	const {
+		objectRelationships,
+	}: {objectRelationships?: {[key: string]: number}} = useFormState();
 
 	const parameterObjectFieldId = useMemo(
-		() => objectRelationships?.[parameterObjectFieldName],
+		() =>
+			parameterObjectFieldName &&
+			objectRelationships?.[parameterObjectFieldName],
 		[objectRelationships, parameterObjectFieldName]
 	);
 
@@ -102,7 +136,7 @@ export function ObjectRelationship({
 		}
 
 		return parameterObjectFieldId
-			? apiURL.replace(/{\w+}/, parameterObjectFieldId)
+			? apiURL.replace(/{\w+}/, parameterObjectFieldId.toString())
 			: `${apiURL}?page=1&pageSize=10${label ? `&search=${label}` : ''}`;
 	}, [apiURL, label, parameterObjectFieldId, parameterObjectFieldName]);
 
@@ -137,16 +171,14 @@ export function ObjectRelationship({
 		}
 
 		if (!parameterObjectFieldName) {
-			fetchOptions(`${apiURL}/${value}`).then((item) =>
-				setLabel(getLabel(item, labelKey))
-			);
+			fetchOptions<{[key: string]: unknown}>(
+				`${apiURL}/${value}`
+			).then((item) => setLabel(getLabel(item, labelKey)));
 		}
-		else if (resource?.items) {
-			const selected = resource?.items.find(
-				({id}) => id === Number(value)
-			);
+		else if (resource) {
+			const item = resource.items.find(({id}) => id === Number(value));
 
-			setLabel(getLabel(selected, labelKey));
+			setLabel(getLabel(item, labelKey));
 		}
 	}, [apiURL, labelKey, parameterObjectFieldName, resource, value]);
 
@@ -159,7 +191,7 @@ export function ObjectRelationship({
 		}
 
 		setLoading(true);
-		fetchOptions(url)
+		fetchOptions<Resource>(url)
 			.then(setResource)
 			.finally(() => setLoading(false));
 	}, [url]);
@@ -168,18 +200,17 @@ export function ObjectRelationship({
 	 * Deactivates the dropdown on outside click
 	 */
 	useEffect(() => {
-		function handleClick(event) {
+		const handleClick = ({target}: MouseEvent) => {
 			if (
-				autocompleteRef.current.contains(event.target) ||
-				event.target === dropdownRef.current.parentElement ||
-				(dropdownRef.current &&
-					dropdownRef.current.contains(event.target))
+				target === dropdownRef.current?.parentElement ||
+				autocompleteRef.current?.contains(target as Node | null) ||
+				dropdownRef.current?.contains(target as Node | null)
 			) {
 				return;
 			}
-
 			setActive(false);
-		}
+		};
+
 		if (active) {
 			document.addEventListener('mousedown', handleClick);
 		}
@@ -199,11 +230,9 @@ export function ObjectRelationship({
 			{...otherProps}
 		>
 			<ClayAutocomplete ref={autocompleteRef}>
-				<input id={id} name={name} type="hidden" value={value || ''} />
-
 				<ClayAutocomplete.Input
 					disabled={
-						parameterObjectFieldName && !parameterObjectFieldId
+						!!parameterObjectFieldName && !parameterObjectFieldId
 					}
 					name={inputName}
 					onBlur={onBlur}
@@ -212,7 +241,7 @@ export function ObjectRelationship({
 							onChange({target: {value: null}});
 						}
 						else {
-							const selected = resource?.items?.find(
+							const selected = resource?.items.find(
 								(item) => getLabel(item, labelKey) === value
 							);
 
@@ -228,7 +257,7 @@ export function ObjectRelationship({
 						setLabel(value);
 					}}
 					onFocus={(event) => {
-						onFocus(event);
+						onFocus?.(event);
 						setActive(true);
 					}}
 					onKeyUp={(event) => {
@@ -241,40 +270,22 @@ export function ObjectRelationship({
 				/>
 
 				<ClayAutocomplete.DropDown
-					active={active && !readOnly && resource}
+					active={!readOnly && resource && active}
 				>
 					<div ref={dropdownRef}>
 						<ClayDropDown.ItemList>
 							<LoadingWithDebounce
+								labelKey={labelKey}
 								loading={loading}
-								render={
-									<>
-										{resource?.items?.length === 0 && (
-											<ClayDropDown.Item className="disabled">
-												{Liferay.Language.get(
-													'no-results-found'
-												)}
-											</ClayDropDown.Item>
-										)}
-										{resource?.items?.map((item) => (
-											<ClayAutocomplete.Item
-												key={item.id}
-												match={label}
-												onClick={(event) => {
-													onChange(
-														event,
-														String(item[valueKey])
-													);
-													setActive(false);
-													setLabel(
-														getLabel(item, labelKey)
-													);
-												}}
-												value={getLabel(item, labelKey)}
-											/>
-										))}
-									</>
-								}
+								onSelect={(item) => {
+									onChange({
+										target: {value: String(item[valueKey])},
+									});
+									setActive(false);
+									setLabel(getLabel(item, labelKey));
+								}}
+								resource={resource}
+								searchTerm={label}
 							/>
 						</ClayDropDown.ItemList>
 					</div>
@@ -282,8 +293,34 @@ export function ObjectRelationship({
 
 				{loading && <ClayAutocomplete.LoadingIndicator />}
 			</ClayAutocomplete>
+
+			<input name={name} type="hidden" value={value} />
 		</FieldBase>
 	);
 }
 
-export default ObjectRelationship;
+interface IProps {
+	apiURL: string;
+	fieldName: string;
+	inputName: string;
+	labelKey?: string;
+	name: string;
+	onBlur?: React.FocusEventHandler<HTMLInputElement>;
+	onChange: (event: {target: {value: unknown}}) => void;
+	onFocus?: React.FocusEventHandler<HTMLInputElement>;
+	parameterObjectFieldName?: string;
+	placeholder?: string;
+	readOnly?: boolean;
+	required?: boolean;
+	value?: string;
+	valueKey?: string;
+}
+
+interface Item {
+	id: number;
+	[key: string]: unknown;
+}
+
+interface Resource {
+	items: Item[];
+}

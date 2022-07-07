@@ -43,7 +43,14 @@ definition {
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 
-		Navigator.gotoPage(pageName = "${pageName}");
+		if (isSet(siteName)) {
+			Navigator.gotoSitePage(
+				pageName = "Documents and Media Page",
+				siteName = "${siteName}");
+		}
+		else {
+			Navigator.gotoPage(pageName = "${pageName}");
+		}
 
 		DMFolder.addPG(
 			dmFolder = "${dmFolder}",
@@ -255,6 +262,7 @@ definition {
 			pageName = "${pageName}",
 			portletName = "${portletName}",
 			roleTitle = "${roleTitle}",
+			siteName = "${siteName}",
 			userEmailAddress = "${userEmailAddress}",
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",
@@ -268,14 +276,23 @@ definition {
 	macro setUpRegRolePG {
 		JSONUserAPI._disablePasswordChangeRequired();
 
+		if (isSet(siteName)) {
+			var siteName = "${siteName}";
+		}
+		else {
+			var siteName = "Guest";
+		}
+
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "${siteName}",
 			layoutName = "${pageName}");
 
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "${siteName}");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
+			groupName = "${siteName}",
 			layoutName = "${pageName}",
 			widgetName = "${portletName}");
 

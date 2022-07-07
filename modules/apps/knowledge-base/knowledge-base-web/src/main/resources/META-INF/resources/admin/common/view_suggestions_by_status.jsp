@@ -25,7 +25,7 @@ SearchContainer<KBComment> kbCommentsSearchContainer = (SearchContainer)request.
 KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)request.getAttribute("view_suggestions.jsp-resultRowSplitter");
 %>
 
-<liferay-portlet:actionURL name="deleteKBComments" varImpl="deleteKBCommentsURL">
+<liferay-portlet:actionURL name="/knowledge_base/delete_kb_comments" varImpl="deleteKBCommentsURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </liferay-portlet:actionURL>
 

@@ -82,7 +82,12 @@ export default function AddFragmentModal({
 						className={classNames({'has-error': nameError})}
 					>
 						<label htmlFor={getFieldName(namespace, 'name')}>
-							{Liferay.Language.get('fragment-name')}
+							{Liferay.Language.get('name')}
+
+							<ClayIcon
+								className="reference-mark"
+								symbol="asterisk"
+							/>
 						</label>
 
 						<ClayInput

@@ -138,15 +138,17 @@ ViewListTypeEntriesDisplayContext viewListTypeEntriesDisplayContext = (ViewListT
 					window.location.reload();
 				}
 				else if (response.ok) {
-					Liferay.Util.openToast({
+					const parentWindow = Liferay.Util.getOpener();
+
+					parentWindow.Liferay.Util.openToast({
 						message:
 							'<%= LanguageUtil.get(request, "the-picklist-was-updated-successfully") %>',
 						type: 'success',
 					});
 
 					setTimeout(() => {
-						const parentWindow = Liferay.Util.getOpener();
 						parentWindow.Liferay.fire('close-side-panel');
+						parentWindow.location.reload();
 					}, 1500);
 				}
 				else {

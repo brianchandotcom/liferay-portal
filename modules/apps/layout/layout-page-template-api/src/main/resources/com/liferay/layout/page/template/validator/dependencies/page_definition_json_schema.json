@@ -941,11 +941,8 @@
 					"type": "string"
 				},
 				"name": {
-					"items": {
-						"type": "string"
-					},
 					"title": "The name Schema",
-					"type": "array"
+					"type": "string"
 				},
 				"numberOfColumns": {
 					"minimum": 0,
@@ -1352,11 +1349,8 @@
 					"type": "boolean"
 				},
 				"name": {
-					"items": {
-						"type": "string"
-					},
 					"title": "The name Schema",
-					"type": "array"
+					"type": "string"
 				}
 			},
 			"title": "The PageFormDefinition Schema",
@@ -1425,11 +1419,8 @@
 					"type": "boolean"
 				},
 				"name": {
-					"items": {
-						"type": "string"
-					},
 					"title": "The name Schema",
-					"type": "array"
+					"type": "string"
 				},
 				"widgetInstances": {
 					"items": {
@@ -1491,11 +1482,8 @@
 					"type": "integer"
 				},
 				"name": {
-					"items": {
-						"type": "string"
-					},
 					"title": "The name Schema",
-					"type": "array"
+					"type": "string"
 				},
 				"numberOfColumns": {
 					"maximum": 6,
@@ -1913,11 +1901,8 @@
 					"type": "object"
 				},
 				"name": {
-					"items": {
-						"type": "string"
-					},
 					"title": "The name Schema",
-					"type": "array"
+					"type": "string"
 				}
 			},
 			"title": "The PageSectionDefinition Schema",

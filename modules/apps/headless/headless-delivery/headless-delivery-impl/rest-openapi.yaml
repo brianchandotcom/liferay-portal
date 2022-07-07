@@ -1463,6 +1463,10 @@ components:
                     description:
                         The folder's description.
                     type: string
+                externalReferenceCode:
+                    description:
+                        The document folder's external reference code.
+                    type: string
                 id:
                     description:
                         The folder's ID.
@@ -11822,6 +11826,86 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Document"
             tags: ["Document"]
+    "/sites/{siteId}/documents-folder/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the site's document folder by external reference code returns a 204 if the operation succeeds.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["DocumentFolder"]
+        get:
+            # @review
+            description:
+                Retrieves the site's document folder by external reference code.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+            tags: ["DocumentFolder"]
+        put:
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/DocumentFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/DocumentFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/DocumentFolder"
+            tags: ["DocumentFolder"]
     "/sites/{siteId}/documents/by-external-reference-code/{documentExternalReferenceCode}/comments/by-external-reference-code/{externalReferenceCode}":
         delete:
             # @review

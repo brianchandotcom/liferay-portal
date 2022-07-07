@@ -22,6 +22,7 @@ export function FieldTypeSelector({
 	description,
 	fieldTypes,
 	onChangeFieldTypes,
+	portletNamespace,
 	readOnly,
 	small,
 	title,
@@ -74,9 +75,11 @@ export function FieldTypeSelector({
 								checked={fieldTypes.includes(key)}
 								key={key}
 								label={label}
+								name={`${portletNamespace}fieldTypes`}
 								onChange={(event) =>
 									handleChange(key, event.target.checked)
 								}
+								value={key}
 							/>
 						))}
 					</>

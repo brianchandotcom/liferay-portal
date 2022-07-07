@@ -13,7 +13,7 @@
  */
 
 import ClayCard from '@clayui/card';
-import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {MultiStepFormModal, MultiStepFormModalStep} from './MultiStepFormModal';
+import {FieldTypeSelector} from './fragment-editor/FieldTypeSelector';
 
 function getFieldName(namespace, fieldName) {
 	return namespace.concat(fieldName);
@@ -35,6 +36,7 @@ export default function AddFragmentModal({
 	const [name, setName] = useState('');
 	const [type, setType] = useState(fragmentTypes[0]);
 	const [nameError, setNameError] = useState(null);
+	const [selectedFieldTypes, setSelectedFieldTypes] = useState([]);
 
 	const [visible, setVisible] = useState(true);
 	const {observer, onClose} = useModal({
@@ -104,29 +106,19 @@ export default function AddFragmentModal({
 					</ClayForm.Group>
 
 					{type.name === 'form' && (
-						<ClayForm.Group className="form-group-sm">
-							<p className="sheet-subtitle">
-								{Liferay.Language.get(
-									'select-supported-field-types'
-								)}
-							</p>
-
-							<p>
-								{Liferay.Language.get(
-									'specify-which-field-types-this-fragment-will-support.-you-can-change-this-configuration-later'
-								)}
-							</p>
-
-							{fieldTypes.map(({key, label}) => (
-								<ClayCheckbox
-									aria-label={label}
-									key={key}
-									label={label}
-									name={getFieldName(namespace, 'fieldTypes')}
-									value={key}
-								/>
-							))}
-						</ClayForm.Group>
+						<FieldTypeSelector
+							availableFieldTypes={fieldTypes}
+							description={Liferay.Language.get(
+								'specify-which-field-types-this-fragment-will-support.-you-can-change-this-configuration-later'
+							)}
+							fieldTypes={selectedFieldTypes}
+							onChangeFieldTypes={setSelectedFieldTypes}
+							portletNamespace={namespace}
+							small
+							title={Liferay.Language.get(
+								'select-supported-field-types'
+							)}
+						/>
 					)}
 				</MultiStepFormModalStep>
 			</MultiStepFormModal>

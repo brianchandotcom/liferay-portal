@@ -126,9 +126,11 @@ definition {
 	macro gotoNavUnderline {
 		var key_navUnderline = "${navUnderline}";
 
-		AssertClick(
-			locator1 = "NavUnderline#NAV_UNDERLINE_LINK",
-			value1 = "${navUnderline}");
+		if (IsElementNotPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK")) {
+			AssertClick(
+				locator1 = "NavUnderline#NAV_UNDERLINE_LINK",
+				value1 = "${navUnderline}");
+		}
 
 		AssertElementPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK");
 	}

@@ -81,24 +81,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseKBPortlet extends MVCPortlet {
 
-	public void deleteKBComment(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!themeDisplay.isSignedIn()) {
-			return;
-		}
-
-		long kbCommentId = ParamUtil.getLong(actionRequest, "kbCommentId");
-
-		kbCommentService.deleteKBComment(kbCommentId);
-
-		SessionMessages.add(actionRequest, "suggestionDeleted");
-	}
-
 	public void deleteKBComments(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

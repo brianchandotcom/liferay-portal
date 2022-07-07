@@ -112,7 +112,7 @@ int previousStatus = KBUtil.getPreviousStatus(kbComment.getStatus());
 		</c:if>
 
 		<c:if test="<%= KBCommentPermission.contains(permissionChecker, kbComment, KBActionKeys.DELETE) %>">
-			<liferay-portlet:actionURL name="deleteKBComment" varImpl="deleteURL">
+			<liferay-portlet:actionURL name="/knowledge_base/delete_kb_comment" varImpl="deleteURL">
 				<portlet:param name="redirect" value="<%= redirect %>" />
 				<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 			</liferay-portlet:actionURL>

@@ -14,10 +14,15 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.service.base.ObjectFilterLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -28,4 +33,31 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ObjectFilterLocalServiceImpl
 	extends ObjectFilterLocalServiceBaseImpl {
+
+	@Override
+	public ObjectFilter addObjectFilter(
+			long userId, long objectFieldId, String filterBy, String filterType,
+			String json)
+		throws PortalException {
+
+		ObjectFilter objectFilter = objectFilterPersistence.create(
+			counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		objectFilter.setCompanyId(user.getCompanyId());
+		objectFilter.setUserId(user.getUserId());
+		objectFilter.setUserName(user.getFullName());
+
+		objectFilter.setObjectFieldId(objectFieldId);
+		objectFilter.setFilterBy(filterBy);
+		objectFilter.setFilterType(filterType);
+		objectFilter.setJson(json);
+
+		return objectFilterPersistence.update(objectFilter);
+	}
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 }

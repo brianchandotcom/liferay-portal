@@ -680,6 +680,11 @@ public class ObjectFieldLocalServiceImpl
 					newObjectFieldSetting);
 			}
 		}
+
+		objectField.setObjectFieldSettings(
+			_objectFieldSettingLocalService.
+				getObjectFieldSettingsByObjectFieldId(
+					objectField.getObjectFieldId()));
 	}
 
 	private void _deleteFileEntries(long objectDefinitionId, String name) {

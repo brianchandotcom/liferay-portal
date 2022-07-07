@@ -37,8 +37,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,6 +75,11 @@ public class ObjectStateTransitionLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-152677", "true"
+			).build());
+
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				TestPropsValues.getUserId(),
@@ -94,6 +101,11 @@ public class ObjectStateTransitionLocalServiceTest {
 
 	@After
 	public void tearDown() {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-152677", "false"
+			).build());
+
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 

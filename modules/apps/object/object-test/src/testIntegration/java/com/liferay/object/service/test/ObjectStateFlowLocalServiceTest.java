@@ -35,14 +35,17 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -63,6 +66,11 @@ public class ObjectStateFlowLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-152677", "true"
+			).build());
+
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				TestPropsValues.getUserId(),
@@ -78,6 +86,14 @@ public class ObjectStateFlowLocalServiceTest {
 					_listTypeDefinition.getListTypeDefinitionId(), key,
 					LocalizedMapUtil.getLocalizedMap(key)));
 		}
+	}
+
+	@After
+	public void tearDown() {
+		PropsUtil.addProperties(
+			UnicodePropertiesBuilder.setProperty(
+				"feature.flag.LPS-152677", "false"
+			).build());
 	}
 
 	@Test

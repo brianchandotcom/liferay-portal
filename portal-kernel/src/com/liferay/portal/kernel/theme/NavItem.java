@@ -105,14 +105,6 @@ public class NavItem implements Serializable {
 		return navItems;
 	}
 
-	public static List<NavItem> fromLayouts(
-			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return fromLayouts(
-			httpServletRequest, themeDisplay.getLayouts(), themeDisplay);
-	}
-
 	public NavItem(HttpServletRequest httpServletRequest, Layout layout) {
 		this(
 			httpServletRequest,

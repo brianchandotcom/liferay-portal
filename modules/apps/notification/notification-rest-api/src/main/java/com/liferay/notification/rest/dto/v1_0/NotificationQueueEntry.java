@@ -173,34 +173,6 @@ public class NotificationQueueEntry implements Serializable {
 	protected String cc;
 
 	@Schema
-	public String getClassName() {
-		return className;
-	}
-
-	public void setClassName(String className) {
-		this.className = className;
-	}
-
-	@JsonIgnore
-	public void setClassName(
-		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
-
-		try {
-			className = classNameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String className;
-
-	@Schema
 	public String getFrom() {
 		return from;
 	}
@@ -552,20 +524,6 @@ public class NotificationQueueEntry implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(cc));
-
-			sb.append("\"");
-		}
-
-		if (className != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"className\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(className));
 
 			sb.append("\"");
 		}

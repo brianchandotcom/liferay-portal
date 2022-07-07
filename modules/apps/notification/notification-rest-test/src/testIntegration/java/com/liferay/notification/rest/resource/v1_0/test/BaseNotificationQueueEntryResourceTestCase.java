@@ -196,7 +196,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		notificationQueueEntry.setBcc(regex);
 		notificationQueueEntry.setBody(regex);
 		notificationQueueEntry.setCc(regex);
-		notificationQueueEntry.setClassName(regex);
 		notificationQueueEntry.setFrom(regex);
 		notificationQueueEntry.setFromName(regex);
 		notificationQueueEntry.setSubject(regex);
@@ -214,7 +213,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		Assert.assertEquals(regex, notificationQueueEntry.getBcc());
 		Assert.assertEquals(regex, notificationQueueEntry.getBody());
 		Assert.assertEquals(regex, notificationQueueEntry.getCc());
-		Assert.assertEquals(regex, notificationQueueEntry.getClassName());
 		Assert.assertEquals(regex, notificationQueueEntry.getFrom());
 		Assert.assertEquals(regex, notificationQueueEntry.getFromName());
 		Assert.assertEquals(regex, notificationQueueEntry.getSubject());
@@ -941,14 +939,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("className", additionalAssertFieldName)) {
-				if (notificationQueueEntry.getClassName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("from", additionalAssertFieldName)) {
 				if (notificationQueueEntry.getFrom() == null) {
 					valid = false;
@@ -1153,17 +1143,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				if (!Objects.deepEquals(
 						notificationQueueEntry1.getCc(),
 						notificationQueueEntry2.getCc())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("className", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						notificationQueueEntry1.getClassName(),
-						notificationQueueEntry2.getClassName())) {
 
 					return false;
 				}
@@ -1408,14 +1387,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("className")) {
-			sb.append("'");
-			sb.append(String.valueOf(notificationQueueEntry.getClassName()));
-			sb.append("'");
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("from")) {
 			sb.append("'");
 			sb.append(String.valueOf(notificationQueueEntry.getFrom()));
@@ -1563,8 +1534,6 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 				bcc = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				body = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				cc = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				className = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				from = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				fromName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

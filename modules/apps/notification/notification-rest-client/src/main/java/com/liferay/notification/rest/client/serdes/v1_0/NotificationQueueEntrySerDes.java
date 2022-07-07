@@ -113,20 +113,6 @@ public class NotificationQueueEntrySerDes {
 			sb.append("\"");
 		}
 
-		if (notificationQueueEntry.getClassName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"className\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(notificationQueueEntry.getClassName()));
-
-			sb.append("\"");
-		}
-
 		if (notificationQueueEntry.getFrom() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -310,15 +296,6 @@ public class NotificationQueueEntrySerDes {
 			map.put("cc", String.valueOf(notificationQueueEntry.getCc()));
 		}
 
-		if (notificationQueueEntry.getClassName() == null) {
-			map.put("className", null);
-		}
-		else {
-			map.put(
-				"className",
-				String.valueOf(notificationQueueEntry.getClassName()));
-		}
-
 		if (notificationQueueEntry.getFrom() == null) {
 			map.put("from", null);
 		}
@@ -442,12 +419,6 @@ public class NotificationQueueEntrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "cc")) {
 				if (jsonParserFieldValue != null) {
 					notificationQueueEntry.setCc((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "className")) {
-				if (jsonParserFieldValue != null) {
-					notificationQueueEntry.setClassName(
-						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "from")) {

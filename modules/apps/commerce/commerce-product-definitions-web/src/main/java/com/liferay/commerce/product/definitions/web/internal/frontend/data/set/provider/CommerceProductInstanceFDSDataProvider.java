@@ -34,7 +34,7 @@ import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -82,7 +82,7 @@ public class CommerceProductInstanceFDSDataProvider
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		String languageId = LanguageUtil.getLanguageId(locale);
+		String languageId = _language.getLanguageId(locale);
 
 		List<CPInstance> cpInstances = _getCPInstances(
 			_portal.getCompanyId(httpServletRequest), cpDefinitionId,
@@ -129,11 +129,11 @@ public class CommerceProductInstanceFDSDataProvider
 					cpDefinitionName, stockQuantity,
 					new LabelField(
 						statusDisplayStyle,
-						LanguageUtil.get(
+						_language.get(
 							httpServletRequest,
 							WorkflowConstants.getStatusLabel(
 								cpInstance.getStatus()))),
-					LanguageUtil.get(httpServletRequest, discontinued)));
+					_language.get(httpServletRequest, discontinued)));
 		}
 
 		return skus;
@@ -250,6 +250,9 @@ public class CommerceProductInstanceFDSDataProvider
 
 	@Reference
 	private JsonHelper _jsonHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

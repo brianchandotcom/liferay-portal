@@ -28,7 +28,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -86,7 +86,7 @@ public class CommerceProductMediaFDSActionProvider
 					_getProductMediaEditURL(
 						cpAttachmentFileEntry, httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "edit"));
+					_language.get(httpServletRequest, "edit"));
 				dropdownItem.setTarget("sidePanel");
 			}
 		).add(
@@ -99,7 +99,7 @@ public class CommerceProductMediaFDSActionProvider
 						cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
 						httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
+					_language.get(httpServletRequest, "delete"));
 			}
 		).build();
 	}
@@ -185,6 +185,9 @@ public class CommerceProductMediaFDSActionProvider
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -25,7 +25,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -76,7 +76,7 @@ public class CommerceProductOptionFDSActionProvider
 					_getProductOptionEditURL(
 						cpDefinitionOptionRel, httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "edit"));
+					_language.get(httpServletRequest, "edit"));
 				dropdownItem.setTarget("sidePanel");
 			}
 		).add(
@@ -89,7 +89,7 @@ public class CommerceProductOptionFDSActionProvider
 					_getProductOptionDeleteURL(
 						cpDefinitionOptionRel.getCPDefinitionOptionRelId()));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
+					_language.get(httpServletRequest, "delete"));
 				dropdownItem.setTarget("async");
 			}
 		).build();
@@ -133,6 +133,9 @@ public class CommerceProductOptionFDSActionProvider
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

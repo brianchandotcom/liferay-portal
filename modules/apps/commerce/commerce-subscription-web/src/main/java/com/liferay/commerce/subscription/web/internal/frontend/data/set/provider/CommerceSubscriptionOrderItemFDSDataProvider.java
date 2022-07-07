@@ -37,7 +37,7 @@ import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -147,12 +147,12 @@ public class CommerceSubscriptionOrderItemFDSDataProvider
 		String period, boolean plural, HttpServletRequest httpServletRequest) {
 
 		if (plural) {
-			return LanguageUtil.get(
+			return _language.get(
 				httpServletRequest,
 				StringUtil.toLowerCase(period + CharPool.LOWER_CASE_S));
 		}
 
-		return LanguageUtil.get(httpServletRequest, period);
+		return _language.get(httpServletRequest, period);
 	}
 
 	private String _getSubscriptionDuration(
@@ -190,7 +190,7 @@ public class CommerceSubscriptionOrderItemFDSDataProvider
 				long duration = cpSubscriptionInfo.getMaxSubscriptionCycles();
 
 				if (duration > 0) {
-					subscriptionDuration = LanguageUtil.format(
+					subscriptionDuration = _language.format(
 						httpServletRequest, "duration-x-x",
 						new Object[] {
 							duration,
@@ -222,7 +222,7 @@ public class CommerceSubscriptionOrderItemFDSDataProvider
 				long duration =
 					commerceSubscriptionEntry.getMaxSubscriptionCycles();
 
-				subscriptionDuration = LanguageUtil.format(
+				subscriptionDuration = _language.format(
 					httpServletRequest, "duration-x-x",
 					new Object[] {
 						duration,
@@ -269,7 +269,7 @@ public class CommerceSubscriptionOrderItemFDSDataProvider
 				int subscriptionLength =
 					cpSubscriptionInfo.getSubscriptionLength();
 
-				subscriptionPeriod = LanguageUtil.format(
+				subscriptionPeriod = _language.format(
 					httpServletRequest, "every-x-x",
 					new Object[] {
 						subscriptionLength,
@@ -292,7 +292,7 @@ public class CommerceSubscriptionOrderItemFDSDataProvider
 				int subscriptionLength =
 					commerceSubscriptionEntry.getSubscriptionLength();
 
-				subscriptionPeriod = LanguageUtil.format(
+				subscriptionPeriod = _language.format(
 					httpServletRequest, "every-x-x",
 					new Object[] {
 						subscriptionLength,
@@ -319,6 +319,9 @@ public class CommerceSubscriptionOrderItemFDSDataProvider
 
 	@Reference
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

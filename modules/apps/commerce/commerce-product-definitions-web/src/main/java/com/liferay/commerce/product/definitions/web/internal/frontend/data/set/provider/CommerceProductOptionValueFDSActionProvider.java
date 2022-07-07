@@ -27,7 +27,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -87,7 +87,7 @@ public class CommerceProductOptionValueFDSActionProvider
 					_getProductOptionValueEditURL(
 						cpDefinitionOptionValueRel, httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "edit"));
+					_language.get(httpServletRequest, "edit"));
 				dropdownItem.setTarget("sidePanel");
 			}
 		).add(
@@ -101,7 +101,7 @@ public class CommerceProductOptionValueFDSActionProvider
 							getCPDefinitionOptionValueRelId(),
 						httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
+					_language.get(httpServletRequest, "delete"));
 			}
 		).add(
 			() -> CommerceCatalogPermission.contains(
@@ -115,7 +115,7 @@ public class CommerceProductOptionValueFDSActionProvider
 							getCPDefinitionOptionValueRelId(),
 						httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "toggle-default"));
+					_language.get(httpServletRequest, "toggle-default"));
 			}
 		).build();
 	}
@@ -202,6 +202,9 @@ public class CommerceProductOptionValueFDSActionProvider
 	@Reference
 	private CPDefinitionOptionValueRelService
 		_cpDefinitionOptionValueRelService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

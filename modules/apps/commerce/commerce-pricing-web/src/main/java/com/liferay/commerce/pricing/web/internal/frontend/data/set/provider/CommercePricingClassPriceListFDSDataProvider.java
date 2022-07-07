@@ -26,7 +26,7 @@ import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -111,7 +111,7 @@ public class CommercePricingClassPriceListFDSDataProvider
 					dateTimeFormat.format(commercePriceList.getCreateDate()),
 					new LabelField(
 						statusDisplayStyle,
-						LanguageUtil.get(
+						_language.get(
 							httpServletRequest,
 							WorkflowConstants.getStatusLabel(
 								commercePriceList.getStatus()))),
@@ -146,5 +146,8 @@ public class CommercePricingClassPriceListFDSDataProvider
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;
+
+	@Reference
+	private Language _language;
 
 }

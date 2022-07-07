@@ -24,7 +24,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -72,7 +72,7 @@ public class CommerceOrderShipmentFDSActionProvider
 					_getShipmentEditURL(
 						shipment.getShipmentId(), httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "edit"));
+					_language.get(httpServletRequest, "edit"));
 			}
 		).add(
 			() -> _portletResourcePermission.contains(
@@ -83,7 +83,7 @@ public class CommerceOrderShipmentFDSActionProvider
 					_getShipmentDeleteURL(
 						shipment.getShipmentId(), httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
+					_language.get(httpServletRequest, "delete"));
 				dropdownItem.setTarget("modal-lg");
 			}
 		).build();
@@ -140,6 +140,9 @@ public class CommerceOrderShipmentFDSActionProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderShipmentFDSActionProvider.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

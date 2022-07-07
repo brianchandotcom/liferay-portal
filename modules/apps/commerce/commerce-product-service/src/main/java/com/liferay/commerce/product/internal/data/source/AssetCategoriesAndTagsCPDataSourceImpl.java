@@ -22,7 +22,7 @@ import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class AssetCategoriesAndTagsCPDataSourceImpl
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(locale),
 			"products-of-the-same-categories-and-tags");
 	}
@@ -95,5 +95,8 @@ public class AssetCategoriesAndTagsCPDataSourceImpl
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Reference
+	private Language _language;
 
 }

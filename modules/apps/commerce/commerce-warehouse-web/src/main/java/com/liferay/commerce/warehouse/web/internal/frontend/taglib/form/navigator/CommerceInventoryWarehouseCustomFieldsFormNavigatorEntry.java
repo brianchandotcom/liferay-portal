@@ -18,7 +18,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.warehouse.web.internal.servlet.taglib.ui.constants.CommerceInventoryWarehouseFormNavigatorConstants;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -60,7 +60,7 @@ public class CommerceInventoryWarehouseCustomFieldsFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, getKey());
+		return _language.get(locale, getKey());
 	}
 
 	@Override
@@ -108,5 +108,8 @@ public class CommerceInventoryWarehouseCustomFieldsFormNavigatorEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceInventoryWarehouseCustomFieldsFormNavigatorEntry.class);
+
+	@Reference
+	private Language _language;
 
 }

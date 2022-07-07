@@ -31,7 +31,7 @@ import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -103,9 +103,9 @@ public class CommerceProductOptionValueFDSDataProvider
 						locale),
 					cpDefinitionOptionValueRel.getKey(),
 					cpDefinitionOptionValueRel.getName(
-						LanguageUtil.getLanguageId(locale)),
+						_language.getLanguageId(locale)),
 					cpDefinitionOptionValueRel.getPriority(),
-					LanguageUtil.get(
+					_language.get(
 						locale,
 						cpDefinitionOptionValueRel.isPreselected() ? "yes" :
 							"no"),
@@ -205,6 +205,9 @@ public class CommerceProductOptionValueFDSDataProvider
 	@Reference
 	private CPDefinitionOptionValueRelService
 		_cpDefinitionOptionValueRelService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

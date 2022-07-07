@@ -33,7 +33,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -112,7 +112,7 @@ public class CommerceSubscriptionPaymentsFDSDataProvider
 					new LabelField(
 						CommerceOrderPaymentConstants.getOrderPaymentLabelStyle(
 							commerceOrderPayment.getStatus()),
-						LanguageUtil.get(
+						_language.get(
 							httpServletRequest,
 							CommerceOrderPaymentConstants.
 								getOrderPaymentStatusLabel(
@@ -156,5 +156,8 @@ public class CommerceSubscriptionPaymentsFDSDataProvider
 	@Reference
 	private CommerceSubscriptionEntryLocalService
 		_commerceSubscriptionEntryLocalService;
+
+	@Reference
+	private Language _language;
 
 }

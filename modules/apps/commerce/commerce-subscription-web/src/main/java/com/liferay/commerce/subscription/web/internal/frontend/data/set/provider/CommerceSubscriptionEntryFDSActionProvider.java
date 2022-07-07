@@ -25,7 +25,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -73,7 +73,7 @@ public class CommerceSubscriptionEntryFDSActionProvider
 						subscriptionEntry.getSubscriptionId(),
 						httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "edit"));
+					_language.get(httpServletRequest, "edit"));
 			}
 		).add(
 			() -> _portletResourcePermission.contains(
@@ -85,7 +85,7 @@ public class CommerceSubscriptionEntryFDSActionProvider
 						subscriptionEntry.getSubscriptionId(),
 						httpServletRequest));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
+					_language.get(httpServletRequest, "delete"));
 			}
 		).build();
 	}
@@ -127,6 +127,9 @@ public class CommerceSubscriptionEntryFDSActionProvider
 			"commerceSubscriptionEntryId", commerceSubscriptionEntryId
 		).buildPortletURL();
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

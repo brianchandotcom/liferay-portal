@@ -25,7 +25,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -83,7 +83,7 @@ public class CommerceTaxRateSettingFDSActionProvider
 						httpServletRequest,
 						taxRateSetting.getTaxRateSettingId()));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "edit"));
+					_language.get(httpServletRequest, "edit"));
 				dropdownItem.setTarget("sidePanel");
 			}
 		).add(
@@ -96,7 +96,7 @@ public class CommerceTaxRateSettingFDSActionProvider
 						httpServletRequest,
 						taxRateSetting.getTaxRateSettingId()));
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "delete"));
+					_language.get(httpServletRequest, "delete"));
 			}
 		).build();
 	}
@@ -155,6 +155,9 @@ public class CommerceTaxRateSettingFDSActionProvider
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

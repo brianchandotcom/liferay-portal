@@ -26,7 +26,7 @@ import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -88,12 +88,12 @@ public class CommerceProductOptionFDSDataProvider
 						cpDefinitionOptionRel.getDDMFormFieldTypeName(),
 						locale),
 					cpDefinitionOptionRel.getName(
-						LanguageUtil.getLanguageId(locale)),
+						_language.getLanguageId(locale)),
 					cpDefinitionOptionRel.getPriority(),
-					LanguageUtil.get(
+					_language.get(
 						locale,
 						cpDefinitionOptionRel.isRequired() ? "yes" : "no"),
-					LanguageUtil.get(
+					_language.get(
 						locale,
 						cpDefinitionOptionRel.isSkuContributor() ? "yes" :
 							"no"),
@@ -162,7 +162,7 @@ public class CommerceProductOptionFDSDataProvider
 				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 					"content.Language", locale, ddmFormFieldType.getClass());
 
-				return LanguageUtil.get(resourceBundle, label);
+				return _language.get(resourceBundle, label);
 			}
 		}
 		catch (MissingResourceException missingResourceException) {
@@ -185,6 +185,9 @@ public class CommerceProductOptionFDSDataProvider
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

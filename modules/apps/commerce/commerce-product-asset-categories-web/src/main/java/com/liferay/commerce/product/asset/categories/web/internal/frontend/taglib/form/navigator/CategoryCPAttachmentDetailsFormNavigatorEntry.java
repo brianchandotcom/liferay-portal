@@ -18,7 +18,7 @@ import com.liferay.commerce.product.asset.categories.web.internal.servlet.taglib
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
@@ -56,7 +56,7 @@ public class CategoryCPAttachmentDetailsFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "details");
+		return _language.get(locale, "details");
 	}
 
 	@Override
@@ -72,5 +72,8 @@ public class CategoryCPAttachmentDetailsFormNavigatorEntry
 	protected String getJspPath() {
 		return "/image/details.jsp";
 	}
+
+	@Reference
+	private Language _language;
 
 }

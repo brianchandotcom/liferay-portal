@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.frontend.data.set.filter.BaseRadioFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.RadioFDSFilterItem;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -65,7 +65,7 @@ public class CommerceOptionFieldTypeFDSFilter extends BaseRadioFDSFilter {
 				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 					"content.Language", locale, ddmFormFieldType.getClass());
 
-				return LanguageUtil.get(resourceBundle, label);
+				return _language.get(resourceBundle, label);
 			}
 		}
 		catch (MissingResourceException missingResourceException) {
@@ -128,5 +128,8 @@ public class CommerceOptionFieldTypeFDSFilter extends BaseRadioFDSFilter {
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+
+	@Reference
+	private Language _language;
 
 }

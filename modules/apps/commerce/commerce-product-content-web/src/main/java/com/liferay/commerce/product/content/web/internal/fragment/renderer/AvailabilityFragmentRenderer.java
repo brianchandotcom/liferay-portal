@@ -20,7 +20,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -53,7 +53,7 @@ public class AvailabilityFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "availability");
+		return _language.get(locale, "availability");
 	}
 
 	@Override
@@ -133,6 +133,9 @@ public class AvailabilityFragmentRenderer implements FragmentRenderer {
 	@Reference
 	private AvailabilityLabelInfoItemRenderer
 		_cpDefinitionAvailabilityInfoItemRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

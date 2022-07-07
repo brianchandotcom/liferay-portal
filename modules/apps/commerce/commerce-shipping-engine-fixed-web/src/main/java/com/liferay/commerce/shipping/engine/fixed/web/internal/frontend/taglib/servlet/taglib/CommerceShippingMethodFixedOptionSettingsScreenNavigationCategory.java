@@ -27,7 +27,7 @@ import com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.C
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
@@ -85,7 +85,7 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, ENTRY_KEY);
+		return _language.get(resourceBundle, ENTRY_KEY);
 	}
 
 	@Override
@@ -172,6 +172,9 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

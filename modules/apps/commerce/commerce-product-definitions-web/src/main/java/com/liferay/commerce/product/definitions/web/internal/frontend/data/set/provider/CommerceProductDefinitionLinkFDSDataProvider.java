@@ -27,7 +27,7 @@ import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -80,12 +80,12 @@ public class CommerceProductDefinitionLinkFDSDataProvider
 						cProduct.getPublishedCPDefinitionId());
 
 				String name = cpDefinition.getName(
-					LanguageUtil.getLanguageId(
+					_language.getLanguageId(
 						_portal.getLocale(httpServletRequest)));
 
 				Date createDate = cpDefinitionLink.getCreateDate();
 
-				String createDateDescription = LanguageUtil.getTimeDescription(
+				String createDateDescription = _language.getTimeDescription(
 					httpServletRequest,
 					System.currentTimeMillis() - createDate.getTime(), true);
 
@@ -97,10 +97,10 @@ public class CommerceProductDefinitionLinkFDSDataProvider
 							cpDefinition.getDefaultImageThumbnailSrc(
 								CommerceAccountConstants.ACCOUNT_ID_ADMIN)),
 						HtmlUtil.escape(name),
-						LanguageUtil.get(
+						_language.get(
 							httpServletRequest, cpDefinitionLink.getType()),
 						cpDefinitionLink.getPriority(),
-						LanguageUtil.format(
+						_language.format(
 							httpServletRequest, "x-ago", createDateDescription,
 							false)));
 			}
@@ -132,6 +132,9 @@ public class CommerceProductDefinitionLinkFDSDataProvider
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

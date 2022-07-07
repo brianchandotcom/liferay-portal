@@ -19,7 +19,7 @@ import com.liferay.commerce.shipment.web.internal.servlet.taglib.ui.constants.Co
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.io.IOException;
 
@@ -61,7 +61,7 @@ public class CommerceShipmentShippingSummaryScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, getEntryKey());
+		return _language.get(locale, getEntryKey());
 	}
 
 	@Override
@@ -83,6 +83,9 @@ public class CommerceShipmentShippingSummaryScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.shipment.web)"

@@ -28,7 +28,7 @@ import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -77,7 +77,7 @@ public class CommercePricingClassCPDefinitionRelFDSDataProvider
 					_commercePricingClassCPDefinitionRelService.
 						searchByCommercePricingClassId(
 							commercePricingClassId, fdsKeywords.getKeywords(),
-							LanguageUtil.getLanguageId(locale),
+							_language.getLanguageId(locale),
 							fdsPagination.getStartPosition(),
 							fdsPagination.getEndPosition());
 
@@ -101,7 +101,7 @@ public class CommercePricingClassCPDefinitionRelFDSDataProvider
 							_portal.getLocale(httpServletRequest)),
 						new ImageField(
 							cpDefinition.getName(
-								LanguageUtil.getLanguageId(locale)),
+								_language.getLanguageId(locale)),
 							"rounded", "lg",
 							cpDefinition.getDefaultImageThumbnailSrc(
 								CommerceAccountConstants.ACCOUNT_ID_ADMIN))));
@@ -140,7 +140,7 @@ public class CommercePricingClassCPDefinitionRelFDSDataProvider
 		}
 
 		if (cpInstances.size() > 1) {
-			return LanguageUtil.get(locale, "multiple-skus");
+			return _language.get(locale, "multiple-skus");
 		}
 
 		CPInstance cpInstance = cpInstances.get(0);
@@ -157,6 +157,9 @@ public class CommercePricingClassCPDefinitionRelFDSDataProvider
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

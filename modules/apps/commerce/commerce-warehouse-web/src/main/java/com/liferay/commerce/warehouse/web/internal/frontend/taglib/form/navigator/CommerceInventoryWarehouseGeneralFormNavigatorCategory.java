@@ -16,11 +16,12 @@ package com.liferay.commerce.warehouse.web.internal.frontend.taglib.form.navigat
 
 import com.liferay.commerce.warehouse.web.internal.servlet.taglib.ui.constants.CommerceInventoryWarehouseFormNavigatorConstants;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
@@ -46,7 +47,10 @@ public class CommerceInventoryWarehouseGeneralFormNavigatorCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "general");
+		return _language.get(locale, "general");
 	}
+
+	@Reference
+	private Language _language;
 
 }

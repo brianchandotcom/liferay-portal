@@ -18,7 +18,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.warehouse.web.internal.servlet.taglib.ui.constants.CommerceInventoryWarehouseFormNavigatorConstants;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
@@ -56,7 +56,7 @@ public class CommerceInventoryWarehouseGeolocationFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, getKey());
+		return _language.get(locale, getKey());
 	}
 
 	@Override
@@ -72,5 +72,8 @@ public class CommerceInventoryWarehouseGeolocationFormNavigatorEntry
 	protected String getJspPath() {
 		return "/commerce_inventory_warehouse/geolocation.jsp";
 	}
+
+	@Reference
+	private Language _language;
 
 }

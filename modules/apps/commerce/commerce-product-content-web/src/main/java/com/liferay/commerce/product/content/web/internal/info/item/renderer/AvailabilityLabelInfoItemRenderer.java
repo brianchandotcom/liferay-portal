@@ -29,7 +29,7 @@ import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -63,7 +63,7 @@ public class AvailabilityLabelInfoItemRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "availability");
+		return _language.get(locale, "availability");
 	}
 
 	@Override
@@ -181,6 +181,9 @@ public class AvailabilityLabelInfoItemRenderer
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

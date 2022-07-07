@@ -179,7 +179,6 @@ components:
                     example: 30130
                     format: int64
                     minimum: 0
-                    readOnly: true
                     type: integer
                 shippingOptionName:
                     example: "Standard Delivery"
@@ -191,6 +190,9 @@ components:
                     readOnly: true
                 trackingNumber:
                     example: "123AD-asd"
+                    type: string
+                trackingURL:
+                    example: "Standard Delivery"
                     type: string
                 userName:
                     example: "John"

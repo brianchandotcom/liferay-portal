@@ -187,13 +187,20 @@ public class PredicateExpressionVisitorImpl
 			StringPool.PERCENT + fieldValue + StringPool.PERCENT);
 	}
 
-	private Column<?, ?> _getColumn(String objectFieldName) {
+	private Column<?, ?> _getColumn(String fieldName) {
 		try {
-			Table<?> table = _objectFieldLocalService.getTable(
-				_objectDefinitionId, objectFieldName);
+			ObjectField objectField = Optional.ofNullable(
+				_objectFieldLocalService.fetchObjectField(
+					_objectDefinitionId, fieldName)
+			).orElseGet(
+				() -> _getObjectField(fieldName)
+			);
 
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				_objectDefinitionId, objectFieldName);
+			if (objectField == null) {
+				throw new UnsupportedOperationException(
+					"Unsupported method _getColumn with field name " +
+						fieldName);
+			}
 
 			if (Objects.equals(
 					objectField.getBusinessType(),
@@ -207,11 +214,32 @@ public class PredicateExpressionVisitorImpl
 						objectField.getBusinessType() + " field");
 			}
 
+			Table<?> table = _objectFieldLocalService.getTable(
+				_objectDefinitionId, objectField.getName());
+
 			return table.getColumn(objectField.getDBColumnName());
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);
 		}
+	}
+
+	private ObjectField _getObjectField(String relationshipIdName) {
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(_objectDefinitionId)) {
+
+			if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP) &&
+				StringUtil.endsWith(
+					objectField.getName(),
+					StringPool.UNDERLINE + relationshipIdName)) {
+
+				return objectField;
+			}
+		}
+
+		return null;
 	}
 
 	private Optional<Predicate> _getPredicateOptional(

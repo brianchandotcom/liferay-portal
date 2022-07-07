@@ -25,12 +25,17 @@ import com.liferay.commerce.frontend.model.HeaderActionModel;
 import com.liferay.commerce.frontend.model.StepModel;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceShipmentItemService;
+import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipment.web.internal.portlet.action.helper.ActionHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -40,6 +45,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -57,7 +64,9 @@ import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletRequest;
@@ -80,6 +89,8 @@ public class CommerceShipmentDisplayContext
 		CommerceChannelService commerceChannelService,
 		CommerceOrderItemService commerceOrderItemService,
 		CommerceOrderLocalService commerceOrderLocalService,
+		CommerceShipmentItemService commerceShipmentItemService,
+		CommerceShippingMethodService commerceShippingMethodService,
 		CountryService countryService, HttpServletRequest httpServletRequest,
 		PortletResourcePermission portletResourcePermission,
 		RegionService regionService) {
@@ -91,6 +102,8 @@ public class CommerceShipmentDisplayContext
 		_commerceChannelService = commerceChannelService;
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderLocalService = commerceOrderLocalService;
+		_commerceShipmentItemService = commerceShipmentItemService;
+		_commerceShippingMethodService = commerceShippingMethodService;
 		_countryService = countryService;
 		_regionService = regionService;
 	}
@@ -159,6 +172,50 @@ public class CommerceShipmentDisplayContext
 			_commerceOrderLocalService.searchCommerceOrders(searchContext);
 
 		return baseModelSearchResult.getBaseModels();
+	}
+
+	public String getCommerceShippingMethodName(Locale locale) {
+		try {
+			CommerceShipment commerceShipment = getCommerceShipment();
+
+			if (commerceShipment == null) {
+				return StringPool.BLANK;
+			}
+
+			CommerceShippingMethod commerceShippingMethod =
+				commerceShipment.getCommerceShippingMethod();
+
+			if (commerceShippingMethod == null) {
+				return StringPool.BLANK;
+			}
+
+			return commerceShippingMethod.getName(locale);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	public List<CommerceShippingMethod> getCommerceShippingMethods()
+		throws PortalException {
+
+		CommerceShipment commerceShipment = getCommerceShipment();
+
+		if (commerceShipment == null) {
+			return Collections.emptyList();
+		}
+
+		CommerceAddress commerceAddress =
+			_commerceAddressService.getCommerceAddress(
+				commerceShipment.getCommerceAddressId());
+
+		return _commerceShippingMethodService.getCommerceShippingMethods(
+			commerceShipment.getGroupId(), commerceAddress.getCountryId(),
+			true);
 	}
 
 	public List<Country> getCountries() {
@@ -384,6 +441,37 @@ public class CommerceShipmentDisplayContext
 			commerceShipment.getCommerceAddressId());
 	}
 
+	public boolean hasMultipleShippingMethods() throws PortalException {
+		long commerceShippingMethodId = 0;
+
+		List<CommerceShipmentItem> commerceShipmentItems =
+			_commerceShipmentItemService.getCommerceShipmentItems(
+				getCommerceShipmentId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		for (CommerceShipmentItem commerceShipmentItem :
+				commerceShipmentItems) {
+
+			CommerceOrderItem commerceOrderItem =
+				_commerceOrderItemService.getCommerceOrderItem(
+					commerceShipmentItem.getCommerceOrderItemId());
+
+			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
+			if ((commerceShippingMethodId != 0) &&
+				(commerceShippingMethodId !=
+					commerceOrder.getCommerceShippingMethodId())) {
+
+				return true;
+			}
+
+			commerceShippingMethodId =
+				commerceOrder.getCommerceShippingMethodId();
+		}
+
+		return false;
+	}
+
 	private SearchContext _buildSearchContext() throws PortalException {
 		SearchContext searchContext = new SearchContext();
 
@@ -429,11 +517,16 @@ public class CommerceShipmentDisplayContext
 		).toArray();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceShipmentDisplayContext.class);
+
 	private final CommerceAddressFormatter _commerceAddressFormatter;
 	private final CommerceAddressService _commerceAddressService;
 	private final CommerceChannelService _commerceChannelService;
 	private final CommerceOrderItemService _commerceOrderItemService;
 	private final CommerceOrderLocalService _commerceOrderLocalService;
+	private final CommerceShipmentItemService _commerceShipmentItemService;
+	private final CommerceShippingMethodService _commerceShippingMethodService;
 	private final CountryService _countryService;
 	private final RegionService _regionService;
 

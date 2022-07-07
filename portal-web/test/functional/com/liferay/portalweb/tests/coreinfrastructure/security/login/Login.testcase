@@ -203,6 +203,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test OpenSSOSmoke {
+		property custom.properties = "javascript.single.page.application.enabled=false";
 		property dummy.socket.proxy.disabled = "true";
 		property openam.enabled = "true";
 		property test.name.skip.portal.instance = "Login#OpenSSOSmoke";
@@ -237,8 +238,6 @@ definition {
 
 		task ("Login and configure open SSO") {
 			User.firstLoginPG();
-
-			Pause(locator1 = "30000");
 
 			PortalSettings.gotoConfiguration(
 				baseURL = "http://localhost:8080",

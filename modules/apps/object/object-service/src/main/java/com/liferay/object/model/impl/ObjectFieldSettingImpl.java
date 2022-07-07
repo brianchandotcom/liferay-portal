@@ -14,8 +14,23 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.model.ObjectFilter;
+
+import java.util.List;
+
 /**
  * @author Marco Leo
  */
 public class ObjectFieldSettingImpl extends ObjectFieldSettingBaseImpl {
+
+	public List<ObjectFilter> getObjectFilters() {
+		return _objectFilters;
+	}
+
+	public void setObjectFilters(List<ObjectFilter> objectFilters) {
+		_objectFilters = objectFilters;
+	}
+
+	private List<ObjectFilter> _objectFilters;
+
 }

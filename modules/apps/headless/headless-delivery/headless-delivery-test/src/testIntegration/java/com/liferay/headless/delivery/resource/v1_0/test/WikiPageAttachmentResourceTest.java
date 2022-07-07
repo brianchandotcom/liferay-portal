@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -34,6 +36,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -64,6 +67,97 @@ public class WikiPageAttachmentResourceTest
 			wikiNode.getNodeId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
 			serviceContext);
+	}
+
+	@Override
+	@Test
+	public void testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode()
+		throws Exception {
+
+		super.
+			testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.ERROR)) {
+
+			WikiPageAttachment wikiPageAttachment =
+				testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment();
+
+			// Nonexistent wiki page
+
+			assertHttpResponseStatusCode(
+				404,
+				wikiPageAttachmentResource.
+					deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCodeHttpResponse(
+						testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId(),
+						RandomTestUtil.randomString(),
+						wikiPageAttachment.getExternalReferenceCode()));
+		}
+
+		// Nonexistent wiki page attachment
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiPageAttachmentResource.
+				deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId(),
+					testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode(),
+					RandomTestUtil.randomString()));
+
+		// Wiki attachment associated to a different wiki page
+
+		WikiPage prevWikiPage = _wikiPage;
+
+		WikiPageAttachment wikiPageAttachment =
+			testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment();
+
+		assertHttpResponseStatusCode(
+			204,
+			wikiPageAttachmentResource.
+				deleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCodeHttpResponse(
+					testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId(),
+					prevWikiPage.getExternalReferenceCode(),
+					wikiPageAttachment.getExternalReferenceCode()));
+	}
+
+	@Override
+	@Test
+	public void testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode()
+		throws Exception {
+
+		super.
+			testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.ERROR)) {
+
+			WikiPageAttachment wikiPageAttachment =
+				testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment();
+
+			// Nonexistent wiki page
+
+			assertHttpResponseStatusCode(
+				404,
+				wikiPageAttachmentResource.
+					getSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCodeHttpResponse(
+						testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId(),
+						RandomTestUtil.randomString(),
+						wikiPageAttachment.getExternalReferenceCode()));
+		}
+
+		// Nonexistent wiki page attachment
+
+		assertHttpResponseStatusCode(
+			404,
+			wikiPageAttachmentResource.
+				getSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCodeHttpResponse(
+					testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId(),
+					testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode(),
+					RandomTestUtil.randomString()));
 	}
 
 	@Override
@@ -113,12 +207,60 @@ public class WikiPageAttachmentResourceTest
 
 	@Override
 	protected WikiPageAttachment
+			testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment()
+		throws Exception {
+
+		return testDeleteWikiPageAttachment_addWikiPageAttachment();
+	}
+
+	@Override
+	protected Long
+			testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		return _wikiPage.getGroupId();
+	}
+
+	@Override
+	protected String
+			testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode()
+		throws Exception {
+
+		return _wikiPage.getExternalReferenceCode();
+	}
+
+	@Override
+	protected WikiPageAttachment
 			testDeleteWikiPageAttachment_addWikiPageAttachment()
 		throws Exception {
 
 		return wikiPageAttachmentResource.postWikiPageWikiPageAttachment(
 			_wikiPage.getResourcePrimKey(), randomWikiPageAttachment(),
 			getMultipartFiles());
+	}
+
+	@Override
+	protected WikiPageAttachment
+			testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment()
+		throws Exception {
+
+		return testDeleteWikiPageAttachment_addWikiPageAttachment();
+	}
+
+	@Override
+	protected Long
+			testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		return _wikiPage.getGroupId();
+	}
+
+	@Override
+	protected String
+			testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode()
+		throws Exception {
+
+		return _wikiPage.getExternalReferenceCode();
 	}
 
 	@Override
@@ -134,6 +276,30 @@ public class WikiPageAttachmentResourceTest
 	@Override
 	protected Long testGetWikiPageWikiPageAttachmentsPage_getWikiPageId() {
 		return _wikiPage.getResourcePrimKey();
+	}
+
+	@Override
+	protected WikiPageAttachment
+			testGraphQLGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment()
+		throws Exception {
+
+		return testDeleteWikiPageAttachment_addWikiPageAttachment();
+	}
+
+	@Override
+	protected Long
+			testGraphQLGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId()
+		throws Exception {
+
+		return _wikiPage.getGroupId();
+	}
+
+	@Override
+	protected String
+			testGraphQLGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode()
+		throws Exception {
+
+		return _wikiPage.getExternalReferenceCode();
 	}
 
 	@Override

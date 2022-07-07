@@ -163,12 +163,6 @@ describe('CommonStylesManager', () => {
 			document,
 			window,
 		});
-
-		Liferay.FeatureFlags['LPS-147511'] = true;
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPS-147511'] = false;
 	});
 
 	it('creates a style tag', () => {

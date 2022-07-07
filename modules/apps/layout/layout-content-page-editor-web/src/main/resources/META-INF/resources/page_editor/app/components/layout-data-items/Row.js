@@ -63,12 +63,10 @@ const Row = React.forwardRef(({children, className, item}, ref) => {
 		<ClayLayout.Row
 			className={classNames(
 				className,
-				getLayoutDataItemUniqueClassName(item.itemId),
 				getLayoutDataItemClassName(item.type),
+				getLayoutDataItemCssClasses(item),
+				getLayoutDataItemUniqueClassName(item.itemId),
 				{
-					[getLayoutDataItemCssClasses(item)]: Liferay.FeatureFlags[
-						'LPS-147511'
-					],
 					'flex-column-reverse':
 						item.config.numberOfColumns === 2 &&
 						modulesPerRow === 1 &&

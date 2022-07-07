@@ -74,7 +74,7 @@ export default function CSSFieldSet({item}) {
 		);
 	};
 
-	return Liferay.FeatureFlags['LPS-147511'] && canUpdateCSSAdvancedOptions ? (
+	return canUpdateCSSAdvancedOptions ? (
 		<div
 			className={classNames({
 				'mt-3': selectedViewportSize === VIEWPORT_SIZES.desktop,

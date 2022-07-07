@@ -52,14 +52,6 @@ const renderCSSFieldSet = ({permissions}) => {
 };
 
 describe('CSSFieldSet', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPS-147511'] = true;
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPS-147511'] = false;
-	});
-
 	it('shows css collapse with UPDATE permission', () => {
 		renderCSSFieldSet({permissions: {UPDATE: true}});
 

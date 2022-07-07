@@ -264,8 +264,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			[PANEL_IDS.containerAdvanced]:
 				(canUpdateItemAdvancedConfiguration &&
 					state.selectedViewportSize === VIEWPORT_SIZES.desktop) ||
-				(canUpdateCSSAdvancedOptions &&
-					Liferay.FeatureFlags['LPS-147511']),
+				canUpdateCSSAdvancedOptions,
 			[PANEL_IDS.containerGeneral]: true,
 			[PANEL_IDS.containerStyles]: true,
 		};
@@ -275,8 +274,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			[PANEL_IDS.formAdvancedPanel]:
 				(canUpdateItemAdvancedConfiguration &&
 					state.selectedViewportSize === VIEWPORT_SIZES.desktop) ||
-				(canUpdateCSSAdvancedOptions &&
-					Liferay.FeatureFlags['LPS-147511']),
+				canUpdateCSSAdvancedOptions,
 			[PANEL_IDS.formGeneral]:
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.containerStyles]: haveAtLeastLimitedPermission,
@@ -291,8 +289,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			[PANEL_IDS.fragmentAdvanced]:
 				(canUpdateItemAdvancedConfiguration &&
 					state.selectedViewportSize === VIEWPORT_SIZES.desktop) ||
-				(canUpdateCSSAdvancedOptions &&
-					Liferay.FeatureFlags['LPS-147511']),
+				canUpdateCSSAdvancedOptions,
 			[PANEL_IDS.fragmentStyles]: haveAtLeastLimitedPermission,
 			[PANEL_IDS.fragmentGeneral]:
 				fragmentEntryType !== FRAGMENT_ENTRY_TYPES.input &&
@@ -316,8 +313,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			[PANEL_IDS.rowAdvanced]:
 				(canUpdateItemAdvancedConfiguration &&
 					state.selectedViewportSize === VIEWPORT_SIZES.desktop) ||
-				(canUpdateCSSAdvancedOptions &&
-					Liferay.FeatureFlags['LPS-147511']),
+				canUpdateCSSAdvancedOptions,
 		};
 	}
 

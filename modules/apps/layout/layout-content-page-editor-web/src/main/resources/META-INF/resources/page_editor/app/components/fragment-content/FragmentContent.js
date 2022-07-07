@@ -252,9 +252,9 @@ const FragmentContent = ({
 						className,
 						`page-editor__fragment-content ${fragmentEntryLink?.cssClass}`,
 						{
-							[getLayoutDataItemCssClasses(item)]:
-								Liferay.FeatureFlags['LPS-147511'] &&
-								!hasInnerCommonStyles(fragmentEntryLink),
+							[getLayoutDataItemCssClasses(
+								item
+							)]: !hasInnerCommonStyles(fragmentEntryLink),
 							[getLayoutDataItemUniqueClassName(
 								item.itemId
 							)]: !hasInnerCommonStyles(fragmentEntryLink),

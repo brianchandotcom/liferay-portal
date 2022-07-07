@@ -98,7 +98,7 @@ export default function generateStyleSheet(styles, {itemsWithTopper} = {}) {
 			)} {\n${topperCSS}}\n`;
 		}
 
-		if (customCSS && Liferay.FeatureFlags['LPS-147511']) {
+		if (customCSS) {
 			css += customCSS.replaceAll(
 				FRAGMENT_CLASS_PLACEHOLDER,
 				getLayoutDataItemUniqueClassName(itemId)

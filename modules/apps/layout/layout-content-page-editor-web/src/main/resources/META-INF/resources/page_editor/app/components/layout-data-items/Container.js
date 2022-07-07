@@ -109,11 +109,10 @@ const Container = React.memo(
 				{...(link ? {} : data)}
 				className={classNames(
 					className,
-					getLayoutDataItemUniqueClassName(item.itemId),
 					getLayoutDataItemClassName(item.type),
+					getLayoutDataItemCssClasses(item),
+					getLayoutDataItemUniqueClassName(item.itemId),
 					{
-						[getLayoutDataItemCssClasses(item)]: Liferay
-							.FeatureFlags['LPS-147511'],
 						[align]: !!align,
 						[`container-fluid`]:
 							widthType === CONTAINER_WIDTH_TYPES.fixed,

@@ -56,6 +56,20 @@ public class EntityExtensionHandler {
 		return extendedProperties;
 	}
 
+	public Map<String, PropertyDefinition> getExtendedPropertyDefinitions(
+		long companyId, String className) {
+
+		Map<String, PropertyDefinition> propertyDefinitions = new HashMap<>();
+
+		for (ExtensionProvider extensionProvider : _extensionProviders) {
+			propertyDefinitions.putAll(
+				extensionProvider.getExtendedPropertyDefinitions(
+					companyId, className));
+		}
+
+		return propertyDefinitions;
+	}
+
 	public Set<String> getFilteredPropertyNames(long companyId, Object entity) {
 		Set<String> filteredPropertyNames = new HashSet<>();
 

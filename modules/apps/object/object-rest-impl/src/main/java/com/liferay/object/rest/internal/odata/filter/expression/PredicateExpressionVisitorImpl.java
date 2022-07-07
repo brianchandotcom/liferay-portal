@@ -74,6 +74,13 @@ public class PredicateExpressionVisitorImpl
 			ListExpression.Operation operation, Object left, List<Object> right)
 		throws ExpressionVisitException {
 
+		if (Objects.equals(ListExpression.Operation.IN, operation)) {
+			Column<?, Object> column = (Column<?, Object>)_getColumn(
+				GetterUtil.getString(left));
+
+			return column.in(right.toArray());
+		}
+
 		throw new UnsupportedOperationException(
 			"Unsupported method visitListExpressionOperation with operation " +
 				operation);

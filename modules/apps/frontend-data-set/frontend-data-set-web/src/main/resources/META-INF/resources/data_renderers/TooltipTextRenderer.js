@@ -32,7 +32,6 @@ function TooltipTextRenderer({value}) {
 		<>
 			<ClayTooltipProvider
 				contentRenderer={() => <TooltipText text={text} />}
-				delay={0}
 			>
 				<span className="tooltip-provider">
 					<ClayIcon symbol={iconSymbol} />

@@ -586,6 +586,24 @@ definition {
 		WaitForSPARefresh();
 	}
 
+	macro addThemeCSSExtension {
+		WaitForEditable(
+			key_text = "Extension",
+			locator1 = "TextInput#ANY");
+
+		Click(
+			key_text = "Extension",
+			locator1 = "TextInput#ANY");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_listEntry = "${extensionName}",
+			locator1 = "LexiconList#LIST_ENTRY_TITLE");
+
+		SelectFrameTop();
+	}
+
 	macro cannotDeletePagesAssociatedWithSiteTemplate {
 		if (isSet(pageName)) {
 			Click(

@@ -23,6 +23,7 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.test.util.MockInfoServiceRegistrationHolder;
+import com.liferay.info.test.util.info.item.creator.MockInfoItemCreator;
 import com.liferay.info.test.util.model.MockObject;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -148,6 +149,55 @@ public class AddInfoItemStrutsActionValidationTest {
 				infoFormException instanceof
 					InfoFormValidationException.InvalidCaptcha);
 
+			Assert.assertFalse(
+				SessionMessages.contains(mockHttpServletRequest, formItemId));
+		}
+	}
+
+	@Test
+	public void testAddInfoItemStrutsActionInfoFormException()
+		throws Exception {
+
+		InfoField<TextInfoFieldType> infoField = _getInfoField();
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField)
+						).build(),
+						_editPageInfoItemCapability)) {
+
+			MockInfoItemCreator mockInfoItemCreator =
+				mockInfoServiceRegistrationHolder.getMockInfoItemCreator();
+
+			InfoFormException infoFormException = new InfoFormException();
+
+			mockInfoItemCreator.setInfoFormException(infoFormException);
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
+				layout, false,
+				String.valueOf(
+					_portal.getClassNameId(MockObject.class.getName())),
+				"0", infoField);
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(layout, formItemId);
+
+			_addInfoItemStrutsAction.execute(
+				mockHttpServletRequest, new MockHttpServletResponse());
+
+			Assert.assertTrue(
+				SessionErrors.contains(mockHttpServletRequest, formItemId));
+			Assert.assertFalse(
+				SessionErrors.contains(
+					mockHttpServletRequest, infoField.getUniqueId()));
+			Assert.assertEquals(
+				infoFormException,
+				SessionErrors.get(mockHttpServletRequest, formItemId));
 			Assert.assertFalse(
 				SessionMessages.contains(mockHttpServletRequest, formItemId));
 		}

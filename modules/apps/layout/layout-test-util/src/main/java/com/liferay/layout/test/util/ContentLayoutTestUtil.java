@@ -21,9 +21,12 @@ import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.page.template.util.LayoutStructureUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -65,6 +68,58 @@ import org.osgi.framework.ServiceReference;
  * @author Lourdes Fernández Besada
  */
 public class ContentLayoutTestUtil {
+
+	public static JSONObject addFormToLayout(
+			Layout layout, String classNameId, String classTypeId,
+			long segmentsExperienceId, String... fieldTypes)
+		throws Exception {
+
+		JSONObject jsonObject = addItemToLayout(
+			layout,
+			JSONUtil.put(
+				"classNameId", classNameId
+			).put(
+				"classTypeId", classTypeId
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_FORM, segmentsExperienceId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				layout.getGroupId(), TestPropsValues.getUserId());
+		String parentItemId = jsonObject.getString("addedItemId");
+
+		for (int i = 0; i < fieldTypes.length; i++) {
+			String fieldType = fieldTypes[i];
+
+			FragmentEntry fragmentEntry =
+				FragmentEntryLocalServiceUtil.addFragmentEntry(
+					TestPropsValues.getUserId(), layout.getGroupId(), 0,
+					StringUtil.randomString(), StringUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), false, "{fieldSets: []}",
+					null, 0, FragmentConstants.TYPE_INPUT,
+					JSONUtil.put(
+						"fieldTypes", JSONUtil.put(fieldType)
+					).toString(),
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+			addFragmentEntryLinkToLayout(
+				layout, fragmentEntry.getFragmentEntryId(),
+				segmentsExperienceId, fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(), "{}",
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				parentItemId, i);
+		}
+
+		jsonObject.put(
+			"layoutData",
+			LayoutStructureUtil.getLayoutStructure(
+				layout.getPlid(), segmentsExperienceId));
+
+		return jsonObject;
+	}
 
 	public static FragmentEntryLink addFragmentEntryLinkToLayout(
 			Layout layout, long fragmentEntryId, long segmentsExperienceId,

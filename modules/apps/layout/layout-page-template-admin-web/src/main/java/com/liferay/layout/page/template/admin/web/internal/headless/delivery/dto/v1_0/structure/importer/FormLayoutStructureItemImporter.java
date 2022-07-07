@@ -16,14 +16,21 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.page.template.util.AlignConverter;
+import com.liferay.layout.page.template.util.ContentDisplayConverter;
+import com.liferay.layout.page.template.util.FlexWrapConverter;
+import com.liferay.layout.page.template.util.JustifyConverter;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.HashSet;
@@ -165,6 +172,51 @@ public class FormLayoutStructureItemImporter
 		if (definitionMap.containsKey("indexed")) {
 			formStyledLayoutStructureItem.setIndexed(
 				GetterUtil.getBoolean(definitionMap.get("indexed")));
+		}
+
+		Map<String, Object> formLayout = (Map<String, Object>)definitionMap.get(
+			"layout");
+
+		if (formLayout != null) {
+			String align = String.valueOf(
+				formLayout.getOrDefault("align", StringPool.BLANK));
+
+			if (Validator.isNotNull(align)) {
+				formStyledLayoutStructureItem.setAlign(
+					AlignConverter.convertToInternalValue(align));
+			}
+
+			String contentDisplay = String.valueOf(
+				formLayout.getOrDefault("contentDisplay", StringPool.BLANK));
+
+			if (Validator.isNotNull(contentDisplay)) {
+				formStyledLayoutStructureItem.setContentDisplay(
+					ContentDisplayConverter.convertToInternalValue(
+						contentDisplay));
+			}
+
+			String flexWrap = String.valueOf(
+				formLayout.getOrDefault("flexWrap", StringPool.BLANK));
+
+			if (Validator.isNotNull(flexWrap)) {
+				formStyledLayoutStructureItem.setFlexWrap(
+					FlexWrapConverter.convertToInternalValue(flexWrap));
+			}
+
+			String justify = String.valueOf(
+				formLayout.getOrDefault("justify", StringPool.BLANK));
+
+			if (Validator.isNotNull(justify)) {
+				formStyledLayoutStructureItem.setJustify(
+					JustifyConverter.convertToInternalValue(justify));
+			}
+
+			String widthType = StringUtil.toLowerCase(
+				(String)formLayout.get("widthType"));
+
+			if (widthType != null) {
+				formStyledLayoutStructureItem.setWidthType(widthType);
+			}
 		}
 
 		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147895")) &&

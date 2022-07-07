@@ -3528,6 +3528,30 @@ components:
                     description:
                         A flag that indicates whether the page fragment instance is indexed or not.
                     type: boolean
+                layout:
+                    # @review
+                    description:
+                        the page section's layout.
+                    properties:
+                        align:
+                            enum: [Baseline, Center, End, None, Start, Stretch]
+                            type: string
+                        contentDisplay:
+                            enum: [Block, FlexColumn, FlexRow]
+                            type: string
+                        flexWrap:
+                            enum: [NoWrap, Wrap, WrapReverse]
+                            type: string
+                        justify:
+                            enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
+                            type: string
+                        widthType:
+                            # @review
+                            description:
+                                The width's type (fixed or fluid).
+                            enum: [Fixed, Fluid]
+                            type: string
+                    type: object
                 name:
                     # @review
                     description:

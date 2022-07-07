@@ -101,8 +101,7 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 					"join DDMStructureVersion on DDMStructure.structureId = ",
 					"DDMStructureVersion.structureId where ",
 					"DDMStructure.version = DDMStructureVersion.version and ",
-					"DDMStructure.classNameId = ? or DDMStructure.classNameId ",
-					"= ?"));
+					"DDMStructure.classNameId in (?, ?)"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

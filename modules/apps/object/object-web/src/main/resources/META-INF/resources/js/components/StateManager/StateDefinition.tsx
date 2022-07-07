@@ -17,21 +17,69 @@ import {
 	CustomItem,
 	FormCustomSelect,
 } from '@liferay/object-js-components-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import './StateDefinition.scss';
 
 export default function StateDefinition({
+	currentKey,
 	disabled,
 	index,
 	initialValues,
+	setValues,
 	stateName,
+	values,
 }: IProps) {
 	const [items, setItems] = useState<CustomItem[]>(
-		initialValues.map(({key, name}) => {
-			return {label: name, value: key};
+		initialValues.map(({checked, key, name}) => {
+			return {checked, label: name, value: key};
 		})
 	);
+
+	useEffect(() => {
+		const stateSettings = values.objectFieldSettings?.find(
+			({name}: ObjectFieldSetting) => name === 'stateFlow'
+		);
+
+		const stateSettingsIndex = values.objectFieldSettings?.indexOf(
+			stateSettings!
+		);
+
+		const stateSettingsValue = JSON.parse(stateSettings!.value as string);
+
+		const objectStates = stateSettingsValue.objectStates;
+
+		const currentState = objectStates.find(
+			(item: ObjectState) => item.key === currentKey
+		);
+
+		const currentStateIndex = objectStates.indexOf(currentState);
+
+		const newNextObjectStates = items.filter((item) => item.checked);
+
+		const newObjectStates = [...objectStates];
+
+		newObjectStates[currentStateIndex] = {
+			...currentState,
+			nextObjectStates: newNextObjectStates.map(({value}) => {
+				return value;
+			}),
+		};
+
+		stateSettingsValue.objectStates = newObjectStates;
+
+		const newObjectFieldSettings = values.objectFieldSettings;
+
+		newObjectFieldSettings![stateSettingsIndex!].value = JSON.stringify(
+			stateSettingsValue
+		);
+
+		setValues({
+			objectFieldSettings: newObjectFieldSettings,
+		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [items]);
 
 	return (
 		<div className="lfr-objects__state-definition-card-state">
@@ -60,9 +108,16 @@ export default function StateDefinition({
 	);
 }
 
+interface IOption extends PickListItem {
+	checked: boolean;
+}
+
 interface IProps {
+	currentKey: string;
 	disabled: boolean;
 	index: number;
-	initialValues: PickListItem[];
+	initialValues: IOption[];
+	setValues: (values: Partial<ObjectField>) => void;
 	stateName: string;
+	values: Partial<ObjectField>;
 }

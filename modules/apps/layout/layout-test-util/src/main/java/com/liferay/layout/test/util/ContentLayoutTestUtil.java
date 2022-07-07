@@ -122,6 +122,67 @@ public class ContentLayoutTestUtil {
 			fragmentEntry.getType());
 	}
 
+	public static JSONObject addItemToLayout(
+			Layout layout, String itemConfig, String itemType,
+			long segmentsExperienceId)
+		throws Exception {
+
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				layout.getPlid(), segmentsExperienceId);
+
+		return addItemToLayout(
+			layout, itemConfig, itemType, layoutStructure.getMainItemId(), 0,
+			segmentsExperienceId);
+	}
+
+	public static JSONObject addItemToLayout(
+			Layout layout, String itemConfig, String itemType,
+			String parentItemId, int position, long segmentsExperienceId)
+		throws Exception {
+
+		MVCActionCommand mvcActionCommand = getMVCActionCommand(
+			"/layout_content_page_editor/add_item");
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			getMockLiferayPortletActionRequest(
+				CompanyLocalServiceUtil.getCompany(layout.getCompanyId()),
+				GroupLocalServiceUtil.getGroup(layout.getGroupId()), layout);
+
+		mockLiferayPortletActionRequest.addParameter("itemType", itemType);
+		mockLiferayPortletActionRequest.addParameter(
+			"parentItemId", parentItemId);
+		mockLiferayPortletActionRequest.addParameter(
+			"position", String.valueOf(position));
+		mockLiferayPortletActionRequest.addParameter(
+			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			mvcActionCommand, "_addItemToLayoutData",
+			new Class<?>[] {ActionRequest.class},
+			mockLiferayPortletActionRequest);
+
+		mvcActionCommand = getMVCActionCommand(
+			"/layout_content_page_editor/update_item_config");
+
+		mockLiferayPortletActionRequest = getMockLiferayPortletActionRequest(
+			CompanyLocalServiceUtil.getCompany(layout.getCompanyId()),
+			GroupLocalServiceUtil.getGroup(layout.getGroupId()), layout);
+
+		mockLiferayPortletActionRequest.addParameter("itemConfig", itemConfig);
+		mockLiferayPortletActionRequest.addParameter(
+			"itemId", jsonObject.getString("addedItemId"));
+
+		jsonObject.put(
+			"layoutData",
+			(JSONObject)ReflectionTestUtil.invoke(
+				mvcActionCommand, "_updateItemConfig",
+				new Class<?>[] {ActionRequest.class},
+				mockLiferayPortletActionRequest));
+
+		return jsonObject;
+	}
+
 	public static JSONObject addPortletToLayout(Layout layout, String portletId)
 		throws Exception {
 

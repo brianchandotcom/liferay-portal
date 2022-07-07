@@ -39,27 +39,6 @@ public class LayoutStructureItemCSSUtil {
 				_getFragmentEntryLinkIdentifier(fragmentEntryLink));
 	}
 
-	public static String getLayoutStructureItemCssClass(
-		LayoutStructureItem layoutStructureItem) {
-
-		return _LAYOUT_STRUCTURE_ITEM_CSS_CLASS_PREFIX +
-			layoutStructureItem.getItemType();
-	}
-
-	public static String getLayoutStructureItemUniqueCssClass(
-		LayoutStructureItem layoutStructureItem) {
-
-		return _LAYOUT_STRUCTURE_ITEM_CSS_CLASS_PREFIX +
-			layoutStructureItem.getItemId();
-	}
-
-	public static String getStyledLayoutStructureItemCssClasses(
-		StyledLayoutStructureItem styledLayoutStructureItem) {
-
-		return StringUtil.merge(
-			styledLayoutStructureItem.getCssClasses(), StringPool.SPACE);
-	}
-
 	private static JSONObject _createJSONObject(String value) {
 		try {
 			return JSONFactoryUtil.createJSONObject(value);

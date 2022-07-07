@@ -27,9 +27,9 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -102,10 +102,11 @@ public class FragmentEntryProcessorStylesTest {
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			defaultSegmentsExperienceId);
 
-		LayoutStructureItem fragmentStyledLayoutStructureItem =
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				containerStyledLayoutStructureItem.getItemId(), 0);
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)
+				layoutStructure.addFragmentStyledLayoutStructureItem(
+					fragmentEntryLink.getFragmentEntryLinkId(),
+					containerStyledLayoutStructureItem.getItemId(), 0);
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
@@ -121,8 +122,7 @@ public class FragmentEntryProcessorStylesTest {
 					LocaleUtil.getMostRelevantLocale())));
 
 		String layoutStructureItemUniqueCssClass =
-			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
-				fragmentStyledLayoutStructureItem);
+			fragmentStyledLayoutStructureItem.getUniqueCssClass();
 
 		Elements elements = document.select(
 			StringPool.PERIOD + layoutStructureItemUniqueCssClass);

@@ -21,10 +21,9 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
-import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -85,11 +84,12 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 			return html;
 		}
 
-		LayoutStructureItem layoutStructureItem = _getLayoutStructureItem(
-			fragmentEntryLink,
-			fragmentEntryProcessorContext.getHttpServletRequest());
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			_getLayoutStructureItem(
+				fragmentEntryLink,
+				fragmentEntryProcessorContext.getHttpServletRequest());
 
-		if (layoutStructureItem == null) {
+		if (fragmentStyledLayoutStructureItem == null) {
 			return html;
 		}
 
@@ -97,11 +97,9 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 			LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
 				fragmentEntryLink);
 		String layoutStructureItemUniqueCssClass =
-			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
-				layoutStructureItem);
+			fragmentStyledLayoutStructureItem.getUniqueCssClass();
 		String styledLayoutStructureItemCssClasses =
-			LayoutStructureItemCSSUtil.getStyledLayoutStructureItemCssClasses(
-				(StyledLayoutStructureItem)layoutStructureItem);
+			fragmentStyledLayoutStructureItem.getStyledCssClasses();
 
 		for (Element element : elements) {
 			element.addClass(fragmentEntryLinkCssClass);
@@ -143,7 +141,7 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 		return document;
 	}
 
-	private LayoutStructureItem _getLayoutStructureItem(
+	private FragmentStyledLayoutStructureItem _getLayoutStructureItem(
 		FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest) {
 
@@ -168,8 +166,9 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 			}
 		}
 
-		return layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-			fragmentEntryLink.getFragmentEntryLinkId());
+		return (FragmentStyledLayoutStructureItem)
+			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+				fragmentEntryLink.getFragmentEntryLinkId());
 	}
 
 	@Reference

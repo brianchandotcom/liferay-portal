@@ -175,12 +175,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 
 		jspWriter.write("<div class=\"");
 		jspWriter.write(
-			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
-				collectionStyledLayoutStructureItem));
+			collectionStyledLayoutStructureItem.getUniqueCssClass());
 		jspWriter.write(StringPool.SPACE);
-		jspWriter.write(
-			LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
-				collectionStyledLayoutStructureItem));
+		jspWriter.write(collectionStyledLayoutStructureItem.getCssClass());
 		jspWriter.write("\" style=\"");
 
 		HttpServletRequest httpServletRequest = getRequest();
@@ -515,17 +512,12 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write(StringPool.LESS_THAN);
 		jspWriter.write(htmlTag);
 		jspWriter.write(" class=\"");
-		jspWriter.write(
-			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
-				containerStyledLayoutStructureItem));
+		jspWriter.write(containerStyledLayoutStructureItem.getUniqueCssClass());
+		jspWriter.write(StringPool.SPACE);
+		jspWriter.write(containerStyledLayoutStructureItem.getCssClass());
 		jspWriter.write(StringPool.SPACE);
 		jspWriter.write(
-			LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
-				containerStyledLayoutStructureItem));
-		jspWriter.write(StringPool.SPACE);
-		jspWriter.write(
-			LayoutStructureItemCSSUtil.getStyledLayoutStructureItemCssClasses(
-				containerStyledLayoutStructureItem));
+			containerStyledLayoutStructureItem.getStyledCssClasses());
 
 		String colorCssClasses =
 			renderLayoutStructureDisplayContext.getColorCssClasses(
@@ -708,17 +700,11 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write(
 			renderLayoutStructureDisplayContext.getAddInfoItemActionURL());
 		jspWriter.write("\" class=\"");
-		jspWriter.write(
-			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
-				formStyledLayoutStructureItem));
+		jspWriter.write(formStyledLayoutStructureItem.getUniqueCssClass());
 		jspWriter.write(StringPool.SPACE);
-		jspWriter.write(
-			LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
-				formStyledLayoutStructureItem));
+		jspWriter.write(formStyledLayoutStructureItem.getCssClass());
 		jspWriter.write(StringPool.SPACE);
-		jspWriter.write(
-			LayoutStructureItemCSSUtil.getStyledLayoutStructureItemCssClasses(
-				formStyledLayoutStructureItem));
+		jspWriter.write(formStyledLayoutStructureItem.getStyledCssClasses());
 
 		if (Objects.equals(
 				formStyledLayoutStructureItem.getWidthType(), "fixed")) {
@@ -1073,17 +1059,11 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		JspWriter jspWriter = pageContext.getOut();
 
 		jspWriter.write("<div class=\"");
-		jspWriter.write(
-			LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
-				rowStyledLayoutStructureItem));
+		jspWriter.write(rowStyledLayoutStructureItem.getUniqueCssClass());
 		jspWriter.write(StringPool.SPACE);
-		jspWriter.write(
-			LayoutStructureItemCSSUtil.getLayoutStructureItemCssClass(
-				rowStyledLayoutStructureItem));
+		jspWriter.write(rowStyledLayoutStructureItem.getCssClass());
 		jspWriter.write(StringPool.SPACE);
-		jspWriter.write(
-			LayoutStructureItemCSSUtil.getStyledLayoutStructureItemCssClasses(
-				rowStyledLayoutStructureItem));
+		jspWriter.write(rowStyledLayoutStructureItem.getStyledCssClasses());
 		jspWriter.write("\" style=\"");
 		jspWriter.write(
 			renderLayoutStructureDisplayContext.getStyle(
@@ -1186,13 +1166,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					fragmentEntryLink));
 			jspWriter.write(StringPool.SPACE);
 			jspWriter.write(
-				LayoutStructureItemCSSUtil.getLayoutStructureItemUniqueCssClass(
-					fragmentStyledLayoutStructureItem));
+				fragmentStyledLayoutStructureItem.getUniqueCssClass());
 			jspWriter.write(StringPool.SPACE);
 			jspWriter.write(
-				LayoutStructureItemCSSUtil.
-					getStyledLayoutStructureItemCssClasses(
-						fragmentStyledLayoutStructureItem));
+				fragmentStyledLayoutStructureItem.getStyledCssClasses());
 		}
 
 		String colorCssClasses =

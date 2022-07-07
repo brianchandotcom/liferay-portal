@@ -14,7 +14,12 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.impl.ObjectFieldSettingImpl;
+import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.base.ObjectFieldSettingLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.portal.aop.AopService;
@@ -22,7 +27,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,6 +70,35 @@ public class ObjectFieldSettingLocalServiceImpl
 	}
 
 	@Override
+	public ObjectFieldSetting deleteObjectFieldSetting(
+			long objectFieldSettingId)
+		throws PortalException {
+
+		ObjectFieldSetting objectFieldSetting =
+			objectFieldSettingPersistence.findByPrimaryKey(
+				objectFieldSettingId);
+
+		return objectFieldSettingPersistence.remove(objectFieldSetting);
+	}
+
+	public void deleteObjectFieldSettingByObjectFieldId(long objectFieldId)
+		throws PortalException {
+
+		objectFieldSettingPersistence.removeByObjectFieldId(objectFieldId);
+
+		ObjectField objectField = _objectFieldPersistence.findByPrimaryKey(
+			objectFieldId);
+
+		if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
+			_objectFilterLocalService.deleteObjectFilterByObjectFieldId(
+				objectField.getObjectFieldId());
+		}
+	}
+
+	@Override
 	public ObjectFieldSetting fetchObjectFieldSetting(
 		long objectFieldId, String name) {
 
@@ -69,8 +106,38 @@ public class ObjectFieldSettingLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectFieldSetting> getObjectFieldSettings(long objectFieldId) {
-		return objectFieldSettingPersistence.findByObjectFieldId(objectFieldId);
+	public List<ObjectFieldSetting> getObjectFieldSettingsByObjectFieldId(
+		long objectFieldId) {
+
+		ObjectField objectField = _objectFieldPersistence.fetchByPrimaryKey(
+			objectFieldId);
+
+		if (objectField == null) {
+			return Collections.emptyList();
+		}
+
+		List<ObjectFieldSetting> objectFieldSettings =
+			objectFieldSettingPersistence.findByObjectFieldId(objectFieldId);
+
+		if (!Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
+			return objectFieldSettings;
+		}
+
+		ObjectFieldSetting objectFieldSetting = new ObjectFieldSettingImpl();
+
+		objectFieldSetting.setName(ObjectFieldSettingConstants.FILTERS);
+		objectFieldSetting.setObjectFilters(
+			_objectFilterLocalService.getObjectFiltersByObjectFieldId(
+				objectFieldId));
+
+		objectFieldSettings = new ArrayList<>(objectFieldSettings);
+
+		objectFieldSettings.add(objectFieldSetting);
+
+		return objectFieldSettings;
 	}
 
 	@Override
@@ -89,6 +156,9 @@ public class ObjectFieldSettingLocalServiceImpl
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;
+
+	@Reference
+	private ObjectFilterLocalService _objectFilterLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

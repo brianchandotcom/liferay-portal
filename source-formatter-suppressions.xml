@@ -106,25 +106,13 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/analyticscloud/ACAssets\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/analyticscloud/ACUtils\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/applicationsmenunavigation/ApplicationsMenu\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/AutoTagging\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Blogs\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/BlogsEntry\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/BlogsNavigator\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/BookmarksFolder\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Clustering\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Comments\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/DataEngine\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/DDLDataDefinition\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/DDLList\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/DDLNavigator\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/DDLRecord\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/DDLTemplate\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/DMDocument\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/DMDocumentSharing\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/DMFolder\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/DMMetadataSet\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/DMPortlet\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/DMRepository\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/FileInstall\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Form\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/FormFields\.macro" />
@@ -135,17 +123,11 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/fragment/FragmentsAdminNavigator\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/fragment/FragmentsDeploy\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/fragment/FragmentsEditor\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Gmail\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Google\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/GoogleDoc\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/GoogleDrive\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/ItemSelector\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/journal/WebContent\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/journal/webcontentdisplay/WebContentDisplayPortlet\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/journal/webcontentdisplay/WebContentDisplayPortletNavigator\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/journal/WebContentNavigator\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/json/staging/JSONStaging\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/KBArticle\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/LAR\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/displaypagetemplate/DisplayPageTemplate\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/displaypagetemplate/DisplayPageTemplatesAdmin\.macro" />
@@ -156,14 +138,9 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/pagesadmin/PagesAdmin\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/sitepage/Page\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/layout/stylebooks/StyleBooks\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/MessageboardsPortlet\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/MessageboardsThread\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/MGPortlet\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/MicrosoftLogin\.macro" />
+		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/MobileDevice\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Navigator\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Notifications\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/OAuth2\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/OneDrive\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Organization\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/PortletEntry\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/productnavigation/ProductMenu\.macro" />
@@ -181,8 +158,6 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/sitenavigation/sitenavigationmenu/NavigationMenusWidget\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Staging\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/Upgrade\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/VideoShortcut\.macro" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/WikiPage\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/xsl/XSLContent\.macro" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/administration/passwordpolicies/PasswordPolicies\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/login/Login\.testcase" />
@@ -203,19 +178,7 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/analyticscloud/PageEvents\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/analyticscloud/RatingEvents\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/analyticscloud/WebContentEvents\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/collaboration/announcements/AnnouncementsPage\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/collaboration/assetsharing/DMSharing\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/collaboration/blogs/BlogsLocalStaging\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/collaboration/blogs/BlogsNotifications\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/collaboration/blogs/BlogsWidget\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/collaboration/messageboards/MBNotifications\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/contentdashboard/ContentDashboard\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/documentsadministration/DMFileEntry\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/documentsadministration/DMMediaGallery\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/documentsadministration/DMPermissions\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/externalvideoshortcut/DMVideoPreview\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/externalvideoshortcut/DMVideoPreviewLocalStaging\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/documentmanagement/externalvideoshortcut/DMVideoShortcut\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/pageaudit/PageAudit\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/staging/usecase/StagingUsecaseWithRoles\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/webformsanddatalists/dynamicdatalists/usecase/DynamicdatalistsUsecase\.testcase" />
@@ -255,9 +218,6 @@
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/stylebooks/staging/StyleBooksWithStaging\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/stylebooks/StyleBooks\.testcase" />
 		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduser/wem/trash/RecycleBin\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduseree/collaborationanddocmanagement/documentmanagement/connectors/sharepoint/CPSharepoint\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduseree/collaborationanddocmanagement/documentmanagement/connectors/sharepoint/CPSharepoint2013\.testcase" />
-		<suppress checks="PoshiPauseUsageCheck" files="portal-web/test/functional/com/liferay/portalweb/tests/enduseree/collaborationanddocmanagement/documentmanagement/connectors/sharepoint/SharepointREST\.testcase" />
 		<suppress checks="PoshiVariableNameCheck" files="portal-web/test/functional/com/liferay/portalweb/macros/json/journal/JSONWebcontentUtil\.macro" />
 		<suppress checks="PrimitiveWrapperInstantiationCheck" files="portal-impl/src/com/liferay/portal/json/jabsorb/serializer/LiferaySerializer\.java" />
 		<suppress checks="PropertiesEmptyLinesCheck" files="build\.properties" />

@@ -92,6 +92,9 @@ export default function SearchBar({
 
 	const _handleKeyDown = (event) => {
 		if (event.key === 'Enter') {
+			event.preventDefault();
+			event.stopPropagation();
+
 			_handleSubmit();
 		}
 	};

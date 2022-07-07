@@ -117,7 +117,7 @@
 		<Logger level="FATAL" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter" />
 		<Logger level="FATAL" name="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.test.plugins.PluginIntegrationTestHotDeployListener" />
-		<Logger level="INFO" name="com.liferay.portal.kernel.upgrade" />
+		<Logger level="DEBUG" name="com.liferay.portal.kernel.upgrade" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.util.ClassUtil" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.util.JavaDetector" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.util.LoggingTimer" />
@@ -206,9 +206,9 @@
 		<Logger level="INFO" name="com.liferay.portal.tools.deploy.PortletDeployer" />
 		<Logger level="INFO" name="com.liferay.portal.tools.deploy.ThemeDeployer" />
 		<Logger level="INFO" name="com.liferay.portal.tools.sql" />
-		<Logger level="INFO" name="com.liferay.portal.upgrade" />
-		<Logger level="INFO" name="com.liferay.portal.upgrade.UpgradeProcessUtil" />
-		<Logger level="INFO" name="com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings" />
+		<Logger level="DEBUG" name="com.liferay.portal.upgrade" />
+		<Logger level="DEBUG" name="com.liferay.portal.upgrade.UpgradeProcessUtil" />
+		<Logger level="DEBUG" name="com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings" />
 		<Logger level="WARN" name="com.liferay.portal.upload.UploadServletRequestImpl" />
 		<Logger level="ERROR" name="com.liferay.portal.util" />
 		<Logger level="ERROR" name="com.liferay.portal.util.EntityResolver" />

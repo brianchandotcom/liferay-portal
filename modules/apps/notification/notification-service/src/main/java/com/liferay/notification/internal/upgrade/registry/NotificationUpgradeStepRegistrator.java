@@ -34,7 +34,7 @@ public class NotificationUpgradeStepRegistrator
 			"1.0.0", "1.1.0", NotificationQueueEntryAttachmentTable.create(),
 			NotificationTemplateAttachmentTable.create(),
 			UpgradeStepFactory.addColumns(
-				"NotificationTemplate", "objectDefinitionId", "LONG"));
+				"NotificationTemplate", "objectDefinitionId LONG"));
 	}
 
 }

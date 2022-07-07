@@ -15,6 +15,8 @@
 package com.liferay.info.request.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.info.exception.InfoFormException;
+import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -104,6 +106,49 @@ public class AddInfoItemStrutsActionValidationTest {
 				SessionErrors.contains(
 					mockHttpServletRequest, infoField.getUniqueId()));
 			Assert.assertTrue(
+				SessionMessages.contains(mockHttpServletRequest, formItemId));
+		}
+	}
+
+	@Test
+	public void testAddInfoItemStrutsActionCaptchaException() throws Exception {
+		InfoField<TextInfoFieldType> infoField = _getInfoField();
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField)
+						).build(),
+						_editPageInfoItemCapability)) {
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
+				layout, true,
+				String.valueOf(
+					_portal.getClassNameId(MockObject.class.getName())),
+				"0", infoField);
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(layout, formItemId);
+
+			_addInfoItemStrutsAction.execute(
+				mockHttpServletRequest, new MockHttpServletResponse());
+
+			Assert.assertTrue(
+				SessionErrors.contains(mockHttpServletRequest, formItemId));
+
+			InfoFormException infoFormException =
+				(InfoFormException)SessionErrors.get(
+					mockHttpServletRequest, formItemId);
+
+			Assert.assertTrue(
+				infoFormException instanceof
+					InfoFormValidationException.InvalidCaptcha);
+
+			Assert.assertFalse(
 				SessionMessages.contains(mockHttpServletRequest, formItemId));
 		}
 	}

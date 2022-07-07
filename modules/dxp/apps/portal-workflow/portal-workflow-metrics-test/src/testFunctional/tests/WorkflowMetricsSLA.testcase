@@ -257,6 +257,10 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
+		while (IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1") && (maxIterations = "45")) {
+			Refresh();
+		}
+
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = "1",
 			key_overdue = "0",
@@ -283,7 +287,7 @@ definition {
 	@description = "LPS-89082 - Verify that the error alert will be displayed again when user enters the metrics page again after closing it"
 	@priority = "2"
 	test ErrorAlertIsDisplayedAgainWhenClosed {
-		property test.name.skip.portal.instance = "WorkflowMetricsProcessListView#CanOrderByOnTimeItems";
+		property test.name.skip.portal.instance = "WorkflowMetricsSLA#ErrorAlertIsDisplayedAgainWhenClosed";
 
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
@@ -323,7 +327,9 @@ definition {
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
-		AssertElementPresent(locator1 = "WorkflowMetrics#WARNING_SLA_BLOCKED");
+		while (IsElementNotPresent(locator1 = "WorkflowMetrics#WARNING_SLA_BLOCKED") && (maxIterations = "45")) {
+			Refresh();
+		}
 
 		Click(locator1 = "Icon#TIMES");
 
@@ -1255,8 +1261,6 @@ definition {
 	@description = "LPS-89416 - Verify that updating a SLA will recalculate time for all instances In Progress"
 	@priority = "5"
 	test UpdatingSLARecalculateTimeInProgressInstances {
-		property portal.upstream = "quarantine";
-
 		Workflow.openWorkflowProcessBuilderConfiguration();
 
 		Workflow.configureWorkflow(
@@ -1283,6 +1287,12 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		while (IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1") && (maxIterations = "45")) {
+			Refresh();
+		}
+
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
@@ -1307,6 +1317,12 @@ definition {
 			slaDefinitionName = "Test");
 
 		Button.clickUpdate();
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		while (IsTextNotEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_ONTIME_ITEMS_VALUE", value1 = "1") && (maxIterations = "45")) {
+			Refresh();
+		}
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 

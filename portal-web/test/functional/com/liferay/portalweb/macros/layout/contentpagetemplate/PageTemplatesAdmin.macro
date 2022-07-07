@@ -16,9 +16,13 @@ definition {
 
 		if ("${pageTemplateType}" == "Content Page Template") {
 			if (isSet(masterLayoutName)) {
+				WaitForPageLoad();
+
 				LexiconCard.clickCard(card = "${masterLayoutName}");
 			}
 			else {
+				WaitForPageLoad();
+
 				LexiconCard.clickCard(card = "Blank");
 			}
 		}

@@ -68,7 +68,7 @@ if (portletTitleBasedNavigation) {
 </c:if>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl container-form-lg\"" : StringPool.BLANK %>>
-	<liferay-portlet:actionURL name="moveKBObject" var="moveKBObjectURL" />
+	<liferay-portlet:actionURL name="/knowledge_base/move_kb_object" var="moveKBObjectURL" />
 
 	<aui:form action="<%= moveKBObjectURL %>" method="post" name="fm">
 		<aui:input name="mvcPath" type="hidden" value='<%= templatePath + "move_object.jsp" %>' />

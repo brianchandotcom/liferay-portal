@@ -77,37 +77,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseKBPortlet extends MVCPortlet {
 
-	public void moveKBObject(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long resourceClassNameId = ParamUtil.getLong(
-			actionRequest, "resourceClassNameId");
-		long resourcePrimKey = ParamUtil.getLong(
-			actionRequest, "resourcePrimKey");
-		long parentResourcePrimKey = ParamUtil.getLong(
-			actionRequest, "parentResourcePrimKey",
-			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		long kbArticleClassNameId = portal.getClassNameId(
-			KBArticleConstants.getClassName());
-
-		if (resourceClassNameId == kbArticleClassNameId) {
-			long parentResourceClassNameId = ParamUtil.getLong(
-				actionRequest, "parentResourceClassNameId",
-				portal.getClassNameId(KBFolderConstants.getClassName()));
-			double priority = ParamUtil.getDouble(actionRequest, "priority");
-
-			kbArticleService.moveKBArticle(
-				resourcePrimKey, parentResourceClassNameId,
-				parentResourcePrimKey, priority);
-		}
-		else {
-			kbFolderService.moveKBFolder(
-				resourcePrimKey, parentResourcePrimKey);
-		}
-	}
-
 	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)

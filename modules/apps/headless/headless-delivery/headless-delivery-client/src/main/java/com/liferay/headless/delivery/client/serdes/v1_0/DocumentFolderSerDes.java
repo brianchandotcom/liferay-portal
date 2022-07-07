@@ -163,6 +163,20 @@ public class DocumentFolderSerDes {
 			sb.append("\"");
 		}
 
+		if (documentFolder.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(documentFolder.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (documentFolder.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -333,6 +347,15 @@ public class DocumentFolderSerDes {
 				"description", String.valueOf(documentFolder.getDescription()));
 		}
 
+		if (documentFolder.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(documentFolder.getExternalReferenceCode()));
+		}
+
 		if (documentFolder.getId() == null) {
 			map.put("id", null);
 		}
@@ -464,6 +487,14 @@ public class DocumentFolderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					documentFolder.setDescription((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					documentFolder.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

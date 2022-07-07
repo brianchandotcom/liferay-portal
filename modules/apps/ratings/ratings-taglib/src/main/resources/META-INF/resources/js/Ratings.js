@@ -61,7 +61,7 @@ const Ratings = ({
 			Liferay.fire('ratings:vote', {
 				className,
 				classPK,
-				contentTitle,
+				contentTitle: contentTitle || '',
 				ratingType: type,
 				score,
 			});

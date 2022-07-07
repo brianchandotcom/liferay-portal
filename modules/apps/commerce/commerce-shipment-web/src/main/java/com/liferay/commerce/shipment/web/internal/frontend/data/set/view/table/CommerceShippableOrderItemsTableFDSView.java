@@ -51,6 +51,8 @@ public class CommerceShippableOrderItemsTableFDSView extends BaseTableFDSView {
 			"available", "available"
 		).add(
 			"icon", "address-matches-shipment"
+		).add(
+			"shippingMethodAndOptionName", "shipping-method-and-option"
 		).build();
 	}
 

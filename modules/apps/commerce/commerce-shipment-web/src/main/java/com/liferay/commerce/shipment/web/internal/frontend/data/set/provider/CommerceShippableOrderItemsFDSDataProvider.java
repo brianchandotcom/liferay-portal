@@ -16,6 +16,8 @@ package com.liferay.commerce.shipment.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceShipmentFDSNames;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.model.Icon;
 import com.liferay.commerce.frontend.model.OrderItem;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
@@ -23,15 +25,24 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.model.CommerceShippingEngine;
+import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShipmentService;
+import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,8 +89,10 @@ public class CommerceShippableOrderItemsFDSDataProvider
 				continue;
 			}
 
+			CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
 			String iconName = _getAddressMatchIcon(
-				commerceShipment, commerceOrderItem.getCommerceOrder());
+				commerceShipment, commerceOrder);
 
 			Icon icon = null;
 
@@ -103,6 +116,8 @@ public class CommerceShippableOrderItemsFDSDataProvider
 						commerceOrderItem.getCommerceOrderItemId(),
 						commerceOrderItem.getQuantity() -
 							commerceOrderItem.getShippedQuantity(),
+						_getShippingMethodAndOptionName(
+							commerceOrder, httpServletRequest),
 						commerceOrderItem.getSku()));
 			}
 		}
@@ -143,6 +158,46 @@ public class CommerceShippableOrderItemsFDSDataProvider
 		return null;
 	}
 
+	private String _getShippingMethodAndOptionName(
+			CommerceOrder commerceOrder, HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceOrder.getCommerceShippingMethod();
+
+		CommerceShippingEngine commerceShippingEngine =
+			_commerceShippingEngineRegistry.getCommerceShippingEngine(
+				commerceShippingMethod.getEngineKey());
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		List<CommerceShippingOption> commerceShippingOptions =
+			commerceShippingEngine.getCommerceShippingOptions(
+				commerceContext, commerceOrder, themeDisplay.getLocale());
+
+		for (CommerceShippingOption commerceShippingOption :
+				commerceShippingOptions) {
+
+			String commerceShippingOptionKey = commerceShippingOption.getKey();
+
+			if (commerceShippingOptionKey.equals(
+					commerceOrder.getShippingOptionName())) {
+
+				return StringBundler.concat(
+					commerceShippingMethod.getName(themeDisplay.getLocale()),
+					" - ", commerceShippingOption.getName());
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;
 
@@ -154,5 +209,11 @@ public class CommerceShippableOrderItemsFDSDataProvider
 
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;
+
+	@Reference
+	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -1,0 +1,62 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"collectionConfig": {
+						"collectionReference": {
+							"className": "com.liferay.asset.list.model.AssetListEntry",
+							"classPK": "${CLASS_PK}"
+						},
+						"collectionType": "Collection"
+					},
+					"collectionViewports": [
+						{
+							"collectionViewportDefinition": {
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"collectionViewportDefinition": {
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"collectionViewportDefinition": {
+							},
+							"id": "tablet"
+						}
+					],
+					"displayAllItems": false,
+					"displayAllPages": true,
+					"listItemStyle": "",
+					"listStyle": "",
+					"name": "customName",
+					"numberOfColumns": 1,
+					"numberOfItems": 5,
+					"numberOfItemsPerPage": 20,
+					"numberOfPages": 5,
+					"paginationType": "Numeric",
+					"showAllItems": false,
+					"templateKey": ""
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"collectionItemConfig": {
+							}
+						},
+						"type": "CollectionItem"
+					}
+				],
+				"type": "Collection"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

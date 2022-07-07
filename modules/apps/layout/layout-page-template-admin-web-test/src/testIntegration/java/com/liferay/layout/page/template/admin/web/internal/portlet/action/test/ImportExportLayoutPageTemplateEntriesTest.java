@@ -207,6 +207,33 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryCollectionDisplayName()
+		throws Exception {
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-147895", Boolean.TRUE.toString())) {
+
+			Map<String, String> numberValuesMap = HashMapBuilder.put(
+				"CLASS_PK",
+				() -> {
+					AssetListEntry assetListEntry = _addAssetListEntry(
+						_group1.getGroupId());
+
+					return String.valueOf(assetListEntry.getAssetListEntryId());
+				}
+			).build();
+
+			File expectedFile = _generateZipFile(
+				"collection_display/name/expected", numberValuesMap, null);
+			File inputFile = _generateZipFile(
+				"collection_display/name/input", numberValuesMap, null);
+
+			_validateImportExport(expectedFile, inputFile);
+		}
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryContainerBackgroundFragmentImage()
 		throws Exception {
 
@@ -445,6 +472,39 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryContainerName()
+		throws Exception {
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-147895", Boolean.TRUE.toString())) {
+
+			File expectedFile = _generateZipFile(
+				"container/name/expected", null, null);
+			File inputFile = _generateZipFile(
+				"container/name/input", null, null);
+
+			_validateImportExport(expectedFile, inputFile);
+		}
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryFormContainerName()
+		throws Exception {
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-147895", Boolean.TRUE.toString())) {
+
+			File expectedFile = _generateZipFile(
+				"form/name/expected", null, null);
+			File inputFile = _generateZipFile("form/name/input", null, null);
+
+			_validateImportExport(expectedFile, inputFile);
+		}
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryFormContainerWithEmbeddedSuccessMessage()
 		throws Exception {
 
@@ -628,6 +688,25 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			"fragment/image_field/image_url_and_link_url/input", null, null);
 
 		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryFragmentName()
+		throws Exception {
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-147895", Boolean.TRUE.toString())) {
+
+			_addTextFragmentEntry();
+
+			File expectedFile = _generateZipFile(
+				"fragment/name/expected", null, null);
+			File inputFile = _generateZipFile(
+				"fragment/name/input", null, null);
+
+			_validateImportExport(expectedFile, inputFile);
+		}
 	}
 
 	@Test
@@ -917,6 +996,22 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 				"row/custom_css/expected", null, null);
 			File inputFile = _generateZipFile(
 				"row/custom_css/input", null, null);
+
+			_validateImportExport(expectedFile, inputFile);
+		}
+	}
+
+	@Test
+	public void testImportExportLayoutPageTemplateEntryRowName()
+		throws Exception {
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPS-147895", Boolean.TRUE.toString())) {
+
+			File expectedFile = _generateZipFile(
+				"row/name/expected", null, null);
+			File inputFile = _generateZipFile("row/name/input", null, null);
 
 			_validateImportExport(expectedFile, inputFile);
 		}

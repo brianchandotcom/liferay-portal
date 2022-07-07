@@ -142,7 +142,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		var sandboxedPublicationName1 = Publications.getPublicationName();
+		var sandboxedPublicationName1 = Publications.generateSandboxedPublicationName(userScreenName = "usersn");
 
 		Publications.viewSandboxedPublication(
 			sandboxedPublicationName = "${sandboxedPublicationName1}",
@@ -150,7 +150,7 @@ definition {
 
 		Publications.deletePublication(publicationName = "${sandboxedPublicationName1}");
 
-		var sandboxedPublicationName2 = Publications.getPublicationName();
+		var sandboxedPublicationName2 = Publications.generateSandboxedPublicationName(userScreenName = "usersn");
 
 		Publications.viewSandboxedPublication(
 			sandboxedPublicationName = "${sandboxedPublicationName2}",
@@ -168,7 +168,7 @@ definition {
 
 		Publications.publishPublication(publicationName = "${sandboxedPublicationName2}");
 
-		var sandboxedPublicationName3 = Publications.getPublicationName();
+		var sandboxedPublicationName3 = Publications.generateSandboxedPublicationName(userScreenName = "usersn");
 
 		Publications.viewSandboxedPublication(
 			sandboxedPublicationName = "${sandboxedPublicationName3}",

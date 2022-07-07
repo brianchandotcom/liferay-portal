@@ -182,6 +182,15 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
+	macro generateSandboxedPublicationName {
+		var sandboxTime = DateUtil.getFormattedCurrentDate("h:mm", "UTC");
+		var sandboxDate = DateUtil.getFormattedCurrentDate("M/d/yy", "UTC");
+
+		var sandboxedPublicationName = "${userScreenName} - ${sandboxDate} ${sandboxTime}";
+
+		return "${sandboxedPublicationName}";
+	}
+
 	macro getPublicationName {
 		var publicationName = selenium.getText("//span[contains(@class,'change-tracking-indicator-title')]");
 

@@ -18,23 +18,49 @@
 
 <%
 CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-%>
 
-<portlet:actionURL name="/commerce_shipment/edit_commerce_shipment" var="editCommerceShipmentURL" />
+CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceShipment();
+%>
 
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.format(request, "edit-x", "carrier-details") %>'
 >
-	<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="carrierDetails" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<c:if test="<%= commerceShipment != null %>">
+		<portlet:actionURL name="/commerce_shipment/edit_commerce_shipment" var="editCommerceShipmentURL" />
 
-		<aui:model-context bean="<%= commerceShipmentDisplayContext.getCommerceShipment() %>" model="<%= CommerceShipment.class %>" />
+		<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="carrierDetails" />
+			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
-		<aui:input name="commerceShipmentId" type="hidden" />
+			<aui:model-context bean="<%= commerceShipmentDisplayContext.getCommerceShipment() %>" model="<%= CommerceShipment.class %>" />
 
-		<aui:input name="carrier" wrapperCssClass="form-group-item" />
+			<aui:input name="commerceShipmentId" type="hidden" />
 
-		<aui:input name="trackingNumber" wrapperCssClass="form-group-item" />
-	</aui:form>
+			<aui:input name="carrier" wrapperCssClass="form-group-item" />
+
+			<aui:input name="trackingNumber" wrapperCssClass="form-group-item" />
+
+			<aui:select name="shippingMethod">
+
+				<%
+				List<CommerceShippingMethod> commerceShippingMethods = commerceShipmentDisplayContext.getCommerceShippingMethods();
+
+				for (CommerceShippingMethod commerceShippingMethod : commerceShippingMethods) {
+				%>
+
+					<aui:option data='<%= HashMapBuilder.<String, Object>put("trackingURL", commerceShippingMethod.getTrackingURL()).build() %>' label="<%= commerceShippingMethod.getName(locale) %>" selected="<%= (commerceShippingMethod.getCommerceShippingMethodId() == commerceShipment.getCommerceShippingMethodId()) ? true : false %>" value="<%= commerceShippingMethod.getCommerceShippingMethodId() %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<aui:input label="base-tracking-url" name="trackingURL" wrapperCssClass="form-group-item" />
+		</aui:form>
+
+		<liferay-frontend:component
+			module="js/edit_commerce_shipment_courier_detail"
+		/>
+	</c:if>
 </commerce-ui:modal-content>

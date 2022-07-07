@@ -26,7 +26,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -218,7 +218,7 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 			subscriptionSender.setLocalizedContextAttribute(
 				"[$FOLDER_NAME$]",
 				new EscapableLocalizableFunction(
-					locale -> LanguageUtil.get(locale, "home")));
+					locale -> _language.get(locale, "home")));
 		}
 
 		subscriptionSender.setContextAttributes(
@@ -297,6 +297,9 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

@@ -67,7 +67,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -720,6 +720,9 @@ public class DataLayoutTaglibUtil {
 	private JSONFactory _jsonFactory;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private NPMResolver _npmResolver;
 
 	@Reference
@@ -1015,7 +1018,7 @@ public class DataLayoutTaglibUtil {
 					"availableLanguageIds",
 					JSONUtil.toJSONArray(
 						_availableLocales,
-						availableLocale -> LanguageUtil.getLanguageId(
+						availableLocale -> _language.getLanguageId(
 							availableLocale))
 				).put(
 					"defaultLanguageId", ddmStructure.getDefaultLanguageId()

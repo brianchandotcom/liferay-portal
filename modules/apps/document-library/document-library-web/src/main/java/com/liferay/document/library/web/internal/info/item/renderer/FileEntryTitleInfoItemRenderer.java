@@ -15,7 +15,7 @@
 package com.liferay.document.library.web.internal.info.item.renderer;
 
 import com.liferay.info.item.renderer.InfoItemRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -40,7 +40,7 @@ public class FileEntryTitleInfoItemRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "title");
+		return _language.get(locale, "title");
 	}
 
 	@Override
@@ -74,6 +74,9 @@ public class FileEntryTitleInfoItemRenderer
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}
+
+	@Reference
+	private Language _language;
 
 	private ServletContext _servletContext;
 

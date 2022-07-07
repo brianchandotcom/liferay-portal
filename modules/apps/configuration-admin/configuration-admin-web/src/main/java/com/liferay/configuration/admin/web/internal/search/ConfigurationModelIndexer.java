@@ -23,7 +23,7 @@ import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderPro
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -297,7 +297,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			_resourceBundleLoaderProvider.getResourceBundleLoader(
 				configurationModel.getBundleSymbolicName());
 
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+		for (Locale locale : _language.getAvailableLocales()) {
 			String fieldNameSuffix = StringBundler.concat(
 				StringPool.UNDERLINE, locale.getLanguage(),
 				StringPool.UNDERLINE, locale.getCountry());
@@ -386,7 +386,7 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		Document document, ResourceBundleLoader resourceBundleLoader,
 		List<TranslationHelper> translationHelpers) {
 
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+		for (Locale locale : _language.getAvailableLocales()) {
 			for (TranslationHelper translationHelper : translationHelpers) {
 				ResourceBundle resourceBundle = _getResourceBundle(
 					locale, resourceBundleLoader);
@@ -488,6 +488,9 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;

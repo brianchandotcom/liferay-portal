@@ -27,7 +27,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.xml.Document;
@@ -101,15 +101,15 @@ public class DDLXMLExporter extends BaseDDLExporter {
 			Locale locale = getLocale();
 
 			_addFieldElement(
-				fieldsElement, LanguageUtil.get(locale, "status"),
+				fieldsElement, _language.get(locale, "status"),
 				getStatusMessage(recordVersion.getStatus()));
 
 			_addFieldElement(
-				fieldsElement, LanguageUtil.get(locale, "modified-date"),
+				fieldsElement, _language.get(locale, "modified-date"),
 				formatDate(recordVersion.getStatusDate(), dateTimeFormatter));
 
 			_addFieldElement(
-				fieldsElement, LanguageUtil.get(locale, "author"),
+				fieldsElement, _language.get(locale, "author"),
 				recordVersion.getUserName());
 		}
 
@@ -223,6 +223,9 @@ public class DDLXMLExporter extends BaseDDLExporter {
 
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private Language _language;
 
 	private StorageEngine _storageEngine;
 

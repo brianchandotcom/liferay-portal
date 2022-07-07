@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.lists.web.internal.portlet.configuration.icon;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -57,7 +57,7 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)), "export");
 	}
 
@@ -123,5 +123,8 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportDDLRecordSetPortletConfigurationIcon.class);
+
+	@Reference
+	private Language _language;
 
 }

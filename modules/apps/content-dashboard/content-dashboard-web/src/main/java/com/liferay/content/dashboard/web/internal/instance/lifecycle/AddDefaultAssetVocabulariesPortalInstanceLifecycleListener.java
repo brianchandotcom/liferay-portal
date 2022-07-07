@@ -23,7 +23,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -81,10 +81,9 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 		Map<Locale, String> titleMap = new HashMap<>();
 
 		for (Locale locale :
-				LanguageUtil.getCompanyAvailableLocales(
-					company.getCompanyId())) {
+				_language.getCompanyAvailableLocales(company.getCompanyId())) {
 
-			titleMap.put(locale, LanguageUtil.get(locale, name));
+			titleMap.put(locale, _language.get(locale, name));
 		}
 
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
@@ -121,6 +120,9 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

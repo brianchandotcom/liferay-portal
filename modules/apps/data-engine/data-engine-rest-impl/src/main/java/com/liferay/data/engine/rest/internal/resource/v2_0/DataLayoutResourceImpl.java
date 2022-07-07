@@ -59,7 +59,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.frontend.icons.FrontendIconsUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -429,8 +429,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 		if (pagination.getPageSize() > 250) {
 			throw new ValidationException(
-				LanguageUtil.format(
-					locale, "page-size-is-greater-than-x", 250));
+				_language.format(locale, "page-size-is-greater-than-x", 250));
 		}
 
 		if (ArrayUtil.isEmpty(sorts)) {
@@ -718,6 +717,9 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 	@Reference
 	private DEDataDefinitionFieldLinkLocalService
 		_deDataDefinitionFieldLinkLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -19,7 +19,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
@@ -58,7 +58,7 @@ public class DLVideoExternalShortcutURLItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return LanguageUtil.get(locale, "url");
+		return _language.get(locale, "url");
 	}
 
 	@Override
@@ -89,6 +89,9 @@ public class DLVideoExternalShortcutURLItemSelectorView
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
 				new VideoEmbeddableHTMLItemSelectorReturnType()));
+
+	@Reference
+	private Language _language;
 
 	private ServletContext _servletContext;
 

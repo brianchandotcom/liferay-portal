@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -88,7 +88,7 @@ public class DDMFormFunctionsServlet extends BaseDDMFormBuilderServlet {
 		String labelLanguageKey = key + "_function";
 
 		jsonObject.put(
-			"label", LanguageUtil.get(resourceBundle, labelLanguageKey)
+			"label", _language.get(resourceBundle, labelLanguageKey)
 		).put(
 			"value", key
 		);
@@ -96,7 +96,7 @@ public class DDMFormFunctionsServlet extends BaseDDMFormBuilderServlet {
 		String tooltipLanguageKey = key + "_tooltip";
 
 		jsonObject.put(
-			"tooltip", LanguageUtil.get(resourceBundle, tooltipLanguageKey));
+			"tooltip", _language.get(resourceBundle, tooltipLanguageKey));
 
 		return jsonObject;
 	}
@@ -135,5 +135,8 @@ public class DDMFormFunctionsServlet extends BaseDDMFormBuilderServlet {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 }

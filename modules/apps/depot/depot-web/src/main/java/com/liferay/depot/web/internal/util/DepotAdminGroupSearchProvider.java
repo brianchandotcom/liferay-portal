@@ -19,7 +19,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -87,7 +87,7 @@ public class DepotAdminGroupSearchProvider {
 		GroupSearch groupSearch = new GroupSearch(portletRequest, portletURL);
 
 		groupSearch.setEmptyResultsMessage(
-			LanguageUtil.get(
+			_language.get(
 				portletRequest.getLocale(), "no-asset-libraries-were-found"));
 		groupSearch.setResultsAndTotal(
 			() -> {
@@ -129,7 +129,7 @@ public class DepotAdminGroupSearchProvider {
 		GroupSearch groupSearch = new GroupSearch(portletRequest, portletURL);
 
 		groupSearch.setEmptyResultsMessage(
-			LanguageUtil.get(
+			_language.get(
 				portletRequest.getLocale(), "no-asset-libraries-were-found"));
 
 		GroupSearchTerms searchTerms =
@@ -171,5 +171,8 @@ public class DepotAdminGroupSearchProvider {
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private Language _language;
 
 }

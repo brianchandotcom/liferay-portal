@@ -22,7 +22,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -120,7 +120,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			_classNameLocalService.getClassNameId(FileEntry.class),
 			dlFileEntry.getFileEntryId(),
 			_friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(urlTitle),
-			LanguageUtil.getLanguageId(LocaleUtil.getSiteDefault()));
+			_language.getLanguageId(LocaleUtil.getSiteDefault()));
 
 		_friendlyURLEntryLocalService.addFriendlyURLEntry(
 			dlFileEntry.getGroupId(),
@@ -171,5 +171,8 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
+	@Reference
+	private Language _language;
 
 }

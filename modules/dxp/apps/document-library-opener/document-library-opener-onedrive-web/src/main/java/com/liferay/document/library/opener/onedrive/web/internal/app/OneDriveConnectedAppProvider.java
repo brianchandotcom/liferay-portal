@@ -22,7 +22,7 @@ import com.liferay.document.library.opener.onedrive.web.internal.oauth.OAuth2Man
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,7 +73,7 @@ public class OneDriveConnectedAppProvider implements ConnectedAppProvider {
 
 					StringBundler sb = new StringBundler(5);
 
-					sb.append(LanguageUtil.get(resourceBundle, "onedrive"));
+					sb.append(_language.get(resourceBundle, "onedrive"));
 
 					String emailAddress = _getOneDriveUserEmailAddress(
 						accessToken);
@@ -109,6 +109,9 @@ public class OneDriveConnectedAppProvider implements ConnectedAppProvider {
 
 	@Reference
 	private DLOpenerOneDriveManager _dlOpenerOneDriveManager;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private OAuth2Manager _oAuth2Manager;

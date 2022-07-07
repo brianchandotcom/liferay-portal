@@ -17,7 +17,7 @@ package com.liferay.connected.app.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.connected.app.ConnectedAppManager;
 import com.liferay.connected.app.web.internal.constants.ConnectedAppScreenNavigationEntryConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.users.admin.constants.UserScreenNavigationEntryConstants;
@@ -59,7 +59,7 @@ public class UserConnectedAppScreenNavigationEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(_getResourceBundle(locale), "apps");
+		return _language.get(_getResourceBundle(locale), "apps");
 	}
 
 	@Override
@@ -103,6 +103,9 @@ public class UserConnectedAppScreenNavigationEntry
 
 	@Reference
 	private ConnectedAppManager _connectedAppManager;
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.connected.app.web)")
 	private ServletContext _servletContext;

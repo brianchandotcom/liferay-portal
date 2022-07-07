@@ -19,7 +19,7 @@ import com.liferay.digital.signature.web.internal.constants.DigitalSignatureWebK
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -127,7 +127,7 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 			return fileEntryTitle;
 		}
 
-		return LanguageUtil.format(
+		return _language.format(
 			ResourceBundleUtil.getBundle("content.Language", getClass()),
 			(count == 1) ? "x-and-x-other-file" : "x-and-x-other-files",
 			new String[] {fileEntryTitle, String.valueOf(count)}, false);
@@ -138,5 +138,8 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private Language _language;
 
 }

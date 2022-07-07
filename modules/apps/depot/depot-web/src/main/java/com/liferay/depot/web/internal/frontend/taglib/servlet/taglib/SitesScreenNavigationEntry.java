@@ -16,11 +16,12 @@ package com.liferay.depot.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.depot.web.internal.constants.DepotScreenNavigationEntryConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -48,7 +49,7 @@ public class SitesScreenNavigationEntry extends BaseDepotScreenNavigationEntry {
 
 	@Override
 	protected String getDescription(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(locale),
 			"an-asset-library-can-be-connected-to-multiple-sites.-please-add-" +
 				"those-sites-here");
@@ -58,5 +59,8 @@ public class SitesScreenNavigationEntry extends BaseDepotScreenNavigationEntry {
 	protected boolean isShowControls() {
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 }

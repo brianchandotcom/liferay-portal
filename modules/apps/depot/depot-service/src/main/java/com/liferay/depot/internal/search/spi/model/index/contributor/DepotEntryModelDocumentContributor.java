@@ -15,7 +15,7 @@
 package com.liferay.depot.internal.search.spi.model.index.contributor;
 
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -50,7 +50,7 @@ public class DepotEntryModelDocumentContributor
 		document.addText(Field.NAME, group.getName());
 
 		for (Locale locale :
-				LanguageUtil.getAvailableLocales(depotEntry.getGroupId())) {
+				_language.getAvailableLocales(depotEntry.getGroupId())) {
 
 			String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -66,5 +66,8 @@ public class DepotEntryModelDocumentContributor
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 }

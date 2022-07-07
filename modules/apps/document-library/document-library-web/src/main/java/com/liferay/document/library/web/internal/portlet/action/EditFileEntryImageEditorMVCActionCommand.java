@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -376,7 +376,7 @@ public class EditFileEntryImageEditorMVCActionCommand
 
 			SessionMessages.add(
 				actionRequest, "requestProcessed",
-				LanguageUtil.get(
+				_language.get(
 					themeDisplay.getLocale(),
 					"the-image-was-edited-successfully"));
 
@@ -404,6 +404,9 @@ public class EditFileEntryImageEditorMVCActionCommand
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference(target = "(upload.response.handler=multiple)")
 	private UploadResponseHandler _multipleUploadResponseHandler;

@@ -15,7 +15,7 @@
 package com.liferay.configuration.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -40,8 +40,7 @@ public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return LanguageUtil.get(
-			themeDisplay.getLocale(), "export-all-settings");
+		return _language.get(themeDisplay.getLocale(), "export-all-settings");
 	}
 
 	@Override
@@ -81,6 +80,9 @@ public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

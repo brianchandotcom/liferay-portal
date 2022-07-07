@@ -22,7 +22,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
@@ -80,7 +80,7 @@ public class IGPortletDisplayTemplateHandler
 			ResourceBundleUtil.getBundle(
 				"content.Language", locale, getClass()));
 
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return _language.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override
@@ -148,6 +148,9 @@ public class IGPortletDisplayTemplateHandler
 		IGPortletDisplayTemplateHandler.class);
 
 	private volatile DLConfiguration _dlConfiguration;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

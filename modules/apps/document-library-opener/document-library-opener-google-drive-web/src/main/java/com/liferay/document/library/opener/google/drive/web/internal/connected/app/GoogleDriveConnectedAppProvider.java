@@ -28,7 +28,7 @@ import com.liferay.document.library.opener.google.drive.web.internal.oauth.OAuth
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -87,7 +87,7 @@ public class GoogleDriveConnectedAppProvider implements ConnectedAppProvider {
 
 				StringBundler sb = new StringBundler(5);
 
-				sb.append(LanguageUtil.get(resourceBundle, "google-drive"));
+				sb.append(_language.get(resourceBundle, "google-drive"));
 
 				String emailAddress = _getGoogleDriveUserEmailAddress(
 					credential);
@@ -149,6 +149,10 @@ public class GoogleDriveConnectedAppProvider implements ConnectedAppProvider {
 	private DLOpenerGoogleDriveManager _dlOpenerGoogleDriveManager;
 
 	private JacksonFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
+
 	private NetHttpTransport _netHttpTransport;
 
 	@Reference

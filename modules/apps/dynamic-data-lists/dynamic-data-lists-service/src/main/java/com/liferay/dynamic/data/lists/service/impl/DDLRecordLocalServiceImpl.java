@@ -46,7 +46,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -688,7 +688,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		String recordSetName = recordSet.getName(locale);
 
-		String title = LanguageUtil.format(
+		String title = _language.format(
 			locale, "new-x-for-list-x",
 			new Object[] {ddmStructureName, recordSetName}, false);
 
@@ -1298,6 +1298,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	@Reference
 	private DDLRecordVersionPersistence _ddlRecordVersionPersistence;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;

@@ -17,7 +17,7 @@ package com.liferay.digital.signature.web.internal.portal.settings.configuration
 import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
 import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
 import com.liferay.digital.signature.web.internal.constants.DigitalSignatureWebKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -60,7 +60,7 @@ public class DigitalSignatureSiteSettingsConfigurationScreenContributor
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "digital-signature");
+		return _language.get(resourceBundle, "digital-signature");
 	}
 
 	@Override
@@ -110,6 +110,9 @@ public class DigitalSignatureSiteSettingsConfigurationScreenContributor
 			DigitalSignatureWebKeys.DIGITAL_SIGNATURE_RSA_PRIVATE_KEY,
 			digitalSignatureConfiguration.rsaPrivateKey());
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.digital.signature.web)",

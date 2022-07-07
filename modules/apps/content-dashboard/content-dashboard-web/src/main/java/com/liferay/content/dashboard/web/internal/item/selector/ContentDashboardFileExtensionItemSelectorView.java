@@ -26,7 +26,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -230,7 +230,7 @@ public class ContentDashboardFileExtensionItemSelectorView
 						"iconCssClass", _getIconCssClass(fileExtensionGroup)
 					).put(
 						"label",
-						LanguageUtil.get(
+						_language.get(
 							themeDisplay.getLocale(),
 							fileExtensionGroup.getKey())
 					);
@@ -304,6 +304,9 @@ public class ContentDashboardFileExtensionItemSelectorView
 		new HashMap<>();
 	private volatile List<FileExtensionGroup> _fileExtensionGroups =
 		new ArrayList<>();
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Searcher _searcher;

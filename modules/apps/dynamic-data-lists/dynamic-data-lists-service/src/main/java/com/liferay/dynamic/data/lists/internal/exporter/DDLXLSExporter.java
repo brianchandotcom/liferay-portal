@@ -27,7 +27,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistry;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -280,17 +280,17 @@ public class DDLXLSExporter extends BaseDDLExporter {
 		cell = row.createCell(cellIndex++, CellType.STRING);
 
 		cell.setCellStyle(cellStyle);
-		cell.setCellValue(LanguageUtil.get(locale, "status"));
+		cell.setCellValue(_language.get(locale, "status"));
 
 		cell = row.createCell(cellIndex++, CellType.STRING);
 
 		cell.setCellStyle(cellStyle);
-		cell.setCellValue(LanguageUtil.get(locale, "modified-date"));
+		cell.setCellValue(_language.get(locale, "modified-date"));
 
 		cell = row.createCell(cellIndex++, CellType.STRING);
 
 		cell.setCellStyle(cellStyle);
-		cell.setCellValue(LanguageUtil.get(locale, "author"));
+		cell.setCellValue(_language.get(locale, "author"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLXLSExporter.class);
@@ -304,6 +304,9 @@ public class DDLXLSExporter extends BaseDDLExporter {
 
 	@Reference
 	private HtmlParser _htmlParser;
+
+	@Reference
+	private Language _language;
 
 	private StorageEngine _storageEngine;
 

@@ -36,12 +36,8 @@ import com.liferay.knowledge.base.service.KBCommentService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.util.AdminHelper;
-import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -80,43 +76,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 public abstract class BaseKBPortlet extends MVCPortlet {
-
-	public void deleteTempAttachment(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			long resourcePrimKey = ParamUtil.getLong(
-				actionRequest, "resourcePrimKey");
-			String fileName = ParamUtil.getString(actionRequest, "fileName");
-
-			kbArticleService.deleteTempAttachment(
-				themeDisplay.getScopeGroupId(), resourcePrimKey, fileName,
-				KBWebKeys.TEMP_FOLDER_NAME);
-
-			writeJSON(
-				actionRequest, actionResponse,
-				JSONUtil.put("deleted", Boolean.TRUE));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			writeJSON(
-				actionRequest, actionResponse,
-				JSONUtil.put(
-					"deleted", Boolean.FALSE
-				).put(
-					"errorMessage",
-					themeDisplay.translate(
-						"an-unexpected-error-occurred-while-deleting-the-file")
-				));
-		}
-	}
 
 	public void moveKBObject(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -539,7 +498,5 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 		return redirect;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(BaseKBPortlet.class);
 
 }

@@ -44,6 +44,26 @@ public abstract class BaseTopLevelBuildReport
 	extends BaseBuildReport implements TopLevelBuildReport {
 
 	@Override
+	public Map<String, String> getBuildParameters() {
+		Map<String, String> buildParameters = new HashMap<>();
+
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		if (!buildReportJSONObject.has("buildParameters")) {
+			return buildParameters;
+		}
+
+		JSONObject buildParametersJSONObject =
+			buildReportJSONObject.getJSONObject("buildParameters");
+
+		for (String key : buildParametersJSONObject.keySet()) {
+			buildParameters.put(key, buildParametersJSONObject.getString(key));
+		}
+
+		return buildParameters;
+	}
+
+	@Override
 	public URL getBuildReportJSONTestrayURL() {
 		JobReport jobReport = getJobReport();
 

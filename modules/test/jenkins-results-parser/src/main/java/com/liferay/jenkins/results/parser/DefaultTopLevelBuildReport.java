@@ -38,6 +38,8 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 		buildReportJSONObject = new JSONObject();
 
+		buildReportJSONObject.put(
+			"buildParameters", _topLevelBuild.getParameters());
 		buildReportJSONObject.put("buildURL", _topLevelBuild.getBuildURL());
 		buildReportJSONObject.put("duration", _topLevelBuild.getDuration());
 		buildReportJSONObject.put("result", _topLevelBuild.getResult());

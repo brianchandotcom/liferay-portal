@@ -19,11 +19,14 @@ import com.liferay.jenkins.results.parser.testray.TestrayS3Object;
 import java.net.URL;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Michael Hashimoto
  */
 public interface TopLevelBuildReport extends BuildReport {
+
+	public Map<String, String> getBuildParameters();
 
 	public URL getBuildReportJSONTestrayURL();
 

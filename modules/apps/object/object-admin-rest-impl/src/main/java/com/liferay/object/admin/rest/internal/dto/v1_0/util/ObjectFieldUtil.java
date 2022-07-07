@@ -17,6 +17,7 @@ package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,7 +47,8 @@ public class ObjectFieldUtil {
 	public static com.liferay.object.model.ObjectField toObjectField(
 		ObjectField objectField,
 		ObjectFieldLocalService objectFieldLocalService,
-		ObjectFieldSettingLocalService objectFieldSettingLocalService) {
+		ObjectFieldSettingLocalService objectFieldSettingLocalService,
+		ObjectFilterLocalService objectFilterLocalService) {
 
 		com.liferay.object.model.ObjectField serviceBuilderObjectField =
 			objectFieldLocalService.createObjectField(0L);
@@ -73,7 +75,9 @@ public class ObjectFieldUtil {
 				objectField.getObjectFieldSettings(),
 				objectFieldSetting ->
 					ObjectFieldSettingUtil.toObjectFieldSetting(
-						objectFieldSetting, objectFieldSettingLocalService)));
+						objectField.getBusinessTypeAsString(),
+						objectFieldSetting, objectFieldSettingLocalService,
+						objectFilterLocalService)));
 		serviceBuilderObjectField.setRequired(
 			GetterUtil.getBoolean(objectField.getRequired()));
 		serviceBuilderObjectField.setSystem(

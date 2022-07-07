@@ -94,10 +94,19 @@ public class TunnelServlet extends HttpServlet {
 
 			MethodHandler methodHandler = ovp.getValue();
 
+			if (_log.isDebugEnabled()) {
+				_log.debug("Received method handler " + methodHandler);
+			}
+
 			if (methodHandler != null) {
 				MethodKey methodKey = methodHandler.getMethodKey();
 
 				if (!isValidRequest(methodKey.getDeclaringClass())) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Invalid request " + methodKey.getDeclaringClass());
+					}
+
 					return;
 				}
 
@@ -130,6 +139,10 @@ public class TunnelServlet extends HttpServlet {
 		}
 		finally {
 			AccessControlThreadLocal.setRemoteAccess(remoteAccess);
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Return object " + returnObject);
 		}
 
 		if (returnObject != null) {

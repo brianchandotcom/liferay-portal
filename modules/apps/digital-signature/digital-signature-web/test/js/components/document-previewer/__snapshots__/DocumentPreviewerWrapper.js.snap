@@ -155,7 +155,9 @@ exports[`DocumentPreviewerWrapper renders with a document 1`] = `
         </button>
       </li>
     </ul>
-    <span />
+    <span>
+      document-1,1-of-x
+    </span>
   </div>
 </DocumentFragment>
 `;
@@ -185,7 +187,7 @@ exports[`DocumentPreviewerWrapper renders with a document without preview 1`] = 
           <p
             class="empty-message-color taglib-empty-result-message-description"
           >
-            the-envelope-does-not-have-a-document-to-preview
+            the-document-Document-does-not-have-a-preview
           </p>
         </div>
       </div>
@@ -281,7 +283,9 @@ exports[`DocumentPreviewerWrapper renders with a document without preview 1`] = 
         </button>
       </li>
     </ul>
-    <span />
+    <span>
+      document-1,1-of-x
+    </span>
   </div>
 </DocumentFragment>
 `;
@@ -427,7 +431,9 @@ exports[`DocumentPreviewerWrapper renders with an image 1`] = `
         </button>
       </li>
     </ul>
-    <span />
+    <span>
+      document-1,1-of-x
+    </span>
   </div>
 </DocumentFragment>
 `;

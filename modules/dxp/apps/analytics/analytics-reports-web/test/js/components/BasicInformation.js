@@ -49,13 +49,15 @@ describe('BasicInformation', () => {
 			],
 		};
 
-		const {getByText} = render(<BasicInformation {...testProps} />);
+		const {container, getByText} = render(
+			<BasicInformation {...testProps} />
+		);
 
 		expect(getByText(testProps.title)).toBeInTheDocument();
 
 		expect(getByText(testProps.canonicalURL)).toBeInTheDocument();
 
-		const formattedPublishDate = 'September 20, 2021';
+		const formattedPublishDate = '20 September 2021';
 
 		expect(
 			getByText('published-on-' + formattedPublishDate)
@@ -64,5 +66,7 @@ describe('BasicInformation', () => {
 		expect(
 			getByText('authored-by-' + testProps.author.name)
 		).toBeInTheDocument();
+
+		expect(container).toMatchSnapshot();
 	});
 });

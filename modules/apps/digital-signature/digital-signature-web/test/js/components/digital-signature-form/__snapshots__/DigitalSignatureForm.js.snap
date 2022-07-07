@@ -290,6 +290,19 @@ exports[`DigitalSignatureForm Validates required fields 1`] = `
             >
               Email Message
             </textarea>
+            <div
+              class="form-feedback-group"
+            >
+              <div
+                class="form-feedback-item"
+              >
+                <div
+                  class="form-text"
+                >
+                  9987-characters-remaining
+                </div>
+              </div>
+            </div>
           </div>
           <button
             class="btn btn-primary"

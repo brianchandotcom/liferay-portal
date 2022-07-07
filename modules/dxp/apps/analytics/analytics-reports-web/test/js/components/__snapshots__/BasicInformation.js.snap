@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BasicInformation renders author, publish date and title 1`] = `
+<div>
+  <div
+    class="sidebar-section"
+  >
+    <div
+      class="mb-2 autofit-row autofit-row-center"
+    >
+      <div
+        class="autofit-col"
+      >
+        <div
+          class="inline-item-before"
+        >
+          <div
+            class="autofit-row"
+          >
+            <div
+              class="autofit-col"
+            >
+              <div
+                class="autofit-row"
+              >
+                <div
+                  class="autofit-col"
+                >
+                  <div
+                    class="dropdown"
+                  >
+                    <button
+                      class="dropdown-toggle btn-monospaced btn btn-sm btn-secondary"
+                      style=""
+                      type="button"
+                    >
+                      <svg
+                        class="lexicon-icon lexicon-icon-en-us"
+                        role="presentation"
+                      >
+                        <use
+                          xlink:href="#en-us"
+                        />
+                      </svg>
+                      <span
+                        class="d-block font-weight-normal"
+                        style="font-size: 9px;"
+                      >
+                        en-US
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="autofit-col autofit-col-expand"
+      >
+        <div
+          class="autofit-row"
+        >
+          <span
+            class="font-weight-semi-bold text-truncate-inline"
+          >
+            <span
+              class="text-truncate"
+              data-tooltip-align="bottom"
+              title="A testing page"
+            >
+              A testing page
+            </span>
+          </span>
+        </div>
+        <div
+          class="autofit-row"
+        >
+          <span
+            class="text-truncate text-truncate-reverse"
+            data-tooltip-align="bottom"
+            title="http://localhost:8080/en/web/guest/-/basic-web-content"
+          >
+            <bdi
+              class="text-secondary"
+            >
+              http://localhost:8080/en/web/guest/-/basic-web-content
+            </bdi>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mb-2 autofit-row"
+    >
+      <div
+        class="autofit-col autofit-col-expand"
+      >
+        <span
+          class="text-secondary"
+        >
+          published-on-20 September 2021
+        </span>
+      </div>
+    </div>
+    <div
+      class="autofit-row"
+    >
+      <div
+        class="autofit-col autofit-col-expand"
+      >
+        <div
+          class="text-secondary"
+        >
+          <span
+            class="sticker c-mr-2 sticker-user-icon user-icon-color-NaN sticker-circle sticker-sm"
+          >
+            <span
+              class="sticker-overlay"
+            >
+              <svg
+                class="lexicon-icon lexicon-icon-user"
+                role="presentation"
+              >
+                <use
+                  xlink:href="#user"
+                />
+              </svg>
+            </span>
+          </span>
+          authored-by-John Tester
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -85,15 +85,15 @@ describe('DocumentPreviewerWrapper', () => {
 			},
 		];
 
-		const {asFragment, getByText} = render(
+		const {asFragment, container} = render(
 			<DocumentPreviewerWrapper fileEntries={fileEntries} />
 		);
 
-		const message = getByText(
-			'the-envelope-does-not-have-a-document-to-preview'
+		const messageElement = container.querySelector(
+			'.empty-message-color.taglib-empty-result-message-description'
 		);
 
-		expect(message).toBeTruthy();
+		expect(messageElement).toBeTruthy();
 
 		expect(asFragment()).toMatchSnapshot();
 	});

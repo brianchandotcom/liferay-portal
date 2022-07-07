@@ -297,6 +297,34 @@ definition {
 		return "${curl}";
 	}
 
+	macro _updateStructuredContentByErcInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode},${data},${label},${name},${ddmStructureId},${title},${updateExternalReferenceCode}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/structured-contents/by-external-reference-code/${externalReferenceCode} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+            -d {
+	"contentFields": [{
+        "contentFieldValue": {
+            "data": "${data}"
+        },
+        "label": "${label}",
+        "name": "${name}"
+    }],
+  "contentStructureId": "${ddmStructureId}",
+  "externalReferenceCode": "${updateExternalReferenceCode}",
+  "title": "${title}"
+	}
+		''';
+
+		var curl = JSONCurlUtil.put("${curl}");
+
+		return "${curl}";
+	}
+
 	macro _versionStructureContent {
 		Variables.assertDefined(parameterList = "${versionvalue},${responseToParse}");
 
@@ -450,6 +478,14 @@ definition {
 		return "${response}";
 	}
 
+	macro getTitleOfStructuredContent {
+		Variables.assertDefined(parameterList = "${responseToParse}");
+
+		var title = JSONUtil.getWithJSONPath("${responseToParse}", "$.['title']");
+
+		return "${title}";
+	}
+
 	macro getUuidOfStructuredContent {
 		Variables.assertDefined(parameterList = "${responseToParse}");
 
@@ -468,6 +504,26 @@ definition {
 
 	macro sortStructureContent {
 		var response = HeadlessWebcontentAPI._sortStructureContent(sortvalue = "${sortvalue}");
+
+		return "${response}";
+	}
+
+	macro updateStructuredContentByErcInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode},${data},${label},${name},${ddmStructureId},${title}");
+
+		if (!(isSet(updateExternalReferenceCode))) {
+			var updateExternalReferenceCode = "";
+		}
+
+		var response = HeadlessWebcontentAPI._updateStructuredContentByErcInAssetLibrary(
+			assetLibraryId = "${assetLibraryId}",
+			data = "${data}",
+			ddmStructureId = "${ddmStructureId}",
+			externalReferenceCode = "${externalReferenceCode}",
+			label = "${label}",
+			name = "${name}",
+			title = "${title}",
+			updateExternalReferenceCode = "${updateExternalReferenceCode}");
 
 		return "${response}";
 	}

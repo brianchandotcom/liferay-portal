@@ -194,6 +194,55 @@ definition {
 		}
 	}
 
+	@description = "Structured content is updated by asset library id and erc"
+	@priority = "5"
+	test CanUpdateStructuredContentTitleInAssetLibraryByErc {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content with a custom erc is created with a POST request in asset library") {
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			var response = HeadlessWebcontentAPI.createStructuredContentInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				externalReferenceCode = "erc",
+				label = "Text",
+				name = "Text",
+				title = "WC WebContent Title");
+		}
+
+		task ("When I make a PUT request by assetLibraryId and erc") {
+			var response = HeadlessWebcontentAPI.updateStructuredContentByErcInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				externalReferenceCode = "erc",
+				label = "Text",
+				name = "Text",
+				title = "WC WebContent Title Updated");
+		}
+
+		task ("Then I receive a correct body response with updated data") {
+			var titleInResponse = HeadlessWebcontentAPI.getTitleOfStructuredContent(responseToParse = "${response}");
+
+			TestUtils.assertEquals(
+				actual = "${titleInResponse}",
+				expected = "WC WebContent Title Updated");
+		}
+
+		task ("And Then the structured content is correctly updated") {
+			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%20Updated%27");
+
+			HeadlessWebcontentAPI.assertProperNumberOfItems(
+				expectedTotalElement = "1",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "Structured content is created in an asset library with custom erc"
 	@priority = "5"
 	test StructuredContentIsCreatedInAssetLibraryWithCustomErc {

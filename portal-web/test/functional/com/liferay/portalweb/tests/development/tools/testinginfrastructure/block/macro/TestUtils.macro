@@ -37,6 +37,19 @@ definition {
 		}
 	}
 
+	macro assertPartialEquals {
+		echo("${expected}");
+
+		echo("${actual}");
+
+		if (contains("${actual}", "${expected}")) {
+			echo("PASSED");
+		}
+		else {
+			TestUtils.fail(message = "FAILED: Expected text '${expected}' does not match actual text '${actual}'");
+		}
+	}
+
 	macro assertTruncatedText {
 		WaitForSPARefresh();
 

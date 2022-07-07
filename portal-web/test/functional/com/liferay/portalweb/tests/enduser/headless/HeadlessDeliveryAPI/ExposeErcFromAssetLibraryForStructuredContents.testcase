@@ -40,6 +40,53 @@ definition {
 		}
 	}
 
+	@description = "Structured content is not able to create with an existing erc"
+	@priority = "5"
+	test CannotCreateStructuredContentInAssetLibraryWithExistingErc {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content with a custom erc is created with a POST request in asset library") {
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			var response = HeadlessWebcontentAPI.createStructuredContentInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				externalReferenceCode = "erc",
+				label = "Text",
+				name = "Text",
+				title = "WC WebContent Title");
+		}
+
+		task ("When with POST I create a structured content with an existing erc") {
+			var response = HeadlessWebcontentAPI.createStructuredContentInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				externalReferenceCode = "erc",
+				label = "Text",
+				name = "Text",
+				title = "WC Second WebContent Title");
+		}
+
+		task ("Then I receive duplicate external reference code response") {
+			TestUtils.assertPartialEquals(
+				actual = "${response}",
+				expected = "Duplicate journal article external reference code erc");
+		}
+
+		task ("And Then another structured content with same erc is not being created") {
+			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				filtervalue = "title%20eq%20%27WC%20Second%20WebContent%20Title%27");
+
+			HeadlessWebcontentAPI.assertProperNumberOfItems(
+				expectedTotalElement = "0",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "Structured content is created in an asset library with custom erc"
 	@priority = "5"
 	test StructuredContentIsCreatedInAssetLibraryWithCustomErc {

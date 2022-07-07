@@ -5058,11 +5058,17 @@ log.sanitizer.enabled=false</echo>
 								substring="gradleTest"
 							/>
 							<then>
+								<var name="gradle.plugin.dir.name" unset="true" />
+
+								<basename file="@{gradle.plugin.dir}" property="gradle.plugin.dir.name" />
+
 								<if>
-									<isset property="gradle.plugins.test.excludes.globs[@{gradle.plugin.dir}]" />
+									<isset property="gradle.plugins.test.excludes.globs[${gradle.plugin.dir.name}]" />
 									<then>
+										<propertycopy from="gradle.plugins.test.excludes.globs[${gradle.plugin.dir.name}]" name="gradle.plugins.test.excludes.globs" override="true" />
+
 										<gradle-execute dir="@{gradle.plugin.dir}" forcedcacheenabled="false" task="gradleTest">
-											<arg value="-DgradleTest.exclude=${gradle.plugins.test.excludes.globs[@{gradle.plugin.dir}]}" />
+											<arg value="-DgradleTest.exclude=${gradle.plugins.test.excludes.globs}" />
 										</gradle-execute>
 									</then>
 									<else>

@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.internal.dto.v1_0.converter.ObjectRelationshipDTOConverter;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectRelationshipEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -126,7 +128,7 @@ public class ObjectRelationshipResourceImpl
 		long objectDefinitionId2 = GetterUtil.getLong(
 			objectRelationship.getObjectDefinitionId2());
 
-		if ((objectRelationship.getObjectDefinitionId2() == 0) &&
+		if ((objectDefinitionId2 == 0) &&
 			(objectRelationship.getObjectDefinitionExternalReferenceCode2() !=
 				null)) {
 
@@ -178,40 +180,20 @@ public class ObjectRelationshipResourceImpl
 			com.liferay.object.model.ObjectRelationship objectRelationship)
 		throws Exception {
 
-		com.liferay.object.model.ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId2());
-
-		return new ObjectRelationship() {
-			{
-				actions = HashMapBuilder.put(
+		return _objectRelationshipDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				false,
+				HashMapBuilder.put(
 					"delete",
 					addAction(
 						ActionKeys.DELETE, "deleteObjectRelationship",
 						com.liferay.object.model.ObjectDefinition.class.
 							getName(),
 						objectRelationship.getObjectDefinitionId1())
-				).build();
-				deletionType = ObjectRelationship.DeletionType.create(
-					objectRelationship.getDeletionType());
-				id = objectRelationship.getObjectRelationshipId();
-				label = LocalizedMapUtil.getLanguageIdMap(
-					objectRelationship.getLabelMap());
-				name = objectRelationship.getName();
-				objectDefinitionExternalReferenceCode2 =
-					objectDefinition.getExternalReferenceCode();
-				objectDefinitionId1 =
-					objectRelationship.getObjectDefinitionId1();
-				objectDefinitionId2 =
-					objectRelationship.getObjectDefinitionId2();
-				objectDefinitionName2 = objectDefinition.getShortName();
-				parameterObjectFieldId =
-					objectRelationship.getParameterObjectFieldId();
-				reverse = objectRelationship.isReverse();
-				type = ObjectRelationship.Type.create(
-					objectRelationship.getType());
-			}
-		};
+				).build(),
+				null, null, contextAcceptLanguage.getPreferredLocale(), null,
+				null),
+			objectRelationship);
 	}
 
 	private static final EntityModel _entityModel =
@@ -219,6 +201,9 @@ public class ObjectRelationshipResourceImpl
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectRelationshipDTOConverter _objectRelationshipDTOConverter;
 
 	@Reference
 	private ObjectRelationshipService _objectRelationshipService;

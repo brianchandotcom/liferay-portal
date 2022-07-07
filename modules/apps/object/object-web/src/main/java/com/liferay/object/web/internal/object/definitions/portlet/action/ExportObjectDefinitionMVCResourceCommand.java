@@ -121,9 +121,10 @@ public class ExportObjectDefinitionMVCResourceCommand
 		_sanitizeJSON(
 			objectDefinitionJSONObject,
 			new String[] {
-				"dateCreated", "dateModified", "externalReferenceCode", "id",
-				"listTypeDefinitionId", "objectDefinitionId", "objectFieldId",
-				"objectRelationshipId", "titleObjectFieldId"
+				"dateCreated", "dateModified", "id", "listTypeDefinitionId",
+				"objectDefinitionId", "objectDefinitionId1",
+				"objectDefinitionId2", "objectFieldId", "objectRelationshipId",
+				"titleObjectFieldId"
 			});
 
 		String objectDefinitionJSON = objectDefinitionJSONObject.toString();

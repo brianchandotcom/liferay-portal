@@ -110,6 +110,21 @@ create table ObjectFieldSetting (
 	value VARCHAR(75) null
 );
 
+create table ObjectFilter (
+	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	objectFilterId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	objectFieldId LONG,
+	filterBy VARCHAR(75) null,
+	filterType VARCHAR(75) null,
+	json VARCHAR(75) null
+);
+
 create table ObjectLayout (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,

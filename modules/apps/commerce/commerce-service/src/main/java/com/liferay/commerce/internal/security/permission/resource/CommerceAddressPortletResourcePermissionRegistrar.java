@@ -28,10 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Andrea Di Giorgi
  */
-@Component(
-	enabled = false,
-	service = CommerceAddressPortletResourcePermissionRegistrar.class
-)
+@Component(enabled = false, service = {})
 public class CommerceAddressPortletResourcePermissionRegistrar {
 
 	@Activate

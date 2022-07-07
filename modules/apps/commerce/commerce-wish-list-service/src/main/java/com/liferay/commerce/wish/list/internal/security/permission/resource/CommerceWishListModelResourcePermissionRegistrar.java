@@ -37,10 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrea Di Giorgi
  */
-@Component(
-	enabled = false,
-	service = CommerceWishListModelResourcePermissionRegistrar.class
-)
+@Component(enabled = false, service = {})
 public class CommerceWishListModelResourcePermissionRegistrar {
 
 	@Activate

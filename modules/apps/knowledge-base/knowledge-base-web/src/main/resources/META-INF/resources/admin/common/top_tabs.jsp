@@ -24,3 +24,11 @@ KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNav
 	inverted="<%= true %>"
 	navigationItems="<%= kbAdminNavigationDisplayContext.getNavigationItems() %>"
 />
+
+<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+	<div class="kbVerticalBar">
+		<react:component
+			module="admin/js/components/VerticalBar"
+		/>
+	</div>
+</c:if>

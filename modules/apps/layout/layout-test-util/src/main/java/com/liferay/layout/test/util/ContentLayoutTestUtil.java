@@ -167,6 +167,24 @@ public class ContentLayoutTestUtil {
 		return jsonObject;
 	}
 
+	public static String addFormToPublishedLayout(
+			Layout layout, boolean addCaptcha, String classNameId,
+			String classTypeId, InfoField<?>... infoField)
+		throws Exception {
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		JSONObject jsonObject = addFormToLayout(
+			draftLayout, classNameId, classTypeId,
+			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()),
+			addCaptcha, infoField);
+
+		publishLayout(draftLayout, layout);
+
+		return jsonObject.getString("addedItemId");
+	}
+
 	public static FragmentEntryLink addFragmentEntryLinkToLayout(
 			Layout layout, long fragmentEntryId, long segmentsExperienceId,
 			String css, String html, String js, String configuration,

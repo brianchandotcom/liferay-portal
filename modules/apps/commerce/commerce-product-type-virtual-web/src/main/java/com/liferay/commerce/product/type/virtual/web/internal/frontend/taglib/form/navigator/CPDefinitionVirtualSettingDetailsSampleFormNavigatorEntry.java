@@ -18,7 +18,7 @@ import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSettin
 import com.liferay.commerce.product.type.virtual.web.internal.servlet.taglib.ui.constants.CPDefinitionVirtualSettingFormNavigatorConstants;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
@@ -67,7 +67,7 @@ public class CPDefinitionVirtualSettingDetailsSampleFormNavigatorEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "sample");
+		return _language.get(resourceBundle, "sample");
 	}
 
 	@Override
@@ -97,5 +97,8 @@ public class CPDefinitionVirtualSettingDetailsSampleFormNavigatorEntry
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)"
 	)
 	private ServletContext _cpDefinitionVirtualSettingServletContext;
+
+	@Reference
+	private Language _language;
 
 }

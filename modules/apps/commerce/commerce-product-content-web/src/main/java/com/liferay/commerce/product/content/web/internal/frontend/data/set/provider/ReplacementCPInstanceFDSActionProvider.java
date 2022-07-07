@@ -23,7 +23,7 @@ import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -63,7 +63,7 @@ public class ReplacementCPInstanceFDSActionProvider
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY))
 			).setLabel(
-				LanguageUtil.get(httpServletRequest, "view")
+				_language.get(httpServletRequest, "view")
 			).build());
 	}
 
@@ -72,5 +72,8 @@ public class ReplacementCPInstanceFDSActionProvider
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private Language _language;
 
 }

@@ -16,13 +16,14 @@ package com.liferay.commerce.product.content.web.internal.product.content.fronte
 
 import com.liferay.commerce.product.content.web.internal.constants.CPContentPortletConstants;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -49,7 +50,10 @@ public class RenderSelectionFormNavigatorCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "render-selection");
+		return _language.get(resourceBundle, "render-selection");
 	}
+
+	@Reference
+	private Language _language;
 
 }

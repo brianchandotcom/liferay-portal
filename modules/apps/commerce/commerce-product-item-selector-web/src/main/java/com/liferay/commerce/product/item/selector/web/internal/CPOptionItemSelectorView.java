@@ -20,7 +20,7 @@ import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -67,7 +67,7 @@ public class CPOptionItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		return LanguageUtil.get(locale, "options");
+		return _language.get(locale, "options");
 	}
 
 	@Override
@@ -104,6 +104,9 @@ public class CPOptionItemSelectorView
 
 	@Reference
 	private CPOptionService _cpOptionService;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.item.selector.web)"

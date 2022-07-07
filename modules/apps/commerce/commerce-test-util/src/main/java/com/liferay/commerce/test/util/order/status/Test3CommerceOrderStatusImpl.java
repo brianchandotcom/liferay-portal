@@ -18,7 +18,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.status.CommerceOrderStatus;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
@@ -60,7 +60,7 @@ public class Test3CommerceOrderStatusImpl implements CommerceOrderStatus {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "test");
+		return _language.get(locale, "test");
 	}
 
 	@Override
@@ -73,5 +73,8 @@ public class Test3CommerceOrderStatusImpl implements CommerceOrderStatus {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private Language _language;
 
 }

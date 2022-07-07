@@ -68,7 +68,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -535,7 +535,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 			return StringPool.BLANK;
 		}
 
-		return LanguageUtil.format(
+		return _language.format(
 			httpServletRequest, "stock-quantity-x",
 			stockQuantityJSONObject.getString(
 				CPContentContributorConstants.STOCK_QUANTITY_NAME));
@@ -883,6 +883,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Reference
 	private DDMHelper _ddmHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

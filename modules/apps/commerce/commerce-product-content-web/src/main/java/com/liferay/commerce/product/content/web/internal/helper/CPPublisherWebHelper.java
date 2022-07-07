@@ -24,7 +24,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -101,7 +101,7 @@ public class CPPublisherWebHelper {
 		List<CPInstance> cpInstances = cpDefinition.getCPInstances();
 
 		if (cpInstances.size() > 1) {
-			return LanguageUtil.get(locale, "multiple-skus");
+			return _language.get(locale, "multiple-skus");
 		}
 
 		CPInstance cpInstance = cpInstances.get(0);
@@ -329,5 +329,8 @@ public class CPPublisherWebHelper {
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private Language _language;
 
 }

@@ -24,7 +24,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -114,7 +114,7 @@ public class CPDefinitionAssetRendererFactory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, key);
+		return _language.get(resourceBundle, key);
 	}
 
 	@Override
@@ -188,6 +188,9 @@ public class CPDefinitionAssetRendererFactory
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

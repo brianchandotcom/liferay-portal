@@ -20,7 +20,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -56,7 +56,7 @@ public class CommerceThemeMiniumHttpHelper {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "my-lists");
+		return _language.get(resourceBundle, "my-lists");
 	}
 
 	public int getNotificationsCount(ThemeDisplay themeDisplay) {
@@ -80,6 +80,9 @@ public class CommerceThemeMiniumHttpHelper {
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;

@@ -36,7 +36,7 @@ import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.commerce.util.comparator.CommerceShippingOptionPriorityComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -95,7 +95,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Override
 	public String getDescription(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			_getResourceBundle(locale), "fixed-shipping-description");
 	}
 
@@ -123,7 +123,7 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(_getResourceBundle(locale), "flat-rate");
+		return _language.get(_getResourceBundle(locale), "flat-rate");
 	}
 
 	private List<CommerceShippingFixedOption> _getCommerceShippingFixedOptions(
@@ -270,5 +270,8 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 	@Reference
 	private CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
+
+	@Reference
+	private Language _language;
 
 }

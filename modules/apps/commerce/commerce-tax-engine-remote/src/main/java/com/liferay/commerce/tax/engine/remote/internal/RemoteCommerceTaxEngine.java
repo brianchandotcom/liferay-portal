@@ -27,7 +27,7 @@ import com.liferay.commerce.tax.engine.remote.internal.configuration.RemoteComme
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
@@ -103,13 +103,12 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 
 	@Override
 	public String getDescription(Locale locale) {
-		return LanguageUtil.get(
-			_getResourceBundle(locale), "remote-description");
+		return _language.get(_getResourceBundle(locale), "remote-description");
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(_getResourceBundle(locale), KEY);
+		return _language.get(_getResourceBundle(locale), KEY);
 	}
 
 	@Activate
@@ -329,6 +328,9 @@ public class RemoteCommerceTaxEngine implements CommerceTaxEngine {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Language _language;
 
 	private final ObjectMapper _objectMapper = new ObjectMapper();
 	private PoolingHttpClientConnectionManager

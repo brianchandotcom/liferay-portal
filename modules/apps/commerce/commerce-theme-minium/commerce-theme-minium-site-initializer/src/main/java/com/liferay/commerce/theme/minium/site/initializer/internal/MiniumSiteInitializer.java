@@ -64,7 +64,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -141,7 +141,7 @@ public class MiniumSiteInitializer implements SiteInitializer {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "minium-description");
+		return _language.get(resourceBundle, "minium-description");
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class MiniumSiteInitializer implements SiteInitializer {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "minium");
+		return _language.get(resourceBundle, "minium");
 	}
 
 	@Override
@@ -432,7 +432,7 @@ public class MiniumSiteInitializer implements SiteInitializer {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setCompanyId(group.getCompanyId());
-		serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
+		serviceContext.setLanguageId(_language.getLanguageId(locale));
 		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setTimeZone(user.getTimeZone());
 		serviceContext.setUserId(user.getUserId());
@@ -1153,6 +1153,9 @@ public class MiniumSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private KBArticleImporter _kbArticleImporter;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private MiniumLayoutsInitializer _miniumLayoutsInitializer;

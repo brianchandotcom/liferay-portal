@@ -19,7 +19,7 @@ import com.liferay.commerce.product.content.render.list.entry.CPContentListEntry
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramWebKeys;
 import com.liferay.commerce.shop.by.diagram.util.CSDiagramCPTypeHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -61,7 +61,7 @@ public class CSDiagramCPContentListEntryRenderer
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "default");
+		return _language.get(resourceBundle, "default");
 	}
 
 	@Override
@@ -83,6 +83,9 @@ public class CSDiagramCPContentListEntryRenderer
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.shop.by.diagram.web)"

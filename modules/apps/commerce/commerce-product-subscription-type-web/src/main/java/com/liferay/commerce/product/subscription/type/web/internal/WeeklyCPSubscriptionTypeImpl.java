@@ -16,7 +16,7 @@ package com.liferay.commerce.product.subscription.type.web.internal;
 
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.util.CPSubscriptionType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -27,6 +27,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -43,7 +44,7 @@ public class WeeklyCPSubscriptionTypeImpl implements CPSubscriptionType {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "week");
+		return _language.get(locale, "week");
 	}
 
 	@Override
@@ -108,5 +109,8 @@ public class WeeklyCPSubscriptionTypeImpl implements CPSubscriptionType {
 
 		return calendar.getTime();
 	}
+
+	@Reference
+	private Language _language;
 
 }

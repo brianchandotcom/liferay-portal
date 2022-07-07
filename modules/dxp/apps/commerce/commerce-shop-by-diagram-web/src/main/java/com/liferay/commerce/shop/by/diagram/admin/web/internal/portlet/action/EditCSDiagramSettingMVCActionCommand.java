@@ -26,7 +26,7 @@ import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -117,7 +117,7 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 						_portal.getHttpServletResponse(actionResponse),
 						JSONUtil.put(
 							"error",
-							LanguageUtil.get(
+							_language.get(
 								_portal.getHttpServletRequest(actionRequest),
 								"please-select-an-existing-file")
 						).put(
@@ -253,6 +253,9 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CSDiagramSettingService _csDiagramSettingService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

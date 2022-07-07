@@ -18,7 +18,7 @@ import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.commerce.application.list.constants.CommercePanelCategoryKeys;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Portlet;
 
 import java.util.Locale;
@@ -41,7 +41,7 @@ public class CPSpecificationOptionsPanelApp extends BasePanelApp {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "specifications");
+		return _language.get(locale, "specifications");
 	}
 
 	@Override
@@ -57,5 +57,8 @@ public class CPSpecificationOptionsPanelApp extends BasePanelApp {
 	public void setPortlet(Portlet portlet) {
 		super.setPortlet(portlet);
 	}
+
+	@Reference
+	private Language _language;
 
 }

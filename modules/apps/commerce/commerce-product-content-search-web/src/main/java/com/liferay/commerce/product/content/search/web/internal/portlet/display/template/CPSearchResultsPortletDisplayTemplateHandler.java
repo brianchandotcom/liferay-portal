@@ -22,7 +22,7 @@ import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -66,7 +66,7 @@ public class CPSearchResultsPortletDisplayTemplateHandler
 				CPPortletKeys.CP_SEARCH_RESULTS, resourceBundle));
 
 		sb.append(StringPool.SPACE);
-		sb.append(LanguageUtil.get(locale, "template"));
+		sb.append(_language.get(locale, "template"));
 
 		return sb.toString();
 	}
@@ -121,6 +121,9 @@ public class CPSearchResultsPortletDisplayTemplateHandler
 			"/portlet/display/template/dependencies/search_results" +
 				"/portlet-display-templates.xml";
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

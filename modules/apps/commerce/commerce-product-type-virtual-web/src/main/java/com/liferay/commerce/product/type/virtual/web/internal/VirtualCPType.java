@@ -19,7 +19,7 @@ import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -53,7 +53,7 @@ public class VirtualCPType implements CPType {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, VirtualCPTypeConstants.NAME);
+		return _language.get(resourceBundle, VirtualCPTypeConstants.NAME);
 	}
 
 	@Override
@@ -64,5 +64,8 @@ public class VirtualCPType implements CPType {
 	@Reference
 	private CPDefinitionVirtualSettingLocalService
 		_cpDefinitionVirtualSettingLocalService;
+
+	@Reference
+	private Language _language;
 
 }

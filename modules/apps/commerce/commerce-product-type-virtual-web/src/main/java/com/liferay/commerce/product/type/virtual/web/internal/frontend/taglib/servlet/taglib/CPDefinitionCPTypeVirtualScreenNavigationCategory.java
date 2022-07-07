@@ -25,7 +25,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.service.JournalArticleService;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -71,7 +71,7 @@ public class CPDefinitionCPTypeVirtualScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "virtual");
+		return _language.get(resourceBundle, "virtual");
 	}
 
 	@Override
@@ -134,6 +134,9 @@ public class CPDefinitionCPTypeVirtualScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.virtual.web)"

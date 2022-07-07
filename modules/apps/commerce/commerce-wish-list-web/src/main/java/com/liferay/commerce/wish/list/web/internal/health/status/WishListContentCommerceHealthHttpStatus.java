@@ -18,7 +18,7 @@ import com.liferay.commerce.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.health.status.CommerceHealthHttpStatus;
 import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -97,7 +97,7 @@ public class WishListContentCommerceHealthHttpStatus
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle, "wish-list-content-health-status-description");
 	}
 
@@ -111,7 +111,7 @@ public class WishListContentCommerceHealthHttpStatus
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle, "wish-list-content-health-status-name");
 	}
 
@@ -135,6 +135,9 @@ public class WishListContentCommerceHealthHttpStatus
 
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private LayoutService _layoutService;

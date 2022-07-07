@@ -16,11 +16,12 @@ package com.liferay.commerce.product.content.web.internal.frontend.taglib.form.n
 
 import com.liferay.commerce.product.content.web.internal.constants.CPPublisherConstants;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -43,7 +44,10 @@ public class PaginationFormNavigatorCategory implements FormNavigatorCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "pagination");
+		return _language.get(locale, "pagination");
 	}
+
+	@Reference
+	private Language _language;
 
 }

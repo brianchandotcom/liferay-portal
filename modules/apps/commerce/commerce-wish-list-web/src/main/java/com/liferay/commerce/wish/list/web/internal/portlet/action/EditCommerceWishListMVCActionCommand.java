@@ -20,7 +20,7 @@ import com.liferay.commerce.wish.list.exception.NoSuchWishListException;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -127,7 +127,7 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", _portal.getLocale(actionRequest), getClass());
 
-		String name = LanguageUtil.get(resourceBundle, "new-wish-list");
+		String name = _language.get(resourceBundle, "new-wish-list");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceWishList.class.getName(), actionRequest);
@@ -166,6 +166,9 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceWishListService _commerceWishListService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -22,7 +22,7 @@ import com.liferay.commerce.product.content.category.web.internal.display.contex
 import com.liferay.commerce.product.content.category.web.internal.portlet.CPCategoryContentPortlet;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -64,7 +64,7 @@ public class CPCategoryContentPortletDisplayTemplateHandler
 				CPPortletKeys.CP_CATEGORY_CONTENT_WEB, resourceBundle));
 
 		sb.append(StringPool.SPACE);
-		sb.append(LanguageUtil.get(locale, "template"));
+		sb.append(_language.get(locale, "template"));
 
 		return sb.toString();
 	}
@@ -117,6 +117,9 @@ public class CPCategoryContentPortletDisplayTemplateHandler
 			"/portlet/display/template/dependencies/portlet-display-" +
 				"templates.xml";
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

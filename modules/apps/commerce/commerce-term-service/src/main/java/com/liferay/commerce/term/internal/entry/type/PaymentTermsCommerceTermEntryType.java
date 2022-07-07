@@ -16,13 +16,14 @@ package com.liferay.commerce.term.internal.entry.type;
 
 import com.liferay.commerce.term.constants.CommerceTermEntryConstants;
 import com.liferay.commerce.term.entry.type.CommerceTermEntryType;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -45,8 +46,11 @@ public class PaymentTermsCommerceTermEntryType
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(
+		return _language.get(
 			resourceBundle, CommerceTermEntryConstants.TYPE_PAYMENT_TERMS);
 	}
+
+	@Reference
+	private Language _language;
 
 }

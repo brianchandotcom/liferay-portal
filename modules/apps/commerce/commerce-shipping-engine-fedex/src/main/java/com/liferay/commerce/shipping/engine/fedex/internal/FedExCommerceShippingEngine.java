@@ -29,7 +29,7 @@ import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fedex.internal.helper.FedExCommerceShippingOptionHelper;
 import com.liferay.commerce.shipping.origin.locator.CommerceShippingOriginLocator;
 import com.liferay.commerce.util.CommerceShippingHelper;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -72,8 +72,7 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Override
 	public String getDescription(Locale locale) {
-		return LanguageUtil.get(
-			_getResourceBundle(locale), "fedex-description");
+		return _language.get(_getResourceBundle(locale), "fedex-description");
 	}
 
 	@Override
@@ -88,7 +87,7 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(_getResourceBundle(locale), "fedex");
+		return _language.get(_getResourceBundle(locale), "fedex");
 	}
 
 	private long _getCommerceShippingMethodId(CommerceOrder commerceOrder) {
@@ -174,5 +173,8 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+
+	@Reference
+	private Language _language;
 
 }

@@ -22,7 +22,7 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -60,7 +60,7 @@ public class ImageGalleryInfoItemRenderer
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "image-gallery");
+		return _language.get(locale, "image-gallery");
 	}
 
 	@Override
@@ -139,6 +139,9 @@ public class ImageGalleryInfoItemRenderer
 
 	@Reference
 	private CPContentHelper _cpContentHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

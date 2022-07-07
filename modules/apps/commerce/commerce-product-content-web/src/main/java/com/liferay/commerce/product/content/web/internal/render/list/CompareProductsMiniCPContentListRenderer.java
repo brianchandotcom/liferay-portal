@@ -17,7 +17,7 @@ package com.liferay.commerce.product.content.web.internal.render.list;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -54,7 +54,7 @@ public class CompareProductsMiniCPContentListRenderer
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "default");
+		return _language.get(resourceBundle, "default");
 	}
 
 	@Override
@@ -70,5 +70,8 @@ public class CompareProductsMiniCPContentListRenderer
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 }

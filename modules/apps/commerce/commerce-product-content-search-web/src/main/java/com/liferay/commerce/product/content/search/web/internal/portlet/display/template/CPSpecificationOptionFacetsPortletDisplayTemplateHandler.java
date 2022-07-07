@@ -17,7 +17,7 @@ package com.liferay.commerce.product.content.search.web.internal.portlet.display
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetTermDisplayContext;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -58,7 +58,7 @@ public class CPSpecificationOptionFacetsPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.format(
+		return _language.format(
 			locale, "x-template",
 			_portal.getPortletTitle(
 				CPPortletKeys.CP_SPECIFICATION_OPTION_FACETS, resourceBundle),
@@ -119,6 +119,9 @@ public class CPSpecificationOptionFacetsPortletDisplayTemplateHandler
 			"/portlet/display/template/dependencies" +
 				"/specification_option_facets/portlet-display-templates.xml";
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

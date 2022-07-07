@@ -18,7 +18,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.warehouse.web.internal.servlet.taglib.ui.constants.CommerceInventoryWarehouseFormNavigatorConstants;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -61,7 +61,7 @@ public class CommerceWarehouseChannelFormNavigatorEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, getKey());
+		return _language.get(resourceBundle, getKey());
 	}
 
 	@Override
@@ -77,5 +77,8 @@ public class CommerceWarehouseChannelFormNavigatorEntry
 	protected String getJspPath() {
 		return "/commerce_inventory_warehouse/channels.jsp";
 	}
+
+	@Reference
+	private Language _language;
 
 }

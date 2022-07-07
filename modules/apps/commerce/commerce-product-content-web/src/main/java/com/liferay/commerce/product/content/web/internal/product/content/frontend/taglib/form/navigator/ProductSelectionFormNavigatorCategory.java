@@ -16,11 +16,12 @@ package com.liferay.commerce.product.content.web.internal.product.content.fronte
 
 import com.liferay.commerce.product.content.web.internal.constants.CPPublisherConstants;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -44,7 +45,10 @@ public class ProductSelectionFormNavigatorCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "asset-selection");
+		return _language.get(locale, "asset-selection");
 	}
+
+	@Reference
+	private Language _language;
 
 }

@@ -16,11 +16,12 @@ package com.liferay.commerce.product.options.web.internal.frontend.taglib.form.n
 
 import com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.constants.CPOptionCategoryFormNavigatorConstants;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorCategory;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -46,7 +47,10 @@ public class CPOptionCategoryDetailsFormNavigatorCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "details");
+		return _languagel.get(locale, "details");
 	}
+
+	@Reference
+	private Language _languagel;
 
 }

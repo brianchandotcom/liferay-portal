@@ -25,7 +25,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -111,8 +111,7 @@ public class SampleFileCPContentContributor implements CPContentContributor {
 		return StringBundler.concat(
 			"<a class=\"btn btn-primary\" href=\"", sampleURL, StringPool.QUOTE,
 			StringPool.GREATER_THAN,
-			LanguageUtil.get(httpServletRequest, "download-sample-file"),
-			"</a>");
+			_language.get(httpServletRequest, "download-sample-file"), "</a>");
 	}
 
 	@Reference
@@ -121,6 +120,9 @@ public class SampleFileCPContentContributor implements CPContentContributor {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private VirtualCPTypeHelper _virtualCPTypeHelper;

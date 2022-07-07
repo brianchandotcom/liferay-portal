@@ -22,7 +22,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -70,7 +70,7 @@ public class CPDefinitionCPTypeGroupedScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "grouped");
+		return _language.get(resourceBundle, "grouped");
 	}
 
 	@Override
@@ -133,6 +133,9 @@ public class CPDefinitionCPTypeGroupedScreenNavigationCategory
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference
+	private Language _language;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.type.grouped.web)"

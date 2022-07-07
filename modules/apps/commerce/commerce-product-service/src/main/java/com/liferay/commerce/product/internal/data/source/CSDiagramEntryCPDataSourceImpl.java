@@ -25,7 +25,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
 import com.liferay.commerce.util.CommerceUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -53,7 +53,7 @@ public class CSDiagramEntryCPDataSourceImpl implements CPDataSource {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "related-diagrams");
+		return _language.get(locale, "related-diagrams");
 	}
 
 	@Override
@@ -119,6 +119,9 @@ public class CSDiagramEntryCPDataSourceImpl implements CPDataSource {
 
 	@Reference
 	private CSDiagramEntryLocalService _csDiagramEntryLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

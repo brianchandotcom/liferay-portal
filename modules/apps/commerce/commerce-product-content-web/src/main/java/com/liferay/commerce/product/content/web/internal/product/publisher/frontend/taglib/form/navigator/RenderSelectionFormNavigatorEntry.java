@@ -17,7 +17,7 @@ package com.liferay.commerce.product.content.web.internal.product.publisher.fron
 import com.liferay.commerce.product.content.web.internal.constants.CPPublisherConstants;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
@@ -53,7 +53,7 @@ public class RenderSelectionFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, getKey());
+		return _language.get(locale, getKey());
 	}
 
 	@Override
@@ -69,5 +69,8 @@ public class RenderSelectionFormNavigatorEntry
 	protected String getJspPath() {
 		return "/product_publisher/configuration/render_selection.jsp";
 	}
+
+	@Reference
+	private Language _language;
 
 }

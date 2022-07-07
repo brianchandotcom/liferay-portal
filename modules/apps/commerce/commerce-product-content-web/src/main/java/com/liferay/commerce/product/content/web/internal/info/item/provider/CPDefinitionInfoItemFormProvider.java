@@ -26,7 +26,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -243,7 +243,7 @@ public class CPDefinitionInfoItemFormProvider
 	}
 
 	private InfoForm _getInfoForm(InfoFieldSet assetEntryInfoFieldSet) {
-		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+		Set<Locale> availableLocales = _language.getAvailableLocales();
 
 		InfoLocalizedValue.Builder<String> infoLocalizedValueBuilder =
 			InfoLocalizedValue.builder();
@@ -313,6 +313,9 @@ public class CPDefinitionInfoItemFormProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

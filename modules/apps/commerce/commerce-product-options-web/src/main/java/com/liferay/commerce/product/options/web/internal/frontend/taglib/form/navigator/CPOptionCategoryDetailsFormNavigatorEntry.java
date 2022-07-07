@@ -18,11 +18,12 @@ import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.options.web.internal.servlet.taglib.ui.constants.CPOptionCategoryFormNavigatorConstants;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -53,12 +54,15 @@ public class CPOptionCategoryDetailsFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "details");
+		return _language.get(locale, "details");
 	}
 
 	@Override
 	protected String getJspPath() {
 		return "/option_category/details.jsp";
 	}
+
+	@Reference
+	private Language _language;
 
 }

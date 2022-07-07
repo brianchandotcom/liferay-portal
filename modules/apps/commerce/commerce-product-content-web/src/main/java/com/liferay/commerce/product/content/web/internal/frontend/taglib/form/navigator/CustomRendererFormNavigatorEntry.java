@@ -19,7 +19,7 @@ import com.liferay.commerce.product.content.web.internal.constants.CPContentPort
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -67,7 +67,7 @@ public class CustomRendererFormNavigatorEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "custom-renderer");
+		return _language.get(resourceBundle, "custom-renderer");
 	}
 
 	@Override
@@ -119,5 +119,8 @@ public class CustomRendererFormNavigatorEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CustomRendererFormNavigatorEntry.class);
+
+	@Reference
+	private Language _language;
 
 }

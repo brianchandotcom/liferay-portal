@@ -20,7 +20,7 @@ import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinLocalService;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramSettingLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -59,7 +59,7 @@ public class CSDiagramCPType implements CPType {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, CSDiagramCPTypeConstants.NAME);
+		return _language.get(resourceBundle, CSDiagramCPTypeConstants.NAME);
 	}
 
 	@Override
@@ -105,5 +105,8 @@ public class CSDiagramCPType implements CPType {
 
 	@Reference
 	private CSDiagramSettingLocalService _csDiagramSettingLocalService;
+
+	@Reference
+	private Language _language;
 
 }

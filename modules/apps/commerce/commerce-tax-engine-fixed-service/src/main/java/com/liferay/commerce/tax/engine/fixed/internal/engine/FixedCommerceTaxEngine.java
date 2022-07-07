@@ -21,7 +21,7 @@ import com.liferay.commerce.tax.CommerceTaxValue;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -98,13 +98,13 @@ public class FixedCommerceTaxEngine implements CommerceTaxEngine {
 
 	@Override
 	public String getDescription(Locale locale) {
-		return LanguageUtil.get(
+		return _language.get(
 			_getResourceBundle(locale), "fixed-tax-description");
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(_getResourceBundle(locale), KEY);
+		return _language.get(_getResourceBundle(locale), KEY);
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {
@@ -121,5 +121,8 @@ public class FixedCommerceTaxEngine implements CommerceTaxEngine {
 
 	@Reference
 	private CommerceTaxFixedRateLocalService _commerceTaxFixedRateLocalService;
+
+	@Reference
+	private Language _language;
 
 }

@@ -22,7 +22,7 @@ import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.filter.KeywordsInfoFilter;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -124,7 +124,7 @@ public class CPDefinitionInfoCollectionProvider
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "products");
+		return _language.get(locale, "products");
 	}
 
 	@Override
@@ -153,5 +153,8 @@ public class CPDefinitionInfoCollectionProvider
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private Language _language;
 
 }

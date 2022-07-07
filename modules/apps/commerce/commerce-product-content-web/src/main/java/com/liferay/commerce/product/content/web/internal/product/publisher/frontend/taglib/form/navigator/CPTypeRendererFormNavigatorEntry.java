@@ -17,7 +17,7 @@ package com.liferay.commerce.product.content.web.internal.product.publisher.fron
 import com.liferay.commerce.product.content.web.internal.constants.CPPublisherConstants;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -66,7 +66,7 @@ public class CPTypeRendererFormNavigatorEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, getKey());
+		return _language.get(resourceBundle, getKey());
 	}
 
 	@Override
@@ -109,5 +109,8 @@ public class CPTypeRendererFormNavigatorEntry
 
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 }

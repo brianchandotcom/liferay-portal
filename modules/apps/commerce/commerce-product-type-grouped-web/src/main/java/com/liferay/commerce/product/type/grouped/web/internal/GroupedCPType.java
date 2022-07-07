@@ -18,7 +18,7 @@ import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -52,7 +52,7 @@ public class GroupedCPType implements CPType {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, GroupedCPTypeConstants.NAME);
+		return _language.get(resourceBundle, GroupedCPTypeConstants.NAME);
 	}
 
 	@Override
@@ -63,5 +63,8 @@ public class GroupedCPType implements CPType {
 	@Reference
 	private CPDefinitionGroupedEntryLocalService
 		_cpDefinitionGroupedEntryLocalService;
+
+	@Reference
+	private Language _language;
 
 }

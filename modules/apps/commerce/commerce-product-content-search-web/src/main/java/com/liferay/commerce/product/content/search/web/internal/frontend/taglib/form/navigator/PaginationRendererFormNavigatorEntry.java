@@ -17,7 +17,7 @@ package com.liferay.commerce.product.content.search.web.internal.frontend.taglib
 import com.liferay.commerce.product.content.search.web.internal.constants.CPSearchResultsConstants;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -58,7 +58,7 @@ public class PaginationRendererFormNavigatorEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, getKey());
+		return _language.get(resourceBundle, getKey());
 	}
 
 	@Override
@@ -74,5 +74,8 @@ public class PaginationRendererFormNavigatorEntry
 	protected String getJspPath() {
 		return "/search_results/configuration/pagination.jsp";
 	}
+
+	@Reference
+	private Language _language;
 
 }

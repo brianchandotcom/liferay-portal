@@ -17,7 +17,7 @@ package com.liferay.commerce.product.content.search.web.internal.frontend.taglib
 import com.liferay.commerce.product.content.search.web.internal.constants.CPSearchResultsConstants;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 
 import java.util.Locale;
 
@@ -53,7 +53,7 @@ public class SelectionStyleFormNavigatorEntry
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, getKey());
+		return _language.get(locale, getKey());
 	}
 
 	@Override
@@ -69,5 +69,8 @@ public class SelectionStyleFormNavigatorEntry
 	protected String getJspPath() {
 		return "/search_results/configuration/selection_style.jsp";
 	}
+
+	@Reference
+	private Language _language;
 
 }

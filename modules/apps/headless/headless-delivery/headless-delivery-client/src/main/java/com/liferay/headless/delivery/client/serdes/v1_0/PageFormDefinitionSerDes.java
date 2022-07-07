@@ -180,6 +180,16 @@ public class PageFormDefinitionSerDes {
 			sb.append(pageFormDefinition.getIndexed());
 		}
 
+		if (pageFormDefinition.getLayout() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"layout\": ");
+
+			sb.append(String.valueOf(pageFormDefinition.getLayout()));
+		}
+
 		if (pageFormDefinition.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -275,6 +285,13 @@ public class PageFormDefinitionSerDes {
 			map.put("indexed", String.valueOf(pageFormDefinition.getIndexed()));
 		}
 
+		if (pageFormDefinition.getLayout() == null) {
+			map.put("layout", null);
+		}
+		else {
+			map.put("layout", String.valueOf(pageFormDefinition.getLayout()));
+		}
+
 		if (pageFormDefinition.getName() == null) {
 			map.put("name", null);
 		}
@@ -360,6 +377,12 @@ public class PageFormDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageFormDefinition.setIndexed(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "layout")) {
+				if (jsonParserFieldValue != null) {
+					pageFormDefinition.setLayout(
+						LayoutSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

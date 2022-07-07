@@ -40,6 +40,38 @@ definition {
 		}
 	}
 
+	@description = "Get structured content in asset library by existing custom erc"
+	@priority = "5"
+	test CanGetStructuredContentInAssetLibraryByExistingCustomErc {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content with a custom erc is created with a POST request in asset library") {
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			var response = HeadlessWebcontentAPI.createStructuredContentInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				externalReferenceCode = "erc",
+				label = "Text",
+				name = "Text",
+				title = "WC WebContent Title");
+		}
+
+		task ("When I make a GET request by assetLibraryId and erc") {
+			var response = HeadlessWebcontentAPI.getStructuredContentsByErcInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				externalReferenceCode = "erc");
+		}
+
+		task ("Then I receive a correct body response") {
+			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "erc",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "Structured content is not able to create with an existing erc"
 	@priority = "5"
 	test CannotCreateStructuredContentInAssetLibraryWithExistingErc {

@@ -28,6 +28,12 @@ export function FieldTypeSelector({
 	title,
 }) {
 	const handleChange = (key, checked) => {
+		if (key === 'captcha' && checked) {
+			onChangeFieldTypes([key]);
+
+			return;
+		}
+
 		const filteredFieldTypes = fieldTypes.filter(
 			(fieldTypeKey) => fieldTypeKey !== key
 		);
@@ -73,6 +79,10 @@ export function FieldTypeSelector({
 							<ClayCheckbox
 								aria-label={label}
 								checked={fieldTypes.includes(key)}
+								disabled={
+									fieldTypes.includes('captcha') &&
+									key !== 'captcha'
+								}
 								key={key}
 								label={label}
 								name={`${portletNamespace}fieldTypes`}

@@ -33,10 +33,10 @@ import BuildAlertBar from './BuildAlertBar';
 import BuildOverview from './BuildOverview';
 
 type BuildOutletProps = {
-	ignorePath: string;
+	ignorePaths: string[];
 };
 
-const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePath}) => {
+const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePaths}) => {
 	const {pathname} = useLocation();
 	const {buildId, projectId, routineId} = useParams();
 	const {testrayProject, testrayRoutine}: any = useOutletContext();
@@ -56,7 +56,9 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePath}) => {
 		(testrayTask) => testrayTask?.build?.id === Number(buildId)
 	);
 
-	const isCurrentPathIgnored = pathname.includes(ignorePath);
+	const isCurrentPathIgnored = ignorePaths.some((ignorePath) =>
+		pathname.includes(ignorePath)
+	);
 
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${buildId}`;
 
@@ -136,7 +138,7 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePath}) => {
 					</>
 				)}
 
-				<Outlet />
+				<Outlet context={{testrayBuild}} />
 			</>
 		);
 	}

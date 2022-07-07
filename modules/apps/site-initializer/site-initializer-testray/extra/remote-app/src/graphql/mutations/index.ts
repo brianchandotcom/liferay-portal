@@ -13,6 +13,7 @@
  */
 
 export * from './liferayUserAccount';
+export * from './testrayBuild';
 export * from './testrayCase';
 export * from './testrayCaseResult';
 export * from './testrayCaseType';

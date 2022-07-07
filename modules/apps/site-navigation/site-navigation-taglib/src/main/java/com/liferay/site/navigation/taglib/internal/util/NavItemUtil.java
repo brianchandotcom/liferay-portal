@@ -259,7 +259,7 @@ public class NavItemUtil {
 		throws Exception {
 
 		if (navigationMenuMode == NavigationMenuMode.DEFAULT) {
-			return NavItem.fromLayouts(httpServletRequest, themeDisplay);
+			return themeDisplay.getNavItems();
 		}
 
 		boolean privateLayout = false;

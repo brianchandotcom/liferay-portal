@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.permission.RolePermission;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
-import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -115,10 +114,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 				(themeDisplay.getLayout() != null)) {
 
 				try {
-					List<NavItem> navItems = NavItem.fromLayouts(
-						httpServletRequest, themeDisplay);
-
-					contextObjects.put("navItems", navItems);
+					contextObjects.put("navItems", themeDisplay.getNavItems());
 				}
 				catch (Exception exception) {
 					_log.error(exception);

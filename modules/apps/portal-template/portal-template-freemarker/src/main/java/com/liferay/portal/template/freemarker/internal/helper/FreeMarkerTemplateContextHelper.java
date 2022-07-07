@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
-import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -111,10 +110,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 				(themeDisplay.getLayout() != null)) {
 
 				try {
-					List<NavItem> navItems = NavItem.fromLayouts(
-						httpServletRequest, themeDisplay);
-
-					contextObjects.put("navItems", navItems);
+					contextObjects.put("navItems", themeDisplay.getNavItems());
 				}
 				catch (Exception exception) {
 					_log.error(exception);

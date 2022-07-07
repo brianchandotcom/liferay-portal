@@ -30,7 +30,9 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -299,6 +302,68 @@ public class RenderLayoutStructureTagTest {
 			Assert.assertFalse(content.contains(errorHTML));
 
 			_assertInfoFieldInput(infoField, content);
+		}
+	}
+
+	@Test
+	public void testRenderFormWithSuccessMessage() throws Exception {
+		InfoField<TextInfoFieldType> infoField = _getInfoField();
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField)
+						).build(),
+						_editPageInfoItemCapability)) {
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
+				layout, false,
+				String.valueOf(
+					_portal.getClassNameId(MockObject.class.getName())),
+				"0", infoField);
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(layout);
+
+			SessionMessages.add(mockHttpServletRequest, formItemId);
+
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			RenderLayoutStructureTag renderLayoutStructureTag =
+				_getRenderLayoutStructureTag(
+					layout, mockHttpServletRequest, mockHttpServletResponse);
+
+			renderLayoutStructureTag.doTag(
+				mockHttpServletRequest, mockHttpServletResponse);
+
+			String content = mockHttpServletResponse.getContentAsString();
+
+			String formStartHTML = "<form action=\"";
+
+			Assert.assertFalse(content.contains(formStartHTML));
+
+			Locale locale = _portal.getSiteDefaultLocale(_group);
+
+			String expectedSuccessMessage = LanguageUtil.get(
+				locale,
+				"thank-you.-your-information-was-successfully-received");
+
+			String expectedSuccessHTML = StringBundler.concat(
+				"<div class=\"font-weight-semi-bold bg-white",
+				"text-secondary text-center text-3 p-5\">",
+				expectedSuccessMessage, "</div>");
+
+			Assert.assertTrue(content.contains(expectedSuccessHTML));
+
+			String expectedInfoFieldInput =
+				"<p>InputName:" + infoField.getName() + "</p>";
+
+			Assert.assertFalse(content.contains(expectedInfoFieldInput));
 		}
 	}
 

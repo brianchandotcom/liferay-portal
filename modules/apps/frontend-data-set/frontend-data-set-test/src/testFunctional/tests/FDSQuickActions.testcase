@@ -103,7 +103,8 @@ definition {
 		}
 	}
 
-	@description = "LPS-155459: When clicking on the ellipsis and hovering over another row, multiple quick action menu are displayed"
+	@description = "LPS-155459: When clicking on the ellipsis and hovering over another row, multiple quick action menus are displayed"
+	@ignore = "true"
 	@priority = "3"
 	test CanDisplayOnMultipleActiveRows {
 		task ("When click on ellipsis button 2nd row item") {
@@ -126,8 +127,10 @@ definition {
 			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample1");
 		}
 
-		task ("And Then the quick action menu is not displayed on the 2nd row") {
-			FDSQuickActions.viewQuickActionMenuNotPresent(title = "Sample2");
+		// This test is being ignored due to bug that doesn't display multiple quick actions in LPS-157838.
+
+		task ("And Then the quick action menu is displayed on the 2nd row") {
+			FDSQuickActions.viewQuickActionMenuPresent(title = "Sample2");
 		}
 	}
 

@@ -219,11 +219,15 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "commerceShipmentId");
 
 		String carrier = ParamUtil.getString(actionRequest, "carrier");
+		long shippingMethod = ParamUtil.getLong(
+			actionRequest, "shippingMethod");
 		String trackingNumber = ParamUtil.getString(
 			actionRequest, "trackingNumber");
+		String trackingURL = ParamUtil.getString(actionRequest, "trackingURL");
 
 		return _commerceShipmentService.updateCarrierDetails(
-			commerceShipmentId, carrier, trackingNumber);
+			commerceShipmentId, shippingMethod, carrier, trackingNumber,
+			trackingURL);
 	}
 
 	private CommerceShipment _updateCommerceShipment(

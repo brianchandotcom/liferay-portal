@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
@@ -87,32 +85,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = FragmentEntryProcessor.class
 )
 public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
-
-	@Override
-	public void deleteFragmentEntryLinkData(
-		FragmentEntryLink fragmentEntryLink) {
-
-		for (String portletId :
-				_portletRegistry.getFragmentEntryLinkPortletIds(
-					fragmentEntryLink)) {
-
-			try {
-				_portletLocalService.deletePortlet(
-					fragmentEntryLink.getCompanyId(), portletId,
-					fragmentEntryLink.getPlid());
-
-				_layoutClassedModelUsageLocalService.
-					deleteLayoutClassedModelUsages(
-						portletId, _portal.getClassNameId(Portlet.class),
-						fragmentEntryLink.getPlid());
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
-	}
 
 	@Override
 	public JSONArray getAvailableTagsJSONArray() {
@@ -590,9 +562,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletFragmentEntryProcessor.class);
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

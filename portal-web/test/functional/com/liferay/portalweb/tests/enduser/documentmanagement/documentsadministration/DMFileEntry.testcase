@@ -2745,6 +2745,68 @@ definition {
 			fileName = "Document_2.doc");
 	}
 
+	@description = "This ensures that the friendly URL of a document created on a site will be updated automatically if it duplicates the existing one on the site."
+	@priority = "4"
+	test FriendlyURLDuplicatingSiteDocIsAutomaticallyChanged {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openToAddEntry(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.editDocument(
+			dmDocumentFile = "Document_2.doc",
+			dmDocumentTitle = "Document_2");
+
+		DMDocument.editFriendlyURL(friendlyURLEdit = "document_1");
+
+		Alert.viewWarningSpecific(warningMessage = "Warning:The friendly URL document_1 was changed to document_1-1 to ensure uniqueness.");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_2",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewEntryInEdit(friendlyURL = "document_1-1");
+	}
+
+	@description = "This ensures that the friendly URL of a document created on a site will be updated automatically if it duplicates the one in the recycle bin of the site."
+	@priority = "3"
+	test FriendlyURLDuplicatingSiteRecycleBinDocIsAutomaticallyChanged {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDocument.moveToRecycleBin(
+			dmDocumentTitle = "Document_1",
+			groupName = "Guest");
+
+		DMNavigator.openToAddEntry(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.editDocument(
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2");
+
+		DMDocument.editFriendlyURL(friendlyURLEdit = "document_1");
+
+		Alert.viewWarningSpecific(warningMessage = "Warning:The friendly URL document_1 was changed to document_1-1 to ensure uniqueness.");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "Document_2",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewEntryInEdit(friendlyURL = "document_1-1");
+	}
+
 	@description = "This test covers LPS-112571. It ensures that a gif file can be added to editor normally after disabling the gif mime type from the adaptive media of the system settings."
 	@priority = "3"
 	@refactorneeded

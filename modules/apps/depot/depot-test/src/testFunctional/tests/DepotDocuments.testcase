@@ -279,4 +279,71 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This ensures that the friendly URL of a document created on a depot will be updated automatically if it duplicates the existing one on the depot."
+	@priority = "4"
+	test FriendlyURLDuplicatingDepotDocIsAutomaticallyChanged {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Test Depot Name",
+			mimeType = "text/txt",
+			sourceFileName = "Document_1.txt");
+
+		DepotNavigator.openToAddDMEntry(depotName = "Test Depot Name");
+
+		DMDocument.editDocument(
+			dmDocumentFile = "Document_2.txt",
+			dmDocumentTitle = "Document_2");
+
+		DMDocument.editFriendlyURL(friendlyURLEdit = "document_1");
+
+		Alert.viewWarningSpecific(warningMessage = "Warning:The friendly URL document_1 was changed to document_1-1 to ensure uniqueness.");
+
+		DepotNavigator.openToEditDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_2");
+
+		DMDocument.viewEntryInEdit(friendlyURL = "document_1-1");
+	}
+
+	@description = "This ensures that the friendly URL of a document created on a depot will be updated automatically if it duplicates the one in the recycle bin of the depot."
+	@priority = "3"
+	test FriendlyURLDuplicatingDepotRecycleBinDocIsAutomaticallyChanged {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1",
+			groupName = "Test Depot Name",
+			mimeType = "application/excel",
+			sourceFileName = "Document_1.xls");
+
+		JSONDocument.moveToRecycleBin(
+			dmDocumentTitle = "Document_1",
+			groupName = "Test Depot Name",
+			site = "false");
+
+		DepotNavigator.openToAddDMEntry(depotName = "Test Depot Name");
+
+		DMDocument.editDocument(
+			dmDocumentFile = "Document_2.xls",
+			dmDocumentTitle = "Document_2");
+
+		DMDocument.editFriendlyURL(friendlyURLEdit = "document_1");
+
+		Alert.viewWarningSpecific(warningMessage = "Warning:The friendly URL document_1 was changed to document_1-1 to ensure uniqueness.");
+
+		DepotNavigator.openToEditDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "Document_2");
+
+		DMDocument.viewEntryInEdit(friendlyURL = "document_1-1");
+	}
+
 }

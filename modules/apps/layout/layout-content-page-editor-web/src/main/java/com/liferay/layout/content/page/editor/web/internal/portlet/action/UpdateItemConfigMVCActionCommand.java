@@ -51,6 +51,11 @@ public class UpdateItemConfigMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, _updateItemConfig(actionRequest));
+	}
+
+	private JSONObject _updateItemConfig(ActionRequest actionRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -79,8 +84,7 @@ public class UpdateItemConfigMVCActionCommand extends BaseMVCActionCommand {
 
 		hideDefaultSuccessMessage(actionRequest);
 
-		JSONPortletResponseUtil.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

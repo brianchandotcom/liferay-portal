@@ -283,6 +283,33 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="ObjectFilter" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="objectFilterId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="objectFieldId" type="long" />
+		<column name="filterBy" type="String" />
+		<column name="filterType" type="String" />
+		<column name="json" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="ObjectFieldId" return-type="Collection">
+			<finder-column name="objectFieldId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="ObjectLayout" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -761,6 +788,7 @@
 		<exception>ObjectFieldSettingName</exception>
 		<exception>ObjectFieldSettingValue</exception>
 		<exception>ObjectFieldState</exception>
+		<exception>ObjectFilter</exception>
 		<exception>ObjectLayoutBoxCategorizationType</exception>
 		<exception>ObjectLayoutColumnSize</exception>
 		<exception>ObjectRelationshipName</exception>

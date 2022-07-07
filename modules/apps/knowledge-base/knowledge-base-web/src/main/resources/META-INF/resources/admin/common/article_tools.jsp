@@ -204,7 +204,7 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 				<portlet:param name="mvcPath" value='<%= templatePath + "view.jsp" %>' />
 			</liferay-portlet:renderURL>
 
-			<liferay-portlet:actionURL name="deleteKBArticle" var="deleteURL">
+			<liferay-portlet:actionURL name="/knowledge_base/delete_kb_article" var="deleteURL">
 				<portlet:param name="mvcPath" value='<%= templatePath + "view_article.jsp" %>' />
 				<portlet:param name="redirect" value="<%= homeURL %>" />
 				<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />

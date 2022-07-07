@@ -66,7 +66,7 @@ public class DeleteKBArticlePortletConfigurationIcon
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
-			"deleteKBArticle"
+			"/knowledge_base/delete_kb_article"
 		).setMVCPath(
 			ParamUtil.getString(portletRequest, "mvcPath")
 		).setRedirect(

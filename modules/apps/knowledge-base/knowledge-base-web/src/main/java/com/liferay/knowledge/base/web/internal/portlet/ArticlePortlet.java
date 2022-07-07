@@ -88,7 +88,7 @@ public class ArticlePortlet extends BaseKBPortlet {
 		String actionName = ParamUtil.getString(
 			actionRequest, ActionRequest.ACTION_NAME);
 
-		if (actionName.equals("deleteKBArticle")) {
+		if (actionName.equals("/knowledge_base/delete_kb_article")) {
 			return;
 		}
 

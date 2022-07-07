@@ -81,16 +81,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseKBPortlet extends MVCPortlet {
 
-	public void deleteKBArticle(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long resourcePrimKey = ParamUtil.getLong(
-			actionRequest, "resourcePrimKey");
-
-		deleteKBArticle(actionRequest, actionResponse, resourcePrimKey);
-	}
-
 	public void deleteKBComment(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -498,14 +488,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			WorkflowConstants.STATUS_ANY);
 
 		return editURL;
-	}
-
-	protected void deleteKBArticle(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			long resourcePrimKey)
-		throws Exception {
-
-		kbArticleService.deleteKBArticle(resourcePrimKey);
 	}
 
 	protected abstract void doRender(

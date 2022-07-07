@@ -125,7 +125,7 @@ else {
 	</c:if>
 
 	<c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.DELETE) %>">
-		<liferay-portlet:actionURL name="deleteKBArticle" var="deleteURL">
+		<liferay-portlet:actionURL name="/knowledge_base/delete_kb_article" var="deleteURL">
 			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
 			<portlet:param name="redirect" value="<%= (row == null) ? redirect : currentURL %>" />
 			<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />

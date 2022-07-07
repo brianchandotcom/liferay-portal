@@ -22,6 +22,7 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectStateFlowUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectFieldEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -128,6 +129,14 @@ public class ObjectFieldResourceImpl
 			Long objectDefinitionId, ObjectField objectField)
 		throws Exception {
 
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149625")) &&
+			Objects.equals(
+				objectField.getBusinessTypeAsString(),
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152677"))) {
 			return _toObjectField(
 				_objectFieldService.addCustomObjectField(
@@ -177,6 +186,14 @@ public class ObjectFieldResourceImpl
 	public ObjectField putObjectField(
 			Long objectFieldId, ObjectField objectField)
 		throws Exception {
+
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149625")) &&
+			Objects.equals(
+				objectField.getBusinessTypeAsString(),
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152677"))) {
 			return _toObjectField(

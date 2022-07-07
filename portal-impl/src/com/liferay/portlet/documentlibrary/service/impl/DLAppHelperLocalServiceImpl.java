@@ -838,6 +838,21 @@ public class DLAppHelperLocalServiceImpl
 			long[] assetLinkEntryIds)
 		throws PortalException {
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
+		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
+		serviceContext.setAssetTagNames(assetTagNames);
+
+		return updateAsset(userId, fileEntry, fileVersion, serviceContext);
+	}
+
+	@Override
+	public AssetEntry updateAsset(
+			long userId, FileEntry fileEntry, FileVersion fileVersion,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		AssetEntry assetEntry = null;
 
 		boolean visible = false;
@@ -865,19 +880,21 @@ public class DLAppHelperLocalServiceImpl
 		long fileEntryTypeId = getFileEntryTypeId(fileEntry);
 
 		if (addDraftAssetEntry) {
-			if (assetCategoryIds == null) {
-				assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
-					DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId());
+			if (serviceContext.getAssetCategoryIds() == null) {
+				serviceContext.setAssetCategoryIds(
+					_assetCategoryLocalService.getCategoryIds(
+						DLFileEntryConstants.getClassName(),
+						fileEntry.getFileEntryId()));
 			}
 
-			if (assetTagNames == null) {
-				assetTagNames = _assetTagLocalService.getTagNames(
-					DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId());
+			if (serviceContext.getAssetTagNames() == null) {
+				serviceContext.setAssetTagNames(
+					_assetTagLocalService.getTagNames(
+						DLFileEntryConstants.getClassName(),
+						fileEntry.getFileEntryId()));
 			}
 
-			if (assetLinkEntryIds == null) {
+			if (serviceContext.getAssetLinkEntryIds() == null) {
 				AssetEntry previousAssetEntry =
 					_assetEntryLocalService.getEntry(
 						DLFileEntryConstants.getClassName(),
@@ -888,8 +905,9 @@ public class DLAppHelperLocalServiceImpl
 						previousAssetEntry.getEntryId(),
 						AssetLinkConstants.TYPE_RELATED, false);
 
-				assetLinkEntryIds = ListUtil.toLongArray(
-					assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
+				serviceContext.setAssetLinkEntryIds(
+					ListUtil.toLongArray(
+						assetLinks, AssetLink.ENTRY_ID2_ACCESSOR));
 			}
 
 			assetEntry = _assetEntryLocalService.updateEntry(
@@ -897,10 +915,11 @@ public class DLAppHelperLocalServiceImpl
 				fileEntry.getModifiedDate(),
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId(), fileEntry.getUuid(),
-				fileEntryTypeId, assetCategoryIds, assetTagNames, true, false,
-				null, null, null, fileEntry.getExpirationDate(),
-				fileEntry.getMimeType(), fileEntry.getTitle(),
-				fileEntry.getDescription(), null, null, null, 0, 0, null);
+				fileEntryTypeId, serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(), true, false, null, null,
+				null, fileEntry.getExpirationDate(), fileEntry.getMimeType(),
+				fileEntry.getTitle(), fileEntry.getDescription(), null, null,
+				null, 0, 0, null, serviceContext);
 		}
 		else {
 			Date publishDate = null;
@@ -913,11 +932,13 @@ public class DLAppHelperLocalServiceImpl
 				userId, fileEntry.getGroupId(), fileEntry.getCreateDate(),
 				fileEntry.getModifiedDate(),
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
-				fileEntry.getUuid(), fileEntryTypeId, assetCategoryIds,
-				assetTagNames, true, visible, null, null, publishDate,
-				fileEntry.getExpirationDate(), fileEntry.getMimeType(),
-				fileEntry.getTitle(), fileEntry.getDescription(), null, null,
-				null, 0, 0, null);
+				fileEntry.getUuid(), fileEntryTypeId,
+				serviceContext.getAssetCategoryIds(),
+				serviceContext.getAssetTagNames(), true, visible, null, null,
+				publishDate, fileEntry.getExpirationDate(),
+				fileEntry.getMimeType(), fileEntry.getTitle(),
+				fileEntry.getDescription(), null, null, null, 0, 0, null,
+				serviceContext);
 
 			List<DLFileShortcut> dlFileShortcuts =
 				_dlFileShortcutPersistence.findByToFileEntryId(
@@ -930,16 +951,19 @@ public class DLAppHelperLocalServiceImpl
 					dlFileShortcut.getModifiedDate(),
 					DLFileShortcutConstants.getClassName(),
 					dlFileShortcut.getFileShortcutId(),
-					dlFileShortcut.getUuid(), fileEntryTypeId, assetCategoryIds,
-					assetTagNames, true, true, null, null,
+					dlFileShortcut.getUuid(), fileEntryTypeId,
+					serviceContext.getAssetCategoryIds(),
+					serviceContext.getAssetTagNames(), true, true, null, null,
 					dlFileShortcut.getCreateDate(), null,
 					fileEntry.getMimeType(), fileEntry.getTitle(),
-					fileEntry.getDescription(), null, null, null, 0, 0, null);
+					fileEntry.getDescription(), null, null, null, 0, 0, null,
+					serviceContext);
 			}
 		}
 
 		_assetLinkLocalService.updateLinks(
-			userId, assetEntry.getEntryId(), assetLinkEntryIds,
+			userId, assetEntry.getEntryId(),
+			serviceContext.getAssetLinkEntryIds(),
 			AssetLinkConstants.TYPE_RELATED);
 
 		return assetEntry;

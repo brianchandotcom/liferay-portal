@@ -109,7 +109,7 @@ public class XMLSuppressionsFileCheck extends BaseFileCheck {
 
 			String originalValue = suppressElement.attributeValue("files");
 
-			if (originalValue == null) {
+			if ((originalValue == null) || originalValue.contains("brian")) {
 				continue;
 			}
 

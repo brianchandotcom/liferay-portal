@@ -18,6 +18,7 @@
 		"@clayui/css": "^3.44.2",
 		"@clayui/date-picker": "^3.64.0",
 		"@clayui/drop-down": "^3.58.0",
+		"@clayui/form": "^3.58.0",
 		"@clayui/icon": "^3.40.0",
 		"@clayui/layout": "^3.40.0",
 		"@clayui/multi-step-nav": "^3.64.0",

@@ -12,13 +12,21 @@
  * details.
  */
 
+import React, {useContext} from 'react';
+
+import {NewApplicationAutoContext} from '../context/NewApplicationAutoContextProvider';
 import DriverInfo from '../forms/steps/DriverInfo';
+import VehicleInfo from '../forms/steps/VehicleInfo';
 import NewApplication from './NewApplications';
 
 const Applications = () => {
+	const [state] = useContext(NewApplicationAutoContext);
+
 	return (
 		<NewApplication>
-			<DriverInfo />
+			{state.currentStep === 0 && <DriverInfo />}
+
+			{state.currentStep === 1 && <VehicleInfo />}
 		</NewApplication>
 	);
 };

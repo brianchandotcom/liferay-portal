@@ -17,6 +17,7 @@ import ReactDOM from 'react-dom';
 import ClayIconProvider from './common/context/ClayIconProvider';
 
 import './common/styles/index.scss';
+import NewApplicationAutoContextProvider from './routes/applications/context/NewApplicationAutoContextProvider';
 import Applications from './routes/applications/pages/Applications';
 import Claims from './routes/claims/pages/Claims';
 import RecentApplications from './routes/dashboard/pages/RecentApplications';
@@ -37,7 +38,11 @@ const DirectToCustomer: React.FC<Props> = ({route}) => {
 	}
 
 	if (routeEntry === 'applications') {
-		return <Applications />;
+		return (
+			<NewApplicationAutoContextProvider>
+				<Applications />
+			</NewApplicationAutoContextProvider>
+		);
 	}
 
 	if (routeEntry === 'policies') {

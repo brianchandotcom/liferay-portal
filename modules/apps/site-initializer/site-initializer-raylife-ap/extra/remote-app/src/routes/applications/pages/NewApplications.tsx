@@ -15,49 +15,69 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayMultiStepNav from '@clayui/multi-step-nav';
-import {ReactNode, useState} from 'react';
+import classNames from 'classnames';
+import {ReactNode, useContext} from 'react';
 
 import ClayIconProvider from '../../../common/context/ClayIconProvider';
+import {
+	ACTIONS,
+	NewApplicationAutoContext,
+} from '../context/NewApplicationAutoContextProvider';
 
 type DriverInfoProps = {
 	children: ReactNode;
 };
 
 const NewApplication = ({children}: DriverInfoProps) => {
-	const [value, setValue] = useState<number>(0);
+	const [state, dispatch] = useContext(NewApplicationAutoContext);
 
 	const steps = [
 		{
-			active: value === 0,
-			complete: value > 0,
-			onClick: () => setValue(0),
-			title: 'Contact Info',
+			active: state.currentStep === 0,
+			complete: state.currentStep > 0,
+			title: state.steps.contactInfo.name,
 		},
 		{
-			active: value === 1,
-			complete: value > 1,
-			onClick: () => setValue(1),
-			title: 'Vehicle Info',
+			active: state.currentStep === 1,
+			complete: state.currentStep > 1,
+			title: state.steps.vehicleInfo.name,
 		},
 		{
-			active: value === 2,
-			complete: value > 2,
-			onClick: () => setValue(2),
-			title: 'Driver Info',
+			active: state.currentStep === 2,
+			complete: state.currentStep > 2,
+			title: state.steps.driverInfo.name,
 		},
 		{
-			active: value === 3,
-			complete: value > 3,
-			onClick: () => setValue(3),
-			title: 'Coverages',
+			active: state.currentStep === 3,
+			complete: state.currentStep > 3,
+			title: state.steps.coverage.name,
 		},
 		{
-			active: value === 4,
-			complete: value > 4,
-			onClick: () => setValue(4),
-			title: 'Review',
+			active: state.currentStep === 4,
+			complete: state.currentStep > 4,
+			title: state.steps.review.name,
 		},
 	];
+
+	const handleNextClick = () => {
+		dispatch({payload: false, type: ACTIONS.SET_HAS_FORM_CHANGE});
+		if (state.currentStep < steps.length) {
+			dispatch({
+				payload: state.currentStep + 1,
+				type: ACTIONS.SET_CURRENT_STEP,
+			});
+		}
+	};
+
+	const handlePreviousClick = () => {
+		dispatch({payload: false, type: ACTIONS.SET_HAS_FORM_CHANGE});
+		if (state.currentStep > 0) {
+			dispatch({
+				payload: state.currentStep - 1,
+				type: ACTIONS.SET_CURRENT_STEP,
+			});
+		}
+	};
 
 	return (
 		<ClayIconProvider>
@@ -67,8 +87,20 @@ const NewApplication = ({children}: DriverInfoProps) => {
 						<h5>New Application</h5>
 
 						<div className="text-neutral-7 text-paragraph-sm">
-							<ClayIcon symbol="simple-circle"></ClayIcon>
-							No Changes Made
+							<ClayIcon
+								className={classNames('', {
+									'text-accent-4': state.hasFormChanges,
+								})}
+								symbol="simple-circle"
+							></ClayIcon>
+
+							{state.hasFormChanges && (
+								<span>Unsave Changes</span>
+							)}
+
+							{!state.hasFormChanges && (
+								<span>No Changes Made</span>
+							)}
 						</div>
 
 						<div>
@@ -85,32 +117,29 @@ const NewApplication = ({children}: DriverInfoProps) => {
 					<hr></hr>
 					<>
 						<ClayMultiStepNav className="mx-10">
-							{steps.map(
-								({active, complete, onClick, title}, index) => (
-									<ClayMultiStepNav.Item
-										active={active}
+							{steps.map(({active, complete, title}, index) => (
+								<ClayMultiStepNav.Item
+									active={active}
+									complete={complete}
+									expand={index + 1 !== steps.length}
+									key={index}
+								>
+									<ClayMultiStepNav.Title>
+										{title}
+									</ClayMultiStepNav.Title>
+
+									{index + 1 !== steps.length ? (
+										<ClayMultiStepNav.Divider />
+									) : (
+										''
+									)}
+
+									<ClayMultiStepNav.Indicator
 										complete={complete}
-										expand={index + 1 !== steps.length}
-										key={index}
-									>
-										<ClayMultiStepNav.Title>
-											{title}
-										</ClayMultiStepNav.Title>
-
-										{index + 1 !== steps.length ? (
-											<ClayMultiStepNav.Divider />
-										) : (
-											''
-										)}
-
-										<ClayMultiStepNav.Indicator
-											complete={complete}
-											label={1 + index}
-											onClick={onClick}
-										/>
-									</ClayMultiStepNav.Item>
-								)
-							)}
+										label={1 + index}
+									/>
+								</ClayMultiStepNav.Item>
+							))}
 						</ClayMultiStepNav>
 						<hr className="mb-5"></hr>
 					</>
@@ -119,8 +148,28 @@ const NewApplication = ({children}: DriverInfoProps) => {
 
 					<hr></hr>
 
-					<div className="d-flex justify-content-end mt-4">
-						<ClayButton displayType="primary" small={true}>
+					<div
+						className={classNames('d-flex  mt-4', {
+							'justify-content-between': state.currentStep > 0,
+							'justify-content-end': state.currentStep === 0,
+						})}
+					>
+						{state.currentStep > 0 && (
+							<ClayButton
+								displayType={null}
+								onClick={() => handlePreviousClick()}
+								small={true}
+							>
+								<ClayIcon symbol="order-arrow-left" />
+								&nbsp;PREVIOUS
+							</ClayButton>
+						)}
+
+						<ClayButton
+							displayType="primary"
+							onClick={() => handleNextClick()}
+							small={true}
+						>
 							NEXT
 						</ClayButton>
 					</div>

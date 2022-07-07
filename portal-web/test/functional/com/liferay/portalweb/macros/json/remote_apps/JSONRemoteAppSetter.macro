@@ -9,9 +9,13 @@ definition {
 	}
 
 	macro setTypeSettings {
-		Variables.assertDefined(parameterList = "${url}");
+		if (isSet(mainURL)) {
+			var typeSettings = "mainURL=${mainURL}%0A";
+		}
 
-		var typeSettings = "url=${url}%0A";
+		if (isSet(url)) {
+			var typeSettings = "url=${url}%0A";
+		}
 
 		return "${typeSettings}";
 	}

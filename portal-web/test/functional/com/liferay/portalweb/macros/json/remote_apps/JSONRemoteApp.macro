@@ -21,7 +21,7 @@ definition {
 	}
 
 	macro addRemoteAppEntry {
-		Variables.assertDefined(parameterList = "${name},${type},${url}");
+		Variables.assertDefined(parameterList = "${name},${type}");
 
 		if (!(isSet(description))) {
 			var description = "";
@@ -32,7 +32,9 @@ definition {
 		}
 
 		var nameMap = JSONRemoteAppSetter.setNameMap(name = "${name}");
-		var typeSettings = JSONRemoteAppSetter.setTypeSettings(url = "${url}");
+		var typeSettings = JSONRemoteAppSetter.setTypeSettings(
+			mainURL = "${mainURL}",
+			url = "${url}");
 
 		JSONRemoteAppAPI._addRemoteAppEntry(
 			description = "${description}",

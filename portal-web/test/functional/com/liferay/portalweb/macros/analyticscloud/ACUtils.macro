@@ -1091,7 +1091,7 @@ definition {
 	macro waitForSendingRequest {
 		if (isSet(time)) {
 
-			// Pauseing for harRecording test for reuse purpose, see LRAC-10600
+			// Pausing for harRecording test for reuse purpose, see LRAC-10600
 
 			Pause(locator1 = "${time}");
 		}

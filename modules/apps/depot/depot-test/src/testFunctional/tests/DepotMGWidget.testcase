@@ -123,6 +123,12 @@ definition {
 			mgDocumentFile = "Document_1.jpg",
 			mgDocumentTitle = "Document_1.jpg");
 
+		Navigator.openSitePage(
+			pageName = "Media Gallery Page",
+			siteName = "Site Name");
+
+		DMFolder.gotoPGViaMG(mgFolderName = "DM SubFolder Name");
+
 		DMDocument.viewPGViaMG(mgDocumentTitle = "Document_1.jpg");
 
 		DepotNavigator.openToDMFolder(

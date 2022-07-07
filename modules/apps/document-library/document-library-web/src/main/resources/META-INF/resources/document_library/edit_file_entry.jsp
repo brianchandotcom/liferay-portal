@@ -338,24 +338,26 @@ renderResponse.setTitle(headerTitle);
 
 					<aui:input label="title" name="title" />
 
-					<div>
-						<aui:input label="file-name" name="fileName" type='<%= dlEditFileEntryDisplayContext.isFileNameVisible() ? "text" : "hidden" %>' />
+					<c:if test="<%= dlEditFileEntryDisplayContext.isFileNameVisible() %>">
+						<div>
+							<aui:input label="file-name" name="fileName" type="text" />
 
-						<c:if test="<%= fileVersion != null %>">
-							<react:component
-								module="document_library/js/FileNameInput.es"
-								props='<%=
-									HashMapBuilder.<String, Object>put(
-										"initialValue", fileVersion.getFileName()
-									).put(
-										"required", Validator.isNotNull(fileVersion.getExtension())
-									).put(
-										"visible", dlEditFileEntryDisplayContext.isFileNameVisible()
-									).build()
-								%>'
-							/>
-						</c:if>
-					</div>
+							<c:if test="<%= fileVersion != null %>">
+								<react:component
+									module="document_library/js/FileNameInput.es"
+									props='<%=
+										HashMapBuilder.<String, Object>put(
+											"initialValue", fileVersion.getFileName()
+										).put(
+											"required", Validator.isNotNull(fileVersion.getExtension())
+										).put(
+											"visible", dlEditFileEntryDisplayContext.isFileNameVisible()
+										).build()
+									%>'
+								/>
+							</c:if>
+						</div>
+					</c:if>
 
 					<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 						<aui:input name="description" />

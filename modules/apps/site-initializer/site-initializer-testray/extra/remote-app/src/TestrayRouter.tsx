@@ -136,11 +136,6 @@ const TestrayRoute = () => (
 							<Route element={<Routines />} index />
 
 							<Route
-								element={<RoutineBuildForm />}
-								path="create"
-							/>
-
-							<Route
 								element={<RoutineOutlet />}
 								path=":routineId"
 							>
@@ -148,7 +143,7 @@ const TestrayRoute = () => (
 
 								<Route
 									element={<RoutineBuildForm />}
-									path="update"
+									path="create"
 								/>
 
 								<Route
@@ -158,11 +153,21 @@ const TestrayRoute = () => (
 
 								<Route
 									element={
-										<BuildOutlet ignorePath="case-result" />
+										<BuildOutlet
+											ignorePaths={[
+												'case-result',
+												'update',
+											]}
+										/>
 									}
 									path="build/:buildId"
 								>
 									<Route element={<Build />} index />
+
+									<Route
+										element={<RoutineBuildForm />}
+										path="update"
+									/>
 
 									<Route
 										element={<CaseResultOutlet />}

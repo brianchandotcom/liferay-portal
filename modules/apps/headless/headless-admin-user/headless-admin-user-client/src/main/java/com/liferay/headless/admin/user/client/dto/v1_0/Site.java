@@ -120,6 +120,27 @@ public class Site implements Cloneable, Serializable {
 
 	protected Map<String, String> description_i18n;
 
+	public String getDescriptiveName() {
+		return descriptiveName;
+	}
+
+	public void setDescriptiveName(String descriptiveName) {
+		this.descriptiveName = descriptiveName;
+	}
+
+	public void setDescriptiveName(
+		UnsafeSupplier<String, Exception> descriptiveNameUnsafeSupplier) {
+
+		try {
+			descriptiveName = descriptiveNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String descriptiveName;
+
 	public String getFriendlyUrlPath() {
 		return friendlyUrlPath;
 	}

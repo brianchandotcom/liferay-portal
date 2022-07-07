@@ -53,6 +53,20 @@ public class SiteBriefSerDes {
 
 		sb.append("{");
 
+		if (siteBrief.getDescriptiveName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"descriptiveName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(siteBrief.getDescriptiveName()));
+
+			sb.append("\"");
+		}
+
 		if (siteBrief.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -105,6 +119,15 @@ public class SiteBriefSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (siteBrief.getDescriptiveName() == null) {
+			map.put("descriptiveName", null);
+		}
+		else {
+			map.put(
+				"descriptiveName",
+				String.valueOf(siteBrief.getDescriptiveName()));
+		}
+
 		if (siteBrief.getId() == null) {
 			map.put("id", null);
 		}
@@ -146,7 +169,12 @@ public class SiteBriefSerDes {
 			SiteBrief siteBrief, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "descriptiveName")) {
+				if (jsonParserFieldValue != null) {
+					siteBrief.setDescriptiveName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					siteBrief.setId(Long.valueOf((String)jsonParserFieldValue));
 				}

@@ -35,6 +35,27 @@ public class SiteBrief implements Cloneable, Serializable {
 		return SiteBriefSerDes.toDTO(json);
 	}
 
+	public String getDescriptiveName() {
+		return descriptiveName;
+	}
+
+	public void setDescriptiveName(String descriptiveName) {
+		this.descriptiveName = descriptiveName;
+	}
+
+	public void setDescriptiveName(
+		UnsafeSupplier<String, Exception> descriptiveNameUnsafeSupplier) {
+
+		try {
+			descriptiveName = descriptiveNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String descriptiveName;
+
 	public Long getId() {
 		return id;
 	}

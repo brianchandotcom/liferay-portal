@@ -26,7 +26,6 @@ import LinkRenderer from './LinkRenderer';
 import ListRenderer from './ListRenderer';
 import QuantitySelectorRenderer from './QuantitySelectorRenderer';
 import StatusRenderer from './StatusRenderer';
-import TooltipSummaryRenderer from './TooltipSummaryRenderer';
 
 export const dataRenderers = {
 	actionLink: ActionsLinkRenderer,
@@ -40,7 +39,6 @@ export const dataRenderers = {
 	list: ListRenderer,
 	quantitySelector: QuantitySelectorRenderer,
 	status: StatusRenderer,
-	tooltipSummary: TooltipSummaryRenderer,
 };
 
 export const inputRenderers = {

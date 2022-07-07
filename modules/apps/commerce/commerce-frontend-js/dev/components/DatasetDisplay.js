@@ -151,39 +151,6 @@ const fluidDataSetProps = {
 						label: 'Select',
 					},
 					{
-						contentRenderer: 'tooltipSummary',
-						details: {
-							rowsDefinitions: [
-								{
-									label: 'Name',
-									valueFieldKey: 'name',
-								},
-								{
-									label: 'NestedItem',
-									valueFieldKey: ['testLink', 'href'],
-								},
-								{
-									contentRenderer: 'image',
-									label: 'Thumbnail',
-									valueFieldKey: 'img',
-								},
-								{
-									divider: true,
-									label: 'Price',
-									valueFieldKey: 'price',
-								},
-								{
-									divider: true,
-									highlighted: true,
-									label: 'Price Copy',
-									valueFieldKey: 'price',
-								},
-							],
-						},
-						fieldName: 'price',
-						label: 'Price',
-					},
-					{
 						contentRenderer: 'quantitySelector',
 						fieldName: 'testQuantity',
 						label: 'Qt. Selector',

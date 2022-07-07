@@ -99,7 +99,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			(HttpServletRequest)requestContext.get("request");
 
 		JournalArticle journalArticle = _getJournalArticle(
-			groupId, friendlyURL);
+			groupId, friendlyURL, params);
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			_getLayoutDisplayPageObjectProvider(journalArticle);
@@ -155,7 +155,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		throws PortalException {
 
 		JournalArticle journalArticle = _getJournalArticle(
-			groupId, friendlyURL);
+			groupId, friendlyURL, params);
 
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)requestContext.get("request");
@@ -406,16 +406,29 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		return GetterUtil.getLong(paths.get(paths.size() - 1));
 	}
 
-	private JournalArticle _getJournalArticle(long groupId, String friendlyURL)
+	private JournalArticle _getJournalArticle(
+			long groupId, String friendlyURL, Map<String, String[]> params)
 		throws PortalException {
 
 		String normalizedUrlTitle =
 			_friendlyURLNormalizer.normalizeWithEncoding(
 				_getFullURLTitle(friendlyURL));
 
-		JournalArticle journalArticle =
-			_journalArticleLocalService.fetchLatestArticleByUrlTitle(
-				groupId, normalizedUrlTitle, WorkflowConstants.STATUS_APPROVED);
+		JournalArticle journalArticle = null;
+
+		if (params.containsKey("version")) {
+			int articleId = Integer.valueOf(params.get("version")[0]);
+
+			journalArticle = _journalArticleLocalService.fetchArticle(
+				articleId);
+		}
+
+		if (journalArticle == null) {
+			journalArticle =
+				_journalArticleLocalService.fetchLatestArticleByUrlTitle(
+					groupId, normalizedUrlTitle,
+					WorkflowConstants.STATUS_APPROVED);
+		}
 
 		if (journalArticle == null) {
 			PermissionChecker permissionChecker =

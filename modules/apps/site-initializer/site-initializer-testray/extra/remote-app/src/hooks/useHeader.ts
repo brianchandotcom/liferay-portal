@@ -26,6 +26,7 @@ import {
 type UseHeader = {
 	shouldUpdate?: boolean;
 	timeout?: number;
+	title?: string;
 	useAction?: Dropdown;
 	useDropdown?: Dropdown;
 	useHeading?: HeaderTitle[];
@@ -38,6 +39,7 @@ const DEFAULT_TIMEOUT = 0;
 const useHeader = ({
 	shouldUpdate = true,
 	timeout = DEFAULT_TIMEOUT,
+	title,
 	useHeading = initialState.heading,
 	useAction,
 	useIcon = initialState.symbol,
@@ -127,6 +129,14 @@ const useHeader = ({
 			setDropdown(JSON.parse(useDropdownString));
 		}
 	}, [setDropdown, useDropdownString]);
+
+	useEffect(() => {
+		if (title) {
+			setTimeout(() => {
+				document.title = title;
+			}, timeout);
+		}
+	}, [title, timeout]);
 
 	return {
 		context,

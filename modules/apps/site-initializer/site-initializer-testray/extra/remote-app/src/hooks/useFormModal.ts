@@ -26,13 +26,17 @@ type OnSubmitOptions = {
 	updateMutation: DocumentNode;
 };
 
+type onSaveOptions = {
+	forceRefetch?: boolean;
+};
+
 export type FormModalOptions = {
 	modalState: any;
 	observer: Observer;
 	onChange: (state: any) => (event: any) => void;
 	onClose: () => void;
 	onError: (error?: any) => void;
-	onSave: (param?: any) => void;
+	onSave: (param?: any, options?: onSaveOptions) => void;
 	onSubmit: (data: any, options: OnSubmitOptions) => Promise<void>;
 	open: (state?: any) => void;
 	setVisible: Dispatch<boolean>;
@@ -72,14 +76,22 @@ const useFormModal = ({
 		});
 	};
 
-	const onSave = (state?: any) => {
+	const onSave = (
+		state?: any,
+		options: onSaveOptions = {forceRefetch: true}
+	) => {
 		Liferay.Util.openToast({
 			message: i18n.translate('your-request-completed-successfully'),
 			type: 'success',
 		});
 
-		onClose();
-		setForceRefetch(new Date().getTime());
+		if (visible) {
+			onClose();
+		}
+
+		if (options.forceRefetch) {
+			setForceRefetch(new Date().getTime());
+		}
 
 		if (state) {
 			setModalState(state);
@@ -108,8 +120,7 @@ const useFormModal = ({
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 
 			throw error;

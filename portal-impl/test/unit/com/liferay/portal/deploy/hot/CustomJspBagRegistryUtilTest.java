@@ -16,11 +16,13 @@ package com.liferay.portal.deploy.hot;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.url.URLContainer;
 import com.liferay.portal.kernel.util.CustomJspRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.CustomJspRegistryImpl;
 import com.liferay.portal.util.PortalImpl;
@@ -33,10 +35,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -61,6 +67,18 @@ public class CustomJspBagRegistryUtilTest {
 			new CustomJspRegistryUtil();
 
 		customJspRegistryUtil.setCustomJspRegistry(new CustomJspRegistryImpl());
+
+		_servletContext = Mockito.mock(ServletContext.class);
+
+		Mockito.when(
+			_servletContext.getRealPath(Mockito.anyString())
+		).thenReturn(
+			StringPool.BLANK
+		);
+
+		ServletContextPool.put(
+			PortalContextLoaderListener.getPortalServletContextName(),
+			_servletContext);
 	}
 
 	@Test
@@ -151,6 +169,7 @@ public class CustomJspBagRegistryUtilTest {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
+	private static ServletContext _servletContext;
 
 	private static class TestCustomJspBag implements CustomJspBag {
 

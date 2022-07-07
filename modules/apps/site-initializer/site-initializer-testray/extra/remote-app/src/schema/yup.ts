@@ -22,8 +22,8 @@ const yupSchema = {
 		description: yup.string(),
 		gitHash: yup.string(),
 		name: yup.string().required(),
-		productVersionId: yup.string(),
-		routineId: yup.string(),
+		productVersionId: yup.string().required(),
+		routineId: yup.string().required(),
 		template: yup.string(),
 	}),
 	case: yup.object({

@@ -24,6 +24,24 @@ const serialize: RestLink.Serializer = (body, headers) => {
 };
 
 export const bodySerializers: RestLink.Serializers = {
+	build: (
+		{
+			productVersionId: r_productVersionToBuilds_c_productVersionId,
+			projectId: r_projectToBuilds_c_projectId,
+			routineId: r_routineToBuilds_c_routineId,
+			...data
+		},
+		headers
+	) =>
+		serialize(
+			{
+				...data,
+				r_productVersionToBuilds_c_productVersionId,
+				r_projectToBuilds_c_projectId,
+				r_routineToBuilds_c_routineId,
+			},
+			headers
+		),
 	case: (
 		{
 			caseTypeId: r_caseTypeToCases_c_caseTypeId,

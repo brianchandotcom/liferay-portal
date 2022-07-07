@@ -994,9 +994,16 @@
 																																	"en_US": ""
 																																}
 																															},
+																															"title": {
+																																"value": "demo-access.png"
+																															},
 																															"url": {
-																																"value_i18n": {
-																																	"en_US": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/quick-links-demo-access.png$]"
+																																"mapping": {
+																																	"fieldKey": "FileEntry_previewImage",
+																																	"itemReference": {
+																																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/demo-access.png$]"
+																																	}
 																																}
 																															}
 																														},
@@ -1146,9 +1153,16 @@
 																																	"en_US": ""
 																																}
 																															},
+																															"title": {
+																																"value": "deal-registration.png"
+																															},
 																															"url": {
-																																"value_i18n": {
-																																	"en_US": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/quick-links-deal-registration.png$]"
+																																"mapping": {
+																																	"fieldKey": "FileEntry_previewImage",
+																																	"itemReference": {
+																																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/deal-registration.png$]"
+																																	}
 																																}
 																															}
 																														},
@@ -1303,9 +1317,16 @@
 																																	"en_US": ""
 																																}
 																															},
+																															"title": {
+																																"value": "mdf.png"
+																															},
 																															"url": {
-																																"value_i18n": {
-																																	"en_US": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/quick-links-mdf.png$]"
+																																"mapping": {
+																																	"fieldKey": "FileEntry_previewImage",
+																																	"itemReference": {
+																																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/mdf.png$]"
+																																	}
 																																}
 																															}
 																														},
@@ -1568,9 +1589,16 @@
 																																	"en_US": ""
 																																}
 																															},
+																															"title": {
+																																"value": "qsp-tracker.png"
+																															},
 																															"url": {
-																																"value_i18n": {
-																																	"en_US": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/quick-links-qsp-tracker.png$]"
+																																"mapping": {
+																																	"fieldKey": "FileEntry_previewImage",
+																																	"itemReference": {
+																																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/qsp-tracker.png$]"
+																																	}
 																																}
 																															}
 																														},
@@ -1719,9 +1747,16 @@
 																																	"en_US": ""
 																																}
 																															},
+																															"title": {
+																																"value": "price-books.png"
+																															},
 																															"url": {
-																																"value_i18n": {
-																																	"en_US": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/quick-links-price-books.png$]"
+																																"mapping": {
+																																	"fieldKey": "FileEntry_previewImage",
+																																	"itemReference": {
+																																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																																		"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/price-books.png$]"
+																																	}
 																																}
 																															}
 																														},

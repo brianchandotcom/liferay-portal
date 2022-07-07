@@ -178,9 +178,14 @@ export function FormInputGeneralPanel({item}) {
 		key: [CACHE_KEYS.allowedInputTypes, fragmentEntryKey],
 	});
 
+	const isCaptchaInput = useMemo(
+		() => allowedInputTypes?.includes('captcha'),
+		[allowedInputTypes]
+	);
+
 	const filteredFormFields = useSelectorCallback(
 		(state) => {
-			if (!formFields || !allowedInputTypes) {
+			if (!formFields || !allowedInputTypes || isCaptchaInput) {
 				return [];
 			}
 
@@ -242,27 +247,28 @@ export function FormInputGeneralPanel({item}) {
 
 			return nextFields;
 		},
-		[allowedInputTypes, item.itemId, formFields]
+		[allowedInputTypes, formFields, isCaptchaInput, item.itemId]
 	);
 
 	const configFields = useMemo(() => {
-		let nextFields = getInputCommonConfiguration(
+		const fieldSetsWithoutLabel =
+			fragmentEntryLinkRef.current.configuration?.fieldSets
+				?.filter(
+					(fieldSet) => !fieldSet.configurationRole && !fieldSet.label
+				)
+				.flatMap((fieldSet) => fieldSet.fields) ?? [];
+
+		if (isCaptchaInput) {
+			return fieldSetsWithoutLabel;
+		}
+
+		const inputCommonFields = getInputCommonConfiguration(
 			configurationValues,
 			formFields
 		);
 
-		const fieldSetsWithoutLabel =
-			fragmentEntryLinkRef.current.configuration?.fieldSets?.filter(
-				(fieldSet) => !fieldSet.configurationRole && !fieldSet.label
-			) ?? [];
-
-		nextFields = [
-			...nextFields,
-			...fieldSetsWithoutLabel.flatMap((fieldSet) => fieldSet.fields),
-		];
-
-		return nextFields;
-	}, [configurationValues, fragmentEntryLinkRef, formFields]);
+		return [...inputCommonFields, ...fieldSetsWithoutLabel];
+	}, [configurationValues, fragmentEntryLinkRef, formFields, isCaptchaInput]);
 
 	const handleValueSelect = (key, value) => {
 		const keyPath = [FREEMARKER_FRAGMENT_ENTRY_PROCESSOR, key];
@@ -318,6 +324,10 @@ export function FormInputGeneralPanel({item}) {
 		);
 	};
 
+	if (isCaptchaInput && !configFields.length) {
+		return <FragmentGeneralPanel item={item} />;
+	}
+
 	return (
 		<>
 			<div className="mb-3">
@@ -328,19 +338,22 @@ export function FormInputGeneralPanel({item}) {
 					)}
 					open
 				>
-					<FormInputMappingOptions
-						allowedInputTypes={allowedInputTypes}
-						configurationValues={configurationValues}
-						form={{
-							classNameId,
-							classTypeId,
-							fields: filteredFormFields,
-						}}
-						item={item}
-						onValueSelect={handleValueSelect}
-					/>
+					{!isCaptchaInput && (
+						<FormInputMappingOptions
+							allowedInputTypes={allowedInputTypes}
+							configurationValues={configurationValues}
+							form={{
+								classNameId,
+								classTypeId,
+								fields: filteredFormFields,
+							}}
+							item={item}
+							onValueSelect={handleValueSelect}
+						/>
+					)}
 
-					{configurationValues[FIELD_ID_CONFIGURATION_KEY] && (
+					{(configurationValues[FIELD_ID_CONFIGURATION_KEY] ||
+						isCaptchaInput) && (
 						<>
 							<span className="sr-only">
 								{Liferay.Util.sub(

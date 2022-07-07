@@ -74,7 +74,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		var sandboxedPublicationName = Publications.getPublicationName();
+		var sandboxedPublicationName = Publications.generateSandboxedPublicationName(userScreenName = "usersn");
 
 		Publications.viewSandboxedPublication(
 			sandboxedPublicationName = "${sandboxedPublicationName}",

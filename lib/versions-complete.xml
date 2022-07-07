@@ -399,12 +399,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.payment.method.authorize.net.jar!gson.jar</file-name>
-				<version>2.8.5</version>
+				<version>2.9.0</version>
 				<project-name>Gson</project-name>
+				<project-url>https://github.com/google/gson/gson</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -482,13 +483,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.payment.method.paypal.jar!gson.jar</file-name>
-				<version>2.2.2</version>
+				<version>2.9.0</version>
 				<project-name>Gson</project-name>
-				<project-url>http://code.google.com/p/google-gson/</project-url>
+				<project-url>https://github.com/google/gson/gson</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -1038,12 +1039,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.data.engine.rest.impl.jar!gson.jar</file-name>
-				<version>2.8.4</version>
+				<version>2.9.0</version>
 				<project-name>Gson</project-name>
+				<project-url>https://github.com/google/gson/gson</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -1891,12 +1893,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.dynamic.data.mapping.service.jar!gson.jar</file-name>
-				<version>2.8.4</version>
+				<version>2.9.0</version>
 				<project-name>Gson</project-name>
+				<project-url>https://github.com/google/gson/gson</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2580,6 +2583,18 @@
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.object.service.jar!groovy.jar</file-name>
+				<version>2.4.21</version>
+				<project-name>Groovy Runtime</project-name>
+				<project-url>http://groovy-lang.org</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -3415,6 +3430,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.remote.json.web.service.web.jar!jodd-proxetta.jar</file-name>
+				<version>6.0.0</version>
+				<project-name>Jodd Proxetta</project-name>
+				<project-url>https://http.jodd.org</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD-2-Clause</license-name>
+						<license-url>https://github.com/oblac/jodd-proxetta/blob/master/LICENSE</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.remote.rest.extender.jar!cxf-rt-rs-extension-providers.jar</file-name>
 				<version>3.4.4</version>
 				<project-name>Apache CXF JAX-RS Extensions: Providers</project-name>
@@ -3642,12 +3669,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!gson.jar</file-name>
-				<version>2.8.4</version>
+				<version>2.9.0</version>
 				<project-name>Gson</project-name>
+				<project-url>https://github.com/google/gson/gson</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3944,7 +3972,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!antisamy.jar</file-name>
-				<version>1.6.4</version>
+				<version>1.6.8</version>
 				<project-name>OWASP AntiSamy</project-name>
 				<project-url>https://github.com/nahsra/antisamy</project-url>
 				<licenses>
@@ -4011,38 +4039,47 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.antisamy.jar!httpclient.jar</file-name>
-				<version>4.5.13</version>
+				<file-name>com.liferay.portal.security.antisamy.jar!httpclient5.jar</file-name>
+				<version>5.1.3</version>
 				<project-name>Apache HttpClient</project-name>
-				<project-url>http://hc.apache.org/httpcomponents-client</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.antisamy.jar!httpcore.jar</file-name>
-				<version>4.4.14</version>
-				<project-name>HttpComponents Apache HttpCore</project-name>
-				<project-url>http://hc.apache.org/httpcomponents-core-ga</project-url>
+				<file-name>com.liferay.portal.security.antisamy.jar!httpcore5-h2.jar</file-name>
+				<version>5.1.3</version>
+				<project-name>Apache HttpComponents Core HTTP/2</project-name>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.security.antisamy.jar!nekohtml.jar</file-name>
-				<version>1.9.22</version>
-				<project-name>Neko HTML</project-name>
-				<project-url>http://nekohtml.sourceforge.net/</project-url>
+				<file-name>com.liferay.portal.security.antisamy.jar!httpcore5.jar</file-name>
+				<version>5.1.3</version>
+				<project-name>Apache HttpComponents Core HTTP/1.1</project-name>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.security.antisamy.jar!neko-htmlunit.jar</file-name>
+				<version>2.61.0</version>
+				<project-name>HtmlUnit NekoHtml</project-name>
+				<project-url>http://htmlunit.sourceforge.net</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -4484,12 +4521,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!gson.jar</file-name>
-				<version>2.8.6</version>
+				<version>2.9.0</version>
 				<project-name>Gson</project-name>
+				<project-url>https://github.com/google/gson/gson</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -5548,12 +5586,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.push.notifications.sender.firebase.jar!gson.jar</file-name>
-				<version>2.8.0</version>
+				<version>2.9.0</version>
 				<project-name>Gson</project-name>
+				<project-url>https://github.com/google/gson/gson</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -6661,7 +6700,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/gson.jar</file-name>
-				<version>2.2.4</version>
+				<version>2.9.0</version>
 				<project-name>Gson</project-name>
 				<project-url>http://code.google.com/p/google-gson</project-url>
 				<licenses>

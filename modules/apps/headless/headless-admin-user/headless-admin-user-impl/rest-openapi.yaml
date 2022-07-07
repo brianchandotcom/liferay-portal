@@ -723,6 +723,8 @@ components:
                     type: string
                 name:
                     type: string
+                name_descriptive:
+                    type: string
                 name_i18n:
                     additionalProperties:
                         type: string
@@ -748,6 +750,11 @@ components:
                 name:
                     description:
                         The site's name.
+                    readOnly: true
+                    type: string
+                name_descriptive:
+                    description:
+                        The site's descriptive name.
                     readOnly: true
                     type: string
                 name_i18n:

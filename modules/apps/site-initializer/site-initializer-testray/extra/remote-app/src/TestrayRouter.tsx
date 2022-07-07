@@ -43,6 +43,7 @@ import Routines from './pages/Project/Routines';
 import Build from './pages/Project/Routines/Builds/Build';
 import BuildOutlet from './pages/Project/Routines/Builds/BuildOutlet';
 import CaseResult from './pages/Project/Routines/Builds/Inner/CaseResult';
+import CaseResultEditTest from './pages/Project/Routines/Builds/Inner/CaseResult/CaseResultEditTest';
 import CaseResultOutlet from './pages/Project/Routines/Builds/Inner/CaseResult/CaseResultOutlet';
 import CaseResultHistory from './pages/Project/Routines/Builds/Inner/CaseResult/History';
 import CaseTypes from './pages/Project/Routines/Builds/Inner/CaseTypes';
@@ -173,6 +174,11 @@ const TestrayRoute = () => (
 										<Route
 											element={<CaseResultHistory />}
 											path="history"
+										/>
+
+										<Route
+											element={<CaseResultEditTest />}
+											path=":status"
 										/>
 									</Route>
 

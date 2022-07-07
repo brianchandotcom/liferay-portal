@@ -185,7 +185,7 @@ const CaseResult = () => {
 					<Container
 						className="mt-4"
 						collapsable
-						title="Case Details"
+						title={i18n.translate('case-details')}
 					>
 						<QATable
 							items={[

@@ -57,15 +57,15 @@ const CaseResultHeaderActions: React.FC<{
 			<CaseResultAssignModal modal={modal} />
 
 			<ClayButton.Group className="mb-3 ml-3" spaced>
-				{isCaseResultAssignedToMe ? (
-					<ClayButton disabled displayType="unstyled">
-						{i18n.translate('assign')}
-					</ClayButton>
-				) : (
-					<ClayButton onClick={() => modal.open()}>
-						{i18n.translate('assign')}
-					</ClayButton>
-				)}
+				<ClayButton
+					disabled={isCaseResultAssignedToMe}
+					displayType={
+						isCaseResultAssignedToMe ? 'unstyled' : undefined
+					}
+					onClick={() => modal.open()}
+				>
+					{i18n.translate('assign')}
+				</ClayButton>
 
 				<ClayButton
 					displayType="secondary"
@@ -85,54 +85,62 @@ const CaseResultHeaderActions: React.FC<{
 					)}
 				</ClayButton>
 
-				{workflowDisabled ||
-				caseResult.dueStatus !== TEST_STATUS.Untested ? (
-					<ClayButton disabled displayType="unstyled">
-						{i18n.translate('start-test')}
-					</ClayButton>
-				) : (
-					<ClayButton displayType="primary">
-						{i18n.translate('start-test')}
-					</ClayButton>
-				)}
+				<ClayButton
+					disabled={
+						workflowDisabled ||
+						caseResult.dueStatus !== TEST_STATUS.Untested
+					}
+					displayType={
+						workflowDisabled ||
+						caseResult.dueStatus !== TEST_STATUS.Untested
+							? 'unstyled'
+							: 'primary'
+					}
+				>
+					{i18n.translate('start-test')}
+				</ClayButton>
 
-				{workflowDisabled ||
-				caseResult.dueStatus !== TEST_STATUS['In Progress'] ? (
-					<ClayButton disabled displayType="unstyled">
-						{i18n.translate('complete-test')}
-					</ClayButton>
-				) : (
-					<ClayButton onClick={() => navigate('complete-test')}>
-						{i18n.translate('complete-test')}
-					</ClayButton>
-				)}
+				<ClayButton
+					disabled={
+						workflowDisabled ||
+						caseResult.dueStatus !== TEST_STATUS['In Progress']
+					}
+					displayType={
+						workflowDisabled ||
+						caseResult.dueStatus !== TEST_STATUS['In Progress']
+							? 'unstyled'
+							: undefined
+					}
+					onClick={() => navigate('complete-test')}
+				>
+					{i18n.translate('complete-test')}
+				</ClayButton>
 
-				{workflowDisabled || isReopened ? (
-					<ClayButton disabled displayType="unstyled">
-						{i18n.translate('reopen-test')}
-					</ClayButton>
-				) : (
-					<ClayButton
-						displayType="primary"
-						onClick={() => onAssignToMe(caseResult).then(refetch)}
-					>
-						{i18n.translate('reopen-test')}
-					</ClayButton>
-				)}
+				<ClayButton
+					disabled={workflowDisabled || isReopened}
+					displayType={
+						workflowDisabled || isReopened ? 'unstyled' : 'primary'
+					}
+					onClick={() => onAssignToMe(caseResult).then(refetch)}
+				>
+					{i18n.translate('reopen-test')}
+				</ClayButton>
 
-				{workflowDisabled ||
-				caseResult.dueStatus !== TEST_STATUS['In Progress'] ? (
-					<ClayButton disabled displayType="unstyled">
-						{i18n.translate('edit')}
-					</ClayButton>
-				) : (
-					<ClayButton
-						displayType="secondary"
-						onClick={() => navigate('complete-test')}
-					>
-						{i18n.translate('edit')}
-					</ClayButton>
-				)}
+				<ClayButton
+					disabled={
+						workflowDisabled ||
+						caseResult.dueStatus !== TEST_STATUS['In Progress']
+					}
+					displayType={
+						workflowDisabled ||
+						caseResult.dueStatus !== TEST_STATUS['In Progress']
+							? 'unstyled'
+							: 'secondary'
+					}
+					onClick={() => navigate('complete-test')}
+				>
+					{i18n.translate('edit')}
+				</ClayButton>
 
 				{caseResult.dueStatus === TEST_STATUS['In Progress'] && (
 					<ClayButton

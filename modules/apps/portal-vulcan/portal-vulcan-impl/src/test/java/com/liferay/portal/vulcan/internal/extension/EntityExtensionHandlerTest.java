@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.internal.extension;
 
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
@@ -60,8 +61,13 @@ public class EntityExtensionHandlerTest {
 
 	@Test
 	public void testGetExtendedProperties() throws Exception {
+		String propertyName1 = RandomTestUtil.randomString();
+		String propertyName2 = RandomTestUtil.randomString();
+		String propertyValue1 = RandomTestUtil.randomString();
+		long propertyValue2 = RandomTestUtil.randomLong();
+
 		Map<String, Serializable> testMap1 = Collections.singletonMap(
-			"test1", "test");
+			propertyName1, propertyValue1);
 
 		Mockito.when(
 			_mockedExtensionProvider1.getExtendedProperties(
@@ -71,7 +77,7 @@ public class EntityExtensionHandlerTest {
 		);
 
 		Map<String, Serializable> testMap2 = Collections.singletonMap(
-			"test2", 5);
+			propertyName2, propertyValue2);
 
 		Mockito.when(
 			_mockedExtensionProvider2.getExtendedProperties(
@@ -97,13 +103,18 @@ public class EntityExtensionHandlerTest {
 
 		Assert.assertEquals(
 			extendedProperties.toString(), 2, extendedProperties.size());
-		Assert.assertEquals("test", extendedProperties.get("test1"));
-		Assert.assertEquals(5, extendedProperties.get("test2"));
+		Assert.assertEquals(
+			propertyValue1, extendedProperties.get(propertyName1));
+		Assert.assertEquals(
+			propertyValue2, extendedProperties.get(propertyName2));
 	}
 
 	@Test
 	public void testGetFilteredPropertyNames() {
-		Set<String> testSet1 = Collections.singleton("test1");
+		String propertyName1 = RandomTestUtil.randomString();
+		String propertyName2 = RandomTestUtil.randomString();
+
+		Set<String> testSet1 = Collections.singleton(propertyName1);
 
 		Mockito.doReturn(
 			testSet1
@@ -113,7 +124,7 @@ public class EntityExtensionHandlerTest {
 			Mockito.anyLong(), Mockito.anyObject()
 		);
 
-		Set<String> testSet2 = Collections.singleton("test2");
+		Set<String> testSet2 = Collections.singleton(propertyName2);
 
 		Mockito.doReturn(
 			testSet2
@@ -141,31 +152,36 @@ public class EntityExtensionHandlerTest {
 
 		Assert.assertEquals(
 			filteredProperties.toString(), 2, filteredProperties.size());
-		Assert.assertTrue(filteredProperties.contains("test1"));
-		Assert.assertTrue(filteredProperties.contains("test2"));
+		Assert.assertTrue(filteredProperties.contains(propertyName1));
+		Assert.assertTrue(filteredProperties.contains(propertyName2));
 	}
 
 	@Test
 	public void testSetExtendedProperties() throws Exception {
+		String propertyName1 = RandomTestUtil.randomString();
+		String propertyName2 = RandomTestUtil.randomString();
+		String propertyValue1 = RandomTestUtil.randomString();
+		long propertyValue2 = RandomTestUtil.randomLong();
+
 		Map<String, Serializable> testExtendedProperties =
 			HashMapBuilder.<String, Serializable>put(
-				"test1", "test"
+				propertyName1, propertyValue1
 			).put(
-				"test2", 5
+				propertyName2, propertyValue2
 			).build();
 
 		Mockito.when(
 			_mockedExtensionProvider1.getExtendedPropertyDefinitions(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
-			Collections.singletonMap("test1", null)
+			Collections.singletonMap(propertyName1, null)
 		);
 
 		Mockito.when(
 			_mockedExtensionProvider2.getExtendedPropertyDefinitions(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
-			Collections.singletonMap("test2", null)
+			Collections.singletonMap(propertyName2, null)
 		);
 
 		_entityExtensionHandler.setExtendedProperties(
@@ -187,14 +203,14 @@ public class EntityExtensionHandlerTest {
 			_mockedExtensionProvider1
 		).setExtendedProperties(
 			Mockito.eq(_COMPANY_ID), Mockito.eq(_OBJECT),
-			Mockito.eq(Collections.singletonMap("test1", "test"))
+			Mockito.eq(Collections.singletonMap(propertyName1, propertyValue1))
 		);
 
 		Mockito.verify(
 			_mockedExtensionProvider2
 		).setExtendedProperties(
 			Mockito.eq(_COMPANY_ID), Mockito.eq(_OBJECT),
-			Mockito.eq(Collections.singletonMap("test2", 5))
+			Mockito.eq(Collections.singletonMap(propertyName2, propertyValue2))
 		);
 	}
 
@@ -205,14 +221,19 @@ public class EntityExtensionHandlerTest {
 		ExtensionProvider extensionProviderMock2 = Mockito.mock(
 			ExtensionProvider.class);
 
+		String propertyName1 = RandomTestUtil.randomString();
+		String propertyName2 = RandomTestUtil.randomString();
+		String propertyName3 = RandomTestUtil.randomString();
+		String propertyName4 = RandomTestUtil.randomString();
+
 		PropertyDefinition propertyDefinition1 = new PropertyDefinition(
-			"field1", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName1, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition2 = new PropertyDefinition(
-			"field2", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName2, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition3 = new PropertyDefinition(
-			"field3", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName3, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition4 = new PropertyDefinition(
-			"field4", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName4, PropertyDefinition.PropertyType.TEXT, false);
 
 		Mockito.when(
 			extensionProviderMock1.getExtendedPropertyDefinitions(
@@ -244,13 +265,13 @@ public class EntityExtensionHandlerTest {
 		entityExtensionHandler.validate(
 			_COMPANY_ID,
 			HashMapBuilder.<String, Serializable>put(
-				"field1", "value1"
+				propertyName1, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"field2", "value2"
+				propertyName2, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"field3", "value3"
+				propertyName3, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"field4", "value4"
+				propertyName4, RandomTestUtil.randomString()
 			).build(),
 			false);
 
@@ -274,14 +295,19 @@ public class EntityExtensionHandlerTest {
 		ExtensionProvider extensionProviderMock2 = Mockito.mock(
 			ExtensionProvider.class);
 
+		String propertyName1 = RandomTestUtil.randomString();
+		String propertyName2 = RandomTestUtil.randomString();
+		String propertyName3 = RandomTestUtil.randomString();
+		String propertyName4 = RandomTestUtil.randomString();
+
 		PropertyDefinition propertyDefinition1 = new PropertyDefinition(
-			"field1", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName1, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition2 = new PropertyDefinition(
-			"field2", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName2, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition3 = new PropertyDefinition(
-			"field3", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName3, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition4 = new PropertyDefinition(
-			"field4", PropertyDefinition.PropertyType.TEXT, true);
+			propertyName4, PropertyDefinition.PropertyType.TEXT, true);
 
 		Mockito.when(
 			extensionProviderMock1.getExtendedPropertyDefinitions(
@@ -313,13 +339,13 @@ public class EntityExtensionHandlerTest {
 		entityExtensionHandler.validate(
 			_COMPANY_ID,
 			HashMapBuilder.<String, Serializable>put(
-				"field1", 1L
+				propertyName1, RandomTestUtil.randomLong()
 			).<String, Serializable>put(
-				"field2", "value2"
+				propertyName2, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"field3", "value3"
+				propertyName3, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"field4", "value4"
+				propertyName4, RandomTestUtil.randomString()
 			).build(),
 			false);
 
@@ -343,14 +369,19 @@ public class EntityExtensionHandlerTest {
 		ExtensionProvider extensionProviderMock2 = Mockito.mock(
 			ExtensionProvider.class);
 
+		String propertyName1 = RandomTestUtil.randomString();
+		String propertyName2 = RandomTestUtil.randomString();
+		String propertyName3 = RandomTestUtil.randomString();
+		String propertyName4 = RandomTestUtil.randomString();
+
 		PropertyDefinition propertyDefinition1 = new PropertyDefinition(
-			"field1", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName1, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition2 = new PropertyDefinition(
-			"field2", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName2, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition3 = new PropertyDefinition(
-			"field3", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName3, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition4 = new PropertyDefinition(
-			"field4", PropertyDefinition.PropertyType.TEXT, true);
+			propertyName4, PropertyDefinition.PropertyType.TEXT, true);
 
 		Mockito.when(
 			extensionProviderMock1.getExtendedPropertyDefinitions(
@@ -382,11 +413,11 @@ public class EntityExtensionHandlerTest {
 		entityExtensionHandler.validate(
 			_COMPANY_ID,
 			HashMapBuilder.<String, Serializable>put(
-				"field1", "value1"
+				propertyName1, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"field2", "value2"
+				propertyName2, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"field3", "value3"
+				propertyName3, RandomTestUtil.randomString()
 			).build(),
 			false);
 
@@ -410,14 +441,19 @@ public class EntityExtensionHandlerTest {
 		ExtensionProvider extensionProviderMock2 = Mockito.mock(
 			ExtensionProvider.class);
 
+		String propertyName1 = RandomTestUtil.randomString();
+		String propertyName2 = RandomTestUtil.randomString();
+		String propertyName3 = RandomTestUtil.randomString();
+		String propertyName4 = RandomTestUtil.randomString();
+
 		PropertyDefinition propertyDefinition1 = new PropertyDefinition(
-			"field1", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName1, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition2 = new PropertyDefinition(
-			"field2", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName2, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition3 = new PropertyDefinition(
-			"field3", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName3, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition4 = new PropertyDefinition(
-			"field4", PropertyDefinition.PropertyType.TEXT, true);
+			propertyName4, PropertyDefinition.PropertyType.TEXT, true);
 
 		Mockito.when(
 			extensionProviderMock1.getExtendedPropertyDefinitions(
@@ -449,11 +485,11 @@ public class EntityExtensionHandlerTest {
 		entityExtensionHandler.validate(
 			_COMPANY_ID,
 			HashMapBuilder.<String, Serializable>put(
-				"field1", "value1"
+				propertyName1, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"field2", "value2"
+				propertyName2, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"field3", "value3"
+				propertyName3, RandomTestUtil.randomString()
 			).build(),
 			true);
 
@@ -477,14 +513,19 @@ public class EntityExtensionHandlerTest {
 		ExtensionProvider extensionProviderMock2 = Mockito.mock(
 			ExtensionProvider.class);
 
+		String propertyName1 = RandomTestUtil.randomString();
+		String propertyName2 = RandomTestUtil.randomString();
+		String propertyName3 = RandomTestUtil.randomString();
+		String propertyName4 = RandomTestUtil.randomString();
+
 		PropertyDefinition propertyDefinition1 = new PropertyDefinition(
-			"field1", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName1, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition2 = new PropertyDefinition(
-			"field2", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName2, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition3 = new PropertyDefinition(
-			"field3", PropertyDefinition.PropertyType.TEXT, false);
+			propertyName3, PropertyDefinition.PropertyType.TEXT, false);
 		PropertyDefinition propertyDefinition4 = new PropertyDefinition(
-			"field4", PropertyDefinition.PropertyType.TEXT, true);
+			propertyName4, PropertyDefinition.PropertyType.TEXT, true);
 
 		Mockito.when(
 			extensionProviderMock1.getExtendedPropertyDefinitions(
@@ -516,15 +557,15 @@ public class EntityExtensionHandlerTest {
 		entityExtensionHandler.validate(
 			_COMPANY_ID,
 			HashMapBuilder.<String, Serializable>put(
-				"field1", "value1"
+				propertyName1, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"field2", "value2"
+				propertyName2, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"field3", "value3"
+				propertyName3, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"field4", "value4"
+				propertyName4, RandomTestUtil.randomString()
 			).<String, Serializable>put(
-				"unknownField", "value5"
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			).build(),
 			false);
 

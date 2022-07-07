@@ -33,4 +33,31 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ObjectFilterLocalServiceImpl
 	extends ObjectFilterLocalServiceBaseImpl {
+
+	@Override
+	public ObjectFilter addObjectFilter(
+			long userId, long objectFieldId, String filterBy, String filterType,
+			String json)
+		throws PortalException {
+
+		ObjectFilter objectFilter = objectFilterPersistence.create(
+			counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		objectFilter.setCompanyId(user.getCompanyId());
+		objectFilter.setUserId(user.getUserId());
+		objectFilter.setUserName(user.getFullName());
+
+		objectFilter.setObjectFieldId(objectFieldId);
+		objectFilter.setFilterBy(filterBy);
+		objectFilter.setFilterType(filterType);
+		objectFilter.setJson(json);
+
+		return objectFilterPersistence.update(objectFilter);
+	}
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 }

@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FDS_DATASET</td>
+	<td>//a[contains(@class,'nav-link') and contains(text(),'${key_sampleTab}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_ACTION_BUTTON</td>
 	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']//..//*[*[name()='svg'][contains(@class,'lexicon-icon-view')]]</td>
 	<td></td>
@@ -58,6 +63,11 @@
 <tr>
 	<td>TABLE_ITEM_ROW</td>
 	<td>//*[normalize-space(text())='${key_itemName}']/parent::*[contains(@class,'dnd-tr')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_STATUS</td>
+	<td>//strong[contains(@class,'label-success') and text()='${key_statusName}']</td>
 	<td></td>
 </tr>
 <tr>

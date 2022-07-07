@@ -294,22 +294,27 @@ definition {
 	@description = "LPS-155304. Assert filter is preloaded when entering on a FDS page for first time."
 	@priority = "5"
 	test WillRenderAsInitialState {
-		task ("Then a filter is preloaded") {
-			VerifyElementPresent(
-				key_filter = "Status: Approved, Draft",
-				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
+		task ("And When viewing FDS Sample portlet dataset") {
+			Click(
+				key_sampleTab = "Customized",
+				locator1 = "FrontendDataSet#FDS_DATASET");
 		}
 
-		task ("And the results will be displayed accordingly to the filter selected") {
+		task ("Then the results will be displayed accordingly to the filter selected") {
 			AssertElementPresent(
-				key_itemName = "43466",
-				locator1 = "FrontendDataSet#TABLE_ITEM_ROW");
+				key_statusName = "Approved",
+				locator1 = "FrontendDataSet#TABLE_STATUS");
+
+			AssertElementNotPresent(
+				key_statusName = "Pending",
+				locator1 = "FrontendDataSet#TABLE_STATUS");
 		}
 
-		task ("And the Filters Summary boxes will be displayed  accordingly to it") {
+		task ("And Then the Filters Summary boxes will be displayed  accordingly to it") {
 			AssertElementPresent(
 				key_filter = "Status: Approved, Draft",
 				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
 		}
 	}
+
 }

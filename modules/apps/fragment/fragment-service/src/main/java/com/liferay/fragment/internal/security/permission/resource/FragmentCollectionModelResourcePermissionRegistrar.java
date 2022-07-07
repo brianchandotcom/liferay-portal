@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  */
 @Component(immediate = true, service = {})
-public class FragmentCollectionDLFileEntryModelResourcePermissionRegistrar {
+public class FragmentCollectionModelResourcePermissionRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = {})
-public class StyleBookPortletModelResourcePermissionRegistrar {
+public class StyleBookPortletResourcePermissionRegistrar {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {

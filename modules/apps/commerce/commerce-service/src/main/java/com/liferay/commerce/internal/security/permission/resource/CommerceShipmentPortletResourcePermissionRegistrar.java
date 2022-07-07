@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Andrea Di Giorgi
  */
 @Component(
-	enabled = false, immediate = true,
+	enabled = false,
 	service = CommerceShipmentPortletResourcePermissionRegistrar.class
 )
 public class CommerceShipmentPortletResourcePermissionRegistrar {

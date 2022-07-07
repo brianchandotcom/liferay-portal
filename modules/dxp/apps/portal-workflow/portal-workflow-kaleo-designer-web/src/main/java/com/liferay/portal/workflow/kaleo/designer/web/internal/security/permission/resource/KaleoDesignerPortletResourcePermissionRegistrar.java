@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Inácio Nery
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class KaleoDesignerPortletResourcePermissionRegistrar {
 
 	@Activate

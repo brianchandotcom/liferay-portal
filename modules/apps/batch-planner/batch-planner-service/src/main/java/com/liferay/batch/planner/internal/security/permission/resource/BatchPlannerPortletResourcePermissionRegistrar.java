@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Igor Beslic
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class BatchPlannerPortletResourcePermissionRegistrar {
 
 	@Activate

@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Gabriel Albuquerque
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class ObjectPortletResourcePermissionRegistrar {
 
 	@Activate

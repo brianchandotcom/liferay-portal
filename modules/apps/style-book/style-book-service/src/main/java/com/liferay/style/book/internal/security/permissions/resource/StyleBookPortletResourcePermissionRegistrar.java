@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = {})
+@Component(service = {})
 public class StyleBookPortletResourcePermissionRegistrar {
 
 	@Activate

@@ -3342,6 +3342,15 @@ definition {
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "${dmDocumentFileName}");
 		}
+
+		if (isSet(friendlyURL)) {
+			Panel.expandPanel(panel = "Friendly URL");
+
+			AssertTextEquals.assertValue(
+				key_fieldLabel = "Friendly URL",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${friendlyURL}");
+		}
 	}
 
 	macro viewFieldLabels {

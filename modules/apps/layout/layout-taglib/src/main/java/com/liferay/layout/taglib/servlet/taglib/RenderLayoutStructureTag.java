@@ -719,6 +719,51 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write(
 			LayoutStructureItemCSSUtil.getStyledLayoutStructureItemCssClasses(
 				formStyledLayoutStructureItem));
+
+		if (Objects.equals(
+				formStyledLayoutStructureItem.getWidthType(), "fixed")) {
+
+			jspWriter.write(" container-fluid container-fluid-max-xl");
+		}
+
+		if (!Objects.equals(
+				formStyledLayoutStructureItem.getDisplay(), "none")) {
+
+			if (Objects.equals(
+					formStyledLayoutStructureItem.getContentDisplay(),
+					"flex-column")) {
+
+				jspWriter.write(" d-flex flex-column");
+			}
+			else if (Objects.equals(
+						formStyledLayoutStructureItem.getContentDisplay(),
+						"flex-row")) {
+
+				jspWriter.write(" d-flex flex-row");
+			}
+
+			String align = formStyledLayoutStructureItem.getAlign();
+
+			if (Validator.isNotNull(align)) {
+				jspWriter.append(StringPool.SPACE);
+				jspWriter.append(align);
+			}
+
+			String flexWrap = formStyledLayoutStructureItem.getFlexWrap();
+
+			if (Validator.isNotNull(flexWrap)) {
+				jspWriter.append(StringPool.SPACE);
+				jspWriter.append(flexWrap);
+			}
+
+			String justify = formStyledLayoutStructureItem.getJustify();
+
+			if (Validator.isNotNull(justify)) {
+				jspWriter.append(StringPool.SPACE);
+				jspWriter.append(justify);
+			}
+		}
+
 		jspWriter.write(
 			"\" enctype=\"multipart/form-data\" method=\"POST\" style=\"");
 		jspWriter.write(

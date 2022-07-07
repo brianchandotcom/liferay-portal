@@ -16,9 +16,6 @@ package com.liferay.knowledge.base.web.internal.portlet;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
-import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
-import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
-import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
@@ -53,10 +50,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.upload.LiferayFileItemException;
-import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -67,17 +60,14 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.upload.UploadResponseHandler;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -90,41 +80,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 public abstract class BaseKBPortlet extends MVCPortlet {
-
-	public void addTempAttachment(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		UploadPortletRequest uploadPortletRequest =
-			portal.getUploadPortletRequest(actionRequest);
-
-		checkExceededSizeLimit(actionRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long resourcePrimKey = ParamUtil.getLong(
-			actionRequest, "resourcePrimKey");
-		String sourceFileName = uploadPortletRequest.getFileName("file");
-
-		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				"file")) {
-
-			String mimeType = uploadPortletRequest.getContentType("file");
-
-			kbArticleService.addTempAttachment(
-				themeDisplay.getScopeGroupId(), resourcePrimKey, sourceFileName,
-				KBWebKeys.TEMP_FOLDER_NAME, inputStream, mimeType);
-		}
-		catch (AntivirusScannerException | DuplicateFileEntryException |
-			   FileExtensionException | FileNameException | FileSizeException |
-			   UploadRequestSizeException exception) {
-
-			writeJSON(
-				actionRequest, actionResponse,
-				uploadResponseHandler.onFailure(actionRequest, exception));
-		}
-	}
 
 	public void deleteKBArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -545,32 +500,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		return editURL;
 	}
 
-	protected void checkExceededSizeLimit(PortletRequest portletRequest)
-		throws PortalException {
-
-		UploadException uploadException =
-			(UploadException)portletRequest.getAttribute(
-				WebKeys.UPLOAD_EXCEPTION);
-
-		if (uploadException != null) {
-			Throwable throwable = uploadException.getCause();
-
-			if (uploadException.isExceededFileSizeLimit()) {
-				throw new FileSizeException(throwable);
-			}
-
-			if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-				throw new LiferayFileItemException(throwable);
-			}
-
-			if (uploadException.isExceededUploadRequestSizeLimit()) {
-				throw new UploadRequestSizeException(throwable);
-			}
-
-			throw new PortalException(throwable);
-		}
-	}
-
 	protected void deleteKBArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			long resourcePrimKey)
@@ -625,9 +554,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 	@Reference
 	protected Portal portal;
-
-	@Reference
-	protected UploadResponseHandler uploadResponseHandler;
 
 	private void _compareVersions(RenderRequest renderRequest)
 		throws PortletException {

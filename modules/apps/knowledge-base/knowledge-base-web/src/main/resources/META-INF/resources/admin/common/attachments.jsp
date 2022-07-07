@@ -105,7 +105,7 @@ if (kbArticle != null) {
 			},
 		},
 		uploadFile:
-			'<liferay-portlet:actionURL name="addTempAttachment"><portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" /></liferay-portlet:actionURL>',
+			'<liferay-portlet:actionURL name="/knowledge_base/add_temp_attachment"><portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" /></liferay-portlet:actionURL>',
 	});
 </aui:script>
 

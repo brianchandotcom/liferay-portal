@@ -72,6 +72,7 @@ public class ShipmentDTOConverter
 					commerceShipment.getCommerceShippingMethodId();
 				shippingOptionName = commerceShipment.getShippingOptionName();
 				trackingNumber = commerceShipment.getTrackingNumber();
+				trackingURL = commerceShipment.getTrackingURL();
 				userName = commerceShipment.getUserName();
 			}
 		};

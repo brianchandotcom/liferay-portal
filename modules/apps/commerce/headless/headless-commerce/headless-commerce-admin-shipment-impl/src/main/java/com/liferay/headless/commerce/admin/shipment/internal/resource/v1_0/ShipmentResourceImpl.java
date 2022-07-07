@@ -454,8 +454,9 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 			GetterUtil.get(
 				shipment.getTrackingNumber(),
 				commerceShipment.getTrackingNumber()),
-			commerceShipment.getTrackingURL(), commerceShipment.getStatus(),
-			serviceContext);
+			GetterUtil.get(
+				shipment.getTrackingURL(), commerceShipment.getTrackingURL()),
+			commerceShipment.getStatus(), serviceContext);
 	}
 
 	private CommerceShipment _updateNestedResources(

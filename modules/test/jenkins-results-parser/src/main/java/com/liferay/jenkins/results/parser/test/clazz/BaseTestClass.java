@@ -69,6 +69,7 @@ public abstract class BaseTestClass implements TestClass {
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
+		jsonObject.put("average_duration", getAverageDuration());
 		jsonObject.put("file", getTestClassFile());
 		jsonObject.put("ignored", isIgnored());
 

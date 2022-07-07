@@ -76,6 +76,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 
 		jsonObject.put("pql_query", sb.toString());
 
+		jsonObject.put("target_duration", getTargetAxisDuration());
 		jsonObject.put(
 			"test_batch_run_property_queries", _testBatchRunPropertyQueries);
 
@@ -146,6 +147,17 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		setAxisTestClassGroups();
 
 		setSegmentTestClassGroups();
+	}
+
+	@Override
+	protected int getAxisMaxSize() {
+		long targetAxisDuration = getTargetAxisDuration();
+
+		if (targetAxisDuration > 0) {
+			return AXES_SIZE_MAX_DEFAULT;
+		}
+
+		return super.getAxisMaxSize();
 	}
 
 	protected String getDefaultTestBatchRunPropertyQuery(
@@ -227,17 +239,6 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 				throw new RuntimeException(exception);
 			}
 		}
-	}
-
-	@Override
-	protected int getAxisMaxSize() {
-		long targetAxisDuration = getTargetAxisDuration();
-
-		if (targetAxisDuration > 0) {
-			return AXES_SIZE_MAX_DEFAULT;
-		}
-
-		return super.getAxisMaxSize();
 	}
 
 	@Override

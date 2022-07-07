@@ -218,6 +218,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		jsonObject.put("segments", segmentJSONArray);
 
+		jsonObject.put("average_duration", getAverageDuration());
+		jsonObject.put(
+			"average_overhead_duration", getAverageOverheadDuration());
 		jsonObject.put("batch_name", getBatchName());
 		jsonObject.put("include_stable_test_suite", includeStableTestSuite);
 		jsonObject.put("job_properties", _getJobPropertiesMap());
@@ -740,6 +743,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 	}
 
+	protected static final int AXES_SIZE_MAX_DEFAULT = 5000;
+
 	protected static final String NAME_STABLE_TEST_SUITE = "stable";
 
 	protected static final String SLAVE_LABEL_DEFAULT = "!master";
@@ -1058,8 +1063,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		testRelevantIntegrationUnitOnly = false;
 	}
-
-	protected static final int AXES_SIZE_MAX_DEFAULT = 5000;
 
 	private static final int _SEGMENT_MAX_CHILDREN_DEFAULT = 25;
 

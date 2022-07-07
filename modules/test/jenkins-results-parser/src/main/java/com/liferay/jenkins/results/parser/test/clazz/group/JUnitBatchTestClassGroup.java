@@ -148,6 +148,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		jsonObject.put(
 			"include_unstaged_test_class_files",
 			_includeUnstagedTestClassFiles);
+		jsonObject.put("target_duration", getTargetAxisDuration());
 
 		return jsonObject;
 	}

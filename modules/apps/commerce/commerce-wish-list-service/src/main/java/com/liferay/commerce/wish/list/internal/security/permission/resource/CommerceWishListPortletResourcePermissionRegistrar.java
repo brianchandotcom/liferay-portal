@@ -32,10 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrea Di Giorgi
  */
-@Component(
-	enabled = false,
-	service = CommerceWishListPortletResourcePermissionRegistrar.class
-)
+@Component(enabled = false, service = {})
 public class CommerceWishListPortletResourcePermissionRegistrar {
 
 	@Activate

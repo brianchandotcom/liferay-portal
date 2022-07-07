@@ -866,7 +866,7 @@ definition {
 
 			// We need this pause for waiting for the Discount to expire
 
-			Pause(locator1 = "5000");
+			Pause(locator1 = "7000");
 
 			Refresh();
 		}

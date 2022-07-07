@@ -20,8 +20,6 @@ definition {
 	}
 
 	macro addRepeatableField {
-		Pause(locator1 = "2000");
-
 		Click.javaScriptClick(
 			key_fieldName = "${fieldName}",
 			key_repeatableFieldNumber = "${repeatableFieldNumber}",
@@ -88,8 +86,6 @@ definition {
 	}
 
 	macro changeFieldType {
-		Pause(locator1 = "2000");
-
 		while (IsElementNotPresent(locator1 = "FormFields#CHANGE_FIELD_TYPE_BUTTON_DROPDOWN")) {
 			Click(locator1 = "FormFields#CHANGE_FIELD_TYPE_BUTTON");
 		}
@@ -476,8 +472,6 @@ definition {
 	}
 
 	macro editRepeatingText {
-		Pause(locator1 = "2000");
-
 		var key_fieldName = "${fieldName}";
 
 		Type(
@@ -519,20 +513,9 @@ definition {
 	}
 
 	macro editText {
-		Pause(locator1 = "1000");
-
 		Type(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#TEXT_FIELD",
-			value1 = "${fieldValue}");
-	}
-
-	macro editTextAlt {
-		Pause(locator1 = "1000");
-
-		Type(
-			key_fieldName = "${fieldName}",
-			locator1 = "FormFields#TEXT_FIELD_ALT",
 			value1 = "${fieldValue}");
 	}
 
@@ -554,8 +537,6 @@ definition {
 	}
 
 	macro editTextDescription {
-		Pause(locator1 = "1000");
-
 		Type(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#TEXT_FIELD_DESCRIPTION",
@@ -563,8 +544,6 @@ definition {
 	}
 
 	macro editTextFieldWithEnterKey {
-		Pause(locator1 = "1000");
-
 		KeyPress(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#TEXT_FIELD",
@@ -572,26 +551,13 @@ definition {
 	}
 
 	macro editTextMultiline {
-		Pause(locator1 = "1000");
-
 		Type(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#TEXT_MULTILINE_FIELD",
 			value1 = "${fieldValue}");
 	}
 
-	macro editTextMultilineOnPages {
-		Pause(locator1 = "1000");
-
-		Type(
-			key_fieldName = "${fieldName}",
-			locator1 = "FormFields#TEXT_MULTILINE_FIELD_2",
-			value1 = "${fieldValue}");
-	}
-
 	macro editTextWithBackspace {
-		Pause(locator1 = "1000");
-
 		var key_fieldName = "${fieldName}";
 
 		DoubleClick(locator1 = "FormFields#TEXT_FIELD");
@@ -602,8 +568,6 @@ definition {
 	}
 
 	macro editTextWithDataProvider {
-		Pause(locator1 = "1000");
-
 		Type.sendKeys(
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#TEXT_FIELD",
@@ -611,8 +575,6 @@ definition {
 	}
 
 	macro editValidation {
-		Pause(locator1 = "1000");
-
 		Click(locator1 = "FormFields#VALIDATION_ARGUMENT_2");
 
 		Click(
@@ -678,8 +640,6 @@ definition {
 	}
 
 	macro getFieldName {
-		Pause(locator1 = "3000");
-
 		var fieldName = selenium.getElementValue("FormFields#FIELD_NAME_EDIT");
 
 		return "${fieldName}";
@@ -945,8 +905,6 @@ definition {
 	}
 
 	macro selectSelectOption {
-		Pause(locator1 = "1000");
-
 		var key_fieldName = "${fieldName}";
 		var key_selectOption = "${selectOption}";
 
@@ -1888,21 +1846,6 @@ definition {
 			locator1 = "FormFields#SELECT_SINGLE_SELECTION_ROW");
 	}
 
-	macro viewRepeatableTextFieldLabel {
-		Pause(locator1 = "2000");
-
-		var key_fieldLabel = "${fieldLabel}";
-		var key_fieldName = "${fieldName}";
-
-		AssertTextEquals.assertText(
-			locator1 = "FormFields#LABEL",
-			value1 = "${fieldLabel}");
-
-		AssertTextEquals.assertText(
-			locator1 = "FormFields#TEXT_LABEL_2",
-			value1 = "${fieldLabel}");
-	}
-
 	macro viewRepeatableTextMultilineField {
 		FormFields.viewRepeatableTextMultilineLabel(
 			fieldLabel = "${fieldLabel}",
@@ -2030,8 +1973,6 @@ definition {
 	}
 
 	macro viewSelectOptionsList {
-		Pause(locator1 = "2000");
-
 		var key_fieldName = "${fieldName}";
 
 		Click(locator1 = "FormFields#SELECT_FIELD");

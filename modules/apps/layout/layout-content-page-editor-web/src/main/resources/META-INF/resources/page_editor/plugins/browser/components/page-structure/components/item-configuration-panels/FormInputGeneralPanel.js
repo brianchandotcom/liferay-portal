@@ -159,6 +159,19 @@ export function FormInputGeneralPanel({item}) {
 
 	const {fragmentEntryKey} = fragmentEntryLinkRef.current;
 
+	const fragmentName = useSelectorCallback(
+		(state) => {
+			const fragment = state.fragments
+				.flatMap((collection) => collection.fragmentEntries)
+				.find(
+					(fragment) => fragment.fragmentEntryKey === fragmentEntryKey
+				);
+
+			return fragment ? fragment.name : Liferay.Language.get('fragment');
+		},
+		[fragmentEntryKey]
+	);
+
 	const allowedInputTypes = useCache({
 		fetcher: () =>
 			FormService.getFragmentEntryInputFieldTypes({fragmentEntryKey}),
@@ -309,7 +322,10 @@ export function FormInputGeneralPanel({item}) {
 		<>
 			<div className="mb-3">
 				<Collapse
-					label={Liferay.Language.get('form-input-options')}
+					label={Liferay.Util.sub(
+						Liferay.Language.get('x-options'),
+						fragmentName
+					)}
 					open
 				>
 					{filteredFormFields.flatMap((fieldSet) => fieldSet.fields)
@@ -336,8 +352,9 @@ export function FormInputGeneralPanel({item}) {
 					{configurationValues[FIELD_ID_CONFIGURATION_KEY] && (
 						<>
 							<span className="sr-only">
-								{Liferay.Language.get(
-									'input-fragment-configuration'
+								{Liferay.Util.sub(
+									Liferay.Language.get('x-configuration'),
+									fragmentName
 								)}
 							</span>
 

@@ -109,6 +109,26 @@ definition {
 		}
 	}
 
+	@description = "Unable to get structured content by nonexistent erc"
+	@priority = "4"
+	test CanReturnErrorWithGetStructuredContentInAssetLibraryByNonexistentErc {
+		property portal.acceptance = "true";
+
+		task ("When I make a GET request by assetLibraryID and nonexistent erc") {
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = HeadlessWebcontentAPI.getStructuredContentsByErcInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				externalReferenceCode = "nonexistent-erc");
+		}
+
+		task ("Then I receive error message in response") {
+			TestUtils.assertPartialEquals(
+				actual = "${response}",
+				expected = "No JournalArticle exists with the key");
+		}
+	}
+
 	@description = "Structured content is created in an asset library with custom erc"
 	@priority = "5"
 	test StructuredContentIsCreatedInAssetLibraryWithCustomErc {

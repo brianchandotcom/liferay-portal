@@ -94,6 +94,31 @@ const ALIGNMENTS_GUESS_MAP = {
 	trbr: 'top',
 };
 
+/**
+ * Checks if a determining element is inside the viewport
+ * @param {Node} element Element to be checked
+ * @param {ClientRect} maybeRect boundingClientRect
+ * of the element for avoiding calling getBoundingClientRect again.
+ * This operation is very costly for browsers.
+ * @returns {boolean}
+ */
+function isVisibleInViewport(element, maybeRect) {
+	let boundingRect = maybeRect;
+
+	if (!boundingRect) {
+		boundingRect = element.getBoundingClientRect();
+	}
+
+	return (
+		boundingRect.top >= 0 &&
+		boundingRect.left >= 0 &&
+		boundingRect.bottom <=
+			(window.innerHeight || document.documentElement.clientHeight) &&
+		boundingRect.right <=
+			(window.innerWidth || document.documentElement.clientWidth)
+	);
+}
+
 const Step = ({
 	closeOnClickOutside,
 	closeable,
@@ -203,52 +228,63 @@ const Step = ({
 		setCurrentAlignment(defaultPositioning);
 	}, [defaultPositioning]);
 
-	const align = useCallback(() => {
-		if (popoverVisible && popoverRef.current && memoizedTrigger) {
-			const points = ALIGNMENTS_MAP[currentAlignment];
+	const align = useCallback(
+		(boundingRect) => {
+			if (popoverVisible && popoverRef.current && memoizedTrigger) {
+				const points = ALIGNMENTS_MAP[currentAlignment];
 
-			const alignment = doAlign({
-				offset: [OVERLAY_OFFSET_X, OVERLAY_OFFSET_Y],
-				overflow: {
-					adjustX: true,
-					adjustY: true,
-				},
-				points,
-				sourceElement: popoverRef.current,
-				targetElement: memoizedTrigger,
-			});
+				const alignment = doAlign({
+					offset: [OVERLAY_OFFSET_X, OVERLAY_OFFSET_Y],
+					overflow: {
+						adjustX: true,
+						adjustY: true,
+					},
+					points,
+					sourceElement: popoverRef.current,
+					targetElement: memoizedTrigger,
+				});
 
-			const alignmentString = alignment.points.join('');
+				const alignmentString = alignment.points.join('');
 
-			const pointsString = points.join('');
+				const pointsString = points.join('');
 
-			if (alignment.overflow.adjustX) {
-				setCurrentAlignment(ALIGNMENTS_GUESS_MAP[alignmentString]);
+				if (alignment.overflow.adjustX) {
+					setCurrentAlignment(ALIGNMENTS_GUESS_MAP[alignmentString]);
+				}
+				else if (pointsString !== alignmentString) {
+					setCurrentAlignment(
+						ALIGNMENTS_INVERSE_MAP[alignmentString]
+					);
+				}
+
+				if (
+					!darkbg &&
+					previousTrigger &&
+					previousTrigger !== memoizedTrigger
+				) {
+					memoizedTrigger.classList.add(
+						'lfr-walkthrough-element-shadow'
+					);
+
+					previousTrigger.classList.remove(
+						'lfr-walkthrough-element-shadow'
+					);
+				}
+
+				if (!isVisibleInViewport(popoverRef?.current, boundingRect)) {
+					popoverRef?.current?.scrollIntoView();
+				}
 			}
-			else if (pointsString !== alignmentString) {
-				setCurrentAlignment(ALIGNMENTS_INVERSE_MAP[alignmentString]);
-			}
-
-			if (
-				!darkbg &&
-				previousTrigger &&
-				previousTrigger !== memoizedTrigger
-			) {
-				memoizedTrigger.classList.add('lfr-walkthrough-element-shadow');
-
-				previousTrigger.classList.remove(
-					'lfr-walkthrough-element-shadow'
-				);
-			}
-		}
-	}, [
-		currentAlignment,
-		darkbg,
-		popoverRef,
-		popoverVisible,
-		previousTrigger,
-		memoizedTrigger,
-	]);
+		},
+		[
+			currentAlignment,
+			darkbg,
+			popoverRef,
+			popoverVisible,
+			previousTrigger,
+			memoizedTrigger,
+		]
+	);
 
 	useEffect(() => {
 		align();

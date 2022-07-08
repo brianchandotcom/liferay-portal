@@ -22,25 +22,18 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.test.util.LayoutTestUtil;
-import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -51,7 +44,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -60,8 +52,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-
-import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 
@@ -211,86 +201,6 @@ public class ResponsiveLayoutStructureUtilTest {
 		}
 	}
 
-	@Test
-	public void testResponsiveLayoutStructureCommonStylesClassesExist()
-		throws Exception {
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					_layout.getGroupId(), _layout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
-
-		StyledLayoutStructureItem rowStyledLayoutStructureItem =
-			(StyledLayoutStructureItem)
-				layoutStructure.addRowStyledLayoutStructureItem(
-					layoutStructure.getMainItemId(), 0, 1);
-
-		for (ViewportSize viewportSize : ViewportSize.values()) {
-			if (viewportSize.equals(ViewportSize.DESKTOP)) {
-				continue;
-			}
-
-			JSONObject viewportStylesJSONObject = JSONUtil.put(
-				viewportSize.getViewportSizeId(),
-				JSONUtil.put("styles", _getResponsiveStylesJSONObject()));
-
-			rowStyledLayoutStructureItem.updateItemConfig(
-				viewportStylesJSONObject);
-		}
-
-		List<String> commonStyleNames =
-			CommonStylesUtil.getAvailableStyleNames();
-
-		for (String styleName : commonStyleNames) {
-			if (!CommonStylesUtil.isResponsive(styleName)) {
-				continue;
-			}
-
-			String actualCssClass =
-				ResponsiveLayoutStructureUtil.getResponsiveCssClassValues(
-					rowStyledLayoutStructureItem);
-
-			for (ViewportSize viewportSize : ViewportSize.values()) {
-				if (viewportSize.equals(ViewportSize.DESKTOP)) {
-					continue;
-				}
-
-				String expectedCssClass = StringUtil.replace(
-					CommonStylesUtil.getResponsiveTemplate(styleName),
-					StringPool.OPEN_CURLY_BRACE, StringPool.CLOSE_CURLY_BRACE,
-					HashMapBuilder.put(
-						"value", "2"
-					).put(
-						"viewport", viewportSize.getCssClassPrefix()
-					).build());
-
-				Assert.assertThat(
-					actualCssClass,
-					CoreMatchers.containsString(expectedCssClass));
-			}
-		}
-	}
-
-	private JSONObject _getResponsiveStylesJSONObject() throws Exception {
-		List<String> commonStyleNames =
-			CommonStylesUtil.getAvailableStyleNames();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		for (String styleName : commonStyleNames) {
-			if (!CommonStylesUtil.isResponsive(styleName)) {
-				continue;
-			}
-
-			jsonObject.put(styleName, "2");
-		}
-
-		return jsonObject;
-	}
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -307,9 +217,6 @@ public class ResponsiveLayoutStructureUtilTest {
 	private Group _group;
 
 	private Layout _layout;
-
-	@Inject
-	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService

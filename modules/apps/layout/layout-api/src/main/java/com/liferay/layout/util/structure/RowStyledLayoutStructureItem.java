@@ -19,7 +19,6 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -135,17 +134,6 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 
 	public int getNumberOfColumns() {
 		return _numberOfColumns;
-	}
-
-	@Override
-	public String getOverflow() {
-		String overflow = stylesJSONObject.getString("overflow");
-
-		if (Validator.isNull(overflow)) {
-			return "hidden";
-		}
-
-		return overflow;
 	}
 
 	public String getVerticalAlignment() {

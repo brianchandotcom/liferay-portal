@@ -72,7 +72,7 @@ public class VerifyUser extends VerifyProcess {
 			runSQL(sb.toString());
 
 			EntityCacheUtil.clearCache(GroupImpl.class);
-			FinderCacheUtil.clearCache(GroupImpl.class.getName());
+			FinderCacheUtil.clearCache(GroupImpl.class);
 		}
 	}
 

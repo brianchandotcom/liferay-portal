@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -352,7 +352,7 @@ public class VerifyGroup extends VerifyProcess {
 
 	protected void verifyTree() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_companyLocalService.forEachCompanyId(
+			CompanyLocalServiceUtil.forEachCompanyId(
 				companyId -> GroupLocalServiceUtil.rebuildTree(companyId),
 				PortalInstances.getCompanyIdsBySQL());
 		}
@@ -365,7 +365,5 @@ public class VerifyGroup extends VerifyProcess {
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(VerifyGroup.class);
-
-	private CompanyLocalService _companyLocalService;
 
 }

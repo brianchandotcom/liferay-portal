@@ -135,9 +135,8 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 	@Reference
 	private Staging _staging;
 
-	@Reference
-	private VerifyAuditedModel _verifyAuditedModel;
-
+	private final VerifyAuditedModel _verifyAuditedModel =
+		new VerifyAuditedModel();
 	private final VerifyGroupedModel _verifyGroupedModel =
 		new VerifyGroupedModel();
 

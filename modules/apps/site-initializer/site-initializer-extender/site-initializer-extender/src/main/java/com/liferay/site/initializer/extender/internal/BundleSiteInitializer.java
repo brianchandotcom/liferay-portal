@@ -561,7 +561,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject assetListJSONObject = assetListJSONArray.getJSONObject(
 				i);
 
-			_addAssetListEntry(
+			_addOrUpdateAssetListEntryMap(
 				assetListJSONObject, ddmStructureLocalService, serviceContext);
 		}
 
@@ -579,77 +579,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return assetListEntryIdsStringUtilReplaceValues;
-	}
-
-	private void _addAssetListEntry(
-			JSONObject assetListJSONObject,
-			DDMStructureLocalService ddmStructureLocalService,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		JSONObject unicodePropertiesJSONObject =
-			assetListJSONObject.getJSONObject("unicodeProperties");
-
-		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
-			serviceContext.getScopeGroupId(),
-			_portal.getClassNameId(
-				unicodePropertiesJSONObject.getString("classNameIds")),
-			assetListJSONObject.getString("ddmStructureKey"));
-
-		Map<String, String> map = HashMapBuilder.put(
-			"anyAssetType",
-			String.valueOf(
-				_portal.getClassNameId(
-					unicodePropertiesJSONObject.getString("classNameIds")))
-		).put(
-			unicodePropertiesJSONObject.getString("anyClassType"),
-			String.valueOf(ddmStructure.getStructureId())
-		).put(
-			"classNameIds",
-			unicodePropertiesJSONObject.getString("classNameIds")
-		).put(
-			unicodePropertiesJSONObject.getString("classTypeIds"),
-			String.valueOf(ddmStructure.getStructureId())
-		).put(
-			"groupIds", String.valueOf(serviceContext.getScopeGroupId())
-		).build();
-
-		Object[] orderByObjects = JSONUtil.toObjectArray(
-			unicodePropertiesJSONObject.getJSONArray("orderBy"));
-
-		for (Object orderByObject : orderByObjects) {
-			JSONObject orderByJSONObject = (JSONObject)orderByObject;
-
-			map.put(
-				orderByJSONObject.getString("key"),
-				orderByJSONObject.getString("value"));
-		}
-
-		String[] assetTagNames = JSONUtil.toStringArray(
-			assetListJSONObject.getJSONArray("assetTagNames"));
-
-		for (int i = 0; i < assetTagNames.length; i++) {
-			map.put("queryValues" + i, assetTagNames[i]);
-
-			Object[] queryObjects = JSONUtil.toObjectArray(
-				unicodePropertiesJSONObject.getJSONArray("query"));
-
-			for (Object queryObject : queryObjects) {
-				JSONObject queryJSONObject = (JSONObject)queryObject;
-
-				map.put(
-					queryJSONObject.getString("key"),
-					queryJSONObject.getString("value"));
-			}
-		}
-
-		_assetListEntryLocalService.addDynamicAssetListEntry(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			assetListJSONObject.getString("title"),
-			UnicodePropertiesBuilder.create(
-				map, true
-			).buildString(),
-			serviceContext);
 	}
 
 	private Map<String, String> _addClientExtensionEntries(
@@ -2407,6 +2336,98 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addOrUpdateAssetListEntryMap(
+			JSONObject assetListJSONObject,
+			DDMStructureLocalService ddmStructureLocalService,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		JSONObject unicodePropertiesJSONObject =
+			assetListJSONObject.getJSONObject("unicodeProperties");
+
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			serviceContext.getScopeGroupId(),
+			_portal.getClassNameId(
+				unicodePropertiesJSONObject.getString("classNameIds")),
+			assetListJSONObject.getString("ddmStructureKey"));
+
+		Map<String, String> map = HashMapBuilder.put(
+			"anyAssetType",
+			String.valueOf(
+				_portal.getClassNameId(
+					unicodePropertiesJSONObject.getString("classNameIds")))
+		).put(
+			unicodePropertiesJSONObject.getString("anyClassType"),
+			String.valueOf(ddmStructure.getStructureId())
+		).put(
+			"classNameIds",
+			unicodePropertiesJSONObject.getString("classNameIds")
+		).put(
+			unicodePropertiesJSONObject.getString("classTypeIds"),
+			String.valueOf(ddmStructure.getStructureId())
+		).put(
+			"groupIds", String.valueOf(serviceContext.getScopeGroupId())
+		).build();
+
+		Object[] orderByObjects = JSONUtil.toObjectArray(
+			unicodePropertiesJSONObject.getJSONArray("orderBy"));
+
+		for (Object orderByObject : orderByObjects) {
+			JSONObject orderByJSONObject = (JSONObject)orderByObject;
+
+			map.put(
+				orderByJSONObject.getString("key"),
+				orderByJSONObject.getString("value"));
+		}
+
+		String[] assetTagNames = JSONUtil.toStringArray(
+			assetListJSONObject.getJSONArray("assetTagNames"));
+
+		for (int i = 0; i < assetTagNames.length; i++) {
+			map.put("queryValues" + i, assetTagNames[i]);
+
+			Object[] queryObjects = JSONUtil.toObjectArray(
+				unicodePropertiesJSONObject.getJSONArray("query"));
+
+			for (Object queryObject : queryObjects) {
+				JSONObject queryJSONObject = (JSONObject)queryObject;
+
+				map.put(
+					queryJSONObject.getString("key"),
+					queryJSONObject.getString("value"));
+			}
+		}
+
+		List<AssetListEntry> assetListEntries =
+			_assetListEntryLocalService.getAssetListEntries(
+				serviceContext.getScopeGroupId());
+
+		String assetListEntryKey = StringUtil.toLowerCase(
+			assetListJSONObject.getString(
+				"title"
+			).replaceAll(
+				"\\s+", "-"
+			));
+
+		AssetListEntry assetListEntry = _validateAssetListEntry(
+			assetListEntries, assetListEntryKey);
+
+		if (assetListEntry == null) {
+			_assetListEntryLocalService.addDynamicAssetListEntry(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				assetListJSONObject.getString("title"),
+				UnicodePropertiesBuilder.create(
+					map, true
+				).buildString(),
+				serviceContext);
+		}
+		else {
+			_assetListEntryLocalService.updateAssetListEntry(
+				assetListEntry.getAssetListEntryId(),
+				assetListJSONObject.getString("title"));
+		}
+	}
+
 	private void _addPermissions(
 			Map<String, String>
 				objectDefinitionIdsAndObjectEntryIdsStringUtilReplaceValues,
@@ -3686,6 +3707,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 			documentsStringUtilReplaceValues, false, serviceContext);
 		_updateLayoutSet(
 			documentsStringUtilReplaceValues, true, serviceContext);
+	}
+
+	private AssetListEntry _validateAssetListEntry(
+		List<AssetListEntry> assetListEntries, String assetListEntryKey1) {
+
+		for (AssetListEntry assetListEntry : assetListEntries) {
+			String assetListEntryKey2 = assetListEntry.getAssetListEntryKey();
+
+			if (assetListEntryKey1.equals(assetListEntryKey2)) {
+				return assetListEntry;
+			}
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

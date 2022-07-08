@@ -2488,8 +2488,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Delete Role created") {
@@ -2565,8 +2563,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Delete Role created") {
@@ -2642,8 +2638,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Delete Role created") {
@@ -2719,8 +2713,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Delete Role created") {
@@ -2789,8 +2781,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Delete Role created") {
@@ -2859,8 +2849,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Delete Role created") {
@@ -2997,8 +2985,6 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-widget-page-name");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
-
-			Pause(locator1 = "5000");
 		}
 
 		task ("Delete Role created") {

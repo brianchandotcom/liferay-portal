@@ -83,6 +83,10 @@ public class ProductMenuProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		Map<String, String> values = HashMapBuilder.put(
 			"cssClass",
 			() -> {
@@ -109,13 +113,11 @@ public class ProductMenuProductNavigationControlMenuEntry
 						RenderRequest.RENDER_PHASE)
 				).setMVCPath(
 					"/portlet/product_menu.jsp"
+				).setRedirect(
+					themeDisplay.getURLCurrent()
 				).setParameter(
 					"selPpid",
 					() -> {
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)httpServletRequest.getAttribute(
-								WebKeys.THEME_DISPLAY);
-
 						PortletDisplay portletDisplay =
 							themeDisplay.getPortletDisplay();
 

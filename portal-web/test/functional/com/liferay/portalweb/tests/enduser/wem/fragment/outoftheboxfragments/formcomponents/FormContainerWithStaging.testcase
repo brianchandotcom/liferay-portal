@@ -1,0 +1,200 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-150277=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a company Object with a Text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+		}
+
+		task ("Activate local live staging") {
+			JSONStaging.enableLocalStaging(
+				branchingPrivate = "false",
+				branchingPublic = "false",
+				groupName = "Test Site Name");
+		}
+
+		task ("Enable Inputs Fragment collection in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Disable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
+		}
+	}
+
+	@description = "This is a test for LPS-155529. The page designer can submit a Form Container on staging site."
+	@priority = "4"
+	test SubmitFormContainerOnContentPageInStagingSite {
+		property test.name.skip.portal.instance = "FormContainerWithStaging#SubmitFormContainerOnContentPageInStagingSite";
+
+		task ("Given a page designer has a Form Container on content page in staging site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+		}
+
+		task ("When the page designer maps the Form Container to new Object") {
+			PageEditor.editFormContainer(
+				contentType = "Purchase Order",
+				panel = "General");
+		}
+
+		task ("Then the page designer can see default fields on form options in staging site") {
+			AssertSelectedLabel(
+				key_fieldLabel = "Success Message",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Embedded");
+
+			AssertTextEquals(
+				key_text = "Success Text",
+				locator1 = "TextInput#ANY",
+				value1 = "Thank you. Your information was successfully received.");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Preview Success State",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			AssertVisible(
+				key_fragmentName = "Form Container",
+				key_messageInfo = "Place fragments here.",
+				key_position = "1",
+				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+		}
+
+		task ("When the page designer checks preview success state toggle") {
+			PageEditor.editFormContainer(
+				panel = "General",
+				previewSuccessState = "true");
+		}
+
+		task ("Then the page designer can see sucess text under Form Container") {
+			AssertTextEquals(
+				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
+				value1 = "Thank you. Your information was successfully received.");
+		}
+
+		task ("When the page designer publishes the content page with mapped Form Container") {
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Text Input");
+
+			PageEditor.editInput(
+				field = "Region",
+				fragmentName = "Text Input");
+
+			PageEditor.addFragmentToFormContainer(
+				collectionName = "Form Components",
+				fragmentName = "Submit Button",
+				targetFragmentName = "Text Input");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page designer can see Form Container in staging site at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.viewInputStyle(
+				label = "Region",
+				showLabel = "true",
+				type = "text-input");
+
+			Button.viewPresent(button = "Submit");
+		}
+
+		task ("When the page designer navigates to content page at view mode in live site") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer can see Form Container in live site") {
+			PageEditor.viewInputStyle(
+				label = "Region",
+				showLabel = "true",
+				type = "text-input");
+
+			Button.viewPresent(button = "Submit");
+		}
+
+		task ("When the page designer submits form container") {
+			Type(
+				key_text = "Region",
+				locator1 = "TextInput#ANY",
+				value1 = "Brazil");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the page designer can see embeeded success message") {
+			AssertTextEquals(
+				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
+				value1 = "Thank you. Your information was successfully received.");
+		}
+	}
+
+}

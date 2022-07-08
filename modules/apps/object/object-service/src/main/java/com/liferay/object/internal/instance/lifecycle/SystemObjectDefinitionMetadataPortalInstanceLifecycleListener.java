@@ -193,21 +193,6 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 			return;
 		}
 
-		if (Objects.equals(
-				systemObjectDefinitionMetadata.getName(),
-				"CommercePricingClass") &&
-			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-151766"))) {
-
-			return;
-		}
-
-		if (Objects.equals(
-				systemObjectDefinitionMetadata.getName(), "CPDefinition") &&
-			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152408"))) {
-
-			return;
-		}
-
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(

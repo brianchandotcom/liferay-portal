@@ -3661,8 +3661,6 @@ definition {
 				filterOption = "Tags",
 				tagName = "tagnumber2");
 
-			Pause(locator1 = "3000");
-
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "WC Title 1");

@@ -75,7 +75,7 @@ public class OpenIdConnectLoginRequestMVCRenderCommand
 		}
 
 		httpServletRequest.setAttribute(
-			OpenIdConnectWebKeys.OPEN_ID_CONNECT_CLIENTS,
+			OpenIdConnectWebKeys.OAUTH_CLIENT_ENTRIES,
 			_oAuthClientEntryLocalService.
 				getAuthServerWellKnownURISuffixOAuthClientEntries(
 					themeDisplay.getCompanyId(), "openid-configuration"));

@@ -94,6 +94,14 @@ public class ClientExtensionEntryRelLocalServiceImpl
 
 	@Override
 	public List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		long classNameId, long classPK, String type) {
+
+		return clientExtensionEntryRelPersistence.findByC_C_T(
+			classNameId, classPK, type);
+	}
+
+	@Override
+	public List<ClientExtensionEntryRel> getClientExtensionEntryRels(
 		long classNameId, long classPK, String type, int start, int end) {
 
 		return clientExtensionEntryRelPersistence.findByC_C_T(

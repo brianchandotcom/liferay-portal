@@ -35,11 +35,11 @@ const LOAD_TYPE_OPTIONS: Record<
 };
 
 const SCRIPT_LOCATION_LABELS: Record<IScriptLocationOptions, string> = {
-	'head': Liferay.Language.get('page-head'),
-	'page-bottom': Liferay.Language.get('page-bottom'),
+	bottom: Liferay.Language.get('page-bottom'),
+	head: Liferay.Language.get('page-head'),
 };
 
-const DEFAULT_SCRIPT_LOCATION_OPTION: IScriptLocationOptions = 'page-bottom';
+const DEFAULT_SCRIPT_LOCATION_OPTION: IScriptLocationOptions = 'bottom';
 
 export default function GlobalJSCETsConfiguration({
 	globalJSCETSelectorURL,
@@ -383,7 +383,7 @@ function ExtensionRow({
 }
 
 type ILoadTypeOptions = 'default' | 'async' | 'defer';
-type IScriptLocationOptions = 'head' | 'page-bottom';
+type IScriptLocationOptions = 'head' | 'bottom';
 
 interface IGlobalJSCET {
 	cetExternalReferenceCode: string;

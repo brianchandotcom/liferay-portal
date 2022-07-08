@@ -21,7 +21,7 @@ export default function GlobalJSCETsConfiguration({
 	selectGlobalJSCETsEventName,
 }: IProps): JSX.Element;
 declare type ILoadTypeOptions = 'default' | 'async' | 'defer';
-declare type IScriptLocationOptions = 'head' | 'page-bottom';
+declare type IScriptLocationOptions = 'head' | 'bottom';
 interface IGlobalJSCET {
 	cetExternalReferenceCode: string;
 	inherited: boolean;

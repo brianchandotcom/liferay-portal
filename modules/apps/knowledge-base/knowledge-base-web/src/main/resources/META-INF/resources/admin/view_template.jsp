@@ -16,7 +16,16 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
+<c:choose>
+	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+		<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
+
+		<div class="kbAdminContent">
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>
 
 <%
 KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
@@ -33,3 +42,7 @@ KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BAS
 
 	<liferay-util:include page="/admin/template_comments.jsp" servletContext="<%= application %>" />
 </div>
+
+<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+	</div>
+</c:if>

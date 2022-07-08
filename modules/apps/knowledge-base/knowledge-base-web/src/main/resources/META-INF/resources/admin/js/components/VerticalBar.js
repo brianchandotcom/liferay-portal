@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {VerticalBar} from '@clayui/core';
+import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 const VerticalNavigationBar = ({items}) => {
@@ -25,7 +26,7 @@ const VerticalNavigationBar = ({items}) => {
 						<ClayButtonWithIcon
 							displayType="unstyled"
 							onClick={() => {
-								console.log(`***click on ${item.title}`);
+								navigate(item.href);
 							}}
 							symbol={item.icon}
 						/>

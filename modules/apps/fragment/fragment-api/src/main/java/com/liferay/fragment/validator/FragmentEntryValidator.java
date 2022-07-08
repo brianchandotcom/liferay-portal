@@ -31,7 +31,7 @@ public interface FragmentEntryValidator {
 		throws FragmentEntryConfigurationException {
 	}
 
-	public void validateTypeOptions(String typeOptions)
+	public void validateTypeOptions(int fragmentEntryType, String typeOptions)
 		throws FragmentEntryTypeOptionsException;
 
 }

@@ -118,7 +118,7 @@ public class FragmentEntryLocalServiceImpl
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			_fragmentEntryValidator.validateConfiguration(configuration);
-			_fragmentEntryValidator.validateTypeOptions(typeOptions);
+			_fragmentEntryValidator.validateTypeOptions(type, typeOptions);
 			validateContent(html, configuration);
 		}
 
@@ -539,7 +539,7 @@ public class FragmentEntryLocalServiceImpl
 		_fragmentEntryValidator.validateConfiguration(
 			draftFragmentEntry.getConfiguration());
 		_fragmentEntryValidator.validateTypeOptions(
-			draftFragmentEntry.getTypeOptions());
+			draftFragmentEntry.getType(), draftFragmentEntry.getTypeOptions());
 		validateContent(
 			draftFragmentEntry.getHtml(),
 			draftFragmentEntry.getConfiguration());
@@ -638,7 +638,9 @@ public class FragmentEntryLocalServiceImpl
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
 			_fragmentEntryValidator.validateConfiguration(configuration);
-			_fragmentEntryValidator.validateTypeOptions(typeOptions);
+			_fragmentEntryValidator.validateTypeOptions(
+				fragmentEntry.getType(), typeOptions);
+
 			validateContent(html, configuration);
 		}
 

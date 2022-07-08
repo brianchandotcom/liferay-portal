@@ -334,7 +334,7 @@ public class FragmentCollectionContributorTrackerImpl
 			fragmentEntryValidator.validateConfiguration(
 				fragmentEntry.getConfiguration());
 			fragmentEntryValidator.validateTypeOptions(
-				fragmentEntry.getTypeOptions());
+				fragmentEntry.getType(), fragmentEntry.getTypeOptions());
 
 			fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
 				fragmentEntry.getHtml(), fragmentEntry.getConfiguration());

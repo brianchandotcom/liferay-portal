@@ -138,7 +138,7 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 		}
 	}
 
-	public void validateTypeOptions(String typeOptions)
+	public void validateTypeOptions(int fragmentEntryType, String typeOptions)
 		throws FragmentEntryTypeOptionsException {
 
 		if (Validator.isNull(typeOptions)) {

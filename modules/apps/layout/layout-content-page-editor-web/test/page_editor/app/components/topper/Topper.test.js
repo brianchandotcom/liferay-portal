@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
@@ -28,12 +28,11 @@ import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-IN
 const renderTopper = ({
 	hasUpdatePermissions = true,
 	lockedExperience = false,
+	rowConfig = {styles: {}},
 } = {}) => {
 	const row = {
 		children: [],
-		config: {
-			styles: {},
-		},
+		config: rowConfig,
 		itemId: 'row',
 		parentId: null,
 		type: LAYOUT_DATA_ITEM_TYPES.row,
@@ -66,8 +65,6 @@ const renderTopper = ({
 };
 
 describe('Topper', () => {
-	afterEach(cleanup);
-
 	it('does not render Topper if user has no permissions', () => {
 		const {baseElement} = renderTopper({hasUpdatePermissions: false});
 
@@ -75,10 +72,26 @@ describe('Topper', () => {
 	});
 
 	it('renders Topper if user has permissions', () => {
-		const {baseElement} = renderTopper({});
+		const {baseElement} = renderTopper();
 
 		expect(
 			baseElement.querySelector('.page-editor__topper')
 		).toBeInTheDocument();
+	});
+
+	it('renders name of the fragment', () => {
+		renderTopper();
+
+		expect(screen.queryByLabelText('grid')).toBeInTheDocument();
+	});
+
+	it('renders custom name of the fragment', () => {
+		Liferay.FeatureFlags['LPS-147895'] = true;
+
+		renderTopper({rowConfig: {name: 'customName'}});
+
+		expect(screen.queryByLabelText('customName')).toBeInTheDocument();
+
+		Liferay.FeatureFlags['LPS-147895'] = false;
 	});
 });

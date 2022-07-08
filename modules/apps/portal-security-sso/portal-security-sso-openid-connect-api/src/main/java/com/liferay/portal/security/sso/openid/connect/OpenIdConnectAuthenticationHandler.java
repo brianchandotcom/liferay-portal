@@ -39,10 +39,6 @@ public interface OpenIdConnectAuthenticationHandler {
 			HttpServletResponse httpServletResponse)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #requestAuthentication(long, HttpServletRequest, HttpServletResponse)}
-	 */
-	@Deprecated
 	public void requestAuthentication(
 			String openIdConnectProviderName,
 			HttpServletRequest httpServletRequest,

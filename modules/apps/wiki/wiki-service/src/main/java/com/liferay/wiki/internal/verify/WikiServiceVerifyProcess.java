@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.verify.VerifyProcess;
@@ -40,6 +42,10 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-157670"))) {
+			return;
+		}
+
 		updateStagedPortletNames();
 	}
 
@@ -60,31 +66,31 @@ public class WikiServiceVerifyProcess extends VerifyProcess {
 			});
 		groupActionableDynamicQuery.setPerformActionMethod(
 			(ActionableDynamicQuery.PerformActionMethod<Group>)group -> {
-				UnicodeProperties typeSettingsProperties =
+				UnicodeProperties typeSettingsUnicodeProperties =
 					group.getTypeSettingsProperties();
 
-				if (typeSettingsProperties == null) {
+				if (typeSettingsUnicodeProperties == null) {
 					return;
 				}
 
 				String propertyKey = _staging.getStagedPortletId(
 					WikiPortletKeys.WIKI);
 
-				String propertyValue = typeSettingsProperties.getProperty(
-					propertyKey);
+				String propertyValue =
+					typeSettingsUnicodeProperties.getProperty(propertyKey);
 
 				if (Validator.isNull(propertyValue)) {
 					return;
 				}
 
-				typeSettingsProperties.remove(propertyKey);
+				typeSettingsUnicodeProperties.remove(propertyKey);
 
 				propertyKey = _staging.getStagedPortletId(
 					WikiPortletKeys.WIKI_ADMIN);
 
-				typeSettingsProperties.put(propertyKey, propertyValue);
+				typeSettingsUnicodeProperties.put(propertyKey, propertyValue);
 
-				group.setTypeSettingsProperties(typeSettingsProperties);
+				group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 				_groupLocalService.updateGroup(group);
 			});

@@ -138,6 +138,7 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 		}
 	}
 
+	@Override
 	public void validateTypeOptions(int fragmentEntryType, String typeOptions)
 		throws FragmentEntryTypeOptionsException {
 

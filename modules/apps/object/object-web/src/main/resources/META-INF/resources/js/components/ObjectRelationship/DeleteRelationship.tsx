@@ -111,12 +111,11 @@ export default function ModalWithProvider({isApproved}: {isApproved: boolean}) {
 				),
 				type: 'success',
 			});
-
-			window.location.reload();
-
-			return;
 		}
 		onClose();
+		setTimeout(() => {
+			window.location.reload();
+		}, 1500);
 	};
 
 	const getObjectRelationship = async ({itemData}: any) => {

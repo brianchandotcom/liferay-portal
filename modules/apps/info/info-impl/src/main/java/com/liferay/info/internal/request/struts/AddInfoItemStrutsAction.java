@@ -23,6 +23,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormPrincipalException;
 import com.liferay.info.exception.InfoFormValidationException;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHelper;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -79,7 +80,13 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 
 		String redirect = null;
 
+		List<InfoFieldValue<Object>> infoFieldValues = null;
+
 		try {
+			infoFieldValues =
+				_infoRequestFieldValuesProviderHelper.getInfoFieldValues(
+					httpServletRequest);
+
 			if (_isCaptchaLayoutStructureItem(formItemId, httpServletRequest)) {
 				CaptchaUtil.check(httpServletRequest);
 			}
@@ -99,8 +106,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				ParamUtil.getLong(httpServletRequest, "groupId"),
 				InfoItemFieldValues.builder(
 				).infoFieldValues(
-					_infoRequestFieldValuesProviderHelper.getInfoFieldValues(
-						httpServletRequest)
+					infoFieldValues
 				).infoItemReference(
 					new InfoItemReference(className, 0)
 				).build());

@@ -674,6 +674,11 @@
 	<td>//a[contains(.,'${key_entryName}')]/../../..//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-unstyled') and contains(@class, 'component-action')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ANY_FRAGMENT_DROP_TARGET_N</td>
+	<td>//div[@aria-label='${key_targetFragmentName}'][${key_index}]/div[contains(@class,'page-editor__topper__content')]</td>
+	<td></td>
+</tr>
 
 <!--CATALOGS-->
 

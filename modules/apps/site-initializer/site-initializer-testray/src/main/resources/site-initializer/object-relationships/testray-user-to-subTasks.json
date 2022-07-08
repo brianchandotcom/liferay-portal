@@ -3,9 +3,9 @@
 	"label": {
 		"en-US": "User"
 	},
-	"name": "userToSubTasks",
+	"name": "userToSubtasks",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
-	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:SubTask$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Subtask$]",
 	"objectDefinitionName2": "SubTask",
 	"type": "oneToMany"
 }

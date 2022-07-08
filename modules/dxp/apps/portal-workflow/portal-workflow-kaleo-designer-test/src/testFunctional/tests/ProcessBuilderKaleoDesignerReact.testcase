@@ -3413,14 +3413,17 @@ definition {
 
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
-		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(nodeLabel = "Task");
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-200,-250");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
 		ProcessBuilderKaleoDesignerReact.addConnector(
 			connectorIn = "end",
 			connectorLabel = "Task End Connector",
 			connectorOut = "task",
-			direction = "top",
-			selectedNode = "true");
+			direction = "bottom");
 
 		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "TASK END CONNECTOR");
 
@@ -3430,7 +3433,7 @@ definition {
 			connectorIn = "start",
 			connectorLabel = "Task Start Connector",
 			connectorOut = "task",
-			direction = "right");
+			direction = "top");
 
 		ProcessBuilderKaleoDesignerReact.viewConnectorNotPresent(connectorLabel = "TASK START CONNECTOR");
 	}

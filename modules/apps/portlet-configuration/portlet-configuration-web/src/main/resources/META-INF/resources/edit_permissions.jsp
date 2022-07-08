@@ -135,6 +135,10 @@ String resourceName = portletConfigurationPermissionsDisplayContext.getResourceN
 							}
 
 							dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), _getActionLabel(request, resourceName, action), type, HtmlUtil.escape(portletConfigurationPermissionsDisplayContext.getGroupDescriptiveName())}, false));
+
+							if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806"))) {
+								disabled = true;
+							}
 						}
 
 						String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;
@@ -155,7 +159,7 @@ String resourceName = portletConfigurationPermissionsDisplayContext.getResourceN
 											<label>
 												<input
 													<%= (checked || indeterminate) ? "checked" : StringPool.BLANK %>
-													<%= (disabled || Validator.isNotNull(preselectedMsg)) ? "disabled" : StringPool.BLANK %>
+													<%= disabled ? "disabled" : StringPool.BLANK %>
 													<%= indeterminate ? "value=\"indeterminate\"" : StringPool.BLANK %>
 													class="custom-control-input"
 													name="<%= liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>"
@@ -171,7 +175,7 @@ String resourceName = portletConfigurationPermissionsDisplayContext.getResourceN
 												HashMapBuilder.<String, Object>put(
 													"checked", checked
 												).put(
-													"disabled", disabled || Validator.isNotNull(preselectedMsg)
+													"disabled", disabled
 												).put(
 													"indeterminate", indeterminate
 												).put(

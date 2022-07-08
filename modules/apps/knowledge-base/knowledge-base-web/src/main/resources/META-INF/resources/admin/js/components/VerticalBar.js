@@ -16,61 +16,33 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {VerticalBar} from '@clayui/core';
 import React from 'react';
 
-const VerticalNavigationBar = ({actions}) => {
+const VerticalNavigationBar = ({items}) => {
 	return (
 		<VerticalBar absolute className="kbVerticalBar" position="left">
-			<VerticalBar.Bar displayType="light">
-				<VerticalBar.Item key="article">
-					<ClayButtonWithIcon
-						displayType="unstyled"
-						onClick={() => {
-							console.log('click on articles');
-						}}
-						symbol="pages-tree"
-					/>
-				</VerticalBar.Item>
-
-				<VerticalBar.Item key="template">
-					<ClayButtonWithIcon
-						displayType="unstyled"
-						onClick={() => {
-							console.log('click on templates');
-						}}
-						symbol="page-template"
-					/>
-				</VerticalBar.Item>
-
-				<VerticalBar.Item key="suggestion">
-					<ClayButtonWithIcon
-						displayType="unstyled"
-						onClick={() => {
-							console.log('click on suggestions');
-						}}
-						symbol="message"
-					/>
-				</VerticalBar.Item>
+			<VerticalBar.Bar displayType="light" items={items}>
+				{(item) => (
+					<VerticalBar.Item key={item.key}>
+						<ClayButtonWithIcon
+							displayType="unstyled"
+							onClick={() => {
+								console.log(`***click on ${item.title}`);
+							}}
+							symbol={item.icon}
+						/>
+					</VerticalBar.Item>
+				)}
 			</VerticalBar.Bar>
 
-			<VerticalBar.Content>
-				<VerticalBar.Panel key="article">
-					<div className="sidebar-header">
-						<div className="component-title">Article Tree View</div>
-					</div>
-				</VerticalBar.Panel>
-
-				<VerticalBar.Panel key="template">
-					<div className="sidebar-header">
-						<div className="component-title">
-							template Tree View
+			<VerticalBar.Content items={items}>
+				{(item) => (
+					<VerticalBar.Panel key={item.key}>
+						<div className="sidebar-header">
+							<div className="component-title">
+								{item.title} Tree View
+							</div>
 						</div>
-					</div>
-				</VerticalBar.Panel>
-
-				<VerticalBar.Panel key="suggestion">
-					<div className="sidebar-header">
-						<div className="component-title">suggestion</div>
-					</div>
-				</VerticalBar.Panel>
+					</VerticalBar.Panel>
+				)}
 			</VerticalBar.Content>
 		</VerticalBar>
 	);

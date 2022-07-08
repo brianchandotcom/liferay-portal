@@ -358,6 +358,13 @@ public class WhitespaceCheck extends BaseFileCheck {
 		return line;
 	}
 
+	protected String trimLine(
+		String fileName, String absolutePath, String content, String line,
+		int lineNumber) {
+
+		return trimLine(fileName, absolutePath, line);
+	}
+
 	private String _trimContent(
 			String fileName, String absolutePath, String content)
 		throws IOException {
@@ -368,9 +375,14 @@ public class WhitespaceCheck extends BaseFileCheck {
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
 			String line = null;
+			int lineNumber = 0;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				sb.append(trimLine(fileName, absolutePath, line));
+				lineNumber++;
+
+				sb.append(
+					trimLine(
+						fileName, absolutePath, content, line, lineNumber));
 				sb.append("\n");
 			}
 		}

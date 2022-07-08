@@ -59,11 +59,25 @@ public class AccountGroupLocalServiceUtil {
 		return getService().addAccountGroup(accountGroup);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	public static AccountGroup addAccountGroup(
 			long userId, String description, String name)
 		throws PortalException {
 
 		return getService().addAccountGroup(userId, description, name);
+	}
+
+	public static AccountGroup addAccountGroup(
+			long userId, String description, String externalReferenceCode,
+			String name)
+		throws PortalException {
+
+		return getService().addAccountGroup(
+			userId, description, externalReferenceCode, name);
 	}
 
 	public static AccountGroup checkGuestAccountGroup(long companyId)
@@ -430,12 +444,26 @@ public class AccountGroupLocalServiceUtil {
 		return getService().updateAccountGroup(accountGroup);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	public static AccountGroup updateAccountGroup(
 			long accountGroupId, String description, String name)
 		throws PortalException {
 
 		return getService().updateAccountGroup(
 			accountGroupId, description, name);
+	}
+
+	public static AccountGroup updateAccountGroup(
+			long accountGroupId, String description,
+			String externalReferenceCode, String name)
+		throws PortalException {
+
+		return getService().updateAccountGroup(
+			accountGroupId, description, externalReferenceCode, name);
 	}
 
 	public static AccountGroupLocalService getService() {

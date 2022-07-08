@@ -51,8 +51,19 @@ public interface AccountGroupService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.account.service.impl.AccountGroupServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the account group remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AccountGroupServiceUtil} if injection and service tracking are not available.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	public AccountGroup addAccountGroup(
 			long userId, String description, String name)
+		throws PortalException;
+
+	public AccountGroup addAccountGroup(
+			long userId, String description, String externalReferenceCode,
+			String name)
 		throws PortalException;
 
 	public AccountGroup deleteAccountGroup(long accountGroupId)
@@ -74,8 +85,18 @@ public interface AccountGroupService extends BaseService {
 			OrderByComparator<AccountGroup> orderByComparator)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	public AccountGroup updateAccountGroup(
 			long accountGroupId, String description, String name)
+		throws PortalException;
+
+	public AccountGroup updateAccountGroup(
+			long accountGroupId, String description,
+			String externalReferenceCode, String name)
 		throws PortalException;
 
 }

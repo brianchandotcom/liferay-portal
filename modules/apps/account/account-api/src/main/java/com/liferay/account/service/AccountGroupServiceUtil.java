@@ -37,11 +37,26 @@ public class AccountGroupServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.account.service.impl.AccountGroupServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	public static AccountGroup addAccountGroup(
 			long userId, String description, String name)
 		throws PortalException {
 
 		return getService().addAccountGroup(userId, description, name);
+	}
+
+	public static AccountGroup addAccountGroup(
+			long userId, String description, String externalReferenceCode,
+			String name)
+		throws PortalException {
+
+		return getService().addAccountGroup(
+			userId, description, externalReferenceCode, name);
 	}
 
 	public static AccountGroup deleteAccountGroup(long accountGroupId)
@@ -75,12 +90,26 @@ public class AccountGroupServiceUtil {
 			companyId, keywords, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	public static AccountGroup updateAccountGroup(
 			long accountGroupId, String description, String name)
 		throws PortalException {
 
 		return getService().updateAccountGroup(
 			accountGroupId, description, name);
+	}
+
+	public static AccountGroup updateAccountGroup(
+			long accountGroupId, String description,
+			String externalReferenceCode, String name)
+		throws PortalException {
+
+		return getService().updateAccountGroup(
+			accountGroupId, description, externalReferenceCode, name);
 	}
 
 	public static AccountGroupService getService() {

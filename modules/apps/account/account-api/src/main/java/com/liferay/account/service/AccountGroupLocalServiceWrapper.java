@@ -54,6 +54,11 @@ public class AccountGroupLocalServiceWrapper
 		return _accountGroupLocalService.addAccountGroup(accountGroup);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.account.model.AccountGroup addAccountGroup(
 			long userId, String description, String name)
@@ -61,6 +66,16 @@ public class AccountGroupLocalServiceWrapper
 
 		return _accountGroupLocalService.addAccountGroup(
 			userId, description, name);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountGroup addAccountGroup(
+			long userId, String description, String externalReferenceCode,
+			String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupLocalService.addAccountGroup(
+			userId, description, externalReferenceCode, name);
 	}
 
 	@Override
@@ -497,6 +512,11 @@ public class AccountGroupLocalServiceWrapper
 		return _accountGroupLocalService.updateAccountGroup(accountGroup);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.account.model.AccountGroup updateAccountGroup(
 			long accountGroupId, String description, String name)
@@ -504,6 +524,16 @@ public class AccountGroupLocalServiceWrapper
 
 		return _accountGroupLocalService.updateAccountGroup(
 			accountGroupId, description, name);
+	}
+
+	@Override
+	public com.liferay.account.model.AccountGroup updateAccountGroup(
+			long accountGroupId, String description,
+			String externalReferenceCode, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountGroupLocalService.updateAccountGroup(
+			accountGroupId, description, externalReferenceCode, name);
 	}
 
 	@Override

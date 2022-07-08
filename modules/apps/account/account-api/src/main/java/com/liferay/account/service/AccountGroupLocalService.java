@@ -81,9 +81,20 @@ public interface AccountGroupLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountGroup addAccountGroup(AccountGroup accountGroup);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountGroup addAccountGroup(
 			long userId, String description, String name)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public AccountGroup addAccountGroup(
+			long userId, String description, String externalReferenceCode,
+			String name)
 		throws PortalException;
 
 	public AccountGroup checkGuestAccountGroup(long companyId)
@@ -372,9 +383,20 @@ public interface AccountGroupLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountGroup updateAccountGroup(AccountGroup accountGroup);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #updateAccountGroup(long, String, String, String)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	public AccountGroup updateAccountGroup(
 			long accountGroupId, String description, String name)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public AccountGroup updateAccountGroup(
+			long accountGroupId, String description,
+			String externalReferenceCode, String name)
 		throws PortalException;
 
 }

@@ -38,6 +38,16 @@ public class ObjectFieldSettingLocalServiceWrapper
 	}
 
 	@Override
+	public void addObjectFieldSetting(
+			long userId, long objectFieldId,
+			java.util.List<com.liferay.object.model.ObjectFilter> objectFilters)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectFieldSettingLocalService.addObjectFieldSetting(
+			userId, objectFieldId, objectFilters);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectFieldSetting addObjectFieldSetting(
 			long userId, long objectFieldId, String name, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -126,6 +136,14 @@ public class ObjectFieldSettingLocalServiceWrapper
 
 		return _objectFieldSettingLocalService.deleteObjectFieldSetting(
 			objectFieldSetting);
+	}
+
+	@Override
+	public void deleteObjectFieldSettingByObjectFieldId(long objectFieldId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectFieldSettingLocalService.deleteObjectFieldSettingByObjectFieldId(
+			objectFieldId);
 	}
 
 	/**
@@ -353,10 +371,10 @@ public class ObjectFieldSettingLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.object.model.ObjectFieldSetting>
-		getObjectFieldSettings(long objectFieldId) {
+		getObjectFieldSettingsByObjectFieldId(long objectFieldId) {
 
-		return _objectFieldSettingLocalService.getObjectFieldSettings(
-			objectFieldId);
+		return _objectFieldSettingLocalService.
+			getObjectFieldSettingsByObjectFieldId(objectFieldId);
 	}
 
 	/**

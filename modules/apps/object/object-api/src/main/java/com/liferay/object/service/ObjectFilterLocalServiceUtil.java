@@ -14,36 +14,42 @@
 
 package com.liferay.object.service;
 
-import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.object.model.ObjectFilter;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.io.Serializable;
+
+import java.util.List;
 
 /**
- * Provides a wrapper for {@link ObjectFilterLocalService}.
+ * Provides the local service utility for ObjectFilter. This utility wraps
+ * <code>com.liferay.object.service.impl.ObjectFilterLocalServiceImpl</code> and
+ * is an access point for service operations in application layer code running
+ * on the local server. Methods of this service will not have security checks
+ * based on the propagated JAAS credentials because this service can only be
+ * accessed from within the same VM.
  *
  * @author Marco Leo
  * @see ObjectFilterLocalService
  * @generated
  */
-public class ObjectFilterLocalServiceWrapper
-	implements ObjectFilterLocalService,
-			   ServiceWrapper<ObjectFilterLocalService> {
+public class ObjectFilterLocalServiceUtil {
 
-	public ObjectFilterLocalServiceWrapper() {
-		this(null);
-	}
-
-	public ObjectFilterLocalServiceWrapper(
-		ObjectFilterLocalService objectFilterLocalService) {
-
-		_objectFilterLocalService = objectFilterLocalService;
-	}
-
-	@Override
-	public com.liferay.object.model.ObjectFilter addObjectFilter(
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFilterLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
+	 */
+	public static ObjectFilter addObjectFilter(
 			long userId, long objectFieldId, String filterBy, String filterType,
 			String json)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws PortalException {
 
-		return _objectFilterLocalService.addObjectFilter(
+		return getService().addObjectFilter(
 			userId, objectFieldId, filterBy, filterType, json);
 	}
 
@@ -57,11 +63,8 @@ public class ObjectFilterLocalServiceWrapper
 	 * @param objectFilter the object filter
 	 * @return the object filter that was added
 	 */
-	@Override
-	public com.liferay.object.model.ObjectFilter addObjectFilter(
-		com.liferay.object.model.ObjectFilter objectFilter) {
-
-		return _objectFilterLocalService.addObjectFilter(objectFilter);
+	public static ObjectFilter addObjectFilter(ObjectFilter objectFilter) {
+		return getService().addObjectFilter(objectFilter);
 	}
 
 	/**
@@ -70,22 +73,18 @@ public class ObjectFilterLocalServiceWrapper
 	 * @param objectFilterId the primary key for the new object filter
 	 * @return the new object filter
 	 */
-	@Override
-	public com.liferay.object.model.ObjectFilter createObjectFilter(
-		long objectFilterId) {
-
-		return _objectFilterLocalService.createObjectFilter(objectFilterId);
+	public static ObjectFilter createObjectFilter(long objectFilterId) {
+		return getService().createObjectFilter(objectFilterId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel createPersistedModel(
-			java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel createPersistedModel(
+			Serializable primaryKeyObj)
+		throws PortalException {
 
-		return _objectFilterLocalService.createPersistedModel(primaryKeyObj);
+		return getService().createPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -99,12 +98,10 @@ public class ObjectFilterLocalServiceWrapper
 	 * @return the object filter that was removed
 	 * @throws PortalException if a object filter with the primary key could not be found
 	 */
-	@Override
-	public com.liferay.object.model.ObjectFilter deleteObjectFilter(
-			long objectFilterId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static ObjectFilter deleteObjectFilter(long objectFilterId)
+		throws PortalException {
 
-		return _objectFilterLocalService.deleteObjectFilter(objectFilterId);
+		return getService().deleteObjectFilter(objectFilterId);
 	}
 
 	/**
@@ -117,45 +114,34 @@ public class ObjectFilterLocalServiceWrapper
 	 * @param objectFilter the object filter
 	 * @return the object filter that was removed
 	 */
-	@Override
-	public com.liferay.object.model.ObjectFilter deleteObjectFilter(
-		com.liferay.object.model.ObjectFilter objectFilter) {
-
-		return _objectFilterLocalService.deleteObjectFilter(objectFilter);
+	public static ObjectFilter deleteObjectFilter(ObjectFilter objectFilter) {
+		return getService().deleteObjectFilter(objectFilter);
 	}
 
-	@Override
-	public void deleteObjectFilterByObjectFieldId(long objectFieldId) {
-		_objectFilterLocalService.deleteObjectFilterByObjectFieldId(
-			objectFieldId);
+	public static void deleteObjectFilterByObjectFieldId(long objectFieldId) {
+		getService().deleteObjectFilterByObjectFieldId(objectFieldId);
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-			com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel deletePersistedModel(
+			PersistedModel persistedModel)
+		throws PortalException {
 
-		return _objectFilterLocalService.deletePersistedModel(persistedModel);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	@Override
-	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-		return _objectFilterLocalService.dslQuery(dslQuery);
+	public static <T> T dslQuery(DSLQuery dslQuery) {
+		return getService().dslQuery(dslQuery);
 	}
 
-	@Override
-	public int dslQueryCount(
-		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
-
-		return _objectFilterLocalService.dslQueryCount(dslQuery);
+	public static int dslQueryCount(DSLQuery dslQuery) {
+		return getService().dslQueryCount(dslQuery);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _objectFilterLocalService.dynamicQuery();
+	public static DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -164,11 +150,8 @@ public class ObjectFilterLocalServiceWrapper
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
-		return _objectFilterLocalService.dynamicQuery(dynamicQuery);
+	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
+		return getService().dynamicQuery(dynamicQuery);
 	}
 
 	/**
@@ -183,12 +166,10 @@ public class ObjectFilterLocalServiceWrapper
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
 
-		return _objectFilterLocalService.dynamicQuery(dynamicQuery, start, end);
+		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
@@ -204,13 +185,11 @@ public class ObjectFilterLocalServiceWrapper
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	@Override
-	public <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
-		return _objectFilterLocalService.dynamicQuery(
+		return getService().dynamicQuery(
 			dynamicQuery, start, end, orderByComparator);
 	}
 
@@ -220,11 +199,8 @@ public class ObjectFilterLocalServiceWrapper
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-
-		return _objectFilterLocalService.dynamicQueryCount(dynamicQuery);
+	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
@@ -234,20 +210,15 @@ public class ObjectFilterLocalServiceWrapper
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows matching the dynamic query
 	 */
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+	public static long dynamicQueryCount(
+		DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 
-		return _objectFilterLocalService.dynamicQueryCount(
-			dynamicQuery, projection);
+		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	@Override
-	public com.liferay.object.model.ObjectFilter fetchObjectFilter(
-		long objectFilterId) {
-
-		return _objectFilterLocalService.fetchObjectFilter(objectFilterId);
+	public static ObjectFilter fetchObjectFilter(long objectFilterId) {
+		return getService().fetchObjectFilter(objectFilterId);
 	}
 
 	/**
@@ -257,36 +228,32 @@ public class ObjectFilterLocalServiceWrapper
 	 * @param companyId the primary key of the company
 	 * @return the matching object filter, or <code>null</code> if a matching object filter could not be found
 	 */
-	@Override
-	public com.liferay.object.model.ObjectFilter
-		fetchObjectFilterByUuidAndCompanyId(String uuid, long companyId) {
+	public static ObjectFilter fetchObjectFilterByUuidAndCompanyId(
+		String uuid, long companyId) {
 
-		return _objectFilterLocalService.fetchObjectFilterByUuidAndCompanyId(
+		return getService().fetchObjectFilterByUuidAndCompanyId(
 			uuid, companyId);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
-		return _objectFilterLocalService.getActionableDynamicQuery();
+		return getService().getActionableDynamicQuery();
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
 				portletDataContext) {
 
-		return _objectFilterLocalService.getExportActionableDynamicQuery(
-			portletDataContext);
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
+	public static
+		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
+			getIndexableActionableDynamicQuery() {
 
-		return _objectFilterLocalService.getIndexableActionableDynamicQuery();
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -296,12 +263,10 @@ public class ObjectFilterLocalServiceWrapper
 	 * @return the object filter
 	 * @throws PortalException if a object filter with the primary key could not be found
 	 */
-	@Override
-	public com.liferay.object.model.ObjectFilter getObjectFilter(
-			long objectFilterId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static ObjectFilter getObjectFilter(long objectFilterId)
+		throws PortalException {
 
-		return _objectFilterLocalService.getObjectFilter(objectFilterId);
+		return getService().getObjectFilter(objectFilterId);
 	}
 
 	/**
@@ -312,13 +277,11 @@ public class ObjectFilterLocalServiceWrapper
 	 * @return the matching object filter
 	 * @throws PortalException if a matching object filter could not be found
 	 */
-	@Override
-	public com.liferay.object.model.ObjectFilter
-			getObjectFilterByUuidAndCompanyId(String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static ObjectFilter getObjectFilterByUuidAndCompanyId(
+			String uuid, long companyId)
+		throws PortalException {
 
-		return _objectFilterLocalService.getObjectFilterByUuidAndCompanyId(
-			uuid, companyId);
+		return getService().getObjectFilterByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**
@@ -332,19 +295,14 @@ public class ObjectFilterLocalServiceWrapper
 	 * @param end the upper bound of the range of object filters (not inclusive)
 	 * @return the range of object filters
 	 */
-	@Override
-	public java.util.List<com.liferay.object.model.ObjectFilter>
-		getObjectFilters(int start, int end) {
-
-		return _objectFilterLocalService.getObjectFilters(start, end);
+	public static List<ObjectFilter> getObjectFilters(int start, int end) {
+		return getService().getObjectFilters(start, end);
 	}
 
-	@Override
-	public java.util.List<com.liferay.object.model.ObjectFilter>
-		getObjectFiltersByObjectFieldId(long objectFieldId) {
+	public static List<ObjectFilter> getObjectFiltersByObjectFieldId(
+		long objectFieldId) {
 
-		return _objectFilterLocalService.getObjectFiltersByObjectFieldId(
-			objectFieldId);
+		return getService().getObjectFiltersByObjectFieldId(objectFieldId);
 	}
 
 	/**
@@ -352,9 +310,8 @@ public class ObjectFilterLocalServiceWrapper
 	 *
 	 * @return the number of object filters
 	 */
-	@Override
-	public int getObjectFiltersCount() {
-		return _objectFilterLocalService.getObjectFiltersCount();
+	public static int getObjectFiltersCount() {
+		return getService().getObjectFiltersCount();
 	}
 
 	/**
@@ -362,20 +319,17 @@ public class ObjectFilterLocalServiceWrapper
 	 *
 	 * @return the OSGi service identifier
 	 */
-	@Override
-	public String getOSGiServiceIdentifier() {
-		return _objectFilterLocalService.getOSGiServiceIdentifier();
+	public static String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
 	 * @throws PortalException
 	 */
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-			java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException {
 
-		return _objectFilterLocalService.getPersistedModel(primaryKeyObj);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -388,25 +342,14 @@ public class ObjectFilterLocalServiceWrapper
 	 * @param objectFilter the object filter
 	 * @return the object filter that was updated
 	 */
-	@Override
-	public com.liferay.object.model.ObjectFilter updateObjectFilter(
-		com.liferay.object.model.ObjectFilter objectFilter) {
-
-		return _objectFilterLocalService.updateObjectFilter(objectFilter);
+	public static ObjectFilter updateObjectFilter(ObjectFilter objectFilter) {
+		return getService().updateObjectFilter(objectFilter);
 	}
 
-	@Override
-	public ObjectFilterLocalService getWrappedService() {
-		return _objectFilterLocalService;
+	public static ObjectFilterLocalService getService() {
+		return _service;
 	}
 
-	@Override
-	public void setWrappedService(
-		ObjectFilterLocalService objectFilterLocalService) {
-
-		_objectFilterLocalService = objectFilterLocalService;
-	}
-
-	private ObjectFilterLocalService _objectFilterLocalService;
+	private static volatile ObjectFilterLocalService _service;
 
 }

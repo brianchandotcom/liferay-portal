@@ -65,7 +65,9 @@ definition {
 			locator1 = "TextInput#EMAIL_ADDRESS",
 			value1 = "${userEmailAddress}");
 
-		Button.clickSave();
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
 
 		var uniqueSuccess = "Your comment has already been posted. Would you like to create an account with the provided information?";
 

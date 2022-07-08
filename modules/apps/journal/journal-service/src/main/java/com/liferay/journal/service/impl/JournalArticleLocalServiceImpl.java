@@ -5792,11 +5792,6 @@ public class JournalArticleLocalServiceImpl
 				descriptionMap);
 		}
 
-		article.setModifiedDate(serviceContext.getModifiedDate(date));
-		article.setStatusByUserId(user.getUserId());
-		article.setStatusByUserName(user.getFullName());
-		article.setStatusDate(serviceContext.getModifiedDate(date));
-
 		Locale locale = getArticleDefaultLocale(content);
 
 		Map<String, String> urlTitleMap = _getURLTitleMap(
@@ -5855,6 +5850,11 @@ public class JournalArticleLocalServiceImpl
 		ExpandoBridgeUtil.setExpandoBridgeAttributes(
 			latestArticle.getExpandoBridge(), article.getExpandoBridge(),
 			serviceContext);
+
+		article.setModifiedDate(serviceContext.getModifiedDate(date));
+		article.setStatusByUserId(user.getUserId());
+		article.setStatusByUserName(user.getFullName());
+		article.setStatusDate(serviceContext.getModifiedDate(date));
 
 		article = journalArticlePersistence.update(article);
 

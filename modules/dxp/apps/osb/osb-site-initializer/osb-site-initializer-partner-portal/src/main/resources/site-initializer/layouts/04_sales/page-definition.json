@@ -139,7 +139,7 @@
 																"fieldKey": "FileEntry_downloadURL",
 																"itemReference": {
 																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																	"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/Liferay Service Partner - Referral Program Guide 2022.pdf$]"
+																	"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/referral-program-guide.pdf$]"
 																}
 															}
 														},
@@ -204,7 +204,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "icon"
+																		"key": "clay-icon-link"
 																	},
 																	"fragmentConfig": {
 																		"iconName": "document-pdf"
@@ -344,7 +344,7 @@
 																"fieldKey": "FileEntry_downloadURL",
 																"itemReference": {
 																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																	"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/Liferay Service Partner - Reseller Program Guide 2022.pdf$]"
+																	"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/reseller-program-guide.pdf$]"
 																}
 															}
 														},
@@ -408,7 +408,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "icon"
+																		"key": "clay-icon-link"
 																	},
 																	"fragmentConfig": {
 																		"iconName": "document-pdf"
@@ -549,7 +549,7 @@
 																"fieldKey": "FileEntry_downloadURL",
 																"itemReference": {
 																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																	"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/Liferay Service Partner Program Rules of Engagement.pdf$]"
+																	"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/program-rules-of-engagement.pdf$]"
 																}
 															}
 														},
@@ -613,7 +613,7 @@
 															{
 																"definition": {
 																	"fragment": {
-																		"key": "icon"
+																		"key": "clay-icon-link"
 																	},
 																	"fragmentConfig": {
 																		"iconName": "document-pdf"
@@ -1221,7 +1221,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "icon"
+																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
 																				"iconName": "order-arrow-right"
@@ -1603,7 +1603,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "icon"
+																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
 																				"iconName": "order-arrow-right"
@@ -1988,7 +1988,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "icon"
+																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
 																				"iconName": "order-arrow-right"
@@ -2354,7 +2354,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "icon"
+																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
 																				"iconName": "order-arrow-right"
@@ -2740,7 +2740,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "icon"
+																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
 																				"iconName": "order-arrow-right"
@@ -3109,7 +3109,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "icon"
+																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
 																				"iconName": "order-arrow-right"
@@ -3672,7 +3672,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "icon"
+																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
 																				"iconName": "order-arrow-right"
@@ -4068,7 +4068,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "icon"
+																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
 																				"iconLink": "/home",
@@ -4467,7 +4467,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "icon"
+																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
 																				"iconName": "order-arrow-right"
@@ -4853,7 +4853,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "icon"
+																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
 																				"iconName": "order-arrow-right"
@@ -5250,7 +5250,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "icon"
+																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
 																				"iconName": "order-arrow-right"
@@ -5638,7 +5638,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "icon"
+																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
 																				"iconName": "order-arrow-right"

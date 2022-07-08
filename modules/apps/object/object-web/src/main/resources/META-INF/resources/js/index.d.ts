@@ -112,7 +112,7 @@ interface ObjectDefinition {
 
 interface ObjectFieldSetting {
 	name: ObjectFieldSettingName;
-	objectFieldId: number;
+	objectFieldId?: number;
 	value: string | number | boolean | ObjectFieldFilterSetting[];
 }
 

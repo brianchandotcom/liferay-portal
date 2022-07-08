@@ -17,6 +17,7 @@ import {
 	declineAllCookies,
 	getCookie,
 	setCookie,
+	setUserConfigCookie,
 } from '../../js/CookiesUtil';
 
 export default function ({
@@ -70,6 +71,8 @@ export default function ({
 				requiredConsentCookieTypeNames
 			);
 
+			setUserConfigCookie();
+
 			window.location.reload();
 		});
 
@@ -87,6 +90,8 @@ export default function ({
 				}
 			);
 
+			setUserConfigCookie();
+
 			window.location.reload();
 		});
 
@@ -95,6 +100,8 @@ export default function ({
 				optionalConsentCookieTypeNames,
 				requiredConsentCookieTypeNames
 			);
+
+			setUserConfigCookie();
 
 			window.location.reload();
 		});

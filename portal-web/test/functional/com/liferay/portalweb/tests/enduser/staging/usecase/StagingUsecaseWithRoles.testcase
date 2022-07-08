@@ -215,7 +215,7 @@ definition {
 
 	@priority = "4"
 	test StagingDemoLocalLive3 {
-		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingDemoLocalLive4";
+		property name.skip.portal.instance = "StagingUsecaseWithRoles#StagingDemoLocalLive3";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

@@ -207,7 +207,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			).put(
 				"state", new State()
 			).put(
-				"ui_Locals", _getUILocales(httpServletRequest)
+				"ui_Locals", _getLangTags(httpServletRequest)
 			).build();
 
 		try {
@@ -355,7 +355,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		}
 	}
 
-	private List<LangTag> _getUILocales(HttpServletRequest httpServletRequest) {
+	private List<LangTag> _getLangTags(HttpServletRequest httpServletRequest) {
 		Locale locale = _portal.getLocale(httpServletRequest);
 
 		if (locale != null) {

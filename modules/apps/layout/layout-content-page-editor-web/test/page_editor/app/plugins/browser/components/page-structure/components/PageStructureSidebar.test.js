@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
@@ -208,60 +208,58 @@ const renderComponent = ({
 };
 
 describe('PageStructureSidebar', () => {
-	afterEach(cleanup);
-
 	it('has a warning message when there is no content', () => {
-		const {getByText} = renderComponent({
+		renderComponent({
 			masterRootItemChildren: [],
 			rootItemChildren: [],
 		});
 
 		expect(
-			getByText('there-is-no-content-on-this-page')
+			screen.getByText('there-is-no-content-on-this-page')
 		).toBeInTheDocument();
 	});
 
 	it('uses fragments names as labels', () => {
-		const {getByText} = renderComponent({
+		renderComponent({
 			activeItemId: '11-container',
 			rootItemChildren: ['04-fragment'],
 		});
 
-		expect(getByText('Fragment 1')).toBeInTheDocument();
+		expect(screen.getByText('Fragment 1')).toBeInTheDocument();
 	});
 
 	it('uses default labels for containers, columns, rows', () => {
-		const {getAllByText} = renderComponent({
+		renderComponent({
 			activeItemId: '11-container',
 			rootItemChildren: ['01-container', '02-row', '03-column'],
 		});
 
 		['container', 'row', 'column'].forEach((itemLabel) =>
-			getAllByText(
-				LAYOUT_DATA_ITEM_TYPE_LABELS[itemLabel]
-			).forEach((element) => expect(element).toBeInTheDocument())
+			screen
+				.getAllByText(LAYOUT_DATA_ITEM_TYPE_LABELS[itemLabel])
+				.forEach((element) => expect(element).toBeInTheDocument())
 		);
 	});
 
 	it('sets activeItemId as selected item', () => {
-		const {getByLabelText} = renderComponent({
+		renderComponent({
 			activeItemId: '11-container',
 		});
 
-		expect(getByLabelText('Collapse container')).toHaveAttribute(
+		expect(screen.getByLabelText('Collapse container')).toHaveAttribute(
 			'aria-expanded',
 			'true'
 		);
 	});
 
 	it('disables items that are in masterLayout', () => {
-		const {getByLabelText} = renderComponent();
-		const button = getByLabelText('select-x-container');
+		renderComponent();
+		const button = screen.getByLabelText('select-x-container');
 		expect(button.parentElement).toHaveAttribute('aria-disabled', 'true');
 	});
 
 	it('allows removing items of certain types', () => {
-		const {queryByLabelText} = renderComponent({
+		renderComponent({
 			activeItemId: '11-container',
 			rootItemChildren: [
 				'01-container',
@@ -271,27 +269,33 @@ describe('PageStructureSidebar', () => {
 			],
 		});
 
-		expect(queryByLabelText('remove-x-container')).toBeInTheDocument();
-		expect(queryByLabelText('remove-x-grid')).toBeInTheDocument();
-		expect(queryByLabelText('remove-x-module')).toBe(null);
-		expect(queryByLabelText('remove-x-Fragment 1')).toBeInTheDocument();
+		expect(
+			screen.queryByLabelText('remove-x-container')
+		).toBeInTheDocument();
+		expect(screen.queryByLabelText('remove-x-grid')).toBeInTheDocument();
+		expect(screen.queryByLabelText('remove-x-module')).toBe(null);
+		expect(
+			screen.queryByLabelText('remove-x-Fragment 1')
+		).toBeInTheDocument();
 	});
 
 	it('scans fragments editables', () => {
-		const {queryByLabelText} = renderComponent({
+		renderComponent({
 			activeItemId: '04-fragment',
 			rootItemChildren: ['04-fragment'],
 		});
 
-		expect(queryByLabelText('select-x-05-editable')).toBeInTheDocument();
-		expect(queryByLabelText('remove-x-05-editable')).toBe(null);
+		expect(
+			screen.queryByLabelText('select-x-05-editable')
+		).toBeInTheDocument();
+		expect(screen.queryByLabelText('remove-x-05-editable')).toBe(null);
 	});
 
 	it('sets element as active item', () => {
-		const {getByLabelText} = renderComponent({
+		renderComponent({
 			activeItemId: '03-column',
 		});
-		const button = getByLabelText('select-x-grid');
+		const button = screen.getByLabelText('select-x-grid');
 
 		userEvent.click(button);
 
@@ -299,10 +303,10 @@ describe('PageStructureSidebar', () => {
 	});
 
 	it('sets element as active item when it is a fragment', () => {
-		const {getByLabelText} = renderComponent({
+		renderComponent({
 			activeItemId: '03-column',
 		});
-		const button = getByLabelText('select-x-Fragment 1');
+		const button = screen.getByLabelText('select-x-Fragment 1');
 
 		userEvent.click(button);
 
@@ -310,10 +314,10 @@ describe('PageStructureSidebar', () => {
 	});
 
 	it('sets element as active item when it is a column', () => {
-		const {getByLabelText} = renderComponent({
+		renderComponent({
 			activeItemId: '02-row',
 		});
-		const button = getByLabelText('select-x-module');
+		const button = screen.getByLabelText('select-x-module');
 
 		userEvent.click(button);
 
@@ -321,34 +325,34 @@ describe('PageStructureSidebar', () => {
 	});
 
 	it('does not allow removing items if user has no permissions', () => {
-		const {queryByLabelText} = renderComponent({
+		renderComponent({
 			hasUpdatePermissions: false,
 			rootItemChildren: ['01-container', '02-row', '04-fragment'],
 		});
 
-		expect(queryByLabelText('remove-x-container')).toBe(null);
-		expect(queryByLabelText('remove-x-grid')).toBe(null);
-		expect(queryByLabelText('remove-x-Fragment 1')).toBe(null);
+		expect(screen.queryByLabelText('remove-x-container')).toBe(null);
+		expect(screen.queryByLabelText('remove-x-grid')).toBe(null);
+		expect(screen.queryByLabelText('remove-x-Fragment 1')).toBe(null);
 	});
 
 	it('does not allow removing items if viewport is not desktop', () => {
-		const {queryByLabelText} = renderComponent({
+		renderComponent({
 			activeItemId: '11-container',
 			rootItemChildren: ['01-container', '02-row', '04-fragment'],
 			viewportSize: VIEWPORT_SIZES.portraitMobile,
 		});
 
-		expect(queryByLabelText('remove-x-container')).toBe(null);
-		expect(queryByLabelText('remove-x-grid')).toBe(null);
-		expect(queryByLabelText('remove-x-Fragment 1')).toBe(null);
+		expect(screen.queryByLabelText('remove-x-container')).toBe(null);
+		expect(screen.queryByLabelText('remove-x-grid')).toBe(null);
+		expect(screen.queryByLabelText('remove-x-Fragment 1')).toBe(null);
 	});
 
 	it('uses field label for mapped editables', () => {
-		const {getByText} = renderComponent({
+		renderComponent({
 			activeItemId: '04-fragment',
 			rootItemChildren: ['04-fragment'],
 		});
 
-		expect(getByText('Text Field 1')).toBeInTheDocument();
+		expect(screen.getByText('Text Field 1')).toBeInTheDocument();
 	});
 });

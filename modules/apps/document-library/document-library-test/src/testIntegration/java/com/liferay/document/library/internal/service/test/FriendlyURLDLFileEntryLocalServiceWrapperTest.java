@@ -63,6 +63,55 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testAddFileEntriesSameTitleAddsFriendlyURLEntryDeleteFileEntryReuseURLTitle()
+		throws Exception {
+
+		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
+
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		DLFileEntry dlFileEntry1 = _dlFileEntryLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
+			StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
+			null, inputStream, bytes.length, null, null, serviceContext);
+
+		FriendlyURLEntry friendlyURLEntry1 =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				dlFileEntry1.getFileEntryId());
+
+		Assert.assertEquals("urltitle", friendlyURLEntry1.getUrlTitle());
+
+		_dlFileEntryLocalService.deleteFileEntry(dlFileEntry1);
+
+		DLFileEntry dlFileEntry2 = _dlFileEntryLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM,
+			RandomTestUtil.randomString(), "urltitle", StringPool.BLANK,
+			StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
+			null, inputStream, bytes.length, null, null, serviceContext);
+
+		FriendlyURLEntry friendlyURLEntry2 =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				dlFileEntry2.getFileEntryId());
+
+		Assert.assertEquals("urltitle", friendlyURLEntry2.getUrlTitle());
+	}
+
+	@Test
 	public void testAddFileEntriesSameTitleAddsFriendlyURLEntryUniqueTitle()
 		throws Exception {
 

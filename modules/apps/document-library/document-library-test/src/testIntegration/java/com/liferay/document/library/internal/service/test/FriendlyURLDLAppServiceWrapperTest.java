@@ -17,6 +17,7 @@ package com.liferay.document.library.internal.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -73,6 +74,43 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 
 		Assert.assertNotNull(friendlyURLEntry);
 		Assert.assertEquals("urltitle", friendlyURLEntry.getUrlTitle());
+	}
+
+	@Test
+	public void testAddFileEntryBytesAddsFriendlyURLEntryOnTrashUniqueURLTitle()
+		throws Exception {
+
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
+			StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
+
+		FriendlyURLEntry friendlyURLEntry1 =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry1.getFileEntryId());
+
+		Assert.assertEquals("urltitle", friendlyURLEntry1.getUrlTitle());
+
+		_dlTrashService.moveFileEntryToTrash(fileEntry1.getFileEntryId());
+
+		FileEntry fileEntry2 = _dlAppService.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
+			StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
+
+		FriendlyURLEntry friendlyURLEntry2 =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry2.getFileEntryId());
+
+		Assert.assertEquals("urltitle-1", friendlyURLEntry2.getUrlTitle());
 	}
 
 	@Test
@@ -293,5 +331,8 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 
 	@Inject
 	private static Portal _portal;
+
+	@Inject
+	private DLTrashService _dlTrashService;
 
 }

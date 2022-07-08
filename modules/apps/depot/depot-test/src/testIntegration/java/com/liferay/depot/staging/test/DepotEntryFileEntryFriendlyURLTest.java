@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -91,6 +92,45 @@ public class DepotEntryFileEntryFriendlyURLTest {
 	}
 
 	@Test
+	public void testDepotEntryFileEntryFriendlyURLEntriesFileEntryMovedToTrashUniquenessUrlTitle()
+		throws Exception {
+
+		FileEntry fileEntry1 = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _liveDepotEntry.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
+			StringUtil.randomString(), new byte[0], null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_liveDepotEntry.getGroupId()));
+
+		FriendlyURLEntry friendlyURLEntry1 =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry1.getFileEntryId());
+
+		Assert.assertEquals("urltitle", friendlyURLEntry1.getUrlTitle());
+
+		_dlTrashService.moveFileEntryToTrash(fileEntry1.getFileEntryId());
+
+		FileEntry fileEntry2 = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _liveDepotEntry.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
+			StringUtil.randomString(), new byte[0], null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_liveDepotEntry.getGroupId()));
+
+		FriendlyURLEntry friendlyURLEntry2 =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry2.getFileEntryId());
+
+		Assert.assertEquals("urltitle-1", friendlyURLEntry2.getUrlTitle());
+	}
+
+	@Test
 	public void testDepotEntryFileEntryFriendlyURLEntriesNormalizedTitle()
 		throws Exception {
 
@@ -113,6 +153,43 @@ public class DepotEntryFileEntryFriendlyURLTest {
 		Assert.assertEquals(
 			_friendlyURLNormalizer.normalizeWithEncoding(fileEntry.getTitle()),
 			friendlyURLEntry.getUrlTitle());
+	}
+
+	@Test
+	public void testDepotEntryFileEntryFriendlyURLEntriesUniquenessUrlTitle()
+		throws Exception {
+
+		FileEntry fileEntry1 = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _liveDepotEntry.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
+			StringUtil.randomString(), new byte[0], null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_liveDepotEntry.getGroupId()));
+
+		FriendlyURLEntry friendlyURLEntry1 =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry1.getFileEntryId());
+
+		Assert.assertEquals("urltitle", friendlyURLEntry1.getUrlTitle());
+
+		FileEntry fileEntry2 = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _liveDepotEntry.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			StringUtil.randomString(), "urltitle", StringUtil.randomString(),
+			StringUtil.randomString(), new byte[0], null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_liveDepotEntry.getGroupId()));
+
+		FriendlyURLEntry friendlyURLEntry2 =
+			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+				_portal.getClassNameId(FileEntry.class),
+				fileEntry2.getFileEntryId());
+
+		Assert.assertEquals("urltitle-1", friendlyURLEntry2.getUrlTitle());
 	}
 
 	@Test
@@ -268,6 +345,9 @@ public class DepotEntryFileEntryFriendlyURLTest {
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLTrashService _dlTrashService;
 
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

@@ -612,7 +612,9 @@ definition {
 			locator1 = "Button#SAVE",
 			value1 = "Save");
 
-		SelectFrame(value1 = "relative=top");
+		Alert.viewSuccessMessage();
+
+		IFrame.closeFrame();
 	}
 
 	macro swapVocabularies {

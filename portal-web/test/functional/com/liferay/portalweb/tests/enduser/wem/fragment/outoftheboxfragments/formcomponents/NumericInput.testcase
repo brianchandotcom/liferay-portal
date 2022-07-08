@@ -190,6 +190,141 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-155169. The user could submit successfully when a Form Container has Numeric Input fragments"
+	@priority = "4"
+	test SubmitFormWithNumericInput {
+		property test.name.skip.portal.instance = "NumericInput#SubmitFormWithNumericInput";
+
+		task ("Given a user has a content page with Numeric Input fragments inside Form Container") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Map the Form Container to new Object") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add four Numeric Input and a Submit Button fragments into the Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Numeric Input");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Numeric Input",
+					index = "2",
+					targetFragmentName = "Numeric Input");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Numeric Input",
+					index = "3",
+					targetFragmentName = "Numeric Input");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Numeric Input",
+					index = "4",
+					targetFragmentName = "Numeric Input");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "Numeric Input");
+			}
+
+			task ("Map the Numeric Input fragments to different fields") {
+				PageEditor.editInput(
+					field = "Amount",
+					fragmentName = "Numeric Input");
+
+				PageEditor.editInput(
+					field = "Ticket Number",
+					fragmentName = "Numeric Input",
+					index = "2");
+
+				PageEditor.editInput(
+					field = "Price",
+					fragmentName = "Numeric Input",
+					index = "3");
+
+				PageEditor.editInput(
+					field = "Tax",
+					fragmentName = "Numeric Input",
+					index = "4");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the user accesses to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the user can submit the form with Numeric Inputs successfully") {
+			Type(
+				key_text = "Amount",
+				locator1 = "TextInput#ANY",
+				value1 = "2e5");
+
+			Type(
+				key_text = "Ticket Number",
+				locator1 = "TextInput#ANY",
+				value1 = "100");
+
+			Type(
+				key_text = "Price",
+				locator1 = "TextInput#ANY",
+				value1 = "3.14");
+
+			Type(
+				key_text = "Tax",
+				locator1 = "TextInput#ANY",
+				value1 = "-1");
+
+			Button.clickSubmitButton();
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+
+			Refresh();
+
+			AssertTextEquals(
+				key_text = "Amount",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			AssertTextEquals(
+				key_text = "Ticket Number",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			AssertTextEquals(
+				key_text = "Price",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			AssertTextEquals(
+				key_text = "Tax",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+		}
+	}
+
 	@description = "This is a test for LPS-155169. The Numeric Input only allow numbers and some special characters."
 	@priority = "5"
 	test ViewAllowedCharacters {

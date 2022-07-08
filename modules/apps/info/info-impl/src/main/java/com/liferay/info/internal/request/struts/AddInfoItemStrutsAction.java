@@ -25,6 +25,7 @@ import com.liferay.info.exception.InfoFormInvalidGroupException;
 import com.liferay.info.exception.InfoFormInvalidLayoutModeException;
 import com.liferay.info.exception.InfoFormPrincipalException;
 import com.liferay.info.exception.InfoFormValidationException;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHelper;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
@@ -85,7 +86,13 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 
 		String redirect = null;
 
+		List<InfoFieldValue<Object>> infoFieldValues = null;
+
 		try {
+			infoFieldValues =
+				_infoRequestFieldValuesProviderHelper.getInfoFieldValues(
+					httpServletRequest);
+
 			if (!Objects.equals(
 					Constants.VIEW,
 					ParamUtil.getString(httpServletRequest, "p_l_mode"))) {
@@ -120,8 +127,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 				groupId,
 				InfoItemFieldValues.builder(
 				).infoFieldValues(
-					_infoRequestFieldValuesProviderHelper.getInfoFieldValues(
-						httpServletRequest)
+					infoFieldValues
 				).infoItemReference(
 					new InfoItemReference(className, 0)
 				).build());

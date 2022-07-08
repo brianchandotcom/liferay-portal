@@ -44,47 +44,55 @@ public class CheckboxDDMFormFieldValueRequestParameterRetrieverTest {
 
 	@Test
 	public void testGetRequestParameterValueFalse() {
-		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
 		String expectedParameterValue = StringPool.FALSE;
 
-		request.addParameter("ddmFormFieldCheckbox", expectedParameterValue);
+		mockHttpServletRequest.addParameter(
+			"ddmFormFieldCheckbox", expectedParameterValue);
 
 		String defaultParameterValue = StringPool.TRUE;
 
 		String actualParameterValue =
 			_checkboxDDMFormFieldValueRequestParameterRetriever.get(
-				request, "ddmFormFieldCheckbox", defaultParameterValue);
+				mockHttpServletRequest, "ddmFormFieldCheckbox",
+				defaultParameterValue);
 
 		Assert.assertEquals(expectedParameterValue, actualParameterValue);
 	}
 
 	@Test
 	public void testGetRequestParameterValueTrue() {
-		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
 		String expectedParameterValue = StringPool.TRUE;
 
-		request.addParameter("ddmFormFieldCheckbox", expectedParameterValue);
+		mockHttpServletRequest.addParameter(
+			"ddmFormFieldCheckbox", expectedParameterValue);
 
 		String defaultParameterValue = StringPool.FALSE;
 
 		String actualParameterValue =
 			_checkboxDDMFormFieldValueRequestParameterRetriever.get(
-				request, "ddmFormFieldCheckbox", defaultParameterValue);
+				mockHttpServletRequest, "ddmFormFieldCheckbox",
+				defaultParameterValue);
 
 		Assert.assertEquals(expectedParameterValue, actualParameterValue);
 	}
 
 	@Test
 	public void testGetValueWithNullRequestParameter() {
-		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
 		String defaultParameterValue = StringPool.TRUE;
 
 		String parameterValue =
 			_checkboxDDMFormFieldValueRequestParameterRetriever.get(
-				request, "ddmFormFieldCheckbox", defaultParameterValue);
+				mockHttpServletRequest, "ddmFormFieldCheckbox",
+				defaultParameterValue);
 
 		Assert.assertEquals(parameterValue, defaultParameterValue);
 	}

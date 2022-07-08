@@ -278,7 +278,7 @@ public class DDMFormDisplayContextTest {
 
 		DDMForm ddmForm = _createDDMForm(availableLocales, defaultLocale);
 
-		_request.addParameter(
+		_mockHttpServletRequest2.addParameter(
 			"languageId", LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
 
 		DDMFormRenderingContext ddmFormRenderingContext =
@@ -511,7 +511,7 @@ public class DDMFormDisplayContextTest {
 
 	@Test
 	public void testIsShowIconInEditMode() throws Exception {
-		_mockHttpServletRequest.addParameter("p_l_mode", Constants.EDIT);
+		_mockHttpServletRequest1.addParameter("p_l_mode", Constants.EDIT);
 
 		DDMFormDisplayContext ddmFormDisplayContext = _createSpy(
 			false, false, false);
@@ -889,7 +889,7 @@ public class DDMFormDisplayContextTest {
 		);
 
 		Mockito.when(
-			_language.getLanguageId(Matchers.eq(_request))
+			_language.getLanguageId(Matchers.eq(_mockHttpServletRequest2))
 		).thenReturn(
 			_DEFAULT_LANGUAGE_ID
 		);
@@ -920,7 +920,7 @@ public class DDMFormDisplayContextTest {
 		Mockito.when(
 			portal.getHttpServletRequest(Matchers.any(RenderRequest.class))
 		).thenReturn(
-			_request
+			_mockHttpServletRequest2
 		);
 
 		Mockito.when(
@@ -933,7 +933,7 @@ public class DDMFormDisplayContextTest {
 			portal.getOriginalServletRequest(
 				Matchers.any(HttpServletRequest.class))
 		).thenReturn(
-			_mockHttpServletRequest
+			_mockHttpServletRequest1
 		);
 	}
 
@@ -965,10 +965,10 @@ public class DDMFormDisplayContextTest {
 	private final DDMFormWebConfiguration _ddmFormWebConfiguration =
 		Mockito.mock(DDMFormWebConfiguration.class);
 	private final Language _language = Mockito.mock(Language.class);
-	private final MockHttpServletRequest _mockHttpServletRequest =
+	private final MockHttpServletRequest _mockHttpServletRequest1 =
 		new MockHttpServletRequest();
-	private final MockHttpServletRequest _request = Mockito.mock(
-		MockHttpServletRequest.class);
+	private final MockHttpServletRequest _mockHttpServletRequest2 =
+		Mockito.mock(MockHttpServletRequest.class);
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService = Mockito.mock(
 			WorkflowDefinitionLinkLocalService.class);

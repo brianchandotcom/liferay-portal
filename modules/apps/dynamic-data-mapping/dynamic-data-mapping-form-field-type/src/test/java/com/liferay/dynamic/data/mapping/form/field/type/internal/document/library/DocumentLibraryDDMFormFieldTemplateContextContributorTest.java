@@ -400,10 +400,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	}
 
 	private HttpServletRequest _createHttpServletRequest() {
-		MockHttpServletRequest httpServletRequest =
+		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		httpServletRequest.setParameter(
+		mockHttpServletRequest.setParameter(
 			"formInstanceId", String.valueOf(_FORM_INSTANCE_ID));
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
@@ -411,9 +411,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		themeDisplay.setPermissionChecker(
 			Mockito.mock(PermissionChecker.class));
 
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		return httpServletRequest;
+		return mockHttpServletRequest;
 	}
 
 	private DocumentLibraryDDMFormFieldTemplateContextContributor _createSpy(

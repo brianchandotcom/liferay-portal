@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -481,8 +482,8 @@ public class LayoutLookAndFeelDisplayContext {
 					() -> _getCETJSONObject(
 						clientExtensionEntryRel, true,
 						LanguageUtil.format(
-							_themeDisplay.getLocale(), "from-x", "layout-set",
-							true)));
+							_themeDisplay.getLocale(), "from-x",
+							_getLayoutRootNodeName(), false)));
 			}
 
 			Layout layout = _layoutsAdminDisplayContext.getSelLayout();
@@ -520,6 +521,19 @@ public class LayoutLookAndFeelDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	private String _getLayoutRootNodeName() {
+		LayoutSet layoutSet = _layoutsAdminDisplayContext.getSelLayoutSet();
+
+		Group group = GroupLocalServiceUtil.fetchGroup(layoutSet.getGroupId());
+
+		if (group == null) {
+			return StringPool.DASH;
+		}
+
+		return group.getLayoutRootNodeName(
+			layoutSet.isPrivateLayout(), _themeDisplay.getLocale());
 	}
 
 	private final CETManager _cetManager;

@@ -12,7 +12,7 @@ buildPluginDescriptor {
 
 dependencies {
 	compile group: "com.puppycrawl.tools", name: "checkstyle", version: "8.29"
-	compile group: "commons-io", name: "commons-io", version: "2.8.0"
+	compile group: "commons-io", name: "commons-io", version: "2.11.0"
 	compile group: "org.freemarker", name: "freemarker", transitive: false, version: "2.3.28"
 
 	compileInclude group: "com.beust", name: "jcommander", version: "1.48"

@@ -3,7 +3,7 @@ dependencies {
 	compileInclude group: "com.netflix.archaius", name: "archaius-core", version: "0.4.1"
 	compileInclude group: "com.netflix.hystrix", name: "hystrix-core", version: "1.5.11"
 	compileInclude group: "commons-configuration", name: "commons-configuration", version: "1.8"
-	compileInclude group: "commons-io", name: "commons-io", version: "2.8.0"
+	compileInclude group: "commons-io", name: "commons-io", version: "2.11.0"
 	compileInclude group: "io.reactivex", name: "rxjava", version: "1.2.0"
 	compileInclude group: "net.minidev", name: "accessors-smart", version: "2.4.2"
 	compileInclude group: "net.minidev", name: "json-smart", version: "2.4.5"

@@ -23,5 +23,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "commons-io", name: "commons-io", version: "2.8.0"
+	testCompile group: "commons-io", name: "commons-io", version: "2.11.0"
 }

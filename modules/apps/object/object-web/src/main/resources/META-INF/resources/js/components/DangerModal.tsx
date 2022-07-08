@@ -24,6 +24,7 @@ export default function DangerModal({
 	observer,
 	onClose,
 	onDelete,
+	placeholder,
 	title,
 	token,
 }: IProps) {
@@ -46,6 +47,7 @@ export default function DangerModal({
 					onChange={({target: {value}}) => {
 						setValue(value);
 					}}
+					placeholder={placeholder}
 					value={value}
 				/>
 			</ClayModal.Body>
@@ -80,6 +82,7 @@ interface IProps {
 	observer: Observer;
 	onClose: () => void;
 	onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	placeholder?: string;
 	title: string;
 	token: string;
 }

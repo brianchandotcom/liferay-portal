@@ -76,6 +76,7 @@ function ModalDeleteObjectDefinition({
 			observer={observer}
 			onClose={onClose}
 			onDelete={() => onDelete(id)}
+			placeholder={Liferay.Language.get('confirm-object-definition-name')}
 			title={Liferay.Language.get('delete-object-definition')}
 			token={name}
 		>

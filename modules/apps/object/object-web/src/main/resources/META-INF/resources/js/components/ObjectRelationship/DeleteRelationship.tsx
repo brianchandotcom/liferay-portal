@@ -53,6 +53,7 @@ function ModalDeleteObjectRelationship({
 			observer={observer}
 			onClose={onClose}
 			onDelete={() => onDelete(objectRelationship.id)}
+			placeholder={Liferay.Language.get('confirm-relationship-name')}
 			title={Liferay.Language.get('delete-relationship')}
 			token={objectRelationship.name}
 		>

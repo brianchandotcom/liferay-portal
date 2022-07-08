@@ -20,6 +20,7 @@ export default function DangerModal({
 	observer,
 	onClose,
 	onDelete,
+	placeholder,
 	title,
 	token,
 }: IProps): JSX.Element;
@@ -29,6 +30,7 @@ interface IProps {
 	observer: Observer;
 	onClose: () => void;
 	onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	placeholder?: string;
 	title: string;
 	token: string;
 }

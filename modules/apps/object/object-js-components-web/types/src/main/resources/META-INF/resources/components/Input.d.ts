@@ -25,6 +25,7 @@ interface IProps
 	id?: string;
 	label?: string;
 	name?: string;
+	placeholder?: string;
 	required?: boolean;
 	type?: 'number' | 'textarea' | 'text' | 'date';
 	value?: string | number | string[];

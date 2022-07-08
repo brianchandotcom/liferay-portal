@@ -17,6 +17,7 @@ package com.liferay.fragment.input.template.parser;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.constants.InfoFormConstants;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.FileInfoFieldType;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.portlet.PortletURL;
@@ -152,15 +155,24 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		if (infoField == null) {
 			return new InputTemplateNode(
 				errorMessage, inputHelpText, inputLabel, name, required,
-				inputShowHelpText, inputShowLabel, "type", "value");
+				inputShowHelpText, inputShowLabel, "type", StringPool.BLANK);
 		}
 
 		InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
+		String value = StringPool.BLANK;
+
+		Map<String, String> formParameterMap =
+			(Map<String, String>)SessionMessages.get(
+				httpServletRequest, InfoFormConstants.INFO_FORM_PARAMETER_MAP);
+
+		if (formParameterMap != null) {
+			value = formParameterMap.get(infoField.getName());
+		}
+
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(
 			errorMessage, inputHelpText, inputLabel, name, required,
-			inputShowHelpText, inputShowLabel, infoFieldType.getName(),
-			"value");
+			inputShowHelpText, inputShowLabel, infoFieldType.getName(), value);
 
 		if (infoFieldType instanceof FileInfoFieldType) {
 			Optional<String> acceptedFileExtensionsOptional =

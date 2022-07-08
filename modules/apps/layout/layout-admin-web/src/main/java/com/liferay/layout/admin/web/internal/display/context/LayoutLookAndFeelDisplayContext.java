@@ -45,6 +45,8 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsUtil;
@@ -419,6 +421,13 @@ public class LayoutLookAndFeelDisplayContext {
 			return null;
 		}
 
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).fastLoad(
+				clientExtensionEntryRel.getTypeSettings()
+			).build();
+
 		return JSONUtil.put(
 			"cetExternalReferenceCode",
 			clientExtensionEntryRel.getCETExternalReferenceCode()
@@ -427,7 +436,14 @@ public class LayoutLookAndFeelDisplayContext {
 		).put(
 			"inheritedLabel", inheritedLabel
 		).put(
+			"loadType",
+			() -> typeSettingsUnicodeProperties.getProperty("loadType", null)
+		).put(
 			"name", cet.getName(_themeDisplay.getLocale())
+		).put(
+			"scriptLocation",
+			() -> typeSettingsUnicodeProperties.getProperty(
+				"scriptLocation", null)
 		);
 	}
 

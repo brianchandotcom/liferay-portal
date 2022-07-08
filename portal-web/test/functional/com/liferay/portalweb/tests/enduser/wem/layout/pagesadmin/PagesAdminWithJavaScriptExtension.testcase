@@ -19,13 +19,13 @@ definition {
 
 		task ("Upload two JavaScript extension files to Documents and Media") {
 			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "First JavaScript Extension",
+				dmDocumentTitle = "Text Color",
 				groupName = "Test Site Name",
 				mimeType = "application/javascript",
 				sourceFileName = "TextColor.js");
 
 			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "Second JavaScript Extension",
+				dmDocumentTitle = "Inner Text",
 				groupName = "Test Site Name",
 				mimeType = "application/javascript",
 				sourceFileName = "InnerText.js");
@@ -33,10 +33,10 @@ definition {
 
 		task ("Get the latest version URL of two documents") {
 			var firstURL = JSONDocument.getLatestVersionURL(
-				dmDocumentTitle = "First JavaScript Extension",
+				dmDocumentTitle = "Text Color",
 				groupName = "Test Site Name");
 			var secondURL = JSONDocument.getLatestVersionURL(
-				dmDocumentTitle = "Second JavaScript Extension",
+				dmDocumentTitle = "Inner Text",
 				groupName = "Test Site Name");
 		}
 

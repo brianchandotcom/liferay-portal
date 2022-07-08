@@ -19,13 +19,13 @@ definition {
 
 		task ("Upload two CSS extension files to Documents and Media") {
 			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "First CSS Extension",
+				dmDocumentTitle = "Font Family",
 				groupName = "Test Site Name",
 				mimeType = "text/css",
 				sourceFileName = "font_family.css");
 
 			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "Second CSS Extension",
+				dmDocumentTitle = "Background Color",
 				groupName = "Test Site Name",
 				mimeType = "text/css",
 				sourceFileName = "background_color.css");
@@ -33,10 +33,10 @@ definition {
 
 		task ("Get the latest version URL of two documents") {
 			var firstURL = JSONDocument.getLatestVersionURL(
-				dmDocumentTitle = "First CSS Extension",
+				dmDocumentTitle = "Font Family",
 				groupName = "Test Site Name");
 			var secondURL = JSONDocument.getLatestVersionURL(
-				dmDocumentTitle = "Second CSS Extension",
+				dmDocumentTitle = "Background Color",
 				groupName = "Test Site Name");
 		}
 

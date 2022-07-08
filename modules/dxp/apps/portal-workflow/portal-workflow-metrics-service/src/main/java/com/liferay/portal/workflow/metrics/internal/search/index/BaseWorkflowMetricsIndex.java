@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
@@ -34,7 +33,6 @@ import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetri
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -76,21 +74,12 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 			});
 	}
 
-	@Activate
-	protected void activate() throws Exception {
-		companyLocalService.forEachCompanyId(
-			companyId -> createIndex(companyId));
-	}
-
 	@Reference(
 		target = ModuleServiceLifecycle.PORTLETS_INITIALIZED, unbind = "-"
 	)
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	@Reference
-	protected CompanyLocalService companyLocalService;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

@@ -358,20 +358,22 @@ public class OpenIdConnectAuthenticationHandlerImpl
 	private List<LangTag> _getLangTags(HttpServletRequest httpServletRequest) {
 		Locale locale = _portal.getLocale(httpServletRequest);
 
-		if (locale != null) {
-			try {
-				return Arrays.asList(new LangTag(locale.getLanguage()));
-			}
-			catch (LangTagException langTagException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to create a lang tag with locale " +
-							locale.getLanguage());
-				}
-			}
+		if (locale == null) {
+			return null;
 		}
 
-		return null;
+		try {
+			return Arrays.asList(new LangTag(locale.getLanguage()));
+		}
+		catch (LangTagException langTagException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to create a lang tag with locale " +
+						locale.getLanguage());
+			}
+
+			return null;
+		}
 	}
 
 	private UserInfo _requestUserInfo(

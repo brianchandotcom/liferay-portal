@@ -61,7 +61,16 @@ request.setAttribute("view_suggestions.jsp-resultRowSplitter", kbCommentResultRo
 request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchContainer);
 %>
 
-<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
+<c:choose>
+	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+		<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
+
+		<div class="kbAdminContent">
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>
 
 <clay:management-toolbar
 	actionDropdownItems="<%= kbSuggestionListManagementToolbarDisplayContext.getActionDropdownItems() %>"
@@ -89,3 +98,7 @@ request.setAttribute("view_suggestions.jsp-searchContainer", kbCommentsSearchCon
 
 	<liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />
 </clay:container-fluid>
+
+<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+	</div>
+</c:if>

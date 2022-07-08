@@ -144,16 +144,21 @@ public class RenderLayoutStructureDisplayContext {
 
 		StringBundler sb = new StringBundler(4);
 
-		String backgroundColorCssClass =
-			styledLayoutStructureItem.getBackgroundColorCssClass();
+		JSONObject itemConfigJSONObject =
+			styledLayoutStructureItem.getItemConfigJSONObject();
+
+		JSONObject stylesJSONObject = itemConfigJSONObject.getJSONObject(
+			"styles");
+
+		String backgroundColorCssClass = stylesJSONObject.getString(
+			"backgroundColor");
 
 		if (_themeColorsCssClasses.contains(backgroundColorCssClass)) {
 			sb.append("bg-");
 			sb.append(backgroundColorCssClass);
 		}
 
-		String textColorCssClass =
-			styledLayoutStructureItem.getTextColorCssClass();
+		String textColorCssClass = stylesJSONObject.getString("textColor");
 
 		if (_themeColorsCssClasses.contains(textColorCssClass)) {
 			sb.append(" text-");

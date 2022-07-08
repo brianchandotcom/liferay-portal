@@ -33,6 +33,7 @@ import com.liferay.layout.page.template.util.JustifyConverter;
 import com.liferay.layout.page.template.util.MarginConverter;
 import com.liferay.layout.page.template.util.PaddingConverter;
 import com.liferay.layout.page.template.util.ShadowConverter;
+import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -141,6 +142,19 @@ public class ContainerLayoutStructureItemMapper
 		};
 	}
 
+	private String _getStyleProperty(
+		JSONObject stylesJSONObject, String propertyKey) {
+
+		String styleValue = stylesJSONObject.getString(propertyKey);
+
+		if (Validator.isNotNull(styleValue)) {
+			return styleValue;
+		}
+
+		return GetterUtil.getString(
+			CommonStylesUtil.getDefaultStyleValue(propertyKey));
+	}
+
 	private FragmentLink _toFragmentLink(
 		JSONObject jsonObject, boolean saveMapping) {
 
@@ -217,6 +231,12 @@ public class ContainerLayoutStructureItemMapper
 	private Layout _toLayout(
 		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
 
+		JSONObject itemConfigJSONObject =
+			containerStyledLayoutStructureItem.getItemConfigJSONObject();
+
+		JSONObject stylesJSONObject = itemConfigJSONObject.getJSONObject(
+			"styles");
+
 		return new Layout() {
 			{
 				setAlign(
@@ -233,8 +253,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setBorderColor(
 					() -> {
-						String borderColor =
-							containerStyledLayoutStructureItem.getBorderColor();
+						String borderColor = _getStyleProperty(
+							stylesJSONObject, "borderColor");
 
 						if (Validator.isNull(borderColor)) {
 							return null;
@@ -244,9 +264,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setBorderRadius(
 					() -> {
-						String borderRadius =
-							containerStyledLayoutStructureItem.
-								getBorderRadius();
+						String borderRadius = _getStyleProperty(
+							stylesJSONObject, "borderRadius");
 
 						if (Validator.isNull(borderRadius)) {
 							return null;
@@ -258,8 +277,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setBorderWidth(
 					() -> {
-						String borderWidth =
-							containerStyledLayoutStructureItem.getBorderWidth();
+						String borderWidth = _getStyleProperty(
+							stylesJSONObject, "borderWidth");
 
 						if (Validator.isNull(borderWidth)) {
 							return null;
@@ -307,9 +326,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setMarginBottom(
 					() -> {
-						String marginBottom =
-							containerStyledLayoutStructureItem.
-								getMarginBottom();
+						String marginBottom = _getStyleProperty(
+							stylesJSONObject, "marginBottom");
 
 						if (Validator.isNull(marginBottom)) {
 							return null;
@@ -321,8 +339,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setMarginLeft(
 					() -> {
-						String marginLeft =
-							containerStyledLayoutStructureItem.getMarginLeft();
+						String marginLeft = _getStyleProperty(
+							stylesJSONObject, "marginLeft");
 
 						if (Validator.isNull(marginLeft)) {
 							return null;
@@ -333,8 +351,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setMarginRight(
 					() -> {
-						String marginRight =
-							containerStyledLayoutStructureItem.getMarginRight();
+						String marginRight = _getStyleProperty(
+							stylesJSONObject, "marginRight");
 
 						if (Validator.isNull(marginRight)) {
 							return null;
@@ -346,8 +364,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setMarginTop(
 					() -> {
-						String marginTop =
-							containerStyledLayoutStructureItem.getMarginTop();
+						String marginTop = _getStyleProperty(
+							stylesJSONObject, "marginTop");
 
 						if (Validator.isNull(marginTop)) {
 							return null;
@@ -358,8 +376,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setOpacity(
 					() -> {
-						String opacity =
-							containerStyledLayoutStructureItem.getOpacity();
+						String opacity = _getStyleProperty(
+							stylesJSONObject, "opacity");
 
 						if (Validator.isNull(opacity)) {
 							return null;
@@ -369,9 +387,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setPaddingBottom(
 					() -> {
-						String paddingBottom =
-							containerStyledLayoutStructureItem.
-								getPaddingBottom();
+						String paddingBottom = _getStyleProperty(
+							stylesJSONObject, "paddingBottom");
 
 						if (Validator.isNull(paddingBottom)) {
 							return null;
@@ -383,8 +400,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setPaddingLeft(
 					() -> {
-						String paddingLeft =
-							containerStyledLayoutStructureItem.getPaddingLeft();
+						String paddingLeft = _getStyleProperty(
+							stylesJSONObject, "paddingLeft");
 
 						if (Validator.isNull(paddingLeft)) {
 							return null;
@@ -396,9 +413,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setPaddingRight(
 					() -> {
-						String paddingRight =
-							containerStyledLayoutStructureItem.
-								getPaddingRight();
+						String paddingRight = _getStyleProperty(
+							stylesJSONObject, "paddingRight");
 
 						if (Validator.isNull(paddingRight)) {
 							return null;
@@ -410,8 +426,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setPaddingTop(
 					() -> {
-						String paddingTop =
-							containerStyledLayoutStructureItem.getPaddingTop();
+						String paddingTop = _getStyleProperty(
+							stylesJSONObject, "paddingTop");
 
 						if (Validator.isNull(paddingTop)) {
 							return null;
@@ -423,8 +439,8 @@ public class ContainerLayoutStructureItemMapper
 					});
 				setShadow(
 					() -> {
-						String shadow =
-							containerStyledLayoutStructureItem.getShadow();
+						String shadow = _getStyleProperty(
+							stylesJSONObject, "shadow");
 
 						if (Validator.isNull(shadow)) {
 							return null;

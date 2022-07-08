@@ -356,6 +356,7 @@ function ExtensionRow({
 					defaultValue={
 						globalJSCET.loadType || DEFAULT_LOAD_TYPE_OPTION
 					}
+					disabled={disabled}
 					onChange={(event) =>
 						updateGlobalJSCET(
 							globalJSCET,

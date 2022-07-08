@@ -176,7 +176,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "site-name");
 
-		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
+		BlogsEntry.viewInlineImage(uploadFileName = "document_2-jpg");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
 
@@ -199,7 +199,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "site-name-staging");
 
-		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
+		BlogsEntry.viewInlineImage(uploadFileName = "document_2-jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -210,7 +210,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "site-name");
 
-		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
+		BlogsEntry.viewInlineImage(uploadFileName = "document_2-jpg");
 	}
 
 	@description = "This ensures that the blog small image from a depot can be removed and republished when enabling local staging."
@@ -954,7 +954,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "site-name-staging");
 
-		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
+		BlogsEntry.viewInlineImage(uploadFileName = "document_2-jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -965,7 +965,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "site-name");
 
-		BlogsEntry.viewInlineImage(uploadFileName = "Document_2.jpg");
+		BlogsEntry.viewInlineImage(uploadFileName = "document_2-jpg");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Test Page",
@@ -991,7 +991,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "site-name-staging");
 
-		BlogsEntry.viewInlineImage(uploadFileName = "Document_1.jpg");
+		BlogsEntry.viewInlineImage(uploadFileName = "document_1-jpg");
 
 		Staging.gotoPublishToLive();
 
@@ -1002,7 +1002,7 @@ definition {
 			layoutName = "Test Page",
 			siteURLKey = "site-name");
 
-		BlogsEntry.viewInlineImage(uploadFileName = "Document_1.jpg");
+		BlogsEntry.viewInlineImage(uploadFileName = "document_1-jpg");
 	}
 
 	@description = "This ensures that the blog small image from a depot can be edited and republished when enabling local staging."

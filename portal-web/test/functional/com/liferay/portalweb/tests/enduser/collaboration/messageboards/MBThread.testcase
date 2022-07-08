@@ -86,7 +86,7 @@ definition {
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Body",
-			threadBodyImageName = "Document_4.jpg",
+			threadBodyImageName = "document_4-jpg",
 			threadSubject = "MB Thread Message Subject");
 	}
 
@@ -111,7 +111,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewLinkedEntry(
-			imageFileName = "Document_1.jpg",
+			imageFileName = "document_1-jpg",
 			linkedEntry = "Link to Document");
 	}
 

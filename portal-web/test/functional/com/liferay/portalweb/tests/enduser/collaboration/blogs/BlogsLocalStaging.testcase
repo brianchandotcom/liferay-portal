@@ -426,7 +426,7 @@ definition {
 
 		BlogsEntry.viewEntryEmbeddedImage(
 			entryContent = "Blogs Entry Content",
-			imageSourceURL = "Document_1.jpg");
+			imageSourceURL = "document_1");
 	}
 
 	@description = "This test covers LPS-77658. It publishes a blog entry to live via Single Asset Publishing."

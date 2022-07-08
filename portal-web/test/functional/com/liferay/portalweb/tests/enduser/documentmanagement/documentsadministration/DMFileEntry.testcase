@@ -2781,7 +2781,7 @@ definition {
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
-		BlogsEntry.viewInlineImage(uploadFileName = "static.gif");
+		BlogsEntry.viewInlineImage(uploadFileName = "static-gif");
 	}
 
 	@description = "This test covers LPS-144687. It validates that a temp zip is not created if NoSuchFileException occurs during a download."

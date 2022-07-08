@@ -125,7 +125,7 @@ definition {
 			uploadFileName = "Document_1");
 
 		BlogsEntry.editCoverImage(
-			coverImageName = "Document_2.jpg",
+			coverImageName = "document_2-jpg",
 			navTab = "Documents and Media",
 			uploadFileName = "Document_2.jpg");
 
@@ -353,7 +353,7 @@ definition {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
 		Blogs.addEntryWithUploadedCoverImage(
-			coverImageName = "Document_1",
+			coverImageName = "document_1",
 			entryContent = "Blogs Entry Content new",
 			entrySubtitle = "Blogs Entry Subtitle new",
 			entryTitle = "Blogs Entry Title new",

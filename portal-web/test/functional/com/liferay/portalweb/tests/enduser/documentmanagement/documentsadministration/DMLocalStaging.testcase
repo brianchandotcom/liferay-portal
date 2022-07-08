@@ -2182,12 +2182,6 @@ definition {
 			pageName = "Staging DM Page",
 			siteName = "Site Name");
 
-		var siteId = Site.getSiteId();
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
 		DMDocument.viewPG(
 			averageRatingStarCount = "0.0",
 			dmDocumentDescription = "DM Document Description",
@@ -2205,8 +2199,8 @@ definition {
 			tagNameList = "tag1");
 
 		DMDocument.viewLatestVersionURL(
-			dmDocumentFileName = "Document_1.jpg",
-			siteId = "${siteId}");
+			dmDocumentFileName = "document_1",
+			siteName = "site-name");
 
 		DMDocument.viewWebDAVURL(
 			dmDocumentFileName = "Document_1.jpg",
@@ -2254,8 +2248,8 @@ definition {
 			tagNameList = "tag1");
 
 		DMDocument.viewLatestVersionURL(
-			dmDocumentFileName = "Document_3Edit.png",
-			siteId = "${siteId}");
+			dmDocumentFileName = "document_1",
+			siteName = "site-name");
 
 		DMDocument.viewWebDAVURL(
 			dmDocumentFileName = "Document_3Edit.png",

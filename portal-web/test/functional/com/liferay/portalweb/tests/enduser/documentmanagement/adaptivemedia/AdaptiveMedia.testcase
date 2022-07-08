@@ -37,7 +37,7 @@ definition {
 			imageFileName = "high_resolution_photo.jpg",
 			navTab = "Documents and Media");
 
-		AdaptiveMedia.viewImageVariantURL(imageName = "high_resolution_photo.jpg");
+		AdaptiveMedia.viewImageVariantURL(imageName = "high_resolution_photo-jpg");
 
 		PortletEntry.publish();
 	}
@@ -67,7 +67,7 @@ definition {
 			key_fieldLabel = "content",
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
-		AdaptiveMedia.viewImageVariantURL(imageName = "high_resolution_photo.jpg");
+		AdaptiveMedia.viewImageVariantURL(imageName = "high_resolution_photo-jpg");
 	}
 
 	@description = "This ensures that the SVG image can be added and optimized in a blog entry."
@@ -91,7 +91,7 @@ definition {
 			imageFileName = "Document_1.svg",
 			navTab = "Documents and Media");
 
-		AdaptiveMedia.viewImageVariantURL(imageName = "Document_1.svg");
+		AdaptiveMedia.viewImageVariantURL(imageName = "document_1-svg");
 
 		PortletEntry.publish();
 	}

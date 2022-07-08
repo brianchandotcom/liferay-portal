@@ -53,6 +53,11 @@
 	"confirm-the-final-group-id-used-to-create-the-customer-s-analytics-cloud-environments": "Confirma the final Group ID used to create the customer&apos;s Analytics Cloud environments.",
 	"contact-the-support-team": "contact the Support team.",
 	"copied-to-clipboard": "copied to clipboard",
+<<<<<<< Updated upstream
+=======
+	"csp": "CSP",
+>>>>>>> Stashed changes
+	"csp-up-to-10-k-users": "CSP - Up to 10K Users",
 	"current": "Current",
 	"data-center-location": "Data Center Location",
 	"deactivate": "Deactivate",
@@ -140,6 +145,7 @@
 	"license-type": "License Type",
 	"liferay-contact": "Liferay Contact",
 	"liferay-dxp-version": "Liferay DXP Version",
+	"liferay-experience-cloud": "Liferay Experience Cloud",
 	"liferay-sales": "Liferay Sales",
 	"liferay-support": "Liferay Support",
 	"limited": "Limited",
@@ -199,6 +205,7 @@
 	"previous": "Previous",
 	"primary-data-center-region": "Primary Data Center Region",
 	"prod": "Prod",
+	"prod-instance-s": "Prod Instance S",
 	"product": "Product",
 	"product-activation": "Product Activation",
 	"product-version": "Product Version",
@@ -326,7 +333,5 @@
 	"your-dxp-cloud-environments-are-being-set-up-and-will-be-available-soon": "Your DXP Cloud environments are being set up and will be available soon",
 	"your-dxp-cloud-environments-are-ready": "Your DXP Cloud environments are ready.",
 	"your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details": "Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details.",
-	"your-request-completed-successfully": "Your request completed successfully.",
-	"csp-up-to-10-k-users": "CSP - Up to 10K Users",
-	"prod-instance-s": "Prod Instance S"
+	"your-request-completed-successfully": "Your request completed successfully."
 }

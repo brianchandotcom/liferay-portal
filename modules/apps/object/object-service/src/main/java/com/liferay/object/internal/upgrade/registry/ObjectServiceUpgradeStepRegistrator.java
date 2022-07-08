@@ -27,6 +27,7 @@ import com.liferay.object.internal.upgrade.v3_0_0.ObjectFieldSettingUpgradeProce
 import com.liferay.object.internal.upgrade.v3_17_0.util.ObjectStateFlowTable;
 import com.liferay.object.internal.upgrade.v3_17_0.util.ObjectStateTable;
 import com.liferay.object.internal.upgrade.v3_17_0.util.ObjectStateTransitionTable;
+import com.liferay.object.internal.upgrade.v3_19_0.util.ObjectFilterTable;
 import com.liferay.object.internal.upgrade.v3_2_0.ObjectValidationRuleUpgradeProcess;
 import com.liferay.object.internal.upgrade.v3_3_0.util.ObjectViewFilterColumnTable;
 import com.liferay.object.internal.upgrade.v3_4_0.ObjectActionUpgradeProcess;
@@ -159,6 +160,8 @@ public class ObjectServiceUpgradeStepRegistrator
 			"3.17.0", "3.18.0",
 			new com.liferay.object.internal.upgrade.v3_18_0.
 				ObjectFieldUpgradeProcess(_portalUUID));
+
+		registry.register("3.18.0", "3.19.0", ObjectFilterTable.create());
 	}
 
 	@Reference

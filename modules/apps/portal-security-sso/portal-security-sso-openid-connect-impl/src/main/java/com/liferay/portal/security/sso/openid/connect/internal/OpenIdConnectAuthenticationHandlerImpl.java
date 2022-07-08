@@ -259,29 +259,30 @@ public class OpenIdConnectAuthenticationHandlerImpl
 	}
 
 	private URI _getAuthenticationRequestURI(
-			URI authEndpoint, String authRequestParametersJSON, String clientId,
+			URI authenticationEndpoint,
+			String authenticationRequestParametersJSON, String clientId,
 			Map<String, Object> runtimeRequestParameters)
 		throws Exception {
 
-		JSONObject authRequestParametersJSONObject = JSONObjectUtils.parse(
-			authRequestParametersJSON);
+		JSONObject authenticationRequestParametersJSONObject =
+			JSONObjectUtils.parse(authenticationRequestParametersJSON);
 
 		AuthenticationRequest.Builder builder =
 			new AuthenticationRequest.Builder(
 				OpenIdConnectRequestParametersUtil.getResponseType(
-					authRequestParametersJSONObject),
+					authenticationRequestParametersJSONObject),
 				OpenIdConnectRequestParametersUtil.getScope(
-					authRequestParametersJSONObject),
+					authenticationRequestParametersJSONObject),
 				new ClientID(clientId),
 				(URI)runtimeRequestParameters.get("redirect_uri"));
 
 		builder = builder.endpointURI(
-			authEndpoint
+			authenticationEndpoint
 		).nonce(
 			(Nonce)runtimeRequestParameters.get("nonce")
 		).resources(
 			OpenIdConnectRequestParametersUtil.getResources(
-				authRequestParametersJSONObject)
+				authenticationRequestParametersJSONObject)
 		).state(
 			(State)runtimeRequestParameters.get("state")
 		).uiLocales(
@@ -289,7 +290,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		);
 
 		OpenIdConnectRequestParametersUtil.consumeCustomRequestParameters(
-			authRequestParametersJSONObject, builder::customParameter);
+			authenticationRequestParametersJSONObject,
+			builder::customParameter);
 
 		AuthenticationRequest authenticationRequest = builder.build();
 

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -85,12 +86,20 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 
 		LayoutSet publicLayoutSet = _group.getPublicLayoutSet();
 
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"scriptLocation", "head"
+			).build();
+
 		_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 			TestPropsValues.getUserId(),
 			_portal.getClassNameId(LayoutSet.class),
 			publicLayoutSet.getLayoutSetId(),
 			layoutSetGlobalJSClientExtensionEntry.getExternalReferenceCode(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, StringPool.BLANK);
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
+			typeSettingsUnicodeProperties.toString());
 
 		String masterLayoutGlobalJSURL = _getRandomURL();
 
@@ -109,7 +118,8 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 			TestPropsValues.getUserId(), _portal.getClassNameId(Layout.class),
 			masterLayoutPageTemplateEntry.getPlid(),
 			masterLayoutGlobalJSClientExtensionEntry.getExternalReferenceCode(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, StringPool.BLANK);
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
+			typeSettingsUnicodeProperties.toString());
 
 		String layoutGlobalJSURL = _getRandomURL();
 
@@ -126,7 +136,8 @@ public class ClientExtensionTopJSDynamicIncludeTest {
 			TestPropsValues.getUserId(), _portal.getClassNameId(Layout.class),
 			layout.getPlid(),
 			layoutGlobalJSClientExtensionEntry.getExternalReferenceCode(),
-			ClientExtensionEntryConstants.TYPE_GLOBAL_JS, StringPool.BLANK);
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
+			typeSettingsUnicodeProperties.toString());
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

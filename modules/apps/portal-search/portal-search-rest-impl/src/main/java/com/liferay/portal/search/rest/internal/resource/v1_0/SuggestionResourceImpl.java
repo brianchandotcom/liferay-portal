@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.rest.internal.resource.v1_0;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration;
 import com.liferay.portal.search.rest.dto.v1_0.Suggestion;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorConfiguration;
 import com.liferay.portal.search.rest.dto.v1_0.SuggestionsContributorResults;
@@ -42,6 +44,7 @@ import com.liferay.portlet.RenderRequestFactory;
 import com.liferay.portlet.RenderResponseFactory;
 
 import java.util.Collections;
+import java.util.Map;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
@@ -50,6 +53,7 @@ import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -58,6 +62,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Petteri Karttunen
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration",
 	properties = "OSGI-INF/liferay/rest/v1_0/suggestion.properties",
 	scope = ServiceScope.PROTOTYPE, service = SuggestionResource.class
 )
@@ -71,7 +76,9 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 				suggestionsContributorConfigurations)
 		throws Exception {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152597")) ||
+		if (!_searchSuggestionsCompanyConfiguration.
+				enableSuggestionsEndpoint() ||
+			!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-152597")) ||
 			(suggestionsContributorConfigurations == null)) {
 
 			return Page.of(Collections.emptyList());
@@ -110,6 +117,13 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 								Suggestion.class);
 						}
 					}));
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_searchSuggestionsCompanyConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SearchSuggestionsCompanyConfiguration.class, properties);
 	}
 
 	private LiferayRenderRequest _createLiferayRenderRequest(
@@ -224,6 +238,9 @@ public class SuggestionResourceImpl extends BaseSuggestionResourceImpl {
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	private volatile SearchSuggestionsCompanyConfiguration
+		_searchSuggestionsCompanyConfiguration;
 
 	@Reference
 	private SuggestionsRetriever _suggestionsRetriever;

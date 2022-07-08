@@ -16,6 +16,7 @@ package com.liferay.fragment.web.internal.handler;
 
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.exception.FragmentEntryContentException;
+import com.liferay.fragment.exception.FragmentEntryFieldTypesException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -62,6 +63,11 @@ public class FragmentEntryExceptionRequestHandler {
 		}
 		else if (portalException instanceof FragmentEntryContentException) {
 			errorMessage = portalException.getLocalizedMessage();
+		}
+		else if (portalException instanceof FragmentEntryFieldTypesException) {
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(),
+				"please-provide-a-valid-field-types-for-the-fragment");
 		}
 		else if (portalException instanceof FragmentEntryNameException) {
 			errorMessage = LanguageUtil.get(

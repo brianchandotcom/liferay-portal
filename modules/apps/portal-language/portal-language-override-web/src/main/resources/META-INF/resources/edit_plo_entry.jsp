@@ -142,7 +142,7 @@ renderResponse.setTitle(editDisplayContext.getPageTitle());
 						%>
 
 							<div class="form-group" dir="<%= LanguageUtil.get(request, "lang.dir") %>" lang="<%= LocaleUtil.toW3cLanguageId(availableLocale) %>">
-								<aui:input label="<%= TextFormatter.format(languageId, TextFormatter.O) %>" name='<%= "value_" + availableLocale %>' value="<%= valuesLocalizedValuesMap.get(availableLocale) %>" wrappedField="<%= true %>" />
+								<aui:input dir='<%= LanguageUtil.get(availableLocale, "lang.dir") %>' label="<%= TextFormatter.format(languageId, TextFormatter.O) %>" name='<%= "value_" + availableLocale %>' value="<%= valuesLocalizedValuesMap.get(availableLocale) %>" wrappedField="<%= true %>" />
 
 								<c:if test="<%= editDisplayContext.isShowOriginalValues() %>">
 									<div class="form-feedback-group">

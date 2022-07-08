@@ -1,0 +1,210 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-150277=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a company Object with a Decimal field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Decimal",
+				fieldLabelName = "Tax",
+				fieldName = "tax",
+				fieldType = "Double",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+		}
+
+		task ("Enable Inputs Fragment collection in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Disable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
+			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
+		}
+	}
+
+	@description = "This is a test for LPS-155169. The Numeric Input only allow numbers and some special characters."
+	@priority = "5"
+	test ViewAllowedCharacters {
+		property test.name.skip.portal.instance = "NumericInput#ViewAllowedCharacters";
+
+		task ("Given a user has a content page with a Numeric Input inside Form Container") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Map the Form Container to new Object") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add a Numeric Input fragment into the Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Numeric Input");
+			}
+
+			task ("Map the Numeric Input fragment to the decimal field") {
+				PageEditor.editInput(
+					field = "Tax",
+					fragmentName = "Numeric Input");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the user accesses to the content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the user can only be allowed to type numbers and some special characters") {
+			task ("Type -123.456789 in Numeric Input") {
+				Type(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "-123.456789");
+
+				AssertTextEquals(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "-123.456789");
+			}
+
+			task ("Type 10e5 in Numeric Input") {
+				Type(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "10e5");
+
+				AssertTextEquals(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "10e5");
+			}
+
+			task ("Type 3E2 in Numeric Input") {
+				Type(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "3E2");
+
+				AssertTextEquals(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "3E2");
+			}
+
+			task ("Type China#& in Numeric Input") {
+				Refresh();
+
+				Type.sendKeys(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "China#&");
+
+				AssertTextEquals(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "");
+			}
+
+			task ("Type 12@12 in Numeric Input") {
+				Refresh();
+
+				Type.sendKeys(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "12@12");
+
+				AssertTextEquals(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "1212");
+			}
+
+			task ("Type 1.2? in Numeric Input") {
+				Refresh();
+
+				Type.sendKeys(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "1.2?");
+
+				AssertTextEquals(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "1.2");
+			}
+
+			task ("Type Ch1n4 in Numeric Input") {
+				Refresh();
+
+				Type.sendKeys(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "Ch1n4");
+
+				AssertTextEquals(
+					key_text = "Tax",
+					locator1 = "TextInput#ANY",
+					value1 = "14");
+			}
+		}
+	}
+
+}

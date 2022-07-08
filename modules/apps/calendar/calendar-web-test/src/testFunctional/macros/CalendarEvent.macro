@@ -12,9 +12,7 @@ definition {
 
 			Click(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED");
 
-			Pause(locator1 = "3000");
-
-			AssertElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED");
+			WaitForElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED");
 		}
 		else if (IsElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED")) {
 			ScrollWebElementIntoView(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED");
@@ -26,9 +24,7 @@ definition {
 
 				Click(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED");
 
-				Pause(locator1 = "3000");
-
-				AssertElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED");
+				WaitForElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED");
 			}
 		}
 	}
@@ -911,7 +907,7 @@ definition {
 
 	macro editTitle {
 		while (IsNotEditable(locator1 = "TextInput#TITLE")) {
-			Pause(locator1 = "5000");
+			WaitForElementPresent(locator1 = "TextInput#TITLE");
 		}
 
 		PortletEntry.inputTitle(title = "${eventTitle}");
@@ -1671,8 +1667,6 @@ definition {
 
 		Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");
 
-		Pause(locator1 = "5000");
-
 		if (IsElementPresent(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT")) {
 			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");
 		}
@@ -1911,8 +1905,6 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 		var key_siteCalendarName = "${siteCalendarName}";
 		var key_siteName = "${siteName}";
-
-		Pause(locator1 = "5000");
 
 		if (IsElementNotPresent(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT")) {
 			Click(locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR");

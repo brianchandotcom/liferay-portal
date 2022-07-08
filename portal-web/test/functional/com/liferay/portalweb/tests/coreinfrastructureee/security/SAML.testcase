@@ -824,6 +824,8 @@ definition {
 		task ("execute IdP initiated SSO at http://www.able.com:9080") {
 			Navigator.openURL();
 
+			// This pause is waiting to test how the login behaves when timeout is reached. See LRQA-35814 for more details.
+
 			Pause(locator1 = "60000");
 
 			SAML.executeIdPInitiatedSSO(

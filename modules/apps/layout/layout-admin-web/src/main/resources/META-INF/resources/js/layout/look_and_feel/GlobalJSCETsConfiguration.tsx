@@ -187,12 +187,12 @@ export default function GlobalJSCETsConfiguration({
 								{Liferay.Language.get('name')}
 							</ClayTable.Cell>
 
-							<ClayTable.Cell expanded headingCell>
-								{Liferay.Language.get('load-type')}
+							<ClayTable.Cell headingCell noWrap>
+								{Liferay.Language.get('inherited')}
 							</ClayTable.Cell>
 
 							<ClayTable.Cell headingCell noWrap>
-								{Liferay.Language.get('inherited')}
+								{Liferay.Language.get('load-type')}
 							</ClayTable.Cell>
 
 							<ClayTable.Cell headingCell>
@@ -347,11 +347,11 @@ function ExtensionRow({
 		>
 			<ClayTable.Cell>{order}</ClayTable.Cell>
 
-			<ClayTable.Cell expanded headingTitle>
-				{globalJSCET.name}
-			</ClayTable.Cell>
+			<ClayTable.Cell expanded>{globalJSCET.name}</ClayTable.Cell>
 
-			<ClayTable.Cell expanded>
+			<ClayTable.Cell noWrap>{globalJSCET.inheritedLabel}</ClayTable.Cell>
+
+			<ClayTable.Cell noWrap>
 				<ClaySelectWithOption
 					defaultValue={
 						globalJSCET.loadType || DEFAULT_LOAD_TYPE_OPTION
@@ -368,8 +368,6 @@ function ExtensionRow({
 					sizing="sm"
 				/>
 			</ClayTable.Cell>
-
-			<ClayTable.Cell noWrap>{globalJSCET.inheritedLabel}</ClayTable.Cell>
 
 			<ClayTable.Cell>
 				{disabled ? null : (

@@ -26,13 +26,14 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -402,6 +403,30 @@ public class LayoutLookAndFeelDisplayContext {
 		return false;
 	}
 
+	private JSONObject _getCETJSONObject(
+		ClientExtensionEntryRel clientExtensionEntryRel, String inheritedFrom) {
+
+		CETManager cetManager = (CETManager)_httpServletRequest.getAttribute(
+			CETManager.class.getName());
+
+		CET cet = cetManager.getCET(
+			_themeDisplay.getCompanyId(),
+			clientExtensionEntryRel.getCETExternalReferenceCode());
+
+		if (cet == null) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"cetExternalReferenceCode",
+			clientExtensionEntryRel.getCETExternalReferenceCode()
+		).put(
+			"inheritedFrom", inheritedFrom
+		).put(
+			"name", cet.getName(_themeDisplay.getLocale())
+		);
+	}
+
 	private String _getClearFaviconButtonTitle() {
 		Layout selLayout = _layoutsAdminDisplayContext.getSelLayout();
 
@@ -437,32 +462,52 @@ public class LayoutLookAndFeelDisplayContext {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		if (Objects.equals(className, Layout.class.getName())) {
+			LayoutSet layoutSet = _layoutsAdminDisplayContext.getSelLayoutSet();
+
+			List<ClientExtensionEntryRel> clientExtensionEntryRels =
+				ClientExtensionEntryRelLocalServiceUtil.
+					getClientExtensionEntryRels(
+						PortalUtil.getClassNameId(LayoutSet.class),
+						layoutSet.getLayoutSetId(), type);
+
+			for (ClientExtensionEntryRel clientExtensionEntryRel :
+					clientExtensionEntryRels) {
+
+				jsonArray.put(
+					() -> _getCETJSONObject(
+						clientExtensionEntryRel, "layout-set"));
+			}
+
+			Layout layout = _layoutsAdminDisplayContext.getSelLayout();
+
+			if ((layout != null) && (layout.getMasterLayoutPlid() > 0)) {
+				clientExtensionEntryRels =
+					ClientExtensionEntryRelLocalServiceUtil.
+						getClientExtensionEntryRels(
+							PortalUtil.getClassNameId(Layout.class),
+							layout.getMasterLayoutPlid(), type);
+
+				for (ClientExtensionEntryRel clientExtensionEntryRel :
+						clientExtensionEntryRels) {
+
+					jsonArray.put(
+						() -> _getCETJSONObject(
+							clientExtensionEntryRel, "master-layout"));
+				}
+			}
+		}
+
 		List<ClientExtensionEntryRel> clientExtensionEntryRels =
 			ClientExtensionEntryRelLocalServiceUtil.getClientExtensionEntryRels(
-				PortalUtil.getClassNameId(className), classPK, type,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		CETManager cetManager = (CETManager)_httpServletRequest.getAttribute(
-			CETManager.class.getName());
+				PortalUtil.getClassNameId(className), classPK, type);
 
 		for (ClientExtensionEntryRel clientExtensionEntryRel :
 				clientExtensionEntryRels) {
 
-			CET cet = cetManager.getCET(
-				_themeDisplay.getCompanyId(),
-				clientExtensionEntryRel.getCETExternalReferenceCode());
-
-			if (cet == null) {
-				continue;
-			}
-
 			jsonArray.put(
-				JSONUtil.put(
-					"cetExternalReferenceCode",
-					clientExtensionEntryRel.getCETExternalReferenceCode()
-				).put(
-					"name", cet.getName(_themeDisplay.getLocale())
-				));
+				() -> _getCETJSONObject(
+					clientExtensionEntryRel, StringPool.BLANK));
 		}
 
 		return jsonArray;

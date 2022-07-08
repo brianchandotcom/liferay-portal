@@ -181,6 +181,35 @@ public class ResourcePermissionLocalServiceUtil {
 	}
 
 	/**
+	 * Adds resources for the entity with the name and primary key string,
+	 * always creating a resource at the individual scope and only creating
+	 * resources at the group, group template, and company scope if such
+	 * resources don't already exist.
+	 *
+	 * @param companyId the primary key of the portal instance
+	 * @param groupId the primary key of the group
+	 * @param userId the primary key of the user adding the resources
+	 * @param name a name for the resource, which should be a portlet ID if the
+	 resource is a portlet or the resource's class name otherwise
+	 * @param primKey the primary key string of the resource instance,
+	 optionally an empty string if no instance exists
+	 * @param portletActions whether to associate portlet actions with the
+	 resource
+	 * @param serviceContext the service context to be applied. Can set group
+	 and guest permissions.
+	 */
+	public static void addResourcePermissions(
+			long companyId, long groupId, long userId, String name,
+			String primKey, boolean portletActions,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		getService().addResourcePermissions(
+			companyId, groupId, userId, name, primKey, portletActions,
+			serviceContext);
+	}
+
+	/**
 	 * Grants the role permissions at the scope to perform the actions on all
 	 * resources of the type. Existing actions are retained.
 	 *

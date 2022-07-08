@@ -190,6 +190,16 @@ public class ResourceLocalServiceUtil {
 			addGroupPermissions, addGuestPermissions);
 	}
 
+	public static void addResources(
+			long companyId, long groupId, long userId, String name,
+			long primKey, boolean portletActions, ServiceContext serviceContext)
+		throws PortalException {
+
+		getService().addResources(
+			companyId, groupId, userId, name, primKey, portletActions,
+			serviceContext);
+	}
+
 	/**
 	 * Adds resources for the entity with the name and primary key string,
 	 * always creating a resource at the individual scope and only creating

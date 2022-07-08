@@ -192,6 +192,11 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws PortalException;
 
 	public AssetEntry updateAsset(
+			long userId, FileEntry fileEntry, FileVersion fileVersion,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public AssetEntry updateAsset(
 			long userId, Folder folder, long[] assetCategoryIds,
 			String[] assetTagNames, long[] assetLinkEntryIds)
 		throws PortalException;

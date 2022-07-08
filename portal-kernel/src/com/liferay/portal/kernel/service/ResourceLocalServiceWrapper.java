@@ -193,6 +193,17 @@ public class ResourceLocalServiceWrapper
 			addGroupPermissions, addGuestPermissions);
 	}
 
+	@Override
+	public void addResources(
+			long companyId, long groupId, long userId, java.lang.String name,
+			long primKey, boolean portletActions, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_resourceLocalService.addResources(
+			companyId, groupId, userId, name, primKey, portletActions,
+			serviceContext);
+	}
+
 	/**
 	 * Adds resources for the entity with the name and primary key string,
 	 * always creating a resource at the individual scope and only creating

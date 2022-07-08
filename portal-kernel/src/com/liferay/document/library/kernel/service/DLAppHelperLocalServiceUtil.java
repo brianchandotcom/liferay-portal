@@ -307,6 +307,17 @@ public class DLAppHelperLocalServiceUtil {
 
 	public static com.liferay.asset.kernel.model.AssetEntry updateAsset(
 			long userId,
+			com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+			com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateAsset(
+			userId, fileEntry, fileVersion, serviceContext);
+	}
+
+	public static com.liferay.asset.kernel.model.AssetEntry updateAsset(
+			long userId,
 			com.liferay.portal.kernel.repository.model.Folder folder,
 			long[] assetCategoryIds, String[] assetTagNames,
 			long[] assetLinkEntryIds)

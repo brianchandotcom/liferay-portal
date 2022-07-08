@@ -14,6 +14,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -33,9 +35,18 @@ import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.service.impl.GroupLocalServiceImpl;
+import com.liferay.portal.util.PortalInstances;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.Iterator;
 import java.util.List;
@@ -50,7 +61,80 @@ public class VerifyGroup extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-157670"))) {
+			verifyOrganizationNames();
+			verifySites();
+			verifyTree();
+		}
+
 		verifyStagedGroups();
+	}
+
+	protected void verifyOrganizationNames() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("select groupId, name from Group_ where name like '%");
+			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+			sb.append("%' and name not like '%");
+			sb.append(GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+			sb.append("'");
+
+			try (PreparedStatement preparedStatement1 =
+					connection.prepareStatement(sb.toString());
+				PreparedStatement preparedStatement2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update Group_ set name = ? where groupId = ?");
+				ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+				while (resultSet.next()) {
+					String name = resultSet.getString("name");
+
+					if (name.endsWith(
+							GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX) ||
+						name.endsWith(
+							GroupLocalServiceImpl.
+								ORGANIZATION_STAGING_SUFFIX)) {
+
+						continue;
+					}
+
+					int pos = name.indexOf(
+						GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX);
+
+					pos = name.indexOf(" ", pos + 1);
+
+					String newName =
+						name.substring(pos + 1) +
+							GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
+
+					preparedStatement2.setString(1, newName);
+
+					long groupId = resultSet.getLong("groupId");
+
+					preparedStatement2.setLong(2, groupId);
+
+					preparedStatement2.addBatch();
+				}
+
+				preparedStatement2.executeBatch();
+			}
+		}
+	}
+
+	protected void verifySites() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long organizationClassNameId = PortalUtil.getClassNameId(
+				Organization.class);
+
+			runSQL(
+				StringBundler.concat(
+					"update Group_ set site = [$TRUE$] where classNameId = ",
+					String.valueOf(organizationClassNameId),
+					" and site = [$FALSE$] and exists (select 1 from Layout ",
+					"where Layout.groupId = Group_.groupId)"));
+		}
 	}
 
 	protected void verifyStagedGroups() throws Exception {
@@ -266,6 +350,14 @@ public class VerifyGroup extends VerifyProcess {
 			stagingGroup.getGroupId());
 	}
 
+	protected void verifyTree() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_companyLocalService.forEachCompanyId(
+				companyId -> GroupLocalServiceUtil.rebuildTree(companyId),
+				PortalInstances.getCompanyIdsBySQL());
+		}
+	}
+
 	private static final String[] _LEGACY_STAGED_PORTLET_TYPE_SETTINGS_KEYS = {
 		"staged-portlet_39", "staged-portlet_54", "staged-portlet_56",
 		"staged-portlet_59", "staged-portlet_107", "staged-portlet_108",
@@ -273,5 +365,7 @@ public class VerifyGroup extends VerifyProcess {
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(VerifyGroup.class);
+
+	private CompanyLocalService _companyLocalService;
 
 }

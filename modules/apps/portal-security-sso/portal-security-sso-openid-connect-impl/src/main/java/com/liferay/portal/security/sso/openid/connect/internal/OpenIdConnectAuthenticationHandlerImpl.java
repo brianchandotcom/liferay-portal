@@ -69,7 +69,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -339,22 +339,6 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		}
 	}
 
-	private URI _getLoginRedirectURI(HttpServletRequest httpServletRequest) {
-		try {
-			return new URI(
-				StringBundler.concat(
-					_portal.getPortalURL(httpServletRequest),
-					_portal.getPathContext(),
-					OpenIdConnectConstants.REDIRECT_URL_PATTERN));
-		}
-		catch (URISyntaxException uriSyntaxException) {
-			throw new SystemException(
-				"Unable to generate OpenId Connect login redirect URI: " +
-					uriSyntaxException.getMessage(),
-				uriSyntaxException);
-		}
-	}
-
 	private List<LangTag> _getLangTags(HttpServletRequest httpServletRequest) {
 		Locale locale = _portal.getLocale(httpServletRequest);
 
@@ -373,6 +357,22 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			}
 
 			return null;
+		}
+	}
+
+	private URI _getLoginRedirectURI(HttpServletRequest httpServletRequest) {
+		try {
+			return new URI(
+				StringBundler.concat(
+					_portal.getPortalURL(httpServletRequest),
+					_portal.getPathContext(),
+					OpenIdConnectConstants.REDIRECT_URL_PATTERN));
+		}
+		catch (URISyntaxException uriSyntaxException) {
+			throw new SystemException(
+				"Unable to generate OpenId Connect login redirect URI: " +
+					uriSyntaxException.getMessage(),
+				uriSyntaxException);
 		}
 	}
 

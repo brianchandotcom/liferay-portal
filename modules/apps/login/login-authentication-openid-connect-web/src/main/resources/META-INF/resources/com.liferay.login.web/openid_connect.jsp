@@ -38,7 +38,7 @@
 			String clientName = jsonObject.getString("client_name", null);
 
 			if (clientName == null) {
-				clientName = oAuthClientEntry.getClientId() + " at provider: " + oAuthClientEntry.getAuthServerWellKnownURI();
+				clientName = oAuthClientEntry.getClientId() + " at Provider: " + oAuthClientEntry.getAuthServerWellKnownURI();
 			}
 		%>
 

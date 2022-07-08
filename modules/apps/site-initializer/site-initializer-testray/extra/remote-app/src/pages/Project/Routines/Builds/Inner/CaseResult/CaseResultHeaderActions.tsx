@@ -26,15 +26,21 @@ import {Liferay} from '../../../../../../services/liferay';
 import {TEST_STATUS} from '../../../../../../util/constants';
 import CaseResultAssignModal from './CaseResultAssignModal';
 
+const userId = Number(Liferay.ThemeDisplay.getUserId());
+
 const CaseResultHeaderActions: React.FC<{
 	caseResult: TestrayCaseResult;
 	refetch: () => void;
 }> = ({caseResult, refetch}) => {
 	const {onAssignTo, onAssignToMe, onRemoveAssign} = useAssignCaseResult();
+	const {modal} = useFormModal({
+		onSave: (user: UserAccount) =>
+			onAssignTo(caseResult, user.id).then(refetch),
+	});
 	const navigate = useNavigate();
 
-	const userId = Number(Liferay.ThemeDisplay.getUserId());
 	const assignedUserId = caseResult.user?.id || 0;
+	const isCaseResultAssignedToMe = caseResult.user?.id === userId;
 	const isReopened = ![
 		TEST_STATUS.Blocked,
 		TEST_STATUS.Failed,
@@ -44,13 +50,14 @@ const CaseResultHeaderActions: React.FC<{
 
 	const workflowDisabled = assignedUserId <= 0 || assignedUserId !== userId;
 
-	const {modal} = useFormModal({
-		onSave: (user: UserAccount) =>
-			onAssignTo(caseResult, user.id).then(refetch),
-	});
-
-	const isCaseResultAssignedToMe =
-		caseResult.user?.id?.toString() === Liferay.ThemeDisplay.getUserId();
+	const buttonValidations = {
+		completeTest:
+			workflowDisabled ||
+			caseResult.dueStatus !== TEST_STATUS['In Progress'],
+		reopenTest: workflowDisabled || isReopened,
+		startTest:
+			workflowDisabled || caseResult.dueStatus !== TEST_STATUS.Untested,
+	};
 
 	return (
 		<>
@@ -70,12 +77,11 @@ const CaseResultHeaderActions: React.FC<{
 				<ClayButton
 					displayType="secondary"
 					onClick={() => {
-						if (isCaseResultAssignedToMe) {
-							onRemoveAssign(caseResult).then(refetch);
-						}
-						else {
-							onAssignToMe(caseResult).then(refetch);
-						}
+						const assignFN = isCaseResultAssignedToMe
+							? onRemoveAssign
+							: onAssignToMe;
+
+						assignFN(caseResult).then(refetch);
 					}}
 				>
 					{i18n.translate(
@@ -86,30 +92,18 @@ const CaseResultHeaderActions: React.FC<{
 				</ClayButton>
 
 				<ClayButton
-					disabled={
-						workflowDisabled ||
-						caseResult.dueStatus !== TEST_STATUS.Untested
-					}
+					disabled={buttonValidations.startTest}
 					displayType={
-						workflowDisabled ||
-						caseResult.dueStatus !== TEST_STATUS.Untested
-							? 'unstyled'
-							: 'primary'
+						buttonValidations.startTest ? 'unstyled' : 'primary'
 					}
 				>
 					{i18n.translate('start-test')}
 				</ClayButton>
 
 				<ClayButton
-					disabled={
-						workflowDisabled ||
-						caseResult.dueStatus !== TEST_STATUS['In Progress']
-					}
+					disabled={buttonValidations.completeTest}
 					displayType={
-						workflowDisabled ||
-						caseResult.dueStatus !== TEST_STATUS['In Progress']
-							? 'unstyled'
-							: undefined
+						buttonValidations.completeTest ? 'unstyled' : undefined
 					}
 					onClick={() => navigate('complete-test')}
 				>
@@ -117,9 +111,9 @@ const CaseResultHeaderActions: React.FC<{
 				</ClayButton>
 
 				<ClayButton
-					disabled={workflowDisabled || isReopened}
+					disabled={buttonValidations.reopenTest}
 					displayType={
-						workflowDisabled || isReopened ? 'unstyled' : 'primary'
+						buttonValidations.reopenTest ? 'unstyled' : 'primary'
 					}
 					onClick={() => onAssignToMe(caseResult).then(refetch)}
 				>
@@ -127,17 +121,13 @@ const CaseResultHeaderActions: React.FC<{
 				</ClayButton>
 
 				<ClayButton
-					disabled={
-						workflowDisabled ||
-						caseResult.dueStatus !== TEST_STATUS['In Progress']
-					}
+					disabled={buttonValidations.completeTest}
 					displayType={
-						workflowDisabled ||
-						caseResult.dueStatus !== TEST_STATUS['In Progress']
+						buttonValidations.completeTest
 							? 'unstyled'
 							: 'secondary'
 					}
-					onClick={() => navigate('complete-test')}
+					onClick={() => navigate('edit')}
 				>
 					{i18n.translate('edit')}
 				</ClayButton>

@@ -369,7 +369,7 @@ const Step = ({
 										<ClayButton
 											onClick={() => {
 												setPopoverVisible(false);
-												onCurrentStep(null);
+												onCurrentStep(0);
 											}}
 											small
 										>

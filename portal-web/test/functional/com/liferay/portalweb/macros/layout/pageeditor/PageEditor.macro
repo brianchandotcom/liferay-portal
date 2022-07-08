@@ -2475,7 +2475,13 @@ definition {
 	}
 
 	macro editInput {
-		PageEditor.gotoConfiguration(fragmentName = "${fragmentName}");
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		PageEditor.gotoConfiguration(
+			fragmentName = "${fragmentName}",
+			index = "${index}");
 
 		if (isSet(field)) {
 			Select(

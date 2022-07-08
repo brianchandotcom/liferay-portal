@@ -9,7 +9,7 @@ definition {
 
 				Click(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_DELETE_BUTTON");
 
-				Pause(locator1 = "3000");
+				WaitForPageLoad();
 			}
 		}
 	}
@@ -21,7 +21,7 @@ definition {
 			Click(locator1 = "Gmail#GMAIL_HTML_MODE_CONFIRMATION");
 		}
 
-		Pause(locator1 = "5000");
+		WaitForPageLoad();
 	}
 
 	macro gotoMail {
@@ -34,7 +34,7 @@ definition {
 		}
 
 		while (!(IsTextEqual.isPartialText(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME", value1 = "${emailFromUserName}"))) {
-			Pause(locator1 = "5000");
+			WaitForPageLoad();
 		}
 
 		AssertTextEquals.assertPartialText(
@@ -45,13 +45,13 @@ definition {
 			locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_MESSAGE_TITLE",
 			value1 = "${gmailMessageTitle}");
 
-		Pause(locator1 = "5000");
+		WaitForElementPresent.waitForLastScript();
 	}
 
 	macro login {
 		Navigator.openSpecificURL(url = "http://www.gmail.com");
 
-		Pause(locator1 = "5000");
+		WaitForPageLoad();
 
 		var key_userEmailAddress = "${userEmailAddress}";
 
@@ -81,7 +81,7 @@ definition {
 				Click(locator1 = "Gmail#MAIL_NAVIGATION");
 			}
 
-			Pause(locator1 = "5000");
+			WaitForPageLoad();
 		}
 		else if (IsElementPresent(locator1 = "Gmail#GMAIL_HTML_MODE_USER_SCREENNAME")) {
 			AssertElementPresent(locator1 = "Gmail#GMAIL_HTML_MODE_USER_SCREENNAME");
@@ -94,7 +94,7 @@ definition {
 	macro logoutAndLogin {
 		Navigator.openSpecificURL(url = "http://www.gmail.com");
 
-		Pause(locator1 = "3000");
+		WaitForPageLoad();
 
 		Gmail.gotoHtmlMode();
 
@@ -132,7 +132,7 @@ definition {
 			Click(locator1 = "Gmail#MAIL_NAVIGATION");
 		}
 
-		Pause(locator1 = "5000");
+		WaitForPageLoad();
 	}
 
 	macro openMessageContinueReadingButton {

@@ -4,7 +4,9 @@ definition {
 		var key_userEmail = PropsUtil.get("sharepoint.oauth.user.name");
 		var key_userPassword = PropsUtil.get("sharepoint.oauth.user.password");
 
-		Pause(locator1 = "10000");
+		WaitForPageLoad();
+
+		WaitForElementPresent.waitForLastScript();
 
 		if (isSet(windowTitle)) {
 			SelectWindow(locator1 = "MicrosoftLogin#LOGIN_PAGE_TITLE");
@@ -47,7 +49,7 @@ definition {
 	}
 
 	macro confirmMicrosoftApp {
-		Pause(locator1 = "3000");
+		WaitForElementPresent.waitForLastScript();
 
 		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_STAY_SIGNED_IN_CONFIRMATION")) {
 			AssertClick(
@@ -57,7 +59,7 @@ definition {
 	}
 
 	macro confirmSharepointApp {
-		Pause(locator1 = "3000");
+		WaitForElementPresent.waitForLastScript();
 
 		var app_name = "SP2022";
 
@@ -66,7 +68,7 @@ definition {
 				locator1 = "MicrosoftLogin#LOGIN_YES_BUTTON",
 				value1 = "Yes");
 
-			Pause(locator1 = "5000");
+			WaitForElementPresent.waitForLastScript();
 		}
 
 		if (IsElementPresent(locator1 = "MicrosoftLogin#SHAREPOINT_NOTIFICATION")) {
@@ -74,7 +76,7 @@ definition {
 				locator1 = "MicrosoftLogin#SHAREPOINT_TRUST_IT_BUTTON",
 				value1 = "Trust It");
 
-			Pause(locator1 = "5000");
+			WaitForElementPresent.waitForLastScript();
 		}
 
 		if (IsElementPresent(locator1 = "Portlet#HEADER")) {

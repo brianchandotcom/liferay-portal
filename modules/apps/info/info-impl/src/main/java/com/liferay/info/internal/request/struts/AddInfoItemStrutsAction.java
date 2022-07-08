@@ -20,9 +20,11 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.info.constants.InfoFormConstants;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormPrincipalException;
 import com.liferay.info.exception.InfoFormValidationException;
+import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHelper;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -50,7 +52,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -170,6 +174,23 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 
 			SessionErrors.add(
 				httpServletRequest, formItemId, infoFormException);
+		}
+
+		if (!success && (infoFieldValues != null)) {
+			Map<String, String> formParameterMap = new HashMap<>();
+
+			for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
+				InfoField<?> infoField = infoFieldValue.getInfoField();
+
+				formParameterMap.put(
+					infoField.getName(),
+					String.valueOf(infoFieldValue.getValue()));
+			}
+
+			SessionMessages.add(
+				httpServletRequest,
+				InfoFormConstants.INFO_FORM_PARAMETER_MAP + formItemId,
+				formParameterMap);
 		}
 
 		if (Validator.isNull(redirect)) {

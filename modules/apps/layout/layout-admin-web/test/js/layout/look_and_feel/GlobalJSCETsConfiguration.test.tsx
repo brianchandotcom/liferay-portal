@@ -53,7 +53,8 @@ describe('GlobalJSCETsConfiguration', () => {
 				globalJSCETs={[
 					{
 						cetExternalReferenceCode: 'niceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Nice Global JS',
 					},
 				]}
@@ -72,12 +73,14 @@ describe('GlobalJSCETsConfiguration', () => {
 				globalJSCETs={[
 					{
 						cetExternalReferenceCode: 'niceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Nice Global JS',
 					},
 					{
 						cetExternalReferenceCode: 'anotherNiceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						loadType: 'defer',
 						name: 'Nice Global JS v2',
 					},
@@ -98,7 +101,8 @@ describe('GlobalJSCETsConfiguration', () => {
 				globalJSCETs={[
 					{
 						cetExternalReferenceCode: 'niceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Nice Global JS',
 					},
 				]}
@@ -125,7 +129,8 @@ describe('GlobalJSCETsConfiguration', () => {
 				globalJSCETs={[
 					{
 						cetExternalReferenceCode: 'niceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Nice Global JS',
 					},
 				]}
@@ -176,7 +181,8 @@ describe('GlobalJSCETsConfiguration', () => {
 				globalJSCETs={[
 					{
 						cetExternalReferenceCode: 'niceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Nice Global JS',
 					},
 				]}

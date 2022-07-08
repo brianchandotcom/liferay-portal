@@ -21,11 +21,6 @@ import React, {useMemo, useState} from 'react';
 import {GlobalCETOptionsDropDown} from './GlobalCETOptionsDropDown';
 import {GlobalCETOrderHelpIcon} from './GlobalCETOrderHelpIcon';
 
-const INHERITED_LABELS: Record<IInheritedOptions, string> = {
-	'layout-set': Liferay.Language.get('layout-set'),
-	'master-layout': Liferay.Language.get('master'),
-};
-
 export default function GlobalCSSCETsConfiguration({
 	globalCSSCETSelectorURL,
 	globalCSSCETs: initialGlobalCSSCETs,
@@ -35,15 +30,13 @@ export default function GlobalCSSCETsConfiguration({
 	const fixedGlobalCSSCETs = useMemo(
 		() =>
 			initialGlobalCSSCETs.filter(
-				(globalCSSCET) => globalCSSCET.inheritedFrom
+				(globalCSSCET) => globalCSSCET.inherited
 			),
 		[initialGlobalCSSCETs]
 	);
 
 	const [globalCSSCETs, setGlobalCSSCETs] = useState(() =>
-		initialGlobalCSSCETs.filter(
-			(globalCSSCET) => !globalCSSCET.inheritedFrom
-		)
+		initialGlobalCSSCETs.filter((globalCSSCET) => !globalCSSCET.inherited)
 	);
 
 	const allGlobalCSSCETs = useMemo(
@@ -172,18 +165,7 @@ export default function GlobalCSSCETsConfiguration({
 							const items = getDropDownItems(globalCSSCET);
 							const order = index + 1;
 
-							const disabled = Boolean(
-								globalCSSCET.inheritedFrom
-							);
-
-							const inheritedLabel = globalCSSCET.inheritedFrom
-								? Liferay.Util.sub(
-										Liferay.Language.get('from-x'),
-										INHERITED_LABELS[
-											globalCSSCET.inheritedFrom
-										]
-								  )
-								: '-';
+							const disabled = globalCSSCET.inherited;
 
 							return (
 								<ClayTable.Row
@@ -197,7 +179,7 @@ export default function GlobalCSSCETsConfiguration({
 									</ClayTable.Cell>
 
 									<ClayTable.Cell expanded>
-										{inheritedLabel}
+										{globalCSSCET.inheritedLabel}
 									</ClayTable.Cell>
 
 									<ClayTable.Cell>
@@ -222,11 +204,10 @@ export default function GlobalCSSCETsConfiguration({
 	);
 }
 
-type IInheritedOptions = 'layout-set' | 'master-layout';
-
 interface IGlobalCSSCET {
 	cetExternalReferenceCode: string;
-	inheritedFrom: IInheritedOptions | null;
+	inherited: boolean;
+	inheritedLabel: string;
 	name: string;
 }
 

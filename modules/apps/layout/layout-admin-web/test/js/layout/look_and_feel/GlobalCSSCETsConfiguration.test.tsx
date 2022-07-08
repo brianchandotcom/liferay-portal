@@ -53,7 +53,8 @@ describe('GlobalCSSCETsConfiguration', () => {
 				globalCSSCETs={[
 					{
 						cetExternalReferenceCode: 'niceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Nice Global CSS',
 					},
 				]}
@@ -72,12 +73,14 @@ describe('GlobalCSSCETsConfiguration', () => {
 				globalCSSCETs={[
 					{
 						cetExternalReferenceCode: 'niceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Nice Global CSS',
 					},
 					{
 						cetExternalReferenceCode: 'anotherNiceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Nice Global CSS v2',
 					},
 				]}
@@ -97,7 +100,8 @@ describe('GlobalCSSCETsConfiguration', () => {
 				globalCSSCETs={[
 					{
 						cetExternalReferenceCode: 'niceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Nice Global CSS',
 					},
 				]}
@@ -122,7 +126,8 @@ describe('GlobalCSSCETsConfiguration', () => {
 				globalCSSCETs={[
 					{
 						cetExternalReferenceCode: 'niceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Nice Global CSS',
 					},
 				]}
@@ -150,12 +155,14 @@ describe('GlobalCSSCETsConfiguration', () => {
 				value: [
 					JSON.stringify({
 						cetExternalReferenceCode: 'niceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Nice Global CSS',
 					}),
 					JSON.stringify({
 						cetExternalReferenceCode: 'someNiceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Some Nice Global CSS',
 					}),
 				],
@@ -173,7 +180,8 @@ describe('GlobalCSSCETsConfiguration', () => {
 				globalCSSCETs={[
 					{
 						cetExternalReferenceCode: 'niceId',
-						inheritedFrom: null,
+						inherited: false,
+						inheritedLabel: '',
 						name: 'Nice Global CSS',
 					},
 				]}

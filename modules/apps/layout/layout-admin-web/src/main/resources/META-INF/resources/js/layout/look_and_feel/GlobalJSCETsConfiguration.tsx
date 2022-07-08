@@ -23,11 +23,6 @@ import React, {useMemo, useState} from 'react';
 import {GlobalCETOptionsDropDown} from './GlobalCETOptionsDropDown';
 import {GlobalCETOrderHelpIcon} from './GlobalCETOrderHelpIcon';
 
-const INHERITED_LABELS: Record<IInheritedOptions, string> = {
-	'layout-set': Liferay.Language.get('layout-set'),
-	'master-layout': Liferay.Language.get('master'),
-};
-
 const DEFAULT_LOAD_TYPE_OPTION: ILoadTypeOptions = 'default';
 
 const LOAD_TYPE_OPTIONS: Record<
@@ -54,14 +49,12 @@ export default function GlobalJSCETsConfiguration({
 }: IProps) {
 	const fixedGlobalJSCETs = useMemo(
 		() =>
-			initialGlobalJSCETs.filter(
-				(globalJSCET) => globalJSCET.inheritedFrom
-			),
+			initialGlobalJSCETs.filter((globalJSCET) => globalJSCET.inherited),
 		[initialGlobalJSCETs]
 	);
 
 	const [globalJSCETs, setGlobalJSCETs] = useState(() =>
-		initialGlobalJSCETs.filter((globalJSCET) => !globalJSCET.inheritedFrom)
+		initialGlobalJSCETs.filter((globalJSCET) => !globalJSCET.inherited)
 	);
 
 	const allGlobalJSCETs = useMemo(() => {
@@ -336,7 +329,7 @@ function ExtensionRow({
 	portletNamespace,
 	updateGlobalJSCET,
 }: IExtensionRowProps) {
-	const disabled = Boolean(globalJSCET.inheritedFrom);
+	const disabled = globalJSCET.inherited;
 	const dropdownTriggerId = `${portletNamespace}_GlobalJSCETsConfigurationOptionsButton_${globalJSCET.cetExternalReferenceCode}`;
 
 	const dropdownItems = [
@@ -346,13 +339,6 @@ function ExtensionRow({
 			symbolLeft: 'trash',
 		},
 	];
-
-	const inheritedLabel = globalJSCET.inheritedFrom
-		? Liferay.Util.sub(
-				Liferay.Language.get('from-x'),
-				INHERITED_LABELS[globalJSCET.inheritedFrom]
-		  )
-		: '-';
 
 	return (
 		<ClayTable.Row
@@ -382,7 +368,7 @@ function ExtensionRow({
 				/>
 			</ClayTable.Cell>
 
-			<ClayTable.Cell noWrap>{inheritedLabel}</ClayTable.Cell>
+			<ClayTable.Cell noWrap>{globalJSCET.inheritedLabel}</ClayTable.Cell>
 
 			<ClayTable.Cell>
 				{disabled ? null : (
@@ -396,13 +382,13 @@ function ExtensionRow({
 	);
 }
 
-type IInheritedOptions = 'layout-set' | 'master-layout';
 type ILoadTypeOptions = 'default' | 'async' | 'defer';
 type IScriptLocationOptions = 'head' | 'page-bottom';
 
 interface IGlobalJSCET {
 	cetExternalReferenceCode: string;
-	inheritedFrom: IInheritedOptions | null;
+	inherited: boolean;
+	inheritedLabel: string;
 	loadType?: ILoadTypeOptions;
 	name: string;
 	scriptLocation?: IScriptLocationOptions;

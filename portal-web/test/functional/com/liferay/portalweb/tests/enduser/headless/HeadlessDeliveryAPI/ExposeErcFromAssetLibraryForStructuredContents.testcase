@@ -114,7 +114,7 @@ definition {
 			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
 			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
 
-			var response = HeadlessWebcontentAPI.createStructuredContentInAssetLibrary(
+			HeadlessWebcontentAPI.createStructuredContentInAssetLibrary(
 				assetLibraryId = "${depotId}",
 				data = "<p>My content</p>",
 				ddmStructureId = "${ddmStructureId}",
@@ -236,6 +236,42 @@ definition {
 			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
 				assetLibraryId = "${depotId}",
 				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%20Updated%27");
+
+			HeadlessWebcontentAPI.assertProperNumberOfItems(
+				expectedTotalElement = "1",
+				responseToParse = "${response}");
+		}
+	}
+
+	@description = "Structured content is created by put nonexistent erc in asset library without erc in the body"
+	@priority = "5"
+	test StructuredContentIsCreatedInAssetLibraryByPutNonexistentErc {
+		property portal.acceptance = "true";
+
+		task ("When I make a PUT request by assetLibraryId and a non-existent erc without erc in the body") {
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			var response = HeadlessWebcontentAPI.updateStructuredContentByErcInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				externalReferenceCode = "nonexistent-erc",
+				label = "Text",
+				name = "Text",
+				title = "WC WebContent Title");
+		}
+
+		task ("Then its erc matches the inserted one in response") {
+			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "nonexistent-erc",
+				responseToParse = "${response}");
+		}
+
+		task ("And Then a new structured content is created properly") {
+			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%27");
 
 			HeadlessWebcontentAPI.assertProperNumberOfItems(
 				expectedTotalElement = "1",

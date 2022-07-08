@@ -248,9 +248,7 @@ definition {
 		Variables.assertDefined(parameterList = "${filtervalue}");
 
 		var portalURL = JSONCompany.getPortalURL();
-		var siteId = JSONGroupAPI._getGroupIdByName(
-			groupName = "Guest",
-			site = "true");
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/structured-contents?filter=${filtervalue} \
 			-u test@liferay.com:test \

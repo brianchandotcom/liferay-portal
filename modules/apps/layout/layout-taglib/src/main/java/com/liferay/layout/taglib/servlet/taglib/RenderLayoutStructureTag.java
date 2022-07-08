@@ -27,6 +27,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.PaginationBarTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.RowTag;
 import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.constants.InfoFormConstants;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
@@ -810,6 +811,16 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			SessionErrors.remove(
 				getRequest(), formStyledLayoutStructureItem.getItemId());
 		}
+
+		Map<String, String> formParameterMap =
+			(Map<String, String>)SessionMessages.get(
+				getRequest(),
+				InfoFormConstants.INFO_FORM_PARAMETER_MAP +
+					formStyledLayoutStructureItem.getItemId());
+
+		SessionMessages.add(
+			getRequest(), InfoFormConstants.INFO_FORM_PARAMETER_MAP,
+			formParameterMap);
 
 		_renderLayoutStructure(
 			formStyledLayoutStructureItem.getChildrenItemIds(),

@@ -495,7 +495,7 @@ public class ObjectEntryInfoItemFormProvider
 				objectRelationship.getObjectDefinitionId1());
 
 		if (relatedObjectDefinition == null) {
-			return StringPool.BLANK;
+			return "id";
 		}
 
 		ObjectField titleObjectField =
@@ -503,7 +503,7 @@ public class ObjectEntryInfoItemFormProvider
 				relatedObjectDefinition.getTitleObjectFieldId());
 
 		if (titleObjectField == null) {
-			return StringPool.BLANK;
+			return "id";
 		}
 
 		return titleObjectField.getName();

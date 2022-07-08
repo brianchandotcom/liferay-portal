@@ -988,13 +988,21 @@ definition {
 			entryContent = "Test Content",
 			entryTitle = "Test Blog");
 
-		Pause(locator1 = "60000");
+		
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
 		var getInstanceId = selenium.getText("WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		while (IsElementNotPresent(
+            key_status = "check",
+            locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS") && (maxIterations = "20")) {
+
+            Refresh();
+
+        }
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -1094,11 +1102,19 @@ definition {
 			entryContent = "Test Content",
 			entryTitle = "Test Blog");
 
-		Pause(locator1 = "50000");
+		
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+
+		while (IsElementNotPresent(
+            key_status = "check",
+            locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS") && (maxIterations = "30")) {
+
+            Refresh();
+
+        }
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -1536,19 +1552,17 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Performance");
 
-		Pause(locator = "120000");
-
-		Refresh();
-
 		Click(
 			key_index = "4",
 			locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_COMPLETED_ITEMS_BUTTON");
 
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+		while (IsElementNotPresent(
+            key_status = "Overdue",
+			locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_DEFINITION_RESOLVED") && (maxIterations = "10")) {
 
-		Refresh();
+            Refresh();
 
-		Pause(locator1 = "10000");
+        }
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -1663,8 +1677,7 @@ definition {
 			echo("Waiting 5 seconds to recheck");
 
 			Click(locator1 = "WorkflowAllItems#DETAIL_PAGE_CLOSE");
-
-			Pause(locator1 = "5000");
+			
 
 			Refresh();
 
@@ -1745,9 +1758,14 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
 
-		Pause(locator1 = "60000");
+	
+		while (IsElementNotPresent(
+            key_status = "check",
+			locator1 = "WorkflowAllItems#DETAIL_SLA_STATUS") && (maxIterations = "30")) {
 
-		Refresh();
+            Refresh();
+
+        }
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
@@ -2070,7 +2088,7 @@ definition {
 
 		Click(locator1 = "WorkflowAllItems#BUTTON_GO_TO_SUBMISSION_PAGE");
 
-		Pause(locator1 = "3000");
+	
 	}
 
 	@description = "LPS-130167 - Verify that the ordination icon is displayed next to the column title to be ordered"
@@ -2159,12 +2177,20 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry");
 
-		Pause(locator1 = "60000");
+		
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "ONTIME",
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
+
+		while (IsElementNotPresent(
+			locator1 = "WorkflowAllItems#METRICS_INSTANCE_ITEMS_POSITION",
+			key_itemPosition = "1", key_rowNumber = "3") && (maxIterations = "20")) {
+
+			Refresh();
+
+		}
 
 		WorkflowMetrics.assertDueDatePopoverInfo(
 			itemPosition = "3",
@@ -2320,7 +2346,7 @@ definition {
 			entryContent = "Blogs Entry  Content",
 			entryTitle = "Blogs Entry Title 2");
 
-		Pause(locator1 = "60000");
+		
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "PENDING",
@@ -2337,7 +2363,14 @@ definition {
 			keyCompare = "Blogs Entry: Blogs Entry Title 1",
 			rowNumber = "2");
 
-		Pause(locator1 = "60000");
+		while (IsElementNotPresent(
+            locator1 = "WorkflowAllItems#assertTableOrder",
+			rowNumber = "1") && (maxIterations = "10")) {
+        
+            Refresh();
+        }
+
+		
 
 		Click(
 			key_orderBy = "Due Date",
@@ -3015,8 +3048,8 @@ definition {
 			nameOfAssignee = "Test Test",
 			taskList = "task3");
 
-		while (IsElementNotPresent(key_workflowInstanceAssignee = "Test Test, Unassigned, User User", key_workflowInstanceName = "Blogs Entry", locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE") && (maxIterations = "20")) {
-			Pause(locator1 = "3000");
+		while (IsElementNotPresent(key_workflowInstanceAssignee = "Test Test, Unassigned, User User", key_workflowInstanceName = "Blogs Entry", locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE") && (maxIterations = "10")) {
+			
 
 			Refresh();
 		}
@@ -3171,7 +3204,7 @@ definition {
 			entryContent = "Test Content",
 			entryTitle = "Test Blog");
 
-		Pause(locator1 = "60000");
+
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 

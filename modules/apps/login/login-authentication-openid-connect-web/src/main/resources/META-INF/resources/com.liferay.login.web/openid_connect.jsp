@@ -30,7 +30,7 @@
 	<aui:select label="openid-connect-client-name" name="oAuthClientEntryId">
 
 		<%
-		List<OAuthClientEntry> oAuthClientEntries = (List<OAuthClientEntry>)request.getAttribute(OpenIdConnectWebKeys.OPEN_ID_CONNECT_CLIENTS);
+		List<OAuthClientEntry> oAuthClientEntries = (List<OAuthClientEntry>)request.getAttribute(OpenIdConnectWebKeys.OAUTH_CLIENT_ENTRIES);
 
 		for (OAuthClientEntry oAuthClientEntry : oAuthClientEntries) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(oAuthClientEntry.getInfoJSON());

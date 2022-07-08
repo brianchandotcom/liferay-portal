@@ -170,9 +170,15 @@ function SpacingSelectorButton({
 
 	useEffect(() => {
 		if (active && itemListRef.current) {
-			itemListRef.current.querySelector('button')?.focus();
+			itemListRef.current
+				.querySelector(
+					Liferay.FeatureFlags['LPS-147895']
+						? `button[data-value="${value || field?.defaultValue}"]`
+						: 'button'
+				)
+				?.focus();
 		}
-	}, [active]);
+	}, [active, field, value]);
 
 	const spacingOptionValue = useCallback(
 		(optionValue) => {
@@ -260,6 +266,7 @@ function SpacingSelectorButton({
 									[field.label, option.label]
 								)}
 								className="d-flex"
+								data-value={option.value}
 								key={option.value}
 								onClick={() => {
 									onChange(option.value);

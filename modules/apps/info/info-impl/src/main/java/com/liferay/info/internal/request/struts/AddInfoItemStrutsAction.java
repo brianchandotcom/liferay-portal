@@ -82,6 +82,8 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 
 		List<InfoFieldValue<Object>> infoFieldValues = null;
 
+		boolean success = false;
+
 		try {
 			infoFieldValues =
 				_infoRequestFieldValuesProviderHelper.getInfoFieldValues(
@@ -118,6 +120,8 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 
 				SessionMessages.add(httpServletRequest, formItemId);
 			}
+
+			success = true;
 		}
 		catch (CaptchaException captchaException) {
 			if (_log.isDebugEnabled()) {

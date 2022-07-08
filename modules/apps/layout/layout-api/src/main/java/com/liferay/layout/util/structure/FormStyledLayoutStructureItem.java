@@ -59,12 +59,28 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		return super.equals(object);
 	}
 
+	public String getAlign() {
+		return _align;
+	}
+
 	public long getClassNameId() {
 		return _classNameId;
 	}
 
 	public long getClassTypeId() {
 		return _classTypeId;
+	}
+
+	public String getContentDisplay() {
+		return _contentDisplay;
+	}
+
+	public String getDisplay() {
+		return stylesJSONObject.getString("display");
+	}
+
+	public String getFlexWrap() {
+		return _flexWrap;
 	}
 
 	public int getFormConfig() {
@@ -101,6 +117,10 @@ public class FormStyledLayoutStructureItem extends StyledLayoutStructureItem {
 	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_FORM;
+	}
+
+	public String getJustify() {
+		return _justify;
 	}
 
 	public JSONObject getSuccessMessageJSONObject() {

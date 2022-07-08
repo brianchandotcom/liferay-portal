@@ -62,13 +62,24 @@ public class ContainerStyledLayoutStructureItem
 		return super.equals(object);
 	}
 
-	@Override
+	public String getAlign() {
+		return _align;
+	}
+
 	public String getContentDisplay() {
 		return _contentDisplay;
 	}
 
 	public String getContentVisibility() {
 		return _contentVisibility;
+	}
+
+	public String getDisplay() {
+		return stylesJSONObject.getString("display");
+	}
+
+	public String getFlexWrap() {
+		return _flexWrap;
 	}
 
 	public String getHtmlTag() {
@@ -103,6 +114,10 @@ public class ContainerStyledLayoutStructureItem
 	@Override
 	public String getItemType() {
 		return LayoutDataItemTypeConstants.TYPE_CONTAINER;
+	}
+
+	public String getJustify() {
+		return _justify;
 	}
 
 	public JSONObject getLinkJSONObject() {

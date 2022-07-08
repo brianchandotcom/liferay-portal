@@ -31,4 +31,9 @@ public class MarkdownSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("IncorrectNumberedList.testmarkdown");
 	}
 
+	@Test
+	public void testIncorrectWhitespace() throws Exception {
+		test("IncorrectWhitespace.testmarkdown");
+	}
+
 }

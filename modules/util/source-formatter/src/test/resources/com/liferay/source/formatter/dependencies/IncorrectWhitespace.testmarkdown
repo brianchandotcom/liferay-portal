@@ -1,0 +1,20 @@
+#                   Databases
+
+## SQL
+
+1. Create a table.
+
+	1. Type ***create table Book (bookId bigint primary key, authorId bigint, description varchar(75), name varchar(75));*** to create your first table.
+
+	1. Type ***desc Book;*** to describe your table;
+
+		```
+		+-------------+-------------+------+-----+---------+-------+
+		| Field       | Type        | Null | Key | Default | Extra |
+		+-------------+-------------+------+-----+---------+-------+
+		| bookId      | bigint      | NO   | PRI | NULL    |       |
+		| authorId    | bigint      | YES  |     | NULL    |       |
+		| description | varchar(75) | YES  |     | NULL    |       |
+		| name        | varchar(75) | YES  |     | NULL    |       |
+		+-------------+-------------+------+-----+---------+-------+
+		```

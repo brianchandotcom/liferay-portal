@@ -404,7 +404,8 @@ public class LayoutLookAndFeelDisplayContext {
 	}
 
 	private JSONObject _getCETJSONObject(
-		ClientExtensionEntryRel clientExtensionEntryRel, String inheritedFrom) {
+		ClientExtensionEntryRel clientExtensionEntryRel, boolean inherited,
+		String inheritedLabel) {
 
 		CETManager cetManager = (CETManager)_httpServletRequest.getAttribute(
 			CETManager.class.getName());
@@ -421,7 +422,9 @@ public class LayoutLookAndFeelDisplayContext {
 			"cetExternalReferenceCode",
 			clientExtensionEntryRel.getCETExternalReferenceCode()
 		).put(
-			"inheritedFrom", inheritedFrom
+			"inherited", inherited
+		).put(
+			"inheritedLabel", inheritedLabel
 		).put(
 			"name", cet.getName(_themeDisplay.getLocale())
 		);
@@ -476,7 +479,10 @@ public class LayoutLookAndFeelDisplayContext {
 
 				jsonArray.put(
 					() -> _getCETJSONObject(
-						clientExtensionEntryRel, "layout-set"));
+						clientExtensionEntryRel, true,
+						LanguageUtil.format(
+							_themeDisplay.getLocale(), "from-x", "layout-set",
+							true)));
 			}
 
 			Layout layout = _layoutsAdminDisplayContext.getSelLayout();
@@ -493,7 +499,10 @@ public class LayoutLookAndFeelDisplayContext {
 
 					jsonArray.put(
 						() -> _getCETJSONObject(
-							clientExtensionEntryRel, "master-layout"));
+							clientExtensionEntryRel, true,
+							LanguageUtil.format(
+								_themeDisplay.getLocale(), "from-x", "master",
+								true)));
 				}
 			}
 		}
@@ -507,7 +516,7 @@ public class LayoutLookAndFeelDisplayContext {
 
 			jsonArray.put(
 				() -> _getCETJSONObject(
-					clientExtensionEntryRel, StringPool.BLANK));
+					clientExtensionEntryRel, false, StringPool.DASH));
 		}
 
 		return jsonArray;

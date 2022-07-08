@@ -63,7 +63,7 @@ public class NavItemUtil {
 
 		if (layout.isRootLayout()) {
 			return Collections.singletonList(
-				new NavItem(httpServletRequest, themeDisplay, layout, null));
+				new NavItem(httpServletRequest, themeDisplay, layout));
 		}
 
 		List<Layout> ancestorLayouts = layout.getAncestors();
@@ -74,12 +74,10 @@ public class NavItemUtil {
 			Layout ancestorLayout = ancestorLayouts.get(i);
 
 			navItems.add(
-				new NavItem(
-					httpServletRequest, themeDisplay, ancestorLayout, null));
+				new NavItem(httpServletRequest, themeDisplay, ancestorLayout));
 		}
 
-		navItems.add(
-			new NavItem(httpServletRequest, themeDisplay, layout, null));
+		navItems.add(new NavItem(httpServletRequest, themeDisplay, layout));
 
 		return navItems;
 	}
@@ -201,7 +199,7 @@ public class NavItemUtil {
 				}
 
 				rootNavItem = new NavItem(
-					httpServletRequest, themeDisplay, rootLayout, null);
+					httpServletRequest, themeDisplay, rootLayout);
 			}
 			else {
 				navItems = _fromLayouts(
@@ -261,7 +259,7 @@ public class NavItemUtil {
 		throws Exception {
 
 		if (navigationMenuMode == NavigationMenuMode.DEFAULT) {
-			return NavItem.fromLayouts(httpServletRequest, themeDisplay, null);
+			return NavItem.fromLayouts(httpServletRequest, themeDisplay);
 		}
 
 		boolean privateLayout = false;
@@ -275,7 +273,7 @@ public class NavItemUtil {
 			_layoutLocalService.getLayouts(
 				themeDisplay.getScopeGroupId(), privateLayout,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID),
-			themeDisplay, null);
+			themeDisplay);
 	}
 
 	private static List<SiteNavigationMenuItem> _getSiteNavigationMenuItems(

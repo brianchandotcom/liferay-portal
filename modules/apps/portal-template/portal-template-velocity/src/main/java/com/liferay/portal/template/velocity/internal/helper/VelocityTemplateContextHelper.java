@@ -116,7 +116,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 				try {
 					List<NavItem> navItems = NavItem.fromLayouts(
-						httpServletRequest, themeDisplay, contextObjects);
+						httpServletRequest, themeDisplay);
 
 					contextObjects.put("navItems", navItems);
 				}

@@ -41,7 +41,7 @@ public class SiteNavigationMenuNavItem extends NavItem {
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
-		super(httpServletRequest, themeDisplay, themeDisplay.getLayout(), null);
+		super(httpServletRequest, themeDisplay, themeDisplay.getLayout());
 
 		_httpServletRequest = httpServletRequest;
 		_themeDisplay = themeDisplay;

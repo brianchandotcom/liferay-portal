@@ -363,7 +363,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		}
 
 		try {
-			return Arrays.asList(new LangTag(locale.getLanguage()));
+			return Collections.singletonList(new LangTag(locale.getLanguage()));
 		}
 		catch (LangTagException langTagException) {
 			if (_log.isDebugEnabled()) {

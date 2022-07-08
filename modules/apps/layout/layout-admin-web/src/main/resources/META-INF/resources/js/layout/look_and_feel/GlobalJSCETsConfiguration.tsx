@@ -162,7 +162,7 @@ export default function GlobalJSCETsConfiguration({
 				portletNamespace={portletNamespace}
 			/>
 
-			{globalJSCETs.length ? (
+			{allGlobalJSCETs.size ? (
 				<ClayTable>
 					<ClayTable.Head>
 						<ClayTable.Row>

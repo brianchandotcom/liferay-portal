@@ -14,16 +14,33 @@
 
 package com.liferay.message.boards.internal.verify.model;
 
+import com.liferay.portal.kernel.verify.model.VerifiableAuditedModel;
 import com.liferay.portal.kernel.verify.model.VerifiableGroupedModel;
 
 /**
  * @author Miguel Pastor
  */
-public class MBThreadFlagVerifiableModel implements VerifiableGroupedModel {
+public class MBThreadFlagVerifiableModel
+	implements VerifiableAuditedModel, VerifiableGroupedModel {
+
+	@Override
+	public String getJoinByTableName() {
+		return "userId";
+	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
 		return "threadFlagId";
+	}
+
+	@Override
+	public String getRelatedModelName() {
+		return "User_";
+	}
+
+	@Override
+	public String getRelatedPKColumnName() {
+		return "userId";
 	}
 
 	@Override
@@ -39,6 +56,16 @@ public class MBThreadFlagVerifiableModel implements VerifiableGroupedModel {
 	@Override
 	public String getTableName() {
 		return "MBThreadFlag";
+	}
+
+	@Override
+	public boolean isAnonymousUserAllowed() {
+		return false;
+	}
+
+	@Override
+	public boolean isUpdateDates() {
+		return true;
 	}
 
 }

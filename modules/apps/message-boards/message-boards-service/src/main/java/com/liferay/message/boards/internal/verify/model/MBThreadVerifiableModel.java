@@ -15,47 +15,35 @@
 package com.liferay.message.boards.internal.verify.model;
 
 import com.liferay.portal.kernel.verify.model.VerifiableAuditedModel;
-import com.liferay.portal.kernel.verify.model.VerifiableGroupedModel;
 
 /**
  * @author Miguel Pastor
  */
-public class MBDiscussionVerifiableModel
-	implements VerifiableAuditedModel, VerifiableGroupedModel {
+public class MBThreadVerifiableModel implements VerifiableAuditedModel {
 
 	@Override
 	public String getJoinByTableName() {
-		return "threadId";
+		return "rootMessageId";
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "discussionId";
+		return "threadId";
 	}
 
 	@Override
 	public String getRelatedModelName() {
-		return "MBThread";
+		return "MBMessage";
 	}
 
 	@Override
 	public String getRelatedPKColumnName() {
-		return "threadId";
-	}
-
-	@Override
-	public String getRelatedPrimaryKeyColumnName() {
-		return "threadId";
-	}
-
-	@Override
-	public String getRelatedTableName() {
-		return "MBThread";
+		return "messageId";
 	}
 
 	@Override
 	public String getTableName() {
-		return "MBDiscussion";
+		return "MBThread";
 	}
 
 	@Override

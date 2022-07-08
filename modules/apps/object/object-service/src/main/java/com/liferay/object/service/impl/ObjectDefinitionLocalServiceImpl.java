@@ -777,15 +777,15 @@ public class ObjectDefinitionLocalServiceImpl
 
 			_objectFieldLocalService.addSystemObjectField(
 				userId, objectDefinition.getObjectDefinitionId(), "Date",
-				ObjectEntryTable.INSTANCE.status.getName(), dbTableName, "Date",
-				null, false, false, null,
+				ObjectEntryTable.INSTANCE.createDate.getName(), dbTableName,
+				"Date", null, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "create-date")),
-				"dateCreated", false, false);
+				"createDate", false, false);
 
 			_objectFieldLocalService.addSystemObjectField(
 				userId, objectDefinition.getObjectDefinitionId(), "Integer",
-				ObjectEntryTable.INSTANCE.status.getName(),
+				ObjectEntryTable.INSTANCE.objectEntryId.getName(),
 				ObjectEntryTable.INSTANCE.getTableName(), "Integer", null,
 				false, false, null,
 				LocalizedMapUtil.getLocalizedMap(
@@ -794,11 +794,11 @@ public class ObjectDefinitionLocalServiceImpl
 
 			_objectFieldLocalService.addSystemObjectField(
 				userId, objectDefinition.getObjectDefinitionId(), "Date",
-				ObjectEntryTable.INSTANCE.status.getName(), dbTableName, "Date",
-				null, false, false, null,
+				ObjectEntryTable.INSTANCE.modifiedDate.getName(), dbTableName,
+				"Date", null, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "modified-date")),
-				"dateModified", false, false);
+				"modifiedDate", false, false);
 
 			_objectFieldLocalService.addSystemObjectField(
 				userId, objectDefinition.getObjectDefinitionId(), "Text",

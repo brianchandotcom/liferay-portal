@@ -177,18 +177,19 @@ public class ResponsiveLayoutStructureUtilTest {
 				_layout.getGroupId(), _layout.getPlid(),
 				_defaultSegmentsExperienceId, layoutStructure.toString());
 
-		MockHttpServletRequest httpServletRequest =
+		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
 
-		httpServletRequest.setMethod(HttpMethods.GET);
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
 		_layout.includeLayoutContent(
-			httpServletRequest, new MockHttpServletResponse());
+			mockHttpServletRequest, new MockHttpServletResponse());
 
 		String content = String.valueOf(
-			(StringBundler)httpServletRequest.getAttribute(
+			(StringBundler)mockHttpServletRequest.getAttribute(
 				WebKeys.LAYOUT_CONTENT));
 
 		for (ViewportSize viewportSize : ViewportSize.values()) {

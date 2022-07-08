@@ -185,10 +185,11 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		BlogsEntry blogsEntry = _addBlogsEntry();
 
-		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
-		request.setAttribute(WebKeys.LAYOUT, _layout);
-		request.setAttribute(WebKeys.USER_ID, _user.getUserId());
+		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
+		mockHttpServletRequest.setAttribute(WebKeys.USER_ID, _user.getUserId());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getCollectionFieldsJSONObject",
@@ -198,8 +199,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 				String.class, String.class, String.class, int.class, int.class,
 				int.class, String.class, String.class
 			},
-			request, new MockHttpServletResponse(), 0, false, false,
-			LocaleUtil.toLanguageId(LocaleUtil.US),
+			mockHttpServletRequest, new MockHttpServletResponse(), 0, false,
+			false, LocaleUtil.toLanguageId(LocaleUtil.US),
 			JSONUtil.put(
 				"itemType", BlogsEntry.class.getName()
 			).put(

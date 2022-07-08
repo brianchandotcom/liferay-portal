@@ -370,10 +370,10 @@ public class LayoutSEOLinkManagerTest {
 	private HttpServletRequest _getHttpServletRequest(Layout layout)
 		throws Exception {
 
-		MockHttpServletRequest httpServletRequest =
+		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		httpServletRequest.setAttribute(
+		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());
 
@@ -391,7 +391,7 @@ public class LayoutSEOLinkManagerTest {
 
 		_themeDisplay.setPortalDomain("localhost");
 		_themeDisplay.setRealUser(TestPropsValues.getUser());
-		_themeDisplay.setRequest(httpServletRequest);
+		_themeDisplay.setRequest(mockHttpServletRequest);
 		_themeDisplay.setResponse(new MockHttpServletResponse());
 		_themeDisplay.setScopeGroupId(_group.getGroupId());
 		_themeDisplay.setServerName("localhost");
@@ -399,9 +399,10 @@ public class LayoutSEOLinkManagerTest {
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setUser(TestPropsValues.getUser());
 
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
 
-		return httpServletRequest;
+		return mockHttpServletRequest;
 	}
 
 	private LayoutSEOLink _getXDefaultAlternateLayoutSEOLink(

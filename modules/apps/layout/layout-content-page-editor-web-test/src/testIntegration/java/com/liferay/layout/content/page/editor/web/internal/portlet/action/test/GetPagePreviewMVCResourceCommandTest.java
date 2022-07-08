@@ -217,16 +217,17 @@ public class GetPagePreviewMVCResourceCommandTest {
 					fetchDefaultSegmentsExperienceId(
 						_fragmentEntryLink.getPlid())));
 
-		MockHttpServletRequest httpServletRequest =
+		MockHttpServletRequest mockHttpServletRequest =
 			(MockHttpServletRequest)
 				mockLiferayResourceRequest.getHttpServletRequest();
 
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
-		httpServletRequest.setMethod(HttpMethods.GET);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
-		_themeDisplay.setRequest(httpServletRequest);
+		_themeDisplay.setRequest(mockHttpServletRequest);
 
-		_serviceContext.setRequest(httpServletRequest);
+		_serviceContext.setRequest(mockHttpServletRequest);
 
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();

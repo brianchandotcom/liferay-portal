@@ -415,12 +415,12 @@ public class FragmentDropZoneMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		MockHttpServletRequest httpServletRequest =
+		MockHttpServletRequest mockHttpServletRequest =
 			(MockHttpServletRequest)
 				mockLiferayPortletActionRequest.getHttpServletRequest();
 
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(httpServletRequest));
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
 
 		mockLiferayPortletActionRequest.addParameter(
 			"groupId", String.valueOf(groupId));

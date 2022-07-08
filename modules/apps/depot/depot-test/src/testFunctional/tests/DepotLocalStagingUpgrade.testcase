@@ -30,7 +30,7 @@ definition {
 
 		Staging.publishToLive();
 
-		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-local-staging");
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-local-staging-staging");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",

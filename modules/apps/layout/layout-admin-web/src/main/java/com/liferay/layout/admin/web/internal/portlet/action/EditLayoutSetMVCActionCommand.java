@@ -170,7 +170,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			themeDisplay.getUserId());
 
 		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			themeDisplay.getCompanyId(), layoutSet.getLayoutSetId(),
+			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
 			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
 
 		String[] globalCSSCETExternalReferenceCodes = ParamUtil.getStringValues(
@@ -188,7 +188,7 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		_clientExtensionEntryRelLocalService.deleteClientExtensionEntryRels(
-			themeDisplay.getCompanyId(), layoutSet.getLayoutSetId(),
+			_portal.getClassNameId(LayoutSet.class), layoutSet.getLayoutSetId(),
 			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
 
 		String[] globalJSCETExternalReferenceCodes = ParamUtil.getStringValues(

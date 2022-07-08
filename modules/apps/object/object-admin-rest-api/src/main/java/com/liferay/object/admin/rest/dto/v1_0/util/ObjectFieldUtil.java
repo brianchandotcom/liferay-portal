@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 /**
  * @author Feliphe Marinho
  */
-public class ObjectFieldParserUtil {
+public class ObjectFieldUtil {
 
-	public static JSONObject parse(ObjectField objectField) {
+	public static JSONObject toJSONObject(ObjectField objectField) {
 		return JSONUtil.put(
 			"businessType", objectField.getBusinessType()
 		).put(
@@ -49,7 +49,7 @@ public class ObjectFieldParserUtil {
 			"name", objectField.getName()
 		).put(
 			"objectFieldSettings",
-			ObjectFieldSettingParserUtil.parse(objectField)
+			ObjectFieldSettingUtil.toJSONObject(objectField)
 		).put(
 			"relationshipType", objectField.getRelationshipType()
 		).put(

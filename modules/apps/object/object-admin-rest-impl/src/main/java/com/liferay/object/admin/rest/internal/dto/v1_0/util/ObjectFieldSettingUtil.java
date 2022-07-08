@@ -16,7 +16,7 @@ package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectStateFlow;
-import com.liferay.object.admin.rest.dto.v1_0.util.ObjectStateFlowParserUtil;
+import com.liferay.object.admin.rest.dto.v1_0.util.ObjectStateFlowUtil;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalServiceUtil;
@@ -50,10 +50,12 @@ public class ObjectFieldSettingUtil {
 				objectFieldSetting.getName())) {
 
 			serviceBuilderObjectFieldSetting.setObjectStateFlow(
-				ObjectStateFlowUtil.toObjectStateFlow(
-					objectFieldSetting.getObjectFieldId(),
-					ObjectMapperUtil.readValue(
-						ObjectStateFlow.class, objectFieldSetting.getValue())));
+				com.liferay.object.admin.rest.internal.dto.v1_0.util.
+					ObjectStateFlowUtil.toObjectStateFlow(
+						objectFieldSetting.getObjectFieldId(),
+						ObjectMapperUtil.readValue(
+							ObjectStateFlow.class,
+							objectFieldSetting.getValue())));
 		}
 
 		return serviceBuilderObjectFieldSetting;
@@ -82,7 +84,7 @@ public class ObjectFieldSettingUtil {
 				objectFieldSetting.getName())) {
 
 			objectFieldSetting.setValue(
-				ObjectStateFlowParserUtil.parse(
+				ObjectStateFlowUtil.parse(
 					ObjectStateFlowLocalServiceUtil.fetchObjectStateFlow(
 						GetterUtil.getLong(
 							serviceBuilderObjectFieldSetting.getValue()))));

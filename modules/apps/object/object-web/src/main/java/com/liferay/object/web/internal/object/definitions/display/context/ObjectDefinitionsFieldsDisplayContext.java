@@ -16,7 +16,7 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.object.admin.rest.dto.v1_0.util.ObjectFieldParserUtil;
+import com.liferay.object.admin.rest.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
@@ -156,7 +156,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 	}
 
 	public JSONObject getObjectFieldJSONObject(ObjectField objectField) {
-		return ObjectFieldParserUtil.parse(objectField);
+		return ObjectFieldUtil.toJSONObject(objectField);
 	}
 
 	@Override

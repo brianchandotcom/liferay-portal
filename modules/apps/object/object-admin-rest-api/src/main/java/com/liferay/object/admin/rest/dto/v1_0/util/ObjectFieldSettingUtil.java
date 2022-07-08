@@ -29,9 +29,9 @@ import java.util.Objects;
 /**
  * @author Feliphe Marinho
  */
-public class ObjectFieldSettingParserUtil {
+public class ObjectFieldSettingUtil {
 
-	public static JSONArray parse(ObjectField objectField) {
+	public static JSONArray toJSONObject(ObjectField objectField) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		ListUtil.isNotEmptyForEach(
@@ -80,7 +80,7 @@ public class ObjectFieldSettingParserUtil {
 					businessType)) {
 
 			if (Objects.equals(objectFieldSetting.getName(), "stateFlow")) {
-				return ObjectStateFlowParserUtil.parse(
+				return ObjectStateFlowUtil.parse(
 					ObjectStateFlowLocalServiceUtil.fetchObjectStateFlow(
 						GetterUtil.getLong(objectFieldSetting.getValue())));
 			}

@@ -26,7 +26,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 /**
  * @author Feliphe Marinho
  */
-public class ObjectStateFlowParserUtil {
+public class ObjectStateFlowUtil {
 
 	public static String parse(ObjectStateFlow objectStateFlow) {
 		return JSONUtil.getJSONString(
@@ -37,7 +37,7 @@ public class ObjectStateFlowParserUtil {
 						ObjectStateLocalServiceUtil.
 							getObjectStateFlowObjectStates(
 								objectStateFlow.getObjectStateFlowId()),
-						ObjectStateFlowParserUtil::_toObjectState,
+						ObjectStateFlowUtil::_toObjectState,
 						com.liferay.object.admin.rest.dto.v1_0.ObjectState.
 							class);
 				}
@@ -69,8 +69,7 @@ public class ObjectStateFlowParserUtil {
 				nextObjectStates = TransformUtil.transformToArray(
 					ObjectStateLocalServiceUtil.getNextObjectStates(
 						objectState.getObjectStateId()),
-					ObjectStateFlowParserUtil::_toNextObjectState,
-					String.class);
+					ObjectStateFlowUtil::_toNextObjectState, String.class);
 			}
 		};
 	}

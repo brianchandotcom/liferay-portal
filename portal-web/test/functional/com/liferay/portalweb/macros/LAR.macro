@@ -130,12 +130,12 @@ definition {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 		}
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 	}
 
 	macro _importSite {
 		while (IsElementNotPresent(locator1 = "Button#CONTINUE")) {
-			Pause(locator1 = "1000");
+			WaitForElementPresent(locator1 = "Button#CONTINUE");
 		}
 
 		Click(locator1 = "Button#CONTINUE");
@@ -173,8 +173,6 @@ definition {
 			locator1 = "Button#ANY",
 			value1 = "Import");
 
-		Pause(locator1 = "5000");
-
 		AssertTextEquals(
 			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
 			value1 = "Successful");
@@ -204,10 +202,6 @@ definition {
 			UploadTempFile.uploadTempFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
 				value1 = "${larFileName}");
-		}
-
-		while ((IsElementNotPresent(locator1 = "Button#CONTINUE")) && (IsElementNotPresent(locator1 = "ExportImport#VALIDATION_ERROR_MESSAGE_HEADER"))) {
-			Pause(locator1 = "1000");
 		}
 
 		if ("${cannotImport}" == "true") {
@@ -251,7 +245,7 @@ definition {
 				locator1 = "Button#CONTINUE",
 				value1 = "Continue");
 
-			Pause(locator1 = "5000");
+			WaitForElementPresent(locator1 = "Button#BACK");
 
 			if ("${copyAsNew}" == "true") {
 				LAR._copyAsNew();
@@ -307,7 +301,7 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		while (IsElementNotPresent(locator1 = "Button#SELECT_FILE")) {
-			Pause(locator1 = "1000");
+			WaitForElementPresent(locator1 = "Button#SELECT_FILE");
 		}
 
 		AssertElementPresent(locator1 = "Button#SELECT_FILE");
@@ -323,7 +317,7 @@ definition {
 
 		if (isSet(importValidationMissingItem) || isSet(importCampaignValidationError) || isSet(importCampaignValidationError)) {
 			while ((IsElementNotPresent(locator1 = "ExportImport#VALIDATION_ERROR_MESSAGE")) && (IsElementNotPresent(locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1"))) {
-				Pause(locator1 = "1000");
+				WaitForElementPresent(locator1 = "ExportImport#VALIDATION_ERROR_MESSAGE");
 			}
 		}
 
@@ -565,7 +559,7 @@ definition {
 	}
 
 	macro filterCompletedProcesses {
-		Pause(locator1 = "3000");
+		WaitForElementPresent(locator1 = "Staging#PROCESS_SUCCESSFUL");
 
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 

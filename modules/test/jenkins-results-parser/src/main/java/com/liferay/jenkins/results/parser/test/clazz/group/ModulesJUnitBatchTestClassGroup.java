@@ -110,8 +110,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
 		excludesJobProperties.addAll(getDefaultExcludesJobProperties());
 
-		Set<File> traversedModulesExcludePropertyFileSet = new HashSet<>();
-
 		for (File modifiedFile :
 				portalGitWorkingDirectory.getModifiedFilesList()) {
 
@@ -119,8 +117,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 				_getJobProperties(
 					modifiedFile,
 					"modules.includes.required.test.batch.class.names.excludes",
-					JobProperty.Type.MODULE_EXCLUDE_GLOB,
-					traversedModulesExcludePropertyFileSet));
+					JobProperty.Type.MODULE_EXCLUDE_GLOB, null));
 		}
 
 		return excludesJobProperties;
@@ -165,9 +162,6 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			moduleName = matcher.group("moduleName");
 		}
 
-		Set<File> traversedTestBatchPropertyFileSet = new HashSet<>();
-		Set<File> traversedModulesIncludePropertyFileSet = new HashSet<>();
-
 		for (File modifiedFile : modifiedFilesList) {
 			String modifiedModuleAbsolutePath =
 				JenkinsResultsParserUtil.getCanonicalPath(modifiedFile);
@@ -181,15 +175,13 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			includesJobProperties.addAll(
 				_getJobProperties(
 					modifiedFile, "test.batch.class.names.includes.modules",
-					JobProperty.Type.MODULE_INCLUDE_GLOB,
-					traversedTestBatchPropertyFileSet));
+					JobProperty.Type.MODULE_INCLUDE_GLOB, null));
 
 			includesJobProperties.addAll(
 				_getJobProperties(
 					modifiedFile,
 					"modules.includes.required.test.batch.class.names.includes",
-					JobProperty.Type.MODULE_INCLUDE_GLOB,
-					traversedModulesIncludePropertyFileSet));
+					JobProperty.Type.MODULE_INCLUDE_GLOB, null));
 		}
 
 		return includesJobProperties;
@@ -255,6 +247,10 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 		}
 
 		File testPropertiesFile = new File(file, "test.properties");
+
+		if (traversedPropertyFileSet == null) {
+			traversedPropertyFileSet = new HashSet<>();
+		}
 
 		if (testPropertiesFile.exists() &&
 			!traversedPropertyFileSet.contains(testPropertiesFile)) {

@@ -4880,6 +4880,14 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 				type = "${type}",
 				value1 = "${placeholder}");
 		}
+
+		if (isSet(markAsRequired)) {
+			AssertElementPresent(
+				fieldLabel = "${label}",
+				index = "${position}",
+				locator1 = "Fragment#INPUT_REQUIRED",
+				type = "${type}");
+		}
 	}
 
 	macro viewItemSelectorText {

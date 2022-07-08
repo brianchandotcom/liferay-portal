@@ -22,13 +22,13 @@ import org.junit.Test;
 public class MarkdownSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
-	public void testIncrrectCodeBlocks() throws Exception {
+	public void testIncorrectCodeBlocks() throws Exception {
 		test("IncorrectCodeBlocks.testmarkdown");
 	}
 
 	@Test
-	public void testIncrrectNumberedList() throws Exception {
-		test("IncrrectNumberedList.testmarkdown");
+	public void testIncorrectNumberedList() throws Exception {
+		test("IncorrectNumberedList.testmarkdown");
 	}
 
 }

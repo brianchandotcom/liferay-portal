@@ -362,6 +362,7 @@ definition {
 				deleteUser = "Test Test");
 
 			// We need this pause to check issue due trash.entry.check.interval=1
+			// To be investigated in LPS-157883
 
 			Pause(locator1 = "120000");
 		}

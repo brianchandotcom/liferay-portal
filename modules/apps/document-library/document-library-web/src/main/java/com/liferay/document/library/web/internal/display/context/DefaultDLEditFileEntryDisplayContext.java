@@ -89,11 +89,6 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public DLFilePicker getDLFilePicker(String onFilePickCallback) {
-		return null;
-	}
-
-	@Override
 	public String getDLFileEntryTypeLanguageId(
 		DDMStructure ddmStructure, Locale locale) {
 
@@ -106,6 +101,11 @@ public class DefaultDLEditFileEntryDisplayContext
 		}
 
 		return languageId;
+	}
+
+	@Override
+	public DLFilePicker getDLFilePicker(String onFilePickCallback) {
+		return null;
 	}
 
 	@Override

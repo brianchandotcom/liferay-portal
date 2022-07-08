@@ -79,18 +79,18 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public DLFilePicker getDLFilePicker(String onFilePickCallback)
-		throws PortalException {
-
-		return parentDisplayContext.getDLFilePicker(onFilePickCallback);
-	}
-
-	@Override
 	public String getDLFileEntryTypeLanguageId(
 		DDMStructure ddmStructure, Locale locale) {
 
 		return parentDisplayContext.getDLFileEntryTypeLanguageId(
 			ddmStructure, locale);
+	}
+
+	@Override
+	public DLFilePicker getDLFilePicker(String onFilePickCallback)
+		throws PortalException {
+
+		return parentDisplayContext.getDLFilePicker(onFilePickCallback);
 	}
 
 	@Override

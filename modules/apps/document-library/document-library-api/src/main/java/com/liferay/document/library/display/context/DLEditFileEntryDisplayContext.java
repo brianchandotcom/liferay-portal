@@ -27,11 +27,11 @@ public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
 
 	public DDMFormValues getDDMFormValues(long classPK) throws PortalException;
 
-	public DLFilePicker getDLFilePicker(String onFilePickCallback)
-		throws PortalException;
-
 	public String getDLFileEntryTypeLanguageId(
 		DDMStructure ddmStructure, Locale locale);
+
+	public DLFilePicker getDLFilePicker(String onFilePickCallback)
+		throws PortalException;
 
 	public default String getFriendlyURLBase() throws PortalException {
 		return null;

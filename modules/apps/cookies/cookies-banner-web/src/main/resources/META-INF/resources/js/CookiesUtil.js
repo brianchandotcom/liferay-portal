@@ -41,22 +41,7 @@ export function declineAllCookies(
 }
 
 export function getCookie(name) {
-	const cookieName = name + '=';
-	const cookieSet = document.cookie.split(';');
-
-	for (let i = 0; i < cookieSet.length; i++) {
-		let c = cookieSet[i];
-
-		while (c.charAt(0) === ' ') {
-			c = c.substring(1, c.length);
-		}
-
-		if (c.indexOf(cookieName) === 0) {
-			return c.substring(cookieName.length, c.length);
-		}
-	}
-
-	return null;
+	return Liferay.Util.Cookie.get(name);
 }
 
 export function setCookie(name, value) {

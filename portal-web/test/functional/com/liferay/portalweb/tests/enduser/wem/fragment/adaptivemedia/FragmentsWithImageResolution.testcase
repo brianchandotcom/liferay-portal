@@ -76,7 +76,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "high_resolution_photo");
+				imageFileName = "high_resolution_photo.jpg");
 		}
 
 		task ("Take down the File Size of image resolution") {
@@ -209,7 +209,7 @@ definition {
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewContainerStyle(
-				backgroundImage = "high_resolution_photo",
+				backgroundImage = "high_resolution_photo\.jpg",
 				position = "1");
 		}
 
@@ -277,7 +277,7 @@ definition {
 				position = "2");
 
 			PageEditor.viewContainerStyle(
-				backgroundImage = "high_resolution_photo",
+				backgroundImage = "high_resolution_photo\.jpg",
 				position = "2");
 		}
 
@@ -944,7 +944,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "commerce_white");
+				imageFileName = "Commerce_White.jpg");
 		}
 
 		task ("Take down the File Size of image resolution in Desktop viewport") {

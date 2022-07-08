@@ -183,7 +183,9 @@ public class KBAdminNavigationDisplayContext {
 				).put(
 					"key", "article"
 				).put(
-					"title", LanguageUtil.get(_httpServletRequest, "articles")
+					"title",
+					LanguageUtil.get(
+						_httpServletRequest, "folders-and-articles")
 				));
 		}
 

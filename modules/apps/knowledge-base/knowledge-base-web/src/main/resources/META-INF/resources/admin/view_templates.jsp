@@ -20,7 +20,16 @@
 KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayContext = new KBTemplatesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, templatePath);
 %>
 
-<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
+<c:choose>
+	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+		<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
+
+		<div class="kbAdminContent">
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>
 
 <liferay-portlet:actionURL name="/knowledge_base/delete_kb_templates" var="deleteKBTemplatesURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -119,3 +128,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 		</aui:fieldset>
 	</aui:form>
 </clay:container-fluid>
+
+<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+	</div>
+</c:if>

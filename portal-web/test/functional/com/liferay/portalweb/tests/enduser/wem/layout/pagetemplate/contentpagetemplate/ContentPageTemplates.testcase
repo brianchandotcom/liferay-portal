@@ -158,7 +158,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				contributed = "false",
 				fragmentClass = "image",
-				imageFileName = "Document_1.png");
+				imageFileName = "document_1-png");
 		}
 	}
 

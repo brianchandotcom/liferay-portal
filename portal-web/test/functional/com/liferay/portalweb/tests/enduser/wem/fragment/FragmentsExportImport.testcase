@@ -405,7 +405,7 @@ definition {
 		task ("View the background image of Container") {
 			PageEditor.viewFragment(fragmentName = "Container");
 
-			ContentPages.viewFragmentBackgroundImage(image = "Document_1\.jpg");
+			ContentPages.viewFragmentBackgroundImage(image = "document_1-jpg");
 		}
 
 		task ("View the styles of Heading") {
@@ -663,7 +663,7 @@ definition {
 
 			AssertElementPresent(
 				key_columnNumber = "2",
-				key_elementHeader = "//div[contains(@class,'page-editor')]//img[contains(@src,'Document_1.png')]",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//img[contains(@src,'document_1-png')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 
@@ -736,7 +736,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "Document_1.jpg");
+				imageFileName = "document_1-jpg");
 		}
 
 		task ("Save the fragment composition as fragment with mapping configuration") {
@@ -783,7 +783,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "Document_1.jpg");
+				imageFileName = "document_1-jpg");
 		}
 	}
 
@@ -1031,7 +1031,7 @@ definition {
 
 			AssertElementNotPresent(
 				key_columnNumber = "2",
-				key_elementHeader = "//div[contains(@class,'page-editor')]//img[contains(@src,'Document_1.png')]",
+				key_elementHeader = "//div[contains(@class,'page-editor')]//img[contains(@src,'document_1-png')]",
 				key_position = "1",
 				locator1 = "PageEditor#GRID_COLUMN_NESTED_ELEMENT");
 

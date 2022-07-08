@@ -574,7 +574,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 		task ("View audio is shown in Web Content Display") {
 			WebContentDisplayPortlet.viewContent(
-				audioFileName = "Document_1.mp3",
+				audioFileName = "document_1-mp3",
 				webContentTitle = "Web Content Title");
 		}
 	}
@@ -618,7 +618,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 		task ("View image is shown in Web Content Display") {
 			WebContentDisplayPortlet.viewContent(
-				imageFileName = "Document_3.png",
+				imageFileName = "document_3-png",
 				webContentTitle = "Web Content Title");
 		}
 	}

@@ -75,7 +75,7 @@ definition {
 				panel = "Styles",
 				uploadFileName = "high_resolution_photo.jpg");
 
-			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo\.jpg");
+			PageEditor.viewContainerStyle(backgroundImage = "high_resolution_photo-jpg");
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
@@ -168,13 +168,13 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the orignal image is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/documents/",
-				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
+				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo-jpg')]",
 				type = "backgroundImage");
 		}
 
@@ -193,13 +193,13 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the Preview-1000x0 is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/Preview-1000x0/",
-				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
+				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo-jpg')]",
 				type = "backgroundImage");
 		}
 	}
@@ -237,7 +237,7 @@ definition {
 				uploadFileName = "high_resolution_photo.jpg");
 
 			PageEditor.viewContainerStyle(
-				backgroundImage = "high_resolution_photo\.jpg",
+				backgroundImage = "high_resolution_photo-jpg",
 				paddingBottom = "3",
 				paddingTop = "3");
 		}
@@ -332,13 +332,13 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the orignal image is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/documents/",
-				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
+				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo-jpg')]",
 				type = "backgroundImage");
 		}
 
@@ -357,13 +357,13 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the Preview-1000x0 is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/Preview-1000x0/",
-				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
+				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo-jpg')]",
 				type = "backgroundImage");
 		}
 	}
@@ -401,7 +401,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "01-img",
 				imageDescription = "",
-				imageFileName = "high_resolution_photo.jpg");
+				imageFileName = "high_resolution_photo-jpg");
 		}
 
 		task ("Take down the Width and File Size of image resolution in Desktop viewport") {
@@ -499,13 +499,13 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "01-img",
 				imageDescription = "",
-				imageFileName = "high_resolution_photo.jpg");
+				imageFileName = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the orignal image is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/documents/",
-				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo-jpg')]");
 		}
 
 		task ("Change to the Tablet Device in simulation menu") {
@@ -526,13 +526,13 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "01-img",
 				imageDescription = "",
-				imageFileName = "high_resolution_photo.jpg");
+				imageFileName = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the Preview-1000x0 is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/Preview-1000x0/",
-				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo-jpg')]");
 		}
 	}
 
@@ -623,13 +623,13 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the orignal image is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/documents/",
-				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
+				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo-jpg')]",
 				type = "backgroundImage");
 		}
 
@@ -648,13 +648,13 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the Preview-1000x0 is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/Preview-1000x0/",
-				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
+				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo-jpg')]",
 				type = "backgroundImage");
 		}
 	}
@@ -747,13 +747,13 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the orignal image is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/documents/",
-				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
+				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo-jpg')]",
 				type = "backgroundImage");
 		}
 
@@ -772,13 +772,13 @@ definition {
 		}
 
 		task ("Assert the mapping image is shown in Preview modal") {
-			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo.jpg");
+			ContentPages.viewFragmentBackgroundImage(image = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the Preview-1000x0 is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/Preview-1000x0/",
-				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo.jpg')]",
+				element = "//div[contains(@class,'lfr-layout-structure-item-container')][contains(@style,'high_resolution_photo-jpg')]",
 				type = "backgroundImage");
 		}
 	}
@@ -872,13 +872,13 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "01-img",
 				imageDescription = "",
-				imageFileName = "high_resolution_photo.jpg");
+				imageFileName = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the orignal image is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/documents/",
-				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo-jpg')]");
 		}
 
 		task ("Change to the Tablet Device in simulation menu") {
@@ -899,13 +899,13 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "01-img",
 				imageDescription = "",
-				imageFileName = "high_resolution_photo.jpg");
+				imageFileName = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the Preview-1000x0 is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/Preview-1000x0/",
-				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo-jpg')]");
 		}
 	}
 

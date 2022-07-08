@@ -361,7 +361,7 @@ definition {
 			PageEditorEditableLink.updateURL(url = "https://liferay.com");
 
 			AssertVisible(
-				key_append = "//img[contains(@src,'Document_1.jpg')]",
+				key_append = "//img[contains(@src,'document_1-jpg')]",
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
@@ -401,12 +401,12 @@ definition {
 
 		task ("Assert mapped URL work in display page template") {
 			AssertVisible(
-				key_append = "//img[contains(@src,'Document_1.jpg')]",
+				key_append = "//img[contains(@src,'document_1-jpg')]",
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			Click(
-				key_append = "//img[contains(@src,'Document_1.jpg')]",
+				key_append = "//img[contains(@src,'document_1-jpg')]",
 				key_url = "https://liferay.com",
 				locator1 = "Fragment#FRAGMENT_LINK");
 
@@ -1302,7 +1302,7 @@ definition {
 		task ("Assert the image of the Document Title 1 is shown in Image fragment") {
 			AssertVisible(
 				id = "image-square",
-				key_image = "Document_1.jpg",
+				key_image = "document_1-jpg",
 				key_imageDescription = "",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
@@ -1338,7 +1338,7 @@ definition {
 		task ("Assert the image of the Document Title 1 is still shown in Image fragment") {
 			AssertVisible(
 				id = "image-square",
-				key_image = "Document_1.jpg",
+				key_image = "document_1-jpg",
 				key_imageDescription = "",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}

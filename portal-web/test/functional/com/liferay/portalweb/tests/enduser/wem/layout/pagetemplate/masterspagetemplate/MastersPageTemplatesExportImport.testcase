@@ -191,7 +191,7 @@ definition {
 				uploadFileName = "Document_1.png");
 
 			PageEditor.viewContainerStyle(
-				backgroundImage = "Document_1\.png",
+				backgroundImage = "document_1-png",
 				position = "1");
 
 			PageEditor.addFragment(
@@ -245,7 +245,7 @@ definition {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
 			PageEditor.viewContainerStyle(
-				backgroundImage = "Document_1\.png",
+				backgroundImage = "document_1-png",
 				position = "1");
 
 			PageEditor.viewFragmentStyle(
@@ -413,7 +413,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image",
 				imageDescription = "This is Document 1 png",
-				imageFileName = "Document_1.png");
+				imageFileName = "document_1-png");
 
 			Button.click(button = "Publish Master");
 
@@ -460,7 +460,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image",
 				imageDescription = "This is Document 1 png",
-				imageFileName = "Document_1.png");
+				imageFileName = "document_1-png");
 		}
 	}
 

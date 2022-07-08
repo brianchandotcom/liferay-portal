@@ -380,7 +380,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "Document_1.jpg");
+				imageFileName = "document_1-jpg");
 		}
 
 		task ("Directly select another Image in Image fragment") {
@@ -394,7 +394,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "Document_2.jpg");
+				imageFileName = "document_2-jpg");
 		}
 
 		task ("Clear the selection") {

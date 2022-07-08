@@ -79,6 +79,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -822,10 +823,18 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			getRequest(), InfoFormConstants.INFO_FORM_PARAMETER_MAP,
 			formParameterMap);
 
+		SessionMessages.remove(
+			getRequest(),
+			InfoFormConstants.INFO_FORM_PARAMETER_MAP +
+				formStyledLayoutStructureItem.getItemId());
+
 		_renderLayoutStructure(
 			formStyledLayoutStructureItem.getChildrenItemIds(),
 			collectionElementIndex, infoForm,
 			renderLayoutStructureDisplayContext);
+
+		SessionMessages.remove(
+			getRequest(), InfoFormConstants.INFO_FORM_PARAMETER_MAP);
 
 		jspWriter.write("</form>");
 	}

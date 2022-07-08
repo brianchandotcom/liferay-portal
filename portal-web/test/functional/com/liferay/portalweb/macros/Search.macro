@@ -22,7 +22,7 @@ definition {
 	}
 
 	macro searchCP {
-		AssertElementPresent(locator1 = "TextInput#SEARCH");
+		WaitForElementPresent(locator1 = "TextInput#SEARCH");
 
 		AssertElementPresent(locator1 = "Icon#BASIC_SEARCH");
 

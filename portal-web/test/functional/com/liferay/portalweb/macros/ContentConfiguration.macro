@@ -178,6 +178,8 @@ definition {
 	macro uncheckSubContent {
 		var key_contentName = "${mainContent}";
 
+		WaitForElementPresent(locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK");
+
 		Click(locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK");
 
 		var key_subContent = "${uncheckSubContent}";

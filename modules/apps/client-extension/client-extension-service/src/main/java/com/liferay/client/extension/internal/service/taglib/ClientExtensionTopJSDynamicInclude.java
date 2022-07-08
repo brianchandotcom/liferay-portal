@@ -81,6 +81,14 @@ public class ClientExtensionTopJSDynamicInclude implements DynamicInclude {
 					clientExtensionEntryRel.getTypeSettings()
 				).build();
 
+			if (!Objects.equals(
+					typeSettingsUnicodeProperties.getProperty(
+						"scriptLocation", StringPool.BLANK),
+					"head")) {
+
+				continue;
+			}
+
 			printWriter.print("<script ");
 
 			String loadType = typeSettingsUnicodeProperties.getProperty(

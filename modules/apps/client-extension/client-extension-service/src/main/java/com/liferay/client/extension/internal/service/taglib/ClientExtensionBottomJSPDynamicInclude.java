@@ -81,6 +81,14 @@ public class ClientExtensionBottomJSPDynamicInclude implements DynamicInclude {
 					clientExtensionEntryRel.getTypeSettings()
 				).build();
 
+			if (!Objects.equals(
+					typeSettingsUnicodeProperties.getProperty(
+						"scriptLocation", StringPool.BLANK),
+					"bottom")) {
+
+				continue;
+			}
+
 			printWriter.print("<script ");
 
 			String loadType = typeSettingsUnicodeProperties.getProperty(

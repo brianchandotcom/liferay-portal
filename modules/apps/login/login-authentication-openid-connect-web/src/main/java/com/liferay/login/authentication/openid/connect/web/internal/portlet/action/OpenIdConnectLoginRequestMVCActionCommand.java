@@ -117,9 +117,6 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 		throws Exception {
 
 		try {
-			long oAuthClientEntryId = ParamUtil.getLong(
-				actionRequest, "oAuthClientEntryId");
-
 			String openIdConnectProviderName = ParamUtil.getString(
 				actionRequest,
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_PROVIDER_NAME);
@@ -161,6 +158,9 @@ public class OpenIdConnectLoginRequestMVCActionCommand
 					openIdConnectProviderName, httpServletRequest,
 					httpServletResponse);
 			}
+
+			long oAuthClientEntryId = ParamUtil.getLong(
+				actionRequest, "oAuthClientEntryId");
 
 			_openIdConnectAuthenticationHandler.requestAuthentication(
 				oAuthClientEntryId, httpServletRequest, httpServletResponse);

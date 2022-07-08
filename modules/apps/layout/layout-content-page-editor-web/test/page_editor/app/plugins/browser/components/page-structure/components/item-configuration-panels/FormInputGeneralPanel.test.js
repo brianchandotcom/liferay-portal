@@ -157,6 +157,7 @@ const renderComponent = ({
 				name: 'Fragment',
 			},
 		},
+		fragments: [],
 		languageId: 'en_US',
 		layoutData: {
 			items: {
@@ -228,10 +229,14 @@ describe('FormInputGeneralPanel', () => {
 	});
 
 	it('shows configuration fieldset when fragment is mapped', () => {
+		Liferay.Util.sub.mockImplementation((langKey, args) =>
+			[langKey, args].join('-')
+		);
+
 		renderComponent({mappedFieldId: 'requiredField'});
 
 		expect(
-			screen.getByText('input-fragment-configuration')
+			screen.getByText('x-configuration-fragment')
 		).toBeInTheDocument();
 	});
 

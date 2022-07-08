@@ -19,6 +19,7 @@ import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -26,6 +27,9 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -33,6 +37,7 @@ import java.io.PrintWriter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,10 +74,28 @@ public class ClientExtensionTopJSDynamicInclude implements DynamicInclude {
 				continue;
 			}
 
-			printWriter.print(
-				"<script data-senna-track=\"temporary\" src=\"" +
-					globalJSCET.getURL() +
-						"\" type=\"text/javascript\"></script>");
+			UnicodeProperties typeSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.create(
+					true
+				).fastLoad(
+					clientExtensionEntryRel.getTypeSettings()
+				).build();
+
+			printWriter.print("<script ");
+
+			String loadType = typeSettingsUnicodeProperties.getProperty(
+				"loadType", StringPool.BLANK);
+
+			if (Validator.isNotNull(loadType) &&
+				!Objects.equals(loadType, "default")) {
+
+				printWriter.print(loadType);
+				printWriter.print(StringPool.SPACE);
+			}
+
+			printWriter.print("data-senna-track=\"temporary\" src=\"");
+			printWriter.print(globalJSCET.getURL());
+			printWriter.print("\" type=\"text/javascript\"></script>");
 		}
 	}
 

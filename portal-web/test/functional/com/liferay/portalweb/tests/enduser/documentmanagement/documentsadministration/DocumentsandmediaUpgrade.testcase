@@ -55,9 +55,9 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
-			dmDocumentFile = "Commerce_Blue.jpg",
-			dmDocumentTitle = "Commerce_Blue.jpg",
-			warningForSizeLimits = "Please enter a file with a valid file size no larger than 10 KB");
+			dmDocumentFile = "high_resolution_photo.jpg",
+			dmDocumentTitle = "high_resolution_photo.jpg",
+			warningForSizeLimits = "Please enter a file with a valid file size no larger than 100 KB");
 	}
 
 	@priority = "4"

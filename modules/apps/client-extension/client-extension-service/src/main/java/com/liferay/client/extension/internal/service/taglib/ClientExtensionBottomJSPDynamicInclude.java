@@ -101,8 +101,7 @@ public class ClientExtensionBottomJSPDynamicInclude implements DynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register(
-			"/html/common/themes/top_js.jspf#resources");
+		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
 	}
 
 	private List<ClientExtensionEntryRel> _getClientExtensionEntryRels(

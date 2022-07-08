@@ -32,7 +32,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
@@ -54,6 +57,16 @@ public class ObjectActionEngineImpl implements ObjectActionEngine {
 	public void executeObjectActions(
 		String className, long companyId, String objectActionTriggerKey,
 		JSONObject payloadJSONObject, long userId) {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext != null) &&
+			!ParamUtil.getBoolean(
+				serviceContext, "executeObjectActions", true)) {
+
+			return;
+		}
 
 		try {
 			_executeObjectActions(

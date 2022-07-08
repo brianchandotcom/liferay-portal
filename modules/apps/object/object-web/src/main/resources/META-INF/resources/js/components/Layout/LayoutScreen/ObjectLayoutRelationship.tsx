@@ -15,7 +15,6 @@
 import ClayLabel from '@clayui/label';
 import React, {useContext} from 'react';
 
-import {defaultLanguageId} from '../../../utils/locale';
 import Panel from '../../Panel/Panel';
 import LayoutContext from '../context';
 
@@ -23,6 +22,7 @@ interface IObjectLayoutRelationshipProps
 	extends React.HTMLAttributes<HTMLElement> {
 	objectRelationshipId: number;
 }
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ObjectLayoutRelationship: React.FC<IObjectLayoutRelationshipProps> = ({
 	objectRelationshipId,

@@ -16,39 +16,33 @@
 
 import './InputLocalized.scss';
 export declare function InputLocalized({
-	defaultLanguageId,
 	disabled,
 	error,
 	id,
 	label,
-	locales,
 	name,
-	onSelectedLocaleChange,
-	onTranslationsChange,
+	onChange,
 	placeholder,
 	required,
 	selectedLocale,
 	translations,
 	...otherProps
 }: IProps): JSX.Element;
-interface ILocale {
-	label: string;
-	symbol: string;
-}
 interface IProps {
 	className?: string;
-	defaultLanguageId: Locale;
 	disabled?: boolean;
 	error?: string;
 	id?: string;
 	label: string;
-	locales: ILocale[];
 	name?: string;
-	onSelectedLocaleChange: (value: ILocale) => void;
-	onTranslationsChange: (value: LocalizedValue<string>) => void;
+	onChange: (value: LocalizedValue<string>, locale: InputLocale) => void;
 	placeholder?: string;
 	required?: boolean;
-	selectedLocale: ILocale;
+	selectedLocale?: Locale;
 	translations: LocalizedValue<string>;
+}
+interface InputLocale {
+	label: Locale;
+	symbol: string;
 }
 export {};

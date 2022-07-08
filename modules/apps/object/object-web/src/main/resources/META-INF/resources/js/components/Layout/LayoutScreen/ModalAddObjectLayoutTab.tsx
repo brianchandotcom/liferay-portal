@@ -21,7 +21,6 @@ import {AutoComplete, Input, useForm} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React, {useContext, useMemo, useState} from 'react';
 
-import {defaultLanguageId} from '../../../utils/locale';
 import {separateCamelCase} from '../../../utils/string';
 import LayoutContext, {TYPES as EVENT_TYPES} from '../context';
 import {TObjectRelationship} from '../types';
@@ -71,6 +70,8 @@ interface ITabTypeProps extends React.HTMLAttributes<HTMLElement> {
 	selected: string;
 	type: string;
 }
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const TabType: React.FC<ITabTypeProps> = ({
 	description,

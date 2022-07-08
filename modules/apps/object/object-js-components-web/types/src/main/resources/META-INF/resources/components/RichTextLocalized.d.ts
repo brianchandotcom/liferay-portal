@@ -19,14 +19,13 @@ export declare function RichTextLocalized({
 	editorConfig,
 	helpMessage,
 	label,
-	locales,
 	onSelectedLocaleChange,
 	onTranslationsChange,
 	selectedLocale,
 	translations,
 }: IProps): JSX.Element;
 interface IItem {
-	label: string;
+	label: Locale;
 	symbol: string;
 }
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -39,10 +38,9 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	editorConfig: string;
 	helpMessage?: string;
 	label: string;
-	locales: Array<IItem>;
 	onSelectedLocaleChange: (val: IItem) => void;
 	onTranslationsChange: (val: LocalizedValue<string>) => void;
-	selectedLocale: IItem;
+	selectedLocale: Locale;
 	translations: LocalizedValue<string>;
 }
 export {};

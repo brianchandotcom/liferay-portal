@@ -15,8 +15,6 @@
 import {API, Select} from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {defaultLanguageId} from '../../utils/locale';
-
 export default function SelectRelationship({
 	error,
 	objectDefinitionId,
@@ -26,7 +24,10 @@ export default function SelectRelationship({
 }: IProps) {
 	const [fields, setFields] = useState<ObjectField[]>([]);
 	const options = useMemo(
-		() => fields.map(({label}) => label[defaultLanguageId]!),
+		() =>
+			fields.map(
+				({label}) => label[Liferay.ThemeDisplay.getDefaultLanguageId()]!
+			),
 		[fields]
 	);
 	const selectedValue = useMemo(() => {

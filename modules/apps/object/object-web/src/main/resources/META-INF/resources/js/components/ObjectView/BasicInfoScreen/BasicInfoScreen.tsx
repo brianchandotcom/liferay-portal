@@ -20,8 +20,9 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useContext} from 'react';
 
-import {defaultLanguageId} from '../../../utils/locale';
 import ViewContext, {TYPES} from '../context';
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export default function BasicInfoScreen() {
 	const [{objectView}, dispatch] = useContext(ViewContext);

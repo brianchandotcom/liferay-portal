@@ -21,8 +21,8 @@ import {fetch} from 'frontend-js-web';
 import React, {FormEvent, useEffect, useState} from 'react';
 
 import {HEADERS} from '../utils/constants';
-import {defaultLanguageId} from '../utils/locale';
 
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const requiredLabel = Liferay.Language.get('required');
 
 function ModalAddObjectValidation({

@@ -18,8 +18,7 @@ import {
 	useForm,
 } from '@liferay/object-js-components-web';
 
-import {defaultLanguageId} from '../utils/locale';
-
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const REQUIRED_MSG = Liferay.Language.get('required');
 
 export function useObjectValidationForm({
@@ -28,7 +27,6 @@ export function useObjectValidationForm({
 }: IUseObjectValidationForm) {
 	const validate = (validation: Partial<ObjectValidation>) => {
 		const errors: ObjectValidationErrors = {};
-
 		const label = validation.name?.[defaultLanguageId];
 		const errorMessage = validation.errorLabel?.[defaultLanguageId];
 		const script = validation.script;

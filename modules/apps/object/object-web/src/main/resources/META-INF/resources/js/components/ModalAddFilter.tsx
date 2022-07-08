@@ -30,19 +30,16 @@ import React, {
 	useState,
 } from 'react';
 
-import {HEADERS} from '../utils/constants';
 import {
 	DATE_OPERATORS,
 	NUMERIC_OPERATORS,
 	PICKLIST_OPERATORS,
 } from '../utils/filterOperators';
-import {defaultLanguageId, locale} from '../utils/locale';
 
 import './ModalAddFilter.scss';
 
-HEADERS.append('Accept-Language', locale!.symbol);
-
 const REQUIRED_MSG = Liferay.Language.get('required');
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function ModalAddFilter({
 	currentFilters,

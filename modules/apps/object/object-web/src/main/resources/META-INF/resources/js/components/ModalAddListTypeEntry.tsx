@@ -25,12 +25,9 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {HEADERS} from '../utils/constants';
-import {
-	availableLocales,
-	defaultLanguageId,
-	defaultLocale,
-} from '../utils/locale';
 import {toCamelCase} from '../utils/string';
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ModalAddListTypeEntry: React.FC<IProps> = ({
 	apiURL,
@@ -38,12 +35,10 @@ const ModalAddListTypeEntry: React.FC<IProps> = ({
 	onClose,
 }) => {
 	const [error, setError] = useState<string>('');
-	const [selectedLocale, setSelectedLocale] = useState<TLocale>(
-		defaultLocale as {
-			label: string;
-			symbol: string;
-		}
-	);
+	const [selectedLocale, setSelectedLocale] = useState({
+		label: defaultLanguageId,
+		symbol: defaultLanguageId.replace('_', '-').toLowerCase(),
+	});
 	const initialValues: TInitialValues = {
 		key: undefined,
 		name_i18n: {[defaultLanguageId]: ''},
@@ -109,17 +104,14 @@ const ModalAddListTypeEntry: React.FC<IProps> = ({
 					)}
 
 					<InputLocalized
-						defaultLanguageId={defaultLanguageId}
 						error={errors.name_i18n}
 						id="locale"
 						label={Liferay.Language.get('name')}
-						locales={availableLocales}
-						onSelectedLocaleChange={setSelectedLocale}
-						onTranslationsChange={(value) =>
-							setValues({name_i18n: value})
-						}
+						onChange={(value, locale) => {
+							setValues({name_i18n: value});
+							setSelectedLocale(locale);
+						}}
 						required
-						selectedLocale={selectedLocale}
 						translations={values.name_i18n}
 					/>
 
@@ -169,11 +161,6 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
 	observer: any;
 	onClose: () => void;
 }
-
-type TLocale = {
-	label: string;
-	symbol: string;
-};
 
 type TInitialValues = {
 	key?: string;

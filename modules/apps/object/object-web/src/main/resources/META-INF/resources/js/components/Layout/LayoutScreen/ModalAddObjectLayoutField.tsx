@@ -19,7 +19,6 @@ import {AutoComplete, useForm} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React, {useContext, useMemo, useState} from 'react';
 
-import {defaultLanguageId} from '../../../utils/locale';
 import LayoutContext, {TYPES} from '../context';
 import {TObjectField} from '../types';
 import RequiredLabel from './RequiredLabel';
@@ -34,6 +33,8 @@ type TInitialValues = {
 interface IBoxBtnColumnsProps extends React.HTMLAttributes<HTMLElement> {
 	handleChange: any;
 }
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const BoxBtnColumns: React.FC<IBoxBtnColumnsProps> = ({handleChange}) => {
 	const [activeIndex, setActiveIndex] = useState<number>(0);

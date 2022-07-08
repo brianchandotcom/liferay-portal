@@ -22,9 +22,10 @@ import React, {useEffect, useState} from 'react';
 
 import {HEADERS} from '../utils/constants';
 import {ERRORS} from '../utils/errors';
-import {defaultLanguageId} from '../utils/locale';
 import {toCamelCase} from '../utils/string';
 import ObjectFieldFormBase, {useObjectFieldForm} from './ObjectFieldFormBase';
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 function ModalAddObjectField({
 	apiURL,

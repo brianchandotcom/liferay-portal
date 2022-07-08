@@ -37,7 +37,6 @@ import {
 	normalizeFieldSettings,
 	updateFieldSettings,
 } from '../utils/fieldSettings';
-import {defaultLanguageId, defaultLocale} from '../utils/locale';
 import {ModalAddFilter} from './ModalAddFilter';
 import ObjectFieldFormBase, {
 	ObjectFieldErrors,
@@ -46,18 +45,9 @@ import ObjectFieldFormBase, {
 
 import './EditObjectField.scss';
 
-const locales: {label: string; symbol: string}[] = [];
-const languageLabels: string[] = [];
-const languages = Liferay.Language.available as LocalizedValue<string>;
-
-Object.entries(languages).forEach(([languageId, label]) => {
-	locales.push({
-		label: languageId,
-		symbol: languageId.replace('_', '-').toLocaleLowerCase(),
-	});
-
-	languageLabels.push(label);
-});
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+const languages = Liferay.Language.available;
+const languageLabels = Object.values(languages);
 
 export default function EditObjectField({
 	forbiddenChars,
@@ -108,9 +98,7 @@ export default function EditObjectField({
 			});
 		}
 		else {
-			const error = (await response.json()) as
-				| {type?: string}
-				| undefined;
+			const error: {type?: string} | undefined = await response.json();
 
 			const message =
 				(error?.type && ERRORS[error.type]) ??
@@ -139,13 +127,6 @@ export default function EditObjectField({
 		isApproved ||
 		values.relationshipType ||
 		values.system
-	);
-
-	const [locale, setSelectedLocale] = useState(
-		defaultLocale as {
-			label: string;
-			symbol: string;
-		}
 	);
 
 	const handleSettingsChange = ({name, value}: ObjectFieldSetting) =>
@@ -474,7 +455,6 @@ export default function EditObjectField({
 		>
 			<Card title={Liferay.Language.get('basic-info')}>
 				<InputLocalized
-					defaultLanguageId={defaultLanguageId}
 					disabled={
 						values.system && objectName !== 'AccountEntry'
 							? disabled
@@ -482,11 +462,8 @@ export default function EditObjectField({
 					}
 					error={errors.label}
 					label={Liferay.Language.get('label')}
-					locales={locales}
-					onSelectedLocaleChange={setSelectedLocale}
-					onTranslationsChange={(label) => setValues({label})}
+					onChange={(label) => setValues({label})}
 					required
-					selectedLocale={locale}
 					translations={values.label as LocalizedValue<string>}
 				/>
 
@@ -623,14 +600,12 @@ function SearchableContainer({
 			objectField.businessType === 'Attachment') &&
 		objectField.businessType !== 'Aggregation';
 
-	const selectedLanguage = useMemo(() => {
-		const selectedLabel =
+	const selectedLanguageIndex = useMemo(() => {
+		const label =
 			objectField.indexedLanguageId &&
 			languages[objectField.indexedLanguageId];
 
-		return selectedLabel
-			? languageLabels.indexOf(selectedLabel)
-			: undefined;
+		return label ? languageLabels.indexOf(label) : undefined;
 	}, [objectField.indexedLanguageId]);
 
 	return (
@@ -683,8 +658,11 @@ function SearchableContainer({
 					disabled={disabled}
 					label={Liferay.Language.get('language')}
 					name="indexedLanguageId"
-					onChange={({target: {value}}: any) => {
-						const selectedLabel = languageLabels[value];
+					onChange={({target: {value}}) => {
+						const selectedLabel =
+							languageLabels[
+								value as keyof typeof languageLabels
+							];
 						const [indexedLanguageId] = Object.entries(
 							languages
 						).find(([, label]) => selectedLabel === label) as [
@@ -695,7 +673,7 @@ function SearchableContainer({
 					}}
 					options={languageLabels}
 					required
-					value={selectedLanguage}
+					value={selectedLanguageIndex}
 				/>
 			)}
 		</Card>

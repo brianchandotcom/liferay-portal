@@ -23,11 +23,6 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {HEADERS} from '../utils/constants';
-import {
-	availableLocales,
-	defaultLanguageId,
-	defaultLocale,
-} from '../utils/locale';
 import {BasicInfo, Conditions} from './DataValidation/ObjectValidationTabs';
 import {
 	ObjectValidationErrors,
@@ -108,7 +103,11 @@ export default function EditObjectValidation({
 	return (
 		<SidePanelForm
 			onSubmit={handleSubmit}
-			title={initialValues.name?.[defaultLanguageId] as string}
+			title={
+				initialValues.name?.[
+					Liferay.ThemeDisplay.getDefaultLanguageId()
+				]!
+			}
 		>
 			<ClayTabs className="side-panel-iframe__tabs">
 				{TABS.map(({label}, index) => (
@@ -128,7 +127,6 @@ export default function EditObjectValidation({
 						<ClayTabs.TabPane key={index}>
 							<Component
 								componentLabel={label}
-								defaultLocale={defaultLocale!}
 								disabled={readOnly}
 								errors={
 									Object.keys(errors).length !== 0
@@ -136,7 +134,6 @@ export default function EditObjectValidation({
 										: errorMessage
 								}
 								handleChange={handleChange}
-								locales={availableLocales}
 								objectValidationRuleElements={
 									objectValidationRuleElements
 								}

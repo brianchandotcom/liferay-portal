@@ -23,13 +23,8 @@ import {
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
-import React, {useState} from 'react';
+import React from 'react';
 
-import {
-	availableLocales,
-	defaultLanguageId,
-	defaultLocale,
-} from '../../utils/locale';
 import {firstLetterUppercase} from '../../utils/string';
 import {
 	ObjectRelationshipFormBase,
@@ -45,13 +40,6 @@ export default function EditRelationship({
 	parameterEndpoint,
 	parameterRequired,
 }: IProps) {
-	const [selectedLocale, setSelectedLocale] = useState(
-		defaultLocale as {
-			label: string;
-			symbol: string;
-		}
-	);
-
 	const onSubmit = async (objectRelationship: ObjectRelationship) => {
 		try {
 			await API.updateRelationship(objectRelationship);
@@ -101,15 +89,11 @@ export default function EditRelationship({
 				)}
 
 				<InputLocalized
-					defaultLanguageId={defaultLanguageId}
 					disabled={readOnly}
 					error={errors.label}
 					label={Liferay.Language.get('label')}
-					locales={availableLocales}
-					onSelectedLocaleChange={setSelectedLocale}
-					onTranslationsChange={(label) => setValues({label})}
+					onChange={(label) => setValues({label})}
 					required
-					selectedLocale={selectedLocale}
 					translations={values.label as LocalizedValue<string>}
 				/>
 

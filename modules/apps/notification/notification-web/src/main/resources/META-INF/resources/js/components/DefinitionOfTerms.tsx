@@ -29,7 +29,7 @@ import {
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {defaultLanguageId} from '../utils/locale';
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function DefinitionOfTerms({baseResourceURL}: IProps) {
 	const [objectDefinitions, setObjectDefinitions] = useState<

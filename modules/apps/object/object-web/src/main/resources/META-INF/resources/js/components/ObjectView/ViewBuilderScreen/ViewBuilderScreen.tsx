@@ -16,9 +16,10 @@ import {useModal} from '@clayui/modal';
 import {BuilderScreen} from '@liferay/object-js-components-web';
 import React, {useContext, useState} from 'react';
 
-import {defaultLanguageId} from '../../../utils/locale';
 import {ModalEditViewColumn} from '../ModalEditViewColumn/ModalEditViewColumn';
 import ViewContext, {TYPES} from '../context';
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ViewBuilderScreen: React.FC<{}> = () => {
 	const [visibleEditModal, setVisibleEditModal] = useState(false);

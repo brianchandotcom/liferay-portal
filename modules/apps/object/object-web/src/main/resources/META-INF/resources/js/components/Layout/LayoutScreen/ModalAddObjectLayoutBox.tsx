@@ -18,7 +18,6 @@ import ClayModal from '@clayui/modal';
 import {Input, useForm} from '@liferay/object-js-components-web';
 import React, {useContext} from 'react';
 
-import {defaultLanguageId} from '../../../utils/locale';
 import LayoutContext, {TYPES} from '../context';
 
 type TInitialValues = {
@@ -46,7 +45,7 @@ const ModalAddObjectLayoutBox: React.FC<IModalAddObjectLayoutBoxProps> = ({
 		dispatch({
 			payload: {
 				name: {
-					[defaultLanguageId]: values.name,
+					[Liferay.ThemeDisplay.getDefaultLanguageId()]: values.name,
 				},
 				tabIndex,
 				type: 'regular',

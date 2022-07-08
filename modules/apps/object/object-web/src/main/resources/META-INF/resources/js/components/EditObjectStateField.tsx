@@ -23,7 +23,6 @@ import React, {useEffect, useState} from 'react';
 
 import {HEADERS} from '../utils/constants';
 import {ERRORS} from '../utils/errors';
-import {defaultLanguageId} from '../utils/locale';
 import {useObjectFieldForm} from './ObjectFieldFormBase';
 import StateDefinition from './StateManager/StateDefinition';
 
@@ -109,7 +108,7 @@ export default function EditObjectStateField({objectField, readOnly}: IProps) {
 			onSubmit={handleSubmit}
 			readOnly={readOnly}
 			title={`${
-				objectField.label[defaultLanguageId]
+				objectField.label[Liferay.ThemeDisplay.getDefaultLanguageId()]
 			} ${Liferay.Language.get('settings')}`}
 		>
 			<Card title={Liferay.Language.get('select-the-state-flow')}>

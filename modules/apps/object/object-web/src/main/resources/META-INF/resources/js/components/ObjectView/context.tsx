@@ -14,7 +14,6 @@
 
 import React, {createContext, useReducer} from 'react';
 
-import {defaultLanguageId} from '../../utils/locale';
 import {
 	TAction,
 	TName,
@@ -35,6 +34,7 @@ interface TInitialFilterColumn extends TObjectViewFilterColumn {
 	valueSummary: string;
 }
 
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const ViewContext = createContext({} as IViewContextProps);
 
 export enum TYPES {

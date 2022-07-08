@@ -20,8 +20,9 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useContext} from 'react';
 
-import {defaultLanguageId} from '../../../utils/locale';
 import LayoutContext, {TYPES} from '../context';
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const InfoScreen: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [{isViewOnly, objectLayout}, dispatch] = useContext(LayoutContext);

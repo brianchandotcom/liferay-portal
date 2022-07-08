@@ -19,7 +19,6 @@ import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {API, Input} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {defaultLanguageId} from '../../utils/locale';
 import {toCamelCase} from '../../utils/string';
 import {
 	ObjectRelationshipFormBase,
@@ -27,6 +26,8 @@ import {
 	useObjectRelationshipForm,
 } from './ObjectRelationshipFormBase';
 import SelectRelationship from './SelectRelationship';
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 function ModalAddObjectRelationship({
 	apiURL,

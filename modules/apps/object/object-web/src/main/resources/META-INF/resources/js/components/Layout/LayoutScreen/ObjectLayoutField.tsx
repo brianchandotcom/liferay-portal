@@ -14,7 +14,6 @@
 
 import React, {useContext} from 'react';
 
-import {defaultLanguageId} from '../../../utils/locale';
 import Panel from '../../Panel/Panel';
 import LayoutContext, {TYPES} from '../context';
 import HeaderDropdown from './HeaderDropdown';
@@ -27,6 +26,8 @@ interface IObjectLayoutFieldProps extends React.HTMLAttributes<HTMLElement> {
 	rowIndex: number;
 	tabIndex: number;
 }
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
 	boxIndex,

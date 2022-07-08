@@ -21,8 +21,9 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {HEADERS} from '../utils/constants';
-import {defaultLanguageId} from '../utils/locale';
 import {TName} from './Layout/types';
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ModalAddListTypeDefinition: React.FC<IProps> = ({
 	apiURL,

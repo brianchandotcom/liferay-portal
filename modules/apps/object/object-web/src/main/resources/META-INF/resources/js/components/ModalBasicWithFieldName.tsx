@@ -21,7 +21,8 @@ import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {HEADERS} from '../utils/constants';
-import {defaultLanguageId} from '../utils/locale';
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
 	apiURL: string;

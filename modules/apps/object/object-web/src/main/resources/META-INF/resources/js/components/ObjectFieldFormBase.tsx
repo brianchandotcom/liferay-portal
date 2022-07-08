@@ -34,11 +34,11 @@ import React, {
 } from 'react';
 
 import {normalizeFieldSettings} from '../utils/fieldSettings';
-import {defaultLanguageId} from '../utils/locale';
 import {toCamelCase} from '../utils/string';
 
 import './ObjectFieldFormBase.scss';
 
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const REQUIRED_MSG = Liferay.Language.get('required');
 
 const attachmentSources = [

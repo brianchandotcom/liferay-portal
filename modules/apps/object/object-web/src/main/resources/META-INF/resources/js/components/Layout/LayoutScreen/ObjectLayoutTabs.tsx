@@ -18,13 +18,14 @@ import ClayLabel from '@clayui/label';
 import {useModal} from '@clayui/modal';
 import React, {useContext, useState} from 'react';
 
-import {defaultLanguageId} from '../../../utils/locale';
 import Panel from '../../Panel/Panel';
 import LayoutContext, {TYPES} from '../context';
 import HeaderDropdown from './HeaderDropdown';
 import ModalAddObjectLayoutBox from './ModalAddObjectLayoutBox';
 import ObjectLayoutBox from './ObjectLayoutBox';
 import ObjectLayoutRelationship from './ObjectLayoutRelationship';
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 	const [{isViewOnly, objectLayout}, dispatch] = useContext(LayoutContext);

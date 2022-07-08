@@ -274,9 +274,7 @@ public class DBUpgrader {
 	}
 
 	public static void verify() throws Exception {
-		if (GetterUtil.getBoolean(
-			PropsUtil.get("feature.flag.LPS-157670"))) {
-
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-157670"))) {
 			VerifyProcessSuite verifyProcessSuite = new VerifyProcessSuite();
 
 			verifyProcessSuite.verify();

@@ -513,6 +513,168 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-155529. The pages designer can add custom translations on Thank you message."
+	@priority = "4"
+	test SubmitFormContainerWithTranslatedSuccessText {
+		property test.name.skip.portal.instance = "FormContainer#SubmitFormContainerWithTranslatedSuccessText";
+
+		task ("Given a page designer has a mapped Form Container  and Language Selector on content page") {
+			task ("Add Form Container and Language Selector to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Map the Form Container to new Object") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add Text Input and Submit Button inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Text Input");
+
+				PageEditor.editInput(
+					field = "Region",
+					fragmentName = "Text Input");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "Text Input");
+			}
+
+			task ("Add a Language Selector below Form Container") {
+				PageEditor.addWidget(
+					collectionName = "Tools",
+					portletName = "Language Selector",
+					targetFragmentName = "Form Container");
+			}
+		}
+
+		task ("When the page designer adds translation on success text") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+
+			PageEditor.editFormContainer(
+				panel = "General",
+				successText = "Estamos muy agradecidos de recibir su formulario.");
+
+			PageEditor.changeLocale(
+				currentLocale = "es-ES",
+				locale = "pt-BR");
+
+			PageEditor.editFormContainer(
+				panel = "General",
+				successText = "Obrigado por nos enviar seu formulario!");
+		}
+
+		task ("Then the page designer can see Portuguese translation on preview success state") {
+			PageEditor.editFormContainer(
+				panel = "General",
+				previewSuccessState = "true");
+
+			AssertTextEquals(
+				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
+				value1 = "Obrigado por nos enviar seu formulario!");
+		}
+
+		task ("When the page designer changes user language to Spanish") {
+			PageEditor.changeLocale(
+				currentLocale = "pt-BR",
+				locale = "es-ES");
+		}
+
+		task ("Then the page designer can see Spanish translation on preview success state") {
+			AssertTextEquals(
+				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
+				value1 = "Estamos muy agradecidos de recibir su formulario.");
+		}
+
+		task ("When the page designer changes user language to non translated") {
+			PageEditor.changeLocale(
+				currentLocale = "es-ES",
+				locale = "fr-FR");
+		}
+
+		task ("Then the page designer should see default translation in English") {
+			AssertTextEquals(
+				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
+				value1 = "Thank you. Your information was successfully received.");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page designer changes the user language to Spanish via Language selector at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			LanguagePortlet.selectLanguagePG(
+				locale = "es-ES",
+				textIcon = "español-España");
+		}
+
+		task ("Then the page designer can see custom Spanish translation on success text after submit form container") {
+			Type(
+				key_text = "Region",
+				locator1 = "TextInput#ANY",
+				value1 = "Spain");
+
+			Button.clickSubmitButton();
+
+			AssertTextEquals(
+				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
+				value1 = "Estamos muy agradecidos de recibir su formulario.");
+		}
+
+		task ("When the page designer changes the user language to Portuguese via URL") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "/pt/web/test-site-name/test-page-name");
+		}
+
+		task ("Then the page designer can see custom Portuguese translation on success text after submit form container") {
+			Type(
+				key_text = "Region",
+				locator1 = "TextInput#ANY",
+				value1 = "Brazil");
+
+			Button.clickSubmitButton();
+
+			AssertTextEquals(
+				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
+				value1 = "Obrigado por nos enviar seu formulario!");
+		}
+
+		task ("When the page designer changes the user language to non custom translated via URL") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "/fr/web/test-site-name/test-page-name");
+		}
+
+		task ("Then the page designer can see default language translation on success text after submit form container") {
+			Type(
+				key_text = "Region",
+				locator1 = "TextInput#ANY",
+				value1 = "France");
+
+			Button.clickSubmitButton();
+
+			AssertTextEquals(
+				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
+				value1 = "Merci. Vos informations ont bien été reçues.");
+		}
+	}
+
 	@description = "This is a test for LPS-155529. The page designer can submit a Form Container with URL success message."
 	@priority = "4"
 	test SubmitFormContainerWithURLSuccessMessage {

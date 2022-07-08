@@ -33,9 +33,9 @@
 		List<OAuthClientEntry> oAuthClientEntries = (List<OAuthClientEntry>)request.getAttribute(OpenIdConnectWebKeys.OPEN_ID_CONNECT_CLIENTS);
 
 		for (OAuthClientEntry oAuthClientEntry : oAuthClientEntries) {
-			JSONObject clientInformation = JSONFactoryUtil.createJSONObject(oAuthClientEntry.getInfoJSON());
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(oAuthClientEntry.getInfoJSON());
 
-			String clientName = clientInformation.getString("client_name", null);
+			String clientName = jsonObject.getString("client_name", null);
 
 			if (clientName == null) {
 				clientName = oAuthClientEntry.getClientId() + " at provider: " + oAuthClientEntry.getAuthServerWellKnownURI();

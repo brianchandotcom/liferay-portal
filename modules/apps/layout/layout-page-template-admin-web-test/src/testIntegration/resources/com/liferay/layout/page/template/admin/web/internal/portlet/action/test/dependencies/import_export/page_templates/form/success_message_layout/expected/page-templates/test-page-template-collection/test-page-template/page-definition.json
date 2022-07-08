@@ -28,7 +28,10 @@
 							}
 						}
 					},
-					"indexed": true
+					"indexed": true,
+					"layout": {
+						"widthType": "Fluid"
+					}
 				},
 				"type": "Form"
 			}

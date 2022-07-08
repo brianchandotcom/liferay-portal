@@ -10,6 +10,9 @@
 						}
 					},
 					"indexed": true,
+					"layout": {
+						"widthType": "Fluid"
+					},
 					"name": "customName"
 				},
 				"type": "Form"

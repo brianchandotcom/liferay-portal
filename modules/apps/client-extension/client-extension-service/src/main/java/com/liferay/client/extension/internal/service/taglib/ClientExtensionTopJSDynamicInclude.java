@@ -65,6 +65,10 @@ public class ClientExtensionTopJSDynamicInclude implements DynamicInclude {
 				clientExtensionEntryRel.getCompanyId(),
 				clientExtensionEntryRel.getCETExternalReferenceCode());
 
+			if (globalJSCET == null) {
+				continue;
+			}
+
 			printWriter.print(
 				"<script data-senna-track=\"temporary\" src=\"" +
 					globalJSCET.getURL() +

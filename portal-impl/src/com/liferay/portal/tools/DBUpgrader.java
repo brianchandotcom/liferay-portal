@@ -193,7 +193,7 @@ public class DBUpgrader {
 					PropsUtil.get("feature.flag.LPS-157670"))) {
 
 				checkRequiredBuildNumber(
-					ReleaseInfo.RELEASE_6_0_12_BUILD_NUMBER);
+					ReleaseInfo.RELEASE_6_1_0_BUILD_NUMBER);
 			}
 			else {
 				checkRequiredBuildNumber(

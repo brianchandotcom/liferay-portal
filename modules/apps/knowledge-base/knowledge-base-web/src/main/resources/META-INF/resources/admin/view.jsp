@@ -29,7 +29,16 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 %>
 
-<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
+<c:choose>
+	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+		<liferay-util:include page="/admin/common/vertical_menu.jsp" servletContext="<%= application %>" />
+
+		<div class="kbAdminContent">
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>
 
 <clay:management-toolbar
 	actionDropdownItems="<%= kbAdminManagementToolbarDisplayContext.getActionDropdownItems() %>"
@@ -297,3 +306,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 		</aui:form>
 	</clay:container-fluid>
 </div>
+
+<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
+	</div>
+</c:if>

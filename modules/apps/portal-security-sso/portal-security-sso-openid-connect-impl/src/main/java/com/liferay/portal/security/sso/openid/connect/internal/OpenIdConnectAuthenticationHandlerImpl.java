@@ -69,7 +69,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -207,7 +207,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			).put(
 				"state", new State()
 			).put(
-				"ui_Locals", _getUILocales(httpServletRequest)
+				"ui_Locals", _getLangTags(httpServletRequest)
 			).build();
 
 		try {
@@ -259,7 +259,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 	}
 
 	private URI _getAuthenticationRequestURI(
-			URI authenticationEndpoint,
+			URI authenticationEndpointURI,
 			String authenticationRequestParametersJSON, String clientId,
 			Map<String, Object> runtimeRequestParameters)
 		throws Exception {
@@ -277,7 +277,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 				(URI)runtimeRequestParameters.get("redirect_uri"));
 
 		builder = builder.endpointURI(
-			authenticationEndpoint
+			authenticationEndpointURI
 		).nonce(
 			(Nonce)runtimeRequestParameters.get("nonce")
 		).resources(
@@ -339,6 +339,27 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		}
 	}
 
+	private List<LangTag> _getLangTags(HttpServletRequest httpServletRequest) {
+		Locale locale = _portal.getLocale(httpServletRequest);
+
+		if (locale == null) {
+			return null;
+		}
+
+		try {
+			return Collections.singletonList(new LangTag(locale.getLanguage()));
+		}
+		catch (LangTagException langTagException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to create a lang tag with locale " +
+						locale.getLanguage());
+			}
+
+			return null;
+		}
+	}
+
 	private URI _getLoginRedirectURI(HttpServletRequest httpServletRequest) {
 		try {
 			return new URI(
@@ -353,25 +374,6 @@ public class OpenIdConnectAuthenticationHandlerImpl
 					uriSyntaxException.getMessage(),
 				uriSyntaxException);
 		}
-	}
-
-	private List<LangTag> _getUILocales(HttpServletRequest httpServletRequest) {
-		Locale locale = _portal.getLocale(httpServletRequest);
-
-		if (locale != null) {
-			try {
-				return Arrays.asList(new LangTag(locale.getLanguage()));
-			}
-			catch (LangTagException langTagException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to create a lang tag with locale " +
-							locale.getLanguage());
-				}
-			}
-		}
-
-		return null;
 	}
 
 	private UserInfo _requestUserInfo(

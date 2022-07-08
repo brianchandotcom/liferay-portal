@@ -415,6 +415,14 @@ public class ClientExtensionEntryRelLocalServiceWrapper
 
 	@Override
 	public java.util.List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		long classNameId, long classPK, String type) {
+
+		return _clientExtensionEntryRelLocalService.getClientExtensionEntryRels(
+			classNameId, classPK, type);
+	}
+
+	@Override
+	public java.util.List<ClientExtensionEntryRel> getClientExtensionEntryRels(
 		long classNameId, long classPK, String type, int start, int end) {
 
 		return _clientExtensionEntryRelLocalService.getClientExtensionEntryRels(

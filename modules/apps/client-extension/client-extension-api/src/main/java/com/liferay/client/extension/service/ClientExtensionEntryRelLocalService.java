@@ -322,6 +322,10 @@ public interface ClientExtensionEntryRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		long classNameId, long classPK, String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ClientExtensionEntryRel> getClientExtensionEntryRels(
 		long classNameId, long classPK, String type, int start, int end);
 
 	/**

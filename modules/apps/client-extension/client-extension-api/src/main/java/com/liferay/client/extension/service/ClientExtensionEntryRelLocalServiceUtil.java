@@ -372,6 +372,13 @@ public class ClientExtensionEntryRelLocalServiceUtil {
 	}
 
 	public static List<ClientExtensionEntryRel> getClientExtensionEntryRels(
+		long classNameId, long classPK, String type) {
+
+		return getService().getClientExtensionEntryRels(
+			classNameId, classPK, type);
+	}
+
+	public static List<ClientExtensionEntryRel> getClientExtensionEntryRels(
 		long classNameId, long classPK, String type, int start, int end) {
 
 		return getService().getClientExtensionEntryRels(

@@ -173,6 +173,20 @@ String resourceName = resource.getName();
 							<c:choose>
 								<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-87806")) %>'>
 									<div>
+										<div class="custom-checkbox custom-control custom-control-inline">
+											<label>
+												<input
+													<%= (checked || indeterminate) ? "checked" : StringPool.BLANK %>
+													<%= (disabled || Validator.isNotNull(preselectedMsg)) ? "disabled" : StringPool.BLANK %>
+													<%= indeterminate ? "value=\"indeterminate\"" : StringPool.BLANK %>
+													class="custom-control-input"
+													name="<%= liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>"
+													type="checkbox"
+												/><span class="custom-control-label"></span
+											>
+											</label>
+										</div>
+
 										<react:component
 											module="js/PermissionsCheckbox"
 											props='<%=

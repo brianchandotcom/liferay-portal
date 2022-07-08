@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<checkstyle>
+		<suppress checks="AssignAsUsedCheck" files="src/main/java/com/liferay/info/internal/request/struts/AddInfoItemStrutsAction\.java" />
+	</checkstyle>
+</suppressions>

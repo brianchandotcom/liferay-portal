@@ -29,6 +29,11 @@ KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNav
 	<div class="kbVerticalBar">
 		<react:component
 			module="admin/js/components/VerticalBar"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"items", kbAdminNavigationDisplayContext.getVerticalNavigationItems()
+				).build()
+			%>'
 		/>
 	</div>
 </c:if>

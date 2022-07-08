@@ -21,6 +21,8 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -139,6 +141,114 @@ public class KBAdminNavigationDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "suggestions")
 			).build()
 		).build();
+	}
+
+	public List<JSONObject> getVerticalNavigationItems()
+		throws PortalException {
+
+		List<JSONObject> verticalNavigationItems = new ArrayList<>();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String mvcPath = ParamUtil.getString(_httpServletRequest, "mvcPath");
+
+		if (PortletPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
+				portletDisplay.getId(), KBActionKeys.VIEW)) {
+
+			boolean active = false;
+
+			if (!mvcPath.equals("/admin/view_suggestions.jsp") &&
+				!mvcPath.equals("/admin/view_templates.jsp")) {
+
+				active = true;
+			}
+
+			verticalNavigationItems.add(
+				JSONUtil.put(
+					"active", active
+				).put(
+					"href",
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/admin/view.jsp"
+					).buildString()
+				).put(
+					"icon", "pages-tree"
+				).put(
+					"key", "article"
+				).put(
+					"title", LanguageUtil.get(_httpServletRequest, "articles")
+				));
+		}
+
+		if (AdminPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(),
+				KBActionKeys.VIEW_KB_TEMPLATES)) {
+
+			boolean active = false;
+
+			if (mvcPath.equals("/admin/view_templates.jsp")) {
+				active = true;
+			}
+
+			verticalNavigationItems.add(
+				JSONUtil.put(
+					"active", active
+				).put(
+					"href",
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/admin/view_templates.jsp"
+					).buildString()
+				).put(
+					"icon", "page-template"
+				).put(
+					"key", "template"
+				).put(
+					"title", LanguageUtil.get(_httpServletRequest, "templates")
+				));
+		}
+
+		if (AdminPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(),
+				KBActionKeys.VIEW_SUGGESTIONS)) {
+
+			boolean active = false;
+
+			if (mvcPath.equals("/admin/view_suggestions.jsp")) {
+				active = true;
+			}
+
+			verticalNavigationItems.add(
+				JSONUtil.put(
+					"active", active
+				).put(
+					"href",
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						"/admin/view_suggestions.jsp"
+					).buildString()
+				).put(
+					"icon", "message"
+				).put(
+					"key", "suggestion"
+				).put(
+					"title",
+					LanguageUtil.get(_httpServletRequest, "suggestions")
+				));
+		}
+
+		return verticalNavigationItems;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

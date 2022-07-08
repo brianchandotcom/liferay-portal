@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
@@ -25,7 +25,13 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../src/main/resources
 import {VIEWPORT_SIZES} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {ControlsProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 import {StoreAPIContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import updateItemConfig from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 import PageStructureSidebar from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/PageStructureSidebar';
+
+jest.mock(
+	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
+	() => jest.fn()
+);
 
 const renderComponent = ({
 	activeItemId = null,
@@ -41,6 +47,12 @@ const renderComponent = ({
 		return [langKey, ...nextArgs].join('-');
 	});
 
+	const mockDispatch = jest.fn((a) => {
+		if (typeof a === 'function') {
+			return a(mockDispatch);
+		}
+	});
+
 	return render(
 		<DndProvider backend={HTML5Backend}>
 			<ControlsProvider
@@ -54,6 +66,7 @@ const renderComponent = ({
 				}}
 			>
 				<StoreAPIContextProvider
+					dispatch={mockDispatch}
 					getState={() => ({
 						fragmentEntryLinks: {
 							'001': {
@@ -354,5 +367,45 @@ describe('PageStructureSidebar', () => {
 		});
 
 		expect(screen.getByText('Text Field 1')).toBeInTheDocument();
+	});
+
+	it('render custom fragment names as labels', () => {
+		renderComponent({
+			activeItemId: '11-container',
+			rootItemChildren: ['04-fragment'],
+		});
+
+		expect(screen.getByText('Fragment 1')).toBeInTheDocument();
+	});
+
+	it('allow changing fragment name', () => {
+		Liferay.FeatureFlags['LPS-147895'] = true;
+
+		const {baseElement} = renderComponent({
+			activeItemId: '11-container',
+			rootItemChildren: ['04-fragment'],
+		});
+
+		userEvent.dblClick(screen.getByLabelText('select-x-Fragment 1'));
+
+		const input = baseElement.querySelector('input');
+
+		expect(input).toBeInTheDocument();
+
+		userEvent.type(input, 'Custom Fragment Name');
+
+		fireEvent.blur(input);
+
+		expect(screen.getByText('Custom Fragment Name')).toBeInTheDocument();
+
+		expect(updateItemConfig).toBeCalledWith(
+			expect.objectContaining({
+				itemConfig: {name: 'Custom Fragment Name'},
+			})
+		);
+
+		updateItemConfig.mockClear();
+
+		Liferay.FeatureFlags['LPS-147895'] = false;
 	});
 });

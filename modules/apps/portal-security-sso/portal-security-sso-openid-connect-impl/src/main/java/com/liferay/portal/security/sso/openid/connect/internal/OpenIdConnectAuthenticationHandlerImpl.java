@@ -259,7 +259,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 	}
 
 	private URI _getAuthenticationRequestURI(
-			URI authenticationEndpoint,
+			URI authenticationEndpointURI,
 			String authenticationRequestParametersJSON, String clientId,
 			Map<String, Object> runtimeRequestParameters)
 		throws Exception {
@@ -277,7 +277,7 @@ public class OpenIdConnectAuthenticationHandlerImpl
 				(URI)runtimeRequestParameters.get("redirect_uri"));
 
 		builder = builder.endpointURI(
-			authenticationEndpoint
+			authenticationEndpointURI
 		).nonce(
 			(Nonce)runtimeRequestParameters.get("nonce")
 		).resources(

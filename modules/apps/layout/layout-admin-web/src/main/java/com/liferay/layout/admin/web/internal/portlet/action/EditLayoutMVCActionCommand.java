@@ -46,7 +46,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -350,10 +352,22 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 		for (String globalJSCETExternalReferenceCode :
 				globalJSCETExternalReferenceCodes) {
 
+			String[] typeSettings = StringUtil.split(
+				globalJSCETExternalReferenceCode, StringPool.UNDERLINE);
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"loadType", typeSettings[1]
+				).put(
+					"scriptLocation", typeSettings[2]
+				).build();
+
 			_clientExtensionEntryRelLocalService.addClientExtensionEntryRel(
 				userId, _portal.getClassNameId(Layout.class), layout.getPlid(),
-				globalJSCETExternalReferenceCode,
-				ClientExtensionEntryConstants.TYPE_GLOBAL_JS, StringPool.BLANK);
+				typeSettings[0], ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
+				typeSettingsUnicodeProperties.toString());
 		}
 
 		String themeCSSCETExternalReferenceCode = ParamUtil.getString(

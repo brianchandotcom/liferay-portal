@@ -24,11 +24,13 @@ const VerticalNavigationBar = ({items}) => {
 				{(item) => (
 					<VerticalBar.Item key={item.key}>
 						<ClayButtonWithIcon
+							data-tooltip-align="right"
 							displayType="unstyled"
 							onClick={() => {
 								navigate(item.href);
 							}}
 							symbol={item.icon}
+							title={Liferay.Language.get(item.title)}
 						/>
 					</VerticalBar.Item>
 				)}

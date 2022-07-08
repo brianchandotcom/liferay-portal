@@ -112,14 +112,14 @@ public class AssetInfoListRendererTest {
 	public void testAssetInfoListRendererAbstract() throws Exception {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		MockHttpServletResponse httpServletResponse =
+		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
 		DefaultInfoListRendererContext defaultInfoListRendererContext =
 			new DefaultInfoListRendererContext(
 				_getHttpServletRequest(),
 				new PipingServletResponse(
-					httpServletResponse, unsyncStringWriter));
+					mockHttpServletResponse, unsyncStringWriter));
 
 		defaultInfoListRendererContext.setListItemRendererKey(
 			"com.liferay.asset.internal.info.renderer." +
@@ -134,14 +134,14 @@ public class AssetInfoListRendererTest {
 	public void testAssetInfoListRendererFullContent() throws Exception {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		MockHttpServletResponse httpServletResponse =
+		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
 		DefaultInfoListRendererContext defaultInfoListRendererContext =
 			new DefaultInfoListRendererContext(
 				_getHttpServletRequest(),
 				new PipingServletResponse(
-					httpServletResponse, unsyncStringWriter));
+					mockHttpServletResponse, unsyncStringWriter));
 
 		defaultInfoListRendererContext.setListItemRendererKey(
 			"com.liferay.asset.internal.info.renderer." +
@@ -156,14 +156,14 @@ public class AssetInfoListRendererTest {
 	public void testAssetInfoListRendererTitle() throws Exception {
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
-		MockHttpServletResponse httpServletResponse =
+		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
 		DefaultInfoListRendererContext defaultInfoListRendererContext =
 			new DefaultInfoListRendererContext(
 				_getHttpServletRequest(),
 				new PipingServletResponse(
-					httpServletResponse, unsyncStringWriter));
+					mockHttpServletResponse, unsyncStringWriter));
 
 		defaultInfoListRendererContext.setListItemRendererKey(
 			"com.liferay.asset.info.internal.item.renderer." +
@@ -208,10 +208,10 @@ public class AssetInfoListRendererTest {
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws Exception {
-		MockHttpServletRequest httpServletRequest =
+		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		httpServletRequest.setAttribute(
+		mockHttpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());
 
@@ -227,16 +227,17 @@ public class AssetInfoListRendererTest {
 			layoutSet.getTheme(), layoutSet.getColorScheme());
 
 		themeDisplay.setRealUser(TestPropsValues.getUser());
-		themeDisplay.setRequest(httpServletRequest);
+		themeDisplay.setRequest(mockHttpServletRequest);
 		themeDisplay.setResponse(new MockHttpServletResponse());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		httpServletRequest.setMethod(HttpMethods.GET);
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
 
-		return httpServletRequest;
+		return mockHttpServletRequest;
 	}
 
 	private final List<AssetEntry> _assetEntries = new ArrayList<>();

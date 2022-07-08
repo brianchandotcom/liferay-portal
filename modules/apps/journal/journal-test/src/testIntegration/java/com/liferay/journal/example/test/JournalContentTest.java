@@ -80,11 +80,11 @@ public class JournalContentTest {
 
 	@Before
 	public void setUp() throws PortalException {
-		MockHttpServletRequest httpServletRequest =
+		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		setUpPortletRequestModel(httpServletRequest);
-		setUpServiceContext(httpServletRequest);
+		setUpPortletRequestModel(mockHttpServletRequest);
+		setUpServiceContext(mockHttpServletRequest);
 	}
 
 	@After
@@ -192,22 +192,22 @@ public class JournalContentTest {
 	}
 
 	protected void setUpPortletRequestModel(
-			MockHttpServletRequest httpServletRequest)
+			MockHttpServletRequest mockHttpServletRequest)
 		throws PortalException {
 
 		RenderRequest renderRequest = getRenderRequest(
-			httpServletRequest, getThemeDisplay(httpServletRequest));
+			mockHttpServletRequest, getThemeDisplay(mockHttpServletRequest));
 
 		_portletRequestModel = new PortletRequestModel(
 			renderRequest, new MockPortletResponse());
 	}
 
 	protected void setUpServiceContext(
-			MockHttpServletRequest httpServletRequest)
+			MockHttpServletRequest mockHttpServletRequest)
 		throws PortalException {
 
 		ServiceContextThreadLocal.pushServiceContext(
-			getServiceContext(httpServletRequest));
+			getServiceContext(mockHttpServletRequest));
 	}
 
 	protected void tearDownServiceContext() {

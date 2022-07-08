@@ -41,6 +41,7 @@ export type TObjectViewColumn = {
 	defaultSort: boolean;
 	fieldLabel: string;
 	label: TName;
+	objectFieldBusinessType?: string;
 	objectFieldName: string;
 	priority?: number;
 };

@@ -191,6 +191,7 @@ const viewReducer = (state: TState, action: TAction) => {
 						defaultSort: false,
 						fieldLabel: item.label[defaultLanguageId],
 						label: item.label,
+						objectFieldBusinessType: item.businessType,
 						objectFieldName: item.name,
 						priority: index,
 					};
@@ -418,6 +419,7 @@ const viewReducer = (state: TState, action: TAction) => {
 								defaultLanguageId
 							] as string,
 							label: viewColumn.label,
+							objectFieldBusinessType: objectField.businessType,
 						});
 					}
 				});

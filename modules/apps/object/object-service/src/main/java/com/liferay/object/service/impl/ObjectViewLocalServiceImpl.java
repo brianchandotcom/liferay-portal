@@ -19,6 +19,7 @@ import com.liferay.object.exception.DefaultObjectViewException;
 import com.liferay.object.exception.ObjectViewColumnFieldNameException;
 import com.liferay.object.exception.ObjectViewFilterColumnException;
 import com.liferay.object.exception.ObjectViewSortColumnException;
+import com.liferay.object.exception.ObjectViewSortColumnObjectFieldNameException;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterParser;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterParserServicesTracker;
 import com.liferay.object.model.ObjectDefinition;
@@ -109,8 +110,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 				user, objectView, objectViewFilterColumns));
 		objectView.setObjectViewSortColumns(
 			_addObjectViewSortColumns(
-				user, objectView.getObjectViewId(), objectViewColumns,
-				objectViewSortColumns));
+				user, objectView, objectViewColumns, objectViewSortColumns));
 
 		return objectView;
 	}
@@ -268,8 +268,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 				user, objectView, objectViewFilterColumns));
 		objectView.setObjectViewSortColumns(
 			_addObjectViewSortColumns(
-				user, objectView.getObjectViewId(), objectViewColumns,
-				objectViewSortColumns));
+				user, objectView, objectViewColumns, objectViewSortColumns));
 
 		return objectView;
 	}
@@ -342,14 +341,15 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 	}
 
 	private List<ObjectViewSortColumn> _addObjectViewSortColumns(
-			User user, long objectViewId,
+			User user, ObjectView objectView,
 			List<ObjectViewColumn> objectViewColumns,
 			List<ObjectViewSortColumn> objectViewSortColumns)
 		throws PortalException {
 
 		try {
 			_validateObjectViewSortColumns(
-				objectViewColumns, objectViewSortColumns);
+				objectView.getObjectDefinitionId(), objectViewColumns,
+				objectViewSortColumns);
 		}
 		catch (ObjectViewSortColumnException objectViewSortColumnException) {
 			throw new ObjectViewSortColumnException(
@@ -366,7 +366,8 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 				newObjectViewSortColumn.setCompanyId(user.getCompanyId());
 				newObjectViewSortColumn.setUserId(user.getUserId());
 				newObjectViewSortColumn.setUserName(user.getFullName());
-				newObjectViewSortColumn.setObjectViewId(objectViewId);
+				newObjectViewSortColumn.setObjectViewId(
+					objectView.getObjectViewId());
 				newObjectViewSortColumn.setObjectFieldName(
 					objectViewSortColumn.getObjectFieldName());
 				newObjectViewSortColumn.setPriority(
@@ -513,7 +514,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 	}
 
 	private void _validateObjectViewSortColumns(
-			List<ObjectViewColumn> objectViewColumns,
+			long objectDefinitionId, List<ObjectViewColumn> objectViewColumns,
 			List<ObjectViewSortColumn> objectViewSortColumns)
 		throws PortalException {
 
@@ -542,6 +543,19 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 				throw new ObjectViewSortColumnException(
 					"There is no sort order of type: " +
 						objectViewSortColumn.getSortOrder());
+			}
+
+			ObjectField objectField = _objectFieldPersistence.findByODI_N(
+				objectDefinitionId, objectViewSortColumn.getObjectFieldName());
+
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+				throw new ObjectViewSortColumnObjectFieldNameException(
+					"Object field " +
+						objectViewSortColumn.getObjectFieldName() +
+							" is not sortable");
 			}
 		}
 	}

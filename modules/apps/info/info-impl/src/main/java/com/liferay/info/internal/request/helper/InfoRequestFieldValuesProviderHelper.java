@@ -113,9 +113,13 @@ public class InfoRequestFieldValuesProviderHelper {
 						continue;
 					}
 
-					infoFieldValues.add(
+					InfoFieldValue<Object> infoFieldValue =
 						_getFileInfoFieldValue(
-							fileItem, groupId, infoField, themeDisplay));
+							fileItem, groupId, infoField, themeDisplay);
+
+					if (infoFieldValue != null) {
+						infoFieldValues.add(infoFieldValue);
+					}
 				}
 			}
 
@@ -127,9 +131,12 @@ public class InfoRequestFieldValuesProviderHelper {
 			}
 
 			for (String value : regularParameters) {
-				infoFieldValues.add(
-					_getInfoFieldValue(
-						infoField, themeDisplay.getLocale(), value));
+				InfoFieldValue<Object> infoFieldValue = _getInfoFieldValue(
+					infoField, themeDisplay.getLocale(), value);
+
+				if (infoFieldValue != null) {
+					infoFieldValues.add(infoFieldValue);
+				}
 			}
 		}
 

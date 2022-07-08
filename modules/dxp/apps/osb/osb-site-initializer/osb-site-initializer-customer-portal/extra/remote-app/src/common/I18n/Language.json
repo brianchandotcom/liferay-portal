@@ -326,5 +326,7 @@
 	"your-dxp-cloud-environments-are-being-set-up-and-will-be-available-soon": "Your DXP Cloud environments are being set up and will be available soon",
 	"your-dxp-cloud-environments-are-ready": "Your DXP Cloud environments are ready.",
 	"your-dxp-cloud-environments-are-ready-go-to-the-product-console-to-view-dxp-cloud-details": "Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details.",
-	"your-request-completed-successfully": "Your request completed successfully."
+	"your-request-completed-successfully": "Your request completed successfully.",
+	"csp-up-to-10-k-users": "CSP - Up to 10K Users",
+	"prod-instance-s": "Prod Instance S"
 }

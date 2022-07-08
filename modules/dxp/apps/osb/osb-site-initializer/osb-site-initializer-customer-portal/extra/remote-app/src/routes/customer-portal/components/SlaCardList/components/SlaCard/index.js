@@ -27,14 +27,19 @@ const SlaCard = ({endDate, label, selected, startDate, title}) => {
 			})}
 		>
 			<ClayCard
-				className={classNames('m-0 p-3 rounded-lg', {
-					'bg-brand-secondary-lighten-6 cp-sla-gold':
-						title === SLA_TYPES.gold,
-					'bg-neutral-0 cp-sla-limited': title === SLA_TYPES.limited,
-					'border-brand-primary-lighten-3 bg-brand-primary-lighten-5 cp-sla-min-width':
-						title === SLA_TYPES.premium,
-					'cp-sla-platinum': title === SLA_TYPES.platinum,
-				})}
+				className={classNames(
+					'm-0 p-3 rounded-lg border cp-sla-min-width',
+					{
+						'bg-brand-secondary-lighten-6 border-brand-secondary-lighten-4':
+							title === SLA_TYPES.gold,
+						'bg-neutral-0 border-brand-primary-darken-2 ':
+							title === SLA_TYPES.limited,
+						'bg-neutral-0 border-neutral-2 ':
+							title === SLA_TYPES.platinum,
+						'border-brand-primary-lighten-3 bg-brand-primary-lighten-5':
+							title === SLA_TYPES.premium,
+					}
+				)}
 			>
 				<ClayCard.Row className="align-items-center d-flex justify-content-between">
 					<div

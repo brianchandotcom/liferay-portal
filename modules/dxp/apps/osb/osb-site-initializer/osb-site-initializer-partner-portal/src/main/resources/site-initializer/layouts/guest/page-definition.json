@@ -254,7 +254,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Welcome!"
+																								"ar_SA": "Welcome!",
+																								"ca_ES": "Welcome!",
+																								"de_DE": "Welcome!",
+																								"en_US": "Welcome!",
+																								"es_ES": "Welcome!",
+																								"fi_FI": "Welcome!",
+																								"fr_FR": "Welcome!",
+																								"hu_HU": "Welcome!",
+																								"ja_JP": "Welcome!",
+																								"nl_NL": "Welcome!",
+																								"pt_BR": "Welcome!",
+																								"sv_SE": "Welcome!",
+																								"zh_CN": "Welcome!"
 																							}
 																						}
 																					}
@@ -285,7 +297,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Sign in to Partner Portal with your Liferay account."
+																								"ar_SA": "Sign in to Partner Portal with your Liferay account.",
+																								"ca_ES": "Sign in to Partner Portal with your Liferay account.",
+																								"de_DE": "Sign in to Partner Portal with your Liferay account.",
+																								"en_US": "Sign in to Partner Portal with your Liferay account.",
+																								"es_ES": "Sign in to Partner Portal with your Liferay account.",
+																								"fi_FI": "Sign in to Partner Portal with your Liferay account.",
+																								"fr_FR": "Sign in to Partner Portal with your Liferay account.",
+																								"hu_HU": "Sign in to Partner Portal with your Liferay account.",
+																								"ja_JP": "Sign in to Partner Portal with your Liferay account.",
+																								"nl_NL": "Sign in to Partner Portal with your Liferay account.",
+																								"pt_BR": "Sign in to Partner Portal with your Liferay account.",
+																								"sv_SE": "Sign in to Partner Portal with your Liferay account.",
+																								"zh_CN": "Sign in to Partner Portal with your Liferay account."
 																							}
 																						}
 																					}
@@ -327,7 +351,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "​​​​​​​Sign In"
+																								"ar_SA": "​​​​​​​Sign In",
+																								"ca_ES": "​​​​​​​Sign In",
+																								"de_DE": "​​​​​​​Sign In",
+																								"en_US": "​​​​​​​Sign In",
+																								"es_ES": "​​​​​​​Sign In",
+																								"fi_FI": "​​​​​​​Sign In",
+																								"fr_FR": "​​​​​​​Sign In",
+																								"hu_HU": "​​​​​​​Sign In",
+																								"ja_JP": "​​​​​​​Sign In",
+																								"nl_NL": "​​​​​​​Sign In",
+																								"pt_BR": "​​​​​​​Sign In",
+																								"sv_SE": "​​​​​​​Sign In",
+																								"zh_CN": "​​​​​​​Sign In"
 																							}
 																						}
 																					}
@@ -403,7 +439,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Need Help?"
+																								"ar_SA": "Need Help?",
+																								"ca_ES": "Need Help?",
+																								"de_DE": "Need Help?",
+																								"en_US": "Need Help?",
+																								"es_ES": "Need Help?",
+																								"fi_FI": "Need Help?",
+																								"fr_FR": "Need Help?",
+																								"hu_HU": "Need Help?",
+																								"ja_JP": "Need Help?",
+																								"nl_NL": "Need Help?",
+																								"pt_BR": "Need Help?",
+																								"sv_SE": "Need Help?",
+																								"zh_CN": "Need Help?"
 																							}
 																						}
 																					}
@@ -433,7 +481,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Contact your Channel Account Manager or"
+																								"ar_SA": "Contact your Channel Account Manager or",
+																								"ca_ES": "Contact your Channel Account Manager or",
+																								"de_DE": "Contact your Channel Account Manager or",
+																								"en_US": "Contact your Channel Account Manager or",
+																								"es_ES": "Contact your Channel Account Manager or",
+																								"fi_FI": "Contact your Channel Account Manager or",
+																								"fr_FR": "Contact your Channel Account Manager or",
+																								"hu_HU": "Contact your Channel Account Manager or",
+																								"ja_JP": "Contact your Channel Account Manager or",
+																								"nl_NL": "Contact your Channel Account Manager or",
+																								"pt_BR": "Contact your Channel Account Manager or",
+																								"sv_SE": "Contact your Channel Account Manager or",
+																								"zh_CN": "Contact your Channel Account Manager or"
 																							}
 																						}
 																					}
@@ -547,7 +607,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Interested in the Liferay Partner Program?"
+																								"ar_SA": "Interested in the Liferay Partner Program?",
+																								"ca_ES": "Interested in the Liferay Partner Program?",
+																								"de_DE": "Interested in the Liferay Partner Program?",
+																								"en_US": "Interested in the Liferay Partner Program?",
+																								"es_ES": "Interested in the Liferay Partner Program?",
+																								"fi_FI": "Interested in the Liferay Partner Program?",
+																								"fr_FR": "Interested in the Liferay Partner Program?",
+																								"hu_HU": "Interested in the Liferay Partner Program?",
+																								"ja_JP": "Interested in the Liferay Partner Program?",
+																								"nl_NL": "Interested in the Liferay Partner Program?",
+																								"pt_BR": "Interested in the Liferay Partner Program?",
+																								"sv_SE": "Interested in the Liferay Partner Program?",
+																								"zh_CN": "Interested in the Liferay Partner Program?"
 																							}
 																						}
 																					}
@@ -577,7 +649,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "There are more benefits of becoming a Liferay partner."
+																								"ar_SA": "There are more benefits of becoming a Liferay partner.",
+																								"ca_ES": "There are more benefits of becoming a Liferay partner.",
+																								"de_DE": "There are more benefits of becoming a Liferay partner.",
+																								"en_US": "There are more benefits of becoming a Liferay partner.",
+																								"es_ES": "There are more benefits of becoming a Liferay partner.",
+																								"fi_FI": "There are more benefits of becoming a Liferay partner.",
+																								"fr_FR": "There are more benefits of becoming a Liferay partner.",
+																								"hu_HU": "There are more benefits of becoming a Liferay partner.",
+																								"ja_JP": "There are more benefits of becoming a Liferay partner.",
+																								"nl_NL": "There are more benefits of becoming a Liferay partner.",
+																								"pt_BR": "There are more benefits of becoming a Liferay partner.",
+																								"sv_SE": "There are more benefits of becoming a Liferay partner.",
+																								"zh_CN": "There are more benefits of becoming a Liferay partner."
 																							}
 																						}
 																					}
@@ -742,7 +826,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Welcome!"
+																								"ar_SA": "Welcome!",
+																								"ca_ES": "Welcome!",
+																								"de_DE": "Welcome!",
+																								"en_US": "Welcome!",
+																								"es_ES": "Welcome!",
+																								"fi_FI": "Welcome!",
+																								"fr_FR": "Welcome!",
+																								"hu_HU": "Welcome!",
+																								"ja_JP": "Welcome!",
+																								"nl_NL": "Welcome!",
+																								"pt_BR": "Welcome!",
+																								"sv_SE": "Welcome!",
+																								"zh_CN": "Welcome!"
 																							}
 																						}
 																					}
@@ -773,7 +869,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Sign in to Partner Portal with your Liferay account."
+																								"ar_SA": "Sign in to Partner Portal with your Liferay account.",
+																								"ca_ES": "Sign in to Partner Portal with your Liferay account.",
+																								"de_DE": "Sign in to Partner Portal with your Liferay account.",
+																								"en_US": "Sign in to Partner Portal with your Liferay account.",
+																								"es_ES": "Sign in to Partner Portal with your Liferay account.",
+																								"fi_FI": "Sign in to Partner Portal with your Liferay account.",
+																								"fr_FR": "Sign in to Partner Portal with your Liferay account.",
+																								"hu_HU": "Sign in to Partner Portal with your Liferay account.",
+																								"ja_JP": "Sign in to Partner Portal with your Liferay account.",
+																								"nl_NL": "Sign in to Partner Portal with your Liferay account.",
+																								"pt_BR": "Sign in to Partner Portal with your Liferay account.",
+																								"sv_SE": "Sign in to Partner Portal with your Liferay account.",
+																								"zh_CN": "Sign in to Partner Portal with your Liferay account."
 																							}
 																						}
 																					}
@@ -815,7 +923,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "​​​​​​​Sign In"
+																								"ar_SA": "​​​​​​​Sign In",
+																								"ca_ES": "​​​​​​​Sign In",
+																								"de_DE": "​​​​​​​Sign In",
+																								"en_US": "​​​​​​​Sign In",
+																								"es_ES": "​​​​​​​Sign In",
+																								"fi_FI": "​​​​​​​Sign In",
+																								"fr_FR": "​​​​​​​Sign In",
+																								"hu_HU": "​​​​​​​Sign In",
+																								"ja_JP": "​​​​​​​Sign In",
+																								"nl_NL": "​​​​​​​Sign In",
+																								"pt_BR": "​​​​​​​Sign In",
+																								"sv_SE": "​​​​​​​Sign In",
+																								"zh_CN": "​​​​​​​Sign In"
 																							}
 																						}
 																					}
@@ -891,7 +1011,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Need Help?"
+																								"ar_SA": "Need Help?",
+																								"ca_ES": "Need Help?",
+																								"de_DE": "Need Help?",
+																								"en_US": "Need Help?",
+																								"es_ES": "Need Help?",
+																								"fi_FI": "Need Help?",
+																								"fr_FR": "Need Help?",
+																								"hu_HU": "Need Help?",
+																								"ja_JP": "Need Help?",
+																								"nl_NL": "Need Help?",
+																								"pt_BR": "Need Help?",
+																								"sv_SE": "Need Help?",
+																								"zh_CN": "Need Help?"
 																							}
 																						}
 																					}
@@ -921,7 +1053,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Contact your Channel Account Manager or"
+																								"ar_SA": "Contact your Channel Account Manager or",
+																								"ca_ES": "Contact your Channel Account Manager or",
+																								"de_DE": "Contact your Channel Account Manager or",
+																								"en_US": "Contact your Channel Account Manager or",
+																								"es_ES": "Contact your Channel Account Manager or",
+																								"fi_FI": "Contact your Channel Account Manager or",
+																								"fr_FR": "Contact your Channel Account Manager or",
+																								"hu_HU": "Contact your Channel Account Manager or",
+																								"ja_JP": "Contact your Channel Account Manager or",
+																								"nl_NL": "Contact your Channel Account Manager or",
+																								"pt_BR": "Contact your Channel Account Manager or",
+																								"sv_SE": "Contact your Channel Account Manager or",
+																								"zh_CN": "Contact your Channel Account Manager or"
 																							}
 																						}
 																					}
@@ -1035,7 +1179,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Interested in the Liferay Partner Program?"
+																								"ar_SA": "Interested in the Liferay Partner Program?",
+																								"ca_ES": "Interested in the Liferay Partner Program?",
+																								"de_DE": "Interested in the Liferay Partner Program?",
+																								"en_US": "Interested in the Liferay Partner Program?",
+																								"es_ES": "Interested in the Liferay Partner Program?",
+																								"fi_FI": "Interested in the Liferay Partner Program?",
+																								"fr_FR": "Interested in the Liferay Partner Program?",
+																								"hu_HU": "Interested in the Liferay Partner Program?",
+																								"ja_JP": "Interested in the Liferay Partner Program?",
+																								"nl_NL": "Interested in the Liferay Partner Program?",
+																								"pt_BR": "Interested in the Liferay Partner Program?",
+																								"sv_SE": "Interested in the Liferay Partner Program?",
+																								"zh_CN": "Interested in the Liferay Partner Program?"
 																							}
 																						}
 																					}
@@ -1065,7 +1221,19 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "There are more benefits of becoming a Liferay partner."
+																								"ar_SA": "There are more benefits of becoming a Liferay partner.",
+																								"ca_ES": "There are more benefits of becoming a Liferay partner.",
+																								"de_DE": "There are more benefits of becoming a Liferay partner.",
+																								"en_US": "There are more benefits of becoming a Liferay partner.",
+																								"es_ES": "There are more benefits of becoming a Liferay partner.",
+																								"fi_FI": "There are more benefits of becoming a Liferay partner.",
+																								"fr_FR": "There are more benefits of becoming a Liferay partner.",
+																								"hu_HU": "There are more benefits of becoming a Liferay partner.",
+																								"ja_JP": "There are more benefits of becoming a Liferay partner.",
+																								"nl_NL": "There are more benefits of becoming a Liferay partner.",
+																								"pt_BR": "There are more benefits of becoming a Liferay partner.",
+																								"sv_SE": "There are more benefits of becoming a Liferay partner.",
+																								"zh_CN": "There are more benefits of becoming a Liferay partner."
 																							}
 																						}
 																					}

@@ -144,7 +144,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Partner Portal"
+																"ar_SA": "Partner Portal",
+																"ca_ES": "Partner Portal",
+																"de_DE": "Partner Portal",
+																"en_US": "Partner Portal",
+																"es_ES": "Partner Portal",
+																"fi_FI": "Partner Portal",
+																"fr_FR": "Partner Portal",
+																"hu_HU": "Partner Portal",
+																"ja_JP": "Partner Portal",
+																"nl_NL": "Partner Portal",
+																"pt_BR": "Partner Portal",
+																"sv_SE": "Partner Portal",
+																"zh_CN": "Partner Portal"
 															}
 														}
 													}
@@ -542,7 +554,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Platform"
+																"ar_SA": "Platform",
+																"ca_ES": "Platform",
+																"de_DE": "Platform",
+																"en_US": "Platform",
+																"es_ES": "Platform",
+																"fi_FI": "Platform",
+																"fr_FR": "Platform",
+																"hu_HU": "Platform",
+																"ja_JP": "Platform",
+																"nl_NL": "Platform",
+																"pt_BR": "Platform",
+																"sv_SE": "Platform",
+																"zh_CN": "Platform"
 															}
 														}
 													}
@@ -572,7 +596,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Resource Library"
+																"ar_SA": "Resource Library",
+																"ca_ES": "Resource Library",
+																"de_DE": "Resource Library",
+																"en_US": "Resource Library",
+																"es_ES": "Resource Library",
+																"fi_FI": "Resource Library",
+																"fr_FR": "Resource Library",
+																"hu_HU": "Resource Library",
+																"ja_JP": "Resource Library",
+																"nl_NL": "Resource Library",
+																"pt_BR": "Resource Library",
+																"sv_SE": "Resource Library",
+																"zh_CN": "Resource Library"
 															}
 														}
 													}
@@ -601,7 +637,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Subscription Services"
+																"ar_SA": "Subscription Services",
+																"ca_ES": "Subscription Services",
+																"de_DE": "Subscription Services",
+																"en_US": "Subscription Services",
+																"es_ES": "Subscription Services",
+																"fi_FI": "Subscription Services",
+																"fr_FR": "Subscription Services",
+																"hu_HU": "Subscription Services",
+																"ja_JP": "Subscription Services",
+																"nl_NL": "Subscription Services",
+																"pt_BR": "Subscription Services",
+																"sv_SE": "Subscription Services",
+																"zh_CN": "Subscription Services"
 															}
 														}
 													}
@@ -630,7 +678,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Request a Demo"
+																"ar_SA": "Request a Demo",
+																"ca_ES": "Request a Demo",
+																"de_DE": "Request a Demo",
+																"en_US": "Request a Demo",
+																"es_ES": "Request a Demo",
+																"fi_FI": "Request a Demo",
+																"fr_FR": "Request a Demo",
+																"hu_HU": "Request a Demo",
+																"ja_JP": "Request a Demo",
+																"nl_NL": "Request a Demo",
+																"pt_BR": "Request a Demo",
+																"sv_SE": "Request a Demo",
+																"zh_CN": "Request a Demo"
 															}
 														}
 													}
@@ -659,7 +719,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Marketplace Apps"
+																"ar_SA": "Marketplace Apps",
+																"ca_ES": "Marketplace Apps",
+																"de_DE": "Marketplace Apps",
+																"en_US": "Marketplace Apps",
+																"es_ES": "Marketplace Apps",
+																"fi_FI": "Marketplace Apps",
+																"fr_FR": "Marketplace Apps",
+																"hu_HU": "Marketplace Apps",
+																"ja_JP": "Marketplace Apps",
+																"nl_NL": "Marketplace Apps",
+																"pt_BR": "Marketplace Apps",
+																"sv_SE": "Marketplace Apps",
+																"zh_CN": "Marketplace Apps"
 															}
 														}
 													}
@@ -688,7 +760,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Downloads"
+																"ar_SA": "Downloads",
+																"ca_ES": "Downloads",
+																"de_DE": "Downloads",
+																"en_US": "Downloads",
+																"es_ES": "Downloads",
+																"fi_FI": "Downloads",
+																"fr_FR": "Downloads",
+																"hu_HU": "Downloads",
+																"ja_JP": "Downloads",
+																"nl_NL": "Downloads",
+																"pt_BR": "Downloads",
+																"sv_SE": "Downloads",
+																"zh_CN": "Downloads"
 															}
 														}
 													}
@@ -744,7 +828,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Company"
+																"ar_SA": "Company",
+																"ca_ES": "Company",
+																"de_DE": "Company",
+																"en_US": "Company",
+																"es_ES": "Company",
+																"fi_FI": "Company",
+																"fr_FR": "Company",
+																"hu_HU": "Company",
+																"ja_JP": "Company",
+																"nl_NL": "Company",
+																"pt_BR": "Company",
+																"sv_SE": "Company",
+																"zh_CN": "Company"
 															}
 														}
 													}
@@ -774,7 +870,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Press Releases"
+																"ar_SA": "Press Releases",
+																"ca_ES": "Press Releases",
+																"de_DE": "Press Releases",
+																"en_US": "Press Releases",
+																"es_ES": "Press Releases",
+																"fi_FI": "Press Releases",
+																"fr_FR": "Press Releases",
+																"hu_HU": "Press Releases",
+																"ja_JP": "Press Releases",
+																"nl_NL": "Press Releases",
+																"pt_BR": "Press Releases",
+																"sv_SE": "Press Releases",
+																"zh_CN": "Press Releases"
 															}
 														}
 													}
@@ -803,7 +911,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Careers"
+																"ar_SA": "Careers",
+																"ca_ES": "Careers",
+																"de_DE": "Careers",
+																"en_US": "Careers",
+																"es_ES": "Careers",
+																"fi_FI": "Careers",
+																"fr_FR": "Careers",
+																"hu_HU": "Careers",
+																"ja_JP": "Careers",
+																"nl_NL": "Careers",
+																"pt_BR": "Careers",
+																"sv_SE": "Careers",
+																"zh_CN": "Careers"
 															}
 														}
 													}
@@ -832,7 +952,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Locations"
+																"ar_SA": "Locations",
+																"ca_ES": "Locations",
+																"de_DE": "Locations",
+																"en_US": "Locations",
+																"es_ES": "Locations",
+																"fi_FI": "Locations",
+																"fr_FR": "Locations",
+																"hu_HU": "Locations",
+																"ja_JP": "Locations",
+																"nl_NL": "Locations",
+																"pt_BR": "Locations",
+																"sv_SE": "Locations",
+																"zh_CN": "Locations"
 															}
 														}
 													}
@@ -861,7 +993,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Newsletter Sign Up"
+																"ar_SA": "Newsletter Sign Up",
+																"ca_ES": "Newsletter Sign Up",
+																"de_DE": "Newsletter Sign Up",
+																"en_US": "Newsletter Sign Up",
+																"es_ES": "Newsletter Sign Up",
+																"fi_FI": "Newsletter Sign Up",
+																"fr_FR": "Newsletter Sign Up",
+																"hu_HU": "Newsletter Sign Up",
+																"ja_JP": "Newsletter Sign Up",
+																"nl_NL": "Newsletter Sign Up",
+																"pt_BR": "Newsletter Sign Up",
+																"sv_SE": "Newsletter Sign Up",
+																"zh_CN": "Newsletter Sign Up"
 															}
 														}
 													}
@@ -890,7 +1034,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Our Story"
+																"ar_SA": "Our Story",
+																"ca_ES": "Our Story",
+																"de_DE": "Our Story",
+																"en_US": "Our Story",
+																"es_ES": "Our Story",
+																"fi_FI": "Our Story",
+																"fr_FR": "Our Story",
+																"hu_HU": "Our Story",
+																"ja_JP": "Our Story",
+																"nl_NL": "Our Story",
+																"pt_BR": "Our Story",
+																"sv_SE": "Our Story",
+																"zh_CN": "Our Story"
 															}
 														}
 													}
@@ -946,7 +1102,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Contact Us"
+																"ar_SA": "Contact Us",
+																"ca_ES": "Contact Us",
+																"de_DE": "Contact Us",
+																"en_US": "Contact Us",
+																"es_ES": "Contact Us",
+																"fi_FI": "Contact Us",
+																"fr_FR": "Contact Us",
+																"hu_HU": "Contact Us",
+																"ja_JP": "Contact Us",
+																"nl_NL": "Contact Us",
+																"pt_BR": "Contact Us",
+																"sv_SE": "Contact Us",
+																"zh_CN": "Contact Us"
 															}
 														}
 													}
@@ -976,7 +1144,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:"
+																"ar_SA": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																"ca_ES": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																"de_DE": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																"en_US": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																"es_ES": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																"fi_FI": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																"fr_FR": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																"hu_HU": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																"ja_JP": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																"nl_NL": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																"pt_BR": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																"sv_SE": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																"zh_CN": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:"
 															}
 														}
 													}
@@ -1005,7 +1185,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>"
+																"ar_SA": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																"ca_ES": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																"de_DE": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																"en_US": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																"es_ES": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																"fi_FI": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																"fr_FR": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																"hu_HU": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																"ja_JP": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																"nl_NL": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																"pt_BR": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																"sv_SE": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																"zh_CN": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>"
 															}
 														}
 													}
@@ -1034,7 +1226,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>"
+																"ar_SA": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>",
+																"ca_ES": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>",
+																"de_DE": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>",
+																"en_US": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>",
+																"es_ES": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>",
+																"fi_FI": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>",
+																"fr_FR": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>",
+																"hu_HU": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>",
+																"ja_JP": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>",
+																"nl_NL": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>",
+																"pt_BR": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>",
+																"sv_SE": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>",
+																"zh_CN": "<a href=\"mailto:partner-enablement@liferay.com\">partner-enablement@liferay.com</a>"
 															}
 														}
 													}
@@ -1066,7 +1270,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>"
+																"ar_SA": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																"ca_ES": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																"de_DE": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																"en_US": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																"es_ES": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																"fi_FI": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																"fr_FR": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																"hu_HU": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																"ja_JP": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																"nl_NL": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																"pt_BR": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																"sv_SE": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																"zh_CN": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>"
 															}
 														}
 													}
@@ -1095,7 +1311,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>"
+																"ar_SA": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
+																"ca_ES": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
+																"de_DE": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
+																"en_US": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
+																"es_ES": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
+																"fi_FI": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
+																"fr_FR": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
+																"hu_HU": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
+																"ja_JP": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
+																"nl_NL": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
+																"pt_BR": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
+																"sv_SE": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
+																"zh_CN": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>"
 															}
 														}
 													}
@@ -1151,7 +1379,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Connect"
+																"ar_SA": "Connect",
+																"ca_ES": "Connect",
+																"de_DE": "Connect",
+																"en_US": "Connect",
+																"es_ES": "Connect",
+																"fi_FI": "Connect",
+																"fr_FR": "Connect",
+																"hu_HU": "Connect",
+																"ja_JP": "Connect",
+																"nl_NL": "Connect",
+																"pt_BR": "Connect",
+																"sv_SE": "Connect",
+																"zh_CN": "Connect"
 															}
 														}
 													}

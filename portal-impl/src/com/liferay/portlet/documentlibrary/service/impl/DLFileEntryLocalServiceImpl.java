@@ -2023,9 +2023,7 @@ public class DLFileEntryLocalServiceImpl
 			_resourceLocalService.addResources(
 				dlFileEntry.getCompanyId(), dlFileEntry.getGroupId(),
 				dlFileEntry.getUserId(), DLFileEntry.class.getName(),
-				dlFileEntry.getFileEntryId(), false,
-				serviceContext.isAddGroupPermissions(),
-				serviceContext.isAddGuestPermissions());
+				dlFileEntry.getFileEntryId(), false, serviceContext);
 		}
 		else {
 			if (serviceContext.isDeriveDefaultPermissions()) {

@@ -1,0 +1,111 @@
+definition {
+
+    @summary = "Add multiple fragments using index or position in a Display Page Template."
+    macro addFragment {
+		PageEditor.assertFragmentSidebarLoaded();
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		if (!(isSet(displayStyle))) {
+			var displayStyle = "list";
+		}
+
+        if (!(isSet(targetFragmentName))) {
+			var targetFragmentName = "${fragmentName}";
+		}
+
+		Navigator.gotoNavTab(navTab = "Fragments");
+
+		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
+
+        if("${index}" == "1") {
+            DragAndDrop.javaScriptDragAndDropToObject(
+                key_collectionName = "${collectionName}",
+                key_fragmentName = "${fragmentName}",
+                locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+                locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+                value1 = "");
+        }
+        else {
+            var position = ${index} - 1;
+
+            DragAndDrop.javaScriptDragAndDropToBottom(
+                key_collectionName = "${collectionName}",
+                key_fragmentName = "${fragmentName}",
+                key_index = "${position}",
+                key_targetFragmentName = "${targetFragmentName}",
+                locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+                locator2 = "CommerceEntry#ANY_FRAGMENT_DROP_TARGET_N",
+                value1 = "");
+        }
+		
+		PageEditor.waitForAutoSave();
+	}
+
+    @summary = "Map multiple fields to multiple fragments using index and position. Then publish the Display Page Template"
+	macro  mapFragmentsToFields{
+        Variables.assertDefined(parameterList = "${displayPageName},${fieldsList},${fragmentName},${siteURLKey}");
+
+        if(!(isSet(collectionName))) {
+            var collectionName = "Basic Components";
+        }
+
+        DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "${siteURLKey}");
+
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "${displayPageName}");
+
+        var index = "1";
+
+        for (var fieldName : list "${fieldsList}") {          
+            CommerceDisplayPageTemplates.addFragment(
+                collectionName = "${collectionName}",
+                fragmentName = "${fragmentName}",
+                index = "${index}");
+
+            CommerceDisplayPageTemplates.mapEditableTextToField(
+                field = "${fieldName}",
+                fragmentName = "${fragmentName}",
+                index = "${index}");
+
+            var index = ${index} + 1;
+        }
+
+		PageEditor.publish();
+	}
+
+    @summary = "Map a fragment to a field in a Display Page Template"
+    macro mapEditableTextToField {
+        if("${index}" == "1") {
+            var contributed = "false";
+        }
+        else {
+            var contributed = "true";
+        }
+
+        if(!(isSet(id))) {
+            var id = "element-text";
+        }
+       
+		PageEditorMapping.gotoEditableFieldMapping(
+			className = "${className}",
+			contributed = "${contributed}",
+			fragmentName = "${fragmentName}",
+			id = "${id}",
+			index = "${index}");
+
+		if (isSet(source)) {
+			Select(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "${source}");
+		}
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${field}");
+
+		PageEditor.waitForAutoSave();
+	}
+
+}

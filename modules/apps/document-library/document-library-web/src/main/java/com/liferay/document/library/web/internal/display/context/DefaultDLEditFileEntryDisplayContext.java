@@ -94,7 +94,7 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public String getDocumentTypeLanguageId(
+	public String getDLFileEntryTypeLanguageId(
 		DDMStructure ddmStructure, Locale locale) {
 
 		String languageId = LocaleUtil.toLanguageId(locale);

@@ -30,7 +30,7 @@ public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
 	public DLFilePicker getDLFilePicker(String onFilePickCallback)
 		throws PortalException;
 
-	public String getDocumentTypeLanguageId(
+	public String getDLFileEntryTypeLanguageId(
 		DDMStructure ddmStructure, Locale locale);
 
 	public default String getFriendlyURLBase() throws PortalException {

@@ -86,10 +86,10 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public String getDocumentTypeLanguageId(
+	public String getDLFileEntryTypeLanguageId(
 		DDMStructure ddmStructure, Locale locale) {
 
-		return parentDisplayContext.getDocumentTypeLanguageId(
+		return parentDisplayContext.getDLFileEntryTypeLanguageId(
 			ddmStructure, locale);
 	}
 

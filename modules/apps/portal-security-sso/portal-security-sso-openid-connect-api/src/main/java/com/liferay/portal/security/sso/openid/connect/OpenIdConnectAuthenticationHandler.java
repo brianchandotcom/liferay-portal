@@ -40,7 +40,9 @@ public interface OpenIdConnectAuthenticationHandler {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #requestAuthentication(long, HttpServletRequest, HttpServletResponse)}
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #requestAuthentication(long, HttpServletRequest,
+	 *             HttpServletResponse)}
 	 */
 	@Deprecated
 	public void requestAuthentication(

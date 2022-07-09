@@ -80,7 +80,7 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public String getCssClass() {
-		return _LAYOUT_STRUCTURE_ITEM_CSS_CLASS_PREFIX + getItemType();
+		return LAYOUT_STRUCTURE_ITEM_CSS_CLASS_PREFIX + getItemType();
 	}
 
 	public Set<String> getCssClasses() {
@@ -137,7 +137,7 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	public String getUniqueCssClass() {
-		return _LAYOUT_STRUCTURE_ITEM_CSS_CLASS_PREFIX + getItemId();
+		return LAYOUT_STRUCTURE_ITEM_CSS_CLASS_PREFIX + getItemId();
 	}
 
 	@Override
@@ -205,6 +205,9 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 			_log.error("Unable to get available style names", exception);
 		}
 	}
+
+	protected static final String LAYOUT_STRUCTURE_ITEM_CSS_CLASS_PREFIX =
+		"lfr-layout-structure-item-";
 
 	protected JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
 	protected Map<String, JSONObject> viewportStyleJSONObjects =
@@ -290,9 +293,6 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		viewportStyleJSONObjects.put(
 			viewportSize.getViewportSizeId(), currentViewportStyleJSONObject);
 	}
-
-	private static final String _LAYOUT_STRUCTURE_ITEM_CSS_CLASS_PREFIX =
-		"lfr-layout-structure-item-";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StyledLayoutStructureItem.class);

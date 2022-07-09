@@ -67,7 +67,7 @@ public class FragmentStyledLayoutStructureItem
 		FragmentEntryLink fragmentEntryLink) {
 
 		return _normalizeCssClass(
-			_LAYOUT_STRUCTURE_ITEM_CSS_CLASS_PREFIX +
+			LAYOUT_STRUCTURE_ITEM_CSS_CLASS_PREFIX +
 				_getFragmentEntryLinkIdentifier(fragmentEntryLink));
 	}
 
@@ -177,9 +177,6 @@ public class FragmentStyledLayoutStructureItem
 
 		return cssClass.replaceAll("[^A-Za-z0-9-]", StringPool.DASH);
 	}
-
-	private static final String _LAYOUT_STRUCTURE_ITEM_CSS_CLASS_PREFIX =
-		"lfr-layout-structure-item-";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentStyledLayoutStructureItem.class);

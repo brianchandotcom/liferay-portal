@@ -83,7 +83,6 @@ export function ExpressionBuilder({
 }
 
 export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
-	const {observer, onOpenChange} = useModal();
 	const editorRef = useRef<CodeMirror.Editor>(null);
 	const [
 		{error, onSave, required, source, validateExpressionURL},
@@ -95,6 +94,10 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 		source?: string;
 		validateExpressionURL?: string;
 	}>({});
+
+	const {observer, onOpenChange} = useModal({
+		onClose: () => setState({}),
+	});
 
 	useEffect(() => {
 		const openModal = (params: {
@@ -120,7 +123,6 @@ export function ExpressionBuilderModal({sidebarElements}: IModalProps) {
 	}
 
 	const closeModal = () => {
-		setState({});
 		onOpenChange(false);
 	};
 

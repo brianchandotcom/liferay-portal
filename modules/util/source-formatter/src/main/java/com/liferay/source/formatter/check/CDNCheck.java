@@ -14,7 +14,9 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 /**
  * @author Peter Shin
@@ -24,6 +26,14 @@ public class CDNCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
+
+		String rootDirName = SourceUtil.getRootDirName(absolutePath);
+
+		if (rootDirName.equals(StringPool.BLANK) ||
+			absolutePath.matches(rootDirName + "/build\\..+\\.properties")) {
+
+			return content;
+		}
 
 		return _fixCDNURL(content);
 	}

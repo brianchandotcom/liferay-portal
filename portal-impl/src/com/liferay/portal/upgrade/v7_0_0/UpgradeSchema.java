@@ -32,12 +32,12 @@ public class UpgradeSchema extends UpgradeProcess {
 		upgrade(new UpgradeMVCCVersion());
 	}
 
-    private void _runSQLTemplate(String... sqlFileNames) throws Exception {
-        for (String sqlFileName : sqlFileNames) {
-            try (LoggingTimer loggingTimer = new LoggingTimer(sqlFileName)) {
-                runSQLTemplate(sqlFileName, false);
-            }
-        }
-    }
+	private void _runSQLTemplate(String... sqlFileNames) throws Exception {
+		for (String sqlFileName : sqlFileNames) {
+			try (LoggingTimer loggingTimer = new LoggingTimer(sqlFileName)) {
+				runSQLTemplate(sqlFileName, false);
+			}
+		}
+	}
 
 }

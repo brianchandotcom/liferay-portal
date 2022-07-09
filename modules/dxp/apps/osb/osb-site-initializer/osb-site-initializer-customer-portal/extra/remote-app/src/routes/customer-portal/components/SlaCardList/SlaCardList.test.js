@@ -55,6 +55,21 @@ describe('SLA Card', () => {
 		expect(linkElementNameslaFuture).toBeInTheDocument();
 	});
 
+	it('displays Premium Support Level type', () => {
+		const koroneikiAccount = {
+			slaExpired: 'Gold Subscription',
+			slaExpiredEndDate: '2018-07-25T00:00:00Z',
+			slaExpiredStartDate: '2017-08-25T00:00:00Z',
+			slaFuture: 'Premium Subscription',
+			slaFutureEndDate: '2024-07-25T00:00:00Z',
+			slaFutureStartDate: '2023-08-25T00:00:00Z',
+		};
+		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
+
+		const linkElementNameslaFuture = screen.getByText('Premium');
+		expect(linkElementNameslaFuture).toBeInTheDocument();
+	});
+
 	it('shows SLA Card start and end date', () => {
 		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
 

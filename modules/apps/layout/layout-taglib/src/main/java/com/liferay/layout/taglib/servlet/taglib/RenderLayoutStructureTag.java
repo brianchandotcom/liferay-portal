@@ -870,10 +870,6 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				HttpServletResponse httpServletResponse =
 					(HttpServletResponse)pageContext.getResponse();
 
-				String html = fragmentRendererController.render(
-					defaultFragmentRendererContext, httpServletRequest,
-					httpServletResponse);
-
 				if (GetterUtil.getBoolean(
 						httpServletRequest.getAttribute(
 							FragmentWebKeys.
@@ -889,7 +885,10 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					jspWriter.write("<div>");
 				}
 
-				jspWriter.write(html);
+				jspWriter.write(
+					fragmentRendererController.render(
+						defaultFragmentRendererContext, httpServletRequest,
+						httpServletResponse));
 				jspWriter.write("</div>");
 			}
 		}

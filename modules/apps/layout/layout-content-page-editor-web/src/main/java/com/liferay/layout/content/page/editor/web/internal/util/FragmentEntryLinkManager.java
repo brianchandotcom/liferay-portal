@@ -43,7 +43,6 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
@@ -181,8 +180,18 @@ public class FragmentEntryLinkManager {
 					"content", content
 				).put(
 					"cssClass",
-					LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
-						fragmentEntryLink)
+					() -> {
+						FragmentStyledLayoutStructureItem
+							fragmentStyledLayoutStructureItem =
+								(FragmentStyledLayoutStructureItem)
+									layoutStructure.
+										getLayoutStructureItemByFragmentEntryLinkId(
+											fragmentEntryLink.
+												getFragmentEntryLinkId());
+
+						return fragmentStyledLayoutStructureItem.
+							getFragmentEntryLinkCssClass(fragmentEntryLink);
+					}
 				).put(
 					"defaultConfigurationValues",
 					JSONFactoryUtil.createJSONObject()
@@ -239,8 +248,18 @@ public class FragmentEntryLinkManager {
 				"content", content
 			).put(
 				"cssClass",
-				LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
-					fragmentEntryLink)
+				() -> {
+					FragmentStyledLayoutStructureItem
+						fragmentStyledLayoutStructureItem =
+							(FragmentStyledLayoutStructureItem)
+								layoutStructure.
+									getLayoutStructureItemByFragmentEntryLinkId(
+										fragmentEntryLink.
+											getFragmentEntryLinkId());
+
+					return fragmentStyledLayoutStructureItem.
+						getFragmentEntryLinkCssClass(fragmentEntryLink);
+				}
 			).put(
 				"defaultConfigurationValues",
 				_fragmentEntryConfigurationParser.

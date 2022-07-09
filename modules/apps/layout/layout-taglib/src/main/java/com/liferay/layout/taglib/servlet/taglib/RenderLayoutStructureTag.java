@@ -48,7 +48,6 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1162,7 +1161,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				fragmentEntryLink)) {
 
 			jspWriter.write(
-				LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkCssClass(
 					fragmentEntryLink));
 			jspWriter.write(StringPool.SPACE);
 			jspWriter.write(

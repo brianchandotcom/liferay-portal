@@ -23,7 +23,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItemCSSUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -94,7 +93,7 @@ public class StylesFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		String fragmentEntryLinkCssClass =
-			LayoutStructureItemCSSUtil.getFragmentEntryLinkCssClass(
+			fragmentStyledLayoutStructureItem.getFragmentEntryLinkCssClass(
 				fragmentEntryLink);
 		String layoutStructureItemUniqueCssClass =
 			fragmentStyledLayoutStructureItem.getUniqueCssClass();

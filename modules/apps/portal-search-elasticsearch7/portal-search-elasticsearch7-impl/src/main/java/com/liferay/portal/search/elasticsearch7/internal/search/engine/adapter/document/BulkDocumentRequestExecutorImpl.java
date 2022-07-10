@@ -170,13 +170,38 @@ public class BulkDocumentRequestExecutorImpl
 				bulkDocumentRequest.getConnectionId(),
 				bulkDocumentRequest.isPreferLocalCluster());
 
-		try {
-			return restHighLevelClient.bulk(
-				bulkRequest, RequestOptions.DEFAULT);
+		BulkResponse bulkResponse = null;
+
+		int count = 0;
+		do {
+			try {
+				bulkResponse = restHighLevelClient.bulk(
+					bulkRequest, RequestOptions.DEFAULT);
+			}
+			catch (Exception exception) {
+				if (count++ >= 5) {
+					_log.error("All 5 retries failed to get a bulk response");
+
+					throw new RuntimeException(exception);
+				}
+
+				_log.error(
+					"There was an exception during getting a response to a " +
+						"request from the search server, retrying after 1 " +
+						"minute (5/" + count +").",
+					exception);
+
+				try {
+					Thread.sleep(60000);
+				}
+				catch (InterruptedException interruptedException) {
+					throw new RuntimeException(exception);
+				}
+			}
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+		while (bulkResponse == null);
+
+		return bulkResponse;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

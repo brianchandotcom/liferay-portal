@@ -90,8 +90,8 @@ describe('GlobalJSCETsConfiguration', () => {
 			/>
 		);
 
-		await screen.findByDisplayValue('niceId_default');
-		await screen.findByDisplayValue('anotherNiceId_defer');
+		await screen.findByDisplayValue('niceId_default_bottom');
+		await screen.findByDisplayValue('anotherNiceId_defer_bottom');
 	});
 
 	it('opens a selection modal when "add" button is pressed', async () => {
@@ -115,6 +115,10 @@ describe('GlobalJSCETsConfiguration', () => {
 			await screen.findByRole('button', {
 				name: 'add-javascript-extensions',
 			})
+		);
+
+		userEvent.click(
+			await screen.findByRole('menuitem', {name: 'in-page-bottom'})
 		);
 
 		expect(openSelectionModal).toHaveBeenCalled();
@@ -145,6 +149,10 @@ describe('GlobalJSCETsConfiguration', () => {
 			})
 		);
 
+		userEvent.click(
+			await screen.findByRole('menuitem', {name: 'in-page-bottom'})
+		);
+
 		expect(openSelectionModal).toHaveBeenCalledTimes(1);
 
 		expect(openSelectionModal).toHaveBeenCalledWith(
@@ -170,8 +178,8 @@ describe('GlobalJSCETsConfiguration', () => {
 			});
 		});
 
-		await screen.findByDisplayValue('niceId_default');
-		await screen.findByDisplayValue('someNiceId_default');
+		await screen.findByDisplayValue('niceId_default_bottom');
+		await screen.findByDisplayValue('someNiceId_default_bottom');
 	});
 
 	it('allows removing extensions by pressing dropdown "remove" button', async () => {

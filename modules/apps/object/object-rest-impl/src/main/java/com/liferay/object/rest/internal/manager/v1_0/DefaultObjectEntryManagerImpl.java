@@ -781,9 +781,15 @@ public class DefaultObjectEntryManagerImpl
 			}
 
 			if (objectField.getListTypeDefinitionId() != 0) {
-				Map<String, String> map = (HashMap<String, String>)object;
+				if (object instanceof Map) {
+					Map<String, String> map = (HashMap<String, String>)object;
 
-				values.put(name, map.get("key"));
+					values.put(name, map.get("key"));
+
+					continue;
+				}
+
+				values.put(name, (Serializable)object);
 			}
 			else {
 				values.put(name, (Serializable)object);

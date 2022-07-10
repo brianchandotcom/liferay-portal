@@ -35,8 +35,8 @@ const LOAD_TYPE_OPTIONS: Record<
 };
 
 const SCRIPT_LOCATION_LABELS: Record<IScriptLocationOptions, string> = {
-	bottom: Liferay.Language.get('page-bottom'),
-	head: Liferay.Language.get('page-head'),
+	bottom: Liferay.Language.get('in-page-bottom'),
+	head: Liferay.Language.get('in-page-head'),
 };
 
 const DEFAULT_SCRIPT_LOCATION_OPTION: IScriptLocationOptions = 'bottom';
@@ -213,14 +213,13 @@ export default function GlobalJSCETsConfiguration({
 												className="list-group-header-title py-2"
 												colSpan={5}
 											>
-												{Liferay.Util.sub(
-													Liferay.Language.get(
-														'x-js-extensions'
-													),
-													SCRIPT_LOCATION_LABELS[
-														scriptLocation
-													]
-												)}
+												{scriptLocation === 'bottom'
+													? Liferay.Language.get(
+															'page-bottom-js-extensions'
+													  )
+													: Liferay.Language.get(
+															'page-head-js-extensions'
+													  )}
 											</ClayTable.Cell>
 										</ClayTable.Row>
 
@@ -278,10 +277,7 @@ function AddExtensionButton({
 			active={active}
 			items={[...Object.entries(SCRIPT_LOCATION_LABELS)].map(
 				([scriptLocation, label]) => ({
-					label: Liferay.Util.sub(
-						Liferay.Language.get('in-x'),
-						label
-					),
+					label,
 					onClick: () =>
 						addGlobalJSCET(
 							scriptLocation as IScriptLocationOptions

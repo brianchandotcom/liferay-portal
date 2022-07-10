@@ -778,22 +778,21 @@ public class DefaultObjectEntryManagerImpl
 					ObjectFieldConstants.DB_TYPE_DATE)) {
 
 				values.put(name, _toDate(locale, String.valueOf(object)));
+
+				continue;
 			}
 
-			if (objectField.getListTypeDefinitionId() != 0) {
-				if (object instanceof Map) {
-					Map<String, String> map = (HashMap<String, String>)object;
+			if ((objectField.getListTypeDefinitionId() != 0) &&
+				(object instanceof Map)) {
 
-					values.put(name, map.get("key"));
+				Map<String, String> map = (HashMap<String, String>)object;
 
-					continue;
-				}
+				values.put(name, map.get("key"));
 
-				values.put(name, (Serializable)object);
+				continue;
 			}
-			else {
-				values.put(name, (Serializable)object);
-			}
+
+			values.put(name, (Serializable)object);
 		}
 
 		return values;

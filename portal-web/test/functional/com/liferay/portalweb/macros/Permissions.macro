@@ -45,7 +45,7 @@ definition {
 
 		if (isSet(siteName)) {
 			Navigator.gotoSitePage(
-				pageName = "Documents and Media Page",
+				pageName = "${pageName}",
 				siteName = "${siteName}");
 		}
 		else {
@@ -288,7 +288,7 @@ definition {
 			layoutName = "${pageName}");
 
 		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
+			pageName = "${pageName}",
 			siteName = "${siteName}");
 
 		JSONLayout.addWidgetToPublicLayout(

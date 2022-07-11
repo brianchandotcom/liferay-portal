@@ -41,6 +41,7 @@ const openAlertModal = ({message}) => {
 };
 
 const Modal = ({
+	bodyComponent,
 	bodyHTML,
 	buttons,
 	containerProps = {
@@ -127,24 +128,30 @@ const Modal = ({
 		}
 	};
 
-	const Body = ({html}) => {
+	const Body = ({component: BodyComponent, html}) => {
 		const bodyRef = useRef();
 
 		useEffect(() => {
-			const fragment = document
-				.createRange()
-				.createContextualFragment(html);
+			if (html) {
+				const fragment = document
+					.createRange()
+					.createContextualFragment(html);
 
-			bodyRef.current.innerHTML = '';
+				bodyRef.current.innerHTML = '';
 
-			bodyRef.current.appendChild(fragment);
+				bodyRef.current.appendChild(fragment);
+			}
 
 			if (onOpen) {
-				onOpen({container: fragment, processClose});
+				onOpen({container: bodyRef.current, processClose});
 			}
 		}, [html]);
 
-		return <div className="liferay-modal-body" ref={bodyRef}></div>;
+		return (
+			<div className="liferay-modal-body" ref={bodyRef}>
+				{BodyComponent && <BodyComponent />}
+			</div>
+		);
 	};
 
 	useEffect(() => {
@@ -222,7 +229,7 @@ const Modal = ({
 							height,
 						}}
 					>
-						{url ? (
+						{url && (
 							<>
 								{loading && <ClayLoadingIndicator />}
 								<Iframe
@@ -240,9 +247,11 @@ const Modal = ({
 									url={url}
 								/>
 							</>
-						) : (
-							<>{bodyHTML && <Body html={bodyHTML} />}</>
 						)}
+
+						{bodyHTML && <Body html={bodyHTML} />}
+
+						{bodyComponent && <Body component={bodyComponent} />}
 					</div>
 
 					{buttons && (

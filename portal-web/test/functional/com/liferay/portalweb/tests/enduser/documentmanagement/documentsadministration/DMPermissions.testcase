@@ -1107,7 +1107,7 @@ definition {
 		Navigator.openSpecificURL(url = "${dmDocumentURL}");
 
 		AssertVisible(
-			key_imageSourceURL = "Document_1",
+			key_imageSourceURL = "dm-document-title",
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
@@ -2096,7 +2096,7 @@ definition {
 		Navigator.openSpecificURL(url = "${dmDocumentURL}");
 
 		AssertVisible(
-			key_imageSourceURL = "Document_1",
+			key_imageSourceURL = "dm-document-title",
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 

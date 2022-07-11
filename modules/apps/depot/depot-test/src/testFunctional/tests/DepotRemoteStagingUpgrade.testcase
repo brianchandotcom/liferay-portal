@@ -120,7 +120,6 @@ definition {
 		property portal.version = "7.3.10.1";
 		property test.name.skip.portal.instance = "DepotRemoteStagingUpgrade#CanPublishImageInMGAfterUpgradeFrom73101Archive";
 
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");

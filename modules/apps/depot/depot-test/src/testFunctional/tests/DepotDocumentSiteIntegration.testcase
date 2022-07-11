@@ -104,7 +104,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/test-content-page-name");
 
-		ContentPages.viewFragmentBackgroundImage(image = "Document_1.jpeg");
+		ContentPages.viewFragmentBackgroundImage(image = "document_1-jpeg");
 	}
 
 	@description = "This ensures that a depot image can be used through web content on a connected site."

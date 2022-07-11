@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal, openToast} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 import {GlobalCETOptionsDropDown} from './GlobalCETOptionsDropDown';
@@ -75,26 +75,58 @@ export default function GlobalCSSCETsConfiguration({
 					return;
 				}
 
-				const items = selectedItems.value.map((selectedItem) => ({
-					inherited: false,
-					inheritedLabel: '-',
-					...(JSON.parse(selectedItem) as {
-						cetExternalReferenceCode: string;
-						name: string;
-					}),
-				}));
+				setGlobalCSSCETs((previousGlobalCSSCETs) => {
+					const duplicatedGlobalCSSCETs: IGlobalCSSCET[] = [];
 
-				setGlobalCSSCETs((previousGlobalCSSCETs) => [
-					...previousGlobalCSSCETs.filter(
-						(previousGlobalCSSCET) =>
-							!items.some(
-								(globalCSSCET) =>
-									globalCSSCET.cetExternalReferenceCode ===
+					const nextGlobalCSSCETs = selectedItems.value
+						.map((selectedItem) => ({
+							inherited: false,
+							inheritedLabel: '-',
+							...(JSON.parse(selectedItem) as {
+								cetExternalReferenceCode: string;
+								name: string;
+							}),
+						}))
+						.filter((nextGlobalCSSCET) => {
+							const isDuplicated = previousGlobalCSSCETs.some(
+								(previousGlobalCSSCET) =>
+									nextGlobalCSSCET.cetExternalReferenceCode ===
 									previousGlobalCSSCET.cetExternalReferenceCode
-							)
-					),
-					...items,
-				]);
+							);
+
+							if (isDuplicated) {
+								duplicatedGlobalCSSCETs.push(nextGlobalCSSCET);
+
+								return false;
+							}
+
+							return true;
+						});
+
+					if (duplicatedGlobalCSSCETs.length) {
+						openToast({
+							autoClose: true,
+							message: `${Liferay.Language.get(
+								'some-extensions-were-not-added-because-they-are-already-applied-to-this-page'
+							)} (${duplicatedGlobalCSSCETs
+								.map((globalCSSCET) => globalCSSCET.name)
+								.join(', ')})`,
+							type: 'warning',
+						});
+					}
+
+					return [
+						...previousGlobalCSSCETs.filter(
+							(previousGlobalCSSCET) =>
+								!nextGlobalCSSCETs.some(
+									(globalCSSCET) =>
+										globalCSSCET.cetExternalReferenceCode ===
+										previousGlobalCSSCET.cetExternalReferenceCode
+								)
+						),
+						...nextGlobalCSSCETs,
+					];
+				});
 			},
 			selectEventName: selectGlobalCSSCETsEventName,
 			title: Liferay.Language.get('select-css-extensions'),

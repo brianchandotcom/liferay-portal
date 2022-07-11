@@ -17,7 +17,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClaySelectWithOption} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal, openToast} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 import {GlobalCETOptionsDropDown} from './GlobalCETOptionsDropDown';
@@ -115,27 +115,61 @@ export default function GlobalJSCETsConfiguration({
 					return;
 				}
 
-				const items = selectedItems.value.map((selectedItem) => ({
-					inherited: false,
-					inheritedLabel: '-',
-					scriptLocation,
-					...(JSON.parse(selectedItem) as {
-						cetExternalReferenceCode: string;
-						name: string;
-					}),
-				}));
+				setGlobalJSCETs((previousGlobalJSCETs) => {
+					const duplicatedGlobalJSCETs: IGlobalJSCET[] = [];
 
-				setGlobalJSCETs((previousGlobalJSCETs) => [
-					...previousGlobalJSCETs.filter(
-						(previousGlobalJSCET) =>
-							!items.some(
-								(globalJSCET) =>
-									globalJSCET.cetExternalReferenceCode ===
-									previousGlobalJSCET.cetExternalReferenceCode
-							)
-					),
-					...items,
-				]);
+					const nextGlobalJSCETs = selectedItems.value
+						.map((selectedItem) => ({
+							inherited: false,
+							inheritedLabel: '-',
+							scriptLocation,
+							...(JSON.parse(selectedItem) as {
+								cetExternalReferenceCode: string;
+								name: string;
+							}),
+						}))
+						.filter((nextGlobalJSCET) => {
+							const isDuplicated = previousGlobalJSCETs.some(
+								(previousGlobalJSCET) =>
+									nextGlobalJSCET.cetExternalReferenceCode ===
+										previousGlobalJSCET.cetExternalReferenceCode &&
+									nextGlobalJSCET.scriptLocation ===
+										previousGlobalJSCET.scriptLocation
+							);
+
+							if (isDuplicated) {
+								duplicatedGlobalJSCETs.push(nextGlobalJSCET);
+
+								return false;
+							}
+
+							return true;
+						});
+
+					if (duplicatedGlobalJSCETs.length) {
+						openToast({
+							autoClose: true,
+							message: `${Liferay.Language.get(
+								'some-extensions-were-not-added-because-they-are-already-applied-to-this-page'
+							)} (${duplicatedGlobalJSCETs
+								.map((globalJSCET) => globalJSCET.name)
+								.join(', ')})`,
+							type: 'warning',
+						});
+					}
+
+					return [
+						...previousGlobalJSCETs.filter(
+							(previousGlobalJSCET) =>
+								!nextGlobalJSCETs.some(
+									(globalJSCET) =>
+										globalJSCET.cetExternalReferenceCode ===
+										previousGlobalJSCET.cetExternalReferenceCode
+								)
+						),
+						...nextGlobalJSCETs,
+					];
+				});
 			},
 			selectEventName: selectGlobalJSCETsEventName,
 			title: Liferay.Language.get('select-javascript-extensions'),

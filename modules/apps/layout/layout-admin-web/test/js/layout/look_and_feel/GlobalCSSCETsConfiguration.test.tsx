@@ -22,6 +22,7 @@ import GlobalCSSCETsConfiguration from '../../../../src/main/resources/META-INF/
 
 jest.mock('frontend-js-web', () => ({
 	openSelectionModal: jest.fn(),
+	openToast: () => {},
 }));
 
 const openSelectionModalMock = openSelectionModal as jest.Mock<

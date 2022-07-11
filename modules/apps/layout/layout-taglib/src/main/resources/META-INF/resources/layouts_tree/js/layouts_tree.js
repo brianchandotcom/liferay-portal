@@ -551,7 +551,6 @@ AUI.add(
 								doAsGroupId: themeDisplay.getScopeGroupId(),
 								p_auth: Liferay.authToken,
 								p_l_id: themeDisplay.getPlid(),
-								p_p_id: '88',
 							})
 						),
 						method: 'POST',

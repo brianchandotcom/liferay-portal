@@ -28,11 +28,9 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
-import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -45,12 +43,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
@@ -138,26 +133,6 @@ public class AdminPortlet extends BaseKBPortlet {
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
 		}
-	}
-
-	@Override
-	protected String buildEditURL(
-		ActionRequest actionRequest, ActionResponse actionResponse,
-		KBArticle kbArticle) {
-
-		return PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				actionRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-				PortletRequest.RENDER_PHASE)
-		).setMVCPath(
-			templatePath + "edit_article.jsp"
-		).setRedirect(
-			getRedirect(actionRequest, actionResponse)
-		).setParameter(
-			"resourcePrimKey", kbArticle.getResourcePrimKey()
-		).setWindowState(
-			actionRequest.getWindowState()
-		).buildString();
 	}
 
 	@Override

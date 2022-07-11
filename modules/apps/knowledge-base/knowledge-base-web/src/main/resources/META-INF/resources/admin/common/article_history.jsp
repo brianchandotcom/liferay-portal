@@ -57,7 +57,7 @@ List<KBArticle> kbArticles = KBArticleServiceUtil.getKBArticleVersions(scopeGrou
 							showWhenSingleIcon="<%= true %>"
 						>
 							<c:if test="<%= (kbArticle.getStatus() == WorkflowConstants.STATUS_APPROVED) && KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
-								<liferay-portlet:actionURL name="updateKBArticle" varImpl="revertURL">
+								<liferay-portlet:actionURL name="/knowledge_base/update_kb_article" varImpl="revertURL">
 									<portlet:param name="redirect" value="<%= currentURL %>" />
 									<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 									<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />

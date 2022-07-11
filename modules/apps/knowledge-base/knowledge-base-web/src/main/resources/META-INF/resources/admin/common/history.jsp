@@ -149,7 +149,7 @@ if (portletTitleBasedNavigation) {
 				<liferay-ui:search-container-column-text
 					align="right"
 				>
-					<liferay-portlet:actionURL name="updateKBArticle" varImpl="revertURL">
+					<liferay-portlet:actionURL name="/knowledge_base/update_kb_article" varImpl="revertURL">
 						<portlet:param name="mvcPath" value='<%= templatePath + "history.jsp" %>' />
 						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />

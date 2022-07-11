@@ -74,7 +74,7 @@ if (portletTitleBasedNavigation) {
 </c:if>
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid container-fluid-max-xl container-form-lg\"" : StringPool.BLANK %>>
-	<liferay-portlet:actionURL name="updateKBArticle" var="updateKBArticleURL" />
+	<liferay-portlet:actionURL name="/knowledge_base/update_kb_article" var="updateKBArticleURL" />
 
 	<aui:form action="<%= updateKBArticleURL %>" method="post" name="fm">
 		<aui:input name="mvcPath" type="hidden" value='<%= templatePath + "edit_article.jsp" %>' />

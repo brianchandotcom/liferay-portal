@@ -19,16 +19,13 @@ import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
-import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBCommentConstants;
-import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
 import com.liferay.knowledge.base.exception.KBArticlePriorityException;
 import com.liferay.knowledge.base.exception.KBArticleTitleException;
 import com.liferay.knowledge.base.exception.KBCommentContentException;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
-import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBCommentLocalService;
@@ -44,12 +41,10 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -182,87 +177,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		}
 	}
 
-	public void updateKBArticle(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		long resourcePrimKey = ParamUtil.getLong(
-			actionRequest, "resourcePrimKey");
-
-		String title = ParamUtil.getString(actionRequest, "title");
-		String content = ParamUtil.getString(actionRequest, "content");
-		String description = ParamUtil.getString(actionRequest, "description");
-		String sourceURL = ParamUtil.getString(actionRequest, "sourceURL");
-		String[] sections = actionRequest.getParameterValues("sections");
-		String[] selectedFileNames = ParamUtil.getParameterValues(
-			actionRequest, "selectedFileName");
-
-		KBArticle kbArticle = null;
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			KBArticle.class.getName(), actionRequest);
-
-		if (cmd.equals(Constants.ADD)) {
-			long parentResourceClassNameId = ParamUtil.getLong(
-				actionRequest, "parentResourceClassNameId",
-				portal.getClassNameId(KBFolderConstants.getClassName()));
-			long parentResourcePrimKey = ParamUtil.getLong(
-				actionRequest, "parentResourcePrimKey",
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-			String urlTitle = ParamUtil.getString(actionRequest, "urlTitle");
-
-			kbArticle = kbArticleService.addKBArticle(
-				null, portal.getPortletId(actionRequest),
-				parentResourceClassNameId, parentResourcePrimKey, title,
-				urlTitle, content, description, sourceURL, sections,
-				selectedFileNames, serviceContext);
-		}
-		else if (cmd.equals(Constants.REVERT)) {
-			int version = ParamUtil.getInteger(
-				actionRequest, "version", KBArticleConstants.DEFAULT_VERSION);
-
-			kbArticle = kbArticleService.revertKBArticle(
-				resourcePrimKey, version, serviceContext);
-		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			long[] removeFileEntryIds = ParamUtil.getLongValues(
-				actionRequest, "removeFileEntryIds");
-
-			kbArticle = kbArticleService.updateKBArticle(
-				resourcePrimKey, title, content, description, sourceURL,
-				sections, selectedFileNames, removeFileEntryIds,
-				serviceContext);
-		}
-
-		if (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) {
-			return;
-		}
-
-		int workflowAction = ParamUtil.getInteger(
-			actionRequest, "workflowAction");
-
-		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
-			String editURL = buildEditURL(
-				actionRequest, actionResponse, kbArticle);
-
-			actionRequest.setAttribute(WebKeys.REDIRECT, editURL);
-		}
-		else {
-			String redirect = PortalUtil.escapeRedirect(
-				ParamUtil.getString(actionRequest, "redirect"));
-
-			if (cmd.equals(Constants.ADD) && Validator.isNotNull(redirect)) {
-				actionRequest.setAttribute(
-					WebKeys.REDIRECT,
-					_getContentRedirect(
-						KBArticle.class, kbArticle.getResourcePrimKey(),
-						redirect));
-			}
-		}
-	}
-
 	public void updateKBComment(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -323,36 +237,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		kbCommentService.updateStatus(kbCommentId, status, serviceContext);
 
 		SessionMessages.add(actionRequest, "suggestionStatusUpdated");
-	}
-
-	protected String buildEditURL(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			KBArticle kbArticle)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String editURL = portal.getLayoutFullURL(themeDisplay);
-
-		editURL = HttpComponentsUtil.setParameter(
-			editURL, "p_p_id", portletDisplay.getId());
-		editURL = HttpComponentsUtil.setParameter(
-			editURL, actionResponse.getNamespace() + "mvcPath",
-			templatePath + "edit_article.jsp");
-		editURL = HttpComponentsUtil.setParameter(
-			editURL, actionResponse.getNamespace() + "redirect",
-			getRedirect(actionRequest, actionResponse));
-		editURL = HttpComponentsUtil.setParameter(
-			editURL, actionResponse.getNamespace() + "resourcePrimKey",
-			kbArticle.getResourcePrimKey());
-		editURL = HttpComponentsUtil.setParameter(
-			editURL, actionResponse.getNamespace() + "status",
-			WorkflowConstants.STATUS_ANY);
-
-		return editURL;
 	}
 
 	protected abstract void doRender(
@@ -424,24 +308,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		}
 
 		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
-	}
-
-	private String _getContentRedirect(
-		Class<?> clazz, long classPK, String redirect) {
-
-		String portletId = HttpComponentsUtil.getParameter(
-			redirect, "portletResource", false);
-
-		String namespace = PortalUtil.getPortletNamespace(portletId);
-
-		if (Validator.isNotNull(portletId)) {
-			redirect = HttpComponentsUtil.addParameter(
-				redirect, namespace + "className", clazz.getName());
-			redirect = HttpComponentsUtil.addParameter(
-				redirect, namespace + "classPK", classPK);
-		}
-
-		return redirect;
 	}
 
 }

@@ -102,6 +102,12 @@ definition {
 			value1 = "Segmentation is disabled");
 	}
 
+	macro checkSegmentationReEnableWarning {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR_3",
+			value1 = "To enable, go to Instance Settings.");
+	}
+
 	macro clickAssignSiteRolesOption {
 		Click(locator1 = "Segmentation#SEGMENT_OPTIONS_MENU");
 

@@ -163,6 +163,9 @@ public class SXPBlueprintSearchResultTest {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			_serviceContext);
+
+		_journalArticleBuilder = new JournalArticleBuilder(
+			_group, _journalArticles, _serviceContext, _user);
 	}
 
 	@Test
@@ -2293,6 +2296,7 @@ public class SXPBlueprintSearchResultTest {
 	@DeleteAfterTestRun
 	private Group _groupB;
 
+	private JournalArticleBuilder _journalArticleBuilder;
 	private final List<JournalArticle> _journalArticles = new ArrayList<>();
 	private JournalFolder _journalFolder;
 	private String _keywords;
@@ -2322,5 +2326,192 @@ public class SXPBlueprintSearchResultTest {
 		type = SegmentsCriteriaContributor.class
 	)
 	private SegmentsCriteriaContributor _userSegmentsCriteriaContributor;
+
+	private class JournalArticleBuilder {
+
+		public JournalArticleBuilder(
+			Group group, List<JournalArticle> journalArticles,
+			ServiceContext serviceContext, User user) {
+
+			_journalArticles = journalArticles;
+			_serviceContext = serviceContext;
+
+			_defaultGroup = group;
+			_defaultUser = user;
+
+			_reset();
+		}
+
+		public void build() throws Exception {
+			if (_assetCategory != null) {
+				System.out.println(
+					"JournalArticleBuilder CategoryId: " +
+						_assetCategory.getCategoryId());
+				_serviceContext.setAssetCategoryIds(
+					new long[] {_assetCategory.getCategoryId()});
+			}
+
+			if (_assetTag != null) {
+				_serviceContext.setAssetTagNames(
+					new String[] {_assetTag.getName()});
+			}
+
+			if ((_latitude != 200) && (_longitude != 200)) {
+				_serviceContext.setExpandoBridgeAttributes(
+					Collections.singletonMap(
+						_fieldName,
+						JSONUtil.put(
+							"latitude", _latitude
+						).put(
+							"longitude", _longitude
+						).toString()));
+			}
+
+			long journalFolderId = 0;
+
+			if (_journalFolder != null) {
+				journalFolderId = _journalFolder.getFolderId();
+			}
+
+			_journalArticles.add(
+				_addJournalArticle(
+					_getGroupId(), journalFolderId, _title, _content,
+					_workflowEnabled, _approved));
+
+			_reset();
+		}
+
+		public JournalArticleBuilder setApproved(boolean approved) {
+			_approved = approved;
+
+			return this;
+		}
+
+		public JournalArticleBuilder setAssetCategory(
+			AssetCategory assetCategory) {
+
+			_assetCategory = assetCategory;
+
+			return this;
+		}
+
+		public JournalArticleBuilder setAssetTag(AssetTag assetTag) {
+			_assetTag = assetTag;
+
+			return this;
+		}
+
+		public JournalArticleBuilder setContent(String content) {
+			_content = content;
+
+			return this;
+		}
+
+		public JournalArticleBuilder setGeolocation(
+			String fieldName, double latitude, double longitude) {
+
+			_fieldName = fieldName;
+			_latitude = latitude;
+			_longitude = longitude;
+
+			return this;
+		}
+
+		public JournalArticleBuilder setGroup(Group group) {
+			_group = group;
+
+			return this;
+		}
+
+		public JournalArticleBuilder setJournalFolder(
+			JournalFolder journalFolder) {
+
+			_journalFolder = journalFolder;
+
+			return this;
+		}
+
+		public JournalArticleBuilder setJournalFolder(String title)
+			throws Exception {
+
+			_journalFolder = JournalFolderServiceUtil.addFolder(
+				null, _getGroupId(), 0, title, StringPool.BLANK,
+				_serviceContext);
+
+			return this;
+		}
+
+		public JournalArticleBuilder setTitle(String title) {
+			_title = title;
+
+			return this;
+		}
+
+		public JournalArticleBuilder setWorkflowEnabled(
+			boolean workflowEnabled) {
+
+			_workflowEnabled = workflowEnabled;
+
+			return this;
+		}
+
+		private JournalArticle _addJournalArticle(
+				long groupId, long folderId, String name, String content,
+				boolean workflowEnabled, boolean approved)
+			throws Exception {
+
+			return JournalTestUtil.addArticle(
+				groupId, folderId,
+				PortalUtil.getClassNameId(JournalArticle.class),
+				HashMapBuilder.put(
+					LocaleUtil.US, name
+				).build(),
+				null,
+				HashMapBuilder.put(
+					LocaleUtil.US, content
+				).build(),
+				LocaleUtil.getSiteDefault(), workflowEnabled, approved,
+				_serviceContext);
+		}
+
+		private long _getGroupId() {
+			if (_group != null) {
+				return _group.getGroupId();
+			}
+
+			return _defaultGroup.getGroupId();
+		}
+
+		private void _reset() {
+			_approved = true;
+			_assetCategory = null;
+			_assetTag = null;
+			_content = StringPool.BLANK;
+			_fieldName = StringPool.BLANK;
+			_group = null;
+			_journalFolder = null;
+			_latitude = 200;
+			_longitude = 200;
+			_title = StringPool.BLANK;
+			_workflowEnabled = false;
+		}
+
+		private boolean _approved;
+		private AssetCategory _assetCategory;
+		private AssetTag _assetTag;
+		private String _content;
+		private final Group _defaultGroup;
+		private final User _defaultUser;
+		private String _fieldName;
+		private Group _group;
+		private final List<JournalArticle> _journalArticles;
+		private JournalFolder _journalFolder;
+		private double _latitude;
+		private double _longitude;
+		private ServiceContext _serviceContext;
+		private String _title;
+		private boolean _workflowEnabled;
+
+	}
 
 }

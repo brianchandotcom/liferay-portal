@@ -49,13 +49,16 @@ public class Version implements Comparable<Version> {
 		return new Version(
 			GetterUtil.getInteger(matcher.group(1)),
 			GetterUtil.getInteger(matcher.group(3)),
-			GetterUtil.getInteger(matcher.group(5)));
+			GetterUtil.getInteger(matcher.group(5)),
+			GetterUtil.getString(matcher.group(7), _LAST_STEP));
 	}
 
 	public Version(int major, int minor, int micro) {
 		_major = major;
 		_minor = minor;
 		_micro = micro;
+
+		_step = _LAST_STEP;
 	}
 
 	@Override
@@ -72,7 +75,13 @@ public class Version implements Comparable<Version> {
 			return result;
 		}
 
-		return Integer.compare(_micro, version._micro);
+		result = Integer.compare(_micro, version._micro);
+
+		if (result != 0) {
+			return result;
+		}
+
+		return _step.compareTo(version._step);
 	}
 
 	@Override
@@ -88,7 +97,7 @@ public class Version implements Comparable<Version> {
 		Version version = (Version)object;
 
 		if ((_major == version._major) && (_minor == version._minor) &&
-			(_micro == version._micro)) {
+			(_micro == version._micro) && _step.equals(version._step)) {
 
 			return true;
 		}
@@ -108,26 +117,49 @@ public class Version implements Comparable<Version> {
 		return _minor;
 	}
 
+	public String getStep() {
+		return _step;
+	}
+
 	@Override
 	public int hashCode() {
 		int hash = HashUtil.hash(0, _major);
 
 		hash = HashUtil.hash(hash, _minor);
 
-		return HashUtil.hash(hash, _micro);
+		hash = HashUtil.hash(hash, _micro);
+
+		return HashUtil.hash(hash, _step);
 	}
 
 	@Override
 	public String toString() {
+		if (getStep().equals(_LAST_STEP)) {
+			return StringBundler.concat(
+				_major, StringPool.PERIOD, _minor, StringPool.PERIOD, _micro);
+		}
+
 		return StringBundler.concat(
-			_major, StringPool.PERIOD, _minor, StringPool.PERIOD, _micro);
+			_major, StringPool.PERIOD, _minor, StringPool.PERIOD, _micro,
+			StringPool.PERIOD, _step);
 	}
 
+	protected Version(int major, int minor, int micro, String step) {
+		_major = major;
+		_minor = minor;
+		_micro = micro;
+		_step = step;
+	}
+
+	private static final String _LAST_STEP = "updated";
+
 	private static final Pattern _versionPattern = Pattern.compile(
-		"(\\d{1,10})(\\.(\\d{1,10})(\\.(\\d{1,10})(\\.([-_\\da-zA-Z]+))?)?)?");
+		"(\\d{1,10})(\\.(\\d{1,10})(\\.(\\d{1,10})" +
+			"(\\.([-_\\da-zA-Z]+))?)?)?");
 
 	private final int _major;
 	private final int _micro;
 	private final int _minor;
+	private final String _step;
 
 }

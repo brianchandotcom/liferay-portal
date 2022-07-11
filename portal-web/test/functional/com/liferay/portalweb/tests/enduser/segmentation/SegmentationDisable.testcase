@@ -33,6 +33,34 @@ definition {
 		}
 	}
 
+	@description = "LPS-153084 Given the 'Enable Assign Roles by Segment' is disable at Instance Settings And enabled at System Settings
+    When user navigates to Regular Roles > Assignees > Segments
+    Then the warning alert explains how to re-enable it"
+	@priority = "3"
+	test CheckRoleDisabledAlertAtInstanceSettings {
+		task ("Disable asssigning role by segment at Instance Settings") {
+			Segmentation.disableSegmentationAtSystemSettings();
+		}
+
+		task ("Create a Role") {
+			JSONRole.addRegularRole(
+				roleKey = "Test Role",
+				roleTitle = "Test Role");
+		}
+
+		task ("Navigate to Role>Assignee>Segments") {
+			Segmentation.gotoRoleAssigneeSegments(roleName = "Test Role");
+		}
+
+		task ("Check alert message") {
+			Segmentation.checkSegmentationDisabledWarning(textValue = "Assigning roles by segment is disabled. To enable, go to Instance Settings.");
+		}
+
+		task ("Reset System Settings configuration") {
+			Segmentation.resetSegmentationAtSystemSettings();
+		}
+	}
+
 	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Dynamic Collection Editor page
     When user clicks at Close button
     Then the alert disappears from page"

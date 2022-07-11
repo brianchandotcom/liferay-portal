@@ -441,10 +441,11 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 					WorkflowConstants.STATUS_PENDING);
 
 			if ((journalArticle != null) &&
-				!_workflowPermission.hasPermission(
-					permissionChecker, groupId,
-					"com.liferay.journal.model.JournalArticle",
-					journalArticle.getId(), ActionKeys.VIEW)) {
+				!GetterUtil.getBoolean(
+					_workflowPermission.hasPermission(
+						permissionChecker, groupId,
+						"com.liferay.journal.model.JournalArticle",
+						journalArticle.getId(), ActionKeys.VIEW))) {
 
 				throw new PrincipalException();
 			}
@@ -489,10 +490,11 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 					groupId, normalizedUrlTitle,
 					WorkflowConstants.STATUS_PENDING);
 
-			if (!_workflowPermission.hasPermission(
-					permissionChecker, groupId,
-					"com.liferay.journal.model.JournalArticle",
-					journalArticle.getId(), ActionKeys.VIEW)) {
+			if (!GetterUtil.getBoolean(
+					_workflowPermission.hasPermission(
+						permissionChecker, groupId,
+						"com.liferay.journal.model.JournalArticle",
+						journalArticle.getId(), ActionKeys.VIEW))) {
 
 				throw new PrincipalException();
 			}

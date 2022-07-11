@@ -66,7 +66,7 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 					/>
 				</c:when>
 				<c:otherwise>
-					<liferay-portlet:actionURL name="subscribeKBArticle" var="subscribeKBArticleURL">
+					<liferay-portlet:actionURL name="/knowledge_base/subscribe_kb_article" var="subscribeKBArticleURL">
 						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
 						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />

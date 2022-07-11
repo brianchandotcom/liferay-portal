@@ -182,20 +182,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		}
 	}
 
-	public void subscribeKBArticle(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long resourcePrimKey = ParamUtil.getLong(
-			actionRequest, "resourcePrimKey");
-
-		kbArticleService.subscribeKBArticle(
-			themeDisplay.getScopeGroupId(), resourcePrimKey);
-	}
-
 	public void unsubscribeKBArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

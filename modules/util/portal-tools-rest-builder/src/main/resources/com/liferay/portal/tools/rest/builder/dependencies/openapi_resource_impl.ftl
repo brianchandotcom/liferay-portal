@@ -1,13 +1,34 @@
 package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
+<#assign
+	schemas = freeMarkerTool.getSchemas(openAPIYAML)
+	allSchemas = freeMarkerTool.getAllSchemas(null, openAPIYAML, schemas)
+
+	resourceSchemaNameClasses = {}
+/>
+
+<#list allSchemas?keys as schemaName>
+	<#assign javaMethodSignatures = freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName) />
+
+	<#if javaMethodSignatures?has_content>
+		<#if schemas?keys?seq_contains(schemaName)>
+			<#assign resourceSchemaNameClasses = resourceSchemaNameClasses + {schemaName + "ResourceImpl.class": schemaName + ".class"} />
+			import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
+		<#else>
+			<#assign resourceSchemaNameClasses = resourceSchemaNameClasses + {schemaName + "ResourceImpl.class": "null"} />
+		</#if>
+	</#if>
+</#list>
+
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -58,13 +79,13 @@ public class OpenAPIResourceImpl {
 		try {
 			Class<? extends OpenAPIResource> clazz = _openAPIResource.getClass();
 
-			clazz.getMethod("getOpenAPI", Set.class, String.class, UriInfo.class);
+			clazz.getMethod("getOpenAPI", long.class, Map.class, String.class, UriInfo.class);
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			return _openAPIResource.getOpenAPI(_resourceClasses, type);
+			return _openAPIResource.getOpenAPI(_resourceClasses.keySet(), type);
 		}
 
-		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
+		return _openAPIResource.getOpenAPI(_company.getCompanyId(), _resourceClasses, type, _uriInfo);
 	}
 
 	@Reference
@@ -73,18 +94,17 @@ public class OpenAPIResourceImpl {
 	@Context
 	private UriInfo _uriInfo;
 
-	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
+	private final Map<Class<?>, Class<?>> _resourceClasses = new HashMap<Class<?>, Class<?>>() {
 		{
-			<#list freeMarkerTool.getAllSchemas(null, openAPIYAML, freeMarkerTool.getSchemas(openAPIYAML))?keys as schemaName>
-				<#assign javaMethodSignatures = freeMarkerTool.getResourceJavaMethodSignatures(configYAML, openAPIYAML, schemaName) />
-
-				<#if javaMethodSignatures?has_content>
-					add(${schemaName}ResourceImpl.class);
-				</#if>
+			<#list resourceSchemaNameClasses?keys?sort as resourceClass>
+				put(${resourceClass}, ${resourceSchemaNameClasses[resourceClass]});
 			</#list>
 
-			add(OpenAPIResourceImpl.class);
+			put(OpenAPIResourceImpl.class, null);
 		}
 	};
+
+	@Context
+	private Company _company;
 
 }

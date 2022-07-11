@@ -376,16 +376,28 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		pullProperty.set(workspaceExtension.getDockerPullPolicy());
 
-		DockerRegistryCredentials credentials =
-			dockerBuildImage.getRegistryCredentials();
+		if (Objects.nonNull(
+				workspaceExtension.getDockerLocalRegistryAddress())) {
 
-		Property<String> userNameProperty = credentials.getUsername();
+			DockerRegistryCredentials credentials =
+				dockerBuildImage.getRegistryCredentials();
 
-		userNameProperty.set(workspaceExtension.getDockerUserName());
+			String dockerUserName = workspaceExtension.getDockerUserName();
 
-		Property<String> passwordProperty = credentials.getPassword();
+			if (Objects.nonNull(dockerUserName)) {
+				Property<String> userNameProperty = credentials.getUsername();
 
-		passwordProperty.set(workspaceExtension.getDockerAccessToken());
+				userNameProperty.set(dockerUserName);
+			}
+
+			String dockerPassword = workspaceExtension.getDockerAccessToken();
+
+			if (Objects.nonNull(dockerPassword)) {
+				Property<String> passwordProperty = credentials.getPassword();
+
+				passwordProperty.set(dockerPassword);
+			}
+		}
 
 		dockerBuildImage.setDescription(
 			"Builds a child docker image from Liferay base image with all " +
@@ -716,9 +728,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						new ArrayList<>(instructions.get());
 
 					String dockerLocalRegistryAddress =
-							workspaceExtension.
-								getDockerLocalRegistryAddress();
-					
+						workspaceExtension.getDockerLocalRegistryAddress();
+
 					if (Objects.nonNull(workspaceExtension.getProduct())) {
 						WorkspaceExtension.ProductInfo productInfo =
 							workspaceExtension.getProductInfo();
@@ -751,14 +762,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 						}
 					}
 					else {
-						String dockerImageLiferay = workspaceExtension.
-								getDockerImageLiferay();
-						
+						String dockerImageLiferay =
+							workspaceExtension.getDockerImageLiferay();
+
 						if (Objects.nonNull(dockerLocalRegistryAddress)) {
 							dockerImageLiferay = dockerImageLiferay.replace(
 								"liferay", dockerLocalRegistryAddress);
 						}
-						
+
 						Dockerfile.FromInstruction baseImage =
 							new Dockerfile.FromInstruction(
 								new Dockerfile.From(dockerImageLiferay));
@@ -1239,13 +1250,19 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		DockerRegistryCredentials credentials =
 			dockerPullImage.getRegistryCredentials();
 
-		Property<String> userNameProperty = credentials.getUsername();
+		if (Objects.nonNull(dockerUserName)) {
+			Property<String> userNameProperty = credentials.getUsername();
 
-		userNameProperty.set(workspaceExtension.getDockerUserName());
+			userNameProperty.set(dockerUserName);
+		}
 
-		Property<String> passwordProperty = credentials.getPassword();
+		String dockerPassword = workspaceExtension.getDockerAccessToken();
 
-		passwordProperty.set(workspaceExtension.getDockerAccessToken());
+		if (Objects.nonNull(dockerPassword)) {
+			Property<String> passwordProperty = credentials.getPassword();
+
+			passwordProperty.set(dockerPassword);
+		}
 
 		dockerPullImage.setGroup(DOCKER_GROUP);
 		dockerPullImage.setDescription("Pull the Docker image.");
@@ -1288,16 +1305,18 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		DockerRegistryCredentials credentials =
 			dockerPushImage.getRegistryCredentials();
 
-		Property<String> userNameProperty = credentials.getUsername();
+		if (Objects.nonNull(dockerUserName)) {
+			Property<String> userNameProperty = credentials.getUsername();
 
-		if (Objects.nonNull(userNameProperty)) {
 			userNameProperty.set(dockerUserName);
 		}
 
-		Property<String> passwordProperty = credentials.getPassword();
+		String dockerPassword = workspaceExtension.getDockerAccessToken();
 
-		if (Objects.nonNull(passwordProperty)) {
-			passwordProperty.set(workspaceExtension.getDockerAccessToken());
+		if (Objects.nonNull(dockerPassword)) {
+			Property<String> passwordProperty = credentials.getPassword();
+
+			passwordProperty.set(dockerPassword);
 		}
 
 		return dockerPushImage;

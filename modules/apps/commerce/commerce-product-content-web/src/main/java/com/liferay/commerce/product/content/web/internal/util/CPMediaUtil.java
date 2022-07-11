@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 
 import java.util.ArrayList;
@@ -48,28 +49,18 @@ public class CPMediaUtil {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		List<CPMedia> cpMedias = new ArrayList<>();
-
 		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
+		return TransformUtil.transform(
 			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
 				classNameId, classPK, CPAttachmentFileEntryConstants.TYPE_OTHER,
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				cpAttachmentFileEntries) {
-
-			cpMedias.add(
-				new CPMediaImpl(
-					CommerceUtil.getCommerceAccountId(
-						(CommerceContext)httpServletRequest.getAttribute(
-							CommerceWebKeys.COMMERCE_CONTEXT)),
-					cpAttachmentFileEntry, themeDisplay));
-		}
-
-		return cpMedias;
+				QueryUtil.ALL_POS),
+			cpAttachmentFileEntry -> new CPMediaImpl(
+				CommerceUtil.getCommerceAccountId(
+					(CommerceContext)httpServletRequest.getAttribute(
+						CommerceWebKeys.COMMERCE_CONTEXT)),
+				cpAttachmentFileEntry, themeDisplay));
 	}
 
 	public static List<CPMedia> getImageCPMedias(

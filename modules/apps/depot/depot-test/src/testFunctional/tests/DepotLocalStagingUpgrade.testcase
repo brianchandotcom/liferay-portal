@@ -23,6 +23,7 @@ definition {
 	test CanPublishBlogSmallImageAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-depot-local-staging-with-image";
 		property portal.version = "7.3.10.1";
+		property test.name.skip.portal.instance = "DepotLocalStagingUpgrade#CanPublishBlogSmallImageAfterUpgradeFrom73101Archive";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
 
@@ -69,6 +70,7 @@ definition {
 	test CanPublishImageInBlogContentFieldAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-depot-local-staging-with-image";
 		property portal.version = "7.3.10.1";
+		property test.name.skip.portal.instance = "DepotLocalStagingUpgrade#CanPublishImageInBlogContentFieldAfterUpgradeFrom73101Archive";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
 
@@ -118,6 +120,7 @@ definition {
 	test CanPublishImageInMGAfterUpgradeFrom73101Archive {
 		property data.archive.type = "data-archive-depot-local-staging-with-image";
 		property portal.version = "7.3.10.1";
+		property test.name.skip.portal.instance = "DepotLocalStagingUpgrade#CanPublishImageInMGAfterUpgradeFrom73101Archive";
 
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
 

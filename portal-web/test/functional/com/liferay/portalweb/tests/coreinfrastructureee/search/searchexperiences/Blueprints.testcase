@@ -1604,6 +1604,65 @@ definition {
 		AssertTextPresent(value1 = "Import Element");
 	}
 
+	test FederatedSearchKeyAppliesToBlueprintsOptions {
+		JSONDocument.addFile(
+			dmDocumentTitle = "Apple",
+			groupName = "Guest");
+
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			title = "Apple Pie");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Paste Any Elasticsearch Query");
+
+		var elasticsearchQueryJson = '''
+{
+	"match":
+	{
+		"title_en_US":
+		{
+			"query": "Pie"
+		}
+	}
+}
+		''';
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${elasticsearchQueryJson}");
+
+		Blueprints.configureElementDropdown(
+			dropdownName = "Occur",
+			option = "MUST");
+
+		PortletEntry.save();
+
+		Search.openSearchPage();
+
+		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
+
+		Blueprints.configureFederatedSearchKeyForOptionsWidget(federatedSearchKey = "key");
+
+		SearchPortlets.configureSearchBarWidget(federatedSearchKey = "key");
+
+		SearchResultPortlet.configureSearchResults(federatedSearchKey = "key");
+
+		SearchPortlets.searchWidget(searchTerm = "apple");
+
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "Apple Pie",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Apple",
+			searchAssetType = "Document");
+	}
+
 	test HideAndShowAddElementsSidebar {
 		Blueprints.openBlueprintsAdmin();
 

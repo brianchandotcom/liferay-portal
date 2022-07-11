@@ -75,25 +75,26 @@ export default function GlobalCSSCETsConfiguration({
 					return;
 				}
 
-				const items = selectedItems.value.map((selectedItem) =>
-					JSON.parse(selectedItem)
-				);
+				const items = selectedItems.value.map((selectedItem) => ({
+					inherited: false,
+					inheritedLabel: '-',
+					...(JSON.parse(selectedItem) as {
+						cetExternalReferenceCode: string;
+						name: string;
+					}),
+				}));
 
-				setGlobalCSSCETs((previousGlobalCSSCETs) => {
-					const nextGlobalCSSCETs = [
-						...previousGlobalCSSCETs,
-						...items,
-					];
-
-					return nextGlobalCSSCETs.filter(
-						(globalCSSCET, index) =>
-							nextGlobalCSSCETs.findIndex(
-								({cetExternalReferenceCode}) =>
+				setGlobalCSSCETs((previousGlobalCSSCETs) => [
+					...previousGlobalCSSCETs.filter(
+						(previousGlobalCSSCET) =>
+							!items.some(
+								(globalCSSCET) =>
 									globalCSSCET.cetExternalReferenceCode ===
-									cetExternalReferenceCode
-							) === index
-					);
-				});
+									previousGlobalCSSCET.cetExternalReferenceCode
+							)
+					),
+					...items,
+				]);
 			},
 			selectEventName: selectGlobalCSSCETsEventName,
 			title: Liferay.Language.get('select-css-extensions'),

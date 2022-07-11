@@ -116,8 +116,13 @@ export default function GlobalJSCETsConfiguration({
 				}
 
 				const items = selectedItems.value.map((selectedItem) => ({
-					...JSON.parse(selectedItem),
+					inherited: false,
+					inheritedLabel: '-',
 					scriptLocation,
+					...(JSON.parse(selectedItem) as {
+						cetExternalReferenceCode: string;
+						name: string;
+					}),
 				}));
 
 				setGlobalJSCETs((previousGlobalJSCETs) => [

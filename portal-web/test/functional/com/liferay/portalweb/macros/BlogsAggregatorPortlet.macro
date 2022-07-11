@@ -28,6 +28,30 @@ definition {
 		IFrame.saveConfiguration();
 	}
 
+	macro selectOrganization {
+		Portlet.gotoPortletOptions(
+			portletName = "Blogs Aggregator",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		AssertClick(
+			locator1 = "Button#SELECT",
+			value1 = "Select");
+
+		SelectFrame.selectSecondFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_roleTitle = "${organizationName}",
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_REGULAR_SELECT_CHOOSE_BUTTON");
+
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		IFrame.saveConfiguration();
+	}
+
 	macro viewBlogsEntryViaBAPortletPG {
 		AssertTextEquals(
 			key_entryTitle = "${entryTitle}",

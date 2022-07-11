@@ -576,7 +576,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 
 		task ("View audio is shown in Web Content Display") {
 			WebContentDisplayPortlet.viewContent(
-				audioFileName = "document_1-mp3",
+				audioFileName = "document-title?audioPreview=1&type=mp3",
 				webContentTitle = "Web Content Title");
 		}
 	}

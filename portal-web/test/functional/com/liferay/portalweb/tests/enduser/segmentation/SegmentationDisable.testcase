@@ -132,6 +132,22 @@ definition {
 		}
 	}
 
+	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
+	When user navigates to Experience menu
+	Then the warning alert explains how to re-enable it"
+	@priority = "3"
+	test ViewReEnabledAlertAtExperiencesMenu {
+		task ("Open the Experience menu and check if warning appears") {
+			Navigator.openURL();
+			
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openExperienceMenu();
+
+			Segmentation.checkSegmentationReEnableWarning();
+		}
+	}
+
 	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Dynamic Collection Editor page
     When user clicks at Close button
     Then the alert disappears from page"

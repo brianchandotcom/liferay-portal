@@ -823,6 +823,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		copy.setDescription(
 			"Copy the Liferay configs and provided configurations to the " +
 				"docker build directory.");
+		copy.setGroup(DOCKER_GROUP);
 
 		copy.setDestinationDir(workspaceExtension.getDockerDir());
 

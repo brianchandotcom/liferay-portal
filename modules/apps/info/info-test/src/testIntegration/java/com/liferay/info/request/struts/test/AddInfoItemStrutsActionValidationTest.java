@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
@@ -294,6 +295,7 @@ public class AddInfoItemStrutsActionValidationTest {
 		mockHttpServletRequest.addParameter("formItemId", formItemId);
 		mockHttpServletRequest.addParameter(
 			"groupId", String.valueOf(layout.getGroupId()));
+		mockHttpServletRequest.addParameter("p_l_mode", Constants.VIEW);
 		mockHttpServletRequest.addParameter(
 			"plid", String.valueOf(layout.getPlid()));
 		mockHttpServletRequest.addParameter(

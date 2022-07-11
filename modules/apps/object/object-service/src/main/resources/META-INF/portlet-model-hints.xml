@@ -118,6 +118,20 @@
 		<field name="name" type="String" />
 		<field name="value" type="String" />
 	</model>
+	<model name="com.liferay.object.model.ObjectFilter">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="objectFilterId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="objectFieldId" type="long" />
+		<field name="filterBy" type="String" />
+		<field name="filterType" type="String" />
+		<field name="json" type="String" />
+	</model>
 	<model name="com.liferay.object.model.ObjectLayout">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />

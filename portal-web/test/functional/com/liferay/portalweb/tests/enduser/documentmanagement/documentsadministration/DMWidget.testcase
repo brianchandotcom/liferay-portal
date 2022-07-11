@@ -151,12 +151,22 @@ definition {
 	}
 
 	@description = "This test covers LPS-104252. It validates that the search bar in the DM widget cannot execute XSS."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test SearchBarDoesNotExecuteXSS {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
 
-		// TODO LPS-129152
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		Search.searchPG(
+			portletName = "Documents and Media",
+			searchTerm = '''<script>alert(123);</script>''');
+
+		AssertAlertNotPresent();
 	}
 
 	@description = "This is a use case for LPS-95662. Selecting an asset from the second does not invoke the management toolbar on the first."

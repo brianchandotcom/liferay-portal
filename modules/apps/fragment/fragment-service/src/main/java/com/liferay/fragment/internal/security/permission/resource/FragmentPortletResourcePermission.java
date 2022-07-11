@@ -20,10 +20,10 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.BasePortletResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionLogic;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionWrapper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletResourcePermission.class
 )
 public class FragmentPortletResourcePermission
-	extends PortletResourcePermissionWrapper {
+	extends BasePortletResourcePermissionWrapper {
 
 	@Override
 	protected PortletResourcePermission doGetPortletResourcePermission() {

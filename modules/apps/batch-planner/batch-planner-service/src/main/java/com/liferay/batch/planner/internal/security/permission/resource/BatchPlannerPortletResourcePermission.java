@@ -15,9 +15,9 @@
 package com.liferay.batch.planner.internal.security.permission.resource;
 
 import com.liferay.batch.planner.constants.BatchPlannerConstants;
+import com.liferay.portal.kernel.security.permission.resource.BasePortletResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionWrapper;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	service = PortletResourcePermission.class
 )
 public class BatchPlannerPortletResourcePermission
-	extends PortletResourcePermissionWrapper {
+	extends BasePortletResourcePermissionWrapper {
 
 	@Override
 	protected PortletResourcePermission doGetPortletResourcePermission() {

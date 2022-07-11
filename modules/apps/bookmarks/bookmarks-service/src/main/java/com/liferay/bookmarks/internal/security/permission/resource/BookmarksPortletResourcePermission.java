@@ -17,9 +17,9 @@ package com.liferay.bookmarks.internal.security.permission.resource;
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
+import com.liferay.portal.kernel.security.permission.resource.BasePortletResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.StagedPortletPermissionLogic;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletResourcePermission.class
 )
 public class BookmarksPortletResourcePermission
-	extends PortletResourcePermissionWrapper {
+	extends BasePortletResourcePermissionWrapper {
 
 	@Override
 	protected PortletResourcePermission doGetPortletResourcePermission() {

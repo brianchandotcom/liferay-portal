@@ -14,9 +14,9 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.security.permission.resource;
 
+import com.liferay.portal.kernel.security.permission.resource.BasePortletResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionWrapper;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	service = PortletResourcePermission.class
 )
 public class KaleoDesignerPortletResourcePermission
-	extends PortletResourcePermissionWrapper {
+	extends BasePortletResourcePermissionWrapper {
 
 	@Override
 	protected PortletResourcePermission doGetPortletResourcePermission() {

@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.info.exception.InfoFormException;
+import com.liferay.info.exception.InfoFormInvalidGroupException;
 import com.liferay.info.exception.InfoFormPrincipalException;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHelper;
@@ -40,7 +41,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -80,6 +83,14 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		String redirect = null;
 
 		try {
+			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if ((group == null) || !group.isSite()) {
+				throw new InfoFormInvalidGroupException();
+			}
+
 			if (_isCaptchaLayoutStructureItem(formItemId, httpServletRequest)) {
 				CaptchaUtil.check(httpServletRequest);
 			}
@@ -305,6 +316,9 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;

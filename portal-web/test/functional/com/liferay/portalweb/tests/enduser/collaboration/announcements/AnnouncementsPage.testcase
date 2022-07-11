@@ -83,7 +83,7 @@ definition {
 
 		AnnouncementsEntry.viewNoPG(entryTitle = "Announcements Entry Title");
 
-		// We need to wait for the system time to pass by 1 minute in order to verify the announcement display date. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test.
+		// We need to wait for the system time to pass by 1 minute in order to verify the announcement display date. There is currently no easy way to manipulate the system time in CI for automation. 1 minute is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
 
 		Pause(locator1 = "60000");
 

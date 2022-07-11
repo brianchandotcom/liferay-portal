@@ -872,6 +872,19 @@ definition {
 		Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
 	}
 
+	@summary = "Takes the token from an existing data source to make a reconnection"
+	macro takeTokenFromExistingDataSource {
+		ACSettings.goToDataSources();
+
+		ACUtils.searchBar(searchItem = "${dataSourceName}");
+
+		ACNavigation.openItem(itemName = "${dataSourceName}");
+
+		ACUtils.clickAnyButton(button = "Reconnect");
+
+		Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
+	}
+
 	macro verifyCannotAddUser {
 		AssertElementNotPresent(locator1 = "ACSettings#INVITE_USERS_BUTTON");
 	}

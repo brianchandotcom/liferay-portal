@@ -10,7 +10,7 @@
  */
 
 import {useMemo} from 'react';
-import {SLA_CARD_NAMES} from '../../../../../../../common/utils/constants/slaCardNames';
+import {SLA_CARD_NAMES} from '../../../../../../../../../common/utils/constants/slaCardNames';
 import getSlaCard from '../utils/getSlaCard';
 
 const useSlaCards = (koroneikiAccount) =>

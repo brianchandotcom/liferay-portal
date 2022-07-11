@@ -22,6 +22,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormInvalidGroupException;
+import com.liferay.info.exception.InfoFormInvalidLayoutModeException;
 import com.liferay.info.exception.InfoFormPrincipalException;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHelper;
@@ -48,11 +49,13 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -83,6 +86,13 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		String redirect = null;
 
 		try {
+			if (!Objects.equals(
+					Constants.VIEW,
+					ParamUtil.getString(httpServletRequest, "p_l_mode"))) {
+
+				throw new InfoFormInvalidLayoutModeException();
+			}
+
 			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
 			Group group = _groupLocalService.fetchGroup(groupId);
@@ -107,7 +117,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			}
 
 			infoItemCreator.createFromInfoItemFieldValues(
-				ParamUtil.getLong(httpServletRequest, "groupId"),
+				groupId,
 				InfoItemFieldValues.builder(
 				).infoFieldValues(
 					_infoRequestFieldValuesProviderHelper.getInfoFieldValues(

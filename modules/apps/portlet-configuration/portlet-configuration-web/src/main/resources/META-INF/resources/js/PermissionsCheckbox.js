@@ -29,7 +29,7 @@ export default function PermissionsCheckbox({
 	componentId: _componentId,
 	cssClass,
 	indeterminate,
-	indeterminateValue,
+	indeterminateValue = 'indeterminate',
 	locale: _locale,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
@@ -49,6 +49,7 @@ export default function PermissionsCheckbox({
 			checked={checkboxStatus !== CHECKBOX_STATUS.unchecked}
 			className={cssClass}
 			indeterminate={checkboxStatus === CHECKBOX_STATUS.indeterminate}
+			inline
 			onChange={() => {
 				setCheckboxStatus((checkboxStatus) =>
 					checkboxStatus === CHECKBOX_STATUS.unchecked
@@ -57,8 +58,7 @@ export default function PermissionsCheckbox({
 				);
 			}}
 			value={
-				checkboxStatus === CHECKBOX_STATUS.indeterminate &&
-				indeterminateValue
+				checkboxStatus === CHECKBOX_STATUS.indeterminate
 					? indeterminateValue
 					: value
 					? value

@@ -179,10 +179,6 @@ String resourceName = portletConfigurationPermissionsDisplayContext.getResourceN
 												).put(
 													"indeterminate", indeterminate
 												).put(
-													"indeterminateValue", "indeterminate"
-												).put(
-													"inline", true
-												).put(
 													"name", liferayPortletResponse.getNamespace() + role.getRoleId() + actionSeparator + action
 												).put(
 													"title", dataMessage

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 /**
  * @author Shuyang Zhou
  */
-public abstract class ModelResourcePermissionWrapper<T extends ClassedModel>
+public abstract class BaseModelResourcePermissionWrapper<T extends ClassedModel>
 	implements ModelResourcePermission<T> {
 
 	@Override

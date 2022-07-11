@@ -1448,6 +1448,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	private String _getFaviconURL(long faviconFileEntryId) {
+		if (faviconFileEntryId <= 0) {
+			return null;
+		}
+
 		try {
 			FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
 				faviconFileEntryId);

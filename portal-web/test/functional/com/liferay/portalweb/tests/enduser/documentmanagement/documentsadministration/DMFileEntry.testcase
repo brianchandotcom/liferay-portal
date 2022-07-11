@@ -1653,9 +1653,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(
-			flexibleRefreshingTime = "3000",
-			waitingTime = "60000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -1952,9 +1950,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(
-			flexibleRefreshingTime = "3000",
-			waitingTime = "60000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
 
 		Notifications.gotoNotifications();
 
@@ -2126,9 +2122,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(
-			flexibleRefreshingTime = "3000",
-			waitingTime = "60000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -2179,9 +2173,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(
-			flexibleRefreshingTime = "3000",
-			waitingTime = "60000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -2231,9 +2223,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(
-			flexibleRefreshingTime = "3000",
-			waitingTime = "60000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 
@@ -2474,9 +2464,7 @@ definition {
 
 		Navigator.openURL();
 
-		Notifications.waitForNotificationFlexibly(
-			flexibleRefreshingTime = "3000",
-			waitingTime = "60000");
+		Notifications.waitForNotificationFlexibly(flexibleRefreshingTime = "3000");
 
 		Notifications.viewBadgeCount(notificationCount = "1");
 

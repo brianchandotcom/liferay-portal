@@ -3860,7 +3860,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "PageAudit#HELP_TEXT",
-				value1 = "Launch a page audit to check issues that impact on your page's accesibility and SEO.");
+				value1 = "Launch a page audit to check issues that impact on your page's accessibility and SEO.");
 
 			AssertVisible(locator1 = "PageAudit#LAUNCH_PAGE_AUDIT_BUTTON");
 		}

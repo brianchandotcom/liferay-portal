@@ -26,10 +26,10 @@ import {filters} from '../../../schema/filter';
 import {BUILD_STATUS} from '../../../util/constants';
 import dayjs from '../../../util/date';
 import {searchUtil} from '../../../util/search';
-import useRoutineActions from './useRoutineActions';
+import useBuildActions from './Builds/useBuildActions';
 
 const Routine = () => {
-	const {actionsBuild, formModal} = useRoutineActions();
+	const {actions, formModal} = useBuildActions();
 	const {barChart, colors} = useBuildHistory();
 	const {routineId} = useParams();
 	const navigate = useNavigate();
@@ -53,7 +53,7 @@ const Routine = () => {
 				}}
 				query={getBuilds}
 				tableProps={{
-					actions: actionsBuild,
+					actions,
 					columns: [
 						{
 							key: 'status',

@@ -842,6 +842,34 @@ definition {
 		}
 	}
 
+	macro discardDraft {
+		WaitForPageLoad();
+
+		PagesAdmin.openPageEllipsisMenu(pageName = "${pageName}");
+
+		MenuItem.clickNoError(menuItem = "Discard Draft");
+
+		AssertConfirm(value1 = "Are you sure you want to discard the current draft and apply the latest published changes?");
+
+		if (isSet(failure)) {
+			if (IsElementPresent(locator1 = "Message#ERROR_2")) {
+				Alert.viewRequestFailedToComplete();
+
+				AssertTextEquals(
+					locator1 = "Message#ERROR_2",
+					value1 = "${failure}");
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "Message#ERROR",
+					value1 = "${failure}");
+			}
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	macro editFriendlyURL {
 		Type(
 			inputFieldId = "friendlyURL",

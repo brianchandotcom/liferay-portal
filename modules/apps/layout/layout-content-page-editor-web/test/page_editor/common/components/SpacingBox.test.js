@@ -17,78 +17,101 @@ import {fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import SpacingBox from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/SpacingBox';
+import {StyleBookContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-design-options/hooks/useStyleBook';
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({
+		config: {
+			frontendTokens: {
+				spacer0: {
+					defaultValue: '3rem',
+					label: 'Spacer 0',
+					value: '3rem',
+				},
+				spacer10: {
+					defaultValue: '5rem',
+					label: 'Spacer 10',
+					value: '5rem',
+				},
+			},
+		},
+	})
+);
 
 const SpacingBoxTest = ({onChange = () => {}, value = {}}) => (
-	<SpacingBox
-		fields={{
-			marginBottom: {
-				defaultValue: '0',
-				label: 'margin-bottom',
-				validValues: [
-					{label: '0', value: '0'},
-					{label: '10', value: '10'},
-				],
-			},
-			marginLeft: {
-				defaultValue: '0',
-				label: 'margin-left',
-				validValues: [
-					{label: '0', value: '0'},
-					{label: '10', value: '10'},
-				],
-			},
-			marginRight: {
-				defaultValue: '0',
-				label: 'margin-right',
-				validValues: [
-					{label: '0', value: '0'},
-					{label: '10', value: '10'},
-				],
-			},
-			marginTop: {
-				defaultValue: '0',
-				label: 'margin-top',
-				validValues: [
-					{label: '0', value: '0'},
-					{label: '10', value: '10'},
-				],
-			},
-			paddingBottom: {
-				defaultValue: '0',
-				label: 'padding-bottom',
-				validValues: [
-					{label: '0', value: '0'},
-					{label: '10', value: '10'},
-				],
-			},
-			paddingLeft: {
-				defaultValue: '0',
-				label: 'padding-left',
-				validValues: [
-					{label: '0', value: '0'},
-					{label: '10', value: '10'},
-				],
-			},
-			paddingRight: {
-				defaultValue: '0',
-				label: 'padding-right',
-				validValues: [
-					{label: '0', value: '0'},
-					{label: '10', value: '10'},
-				],
-			},
-			paddingTop: {
-				defaultValue: '0',
-				label: 'padding-top',
-				validValues: [
-					{label: '0', value: '0'},
-					{label: '10', value: '10'},
-				],
-			},
-		}}
-		onChange={onChange}
-		value={value}
-	/>
+	<StyleBookContextProvider>
+		<SpacingBox
+			fields={{
+				marginBottom: {
+					defaultValue: '0',
+					label: 'margin-bottom',
+					validValues: [
+						{label: '0', value: '0'},
+						{label: '10', value: '10'},
+					],
+				},
+				marginLeft: {
+					defaultValue: '0',
+					label: 'margin-left',
+					validValues: [
+						{label: '0', value: '0'},
+						{label: '10', value: '10'},
+					],
+				},
+				marginRight: {
+					defaultValue: '0',
+					label: 'margin-right',
+					validValues: [
+						{label: '0', value: '0'},
+						{label: '10', value: '10'},
+					],
+				},
+				marginTop: {
+					defaultValue: '0',
+					label: 'margin-top',
+					validValues: [
+						{label: '0', value: '0'},
+						{label: '10', value: '10'},
+					],
+				},
+				paddingBottom: {
+					defaultValue: '0',
+					label: 'padding-bottom',
+					validValues: [
+						{label: '0', value: '0'},
+						{label: '10', value: '10'},
+					],
+				},
+				paddingLeft: {
+					defaultValue: '0',
+					label: 'padding-left',
+					validValues: [
+						{label: '0', value: '0'},
+						{label: '10', value: '10'},
+					],
+				},
+				paddingRight: {
+					defaultValue: '0',
+					label: 'padding-right',
+					validValues: [
+						{label: '0', value: '0'},
+						{label: '5', value: '5'},
+					],
+				},
+				paddingTop: {
+					defaultValue: '0',
+					label: 'padding-top',
+					validValues: [
+						{label: '0', value: '0'},
+						{label: '10', value: '10'},
+					],
+				},
+			}}
+			onChange={onChange}
+			value={value}
+		/>
+	</StyleBookContextProvider>
 );
 
 describe('SpacingBox', () => {
@@ -96,31 +119,24 @@ describe('SpacingBox', () => {
 	let _liferayUtilSub;
 
 	beforeEach(() => {
+		Liferay.FeatureFlags['LPS-147895'] = true;
+
 		_getComputedStyle = window.getComputedStyle;
 		_liferayUtilSub = window.Liferay.Util.sub;
 	});
 
 	afterEach(() => {
+		Liferay.FeatureFlags['LPS-147895'] = false;
+
 		window.getComputedStyle = _getComputedStyle;
 		window.Liferay.Util.sub = _liferayUtilSub;
 	});
 
-	it('renders given spacing values', async () => {
-		window.getComputedStyle = () => {
-			return {
-				getPropertyValue: (key) => {
-					return {
-						'margin-top': '111px',
-						'padding-left': '0px',
-					}[key];
-				},
-			};
-		};
-
+	it('renders given spacing values from StyleBook', async () => {
 		render(<SpacingBoxTest value={{marginTop: '10'}} />);
 
-		expect(screen.getByLabelText('padding-left')).toHaveTextContent('0');
-		expect(screen.getByLabelText('margin-top')).toHaveTextContent('111');
+		expect(screen.getByLabelText('padding-left')).toHaveTextContent('3rem');
+		expect(screen.getByLabelText('margin-top')).toHaveTextContent('5rem');
 	});
 
 	it('can be navigated with keyboard', () => {
@@ -154,17 +170,34 @@ describe('SpacingBox', () => {
 	});
 
 	it('shows token value next to token name in the dropdown', () => {
+		render(<SpacingBoxTest />);
+
+		fireEvent.click(screen.getByLabelText('padding-left'));
+
+		expect(screen.getByText('5rem')).toBeInTheDocument();
+	});
+
+	it('focuses the selected option when the dropdown is opened', async () => {
+		render(<SpacingBoxTest value={{marginTop: '10'}} />);
+
+		fireEvent.click(screen.getByLabelText('margin-top'));
+
+		expect(screen.getByText('Spacer 10').parentElement).toHaveFocus();
+	});
+
+	it('gets the corresponding value if the token value does not exist', () => {
 		window.getComputedStyle = () => {
 			return {
 				getPropertyValue: (key) => {
-					return {'padding-left': '111px'}[key];
+					return {'padding-right': '111px'}[key];
 				},
 			};
 		};
 
 		render(<SpacingBoxTest />);
 
-		fireEvent.click(screen.getByLabelText('padding-left'));
-		expect(screen.getByText('111')).toBeInTheDocument();
+		fireEvent.click(screen.getByLabelText('padding-right'));
+
+		expect(screen.getByText('111px')).toBeInTheDocument();
 	});
 });

@@ -53,7 +53,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 		<liferay-ui:error exception="<%= ObjectDefinitionPluralLabelException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionScopeException.class %>" />
 		<liferay-ui:error exception="<%= ObjectDefinitionStatusException.class %>" />
-		<liferay-ui:error exception="<%= RequiredObjectFieldException.class %>" message="at-least-one-field-must-be-added" />
+		<liferay-ui:error exception="<%= RequiredObjectFieldException.class %>" message="at-least-one-custom-field-must-be-added" />
 
 		<aui:model-context bean="<%= objectDefinition %>" model="<%= ObjectDefinition.class %>" />
 

@@ -81,6 +81,16 @@ public class FriendlyURLEntryStagedModelDataHandler
 				friendlyURLEntry, friendlyURLEntry.getUuid()),
 			friendlyURLEntry.getUrlTitleMapAsXML());
 
+		FriendlyURLEntry mainFriendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+				friendlyURLEntry.getClassNameId(),
+				friendlyURLEntry.getClassPK());
+
+		if (mainFriendlyURLEntry == null) {
+			_friendlyURLEntryLocalService.setMainFriendlyURLEntry(
+				friendlyURLEntry);
+		}
+
 		if (friendlyURLEntry.isMain()) {
 			friendlyURLEntryElement.addAttribute(
 				"mainEntry", Boolean.TRUE.toString());

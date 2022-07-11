@@ -1947,6 +1947,8 @@ public class ContentPageEditorDisplayContext {
 			resourceURL.setDoAsUserId(defaultUser.getUserId());
 		}
 
+		resourceURL.setParameter("p_l_mode", Constants.PREVIEW);
+
 		resourceURL.setResourceID(resourceID);
 
 		return resourceURL.toString();

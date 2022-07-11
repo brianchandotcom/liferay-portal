@@ -26,6 +26,7 @@ import com.liferay.object.internal.rest.context.path.RESTContextPathResolverImpl
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
+import com.liferay.object.related.models.ObjectRelationshipEndpointsExtension;
 import com.liferay.object.rest.context.path.RESTContextPathResolver;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -206,6 +207,10 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 							companyId, systemObjectDefinitionMetadata);
 			}
 
+			_objectRelationshipEndpointsExtension.
+				addSystemObjectRelationshipsEndpoints(
+					systemObjectDefinitionMetadata);
+
 			_bundleContext.registerService(
 				ArgumentsResolver.class,
 				new ObjectDefinitionTableArgumentsResolver(
@@ -277,6 +282,10 @@ public class SystemObjectDefinitionMetadataPortalInstanceLifecycleListener
 	@Reference
 	private ObjectRelatedModelsProviderRegistry
 		_objectRelatedModelsProviderRegistry;
+
+	@Reference
+	private ObjectRelationshipEndpointsExtension
+		_objectRelationshipEndpointsExtension;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

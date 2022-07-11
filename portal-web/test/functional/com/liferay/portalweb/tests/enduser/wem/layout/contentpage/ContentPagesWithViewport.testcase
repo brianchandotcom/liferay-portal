@@ -88,14 +88,22 @@ definition {
 		}
 
 		task ("Then the page creator could customize styles of Heading fragment in the Tablet viewport") {
-			task ("View the Advanced tab is not shown on sidebar") {
+			task ("View only the CSS section is available on Advanced panel") {
 				SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 
 				PageEditor.clickConfigurableField(fragmentName = "Heading");
 
 				SelectFrameTop();
 
-				Navigator.viewNoNavTab(navTab = "Advanced");
+				Navigator.gotoNavTab(navTab = "Advanced");
+
+				AssertElementPresent(
+					key_fieldSetLabel = "CSS",
+					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+
+				AssertElementNotPresent(
+					checkboxName = "Hide from Site Search Results",
+					locator1 = "Checkbox#ANY_CHECKBOX");
 			}
 
 			task ("View only the Frame section is available on General panel") {

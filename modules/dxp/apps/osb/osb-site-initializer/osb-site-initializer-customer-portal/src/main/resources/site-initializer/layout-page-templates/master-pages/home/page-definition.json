@@ -326,7 +326,7 @@
 																						},
 																						{
 																							"fieldName": "siteKey",
-																							"fieldValue": "cp 2.0"
+																							"fieldValue": "[$SITE_ENTRY_NAME$]"
 																						}
 																					]
 																				}

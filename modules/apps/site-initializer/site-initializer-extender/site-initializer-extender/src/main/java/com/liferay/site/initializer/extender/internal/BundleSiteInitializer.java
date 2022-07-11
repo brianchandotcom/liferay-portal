@@ -561,7 +561,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject assetListJSONObject = assetListJSONArray.getJSONObject(
 				i);
 
-			_addOrUpdateAssetListEntryMap(
+			_addOrUpdateAssetListEntry(
 				assetListJSONObject, ddmStructureLocalService, serviceContext);
 		}
 
@@ -2336,7 +2336,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addOrUpdateAssetListEntryMap(
+	private void _addOrUpdateAssetListEntry(
 			JSONObject assetListJSONObject,
 			DDMStructureLocalService ddmStructureLocalService,
 			ServiceContext serviceContext)
@@ -2409,7 +2409,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				"\\s+", "-"
 			));
 
-		AssetListEntry assetListEntry = _validateAssetListEntry(
+		AssetListEntry assetListEntry = _existingAssetListEntry(
 			assetListEntries, assetListEntryKey);
 
 		if (assetListEntry == null) {
@@ -3709,7 +3709,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			documentsStringUtilReplaceValues, true, serviceContext);
 	}
 
-	private AssetListEntry _validateAssetListEntry(
+	private AssetListEntry _existingAssetListEntry(
 		List<AssetListEntry> assetListEntries, String assetListEntryKey1) {
 
 		for (AssetListEntry assetListEntry : assetListEntries) {

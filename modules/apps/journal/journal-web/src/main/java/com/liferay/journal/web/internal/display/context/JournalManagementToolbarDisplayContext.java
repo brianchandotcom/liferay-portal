@@ -223,14 +223,7 @@ public class JournalManagementToolbarDisplayContext
 				LiferayWindowState.POP_UP
 			).buildString()
 		).put(
-			"selectEntityURL",
-			PortletURLBuilder.createRenderURL(
-				liferayPortletResponse
-			).setMVCPath(
-				"/select_ddm_structure.jsp"
-			).setWindowState(
-				LiferayWindowState.POP_UP
-			).buildString()
+			"selectEntityURL", _journalDisplayContext.getSelectDDMStructureURL()
 		).put(
 			"trashEnabled", _isTrashEnabled()
 		).put(

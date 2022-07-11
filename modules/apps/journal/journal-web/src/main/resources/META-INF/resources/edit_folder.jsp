@@ -385,9 +385,11 @@ renderResponse.setTitle(title);
 		selectDDMStructureButton.addEventListener('click', (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
+					const itemValue = JSON.parse(selectedItem.value);
+
 					var ddmStructureLink =
 						'<a class="modify-link" data-rowId="' +
-						selectedItem.ddmstructureid +
+						itemValue.ddmstructureid +
 						'" href="javascript:void(0);"><%= UnicodeFormatter.toString(removeDDMStructureIcon) %></a>';
 
 					<c:choose>
@@ -397,18 +399,18 @@ renderResponse.setTitle(title);
 
 							workflowDefinitions = workflowDefinitions.replace(
 								/LIFERAY_WORKFLOW_DEFINITION_DDM_STRUCTURE/g,
-								'workflowDefinition' + selectedItem.ddmstructureid
+								'workflowDefinition' + itemValue.ddmstructureid
 							);
 
 							searchContainer.addRow(
-								[selectedItem.name, workflowDefinitions, ddmStructureLink],
-								selectedItem.ddmstructureid
+								[itemValue.name, workflowDefinitions, ddmStructureLink],
+								itemValue.ddmstructureid
 							);
 						</c:when>
 						<c:otherwise>
 							searchContainer.addRow(
-								[selectedItem.name, ddmStructureLink],
-								selectedItem.ddmstructureid
+								[itemValue.name, ddmStructureLink],
+								itemValue.ddmstructureid
 							);
 						</c:otherwise>
 					</c:choose>
@@ -417,8 +419,7 @@ renderResponse.setTitle(title);
 				},
 				selectEventName: '<portlet:namespace />selectDDMStructure',
 				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-				url:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
+				url: '<%= journalDisplayContext.getSelectDDMStructureURL() %>>',
 			});
 		});
 	}

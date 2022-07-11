@@ -95,20 +95,21 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 		const onClick = (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
+					const itemValue = JSON.parse(selectedItem.value);
+
 					if (
 						document.<portlet:namespace />fm.<portlet:namespace />classPK
-							.value != selectedItem.ddmstructureid
+							.value != itemValue.ddmstructureid
 					) {
 						document.<portlet:namespace />fm.<portlet:namespace />classPK.value =
-							selectedItem.ddmstructureid;
+							itemValue.ddmstructureid;
 
 						Liferay.fire('<portlet:namespace />refreshEditor');
 					}
 				},
 				selectEventName: '<portlet:namespace />selectDDMStructure',
 				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-				url:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
+				url: '<%= journalDisplayContext.getSelectDDMStructureURL() %>>',
 			});
 		};
 

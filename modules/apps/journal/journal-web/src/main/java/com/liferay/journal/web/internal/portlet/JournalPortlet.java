@@ -146,14 +146,10 @@ public class JournalPortlet extends MVCPortlet {
 
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
-		String path = getPath(renderRequest, renderResponse);
+		if (Objects.equals(
+				getPath(renderRequest, renderResponse),
+				"/edit_ddm_template.jsp")) {
 
-		if (Objects.equals(path, "/edit_article.jsp")) {
-			renderRequest.setAttribute(
-				JournalWebKeys.ITEM_SELECTOR, _itemSelector);
-		}
-
-		if (Objects.equals(path, "/edit_ddm_template.jsp")) {
 			renderRequest.setAttribute(
 				DDMTemplateHelper.class.getName(), _ddmTemplateHelper);
 			renderRequest.setAttribute(
@@ -168,6 +164,7 @@ public class JournalPortlet extends MVCPortlet {
 			_ddmFormValuesToMapConverter);
 		renderRequest.setAttribute(
 			DDMWebConfiguration.class.getName(), _ddmWebConfiguration);
+		renderRequest.setAttribute(JournalWebKeys.ITEM_SELECTOR, _itemSelector);
 		renderRequest.setAttribute(
 			FFJournalAutoSaveDraftConfiguration.class.getName(),
 			_ffJournalAutoSaveDraftConfiguration);

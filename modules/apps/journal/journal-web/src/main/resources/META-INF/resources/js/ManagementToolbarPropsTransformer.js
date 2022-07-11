@@ -117,14 +117,18 @@ export default function propsTransformer({
 			if (item?.data?.action === 'openDDMStructuresSelector') {
 				openSelectionModal({
 					onSelect: (selectedItem) => {
-						navigate(
-							addParams(
-								{
-									[`${portletNamespace}ddmStructureKey`]: selectedItem.ddmstructurekey,
-								},
-								viewDDMStructureArticlesURL
-							)
-						);
+						if (selectedItem) {
+							const itemValue = JSON.parse(selectedItem.value);
+
+							navigate(
+								addParams(
+									{
+										[`${portletNamespace}ddmStructureKey`]: itemValue.ddmstructurekey,
+									},
+									viewDDMStructureArticlesURL
+								)
+							);
+						}
 					},
 					selectEventName: `${portletNamespace}selectDDMStructure`,
 					title: Liferay.Language.get('structures'),

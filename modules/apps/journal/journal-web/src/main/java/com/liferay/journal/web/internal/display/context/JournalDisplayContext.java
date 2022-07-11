@@ -18,15 +18,19 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
+import com.liferay.dynamic.data.mapping.item.selector.DDMStructureItemSelectorReturnType;
+import com.liferay.dynamic.data.mapping.item.selector.criterion.DDMStructureItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalFolder;
@@ -73,6 +77,8 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -914,6 +920,25 @@ public class JournalDisplayContext {
 		return _searchContainer;
 	}
 
+	public String getSelectDDMStructureURL() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_liferayPortletRequest);
+
+		DDMStructureItemSelectorCriterion ddmStructureItemSelectorCriterion =
+			new DDMStructureItemSelectorCriterion();
+
+		ddmStructureItemSelectorCriterion.setClassNameId(
+			PortalUtil.getClassNameId(JournalArticle.class));
+		ddmStructureItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new DDMStructureItemSelectorReturnType());
+
+		return String.valueOf(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory,
+				_liferayPortletResponse.getNamespace() + "selectDDMStructure",
+				ddmStructureItemSelectorCriterion));
+	}
+
 	public int getStatus() {
 		if (_status != null) {
 			return _status;
@@ -1123,6 +1148,8 @@ public class JournalDisplayContext {
 			assetDisplayPageFriendlyURLProvider;
 		_trashHelper = trashHelper;
 
+		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
+			JournalWebKeys.ITEM_SELECTOR);
 		_journalWebConfiguration =
 			(JournalWebConfiguration)_httpServletRequest.getAttribute(
 				JournalWebConfiguration.class.getName());
@@ -1522,6 +1549,7 @@ public class JournalDisplayContext {
 	private JournalFolder _folder;
 	private Long _folderId;
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;

@@ -349,10 +349,12 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 	function <portlet:namespace />openDDMStructureSelector() {
 		Liferay.Util.openSelectionModal({
 			onSelect: function (selectedItem) {
+				const itemValue = JSON.parse(selectedItem.value);
+
 				if (
 					document.<portlet:namespace />fm
 						.<portlet:namespace />ddmStructureKey.value !=
-					selectedItem.ddmstructurekey
+					itemValue.ddmstructurekey
 				) {
 					if (
 						confirm(
@@ -360,7 +362,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 						)
 					) {
 						document.<portlet:namespace />fm.<portlet:namespace />ddmStructureKey.value =
-							selectedItem.ddmstructurekey;
+							itemValue.ddmstructurekey;
 						document.<portlet:namespace />fm.<portlet:namespace />ddmTemplateKey.value =
 							'';
 						document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value =
@@ -379,8 +381,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 			},
 			selectEventName: '<portlet:namespace />selectDDMStructure',
 			title: '<%= UnicodeLanguageUtil.get(request, "structures") %>',
-			url:
-				'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_ddm_structure.jsp" /></portlet:renderURL>',
+			url: '<%= journalDisplayContext.getSelectDDMStructureURL() %>>',
 		});
 	}
 

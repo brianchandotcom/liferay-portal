@@ -608,8 +608,7 @@ public class ObjectRelationshipLocalServiceTest {
 				objectRelationshipParameterObjectFieldIdException.getMessage());
 		}
 
-		String objectRelationshipName = StringUtil.lowerCase(
-			RandomTestUtil.randomString());
+		String objectRelationshipName = StringUtil.randomId();
 
 		_objectRelationshipLocalService.addObjectRelationship(
 			TestPropsValues.getUserId(),

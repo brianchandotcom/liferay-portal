@@ -15,7 +15,11 @@
 import React, {useEffect, useState} from 'react';
 
 import DonutChart from '../../../common/components/donut-chart';
-import {getApplications, getProductQuotes} from '../../../common/services/';
+import {
+	getApplications,
+	getApplicationsFilterProducts,
+	getProductQuotes,
+} from '../../../common/services/';
 
 const MAX_NAME_LENGHT = 15;
 
@@ -29,57 +33,65 @@ export default function () {
 	const colorsArray = ['#7154E1', '#55C2FF', '#4BC286', '#FF9A24'];
 
 	useEffect(() => {
-		Promise.allSettled([getProductQuotes(), getApplications()]).then(
-			(results) => {
-				const [productQuotesResult, applicationsResult] = results;
+		Promise.allSettled([
+			getProductQuotes(),
+			getApplications(),
+			getApplicationsFilterProducts(),
+		]).then((results) => {
+			const [
+				productQuotesResult,
+				applicationsResult,
+				applicationsFilteredProducts,
+			] = results;
 
-				const columnsArr = [];
-				const colorsObj = {};
+			const columnsArr = [];
+			const colorsObj = {};
 
-				setChartTitle(applicationsResult?.value?.data?.totalCount);
+			setChartTitle(
+				applicationsFilteredProducts?.value?.data?.totalCount
+			);
 
-				productQuotesResult?.value?.data?.items?.map(
-					(productQuote, index) => {
-						const countApplications = applicationsResult?.value?.data?.items?.filter(
-							(application) =>
-								Number(application.productQuote) ===
-								productQuote.productId
-						).length;
+			productQuotesResult?.value?.data?.items?.map(
+				(productQuote, index) => {
+					const countApplications = applicationsResult?.value?.data?.items?.filter(
+						(application) =>
+							application.productName ===
+							Object.values(productQuote.name)[0]
+					).length;
 
-						const shortDescription = Object.values(
-							productQuote.shortDescription
-						)[0];
+					const shortDescription = Object.values(
+						productQuote.shortDescription
+					)[0];
 
-						const [fullName] = Object.values(productQuote.name);
-						let productName = fullName;
+					const [fullName] = Object.values(productQuote.name);
+					let productName = fullName;
 
-						const productAbbrevation = productName
-							.split(' ')
-							.map((product) => product.charAt(0))
-							.join('');
+					const productAbbrevation = productName
+						.split(' ')
+						.map((product) => product.charAt(0))
+						.join('');
 
-						if (productName?.length > MAX_NAME_LENGHT) {
-							productName =
-								shortDescription === ''
-									? productAbbrevation
-									: shortDescription;
-						}
-
-						colorsObj[fullName] = colorsArray[index];
-						columnsArr[index] = [
-							fullName,
-							countApplications,
-							productName,
-						];
+					if (productName?.length > MAX_NAME_LENGHT) {
+						productName =
+							shortDescription === ''
+								? productAbbrevation
+								: shortDescription;
 					}
-				);
 
-				setColumns(columnsArr);
-				setColors(colorsObj);
+					colorsObj[fullName] = colorsArray[index];
+					columnsArr[index] = [
+						fullName,
+						countApplications,
+						productName,
+					];
+				}
+			);
 
-				setLoadData(true);
-			}
-		);
+			setColumns(columnsArr);
+			setColors(colorsObj);
+
+			setLoadData(true);
+		});
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

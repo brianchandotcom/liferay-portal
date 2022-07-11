@@ -658,6 +658,10 @@ definition {
 			Click(
 				key_deviceType = "Tablet",
 				locator1 = "PageEditor#DEVICE_TYPE");
+
+			WaitForElementPresent(
+				key_deviceType = "Tablet",
+				locator1 = "PageEditor#DEVICE_TYPE_ACTIVE");
 		}
 
 		task ("Take down the Width and File Size of image resolution in Tablet viewport") {

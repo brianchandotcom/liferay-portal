@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.auth.verifier.internal.digest.authentication.configuration.DigestAuthenticationAuthVerifierConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, service = {}
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 @Deprecated
 public class DigestAuthenticationAuthVerifierPipelineConfigurator

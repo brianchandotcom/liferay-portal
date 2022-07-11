@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
  */
 @Component(
 	configurationPid = "com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, service = {}
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class TunnelAuthVerifierPipelineConfigurator
 	extends BaseAuthVerifierPipelineConfigurator {

@@ -14,14 +14,39 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionValue;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Pin;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductAccountGroup;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductChannel;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroupProduct;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOptionValue;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductShippingConfiguration;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSubscriptionConfiguration;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfiguration;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -64,13 +89,15 @@ public class OpenAPIResourceImpl {
 				_openAPIResource.getClass();
 
 			clazz.getMethod(
-				"getOpenAPI", Set.class, String.class, UriInfo.class);
+				"getOpenAPI", long.class, Map.class, String.class,
+				UriInfo.class);
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			return _openAPIResource.getOpenAPI(_resourceClasses, type);
+			return _openAPIResource.getOpenAPI(_resourceClasses.keySet(), type);
 		}
 
-		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
+		return _openAPIResource.getOpenAPI(
+			_company.getCompanyId(), _resourceClasses, type, _uriInfo);
 	}
 
 	@Reference
@@ -79,58 +106,55 @@ public class OpenAPIResourceImpl {
 	@Context
 	private UriInfo _uriInfo;
 
-	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
-		{
-			add(AttachmentResourceImpl.class);
+	private final Map<Class<?>, Class<?>> _resourceClasses =
+		new HashMap<Class<?>, Class<?>>() {
+			{
+				put(AttachmentResourceImpl.class, Attachment.class);
+				put(CatalogResourceImpl.class, Catalog.class);
+				put(CategoryResourceImpl.class, Category.class);
+				put(DiagramResourceImpl.class, Diagram.class);
+				put(MappedProductResourceImpl.class, MappedProduct.class);
+				put(OptionCategoryResourceImpl.class, OptionCategory.class);
+				put(OptionResourceImpl.class, Option.class);
+				put(OptionValueResourceImpl.class, OptionValue.class);
+				put(PinResourceImpl.class, Pin.class);
+				put(
+					ProductAccountGroupResourceImpl.class,
+					ProductAccountGroup.class);
+				put(ProductChannelResourceImpl.class, ProductChannel.class);
+				put(
+					ProductConfigurationResourceImpl.class,
+					ProductConfiguration.class);
+				put(
+					ProductGroupProductResourceImpl.class,
+					ProductGroupProduct.class);
+				put(ProductGroupResourceImpl.class, ProductGroup.class);
+				put(ProductOptionResourceImpl.class, ProductOption.class);
+				put(
+					ProductOptionValueResourceImpl.class,
+					ProductOptionValue.class);
+				put(ProductResourceImpl.class, Product.class);
+				put(
+					ProductShippingConfigurationResourceImpl.class,
+					ProductShippingConfiguration.class);
+				put(
+					ProductSpecificationResourceImpl.class,
+					ProductSpecification.class);
+				put(
+					ProductSubscriptionConfigurationResourceImpl.class,
+					ProductSubscriptionConfiguration.class);
+				put(
+					ProductTaxConfigurationResourceImpl.class,
+					ProductTaxConfiguration.class);
+				put(RelatedProductResourceImpl.class, RelatedProduct.class);
+				put(SkuResourceImpl.class, Sku.class);
+				put(SpecificationResourceImpl.class, Specification.class);
 
-			add(CatalogResourceImpl.class);
+				put(OpenAPIResourceImpl.class, null);
+			}
+		};
 
-			add(CategoryResourceImpl.class);
-
-			add(DiagramResourceImpl.class);
-
-			add(MappedProductResourceImpl.class);
-
-			add(OptionResourceImpl.class);
-
-			add(OptionCategoryResourceImpl.class);
-
-			add(OptionValueResourceImpl.class);
-
-			add(PinResourceImpl.class);
-
-			add(ProductResourceImpl.class);
-
-			add(ProductAccountGroupResourceImpl.class);
-
-			add(ProductChannelResourceImpl.class);
-
-			add(ProductConfigurationResourceImpl.class);
-
-			add(ProductGroupResourceImpl.class);
-
-			add(ProductGroupProductResourceImpl.class);
-
-			add(ProductOptionResourceImpl.class);
-
-			add(ProductOptionValueResourceImpl.class);
-
-			add(ProductShippingConfigurationResourceImpl.class);
-
-			add(ProductSpecificationResourceImpl.class);
-
-			add(ProductSubscriptionConfigurationResourceImpl.class);
-
-			add(ProductTaxConfigurationResourceImpl.class);
-
-			add(RelatedProductResourceImpl.class);
-
-			add(SkuResourceImpl.class);
-
-			add(SpecificationResourceImpl.class);
-
-			add(OpenAPIResourceImpl.class);
-		}
-	};
+	@Context
+	private Company _company;
 
 }

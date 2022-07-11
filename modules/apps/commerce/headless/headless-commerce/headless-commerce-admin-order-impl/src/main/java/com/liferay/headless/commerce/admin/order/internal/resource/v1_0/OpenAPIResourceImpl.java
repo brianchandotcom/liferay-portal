@@ -14,14 +14,32 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Account;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.AccountGroup;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.BillingAddress;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Channel;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderNote;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRule;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccount;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccountGroup;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleChannel;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleOrderType;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderType;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderTypeChannel;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Term;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -64,13 +82,15 @@ public class OpenAPIResourceImpl {
 				_openAPIResource.getClass();
 
 			clazz.getMethod(
-				"getOpenAPI", Set.class, String.class, UriInfo.class);
+				"getOpenAPI", long.class, Map.class, String.class,
+				UriInfo.class);
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			return _openAPIResource.getOpenAPI(_resourceClasses, type);
+			return _openAPIResource.getOpenAPI(_resourceClasses.keySet(), type);
 		}
 
-		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
+		return _openAPIResource.getOpenAPI(
+			_company.getCompanyId(), _resourceClasses, type, _uriInfo);
 	}
 
 	@Reference
@@ -79,44 +99,36 @@ public class OpenAPIResourceImpl {
 	@Context
 	private UriInfo _uriInfo;
 
-	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
-		{
-			add(AccountResourceImpl.class);
+	private final Map<Class<?>, Class<?>> _resourceClasses =
+		new HashMap<Class<?>, Class<?>>() {
+			{
+				put(AccountGroupResourceImpl.class, AccountGroup.class);
+				put(AccountResourceImpl.class, Account.class);
+				put(BillingAddressResourceImpl.class, BillingAddress.class);
+				put(ChannelResourceImpl.class, Channel.class);
+				put(OrderItemResourceImpl.class, OrderItem.class);
+				put(OrderNoteResourceImpl.class, OrderNote.class);
+				put(OrderResourceImpl.class, Order.class);
+				put(
+					OrderRuleAccountGroupResourceImpl.class,
+					OrderRuleAccountGroup.class);
+				put(OrderRuleAccountResourceImpl.class, OrderRuleAccount.class);
+				put(OrderRuleChannelResourceImpl.class, OrderRuleChannel.class);
+				put(
+					OrderRuleOrderTypeResourceImpl.class,
+					OrderRuleOrderType.class);
+				put(OrderRuleResourceImpl.class, OrderRule.class);
+				put(OrderTypeChannelResourceImpl.class, OrderTypeChannel.class);
+				put(OrderTypeResourceImpl.class, OrderType.class);
+				put(ShippingAddressResourceImpl.class, ShippingAddress.class);
+				put(TermOrderTypeResourceImpl.class, TermOrderType.class);
+				put(TermResourceImpl.class, Term.class);
 
-			add(AccountGroupResourceImpl.class);
+				put(OpenAPIResourceImpl.class, null);
+			}
+		};
 
-			add(BillingAddressResourceImpl.class);
-
-			add(ChannelResourceImpl.class);
-
-			add(OrderResourceImpl.class);
-
-			add(OrderItemResourceImpl.class);
-
-			add(OrderNoteResourceImpl.class);
-
-			add(OrderRuleResourceImpl.class);
-
-			add(OrderRuleAccountResourceImpl.class);
-
-			add(OrderRuleAccountGroupResourceImpl.class);
-
-			add(OrderRuleChannelResourceImpl.class);
-
-			add(OrderRuleOrderTypeResourceImpl.class);
-
-			add(OrderTypeResourceImpl.class);
-
-			add(OrderTypeChannelResourceImpl.class);
-
-			add(ShippingAddressResourceImpl.class);
-
-			add(TermResourceImpl.class);
-
-			add(TermOrderTypeResourceImpl.class);
-
-			add(OpenAPIResourceImpl.class);
-		}
-	};
+	@Context
+	private Company _company;
 
 }

@@ -14,14 +14,25 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
+import com.liferay.search.experiences.rest.dto.v1_0.FieldMappingInfo;
+import com.liferay.search.experiences.rest.dto.v1_0.KeywordQueryContributor;
+import com.liferay.search.experiences.rest.dto.v1_0.ModelPrefilterContributor;
+import com.liferay.search.experiences.rest.dto.v1_0.QueryPrefilterContributor;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
+import com.liferay.search.experiences.rest.dto.v1_0.SXPParameterContributorDefinition;
+import com.liferay.search.experiences.rest.dto.v1_0.SearchResponse;
+import com.liferay.search.experiences.rest.dto.v1_0.SearchableAssetName;
+import com.liferay.search.experiences.rest.dto.v1_0.SearchableAssetNameDisplay;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -47,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Generated("")
 @OpenAPIDefinition(
-	info = @Info(description = "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.search.experiences.rest.client', and version '3.0.3'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "", version = "v1.0")
+	info = @Info(description = "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.search.experiences.rest.client', and version '3.0.4'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "", version = "v1.0")
 )
 @Path("/v1.0")
 public class OpenAPIResourceImpl {
@@ -63,13 +74,15 @@ public class OpenAPIResourceImpl {
 				_openAPIResource.getClass();
 
 			clazz.getMethod(
-				"getOpenAPI", Set.class, String.class, UriInfo.class);
+				"getOpenAPI", long.class, Map.class, String.class,
+				UriInfo.class);
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			return _openAPIResource.getOpenAPI(_resourceClasses, type);
+			return _openAPIResource.getOpenAPI(_resourceClasses.keySet(), type);
 		}
 
-		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
+		return _openAPIResource.getOpenAPI(
+			_company.getCompanyId(), _resourceClasses, type, _uriInfo);
 	}
 
 	@Reference
@@ -78,30 +91,37 @@ public class OpenAPIResourceImpl {
 	@Context
 	private UriInfo _uriInfo;
 
-	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
-		{
-			add(FieldMappingInfoResourceImpl.class);
+	private final Map<Class<?>, Class<?>> _resourceClasses =
+		new HashMap<Class<?>, Class<?>>() {
+			{
+				put(FieldMappingInfoResourceImpl.class, FieldMappingInfo.class);
+				put(
+					KeywordQueryContributorResourceImpl.class,
+					KeywordQueryContributor.class);
+				put(
+					ModelPrefilterContributorResourceImpl.class,
+					ModelPrefilterContributor.class);
+				put(
+					QueryPrefilterContributorResourceImpl.class,
+					QueryPrefilterContributor.class);
+				put(
+					SearchableAssetNameDisplayResourceImpl.class,
+					SearchableAssetNameDisplay.class);
+				put(
+					SearchableAssetNameResourceImpl.class,
+					SearchableAssetName.class);
+				put(SearchResponseResourceImpl.class, SearchResponse.class);
+				put(SXPBlueprintResourceImpl.class, SXPBlueprint.class);
+				put(SXPElementResourceImpl.class, SXPElement.class);
+				put(
+					SXPParameterContributorDefinitionResourceImpl.class,
+					SXPParameterContributorDefinition.class);
 
-			add(KeywordQueryContributorResourceImpl.class);
+				put(OpenAPIResourceImpl.class, null);
+			}
+		};
 
-			add(ModelPrefilterContributorResourceImpl.class);
-
-			add(QueryPrefilterContributorResourceImpl.class);
-
-			add(SXPBlueprintResourceImpl.class);
-
-			add(SXPElementResourceImpl.class);
-
-			add(SXPParameterContributorDefinitionResourceImpl.class);
-
-			add(SearchResponseResourceImpl.class);
-
-			add(SearchableAssetNameResourceImpl.class);
-
-			add(SearchableAssetNameDisplayResourceImpl.class);
-
-			add(OpenAPIResourceImpl.class);
-		}
-	};
+	@Context
+	private Company _company;
 
 }

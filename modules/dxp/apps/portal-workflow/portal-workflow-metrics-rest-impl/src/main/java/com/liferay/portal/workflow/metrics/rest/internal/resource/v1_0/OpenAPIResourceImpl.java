@@ -14,14 +14,32 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.AssigneeMetric;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Calendar;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.HistogramMetric;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Index;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Node;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.NodeMetric;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Process;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.ProcessMetric;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.ProcessVersion;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.ReindexStatus;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Role;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLA;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TimeRange;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -63,13 +81,15 @@ public class OpenAPIResourceImpl {
 				_openAPIResource.getClass();
 
 			clazz.getMethod(
-				"getOpenAPI", Set.class, String.class, UriInfo.class);
+				"getOpenAPI", long.class, Map.class, String.class,
+				UriInfo.class);
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			return _openAPIResource.getOpenAPI(_resourceClasses, type);
+			return _openAPIResource.getOpenAPI(_resourceClasses.keySet(), type);
 		}
 
-		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
+		return _openAPIResource.getOpenAPI(
+			_company.getCompanyId(), _resourceClasses, type, _uriInfo);
 	}
 
 	@Reference
@@ -78,44 +98,32 @@ public class OpenAPIResourceImpl {
 	@Context
 	private UriInfo _uriInfo;
 
-	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
-		{
-			add(AssigneeResourceImpl.class);
+	private final Map<Class<?>, Class<?>> _resourceClasses =
+		new HashMap<Class<?>, Class<?>>() {
+			{
+				put(AssigneeMetricResourceImpl.class, AssigneeMetric.class);
+				put(AssigneeResourceImpl.class, Assignee.class);
+				put(CalendarResourceImpl.class, Calendar.class);
+				put(HistogramMetricResourceImpl.class, HistogramMetric.class);
+				put(IndexResourceImpl.class, Index.class);
+				put(InstanceResourceImpl.class, Instance.class);
+				put(NodeMetricResourceImpl.class, NodeMetric.class);
+				put(NodeResourceImpl.class, Node.class);
+				put(ProcessMetricResourceImpl.class, ProcessMetric.class);
+				put(ProcessResourceImpl.class, Process.class);
+				put(ProcessVersionResourceImpl.class, ProcessVersion.class);
+				put(ReindexStatusResourceImpl.class, ReindexStatus.class);
+				put(RoleResourceImpl.class, Role.class);
+				put(SLAResourceImpl.class, SLA.class);
+				put(SLAResultResourceImpl.class, SLAResult.class);
+				put(TaskResourceImpl.class, Task.class);
+				put(TimeRangeResourceImpl.class, TimeRange.class);
 
-			add(AssigneeMetricResourceImpl.class);
+				put(OpenAPIResourceImpl.class, null);
+			}
+		};
 
-			add(CalendarResourceImpl.class);
-
-			add(HistogramMetricResourceImpl.class);
-
-			add(IndexResourceImpl.class);
-
-			add(InstanceResourceImpl.class);
-
-			add(NodeResourceImpl.class);
-
-			add(NodeMetricResourceImpl.class);
-
-			add(ProcessResourceImpl.class);
-
-			add(ProcessMetricResourceImpl.class);
-
-			add(ProcessVersionResourceImpl.class);
-
-			add(ReindexStatusResourceImpl.class);
-
-			add(RoleResourceImpl.class);
-
-			add(SLAResourceImpl.class);
-
-			add(SLAResultResourceImpl.class);
-
-			add(TaskResourceImpl.class);
-
-			add(TimeRangeResourceImpl.class);
-
-			add(OpenAPIResourceImpl.class);
-		}
-	};
+	@Context
+	private Company _company;
 
 }

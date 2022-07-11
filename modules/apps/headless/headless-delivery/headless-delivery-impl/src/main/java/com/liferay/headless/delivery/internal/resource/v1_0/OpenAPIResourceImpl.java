@@ -14,14 +14,39 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
+import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.delivery.dto.v1_0.Comment;
+import com.liferay.headless.delivery.dto.v1_0.ContentElement;
+import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
+import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
+import com.liferay.headless.delivery.dto.v1_0.ContentTemplate;
+import com.liferay.headless.delivery.dto.v1_0.Document;
+import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
+import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
+import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseFolder;
+import com.liferay.headless.delivery.dto.v1_0.Language;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.delivery.dto.v1_0.NavigationMenu;
+import com.liferay.headless.delivery.dto.v1_0.SitePage;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
+import com.liferay.headless.delivery.dto.v1_0.WikiNode;
+import com.liferay.headless.delivery.dto.v1_0.WikiPage;
+import com.liferay.headless.delivery.dto.v1_0.WikiPageAttachment;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -47,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Generated("")
 @OpenAPIDefinition(
-	info = @Info(description = "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.delivery.client', and version '4.0.32'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Headless Delivery", version = "v1.0")
+	info = @Info(description = "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.delivery.client', and version '4.0.34'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Headless Delivery", version = "v1.0")
 )
 @Path("/v1.0")
 public class OpenAPIResourceImpl {
@@ -63,13 +88,15 @@ public class OpenAPIResourceImpl {
 				_openAPIResource.getClass();
 
 			clazz.getMethod(
-				"getOpenAPI", Set.class, String.class, UriInfo.class);
+				"getOpenAPI", long.class, Map.class, String.class,
+				UriInfo.class);
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			return _openAPIResource.getOpenAPI(_resourceClasses, type);
+			return _openAPIResource.getOpenAPI(_resourceClasses.keySet(), type);
 		}
 
-		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
+		return _openAPIResource.getOpenAPI(
+			_company.getCompanyId(), _resourceClasses, type, _uriInfo);
 	}
 
 	@Reference
@@ -78,58 +105,61 @@ public class OpenAPIResourceImpl {
 	@Context
 	private UriInfo _uriInfo;
 
-	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
-		{
-			add(BlogPostingResourceImpl.class);
+	private final Map<Class<?>, Class<?>> _resourceClasses =
+		new HashMap<Class<?>, Class<?>>() {
+			{
+				put(BlogPostingImageResourceImpl.class, BlogPostingImage.class);
+				put(BlogPostingResourceImpl.class, BlogPosting.class);
+				put(CommentResourceImpl.class, Comment.class);
+				put(ContentElementResourceImpl.class, ContentElement.class);
+				put(
+					ContentSetElementResourceImpl.class,
+					ContentSetElement.class);
+				put(ContentStructureResourceImpl.class, ContentStructure.class);
+				put(ContentTemplateResourceImpl.class, ContentTemplate.class);
+				put(DocumentFolderResourceImpl.class, DocumentFolder.class);
+				put(DocumentResourceImpl.class, Document.class);
+				put(
+					KnowledgeBaseArticleResourceImpl.class,
+					KnowledgeBaseArticle.class);
+				put(
+					KnowledgeBaseAttachmentResourceImpl.class,
+					KnowledgeBaseAttachment.class);
+				put(
+					KnowledgeBaseFolderResourceImpl.class,
+					KnowledgeBaseFolder.class);
+				put(LanguageResourceImpl.class, Language.class);
+				put(
+					MessageBoardAttachmentResourceImpl.class,
+					MessageBoardAttachment.class);
+				put(
+					MessageBoardMessageResourceImpl.class,
+					MessageBoardMessage.class);
+				put(
+					MessageBoardSectionResourceImpl.class,
+					MessageBoardSection.class);
+				put(
+					MessageBoardThreadResourceImpl.class,
+					MessageBoardThread.class);
+				put(NavigationMenuResourceImpl.class, NavigationMenu.class);
+				put(SitePageResourceImpl.class, SitePage.class);
+				put(
+					StructuredContentFolderResourceImpl.class,
+					StructuredContentFolder.class);
+				put(
+					StructuredContentResourceImpl.class,
+					StructuredContent.class);
+				put(WikiNodeResourceImpl.class, WikiNode.class);
+				put(
+					WikiPageAttachmentResourceImpl.class,
+					WikiPageAttachment.class);
+				put(WikiPageResourceImpl.class, WikiPage.class);
 
-			add(BlogPostingImageResourceImpl.class);
+				put(OpenAPIResourceImpl.class, null);
+			}
+		};
 
-			add(CommentResourceImpl.class);
-
-			add(ContentElementResourceImpl.class);
-
-			add(ContentSetElementResourceImpl.class);
-
-			add(ContentStructureResourceImpl.class);
-
-			add(ContentTemplateResourceImpl.class);
-
-			add(DocumentResourceImpl.class);
-
-			add(DocumentFolderResourceImpl.class);
-
-			add(KnowledgeBaseArticleResourceImpl.class);
-
-			add(KnowledgeBaseAttachmentResourceImpl.class);
-
-			add(KnowledgeBaseFolderResourceImpl.class);
-
-			add(LanguageResourceImpl.class);
-
-			add(MessageBoardAttachmentResourceImpl.class);
-
-			add(MessageBoardMessageResourceImpl.class);
-
-			add(MessageBoardSectionResourceImpl.class);
-
-			add(MessageBoardThreadResourceImpl.class);
-
-			add(NavigationMenuResourceImpl.class);
-
-			add(SitePageResourceImpl.class);
-
-			add(StructuredContentResourceImpl.class);
-
-			add(StructuredContentFolderResourceImpl.class);
-
-			add(WikiNodeResourceImpl.class);
-
-			add(WikiPageResourceImpl.class);
-
-			add(WikiPageAttachmentResourceImpl.class);
-
-			add(OpenAPIResourceImpl.class);
-		}
-	};
+	@Context
+	private Company _company;
 
 }

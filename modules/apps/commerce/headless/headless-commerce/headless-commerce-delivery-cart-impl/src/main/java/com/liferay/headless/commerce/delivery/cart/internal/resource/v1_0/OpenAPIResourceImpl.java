@@ -14,14 +14,21 @@
 
 package com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0;
 
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Address;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartComment;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.PaymentMethod;
+import com.liferay.headless.commerce.delivery.cart.dto.v1_0.ShippingMethod;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -64,13 +71,15 @@ public class OpenAPIResourceImpl {
 				_openAPIResource.getClass();
 
 			clazz.getMethod(
-				"getOpenAPI", Set.class, String.class, UriInfo.class);
+				"getOpenAPI", long.class, Map.class, String.class,
+				UriInfo.class);
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			return _openAPIResource.getOpenAPI(_resourceClasses, type);
+			return _openAPIResource.getOpenAPI(_resourceClasses.keySet(), type);
 		}
 
-		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
+		return _openAPIResource.getOpenAPI(
+			_company.getCompanyId(), _resourceClasses, type, _uriInfo);
 	}
 
 	@Reference
@@ -79,22 +88,21 @@ public class OpenAPIResourceImpl {
 	@Context
 	private UriInfo _uriInfo;
 
-	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
-		{
-			add(AddressResourceImpl.class);
+	private final Map<Class<?>, Class<?>> _resourceClasses =
+		new HashMap<Class<?>, Class<?>>() {
+			{
+				put(AddressResourceImpl.class, Address.class);
+				put(CartCommentResourceImpl.class, CartComment.class);
+				put(CartItemResourceImpl.class, CartItem.class);
+				put(CartResourceImpl.class, Cart.class);
+				put(PaymentMethodResourceImpl.class, PaymentMethod.class);
+				put(ShippingMethodResourceImpl.class, ShippingMethod.class);
 
-			add(CartResourceImpl.class);
+				put(OpenAPIResourceImpl.class, null);
+			}
+		};
 
-			add(CartCommentResourceImpl.class);
-
-			add(CartItemResourceImpl.class);
-
-			add(PaymentMethodResourceImpl.class);
-
-			add(ShippingMethodResourceImpl.class);
-
-			add(OpenAPIResourceImpl.class);
-		}
-	};
+	@Context
+	private Company _company;
 
 }

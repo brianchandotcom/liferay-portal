@@ -14,14 +14,29 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
+import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
+import com.liferay.headless.admin.user.dto.v1_0.Organization;
+import com.liferay.headless.admin.user.dto.v1_0.Phone;
+import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.dto.v1_0.Role;
+import com.liferay.headless.admin.user.dto.v1_0.Segment;
+import com.liferay.headless.admin.user.dto.v1_0.SegmentUser;
+import com.liferay.headless.admin.user.dto.v1_0.Site;
+import com.liferay.headless.admin.user.dto.v1_0.Subscription;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
+import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -47,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Generated("")
 @OpenAPIDefinition(
-	info = @Info(description = "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.user.client', and version '4.0.28'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Headless Admin User", version = "v1.0")
+	info = @Info(description = "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.user.client', and version '4.0.29'.", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Headless Admin User", version = "v1.0")
 )
 @Path("/v1.0")
 public class OpenAPIResourceImpl {
@@ -63,13 +78,15 @@ public class OpenAPIResourceImpl {
 				_openAPIResource.getClass();
 
 			clazz.getMethod(
-				"getOpenAPI", Set.class, String.class, UriInfo.class);
+				"getOpenAPI", long.class, Map.class, String.class,
+				UriInfo.class);
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			return _openAPIResource.getOpenAPI(_resourceClasses, type);
+			return _openAPIResource.getOpenAPI(_resourceClasses.keySet(), type);
 		}
 
-		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
+		return _openAPIResource.getOpenAPI(
+			_company.getCompanyId(), _resourceClasses, type, _uriInfo);
 	}
 
 	@Reference
@@ -78,38 +95,29 @@ public class OpenAPIResourceImpl {
 	@Context
 	private UriInfo _uriInfo;
 
-	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
-		{
-			add(AccountResourceImpl.class);
+	private final Map<Class<?>, Class<?>> _resourceClasses =
+		new HashMap<Class<?>, Class<?>>() {
+			{
+				put(AccountResourceImpl.class, Account.class);
+				put(AccountRoleResourceImpl.class, AccountRole.class);
+				put(EmailAddressResourceImpl.class, EmailAddress.class);
+				put(OrganizationResourceImpl.class, Organization.class);
+				put(PhoneResourceImpl.class, Phone.class);
+				put(PostalAddressResourceImpl.class, PostalAddress.class);
+				put(RoleResourceImpl.class, Role.class);
+				put(SegmentResourceImpl.class, Segment.class);
+				put(SegmentUserResourceImpl.class, SegmentUser.class);
+				put(SiteResourceImpl.class, Site.class);
+				put(SubscriptionResourceImpl.class, Subscription.class);
+				put(UserAccountResourceImpl.class, UserAccount.class);
+				put(UserGroupResourceImpl.class, UserGroup.class);
+				put(WebUrlResourceImpl.class, WebUrl.class);
 
-			add(AccountRoleResourceImpl.class);
+				put(OpenAPIResourceImpl.class, null);
+			}
+		};
 
-			add(EmailAddressResourceImpl.class);
-
-			add(OrganizationResourceImpl.class);
-
-			add(PhoneResourceImpl.class);
-
-			add(PostalAddressResourceImpl.class);
-
-			add(RoleResourceImpl.class);
-
-			add(SegmentResourceImpl.class);
-
-			add(SegmentUserResourceImpl.class);
-
-			add(SiteResourceImpl.class);
-
-			add(SubscriptionResourceImpl.class);
-
-			add(UserAccountResourceImpl.class);
-
-			add(UserGroupResourceImpl.class);
-
-			add(WebUrlResourceImpl.class);
-
-			add(OpenAPIResourceImpl.class);
-		}
-	};
+	@Context
+	private Company _company;
 
 }

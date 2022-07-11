@@ -14,14 +14,21 @@
 
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
+import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
+import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountAddress;
+import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountGroup;
+import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember;
+import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountOrganization;
+import com.liferay.headless.commerce.admin.account.dto.v1_0.User;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Generated;
 
@@ -64,13 +71,15 @@ public class OpenAPIResourceImpl {
 				_openAPIResource.getClass();
 
 			clazz.getMethod(
-				"getOpenAPI", Set.class, String.class, UriInfo.class);
+				"getOpenAPI", long.class, Map.class, String.class,
+				UriInfo.class);
 		}
 		catch (NoSuchMethodException noSuchMethodException) {
-			return _openAPIResource.getOpenAPI(_resourceClasses, type);
+			return _openAPIResource.getOpenAPI(_resourceClasses.keySet(), type);
 		}
 
-		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
+		return _openAPIResource.getOpenAPI(
+			_company.getCompanyId(), _resourceClasses, type, _uriInfo);
 	}
 
 	@Reference
@@ -79,22 +88,23 @@ public class OpenAPIResourceImpl {
 	@Context
 	private UriInfo _uriInfo;
 
-	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
-		{
-			add(AccountResourceImpl.class);
+	private final Map<Class<?>, Class<?>> _resourceClasses =
+		new HashMap<Class<?>, Class<?>>() {
+			{
+				put(AccountAddressResourceImpl.class, AccountAddress.class);
+				put(AccountGroupResourceImpl.class, AccountGroup.class);
+				put(AccountMemberResourceImpl.class, AccountMember.class);
+				put(
+					AccountOrganizationResourceImpl.class,
+					AccountOrganization.class);
+				put(AccountResourceImpl.class, Account.class);
+				put(UserResourceImpl.class, User.class);
 
-			add(AccountAddressResourceImpl.class);
+				put(OpenAPIResourceImpl.class, null);
+			}
+		};
 
-			add(AccountGroupResourceImpl.class);
-
-			add(AccountMemberResourceImpl.class);
-
-			add(AccountOrganizationResourceImpl.class);
-
-			add(UserResourceImpl.class);
-
-			add(OpenAPIResourceImpl.class);
-		}
-	};
+	@Context
+	private Company _company;
 
 }

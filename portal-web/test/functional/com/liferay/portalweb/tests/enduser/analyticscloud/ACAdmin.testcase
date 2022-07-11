@@ -97,8 +97,8 @@ definition {
 	test NewUserCanNotAccessAdminPage {
 		var userFirstName = "ac";
 		var userLastName = "ac";
-		var userScreenName = "ac";
-		var userEmailAddress = "ac@liferay.com";
+		var userScreenName = "acnonadmin";
+		var userEmailAddress = "acnonadmin@liferay.com";
 
 		task ("Get the URL link") {
 			var currentURL = Navigator.getCurrentURL();
@@ -176,8 +176,8 @@ definition {
 	test NewUserIndependentOfRoleCanSeeDataInTheWorkspace {
 		var userFirstName = "ac";
 		var userLastName = "ac";
-		var userScreenName = "ac";
-		var userEmailAddress = "ac@liferay.com";
+		var userScreenName = "acworkspace";
+		var userEmailAddress = "acworkspace@liferay.com";
 		var currentURL = Navigator.getCurrentURL();
 
 		task ("Connect AC and DXP and generate some events") {

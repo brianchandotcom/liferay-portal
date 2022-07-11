@@ -70,6 +70,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsUtil;
@@ -797,6 +799,11 @@ public class RenderLayoutStructureTag extends IncludeTag {
 		jspWriter.write(formStyledLayoutStructureItem.getItemId());
 		jspWriter.write("\"><input name=\"groupId\" type=\"hidden\" value=\"");
 		jspWriter.write(String.valueOf(themeDisplay.getScopeGroupId()));
+		jspWriter.write("\"><input name=\"p_l_mode\" type=\"hidden\" value=\"");
+		jspWriter.write(
+			ParamUtil.getString(
+				PortalUtil.getOriginalServletRequest(httpServletRequest),
+				"p_l_mode", Constants.VIEW));
 		jspWriter.write("\"><input name=\"plid\" type=\"hidden\" value=\"");
 		jspWriter.write(String.valueOf(themeDisplay.getPlid()));
 		jspWriter.write(

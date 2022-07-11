@@ -416,11 +416,12 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 		JournalArticle journalArticle = null;
 
-		if (params.containsKey("version")) {
-			long articleId = GetterUtil.getLong(params.get("version")[0]);
+		String[] versionIds = params.get("version");
 
-			journalArticle = _journalArticleLocalService.fetchArticle(
-				articleId);
+		if (ArrayUtil.isNotEmpty(versionIds)) {
+			long id = GetterUtil.getLong(versionIds[0]);
+
+			journalArticle = _journalArticleLocalService.fetchArticle(id);
 		}
 
 		if (journalArticle == null) {

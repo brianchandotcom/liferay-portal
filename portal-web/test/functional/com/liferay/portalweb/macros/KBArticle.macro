@@ -156,8 +156,6 @@ definition {
 				if (isSet(viewInternalVideoPreview)) {
 					SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
-					WaitForElementPresent.waitForLastScript();
-
 					DMDocument.viewInternalVideoPreview(videoName = "${videoName}");
 				}
 			}

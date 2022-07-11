@@ -18,9 +18,9 @@ import {
 	CustomItem,
 	FormError,
 	SidePanelForm,
-	closeSidePanel,
 	invalidateRequired,
 	openToast,
+	saveAndReload,
 	useForm,
 } from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
@@ -59,7 +59,7 @@ export default function Action({
 			window.location.reload();
 		}
 		else if (response.ok) {
-			closeSidePanel();
+			saveAndReload();
 			openToast({message: successMessage});
 
 			return;

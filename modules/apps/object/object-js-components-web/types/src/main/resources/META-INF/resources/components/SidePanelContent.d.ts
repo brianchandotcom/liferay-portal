@@ -15,6 +15,7 @@
 import React from 'react';
 import './SidePanelContent.scss';
 export declare function closeSidePanel(): void;
+export declare function saveAndReload(): void;
 export declare function openToast(options: {
 	message: string;
 	type?: 'danger' | 'success';

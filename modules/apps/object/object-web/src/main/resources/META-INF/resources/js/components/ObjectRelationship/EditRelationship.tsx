@@ -19,8 +19,8 @@ import {
 	Input,
 	InputLocalized,
 	SidePanelForm,
-	closeSidePanel,
 	openToast,
+	saveAndReload,
 } from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
@@ -55,7 +55,7 @@ export default function EditRelationship({
 	const onSubmit = async (objectRelationship: ObjectRelationship) => {
 		try {
 			await updateRelationship(objectRelationship);
-			closeSidePanel();
+			saveAndReload();
 
 			openToast({
 				message: Liferay.Language.get(

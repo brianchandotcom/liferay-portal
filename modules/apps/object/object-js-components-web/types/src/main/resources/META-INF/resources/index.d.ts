@@ -35,6 +35,7 @@ export {SelectWithOption} from './components/SelectWithOption';
 export {
 	closeSidePanel,
 	openToast,
+	saveAndReload,
 	SidePanelContent,
 	SidePanelForm,
 } from './components/SidePanelContent';

@@ -15,7 +15,7 @@
 import {
 	Card,
 	SidePanelForm,
-	closeSidePanel,
+	saveAndReload,
 } from '@liferay/object-js-components-web';
 import {fetch, openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -72,7 +72,7 @@ export default function EditObjectStateField({objectField, readOnly}: IProps) {
 		);
 
 		if (response.ok) {
-			closeSidePanel();
+			saveAndReload();
 			openToast({
 				message: Liferay.Language.get(
 					'the-object-field-was-updated-successfully'

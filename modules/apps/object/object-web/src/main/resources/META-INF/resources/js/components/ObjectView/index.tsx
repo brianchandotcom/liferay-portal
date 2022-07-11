@@ -15,9 +15,9 @@
 import ClayTabs from '@clayui/tabs';
 import {
 	SidePanelContent,
-	closeSidePanel,
 	invalidateRequired,
 	openToast,
+	saveAndReload,
 } from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
@@ -181,7 +181,7 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				window.location.reload();
 			}
 			else if (response.ok) {
-				closeSidePanel();
+				saveAndReload();
 
 				openToast({
 					message: Liferay.Language.get(

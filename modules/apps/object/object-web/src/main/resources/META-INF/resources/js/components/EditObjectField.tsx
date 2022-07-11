@@ -22,8 +22,8 @@ import {
 	Select,
 	SidePanelForm,
 	Toggle,
-	closeSidePanel,
 	openToast,
+	saveAndReload,
 } from '@liferay/object-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
@@ -99,7 +99,7 @@ export default function EditObjectField({
 		);
 
 		if (response.ok) {
-			closeSidePanel();
+			saveAndReload();
 			openToast({
 				message: Liferay.Language.get(
 					'the-object-field-was-updated-successfully'

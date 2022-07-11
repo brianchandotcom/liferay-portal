@@ -16,8 +16,8 @@ import ClayTabs from '@clayui/tabs';
 import {
 	SidePanelForm,
 	SidebarCategory,
-	closeSidePanel,
 	openToast,
+	saveAndReload,
 } from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -68,7 +68,7 @@ export default function EditObjectValidation({
 		);
 
 		if (response.ok) {
-			closeSidePanel();
+			saveAndReload();
 			openToast({
 				message: Liferay.Language.get(
 					'the-object-validation-was-updated-successfully'

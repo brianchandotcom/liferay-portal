@@ -704,6 +704,11 @@
 			<property name="immutableFieldTypes" value="boolean,byte,char,double,float,int,long,short,Boolean,Byte,Character,Class,Double,Float,Int,Long,Number,Short,String" />
 			<message key="static.block.unneeded" value="No need to use static block for method call ''{0}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.StaticResourceURLCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Check called getStaticResourceURL and getContextPath, without also calling getPathProxy." />
+			<message key="add.path.proxy" value="Should add ''PortalUtil.getPathProxy()'' before ''{0}''."/>
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.StringBundlerNamingCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks for consistent naming on variables of type 'StringBundler'." />

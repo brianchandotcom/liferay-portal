@@ -1034,6 +1034,10 @@
 			<category name="Bug Prevention" />
 			<description name="Checks that messages send to `SessionsErrors` or `SessionMessages` follow naming conventions." />
 		</check>
+		<check name="JSPStaticResourceURLCheck">
+			<category name="Bug Prevention" />
+			<description name="Check called getStaticResourceURL and getContextPath, without also calling getPathProxy." />
+		</check>
 		<check name="JSPStylingCheck">
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />

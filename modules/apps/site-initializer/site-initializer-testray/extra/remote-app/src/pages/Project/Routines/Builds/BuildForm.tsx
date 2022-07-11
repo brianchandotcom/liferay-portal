@@ -19,28 +19,30 @@ import {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {useNavigate, useOutletContext, useParams} from 'react-router-dom';
 
-import Form from '../../../components/Form';
-import Container from '../../../components/Layout/Container';
-import {CreateBuild, UpdateBuild} from '../../../graphql/mutations';
+import Form from '../../../../components/Form';
+import Container from '../../../../components/Layout/Container';
+import {CreateBuild, UpdateBuild} from '../../../../graphql/mutations';
 import {
 	CTypePagination,
 	TestrayBuild,
 	TestrayCase,
 	TestrayRoutine,
 	getRoutines,
-} from '../../../graphql/queries';
+} from '../../../../graphql/queries';
 import {
 	TestrayProductVersion,
 	getProductVersions,
-} from '../../../graphql/queries/testrayProductVersion';
-import {useHeader} from '../../../hooks';
-import useFormActions from '../../../hooks/useFormActions';
-import useFormModal from '../../../hooks/useFormModal';
-import i18n from '../../../i18n';
-import yupSchema, {yupResolver} from '../../../schema/yup';
-import {searchUtil} from '../../../util/search';
-import {CaseListView} from '../Cases';
-import SuiteFormSelectModal from '../Suites/modal';
+} from '../../../../graphql/queries/testrayProductVersion';
+import {useHeader} from '../../../../hooks';
+import useFormActions from '../../../../hooks/useFormActions';
+import useFormModal from '../../../../hooks/useFormModal';
+import i18n from '../../../../i18n';
+import yupSchema, {yupResolver} from '../../../../schema/yup';
+import {searchUtil} from '../../../../util/search';
+import {CaseListView} from '../../Cases';
+import SuiteFormSelectModal from '../../Suites/modal';
+import BuildOptionModal from './BuildOptionModal';
+import BuildSelectOptionsModal from './BuildSelectOptionsModal';
 
 type RoutineBuildData = {
 	description: string;
@@ -91,6 +93,9 @@ const RoutineBuildForm = () => {
 		onSave: (newCases) =>
 			setCases((prevCases) => [...new Set([...prevCases, ...newCases])]),
 	});
+
+	const {modal: optionModal} = useFormModal();
+	const {modal: optionSelectModal} = useFormModal();
 
 	const {setTabs} = useHeader({
 		shouldUpdate: false,
@@ -251,17 +256,19 @@ const RoutineBuildForm = () => {
 				<ClayButton.Group className="mb-4">
 					<ClayButton
 						displayType="secondary"
-						onClick={() => modal.open()}
+						onClick={() => optionModal.open()}
 					>
 						{i18n.translate('add-option')}
 					</ClayButton>
 
-					<ClayButton className="ml-1" displayType="secondary">
+					<ClayButton
+						className="ml-1"
+						displayType="secondary"
+						onClick={() => optionSelectModal.open()}
+					>
 						{i18n.translate('select-stacks')}
 					</ClayButton>
 				</ClayButton.Group>
-
-				<SuiteFormSelectModal modal={modal} type="select-cases" />
 
 				<h3>{i18n.translate('cases')}</h3>
 
@@ -326,6 +333,12 @@ const RoutineBuildForm = () => {
 					/>
 				</div>
 			</ClayForm>
+
+			<SuiteFormSelectModal modal={modal} type="select-cases" />
+
+			<BuildOptionModal modal={optionModal} />
+
+			<BuildSelectOptionsModal modal={optionSelectModal} />
 		</Container>
 	);
 };

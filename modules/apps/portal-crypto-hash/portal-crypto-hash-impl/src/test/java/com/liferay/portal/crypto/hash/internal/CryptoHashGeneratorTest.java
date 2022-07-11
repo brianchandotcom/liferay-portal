@@ -19,6 +19,8 @@ import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
 import com.liferay.portal.crypto.hash.provider.bcrypt.internal.BCryptCryptoHashProviderFactory;
 import com.liferay.portal.crypto.hash.provider.message.digest.internal.MessageDigestCryptoHashProviderFactory;
+import com.liferay.portal.crypto.hash.spi.CryptoHashProviderFactory;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -27,11 +29,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Arthur Chan
@@ -46,19 +52,26 @@ public class CryptoHashGeneratorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
 		_cryptoHashVerifierImpl = new CryptoHashVerifierImpl();
+
+		_cryptoHashVerifierImpl.activate(bundleContext);
 
 		BCryptCryptoHashProviderFactory bCryptCryptoHashProviderFactory =
 			new BCryptCryptoHashProviderFactory();
 
-		_cryptoHashVerifierImpl.register(bCryptCryptoHashProviderFactory);
+		_serviceRegistration1 = bundleContext.registerService(
+			CryptoHashProviderFactory.class, bCryptCryptoHashProviderFactory,
+			null);
 
 		MessageDigestCryptoHashProviderFactory
 			messageDigestCryptoHashProviderFactory =
 				new MessageDigestCryptoHashProviderFactory();
 
-		_cryptoHashVerifierImpl.register(
-			messageDigestCryptoHashProviderFactory);
+		_serviceRegistration2 = bundleContext.registerService(
+			CryptoHashProviderFactory.class,
+			messageDigestCryptoHashProviderFactory, null);
 
 		_cryptoHashGenerators = Arrays.asList(
 			new CryptoHashGeneratorImpl(
@@ -68,6 +81,13 @@ public class CryptoHashGeneratorTest {
 				messageDigestCryptoHashProviderFactory.create(
 					Collections.singletonMap(
 						"message.digest.algorithm", "SHA-256"))));
+	}
+
+	@After
+	public void tearDown() {
+		_serviceRegistration2.unregister();
+
+		_serviceRegistration1.unregister();
 	}
 
 	@Test
@@ -113,5 +133,7 @@ public class CryptoHashGeneratorTest {
 
 	private List<CryptoHashGenerator> _cryptoHashGenerators;
 	private CryptoHashVerifierImpl _cryptoHashVerifierImpl;
+	private ServiceRegistration<?> _serviceRegistration1;
+	private ServiceRegistration<?> _serviceRegistration2;
 
 }

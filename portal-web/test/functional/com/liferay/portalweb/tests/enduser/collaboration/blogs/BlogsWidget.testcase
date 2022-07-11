@@ -152,12 +152,35 @@ definition {
 	}
 
 	@description = "This is a test for LPS-99922. It checks that XSS will not be executed when adding a blog entry with the card display template."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotExecuteXSSWithCardDisplayTemplate {
+		BlogsNavigator.gotoAddEntry();
 
-		// TODO LPS-129154 CannotExecuteXSSWithCardDisplayTemplate pending implementation
+		BlogsEntry.addTitle(entryTitle = '''<script>alert(123);</script>''');
 
+		BlogsEntry.addContent(entryContent = "Blogs Entry Content");
+
+		PortletEntry.publish();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Blogs",
+			portletOption = "Configuration");
+
+		BlogsConfiguration.selectConfigurationIFrame();
+
+		BlogsConfiguration.selectDisplayTemplate(displayTemplate = "Card");
+
+		IFrame.saveConfiguration();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		AssertAlertNotPresent();
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "<script>alert(123);</script>");
+
+		AssertAlertNotPresent();
 	}
 
 	@description = "This checks that a guest cannot view a blog entry in the AP when permissions are removed."

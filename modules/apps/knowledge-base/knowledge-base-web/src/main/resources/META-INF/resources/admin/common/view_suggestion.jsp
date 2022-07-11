@@ -91,7 +91,7 @@ int previousStatus = KBUtil.getPreviousStatus(kbComment.getStatus());
 	<aui:button-row>
 		<c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
 			<c:if test="<%= previousStatus != KBCommentConstants.STATUS_NONE %>">
-				<liferay-portlet:actionURL name="updateKBCommentStatus" varImpl="previousStatusURL">
+				<liferay-portlet:actionURL name="/knowledge_base/update_kb_comment_status" varImpl="previousStatusURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 					<portlet:param name="kbCommentStatus" value="<%= String.valueOf(previousStatus) %>" />
@@ -101,7 +101,7 @@ int previousStatus = KBUtil.getPreviousStatus(kbComment.getStatus());
 			</c:if>
 
 			<c:if test="<%= nextStatus != KBCommentConstants.STATUS_NONE %>">
-				<liferay-portlet:actionURL name="updateKBCommentStatus" varImpl="nextStatusURL">
+				<liferay-portlet:actionURL name="/knowledge_base/update_kb_comment_status" varImpl="nextStatusURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 					<portlet:param name="kbCommentStatus" value="<%= String.valueOf(nextStatus) %>" />

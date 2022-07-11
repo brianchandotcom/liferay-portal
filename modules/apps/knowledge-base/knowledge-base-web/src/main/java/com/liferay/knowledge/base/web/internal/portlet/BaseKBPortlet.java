@@ -25,7 +25,6 @@ import com.liferay.knowledge.base.exception.KBArticleTitleException;
 import com.liferay.knowledge.base.exception.KBCommentContentException;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
-import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBCommentLocalService;
 import com.liferay.knowledge.base.service.KBCommentService;
@@ -33,13 +32,9 @@ import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -53,8 +48,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -174,22 +167,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		catch (Exception exception) {
 			throw new PortletException(exception);
 		}
-	}
-
-	public void updateKBCommentStatus(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		long kbCommentId = ParamUtil.getLong(actionRequest, "kbCommentId");
-
-		int status = ParamUtil.getInteger(actionRequest, "kbCommentStatus");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			KBComment.class.getName(), actionRequest);
-
-		kbCommentService.updateStatus(kbCommentId, status, serviceContext);
-
-		SessionMessages.add(actionRequest, "suggestionStatusUpdated");
 	}
 
 	protected abstract void doRender(

@@ -13,6 +13,7 @@
  */
 
 export default {
+	'add': 'Add',
 	'add-another': 'Add Another',
 	'add-case': 'Add Case',
 	'add-cases': 'Add Cases',
@@ -166,6 +167,7 @@ export default {
 	'new-suite': 'New Suite',
 	'new-task': 'New Task',
 	'new-user-account': 'New User Account',
+	'next': 'Next',
 	'no-password-provided': 'No password provided',
 	'no-permissions': 'No Permissions',
 	'no-results-found': 'No results found',
@@ -211,7 +213,9 @@ export default {
 	'select-case-parameters': 'Select Case Parameters',
 	'select-cases': 'Select Cases',
 	'select-default-environment-factors': 'Select Default Environment Factors',
+	'select-options': 'Select Options',
 	'select-requirements': 'Select Requirements',
+	'select-stacks': 'Select Stacks',
 	'show': 'Show',
 	'showing-x-to-x-of-x': 'Showing {0} to {1} of {2}',
 	'sign-out': 'Sign Out',

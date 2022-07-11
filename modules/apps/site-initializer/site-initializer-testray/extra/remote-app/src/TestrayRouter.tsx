@@ -41,6 +41,7 @@ import RequirementsForm from './pages/Project/Requirements/RequirementsForm';
 import RequirementsOutlet from './pages/Project/Requirements/RequirementsOutlet';
 import Routines from './pages/Project/Routines';
 import Build from './pages/Project/Routines/Builds/Build';
+import BuildForm from './pages/Project/Routines/Builds/BuildForm';
 import BuildOutlet from './pages/Project/Routines/Builds/BuildOutlet';
 import CaseResult from './pages/Project/Routines/Builds/Inner/CaseResult';
 import CaseResultEditTest from './pages/Project/Routines/Builds/Inner/CaseResult/CaseResultEditTest';
@@ -52,7 +53,6 @@ import Runs from './pages/Project/Routines/Builds/Inner/Run';
 import Teams from './pages/Project/Routines/Builds/Inner/Teams';
 import Routine from './pages/Project/Routines/Routine';
 import RoutineArchived from './pages/Project/Routines/RoutineArchived';
-import RoutineBuildForm from './pages/Project/Routines/RoutineBuildForm';
 import RoutineOutlet from './pages/Project/Routines/RoutineOutlet';
 import Suites from './pages/Project/Suites';
 import Suite from './pages/Project/Suites/Suite';
@@ -142,10 +142,7 @@ const TestrayRoute = () => (
 							>
 								<Route element={<Routine />} index />
 
-								<Route
-									element={<RoutineBuildForm />}
-									path="create"
-								/>
+								<Route element={<BuildForm />} path="create" />
 
 								<Route
 									element={<RoutineArchived />}
@@ -166,7 +163,7 @@ const TestrayRoute = () => (
 									<Route element={<Build />} index />
 
 									<Route
-										element={<RoutineBuildForm />}
+										element={<BuildForm />}
 										path="update"
 									/>
 

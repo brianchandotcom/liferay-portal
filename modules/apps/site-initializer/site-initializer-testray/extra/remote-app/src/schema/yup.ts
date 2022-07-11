@@ -53,6 +53,9 @@ const yupSchema = {
 		factorCategoryId: yup.string(),
 		name: yup.string().required(),
 	}),
+	option: yup.object({
+		name: yup.string(),
+	}),
 	project: yup.object({
 		description: yup.string(),
 		name: yup.string().required(),

@@ -16,12 +16,10 @@ package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.kernel.version.VersionTreeMap;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
-
-import java.util.TreeMap;
 
 /**
  * @author Pei-Jung Lan
@@ -30,9 +28,7 @@ public class PortalUpgradeProcessRegistryImpl
 	implements PortalUpgradeProcessRegistry {
 
 	@Override
-	public void registerUpgradeProcesses(
-		TreeMap<Version, UpgradeProcess> upgradeProcesses) {
-
+	public void registerUpgradeProcesses(VersionTreeMap upgradeProcesses) {
 		upgradeProcesses.put(new Version(9, 0, 0), new UpgradeAddress());
 
 		upgradeProcesses.put(

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.info.internal.request.struts.test;
+package com.liferay.info.request.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.info.exception.InfoFormException;

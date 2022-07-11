@@ -3183,7 +3183,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "PageEditor#ITEM_CONFIGURATION_ALERT_INFO",
-				value1 = "Display a collection on the page that support at least one filter type.");
+				value1 = "Display a collection on the page that supports at least one filter type.");
 		}
 
 		task ("Add the second Grid below the first one") {

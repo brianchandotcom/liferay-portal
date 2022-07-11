@@ -521,7 +521,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Message#SUBTITLE",
-				value1 = "This item does not have a display page. Items without display page do not have links and are hidden from menus.");
+				value1 = "This item does not have a display page. Items without a display page do not have links and are hidden from menus.");
 		}
 		else if ("${warningMessage}" == "No categories inside") {
 			AssertElementPresent(

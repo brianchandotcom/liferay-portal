@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormInvalidGroupException;
+import com.liferay.info.exception.InfoFormInvalidLayoutModeException;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
@@ -313,6 +314,44 @@ public class AddInfoItemStrutsActionValidationTest {
 		}
 	}
 
+	@Test
+	public void testAddInfoItemStrutsActionPreviewLayoutMode()
+		throws Exception {
+
+		InfoField<TextInfoFieldType> infoField = _getInfoField();
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField)
+						).build(),
+						_editPageInfoItemCapability)) {
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
+				layout, false,
+				String.valueOf(
+					_portal.getClassNameId(MockObject.class.getName())),
+				"0", infoField);
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(
+					layout, formItemId, Constants.PREVIEW);
+
+			_addInfoItemStrutsAction.execute(
+				mockHttpServletRequest, new MockHttpServletResponse());
+
+			Assert.assertTrue(
+				SessionErrors.contains(mockHttpServletRequest, formItemId));
+			Assert.assertTrue(
+				SessionErrors.get(mockHttpServletRequest, formItemId) instanceof
+					InfoFormInvalidLayoutModeException);
+		}
+	}
+
 	private InfoField<TextInfoFieldType> _getInfoField() {
 		return InfoField.builder(
 		).infoFieldType(
@@ -332,6 +371,13 @@ public class AddInfoItemStrutsActionValidationTest {
 			Layout layout, String formItemId)
 		throws Exception {
 
+		return _getMockHttpServletRequest(layout, formItemId, Constants.VIEW);
+	}
+
+	private MockHttpServletRequest _getMockHttpServletRequest(
+			Layout layout, String formItemId, String layoutMode)
+		throws Exception {
+
 		MockHttpServletRequest mockHttpServletRequest =
 			ContentLayoutTestUtil.getMockHttpServletRequest(
 				_companyLocalService.getCompany(layout.getCompanyId()), _group,
@@ -349,7 +395,7 @@ public class AddInfoItemStrutsActionValidationTest {
 		mockHttpServletRequest.addParameter("formItemId", formItemId);
 		mockHttpServletRequest.addParameter(
 			"groupId", String.valueOf(layout.getGroupId()));
-		mockHttpServletRequest.addParameter("p_l_mode", Constants.VIEW);
+		mockHttpServletRequest.addParameter("p_l_mode", layoutMode);
 		mockHttpServletRequest.addParameter(
 			"plid", String.valueOf(layout.getPlid()));
 		mockHttpServletRequest.addParameter(

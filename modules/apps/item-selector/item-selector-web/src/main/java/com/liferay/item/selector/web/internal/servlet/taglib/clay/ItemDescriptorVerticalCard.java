@@ -15,8 +15,13 @@
 package com.liferay.item.selector.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.portlet.RenderRequest;
 
@@ -52,6 +57,17 @@ public class ItemDescriptorVerticalCard extends BaseVerticalCard {
 	@Override
 	public String getInputValue() {
 		return null;
+	}
+
+	@Override
+	public List<LabelItem> getLabels() {
+		if (_itemDescriptor.getStatus() == null) {
+			return Collections.emptyList();
+		}
+
+		return LabelItemListBuilder.add(
+			labelItem -> labelItem.setStatus(_itemDescriptor.getStatus())
+		).build();
 	}
 
 	@Override

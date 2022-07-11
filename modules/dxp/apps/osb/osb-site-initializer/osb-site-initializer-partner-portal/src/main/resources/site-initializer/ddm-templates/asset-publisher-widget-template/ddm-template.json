@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.asset.kernel.model.AssetEntry",
+	"ddmTemplateKey": "HOME-ANNOUNCEMENTS-ASSET-PUBLISHER-TEMPLATE",
+	"name": "Home Announcements Asset Publisher Template",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

@@ -1903,6 +1903,8 @@ definition {
 		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}") && (maxIterations = "24")) {
 			echo("Waiting 5 seconds, until the Completed SLA shows up");
 
+			// Pausing 5 seconds due to LRQA-53650
+
 			Pause(locator1 = "5000");
 
 			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
@@ -1918,6 +1920,8 @@ definition {
 	macro waitForSLA {
 		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}") && (maxIterations = "24")) {
 			echo("Waiting 5 seconds to recheck");
+
+			// Pausing 5 seconds due to LRQA-53650
 
 			Pause(locator1 = "5000");
 
@@ -1936,6 +1940,8 @@ definition {
 			var count = ${count} + 1;
 
 			echo("Waiting 5 seconds to recheck");
+
+			// Pausing 5 seconds due to LRQA-53650
 
 			Pause(locator1 = "5000");
 

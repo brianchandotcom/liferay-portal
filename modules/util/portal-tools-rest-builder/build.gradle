@@ -19,6 +19,7 @@ dependencies {
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "1.27"
 	compileInclude project(":apps:portal-vulcan:portal-vulcan-api")
 
+	compileOnly group: "com.liferay", name: "com.liferay.petra.io", version: "5.0.5"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "5.0.1"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.tools.java.parser", version: "1.0.41"

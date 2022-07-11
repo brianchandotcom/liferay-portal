@@ -424,8 +424,12 @@ public class SearchBarPortletDisplayContextFactory {
 			portletPreferencesLookup, searchBarPrecedenceHelper,
 			searchBarPortletPreferences, searchSettings, themeDisplay);
 
-		if (searchScopePreference ==
-				SearchScopePreference.LET_THE_USER_CHOOSE) {
+		if (searchScopePreference == SearchScopePreference.EVERYTHING) {
+			searchBarPortletDisplayContext.setSelectedEverythingSearchScope(
+				true);
+		}
+		else if (searchScopePreference ==
+					SearchScopePreference.LET_THE_USER_CHOOSE) {
 
 			searchBarPortletDisplayContext.setLetTheUserChooseTheSearchScope(
 				true);
@@ -438,20 +442,13 @@ public class SearchBarPortletDisplayContextFactory {
 					searchBarPortletDisplayContext.
 						setSelectedEverythingSearchScope(true);
 				}
-
-				if (searchScope == SearchScope.THIS_SITE) {
+				else {
 					searchBarPortletDisplayContext.
 						setSelectedCurrentSiteSearchScope(true);
 				}
 			}
 		}
-
-		if (searchScopePreference == SearchScopePreference.EVERYTHING) {
-			searchBarPortletDisplayContext.setSelectedEverythingSearchScope(
-				true);
-		}
-
-		if (searchScopePreference == SearchScopePreference.THIS_SITE) {
+		else {
 			searchBarPortletDisplayContext.setSelectedCurrentSiteSearchScope(
 				true);
 		}

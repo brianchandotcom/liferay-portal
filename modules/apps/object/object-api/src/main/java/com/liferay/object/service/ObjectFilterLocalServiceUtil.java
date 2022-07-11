@@ -44,6 +44,14 @@ public class ObjectFilterLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFilterLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectFilter addObjectFilter(
+			long userId, long objectFieldId, String filterBy, String filterType,
+			String json)
+		throws PortalException {
+
+		return getService().addObjectFilter(
+			userId, objectFieldId, filterBy, filterType, json);
+	}
 
 	/**
 	 * Adds the object filter to the database. Also notifies the appropriate model listeners.
@@ -108,6 +116,10 @@ public class ObjectFilterLocalServiceUtil {
 	 */
 	public static ObjectFilter deleteObjectFilter(ObjectFilter objectFilter) {
 		return getService().deleteObjectFilter(objectFilter);
+	}
+
+	public static void deleteObjectFilterByObjectFieldId(long objectFieldId) {
+		getService().deleteObjectFilterByObjectFieldId(objectFieldId);
 	}
 
 	/**
@@ -285,6 +297,12 @@ public class ObjectFilterLocalServiceUtil {
 	 */
 	public static List<ObjectFilter> getObjectFilters(int start, int end) {
 		return getService().getObjectFilters(start, end);
+	}
+
+	public static List<ObjectFilter> getObjectFiltersByObjectFieldId(
+		long objectFieldId) {
+
+		return getService().getObjectFiltersByObjectFieldId(objectFieldId);
 	}
 
 	/**

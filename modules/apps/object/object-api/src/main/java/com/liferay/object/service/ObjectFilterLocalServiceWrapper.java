@@ -37,6 +37,16 @@ public class ObjectFilterLocalServiceWrapper
 		_objectFilterLocalService = objectFilterLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectFilter addObjectFilter(
+			long userId, long objectFieldId, String filterBy, String filterType,
+			String json)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFilterLocalService.addObjectFilter(
+			userId, objectFieldId, filterBy, filterType, json);
+	}
+
 	/**
 	 * Adds the object filter to the database. Also notifies the appropriate model listeners.
 	 *
@@ -112,6 +122,12 @@ public class ObjectFilterLocalServiceWrapper
 		com.liferay.object.model.ObjectFilter objectFilter) {
 
 		return _objectFilterLocalService.deleteObjectFilter(objectFilter);
+	}
+
+	@Override
+	public void deleteObjectFilterByObjectFieldId(long objectFieldId) {
+		_objectFilterLocalService.deleteObjectFilterByObjectFieldId(
+			objectFieldId);
 	}
 
 	/**
@@ -321,6 +337,14 @@ public class ObjectFilterLocalServiceWrapper
 		getObjectFilters(int start, int end) {
 
 		return _objectFilterLocalService.getObjectFilters(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectFilter>
+		getObjectFiltersByObjectFieldId(long objectFieldId) {
+
+		return _objectFilterLocalService.getObjectFiltersByObjectFieldId(
+			objectFieldId);
 	}
 
 	/**

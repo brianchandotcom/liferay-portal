@@ -124,6 +124,13 @@ public class ObjectFieldSettingLocalServiceUtil {
 		return getService().deleteObjectFieldSetting(objectFieldSetting);
 	}
 
+	public static void deleteObjectFieldSettingByObjectFieldId(
+			long objectFieldId)
+		throws PortalException {
+
+		getService().deleteObjectFieldSettingByObjectFieldId(objectFieldId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -313,10 +320,11 @@ public class ObjectFieldSettingLocalServiceUtil {
 		return getService().getObjectFieldSettings(start, end);
 	}
 
-	public static List<ObjectFieldSetting> getObjectFieldSettings(
-		long objectFieldId) {
+	public static List<ObjectFieldSetting>
+		getObjectFieldSettingsByObjectFieldId(long objectFieldId) {
 
-		return getService().getObjectFieldSettings(objectFieldId);
+		return getService().getObjectFieldSettingsByObjectFieldId(
+			objectFieldId);
 	}
 
 	/**

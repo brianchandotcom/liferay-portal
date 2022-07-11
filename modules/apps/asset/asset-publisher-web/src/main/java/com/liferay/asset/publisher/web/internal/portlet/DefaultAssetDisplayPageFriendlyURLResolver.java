@@ -414,10 +414,6 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			long groupId, String friendlyURL, Map<String, String[]> params)
 		throws PortalException {
 
-		String normalizedUrlTitle =
-			_friendlyURLNormalizer.normalizeWithEncoding(
-				_getFullURLTitle(friendlyURL));
-
 		JournalArticle journalArticle = null;
 
 		String[] versionIds = params.get("version");
@@ -427,6 +423,10 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 			journalArticle = _journalArticleLocalService.fetchArticle(id);
 		}
+
+		String normalizedUrlTitle =
+			_friendlyURLNormalizer.normalizeWithEncoding(
+				_getFullURLTitle(friendlyURL));
 
 		if (journalArticle == null) {
 			journalArticle =

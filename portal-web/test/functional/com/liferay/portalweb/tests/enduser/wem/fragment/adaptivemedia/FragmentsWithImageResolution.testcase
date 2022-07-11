@@ -1075,7 +1075,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "Document_2-jpg");
+				imageFileName = "document_2-jpg");
 
 			WaitForElementPresent(
 				key_resolutionLabel = "File Size",

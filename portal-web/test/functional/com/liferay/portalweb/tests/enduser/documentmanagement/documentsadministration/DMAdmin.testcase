@@ -307,12 +307,24 @@ definition {
 	}
 
 	@description = "This test covers LPS-103231. It validates that the owner name from a document cannot execute XSS from the info panel."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test XSSCannotBeExecutedFromTheOwnerNameInTheInfoPanel {
+		Navigator.gotoAccountSettings();
 
-		// TODO LPS-129153
+		User.editUserInformation(userMiddleNameEdit = '''<svg/onload=alert(1)>''');
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconCard.checkCardCheckbox(card = "DM Document Title");
+
+		AssertAlertNotPresent();
 	}
 
 }

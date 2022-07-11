@@ -37,21 +37,21 @@ describe('SLA Card', () => {
 	it('displays Limited Support Level type', () => {
 		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
 
-		const linkElementNameslaCurrent = screen.getByText('Limited');
+		const linkElementNameslaCurrent = screen.getByText(/limited/i);
 		expect(linkElementNameslaCurrent).toBeInTheDocument();
 	});
 
 	it('displays Gold Support Level type', () => {
 		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
 
-		const linkElementNameslaExpired = screen.getByText('Gold');
+		const linkElementNameslaExpired = screen.getByText(/gold/i);
 		expect(linkElementNameslaExpired).toBeInTheDocument();
 	});
 
 	it('displays Platinum Support Level type', () => {
 		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
 
-		const linkElementNameslaFuture = screen.getByText('Platinum');
+		const linkElementNameslaFuture = screen.getByText(/platinum/i);
 		expect(linkElementNameslaFuture).toBeInTheDocument();
 	});
 
@@ -66,7 +66,7 @@ describe('SLA Card', () => {
 		};
 		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
 
-		const linkElementNameslaFuture = screen.getByText('Premium');
+		const linkElementNameslaFuture = screen.getByText(/premium/i);
 		expect(linkElementNameslaFuture).toBeInTheDocument();
 	});
 

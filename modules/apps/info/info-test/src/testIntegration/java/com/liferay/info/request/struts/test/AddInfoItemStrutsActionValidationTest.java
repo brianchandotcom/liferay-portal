@@ -15,7 +15,9 @@
 package com.liferay.info.request.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.info.exception.InfoFormException;
+import com.liferay.info.exception.InfoFormInvalidGroupException;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
@@ -31,6 +33,8 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -39,6 +43,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -152,6 +158,54 @@ public class AddInfoItemStrutsActionValidationTest {
 
 			Assert.assertFalse(
 				SessionMessages.contains(mockHttpServletRequest, formItemId));
+		}
+	}
+
+	@Test
+	public void testAddInfoItemStrutsActionFromStagingGroup() throws Exception {
+		InfoField<TextInfoFieldType> infoField = _getInfoField();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField)
+						).build(),
+						_editPageInfoItemCapability)) {
+
+			_stagingLocalService.enableLocalStaging(
+				TestPropsValues.getUserId(), _group, false, false,
+				serviceContext);
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(
+				_group.getStagingGroup());
+
+			String formItemId = ContentLayoutTestUtil.addFormToPublishedLayout(
+				layout, false,
+				String.valueOf(
+					_portal.getClassNameId(MockObject.class.getName())),
+				"0", infoField);
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(layout, formItemId);
+
+			_addInfoItemStrutsAction.execute(
+				mockHttpServletRequest, new MockHttpServletResponse());
+
+			Assert.assertTrue(
+				SessionErrors.contains(mockHttpServletRequest, formItemId));
+			Assert.assertTrue(
+				SessionErrors.get(mockHttpServletRequest, formItemId) instanceof
+					InfoFormInvalidGroupException);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
 		}
 	}
 
@@ -327,5 +381,8 @@ public class AddInfoItemStrutsActionValidationTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
 
 }

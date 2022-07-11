@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal.writer;
 
+import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -161,6 +162,10 @@ public class ColumnValuesExtractor {
 						return StringPool.BLANK;
 					}
 
+					if (ItemClassIndexUtil.isListEntry(value)) {
+						return _getListEntryKey(value);
+					}
+
 					if (value instanceof String) {
 						return CSVUtil.encode(value);
 					}
@@ -199,6 +204,12 @@ public class ColumnValuesExtractor {
 
 				return value;
 			});
+	}
+
+	private String _getListEntryKey(Object object) {
+		ListEntry listEntry = (ListEntry)object;
+
+		return listEntry.getKey();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

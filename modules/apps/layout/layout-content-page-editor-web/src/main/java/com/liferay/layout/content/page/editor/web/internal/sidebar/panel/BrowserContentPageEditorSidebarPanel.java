@@ -42,7 +42,7 @@ public class BrowserContentPageEditorSidebarPanel
 
 	@Override
 	public String getIcon() {
-		return "cursor";
+		return "hierarchy";
 	}
 
 	@Override

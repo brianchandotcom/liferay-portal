@@ -1699,10 +1699,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				json = StringUtil.replace(
 					json,
-					new String[] {"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]"},
+					new String[] {
+						"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
+						"[$SITE_ENTRY_NAME$]"
+					},
 					new String[] {
 						scopeGroup.getFriendlyURL(),
-						String.valueOf(serviceContext.getScopeGroupId())
+						String.valueOf(serviceContext.getScopeGroupId()),
+						scopeGroup.getGroupKey()
 					});
 
 				String css = StringUtil.replace(

@@ -14,6 +14,9 @@
 
 package com.liferay.portal.crypto.hash.internal;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
 import com.liferay.portal.crypto.hash.CryptoHashVerifier;
 import com.liferay.portal.crypto.hash.exception.CryptoHashException;
@@ -24,22 +27,16 @@ import com.liferay.portal.crypto.hash.spi.CryptoHashProviderResponse;
 import java.security.MessageDigest;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Carlos Sierra Andrés
  */
+@Component(service = CryptoHashVerifier.class)
 public class CryptoHashVerifierImpl implements CryptoHashVerifier {
-
-	public void register(CryptoHashProviderFactory cryptoHashProviderFactory) {
-		_cryptoHashProviderFactories.put(
-			cryptoHashProviderFactory.getCryptoHashProviderFactoryName(),
-			cryptoHashProviderFactory);
-	}
-
-	public void unregister(String cryptoHashProviderName) {
-		_cryptoHashProviderFactories.remove(cryptoHashProviderName);
-	}
 
 	@Override
 	public boolean verify(
@@ -66,13 +63,22 @@ public class CryptoHashVerifierImpl implements CryptoHashVerifier {
 		return MessageDigest.isEqual(input, hash);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, CryptoHashProviderFactory.class, null,
+			ServiceReferenceMapperFactory.createFromFunction(
+				bundleContext,
+				CryptoHashProviderFactory::getCryptoHashProviderFactoryName));
+	}
+
 	private CryptoHashProvider _getCryptoHashProvider(
 			String cryptoHashProviderFactoryName,
 			Map<String, ?> cryptoHashProviderProperties)
 		throws CryptoHashException {
 
 		CryptoHashProviderFactory cryptoHashProviderFactory =
-			_cryptoHashProviderFactories.get(cryptoHashProviderFactoryName);
+			_serviceTrackerMap.getService(cryptoHashProviderFactoryName);
 
 		if (cryptoHashProviderFactory == null) {
 			throw new CryptoHashException(
@@ -83,7 +89,7 @@ public class CryptoHashVerifierImpl implements CryptoHashVerifier {
 		return cryptoHashProviderFactory.create(cryptoHashProviderProperties);
 	}
 
-	private final Map<String, CryptoHashProviderFactory>
-		_cryptoHashProviderFactories = new ConcurrentHashMap<>();
+	private ServiceTrackerMap<String, CryptoHashProviderFactory>
+		_serviceTrackerMap;
 
 }

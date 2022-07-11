@@ -16,11 +16,9 @@ package com.liferay.portal.crypto.hash.internal;
 
 import com.liferay.osgi.service.tracker.collections.ServiceReferenceServiceTuple;
 import com.liferay.portal.crypto.hash.CryptoHashGenerator;
-import com.liferay.portal.crypto.hash.CryptoHashVerifier;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
@@ -32,7 +30,6 @@ import org.apache.aries.component.dsl.Utils;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -45,9 +42,6 @@ public class CryptoHashTrackerRegistrator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		CryptoHashVerifierImpl cryptoHashVerifierImpl =
-			new CryptoHashVerifierImpl();
-
 		OSGi<?> osgi = OSGi.serviceReferences(
 			CryptoHashProviderFactory.class
 		).map(
@@ -67,21 +61,6 @@ public class CryptoHashTrackerRegistrator {
 			},
 			(key, serviceReferenceTupleOsgi) -> Utils.highest(
 				serviceReferenceTupleOsgi)
-		).effects(
-			serviceReferenceServiceTuple -> {
-				CryptoHashProviderFactory cryptoHashProviderFactory =
-					serviceReferenceServiceTuple.getService();
-
-				cryptoHashVerifierImpl.register(cryptoHashProviderFactory);
-			},
-			serviceReferenceServiceTuple -> {
-				CryptoHashProviderFactory cryptoHashProviderFactory =
-					serviceReferenceServiceTuple.getService();
-
-				cryptoHashVerifierImpl.unregister(
-					cryptoHashProviderFactory.
-						getCryptoHashProviderFactoryName());
-			}
 		).filter(
 			serviceReferenceServiceTuple -> {
 				ServiceReference<CryptoHashProviderFactory> serviceReference =
@@ -133,21 +112,13 @@ public class CryptoHashTrackerRegistrator {
 		);
 
 		_osgiResult = osgi.run(bundleContext);
-
-		_cryptoHashVerifierServiceRegistration = bundleContext.registerService(
-			CryptoHashVerifier.class, cryptoHashVerifierImpl,
-			new HashMapDictionary<>());
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_cryptoHashVerifierServiceRegistration.unregister();
-
 		_osgiResult.close();
 	}
 
-	private ServiceRegistration<CryptoHashVerifier>
-		_cryptoHashVerifierServiceRegistration;
 	private OSGiResult _osgiResult;
 
 }

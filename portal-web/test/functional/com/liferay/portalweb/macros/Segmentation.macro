@@ -97,9 +97,13 @@ definition {
 	}
 
 	macro checkSegmentationDisabledWarning {
+		if (!(isSet(textValue))) {
+			var textValue = "Segmentation is disabled";
+		}
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_3",
-			value1 = "Segmentation is disabled");
+			value1 = "${textValue}");
 	}
 
 	macro checkSegmentationReEnableWarning {
@@ -202,6 +206,29 @@ definition {
 			configurationCategory = "Segments",
 			configurationName = "Segments Service",
 			configurationScope = "Virtual Instance Scope");
+
+		FormFields.disableCheckbox(fieldName = "Enable Segmentation");
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro disableSegmentationAtSystemSettings {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Segments",
+			configurationName = "Segments Service",
+			configurationScope = "System Scope");
 
 		FormFields.disableCheckbox(fieldName = "Enable Segmentation");
 
@@ -349,6 +376,17 @@ definition {
 		return "${languageId}";
 	}
 
+	macro gotoRoleAssigneeSegments {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role._goToRoleAssigneeType(
+			assigneeType = "Segments",
+			roleTitle = "${roleName}");
+	}
+
 	macro gotoSidebar {
 		Click(
 			key_typeName = "${fieldType}",
@@ -387,6 +425,24 @@ definition {
 			configurationCategory = "Segments",
 			configurationName = "Segments Service",
 			configurationScope = "Virtual Instance Scope");
+
+		Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Reset Default Values");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro resetSegmentationAtSystemSettings {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Segments",
+			configurationName = "Segments Service",
+			configurationScope = "System Scope");
 
 		Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
 

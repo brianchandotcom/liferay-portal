@@ -1,0 +1,104 @@
+.management-bar-wrapper {
+	border-bottom: 1px solid $border-color;
+
+	& > .management-bar + .management-bar {
+		border-top: 1px solid #eee;
+	}
+
+	.btn.btn-filter-navigation {
+		height: 14px;
+		line-height: 1;
+		margin-right: 12px;
+		padding: 0;
+		position: relative;
+		top: -1px;
+		width: 14px;
+	}
+
+	.custom-views-dropdown {
+		border-left: 1px solid $border-color;
+		padding-left: 0.5rem;
+	}
+
+	.data-set-filter .simple-toggle-switch {
+		$toggle-height: 24px;
+		$toggle-width: 40px;
+		$toggle-padding: 3px;
+
+		.toggle-switch-bar {
+			height: $toggle-height;
+			line-height: $toggle-height;
+		}
+
+		.toggle-switch-handle {
+			min-width: $toggle-width;
+		}
+
+		.toggle-switch-check {
+			height: $toggle-height;
+			width: $toggle-width;
+
+			&:empty ~ .toggle-switch-bar {
+				&::after {
+					bottom: $toggle-padding;
+					height: $toggle-height - ($toggle-padding * 2);
+					left: $toggle-padding;
+					top: $toggle-padding;
+					width: $toggle-height - ($toggle-padding * 2);
+				}
+
+				&::before {
+					width: $toggle-width;
+				}
+
+				.toggle-switch-handle:after {
+					margin-left: $toggle-width;
+				}
+			}
+
+			&:checked ~ .toggle-switch-bar::after {
+				left: $toggle-height - ($toggle-padding * 2);
+			}
+		}
+	}
+
+	.dropdown-toggle {
+		padding: map-get($spacers, 2);
+	}
+
+	.filter-body {
+		.inline-scroller {
+			max-height: 200px;
+		}
+
+		.form-control {
+			padding-left: map-get($spacers, 2);
+			padding-right: map-get($spacers, 2);
+		}
+
+		.custom-control-label {
+			display: flex;
+
+			&::before {
+				flex-shrink: 0;
+			}
+		}
+	}
+
+	.filter-resume {
+		cursor: pointer;
+
+		&.active {
+			border-color: $primary-color;
+		}
+
+		&.disabled {
+			cursor: not-allowed;
+			opacity: 0.5;
+		}
+
+		.filter-resume-content {
+			display: flex;
+		}
+	}
+}

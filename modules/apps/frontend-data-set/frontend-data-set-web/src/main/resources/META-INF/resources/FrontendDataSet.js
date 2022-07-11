@@ -418,7 +418,7 @@ const FrontendDataSet = ({
 	}, [id]);
 
 	const managementBar = showManagementBar ? (
-		<div className="data-set-management-bar-wrapper">
+		<div className="management-bar-wrapper">
 			<ManagementBar
 				bulkActions={bulkActions}
 				creationMenu={creationMenu}

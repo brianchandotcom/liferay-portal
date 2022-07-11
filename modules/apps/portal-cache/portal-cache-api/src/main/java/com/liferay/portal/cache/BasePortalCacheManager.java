@@ -134,14 +134,6 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		return _transactionalPortalCacheNames;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public boolean isBlockingPortalCacheAllowed() {
-		return false;
-	}
-
 	@Override
 	public boolean isClusterAware() {
 		return _clusterAware;
@@ -166,23 +158,8 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 		doRemovePortalCache(portalCacheName);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setBlockingPortalCacheAllowed(
-		boolean blockingPortalCacheAllowed) {
-	}
-
 	public void setClusterAware(boolean clusterAware) {
 		_clusterAware = clusterAware;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setMpiOnly(boolean mpiOnly) {
 	}
 
 	public void setPortalCacheManagerName(String portalCacheManagerName) {

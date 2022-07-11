@@ -3465,6 +3465,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private AssetListEntry _existingAssetListEntry(
+		List<AssetListEntry> assetListEntries, String assetListEntryKey1) {
+
+		for (AssetListEntry assetListEntry : assetListEntries) {
+			String assetListEntryKey2 = assetListEntry.getAssetListEntryKey();
+
+			if (assetListEntryKey1.equals(assetListEntryKey2)) {
+				return assetListEntry;
+			}
+		}
+
+		return null;
+	}
+
 	private long[] _getAssetCategoryIds(
 		long groupId, String[] externalReferenceCodes) {
 
@@ -3707,20 +3721,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			documentsStringUtilReplaceValues, false, serviceContext);
 		_updateLayoutSet(
 			documentsStringUtilReplaceValues, true, serviceContext);
-	}
-
-	private AssetListEntry _existingAssetListEntry(
-		List<AssetListEntry> assetListEntries, String assetListEntryKey1) {
-
-		for (AssetListEntry assetListEntry : assetListEntries) {
-			String assetListEntryKey2 = assetListEntry.getAssetListEntryKey();
-
-			if (assetListEntryKey1.equals(assetListEntryKey2)) {
-				return assetListEntry;
-			}
-		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

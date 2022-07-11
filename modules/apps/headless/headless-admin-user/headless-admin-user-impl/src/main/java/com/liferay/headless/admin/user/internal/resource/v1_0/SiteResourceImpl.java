@@ -107,6 +107,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				membershipType = group.getTypeLabel();
 				name = group.getName(
 					contextAcceptLanguage.getPreferredLocale());
+				name_descriptive = group.getDescriptiveName(
+					contextAcceptLanguage.getPreferredLocale());
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					group.getNameMap());

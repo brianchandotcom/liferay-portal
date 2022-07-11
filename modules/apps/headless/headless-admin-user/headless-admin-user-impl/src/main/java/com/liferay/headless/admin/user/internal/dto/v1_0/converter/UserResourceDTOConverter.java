@@ -318,12 +318,15 @@ public class UserResourceDTOConverter
 	}
 
 	private SiteBrief _toSiteBrief(
-		DTOConverterContext dtoConverterContext, Group group) {
+			DTOConverterContext dtoConverterContext, Group group)
+		throws PortalException {
 
 		return new SiteBrief() {
 			{
 				id = group.getGroupId();
 				name = group.getName(dtoConverterContext.getLocale());
+				name_descriptive = group.getDescriptiveName(
+					dtoConverterContext.getLocale());
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					dtoConverterContext.isAcceptAllLanguages(),
 					group.getNameMap());

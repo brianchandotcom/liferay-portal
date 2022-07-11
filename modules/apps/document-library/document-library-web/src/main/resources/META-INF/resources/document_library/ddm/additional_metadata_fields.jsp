@@ -17,7 +17,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-DLFileEntryAdditionalMetadataSetsDisplayContext dlFileEntryAdditionalMetadataSetsDisplayContext = new DLFileEntryAdditionalMetadataSetsDisplayContext(request);
+DLFileEntryAdditionalMetadataSetsDisplayContext dlFileEntryAdditionalMetadataSetsDisplayContext = new DLFileEntryAdditionalMetadataSetsDisplayContext(request, renderResponse);
 %>
 
 <liferay-util:buffer
@@ -75,24 +75,23 @@ DLFileEntryAdditionalMetadataSetsDisplayContext dlFileEntryAdditionalMetadataSet
 		Liferay.Util.openSelectionModal({
 			id: '<portlet:namespace />selectDDMStructure',
 			onSelect: function (selectedItem) {
+				const itemValue = JSON.parse(selectedItem.value);
+
 				var searchContainer = Liferay.SearchContainer.get(
 					'<portlet:namespace />ddmStructuresSearchContainer'
 				);
 
 				var data = searchContainer.getData(false);
 
-				if (!data.includes(selectedItem.ddmstructureid)) {
+				if (!data.includes(itemValue.ddmstructureid)) {
 					var ddmStructureLink =
 						'<a class="modify-link" data-rowId="' +
-						selectedItem.ddmstructureid +
+						itemValue.ddmstructureid +
 						'" href="javascript:void(0);" title="<%= LanguageUtil.get(request, "remove") %>"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
 
 					searchContainer.addRow(
-						[
-							Liferay.Util.escapeHTML(selectedItem.name),
-							ddmStructureLink,
-						],
-						selectedItem.ddmstructureid
+						[Liferay.Util.escapeHTML(itemValue.name), ddmStructureLink],
+						itemValue.ddmstructureid
 					);
 
 					searchContainer.updateDataStore();
@@ -101,7 +100,7 @@ DLFileEntryAdditionalMetadataSetsDisplayContext dlFileEntryAdditionalMetadataSet
 			selectEventName: '<portlet:namespace />selectDDMStructure',
 			title: '<%= UnicodeLanguageUtil.get(request, "select-metadata-set") %>',
 			url:
-				'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(dlFileEntryAdditionalMetadataSetsDisplayContext.getDDMStructureId()) %>" /></portlet:renderURL>',
+				'<%= dlFileEntryAdditionalMetadataSetsDisplayContext.getSelectDDMStructureURL() %>',
 		});
 	}
 </aui:script>

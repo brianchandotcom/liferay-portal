@@ -7769,11 +7769,16 @@ public class JournalArticleLocalServiceImpl
 				cacheable = _journalDefaultTemplateProvider.isCacheable();
 			}
 
+			Map<String, String> friendlyURLMap = _getFriendlyURLMap(
+				article, themeDisplay);
+
 			content = JournalUtil.transform(
 				themeDisplay, tokens, viewMode, languageId, document,
 				portletRequestModel, script, propagateException,
 				HashMapBuilder.<String, Object>put(
-					"friendlyURLs", _getFriendlyURLMap(article, themeDisplay)
+					"friendlyURL", _getFriendlyURL(friendlyURLMap, themeDisplay)
+				).put(
+					"friendlyURLs", friendlyURLMap
 				).build());
 
 			if (!pageFlow) {
@@ -8897,6 +8902,26 @@ public class JournalArticleLocalServiceImpl
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getFriendlyURL(
+			Map<String, String> friendlyURLMap, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		String friendlyURL = friendlyURLMap.get(themeDisplay.getLanguageId());
+
+		if (Validator.isNotNull(friendlyURL)) {
+			return friendlyURL;
+		}
+
+		friendlyURL = friendlyURLMap.get(
+			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
+
+		if (Validator.isNotNull(friendlyURL)) {
+			return friendlyURL;
 		}
 
 		return StringPool.BLANK;

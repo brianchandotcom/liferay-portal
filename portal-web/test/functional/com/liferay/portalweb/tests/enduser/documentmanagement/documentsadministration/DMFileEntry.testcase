@@ -2466,6 +2466,8 @@ definition {
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "Document_1.txt");
 
+		WaitForPageLoad();
+
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
 			increaseMinutes = "1");

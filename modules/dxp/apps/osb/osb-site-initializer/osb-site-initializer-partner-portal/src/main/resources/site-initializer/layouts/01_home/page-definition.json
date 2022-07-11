@@ -506,7 +506,19 @@
 																								"fragmentLink": {},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Featured"
+																										"en_US": "Featured",
+																										"ar_SA": "Featured",
+																										"ca_ES": "Featured",
+																										"de_DE": "Featured",
+																										"es_ES": "Featured",
+																										"fi_FI": "Featured",
+																										"fr_FR": "Featured",
+																										"hu_HU": "Featured",
+																										"ja_JP": "Featured",
+																										"nl_NL": "Featured",
+																										"pt_BR": "Featured",
+																										"sv_SE": "Featured",
+																										"zh_CN": "Featured"
 																									}
 																								}
 																							}
@@ -1034,7 +1046,19 @@
 																														"fragmentLink": {},
 																														"text": {
 																															"value_i18n": {
-																																"en_US": "Deal Registration"
+																																"en_US": "Deal Registration",
+																																"ar_SA": "Deal Registration",
+																																"ca_ES": "Deal Registration",
+																																"de_DE": "Deal Registration",
+																																"es_ES": "Deal Registration",
+																																"fi_FI": "Deal Registration",
+																																"fr_FR": "Deal Registration",
+																																"hu_HU": "Deal Registration",
+																																"ja_JP": "Deal Registration",
+																																"nl_NL": "Deal Registration",
+																																"pt_BR": "Deal Registration",
+																																"sv_SE": "Deal Registration",
+																																"zh_CN": "Deal Registration"
 																															}
 																														}
 																													}
@@ -1193,7 +1217,19 @@
 																														"fragmentLink": {},
 																														"text": {
 																															"value_i18n": {
-																																"en_US": "Demo Access"
+																																"en_US": "Demo Access",
+																																"ar_SA": "Demo Access",
+																																"ca_ES": "Demo Access",
+																																"de_DE": "Demo Access",
+																																"es_ES": "Demo Access",
+																																"fi_FI": "Demo Access",
+																																"fr_FR": "Demo Access",
+																																"hu_HU": "Demo Access",
+																																"ja_JP": "Demo Access",
+																																"nl_NL": "Demo Access",
+																																"pt_BR": "Demo Access",
+																																"sv_SE": "Demo Access",
+																																"zh_CN": "Demo Access"
 																															}
 																														}
 																													}
@@ -1357,7 +1393,19 @@
 																														"fragmentLink": {},
 																														"text": {
 																															"value_i18n": {
-																																"en_US": "MDF"
+																																"en_US": "MDF",
+																																"ar_SA": "MDF",
+																																"ca_ES": "MDF",
+																																"de_DE": "MDF",
+																																"es_ES": "MDF",
+																																"fi_FI": "MDF",
+																																"fr_FR": "MDF",
+																																"hu_HU": "MDF",
+																																"ja_JP": "MDF",
+																																"nl_NL": "MDF",
+																																"pt_BR": "MDF",
+																																"sv_SE": "MDF",
+																																"zh_CN": "MDF"
 																															}
 																														}
 																													}
@@ -1629,7 +1677,19 @@
 																														"fragmentLink": {},
 																														"text": {
 																															"value_i18n": {
-																																"en_US": "QSP Tracker"
+																																"en_US": "QSP Tracker",
+																																"ar_SA": "QSP Tracker",
+																																"ca_ES": "QSP Tracker",
+																																"de_DE": "QSP Tracker",
+																																"es_ES": "QSP Tracker",
+																																"fi_FI": "QSP Tracker",
+																																"fr_FR": "QSP Tracker",
+																																"hu_HU": "QSP Tracker",
+																																"ja_JP": "QSP Tracker",
+																																"nl_NL": "QSP Tracker",
+																																"pt_BR": "QSP Tracker",
+																																"sv_SE": "QSP Tracker",
+																																"zh_CN": "QSP Tracker"
 																															}
 																														}
 																													}
@@ -1787,7 +1847,19 @@
 																														"fragmentLink": {},
 																														"text": {
 																															"value_i18n": {
-																																"en_US": "Price Books"
+																																"en_US": "Price Books",
+																																"ar_SA": "Price Books",
+																																"ca_ES": "Price Books",
+																																"de_DE": "Price Books",
+																																"es_ES": "Price Books",
+																																"fi_FI": "Price Books",
+																																"fr_FR": "Price Books",
+																																"hu_HU": "Price Books",
+																																"ja_JP": "Price Books",
+																																"nl_NL": "Price Books",
+																																"pt_BR": "Price Books",
+																																"sv_SE": "Price Books",
+																																"zh_CN": "Price Books"
 																															}
 																														}
 																													}

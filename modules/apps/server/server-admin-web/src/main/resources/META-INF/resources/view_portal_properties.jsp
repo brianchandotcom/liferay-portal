@@ -103,7 +103,8 @@ ViewPortalPropertiesDisplayContext viewPortalPropertiesDisplayContext = new View
 						name="source"
 					>
 						<liferay-ui:icon
-							iconCssClass='<%= overriddenPropertyValue ? "icon-hdd" : "icon-file-alt" %>'
+							icon='<%= overriddenPropertyValue ? "hdd" : "document" %>'
+							markupView="lexicon"
 							message='<%= LanguageUtil.get(request, overriddenPropertyValue ? "the-value-of-this-property-was-overridden-using-the-control-panel-and-is-stored-in-the-database" : "the-value-of-this-property-is-read-from-a-portal.properties-file-or-one-of-its-extension-files") %>'
 						/>
 					</liferay-ui:search-container-column-text>

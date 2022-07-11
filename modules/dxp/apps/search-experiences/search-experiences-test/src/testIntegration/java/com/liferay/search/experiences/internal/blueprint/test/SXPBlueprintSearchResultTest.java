@@ -1904,6 +1904,16 @@ public class SXPBlueprintSearchResultTest {
 			null, null, _serviceContext);
 	}
 
+	private Group _addGroup() throws Exception {
+		Group group = GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			RandomTestUtil.randomString(), _serviceContext);
+
+		_groups.add(group);
+
+		return group;
+	}
+
 	private void _addGroupAAndGroupB() throws Exception {
 		_groupA = GroupTestUtil.addGroup(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID,
@@ -2295,6 +2305,9 @@ public class SXPBlueprintSearchResultTest {
 
 	@DeleteAfterTestRun
 	private Group _groupB;
+
+	@DeleteAfterTestRun
+	private List<Group> _groups = new ArrayList<>();
 
 	private JournalArticleBuilder _journalArticleBuilder;
 	private final List<JournalArticle> _journalArticles = new ArrayList<>();

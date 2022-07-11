@@ -141,11 +141,6 @@
 <!--FORM COMPONENTS-->
 
 <tr>
-	<td>FORM_CONTAINER_SUCCESS_MESSAGE</td>
-	<td>//div[@aria-label='Form Container']//span[contains(@class,'text-secondary')] | //div[contains(@id,'main-content')]//div[contains(@class,'text-secondary')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>INPUT_CAPTCHA_BODY</td>
 	<td>xpath=(//div[contains(@id,'fragment-')]//fieldset[contains(@class,'form-input-captcha')])[${index}]</td>
 	<td></td>

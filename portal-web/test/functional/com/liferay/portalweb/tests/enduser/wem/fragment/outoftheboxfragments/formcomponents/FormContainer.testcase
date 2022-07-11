@@ -298,9 +298,7 @@ definition {
 		}
 
 		task ("Then the page designer can see sucess text under Form Container") {
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "Thank you. Your information was successfully received.");
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 		}
 
 		task ("When the page designer publishes the content page with mapped Form Container") {
@@ -332,9 +330,7 @@ definition {
 
 			Button.clickSubmitButton();
 
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "Thank you. Your information was successfully received.");
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 		}
 
 		task ("When the page designer preview success state on page editor after add custom success text") {
@@ -349,9 +345,7 @@ definition {
 		}
 
 		task ("Then the page designer can see custom sucess text under Form Container") {
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "We are glad to receive your Form!");
+			AssertTextPresent(value1 = "We are glad to receive your Form!");
 		}
 
 		task ("When the page designer navigates to published content page at view mode") {
@@ -370,9 +364,7 @@ definition {
 
 			Button.clickSubmitButton();
 
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "We are glad to receive your Form!");
+			AssertTextPresent(value1 = "We are glad to receive your Form!");
 		}
 	}
 
@@ -472,9 +464,7 @@ definition {
 
 			Button.clickSubmitButton();
 
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "Thank you. Your information was successfully received.");
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 		}
 
 		task ("When the page designer selects a page from another site as success message on page editor") {
@@ -586,9 +576,7 @@ definition {
 				panel = "General",
 				previewSuccessState = "true");
 
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "Obrigado por nos enviar seu formulario!");
+			AssertTextPresent(value1 = "Obrigado por nos enviar seu formulario!");
 		}
 
 		task ("When the page designer changes user language to Spanish") {
@@ -598,9 +586,7 @@ definition {
 		}
 
 		task ("Then the page designer can see Spanish translation on preview success state") {
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "Estamos muy agradecidos de recibir su formulario.");
+			AssertTextPresent(value1 = "Estamos muy agradecidos de recibir su formulario.");
 		}
 
 		task ("When the page designer changes user language to non translated") {
@@ -610,9 +596,7 @@ definition {
 		}
 
 		task ("Then the page designer should see default translation in English") {
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "Thank you. Your information was successfully received.");
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 
 			PageEditor.publish();
 		}
@@ -635,9 +619,7 @@ definition {
 
 			Button.clickSubmitButton();
 
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "Estamos muy agradecidos de recibir su formulario.");
+			AssertTextPresent(value1 = "Estamos muy agradecidos de recibir su formulario.");
 		}
 
 		task ("When the page designer changes the user language to Portuguese via URL") {
@@ -652,9 +634,7 @@ definition {
 
 			Button.clickSubmitButton();
 
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "Obrigado por nos enviar seu formulario!");
+			AssertTextPresent(value1 = "Obrigado por nos enviar seu formulario!");
 		}
 
 		task ("When the page designer changes the user language to non custom translated via URL") {
@@ -669,9 +649,7 @@ definition {
 
 			Button.clickSubmitButton();
 
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "Merci. Vos informations ont bien été reçues.");
+			AssertTextPresent(value1 = "Merci. Vos informations ont bien été reçues.");
 		}
 	}
 

@@ -127,9 +127,7 @@ definition {
 		}
 
 		task ("Then the page designer can see sucess text under Form Container") {
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "Thank you. Your information was successfully received.");
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 		}
 
 		task ("When the page designer publishes the content page with mapped Form Container") {
@@ -191,9 +189,7 @@ definition {
 		}
 
 		task ("Then the page designer can see embeeded success message") {
-			AssertTextEquals(
-				locator1 = "Fragment#FORM_CONTAINER_SUCCESS_MESSAGE",
-				value1 = "Thank you. Your information was successfully received.");
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 		}
 	}
 

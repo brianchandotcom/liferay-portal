@@ -9,10 +9,4 @@
  * distribution rights of the Software.
  */
 
-import SupportOverview from './SupportOverview/SupportOverview';
-
-const OverviewSkeleton = () => {
-	return <SupportOverview.Skeleton />;
-};
-
-export default OverviewSkeleton;
+export {default} from './SupportOverview';

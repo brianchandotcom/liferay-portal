@@ -18,12 +18,12 @@ import {getAccountSubscriptions} from '../../../../../common/services/liferay/gr
 import CardSubscription from '../../../components/CardSubscription';
 import SubscriptionsFilterByStatus from '../../../components/SubscriptionsFilterByStatus';
 import SubscriptionsNavbar from '../../../components/SubscriptionsNavbar';
-import SupportOverview from '../../../components/SupportOverview';
 import {useCustomerPortal} from '../../../context';
 import {actionTypes} from '../../../context/reducer';
 import {PRODUCT_TYPES, SUBSCRIPTIONS_STATUS} from '../../../utils/constants';
 import {getWebContents} from '../../../utils/getWebContents';
 import OverviewSkeleton from './Skeleton';
+import SupportOverview from './SupportOverview/SupportOverview';
 
 const Overview = () => {
 	const [{project, subscriptionGroups}, dispatch] = useCustomerPortal();

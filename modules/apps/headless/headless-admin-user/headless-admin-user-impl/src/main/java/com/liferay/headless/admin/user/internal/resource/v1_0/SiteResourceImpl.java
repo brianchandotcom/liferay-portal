@@ -101,6 +101,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				description_i18n = LocalizedMapUtil.getI18nMap(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					group.getDescriptionMap());
+				descriptiveName = group.getDescriptiveName(
+					contextAcceptLanguage.getPreferredLocale());
 				friendlyUrlPath = group.getFriendlyURL();
 				id = group.getGroupId();
 				key = group.getGroupKey();

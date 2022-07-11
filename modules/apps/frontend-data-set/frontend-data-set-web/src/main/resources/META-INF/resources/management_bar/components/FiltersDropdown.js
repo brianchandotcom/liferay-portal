@@ -12,9 +12,9 @@
  * details.
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import Icon from '@clayui/icon';
+import ClayIcon from '@clayui/icon';
 import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
@@ -45,19 +45,19 @@ const FiltersDropdown = () => {
 			className="filters-dropdown"
 			onActiveChange={setActive}
 			trigger={
-				<button
-					className="btn btn-unstyled dropdown-toggle filters-dropdown-button"
-					type="button"
+				<ClayButton
+					className="filters-dropdown-button"
+					displayType="unstyled"
 				>
 					<span className="navbar-text-truncate">
 						{Liferay.Language.get('filter')}
 					</span>
 
-					<Icon
+					<ClayIcon
 						className="ml-2"
 						symbol={active ? 'caret-top' : 'caret-bottom'}
 					/>
-				</button>
+				</ClayButton>
 			}
 		>
 			{activeFilter ? (

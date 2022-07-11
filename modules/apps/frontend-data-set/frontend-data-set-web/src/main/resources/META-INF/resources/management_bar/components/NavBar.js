@@ -22,7 +22,7 @@ import FrontendDataSetContext from '../../FrontendDataSetContext';
 import ViewsContext from '../../views/ViewsContext';
 import ActiveViewSelector from './ActiveViewSelector';
 import CreationMenu from './CreationMenu';
-import CustomViewDropdown from './CustomViewDropdown';
+import CustomViewsControls from './CustomViewsControls';
 import FiltersDropdown from './FiltersDropdown';
 import MainSearch from './MainSearch';
 
@@ -32,7 +32,7 @@ function NavBar({creationMenu, showSearch}) {
 	const [showMobile, setShowMobile] = useState(false);
 
 	return (
-		<ManagementToolbar.Container className="c-mb-0 justify-content-space-between">
+		<ManagementToolbar.Container className="justify-content-space-between">
 			<ManagementToolbar.ItemList>
 				{!!filters.length && (
 					<ManagementToolbar.Item>
@@ -73,11 +73,7 @@ function NavBar({creationMenu, showSearch}) {
 					</ManagementToolbar.Item>
 				)}
 
-				{customViewsEnabled && (
-					<ManagementToolbar.Item>
-						<CustomViewDropdown />
-					</ManagementToolbar.Item>
-				)}
+				{customViewsEnabled && <CustomViewsControls />}
 
 				{creationMenu && (
 					<ManagementToolbar.Item>

@@ -173,13 +173,17 @@ export default function GlobalJSCETsConfiguration({
 										'loading-order'
 									)}
 								>
-									{Liferay.Language.get(
-										'numbers-indicate-in-which-order-extensions-are-loaded-extensions-inherited-from-master-will-always-be-loaded-in-first-place'
-									)}
-
-									{Liferay.Language.get(
-										'also-head-insertions-will-be-loaded-before-body-bottom-ones'
-									)}
+									{[
+										Liferay.Language.get(
+											'numbers-indicate-the-order-in-which-client-extensions-are-loaded'
+										),
+										Liferay.Language.get(
+											'extensions-inherited-from-master-will-always-be-loaded-in-first-place'
+										),
+										Liferay.Language.get(
+											'also-head-insertions-will-be-loaded-before-body-bottom-ones'
+										),
+									].join(' ')}
 								</GlobalCETOrderHelpIcon>
 							</ClayTable.Cell>
 
@@ -192,7 +196,7 @@ export default function GlobalJSCETsConfiguration({
 							</ClayTable.Cell>
 
 							<ClayTable.Cell headingCell noWrap>
-								{Liferay.Language.get('load-type')}
+								{Liferay.Language.get('load')}
 							</ClayTable.Cell>
 
 							<ClayTable.Cell headingCell>

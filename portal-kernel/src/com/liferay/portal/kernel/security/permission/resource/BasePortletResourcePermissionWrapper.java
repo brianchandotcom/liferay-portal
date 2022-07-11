@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 /**
  * @author Shuyang Zhou
  */
-public abstract class PortletResourcePermissionWrapper
+public abstract class BasePortletResourcePermissionWrapper
 	implements PortletResourcePermission {
 
 	@Override

@@ -61,12 +61,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8786 | Test Summary: Add keyword when there are none"
-	@ignore = "true"
 	@priority = "3"
 	test AddKeywordCurrentlyNone {
-
-		// AC Story ticket: LRAC-9248
-
 		task ("Go to AC Settings > definitions > Interests") {
 			ACNavigation.goToSettings();
 
@@ -76,10 +72,7 @@ definition {
 		}
 
 		task ("Check no result") {
-
-			// This test is being ignored due to a history that makes changes to empty state messages.
-
-			ACUtils.viewNoResultsMessage(noResultMessage = "You have not added keywords to the blocklist yet.");
+			ACUtils.viewNoResultsMessage(noResultMessage = "No Keywords Found");
 		}
 
 		task ("Add keywords and assert result") {
@@ -198,12 +191,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8789 | Test Summary: Delete a keyword block"
-	@ignore = "true"
 	@priority = "3"
 	test DeleteKeywordBlock {
-
-		// AC Story ticket: LRAC-9248
-
 		task ("Go to settings, definitions and definitions type") {
 			ACNavigation.goToSettings();
 
@@ -229,10 +218,7 @@ definition {
 		}
 
 		task ("Assert that all keywords were deleted") {
-
-			// This test is being ignored due to a history that makes changes to empty state messages.
-
-			ACUtils.viewNoResultsMessage(noResultMessage = "You have not added keywords to the blocklist yet.");
+			ACUtils.viewNoResultsMessage(noResultMessage = "No Keywords Found");
 		}
 	}
 
@@ -271,12 +257,8 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8791 | Test Summary: Delete multiple keywords"
-	@ignore = "true"
 	@priority = "3"
 	test DeleteMultipleKeywords {
-
-		// AC Story ticket: LRAC-9248
-
 		task ("Go to settings, definitions and definitions type") {
 			ACNavigation.goToSettings();
 
@@ -300,10 +282,7 @@ definition {
 		}
 
 		task ("Assert that all keywords were deleted") {
-
-			// This test is being ignored due to a history that makes changes to empty state messages.
-
-			ACUtils.viewNoResultsMessage(noResultMessage = "You have not added keywords to the blocklist yet.");
+			ACUtils.viewNoResultsMessage(noResultMessage = "No Keywords Found");
 		}
 	}
 

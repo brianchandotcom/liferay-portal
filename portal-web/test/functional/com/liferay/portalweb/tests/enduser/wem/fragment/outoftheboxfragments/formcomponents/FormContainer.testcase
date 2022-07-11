@@ -1,7 +1,6 @@
 @component-name = "portal-wcm"
 definition {
 
-	property custom.properties = "feature.flag.LPS-150277=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Fragments";
@@ -320,7 +319,7 @@ definition {
 	@description = "This is a test for LPS-157739. The page creator could map new field to new input fragment after mapping Form Container to object."
 	@priority = "4"
 	test MapNewFieldToNewInputFragmentInMappedFormContainer {
-		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-157738=true";
+		property custom.properties = "feature.flag.LPS-157738=true";
 		property test.name.skip.portal.instance = "FormContainer#MapNewFieldToNewInputFragmentInMappedFormContainer";
 
 		task ("Given a page creator has a mapped Form Container on a content page") {
@@ -376,7 +375,7 @@ definition {
 	@description = "This is a test for LPS-157739. The page creator could remove automatically added input fragments and change mapping fields."
 	@priority = "4"
 	test RemoveAutomaticallyAddedInputFragmentsThenChangeMappingField {
-		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-157738=true";
+		property custom.properties = "feature.flag.LPS-157738=true";
 		property test.name.skip.portal.instance = "FormContainer#RemoveAutomaticallyAddedInputFragmentsThenChangeMappingField";
 
 		task ("Given a page creator has a Form Container on a content page") {
@@ -1017,7 +1016,6 @@ definition {
 	@description = "This is a test for LPS-157739. The page creator could receive an object entry after submitting form."
 	@priority = "5"
 	test ViewCreatedObjectEntryAfterSubmitForm {
-		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-157738=true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "FormContainer#ViewCreatedObjectEntryAfterSubmitForm";
 
@@ -1351,7 +1349,7 @@ definition {
 	@description = "This is a test for LPS-158143. The page creator could see error message after mapping the Form Container to object when multiple OOTB input fragments are unavailable. The page creator could see error message after mapping the Form Container to object when some OOTB input fragments are disabled from master page."
 	@priority = "4"
 	test ViewErrorMessageAfterMappingFormContainerToEntityWhenMultipleInputFragmentsDisabledFromMasterPage {
-		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-157738=true";
+		property custom.properties = "feature.flag.LPS-157738=true";
 		property test.name.skip.portal.instance = "FormContainer#ViewErrorMessageAfterMappingFormContainerToEntityWhenMultipleInputFragmentsDisabledFromMasterPage";
 
 		task ("Given a page creator has a Form Container on a content page based on a master page") {
@@ -1783,7 +1781,7 @@ definition {
 	@description = "This is a test for LPS-158143. The page creator could see success message after mapping the Form Container to object when all OOTB input fragments are available."
 	@priority = "4"
 	test ViewSuccessMessageAfterMappingFormContainerToEntity {
-		property custom.properties = "feature.flag.LPS-150277=true${line.separator}feature.flag.LPS-157738=true";
+		property custom.properties = "feature.flag.LPS-157738=true";
 		property test.name.skip.portal.instance = "FormContainer#ViewSuccessMessageAfterMappingFormContainerToEntity";
 
 		task ("Given a page creator has a Form Container on a content page") {

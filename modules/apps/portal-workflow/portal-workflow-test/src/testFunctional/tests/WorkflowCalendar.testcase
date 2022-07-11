@@ -114,8 +114,6 @@ definition {
 		AssertElementNotPresent(
 			key_eventTitle = "Calendar Event Title",
 			locator1 = "WorkflowCalendar#CALENDAR_EVENT_BY_TITLE");
-
-			
 	}
 
 	@priority = "5"

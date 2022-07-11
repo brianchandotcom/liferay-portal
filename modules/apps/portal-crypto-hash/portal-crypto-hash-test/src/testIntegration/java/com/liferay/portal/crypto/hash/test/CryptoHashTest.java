@@ -17,7 +17,7 @@ package com.liferay.portal.crypto.hash.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.IOException;
-
 import java.nio.charset.StandardCharsets;
 
 import java.security.MessageDigest;
@@ -43,12 +41,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import jodd.util.BCrypt;
 
@@ -62,14 +56,9 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.cm.ManagedServiceFactory;
 
 /**
  * @author Carlos Sierra Andrés
@@ -321,61 +310,16 @@ public class CryptoHashTest {
 					"BCrypt", Collections.emptyMap(), _bCryptSalt)));
 	}
 
-	private Configuration _addFactoryConfiguration(
-		String factoryPid, Dictionary<String, ?> properties) {
+	private void _addFactoryConfiguration(
+			String factoryPid, Dictionary<String, Object> properties)
+		throws Exception {
 
-		Configuration configuration = _registerFactoryConfiguration(
-			factoryPid, properties);
-
-		String configurationPid = configuration.getPid();
+		String configurationPid =
+			ConfigurationTestUtil.createFactoryConfiguration(
+				factoryPid, properties);
 
 		_autoCloseables.add(
-			() -> {
-				CountDownLatch countDownLatch = new CountDownLatch(1);
-
-				ServiceRegistration<ManagedServiceFactory> serviceRegistration =
-					_bundleContext.registerService(
-						ManagedServiceFactory.class,
-						new ManagedServiceFactory() {
-
-							@Override
-							public void deleted(String pid) {
-								if (configurationPid.equals(pid)) {
-									countDownLatch.countDown();
-								}
-							}
-
-							@Override
-							public String getName() {
-								return "Test managed service factory for PID " +
-									factoryPid;
-							}
-
-							@Override
-							public void updated(
-								String pid,
-								Dictionary<String, ?> updatedProperties) {
-							}
-
-						},
-						HashMapDictionaryBuilder.put(
-							Constants.SERVICE_PID, factoryPid
-						).build());
-
-				try {
-					configuration.delete();
-
-					countDownLatch.await(10, TimeUnit.SECONDS);
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
-				finally {
-					serviceRegistration.unregister();
-				}
-			});
-
-		return configuration;
+			() -> ConfigurationTestUtil.deleteConfiguration(configurationPid));
 	}
 
 	private <S, R, E extends Throwable> R _callService(
@@ -418,107 +362,6 @@ public class CryptoHashTest {
 		}
 
 		return null;
-	}
-
-	private boolean _contains(
-		Dictionary<String, ?> properties1, Dictionary<String, ?> properties2) {
-
-		if (properties2.size() > properties1.size()) {
-			return false;
-		}
-
-		Enumeration<String> enumeration = properties2.keys();
-
-		while (enumeration.hasMoreElements()) {
-			String key = enumeration.nextElement();
-
-			if (!Objects.deepEquals(
-					properties2.get(key), properties1.get(key))) {
-
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	private Configuration _registerFactoryConfiguration(
-		String factoryPid, Dictionary<String, ?> properties) {
-
-		CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		ServiceRegistration<ManagedServiceFactory> serviceRegistration =
-			_bundleContext.registerService(
-				ManagedServiceFactory.class,
-				new ManagedServiceFactory() {
-
-					@Override
-					public void deleted(String pid) {
-					}
-
-					@Override
-					public String getName() {
-						return "Test managed service factory for PID " +
-							factoryPid;
-					}
-
-					@Override
-					public void updated(
-						String pid, Dictionary<String, ?> updatedProperties) {
-
-						if (updatedProperties == null) {
-							return;
-						}
-
-						if (_contains(updatedProperties, properties)) {
-							countDownLatch.countDown();
-						}
-					}
-
-				},
-				HashMapDictionaryBuilder.put(
-					Constants.SERVICE_PID, factoryPid
-				).build());
-
-		try {
-			ServiceReference<ConfigurationAdmin> serviceReference =
-				_bundleContext.getServiceReference(ConfigurationAdmin.class);
-
-			ConfigurationAdmin configurationAdmin = _bundleContext.getService(
-				serviceReference);
-
-			Configuration configuration = null;
-
-			try {
-				configuration = configurationAdmin.createFactoryConfiguration(
-					factoryPid, StringPool.QUESTION);
-
-				configuration.update(properties);
-
-				countDownLatch.await(5, TimeUnit.MINUTES);
-
-				return configuration;
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
-			catch (InterruptedException interruptedException) {
-				try {
-					configuration.delete();
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-
-				throw new RuntimeException(interruptedException);
-			}
-			finally {
-				_bundleContext.ungetService(serviceReference);
-			}
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(CryptoHashTest.class);

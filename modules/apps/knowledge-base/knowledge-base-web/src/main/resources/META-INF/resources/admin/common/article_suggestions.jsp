@@ -56,7 +56,7 @@ if (ratingsType == null) {
 		PortletURL viewKBArticleURL = kbArticleURLHelper.createViewWithCommentsURL(kbArticle);
 		%>
 
-		<liferay-portlet:actionURL name="updateKBComment" var="updateKBCommentURL">
+		<liferay-portlet:actionURL name="/knowledge_base/update_kb_comment" var="updateKBCommentURL">
 			<portlet:param name="redirect" value="<%= viewKBArticleURL.toString() %>" />
 		</liferay-portlet:actionURL>
 

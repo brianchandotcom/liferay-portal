@@ -156,7 +156,7 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 
 				submitForm(
 					form,
-					'<liferay-portlet:actionURL name="updateKBComment"><portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" /></liferay-portlet:actionURL>'
+					'<liferay-portlet:actionURL name="/knowledge_base/update_kb_comment"><portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" /></liferay-portlet:actionURL>'
 				);
 			}
 		}

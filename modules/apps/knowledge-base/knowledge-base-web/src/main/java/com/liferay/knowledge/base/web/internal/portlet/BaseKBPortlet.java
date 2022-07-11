@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
-import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
 import com.liferay.knowledge.base.exception.KBArticlePriorityException;
 import com.liferay.knowledge.base.exception.KBArticleTitleException;
@@ -175,52 +174,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		catch (Exception exception) {
 			throw new PortletException(exception);
 		}
-	}
-
-	public void updateKBComment(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!themeDisplay.isSignedIn()) {
-			return;
-		}
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
-		String content = ParamUtil.getString(actionRequest, "content");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			KBComment.class.getName(), actionRequest);
-
-		if (cmd.equals(Constants.ADD)) {
-			kbCommentLocalService.addKBComment(
-				themeDisplay.getUserId(), classNameId, classPK, content,
-				serviceContext);
-		}
-		else if (cmd.equals(Constants.UPDATE)) {
-			long kbCommentId = ParamUtil.getLong(actionRequest, "kbCommentId");
-
-			int status = ParamUtil.getInteger(
-				actionRequest, "status", KBCommentConstants.STATUS_ANY);
-
-			if (status == KBCommentConstants.STATUS_ANY) {
-				KBComment kbComment = kbCommentService.getKBComment(
-					kbCommentId);
-
-				status = kbComment.getStatus();
-			}
-
-			kbCommentLocalService.updateKBComment(
-				kbCommentId, classNameId, classPK, content, status,
-				serviceContext);
-		}
-
-		SessionMessages.add(actionRequest, "suggestionSaved");
 	}
 
 	public void updateKBCommentStatus(

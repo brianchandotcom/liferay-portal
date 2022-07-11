@@ -74,6 +74,18 @@ definition {
         }
     }
 
+	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
+	When user navigates to Segments page
+	Then the warning alert explains how to re-enable it"
+	@priority = "4"
+	test ViewReEnableAlertAtSegmentsList {
+		task ("Open the Segments List and check if warning appears") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			Segmentation.checkSegmentationReEnableWarning();
+		}
+	}
+
 	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Dynamic Collection Editor page
     When user clicks at Close button
     Then the alert disappears from page"

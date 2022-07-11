@@ -417,7 +417,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		JournalArticle journalArticle = null;
 
 		if (params.containsKey("version")) {
-			int articleId = Integer.valueOf(params.get("version")[0]);
+			long articleId = GetterUtil.getLong(params.get("version")[0]);
 
 			journalArticle = _journalArticleLocalService.fetchArticle(
 				articleId);

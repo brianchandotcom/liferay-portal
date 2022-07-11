@@ -2447,6 +2447,24 @@ definition {
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article",
 			searchTerm = "WC Title");
+
+		task ("Use case for LPS-157511, assert user is able to manually input a date") {
+			Click(
+				locator1 = "Search#MODIFIED_FACET_SELECTION",
+				range = "Custom Range");
+
+			Click(locator1 = "Search#CUSTOM_RANGE_FROM");
+
+			Type(
+				locator1 = "Search#CUSTOM_RANGE_FROM",
+				value1 = "01/01/2020");
+
+			Click(locator1 = "Button#SEARCH");
+
+			AssertTextEquals(
+				locator1 = "Search#CUSTOM_RANGE_FROM",
+				value1 = "01/01/2020");
+		}
 	}
 
 	@priority = "4"

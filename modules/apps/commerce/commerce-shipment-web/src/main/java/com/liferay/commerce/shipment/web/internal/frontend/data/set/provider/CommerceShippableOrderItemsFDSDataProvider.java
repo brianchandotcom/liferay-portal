@@ -21,6 +21,7 @@ import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.model.Icon;
 import com.liferay.commerce.frontend.model.OrderItem;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
@@ -28,6 +29,7 @@ import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
+import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShipmentService;
@@ -147,15 +149,25 @@ public class CommerceShippableOrderItemsFDSDataProvider
 	};
 
 	private String _getAddressMatchIcon(
-		CommerceShipment commerceShipment, CommerceOrder commerceOrder) {
+			CommerceShipment commerceShipment, CommerceOrder commerceOrder)
+		throws PortalException {
 
-		if (commerceShipment.getCommerceAddressId() ==
-				commerceOrder.getShippingAddressId()) {
+		CommerceAddress commerceOrderShippingCommerceAddress =
+			_commerceAddressService.fetchCommerceAddress(
+				commerceOrder.getShippingAddressId());
+		CommerceAddress commerceShipmentCommerceAddress =
+			_commerceAddressService.fetchCommerceAddress(
+				commerceShipment.getCommerceAddressId());
+
+		if ((commerceOrderShippingCommerceAddress != null) &&
+			(commerceShipmentCommerceAddress != null) &&
+			commerceShipmentCommerceAddress.isSameAddress(
+				commerceOrderShippingCommerceAddress)) {
 
 			return "check";
 		}
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	private String _getShippingMethodAndOptionName(
@@ -165,9 +177,17 @@ public class CommerceShippableOrderItemsFDSDataProvider
 		CommerceShippingMethod commerceShippingMethod =
 			commerceOrder.getCommerceShippingMethod();
 
+		if (commerceShippingMethod == null) {
+			return StringPool.BLANK;
+		}
+
 		CommerceShippingEngine commerceShippingEngine =
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
 				commerceShippingMethod.getEngineKey());
+
+		if (commerceShippingEngine == null) {
+			return StringPool.BLANK;
+		}
 
 		CommerceContext commerceContext =
 			(CommerceContext)httpServletRequest.getAttribute(
@@ -197,6 +217,9 @@ public class CommerceShippableOrderItemsFDSDataProvider
 
 		return StringPool.BLANK;
 	}
+
+	@Reference
+	private CommerceAddressService _commerceAddressService;
 
 	@Reference
 	private CommerceInventoryEngine _commerceInventoryEngine;

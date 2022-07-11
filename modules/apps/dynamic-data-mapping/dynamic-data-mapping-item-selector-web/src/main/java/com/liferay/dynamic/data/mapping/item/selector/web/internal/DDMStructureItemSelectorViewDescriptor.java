@@ -62,6 +62,11 @@ public class DDMStructureItemSelectorViewDescriptor
 	}
 
 	@Override
+	public String[] getDisplayViews() {
+		return new String[] {"list"};
+	}
+
+	@Override
 	public ItemDescriptor getItemDescriptor(DDMStructure ddmStructure) {
 		return new DDMStructureItemDescriptor(
 			ddmStructure, _httpServletRequest);

@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceWrapper;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -65,7 +66,9 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
 
-		_addFriendlyURLEntry(dlFileEntry, _getUrlTitle(title, urlTitle));
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			_addFriendlyURLEntry(dlFileEntry, _getUrlTitle(title, urlTitle));
+		}
 
 		return dlFileEntry;
 	}
@@ -76,10 +79,12 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 
 		dlFileEntry = super.deleteFileEntry(dlFileEntry);
 
-		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-			dlFileEntry.getGroupId(),
-			_classNameLocalService.getClassNameId(FileEntry.class),
-			dlFileEntry.getFileEntryId());
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+				dlFileEntry.getGroupId(),
+				_classNameLocalService.getClassNameId(FileEntry.class),
+				dlFileEntry.getFileEntryId());
+		}
 
 		return dlFileEntry;
 	}
@@ -100,7 +105,9 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			ddmFormValuesMap, file, inputStream, size, expirationDate,
 			reviewDate, serviceContext);
 
-		_updateFriendlyURL(dlFileEntry, title, urlTitle);
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			_updateFriendlyURL(dlFileEntry, title, urlTitle);
+		}
 
 		return dlFileEntry;
 	}

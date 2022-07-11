@@ -63,6 +63,25 @@ definition {
 			option = "${option}");
 	}
 
+	macro configureFederatedSearchKeyForOptionsWidget {
+		Portlet.gotoPortletOptions(
+			portletName = "Blueprints Options",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Type(
+			key_fieldLabel = "Federated Search Key",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${federatedSearchKey}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		IFrame.closeFrame();
+	}
+
 	macro createBlueprint {
 		Click(locator1 = "Button#PLUS");
 

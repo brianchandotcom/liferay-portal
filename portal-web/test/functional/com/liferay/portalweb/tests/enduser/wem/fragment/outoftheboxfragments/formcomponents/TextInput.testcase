@@ -580,6 +580,88 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-151402. The user could see error message when submit a form with value exceeding the length of field."
+	@priority = "4"
+	test ViewErrorMessageWhenSubmitFormWithValueExceedingTheLengthOfField {
+		property test.name.skip.portal.instance = "TextInput#ViewErrorMessageWhenSubmitFormWithValueExceedingTheLengthOfField";
+
+		task ("Given a user has a content page where a Text Input and Submit Button fragments are inside a Form Container") {
+			task ("Change the Maximum Number of Characters of Region field to 20") {
+				ObjectAdmin.openObjectAdmin();
+
+				ObjectPortlet.selectCustomObject(label = "Purchase Order");
+
+				ObjectAdmin.goToFieldsTab();
+
+				ObjectAdmin.goToFieldsDetails(label = "Region");
+
+				ObjectField.checkLimitCharacters();
+
+				Type(
+					key_text = "Maximum Number of Characters",
+					locator1 = "TextInput#ANY",
+					value1 = "20");
+
+				ObjectField.save();
+			}
+
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add a Text Input and Submit Button fragment into Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Text Input");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "Text Input");
+			}
+
+			task ("Map the Text Input fragment to Region field") {
+				PageEditor.editInput(
+					field = "Region",
+					fragmentName = "Text Input");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the user submits form with value exceeding the length of Text Input") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Type(
+				key_text = "Region",
+				locator1 = "TextInput#ANY",
+				value1 = "New Jersey, New York, Mississippi");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should see an error message on the top of form") {
+			Alert.viewErrorMessage(errorMessage = "Value exceeds maximum length of 20 for field Region.");
+		}
+	}
+
 	@description = "This is a test for LPS-150278. View warning modal when hiding and publishing a layout elements that contains a required Text Input fragment on content page."
 	@priority = "4"
 	test ViewWarningWhenHideRequiredTextInputOnContentPage {

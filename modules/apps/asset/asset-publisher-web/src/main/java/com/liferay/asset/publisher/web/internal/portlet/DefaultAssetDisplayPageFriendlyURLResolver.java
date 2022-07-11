@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
@@ -52,6 +53,9 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
@@ -418,7 +422,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 		String[] versionIds = params.get("version");
 
-		if (ArrayUtil.isNotEmpty(versionIds)) {
+		if (ArrayUtil.isNotEmpty(versionIds) && !_isDefaultUser()) {
 			long id = GetterUtil.getLong(versionIds[0]);
 
 			journalArticle = _journalArticleLocalService.fetchArticle(id);
@@ -564,6 +568,23 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		return 0;
 	}
 
+	private boolean _isDefaultUser() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return true;
+		}
+
+		User user = _userLocalService.fetchUser(serviceContext.getUserId());
+
+		if ((user == null) || user.isDefaultUser()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
@@ -594,6 +615,9 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private WorkflowPermission _workflowPermission;

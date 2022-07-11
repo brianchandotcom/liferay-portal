@@ -13,11 +13,7 @@
  */
 
 import {render} from '@liferay/frontend-js-react-web';
-import {
-	getCheckedCheckboxes,
-	openSelectionModal,
-	openSimpleInputModal,
-} from 'frontend-js-web';
+import {getCheckedCheckboxes, openSelectionModal} from 'frontend-js-web';
 
 import AddFragmentModal from './AddFragmentModal';
 import openDeleteFragmentModal from './openDeleteFragmentModal';
@@ -37,17 +33,6 @@ export default function propsTransformer({
 	portletNamespace,
 	...otherProps
 }) {
-	const addFragmentEntry = (itemData) => {
-		openSimpleInputModal({
-			dialogTitle: itemData?.title,
-			formSubmitURL: itemData?.addFragmentEntryURL,
-			mainFieldLabel: Liferay.Language.get('name'),
-			mainFieldName: 'name',
-			mainFieldPlaceholder: Liferay.Language.get('name'),
-			namespace: `${portletNamespace}`,
-		});
-	};
-
 	const copySelectedFragmentEntries = () => {
 		const form = document.getElementById(`${portletNamespace}fm`);
 
@@ -212,28 +197,17 @@ export default function propsTransformer({
 				moveFragmentCompositionsAndFragmentEntries();
 			}
 		},
-		onCreateButtonClick(event, {item}) {
-			if (Liferay.FeatureFlags['LPS-149720']) {
-				render(
-					AddFragmentModal,
-					{
-						addFragmentEntryURL,
-						fieldTypes,
-						fragmentTypes,
-						namespace: portletNamespace,
-					},
-					document.createElement('div')
-				);
-			}
-			else {
-				const data = item?.data;
-
-				const action = data?.action;
-
-				if (action === 'addFragmentEntry') {
-					addFragmentEntry(data);
-				}
-			}
+		onCreateButtonClick() {
+			render(
+				AddFragmentModal,
+				{
+					addFragmentEntryURL,
+					fieldTypes,
+					fragmentTypes,
+					namespace: portletNamespace,
+				},
+				document.createElement('div')
+			);
 		},
 	};
 }

@@ -78,6 +78,6 @@ public class JSPStaticResourceURLCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _staticResourceURLParamPattern =
-		Pattern.compile("PortalUtil.getStaticResourceURL\\(");
+		Pattern.compile("PortalUtil\\.getStaticResourceURL\\(");
 
 }

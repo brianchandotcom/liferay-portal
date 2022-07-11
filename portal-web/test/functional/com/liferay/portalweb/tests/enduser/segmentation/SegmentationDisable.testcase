@@ -33,121 +33,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-151362: Given the 'Enable Segmentation'
-	When the 'Enable Segmentation' is disabled
-	Then segmentation is disabled for Experiences"
-	@priority = "5"
-	test ViewDisabledAlertAtExperiencesMenu {
-		task ("Open the Experience menu and check if warning appears") {
-			Navigator.openURL();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.openExperienceMenu();
-
-			Segmentation.checkSegmentationDisabledWarning();
-		}
-	}
-
-	@description = "LPS-151362: Given the 'Enable Segmentation'
-    When the 'Enable Segmentation' is disabled
-    Then segmentation is disabled for Collections"
-    @priority = "4"
-    test ViewDisabledSegmentationAlertAtDynamicCollectionEditor {
-
-    	task ("Create a Collection via JSONWS") {
-            JSONAssetlist.addDynamicAssetListEntry(
-                groupName = "Test Site Name",
-                title = "Dynamic Collection Test");
-        }
-
-   		 task ("Navigate to Collection Admin") {
-            AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-            AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-        }
-
-    	task ("Check if warning appears"){
-
-        	Segmentation.checkSegmentationDisabledWarning();
-
-        }
-    }
-
-	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
-	When user navigates to Segments page
-	Then the warning alert explains how to re-enable it"
-	@priority = "4"
-	test ViewReEnableAlertAtSegmentsList {
-		task ("Open the Segments List and check if warning appears") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
-			Segmentation.checkSegmentationReEnableWarning();
-		}
-	}
-
-	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
-	When user navigates to Manual Collection editor
-	Then the warning alert explains how to re-enable it"
-	@priority = "3"
-	test ViewReEnableAlertAtManualCollectionEditor {
-		task ("Create a Collection via JSONWS") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
-		task ("Navigate to Manual Collection Editor") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-		}
-
-		task ("Check if warning appears") {
-			Segmentation.checkSegmentationReEnableWarning();
-		}
-	}
-
-	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
-	When user navigates to Dynamic Collection editor
-	Then the warning alert explains how to re-enable it"
-	@priority = "3"
-	test ViewReEnableAlertAtDynamicCollectionEditor {
-		task ("Create a Collection via JSONWS") {
-			JSONAssetlist.addDynamicAssetListEntry(
-				groupName = "Test Site Name",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Navigate to Collection Admin") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-		}
-
-		task ("Check if warning appears") {
-			Segmentation.checkSegmentationReEnableWarning();
-		}
-	}
-
-	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
-	When user navigates to Experience menu
-	Then the warning alert explains how to re-enable it"
-	@priority = "3"
-	test ViewReEnabledAlertAtExperiencesMenu {
-		task ("Open the Experience menu and check if warning appears") {
-			Navigator.openURL();
-			
-			ContentPages.gotoPageEditor();
-
-			PageEditor.openExperienceMenu();
-
-			Segmentation.checkSegmentationReEnableWarning();
-		}
-	}
-
 	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Dynamic Collection Editor page
     When user clicks at Close button
     Then the alert disappears from page"
@@ -636,6 +521,154 @@ definition {
 			SelectFrameTop();
 
 			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-151362: Given the 'Enable Segmentation'
+	When the 'Enable Segmentation' is disabled
+	Then segmentation is disabled for Experiences"
+	@priority = "5"
+	test ViewDisabledAlertAtExperiencesMenu {
+		task ("Open the Experience menu and check if warning appears") {
+			Navigator.openURL();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openExperienceMenu();
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-151362: Given the 'Enable Segmentation'
+    When the 'Enable Segmentation' is disabled
+    Then segmentation is disabled for Collections"
+	@priority = "4"
+	test ViewDisabledSegmentationAlertAtDynamicCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Check if warning appears") {
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
+	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
+	When user navigates to Dynamic Collection editor
+	Then the warning alert explains how to re-enable it"
+	@priority = "3"
+	test ViewReEnableAlertAtDynamicCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Check if warning appears") {
+			Segmentation.checkSegmentationReEnableWarning();
+		}
+	}
+
+	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
+	When user navigates to Manual Collection editor
+	Then the warning alert explains how to re-enable it"
+	@priority = "3"
+	test ViewReEnableAlertAtManualCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to Manual Collection Editor") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Check if warning appears") {
+			Segmentation.checkSegmentationReEnableWarning();
+		}
+	}
+
+	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
+	When user navigates to Segments page
+	Then the warning alert explains how to re-enable it"
+	@priority = "4"
+	test ViewReEnableAlertAtSegmentsList {
+		task ("Open the Segments List and check if warning appears") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			Segmentation.checkSegmentationReEnableWarning();
+		}
+	}
+
+	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
+	When user navigates to Experience simulation sidepanel
+	Then the warning alert explains how to re-enable it"
+	@priority = "3"
+	test ViewReEnabledAlertAtExperienceSimulationSidepanel {
+		task ("Create a layout page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Experience Content Page",
+				type = "content");
+		}
+
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "First Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With User3",
+				text = "userfn3");
+		}
+
+		task ("Navigate o simulation panel") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			MobileDevice.previewPG();
+
+			SelectFrameTop();
+		}
+
+		task ("Check if warning appears") {
+			Segmentation.checkSegmentationReEnableWarning();
+		}
+	}
+
+	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
+	When user navigates to Experience menu
+	Then the warning alert explains how to re-enable it"
+	@priority = "3"
+	test ViewReEnabledAlertAtExperiencesMenu {
+		task ("Open the Experience menu and check if warning appears") {
+			Navigator.openURL();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openExperienceMenu();
+
+			Segmentation.checkSegmentationReEnableWarning();
 		}
 	}
 

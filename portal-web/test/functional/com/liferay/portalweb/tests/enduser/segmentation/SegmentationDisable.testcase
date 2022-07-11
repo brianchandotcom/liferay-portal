@@ -110,6 +110,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-151362: Given segmentation is disabled at Instance Settings
+	When user navigates to Dynamic Collection editor
+	Then the warning alert explains how to re-enable it"
+	@priority = "3"
+	test ViewReEnableAlertAtDynamicCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Check if warning appears") {
+			Segmentation.checkSegmentationReEnableWarning();
+		}
+	}
+
 	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Dynamic Collection Editor page
     When user clicks at Close button
     Then the alert disappears from page"

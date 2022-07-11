@@ -353,6 +353,7 @@ function ExtensionRow({
 
 			<ClayTable.Cell noWrap>
 				<ClaySelectWithOption
+					className="load-type-select"
 					defaultValue={
 						globalJSCET.loadType || DEFAULT_LOAD_TYPE_OPTION
 					}

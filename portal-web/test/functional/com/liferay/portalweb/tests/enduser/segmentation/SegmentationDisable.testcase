@@ -33,6 +33,22 @@ definition {
 		}
 	}
 
+	@description = "LPS-151362: Given the 'Enable Segmentation'
+	When the 'Enable Segmentation' is disabled
+	Then segmentation is disabled for Experiences"
+	@priority = "5"
+	test ViewDisabledAlertAtExperiencesMenu {
+		task ("Open the Experience menu and check if warning appears") {
+			Navigator.openURL();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openExperienceMenu();
+
+			Segmentation.checkSegmentationDisabledWarning();
+		}
+	}
+
 	@description = "LPS-154019: Given the 'Enable Segmentation' is disabled And there's a warning alert at Dynamic Collection Editor page
     When user clicks at Close button
     Then the alert disappears from page"

@@ -298,7 +298,18 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 	}
 
-	protected void updateTreePath() {
+	protected void updateTreePath() throws Exception {
+		_runSQL("create index IX_LPP_41834_YGUA on DLFileEntry (folderId);");
+
+		_runSQL("create index IX_LPP_41834_UQAZ on DLFileShortcut (folderId);");
+
+		_runSQL("create index IX_LPP_41834_ABGC on DLFileVersion (folderId);");
+
+		_runSQL(
+			"create index IX_LPP_41834_PWBE on DLFolder (companyId, " +
+				"parentFolderId, status);");
+		_runSQL("create index IX_LPP_41834_EYIW on DLFolder (userId);");
+
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
@@ -348,6 +359,12 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 		}
 		catch (SQLException sqlException) {
 			_log.error("Unable to update tree paths", sqlException);
+		}
+	}
+
+	private void _runSQL(String sql) throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer(sql)) {
+			runSQLTemplateString(sql, false);
 		}
 	}
 

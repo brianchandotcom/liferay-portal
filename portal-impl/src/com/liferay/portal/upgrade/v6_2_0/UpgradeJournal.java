@@ -1154,6 +1154,11 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void upgradeURLTitle() throws Exception {
+		_runSQL(
+			"create index IX_LPP_41834_MXJT on JournalArticle (groupId, " +
+				"articleId, urlTitle);");
+		_runSQL("create index IX_LPP_41834_UXEC on JournalArticle (urlTitle);");
+
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select distinct groupId, articleId, urlTitle from " +
@@ -1180,8 +1185,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 						continue;
 					}
 
-					String articleId = resultSet.getString("articleId");
 					long groupId = resultSet.getLong("groupId");
+					String articleId = resultSet.getString("articleId");
 
 					normalizedURLTitle = _getUniqueUrlTitle(
 						groupId, articleId, normalizedURLTitle,
@@ -1237,11 +1242,11 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(*) from JournalArticle where groupId = ? and " +
-					"urlTitle = ? and articleId != ?")) {
+					"articleId != ? and urlTitle = ?")) {
 
 			preparedStatement.setLong(1, groupId);
-			preparedStatement.setString(2, urlTitle);
-			preparedStatement.setString(3, articleId);
+			preparedStatement.setString(2, articleId);
+			preparedStatement.setString(3, urlTitle);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
@@ -1254,6 +1259,12 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 				return true;
 			}
+		}
+	}
+
+	private void _runSQL(String sql) throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer(sql)) {
+			runSQLTemplateString(sql, false);
 		}
 	}
 

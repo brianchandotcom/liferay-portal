@@ -1240,6 +1240,10 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		for (String urlTitle : urlTitles) {
+			if (Validator.isBlank(urlTitle)) {
+				continue;
+			}
+
 			_friendlyURLEntryLocalService.addFriendlyURLEntry(
 				importedFileEntry.getGroupId(),
 				_classNameLocalService.getClassNameId(FileEntry.class),

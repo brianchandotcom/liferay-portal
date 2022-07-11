@@ -54,6 +54,7 @@ const CaseResultHeaderActions: React.FC<{
 		completeTest:
 			workflowDisabled ||
 			caseResult.dueStatus !== TEST_STATUS['In Progress'],
+		editValidation: assignedUserId > 0 && assignedUserId !== userId,
 		reopenTest: workflowDisabled || isReopened,
 		startTest:
 			workflowDisabled || caseResult.dueStatus !== TEST_STATUS.Untested,
@@ -105,7 +106,7 @@ const CaseResultHeaderActions: React.FC<{
 					displayType={
 						buttonValidations.completeTest ? 'unstyled' : undefined
 					}
-					onClick={() => navigate('complete-test')}
+					onClick={() => navigate(`edit/${caseResult.dueStatus}`)}
 				>
 					{i18n.translate('complete-test')}
 				</ClayButton>
@@ -121,13 +122,13 @@ const CaseResultHeaderActions: React.FC<{
 				</ClayButton>
 
 				<ClayButton
-					disabled={buttonValidations.completeTest}
+					disabled={buttonValidations.editValidation}
 					displayType={
-						buttonValidations.completeTest
+						buttonValidations.editValidation
 							? 'unstyled'
 							: 'secondary'
 					}
-					onClick={() => navigate('edit')}
+					onClick={() => navigate(`edit/${caseResult.dueStatus}`)}
 				>
 					{i18n.translate('edit')}
 				</ClayButton>

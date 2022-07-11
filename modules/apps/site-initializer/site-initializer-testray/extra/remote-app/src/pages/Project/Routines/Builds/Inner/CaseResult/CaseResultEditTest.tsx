@@ -20,7 +20,6 @@ import {useOutletContext, useParams} from 'react-router-dom';
 
 import Form from '../../../../../../components/Form';
 import Footer from '../../../../../../components/Form/Footer';
-import InputSelect from '../../../../../../components/Form/Select/Select';
 import Container from '../../../../../../components/Layout/Container';
 import {UpdateCaseResult} from '../../../../../../graphql/mutations';
 import useFormActions from '../../../../../../hooks/useFormActions';
@@ -44,13 +43,15 @@ const CaseResultEditTest = () => {
 
 	const [onUpdateCaseResult] = useMutation(UpdateCaseResult);
 
-	const {caseResultId} = useParams();
+	const {caseResultId, status} = useParams();
 
 	const {
 		formState: {errors},
 		handleSubmit,
 		register,
+		watch,
 	} = useForm<CaseResultForm>({
+		defaultValues: status ? {dueStatus: status} : {},
 		resolver: yupResolver(yupSchema.caseResult),
 	});
 
@@ -76,6 +77,8 @@ const CaseResultEditTest = () => {
 		onSave();
 	};
 
+	const dueStatus = watch('dueStatus');
+
 	return (
 		<Container>
 			<ClayAlert displayType="info">
@@ -84,8 +87,9 @@ const CaseResultEditTest = () => {
 				)}
 			</ClayAlert>
 
-			<InputSelect
+			<Form.Select
 				className="container-fluid-max-md"
+				defaultOption={false}
 				label={i18n.translate('status')}
 				name="dueStatus"
 				options={[
@@ -95,6 +99,7 @@ const CaseResultEditTest = () => {
 					{label: 'Test Fix', value: TEST_STATUS['Test Fix']},
 				]}
 				{...inputProps}
+				value={dueStatus}
 			/>
 
 			<Form.Input

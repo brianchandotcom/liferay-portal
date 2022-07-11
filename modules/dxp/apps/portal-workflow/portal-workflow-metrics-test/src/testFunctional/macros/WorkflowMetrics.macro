@@ -22,8 +22,6 @@ definition {
 				WaitForSPARefresh();
 
 				Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
-
-				Pause(locator1 = "6000");
 			}
 
 			if (IsElementNotPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE")) {
@@ -54,8 +52,6 @@ definition {
 				Refresh();
 
 				WaitForSPARefresh();
-
-				Pause(locator1 = "6000");
 			}
 
 			if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME")) {
@@ -319,9 +315,7 @@ definition {
 	}
 
 	macro assertSLAMetricsCalculated {
-		while (IsElementNotPresent(locator1 = "WorkflowMetricsSLA#SLA_PROCESS_DATE_MESSAGE")) {
-			Pause(locator1 = "10000");
-
+		while (IsElementNotPresent(locator1 = "WorkflowMetricsSLA#SLA_PROCESS_DATE_MESSAGE") && (maxIterations = "15")) {
 			Refresh();
 		}
 
@@ -336,9 +330,7 @@ definition {
 	}
 
 	macro assertSLAProcessingDate {
-		while (IsElementNotPresent(key_warningMessage = "${warningMessage}", locator1 = "Message#WARNING_SPECIFIC")) {
-			Pause(locator1 = "10000");
-
+		while (IsElementNotPresent(key_warningMessage = "${warningMessage}", locator1 = "Message#WARNING_SPECIFIC") && (maxIterations = "30")) {
 			Refresh();
 		}
 
@@ -347,9 +339,7 @@ definition {
 			locator1 = "Message#WARNING_SPECIFIC",
 			value1 = "${warningMessage}");
 
-		while (IsElementNotPresent(locator1 = "WorkflowMetricsSLA#SLA_PROCESS_DATE_MESSAGE")) {
-			Pause(locator1 = "10000");
-
+		while (IsElementNotPresent(locator1 = "WorkflowMetricsSLA#SLA_PROCESS_DATE_MESSAGE") && (maxIterations = "30")) {
 			Refresh();
 		}
 
@@ -391,10 +381,8 @@ definition {
 	macro assertWarningBlockedSlaNotPresent {
 		var key_warningMessage = "${warningMessage}";
 
-		while (IsElementPresent(locator1 = "Message#WARNING_SPECIFIC")) {
+		while (IsElementPresent(locator1 = "Message#WARNING_SPECIFIC") && (maxIterations = "30")) {
 			Refresh();
-
-			Pause(locator1 = "10000");
 		}
 
 		AssertElementNotPresent(locator1 = "Message#WARNING_SPECIFIC");
@@ -403,10 +391,8 @@ definition {
 	macro assertWarningBlockedSlaPresent {
 		var key_warningMessage = "${warningMessage}";
 
-		while (IsElementNotPresent(locator1 = "Message#WARNING_SPECIFIC")) {
+		while (IsElementNotPresent(locator1 = "Message#WARNING_SPECIFIC") && (maxIterations = "30")) {
 			Refresh();
-
-			Pause(locator1 = "10000");
 		}
 
 		AssertTextEquals.assertPartialText(
@@ -695,10 +681,7 @@ definition {
 	macro executeIndexActions {
 		var key_actionDescription = "${actionDescription}";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		Workflow.openWorkflowMetrics();
 
 		WaitForSPARefresh();
 
@@ -706,8 +689,6 @@ definition {
 
 		while (IsElementNotPresent(locator1 = "WorkflowMetricsIndex#METRICS_INDEX_SETTINGS") && (maxIterations = "5")) {
 			Click(locator1 = "WorkflowMetricsIndex#METRICS_MENU_INDEX");
-
-			Pause(locator1 = "1000");
 		}
 
 		if (IsElementNotPresent(locator1 = "WorkflowMetricsIndex#METRICS_INDEX_SETTINGS")) {
@@ -939,8 +920,6 @@ definition {
 	}
 
 	macro goToUpdateDueDateTasks {
-		Pause(locator1 = "2000");
-
 		PortletEntry.selectAll();
 
 		Click(
@@ -969,18 +948,10 @@ definition {
 	macro goToWorkflowProcessMetrics {
 		var key_workflowProcessName = "${workflowProcessName}";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Metrics");
+		Workflow.openWorkflowMetrics();
 
 		while (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME") && (maxIterations = "10")) {
-			ApplicationsMenu.gotoPortlet(
-				category = "Workflow",
-				panel = "Applications",
-				portlet = "Metrics");
-
-			Pause(locator1 = "6000");
+			Workflow.openWorkflowMetrics();
 		}
 
 		if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME")) {
@@ -1211,8 +1182,6 @@ definition {
 			ScrollWebElementIntoView(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN");
 
 			Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN");
-
-			Pause(locator1 = "6000");
 		}
 
 		if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_DROPDOWN_STEP_${velocityUnit}")) {
@@ -1254,8 +1223,6 @@ definition {
 				Refresh();
 
 				Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER");
-
-				Pause(locator1 = "6000");
 			}
 
 			if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION")) {
@@ -1279,8 +1246,6 @@ definition {
 			Refresh();
 
 			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_PROCESS_STEP");
-
-			Pause(locator1 = "6000");
 		}
 
 		if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION")) {

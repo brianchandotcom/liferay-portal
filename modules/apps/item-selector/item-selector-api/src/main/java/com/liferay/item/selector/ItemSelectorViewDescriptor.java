@@ -32,6 +32,10 @@ public interface ItemSelectorViewDescriptor<T> {
 		return "icon";
 	}
 
+	public default String[] getDisplayViews() {
+		return new String[] {"descriptive", "icon", "list"};
+	}
+
 	public ItemDescriptor getItemDescriptor(T t);
 
 	public ItemSelectorReturnType getItemSelectorReturnType();

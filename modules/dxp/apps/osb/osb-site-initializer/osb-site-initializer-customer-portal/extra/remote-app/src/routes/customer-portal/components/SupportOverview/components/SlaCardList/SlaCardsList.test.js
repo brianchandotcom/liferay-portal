@@ -12,7 +12,7 @@
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import SlaCardList from '.';
+import SlaCardsList from '.';
 
 describe('SLA Card', () => {
 	const koroneikiAccount = {
@@ -28,28 +28,28 @@ describe('SLA Card', () => {
 	};
 
 	it('displays Support Level title', () => {
-		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
+		render(<SlaCardsList koroneikiAccount={koroneikiAccount} />);
 
 		const slaTitle = screen.getByRole('heading', {name: /support level/i});
 		expect(slaTitle).toHaveTextContent('Support Level');
 	});
 
 	it('displays Limited Support Level type', () => {
-		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
+		render(<SlaCardsList koroneikiAccount={koroneikiAccount} />);
 
 		const linkElementNameslaCurrent = screen.getByText(/limited/i);
 		expect(linkElementNameslaCurrent).toBeInTheDocument();
 	});
 
 	it('displays Gold Support Level type', () => {
-		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
+		render(<SlaCardsList koroneikiAccount={koroneikiAccount} />);
 
 		const linkElementNameslaExpired = screen.getByText(/gold/i);
 		expect(linkElementNameslaExpired).toBeInTheDocument();
 	});
 
 	it('displays Platinum Support Level type', () => {
-		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
+		render(<SlaCardsList koroneikiAccount={koroneikiAccount} />);
 
 		const linkElementNameslaFuture = screen.getByText(/platinum/i);
 		expect(linkElementNameslaFuture).toBeInTheDocument();
@@ -71,7 +71,7 @@ describe('SLA Card', () => {
 	});
 
 	it('shows SLA Card start and end date', () => {
-		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
+		render(<SlaCardsList koroneikiAccount={koroneikiAccount} />);
 
 		const linkElementEndDate = screen.getByText('06/15/2022', {
 			exact: false,
@@ -87,7 +87,7 @@ describe('SLA Card', () => {
 	it('displays a message when the projectd do not have Sla Support', () => {
 		const projectNoSlaMock = {};
 
-		render(<SlaCardList koroneikiAccount={projectNoSlaMock} />);
+		render(<SlaCardsList koroneikiAccount={projectNoSlaMock} />);
 		const linkElement = screen.getByText(
 			/support level is displayed here/i
 		);
@@ -99,7 +99,7 @@ describe('SLA Card', () => {
 	it('displays an order from highest to lowest when user has multiple status (Current > Future > Expired)', async () => {
 		const user = userEvent.setup();
 
-		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
+		render(<SlaCardsList koroneikiAccount={koroneikiAccount} />);
 
 		const linkCurrentStatus = screen.getByText(/current/i);
 

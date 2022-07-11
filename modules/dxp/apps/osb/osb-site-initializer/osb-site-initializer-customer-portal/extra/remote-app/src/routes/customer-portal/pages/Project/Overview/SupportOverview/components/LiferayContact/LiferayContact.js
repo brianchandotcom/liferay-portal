@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import i18n from '../../../../../../common/I18n';
-import getKebabCase from '../../../../../../common/utils/getKebabCase';
+import i18n from '../../../../../../../../common/I18n';
+import getKebabCase from '../../../../../../../../common/utils/getKebabCase';
 
 const LiferayContact = ({koroneikiAccount}) => (
 	<div>

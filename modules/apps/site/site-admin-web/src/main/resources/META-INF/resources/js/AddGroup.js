@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openToast} from 'frontend-js-web';
+import {fetch, openToast} from 'frontend-js-web';
 
 export default function ({namespace}) {
 	const loading = document.querySelector('.add-group-loading');
@@ -46,7 +46,7 @@ export default function ({namespace}) {
 
 		const formData = new FormData(form);
 
-		Liferay.Util.fetch(form.action, {
+		fetch(form.action, {
 			body: formData,
 			method: 'POST',
 		})

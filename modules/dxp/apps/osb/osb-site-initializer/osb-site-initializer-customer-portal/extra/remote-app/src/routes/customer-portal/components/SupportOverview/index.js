@@ -9,24 +9,4 @@
  * distribution rights of the Software.
  */
 
-import LiferayContact from '../LiferayContact';
-import SlaCardList from '../SlaCardList';
-import SupportOverviewSkeleton from './Skeleton';
-
-const SupportOverview = ({koroneikiAccount}) => (
-	<div className="container cp-project-contacs-container mb-5 mx-0">
-		<div className="row">
-			<div className="col-5 pb-8">
-				<SlaCardList koroneikiAccount={koroneikiAccount} />
-			</div>
-
-			<div className="col-7">
-				<LiferayContact koroneikiAccount={koroneikiAccount} />
-			</div>
-		</div>
-	</div>
-);
-
-SupportOverview.Skeleton = SupportOverviewSkeleton;
-
-export default SupportOverview;
+export {default} from './SupportOverview';

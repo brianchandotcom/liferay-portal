@@ -1240,7 +1240,7 @@
 	<source-processor name="LibrarySourceProcessor">
 		<check name="LibraryVersionCheck">
 			<category name="Bug Prevention" />
-			<description name="Check if the library contains known vulnerability." />
+			<description name="Checks the introduction of libraries and third party components with known vulnerabilities" />
 			<property name="queryArgumentsPageNumber" value="50" />
 
 			<!-- Severity of the vulnerability CRITICAL, HIGH, LOW, MODERATE -->

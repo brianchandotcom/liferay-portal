@@ -37,7 +37,7 @@ public class JSPStaticResourceURLCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			int x = matcher.start();
 
-			String expression = null;
+			String parameters = null;
 
 			while (true) {
 				x = content.indexOf(StringPool.CLOSE_PARENTHESIS, x);
@@ -46,10 +46,10 @@ public class JSPStaticResourceURLCheck extends BaseFileCheck {
 					return content;
 				}
 
-				expression = content.substring(matcher.start(), x + 1);
+				parameters = content.substring(matcher.start(), x + 1);
 
 				int level = getLevel(
-					expression, StringPool.OPEN_PARENTHESIS,
+					parameters, StringPool.OPEN_PARENTHESIS,
 					StringPool.CLOSE_PARENTHESIS);
 
 				if (level == 0) {
@@ -59,14 +59,14 @@ public class JSPStaticResourceURLCheck extends BaseFileCheck {
 				x++;
 			}
 
-			List<String> parameters = JavaSourceUtil.getParameterList(
-				expression);
+			List<String> parameterList = JavaSourceUtil.getParameterList(
+				parameters);
 
-			if (ListUtil.isEmpty(parameters) || (parameters.size() < 2)) {
+			if (ListUtil.isEmpty(parameterList) || (parameterList.size() < 2)) {
 				continue;
 			}
 
-			String secondParameter = parameters.get(1);
+			String secondParameter = parameterList.get(1);
 
 			if (!secondParameter.contains("getContextPath()") ||
 				(secondParameter.contains("PortalUtil.getPathProxy()") &&
@@ -76,7 +76,7 @@ public class JSPStaticResourceURLCheck extends BaseFileCheck {
 			}
 
 			int insertPos =
-				matcher.start() + expression.indexOf(secondParameter);
+				matcher.start() + parameters.indexOf(secondParameter);
 
 			return StringUtil.insert(
 				content, "PortalUtil.getPathProxy() + ", insertPos);

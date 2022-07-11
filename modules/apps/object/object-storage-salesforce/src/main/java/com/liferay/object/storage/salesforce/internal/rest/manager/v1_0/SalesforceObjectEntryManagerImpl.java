@@ -35,9 +35,11 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -160,7 +162,7 @@ public class SalesforceObjectEntryManagerImpl
 
 		JSONObject responseJSONObject = _salesforceHttp.get(
 			companyId, getGroupId(objectDefinition, scopeKey),
-			_getLocation(objectDefinition, pagination, search));
+			_getLocation(objectDefinition, pagination, search, sorts));
 
 		if ((responseJSONObject == null) ||
 			(responseJSONObject.length() == 0)) {
@@ -257,8 +259,8 @@ public class SalesforceObjectEntryManagerImpl
 	}
 
 	private String _getLocation(
-		ObjectDefinition objectDefinition, Pagination pagination,
-		String search) {
+		ObjectDefinition objectDefinition, Pagination pagination, String search,
+		Sort[] sorts) {
 
 		if (Validator.isNotNull(search)) {
 			return HttpComponentsUtil.addParameter(
@@ -266,7 +268,9 @@ public class SalesforceObjectEntryManagerImpl
 				StringBundler.concat(
 					"FIND {", search, "} IN ALL FIELDS RETURNING ",
 					_getSalesforceObjectName(objectDefinition.getName()),
-					"(FIELDS(ALL)", _getSalesforcePagination(pagination), ")"));
+					"(FIELDS(ALL)",
+					_getSorts(objectDefinition.getObjectDefinitionId(), sorts),
+					_getSalesforcePagination(pagination), ")"));
 		}
 
 		return HttpComponentsUtil.addParameter(
@@ -274,6 +278,7 @@ public class SalesforceObjectEntryManagerImpl
 			StringBundler.concat(
 				"SELECT FIELDS(ALL) FROM ",
 				_getSalesforceObjectName(objectDefinition.getName()),
+				_getSorts(objectDefinition.getObjectDefinitionId(), sorts),
 				_getSalesforcePagination(pagination)));
 	}
 
@@ -314,6 +319,63 @@ public class SalesforceObjectEntryManagerImpl
 			pagination.getStartPosition());
 	}
 
+	private String _getSorts(long objectDefinitionId, Sort[] sorts) {
+		if (ArrayUtil.isEmpty(sorts)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(objectDefinitionId);
+
+		for (Sort sort : sorts) {
+			if (sb.length() == 0) {
+				sb.append(" ORDER BY ");
+			}
+			else {
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+
+			String fieldName = sort.getFieldName();
+
+			if (Field.isSortableFieldName(fieldName)) {
+				fieldName = StringUtil.removeSubstring(
+					fieldName,
+					StringPool.UNDERLINE + Field.SORTABLE_FIELD_SUFFIX);
+			}
+
+			String defaultFieldName = _defaultObjectFieldNames.get(fieldName);
+
+			if (defaultFieldName != null) {
+				sb.append(defaultFieldName);
+			}
+			else {
+				if (fieldName.startsWith("nestedFieldArray.")) {
+					String[] parts = StringUtil.split(
+						sort.getFieldName(), StringPool.POUND);
+
+					fieldName = parts[1];
+				}
+
+				ObjectField objectField = _getObjectFieldByName(
+					fieldName, objectFields);
+
+				if (objectField == null) {
+					continue;
+				}
+
+				sb.append(objectField.getExternalReferenceCode());
+			}
+
+			if (sort.isReverse()) {
+				sb.append(" DESC");
+			}
+		}
+
+		return sb.toString();
+	}
+
 	private int _getTotalCount(
 		long companyId, ObjectDefinition objectDefinition, String scopeKey,
 		String search) {
@@ -321,7 +383,8 @@ public class SalesforceObjectEntryManagerImpl
 		if (Validator.isNotNull(search)) {
 			JSONObject responseJSONObject = _salesforceHttp.get(
 				companyId, getGroupId(objectDefinition, scopeKey),
-				_getLocation(objectDefinition, Pagination.of(1, 200), search));
+				_getLocation(
+					objectDefinition, Pagination.of(1, 200), search, null));
 
 			JSONArray jsonArray = responseJSONObject.getJSONArray(
 				"searchRecords");
@@ -493,6 +556,15 @@ public class SalesforceObjectEntryManagerImpl
 
 		return objectEntry;
 	}
+
+	private final Map<String, String> _defaultObjectFieldNames =
+		HashMapBuilder.put(
+			"createDate", "CreatedDate"
+		).put(
+			"modified", "LastModifiedDate"
+		).put(
+			"userName", "OwnerId"
+		).build();
 
 	@Reference
 	private JSONFactory _jsonFactory;

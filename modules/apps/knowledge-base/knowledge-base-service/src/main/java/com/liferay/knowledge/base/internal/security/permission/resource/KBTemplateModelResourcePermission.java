@@ -17,9 +17,9 @@ package com.liferay.knowledge.base.internal.security.permission.resource;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBTemplateLocalService;
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class KBTemplateModelResourcePermission
-	extends ModelResourcePermissionWrapper<KBTemplate> {
+	extends BaseModelResourcePermissionWrapper<KBTemplate> {
 
 	@Override
 	protected ModelResourcePermission<KBTemplate>

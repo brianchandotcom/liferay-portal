@@ -21,10 +21,10 @@ import com.liferay.commerce.wish.list.service.CommerceWishListLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class CommerceWishListModelResourcePermission
-	extends ModelResourcePermissionWrapper<CommerceWishList> {
+	extends BaseModelResourcePermissionWrapper<CommerceWishList> {
 
 	@Override
 	protected ModelResourcePermission<CommerceWishList>

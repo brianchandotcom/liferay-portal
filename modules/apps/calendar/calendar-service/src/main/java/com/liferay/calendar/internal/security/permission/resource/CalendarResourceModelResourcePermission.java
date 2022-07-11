@@ -19,9 +19,9 @@ import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class CalendarResourceModelResourcePermission
-	extends ModelResourcePermissionWrapper<CalendarResource> {
+	extends BaseModelResourcePermissionWrapper<CalendarResource> {
 
 	@Override
 	protected ModelResourcePermission<CalendarResource>

@@ -16,9 +16,9 @@ package com.liferay.document.library.internal.security.permission.resource;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class FileShortcutModelResourcePermission
-	extends ModelResourcePermissionWrapper<FileShortcut> {
+	extends BaseModelResourcePermissionWrapper<FileShortcut> {
 
 	@Override
 	protected ModelResourcePermission<FileShortcut>

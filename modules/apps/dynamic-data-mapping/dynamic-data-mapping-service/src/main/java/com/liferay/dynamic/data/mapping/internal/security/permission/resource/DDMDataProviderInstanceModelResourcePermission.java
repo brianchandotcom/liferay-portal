@@ -17,9 +17,9 @@ package com.liferay.dynamic.data.mapping.internal.security.permission.resource;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class DDMDataProviderInstanceModelResourcePermission
-	extends ModelResourcePermissionWrapper<DDMDataProviderInstance> {
+	extends BaseModelResourcePermissionWrapper<DDMDataProviderInstance> {
 
 	@Override
 	protected ModelResourcePermission<DDMDataProviderInstance>

@@ -14,9 +14,9 @@
 
 package com.liferay.site.navigation.internal.security.permission.resource;
 
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class SiteNavigationMenuItemModelResourcePermission
-	extends ModelResourcePermissionWrapper<SiteNavigationMenuItem> {
+	extends BaseModelResourcePermissionWrapper<SiteNavigationMenuItem> {
 
 	@Override
 	protected ModelResourcePermission<SiteNavigationMenuItem>

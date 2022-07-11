@@ -14,9 +14,9 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.security.permission.resource;
 
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class KaleoDefinitionVersionModelResourcePermission
-	extends ModelResourcePermissionWrapper<KaleoDefinitionVersion> {
+	extends BaseModelResourcePermissionWrapper<KaleoDefinitionVersion> {
 
 	@Override
 	protected ModelResourcePermission<KaleoDefinitionVersion>

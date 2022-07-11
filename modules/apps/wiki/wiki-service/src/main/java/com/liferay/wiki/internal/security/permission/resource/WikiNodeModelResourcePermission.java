@@ -15,9 +15,9 @@
 package com.liferay.wiki.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.wiki.constants.WikiConstants;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class WikiNodeModelResourcePermission
-	extends ModelResourcePermissionWrapper<WikiNode> {
+	extends BaseModelResourcePermissionWrapper<WikiNode> {
 
 	@Override
 	protected ModelResourcePermission<WikiNode> doGetModelResourcePermission() {

@@ -19,9 +19,9 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeModel;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class DLFileEntryTypeModelResourcePermission
-	extends ModelResourcePermissionWrapper<DLFileEntryType> {
+	extends BaseModelResourcePermissionWrapper<DLFileEntryType> {
 
 	@Override
 	protected ModelResourcePermission<DLFileEntryType>

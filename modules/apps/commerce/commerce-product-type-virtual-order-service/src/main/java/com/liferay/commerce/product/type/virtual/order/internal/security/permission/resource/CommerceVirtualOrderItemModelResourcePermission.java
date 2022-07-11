@@ -18,9 +18,9 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.type.virtual.order.constants.CommerceVirtualOrderConstants;
 import com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem;
 import com.liferay.commerce.product.type.virtual.order.service.CommerceVirtualOrderItemLocalService;
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class CommerceVirtualOrderItemModelResourcePermission
-	extends ModelResourcePermissionWrapper<CommerceVirtualOrderItem> {
+	extends BaseModelResourcePermissionWrapper<CommerceVirtualOrderItem> {
 
 	@Override
 	protected ModelResourcePermission<CommerceVirtualOrderItem>

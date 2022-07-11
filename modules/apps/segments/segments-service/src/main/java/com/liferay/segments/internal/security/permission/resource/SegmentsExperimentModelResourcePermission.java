@@ -17,10 +17,10 @@ package com.liferay.segments.internal.security.permission.resource;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class SegmentsExperimentModelResourcePermission
-	extends ModelResourcePermissionWrapper<SegmentsExperiment> {
+	extends BaseModelResourcePermissionWrapper<SegmentsExperiment> {
 
 	@Override
 	protected ModelResourcePermission<SegmentsExperiment>

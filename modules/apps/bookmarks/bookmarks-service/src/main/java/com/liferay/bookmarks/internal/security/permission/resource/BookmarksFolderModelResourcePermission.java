@@ -23,10 +23,10 @@ import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.DynamicInheritancePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.util.PropsValues;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class BookmarksFolderModelResourcePermission
-	extends ModelResourcePermissionWrapper<BookmarksFolder> {
+	extends BaseModelResourcePermissionWrapper<BookmarksFolder> {
 
 	@Override
 	protected ModelResourcePermission<BookmarksFolder>

@@ -17,9 +17,9 @@ package com.liferay.layout.page.template.internal.security.permission.resource;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ModelResourcePermission.class
 )
 public class LayoutPageTemplateCollectionModelResourcePermission
-	extends ModelResourcePermissionWrapper<LayoutPageTemplateCollection> {
+	extends BaseModelResourcePermissionWrapper<LayoutPageTemplateCollection> {
 
 	@Override
 	protected ModelResourcePermission<LayoutPageTemplateCollection>

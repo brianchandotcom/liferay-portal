@@ -35,9 +35,8 @@ public class JSPStaticResourceURLCheck extends BaseFileCheck {
 		Matcher matcher = _staticResourceURLParamPattern.matcher(content);
 
 		while (matcher.find()) {
-			int x = matcher.start();
-
 			String parameters = null;
+			int x = matcher.start();
 
 			while (true) {
 				x = content.indexOf(StringPool.CLOSE_PARENTHESIS, x);
@@ -69,8 +68,8 @@ public class JSPStaticResourceURLCheck extends BaseFileCheck {
 			String secondParameter = parameterList.get(1);
 
 			if (!secondParameter.contains("getContextPath()") ||
-				(secondParameter.contains("PortalUtil.getPathProxy()") &&
-				 secondParameter.contains("getContextPath()"))) {
+				(secondParameter.contains("getContextPath()") &&
+				 secondParameter.contains("PortalUtil.getPathProxy()"))) {
 
 				continue;
 			}

@@ -2264,37 +2264,10 @@ public class SXPBlueprintSearchResultTest {
 		return group;
 	}
 
-	private void _addGroupAAndGroupB() throws Exception {
-		_groupA = GroupTestUtil.addGroup(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			RandomTestUtil.randomString(), _serviceContext);
-		_groupB = GroupTestUtil.addGroup(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			RandomTestUtil.randomString(), _serviceContext);
-	}
-
 	private User _addGroupUser(Group group, String roleName) throws Exception {
 		Role role = RoleTestUtil.addRole(roleName, RoleConstants.TYPE_REGULAR);
 
 		return UserTestUtil.addGroupUser(group, role.getName());
-	}
-
-	private JournalArticle _addJournalArticle(
-			long groupId, long folderId, String name, String content,
-			boolean workflowEnabled, boolean approved)
-		throws Exception {
-
-		return JournalTestUtil.addArticle(
-			groupId, folderId, PortalUtil.getClassNameId(JournalArticle.class),
-			HashMapBuilder.put(
-				LocaleUtil.US, name
-			).build(),
-			null,
-			HashMapBuilder.put(
-				LocaleUtil.US, content
-			).build(),
-			LocaleUtil.getSiteDefault(), workflowEnabled, approved,
-			_serviceContext);
 	}
 
 	private SegmentsEntry _addSegmentsEntry(User user) throws Exception {
@@ -2496,84 +2469,6 @@ public class SXPBlueprintSearchResultTest {
 		return false;
 	}
 
-	private void _setUpJournalArticles(
-			String[] journalArticleContents, String[] journalArticleTitles)
-		throws Exception {
-
-		Group group = _group;
-
-		if (_groupA != null) {
-			group = _groupA;
-		}
-
-		_journalArticles.add(
-			_addJournalArticle(
-				group.getGroupId(), 0, journalArticleTitles[0],
-				journalArticleContents[0], false, true));
-
-		if (journalArticleTitles.length < 2) {
-			return;
-		}
-
-		if (_groupB != null) {
-			group = _groupB;
-		}
-
-		if (_assetCategory != null) {
-			System.out.println(
-				"setupJournalArticles CategoryId: " +
-					_assetCategory.getCategoryId());
-			_serviceContext.setAssetCategoryIds(
-				new long[] {_assetCategory.getCategoryId()});
-		}
-
-		if (_assetTag != null) {
-			_serviceContext.setAssetTagNames(
-				new String[] {_assetTag.getName()});
-		}
-
-		long journalFolderId = 0;
-
-		if (_journalFolder != null) {
-			journalFolderId = _journalFolder.getFolderId();
-		}
-
-		_journalArticles.add(
-			_addJournalArticle(
-				group.getGroupId(), journalFolderId, journalArticleTitles[1],
-				journalArticleContents[1], false, true));
-
-		for (int i = 2;
-			 (journalArticleTitles.length > 2) &&
-			 (i < journalArticleTitles.length); i++) {
-
-			_journalArticles.add(
-				_addJournalArticle(
-					_group.getGroupId(), 0, journalArticleTitles[i],
-					journalArticleContents[i], false, true));
-		}
-	}
-
-	private void _setUpJournalArticles(
-			String[] expandoBridgeAttributeNames, String[] journalArticleTitles,
-			double[] latitudes, double[] longitudes)
-		throws Exception {
-
-		for (int i = 0; i < journalArticleTitles.length; i++) {
-			_serviceContext.setExpandoBridgeAttributes(
-				Collections.singletonMap(
-					expandoBridgeAttributeNames[i],
-					JSONUtil.put(
-						"latitude", latitudes[i]
-					).put(
-						"longitude", longitudes[i]
-					).toString()));
-
-			_setUpJournalArticles(
-				new String[] {""}, new String[] {journalArticleTitles[i]});
-		}
-	}
-
 	private void _updateConfigurationJSON(
 			String configurationName, JSONObject jsonObject)
 		throws Exception {
@@ -2652,12 +2547,6 @@ public class SXPBlueprintSearchResultTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@DeleteAfterTestRun
-	private Group _groupA;
-
-	@DeleteAfterTestRun
-	private Group _groupB;
 
 	@DeleteAfterTestRun
 	private List<Group> _groups = new ArrayList<>();

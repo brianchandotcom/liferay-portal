@@ -248,7 +248,7 @@ definition {
 			for (var fieldSetLabel : list "Spacing,Text,Background,Borders,Effects") {
 				AssertElementPresent(
 					key_fieldSetLabel = "${fieldSetLabel}",
-					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 			}
 		}
 
@@ -259,7 +259,7 @@ definition {
 		task ("Then the page creator could see the Frame section on General panel") {
 			AssertElementPresent(
 				key_fieldSetLabel = "Frame",
-				locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+				locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 		}
 
 		task ("When the page creator navigates to the Advanced panel of Form Container") {

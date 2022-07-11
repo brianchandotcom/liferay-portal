@@ -70,7 +70,7 @@ definition {
 
 			AssertVisible(
 				key_fieldSetLabel = "Marco",
-				locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+				locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Desbordamiento",
@@ -89,7 +89,7 @@ definition {
 			for (var fieldSetLabel : list "Espaciado,Texto,Fondo,Bordes,Efectos") {
 				AssertVisible(
 					key_fieldSetLabel = "${fieldSetLabel}",
-					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 			}
 
 			for (var fieldLabel : list "Margen,Relleno") {

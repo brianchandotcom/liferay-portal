@@ -99,7 +99,7 @@ definition {
 
 				AssertElementPresent(
 					key_fieldSetLabel = "CSS",
-					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 
 				AssertElementNotPresent(
 					checkboxName = "Hide from Site Search Results",
@@ -111,11 +111,11 @@ definition {
 
 				AssertElementPresent(
 					key_fieldSetLabel = "Frame",
-					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 
 				AssertElementNotPresent(
 					key_fieldSetLabel = "Heading Options",
-					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 			}
 
 			task ("View all sections are available on Styles panel") {
@@ -124,7 +124,7 @@ definition {
 				for (var fieldSetLabel : list "Spacing,Text,Background,Borders,Effects") {
 					AssertElementPresent(
 						key_fieldSetLabel = "${fieldSetLabel}",
-						locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+						locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 				}
 			}
 		}
@@ -894,14 +894,14 @@ definition {
 
 			AssertElementPresent(
 				key_fieldSetLabel = "Frame",
-				locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+				locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 
 			Navigator.gotoNavTab(navTab = "Styles");
 
 			for (var fieldSetLabel : list "Spacing,Text,Background,Borders,Effects") {
 				AssertElementPresent(
 					key_fieldSetLabel = "${fieldSetLabel}",
-					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 			}
 		}
 
@@ -911,7 +911,7 @@ definition {
 
 				AssertElementPresent(
 					key_fieldSetLabel = "Spacing",
-					locator1 = "PageEditor#COMMON_STYLES_FIELDSET_LABEL");
+					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 			}
 		}
 	}

@@ -18,19 +18,27 @@ import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
 import com.liferay.portal.crypto.hash.CryptoHashVerifier;
 import com.liferay.portal.crypto.hash.exception.CryptoHashException;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProvider;
+import com.liferay.portal.crypto.hash.spi.CryptoHashProviderFactory;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderResponse;
 
 import java.security.MessageDigest;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public class CryptoHashVerifierImpl implements CryptoHashVerifier {
 
-	public CryptoHashVerifierImpl(
-		CryptoHashProviderFactoryRegistry cryptoHashProviderFactoryRegistry) {
+	public void register(CryptoHashProviderFactory cryptoHashProviderFactory) {
+		_cryptoHashProviderFactories.put(
+			cryptoHashProviderFactory.getCryptoHashProviderFactoryName(),
+			cryptoHashProviderFactory);
+	}
 
-		_cryptoHashProviderFactoryRegistry = cryptoHashProviderFactoryRegistry;
+	public void unregister(String cryptoHashProviderName) {
+		_cryptoHashProviderFactories.remove(cryptoHashProviderName);
 	}
 
 	@Override
@@ -42,12 +50,11 @@ public class CryptoHashVerifierImpl implements CryptoHashVerifier {
 		for (CryptoHashVerificationContext cryptoHashVerificationContext :
 				cryptoHashVerificationContexts) {
 
-			CryptoHashProvider cryptoHashProvider =
-				_cryptoHashProviderFactoryRegistry.getCryptoHashProvider(
-					cryptoHashVerificationContext.
-						getCryptoHashProviderFactoryName(),
-					cryptoHashVerificationContext.
-						getCryptoHashProviderProperties());
+			CryptoHashProvider cryptoHashProvider = _getCryptoHashProvider(
+				cryptoHashVerificationContext.
+					getCryptoHashProviderFactoryName(),
+				cryptoHashVerificationContext.
+					getCryptoHashProviderProperties());
 
 			CryptoHashProviderResponse cryptoHashProviderResponse =
 				cryptoHashProvider.generate(
@@ -59,7 +66,24 @@ public class CryptoHashVerifierImpl implements CryptoHashVerifier {
 		return MessageDigest.isEqual(input, hash);
 	}
 
-	private final CryptoHashProviderFactoryRegistry
-		_cryptoHashProviderFactoryRegistry;
+	private CryptoHashProvider _getCryptoHashProvider(
+			String cryptoHashProviderFactoryName,
+			Map<String, ?> cryptoHashProviderProperties)
+		throws CryptoHashException {
+
+		CryptoHashProviderFactory cryptoHashProviderFactory =
+			_cryptoHashProviderFactories.get(cryptoHashProviderFactoryName);
+
+		if (cryptoHashProviderFactory == null) {
+			throw new CryptoHashException(
+				"No crypto hash provider factory found for " +
+					cryptoHashProviderFactoryName);
+		}
+
+		return cryptoHashProviderFactory.create(cryptoHashProviderProperties);
+	}
+
+	private final Map<String, CryptoHashProviderFactory>
+		_cryptoHashProviderFactories = new ConcurrentHashMap<>();
 
 }

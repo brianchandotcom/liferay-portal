@@ -45,8 +45,8 @@ public class CryptoHashTrackerRegistrator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		CryptoHashProviderFactoryRegistry cryptoHashProviderFactoryRegistry =
-			new CryptoHashProviderFactoryRegistry();
+		CryptoHashVerifierImpl cryptoHashVerifierImpl =
+			new CryptoHashVerifierImpl();
 
 		OSGi<?> osgi = OSGi.serviceReferences(
 			CryptoHashProviderFactory.class
@@ -72,14 +72,13 @@ public class CryptoHashTrackerRegistrator {
 				CryptoHashProviderFactory cryptoHashProviderFactory =
 					serviceReferenceServiceTuple.getService();
 
-				cryptoHashProviderFactoryRegistry.register(
-					cryptoHashProviderFactory);
+				cryptoHashVerifierImpl.register(cryptoHashProviderFactory);
 			},
 			serviceReferenceServiceTuple -> {
 				CryptoHashProviderFactory cryptoHashProviderFactory =
 					serviceReferenceServiceTuple.getService();
 
-				cryptoHashProviderFactoryRegistry.unregister(
+				cryptoHashVerifierImpl.unregister(
 					cryptoHashProviderFactory.
 						getCryptoHashProviderFactoryName());
 			}
@@ -136,8 +135,7 @@ public class CryptoHashTrackerRegistrator {
 		_osgiResult = osgi.run(bundleContext);
 
 		_cryptoHashVerifierServiceRegistration = bundleContext.registerService(
-			CryptoHashVerifier.class,
-			new CryptoHashVerifierImpl(cryptoHashProviderFactoryRegistry),
+			CryptoHashVerifier.class, cryptoHashVerifierImpl,
 			new HashMapDictionary<>());
 	}
 

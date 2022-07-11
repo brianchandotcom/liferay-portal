@@ -5,7 +5,10 @@ const numericInput = fragmentElement.querySelector(
 const isInteger = input.attributes.dataType === 'integer';
 
 function handleOnKeydown(event) {
-	if (isInteger && (event.key === ',' || event.key === '.')) {
+	if (
+		(isInteger && (event.key === ',' || event.key === '.')) ||
+		event.key === '+'
+	) {
 		event.preventDefault();
 	}
 }

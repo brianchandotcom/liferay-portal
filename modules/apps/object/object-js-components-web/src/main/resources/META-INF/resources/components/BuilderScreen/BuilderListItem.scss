@@ -21,6 +21,13 @@
 		margin-right: 10px;
 	}
 
+	&__object-builder-list-item-first-column {
+		display: flex;
+		max-width: 278px;
+		padding-top: 4px;
+		word-break: break-all;
+	}
+
 	&__object-builder-list-item-second-column {
 		left: 336px !important;
 		position: absolute;

@@ -227,7 +227,7 @@ function SpacingSelectorButton({
 						/>
 					) : null}
 
-					<span ref={setLabelElement}>
+					<span className="text-truncate" ref={setLabelElement}>
 						<SpacingOptionValue
 							position={position}
 							removeValueUnit
@@ -257,14 +257,14 @@ function SpacingSelectorButton({
 									document.getElementById(triggerId)?.focus();
 								}}
 							>
-								<span className="flex-grow-1 text-truncate">
+								<span className="text-truncate w-50">
 									{Liferay.FeatureFlags['LPS-147895']
 										? tokenValues[`spacer${option.value}`]
 												?.label || option.label
 										: option.label}
 								</span>
 
-								<strong className="flex-shrink-0 pl-2">
+								<strong className="flex-grow-1 pl-2 text-right text-truncate">
 									<SpacingOptionValue
 										position={position}
 										tokenValues={tokenValues}

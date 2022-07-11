@@ -67,18 +67,13 @@ public class JSPStaticResourceURLCheck extends BaseFileCheck {
 
 			String secondParameter = parameterList.get(1);
 
-			if (!secondParameter.contains("getContextPath()") ||
-				(secondParameter.contains("getContextPath()") &&
-				 secondParameter.contains("PortalUtil.getPathProxy()"))) {
+			if (secondParameter.startsWith("application.getContextPath()")) {
+				int insertPos =
+					matcher.start() + parameters.indexOf(secondParameter);
 
-				continue;
+				return StringUtil.insert(
+					content, "PortalUtil.getPathProxy() + ", insertPos);
 			}
-
-			int insertPos =
-				matcher.start() + parameters.indexOf(secondParameter);
-
-			return StringUtil.insert(
-				content, "PortalUtil.getPathProxy() + ", insertPos);
 		}
 
 		return content;

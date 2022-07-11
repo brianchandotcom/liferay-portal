@@ -368,11 +368,22 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 		ContainerStyledLayoutStructureItem
 			actualContainerStyledLayoutStructureItem) {
 
-		Assert.assertEquals(
+		JSONObject expectedItemConfigJSONObject =
 			expectedContainerStyledLayoutStructureItem.
-				getBackgroundColorCssClass(),
-			actualContainerStyledLayoutStructureItem.
-				getBackgroundColorCssClass());
+				getItemConfigJSONObject();
+
+		JSONObject actualItemConfigJSONObject =
+			actualContainerStyledLayoutStructureItem.getItemConfigJSONObject();
+
+		JSONObject expectedStylesJSONObject =
+			expectedItemConfigJSONObject.getJSONObject("styles");
+
+		JSONObject actualStylesJSONObject =
+			actualItemConfigJSONObject.getJSONObject("styles");
+
+		Assert.assertEquals(
+			expectedStylesJSONObject.getString("backgroundColor"),
+			actualStylesJSONObject.getString("backgroundColor"));
 
 		JSONObject expectedBackgroundImageJSONObject =
 			expectedContainerStyledLayoutStructureItem.
@@ -386,17 +397,17 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			actualBackgroundImageJSONObject.toString());
 
 		Assert.assertEquals(
-			expectedContainerStyledLayoutStructureItem.getPaddingBottom(),
-			actualContainerStyledLayoutStructureItem.getPaddingBottom());
+			expectedStylesJSONObject.getString("paddingBottom"),
+			actualStylesJSONObject.getString("paddingBottom"));
 		Assert.assertEquals(
-			expectedContainerStyledLayoutStructureItem.getPaddingLeft(),
-			actualContainerStyledLayoutStructureItem.getPaddingLeft());
+			expectedStylesJSONObject.getString("paddingLeft"),
+			actualStylesJSONObject.getString("paddingLeft"));
 		Assert.assertEquals(
-			expectedContainerStyledLayoutStructureItem.getPaddingRight(),
-			actualContainerStyledLayoutStructureItem.getPaddingRight());
+			expectedStylesJSONObject.getString("paddingRight"),
+			actualStylesJSONObject.getString("paddingRight"));
 		Assert.assertEquals(
-			expectedContainerStyledLayoutStructureItem.getPaddingTop(),
-			actualContainerStyledLayoutStructureItem.getPaddingTop());
+			expectedStylesJSONObject.getString("paddingTop"),
+			actualStylesJSONObject.getString("paddingTop"));
 		Assert.assertEquals(
 			expectedContainerStyledLayoutStructureItem.getWidthType(),
 			actualContainerStyledLayoutStructureItem.getWidthType());

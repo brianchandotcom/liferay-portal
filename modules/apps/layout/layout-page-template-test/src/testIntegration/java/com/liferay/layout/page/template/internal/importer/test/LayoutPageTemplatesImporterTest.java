@@ -267,17 +267,18 @@ public class LayoutPageTemplatesImporterTest {
 
 		Assert.assertEquals(
 			"fluid", containerStyledLayoutStructureItem.getWidthType());
+
+		JSONObject itemConfigJSONObject =
+			containerStyledLayoutStructureItem.getItemConfigJSONObject();
+
+		JSONObject stylesJSONObject = itemConfigJSONObject.getJSONObject(
+			"styles");
+
 		Assert.assertEquals(
-			StringPool.BLANK,
-			containerStyledLayoutStructureItem.getMarginRight());
-		Assert.assertEquals(
-			"5", containerStyledLayoutStructureItem.getPaddingBottom());
-		Assert.assertEquals(
-			"5", containerStyledLayoutStructureItem.getPaddingLeft());
-		Assert.assertEquals(
-			"5", containerStyledLayoutStructureItem.getPaddingTop());
-		Assert.assertEquals(
-			"fluid", containerStyledLayoutStructureItem.getWidthType());
+			StringPool.BLANK, stylesJSONObject.getString("marginBottom"));
+		Assert.assertEquals("5", stylesJSONObject.getString("paddingBottom"));
+		Assert.assertEquals("5", stylesJSONObject.getString("paddingLeft"));
+		Assert.assertEquals("5", stylesJSONObject.getString("paddingTop"));
 
 		JSONObject jsonObject =
 			containerStyledLayoutStructureItem.getBackgroundImageJSONObject();

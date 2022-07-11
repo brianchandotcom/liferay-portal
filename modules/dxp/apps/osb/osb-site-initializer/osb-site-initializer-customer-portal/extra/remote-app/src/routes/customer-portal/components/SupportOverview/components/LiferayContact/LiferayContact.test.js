@@ -10,7 +10,7 @@
  */
 
 import {render, screen} from '@testing-library/react';
-import LiferayContact from '../LiferayContact';
+import LiferayContact from './LiferayContact';
 
 describe('LiferayContact', () => {
 	const koroneikiAccount = {

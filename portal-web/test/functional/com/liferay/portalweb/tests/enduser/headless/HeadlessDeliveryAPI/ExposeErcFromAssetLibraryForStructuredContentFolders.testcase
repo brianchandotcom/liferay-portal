@@ -65,4 +65,44 @@ definition {
 		}
 	}
 
+	@description = "Sub folder is created with a custom erc in structured content folder in asset library"
+	@priority = "5"
+	test SubfolderIsCreatedInStructuredContentFolderInAssetLibraryWithCustomErc {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content folder with a custom erc is created with POST request") {
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				externalReferenceCode = "erc",
+				name = "Test Folder");
+		}
+
+		task ("When with POST request I create a child folder with another custom erc") {
+			var folderId = HeadlessWebcontentFolderAPI.getIdOfCreateStructuredContentFolder(responseToParse = "${response}");
+
+			var response = HeadlessWebcontentFolderAPI.createSubfolderInStructuredContentFolder(
+				externalReferenceCode = "subfolder-erc",
+				name = "Sub Folder",
+				parentStructuredContentFolderId = "${folderId}");
+		}
+
+		task ("Then I can see the custom erc in the body response") {
+			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "subfolder-erc",
+				responseToParse = "${response}");
+		}
+
+		task ("And Then a child folder is being created properly") {
+			var response = HeadlessWebcontentFolderAPI.getStructuredContentFoldersByErcInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				externalReferenceCode = "erc");
+
+			HeadlessWebcontentFolderAPI.assetProperNumberOfStructuredContentFolders(
+				expectedNumbers = "1",
+				responseToParse = "${response}");
+		}
+	}
+
 }

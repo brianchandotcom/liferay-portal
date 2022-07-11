@@ -1,5 +1,38 @@
 definition {
 
+	macro _addSubfolderInAnExistingStructuredContentFolder {
+		Variables.assertDefined(parameterList = "${name}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/structured-content-folders/${parentStructuredContentFolderId}/structured-content-folders \
+				-u ${userEmailAddress}:${userPassword} \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-d {
+                    "externalReferenceCode": "${externalReferenceCode}",
+                    "name": "${name}"
+				}
+		''';
+
+		var response = JSONCurlUtil.post("${curl}");
+
+		return "${response}";
+	}
+
 	macro _addWebcontentFolder {
 		Variables.assertDefined(parameterList = "${name}");
 
@@ -40,6 +73,22 @@ definition {
 		return "${response}";
 	}
 
+	macro _getStructuredContentFoldersByErcInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+            ${portalURL}/o/headless-delivery/v1.0/asset-libraries/${assetLibraryId}/structured-content-folders/by-external-reference-code/${externalReferenceCode} \
+            -u test@liferay.com:test \
+            -H Content-Type: application/json
+        ''';
+
+		var curl = JSONCurlUtil.get("${curl}");
+
+		return "${curl}";
+	}
+
 	macro assertExternalReferenceCodeWithCorrectValue {
 		if (!(isSet(expectedExternalReferenceCodeValue))) {
 			var folderId = JSONUtil.getWithJSONPath("${responseToParse}", "$.id");
@@ -60,6 +109,14 @@ definition {
 			expected = "${expectedExternalReferenceCodeValue}");
 	}
 
+	macro assetProperNumberOfStructuredContentFolders {
+		var actualNumbers = JSONUtil.getWithJSONPath("${responseToParse}", "$..['numberOfStructuredContentFolders']");
+
+		TestUtils.assertEquals(
+			actual = "${actualNumbers}",
+			expected = "${expectedNumbers}");
+	}
+
 	macro createStructuredContentFolderInAssetLibrary {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${name}");
 
@@ -71,6 +128,37 @@ definition {
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}",
 			viewableBy = "${viewableBy}");
+
+		return "${response}";
+	}
+
+	macro createSubfolderInStructuredContentFolder {
+		Variables.assertDefined(parameterList = "${parentStructuredContentFolderId},${name}");
+
+		var response = HeadlessWebcontentFolderAPI._addSubfolderInAnExistingStructuredContentFolder(
+			description = "${description}",
+			externalReferenceCode = "${externalReferenceCode}",
+			name = "${name}",
+			parentStructuredContentFolderId = "${parentStructuredContentFolderId}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}",
+			viewableBy = "${viewableBy}");
+
+		return "${response}";
+	}
+
+	macro getIdOfCreateStructuredContentFolder {
+		var folderId = JSONUtil.getWithJSONPath("${responseToParse}", "$.id");
+
+		return "${folderId}";
+	}
+
+	macro getStructuredContentFoldersByErcInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
+
+		var response = HeadlessWebcontentFolderAPI._getStructuredContentFoldersByErcInAssetLibrary(
+			assetLibraryId = "${assetLibraryId}",
+			externalReferenceCode = "${externalReferenceCode}");
 
 		return "${response}";
 	}

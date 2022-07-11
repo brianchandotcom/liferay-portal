@@ -19,6 +19,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
@@ -233,12 +234,12 @@ public class ObjectEntryInfoItemFormProvider
 					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
 			finalStep.attribute(
-				SelectInfoFieldType.OPTIONS_LABEL_FIELD_NAME,
-				_getOptionsLabelFieldName(objectField)
+				RelationshipInfoFieldType.LABEL_FIELD_NAME,
+				_getRelationshipLabelFieldName(objectField)
 			).attribute(
-				SelectInfoFieldType.OPTIONS_URL, _getOptionsURL(objectField)
+				RelationshipInfoFieldType.URL, _getRelationshipURL(objectField)
 			).attribute(
-				SelectInfoFieldType.OPTIONS_VALUE_FIELD_NAME, "id"
+				RelationshipInfoFieldType.VALUE_FIELD_NAME, "id"
 			);
 		}
 
@@ -484,7 +485,7 @@ public class ObjectEntryInfoItemFormProvider
 		return options;
 	}
 
-	private String _getOptionsLabelFieldName(ObjectField objectField) {
+	private String _getRelationshipLabelFieldName(ObjectField objectField) {
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.
 				fetchObjectRelationshipByObjectFieldId2(
@@ -509,7 +510,7 @@ public class ObjectEntryInfoItemFormProvider
 		return titleObjectField.getName();
 	}
 
-	private String _getOptionsURL(ObjectField objectField) {
+	private String _getRelationshipURL(ObjectField objectField) {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 

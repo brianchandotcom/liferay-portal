@@ -22,6 +22,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.item.selector.ItemSelector;
@@ -287,24 +288,24 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 			Optional<String> optionsLabelFieldNameOptional =
 				infoField.getAttributeOptional(
-					SelectInfoFieldType.OPTIONS_LABEL_FIELD_NAME);
+					RelationshipInfoFieldType.LABEL_FIELD_NAME);
 
 			inputTemplateNode.addAttribute(
-				"optionsLabelFieldName",
+				"relationshipLabelFieldName",
 				optionsLabelFieldNameOptional.orElse(null));
 
 			Optional<String> optionsURLOptional =
-				infoField.getAttributeOptional(SelectInfoFieldType.OPTIONS_URL);
+				infoField.getAttributeOptional(RelationshipInfoFieldType.URL);
 
 			inputTemplateNode.addAttribute(
-				"optionsURL", optionsURLOptional.orElse(null));
+				"relationshipURL", optionsURLOptional.orElse(null));
 
 			Optional<String> optionsValueFieldNameOptional =
 				infoField.getAttributeOptional(
-					SelectInfoFieldType.OPTIONS_VALUE_FIELD_NAME);
+					RelationshipInfoFieldType.VALUE_FIELD_NAME);
 
 			inputTemplateNode.addAttribute(
-				"optionsValueFieldName",
+				"relationshipValueFieldName",
 				optionsValueFieldNameOptional.orElse(null));
 		}
 

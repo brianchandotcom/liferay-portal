@@ -84,7 +84,7 @@ function repositionDropdown() {
 }
 
 function showDropdown() {
-	const canFetchOptions = input.attributes.optionsURL && searchInput;
+	const canFetchOptions = input.attributes.relationshipURL && searchInput;
 
 	if (canFetchOptions || defaultOptions.length) {
 		repositionDropdown();
@@ -320,14 +320,14 @@ function filterLocalOptions(query) {
 
 function fetchRemoteOptions(query, abortController) {
 	if (
-		!input.attributes.optionsLabelFieldName ||
-		!input.attributes.optionsURL ||
-		!input.attributes.optionsValueFieldName
+		!input.attributes.relationshipLabelFieldName ||
+		!input.attributes.relationshipURL ||
+		!input.attributes.relationshipValueFieldName
 	) {
 		return Promise.resolve({items: []});
 	}
 
-	const url = new URL(input.attributes.optionsURL);
+	const url = new URL(input.attributes.relationshipURL);
 	url.searchParams.set('search', query);
 
 	return Liferay.Util.fetch(url, {
@@ -341,8 +341,8 @@ function fetchRemoteOptions(query, abortController) {
 		.then((response) => response.json())
 		.then((result) => {
 			return result.items.map((entry) => ({
-				label: entry[input.attributes.optionsLabelFieldName],
-				value: entry[input.attributes.optionsValueFieldName],
+				label: entry[input.attributes.relationshipLabelFieldName],
+				value: entry[input.attributes.relationshipValueFieldName],
 			}));
 		});
 }
@@ -396,7 +396,7 @@ function handleSearchInput() {
 
 	showElement(loadingResultsMessage);
 
-	const fetcher = input.attributes.optionsURL
+	const fetcher = input.attributes.relationshipURL
 		? fetchRemoteOptions
 		: filterLocalOptions;
 

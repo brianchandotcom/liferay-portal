@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import classNames from 'classnames';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {useGlobalContext} from '../../app/contexts/GlobalContext';
 import {useId} from '../../app/utils/useId';
@@ -180,15 +180,6 @@ function SpacingSelectorButton({
 		}
 	}, [active, field, value]);
 
-	const spacingOptionValue = useCallback(
-		(optionValue) => {
-			const value = tokenValues[`spacer${optionValue}`].value;
-
-			return value === undefined ? '' : value;
-		},
-		[tokenValues]
-	);
-
 	return (
 		<ClayDropDown
 			active={active}
@@ -224,17 +215,12 @@ function SpacingSelectorButton({
 							label={
 								<>
 									{field.label} -{' '}
-									{Liferay.FeatureFlags['LPS-147895'] ? (
-										spacingOptionValue(
-											value || field?.defaultValue
-										)
-									) : (
-										<SpacingOptionValue
-											position={position}
-											type={type}
-											value={value || field.defaultValue}
-										/>
-									)}
+									<SpacingOptionValue
+										position={position}
+										tokenValues={tokenValues}
+										type={type}
+										value={value || field.defaultValue}
+									/>
 								</>
 							}
 							positionElement={labelElement}
@@ -242,16 +228,13 @@ function SpacingSelectorButton({
 					) : null}
 
 					<span ref={setLabelElement}>
-						{Liferay.FeatureFlags['LPS-147895'] ? (
-							spacingOptionValue(value || field?.defaultValue)
-						) : (
-							<SpacingOptionValue
-								position={position}
-								removeValueUnit
-								type={type}
-								value={value || field?.defaultValue}
-							/>
-						)}
+						<SpacingOptionValue
+							position={position}
+							removeValueUnit
+							tokenValues={tokenValues}
+							type={type}
+							value={value || field?.defaultValue}
+						/>
 					</span>
 				</ClayButton>
 			}
@@ -277,20 +260,17 @@ function SpacingSelectorButton({
 								<span className="flex-grow-1 text-truncate">
 									{Liferay.FeatureFlags['LPS-147895']
 										? tokenValues[`spacer${option.value}`]
-												?.label
+												?.label || option.label
 										: option.label}
 								</span>
 
 								<strong className="flex-shrink-0 pl-2">
-									{Liferay.FeatureFlags['LPS-147895'] ? (
-										spacingOptionValue(option.value)
-									) : (
-										<SpacingOptionValue
-											position={position}
-											type={type}
-											value={option.value}
-										/>
-									)}
+									<SpacingOptionValue
+										position={position}
+										tokenValues={tokenValues}
+										type={type}
+										value={option.value}
+									/>
 								</strong>
 							</ClayDropDown.Item>
 						))}
@@ -304,6 +284,7 @@ function SpacingSelectorButton({
 function SpacingOptionValue({
 	position,
 	removeValueUnit = false,
+	tokenValues,
 	type,
 	value: optionValue,
 }) {
@@ -311,6 +292,15 @@ function SpacingOptionValue({
 	const [value, setValue] = useState(optionValue);
 
 	useEffect(() => {
+		if (
+			Liferay.FeatureFlags['LPS-147895'] &&
+			tokenValues[`spacer${optionValue}`]
+		) {
+			setValue(tokenValues[`spacer${optionValue}`].value);
+
+			return;
+		}
+
 		const element = globalContext.document.createElement('div');
 		element.style.display = 'none';
 		element.classList.add(`${type[0]}${position[0]}-${optionValue}`);
@@ -320,7 +310,7 @@ function SpacingOptionValue({
 			.getComputedStyle(element)
 			.getPropertyValue(`${type}-${position}`);
 
-		if (removeValueUnit) {
+		if (!Liferay.FeatureFlags['LPS-147895'] && removeValueUnit) {
 			nextValue = parseFloat(nextValue);
 
 			if (isNaN(nextValue)) {
@@ -333,7 +323,14 @@ function SpacingOptionValue({
 
 		setValue(nextValue);
 		globalContext.document.body.removeChild(element);
-	}, [globalContext, optionValue, position, removeValueUnit, type]);
+	}, [
+		globalContext,
+		optionValue,
+		position,
+		removeValueUnit,
+		type,
+		tokenValues,
+	]);
 
 	return value === undefined ? '' : value;
 }

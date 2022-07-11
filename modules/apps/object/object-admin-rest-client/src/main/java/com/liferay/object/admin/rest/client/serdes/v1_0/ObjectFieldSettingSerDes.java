@@ -96,11 +96,14 @@ public class ObjectFieldSettingSerDes {
 
 			sb.append("\"value\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(objectFieldSetting.getValue()));
-
-			sb.append("\"");
+			if (objectFieldSetting.getValue() instanceof String) {
+				sb.append("\"");
+				sb.append((String)objectFieldSetting.getValue());
+				sb.append("\"");
+			}
+			else {
+				sb.append(objectFieldSetting.getValue());
+			}
 		}
 
 		sb.append("}");
@@ -194,7 +197,7 @@ public class ObjectFieldSettingSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "value")) {
 				if (jsonParserFieldValue != null) {
-					objectFieldSetting.setValue((String)jsonParserFieldValue);
+					objectFieldSetting.setValue((Object)jsonParserFieldValue);
 				}
 			}
 		}

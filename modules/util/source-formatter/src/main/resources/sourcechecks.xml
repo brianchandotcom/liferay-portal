@@ -1036,7 +1036,7 @@
 		</check>
 		<check name="JSPStaticResourceURLCheck">
 			<category name="Bug Prevention" />
-			<description name="Check called getStaticResourceURL and getContextPath, without also calling getPathProxy." />
+			<description name="Checks calls to `PortalUtil.getStaticResourceURL` and `getContextPath` without `getPathProxy`." />
 		</check>
 		<check name="JSPStylingCheck">
 			<category name="Styling" />

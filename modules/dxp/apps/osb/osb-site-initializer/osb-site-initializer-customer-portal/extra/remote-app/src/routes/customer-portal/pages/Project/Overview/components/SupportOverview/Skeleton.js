@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {Skeleton} from '../../../../../../common/components';
+import {Skeleton} from '../../../../../../../common/components';
 
 const SupportOverviewSkeleton = () => {
 	return (

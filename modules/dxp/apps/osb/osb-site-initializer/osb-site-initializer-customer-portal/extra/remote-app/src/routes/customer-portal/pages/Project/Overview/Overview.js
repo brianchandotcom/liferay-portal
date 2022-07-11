@@ -23,7 +23,7 @@ import {actionTypes} from '../../../context/reducer';
 import {PRODUCT_TYPES, SUBSCRIPTIONS_STATUS} from '../../../utils/constants';
 import {getWebContents} from '../../../utils/getWebContents';
 import OverviewSkeleton from './Skeleton';
-import SupportOverview from './SupportOverview/SupportOverview';
+import SupportOverview from './components/SupportOverview/';
 
 const Overview = () => {
 	const [{project, subscriptionGroups}, dispatch] = useCustomerPortal();

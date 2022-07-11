@@ -13,8 +13,8 @@ import ClayCard from '@clayui/card';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import React from 'react';
-import i18n from '../../../../../../../../../../common/I18n';
-import {SLA_TYPES} from '../../../../../../../../../../common/utils/constants';
+import i18n from '../../../../../../../../../../../common/I18n';
+import {SLA_TYPES} from '../../../../../../../../../../../common/utils/constants';
 
 const SlaCard = ({endDate, label, selected, startDate, title}) => {
 	const slaDate = `${startDate} - ${endDate}`;

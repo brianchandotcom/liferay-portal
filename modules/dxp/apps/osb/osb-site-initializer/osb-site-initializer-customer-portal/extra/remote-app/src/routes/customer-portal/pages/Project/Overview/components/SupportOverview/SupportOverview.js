@@ -11,13 +11,13 @@
 
 import SupportOverviewSkeleton from './Skeleton';
 import LiferayContact from './components/LiferayContact';
-import SlaCardList from './components/SlaCardList';
+import SlaCardsList from './components/SlaCardsList';
 
 const SupportOverview = ({koroneikiAccount}) => (
 	<div className="container cp-project-contacs-container mb-5 mx-0">
 		<div className="row">
 			<div className="col-5 pb-8">
-				<SlaCardList koroneikiAccount={koroneikiAccount} />
+				<SlaCardsList koroneikiAccount={koroneikiAccount} />
 			</div>
 
 			<div className="col-7">

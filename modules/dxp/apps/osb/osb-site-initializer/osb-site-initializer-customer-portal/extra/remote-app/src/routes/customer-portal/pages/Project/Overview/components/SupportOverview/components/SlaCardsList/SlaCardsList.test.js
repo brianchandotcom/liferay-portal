@@ -64,7 +64,7 @@ describe('SLA Card', () => {
 			slaFutureEndDate: '2024-07-25T00:00:00Z',
 			slaFutureStartDate: '2023-08-25T00:00:00Z',
 		};
-		render(<SlaCardList koroneikiAccount={koroneikiAccount} />);
+		render(<SlaCardsList koroneikiAccount={koroneikiAccount} />);
 
 		const linkElementNameslaFuture = screen.getByText(/premium/i);
 		expect(linkElementNameslaFuture).toBeInTheDocument();

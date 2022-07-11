@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import SupportOverview from './SupportOverview/SupportOverview';
+import SupportOverview from './components/SupportOverview';
 
 const OverviewSkeleton = () => {
 	return <SupportOverview.Skeleton />;

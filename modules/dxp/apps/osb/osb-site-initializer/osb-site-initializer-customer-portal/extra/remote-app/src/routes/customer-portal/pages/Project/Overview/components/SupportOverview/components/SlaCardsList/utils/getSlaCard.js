@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {FORMAT_DATE} from '../../../../../../../../../common/utils/constants/slaCardDate';
-import getDateCustomFormat from '../../../../../../../../../common/utils/getDateCustomFormat';
+import {FORMAT_DATE} from '../../../../../../../../../../common/utils/constants/slaCardDate';
+import getDateCustomFormat from '../../../../../../../../../../common/utils/getDateCustomFormat';
 
 export default function getSlaCard(endDate, startDate, title, label) {
 	return {

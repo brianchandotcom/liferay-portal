@@ -10,7 +10,7 @@
  */
 
 import classNames from 'classnames';
-import i18n from '../../../../../../../../common/I18n';
+import i18n from '../../../../../../../../../common/I18n';
 import SlaCard from './components/SlaCard';
 import SwitchSlaCardsButton from './components/SwitchSlaCardButton';
 import useCardPosition from './hooks/useCardPosition';

@@ -182,16 +182,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		}
 	}
 
-	public void unsubscribeKBArticle(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long resourcePrimKey = ParamUtil.getLong(
-			actionRequest, "resourcePrimKey");
-
-		kbArticleService.unsubscribeKBArticle(resourcePrimKey);
-	}
-
 	public void updateKBArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

@@ -51,7 +51,7 @@ int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 		<c:if test="<%= enableKBArticleSubscriptions && (kbArticle.isApproved() || !kbArticle.isFirstVersion()) && KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.SUBSCRIBE) %>">
 			<c:choose>
 				<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), KBArticle.class.getName(), kbArticle.getResourcePrimKey()) %>">
-					<liferay-portlet:actionURL name="unsubscribeKBArticle" var="unsubscribeKBArticleURL">
+					<liferay-portlet:actionURL name="/knowledge_base/unsubscribe_kb_article" var="unsubscribeKBArticleURL">
 						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
 						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Luca Pellizzon
  */
-public class CommerceReplenishmentAvailabilityDateComparator
+public class CommerceInventoryReplenishmentItemAvailabilityDateComparator
 	extends OrderByComparator<CommerceInventoryReplenishmentItem> {
 
 	public static final String ORDER_BY_ASC = "availabilityDate ASC";
@@ -30,11 +30,13 @@ public class CommerceReplenishmentAvailabilityDateComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"availabilityDate"};
 
-	public CommerceReplenishmentAvailabilityDateComparator() {
+	public CommerceInventoryReplenishmentItemAvailabilityDateComparator() {
 		this(true);
 	}
 
-	public CommerceReplenishmentAvailabilityDateComparator(boolean ascending) {
+	public CommerceInventoryReplenishmentItemAvailabilityDateComparator(
+		boolean ascending) {
+
 		_ascending = ascending;
 	}
 

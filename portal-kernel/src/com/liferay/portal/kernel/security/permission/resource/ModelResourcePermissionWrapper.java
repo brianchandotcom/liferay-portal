@@ -30,8 +30,10 @@ public abstract class ModelResourcePermissionWrapper<T extends ClassedModel>
 			String actionId)
 		throws PortalException {
 
-		_getModelResourcePermission().check(
-			permissionChecker, primaryKey, actionId);
+		ModelResourcePermission<T> modelResourcePermission =
+			_getModelResourcePermission();
+
+		modelResourcePermission.check(permissionChecker, primaryKey, actionId);
 	}
 
 	@Override
@@ -39,7 +41,10 @@ public abstract class ModelResourcePermissionWrapper<T extends ClassedModel>
 			PermissionChecker permissionChecker, T model, String actionId)
 		throws PortalException {
 
-		_getModelResourcePermission().check(permissionChecker, model, actionId);
+		ModelResourcePermission<T> modelResourcePermission =
+			_getModelResourcePermission();
+
+		modelResourcePermission.check(permissionChecker, model, actionId);
 	}
 
 	@Override
@@ -48,7 +53,10 @@ public abstract class ModelResourcePermissionWrapper<T extends ClassedModel>
 			String actionId)
 		throws PortalException {
 
-		return _getModelResourcePermission().contains(
+		ModelResourcePermission<T> modelResourcePermission =
+			_getModelResourcePermission();
+
+		return modelResourcePermission.contains(
 			permissionChecker, primaryKey, actionId);
 	}
 
@@ -57,18 +65,27 @@ public abstract class ModelResourcePermissionWrapper<T extends ClassedModel>
 			PermissionChecker permissionChecker, T model, String actionId)
 		throws PortalException {
 
-		return _getModelResourcePermission().contains(
+		ModelResourcePermission<T> modelResourcePermission =
+			_getModelResourcePermission();
+
+		return modelResourcePermission.contains(
 			permissionChecker, model, actionId);
 	}
 
 	@Override
 	public String getModelName() {
-		return _getModelResourcePermission().getModelName();
+		ModelResourcePermission<T> modelResourcePermission =
+			_getModelResourcePermission();
+
+		return modelResourcePermission.getModelName();
 	}
 
 	@Override
 	public PortletResourcePermission getPortletResourcePermission() {
-		return _getModelResourcePermission().getPortletResourcePermission();
+		ModelResourcePermission<T> modelResourcePermission =
+			_getModelResourcePermission();
+
+		return modelResourcePermission.getPortletResourcePermission();
 	}
 
 	protected abstract ModelResourcePermission<T>

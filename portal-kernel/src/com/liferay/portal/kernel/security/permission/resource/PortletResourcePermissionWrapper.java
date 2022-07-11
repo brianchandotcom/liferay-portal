@@ -29,8 +29,10 @@ public abstract class PortletResourcePermissionWrapper
 			PermissionChecker permissionChecker, Group group, String actionId)
 		throws PrincipalException {
 
-		_getPortletResourcePermission().check(
-			permissionChecker, group, actionId);
+		PortletResourcePermission portletResourcePermission =
+			_getPortletResourcePermission();
+
+		portletResourcePermission.check(permissionChecker, group, actionId);
 	}
 
 	@Override
@@ -38,15 +40,20 @@ public abstract class PortletResourcePermissionWrapper
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PrincipalException {
 
-		_getPortletResourcePermission().check(
-			permissionChecker, groupId, actionId);
+		PortletResourcePermission portletResourcePermission =
+			_getPortletResourcePermission();
+
+		portletResourcePermission.check(permissionChecker, groupId, actionId);
 	}
 
 	@Override
 	public boolean contains(
 		PermissionChecker permissionChecker, Group group, String actionId) {
 
-		return _getPortletResourcePermission().contains(
+		PortletResourcePermission portletResourcePermission =
+			_getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
 			permissionChecker, group, actionId);
 	}
 
@@ -54,13 +61,19 @@ public abstract class PortletResourcePermissionWrapper
 	public boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return _getPortletResourcePermission().contains(
+		PortletResourcePermission portletResourcePermission =
+			_getPortletResourcePermission();
+
+		return portletResourcePermission.contains(
 			permissionChecker, groupId, actionId);
 	}
 
 	@Override
 	public String getResourceName() {
-		return _getPortletResourcePermission().getResourceName();
+		PortletResourcePermission portletResourcePermission =
+			_getPortletResourcePermission();
+
+		return portletResourcePermission.getResourceName();
 	}
 
 	protected abstract PortletResourcePermission

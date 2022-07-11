@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.HashMap;
@@ -43,9 +41,7 @@ public class ObjectUtil {
 		Map<String, List<Map<String, Object>>> layoutElementMapsListMap =
 			new HashMap<>(ContentPageEditorConstants.layoutElementMapsListMap);
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150277")) ||
-			hideInputFragments(companyId)) {
-
+		if (hideInputFragments(companyId)) {
 			layoutElementMapsListMap.remove("INPUTS");
 		}
 

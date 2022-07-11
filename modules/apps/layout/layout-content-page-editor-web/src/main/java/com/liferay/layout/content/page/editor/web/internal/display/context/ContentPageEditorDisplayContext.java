@@ -118,7 +118,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -325,9 +324,6 @@ public class ContentPageEditorDisplayContext {
 				"editFragmentEntryLinkURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/edit_fragment_entry_link")
-			).put(
-				"featureFlagLps150277",
-				GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-150277"))
 			).put(
 				"formTypes",
 				MappingTypesUtil.getMappingTypesJSONArray(

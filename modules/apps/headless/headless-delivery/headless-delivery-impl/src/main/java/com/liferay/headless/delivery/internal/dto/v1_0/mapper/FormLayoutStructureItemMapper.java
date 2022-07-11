@@ -138,10 +138,6 @@ public class FormLayoutStructureItemMapper
 		boolean saveInlineContent, boolean saveMappingConfiguration,
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
 
-		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149720"))) {
-			return null;
-		}
-
 		JSONObject successMessageJSONObject =
 			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
 

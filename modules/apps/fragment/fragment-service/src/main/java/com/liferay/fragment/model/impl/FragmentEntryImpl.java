@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -222,9 +220,7 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 		String typeOptions = getTypeOptions();
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-149720")) &&
-			Validator.isNotNull(typeOptions)) {
-
+		if (Validator.isNotNull(typeOptions)) {
 			jsonObject.put(
 				"typeOptions", JSONFactoryUtil.createJSONObject(typeOptions));
 		}

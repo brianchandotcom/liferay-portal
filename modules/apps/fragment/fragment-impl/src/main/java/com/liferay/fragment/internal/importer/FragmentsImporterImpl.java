@@ -54,11 +54,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -732,12 +730,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 				readOnly = jsonObject.getBoolean("readOnly");
 				icon = jsonObject.getString("icon");
 				typeLabel = jsonObject.getString("type");
-
-				if (GetterUtil.getBoolean(
-						PropsUtil.get("feature.flag.LPS-149720"))) {
-
-					typeOptions = jsonObject.getString("typeOptions");
-				}
+				typeOptions = jsonObject.getString("typeOptions");
 			}
 
 			FragmentEntry fragmentEntry = _addFragmentEntry(

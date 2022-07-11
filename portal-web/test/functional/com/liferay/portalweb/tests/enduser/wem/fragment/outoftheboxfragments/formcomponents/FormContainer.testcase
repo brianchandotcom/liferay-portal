@@ -291,10 +291,11 @@ definition {
 				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
 		}
 
-		task ("When the page designer checks preview success state toggle") {
+		task ("When the page designer previews success state") {
 			PageEditor.editFormContainer(
 				panel = "General",
-				previewSuccessState = "true");
+				previewSuccessState = "true",
+				successMessage = "Embedded");
 		}
 
 		task ("Then the page designer can see sucess text under Form Container") {
@@ -333,7 +334,7 @@ definition {
 			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
 		}
 
-		task ("When the page designer preview success state on page editor after add custom success text") {
+		task ("When the page designer previews success state on page editor after add custom success text") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -341,6 +342,7 @@ definition {
 			PageEditor.editFormContainer(
 				panel = "General",
 				previewSuccessState = "true",
+				successMessage = "Embedded",
 				successText = "We are glad to receive your Form!");
 		}
 
@@ -476,7 +478,8 @@ definition {
 				changePage = "true",
 				pageName = "Home",
 				panel = "General",
-				siteName = "Liferay DXP");
+				siteName = "Liferay DXP",
+				successMessage = "Page");
 
 			PageEditor.publish();
 		}
@@ -560,6 +563,7 @@ definition {
 
 			PageEditor.editFormContainer(
 				panel = "General",
+				successMessage = "Embedded",
 				successText = "Estamos muy agradecidos de recibir su formulario.");
 
 			PageEditor.changeLocale(
@@ -568,13 +572,15 @@ definition {
 
 			PageEditor.editFormContainer(
 				panel = "General",
+				successMessage = "Embedded",
 				successText = "Obrigado por nos enviar seu formulario!");
 		}
 
 		task ("Then the page designer can see Portuguese translation on preview success state") {
 			PageEditor.editFormContainer(
 				panel = "General",
-				previewSuccessState = "true");
+				previewSuccessState = "true",
+				successMessage = "Embedded");
 
 			AssertTextPresent(value1 = "Obrigado por nos enviar seu formulario!");
 		}

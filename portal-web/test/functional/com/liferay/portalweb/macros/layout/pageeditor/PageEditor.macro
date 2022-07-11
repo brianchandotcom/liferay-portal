@@ -2276,12 +2276,29 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Embedded");
 
-				PageEditor.waitForAutoSave();
-
 				AssertSelectedLabel(
 					key_fieldLabel = "Success Message",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Embedded");
+
+				if (isSet(successText)) {
+					Type(
+						key_text = "Success Text",
+						locator1 = "TextInput#ANY",
+						value1 = "${successText}");
+
+					Click(
+						key_sidebarButton = "Browser",
+						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+				}
+
+				if ("${previewSuccessState}" == "true") {
+					Check.checkNotVisible(
+						checkboxName = "Preview Success State",
+						locator1 = "Checkbox#ANY_CHECKBOX");
+				}
+
+				PageEditor.waitForAutoSave();
 			}
 			else if ("${successMessage}" == "Page") {
 				Select(
@@ -2289,12 +2306,52 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Page");
 
-				PageEditor.waitForAutoSave();
-
 				AssertSelectedLabel(
 					key_fieldLabel = "Success Message",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "Page");
+
+				if (isSet(pageName)) {
+					if (IsTextEqual(key_fieldLabel = "Page", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
+						Click(
+							key_fieldLabel = "Page",
+							key_text = "plus",
+							locator1 = "Icon#ANY_ITEM_SELECTOR");
+					}
+					else {
+						Click(
+							key_fieldLabel = "Page",
+							key_text = "change",
+							locator1 = "Icon#ANY_ITEM_SELECTOR");
+					}
+
+					SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+					if (isSet(siteName)) {
+						AssertClick(
+							key_breadcrumbName = "Sites and Libraries",
+							locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+							value1 = "Sites and Libraries");
+
+						LexiconCard.clickCardTitleLink(card = "${siteName}");
+					}
+
+					Portlet.expandTree();
+
+					AssertVisible(
+						key_nodeName = "${pageName}",
+						locator1 = "Treeview#NODE_ITEM");
+
+					Click(
+						key_nodeName = "${pageName}",
+						locator1 = "Treeview#NODE_UNSELECTED");
+
+					PageEditor.viewItemSelectorText(
+						fieldLabel = "Page",
+						text = "${pageName}");
+				}
+
+				PageEditor.waitForAutoSave();
 			}
 			else if ("${successMessage}" == "URL") {
 				Select(
@@ -2302,84 +2359,23 @@ definition {
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "URL");
 
-				PageEditor.waitForAutoSave();
-
 				AssertSelectedLabel(
 					key_fieldLabel = "Success Message",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = "URL");
-			}
 
-			if (isSet(successText)) {
-				Type(
-					key_text = "Success Text",
-					locator1 = "TextInput#ANY",
-					value1 = "${successText}");
+				if (isSet(url)) {
+					Type(
+						key_text = "URL",
+						locator1 = "TextInput#ANY",
+						value1 = "${url}");
 
-				Click(
-					key_sidebarButton = "Browser",
-					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+					Click(
+						key_sidebarButton = "Browser",
+						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+				}
 
 				PageEditor.waitForAutoSave();
-			}
-
-			if (isSet(pageName)) {
-				if (isSet(changePage)) {
-					Click(
-						key_fieldLabel = "Page",
-						key_text = "change",
-						locator1 = "Icon#ANY_ITEM_SELECTOR");
-				}
-				else {
-					Click(
-						key_fieldLabel = "Page",
-						key_text = "plus",
-						locator1 = "Icon#ANY_ITEM_SELECTOR");
-				}
-
-				SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-				if (isSet(siteName)) {
-					AssertClick(
-						key_breadcrumbName = "Sites and Libraries",
-						locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-						value1 = "Sites and Libraries");
-
-					LexiconCard.clickCardTitleLink(card = "${siteName}");
-				}
-
-				Portlet.expandTree();
-
-				AssertVisible(
-					key_nodeName = "${pageName}",
-					locator1 = "Treeview#NODE_ITEM");
-
-				Click(
-					key_nodeName = "${pageName}",
-					locator1 = "Treeview#NODE_UNSELECTED");
-
-				PageEditor.viewItemSelectorText(
-					fieldLabel = "Page",
-					text = "${pageName}");
-			}
-
-			if (isSet(url)) {
-				Type(
-					key_text = "URL",
-					locator1 = "TextInput#ANY",
-					value1 = "${url}");
-
-				Click(
-					key_sidebarButton = "Browser",
-					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-				PageEditor.waitForAutoSave();
-			}
-
-			if ("${previewSuccessState}" == "true") {
-				Check.checkNotVisible(
-					checkboxName = "Preview Success State",
-					locator1 = "Checkbox#ANY_CHECKBOX");
 			}
 		}
 	}

@@ -260,7 +260,7 @@ definition {
 		task ("Discard the draft") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-			PageEditor.clickDiscardDraft(pageName = "Test Content Page Name");
+			PagesAdmin.discardDraft(pageName = "Test Content Page Name");
 		}
 
 		task ("Assert the Title fragment is no longer present") {

@@ -4200,7 +4200,7 @@ definition {
 		task ("Go to the pages menu and discard changes") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
+			PagesAdmin.discardDraft(pageName = "Experience Content Page");
 		}
 
 		task ("Go to Experience Content Page and check the Experience is not present") {
@@ -4247,7 +4247,7 @@ definition {
 		task ("Go to the pages menu and discard changes") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
+			PagesAdmin.discardDraft(pageName = "Experience Content Page");
 		}
 
 		task ("Go to Experience Content Page and the Experience is not present") {
@@ -4304,7 +4304,7 @@ definition {
 		task ("Go to the pages menu and discard changes") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
+			PagesAdmin.discardDraft(pageName = "Experience Content Page");
 		}
 
 		task ("Go to Experience Content Page and check if the changes are discarded") {
@@ -4350,7 +4350,7 @@ definition {
 		task ("Go to the pages menu and discard changes") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
 
-			PageEditor.clickDiscardDraft(pageName = "Experience Content Page");
+			PagesAdmin.discardDraft(pageName = "Experience Content Page");
 		}
 
 		task ("Go to Experience Content Page and check the discarted changes") {

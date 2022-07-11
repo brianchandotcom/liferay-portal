@@ -344,7 +344,7 @@ definition {
 
 		PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
-		PageEditor.clickDiscardDraft(pageName = "Content Page Name");
+		PagesAdmin.discardDraft(pageName = "Content Page Name");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",

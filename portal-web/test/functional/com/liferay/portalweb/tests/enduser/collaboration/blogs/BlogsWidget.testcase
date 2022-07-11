@@ -696,12 +696,37 @@ definition {
 	}
 
 	@description = "This is a test for LPS-78189. It ensures that a user can view the blog entry via Blogs Aggregator after configuring the organization."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewEntryWithOrganizationViaBlogsAggregator {
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Blogs Aggregator Page");
 
-		// TODO LPS-149577 CanViewEntryWithOrganizationViaBlogsAggregator pending implementation
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
+
+		Portlet.addPG(portletName = "Blogs Aggregator");
+
+		BlogsAggregatorPortlet.selectOrganization(organizationName = "Organization Name");
+
+		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
+
+		BlogsEntry.viewNoEntryViaBlogsAggregatorPG();
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization Name",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Blogs Aggregator Page");
+
+		BlogsAggregatorPortlet.viewBlogsEntryViaBAPortletPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 	}
 
 	@description = "This is a test for LPS-141740. It checks that a user can view the details of latest blogs entry via recent bloggers."

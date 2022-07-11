@@ -205,6 +205,12 @@ public class VarPoshiElement extends PoshiElement {
 			return;
 		}
 
+		if (value.matches(_VAR_VALUE_INTEGER_REGEX)) {
+			addAttribute("value", value);
+
+			return;
+		}
+
 		if ((!isValidFunctionFileName(value) && !isValidMacroFileName(value)) ||
 			value.startsWith("selenium.")) {
 
@@ -509,6 +515,8 @@ public class VarPoshiElement extends PoshiElement {
 
 	private static final String _ELEMENT_NAME = "var";
 
+	private static final String _VAR_VALUE_INTEGER_REGEX = "\\d+";
+
 	private static final String _VAR_VALUE_MATH_EXPRESSION_REGEX;
 
 	private static final String _VAR_VALUE_MATH_VALUE_REGEX =
@@ -546,7 +554,8 @@ public class VarPoshiElement extends PoshiElement {
 
 		_VAR_VALUE_REGEX = StringUtil.combine(
 			"(", _VAR_VALUE_STRING_REGEX, "|", _VAR_VALUE_MATH_EXPRESSION_REGEX,
-			"|", _VAR_VALUE_MULTILINE_REGEX, "|", _VAR_VALUE_OBJECT_REGEX, ")");
+			"|", _VAR_VALUE_INTEGER_REGEX, "|", _VAR_VALUE_MULTILINE_REGEX, "|",
+			_VAR_VALUE_OBJECT_REGEX, ")");
 
 		_statementPattern = Pattern.compile(
 			"^" + VAR_NAME_REGEX + ASSIGNMENT_REGEX + _VAR_VALUE_REGEX +

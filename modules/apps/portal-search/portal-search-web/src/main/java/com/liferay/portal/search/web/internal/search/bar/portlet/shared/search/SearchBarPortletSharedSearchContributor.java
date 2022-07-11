@@ -81,9 +81,6 @@ public class SearchBarPortletSharedSearchContributor
 
 		_setScope(searchBarPortletPreferences, portletSharedSearchSettings);
 
-		_setScopeParameterName(
-			searchBarPortletPreferences, portletSharedSearchSettings);
-
 		_filterByThisSite(
 			searchRequestBuilder, searchBarPortletPreferences,
 			portletSharedSearchSettings);
@@ -242,11 +239,6 @@ public class SearchBarPortletSharedSearchContributor
 
 		portletSharedSearchSettings.setScope(
 			searchScopePreference.getPreferenceString());
-	}
-
-	private void _setScopeParameterName(
-		SearchBarPortletPreferences searchBarPortletPreferences,
-		PortletSharedSearchSettings portletSharedSearchSettings) {
 
 		portletSharedSearchSettings.setScopeParameterName(
 			searchBarPortletPreferences.getScopeParameterName());

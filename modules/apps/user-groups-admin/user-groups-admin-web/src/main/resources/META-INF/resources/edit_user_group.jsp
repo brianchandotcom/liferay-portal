@@ -131,9 +131,9 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 
 		<c:if test="<%= (userGroupGroup != null) || !layoutSetPrototypes.isEmpty() %>">
 			<aui:fieldset cssClass="text-muted">
-				<h5>
+				<p class="text-secondary">
 					<liferay-ui:message key="the-pages-of-a-user-group-cannot-be-accessed-directly-by-end-users" />
-				</h5>
+				</p>
 
 				<%
 				boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);

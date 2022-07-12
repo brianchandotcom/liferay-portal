@@ -205,6 +205,11 @@
 	<td>//div[contains(@class,'quantity-selector-popover')]//small[(@class='text-danger') and (text()='${key_quantityConfigurationText}')]/b[text()='${key_quantity}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COLLECTION_DISPLAY_PRODUCT_SPECIFICATION_ENTRY</td>
+	<td>//li[contains(@class,'list-group-item')]//dt[contains(.,'${key_specification}')]/..//dd[contains(.,'${key_value}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

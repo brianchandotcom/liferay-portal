@@ -184,6 +184,18 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 					JobProperty.Type.MODULE_INCLUDE_GLOB, null));
 		}
 
+		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
+
+		includesJobProperties.add(
+			getJobProperty(
+				"test.batch.class.names.includes.modules", workingDirectory,
+				JobProperty.Type.INCLUDE_GLOB));
+
+		includesJobProperties.add(
+			getJobProperty(
+				"modules.includes.required.test.batch.class.names.includes",
+				workingDirectory, JobProperty.Type.MODULE_INCLUDE_GLOB));
+
 		return includesJobProperties;
 	}
 
@@ -258,7 +270,13 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 			JobProperty jobProperty = getJobProperty(
 				basePropertyName, file, jobType);
 
-			jobPropertiesList.add(jobProperty);
+			String jobPropertyValue = jobProperty.getValue();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue) &&
+				!jobPropertiesList.contains(jobProperty)) {
+
+				jobPropertiesList.add(jobProperty);
+			}
 
 			traversedPropertyFileSet.add(testPropertiesFile);
 		}

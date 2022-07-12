@@ -119,6 +119,43 @@ function isVisibleInViewport(element, maybeRect) {
 	);
 }
 
+/**
+ * Checks if the search parameters of the provided URL are contained in the browser's current URL.
+ * @param {String} jsonPath Received path string to be checked if it contains the parameters of locationPath
+ * @param {String} locationPath Received path string to be compared
+ * @returns {boolean}
+ */
+function urlSearchParamsContainsAnother(jsonPath, locationPath) {
+	const locationURLInstance = new URL(locationPath, window.location.origin);
+	const jsonURLInstance = new URL(jsonPath, window.location.origin);
+
+	let contains = true;
+
+	jsonURLInstance.searchParams.forEach((value, key) => {
+		if (
+			!locationURLInstance.searchParams.has(key) ||
+			locationURLInstance.searchParams.get(key) !== value
+		) {
+			contains = false;
+		}
+	});
+
+	return contains;
+}
+
+/**
+ * Checks if a given path contains a layoutRelativeURL
+ * @param {String} path
+ * @returns {boolean}
+ */
+function pathContainsLayoutRelativeURL(path) {
+	const layoutRelativeURLWithoutSearchParams = themeDisplay
+		.getLayoutRelativeURL()
+		.split('?')[0];
+
+	return layoutRelativeURLWithoutSearchParams.includes(path);
+}
+
 const Step = ({
 	closeOnClickOutside,
 	closeable,
@@ -146,12 +183,6 @@ const Step = ({
 		previous,
 		title,
 	} = steps[currentStep];
-
-	const path =
-		themeDisplay.getPathContext() +
-		location.pathname +
-		location.search +
-		location.hash;
 
 	const [currentAlignment, setCurrentAlignment] = useState(
 		defaultPositioning
@@ -292,7 +323,19 @@ const Step = ({
 
 	useObserveRect(align, popoverRef?.current);
 
-	if (!pages[path]?.includes(id)) {
+	const path = themeDisplay.getLayoutRelativeURL();
+
+	const locationURL =
+		themeDisplay.getPathContext() +
+		location.pathname +
+		location.search +
+		location.hash;
+
+	if (
+		!pages[path]?.includes(id) ||
+		!urlSearchParamsContainsAnother(path, locationURL) ||
+		!pathContainsLayoutRelativeURL(locationURL)
+	) {
 		return null;
 	}
 

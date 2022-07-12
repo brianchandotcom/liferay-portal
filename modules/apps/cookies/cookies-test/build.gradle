@@ -1,13 +1,10 @@
 dependencies {
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "javax.portlet", name: "portlet-api", version: "3.0.1"
-	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
-	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
-	compileOnly project(":apps:configuration-admin:configuration-admin-api")
-	compileOnly project(":apps:cookies:cookies-api")
-	compileOnly project(":apps:cookies:cookies-impl")
-	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
-	compileOnly project(":core:petra:petra-string")
-
+	testIntegrationCompile group: "javax.portlet", name: "portlet-api", version: "3.0.1"
+	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	testIntegrationCompile project(":apps:configuration-admin:configuration-admin-api")
+	testIntegrationCompile project(":apps:cookies:cookies-api")
+	testIntegrationCompile project(":apps:cookies:cookies-impl")
+	testIntegrationCompile project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

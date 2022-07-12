@@ -21,6 +21,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
+import com.liferay.layout.set.prototype.web.internal.servlet.taglib.util.LayoutSetPrototypeActionDropdownItemsProvider;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -141,6 +142,19 @@ public class LayoutSetPrototypeDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "order-by"));
 			}
 		).build();
+	}
+
+	public List<DropdownItem> getLayoutSetPrototypeActionDropdownItems(
+			LayoutSetPrototype layoutSetPrototype)
+		throws Exception {
+
+		LayoutSetPrototypeActionDropdownItemsProvider
+			layoutSetPrototypeActionDropdownItemsProvider =
+				new LayoutSetPrototypeActionDropdownItemsProvider(
+					layoutSetPrototype, _renderRequest, _renderResponse);
+
+		return layoutSetPrototypeActionDropdownItemsProvider.
+			getActionDropdownItems();
 	}
 
 	public String getOrderByCol() {

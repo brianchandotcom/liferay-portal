@@ -76,7 +76,7 @@ public class SXPBlueprintLocalServiceTest {
 	}
 
 	@Test
-	public void testGetSXPBlueprint() throws Exception {
+	public void testGetSXPBlueprintByExternalReferenceCode() throws Exception {
 		Assert.assertEquals(
 			_sxpBlueprint,
 			_sxpBlueprintLocalService.getSXPBlueprintByExternalReferenceCode(

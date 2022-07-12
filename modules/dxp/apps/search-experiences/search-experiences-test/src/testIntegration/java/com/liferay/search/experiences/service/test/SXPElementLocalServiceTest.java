@@ -76,7 +76,7 @@ public class SXPElementLocalServiceTest {
 	}
 
 	@Test
-	public void testGetSXPElement() throws Exception {
+	public void testGetSXPElementByExternalReferenceCode() throws Exception {
 		Assert.assertEquals(
 			_sxpElement,
 			_sxpElementLocalService.getSXPElementByExternalReferenceCode(

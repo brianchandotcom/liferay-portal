@@ -64,6 +64,7 @@ definition {
 	@priority = "3"
 	test AddEvent {
 		property portal.upstream = "quarantine";
+
 		CalendarNavigator.gotoAddEvent();
 
 		CalendarEvent.editTitle(eventTitle = "Calendar Event Title");
@@ -139,8 +140,6 @@ definition {
 		CalendarEvent.viewUnavailableCalendarsNotPresent(unavailableCalendarList = "Site Name");
 
 		CalendarEvent.viewAvailableCalendars(availableCalendarList = "Test Test");
-
-		
 	}
 
 	@description = "This is a use case for LPS-74684."

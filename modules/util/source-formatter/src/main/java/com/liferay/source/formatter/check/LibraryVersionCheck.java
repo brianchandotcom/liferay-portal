@@ -18,8 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONObjectImpl;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,10 +29,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
+import java.io.StringReader;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -466,61 +467,41 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	private void _propertiesLibraryVersionCheck(String fileName, String content)
 		throws IOException {
 
+		Properties properties = new Properties();
+
+		properties.load(new StringReader(content));
+
+		Enumeration<String> enumeration =
+			(Enumeration<String>)properties.propertyNames();
+
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+		while (enumeration.hasMoreElements()) {
+			String key = enumeration.nextElement();
 
-			String line = StringPool.BLANK;
+			String value = properties.getProperty(key);
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (Validator.isNull(line)) {
-					continue;
-				}
-
-				int equalIndex = line.indexOf(StringPool.EQUAL);
-
-				if (equalIndex == -1) {
-					continue;
-				}
-
-				String libraryAndVersion = line.substring(equalIndex + 1);
-
-				int colonIndex = libraryAndVersion.lastIndexOf(
-					StringPool.COLON);
-
-				if (colonIndex == -1) {
-					continue;
-				}
-
-				if (StringUtil.count(libraryAndVersion, StringPool.COLON) ==
-						3) {
-
-					libraryAndVersion = libraryAndVersion.substring(
-						0, colonIndex);
-
-					colonIndex = libraryAndVersion.lastIndexOf(
-						StringPool.COLON);
-
-					if (colonIndex == -1) {
-						continue;
-					}
-				}
-
-				_checkIsContainVulnerabilities(
-					fileName, libraryAndVersion.substring(0, colonIndex),
-					libraryAndVersion.substring(colonIndex + 1), httpClient,
-					SecurityAdvisoryEcosystemEnum.MAVEN);
+			if (Validator.isNull(value)) {
+				continue;
 			}
+
+			String[] dependency = value.split(StringPool.COLON);
+
+			if (dependency.length < 3) {
+				continue;
+			}
+
+			_checkIsContainVulnerabilities(
+				fileName, dependency[1], dependency[2], httpClient,
+				SecurityAdvisoryEcosystemEnum.MAVEN);
 		}
-		finally {
-			try {
-				httpClient.close();
-			}
-			catch (IOException ioException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioException);
-				}
+
+		try {
+			httpClient.close();
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
 			}
 		}
 	}

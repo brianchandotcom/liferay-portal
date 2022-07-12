@@ -42,5 +42,6 @@
 		<field name="overlapAllowed" type="boolean" />
 		<field name="startDate" type="Date" />
 		<field name="system" type="boolean" />
+		<field name="timeZoneId" type="String" />
 	</model>
 </model-hints>

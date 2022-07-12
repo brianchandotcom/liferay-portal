@@ -78,7 +78,7 @@ public class DispatchTriggerCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -118,6 +118,8 @@ public class DispatchTriggerCacheModel
 		sb.append(startDate);
 		sb.append(", system=");
 		sb.append(system);
+		sb.append(", timeZoneId=");
+		sb.append(timeZoneId);
 		sb.append("}");
 
 		return sb.toString();
@@ -219,6 +221,13 @@ public class DispatchTriggerCacheModel
 
 		dispatchTriggerImpl.setSystem(system);
 
+		if (timeZoneId == null) {
+			dispatchTriggerImpl.setTimeZoneId("");
+		}
+		else {
+			dispatchTriggerImpl.setTimeZoneId(timeZoneId);
+		}
+
 		dispatchTriggerImpl.resetOriginalValues();
 
 		return dispatchTriggerImpl;
@@ -254,6 +263,7 @@ public class DispatchTriggerCacheModel
 		startDate = objectInput.readLong();
 
 		system = objectInput.readBoolean();
+		timeZoneId = objectInput.readUTF();
 	}
 
 	@Override
@@ -328,6 +338,13 @@ public class DispatchTriggerCacheModel
 		objectOutput.writeLong(startDate);
 
 		objectOutput.writeBoolean(system);
+
+		if (timeZoneId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(timeZoneId);
+		}
 	}
 
 	public long mvccVersion;
@@ -349,5 +366,6 @@ public class DispatchTriggerCacheModel
 	public boolean overlapAllowed;
 	public long startDate;
 	public boolean system;
+	public String timeZoneId;
 
 }

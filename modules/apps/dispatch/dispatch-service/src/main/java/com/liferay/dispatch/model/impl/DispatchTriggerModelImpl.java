@@ -84,7 +84,8 @@ public class DispatchTriggerModelImpl
 		{"dispatchTaskExecutorType", Types.VARCHAR},
 		{"dispatchTaskSettings", Types.CLOB}, {"endDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"overlapAllowed", Types.BOOLEAN},
-		{"startDate", Types.TIMESTAMP}, {"system_", Types.BOOLEAN}
+		{"startDate", Types.TIMESTAMP}, {"system_", Types.BOOLEAN},
+		{"timeZoneId", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -110,10 +111,11 @@ public class DispatchTriggerModelImpl
 		TABLE_COLUMNS_MAP.put("overlapAllowed", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("startDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("timeZoneId", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DispatchTrigger (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,dispatchTaskClusterMode INTEGER,dispatchTaskExecutorType VARCHAR(75) null,dispatchTaskSettings TEXT null,endDate DATE null,name VARCHAR(75) null,overlapAllowed BOOLEAN,startDate DATE null,system_ BOOLEAN)";
+		"create table DispatchTrigger (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,dispatchTriggerId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,cronExpression VARCHAR(75) null,dispatchTaskClusterMode INTEGER,dispatchTaskExecutorType VARCHAR(75) null,dispatchTaskSettings TEXT null,endDate DATE null,name VARCHAR(75) null,overlapAllowed BOOLEAN,startDate DATE null,system_ BOOLEAN,timeZoneId VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table DispatchTrigger";
 
@@ -393,6 +395,12 @@ public class DispatchTriggerModelImpl
 		attributeSetterBiConsumers.put(
 			"system",
 			(BiConsumer<DispatchTrigger, Boolean>)DispatchTrigger::setSystem);
+		attributeGetterFunctions.put(
+			"timeZoneId", DispatchTrigger::getTimeZoneId);
+		attributeSetterBiConsumers.put(
+			"timeZoneId",
+			(BiConsumer<DispatchTrigger, String>)
+				DispatchTrigger::setTimeZoneId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -835,6 +843,26 @@ public class DispatchTriggerModelImpl
 		_system = system;
 	}
 
+	@JSON
+	@Override
+	public String getTimeZoneId() {
+		if (_timeZoneId == null) {
+			return "";
+		}
+		else {
+			return _timeZoneId;
+		}
+	}
+
+	@Override
+	public void setTimeZoneId(String timeZoneId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_timeZoneId = timeZoneId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -919,6 +947,7 @@ public class DispatchTriggerModelImpl
 		dispatchTriggerImpl.setOverlapAllowed(isOverlapAllowed());
 		dispatchTriggerImpl.setStartDate(getStartDate());
 		dispatchTriggerImpl.setSystem(isSystem());
+		dispatchTriggerImpl.setTimeZoneId(getTimeZoneId());
 
 		dispatchTriggerImpl.resetOriginalValues();
 
@@ -967,6 +996,8 @@ public class DispatchTriggerModelImpl
 			this.<Date>getColumnOriginalValue("startDate"));
 		dispatchTriggerImpl.setSystem(
 			this.<Boolean>getColumnOriginalValue("system_"));
+		dispatchTriggerImpl.setTimeZoneId(
+			this.<String>getColumnOriginalValue("timeZoneId"));
 
 		return dispatchTriggerImpl;
 	}
@@ -1167,6 +1198,14 @@ public class DispatchTriggerModelImpl
 
 		dispatchTriggerCacheModel.system = isSystem();
 
+		dispatchTriggerCacheModel.timeZoneId = getTimeZoneId();
+
+		String timeZoneId = dispatchTriggerCacheModel.timeZoneId;
+
+		if ((timeZoneId != null) && (timeZoneId.length() == 0)) {
+			dispatchTriggerCacheModel.timeZoneId = null;
+		}
+
 		return dispatchTriggerCacheModel;
 	}
 
@@ -1279,6 +1318,7 @@ public class DispatchTriggerModelImpl
 	private boolean _overlapAllowed;
 	private Date _startDate;
 	private boolean _system;
+	private String _timeZoneId;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1332,6 +1372,7 @@ public class DispatchTriggerModelImpl
 		_columnOriginalValues.put("overlapAllowed", _overlapAllowed);
 		_columnOriginalValues.put("startDate", _startDate);
 		_columnOriginalValues.put("system_", _system);
+		_columnOriginalValues.put("timeZoneId", _timeZoneId);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1394,6 +1435,8 @@ public class DispatchTriggerModelImpl
 		columnBitmasks.put("startDate", 131072L);
 
 		columnBitmasks.put("system_", 262144L);
+
+		columnBitmasks.put("timeZoneId", 524288L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

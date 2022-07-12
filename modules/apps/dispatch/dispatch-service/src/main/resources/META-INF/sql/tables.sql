@@ -33,5 +33,6 @@ create table DispatchTrigger (
 	name VARCHAR(75) null,
 	overlapAllowed BOOLEAN,
 	startDate DATE null,
-	system_ BOOLEAN
+	system_ BOOLEAN,
+	timeZoneId VARCHAR(75) null
 );

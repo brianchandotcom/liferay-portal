@@ -213,7 +213,21 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 					continue;
 				}
 
-				sb.append("{\n");
+				List<AMDRequire> amdRequires = jsFragment.getAMDRequires();
+				List<String> auiUses = jsFragment.getAUIUses();
+
+				boolean legacyJSFragment = false;
+
+				if (!amdRequires.isEmpty() || !auiUses.isEmpty()) {
+					legacyJSFragment = true;
+				}
+
+				if (legacyJSFragment) {
+					sb.append("(function() {\n");
+				}
+				else {
+					sb.append("{\n");
+				}
 
 				// Map AMD requires to their requested aliases
 
@@ -260,7 +274,12 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 					sb.append(StringPool.NEW_LINE);
 				}
 
-				sb.append("}\n");
+				if (legacyJSFragment) {
+					sb.append("})();\n");
+				}
+				else {
+					sb.append("}\n");
+				}
 			}
 		}
 

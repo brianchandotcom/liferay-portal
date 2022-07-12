@@ -70,6 +70,7 @@ public class DocumentFolderDTOConverter
 				dateCreated = folder.getCreateDate();
 				dateModified = folder.getModifiedDate();
 				description = folder.getDescription();
+				externalReferenceCode = folder.getExternalReferenceCode();
 				id = folder.getFolderId();
 				name = folder.getName();
 				numberOfDocumentFolders = _dlAppService.getFoldersCount(

@@ -107,39 +107,10 @@
 				</c:when>
 				<c:when test="<%= layoutSetPrototypeDisplayContext.isIconView() %>">
 					<liferay-ui:search-container-column-text>
-						<liferay-frontend:icon-vertical-card
-							actionJsp="/layout_set_prototype_action.jsp"
-							actionJspServletContext="<%= application %>"
-							icon="site-template"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							title="<%= layoutSetPrototype.getName(locale) %>"
-							url="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>"
-						>
-							<liferay-frontend:vertical-card-header>
-
-								<%
-								Date createDate = layoutSetPrototype.getModifiedDate();
-								%>
-
-								<label class="text-default">
-									<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true) %>" key="created-x-ago" />
-								</label>
-							</liferay-frontend:vertical-card-header>
-
-							<liferay-frontend:vertical-card-footer>
-								<label class="text-default">
-									<c:choose>
-										<c:when test="<%= layoutSetPrototype.isActive() %>">
-											<liferay-ui:message key="active" />
-										</c:when>
-										<c:otherwise>
-											<liferay-ui:message key="not-active" />
-										</c:otherwise>
-									</c:choose>
-								</label>
-							</liferay-frontend:vertical-card-footer>
-						</liferay-frontend:icon-vertical-card>
+						<clay:vertical-card
+							propsTransformer="js/LayoutSetPrototypeDropdownDefaultPropsTransformer"
+							verticalCard="<%= new LayoutSetPrototypeVerticalCard(layoutSetPrototype, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test="<%= layoutSetPrototypeDisplayContext.isListView() %>">

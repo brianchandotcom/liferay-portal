@@ -324,7 +324,11 @@
 		}
 
 		.kbAdminContent {
-			margin-left: 45px;
+			margin-left: 360px;
+
+			&.expanded {
+				margin-left: 45px;
+			}
 		}
 	}
 }

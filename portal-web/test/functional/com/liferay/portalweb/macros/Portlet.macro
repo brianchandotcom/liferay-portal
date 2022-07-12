@@ -1,9 +1,17 @@
 definition {
 
 	macro _clickAddPortlet {
-		Click.clickNoWaitForVisible(
-			key_portletName = "${portletName}",
-			locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
+		if (isSet(categoryName)) {
+			Click.clickNoWaitForVisible(
+				key_categoryName = "${categoryName}",
+				key_portletName = "${portletName}",
+				locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK_BY_CATEGORY");
+		}
+		else {
+			Click.clickNoWaitForVisible(
+				key_portletName = "${portletName}",
+				locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
+		}
 	}
 
 	macro addDuplicatePG {

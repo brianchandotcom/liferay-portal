@@ -384,6 +384,21 @@ public interface DispatchTriggerModel
 	 */
 	public void setSystem(boolean system);
 
+	/**
+	 * Returns the time zone ID of this dispatch trigger.
+	 *
+	 * @return the time zone ID of this dispatch trigger
+	 */
+	@AutoEscape
+	public String getTimeZoneId();
+
+	/**
+	 * Sets the time zone ID of this dispatch trigger.
+	 *
+	 * @param timeZoneId the time zone ID of this dispatch trigger
+	 */
+	public void setTimeZoneId(String timeZoneId);
+
 	@Override
 	public DispatchTrigger cloneWithOriginalValues();
 

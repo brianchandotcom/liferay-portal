@@ -63,6 +63,7 @@ public class DispatchTriggerWrapper
 		attributes.put("overlapAllowed", isOverlapAllowed());
 		attributes.put("startDate", getStartDate());
 		attributes.put("system", isSystem());
+		attributes.put("timeZoneId", getTimeZoneId());
 
 		return attributes;
 	}
@@ -185,6 +186,12 @@ public class DispatchTriggerWrapper
 
 		if (system != null) {
 			setSystem(system);
+		}
+
+		String timeZoneId = (String)attributes.get("timeZoneId");
+
+		if (timeZoneId != null) {
+			setTimeZoneId(timeZoneId);
 		}
 	}
 
@@ -380,6 +387,16 @@ public class DispatchTriggerWrapper
 	@Override
 	public boolean getSystem() {
 		return model.getSystem();
+	}
+
+	/**
+	 * Returns the time zone ID of this dispatch trigger.
+	 *
+	 * @return the time zone ID of this dispatch trigger
+	 */
+	@Override
+	public String getTimeZoneId() {
+		return model.getTimeZoneId();
 	}
 
 	/**
@@ -634,6 +651,16 @@ public class DispatchTriggerWrapper
 	@Override
 	public void setSystem(boolean system) {
 		model.setSystem(system);
+	}
+
+	/**
+	 * Sets the time zone ID of this dispatch trigger.
+	 *
+	 * @param timeZoneId the time zone ID of this dispatch trigger
+	 */
+	@Override
+	public void setTimeZoneId(String timeZoneId) {
+		model.setTimeZoneId(timeZoneId);
 	}
 
 	/**

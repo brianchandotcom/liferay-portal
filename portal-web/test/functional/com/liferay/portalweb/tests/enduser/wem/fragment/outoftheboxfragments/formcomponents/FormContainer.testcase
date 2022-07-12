@@ -799,4 +799,194 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-151402. The user could only see the first error message when multiple validation issues happen on submitting a form."
+	@priority = "4"
+	test ViewOnlyTheFirstErrorMessageShownWhenMultipleValidationIssuesHappen {
+		property test.name.skip.portal.instance = "FormContainer#ViewOnlyTheFirstErrorMessageShownWhenMultipleValidationIssuesHappen";
+
+		task ("Given a user has a content page where a required Checkbox, Date, Text Input and Submit Button fragments are inside a Form Container") {
+			task ("Change the Maximum Number of Characters of Region field to 20") {
+				ObjectAdmin.openObjectAdmin();
+
+				ObjectPortlet.selectCustomObject(label = "Purchase Order");
+
+				ObjectAdmin.goToFieldsTab();
+
+				ObjectAdmin.goToFieldsDetails(label = "Region");
+
+				ObjectField.checkLimitCharacters();
+
+				Type(
+					key_text = "Maximum Number of Characters",
+					locator1 = "TextInput#ANY",
+					value1 = "20");
+
+				ObjectField.save();
+			}
+
+			task ("Add a Boolean and Date fields to Object") {
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Boolean",
+					fieldLabelName = "I accept the terms of use and Privacy Policy",
+					fieldName = "iAcceptTheTermsOfUseAndPrivacyPolicy",
+					fieldType = "Boolean",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Date",
+					fieldLabelName = "Purchase Date",
+					fieldName = "purchaseDate",
+					fieldType = "Date",
+					isRequired = "false",
+					objectName = "PurchaseOrder");
+			}
+
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add a Checkbox, Date, Text Input and Submit Button fragment into Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Checkbox");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Date",
+					targetFragmentName = "Checkbox");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Text Input",
+					targetFragmentName = "Date");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "Text Input");
+			}
+
+			task ("Map fragments to suitable fields") {
+				PageEditor.editInput(
+					field = "I accept the terms of use and Privacy Policy",
+					fragmentName = "Checkbox",
+					markAsRequired = "true");
+
+				PageEditor.editInput(
+					field = "Purchase Date",
+					fragmentName = "Date");
+
+				PageEditor.editInput(
+					field = "Region",
+					fragmentName = "Text Input");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the user submits form with blank Checkbox, invalid Date and value exceeding the length of Text Input") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Type.sendKeys(
+				key_text = "Purchase Date",
+				locator1 = "TextInput#ANY",
+				value1 = "0101");
+
+			Type(
+				key_text = "Region",
+				locator1 = "TextInput#ANY",
+				value1 = "New Jersey, New York, Mississippi");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should only see one error message") {
+			AssertAttributeValue(
+				attribute1 = "required",
+				index = "1",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "checkbox",
+				value1 = "true");
+
+			AssertAttributeValue(
+				attribute1 = "validationMessage",
+				index = "1",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "checkbox",
+				value1 = "Please check this box if you want to proceed.");
+
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+		}
+
+		task ("When the user submits form with checked Checkbox, invalid Date and value exceeding the length of Text Input") {
+			Check.checkNotVisible(
+				index = "1",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "checkbox");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should only see one error message") {
+			AssertAttributeValue(
+				attribute1 = "validationMessage",
+				index = "1",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "checkbox",
+				value1 = "");
+
+			AssertAttributeValue(
+				attribute1 = "validationMessage",
+				key_text = "Purchase Date",
+				locator1 = "TextInput#ANY",
+				value1 = "Please enter a valid value. The field is incomplete or has an invalid date.");
+
+			AssertElementNotPresent(locator1 = "Message#ERROR");
+		}
+
+		task ("When the user submits form with checked Checkbox, valid Date and value exceeding the length of Text Input") {
+			Type.sendKeys(
+				key_text = "Purchase Date",
+				locator1 = "TextInput#ANY",
+				value1 = "2020");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should only see one error message") {
+			Alert.viewErrorMessage(errorMessage = "Value exceeds maximum length of 20 for field Region.");
+
+			AssertAttributeValue(
+				attribute1 = "validationMessage",
+				index = "1",
+				locator1 = "Fragment#INPUT_FIELD",
+				type = "checkbox",
+				value1 = "");
+
+			AssertAttributeValue(
+				attribute1 = "validationMessage",
+				key_text = "Purchase Date",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+		}
+	}
+
 }

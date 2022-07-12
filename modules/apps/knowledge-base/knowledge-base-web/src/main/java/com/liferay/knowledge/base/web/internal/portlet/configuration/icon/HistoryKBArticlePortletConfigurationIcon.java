@@ -60,7 +60,7 @@ public class HistoryKBArticlePortletConfigurationIcon
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
-			"/admin/history.jsp"
+			"/admin/common/history.jsp"
 		).setRedirect(
 			() -> {
 				ThemeDisplay themeDisplay =

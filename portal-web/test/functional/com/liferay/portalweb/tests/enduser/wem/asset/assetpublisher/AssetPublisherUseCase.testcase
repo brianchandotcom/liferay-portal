@@ -1148,6 +1148,8 @@ definition {
 
 			Button.click(button = "Apply");
 
+			SelectFrameTop();
+
 			AssertTextEquals.assertPartialText(
 				key_text = "Select from List: Value1",
 				locator1 = "APConfiguration#SOURCE_SCOPE_FIELD_FILTER_AND_VALUE",

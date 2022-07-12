@@ -456,9 +456,9 @@ definition {
 			AssertElementNotPresent(locator1 = "Home#PAGE_2_GUEST_VIEW");
 		}
 
-		// This pause is required to allow the test to wait for the scheduled Publication to be published. See LRQA-7161 for more details.
+		// This pause is required to allow the test to wait for the scheduled Publication to be published. See LRQA-7161 and LRQA-75872 for more details.
 
-		Pause(locator1 = "180000");
+		Pause(locator1 = "300000");
 
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",

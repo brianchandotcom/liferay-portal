@@ -212,6 +212,12 @@ definition {
 					value1 = "Test Tracking Number");
 			}
 
+			if (isSet(trackingURL)) {
+				Type(
+					locator1 = "CommerceOrders#CARRIER_DETAILS_URL_TEXTAREA",
+					value1 = "${trackingURL}");
+			}
+
 			Button.clickSubmitButton();
 		}
 

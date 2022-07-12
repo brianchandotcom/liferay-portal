@@ -442,13 +442,13 @@ public class OpenIdConnectProviderManagedServiceFactory
 			return discoveryEndPoint;
 		}
 
-		discoveryEndPoint = _generateLocalWellKnownURI(
+		String localWellKnownURI = _generateLocalWellKnownURI(
 			GetterUtil.getString(properties.get("issuerURL")),
 			GetterUtil.getString(properties.get("tokenEndPoint")));
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			_oAuthClientASLocalMetadataLocalService.
-				fetchOAuthClientASLocalMetadata(discoveryEndPoint);
+				fetchOAuthClientASLocalMetadata(localWellKnownURI);
 
 		if (oAuthClientASLocalMetadata == null) {
 			_oAuthClientASLocalMetadataLocalService.
@@ -464,7 +464,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 					_generateMetadataJSON(properties), "openid-configuration");
 		}
 
-		return discoveryEndPoint;
+		return localWellKnownURI;
 	}
 
 	private void _updateOAuthClientEntries(

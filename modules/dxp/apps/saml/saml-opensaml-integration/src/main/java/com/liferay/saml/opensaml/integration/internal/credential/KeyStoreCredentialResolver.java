@@ -187,57 +187,48 @@ public class KeyStoreCredentialResolver
 	public Iterable<Credential> resolve(CriteriaSet criteriaSet)
 		throws SecurityException {
 
-		try {
-			_checkCriteriaRequirements(criteriaSet);
+		_checkCriteriaRequirements(criteriaSet);
 
-			EntityIdCriterion entityIDCriterion = criteriaSet.get(
-				EntityIdCriterion.class);
+		EntityIdCriterion entityIDCriterion = criteriaSet.get(
+			EntityIdCriterion.class);
 
-			String entityId = entityIDCriterion.getEntityId();
+		String entityId = entityIDCriterion.getEntityId();
 
-			SamlProviderConfiguration samlProviderConfiguration =
-				_samlProviderConfigurationHelper.getSamlProviderConfiguration();
+		SamlProviderConfiguration samlProviderConfiguration =
+			_samlProviderConfigurationHelper.getSamlProviderConfiguration();
 
-			UsageCriterion usageCriterion = criteriaSet.get(UsageCriterion.class);
+		UsageCriterion usageCriterion = criteriaSet.get(UsageCriterion.class);
 
-			UsageType usageType = UsageType.UNSPECIFIED;
+		UsageType usageType = UsageType.UNSPECIFIED;
 
-			if (usageCriterion != null) {
-				usageType = usageCriterion.getUsage();
-			}
-
-			String keyStoreCredentialPassword = null;
-
-			if (entityId.equals(samlProviderConfiguration.entityId())) {
-				if (usageType == UsageType.ENCRYPTION) {
-					keyStoreCredentialPassword =
-						samlProviderConfiguration.
-							keyStoreEncryptionCredentialPassword();
-				}
-				else {
-					keyStoreCredentialPassword =
-						samlProviderConfiguration.keyStoreCredentialPassword();
-				}
-			}
-
-			KeyStore.Entry entry = _getKeyStoreEntry(
-				_getAlias(entityId, usageType), keyStoreCredentialPassword);
-
-			if (entry == null) {
-				return Collections.emptySet();
-			}
-
-			Credential credential = _buildCredential(
-				entry, entityId, usageType);
-
-			return Collections.singleton(credential);
+		if (usageCriterion != null) {
+			usageType = usageCriterion.getUsage();
 		}
-		catch (RuntimeException runtimeException) {
-			throw new SecurityException(runtimeException);
+
+		String keyStoreCredentialPassword = null;
+
+		if (entityId.equals(samlProviderConfiguration.entityId())) {
+			if (usageType == UsageType.ENCRYPTION) {
+				keyStoreCredentialPassword =
+					samlProviderConfiguration.
+						keyStoreEncryptionCredentialPassword();
+			}
+			else {
+				keyStoreCredentialPassword =
+					samlProviderConfiguration.keyStoreCredentialPassword();
+			}
 		}
-		catch (Exception exception) {
-			throw new SecurityException(exception);
+
+		KeyStore.Entry entry = _getKeyStoreEntry(
+			_getAlias(entityId, usageType), keyStoreCredentialPassword);
+
+		if (entry == null) {
+			return Collections.emptySet();
 		}
+
+		Credential credential = _buildCredential(entry, entityId, usageType);
+
+		return Collections.singleton(credential);
 	}
 
 	@Override

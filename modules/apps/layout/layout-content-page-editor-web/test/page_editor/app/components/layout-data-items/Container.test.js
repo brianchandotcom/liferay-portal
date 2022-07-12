@@ -59,4 +59,16 @@ describe('Container', () => {
 		expect(link.target).toBe('_blank');
 		expect(link.textContent).toBe('Container');
 	});
+
+	it('adds content-visibility: auto when that configuration is set', () => {
+		renderContainer({
+			contentVisibility: 'auto',
+		});
+
+		const container = document.querySelector(
+			'.lfr-layout-structure-item-container'
+		);
+
+		expect(container.style.contentVisibility).toBe('auto');
+	});
 });

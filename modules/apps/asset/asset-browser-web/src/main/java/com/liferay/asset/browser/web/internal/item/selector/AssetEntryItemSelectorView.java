@@ -121,10 +121,6 @@ public class AssetEntryItemSelectorView
 					_getGroupId(
 						assetEntryItemSelectorCriterion, servletRequest))
 			).put(
-				"multipleSelection",
-				_toStringArray(
-					!assetEntryItemSelectorCriterion.isSingleSelect())
-			).put(
 				"scopeGroupType",
 				_toStringArray(
 					assetEntryItemSelectorCriterion.getScopeGroupType())

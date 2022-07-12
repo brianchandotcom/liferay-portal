@@ -298,6 +298,12 @@ definition {
 			Click(
 				key_sampleTab = "Customized",
 				locator1 = "FrontendDataSet#FDS_DATASET");
+
+			Click(locator1 = "FrontendDataSet#ITEMS_VIEW_MODE_BUTTON");
+
+			Click(
+				key_viewMode = "Table",
+				locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
 		}
 
 		task ("Then the results will be displayed accordingly to the filter selected") {
@@ -308,6 +314,10 @@ definition {
 			AssertElementNotPresent(
 				key_statusName = "Pending",
 				locator1 = "FrontendDataSet#TABLE_STATUS");
+
+			AssertTextEquals(
+				locator1 = "FrontendDataSet#PAGINATION_RESULTS",
+				value1 = "Showing 1 to 10 of 100");
 		}
 
 		task ("And Then the Filters Summary boxes will be displayed  accordingly to it") {

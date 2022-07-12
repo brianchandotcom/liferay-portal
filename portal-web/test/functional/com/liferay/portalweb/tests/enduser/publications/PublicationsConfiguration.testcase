@@ -43,6 +43,44 @@ definition {
 		Alert.viewErrorMessage(errorMessage = "Staging is enabled for at least one site or asset library in the current virtual instance. Publications and staging cannot be used together.");
 	}
 
+	@description = "Publications test in a non-root portal context."
+	@priority = "4"
+	test CreatePublicationsInNonRootContext {
+		property portal.context = "liferay";
+		property skip.clean-app-server-deploy-dir = "true";
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "PublicationsConfiguration#CreatePublicationsInNonRootContext";
+
+		Publications.enablePublications();
+
+		AssertTextEquals(
+			locator1 = "Publications#MANAGE_PUBLICATIONS_PAGE_TITLE",
+			value1 = "Publications");
+
+		AssertTextPresent(
+			key_publicationName = "Production",
+			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
+			value1 = "Production");
+
+		Publications.createNewPublication(
+			gotoPublicationsAdmin = "true",
+			publicationDescription = "Publication Description",
+			publicationName = "Publication Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+	}
+
 	@priority = "5"
 	test EnableDisablePublicationsAndSandboxViaInstanceSettings {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

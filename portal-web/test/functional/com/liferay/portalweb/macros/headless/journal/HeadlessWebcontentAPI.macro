@@ -397,6 +397,7 @@ definition {
 	macro _versionStructureContent {
 		if (!(isSet(structuredContentId))) {
 			Variables.assertDefined(parameterList = "${responseToParse},${versionvalue}");
+
 			var structuredContentId = JSONUtil.getWithJSONPath("${responseToParse}", "$.['id']");
 		}
 		else {
@@ -614,9 +615,9 @@ definition {
 
 	macro returnAllstructuredContentId {
 		var response = HeadlessWebcontentAPI._allStructuredContent();
-			
+
 		var structuredContentId = JSONUtil.getWithJSONPath("${response}", "$..['items'][?(@.creator)].id");
-		
+
 		return "${structuredContentId}";
 	}
 
@@ -651,23 +652,22 @@ definition {
 			var allStructuredContentId = HeadlessWebcontentAPI.returnAllstructuredContentId();
 
 			var structuredContentId = ListUtil.newListFromString("${allStructuredContentId}");
+
 			var size = ListUtil.size("${structuredContentId}");
 			var i = "0";
 			var response = "";
+
 			while ("${i}" != "${size}") {
 				var locale = ListUtil.get("${structuredContentId}", "${i}");
 
 				var responseuni = HeadlessWebcontentAPI._versionStructureContent(
 					structuredContentId = "${locale}",
 					versionvalue = "${versionvalue}");
-
 				var i = ${i} + 1;
-
 				var actualTitleName = JSONUtil.getWithJSONPath("${responseuni}", "$..title");
-				
+
 				var response = StringUtil.add("${response}", "${actualTitleName}");
 			}
-
 		}
 		else {
 			var response = HeadlessWebcontentAPI._versionStructureContent(

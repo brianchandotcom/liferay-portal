@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -265,6 +266,25 @@ public class DispatchTriggerLocalServiceImpl
 			int startDateMinute)
 		throws PortalException {
 
+		TimeZone timeZone = TimeZone.getTimeZone("UTC");
+
+		return updateDispatchTrigger(
+			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
+			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
+			neverEnd, overlapAllowed, startDateMonth, startDateDay,
+			startDateYear, startDateHour, startDateMinute, timeZone.getID());
+	}
+
+	@Override
+	public DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId, boolean active, String cronExpression,
+			DispatchTaskClusterMode dispatchTaskClusterMode, int endDateMonth,
+			int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+			boolean neverEnd, boolean overlapAllowed, int startDateMonth,
+			int startDateDay, int startDateYear, int startDateHour,
+			int startDateMinute, String timeZoneId)
+		throws PortalException {
+
 		DispatchTrigger dispatchTrigger =
 			dispatchTriggerPersistence.fetchByPrimaryKey(dispatchTriggerId);
 
@@ -276,18 +296,24 @@ public class DispatchTriggerLocalServiceImpl
 		}
 		else {
 			dispatchTrigger.setEndDate(
-				_portal.getDate(
-					endDateMonth, endDateDay, endDateYear, endDateHour,
-					endDateMinute, DispatchTriggerEndDateException.class));
+				_getUTCDate(
+					_portal.getDate(
+						endDateMonth, endDateDay, endDateYear, endDateHour,
+						endDateMinute, DispatchTriggerEndDateException.class),
+					timeZoneId));
 		}
 
 		dispatchTrigger.setDispatchTaskClusterMode(
 			dispatchTaskClusterMode.getMode());
 		dispatchTrigger.setOverlapAllowed(overlapAllowed);
 		dispatchTrigger.setStartDate(
-			_portal.getDate(
-				startDateMonth, startDateDay, startDateYear, startDateHour,
-				startDateMinute, DispatchTriggerStartDateException.class));
+			_getUTCDate(
+				_portal.getDate(
+					startDateMonth, startDateDay, startDateYear, startDateHour,
+					startDateMinute, DispatchTriggerStartDateException.class),
+				timeZoneId));
+
+		dispatchTrigger.setTimeZoneId(timeZoneId);
 
 		dispatchTrigger = dispatchTriggerPersistence.update(dispatchTrigger);
 
@@ -298,7 +324,7 @@ public class DispatchTriggerLocalServiceImpl
 			_dispatchTriggerHelper.addSchedulerJob(
 				dispatchTriggerId, cronExpression,
 				dispatchTrigger.getStartDate(), dispatchTrigger.getEndDate(),
-				dispatchTaskClusterMode.getStorageType());
+				dispatchTaskClusterMode.getStorageType(), timeZoneId);
 		}
 
 		return dispatchTrigger;
@@ -344,6 +370,12 @@ public class DispatchTriggerLocalServiceImpl
 			StringBundler.concat(
 				"Dispatch trigger name \"", name,
 				"\" already exists for company ", companyId));
+	}
+
+	private Date _getUTCDate(Date date, String timeZoneId) {
+		TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
+
+		return new Date(date.getTime() - timeZone.getOffset(date.getTime()));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -112,7 +112,8 @@ public class DispatchConfigurator {
 					dispatchTrigger.getCronExpression(),
 					dispatchTrigger.getStartDate(),
 					dispatchTrigger.getEndDate(),
-					dispatchTaskClusterMode.getStorageType());
+					dispatchTaskClusterMode.getStorageType(),
+					dispatchTrigger.getTimeZoneId());
 			}
 			catch (DispatchTriggerSchedulerException
 						dispatchTriggerSchedulerException) {

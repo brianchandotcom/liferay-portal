@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,12 +39,13 @@ public class DispatchTriggerHelper {
 
 	public void addSchedulerJob(
 			long dispatchTriggerId, String cronExpression, Date startDate,
-			Date endDate, StorageType storageType)
+			Date endDate, StorageType storageType, String timeZoneId)
 		throws DispatchTriggerSchedulerException {
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			_getJobName(dispatchTriggerId), _getGroupName(dispatchTriggerId),
-			startDate, endDate, cronExpression);
+			startDate, endDate, cronExpression,
+			TimeZone.getTimeZone(timeZoneId));
 
 		try {
 			_schedulerEngineHelper.schedule(

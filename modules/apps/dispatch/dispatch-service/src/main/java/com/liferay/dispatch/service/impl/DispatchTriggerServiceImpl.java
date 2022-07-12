@@ -124,6 +124,26 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 
 	@Override
 	public DispatchTrigger updateDispatchTrigger(
+			long dispatchTriggerId, boolean active, String cronExpression,
+			DispatchTaskClusterMode dispatchTaskClusterMode, int endDateMonth,
+			int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
+			boolean neverEnd, boolean overlapAllowed, int startDateMonth,
+			int startDateDay, int startDateYear, int startDateHour,
+			int startDateMinute, String timeZoneId)
+		throws PortalException {
+
+		_dispatchTriggerModelResourcePermission.check(
+			getPermissionChecker(), dispatchTriggerId, ActionKeys.UPDATE);
+
+		return dispatchTriggerLocalService.updateDispatchTrigger(
+			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
+			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
+			neverEnd, overlapAllowed, startDateMonth, startDateDay,
+			startDateYear, startDateHour, startDateMinute, timeZoneId);
+	}
+
+	@Override
+	public DispatchTrigger updateDispatchTrigger(
 			long dispatchTriggerId,
 			UnicodeProperties dispatchTaskSettingsUnicodeProperties,
 			String name)

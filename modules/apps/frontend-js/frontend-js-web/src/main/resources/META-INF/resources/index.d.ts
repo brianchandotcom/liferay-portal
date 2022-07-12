@@ -157,6 +157,10 @@ export function getCheckedCheckboxes(
 	name?: string
 ): Array<number> | '';
 
+export function getOpener(): any;
+
+export function getTop(): Window;
+
 export function getUncheckedCheckboxes(
 	form: HTMLFormElement,
 	except: string,

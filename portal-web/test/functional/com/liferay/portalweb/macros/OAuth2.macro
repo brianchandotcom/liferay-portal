@@ -81,6 +81,22 @@ definition {
 			value1 = "Save");
 	}
 
+	macro addOAuth2AppCreatorRole {
+		JSONRole.addRegularRole(
+			roleKey = "OAuth2 App Creator",
+			roleTitle = "OAuth2 App Creator");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet",
+			roleTitle = "OAuth2 App Creator");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "CREATE_TOKEN",
+			resourceName = "com.liferay.oauth2.provider.model.OAuth2Application",
+			roleTitle = "OAuth2 App Creator");
+	}
+
 	macro addPrefixHandlerInSystemSettings {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -416,7 +432,9 @@ definition {
 		if ("${grantFlow}" == "clientCredentials") {
 			var tokenCurl = '''
 				${portalURL}/o/oauth2/token \
-					--data grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}
+					-d client_id=${client_id} \
+					-d client_secret=${client_secret} \
+					-d grant_type=client_credentials
 			''';
 		}
 
@@ -452,6 +470,27 @@ definition {
 		echo("## * Authorization Code: ${authorizationCode}");
 
 		return "${authorizationCode}";
+	}
+
+	macro getDeleteOutput {
+		var portalURL = PropsUtil.get("portal.url");
+		var articleId = JSONWebcontentSetter.setArticleId(
+			groupName = "Guest",
+			title = "WC Title");
+		var groupId = JSONGroupAPI._getGroupIdByName(
+			groupName = "Guest",
+			site = "true");
+
+		var deleteCurl = '''
+			${portalURL}/api/jsonws/journal.journalarticle/delete-article -H 'Authorization: Bearer ${accessToken}' \
+				-d groupId=${groupId} \
+				-d articleId=${articleId} \
+				-d articleURL='wc-title'
+		''';
+
+		var deleteOutput = JSONCurlUtil.post("${deleteCurl}");
+
+		return "${deleteOutput}";
 	}
 
 	macro inputApplicationValues {
@@ -580,6 +619,7 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			WaitForElementPresent(
+				key_clientCredentialsUser = "${clientCredentialsUser}",
 				locator1 = "OAuth2#ADMIN_CLIENT_CREDENTIALS_USER_SELECTED",
 				value1 = "${clientCredentialsUser}");
 

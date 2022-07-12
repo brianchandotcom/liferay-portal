@@ -36,8 +36,6 @@ jest.mock('frontend-js-web', () => ({
 	openToast: jest.fn(),
 }));
 
-const openToastMock = openToast;
-
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/api/index.js',
 	() => {
@@ -254,7 +252,7 @@ describe('VariationsNav', () => {
 
 		expect(await saveVariationsListPriorityService).toHaveBeenCalled();
 
-		expect(openToastMock).toHaveBeenCalledWith({
+		expect(openToast).toHaveBeenCalledWith({
 			message: Liferay.Language.get(
 				'your-request-completed-successfully'
 			),
@@ -281,7 +279,7 @@ describe('VariationsNav', () => {
 
 		expect(await saveVariationsListPriorityService).toHaveBeenCalled();
 
-		expect(openToastMock).toHaveBeenCalledWith({
+		expect(openToast).toHaveBeenCalledWith({
 			message: Liferay.Language.get(
 				'your-request-completed-successfully'
 			),
@@ -313,7 +311,7 @@ describe('VariationsNav', () => {
 
 		expect(await saveVariationsListPriorityService).toHaveBeenCalled();
 
-		expect(openToastMock).toHaveBeenCalledWith({
+		expect(openToast).toHaveBeenCalledWith({
 			message: Liferay.Language.get('an-unexpected-error-occurred'),
 			type: 'danger',
 		});

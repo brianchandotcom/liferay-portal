@@ -98,6 +98,13 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
+	macro addShippingMethodTrackingURL {
+		Type(
+			key_fieldLabel = "Tracking URL",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${trackingURL}");
+	}
+
 	macro addShippingOption {
 		Variables.assertDefined(parameterList = "${name},${key}");
 

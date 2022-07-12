@@ -22,6 +22,7 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedObjectFieldIdException;
@@ -768,42 +769,47 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 
 			_objectFieldLocalService.addSystemObjectField(
-				userId, objectDefinition.getObjectDefinitionId(), "Text",
+				userId, objectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectEntryTable.INSTANCE.userName.getName(), dbTableName,
-				"String", null, false, false, null,
+				ObjectFieldConstants.DB_TYPE_STRING, null, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "author")),
 				"creator", false, false);
 
 			_objectFieldLocalService.addSystemObjectField(
-				userId, objectDefinition.getObjectDefinitionId(), "Date",
-				ObjectEntryTable.INSTANCE.status.getName(), dbTableName, "Date",
-				null, false, false, null,
+				userId, objectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_DATE,
+				ObjectEntryTable.INSTANCE.createDate.getName(), dbTableName,
+				ObjectFieldConstants.DB_TYPE_DATE, null, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "create-date")),
-				"dateCreated", false, false);
+				"createDate", false, false);
 
 			_objectFieldLocalService.addSystemObjectField(
-				userId, objectDefinition.getObjectDefinitionId(), "Integer",
-				ObjectEntryTable.INSTANCE.status.getName(),
-				ObjectEntryTable.INSTANCE.getTableName(), "Integer", null,
-				false, false, null,
+				userId, objectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER,
+				ObjectEntryTable.INSTANCE.objectEntryId.getName(),
+				ObjectEntryTable.INSTANCE.getTableName(),
+				ObjectFieldConstants.DB_TYPE_LONG, null, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "id")),
 				"id", false, false);
 
 			_objectFieldLocalService.addSystemObjectField(
-				userId, objectDefinition.getObjectDefinitionId(), "Date",
-				ObjectEntryTable.INSTANCE.status.getName(), dbTableName, "Date",
-				null, false, false, null,
+				userId, objectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_DATE,
+				ObjectEntryTable.INSTANCE.modifiedDate.getName(), dbTableName,
+				ObjectFieldConstants.DB_TYPE_DATE, null, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "modified-date")),
-				"dateModified", false, false);
+				"modifiedDate", false, false);
 
 			_objectFieldLocalService.addSystemObjectField(
-				userId, objectDefinition.getObjectDefinitionId(), "Text",
+				userId, objectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				ObjectEntryTable.INSTANCE.status.getName(), dbTableName,
-				"Integer", null, false, false, null,
+				ObjectFieldConstants.DB_TYPE_INTEGER, null, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(
 					LanguageUtil.get(LocaleUtil.getDefault(), "status")),
 				"status", false, false);

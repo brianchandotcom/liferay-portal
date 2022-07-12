@@ -405,6 +405,10 @@ definition {
 					pageName = "Thank you page",
 					panel = "General",
 					successMessage = "Page");
+
+				PageEditor.viewItemSelectorText(
+					fieldLabel = "Page",
+					text = "Thank you page");
 			}
 
 			task ("Add Text Input and Submit Button inside Form Container") {
@@ -480,6 +484,10 @@ definition {
 				panel = "General",
 				siteName = "Liferay DXP",
 				successMessage = "Page");
+
+			PageEditor.viewItemSelectorText(
+				fieldLabel = "Page",
+				text = "Home");
 
 			PageEditor.publish();
 		}

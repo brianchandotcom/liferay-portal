@@ -388,47 +388,40 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(
-					new UnsyncStringReader(dependencies))) {
+		for (String dependency : dependencies.split(StringPool.NEW_LINE)) {
+			dependency = dependency.trim();
 
-			String line = StringPool.BLANK;
+			if (Validator.isNull(dependency) ||
+				!dependency.matches(
+					"(compile|compileInclude|compileOnly|classpath" +
+						"|testCompile) .+")) {
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				line = StringUtil.trim(line);
-
-				if (Validator.isNull(line) ||
-					!line.matches(
-						"(compile|compileInclude|compileOnly|classpath" +
-							"|testCompile) .+")) {
-
-					continue;
-				}
-
-				String group = _getContentByPattern(line, _gradleGroupPattern);
-				String name = _getContentByPattern(line, _gradleNamePattern);
-				String version = _getContentByPattern(
-					line, _gradleVersionPattern);
-
-				if (Validator.isNull(group) || Validator.isNull(name) ||
-					Validator.isNull(version)) {
-
-					continue;
-				}
-
-				_checkIsContainVulnerabilities(
-					fileName, group + StringPool.COLON + name, version,
-					httpClient, SecurityAdvisoryEcosystemEnum.MAVEN);
+				continue;
 			}
+
+			String group = _getContentByPattern(
+				dependency, _gradleGroupPattern);
+			String name = _getContentByPattern(dependency, _gradleNamePattern);
+			String version = _getContentByPattern(
+				dependency, _gradleVersionPattern);
+
+			if (Validator.isNull(group) || Validator.isNull(name) ||
+				Validator.isNull(version)) {
+
+				continue;
+			}
+
+			_checkIsContainVulnerabilities(
+				fileName, group + StringPool.COLON + name, version, httpClient,
+				SecurityAdvisoryEcosystemEnum.MAVEN);
 		}
-		finally {
-			try {
-				httpClient.close();
-			}
-			catch (IOException ioException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioException);
-				}
+
+		try {
+			httpClient.close();
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
 			}
 		}
 	}

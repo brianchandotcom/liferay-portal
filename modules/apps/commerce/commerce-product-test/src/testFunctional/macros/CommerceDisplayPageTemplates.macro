@@ -42,6 +42,22 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
+	macro checkCollectionDisplayProductSpecificationsPresent {
+		var productSpecifications = CommerceJSONProductsAPI._getCommerceProductSpecifications(productName = "${product}");
+
+		for (var productSpecification : list "${productSpecifications}") {
+			var specification = StringUtil.extractFirst("${productSpecification}", ":");
+			var value = StringUtil.extractLast("${productSpecification}", ":");
+
+			AssertElementPresent(
+				key_specification = "${specification}",
+				key_value = "${value}",
+				locator1 = "CommerceFrontStore#COLLECTION_DISPLAY_PRODUCT_SPECIFICATION_ENTRY");
+
+			echo("The Specification ${specification} with the value ${value} is present");
+		}
+	}
+
 	@summary = "Map a fragment to a field in a Display Page Template"
 	macro mapEditableTextToField {
 		if ("${index}" == "1") {

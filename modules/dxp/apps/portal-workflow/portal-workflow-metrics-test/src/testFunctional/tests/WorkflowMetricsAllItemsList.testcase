@@ -3167,6 +3167,8 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
+		WorkflowMetrics.assertSLAMetricsCalculated();
+
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");

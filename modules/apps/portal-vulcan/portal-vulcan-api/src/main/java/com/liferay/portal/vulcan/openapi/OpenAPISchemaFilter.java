@@ -14,7 +14,9 @@
 
 package com.liferay.portal.vulcan.openapi;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,8 +28,8 @@ public class OpenAPISchemaFilter {
 		return _applicationPath;
 	}
 
-	public DTOProperty getDTOProperty() {
-		return _dtoProperty;
+	public List<DTOProperty> getDTOProperties() {
+		return _dtoProperties;
 	}
 
 	public Map<String, String> getSchemaMappings() {
@@ -38,8 +40,8 @@ public class OpenAPISchemaFilter {
 		_applicationPath = applicationPath;
 	}
 
-	public void setDTOProperty(DTOProperty dtoProperty) {
-		_dtoProperty = dtoProperty;
+	public void setDTOProperties(List<DTOProperty> dtoProperties) {
+		_dtoProperties = dtoProperties;
 	}
 
 	public void setSchemaMappings(Map<String, String> schemaMappings) {
@@ -47,7 +49,7 @@ public class OpenAPISchemaFilter {
 	}
 
 	private String _applicationPath;
-	private DTOProperty _dtoProperty;
+	private List<DTOProperty> _dtoProperties = new ArrayList<>();
 	private Map<String, String> _schemaMappings = new HashMap<>();
 
 }

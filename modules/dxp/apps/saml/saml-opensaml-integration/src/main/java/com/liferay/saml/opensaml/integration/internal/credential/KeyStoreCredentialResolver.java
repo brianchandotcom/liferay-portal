@@ -22,12 +22,16 @@ import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.credential.KeyStoreManager;
+import com.liferay.saml.runtime.exception.CredentialAuthException;
+import com.liferay.saml.runtime.exception.CredentialException;
 import com.liferay.saml.runtime.exception.EntityIdException;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 
+import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.PrivateKey;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
@@ -56,6 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
+ * @author Stian Sigvartsen
  */
 @Component(
 	configurationPid = "com.liferay.saml.runtime.configuration.SamlKeyStoreManagerConfiguration",
@@ -64,6 +69,28 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class KeyStoreCredentialResolver
 	extends AbstractCredentialResolver implements LocalEntityManager {
+
+	public void authenticateLocalEntityCertificate(
+			String certificateKeyPassword, CertificateUsage certificateUsage,
+			String entityId)
+		throws CredentialAuthException, CredentialException {
+
+		KeyStore.Entry entry = null;
+
+		if (certificateUsage == CertificateUsage.ENCRYPTION) {
+			entry = _getKeyStoreEntry(
+				_getAlias(entityId, UsageType.ENCRYPTION),
+				certificateKeyPassword);
+		}
+		else {
+			entry = _getKeyStoreEntry(
+				_getAlias(entityId, UsageType.SIGNING), certificateKeyPassword);
+		}
+
+		if (entry == null) {
+			throw new CredentialException("Certificate not found");
+		}
+	}
 
 	@Override
 	public void deleteLocalEntityCertificate(CertificateUsage certificateUsage)
@@ -168,13 +195,10 @@ public class KeyStoreCredentialResolver
 
 			String entityId = entityIDCriterion.getEntityId();
 
-			KeyStore.PasswordProtection keyStorePasswordProtection = null;
-
 			SamlProviderConfiguration samlProviderConfiguration =
 				_samlProviderConfigurationHelper.getSamlProviderConfiguration();
 
-			UsageCriterion usageCriterion = criteriaSet.get(
-				UsageCriterion.class);
+			UsageCriterion usageCriterion = criteriaSet.get(UsageCriterion.class);
 
 			UsageType usageType = UsageType.UNSPECIFIED;
 
@@ -182,9 +206,9 @@ public class KeyStoreCredentialResolver
 				usageType = usageCriterion.getUsage();
 			}
 
-			if (entityId.equals(samlProviderConfiguration.entityId())) {
-				String keyStoreCredentialPassword = null;
+			String keyStoreCredentialPassword = null;
 
+			if (entityId.equals(samlProviderConfiguration.entityId())) {
 				if (usageType == UsageType.ENCRYPTION) {
 					keyStoreCredentialPassword =
 						samlProviderConfiguration.
@@ -194,18 +218,10 @@ public class KeyStoreCredentialResolver
 					keyStoreCredentialPassword =
 						samlProviderConfiguration.keyStoreCredentialPassword();
 				}
-
-				if (keyStoreCredentialPassword != null) {
-					keyStorePasswordProtection =
-						new KeyStore.PasswordProtection(
-							keyStoreCredentialPassword.toCharArray());
-				}
 			}
 
-			KeyStore keyStore = _keyStoreManager.getKeyStore();
-
-			KeyStore.Entry entry = keyStore.getEntry(
-				_getAlias(entityId, usageType), keyStorePasswordProtection);
+			KeyStore.Entry entry = _getKeyStoreEntry(
+				_getAlias(entityId, usageType), keyStoreCredentialPassword);
 
 			if (entry == null) {
 				return Collections.emptySet();
@@ -280,6 +296,88 @@ public class KeyStoreCredentialResolver
 		}
 
 		return entityId;
+	}
+
+	private <T> T _getCauseThrowable(
+		Throwable throwable, Class<T> exceptionType) {
+
+		if (throwable == null) {
+			return null;
+		}
+
+		Throwable causeThrowable = throwable.getCause();
+
+		while (causeThrowable != null) {
+			if (exceptionType.isInstance(causeThrowable)) {
+				return (T)causeThrowable;
+			}
+
+			causeThrowable = causeThrowable.getCause();
+		}
+
+		return null;
+	}
+
+	private KeyStore.Entry _getKeyStoreEntry(
+			String alias, String certificateKeyPassword)
+		throws CredentialAuthException {
+
+		KeyStore.PasswordProtection keyStorePasswordProtection = null;
+
+		if (certificateKeyPassword != null) {
+			keyStorePasswordProtection = new KeyStore.PasswordProtection(
+				certificateKeyPassword.toCharArray());
+		}
+
+		try {
+			KeyStore keyStore = _keyStoreManager.getKeyStore();
+
+			return keyStore.getEntry(alias, keyStorePasswordProtection);
+		}
+		catch (GeneralSecurityException generalSecurityException) {
+			Class<? extends KeyStoreManager> clazz =
+				_keyStoreManager.getClass();
+			long companyId = CompanyThreadLocal.getCompanyId();
+
+			if (generalSecurityException instanceof KeyStoreException) {
+				UnrecoverableKeyException unrecoverableKeyException =
+					_getCauseThrowable(
+						generalSecurityException,
+						UnrecoverableKeyException.class);
+
+				if (unrecoverableKeyException != null) {
+					throw new CredentialAuthException.KeyStorePasswordIncorrect(
+						String.format(
+							"Company %s used an incorrect password to access " +
+								"the KeyStore provided by %s",
+							companyId, clazz.getSimpleName()),
+						unrecoverableKeyException);
+				}
+
+				throw new CredentialAuthException.CannotLoadKeyStore(
+					String.format(
+						"Company %s could not load the SAML KeyStore " +
+							"provided by %s",
+						companyId, clazz.getSimpleName()),
+					generalSecurityException);
+			}
+
+			if (generalSecurityException instanceof UnrecoverableKeyException) {
+				throw new CredentialAuthException.CredentialPasswordIncorrect(
+					String.format(
+						"Company %s used an incorrect key credential " +
+							"password to an entry in the SAML KeyStore " +
+								"provided by %s",
+						companyId, clazz.getSimpleName()),
+					(UnrecoverableKeyException)generalSecurityException);
+			}
+
+			throw new CredentialAuthException(
+				String.format(
+					"Unknown Exception occurred for company %s using %s",
+					companyId, clazz.getSimpleName()),
+				generalSecurityException);
+		}
 	}
 
 	private SamlProviderConfiguration _getSamlProviderConfiguration() {

@@ -14,18 +14,25 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
 
@@ -61,6 +68,18 @@ public class LayoutActionsDisplayContext {
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "configure"));
+						}
+					).add(
+						() -> _isShowPermissionsAction(layout),
+						dropdownItem -> {
+							dropdownItem.putData("action", "permissionLayout");
+							dropdownItem.putData(
+								"permissionLayoutURL",
+								_getPermissionsURL(layout));
+							dropdownItem.setIcon("password-policies");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "permissions"));
 						}
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -101,11 +120,38 @@ public class LayoutActionsDisplayContext {
 		return layout;
 	}
 
+	private String _getPermissionsURL(Layout layout) throws Exception {
+		return PermissionsURLTag.doTag(
+			StringPool.BLANK, Layout.class.getName(),
+			HtmlUtil.escape(layout.getName(_themeDisplay.getLocale())), null,
+			String.valueOf(layout.getPlid()),
+			LiferayWindowState.POP_UP.toString(), null,
+			_themeDisplay.getRequest());
+	}
+
 	private boolean _isShowConfigureAction(Layout layout)
 		throws PortalException {
 
 		return LayoutPermissionUtil.containsLayoutUpdatePermission(
 			_themeDisplay.getPermissionChecker(), layout);
+	}
+
+	private boolean _isShowPermissionsAction(Layout layout)
+		throws PortalException {
+
+		if (StagingUtil.isIncomplete(layout)) {
+			return false;
+		}
+
+		Group group = layout.getGroup();
+
+		if (group.isLayoutPrototype()) {
+			return false;
+		}
+
+		return LayoutPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), layout,
+			ActionKeys.PERMISSIONS);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

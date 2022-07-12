@@ -260,6 +260,8 @@ definition {
 
 			Navigator.gotoBack();
 
+			PageEditor.assertFragmentSidebarLoaded();
+
 			PageEditor.publish();
 		}
 

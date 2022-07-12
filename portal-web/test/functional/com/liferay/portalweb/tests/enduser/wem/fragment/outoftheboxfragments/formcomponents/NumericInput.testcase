@@ -468,6 +468,94 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-151402. The user could see error message when submit a form with value exceeding the maximum or minimum value of field."
+	@priority = "4"
+	test ViewErrorMessageWhenSubmitFormWithValueExceedingTheMaxOrMinValueOfField {
+		property test.name.skip.portal.instance = "NumericInput#ViewErrorMessageWhenSubmitFormWithValueExceedingTheMaxOrMinValueOfField";
+
+		task ("Given a user has a content page where a Numeric Input and Submit Button fragments are inside a Form Container") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add a Numeric Input and Submit Button fragment into Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Numeric Input");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "Numeric Input");
+			}
+
+			task ("Map the Numeric Input fragment to Integer field") {
+				PageEditor.editInput(
+					field = "Ticket Number",
+					fragmentName = "Numeric Input");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the user submits form with value exceeding the maximum value of Numeric Input") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Type(
+				key_text = "Ticket Number",
+				locator1 = "TextInput#ANY",
+				value1 = "10000000000");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should see an error message") {
+			AssertAttributeValue(
+				attribute1 = "validationMessage",
+				key_text = "Ticket Number",
+				locator1 = "TextInput#ANY",
+				value1 = "Value must be less than or equal to 2147483647.");
+		}
+
+		task ("When the user submits form with value exceeding the minimum value of Numeric Input") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Type(
+				key_text = "Ticket Number",
+				locator1 = "TextInput#ANY",
+				value1 = "-10000000000");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should see an error message") {
+			AssertAttributeValue(
+				attribute1 = "validationMessage",
+				key_text = "Ticket Number",
+				locator1 = "TextInput#ANY",
+				value1 = "Value must be greater than or equal to -2147483648.");
+		}
+	}
+
 	@description = "This is a test for LPS-155169. The Numeric Input could be mapped to Long Integer, Integer, Precision Decimal and Decimal fields."
 	@priority = "5"
 	test ViewMappableFields {

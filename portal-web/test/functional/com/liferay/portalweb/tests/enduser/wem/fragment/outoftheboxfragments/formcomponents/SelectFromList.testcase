@@ -251,4 +251,74 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-151402. The user could see error message when submit a form with invalid field."
+	@priority = "4"
+	test ViewErrorMessageWhenSubmitFormWithInvalidField {
+		property test.name.skip.portal.instance = "SelectFromList#ViewErrorMessageWhenSubmitFormWithInvalidField";
+
+		task ("Given a user has a content page where a Select from List and Submit Button fragments are inside a Form Container") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add a Select from List and Submit Button fragment into Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Select from List");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "Select from List");
+			}
+
+			task ("Map the Select from List fragment to Type field") {
+				PageEditor.editInput(
+					field = "Type",
+					fragmentName = "Select from List");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the user submits form with invalid field") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			SetElementAttribute(
+				attribute1 = "data-option-value",
+				locator1 = "//li[contains(@class,'dropdown')][normalize-space(text())='Reserved']",
+				value = "invalid");
+
+			Click(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			MenuItem.click(menuItem = "Reserved");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should see an error message on the top of form") {
+			Alert.viewErrorMessage(errorMessage = "The Type is invalid.");
+		}
+	}
+
 }

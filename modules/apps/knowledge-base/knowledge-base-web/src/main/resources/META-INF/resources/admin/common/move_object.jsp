@@ -136,7 +136,7 @@ if (portletTitleBasedNavigation) {
 				title: '<liferay-ui:message key="select-parent" />',
 
 				<liferay-portlet:renderURL var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
+					<portlet:param name="mvcPath" value="/admin/common/select_parent.jsp" />
 					<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 					<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
 					<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />

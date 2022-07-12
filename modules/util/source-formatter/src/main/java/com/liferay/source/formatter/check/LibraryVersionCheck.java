@@ -240,8 +240,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			return;
 		}
 
-		for (String packageName : jsonObject.keySet()) {
-			String version = jsonObject.getString(packageName);
+		for (String dependencyName : jsonObject.keySet()) {
+			String version = jsonObject.getString(dependencyName);
 
 			if (version.startsWith("^") || version.startsWith("~") ||
 				version.startsWith("*")) {
@@ -250,7 +250,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			}
 
 			_checkIsContainVulnerabilities(
-				fileName, packageName, version, httpClient,
+				fileName, dependencyName, version, httpClient,
 				SecurityAdvisoryEcosystemEnum.NPM);
 		}
 	}

@@ -23,6 +23,7 @@ type ContactInfoFormTypes = {
 	email: string;
 	firstName: string;
 	lastName: string;
+	ownership: string;
 	phone: string;
 	state: string;
 	streetAddress: string;
@@ -67,6 +68,7 @@ export type VehicleInfoFormTypes = {
 };
 
 export type InitialStateTypes = {
+	applicationId: string;
 	currentStep: number;
 	hasFormChanges: boolean;
 	steps: {
@@ -98,6 +100,7 @@ export type InitialStateTypes = {
 };
 
 const initialState: InitialStateTypes = {
+	applicationId: '',
 	currentStep: 0,
 	hasFormChanges: false,
 	steps: {
@@ -109,6 +112,7 @@ const initialState: InitialStateTypes = {
 				email: '',
 				firstName: '',
 				lastName: '',
+				ownership: '',
 				phone: '',
 				state: '',
 				streetAddress: '',

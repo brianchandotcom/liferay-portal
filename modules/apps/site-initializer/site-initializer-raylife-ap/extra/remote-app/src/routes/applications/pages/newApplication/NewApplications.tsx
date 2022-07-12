@@ -19,6 +19,8 @@ import classNames from 'classnames';
 import {ReactNode, useContext} from 'react';
 
 import ClayIconProvider from '../../../../common/context/ClayIconProvider';
+import {createOrUpdateRaylifeApplication} from '../../../../common/services';
+import {CONSTANTS} from '../../../../common/utils/constants';
 import {
 	ACTIONS,
 	NewApplicationAutoContext,
@@ -61,6 +63,12 @@ const NewApplication = ({children}: DriverInfoProps) => {
 
 	const handleNextClick = () => {
 		dispatch({payload: false, type: ACTIONS.SET_HAS_FORM_CHANGE});
+
+		const applicationStatus =
+			state.currentStep === 0 ? CONSTANTS.APPLICATION_STATUS.OPEN : '';
+
+		createOrUpdateRaylifeApplication(state, applicationStatus);
+
 		if (state.currentStep < steps.length) {
 			dispatch({
 				payload: state.currentStep + 1,
@@ -104,12 +112,20 @@ const NewApplication = ({children}: DriverInfoProps) => {
 						</div>
 
 						<div>
-							<ClayButton displayType={null} small={true}>
-								EXIT
+							<ClayButton
+								className="text-uppercase"
+								displayType={null}
+								small={true}
+							>
+								Exit
 							</ClayButton>
 
-							<ClayButton displayType="secondary" small={true}>
-								SAVE
+							<ClayButton
+								className="text-uppercase"
+								displayType="secondary"
+								small={true}
+							>
+								Save
 							</ClayButton>
 						</div>
 					</div>
@@ -166,11 +182,12 @@ const NewApplication = ({children}: DriverInfoProps) => {
 						)}
 
 						<ClayButton
+							className="text-uppercase"
 							displayType="primary"
 							onClick={() => handleNextClick()}
 							small={true}
 						>
-							NEXT
+							Next
 						</ClayButton>
 					</div>
 				</div>

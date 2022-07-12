@@ -13,6 +13,17 @@
  */
 
 export const CONSTANTS = {
+	APPLICATION_STATUS: {
+		APPROVED: 'approved',
+		BOUND: 'bound',
+		INCOMPLETE: 'incomplete',
+		ININVESTIGATION: 'inInvestigation',
+		OPEN: 'open',
+		QUOTED: 'quoted',
+		REJECTED: 'rejected',
+		REVIEWED: 'reviewed',
+		UNDERWRITING: 'underwriting',
+	},
 	MONTHS_ABREVIATIONS: [
 		'Jan',
 		'Feb',

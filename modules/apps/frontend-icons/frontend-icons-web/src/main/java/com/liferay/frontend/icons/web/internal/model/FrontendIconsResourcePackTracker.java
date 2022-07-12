@@ -18,7 +18,6 @@ import com.liferay.frontend.icons.web.internal.repository.FrontendIconsResourceP
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
@@ -152,29 +151,11 @@ public class FrontendIconsResourcePackTracker {
 				return;
 			}
 
-			try {
-				_companyLocalService.forEachCompanyId(
-					companyId -> {
-						try {
-							_frontendIconsResourcePackRepository.
-								deleteFrontendIconsResourcePack(
-									companyId, name);
-						}
-						catch (UndeployedExternalRepositoryException
-									undeployedExternalRepositoryException) {
-
-							if (_log.isDebugEnabled()) {
-								_log.debug(
-									undeployedExternalRepositoryException);
-							}
-						}
-					});
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-			}
+			_companyLocalService.forEachCompanyId(
+				companyId ->
+					_frontendIconsResourcePackRepository.
+						deleteTransientFrontendIconsResourcePack(
+							companyId, name));
 
 			serviceRegistration.unregister();
 
@@ -220,7 +201,7 @@ public class FrontendIconsResourcePackTracker {
 						companyId -> {
 							try {
 								_frontendIconsResourcePackRepository.
-									addFrontendIconsResourcePack(
+									addTransientFrontendIconsResourcePack(
 										companyId, frontendIconsResourcePack);
 							}
 							catch (UndeployedExternalRepositoryException
@@ -235,9 +216,9 @@ public class FrontendIconsResourcePackTracker {
 
 					return frontendIconsResourcePack;
 				}
-				catch (IOException | PortalException exception) {
+				catch (IOException ioException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
+						_log.debug(ioException);
 					}
 				}
 			}

@@ -31,12 +31,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.documentlibrary.store.StoreFactory;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -86,6 +88,17 @@ public class FrontendIconsResourcePackRepository {
 		}
 	}
 
+	public void addTransientFrontendIconsResourcePack(
+		long companyId, FrontendIconsResourcePack frontendIconsResourcePack) {
+
+		Map<String, FrontendIconsResourcePack> frontendIconsResourcePacks =
+			_transientFrontendIconsResourcePacks.computeIfAbsent(
+				companyId, key -> new ConcurrentHashMap<>());
+
+		frontendIconsResourcePacks.put(
+			frontendIconsResourcePack.getName(), frontendIconsResourcePack);
+	}
+
 	public void deleteFrontendIconsResourcePack(long companyId, String name)
 		throws PortalException {
 
@@ -101,10 +114,38 @@ public class FrontendIconsResourcePackRepository {
 		}
 	}
 
+	public void deleteTransientFrontendIconsResourcePack(
+		long companyId, String name) {
+
+		_transientFrontendIconsResourcePacks.computeIfPresent(
+			companyId,
+			(key, frontendIconsResourcePacks) -> {
+				frontendIconsResourcePacks.remove(name);
+
+				if (frontendIconsResourcePacks.isEmpty()) {
+					return null;
+				}
+
+				return frontendIconsResourcePacks;
+			});
+	}
+
 	public FrontendIconsResourcePack getFrontendIconsResourcePack(
 		long companyId, String name) {
 
 		name = StringUtil.toUpperCase(name);
+
+		Map<String, FrontendIconsResourcePack> frontendIconsResourcePacks =
+			_transientFrontendIconsResourcePacks.get(companyId);
+
+		if (frontendIconsResourcePacks != null) {
+			FrontendIconsResourcePack frontendIconsResourcePack =
+				frontendIconsResourcePacks.get(name);
+
+			if (frontendIconsResourcePack != null) {
+				return frontendIconsResourcePack;
+			}
+		}
 
 		try {
 			Company company = _companyLocalService.getCompany(companyId);
@@ -140,8 +181,15 @@ public class FrontendIconsResourcePackRepository {
 			long companyId)
 		throws IOException, PortalException {
 
-		List<FrontendIconsResourcePack> frontendIconsResourcePacks =
-			new ArrayList<>();
+		Map<String, FrontendIconsResourcePack>
+			mergedFrontendIconsResourcePacks = new HashMap<>();
+
+		Map<String, FrontendIconsResourcePack> frontendIconsResourcePacks =
+			_transientFrontendIconsResourcePacks.get(companyId);
+
+		if (frontendIconsResourcePacks != null) {
+			mergedFrontendIconsResourcePacks.putAll(frontendIconsResourcePacks);
+		}
 
 		Company company = _companyLocalService.getCompany(companyId);
 
@@ -153,6 +201,12 @@ public class FrontendIconsResourcePackRepository {
 
 		for (FileEntry fileEntry : fileEntries) {
 			String title = fileEntry.getTitle();
+
+			if (mergedFrontendIconsResourcePacks.containsKey(
+					StringUtil.toUpperCase(title))) {
+
+				continue;
+			}
 
 			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchFileEntry(
 				company.getGroupId(), folder.getFolderId(), title);
@@ -167,10 +221,11 @@ public class FrontendIconsResourcePackRepository {
 				SVGUtil.getFrontendIconsResources(
 					StringUtil.read(fileEntry.getContentStream())));
 
-			frontendIconsResourcePacks.add(frontendIconsResourcePack);
+			mergedFrontendIconsResourcePacks.put(
+				frontendIconsResourcePack.getName(), frontendIconsResourcePack);
 		}
 
-		return frontendIconsResourcePacks;
+		return new ArrayList<>(mergedFrontendIconsResourcePacks.values());
 	}
 
 	private Folder _getFolder(Company company) throws PortalException {
@@ -213,8 +268,8 @@ public class FrontendIconsResourcePackRepository {
 	@Reference
 	private PortletFileRepository _portletFileRepository;
 
-	@Reference(target = "(dl.store.impl.enabled=true)")
-	private StoreFactory _storeFactory;
+	private final Map<Long, Map<String, FrontendIconsResourcePack>>
+		_transientFrontendIconsResourcePacks = new ConcurrentHashMap<>();
 
 	@Reference
 	private UserLocalService _userLocalService;

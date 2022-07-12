@@ -116,7 +116,7 @@ public class AccountEntryModelListenerWhenDeletingAccountEntryTest {
 	public void testAccountGroupRelDeleted() throws Exception {
 		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_accountGroupRelLocalService.addAccountGroupRel(
 			accountGroup.getAccountGroupId(), AccountEntry.class.getName(),

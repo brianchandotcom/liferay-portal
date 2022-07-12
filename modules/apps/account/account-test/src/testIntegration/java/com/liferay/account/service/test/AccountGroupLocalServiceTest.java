@@ -15,6 +15,7 @@
 package com.liferay.account.service.test;
 
 import com.liferay.account.exception.DefaultAccountGroupException;
+import com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -24,6 +25,7 @@ import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Company;
@@ -70,11 +72,24 @@ public class AccountGroupLocalServiceTest {
 
 	@Test
 	public void testAddAccountGroup() throws Exception {
-		AccountGroup accountGroup = _addAccountGroup();
+		AccountGroup accountGroup1 = _addAccountGroup();
 
-		Assert.assertNotNull(
+		AccountGroup accountGroup2 =
 			_accountGroupLocalService.fetchAccountGroup(
-				accountGroup.getAccountGroupId()));
+				accountGroup1.getAccountGroupId());
+
+		Assert.assertNotNull(accountGroup2);
+
+		Assert.assertEquals(
+			accountGroup1.getExternalReferenceCode(),
+			accountGroup2.getExternalReferenceCode());
+
+		_assertException(
+			DuplicateAccountGroupExternalReferenceCodeException.class,
+			() -> _addAccountGroup(
+				RandomTestUtil.randomString(),
+				accountGroup1.getExternalReferenceCode(),
+				RandomTestUtil.randomString()));
 	}
 
 	@Test
@@ -217,6 +232,31 @@ public class AccountGroupLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateAccountGroup() throws Exception {
+		AccountGroup accountGroup1 = _addAccountGroup();
+
+		AccountGroup accountGroup2 =
+			_accountGroupLocalService.updateAccountGroup(
+				accountGroup1.getAccountGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+
+		Assert.assertNotEquals(
+			accountGroup1.getExternalReferenceCode(),
+			accountGroup2.getExternalReferenceCode());
+
+		AccountGroup accountGroup3 = _addAccountGroup();
+
+		_assertException(
+			DuplicateAccountGroupExternalReferenceCodeException.class,
+			() -> _accountGroupLocalService.updateAccountGroup(
+				accountGroup1.getAccountGroupId(),
+				RandomTestUtil.randomString(),
+				accountGroup3.getExternalReferenceCode(),
+				RandomTestUtil.randomString()));
+	}
+
+	@Test
 	public void testUpdateDefaultAccountGroup() throws Exception {
 		try {
 			AccountGroup accountGroup =
@@ -225,7 +265,7 @@ public class AccountGroupLocalServiceTest {
 
 			_accountGroupLocalService.updateAccountGroup(
 				accountGroup.getAccountGroupId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString());
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
 		}
 		catch (ModelListenerException modelListenerException) {
 			Assert.assertTrue(
@@ -238,14 +278,40 @@ public class AccountGroupLocalServiceTest {
 	private AccountGroup _addAccountGroup() throws Exception {
 		return AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	private AccountGroup _addAccountGroup(String description, String name)
 		throws Exception {
 
 		return AccountGroupTestUtil.addAccountGroup(
-			_accountGroupLocalService, description, name);
+			_accountGroupLocalService, description,
+			RandomTestUtil.randomString(), name);
+	}
+
+	private AccountGroup _addAccountGroup(
+			String description, String externalReferenceCode, String name)
+		throws Exception {
+
+		return AccountGroupTestUtil.addAccountGroup(
+			_accountGroupLocalService, description, externalReferenceCode,
+			name);
+	}
+
+	private void _assertException(
+			Class<? extends Exception> exceptionClass,
+			UnsafeRunnable<? extends Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exceptionClass.isAssignableFrom(exception.getClass()));
+		}
 	}
 
 	private void _testDeleteAccountGroup(

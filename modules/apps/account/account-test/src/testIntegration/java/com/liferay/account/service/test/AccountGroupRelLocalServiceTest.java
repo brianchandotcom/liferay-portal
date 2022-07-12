@@ -62,7 +62,7 @@ public class AccountGroupRelLocalServiceTest {
 
 		_accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	@Test

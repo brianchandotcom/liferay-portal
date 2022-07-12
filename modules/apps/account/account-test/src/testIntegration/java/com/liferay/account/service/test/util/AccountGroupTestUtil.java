@@ -25,11 +25,12 @@ public class AccountGroupTestUtil {
 
 	public static AccountGroup addAccountGroup(
 			AccountGroupLocalService accountGroupLocalService,
-			String description, String name)
+			String description, String externalReferenceCode, String name)
 		throws Exception {
 
 		return accountGroupLocalService.addAccountGroup(
-			TestPropsValues.getUserId(), description, name);
+			TestPropsValues.getUserId(), description, externalReferenceCode,
+			name);
 	}
 
 }

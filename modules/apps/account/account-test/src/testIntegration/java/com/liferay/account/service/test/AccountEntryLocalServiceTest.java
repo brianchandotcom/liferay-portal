@@ -599,7 +599,7 @@ public class AccountEntryLocalServiceTest {
 
 		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		LinkedHashMap<String, Object> params = _getLinkedHashMap(
 			"accountGroupIds", new long[] {accountGroup.getAccountGroupId()});

@@ -96,7 +96,7 @@ public class AccountGroupRelServiceTest {
 			_accountEntryLocalService);
 		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_accountGroupRelService.addAccountGroupRel(
 			accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
@@ -108,7 +108,7 @@ public class AccountGroupRelServiceTest {
 			_accountEntryLocalService);
 		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_accountGroupRelLocalService.addAccountGroupRel(
 			accountGroup.getAccountGroupId(), AccountEntry.class.getName(),

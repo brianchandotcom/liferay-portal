@@ -75,21 +75,21 @@ public class AccountGroupServiceTest {
 
 		_accountGroupService.addAccountGroup(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	@Test(expected = PrincipalException.class)
 	public void testAddAccountGroupWithoutPermission() throws Exception {
 		_accountGroupService.addAccountGroup(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	@Test
 	public void testDeleteAccountGroup() throws Exception {
 		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		UserRoleTestUtil.addResourcePermission(
 			ActionKeys.DELETE, AccountGroup.class.getName(), _user.getUserId());
@@ -102,7 +102,7 @@ public class AccountGroupServiceTest {
 	public void testDeleteAccountGroupWithoutPermission() throws Exception {
 		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_accountGroupService.deleteAccountGroup(
 			accountGroup.getAccountGroupId());
@@ -112,10 +112,10 @@ public class AccountGroupServiceTest {
 	public void testSearchAccountGroups() throws Exception {
 		AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 		AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		UserRoleTestUtil.addResourcePermission(
 			ActionKeys.VIEW, AccountGroup.class.getName(), _user.getUserId());
@@ -149,10 +149,10 @@ public class AccountGroupServiceTest {
 	public void testSearchAccountGroupsWithoutPermission() throws Exception {
 		AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 		AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
 			_accountGroupService.searchAccountGroups(
@@ -168,25 +168,25 @@ public class AccountGroupServiceTest {
 	public void testUpdateAccountGroup() throws Exception {
 		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		UserRoleTestUtil.addResourcePermission(
 			ActionKeys.UPDATE, AccountGroup.class.getName(), _user.getUserId());
 
 		_accountGroupService.updateAccountGroup(
 			accountGroup.getAccountGroupId(), RandomTestUtil.randomString(),
-			accountGroup.getName());
+			RandomTestUtil.randomString(), accountGroup.getName());
 	}
 
 	@Test(expected = PrincipalException.class)
 	public void testUpdateAccountGroupWithoutPermission() throws Exception {
 		AccountGroup accountGroup = AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_accountGroupService.updateAccountGroup(
 			accountGroup.getAccountGroupId(), RandomTestUtil.randomString(),
-			accountGroup.getName());
+			RandomTestUtil.randomString(), accountGroup.getName());
 	}
 
 	@Inject

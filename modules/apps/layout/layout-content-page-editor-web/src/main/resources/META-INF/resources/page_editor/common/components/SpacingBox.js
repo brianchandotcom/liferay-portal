@@ -55,7 +55,6 @@ const DROPDOWN_CLASSNAME = 'page-editor__spacing-selector__dropdown';
 
 export default function SpacingBox({fields, onChange, value}) {
 	const ref = useRef();
-	const {tokenValues} = useStyleBook();
 
 	const focusButton = (type, position) => {
 		const button = document.querySelector(
@@ -140,7 +139,6 @@ export default function SpacingBox({fields, onChange, value}) {
 								key={key}
 								onChange={(value) => onChange(key, value)}
 								position={position}
-								tokenValues={tokenValues}
 								type={type}
 								value={value[key]}
 							/>
@@ -152,18 +150,12 @@ export default function SpacingBox({fields, onChange, value}) {
 	);
 }
 
-function SpacingSelectorButton({
-	field,
-	onChange,
-	position,
-	tokenValues,
-	type,
-	value,
-}) {
+function SpacingSelectorButton({field, onChange, position, type, value}) {
 	const [active, setActive] = useState(false);
 	const disabled = !field || field.disabled;
 	const itemListRef = useRef();
 	const [labelElement, setLabelElement] = useState(null);
+	const {tokenValues} = useStyleBook();
 	const tooltipId = useId();
 	const triggerId = useId();
 	const [triggerElement, setTriggerElement] = useState(null);

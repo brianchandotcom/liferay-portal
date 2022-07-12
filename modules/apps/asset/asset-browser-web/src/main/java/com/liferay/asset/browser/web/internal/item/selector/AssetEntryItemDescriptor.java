@@ -14,7 +14,9 @@
 
 package com.liferay.asset.browser.web.internal.item.selector;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -43,7 +45,12 @@ public class AssetEntryItemDescriptor
 
 	@Override
 	public String getIcon() {
-		return null;
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					_assetEntry.getClassNameId());
+
+		return assetRendererFactory.getIconCssClass();
 	}
 
 	@Override

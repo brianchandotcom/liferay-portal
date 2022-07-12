@@ -9,18 +9,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		task ("Given active object definitions created") {
-			var objectDefinitionId1 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "university",
-				en_US_plural_label = "universities",
-				name = "University",
-				requiredStringFieldName = "name");
-			var objectDefinitionId2 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
-				en_US_label = "subject",
-				en_US_plural_label = "subjects",
-				name = "Subject",
-				requiredStringFieldName = "name");
-		}
+		ObjectDefinitionAPI.setUpGlobalobjectDefinitionId();
 	}
 
 	tearDown {
@@ -28,6 +17,10 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			ObjectDefinitionAPI.modifyRelationship(
+				deletionType = "cascade",
+				objectName = "University");
+
 			ObjectAdmin.deleteObjectViaAPI(objectName = "University");
 
 			ObjectAdmin.deleteObjectViaAPI(objectName = "Subject");
@@ -41,15 +34,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given manyToMany relationship universitySubjects with deletionType Disassociate created") {
-			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
-			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
-
 			var relationshipName = ObjectDefinitionAPI.createRelationship(
 				deletionType = "disassociate",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = "${objectDefinitionId1}",
-				objectDefinitionId2 = "${objectDefinitionId2}",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
 				type = "manyToMany");
 		}
 
@@ -113,15 +103,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given manyToMany relationship universitySubjects with deletionType Disassociate created") {
-			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
-			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
-
 			var relationshipName = ObjectDefinitionAPI.createRelationship(
 				deletionType = "disassociate",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = "${objectDefinitionId1}",
-				objectDefinitionId2 = "${objectDefinitionId2}",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
 				type = "manyToMany");
 		}
 
@@ -188,15 +175,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given manyToMany relationship universitySubjects created") {
-			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
-			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
-
 			var relationshipName = ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = "${objectDefinitionId1}",
-				objectDefinitionId2 = "${objectDefinitionId2}",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
 				type = "manyToMany");
 		}
 
@@ -246,15 +230,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given manyToMany relationship universitySubjects created") {
-			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
-			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
-
 			var relationshipName = ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = "${objectDefinitionId1}",
-				objectDefinitionId2 = "${objectDefinitionId2}",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
 				type = "manyToMany");
 		}
 
@@ -304,15 +285,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given manyToMany relationship universitySubjects created") {
-			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
-			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
-
 			var relationshipName = ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = "${objectDefinitionId1}",
-				objectDefinitionId2 = "${objectDefinitionId2}",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
 				type = "manyToMany");
 		}
 
@@ -362,15 +340,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given manyToMany relationship universitySubjects created") {
-			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
-			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
-
 			var relationshipName = ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = "${objectDefinitionId1}",
-				objectDefinitionId2 = "${objectDefinitionId2}",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
 				type = "manyToMany");
 		}
 
@@ -420,15 +395,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given manyToMany relationship universitySubjects created") {
-			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
-			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
-
 			var relationshipName = ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = "${objectDefinitionId1}",
-				objectDefinitionId2 = "${objectDefinitionId2}",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
 				type = "manyToMany");
 		}
 
@@ -490,15 +462,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given manyToMany relationship universitySubjects created") {
-			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
-			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
-
 			var relationshipName = ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = "${objectDefinitionId1}",
-				objectDefinitionId2 = "${objectDefinitionId2}",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
 				type = "manyToMany");
 		}
 
@@ -568,15 +537,12 @@ definition {
 		}
 
 		task ("Given manyToMany relationship universitySubjects created") {
-			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
-			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
-
 			var relationshipName = ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = "${objectDefinitionId1}",
-				objectDefinitionId2 = "${objectDefinitionId2}",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
 				type = "manyToMany");
 		}
 
@@ -587,7 +553,7 @@ definition {
 				deletionType = "cascade",
 				en_US_label = "universitiesStudents",
 				name = "universitiesStudents",
-				objectDefinitionId1 = "${objectDefinitionId1}",
+				objectDefinitionId1 = "${staticObjectId1}",
 				objectDefinitionId2 = "${objectDefinitionId2}",
 				type = "manyToMany");
 		}
@@ -654,15 +620,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given manyToMany relationship universitySubjects created") {
-			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
-			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
-
 			var relationshipName = ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = "${objectDefinitionId1}",
-				objectDefinitionId2 = "${objectDefinitionId2}",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
 				type = "manyToMany");
 		}
 
@@ -726,15 +689,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given manyToMany relationship universitySubjects created") {
-			var objectDefinitionId1 = JSONObject.getObjectId(objectName = "University");
-			var objectDefinitionId2 = JSONObject.getObjectId(objectName = "Subject");
-
 			var relationshipName = ObjectDefinitionAPI.createRelationship(
 				deletionType = "cascade",
 				en_US_label = "universitiesSubjects",
 				name = "universitiesSubjects",
-				objectDefinitionId1 = "${objectDefinitionId1}",
-				objectDefinitionId2 = "${objectDefinitionId2}",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
 				type = "manyToMany");
 		}
 
@@ -791,6 +751,80 @@ definition {
 				expectedValue = "Liferay Foundations,Liferay Foundations",
 				objectEntryId = "${subjectId}",
 				responseToParse = "${responseToParse}");
+		}
+	}
+
+	@priority = "4"
+	test ObjectEntryDeletionImpossibleWithPreventDeletionTypeRelationshipCreated {
+		property portal.acceptance = "true";
+
+		task ("Given manyToMany relationship universitySubjects with deletionType prevent created") {
+			var relationshipName = ObjectDefinitionAPI.createRelationship(
+				deletionType = "prevent",
+				en_US_label = "universitiesSubjects",
+				name = "universitiesSubjects",
+				objectDefinitionId1 = "${staticObjectId1}",
+				objectDefinitionId2 = "${staticObjectId2}",
+				type = "manyToMany");
+		}
+
+		task ("Given three university entries created") {
+			var universityId1 = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay First University");
+			var universityId2 = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay Second University");
+			var universityId3 = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Liferay Third University");
+		}
+
+		task ("Given subject entry created") {
+			var subjectId = ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "Liferay Foundations");
+		}
+
+		task ("When I relate subject entry with all three universities through universities PUT endpoint") {
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${universityId1}",
+				objectEntry2 = "${subjectId}",
+				relationshipName = "universitiesSubjects");
+
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${universityId2}",
+				objectEntry2 = "${subjectId}",
+				relationshipName = "universitiesSubjects");
+
+			ObjectDefinitionAPI.relateObjectEntries(
+				en_US_plural_label = "universities",
+				objectEntry1 = "${universityId3}",
+				objectEntry2 = "${subjectId}",
+				relationshipName = "universitiesSubjects");
+		}
+
+		task ("When deleting subject entry") {
+			var responseToParse = ObjectDefinitionAPI.deleteObjectEntry(
+				en_US_plural_label = "subjects",
+				objectEntryId = "${subjectId}");
+		}
+
+		task ("Then assert bad response and subject entry is not deleted") {
+			var responseToParse1 = ObjectDefinitionAPI.getObjectsWithNestedField(
+				nestedField = "universitiesSubjects",
+				objects = "universities");
+
+			ObjectDefinitionAPI.assertResponseMessageAfterDeletingObjectEntry(
+				expectedValue = "BAD_REQUEST",
+				responseToParse = "${responseToParse}");
+
+			ObjectDefinitionAPI.assertResponseIncludeCorrectDetailsOfNotDeletedObject(
+				expectedValue = "Liferay Foundations,Liferay Foundations,Liferay Foundations",
+				objectEntryId = "${subjectId}",
+				responseToParse = "${responseToParse1}");
 		}
 	}
 

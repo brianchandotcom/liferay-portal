@@ -196,7 +196,7 @@ if (portletTitleBasedNavigation) {
 
 			if (rowIds.length === 2) {
 				<portlet:renderURL var="compareVersionURL">
-					<portlet:param name="mvcPath" value='<%= templatePath + "compare_versions.jsp" %>' />
+					<portlet:param name="mvcPath" value="/admin/common/compare_versions.jsp" />
 					<portlet:param name="<%= Constants.CMD %>" value="compareVersions" />
 					<portlet:param name="backURL" value="<%= currentURL %>" />
 					<portlet:param name="redirect" value="<%= redirect %>" />

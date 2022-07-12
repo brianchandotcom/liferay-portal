@@ -14,6 +14,7 @@
 
 package com.liferay.portal.vulcan.permission;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
@@ -25,6 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Javier Gamarra
  */
 @GraphQLName("Permission")
+@JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Permission")
 public class Permission {
 

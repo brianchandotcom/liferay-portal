@@ -342,7 +342,7 @@ public class ObjectEntryOpenAPIResourceImpl
 					_objectDefinition.getObjectDefinitionId()),
 				this::_getDTOProperty));
 
-		openAPISchemaFilter.setDTOProperty(dtoProperty);
+		openAPISchemaFilter.setDTOProperties(Arrays.asList(dtoProperty));
 
 		openAPISchemaFilter.setSchemaMappings(
 			HashMapBuilder.put(

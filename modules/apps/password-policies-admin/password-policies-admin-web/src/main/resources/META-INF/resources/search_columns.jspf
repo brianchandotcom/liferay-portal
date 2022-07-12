@@ -48,7 +48,6 @@
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-expand table-cell-minw-300"
-			href="<%= rowHREF %>"
 			name="description"
 			orderable="<%= true %>"
 			property="description"

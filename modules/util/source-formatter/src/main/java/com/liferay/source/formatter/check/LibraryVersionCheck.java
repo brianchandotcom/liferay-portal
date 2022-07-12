@@ -364,7 +364,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			return;
 		}
 
-		String dependenciesStatement;
+		String dependencies = null;
 
 		int y = content.indexOf("}", x);
 
@@ -373,10 +373,10 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				return;
 			}
 
-			dependenciesStatement = content.substring(x, y + 1);
+			dependencies = content.substring(x, y + 1);
 
 			int level = getLevel(
-				dependenciesStatement, StringPool.OPEN_CURLY_BRACE,
+				dependencies, StringPool.OPEN_CURLY_BRACE,
 				StringPool.CLOSE_CURLY_BRACE);
 
 			if (level == 0) {
@@ -390,7 +390,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(
-					new UnsyncStringReader(dependenciesStatement))) {
+					new UnsyncStringReader(dependencies))) {
 
 			String line = StringPool.BLANK;
 

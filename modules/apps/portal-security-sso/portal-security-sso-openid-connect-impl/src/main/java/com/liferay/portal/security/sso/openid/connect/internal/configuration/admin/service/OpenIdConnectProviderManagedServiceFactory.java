@@ -212,7 +212,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 
 		JSONObject requestParametersJSONObject =
 			_generateRequestParametersJSONObject(
-				properties, "customAuthorizationRequestParameters");
+				"customAuthorizationRequestParameters", properties);
 
 		return requestParametersJSONObject.put(
 			"response_type", "code"
@@ -290,7 +290,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 	}
 
 	private JSONObject _generateRequestParametersJSONObject(
-		Dictionary<String, ?> properties, String parametersName) {
+		String parametersName, Dictionary<String, ?> properties) {
 
 		JSONObject requestParametersJSONObject = JSONUtil.put(
 			"scope", _getPropertyAsString("scopes", properties));
@@ -362,7 +362,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 
 		JSONObject requestParametersJSONObject =
 			_generateRequestParametersJSONObject(
-				properties, "customTokenRequestParameters");
+				"customTokenRequestParameters", properties);
 
 		return requestParametersJSONObject.put(
 			"grant_type", "authorization_code"
@@ -407,8 +407,8 @@ public class OpenIdConnectProviderManagedServiceFactory
 	}
 
 	private void _updateCompanyIdProviderNameOAuthClientEntryIds(
-		long companyId, String oldProviderName, String providerName,
-		long oAuthClientEntryId) {
+		long companyId, long oAuthClientEntryId, String oldProviderName,
+		String providerName) {
 
 		Map<String, Long> oAuthClientEntryIds = _oAuthClientEntryIds.get(
 			companyId);
@@ -521,9 +521,9 @@ public class OpenIdConnectProviderManagedServiceFactory
 			}
 
 			_updateCompanyIdProviderNameOAuthClientEntryIds(
-				companyId, oldProviderName,
-				_getPropertyAsString("providerName", properties),
-				oAuthClientEntry.getOAuthClientEntryId());
+				companyId, oAuthClientEntry.getOAuthClientEntryId(),
+				oldProviderName,
+				_getPropertyAsString("providerName", properties));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

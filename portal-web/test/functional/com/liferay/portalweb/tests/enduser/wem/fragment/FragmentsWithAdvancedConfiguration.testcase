@@ -163,10 +163,13 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Search");
 
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Search",
-				widgetName = "Search Results");
+			Navigator.gotoSitePage(
+				pageName = "Search",
+				siteName = "Test Site Name");
+
+			Portlet.addPG(
+				categoryName = "Search",
+				portletName = "Search Results");
 		}
 
 		task ("Add a Button fragment to content page") {
@@ -239,10 +242,13 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Search");
 
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Search",
-				widgetName = "Search Results");
+			Navigator.gotoSitePage(
+				pageName = "Search",
+				siteName = "Test Site Name");
+
+			Portlet.addPG(
+				categoryName = "Search",
+				portletName = "Search Results");
 		}
 
 		task ("Add a Paragraph fragment to a content page") {

@@ -301,6 +301,21 @@ definition {
 		return "${json}";
 	}
 
+	macro _getRelationshipId {
+		Variables.assertDefined(parameterList = "${objectDefinitionId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+        	${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-relationships \
+			-u test@liferay.com:test
+		''';
+
+		var relationshipId = JSONCurlUtil.get("${curl}", "$..['id']");
+
+		return "${relationshipId}";
+	}
+
 	macro _getRelationshipNameById {
 		Variables.assertDefined(parameterList = "${relationshipId}");
 
@@ -314,6 +329,27 @@ definition {
 		var relationshipName = JSONCurlUtil.get("${curl}", "$.name");
 
 		return "${relationshipName}";
+	}
+
+	macro _modifyRelationship {
+		Variables.assertDefined(parameterList = "${deletionType},${relationshipId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+        	${portalURL}/o/object-admin/v1.0/object-relationships/${relationshipId} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json \
+			-H accept: application/json
+			-d
+					{	                 
+	"deletionType": "${deletionType}"
+					}
+		''';
+
+		var relationshipDeletionType = JSONCurlUtil.put("${curl}");
+
+		return "${relationshipDeletionType}";
 	}
 
 	macro _publishObjectDefinition {
@@ -423,6 +459,14 @@ definition {
 		TestUtils.assertEquals(
 			actual = "${actual}",
 			expected = "${managerId2}");
+	}
+
+	macro assertResponseMessageAfterDeletingObjectEntry {
+		var actual = JSONUtil.getWithJSONPath("${responseToParse}", "$.status");
+
+		TestUtils.assertEquals(
+			actual = "${actual}",
+			expected = "${expectedValue}");
 	}
 
 	macro assertResponseNotIncludeDetailsOfDeletedObject {
@@ -557,6 +601,16 @@ definition {
 		return "${getObjectsWithNestedFieldJSON}";
 	}
 
+	macro modifyRelationship {
+		var objectDefinitionId = JSONObject.getObjectId(objectName = "${objectName}");
+
+		var relationshipId = ObjectDefinitionAPI._getRelationshipId(objectDefinitionId = "${objectDefinitionId}");
+
+		ObjectDefinitionAPI._modifyRelationship(
+			deletionType = "${deletionType}",
+			relationshipId = "${relationshipId}");
+	}
+
 	macro relateObjectEntries {
 		var response = ObjectDefinitionAPI._relateObjectEntries(
 			en_US_plural_label = "${en_US_plural_label}",
@@ -565,6 +619,25 @@ definition {
 			relationshipName = "${relationshipName}");
 
 		return "${response}";
+	}
+
+	macro setUpGlobalobjectDefinitionId {
+		var objectId1 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			en_US_label = "university",
+			en_US_plural_label = "universities",
+			name = "University",
+			requiredStringFieldName = "name");
+		var objectId2 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+			en_US_label = "subject",
+			en_US_plural_label = "subjects",
+			name = "Subject",
+			requiredStringFieldName = "name");
+		static var staticObjectId1 = "${objectId1}";
+		static var staticObjectId2 = "${objectId2}";
+
+		return "${staticObjectId1}";
+
+		return "${staticObjectId2}";
 	}
 
 	macro updateEmployee {

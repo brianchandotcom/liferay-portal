@@ -23,7 +23,7 @@ function check_blade {
 		exit 1
 	fi
 
-	${bladePath} update -s
+	${bladePath} update -s > /dev/null
 
 	echo "${bladePath}"
 }
@@ -37,17 +37,15 @@ function refresh_sample_default_workspace {
 
 	cd sample-default-workspace
 
-	${bladePath} init --liferay-version dxp-7.4-u30
+	${bladePath} init --liferay-version dxp-7.4-u32
 
 	echo -e "\n**/dist\n**/node_modules_cache\n.DS_Store" >> .gitignore
 
 	echo -e "\n\nfeature.flag.LPS-153457=true" >> configs/local/portal-ext.properties
 
-	echo -e "\nliferay.workspace.docker.image.liferay=liferay/dxp:7.4.13.nightly-d4.1.4-20220628211901" >> gradle.properties
+	echo -e "\nliferay.workspace.docker.image.liferay=liferay/7.4.13.nightly-d4.1.4-20220707214146" >> gradle.properties
 
-	sed -i'.bak' 's/4.0.0/4.0.1/g' settings.gradle
-
-	rm settings.gradle.bak
+	sort -o gradle.properties gradle.properties
 
 	touch modules/.touch
 	touch themes/.touch

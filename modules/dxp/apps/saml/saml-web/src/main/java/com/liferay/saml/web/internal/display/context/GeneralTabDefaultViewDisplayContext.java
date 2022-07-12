@@ -16,12 +16,11 @@ package com.liferay.saml.web.internal.display.context;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.saml.runtime.SamlException;
 import com.liferay.saml.runtime.configuration.SamlConfiguration;
-import com.liferay.saml.runtime.exception.EntityIdException;
+import com.liferay.saml.runtime.exception.CredentialAuthException;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
 
-import java.security.KeyStoreException;
-import java.security.UnrecoverableKeyException;
 import java.security.cert.X509Certificate;
 
 import java.util.HashMap;
@@ -48,115 +47,84 @@ public class GeneralTabDefaultViewDisplayContext {
 	public X509CertificateStatus getX509CertificateStatus(
 		LocalEntityManager.CertificateUsage certificateUsage) {
 
-		X509CertificateStatus x509CertificateStatus =
-			_x509CertificateStatuses.get(certificateUsage);
+		return _x509CertificateStatuses.computeIfAbsent(
+				certificateUsage,
+				this::doGetX509CertificateStatus);
+	}
 
-		if (x509CertificateStatus != null) {
-			return x509CertificateStatus;
-		}
+	protected X509CertificateStatus doGetX509CertificateStatus(
+		LocalEntityManager.CertificateUsage certificateUsage) {
 
 		try {
 			X509Certificate x509Certificate =
 				_localEntityManager.getLocalEntityCertificate(certificateUsage);
 
 			if (x509Certificate != null) {
-				x509CertificateStatus = new X509CertificateStatus(
+				return new X509CertificateStatus(
 					x509Certificate, X509CertificateStatus.Status.BOUND);
 			}
 			else {
-				x509CertificateStatus = new X509CertificateStatus(
+				return new X509CertificateStatus(
 					null, X509CertificateStatus.Status.UNBOUND);
 			}
 		}
-		catch (Exception exception) {
-			Throwable throwable = _getCauseThrowable(
-				exception, KeyStoreException.class);
-			X509CertificateStatus.Status status;
-
-			if (throwable != null) {
-				Throwable unrecoverableKeyThrowable = _getCauseThrowable(
-					throwable, UnrecoverableKeyException.class);
-
-				if (unrecoverableKeyThrowable != null) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to get local entity certificate because " +
-								"of incorrect keystore password",
-							throwable);
-					}
-
-					status =
-						X509CertificateStatus.Status.
-							SAML_KEYSTORE_PASSWORD_INCORRECT;
-				}
-				else {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to get local entity certificate because " +
-								"of keystore loading issue",
-							throwable);
-					}
-
-					status =
-						X509CertificateStatus.Status.SAML_KEYSTORE_EXCEPTION;
-				}
-			}
-			else {
-				throwable = _getCauseThrowable(
-					exception, UnrecoverableKeyException.class);
-
-				if (throwable != null) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to get local entity certificate because " +
-								"of incorrect key credential password",
-							throwable);
-					}
-
-					status =
-						X509CertificateStatus.Status.
-							SAML_X509_CERTIFICATE_AUTH_NEEDED;
-				}
-				else {
-					throwable = _getCauseThrowable(
-						exception, EntityIdException.class);
-
-					if (throwable != null) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								"Unable to get local entity certificate",
-								throwable);
-						}
-
-						status = X509CertificateStatus.Status.UNBOUND;
-					}
-					else {
-						String message =
-							"Unable to get local entity certificate: " +
-								exception.getMessage();
-
-						if (_log.isDebugEnabled()) {
-							_log.debug(message, exception);
-						}
-						else if (_log.isWarnEnabled()) {
-							_log.warn(message);
-						}
-
-						status = X509CertificateStatus.Status.UNKNOWN_EXCEPTION;
-					}
-				}
-			}
-
-			x509CertificateStatus = new X509CertificateStatus(null, status);
+		catch (CredentialAuthException.KeyStorePasswordIncorrect
+				keyStorePasswordIncorrect) {
+			return _buildX509CertificateStatus(
+				keyStorePasswordIncorrect,
+				X509CertificateStatus.Status.SAML_KEYSTORE_PASSWORD_INCORRECT,
+				true);
 		}
-
-		_x509CertificateStatuses.put(certificateUsage, x509CertificateStatus);
-
-		return x509CertificateStatus;
+		catch (CredentialAuthException.CannotLoadKeyStore cannotLoadKeyStore) {
+			return _buildX509CertificateStatus(
+				cannotLoadKeyStore,
+				X509CertificateStatus.Status.SAML_KEYSTORE_EXCEPTION,
+				true);
+		}
+		catch (CredentialAuthException.CredentialPasswordIncorrect
+			credentialPasswordIncorrect) {
+			return _buildX509CertificateStatus(
+				credentialPasswordIncorrect,
+				X509CertificateStatus.Status.SAML_X509_CERTIFICATE_AUTH_NEEDED,
+				false);
+		}
+		catch (CredentialAuthException credentialAuthException) {
+			return _buildX509CertificateStatus(
+				credentialAuthException,
+				X509CertificateStatus.Status.UNKNOWN_EXCEPTION,
+				true);
+		}
+		catch (SamlException samlException) {
+			return _buildX509CertificateStatus(
+				samlException,
+				X509CertificateStatus.Status.UNBOUND,
+				false);
+		}
 	}
 
 	public boolean isRoleIdPAvailable() {
 		return _samlConfiguration.idpRoleConfigurationEnabled();
+	}
+
+	private X509CertificateStatus _buildX509CertificateStatus(
+		Exception exception,
+		X509CertificateStatus.Status status, boolean logError) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				String.format(
+					"Unable to get local entity certificate: %s",
+					exception.getMessage()),
+				exception);
+		}
+		else if (logError && _log.isErrorEnabled()) {
+			_log.error(
+				String.format(
+					"Unable to get local entity certificate: %s",
+					exception.getMessage()));
+		}
+
+		return new X509CertificateStatus(null, status);
 	}
 
 	public static class X509CertificateStatus {
@@ -186,26 +154,6 @@ public class GeneralTabDefaultViewDisplayContext {
 		private final Status _status;
 		private final X509Certificate _x509Certificate;
 
-	}
-
-	private Throwable _getCauseThrowable(
-		Throwable throwable, Class<?> exceptionType) {
-
-		if (throwable == null) {
-			return null;
-		}
-
-		Throwable causeThrowable = throwable.getCause();
-
-		while (causeThrowable != null) {
-			if (exceptionType.isInstance(causeThrowable)) {
-				return causeThrowable;
-			}
-
-			causeThrowable = causeThrowable.getCause();
-		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

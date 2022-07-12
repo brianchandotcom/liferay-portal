@@ -113,6 +113,22 @@ if (dispatchTrigger != null) {
 
 					<aui:input name="overlapAllowed" />
 
+					<aui:select label="time-zone" name="timeZoneId">
+
+						<%
+						String dispatchTriggerTimeZoneId = dispatchTrigger.getTimeZoneId();
+
+						for (String timeZoneId : PropsUtil.getArray(PropsKeys.TIME_ZONES)) {
+						%>
+
+							<aui:option label="<%= timeZoneId %>" selected='<%= dispatchTriggerTimeZoneId.isEmpty() ? timeZoneId.equals("UTC") : dispatchTriggerTimeZoneId.equals(timeZoneId) %>' value="<%= timeZoneId %>" />
+
+						<%
+						}
+						%>
+
+					</aui:select>
+
 					<aui:input name="cronExpression" />
 
 					<aui:field-wrapper label="start-date">

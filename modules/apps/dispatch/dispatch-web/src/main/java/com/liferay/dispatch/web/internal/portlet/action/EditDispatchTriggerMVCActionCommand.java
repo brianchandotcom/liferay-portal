@@ -238,11 +238,13 @@ public class EditDispatchTriggerMVCActionCommand extends BaseMVCActionCommand {
 			startDateHour += 12;
 		}
 
+		String timeZoneId = ParamUtil.getString(actionRequest, "timeZoneId");
+
 		_dispatchTriggerService.updateDispatchTrigger(
 			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
 			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
 			neverEnd, overlapAllowed, startDateMonth, startDateDay,
-			startDateYear, startDateHour, startDateMinute);
+			startDateYear, startDateHour, startDateMinute, timeZoneId);
 	}
 
 	private void _sendMessage(long dispatchTriggerId) {

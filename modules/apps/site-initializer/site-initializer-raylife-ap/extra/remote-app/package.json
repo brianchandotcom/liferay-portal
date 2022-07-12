@@ -13,6 +13,7 @@
 	},
 	"dependencies": {
 		"@clayui/button": "^3.40.0",
+		"@clayui/card": "^3.62.0",
 		"@clayui/charts": "^3.40.0",
 		"@clayui/core": "3.45.1",
 		"@clayui/css": "^3.44.2",
@@ -21,6 +22,7 @@
 		"@clayui/form": "^3.58.0",
 		"@clayui/icon": "^3.40.0",
 		"@clayui/layout": "^3.40.0",
+		"@clayui/loading-indicator": "^3.60.0",
 		"@clayui/multi-step-nav": "^3.64.0",
 		"classnames": "^2.3.1",
 		"react": "^17.0.2",

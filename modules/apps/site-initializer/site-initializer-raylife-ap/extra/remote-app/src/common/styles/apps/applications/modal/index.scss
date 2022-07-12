@@ -1,0 +1,45 @@
+//   Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+
+//  This library is free software; you can redistribute it and/or modify it under
+//  the terms of the GNU Lesser General Public License as published by the Free
+//  Software Foundation; either version 2.1 of the License, or (at your option)
+//  any later version.
+//  This library is distributed in the hope that it will be useful, but WITHOUT
+//  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+//  FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+//  details.
+
+.application-card {
+	border-radius: 3px;
+	width: 150px;
+	&.active {
+		box-shadow: inset 0 -4px 0 0 #4c84ff;
+		cursor: pointer;
+		transition: all 0.07s ease;
+	}
+}
+
+.card-hover:hover {
+	box-shadow: inset 0 -4px 0 0 #4c84ff;
+	cursor: pointer;
+	transition: all 0.07s ease;
+}
+
+.modal-clay {
+	left: 21vw;
+	max-width: 58vw;
+
+	.loading-modal {
+		height: 50px;
+		left: 50%;
+		margin: -25px 0 0 -25px;
+		position: absolute;
+		top: 50%;
+		width: 50px;
+	}
+
+	.loading-animation::before,
+	.loading-animation::after {
+		color: gray !important;
+	}
+}

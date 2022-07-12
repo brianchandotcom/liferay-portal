@@ -12,7 +12,9 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {useModal} from '@clayui/modal';
 import {useEffect, useState} from 'react';
 
 import Header from '../../../common/components/header';
@@ -23,6 +25,10 @@ import {
 } from '../../../common/services';
 import formatDate from '../../../common/utils/dateFormater';
 import {redirectTo} from '../../../common/utils/liferay';
+import LoadingIndicator from '../../applications/components/LoadingIndicator';
+import Modal from '../../applications/components/Modal';
+import InsuranceCard from '../../applications/contents/InsuranceCard';
+import ProductCardPersona from '../../applications/contents/ProductCardPersona';
 
 const HEADERS = [
 	{
@@ -66,8 +72,22 @@ type RecentApplication = {
 
 type TableContent = {[keys: string]: string};
 
+enum ModalType {
+	insurance = 1,
+	insuranceProducts = 2,
+}
+
+const insuranceCards = ['Personal', 'Business'];
+
 const RecentApplications = () => {
 	const [applications, setApplications] = useState<TableContent[]>([]);
+	const [visible, setVisible] = useState(false);
+	const [contentModal, setContentModal] = useState(ModalType.insurance);
+	const [cardSelected, setCardSelected] = useState(insuranceCards[0]);
+	const [isLoading, setIsLoading] = useState(false);
+	const {observer, onClose} = useModal({
+		onClose: () => setVisible(false),
+	});
 
 	const handleDeleteApplication = (externalReferenceCode: string) => {
 		deleteApplicationByExternalReferenceCode(externalReferenceCode);
@@ -77,6 +97,14 @@ const RecentApplications = () => {
 		);
 
 		setApplications(filteredApplications);
+	};
+
+	const handleModal = () => {
+		setContentModal(ModalType.insurance);
+		setCardSelected(insuranceCards[0]);
+		setIsLoading(true);
+		setVisible(!visible);
+		setTimeout(() => setIsLoading(false), 2000);
 	};
 
 	const handleEditApplication = (externalReferenceCode: string) => {
@@ -94,7 +122,6 @@ const RecentApplications = () => {
 	useEffect(() => {
 		getApplications(PARAMETERS).then((results) => {
 			const applicationsList: TableContent[] = [];
-
 			results?.data?.items.forEach(
 				({
 					applicationStatus: {name},
@@ -110,17 +137,97 @@ const RecentApplications = () => {
 						productName,
 					})
 			);
-
 			setApplications(applicationsList);
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	const handleNextClick = () => {
+		setContentModal(ModalType.insuranceProducts);
+	};
+
+	const handlePreviousClick = () => {
+		setContentModal(ModalType.insurance);
+	};
+
+	const onClickInsuranceCard = (index: number) => {
+		setCardSelected(insuranceCards[index]);
+	};
+
+	const ButtonsInsurance = () => (
+		<>
+			<ClayButton
+				className="border-white"
+				displayType="secondary"
+				onClick={() => onClose()}
+			>
+				Cancel
+			</ClayButton>
+			<ClayButton displayType="primary" onClick={() => handleNextClick()}>
+				Next
+			</ClayButton>
+		</>
+	);
+
+	const ButtonsInsuranceProducts = () => (
+		<>
+			<ClayButton
+				className="border-white m-1"
+				displayType="secondary"
+				onClick={() => onClose()}
+			>
+				Cancel
+			</ClayButton>
+			<ClayButton
+				className="m-1"
+				displayType="secondary"
+				onClick={() => handlePreviousClick()}
+			>
+				Previous
+			</ClayButton>
+			<ClayButton
+				className="m-1"
+				displayType="primary"
+				onClick={() => handleNextClick()}
+			>
+				Next
+			</ClayButton>
+		</>
+	);
 
 	return (
 		<div className="px-3 ray-dashboard-recent-applications">
+			<Modal
+				Buttons={() =>
+					contentModal === ModalType.insurance ? (
+						<ButtonsInsurance />
+					) : (
+						<ButtonsInsuranceProducts />
+					)
+				}
+				modalStyle="modal-clay"
+				observer={observer}
+				size="full-screen"
+				title="New Application"
+				visible={visible}
+			>
+				{isLoading ? (
+					<LoadingIndicator />
+				) : contentModal === ModalType.insurance ? (
+					<InsuranceCard
+						cardSelected={cardSelected}
+						cards={insuranceCards}
+						onClickInsuranceCard={onClickInsuranceCard}
+					/>
+				) : (
+					<ProductCardPersona />
+				)}
+			</Modal>
+
 			<Header className="mb-5 pt-3" title="Recent Applications">
 				<button
 					className="btn btn-outline-primary text-paragraph text-uppercase"
-					onClick={() => redirectTo('app-edit')}
+					onClick={() => handleModal()}
 				>
 					<ClayIcon className="mr-md-2" symbol="plus" />
 

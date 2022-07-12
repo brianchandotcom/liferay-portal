@@ -34,7 +34,9 @@ const VerticalNavigationBar = ({items}) => {
 							data-tooltip-align="right"
 							displayType="unstyled"
 							onClick={() => {
-								navigate(item.href);
+								if (item.key !== activeItem.key) {
+									navigate(item.href);
+								}
 							}}
 							symbol={item.icon}
 							title={Liferay.Language.get(item.title)}

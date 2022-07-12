@@ -22,9 +22,12 @@ import java.security.KeyStoreException;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface LocalEntityManager {
 
 	public void authenticateLocalEntityCertificate(

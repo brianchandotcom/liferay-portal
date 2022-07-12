@@ -4,7 +4,8 @@
 			"com.liferay.headless.admin.taxonomy*",
 			"com.liferay.headless.commerce*",
 			"com.liferay.headless.delivery*",
-			"com.liferay.object.rest*"
+			"com.liferay.object.rest*",
+			"com.liferay.headless.admin.user.internal.resource.v1_0*"
 		],
 		"defaultSAPEntry": "true",
 		"enabled": "true",

@@ -18,8 +18,15 @@ import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 const VerticalNavigationBar = ({items}) => {
+	const activeItem = items.find((item) => item.active);
+
 	return (
-		<VerticalBar absolute className="kbVerticalBar" position="left">
+		<VerticalBar
+			absolute
+			className="kbVerticalBar"
+			defaultActive={activeItem?.key}
+			position="left"
+		>
 			<VerticalBar.Bar displayType="light" items={items}>
 				{(item) => (
 					<VerticalBar.Item key={item.key}>

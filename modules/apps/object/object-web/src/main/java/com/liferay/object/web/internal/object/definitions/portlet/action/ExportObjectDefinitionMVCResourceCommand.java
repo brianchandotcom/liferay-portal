@@ -17,6 +17,7 @@ package com.liferay.object.web.internal.object.definitions.portlet.action;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.web.internal.object.definitions.portlet.action.util.ExportImportObjectDefinitiontUtil;
 import com.liferay.petra.string.StringPool;
@@ -85,8 +86,11 @@ public class ExportObjectDefinitionMVCResourceCommand
 		objectDefinition.setObjectFields(
 			ArrayUtil.filter(
 				objectDefinition.getObjectFields(),
-				objectField -> Validator.isNull(
-					objectField.getRelationshipType())));
+				objectField ->
+					Validator.isNull(objectField.getRelationshipType()) &&
+					!Objects.equals(
+						objectField.getBusinessTypeAsString(),
+						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)));
 
 		JSONObject objectDefinitionJSONObject =
 			JSONFactoryUtil.createJSONObject(objectDefinition.toString());

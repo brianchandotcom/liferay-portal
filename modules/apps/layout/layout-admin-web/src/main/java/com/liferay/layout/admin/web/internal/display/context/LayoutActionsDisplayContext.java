@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
 
@@ -84,6 +86,57 @@ public class LayoutActionsDisplayContext {
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> _isShowDeleteAction(layout),
+						dropdownItem -> {
+							dropdownItem.putData("action", "deleteLayout");
+							dropdownItem.putData(
+								"deleteLayoutURL", _getDeleteLayoutURL(layout));
+
+							String messageKey =
+								"are-you-sure-you-want-to-delete-the-page-x.-" +
+									"it-will-be-removed-immediately";
+
+							if (layout.hasChildren() &&
+								layout.hasScopeGroup()) {
+
+								messageKey = StringBundler.concat(
+									"are-you-sure-you-want-to-delete-the-page-",
+									"x.-this-page-serves-as-a-scope-for-",
+									"content-and-also-contains-child-pages");
+							}
+							else if (layout.hasChildren()) {
+								messageKey = StringBundler.concat(
+									"are-you-sure-you-want-to-delete-the-page-",
+									"x.-this-page-contains-child-pages-that-",
+									"will-also-be-removed");
+							}
+							else if (layout.hasScopeGroup()) {
+								messageKey = StringBundler.concat(
+									"are-you-sure-you-want-to-delete-the-page-",
+									"x.-this-page-serves-as-a-scope-for-",
+									"content");
+							}
+
+							dropdownItem.putData(
+								"message",
+								LanguageUtil.format(
+									_httpServletRequest, messageKey,
+									HtmlUtil.escape(
+										layout.getName(
+											_themeDisplay.getLocale()))));
+
+							dropdownItem.setIcon("trash");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "delete"));
+						}
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
 		).build();
 	}
 
@@ -110,6 +163,22 @@ public class LayoutActionsDisplayContext {
 		).toString();
 	}
 
+	private String _getDeleteLayoutURL(Layout layout) {
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.ACTION_PHASE)
+		).setActionName(
+			"/layout_admin/delete_layout"
+		).setRedirect(
+			PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.RENDER_PHASE)
+		).setParameter(
+			"selPlid", layout.getPlid()
+		).buildString();
+	}
+
 	private Layout _getLayout() {
 		Layout layout = _themeDisplay.getLayout();
 
@@ -134,6 +203,29 @@ public class LayoutActionsDisplayContext {
 
 		return LayoutPermissionUtil.containsLayoutUpdatePermission(
 			_themeDisplay.getPermissionChecker(), layout);
+	}
+
+	private boolean _isShowDeleteAction(Layout layout) throws PortalException {
+		if (StagingUtil.isIncomplete(layout) ||
+			!LayoutPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.DELETE)) {
+
+			return false;
+		}
+
+		Group group = layout.getGroup();
+
+		int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
+			group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		if (group.isGuest() && !layout.isPrivateLayout() &&
+			layout.isRootLayout() && (layoutsCount == 1)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isShowPermissionsAction(Layout layout)

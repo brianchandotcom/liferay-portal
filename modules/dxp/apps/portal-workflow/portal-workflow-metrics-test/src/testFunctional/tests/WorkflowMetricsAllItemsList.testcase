@@ -1159,17 +1159,27 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.waitForCompletedSLA(
+			key_expectedValue = "2",
+			key_status = "UNTRACKED");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title 1",
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
-		Pause(locator1 = "60000");
-
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "COMPLETED",
 			workflowMetricsTab = "PERFORMANCE",
 			workflowProcess = "Single Approver");
+
+		while (IsElementNotPresent(key_itemSubject = "Blogs Entry: Blogs Entry Title 1", key_value = "-", locator1 = "WorkflowMetricsAllItemsList#DUE_DATE_COLUMN_VALUE") && (maxIterations = "30")) {
+			Refresh();
+		}
 
 		WorkflowMetrics.validateDueDateBySLADetails(
 			itemName = "Blogs Entry: Blogs Entry Title 1",
@@ -1178,6 +1188,14 @@ definition {
 			statusResult = "success");
 
 		Navigator.openURL();
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.waitForCompletedSLA(
+			key_expectedValue = "1",
+			key_status = "OVERDUE");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "PENDING",
@@ -1192,12 +1210,14 @@ definition {
 
 		Button.click(button = "Done");
 
-		Pause(locator1 = "60000");
-
 		WorkflowMetrics.goToDashboardAllItemsWithFilter(
 			workflowFilterOption = "COMPLETED",
 			workflowMetricsTab = "PERFORMANCE",
 			workflowProcess = "Single Approver");
+
+		while (IsElementNotPresent(key_itemSubject = "Blogs Entry: Blogs Entry Title 2", key_value = "-", locator1 = "WorkflowMetricsAllItemsList#DUE_DATE_COLUMN_VALUE") && (maxIterations = "30")) {
+			Refresh();
+		}
 
 		WorkflowMetrics.validateDueDateBySLADetails(
 			itemName = "Blogs Entry: Blogs Entry Title 2",
@@ -3119,8 +3139,6 @@ definition {
 			workflowAssetType = "Blogs Entry",
 			workflowTask = "Review");
 
-		Pause(locator1 = "60000");
-
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Single Approver");
 
 		WaitForElementPresent(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
@@ -3129,7 +3147,15 @@ definition {
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
 
-		AssertElementPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_PAUSED");
+		while (IsElementNotPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_PAUSED") && (maxIterations = "20")) {
+			Refresh();
+
+			Click(locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_ID");
+		}
+
+		if (IsElementNotPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_PAUSED")) {
+			echo("Pause information not displayed");
+		}
 	}
 
 	@description = "LPS-92053 - Verify that, in the item detail modal, Open when an SLA is paused, the SLA status will be related to the moment when it triggered the pause timer"

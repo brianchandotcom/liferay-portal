@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DUE_DATE_COLUMN_VALUE</td>
+	<td>//td//div[contains(@class, 'due-date text-info') and '${key_value}']/following::td[contains(@title, '${key_itemSubject}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSERT_ALL_ITEMS_LIST_BY_DETAILS</td>
 	<td>//p[span[contains(text(),'${key_rowName}')] and contains(.,'${key_itemName}')]</td>
 	<td></td>

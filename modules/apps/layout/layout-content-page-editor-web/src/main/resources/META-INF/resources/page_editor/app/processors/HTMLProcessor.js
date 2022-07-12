@@ -32,7 +32,7 @@ function createEditor(element, changeCallback, destroyCallback) {
 		HTMLEditorModal,
 		{
 			initialContent: element.innerHTML,
-			onCloseCallback: destroyCallback,
+			onClose: destroyCallback,
 			onSave: (content) => {
 				changeCallback(content);
 				destroyCallback();

@@ -947,18 +947,18 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@clayui/button@3.56.0":
-  version "3.56.0"
-  resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.56.0.tgz#cafdeb1035f26733bb7bc7943f99ba6e8535bc4a"
-  integrity sha512-Tz78L+bsaM3MXBX0gd7+YnuyEka81FNxN95dnovHzEQi3TJsRaHFSjLcCWZAVqm08dj2ucUTEprlfG0d/WymBQ==
+"@clayui/button@3.65.0":
+  version "3.65.0"
+  resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.65.0.tgz#56a1da250b1e9a5e50fe1813e75e0593a5446fef"
+  integrity sha512-ujWccD6aarnQKG4bnk0z/OgfHAwF1N+a+Q9U7zn1mgYekqK5m6/wZ1W/HBh+4GYAXP5BJj9y67vXmeMM7rlGFQ==
   dependencies:
     "@clayui/icon" "^3.56.0"
     classnames "^2.2.6"
 
-"@clayui/charts@3.56.0":
-  version "3.56.0"
-  resolved "https://registry.yarnpkg.com/@clayui/charts/-/charts-3.56.0.tgz#9e0a467b549d3163d796f54c3da80deb19c35cb6"
-  integrity sha512-tdUVqOFUfEkNNBTzl7qjYL4ZaJLL5sIH90gtFkY0vPgaGPLmI7rYSK71Z9Axg/5eDoJGuHhdPec8VrQW9PABjg==
+"@clayui/charts@3.65.0":
+  version "3.65.0"
+  resolved "https://registry.yarnpkg.com/@clayui/charts/-/charts-3.65.0.tgz#e2f2a90d15faebc40da8e51f91468aa4719bc84e"
+  integrity sha512-gkV3JaTgK6x5hD0vuDDW3Ib4vM1FvKckTpwPh4SiIyvGAa3+aMr4o9Vecv8FLYH4NKX923qY7Vt7KeJLdtgSTQ==
   dependencies:
     billboard.js "^1.8.0"
     classnames "^2.2.6"

@@ -85,7 +85,10 @@ function FormOptions({item, onValueSelect}) {
 
 	return (
 		<div className="mb-3">
-			<Collapse label={Liferay.Language.get('form-options')} open>
+			<Collapse
+				label={Liferay.Language.get('form-container-options')}
+				open
+			>
 				{!!formTypes.length && (
 					<SelectField
 						disabled={!formTypes.length}

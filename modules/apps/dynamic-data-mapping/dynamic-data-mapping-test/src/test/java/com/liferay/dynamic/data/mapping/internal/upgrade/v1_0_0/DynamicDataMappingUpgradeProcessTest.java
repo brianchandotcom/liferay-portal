@@ -41,9 +41,6 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -93,36 +90,29 @@ public class DynamicDataMappingUpgradeProcessTest extends BaseDDMTestCase {
 				(ResourceActions)ProxyUtil.newProxyInstance(
 					DynamicDataMappingUpgradeProcessTest.class.getClassLoader(),
 					new Class<?>[] {ResourceActions.class},
-					new InvocationHandler() {
+					(proxy, method, args) -> {
+						String methodName = method.getName();
 
-						@Override
-						public Object invoke(
-							Object proxy, Method method, Object[] args) {
-
-							String methodName = method.getName();
-
-							if (methodName.equals("getCompositeModelName")) {
-								if (ArrayUtil.isEmpty(args)) {
-									return StringPool.BLANK;
-								}
-
-								Arrays.sort(args);
-
-								StringBundler sb = new StringBundler(
-									args.length * 2);
-
-								for (Object className : args) {
-									sb.append(className);
-								}
-
-								sb.setIndex(sb.index() - 1);
-
-								return sb.toString();
+						if (methodName.equals("getCompositeModelName")) {
+							if (ArrayUtil.isEmpty(args)) {
+								return StringPool.BLANK;
 							}
 
-							return null;
+							Arrays.sort(args);
+
+							StringBundler sb = new StringBundler(
+								args.length * 2);
+
+							for (Object className : args) {
+								sb.append(className);
+							}
+
+							sb.setIndex(sb.index() - 1);
+
+							return sb.toString();
 						}
 
+						return null;
 					}),
 				null, null, null, null);
 	}

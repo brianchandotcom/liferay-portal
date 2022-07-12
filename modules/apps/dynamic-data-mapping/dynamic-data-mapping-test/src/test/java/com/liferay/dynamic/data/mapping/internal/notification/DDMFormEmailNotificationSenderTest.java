@@ -41,7 +41,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -158,7 +157,7 @@ public class DDMFormEmailNotificationSenderTest {
 	private static void _setUpDDMFormFieldTypeServicesTracker() {
 		Mockito.when(
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
-				Matchers.anyString())
+				Mockito.anyString())
 		).thenReturn(
 			_defaultDDMFormFieldValueRenderer
 		);

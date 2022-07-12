@@ -39,7 +39,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -200,8 +199,7 @@ public class NumericInputMaskDDMFormFieldTemplateContextContributorTest
 		Language language = Mockito.mock(Language.class);
 
 		Mockito.when(
-			language.get(
-				Matchers.any(ResourceBundle.class), Matchers.eq("none"))
+			language.get(Mockito.any(ResourceBundle.class), Mockito.eq("none"))
 		).thenReturn(
 			"None"
 		);

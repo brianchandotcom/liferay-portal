@@ -43,7 +43,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -345,7 +344,7 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		).when(
 			selectDDMFormFieldTemplateContextContributor
 		).getResourceBundle(
-			Matchers.any(Locale.class)
+			Mockito.any(Locale.class)
 		);
 
 		return selectDDMFormFieldTemplateContextContributor;

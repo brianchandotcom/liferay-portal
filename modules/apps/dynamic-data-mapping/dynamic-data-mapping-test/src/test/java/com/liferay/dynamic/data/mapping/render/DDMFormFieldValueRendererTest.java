@@ -62,7 +62,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -512,7 +511,7 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 
 		Mockito.when(
 			dlAppLocalService.getFileEntryByUuidAndGroupId(
-				Matchers.anyString(), Matchers.anyLong())
+				Mockito.anyString(), Mockito.anyLong())
 		).thenReturn(
 			fileEntry
 		);
@@ -539,16 +538,16 @@ public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 			LayoutServiceUtil.class, "_service", layoutService);
 		Mockito.when(
 			layoutService.getLayoutName(
-				Matchers.anyLong(), Matchers.anyBoolean(), Matchers.anyLong(),
-				Matchers.eq("en_US"))
+				Mockito.anyLong(), Mockito.anyBoolean(), Mockito.anyLong(),
+				Mockito.eq("en_US"))
 		).thenReturn(
 			"Layout Name"
 		);
 
 		Mockito.when(
 			layoutService.getLayoutName(
-				Matchers.anyLong(), Matchers.anyBoolean(), Matchers.anyLong(),
-				Matchers.eq("pt_BR"))
+				Mockito.anyLong(), Mockito.anyBoolean(), Mockito.anyLong(),
+				Mockito.eq("pt_BR"))
 		).thenReturn(
 			"Nome da Pagina"
 		);

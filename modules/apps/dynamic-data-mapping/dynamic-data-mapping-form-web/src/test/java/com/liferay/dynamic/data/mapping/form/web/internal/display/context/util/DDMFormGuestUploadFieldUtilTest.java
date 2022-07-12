@@ -41,7 +41,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -189,10 +188,10 @@ public class DDMFormGuestUploadFieldUtilTest {
 
 		Mockito.when(
 			_ddmFormInstanceRecordLocalService.getFormInstanceRecords(
-				Matchers.eq(_DDM_FORM_INSTANCE_ID),
-				Matchers.eq(WorkflowConstants.STATUS_ANY),
-				Matchers.eq(QueryUtil.ALL_POS), Matchers.eq(QueryUtil.ALL_POS),
-				Matchers.eq(null))
+				Mockito.eq(_DDM_FORM_INSTANCE_ID),
+				Mockito.eq(WorkflowConstants.STATUS_ANY),
+				Mockito.eq(QueryUtil.ALL_POS), Mockito.eq(QueryUtil.ALL_POS),
+				Mockito.eq(null))
 		).thenReturn(
 			ddmFormInstanceRecords
 		);

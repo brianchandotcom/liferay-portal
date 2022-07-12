@@ -43,7 +43,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -147,8 +146,7 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 
 	private void _mockLanguageGet() {
 		Mockito.when(
-			language.get(
-				Matchers.any(ResourceBundle.class), Matchers.anyString())
+			language.get(Mockito.any(ResourceBundle.class), Mockito.anyString())
 		).thenAnswer(
 			invocation -> invocation.getArguments()[1]
 		);

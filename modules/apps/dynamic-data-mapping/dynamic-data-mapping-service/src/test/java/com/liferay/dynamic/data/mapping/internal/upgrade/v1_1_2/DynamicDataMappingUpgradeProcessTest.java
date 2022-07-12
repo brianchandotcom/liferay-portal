@@ -27,18 +27,13 @@ import java.util.Set;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.internal.verification.VerificationModeFactory;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Jeyvison Nascimento
  */
-@RunWith(MockitoJUnitRunner.class)
 public class DynamicDataMappingUpgradeProcessTest {
 
 	@ClassRule
@@ -53,7 +48,7 @@ public class DynamicDataMappingUpgradeProcessTest {
 				_getRadioDDMFormFieldValueTransformer();
 
 		Mockito.when(
-			_jsonFactory.createJSONArray(Matchers.any(String.class))
+			_jsonFactory.createJSONArray(Mockito.any(String.class))
 		).thenReturn(
 			new JSONArrayImpl()
 		);
@@ -81,7 +76,7 @@ public class DynamicDataMappingUpgradeProcessTest {
 		Mockito.verify(
 			_value, VerificationModeFactory.atLeastOnce()
 		).addString(
-			Matchers.any(Locale.class), Matchers.anyString()
+			Mockito.any(Locale.class), Mockito.anyString()
 		);
 	}
 
@@ -104,7 +99,7 @@ public class DynamicDataMappingUpgradeProcessTest {
 		Mockito.verify(
 			_value, Mockito.never()
 		).getString(
-			Matchers.any(Locale.class)
+			Mockito.any(Locale.class)
 		);
 	}
 
@@ -115,7 +110,7 @@ public class DynamicDataMappingUpgradeProcessTest {
 				_getSelectDDMFormFieldValueTransformer();
 
 		Mockito.when(
-			_jsonFactory.createJSONArray(Matchers.any(String.class))
+			_jsonFactory.createJSONArray(Mockito.any(String.class))
 		).thenReturn(
 			new JSONArrayImpl()
 		);
@@ -133,7 +128,7 @@ public class DynamicDataMappingUpgradeProcessTest {
 		);
 
 		Mockito.when(
-			_value.getString(Matchers.any(Locale.class))
+			_value.getString(Mockito.any(Locale.class))
 		).thenReturn(
 			"value"
 		);
@@ -143,7 +138,7 @@ public class DynamicDataMappingUpgradeProcessTest {
 		Mockito.verify(
 			_value, VerificationModeFactory.atLeastOnce()
 		).addString(
-			Matchers.any(Locale.class), Matchers.anyString()
+			Mockito.any(Locale.class), Mockito.anyString()
 		);
 	}
 
@@ -166,7 +161,7 @@ public class DynamicDataMappingUpgradeProcessTest {
 		Mockito.verify(
 			_value, Mockito.never()
 		).getString(
-			Matchers.any(Locale.class)
+			Mockito.any(Locale.class)
 		);
 	}
 
@@ -207,13 +202,9 @@ public class DynamicDataMappingUpgradeProcessTest {
 			new SelectDDMFormFieldValueTransformer();
 	}
 
-	@Mock
-	private DDMFormFieldValue _ddmFormFieldValue;
-
-	@Mock
-	private JSONFactory _jsonFactory;
-
-	@Mock
-	private Value _value;
+	private final DDMFormFieldValue _ddmFormFieldValue = Mockito.mock(
+		DDMFormFieldValue.class);
+	private final JSONFactory _jsonFactory = Mockito.mock(JSONFactory.class);
+	private final Value _value = Mockito.mock(Value.class);
 
 }

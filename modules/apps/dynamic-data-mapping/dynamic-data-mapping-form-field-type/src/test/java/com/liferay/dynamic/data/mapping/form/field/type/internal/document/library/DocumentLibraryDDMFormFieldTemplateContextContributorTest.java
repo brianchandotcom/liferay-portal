@@ -71,8 +71,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.ArgumentMatcher;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -220,7 +218,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	public void testGetParametersForUserWithoutPermission() throws Exception {
 		Mockito.when(
 			_modelResourcePermission.contains(
-				Matchers.any(PermissionChecker.class), Mockito.anyLong(),
+				Mockito.nullable(PermissionChecker.class), Mockito.anyLong(),
 				Mockito.anyString())
 		).thenReturn(
 			false
@@ -429,7 +427,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		).when(
 			documentLibraryDDMFormFieldTemplateContextContributor
 		).getResourceBundle(
-			Matchers.any(Locale.class)
+			Mockito.any(Locale.class)
 		);
 
 		Mockito.doReturn(
@@ -437,7 +435,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		).when(
 			documentLibraryDDMFormFieldTemplateContextContributor
 		).getThemeDisplay(
-			Matchers.any(HttpServletRequest.class)
+			Mockito.any(HttpServletRequest.class)
 		);
 
 		return documentLibraryDDMFormFieldTemplateContextContributor;
@@ -621,19 +619,12 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(),
 				Mockito.argThat(
-					new ArgumentMatcher<Group>() {
-
-						@Override
-						public boolean matches(Object object) {
-							Group group = (Group)object;
-
-							if ((group == _group) || (group == _scopeGroup)) {
-								return true;
-							}
-
-							return false;
+					argument -> {
+						if ((argument == _group) || (argument == _scopeGroup)) {
+							return true;
 						}
 
+						return false;
 					}),
 				Mockito.eq(_GROUP_ID),
 				Mockito.eq(_PORTLET_NAMESPACE + "selectDocumentLibrary"),
@@ -659,7 +650,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	private void _setUpModelResourcePermission() throws Exception {
 		Mockito.when(
 			_modelResourcePermission.contains(
-				Matchers.any(PermissionChecker.class), Mockito.anyLong(),
+				Mockito.nullable(PermissionChecker.class), Mockito.anyLong(),
 				Mockito.anyString())
 		).thenReturn(
 			true
@@ -726,8 +717,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		).when(
 			portletURLFactory
 		).create(
-			Matchers.any(PortletRequest.class),
-			Matchers.eq(DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM),
+			Mockito.nullable(PortletRequest.class),
+			Mockito.eq(DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM),
 			Mockito.anyString()
 		);
 
@@ -736,8 +727,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		).when(
 			portletURLFactory
 		).create(
-			Matchers.any(HttpServletRequest.class),
-			Matchers.eq(DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM),
+			Mockito.nullable(HttpServletRequest.class),
+			Mockito.eq(DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM),
 			Mockito.anyLong(), Mockito.anyString()
 		);
 

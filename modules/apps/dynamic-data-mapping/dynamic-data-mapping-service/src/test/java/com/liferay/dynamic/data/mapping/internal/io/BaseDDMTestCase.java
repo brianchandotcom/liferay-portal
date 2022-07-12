@@ -41,7 +41,6 @@ import java.util.Set;
 
 import org.junit.Before;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -176,7 +175,7 @@ public abstract class BaseDDMTestCase {
 
 	private void _whenLanguageIsAvailableLocale(String languageId) {
 		Mockito.when(
-			language.isAvailableLocale(Matchers.eq(languageId))
+			language.isAvailableLocale(Mockito.eq(languageId))
 		).thenReturn(
 			true
 		);

@@ -44,7 +44,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -76,7 +75,7 @@ public class RedirectButtonDDMFormFieldTemplateContextContributorTest {
 		).when(
 			portletURLFactory
 		).create(
-			Matchers.any(PortletRequest.class), Mockito.anyString(),
+			Mockito.any(PortletRequest.class), Mockito.anyString(),
 			Mockito.anyString()
 		);
 
@@ -85,7 +84,7 @@ public class RedirectButtonDDMFormFieldTemplateContextContributorTest {
 		).when(
 			portletURLFactory
 		).create(
-			Matchers.any(HttpServletRequest.class), Mockito.anyString(),
+			Mockito.any(HttpServletRequest.class), Mockito.anyString(),
 			Mockito.anyLong(), Mockito.anyString()
 		);
 
@@ -182,8 +181,8 @@ public class RedirectButtonDDMFormFieldTemplateContextContributorTest {
 
 		Mockito.when(
 			language.format(
-				Matchers.any(Locale.class), Matchers.eq(message),
-				Matchers.eq(messageArguments))
+				Mockito.any(Locale.class), Mockito.eq(message),
+				Mockito.eq(messageArguments))
 		).thenReturn(
 			StringUtil.merge(
 				ArrayUtil.append(messageArguments, message), StringPool.COMMA)

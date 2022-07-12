@@ -43,7 +43,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -77,7 +76,7 @@ public class CheckboxDDMFormFieldTemplateContextContributorTest
 		).when(
 			portletURLFactory
 		).create(
-			Matchers.any(PortletRequest.class), Mockito.anyString(),
+			Mockito.any(PortletRequest.class), Mockito.anyString(),
 			Mockito.anyString()
 		);
 
@@ -86,7 +85,7 @@ public class CheckboxDDMFormFieldTemplateContextContributorTest
 		).when(
 			portletURLFactory
 		).create(
-			Matchers.any(HttpServletRequest.class), Mockito.anyString(),
+			Mockito.any(HttpServletRequest.class), Mockito.anyString(),
 			Mockito.anyLong(), Mockito.anyString()
 		);
 

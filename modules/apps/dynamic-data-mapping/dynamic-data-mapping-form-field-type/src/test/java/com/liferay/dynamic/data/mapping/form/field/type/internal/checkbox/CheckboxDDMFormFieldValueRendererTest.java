@@ -30,7 +30,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -103,7 +102,7 @@ public class CheckboxDDMFormFieldValueRendererTest {
 		Locale locale, String key, String returnValue) {
 
 		Mockito.when(
-			language.get(Matchers.eq(locale), Matchers.eq(key))
+			language.get(Mockito.eq(locale), Mockito.eq(key))
 		).thenReturn(
 			returnValue
 		);

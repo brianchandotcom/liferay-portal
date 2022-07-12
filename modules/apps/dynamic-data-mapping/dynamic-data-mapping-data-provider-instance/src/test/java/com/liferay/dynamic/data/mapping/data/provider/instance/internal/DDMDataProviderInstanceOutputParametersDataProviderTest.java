@@ -54,7 +54,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -185,7 +184,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 
 		Mockito.when(
 			_ddmFormValuesDeserializer.deserialize(
-				Matchers.any(DDMFormValuesDeserializerDeserializeRequest.class))
+				Mockito.any(DDMFormValuesDeserializerDeserializeRequest.class))
 		).thenReturn(
 			ddmFormValuesDeserializerDeserializeResponse
 		);
@@ -340,7 +339,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
 
 		Mockito.when(
-			portal.getResourceBundle(Matchers.any(Locale.class))
+			portal.getResourceBundle(Mockito.any(Locale.class))
 		).thenReturn(
 			resourceBundle
 		);
@@ -356,7 +355,7 @@ public class DDMDataProviderInstanceOutputParametersDataProviderTest {
 			resourceBundleLoader);
 
 		Mockito.when(
-			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
+			resourceBundleLoader.loadResourceBundle(Mockito.any(Locale.class))
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);

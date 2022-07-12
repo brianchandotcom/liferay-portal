@@ -40,7 +40,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -93,7 +92,7 @@ public class OptionsDDMFormFieldContextHelperTest {
 
 		Mockito.when(
 			language.get(
-				Matchers.any(ResourceBundle.class), Matchers.eq("option"))
+				Mockito.any(ResourceBundle.class), Mockito.eq("option"))
 		).thenReturn(
 			"Option"
 		);

@@ -31,7 +31,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -123,13 +122,13 @@ public class DDMFormInstanceUpgradeProcessTest extends BaseDDMTestCase {
 			ResourceActionLocalService.class);
 
 		Mockito.when(
-			resourceActionLocalService.getResourceActions(Matchers.eq(oldName))
+			resourceActionLocalService.getResourceActions(Mockito.eq(oldName))
 		).thenReturn(
 			oldResourceActionListSupplier.get()
 		);
 
 		Mockito.when(
-			resourceActionLocalService.getResourceActions(Matchers.eq(newName))
+			resourceActionLocalService.getResourceActions(Mockito.eq(newName))
 		).thenReturn(
 			newResourceActionListSupplier.get()
 		);

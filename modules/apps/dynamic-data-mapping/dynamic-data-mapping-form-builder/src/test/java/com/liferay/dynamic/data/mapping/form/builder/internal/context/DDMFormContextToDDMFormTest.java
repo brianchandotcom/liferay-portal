@@ -32,17 +32,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author Jeyvison Nascimento
  */
-@RunWith(MockitoJUnitRunner.class)
 public class DDMFormContextToDDMFormTest {
 
 	@ClassRule
@@ -141,13 +136,13 @@ public class DDMFormContextToDDMFormTest {
 	public void testGetValueFromValueAccessor() throws IOException {
 		Mockito.when(
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(
-				Matchers.anyString())
+				Mockito.anyString())
 		).thenReturn(
 			_ddmFormFieldValueAccessor
 		);
 
 		Mockito.when(
-			_ddmFormFieldValueAccessor.getValue(Matchers.any(), Matchers.any())
+			_ddmFormFieldValueAccessor.getValue(Mockito.any(), Mockito.any())
 		).thenReturn(
 			false
 		);
@@ -165,7 +160,7 @@ public class DDMFormContextToDDMFormTest {
 	public void testGetValueWithoutValueAccessor() throws IOException {
 		Mockito.when(
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(
-				Matchers.anyString())
+				Mockito.anyString())
 		).thenReturn(
 			null
 		);
@@ -186,11 +181,10 @@ public class DDMFormContextToDDMFormTest {
 	}
 
 	private DDMFormContextToDDMForm _ddmFormContextToDDMForm;
-
-	@Mock
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-
-	@Mock
-	private DDMFormFieldValueAccessor<Object> _ddmFormFieldValueAccessor;
+	private final DDMFormFieldTypeServicesTracker
+		_ddmFormFieldTypeServicesTracker = Mockito.mock(
+			DDMFormFieldTypeServicesTracker.class);
+	private final DDMFormFieldValueAccessor<Object> _ddmFormFieldValueAccessor =
+		Mockito.mock(DDMFormFieldValueAccessor.class);
 
 }

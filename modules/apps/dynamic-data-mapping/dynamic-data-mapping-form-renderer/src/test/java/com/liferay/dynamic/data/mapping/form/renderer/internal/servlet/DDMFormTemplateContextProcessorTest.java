@@ -45,7 +45,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -453,7 +452,7 @@ public class DDMFormTemplateContextProcessorTest {
 		).when(
 			language
 		).isAvailableLocale(
-			Matchers.any(Locale.class)
+			Mockito.any(Locale.class)
 		);
 
 		languageUtil.setLanguage(language);

@@ -101,7 +101,6 @@ import java.util.Set;
 
 import org.junit.Before;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
@@ -427,49 +426,49 @@ public abstract class BaseDDMTestCase {
 
 		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
-				Matchers.anyString())
+				Mockito.anyString())
 		).thenReturn(
 			ddmFormFieldRenderer
 		);
 
 		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
-				Matchers.anyString())
+				Mockito.anyString())
 		).thenReturn(
 			_defaultDDMFormFieldType
 		);
 
 		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
-				Matchers.eq("fieldset"))
+				Mockito.eq("fieldset"))
 		).thenReturn(
 			new FieldSetDDMFormFieldType()
 		);
 
 		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
-				Matchers.eq("radio"))
+				Mockito.eq("radio"))
 		).thenReturn(
 			new RadioDDMFormFieldType()
 		);
 
 		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
-				Matchers.eq("select"))
+				Mockito.eq("select"))
 		).thenReturn(
 			new SelectDDMFormFieldType()
 		);
 
 		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
-				Matchers.eq("text"))
+				Mockito.eq("text"))
 		).thenReturn(
 			new TextDDMFormFieldType()
 		);
 
 		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
-				Matchers.anyString())
+				Mockito.anyString())
 		).thenReturn(
 			HashMapBuilder.<String, Object>put(
 				"ddm.form.field.type.icon", "my-icon"
@@ -507,7 +506,7 @@ public abstract class BaseDDMTestCase {
 	protected void setUpConfigurationFactoryUtil() {
 		Mockito.when(
 			_configurationFactory.getConfiguration(
-				Matchers.any(ClassLoader.class), Matchers.anyString())
+				Mockito.any(ClassLoader.class), Mockito.anyString())
 		).thenReturn(
 			_configuration
 		);
@@ -585,7 +584,7 @@ public abstract class BaseDDMTestCase {
 
 		Mockito.when(
 			ddmStructureLocalService.getStructureDDMForm(
-				Matchers.any(DDMStructure.class))
+				Mockito.any(DDMStructure.class))
 		).thenAnswer(
 			invocationOnMock -> {
 				Object[] args = invocationOnMock.getArguments();
@@ -614,7 +613,7 @@ public abstract class BaseDDMTestCase {
 			ddmTemplateLocalService);
 
 		Mockito.when(
-			ddmTemplateLocalService.getTemplate(Matchers.anyLong())
+			ddmTemplateLocalService.getTemplate(Mockito.anyLong())
 		).thenAnswer(
 			invocationOnMock -> {
 				Object[] args = invocationOnMock.getArguments();
@@ -678,8 +677,7 @@ public abstract class BaseDDMTestCase {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		Mockito.when(
-			language.get(
-				Matchers.any(ResourceBundle.class), Matchers.anyString())
+			language.get(Mockito.any(ResourceBundle.class), Mockito.anyString())
 		).then(
 			(Answer<String>)invocationOnMock -> {
 				Object[] arguments = invocationOnMock.getArguments();
@@ -724,7 +722,7 @@ public abstract class BaseDDMTestCase {
 		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
 
 		Mockito.when(
-			portal.getResourceBundle(Matchers.any(Locale.class))
+			portal.getResourceBundle(Mockito.any(Locale.class))
 		).thenReturn(
 			resourceBundle
 		);
@@ -775,7 +773,7 @@ public abstract class BaseDDMTestCase {
 		Locale locale, String key, String returnValue) {
 
 		Mockito.when(
-			language.get(Matchers.eq(locale), Matchers.eq(key))
+			language.get(Mockito.eq(locale), Mockito.eq(key))
 		).thenReturn(
 			returnValue
 		);
@@ -793,7 +791,7 @@ public abstract class BaseDDMTestCase {
 
 	protected void whenLanguageGetLanguageId(Locale locale, String languageId) {
 		Mockito.when(
-			language.getLanguageId(Matchers.eq(locale))
+			language.getLanguageId(Mockito.eq(locale))
 		).thenReturn(
 			languageId
 		);
@@ -801,7 +799,7 @@ public abstract class BaseDDMTestCase {
 
 	protected void whenLanguageIsAvailableLocale(Locale locale) {
 		Mockito.when(
-			language.isAvailableLocale(Matchers.eq(locale))
+			language.isAvailableLocale(Mockito.eq(locale))
 		).thenReturn(
 			true
 		);
@@ -809,7 +807,7 @@ public abstract class BaseDDMTestCase {
 
 	protected void whenLanguageIsAvailableLocale(String languageId) {
 		Mockito.when(
-			language.isAvailableLocale(Matchers.eq(languageId))
+			language.isAvailableLocale(Mockito.eq(languageId))
 		).thenReturn(
 			true
 		);

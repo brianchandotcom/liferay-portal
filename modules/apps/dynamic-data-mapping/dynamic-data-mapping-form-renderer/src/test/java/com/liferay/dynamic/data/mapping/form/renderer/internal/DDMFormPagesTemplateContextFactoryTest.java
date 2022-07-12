@@ -89,7 +89,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -836,7 +835,7 @@ public class DDMFormPagesTemplateContextFactoryTest {
 		Language language, Locale locale, String key, String returnValue) {
 
 		Mockito.when(
-			language.get(Matchers.any(ResourceBundle.class), Matchers.eq(key))
+			language.get(Mockito.any(ResourceBundle.class), Mockito.eq(key))
 		).thenReturn(
 			returnValue
 		);
@@ -849,7 +848,7 @@ public class DDMFormPagesTemplateContextFactoryTest {
 
 		Mockito.when(
 			_ddmFormFieldTypeServicesTracker.
-				getDDMFormFieldTemplateContextContributor(Matchers.eq(type))
+				getDDMFormFieldTemplateContextContributor(Mockito.eq(type))
 		).thenReturn(
 			ddmFormFieldTemplateContextContributor
 		);
@@ -867,7 +866,7 @@ public class DDMFormPagesTemplateContextFactoryTest {
 
 		Mockito.when(
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(
-				Matchers.anyString())
+				Mockito.anyString())
 		).thenReturn(
 			(DDMFormFieldValueAccessor<Object>)ddmFormFieldValueAccessor
 		);
@@ -983,19 +982,19 @@ public class DDMFormPagesTemplateContextFactoryTest {
 		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
 
 		Mockito.when(
-			portal.getCompanyId(Matchers.any(PortletRequest.class))
+			portal.getCompanyId(Mockito.any(PortletRequest.class))
 		).thenReturn(
 			1L
 		);
 
 		Mockito.when(
-			portal.getUserId(Matchers.any(PortletRequest.class))
+			portal.getUserId(Mockito.any(PortletRequest.class))
 		).thenReturn(
 			1L
 		);
 
 		Mockito.when(
-			portal.getResourceBundle(Matchers.any(Locale.class))
+			portal.getResourceBundle(Mockito.any(Locale.class))
 		).thenReturn(
 			resourceBundle
 		);
@@ -1009,7 +1008,7 @@ public class DDMFormPagesTemplateContextFactoryTest {
 		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
 
 		Mockito.when(
-			portal.getResourceBundle(Matchers.any(Locale.class))
+			portal.getResourceBundle(Mockito.any(Locale.class))
 		).thenReturn(
 			resourceBundle
 		);
@@ -1028,7 +1027,7 @@ public class DDMFormPagesTemplateContextFactoryTest {
 			resourceBundleLoader);
 
 		Mockito.when(
-			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
+			resourceBundleLoader.loadResourceBundle(Mockito.any(Locale.class))
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
@@ -1102,7 +1101,7 @@ public class DDMFormPagesTemplateContextFactoryTest {
 
 		Mockito.when(
 			ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
-				Matchers.any())
+				Mockito.any())
 		).thenReturn(
 			ddmExpressionFunctionFactoryMap
 		);

@@ -36,7 +36,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.InOrder;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -149,8 +148,7 @@ public class DDMFormInstanceRecordXMLWriterTest {
 		).when(
 			ddmFormInstanceRecordXMLWriter
 		).addFieldElement(
-			Matchers.any(Element.class), Matchers.anyString(),
-			Matchers.anyString()
+			Mockito.any(Element.class), Mockito.anyString(), Mockito.anyString()
 		);
 
 		ddmFormInstanceRecordXMLWriter.addFieldElements(
@@ -243,7 +241,7 @@ public class DDMFormInstanceRecordXMLWriterTest {
 		).when(
 			ddmFormInstanceRecordXMLWriter
 		).addFieldElements(
-			Matchers.any(Element.class), Matchers.anyMap(), Matchers.anyMap()
+			Mockito.any(Element.class), Mockito.anyMap(), Mockito.anyMap()
 		);
 
 		DDMFormInstanceRecordWriterRequest ddmFormInstanceRecordWriterRequest =
@@ -277,7 +275,7 @@ public class DDMFormInstanceRecordXMLWriterTest {
 		inOrder.verify(
 			ddmFormInstanceRecordXMLWriter, Mockito.times(1)
 		).addFieldElements(
-			Matchers.any(Element.class), Matchers.anyMap(), Matchers.anyMap()
+			Mockito.nullable(Element.class), Mockito.anyMap(), Mockito.anyMap()
 		);
 
 		inOrder.verify(
@@ -289,7 +287,7 @@ public class DDMFormInstanceRecordXMLWriterTest {
 		inOrder.verify(
 			ddmFormInstanceRecordXMLWriter, Mockito.times(1)
 		).addFieldElements(
-			Matchers.any(Element.class), Matchers.anyMap(), Matchers.anyMap()
+			Mockito.nullable(Element.class), Mockito.anyMap(), Mockito.anyMap()
 		);
 
 		inOrder.verify(

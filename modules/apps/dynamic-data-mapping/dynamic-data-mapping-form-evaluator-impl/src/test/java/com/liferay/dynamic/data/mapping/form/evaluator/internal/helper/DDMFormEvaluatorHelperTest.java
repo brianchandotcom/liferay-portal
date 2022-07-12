@@ -96,7 +96,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
@@ -197,8 +196,7 @@ public class DDMFormEvaluatorHelperTest {
 				"field0_instanceId", "field0", new UnlocalizedValue("")));
 
 		Mockito.when(
-			_roleLocalService.fetchRole(
-				Matchers.anyLong(), Matchers.anyString())
+			_roleLocalService.fetchRole(Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			_role
 		);
@@ -211,8 +209,8 @@ public class DDMFormEvaluatorHelperTest {
 
 		Mockito.when(
 			_userLocalService.hasRoleUser(
-				Matchers.anyLong(), Matchers.eq("Role1"), Matchers.anyLong(),
-				Matchers.eq(true))
+				Mockito.anyLong(), Mockito.eq("Role1"), Mockito.anyLong(),
+				Mockito.eq(true))
 		).thenReturn(
 			true
 		);
@@ -1836,24 +1834,22 @@ public class DDMFormEvaluatorHelperTest {
 
 		Mockito.when(
 			_language.get(
-				Matchers.any(Locale.class),
-				Matchers.eq("input-format-is-not-satisfied"))
+				Mockito.any(Locale.class),
+				Mockito.eq("input-format-is-not-satisfied"))
 		).thenReturn(
 			"Input format is not satisfied."
 		);
 
 		Mockito.when(
 			_language.get(
-				Matchers.any(Locale.class),
-				Matchers.eq("this-field-is-invalid"))
+				Mockito.any(Locale.class), Mockito.eq("this-field-is-invalid"))
 		).thenReturn(
 			"This field is invalid."
 		);
 
 		Mockito.when(
 			_language.get(
-				Matchers.any(Locale.class),
-				Matchers.eq("this-field-is-required"))
+				Mockito.any(Locale.class), Mockito.eq("this-field-is-required"))
 		).thenReturn(
 			"This field is required."
 		);
@@ -2085,7 +2081,7 @@ public class DDMFormEvaluatorHelperTest {
 
 		Mockito.when(
 			ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
-				Matchers.any())
+				Mockito.any())
 		).thenReturn(
 			_createDDMExpressionFunctionMap()
 		);
@@ -2109,7 +2105,7 @@ public class DDMFormEvaluatorHelperTest {
 
 			Mockito.when(
 				ddmFormFieldTypeServicesTracker.getDDMFormFieldValueAccessor(
-					Matchers.eq(entry.getKey()))
+					Mockito.eq(entry.getKey()))
 			).then(
 				(Answer<DDMFormFieldValueAccessor<?>>)
 					invocation -> entry.getValue()
@@ -2125,7 +2121,7 @@ public class DDMFormEvaluatorHelperTest {
 
 		Mockito.when(
 			ddmFormPageChangeTracker.getDDMFormPageChangeByDDMFormInstanceId(
-				Matchers.anyString())
+				Mockito.anyString())
 		).then(
 			(Answer<DDMFormPageChange>)invocation -> new DDMTestFormPageChange()
 		);

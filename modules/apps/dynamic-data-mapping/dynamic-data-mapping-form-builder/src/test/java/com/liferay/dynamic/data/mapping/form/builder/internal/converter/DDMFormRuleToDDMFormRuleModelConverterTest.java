@@ -48,7 +48,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -400,7 +399,7 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 
 		Mockito.when(
 			ddmExpressionFunctionTracker.getDDMExpressionFunctionFactories(
-				Matchers.any())
+				Mockito.any())
 		).thenReturn(
 			ddmExpressionFunctionFactories
 		);

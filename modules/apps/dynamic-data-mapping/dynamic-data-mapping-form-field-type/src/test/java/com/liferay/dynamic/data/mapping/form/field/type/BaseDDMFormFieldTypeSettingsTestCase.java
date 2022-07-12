@@ -43,7 +43,6 @@ import java.util.stream.Stream;
 import org.junit.Assert;
 import org.junit.Before;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -117,7 +116,7 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 		ResourceBundle resourceBundle = Mockito.mock(ResourceBundle.class);
 
 		Mockito.when(
-			portal.getResourceBundle(Matchers.any(Locale.class))
+			portal.getResourceBundle(Mockito.any(Locale.class))
 		).thenReturn(
 			resourceBundle
 		);
@@ -133,7 +132,7 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 			resourceBundleLoader);
 
 		Mockito.when(
-			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
+			resourceBundleLoader.loadResourceBundle(Mockito.any(Locale.class))
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);
@@ -141,14 +140,14 @@ public abstract class BaseDDMFormFieldTypeSettingsTestCase {
 		ResourceBundle mockResourceBundle = Mockito.mock(ResourceBundle.class);
 
 		Mockito.when(
-			resourceBundleLoader.loadResourceBundle(Matchers.eq(LocaleUtil.US))
+			resourceBundleLoader.loadResourceBundle(Mockito.eq(LocaleUtil.US))
 		).thenReturn(
 			mockResourceBundle
 		);
 
 		Mockito.when(
 			resourceBundleLoader.loadResourceBundle(
-				Matchers.eq(LocaleUtil.BRAZIL))
+				Mockito.eq(LocaleUtil.BRAZIL))
 		).thenReturn(
 			mockResourceBundle
 		);

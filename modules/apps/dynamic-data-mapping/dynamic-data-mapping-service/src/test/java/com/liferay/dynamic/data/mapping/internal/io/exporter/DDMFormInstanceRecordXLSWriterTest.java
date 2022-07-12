@@ -41,7 +41,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.InOrder;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -288,29 +287,29 @@ public class DDMFormInstanceRecordXLSWriterTest {
 		inOrder.verify(
 			ddmFormInstanceRecordXLSWriter, Mockito.times(1)
 		).createCellStyle(
-			Matchers.any(Workbook.class), Matchers.anyBoolean(),
-			Matchers.anyString(), Matchers.anyByte()
+			Mockito.any(Workbook.class), Mockito.anyBoolean(),
+			Mockito.anyString(), Mockito.anyShort()
 		);
 
 		inOrder.verify(
 			ddmFormInstanceRecordXLSWriter, Mockito.times(1)
 		).createRow(
-			Matchers.anyInt(), Matchers.any(CellStyle.class),
-			Matchers.anyCollection(), Matchers.any(Sheet.class)
+			Mockito.anyInt(), Mockito.nullable(CellStyle.class),
+			Mockito.anyCollection(), Mockito.nullable(Sheet.class)
 		);
 
 		inOrder.verify(
 			ddmFormInstanceRecordXLSWriter, Mockito.times(1)
 		).createCellStyle(
-			Matchers.any(Workbook.class), Matchers.anyBoolean(),
-			Matchers.anyString(), Matchers.anyByte()
+			Mockito.any(Workbook.class), Mockito.anyBoolean(),
+			Mockito.anyString(), Mockito.anyShort()
 		);
 
 		inOrder.verify(
 			ddmFormInstanceRecordXLSWriter, Mockito.times(2)
 		).createRow(
-			Matchers.anyInt(), Matchers.any(CellStyle.class),
-			Matchers.anyCollection(), Matchers.any(Sheet.class)
+			Mockito.anyInt(), Mockito.nullable(CellStyle.class),
+			Mockito.anyCollection(), Mockito.nullable(Sheet.class)
 		);
 
 		inOrder.verify(

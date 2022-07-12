@@ -58,7 +58,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -183,7 +182,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest {
 
 		Mockito.when(
 			ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
-				Matchers.anyString())
+				Mockito.anyString())
 		).thenReturn(
 			ddmFormFieldValueRenderer
 		);
@@ -197,8 +196,8 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest {
 
 		Mockito.when(
 			ddmFormFieldValueRenderer.render(
-				Matchers.anyString(), Matchers.any(DDMFormFieldValue.class),
-				Matchers.any(Locale.class))
+				Mockito.anyString(), Mockito.any(DDMFormFieldValue.class),
+				Mockito.any(Locale.class))
 		).thenReturn(
 			"mockedRenderResponse"
 		);
@@ -296,7 +295,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContextTest {
 		);
 
 		Mockito.when(
-			portal.getHttpServletRequest(Matchers.any(PortletRequest.class))
+			portal.getHttpServletRequest(Mockito.any(PortletRequest.class))
 		).thenReturn(
 			httpServletRequest
 		);

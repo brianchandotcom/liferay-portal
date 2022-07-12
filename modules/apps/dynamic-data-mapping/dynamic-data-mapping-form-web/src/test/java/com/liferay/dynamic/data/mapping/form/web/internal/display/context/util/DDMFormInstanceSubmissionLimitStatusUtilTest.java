@@ -30,7 +30,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -140,7 +139,7 @@ public class DDMFormInstanceSubmissionLimitStatusUtilTest {
 		Mockito.when(
 			ddmFormInstanceRecordVersionLocalService.
 				getFormInstanceRecordVersions(
-					Matchers.anyLong(), Matchers.anyLong())
+					Mockito.anyLong(), Mockito.anyLong())
 		).thenReturn(
 			ddmFormInstanceRecordVersions
 		);

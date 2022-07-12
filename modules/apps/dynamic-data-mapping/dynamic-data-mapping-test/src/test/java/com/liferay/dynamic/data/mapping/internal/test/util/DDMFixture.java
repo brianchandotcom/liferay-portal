@@ -30,9 +30,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import java.util.ResourceBundle;
 
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author André de Oliveira
@@ -40,8 +38,6 @@ import org.mockito.MockitoAnnotations;
 public class DDMFixture {
 
 	public void setUp() throws Exception {
-		MockitoAnnotations.initMocks(this);
-
 		_setUpBeanPropertiesUtil();
 		_setUpDDMStructureLocalServiceUtil();
 		_setUpLanguageUtil();
@@ -139,10 +135,8 @@ public class DDMFixture {
 
 	private BeanProperties _beanProperties;
 	private ClassLoader _classLoader;
-
-	@Mock
-	private DDMStructureLocalService _ddmStructureLocalService;
-
+	private final DDMStructureLocalService _ddmStructureLocalService =
+		Mockito.mock(DDMStructureLocalService.class);
 	private Language _language;
 
 }

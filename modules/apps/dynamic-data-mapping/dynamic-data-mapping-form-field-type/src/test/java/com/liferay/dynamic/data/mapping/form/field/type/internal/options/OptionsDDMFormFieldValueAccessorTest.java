@@ -33,7 +33,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -114,7 +113,7 @@ public class OptionsDDMFormFieldValueAccessorTest {
 		Language language = Mockito.mock(Language.class);
 
 		Mockito.when(
-			language.getLanguageId(Matchers.eq(LocaleUtil.US))
+			language.getLanguageId(Mockito.eq(LocaleUtil.US))
 		).thenReturn(
 			"en_US"
 		);

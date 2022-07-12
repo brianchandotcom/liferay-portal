@@ -47,7 +47,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
@@ -217,7 +216,7 @@ public class CallFunctionTest {
 
 		Mockito.when(
 			ddmFormEvaluatorExpressionFieldAccessor.getFieldProperty(
-				Matchers.any(GetFieldPropertyRequest.class))
+				Mockito.any(GetFieldPropertyRequest.class))
 		).then(
 			(Answer<GetFieldPropertyResponse>)invocation -> {
 				GetFieldPropertyResponse.Builder builder =

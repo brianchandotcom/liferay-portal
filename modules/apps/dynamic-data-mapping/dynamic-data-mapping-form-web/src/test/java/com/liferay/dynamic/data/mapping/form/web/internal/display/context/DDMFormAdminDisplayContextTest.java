@@ -77,7 +77,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -272,7 +271,7 @@ public class DDMFormAdminDisplayContextTest {
 
 		Mockito.when(
 			ddmFormInstanceService.fetchFormInstance(
-				Matchers.eq(_SHARED_FORM_INSTANCE_ID))
+				Mockito.eq(_SHARED_FORM_INSTANCE_ID))
 		).thenReturn(
 			sharedDDMFormInstance
 		);
@@ -337,7 +336,7 @@ public class DDMFormAdminDisplayContextTest {
 
 	private void _setRenderRequestParamenter(String parameter, String value) {
 		Mockito.when(
-			_renderRequest.getParameter(Matchers.eq(parameter))
+			_renderRequest.getParameter(Mockito.eq(parameter))
 		).thenReturn(
 			value
 		);
@@ -385,7 +384,7 @@ public class DDMFormAdminDisplayContextTest {
 		HttpServletRequest httpServletRequest = _mockHttpServletRequest();
 
 		Mockito.when(
-			portal.getHttpServletRequest(Matchers.any(PortletRequest.class))
+			portal.getHttpServletRequest(Mockito.any(PortletRequest.class))
 		).thenReturn(
 			httpServletRequest
 		);
@@ -401,7 +400,7 @@ public class DDMFormAdminDisplayContextTest {
 			resourceBundleLoader);
 
 		Mockito.when(
-			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
+			resourceBundleLoader.loadResourceBundle(Mockito.any(Locale.class))
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);

@@ -27,7 +27,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -74,8 +73,8 @@ public class CaptchaDDMFormFieldTemplateContextContributorTest
 		).when(
 			captchaDDMFormFieldTemplateContextContributor
 		).renderCaptchaTag(
-			Matchers.any(DDMFormField.class),
-			Matchers.any(DDMFormFieldRenderingContext.class)
+			Mockito.any(DDMFormField.class),
+			Mockito.any(DDMFormFieldRenderingContext.class)
 		);
 
 		return captchaDDMFormFieldTemplateContextContributor;

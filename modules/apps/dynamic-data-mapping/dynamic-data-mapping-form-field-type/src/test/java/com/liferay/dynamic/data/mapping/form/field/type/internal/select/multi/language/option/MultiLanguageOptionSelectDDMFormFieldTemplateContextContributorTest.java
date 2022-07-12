@@ -40,7 +40,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
@@ -119,8 +118,8 @@ public class
 
 		Mockito.when(
 			mockSelectDDMFormFieldTemplateContextContributor.getParameters(
-				Matchers.any(DDMFormField.class),
-				Matchers.any(DDMFormFieldRenderingContext.class))
+				Mockito.any(DDMFormField.class),
+				Mockito.any(DDMFormFieldRenderingContext.class))
 		).thenReturn(
 			optionsMap
 		);
@@ -141,13 +140,13 @@ public class
 		);
 
 		Mockito.when(
-			_language.getLanguageId(Matchers.eq(LocaleUtil.BRAZIL))
+			_language.getLanguageId(Mockito.eq(LocaleUtil.BRAZIL))
 		).thenReturn(
 			LocaleUtil.toLanguageId(LocaleUtil.BRAZIL)
 		);
 
 		Mockito.when(
-			_language.getLanguageId(Matchers.eq(LocaleUtil.US))
+			_language.getLanguageId(Mockito.eq(LocaleUtil.US))
 		).thenReturn(
 			LocaleUtil.toLanguageId(LocaleUtil.US)
 		);
@@ -171,14 +170,14 @@ public class
 		ResourceBundle resourceBundle1 = Mockito.mock(ResourceBundle.class);
 
 		Mockito.when(
-			portal.getResourceBundle(Matchers.eq(LocaleUtil.BRAZIL))
+			portal.getResourceBundle(Mockito.eq(LocaleUtil.BRAZIL))
 		).thenReturn(
 			resourceBundle1
 		);
 
 		Mockito.when(
 			resourceBundleLoader.loadResourceBundle(
-				Matchers.eq(LocaleUtil.BRAZIL))
+				Mockito.eq(LocaleUtil.BRAZIL))
 		).thenReturn(
 			resourceBundle1
 		);
@@ -192,13 +191,13 @@ public class
 		ResourceBundle resourceBundle2 = Mockito.mock(ResourceBundle.class);
 
 		Mockito.when(
-			portal.getResourceBundle(Matchers.eq(LocaleUtil.US))
+			portal.getResourceBundle(Mockito.eq(LocaleUtil.US))
 		).thenReturn(
 			resourceBundle2
 		);
 
 		Mockito.when(
-			resourceBundleLoader.loadResourceBundle(Matchers.eq(LocaleUtil.US))
+			resourceBundleLoader.loadResourceBundle(Mockito.eq(LocaleUtil.US))
 		).thenReturn(
 			resourceBundle2
 		);
@@ -235,7 +234,7 @@ public class
 
 		Mockito.when(
 			_language.get(
-				Matchers.any(ResourceBundle.class), Matchers.anyString())
+				Mockito.any(ResourceBundle.class), Mockito.anyString())
 		).then(
 			(Answer<String>)invocationOnMock -> {
 				Object[] arguments = invocationOnMock.getArguments();

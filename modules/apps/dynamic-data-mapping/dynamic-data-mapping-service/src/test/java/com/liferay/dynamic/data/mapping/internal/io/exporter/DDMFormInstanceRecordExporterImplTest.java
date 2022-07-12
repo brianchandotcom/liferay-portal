@@ -70,7 +70,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.InOrder;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -220,8 +219,8 @@ public class DDMFormInstanceRecordExporterImplTest {
 
 		Mockito.when(
 			_ddmFormInstanceRecordLocalService.getFormInstanceRecords(
-				Matchers.anyLong(), Matchers.anyInt(), Matchers.anyInt(),
-				Matchers.anyInt(), Matchers.any(OrderByComparator.class))
+				Mockito.anyLong(), Mockito.anyInt(), Mockito.anyInt(),
+				Mockito.anyInt(), Mockito.any(OrderByComparator.class))
 		).thenThrow(
 			SystemException.class
 		);
@@ -436,8 +435,8 @@ public class DDMFormInstanceRecordExporterImplTest {
 
 		Mockito.when(
 			ddmFormInstanceRecordExporterImpl.getDDMFormFieldValue(
-				Matchers.any(DDMFormField.class), Matchers.anyMap(),
-				Matchers.any(Locale.class))
+				Mockito.any(DDMFormField.class), Mockito.anyMap(),
+				Mockito.any(Locale.class))
 		).thenReturn(
 			"value"
 		);
@@ -470,7 +469,7 @@ public class DDMFormInstanceRecordExporterImplTest {
 
 		Mockito.when(
 			ddmFormInstanceRecordExporterImpl.getStatusMessage(
-				Matchers.anyInt(), Matchers.any(Locale.class))
+				Mockito.anyInt(), Mockito.any(Locale.class))
 		).thenReturn(
 			"aprovado"
 		);
@@ -512,8 +511,8 @@ public class DDMFormInstanceRecordExporterImplTest {
 		inOrder.verify(
 			ddmFormInstanceRecordExporterImpl, Mockito.times(1)
 		).getDDMFormFieldValue(
-			Matchers.any(DDMFormField.class), Matchers.anyMap(),
-			Matchers.any(Locale.class)
+			Mockito.any(DDMFormField.class), Mockito.anyMap(),
+			Mockito.any(Locale.class)
 		);
 
 		inOrder.verify(
@@ -535,7 +534,7 @@ public class DDMFormInstanceRecordExporterImplTest {
 		inOrder.verify(
 			ddmFormInstanceRecordExporterImpl, Mockito.times(1)
 		).getStatusMessage(
-			Matchers.anyInt(), Matchers.any(Locale.class)
+			Mockito.anyInt(), Mockito.any(Locale.class)
 		);
 	}
 
@@ -729,7 +728,7 @@ public class DDMFormInstanceRecordExporterImplTest {
 
 		Mockito.when(
 			ddmFormInstanceRecordWriter.write(
-				Matchers.any(DDMFormInstanceRecordWriterRequest.class))
+				Mockito.any(DDMFormInstanceRecordWriterRequest.class))
 		).thenReturn(
 			builder.build()
 		);
@@ -751,7 +750,7 @@ public class DDMFormInstanceRecordExporterImplTest {
 		inOrder.verify(
 			ddmFormInstanceRecordWriter, Mockito.times(1)
 		).write(
-			Matchers.any(DDMFormInstanceRecordWriterRequest.class)
+			Mockito.any(DDMFormInstanceRecordWriterRequest.class)
 		);
 	}
 

@@ -33,7 +33,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 /**
@@ -124,7 +123,7 @@ public class DDMFormTemplateContextFactoryHelperTest {
 
 		Mockito.when(
 			ddmDataProviderInstanceService.getDataProviderInstance(
-				Matchers.anyLong())
+				Mockito.anyLong())
 		).thenReturn(
 			ddmDataProviderInstance
 		);

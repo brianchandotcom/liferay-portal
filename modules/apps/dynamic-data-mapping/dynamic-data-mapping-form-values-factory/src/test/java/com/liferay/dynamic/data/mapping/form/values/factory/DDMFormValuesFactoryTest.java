@@ -62,7 +62,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -1026,7 +1025,7 @@ public class DDMFormValuesFactoryTest {
 		throws Exception {
 
 		Mockito.when(
-			_serviceTrackerMap.containsKey(Matchers.anyString())
+			_serviceTrackerMap.containsKey(Mockito.anyString())
 		).thenReturn(
 			false
 		);
@@ -1063,7 +1062,7 @@ public class DDMFormValuesFactoryTest {
 		);
 
 		Mockito.when(
-			_language.getLanguageId(Matchers.any(HttpServletRequest.class))
+			_language.getLanguageId(Mockito.any(HttpServletRequest.class))
 		).thenReturn(
 			"es_ES"
 		);

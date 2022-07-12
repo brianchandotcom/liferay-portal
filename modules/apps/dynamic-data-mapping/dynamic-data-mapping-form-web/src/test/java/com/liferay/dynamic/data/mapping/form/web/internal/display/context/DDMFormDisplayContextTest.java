@@ -91,7 +91,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -325,7 +324,7 @@ public class DDMFormDisplayContextTest {
 		ddmFormInstance.setSettings(expectedSettings);
 
 		Mockito.when(
-			_ddmFormInstanceService.fetchFormInstance(Matchers.anyLong())
+			_ddmFormInstanceService.fetchFormInstance(Mockito.anyLong())
 		).thenReturn(
 			ddmFormInstance
 		);
@@ -407,13 +406,13 @@ public class DDMFormDisplayContextTest {
 		DDMFormInstance ddmFormInstance = _mockDDMFormInstance();
 
 		Mockito.when(
-			_ddmFormInstanceLocalService.fetchFormInstance(Matchers.anyLong())
+			_ddmFormInstanceLocalService.fetchFormInstance(Mockito.anyLong())
 		).thenReturn(
 			ddmFormInstance
 		);
 
 		Mockito.when(
-			_ddmFormInstanceService.fetchFormInstance(Matchers.anyLong())
+			_ddmFormInstanceService.fetchFormInstance(Mockito.anyLong())
 		).thenReturn(
 			null
 		);
@@ -439,13 +438,13 @@ public class DDMFormDisplayContextTest {
 			ddmFormInstanceSettings);
 
 		Mockito.when(
-			_ddmFormInstanceLocalService.fetchFormInstance(Matchers.anyLong())
+			_ddmFormInstanceLocalService.fetchFormInstance(Mockito.anyLong())
 		).thenReturn(
 			ddmFormInstance
 		);
 
 		Mockito.when(
-			_ddmFormInstanceService.fetchFormInstance(Matchers.anyLong())
+			_ddmFormInstanceService.fetchFormInstance(Mockito.anyLong())
 		).thenReturn(
 			ddmFormInstance
 		);
@@ -715,7 +714,7 @@ public class DDMFormDisplayContextTest {
 		);
 
 		Mockito.when(
-			_ddmFormInstanceService.fetchFormInstance(Matchers.anyLong())
+			_ddmFormInstanceService.fetchFormInstance(Mockito.anyLong())
 		).thenReturn(
 			ddmFormInstance
 		);
@@ -739,7 +738,7 @@ public class DDMFormDisplayContextTest {
 		);
 
 		Mockito.when(
-			_ddmFormInstanceService.fetchFormInstance(Matchers.anyLong())
+			_ddmFormInstanceService.fetchFormInstance(Mockito.anyLong())
 		).thenReturn(
 			ddmFormInstance
 		);
@@ -753,7 +752,7 @@ public class DDMFormDisplayContextTest {
 
 		Mockito.when(
 			_ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
-				Matchers.anyLong(), Matchers.anyInt())
+				Mockito.anyLong(), Mockito.anyInt())
 		).thenReturn(
 			_ddmFormInstanceVersion
 		);
@@ -780,7 +779,7 @@ public class DDMFormDisplayContextTest {
 
 	private void _mockLanguageGet(String key, String value) {
 		Mockito.when(
-			_language.get(Matchers.any(ResourceBundle.class), Matchers.eq(key))
+			_language.get(Mockito.any(ResourceBundle.class), Mockito.eq(key))
 		).thenReturn(
 			value
 		);
@@ -795,9 +794,9 @@ public class DDMFormDisplayContextTest {
 
 		Mockito.when(
 			portletPermission.contains(
-				Matchers.any(PermissionChecker.class),
-				Matchers.any(Layout.class), Matchers.anyString(),
-				Matchers.anyString())
+				Mockito.nullable(PermissionChecker.class),
+				Mockito.nullable(Layout.class), Mockito.anyString(),
+				Mockito.anyString())
 		).thenReturn(
 			true
 		);
@@ -866,8 +865,8 @@ public class DDMFormDisplayContextTest {
 
 		Mockito.when(
 			_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
-				Matchers.anyLong(), Matchers.anyLong(), Matchers.anyString(),
-				Matchers.anyLong())
+				Mockito.anyLong(), Mockito.anyLong(), Mockito.anyString(),
+				Mockito.anyLong())
 		).thenReturn(
 			hasWorkflowDefinitionLink
 		);
@@ -883,13 +882,13 @@ public class DDMFormDisplayContextTest {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		Mockito.when(
-			_language.getLanguageId(Matchers.any(Locale.class))
+			_language.getLanguageId(Mockito.any(Locale.class))
 		).thenReturn(
 			_DEFAULT_LANGUAGE_ID
 		);
 
 		Mockito.when(
-			_language.getLanguageId(Matchers.eq(_mockHttpServletRequest2))
+			_language.getLanguageId(Mockito.eq(_mockHttpServletRequest2))
 		).thenReturn(
 			_DEFAULT_LANGUAGE_ID
 		);
@@ -918,20 +917,20 @@ public class DDMFormDisplayContextTest {
 		portalUtil.setPortal(portal);
 
 		Mockito.when(
-			portal.getHttpServletRequest(Matchers.any(RenderRequest.class))
+			portal.getHttpServletRequest(Mockito.any(RenderRequest.class))
 		).thenReturn(
 			_mockHttpServletRequest2
 		);
 
 		Mockito.when(
-			portal.getLiferayPortletRequest(Matchers.any(RenderRequest.class))
+			portal.getLiferayPortletRequest(Mockito.any(RenderRequest.class))
 		).thenReturn(
 			Mockito.mock(LiferayPortletRequest.class)
 		);
 
 		Mockito.when(
 			portal.getOriginalServletRequest(
-				Matchers.any(HttpServletRequest.class))
+				Mockito.any(HttpServletRequest.class))
 		).thenReturn(
 			_mockHttpServletRequest1
 		);
@@ -945,7 +944,7 @@ public class DDMFormDisplayContextTest {
 			resourceBundleLoader);
 
 		Mockito.when(
-			resourceBundleLoader.loadResourceBundle(Matchers.any(Locale.class))
+			resourceBundleLoader.loadResourceBundle(Mockito.any(Locale.class))
 		).thenReturn(
 			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
 		);

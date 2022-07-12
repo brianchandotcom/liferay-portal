@@ -201,8 +201,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CARRIER_DETAILS_URL_TEXTAREA</td>
+	<td>//textarea[contains(@name,'URL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT_SHIPMENT_DETAILS</td>
 	<td>//h5[contains(.,'${key_text}')]/..//a[text()='Edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHIPMENT_CARRIER_DETAILS</td>
+	<td>//h5//..//following-sibling::div[@class="description"]/div/span[(normalize-space(text())='${key_detail}')]//../b</td>
 	<td></td>
 </tr>
 <tr>

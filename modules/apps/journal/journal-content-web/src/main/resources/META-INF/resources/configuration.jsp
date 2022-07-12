@@ -64,9 +64,10 @@
 		event.preventDefault();
 
 		Liferay.Util.openSelectionModal({
-			onSelect: function (selectedItem) {
-				if (selectedItem) {
-					retrieveWebContent(selectedItem.assetclasspk);
+			onSelect: function (data) {
+				if (data.value && data.value.length) {
+					const selectedItem = JSON.parse(data.value);
+					retrieveWebContent(selectedItem.classPK);
 				}
 			},
 			selectEventName: '<portlet:namespace />selectedItem',

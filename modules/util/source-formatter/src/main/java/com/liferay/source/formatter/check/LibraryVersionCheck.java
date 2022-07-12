@@ -64,17 +64,17 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		_severities = getAttributeValues(
 			_QUERY_ARGUMENTS_SEVERITIES, absolutePath);
 
-		if (fileName.endsWith(".properties")) {
-			_propertiesLibraryVersionCheck(fileName, content);
-		}
-		else if (fileName.endsWith(".xml")) {
-			_xmlLibraryVersionCheck(fileName, content);
-		}
-		else if (fileName.endsWith(".gradle")) {
+		if (fileName.endsWith(".gradle")) {
 			_gradleLibraryVersionCheck(fileName, content);
 		}
 		else if (fileName.endsWith(".json")) {
 			_jsonLibraryVersionCheck(fileName, content);
+		}
+		else if (fileName.endsWith(".properties")) {
+			_propertiesLibraryVersionCheck(fileName, content);
+		}
+		else if (fileName.endsWith(".xml")) {
+			_xmlLibraryVersionCheck(fileName, content);
 		}
 
 		return content;

@@ -82,6 +82,9 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		else if (fileName.endsWith("ivy.xml")) {
 			_ivyXmlLibraryVersionCheck(fileName, content);
 		}
+		else if (fileName.endsWith("pom.xml")) {
+			_pomXmlLibraryVersionCheck(fileName, content);
+		}
 
 		return content;
 	}
@@ -514,6 +517,59 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				if (_log.isDebugEnabled()) {
 					_log.debug(ioException);
 				}
+			}
+		}
+	}
+
+	private void _pomXmlLibraryVersionCheck(String fileName, String content)
+		throws DocumentException, IOException {
+
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+
+		Document document = SourceUtil.readXML(content);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element dependenciesElement :
+				(List<Element>)rootElement.elements("dependencies")) {
+
+			for (Element dependencyElement :
+					(List<Element>)dependenciesElement.elements("dependency")) {
+
+				Element artifactIdElement = dependencyElement.element(
+					"artifactId");
+
+				if (artifactIdElement == null) {
+					continue;
+				}
+
+				Element groupIdElement = dependencyElement.element("groupId");
+
+				if (groupIdElement == null) {
+					continue;
+				}
+
+				Element versionElement = dependencyElement.element("version");
+
+				if (versionElement == null) {
+					continue;
+				}
+
+				_checkIsContainVulnerabilities(
+					fileName,
+					groupIdElement.getText() + StringPool.COLON +
+						artifactIdElement.getText(),
+					versionElement.getText(), httpClient,
+					SecurityAdvisoryEcosystemEnum.MAVEN);
+			}
+		}
+
+		try {
+			httpClient.close();
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
 			}
 		}
 	}

@@ -189,6 +189,104 @@ definition {
 		}
 	}
 
+	@priority = "4"
+	test CanUpdateConfigValueViaUI {
+		property osgi.module.configuration.file.names = "com.liferay.journal.configuration.JournalServiceConfiguration.config";
+		property osgi.module.configurations = "articleCommentsEnabled=B&quot;true&quot;";
+		property test.name.skip.portal.instance = "SystemSettings#CanUpdateConfigValueViaUI";
+
+		task ("Given assert the Article Comments Enabled is checked for web content in System Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Web Content",
+				configurationName = "Web Content",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.viewCheckboxChecked(fieldName = "articleCommentsEnabled");
+
+			task ("And assert user can add the comment for web content") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content",
+					groupName = "Guest",
+					title = "WC WebContent Title");
+
+				JSONLayout.addPublicLayout(
+					groupName = "Guest",
+					layoutName = "Web Content Page Test");
+
+				JSONLayout.addWidgetToPublicLayout(
+					groupName = "Guest",
+					layoutName = "Web Content Page Test",
+					widgetName = "Web Content Display");
+
+				Navigator.gotoPage(pageName = "Web Content Page Test");
+
+				WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+				IFrame.closeFrame();
+
+				Portlet.gotoPortletOptions(
+					portletName = "Web Content Display",
+					portletOption = "Configuration");
+
+				WebContentDisplayPortlet.configureSetup(
+					enableViewCountIncrement = "true",
+					metadataNameList = "Comments");
+
+				WebContentDisplayPortlet.saveConfiguration();
+
+				IFrame.closeFrame();
+
+				Comments.addPG(entryComment = "WC WebContent Content Comment");
+
+				Comments.viewPG(
+					commentCount = "1",
+					entryComment = "WC WebContent Content Comment",
+					userFullName = "Test Test (You)");
+			}
+		}
+
+		task ("When disable the comment for web content in system settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Web Content",
+				configurationName = "Web Content",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.viewCheckboxChecked(fieldName = "articleCommentsEnabled");
+
+			FormFields.disableCheckbox(fieldName = "articleCommentsEnabled");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Then assert the comment for web content not displays on UI") {
+			Navigator.gotoPage(pageName = "Web Content Page Test");
+
+			Comments.viewNoComments(entryComment = "WC WebContent Content Comment");
+
+			var fileContent = SystemSettings.getConfigFileContent(configFileName = "com.liferay.journal.configuration.JournalServiceConfiguration.config");
+			var expectedText = "articleCommentsEnabled=B&quot;false&quot;";
+
+			if (contains("${fileContent}", "${expectedText}")) {
+				echo("Config file shows updated value: ${expectedText}");
+			}
+			else {
+				echo("Config file content: ${fileContent}");
+
+				fail("Unable to find expected config value: ${expectedText}");
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-79394. This test check that system settings scope is corrected."
 	@priority = "5"
 	test CheckSystemSettingsScopeIsCorrected {

@@ -626,7 +626,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 		<br />
 
-		<h3><liferay-ui:message key="register-your-application" /></h3>
+		<h2 class="version-info"><liferay-ui:message key="register-your-application" /></h2>
 
 		<table class="lfr-table">
 			<tr>

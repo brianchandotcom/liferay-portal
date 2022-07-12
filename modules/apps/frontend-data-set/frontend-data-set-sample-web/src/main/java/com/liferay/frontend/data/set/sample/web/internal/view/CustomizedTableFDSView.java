@@ -64,6 +64,11 @@ public class CustomizedTableFDSView extends BaseTableFDSView {
 	}
 
 	@Override
+	public boolean isDefault() {
+		return true;
+	}
+
+	@Override
 	public boolean isQuickActionsEnabled() {
 		return true;
 	}

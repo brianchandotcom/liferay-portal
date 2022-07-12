@@ -72,6 +72,17 @@ public class AssetEntryItemDescriptor
 		return JSONUtil.put(
 			"assetEntryId", String.valueOf(_assetEntry.getEntryId())
 		).put(
+			"assetType",
+			() -> {
+				AssetRendererFactory<?> assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassNameId(
+							_assetEntry.getClassNameId());
+
+				return assetRendererFactory.getTypeName(
+					themeDisplay.getLocale(), _assetEntry.getClassTypeId());
+			}
+		).put(
 			"className", _assetEntry.getClassName()
 		).put(
 			"classNameId", _assetEntry.getClassNameId()

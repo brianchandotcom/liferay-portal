@@ -25,6 +25,9 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  * <code>assetEntryId</code>: The entryId of the selected asset entry
  * </li>
  * <li>
+ * <code>assetType</code>: The type of the selected asset entry
+ * </li>
+ * <li>
  * <code>className</code>: The class name of the selected asset entry
  * </li>
  * <li>

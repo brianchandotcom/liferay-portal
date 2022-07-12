@@ -55,8 +55,9 @@ type DriverInfoFormTypes = {
 	relationToContact: string;
 };
 
-type VehicleInfoFormTypes = {
+export type VehicleInfoFormTypes = {
 	annualMileage: string;
+	id: number;
 	make: string;
 	model: string;
 	ownership: string;
@@ -88,7 +89,7 @@ export type InitialStateTypes = {
 			name: string;
 		};
 		vehicleInfo: {
-			form: VehicleInfoFormTypes;
+			form: VehicleInfoFormTypes[];
 			index: number;
 			name: string;
 		};
@@ -152,14 +153,17 @@ const initialState: InitialStateTypes = {
 			name: 'Review',
 		},
 		vehicleInfo: {
-			form: {
-				annualMileage: '',
-				make: '',
-				model: '',
-				ownership: '',
-				primaryUsage: '',
-				year: '',
-			},
+			form: [
+				{
+					annualMileage: '',
+					id: Number((Math.random() * 1000000).toFixed(0)),
+					make: '',
+					model: '',
+					ownership: '',
+					primaryUsage: '',
+					year: '',
+				},
+			],
 			index: 1,
 			name: 'Vehicle Info',
 		},
@@ -173,6 +177,8 @@ export enum ACTIONS {
 	SET_COVERAGE_FORM = 'SET_COVERAGE_FORM',
 	SET_DRIVER_INFO_FORM = 'SET_DRIVER_INFO_FORM',
 	SET_HAS_FORM_CHANGE = 'SET_HAS_FORM_CHANGE',
+	SET_NEW_VEHICLE = 'SET_NEW_VEHICLE',
+	SET_REMOVE_VEHICLE = 'SET_REMOVE_VEHICLE',
 }
 
 type ActionsPayload = {
@@ -181,7 +187,13 @@ type ActionsPayload = {
 	[ACTIONS.SET_CURRENT_STEP]: number;
 	[ACTIONS.SET_DRIVER_INFO_FORM]: DriverInfoFormTypes;
 	[ACTIONS.SET_HAS_FORM_CHANGE]: boolean;
-	[ACTIONS.SET_VEHICLE_INFO_FORM]: VehicleInfoFormTypes;
+	[ACTIONS.SET_NEW_VEHICLE]: VehicleInfoFormTypes;
+	[ACTIONS.SET_REMOVE_VEHICLE]: {id: number};
+	[ACTIONS.SET_VEHICLE_INFO_FORM]: {
+		fieldName: string;
+		id: number;
+		value: string;
+	};
 };
 
 type ApplicationActions = ActionMap<ActionsPayload>[keyof ActionMap<
@@ -222,13 +234,24 @@ const reducer = (state: InitialStateTypes, action: ApplicationActions) => {
 		}
 
 		case ACTIONS.SET_VEHICLE_INFO_FORM: {
+			const payload = state.steps.vehicleInfo.form.map((currentForm) => {
+				if (currentForm.id === action.payload.id) {
+					return {
+						...currentForm,
+						[action.payload.fieldName]: action.payload.value,
+					};
+				}
+
+				return currentForm;
+			});
+
 			return {
 				...state,
 				steps: {
 					...state.steps,
 					vehicleInfo: {
 						...state.steps.vehicleInfo,
-						form: action.payload,
+						form: payload,
 					},
 				},
 			};
@@ -255,6 +278,41 @@ const reducer = (state: InitialStateTypes, action: ApplicationActions) => {
 					driverInfo: {
 						...state.steps.driverInfo,
 						form: action.payload,
+					},
+				},
+			};
+		}
+
+		case ACTIONS.SET_NEW_VEHICLE: {
+			const payload = state.steps.vehicleInfo.form;
+
+			payload.push(action.payload);
+
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					vehicleInfo: {
+						...state.steps.vehicleInfo,
+						form: payload,
+					},
+				},
+			};
+		}
+
+		case ACTIONS.SET_REMOVE_VEHICLE: {
+			const id = action.payload.id;
+			const forms = state.steps.vehicleInfo.form;
+
+			const payload = forms.filter((form) => form.id !== id);
+
+			return {
+				...state,
+				steps: {
+					...state.steps,
+					vehicleInfo: {
+						...state.steps.vehicleInfo,
+						form: payload,
 					},
 				},
 			};

@@ -17,7 +17,7 @@ import React, {useContext} from 'react';
 import {NewApplicationAutoContext} from '../context/NewApplicationAutoContextProvider';
 import DriverInfo from '../forms/steps/DriverInfo';
 import VehicleInfo from '../forms/steps/VehicleInfo';
-import NewApplication from './NewApplications';
+import NewApplication from './newApplication/NewApplications';
 
 const Applications = () => {
 	const [state] = useContext(NewApplicationAutoContext);

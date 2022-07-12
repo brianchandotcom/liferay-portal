@@ -18,11 +18,11 @@ import ClayMultiStepNav from '@clayui/multi-step-nav';
 import classNames from 'classnames';
 import {ReactNode, useContext} from 'react';
 
-import ClayIconProvider from '../../../common/context/ClayIconProvider';
+import ClayIconProvider from '../../../../common/context/ClayIconProvider';
 import {
 	ACTIONS,
 	NewApplicationAutoContext,
-} from '../context/NewApplicationAutoContextProvider';
+} from '../../context/NewApplicationAutoContextProvider';
 
 type DriverInfoProps = {
 	children: ReactNode;

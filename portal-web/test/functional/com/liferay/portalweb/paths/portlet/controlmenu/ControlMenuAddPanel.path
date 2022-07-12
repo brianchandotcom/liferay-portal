@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_PORTLET_LINK_BY_CATEGORY</td>
+	<td>//button[normalize-space()='${key_categoryName}']//following-sibling::div//li[contains(@class,'add-panel')][*//*[contains(@class,'title')][normalize-space(text())='${key_portletName}']]//button[contains(@class,'item-add')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_ITEM</td>
 	<td>//div[contains(@class,'open') or contains(@class,'show')]//*[contains(@class,'dropdown-item')][normalize-space(text())='${key_assetItem}']</td>
 	<td></td>

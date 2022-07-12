@@ -1000,6 +1000,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			repositoryProperty.set(
 				dockerUserName + "/" + workspaceExtension.getDockerImageId());
 		}
+		else {
+			repositoryProperty.set(workspaceExtension.getDockerImageId());
+		}
 
 		Property<String> tagProperty = dockerTagImage.getTag();
 
@@ -1304,12 +1307,12 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			imageProperty.add(workspaceExtension.getDockerImageId());
 		}
 
-		DockerRegistryCredentials dockerRgistryCredentials =
+		DockerRegistryCredentials dockerRegistryCredentials =
 			dockerPushImage.getRegistryCredentials();
 
 		if (Objects.nonNull(dockerUserName)) {
 			Property<String> userNameProperty =
-				dockerRgistryCredentials.getUsername();
+				dockerRegistryCredentials.getUsername();
 
 			userNameProperty.set(dockerUserName);
 		}
@@ -1318,7 +1321,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		if (Objects.nonNull(dockerPassword)) {
 			Property<String> passwordProperty =
-				dockerRgistryCredentials.getPassword();
+				dockerRegistryCredentials.getPassword();
 
 			passwordProperty.set(dockerPassword);
 		}

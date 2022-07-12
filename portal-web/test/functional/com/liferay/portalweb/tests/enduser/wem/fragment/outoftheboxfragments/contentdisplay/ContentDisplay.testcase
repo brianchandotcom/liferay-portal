@@ -431,6 +431,8 @@ definition {
 		task ("Assert fragment display correctly") {
 			LexiconCard.clickCard(card = "Document Title");
 
+			SelectFrameTop();
+
 			AssertTextEquals(
 				fragmentName = "dm",
 				index = "1",
@@ -649,6 +651,8 @@ definition {
 				key_listEntry = "Web Content With Text Title",
 				locator1 = "LexiconList#LIST_ENTRY_TITLE",
 				value1 = "Web Content With Text Title");
+
+			SelectFrameTop();
 
 			for (var content : list "Web Content With Text Title,Web Content Description,Web Content Text") {
 				AssertTextEquals.assertPartialText(

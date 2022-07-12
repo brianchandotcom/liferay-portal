@@ -27,6 +27,8 @@ definition {
 		Click(
 			key_card = "${entryTitle}",
 			locator1 = "Card#CARD_TITLE");
+
+		SelectFrameTop();
 	}
 
 	macro _selectField {

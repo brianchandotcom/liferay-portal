@@ -1630,6 +1630,8 @@ definition {
 				locator1 = "Treeview#NODE_UNSELECTED",
 				value1 = "Content Page Name");
 
+			SelectFrameTop();
+
 			Click(locator1 = "CKEditor#OK_BUTTON");
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");

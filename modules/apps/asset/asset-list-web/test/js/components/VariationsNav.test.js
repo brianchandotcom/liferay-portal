@@ -13,6 +13,7 @@
  */
 
 import {cleanup, fireEvent, render} from '@testing-library/react';
+import {openToast} from 'frontend-js-web';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -30,6 +31,12 @@ import {
 const _getComponent = (props) => {
 	return <VariationsNav {...props} />;
 };
+
+jest.mock('frontend-js-web', () => ({
+	openToast: jest.fn(),
+}));
+
+const openToastMock = openToast;
 
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/api/index.js',
@@ -118,8 +125,6 @@ describe('VariationsNav With segments', () => {
 		window['openSelectSegmentsEntryDialogMethod'] = jest.fn();
 		window.confirm = jest.fn(() => true);
 		window.submitForm = jest.fn();
-
-		window.Liferay.Util.openToast = jest.fn();
 	});
 
 	afterEach(() => {
@@ -224,10 +229,6 @@ describe('VariationsNav With segments', () => {
 });
 
 describe('VariationsNav', () => {
-	beforeEach(() => {
-		global.Liferay.Util.openToast = jest.fn();
-	});
-
 	afterEach(() => {
 		jest.restoreAllMocks();
 		cleanup();
@@ -253,7 +254,7 @@ describe('VariationsNav', () => {
 
 		expect(await saveVariationsListPriorityService).toHaveBeenCalled();
 
-		expect(global.Liferay.Util.openToast).toHaveBeenCalledWith({
+		expect(openToastMock).toHaveBeenCalledWith({
 			message: Liferay.Language.get(
 				'your-request-completed-successfully'
 			),
@@ -280,7 +281,7 @@ describe('VariationsNav', () => {
 
 		expect(await saveVariationsListPriorityService).toHaveBeenCalled();
 
-		expect(global.Liferay.Util.openToast).toHaveBeenCalledWith({
+		expect(openToastMock).toHaveBeenCalledWith({
 			message: Liferay.Language.get(
 				'your-request-completed-successfully'
 			),
@@ -312,7 +313,7 @@ describe('VariationsNav', () => {
 
 		expect(await saveVariationsListPriorityService).toHaveBeenCalled();
 
-		expect(global.Liferay.Util.openToast).toHaveBeenCalledWith({
+		expect(openToastMock).toHaveBeenCalledWith({
 			message: Liferay.Language.get('an-unexpected-error-occurred'),
 			type: 'danger',
 		});

@@ -79,8 +79,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		else if (fileName.endsWith(".properties")) {
 			_propertiesLibraryVersionCheck(fileName, content);
 		}
-		else if (fileName.endsWith(".xml")) {
-			_xmlLibraryVersionCheck(fileName, content);
+		else if (fileName.endsWith("ivy.xml")) {
+			_ivyXmlLibraryVersionCheck(fileName, content);
 		}
 
 		return content;
@@ -432,6 +432,55 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 	}
 
+	private void _ivyXmlLibraryVersionCheck(String fileName, String content)
+		throws DocumentException, IOException {
+
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+
+		Document document = SourceUtil.readXML(content);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element dependenciesElement :
+				(List<Element>)rootElement.elements("dependencies")) {
+
+			for (Element dependencyElement :
+					(List<Element>)dependenciesElement.elements("dependency")) {
+
+				String name = dependencyElement.attributeValue("name");
+
+				if (Validator.isNull(name)) {
+					continue;
+				}
+
+				String org = dependencyElement.attributeValue("org");
+
+				if (Validator.isNull(org)) {
+					continue;
+				}
+
+				String rev = dependencyElement.attributeValue("rev");
+
+				if (Validator.isNull(rev)) {
+					continue;
+				}
+
+				_checkIsContainVulnerabilities(
+					fileName, org + StringPool.COLON + name, rev, httpClient,
+					SecurityAdvisoryEcosystemEnum.MAVEN);
+			}
+		}
+
+		try {
+			httpClient.close();
+		}
+		catch (IOException ioException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ioException);
+			}
+		}
+	}
+
 	private void _jsonLibraryVersionCheck(String fileName, String content)
 		throws IOException {
 
@@ -499,55 +548,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			_checkIsContainVulnerabilities(
 				fileName, dependency[1], dependency[2], httpClient,
 				SecurityAdvisoryEcosystemEnum.MAVEN);
-		}
-
-		try {
-			httpClient.close();
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
-			}
-		}
-	}
-
-	private void _xmlLibraryVersionCheck(String fileName, String content)
-		throws DocumentException, IOException {
-
-		CloseableHttpClient httpClient = HttpClients.createDefault();
-
-		Document document = SourceUtil.readXML(content);
-
-		Element rootElement = document.getRootElement();
-
-		for (Element dependenciesElement :
-				(List<Element>)rootElement.elements("dependencies")) {
-
-			for (Element dependencyElement :
-					(List<Element>)dependenciesElement.elements("dependency")) {
-
-				String name = dependencyElement.attributeValue("name");
-
-				if (Validator.isNull(name)) {
-					continue;
-				}
-
-				String org = dependencyElement.attributeValue("org");
-
-				if (Validator.isNull(org)) {
-					continue;
-				}
-
-				String rev = dependencyElement.attributeValue("rev");
-
-				if (Validator.isNull(rev)) {
-					continue;
-				}
-
-				_checkIsContainVulnerabilities(
-					fileName, org + StringPool.COLON + name, rev, httpClient,
-					SecurityAdvisoryEcosystemEnum.MAVEN);
-			}
 		}
 
 		try {

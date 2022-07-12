@@ -136,9 +136,9 @@ public class FreeMarkerTool {
 			return Collections.emptyMap();
 		}
 
-		Set<Map.Entry<String, PathItem>> entries = pathItems.entrySet();
+		Map<String, Schema> allSchemas = new HashMap<>(schemas);
 
-		for (Map.Entry<String, PathItem> entry : entries) {
+		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
 			List<Operation> operations = OpenAPIParserUtil.getOperations(
 				entry.getValue());
 
@@ -146,21 +146,21 @@ public class FreeMarkerTool {
 				List<String> tags = operation.getTags();
 
 				for (String tag : tags) {
-					if (!schemas.containsKey(tag)) {
+					if (!allSchemas.containsKey(tag)) {
 						if ((allExternalSchemas != null) &&
 							allExternalSchemas.containsKey(tag)) {
 
-							schemas.put(tag, allExternalSchemas.get(tag));
+							allSchemas.put(tag, allExternalSchemas.get(tag));
 						}
 						else {
-							schemas.put(tag, new Schema());
+							allSchemas.put(tag, new Schema());
 						}
 					}
 				}
 			}
 		}
 
-		return schemas;
+		return allSchemas;
 	}
 
 	public List<JavaMethodParameter> getBodyJavaMethodParameters(

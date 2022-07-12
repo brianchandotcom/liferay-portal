@@ -154,9 +154,9 @@ public class SXPElementLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		Assert.assertEquals("1.1", _sxpElement.getVersion());
 		Assert.assertEquals(
 			externalReferenceCode, _sxpElement.getExternalReferenceCode());
+		Assert.assertEquals("1.1", _sxpElement.getVersion());
 
 		_sxpElement = _sxpElementLocalService.updateSXPElement(
 			_sxpElement.getUserId(), _sxpElement.getSXPElementId(),
@@ -166,9 +166,9 @@ public class SXPElementLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		Assert.assertEquals("1.2", _sxpElement.getVersion());
 		Assert.assertEquals(
 			externalReferenceCode, _sxpElement.getExternalReferenceCode());
+		Assert.assertEquals("1.2", _sxpElement.getVersion());
 	}
 
 	private SXPElement _addSXPElement(long userId) throws Exception {

@@ -75,9 +75,13 @@ export function FormBuilder() {
 				);
 			}
 
-			const groupFieldSetsPromise = getItem(
-				`/o/data-engine/v2.0/data-definitions/by-content-type/${contentType}`
-			);
+			let groupFieldSetsPromise = [];
+
+			if (groupId !== themeDisplay.getCompanyGroupId()) {
+				groupFieldSetsPromise = getItem(
+					`/o/data-engine/v2.0/data-definitions/by-content-type/${contentType}`
+				);
+			}
 
 			const fetchFieldSets = async () => {
 				try {

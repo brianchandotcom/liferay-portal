@@ -151,7 +151,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			SessionErrors.contains(
 				renderRequest, PrincipalException.getNestedClasses())) {
 
-			include(templatePath + "error.jsp", renderRequest, renderResponse);
+			include("/admin/common/error.jsp", renderRequest, renderResponse);
 		}
 		else {
 			super.doDispatch(renderRequest, renderResponse);

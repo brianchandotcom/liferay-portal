@@ -179,7 +179,7 @@ public class KBAdminManagementToolbarDisplayContext {
 						PortletURLBuilder.createRenderURL(
 							_liferayPortletResponse
 						).setMVCPath(
-							_getTemplatePath() + "edit_article.jsp"
+							"/admin/common/edit_article.jsp"
 						).setRedirect(
 							PortalUtil.getCurrentURL(_httpServletRequest)
 						).setParameter(
@@ -208,7 +208,7 @@ public class KBAdminManagementToolbarDisplayContext {
 								PortletURLBuilder.createRenderURL(
 									_liferayPortletResponse
 								).setMVCPath(
-									_getTemplatePath() + "edit_article.jsp"
+									"/admin/common/edit_article.jsp"
 								).setRedirect(
 									PortalUtil.getCurrentURL(
 										_httpServletRequest)
@@ -465,10 +465,6 @@ public class KBAdminManagementToolbarDisplayContext {
 			ParamUtil.getString(
 				_httpServletRequest, "redirect",
 				PortalUtil.getCurrentURL(_httpServletRequest)));
-	}
-
-	private String _getTemplatePath() {
-		return _portletConfig.getInitParameter("template-path");
 	}
 
 	private boolean _hasAddKBArticlePermission() throws PortalException {

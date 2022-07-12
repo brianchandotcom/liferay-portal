@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,7 +39,6 @@ import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -159,7 +157,7 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 					PortletRequest.RENDER_PHASE)
 			).setMVCPath(
-				_getTemplatePath(actionRequest) + "edit_article.jsp"
+				"/admin/common/edit_article.jsp"
 			).setRedirect(
 				_getRedirect(actionRequest)
 			).setParameter(
@@ -180,7 +178,7 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 			editURL, "p_p_id", portletDisplay.getId());
 		editURL = HttpComponentsUtil.setParameter(
 			editURL, actionResponse.getNamespace() + "mvcPath",
-			_getTemplatePath(actionRequest) + "edit_article.jsp");
+			"/admin/common/edit_article.jsp");
 		editURL = HttpComponentsUtil.setParameter(
 			editURL, actionResponse.getNamespace() + "redirect",
 			_getRedirect(actionRequest));
@@ -224,14 +222,6 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return redirect;
-	}
-
-	private String _getTemplatePath(PortletRequest portletRequest) {
-		PortletConfig portletConfig =
-			(PortletConfig)portletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		return portletConfig.getInitParameter("template-path");
 	}
 
 	@Reference

@@ -34,16 +34,14 @@ definition {
 				objectName = "PurchaseOrder",
 				pluralLabelName = "Purchase Orders");
 
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Purchase Order");
-
-			ObjectAdmin.goToFieldsTab();
-
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Type",
-				fieldPicklist = "Ticket Type",
-				fieldType = "Picklist");
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Picklist",
+				fieldLabelName = "Type",
+				fieldName = "type",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder",
+				picklistName = "Ticket Type");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 		}

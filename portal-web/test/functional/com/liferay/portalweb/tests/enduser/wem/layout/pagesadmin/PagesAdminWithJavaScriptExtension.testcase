@@ -93,7 +93,9 @@ definition {
 		}
 
 		task ("Then the site designer could add a JavaScript Extension to widget page") {
-			PagesAdmin.addJavaScriptExtensions(extensionNameList = "InnerText");
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "InnerText",
+				insertion = "In Page Bottom");
 
 			AssertVisible(
 				key_tableEntry = "InnerText",
@@ -144,7 +146,9 @@ definition {
 		}
 
 		task ("Then the site designer could add a JavaScript Extension to widget page") {
-			PagesAdmin.addJavaScriptExtensions(extensionNameList = "InnerText");
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "InnerText",
+				insertion = "In Page Bottom");
 
 			AssertVisible(
 				key_tableEntry = "InnerText",
@@ -179,7 +183,9 @@ definition {
 		}
 
 		task ("Then the site designer could add a JavaScript Extension to Pages") {
-			PagesAdmin.addJavaScriptExtensions(extensionNameList = "TextColor");
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "TextColor",
+				insertion = "In Page Bottom");
 
 			AssertVisible(
 				key_tableEntry = "TextColor",
@@ -246,7 +252,9 @@ definition {
 
 			Panel.expandPanel(panel = "JavaScript");
 
-			PagesAdmin.addJavaScriptExtensions(extensionNameList = "InnerText");
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "InnerText",
+				insertion = "In Page Bottom");
 
 			PortletEntry.save();
 
@@ -281,7 +289,9 @@ definition {
 				key_tableEntry = "InnerText",
 				locator1 = "LexiconTable#TABLE_ENTRY");
 
-			PagesAdmin.addJavaScriptExtensions(extensionNameList = "TextColor");
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "TextColor",
+				insertion = "In Page Bottom");
 
 			PortletEntry.save();
 
@@ -355,7 +365,9 @@ definition {
 
 			Panel.expandPanel(panel = "JavaScript");
 
-			PagesAdmin.addJavaScriptExtensions(extensionNameList = "InnerText");
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "InnerText",
+				insertion = "In Page Bottom");
 
 			PortletEntry.save();
 		}
@@ -414,7 +426,9 @@ definition {
 
 			Navigator.gotoNavTab(navTab = "Advanced");
 
-			PagesAdmin.addJavaScriptExtensions(extensionNameList = "InnerText");
+			PagesAdmin.addJavaScriptExtensions(
+				extensionNameList = "InnerText",
+				insertion = "In Page Bottom");
 
 			PortletEntry.save();
 

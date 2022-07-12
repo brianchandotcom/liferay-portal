@@ -379,13 +379,14 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		if (Objects.nonNull(
 				workspaceExtension.getDockerLocalRegistryAddress())) {
 
-			DockerRegistryCredentials credentials =
+			DockerRegistryCredentials dockerCredentials =
 				dockerBuildImage.getRegistryCredentials();
 
 			String dockerUserName = workspaceExtension.getDockerUserName();
 
 			if (Objects.nonNull(dockerUserName)) {
-				Property<String> userNameProperty = credentials.getUsername();
+				Property<String> userNameProperty =
+					dockerCredentials.getUsername();
 
 				userNameProperty.set(dockerUserName);
 			}
@@ -393,7 +394,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			String dockerPassword = workspaceExtension.getDockerAccessToken();
 
 			if (Objects.nonNull(dockerPassword)) {
-				Property<String> passwordProperty = credentials.getPassword();
+				Property<String> passwordProperty =
+					dockerCredentials.getPassword();
 
 				passwordProperty.set(dockerPassword);
 			}
@@ -1228,23 +1230,23 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		dockerPullImage.dependsOn(verifyProductTask);
 
-		Property<String> property = dockerPullImage.getImage();
+		Property<String> imageProperty = dockerPullImage.getImage();
 
 		String dockerUserName = workspaceExtension.getDockerUserName();
 
 		if (Objects.nonNull(
 				workspaceExtension.getDockerLocalRegistryAddress())) {
 
-			property.set(
+			imageProperty.set(
 				workspaceExtension.getDockerLocalRegistryAddress() + "/" +
 					workspaceExtension.getDockerImageId());
 		}
 		else if (Objects.nonNull(dockerUserName)) {
-			property.set(
+			imageProperty.set(
 				dockerUserName + "/" + workspaceExtension.getDockerImageId());
 		}
 		else {
-			property.set(workspaceExtension.getDockerImageLiferay());
+			imageProperty.set(workspaceExtension.getDockerImageLiferay());
 		}
 
 		DockerRegistryCredentials credentials =
@@ -1282,31 +1284,32 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		dockerPushImage.setDescription("Push the Docker iamge.");
 		dockerPushImage.dependsOn(dockerTagImage);
 
-		SetProperty<String> property = dockerPushImage.getImages();
+		SetProperty<String> imageProperty = dockerPushImage.getImages();
 
 		String dockerUserName = workspaceExtension.getDockerUserName();
 
 		if (Objects.nonNull(
 				workspaceExtension.getDockerLocalRegistryAddress())) {
 
-			property.add(
+			imageProperty.add(
 				workspaceExtension.getDockerLocalRegistryAddress() + "/" +
 					workspaceExtension.getDockerImageId());
 		}
 		else if (Objects.nonNull(dockerUserName)) {
-			property.add(
+			imageProperty.add(
 				workspaceExtension.getDockerUserName() + "/" +
 					workspaceExtension.getDockerImageId());
 		}
 		else {
-			property.add(workspaceExtension.getDockerImageId());
+			imageProperty.add(workspaceExtension.getDockerImageId());
 		}
 
-		DockerRegistryCredentials credentials =
+		DockerRegistryCredentials dockerRgistryCredentials =
 			dockerPushImage.getRegistryCredentials();
 
 		if (Objects.nonNull(dockerUserName)) {
-			Property<String> userNameProperty = credentials.getUsername();
+			Property<String> userNameProperty =
+				dockerRgistryCredentials.getUsername();
 
 			userNameProperty.set(dockerUserName);
 		}
@@ -1314,7 +1317,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		String dockerPassword = workspaceExtension.getDockerAccessToken();
 
 		if (Objects.nonNull(dockerPassword)) {
-			Property<String> passwordProperty = credentials.getPassword();
+			Property<String> passwordProperty =
+				dockerRgistryCredentials.getPassword();
 
 			passwordProperty.set(dockerPassword);
 		}

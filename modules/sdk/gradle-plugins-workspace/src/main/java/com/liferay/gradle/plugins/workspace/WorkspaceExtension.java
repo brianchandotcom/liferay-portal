@@ -110,18 +110,15 @@ public class WorkspaceExtension {
 		_configsDir = _getProperty(
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
-		_dockerAccessToken = GradleUtil.getProperty(
-			settings, "liferay.workspace.docker.access.token");
+		_dockerAccessToken = _getProperty(settings, "docker.access.token");
 		_dockerDir = _getProperty(settings, "docker.dir", _DOCKER_DIR);
 		_dockerImageLiferay = _getProperty(
 			settings, "docker.image.liferay", _getDefaultDockerImage());
-		_dockerLocalRegistryAddress = GradleUtil.getProperty(
-			settings, "liferay.workspace.docker.local.registry.address");
-		_dockerPullPolicy = GradleUtil.getProperty(
-			settings, "liferay.workspace.docker.pull.policy",
-			_DOCKER_PULL_POLICY);
-		_dockerUserName = GradleUtil.getProperty(
-			settings, "liferay.workspace.docker.username");
+		_dockerLocalRegistryAddress = _getProperty(
+			settings, "docker.local.registry.address");
+		_dockerPullPolicy = _getProperty(
+			settings, "docker.pull.policy", _DOCKER_PULL_POLICY);
+		_dockerUserName = _getProperty(settings, "docker.username");
 		_environment = _getProperty(
 			settings, "environment",
 			BundleSupportConstants.DEFAULT_ENVIRONMENT);
@@ -629,6 +626,11 @@ public class WorkspaceExtension {
 			};
 
 		return gson.fromJson(jsonReader, typeToken.getType());
+	}
+
+	private Object _getProperty(Object object, String keySuffix) {
+		return GradleUtil.getProperty(
+			object, WorkspacePlugin.PROPERTY_PREFIX + keySuffix);
 	}
 
 	private boolean _getProperty(

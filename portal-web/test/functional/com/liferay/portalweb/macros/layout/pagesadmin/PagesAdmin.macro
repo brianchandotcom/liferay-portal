@@ -287,6 +287,8 @@ definition {
 			key_text = "Add JavaScript Extensions",
 			locator1 = "Button#ANY");
 
+		MenuItem.click(menuItem = "${insertion}");
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var extensionName : list "${extensionNameList}") {

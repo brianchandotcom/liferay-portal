@@ -19,6 +19,8 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
+import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -50,6 +52,22 @@ public class CommerceThemeMiniumHttpHelper {
 
 		return _commerceAccountHelper.getAccountManagementPortletURL(
 			httpServletRequest);
+	}
+
+	public String getCatalogURL(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		String portletURL = String.valueOf(
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CPPortletKeys.CP_SEARCH_RESULTS,
+				PortletProvider.Action.VIEW));
+
+		if (portletURL.contains(StringPool.QUESTION)) {
+			return portletURL.substring(
+				0, portletURL.lastIndexOf(StringPool.QUESTION));
+		}
+
+		return portletURL;
 	}
 
 	public String getMyListsLabel(Locale locale) {

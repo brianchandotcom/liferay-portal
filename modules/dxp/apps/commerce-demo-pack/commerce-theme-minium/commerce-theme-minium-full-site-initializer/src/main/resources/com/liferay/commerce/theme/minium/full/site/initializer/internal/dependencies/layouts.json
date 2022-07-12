@@ -1,8 +1,52 @@
 [
 	{
+		"hidden": true,
+		"layoutTemplateId": "2_columns_ii",
+		"lookAndFeel": {
+			"CUSTOMIZABLE_LAYOUT": false,
+			"column-1-customizable": false,
+			"column-2-customizable": false,
+			"layout-template-id": "2_columns_ii",
+			"layoutUpdateable": true,
+			"lfr-theme:regular:is-login-page": true,
+			"lfr-theme:regular:show-sidebar": false,
+			"lfr-theme:regular:show-topbar": false,
+			"lfr-theme:regular:wide-layout": false,
+			"sitemap-changefreq": "daily",
+			"sitemap-include": 1
+		},
+		"name": "Login",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_login_web_portlet_LoginPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+				"portletPreferences": {
+					"articleId": "LOGIN_SPLASH",
+					"ddmStructureKey": "login-splash-structure",
+					"ddmTemplateKey": "LOGIN_SPLASH"
+				}
+			}
+		],
+		"privateLayout": false
+	},
+	{
 		"icon": "icon_dashboard.png",
 		"layoutTemplateId": "1_column",
 		"name": "Dashboard",
+		"permissions": [
+			{
+				"actionIds": [
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -25,12 +69,20 @@
 				"portletName": "com_liferay_blogs_web_portlet_BlogsPortlet_INSTANCE_minium"
 			}
 		],
-		"privateLayout": true
+		"privateLayout": false
 	},
 	{
 		"icon": "icon_catalog.png",
 		"layoutTemplateId": "minium_sidebar",
 		"name": "Catalog",
+		"permissions": [
+			{
+				"actionIds": [
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -78,12 +130,20 @@
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet_INSTANCE_catalog"
 			}
 		],
-		"privateLayout": true,
+		"privateLayout": false,
 		"subLayouts": [
 			{
 				"hidden": true,
 				"layoutTemplateId": "1_column",
 				"name": "Compare",
+				"permissions": [
+					{
+						"actionIds": [
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
 				"portlets": [
 					{
 						"layoutColumnId": "column-1",
@@ -91,12 +151,20 @@
 						"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentPortlet_INSTANCE_minium"
 					}
 				],
-				"privateLayout": true
+				"privateLayout": false
 			},
 			{
 				"hidden": true,
 				"layoutTemplateId": "1_column",
 				"name": "Product Detail",
+				"permissions": [
+					{
+						"actionIds": [
+						],
+						"roleName": "Guest",
+						"scope": 4
+					}
+				],
 				"portlets": [
 					{
 						"layoutColumnId": "column-1",
@@ -123,7 +191,7 @@
 						"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet_INSTANCE_product_detail"
 					}
 				],
-				"privateLayout": true
+				"privateLayout": false
 			}
 		]
 	},
@@ -131,6 +199,14 @@
 		"icon": "icon_orders.png",
 		"layoutTemplateId": "1_column",
 		"name": "Pending Orders",
+		"permissions": [
+			{
+				"actionIds": [
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -138,7 +214,7 @@
 				"portletName": "com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet"
 			}
 		],
-		"privateLayout": true,
+		"privateLayout": false,
 		"subLayouts": [
 			{
 				"hidden": true,
@@ -159,7 +235,7 @@
 						"portletName": "com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet"
 					}
 				],
-				"privateLayout": true
+				"privateLayout": false
 			}
 		]
 	},
@@ -167,6 +243,14 @@
 		"icon": "icon_orders.png",
 		"layoutTemplateId": "1_column",
 		"name": "Placed Orders",
+		"permissions": [
+			{
+				"actionIds": [
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -174,12 +258,20 @@
 				"portletName": "com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet"
 			}
 		],
-		"privateLayout": true
+		"privateLayout": false
 	},
 	{
 		"icon": "icon_account_management.png",
 		"layoutTemplateId": "1_column",
 		"name": "Account Management",
+		"permissions": [
+			{
+				"actionIds": [
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -187,12 +279,20 @@
 				"portletName": "com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet"
 			}
 		],
-		"privateLayout": true
+		"privateLayout": false
 	},
 	{
 		"icon": "icon_product_defect.png",
 		"layoutTemplateId": "1_column",
 		"name": "Report Product Defect",
+		"permissions": [
+			{
+				"actionIds": [
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -200,12 +300,20 @@
 				"portletName": "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_INSTANCE_minium"
 			}
 		],
-		"privateLayout": true
+		"privateLayout": false
 	},
 	{
 		"icon": "icon_kb_articles.png",
 		"layoutTemplateId": "1_column",
 		"name": "Knowledge Base",
+		"permissions": [
+			{
+				"actionIds": [
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -213,13 +321,19 @@
 				"portletName": "com_liferay_knowledge_base_web_portlet_DisplayPortlet"
 			}
 		],
-		"privateLayout": true
+		"privateLayout": false
 	},
 	{
 		"icon": "icon_sales_library.png",
 		"layoutTemplateId": "1_column",
 		"name": "Sales Library",
 		"permissions": [
+			{
+				"actionIds": [
+				],
+				"roleName": "Guest",
+				"scope": 4
+			},
 			{
 				"actionIds": [
 				],
@@ -241,12 +355,20 @@
 				"portletName": "com_liferay_document_library_web_portlet_DLPortlet_INSTANCE_minium"
 			}
 		],
-		"privateLayout": true
+		"privateLayout": false
 	},
 	{
 		"hidden": true,
 		"layoutTemplateId": "2_columns_ii",
 		"name": "Lists",
+		"permissions": [
+			{
+				"actionIds": [
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -259,12 +381,20 @@
 				"portletName": "com_liferay_commerce_wish_list_web_internal_portlet_CommerceWishListContentPortlet"
 			}
 		],
-		"privateLayout": true
+		"privateLayout": false
 	},
 	{
 		"hidden": true,
 		"layoutTemplateId": "1_2_columns_i",
 		"name": "Search",
+		"permissions": [
+			{
+				"actionIds": [
+				],
+				"roleName": "Guest",
+				"scope": 4
+			}
+		],
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
@@ -332,43 +462,6 @@
 				"portletName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet",
 				"portletPreferences": {
 					"allowEmptySearches": "true"
-				}
-			}
-		],
-		"privateLayout": true
-	},
-	{
-		"hidden": true,
-		"layoutTemplateId": "2_columns_ii",
-		"lookAndFeel": {
-			"CUSTOMIZABLE_LAYOUT": false,
-			"column-1-customizable": false,
-			"column-2-customizable": false,
-			"layout-template-id": "2_columns_ii",
-			"layoutUpdateable": true,
-			"lfr-theme:regular:is-login-page": true,
-			"lfr-theme:regular:redirect-to-private-layouts": true,
-			"lfr-theme:regular:show-sidebar": false,
-			"lfr-theme:regular:show-topbar": false,
-			"lfr-theme:regular:wide-layout": false,
-			"sitemap-changefreq": "daily",
-			"sitemap-include": 1
-		},
-		"name": "Login",
-		"portlets": [
-			{
-				"layoutColumnId": "column-1",
-				"layoutColumnPos": 0,
-				"portletName": "com_liferay_login_web_portlet_LoginPortlet"
-			},
-			{
-				"layoutColumnId": "column-2",
-				"layoutColumnPos": 0,
-				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
-				"portletPreferences": {
-					"articleId": "LOGIN_SPLASH",
-					"ddmStructureKey": "login-splash-structure",
-					"ddmTemplateKey": "LOGIN_SPLASH"
 				}
 			}
 		],

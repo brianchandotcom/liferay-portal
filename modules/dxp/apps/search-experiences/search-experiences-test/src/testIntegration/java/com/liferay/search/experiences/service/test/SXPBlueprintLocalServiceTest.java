@@ -154,9 +154,9 @@ public class SXPBlueprintLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		Assert.assertEquals("1.1", _sxpBlueprint.getVersion());
 		Assert.assertEquals(
 			externalReferenceCode, _sxpBlueprint.getExternalReferenceCode());
+		Assert.assertEquals("1.1", _sxpBlueprint.getVersion());
 
 		_sxpBlueprint = _sxpBlueprintLocalService.updateSXPBlueprint(
 			_sxpBlueprint.getUserId(), _sxpBlueprint.getSXPBlueprintId(),
@@ -167,9 +167,9 @@ public class SXPBlueprintLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));
 
-		Assert.assertEquals("1.2", _sxpBlueprint.getVersion());
 		Assert.assertEquals(
 			externalReferenceCode, _sxpBlueprint.getExternalReferenceCode());
+		Assert.assertEquals("1.2", _sxpBlueprint.getVersion());
 	}
 
 	private SXPBlueprint _addSXPBlueprint(long userId) throws Exception {

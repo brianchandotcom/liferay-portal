@@ -76,12 +76,11 @@ public class OpenIdConnectProviderManagedServiceFactory
 
 		if (companyId == CompanyConstants.SYSTEM) {
 			_deleteOAuthClientEntries(
-				GetterUtil.getString(properties.get("providerName")),
-				properties);
+				_getPropertyAsString("providerName", properties), properties);
 		}
 		else {
 			_deleteOAuthClientEntry(
-				companyId, GetterUtil.getString(properties.get("providerName")),
+				companyId, _getPropertyAsString("providerName", properties),
 				properties);
 		}
 	}
@@ -133,7 +132,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 		Dictionary<String, ?> oldProperties = _properties.put(pid, properties);
 
 		String oldProviderName = (oldProperties != null) ?
-			GetterUtil.getString(oldProperties.get("providerName")) : "";
+			_getPropertyAsString("providerName", oldProperties) : "";
 
 		if (companyId == CompanyConstants.SYSTEM) {
 			_updateOAuthClientEntries(oldProviderName, properties);
@@ -148,16 +147,16 @@ public class OpenIdConnectProviderManagedServiceFactory
 			Dictionary<String, ?> properties)
 		throws Exception {
 
-		String discoveryEndPoint = GetterUtil.getString(
-			properties.get("discoveryEndPoint"));
+		String discoveryEndPoint = _getPropertyAsString(
+			"discoveryEndPoint", properties);
 
 		if (Validator.isNotNull(discoveryEndPoint)) {
 			return discoveryEndPoint;
 		}
 
 		String localWellKnownURI = _generateLocalWellKnownURI(
-			GetterUtil.getString(properties.get("issuerURL")),
-			GetterUtil.getString(properties.get("tokenEndPoint")));
+			_getPropertyAsString("issuerURL", properties),
+			_getPropertyAsString("tokenEndPoint", properties));
 
 		_oAuthClientASLocalMetadataLocalService.
 			deleteOAuthClientASLocalMetadata(localWellKnownURI);
@@ -195,8 +194,8 @@ public class OpenIdConnectProviderManagedServiceFactory
 			String authServerWellKnownURI = _deleteOAuthClientASLocalMetadata(
 				properties);
 
-			String openIdConnectClientId = GetterUtil.getString(
-				properties.get("openIdConnectClientId"));
+			String openIdConnectClientId = _getPropertyAsString(
+				"openIdConnectClientId", properties);
 
 			_oAuthClientEntryLocalService.deleteOAuthClientEntry(
 				companyId, authServerWellKnownURI, openIdConnectClientId);
@@ -221,8 +220,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 	}
 
 	private String _generateClientName(Dictionary<String, ?> properties) {
-		String providerName = GetterUtil.getString(
-			properties.get("providerName"));
+		String providerName = _getPropertyAsString("providerName", properties);
 
 		if (Validator.isNull(providerName)) {
 			return null;
@@ -295,7 +293,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 		Dictionary<String, ?> properties, String parametersName) {
 
 		JSONObject requestParametersJSONObject = JSONUtil.put(
-			"scope", properties.get("scopes"));
+			"scope", _getPropertyAsString("scopes", properties));
 
 		String[] parameters = GetterUtil.getStringValues(
 			properties.get(parametersName));
@@ -381,7 +379,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 		String[] values;
 
 		if (key.equals("scopes")) {
-			String scopes = GetterUtil.getString(properties.get("scopes"));
+			String scopes = _getPropertyAsString("scopes", properties);
 
 			values = scopes.split(" ");
 		}
@@ -430,16 +428,16 @@ public class OpenIdConnectProviderManagedServiceFactory
 			long defaultUserId, Dictionary<String, ?> properties)
 		throws Exception {
 
-		String discoveryEndPoint = GetterUtil.getString(
-			properties.get("discoveryEndPoint"));
+		String discoveryEndPoint = _getPropertyAsString(
+			"discoveryEndPoint", properties);
 
 		if (Validator.isNotNull(discoveryEndPoint)) {
 			return discoveryEndPoint;
 		}
 
 		String localWellKnownURI = _generateLocalWellKnownURI(
-			GetterUtil.getString(properties.get("issuerURL")),
-			GetterUtil.getString(properties.get("tokenEndPoint")));
+			_getPropertyAsString("issuerURL", properties),
+			_getPropertyAsString("tokenEndPoint", properties));
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			_oAuthClientASLocalMetadataLocalService.
@@ -498,8 +496,8 @@ public class OpenIdConnectProviderManagedServiceFactory
 			String authServerWellKnownURI = _updateOAuthClientASLocalMetadata(
 				defaultUserId, properties);
 
-			String openIdConnectClientId = GetterUtil.getString(
-				properties.get("openIdConnectClientId"));
+			String openIdConnectClientId = _getPropertyAsString(
+				"openIdConnectClientId", properties);
 
 			OAuthClientEntry oAuthClientEntry =
 				_oAuthClientEntryLocalService.fetchOAuthClientEntry(
@@ -524,7 +522,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 
 			_updateCompanyIdProviderNameOAuthClientEntryIds(
 				companyId, oldProviderName,
-				GetterUtil.getString(properties.get("providerName")),
+				_getPropertyAsString("providerName", properties),
 				oAuthClientEntry.getOAuthClientEntryId());
 		}
 		catch (Exception exception) {

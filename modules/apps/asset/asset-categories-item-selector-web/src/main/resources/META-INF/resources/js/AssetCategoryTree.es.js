@@ -112,10 +112,12 @@ export function AssetCategoryTree({
 		onSelectedItemsCount,
 	]);
 
-	const onClick = (event, item, selection) => {
+	const onClick = (event, item, selection, expand) => {
 		event.preventDefault();
 
 		if (item.disabled) {
+			expand.toggle(item.id);
+
 			return;
 		}
 
@@ -143,10 +145,12 @@ export function AssetCategoryTree({
 			selectionMode={multiSelection ? 'multiple' : 'single'}
 			showExpanderOnHover={false}
 		>
-			{(item, selection) => (
+			{(item, selection, expand) => (
 				<ClayTreeView.Item>
 					<ClayTreeView.ItemStack
-						onClick={(event) => onClick(event, item, selection)}
+						onClick={(event) =>
+							onClick(event, item, selection, expand)
+						}
 						onKeyDown={(event) => onKeyDown(event, item, selection)}
 					>
 						{multiSelection && !item.disabled && (

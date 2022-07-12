@@ -102,10 +102,12 @@ export function SelectTree({
 		});
 	}, [selectedKeys, itemsById, itemSelectorSaveEvent]);
 
-	const onClick = (event, item, selection) => {
+	const onClick = (event, item, selection, expand) => {
 		event.preventDefault();
 
 		if (!inheritSelection && item.disabled) {
+			expand.toggle(item.id);
+
 			return;
 		}
 
@@ -144,10 +146,12 @@ export function SelectTree({
 			}
 			showExpanderOnHover={false}
 		>
-			{(item, selection) => (
+			{(item, selection, expand) => (
 				<ClayTreeView.Item>
 					<ClayTreeView.ItemStack
-						onClick={(event) => onClick(event, item, selection)}
+						onClick={(event) =>
+							onClick(event, item, selection, expand)
+						}
 						onKeyDown={(event) => onKeyDown(event, item, selection)}
 					>
 						{(inheritSelection ||

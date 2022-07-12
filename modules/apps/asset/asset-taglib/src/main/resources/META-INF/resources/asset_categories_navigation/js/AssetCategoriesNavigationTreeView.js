@@ -28,8 +28,14 @@ const AssetCategoriesNavigationTreeView = ({
 		Liferay.Util.navigate(item.url);
 	};
 
-	const onClick = (event, item) => {
+	const onClick = (event, item, expand) => {
 		event.preventDefault();
+
+		if (item.disabled) {
+			expand.toggle(item.id);
+
+			return;
+		}
 
 		handleSelectionChange(item);
 	};
@@ -50,10 +56,10 @@ const AssetCategoriesNavigationTreeView = ({
 			}
 			showExpanderOnHover={false}
 		>
-			{(item) => (
+			{(item, expand) => (
 				<ClayTreeView.Item>
 					<ClayTreeView.ItemStack
-						onClick={(event) => onClick(event, item)}
+						onClick={(event) => onClick(event, item, expand)}
 						onKeyDownCapture={(event) => {
 							if (event.key === ' ' && item.disabled) {
 								event.stopPropagation();

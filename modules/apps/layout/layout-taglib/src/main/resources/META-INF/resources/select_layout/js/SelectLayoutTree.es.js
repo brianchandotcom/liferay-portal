@@ -119,7 +119,7 @@ export function SelectLayoutTree({
 		});
 	};
 
-	const onClick = (event, item, selection) => {
+	const onClick = (event, item, selection, expand) => {
 		event.preventDefault();
 
 		if (followURLOnTitleClick) {
@@ -129,6 +129,8 @@ export function SelectLayoutTree({
 		}
 
 		if (item.disabled) {
+			expand.toggle(item.id);
+
 			return;
 		}
 
@@ -140,19 +142,15 @@ export function SelectLayoutTree({
 		}
 	};
 
-	const onKeyDownCapture = (event, item, selection) => {
+	const onKeyDown = (event, item, selection) => {
 		if (event.key === ' ' || event.key === 'Enter') {
 			event.stopPropagation();
-
-			if (item.disabled) {
-				return;
-			}
 
 			if (multiSelection) {
 				handleMultipleSelectionChange(item, selection);
 			}
 			else {
-				handleSingleSelection(item);
+				handleSingleSelection(item, selection);
 			}
 		}
 	};
@@ -166,13 +164,14 @@ export function SelectLayoutTree({
 			selectionMode={multiSelection ? 'multiple' : 'single'}
 			showExpanderOnHover={false}
 		>
-			{(item, selection) => (
-				<ClayTreeView.Item>
+			{(item, selection, expand) => (
+				<ClayTreeView.Item active={false}>
 					<ClayTreeView.ItemStack
-						onClick={(event) => onClick(event, item, selection)}
-						onKeyDownCapture={(event) =>
-							onKeyDownCapture(event, item, selection)
+						active={false}
+						onClick={(event) =>
+							onClick(event, item, selection, expand)
 						}
+						onKeyDown={(event) => onKeyDown(event, item, selection)}
 					>
 						{multiSelection && !item.disabled && (
 							<ClayCheckbox
@@ -199,8 +198,8 @@ export function SelectLayoutTree({
 								onClick={(event) =>
 									onClick(event, item, selection)
 								}
-								onKeyDownCapture={(event) =>
-									onKeyDownCapture(event, item, selection)
+								onKeyDown={(event) =>
+									onKeyDown(event, item, selection)
 								}
 							>
 								{multiSelection && !item.disabled && (

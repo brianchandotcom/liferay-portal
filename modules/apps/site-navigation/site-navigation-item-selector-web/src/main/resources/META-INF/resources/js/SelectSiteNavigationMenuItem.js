@@ -60,8 +60,14 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 		});
 	};
 
-	const onClick = (event, item) => {
+	const onClick = (event, item, expand) => {
 		event.preventDefault();
+
+		if (item.disabled) {
+			expand.toggle(item.id);
+
+			return;
+		}
 
 		handleTreeViewSelectionChange(event, item);
 	};
@@ -102,10 +108,12 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 					onItemsChange={setItems}
 					showExpanderOnHover={false}
 				>
-					{(item) => (
+					{(item, _selection, expand) => (
 						<ClayTreeView.Item>
 							<ClayTreeView.ItemStack
-								onClick={(event) => onClick(event, item)}
+								onClick={(event) =>
+									onClick(event, item, expand)
+								}
 								onKeyDownCapture={(event) => {
 									if (event.key === ' ' && item.disabled) {
 										event.stopPropagation();

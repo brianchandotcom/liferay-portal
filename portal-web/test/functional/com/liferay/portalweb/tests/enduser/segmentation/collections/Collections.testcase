@@ -1575,7 +1575,7 @@ definition {
 
 		task ("Assert the correct variation is shown") {
 			AssertTextEquals(
-				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY_TEXT",
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_BULLET_LIST_TEXT",
 				value1 = "WC_Title_1");
 		}
 	}
@@ -1697,7 +1697,7 @@ definition {
 
 		task ("Assert the correct variation is shown") {
 			AssertTextEquals(
-				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY_TEXT",
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_BULLET_LIST_TEXT",
 				value1 = "WC_Title_2");
 		}
 	}
@@ -1820,7 +1820,7 @@ definition {
 
 		task ("Assert the correct variation is shown") {
 			AssertTextEquals(
-				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_SUMMARY_TEXT",
+				locator1 = "Fragment#CONTENT_DISPLAY_ASSET_BULLET_LIST_TEXT",
 				value1 = "Blog_1");
 		}
 	}

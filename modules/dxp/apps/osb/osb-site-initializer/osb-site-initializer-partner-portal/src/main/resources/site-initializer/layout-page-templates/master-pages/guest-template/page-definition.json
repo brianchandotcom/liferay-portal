@@ -132,7 +132,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -152,22 +153,23 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
-																"sv_SE": "Partner Portal",
-																"pt_BR": "Partner Portal",
-																"fr_FR": "Partner Portal",
-																"ja_JP": "Partner Portal",
+																"ar_SA": "Partner Portal",
 																"ca_ES": "Partner Portal",
 																"de_DE": "Partner Portal",
-																"hu_HU": "Partner Portal",
-																"ar_SA": "Partner Portal",
-																"fi_FI": "Partner Portal",
 																"en_US": "Partner Portal",
 																"es_ES": "Partner Portal",
-																"zh_CN": "Partner Portal",
-																"nl_NL": "Partner Portal"
+																"fi_FI": "Partner Portal",
+																"fr_FR": "Partner Portal",
+																"hu_HU": "Partner Portal",
+																"ja_JP": "Partner Portal",
+																"nl_NL": "Partner Portal",
+																"pt_BR": "Partner Portal",
+																"sv_SE": "Partner Portal",
+																"zh_CN": "Partner Portal"
 															}
 														}
 													}
@@ -193,14 +195,17 @@
 			},
 			{
 				"definition": {
-					"fragmentStyle": {},
+					"fragmentStyle": {
+					},
 					"fragmentViewports": [
 						{
-							"fragmentViewportStyle": {},
+							"fragmentViewportStyle": {
+							},
 							"id": "landscapeMobile"
 						},
 						{
-							"fragmentViewportStyle": {},
+							"fragmentViewportStyle": {
+							},
 							"id": "tablet"
 						}
 					],
@@ -222,7 +227,8 @@
 					{
 						"definition": {
 							"fragmentSettings": {
-								"unallowedFragments": []
+								"unallowedFragments": [
+								]
 							}
 						},
 						"type": "DropZone"
@@ -237,10 +243,10 @@
 		"colorSchemeName": "01",
 		"themeName": "Dialect",
 		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
 			"lfr-theme:regular:show-header": "false",
-			"lfr-theme:regular:wrap-widget-page-content": "false",
 			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-footer": "false"
+			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},
 	"version": 1.1

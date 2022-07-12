@@ -21,7 +21,7 @@ import ClayForm, {
 } from '@clayui/form';
 import {useState} from 'react';
 
-const DriverInfo = () => {
+const ContactInfo = () => {
 	const [date, setDate] = useState<string>('');
 
 	const options = [
@@ -212,4 +212,4 @@ const DriverInfo = () => {
 	);
 };
 
-export default DriverInfo;
+export default ContactInfo;

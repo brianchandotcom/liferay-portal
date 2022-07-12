@@ -14,12 +14,15 @@
 
 package com.liferay.asset.browser.web.internal.item.selector;
 
+import com.liferay.asset.browser.web.internal.display.context.AssetBrowserDisplayContext;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.criteria.AssetEntryItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import javax.portlet.PortletException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,9 +33,11 @@ public class AssetEntryItemSelectorViewDescriptor
 	implements ItemSelectorViewDescriptor<AssetEntry> {
 
 	public AssetEntryItemSelectorViewDescriptor(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		AssetBrowserDisplayContext assetBrowserDisplayContext) {
 
 		_httpServletRequest = httpServletRequest;
+		_assetBrowserDisplayContext = assetBrowserDisplayContext;
 	}
 
 	@Override
@@ -54,7 +59,12 @@ public class AssetEntryItemSelectorViewDescriptor
 	public SearchContainer<AssetEntry> getSearchContainer()
 		throws PortalException {
 
-		return null;
+		try {
+			return _assetBrowserDisplayContext.getAssetBrowserSearch();
+		}
+		catch (PortletException portletException) {
+			throw new PortalException(portletException);
+		}
 	}
 
 	@Override
@@ -62,6 +72,7 @@ public class AssetEntryItemSelectorViewDescriptor
 		return true;
 	}
 
+	private final AssetBrowserDisplayContext _assetBrowserDisplayContext;
 	private final HttpServletRequest _httpServletRequest;
 
 }

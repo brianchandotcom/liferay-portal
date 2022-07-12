@@ -438,17 +438,13 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		try {
 			JSONObject contentJSONObject = new JSONObjectImpl(content);
 
-			JSONObject dependenciesJSONObject = contentJSONObject.getJSONObject(
-				"dependencies");
+			_checkVersionInJsonFile(
+				fileName, httpClient,
+				contentJSONObject.getJSONObject("dependencies"));
 
 			_checkVersionInJsonFile(
-				fileName, httpClient, dependenciesJSONObject);
-
-			JSONObject devDependenciesJSONObject =
-				contentJSONObject.getJSONObject("devDependencies");
-
-			_checkVersionInJsonFile(
-				fileName, httpClient, devDependenciesJSONObject);
+				fileName, httpClient,
+				contentJSONObject.getJSONObject("devDependencies"));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {

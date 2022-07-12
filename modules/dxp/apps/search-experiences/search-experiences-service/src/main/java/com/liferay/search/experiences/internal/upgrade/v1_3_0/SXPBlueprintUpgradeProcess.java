@@ -89,11 +89,11 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			com.liferay.search.experiences.model.SXPElement
 				serviceBuilderSXPElement = _fetchSXPElement(sxpElement.getId());
 
-			_log.error(
-				"No search experiences element exists with ID " +
-					sxpElement.getId());
-
 			if (serviceBuilderSXPElement == null) {
+				_log.error(
+					"No search experiences element exists with ID " +
+						sxpElement.getId());
+
 				continue;
 			}
 

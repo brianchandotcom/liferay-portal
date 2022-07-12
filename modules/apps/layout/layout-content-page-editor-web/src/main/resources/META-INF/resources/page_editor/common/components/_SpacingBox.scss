@@ -42,7 +42,6 @@ html#{$cadmin-selector} {
 
 					&-bottom {
 						grid-area: 7 / 1 / 8 / 8;
-						padding: 0 $paddingVerticalDropdownButton;
 						clip-path: polygon(
 							0 #{$marginButtonHeight},
 							100% #{$marginButtonHeight},
@@ -53,7 +52,6 @@ html#{$cadmin-selector} {
 
 					&-left {
 						grid-area: 1 / 1 / 8 / 2;
-						padding: 0 $paddingHorizonalDropdownButton;
 						clip-path: polygon(
 							0 0,
 							#{$marginButtonWidth} #{$marginButtonHeight},
@@ -64,7 +62,6 @@ html#{$cadmin-selector} {
 
 					&-right {
 						grid-area: 1 / 7 / 8 / 8;
-						padding: 0 $paddingHorizonalDropdownButton;
 						clip-path: polygon(
 							0 #{$marginButtonHeight},
 							100% 0,
@@ -75,13 +72,22 @@ html#{$cadmin-selector} {
 
 					&-top {
 						grid-area: 1 / 1 / 2 / 8;
-						padding: 0 $paddingVerticalDropdownButton;
 						clip-path: polygon(
 							0 0,
 							100% 0,
 							calc(100% - #{$marginButtonWidth}) #{$marginButtonHeight},
 							#{$marginButtonWidth} #{$marginButtonHeight}
 						);
+					}
+
+					[data-position='top'],
+					[data-position='bottom'] {
+						padding: 0 $paddingVerticalDropdownButton;
+					}
+
+					[data-position='left'],
+					[data-position='right'] {
+						padding: 0 $paddingHorizonalDropdownButton;
 					}
 				}
 
@@ -93,7 +99,6 @@ html#{$cadmin-selector} {
 
 					&-bottom {
 						grid-area: 5 / 3 / 6 / 6;
-						padding: 0 $paddingVerticalDropdownButton;
 						clip-path: polygon(
 							0 #{$paddingButtonHeight},
 							100% #{$paddingButtonHeight},
@@ -104,7 +109,6 @@ html#{$cadmin-selector} {
 
 					&-left {
 						grid-area: 3 / 3 / 6 / 4;
-						padding: 0 $paddingHorizonalDropdownButton;
 						clip-path: polygon(
 							0 0,
 							#{$paddingButtonWidth} #{$paddingButtonHeight},
@@ -115,7 +119,6 @@ html#{$cadmin-selector} {
 
 					&-right {
 						grid-area: 3 / 5 / 6 / 6;
-						padding: 0 $paddingHorizonalDropdownButton;
 						clip-path: polygon(
 							0 #{$paddingButtonHeight},
 							100% 0,
@@ -126,13 +129,22 @@ html#{$cadmin-selector} {
 
 					&-top {
 						grid-area: 3 / 3 / 4 / 6;
-						padding: 0 $paddingVerticalDropdownButton;
 						clip-path: polygon(
 							0 0,
 							100% 0,
 							calc(100% - #{$paddingButtonWidth}) #{$paddingButtonHeight},
 							#{$paddingButtonWidth} #{$paddingButtonHeight}
 						);
+					}
+
+					[data-position='top'],
+					[data-position='bottom'] {
+						padding: 0 $paddingVerticalDropdownButton;
+					}
+
+					[data-position='left'],
+					[data-position='right'] {
+						padding: 0 $paddingHorizonalDropdownButton;
 					}
 				}
 			}

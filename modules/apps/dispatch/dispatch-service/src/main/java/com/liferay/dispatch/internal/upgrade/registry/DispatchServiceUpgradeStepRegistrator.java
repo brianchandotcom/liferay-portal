@@ -79,6 +79,11 @@ public class DispatchServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"4.2.0", "4.3.0",
+			new com.liferay.dispatch.internal.upgrade.v4_3_0.
+				DispatchTriggerUpgradeProcess());
 	}
 
 }

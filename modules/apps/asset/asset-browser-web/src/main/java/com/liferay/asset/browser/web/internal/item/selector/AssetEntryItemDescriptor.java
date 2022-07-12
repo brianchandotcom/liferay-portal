@@ -41,17 +41,18 @@ public class AssetEntryItemDescriptor
 		AssetEntry assetEntry, HttpServletRequest httpServletRequest) {
 
 		_assetEntry = assetEntry;
+
+		_assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(
+					_assetEntry.getClassNameId());
+
 		_httpServletRequest = httpServletRequest;
 	}
 
 	@Override
 	public String getIcon() {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					_assetEntry.getClassNameId());
-
-		return assetRendererFactory.getIconCssClass();
+		return _assetRendererFactory.getIconCssClass();
 	}
 
 	@Override
@@ -74,15 +75,8 @@ public class AssetEntryItemDescriptor
 			"assetEntryId", String.valueOf(_assetEntry.getEntryId())
 		).put(
 			"assetType",
-			() -> {
-				AssetRendererFactory<?> assetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassNameId(
-							_assetEntry.getClassNameId());
-
-				return assetRendererFactory.getTypeName(
-					themeDisplay.getLocale(), _assetEntry.getClassTypeId());
-			}
+			_assetRendererFactory.getTypeName(
+				themeDisplay.getLocale(), _assetEntry.getClassTypeId())
 		).put(
 			"className", _assetEntry.getClassName()
 		).put(
@@ -125,6 +119,7 @@ public class AssetEntryItemDescriptor
 	}
 
 	private final AssetEntry _assetEntry;
+	private final AssetRendererFactory<?> _assetRendererFactory;
 	private final HttpServletRequest _httpServletRequest;
 
 }

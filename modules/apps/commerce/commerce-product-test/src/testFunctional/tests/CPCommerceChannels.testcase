@@ -527,6 +527,94 @@ definition {
 			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
 	}
 
+	@description = "This is a test for COMMERCE-9459. CanEditShippingMethodTrackingURL"
+	@priority = "2"
+	test CanEditShippingMethodTrackingURL {
+		property portal.acceptance = "false";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		Click(
+			key_entryName = "Flat Rate",
+			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceChannels.addShippingMethodTrackingURL(trackingURL = "www.carriersite.com/");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+
+		Click(
+			key_entryName = "Flat Rate",
+			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		AssertElementPresent(
+			key_fieldLabel = "Tracking URL",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "www.carriersite.com/");
+
+		CommerceChannels.addShippingMethodTrackingURL(trackingURL = "www.carriersite2.com/");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+
+		Click(
+			key_entryName = "Flat Rate",
+			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		AssertElementPresent(
+			key_fieldLabel = "Tracking URL",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "www.carriersite2.com/");
+
+		TripleClick(
+			key_fieldLabel = "Tracking URL",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+		KeyPress(
+			key_label = "Tracking URL",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "\BACK_SPACE");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+
+		Click(
+			key_entryName = "Flat Rate",
+			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		AssertElementPresent(
+			key_fieldLabel = "Tracking URL",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "");
+	}
+
 	@description = "Verify users without edit permission cannot change the currency of a channel."
 	@priority = "3"
 	test CanNotEditChannelCurrencyAsUserWithoutEditPermission {

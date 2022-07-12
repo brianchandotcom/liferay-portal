@@ -819,14 +819,50 @@ definition {
 			var expectedDataSourceId = ACSettings.getDXPInstanceId(dataSourceName = "${dataSourceName}");
 		}
 
+		task ("Add a new site with a public widget page") {
+			ACUtils.addPage(layoutName = "AC Page 2");
+		}
+
+		task ("Navigate to the site page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page 2",
+				siteName = "Site Name");
+		}
+
+		task ("Start Har recording") {
+			ProxyUtil.startHarRecording("tabBlurred");
+		}
+
 		task ("Navigate to the site page") {
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}
 
+		task ("Wait for sending requests") {
+			ACUtils.waitForSendingRequest();
+		}
+
+		task ("View the tabBlurred event not triggered") {
+			ACUtils.assertEventNotPresent(
+				applicationId = "Page",
+				eventId = "tabBlurred");
+		}
+
 		task ("Open the BBC home page in a new tab") {
 			Open.openInTheNewTab(locator1 = "https://www.bbc.com");
+		}
+
+		task ("Switch to the previous tab") {
+			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+		}
+
+		task ("Hard refresh the page to clear the network") {
+			TestUtils.hardRefresh();
+		}
+
+		task ("Switch to the BCC tab") {
+			SelectWindow(locator1 = "title=BBC - Homepage");
 		}
 
 		task ("Start Har recording") {

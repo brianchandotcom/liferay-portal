@@ -35,7 +35,9 @@ definition {
 
 			Refresh();
 
-			Portlet.addPGCmd(portletName = "${portletName}");
+			Portlet.addPGCmd(
+				categoryName = "${categoryName}",
+				portletName = "${portletName}");
 		}
 
 		var key_portletName = "${portletName}";
@@ -49,7 +51,9 @@ definition {
 			var portletName = "Where are the Liferay members?";
 		}
 
-		Portlet.addPGCmd(portletName = "${portletName}");
+		Portlet.addPGCmd(
+			categoryName = "${categoryName}",
+			portletName = "${portletName}");
 
 		var i = "1";
 		var key_portletName = "${portletName}";
@@ -61,7 +65,9 @@ definition {
 
 			Refresh();
 
-			Portlet.addPGCmd(portletName = "${portletName}");
+			Portlet.addPGCmd(
+				categoryName = "${categoryName}",
+				portletName = "${portletName}");
 		}
 
 		Click.clickAt(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL");
@@ -95,7 +101,9 @@ definition {
 			locator1 = "NavBar#APPLICATION_SEARCH_FIELD",
 			value1 = "${portletName}");
 
-		Portlet._clickAddPortlet(portletName = "${portletName}");
+		Portlet._clickAddPortlet(
+			categoryName = "${categoryName}",
+			portletName = "${portletName}");
 
 		var key_portletName = "${portletName}";
 

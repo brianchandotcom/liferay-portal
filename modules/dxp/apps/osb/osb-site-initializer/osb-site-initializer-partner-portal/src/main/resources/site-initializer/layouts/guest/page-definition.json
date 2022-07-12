@@ -544,14 +544,38 @@
 																							"value": {
 																								"href": {
 																									"value_i18n": {
-																										"en_US": "mailto:partner-marketing@liferay.com"
+																										"ar_SA": "mailto:partner-marketing@liferay.com",
+																										"ca_ES": "mailto:partner-marketing@liferay.com",
+																										"de_DE": "mailto:partner-marketing@liferay.com",
+																										"en_US": "mailto:partner-marketing@liferay.com",
+																										"es_ES": "mailto:partner-marketing@liferay.com",
+																										"fi_FI": "mailto:partner-marketing@liferay.com",
+																										"fr_FR": "mailto:partner-marketing@liferay.com",
+																										"hu_HU": "mailto:partner-marketing@liferay.com",
+																										"ja_JP": "mailto:partner-marketing@liferay.com",
+																										"nl_NL": "mailto:partner-marketing@liferay.com",
+																										"pt_BR": "mailto:partner-marketing@liferay.com",
+																										"sv_SE": "mailto:partner-marketing@liferay.com",
+																										"zh_CN": "mailto:partner-marketing@liferay.com"
 																									}
 																								}
 																							}
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "partner-marketing@liferay.com"
+																								"ar_SA": "partner-marketing@liferay.com",
+																								"ca_ES": "partner-marketing@liferay.com",
+																								"de_DE": "partner-marketing@liferay.com",
+																								"en_US": "partner-marketing@liferay.com",
+																								"es_ES": "partner-marketing@liferay.com",
+																								"fi_FI": "partner-marketing@liferay.com",
+																								"fr_FR": "partner-marketing@liferay.com",
+																								"hu_HU": "partner-marketing@liferay.com",
+																								"ja_JP": "partner-marketing@liferay.com",
+																								"nl_NL": "partner-marketing@liferay.com",
+																								"pt_BR": "partner-marketing@liferay.com",
+																								"sv_SE": "partner-marketing@liferay.com",
+																								"zh_CN": "partner-marketing@liferay.com"
 																							}
 																						}
 																					}
@@ -735,7 +759,19 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>"
+																										"ar_SA": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"ca_ES": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"de_DE": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"en_US": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"es_ES": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"fi_FI": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"fr_FR": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"hu_HU": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"ja_JP": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"nl_NL": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"pt_BR": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"sv_SE": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"zh_CN": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>"
 																									}
 																								}
 																							}
@@ -982,7 +1018,19 @@
 																							"value": {
 																								"href": {
 																									"value_i18n": {
-																										"en_US": "/c/portal/login"
+																										"ar_SA": "/c/portal/login",
+																										"ca_ES": "/c/portal/login",
+																										"de_DE": "/c/portal/login",
+																										"en_US": "/c/portal/login",
+																										"es_ES": "/c/portal/login",
+																										"fi_FI": "/c/portal/login",
+																										"fr_FR": "/c/portal/login",
+																										"hu_HU": "/c/portal/login",
+																										"ja_JP": "/c/portal/login",
+																										"nl_NL": "/c/portal/login",
+																										"pt_BR": "/c/portal/login",
+																										"sv_SE": "/c/portal/login",
+																										"zh_CN": "/c/portal/login"
 																									}
 																								}
 																							}
@@ -1163,14 +1211,38 @@
 																							"value": {
 																								"href": {
 																									"value_i18n": {
-																										"en_US": "mailto:partner-marketing@liferay.com"
+																										"ar_SA": "mailto:partner-marketing@liferay.com",
+																										"ca_ES": "mailto:partner-marketing@liferay.com",
+																										"de_DE": "mailto:partner-marketing@liferay.com",
+																										"en_US": "mailto:partner-marketing@liferay.com",
+																										"es_ES": "mailto:partner-marketing@liferay.com",
+																										"fi_FI": "mailto:partner-marketing@liferay.com",
+																										"fr_FR": "mailto:partner-marketing@liferay.com",
+																										"hu_HU": "mailto:partner-marketing@liferay.com",
+																										"ja_JP": "mailto:partner-marketing@liferay.com",
+																										"nl_NL": "mailto:partner-marketing@liferay.com",
+																										"pt_BR": "mailto:partner-marketing@liferay.com",
+																										"sv_SE": "mailto:partner-marketing@liferay.com",
+																										"zh_CN": "mailto:partner-marketing@liferay.com"
 																									}
 																								}
 																							}
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "partner-marketing@liferay.com"
+																								"ar_SA": "partner-marketing@liferay.com",
+																								"ca_ES": "partner-marketing@liferay.com",
+																								"de_DE": "partner-marketing@liferay.com",
+																								"en_US": "partner-marketing@liferay.com",
+																								"es_ES": "partner-marketing@liferay.com",
+																								"fi_FI": "partner-marketing@liferay.com",
+																								"fr_FR": "partner-marketing@liferay.com",
+																								"hu_HU": "partner-marketing@liferay.com",
+																								"ja_JP": "partner-marketing@liferay.com",
+																								"nl_NL": "partner-marketing@liferay.com",
+																								"pt_BR": "partner-marketing@liferay.com",
+																								"sv_SE": "partner-marketing@liferay.com",
+																								"zh_CN": "partner-marketing@liferay.com"
 																							}
 																						}
 																					}
@@ -1354,7 +1426,19 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>"
+																										"ar_SA": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"ca_ES": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"de_DE": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"en_US": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a><a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"es_ES": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"fi_FI": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"fr_FR": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"hu_HU": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"ja_JP": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"nl_NL": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"pt_BR": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"sv_SE": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																										"zh_CN": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>"
 																									}
 																								}
 																							}

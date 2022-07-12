@@ -40,4 +40,8 @@ public interface FDSView {
 
 	public String getThumbnail();
 
+	public default boolean isDefault() {
+		return false;
+	}
+
 }

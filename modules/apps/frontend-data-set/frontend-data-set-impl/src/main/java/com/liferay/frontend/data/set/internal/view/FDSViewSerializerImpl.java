@@ -52,6 +52,8 @@ public class FDSViewSerializerImpl implements FDSViewSerializer {
 				"contentRendererModuleURL",
 				fdsView.getContentRendererModuleURL()
 			).put(
+				"default", fdsView.isDefault()
+			).put(
 				"label",
 				LanguageUtil.get(
 					ResourceBundleUtil.getBundle(

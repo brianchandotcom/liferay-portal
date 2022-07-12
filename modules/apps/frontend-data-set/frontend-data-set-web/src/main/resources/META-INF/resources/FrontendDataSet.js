@@ -141,7 +141,9 @@ const FrontendDataSet = ({
 	const [total, setTotal] = useState(0);
 
 	const getInitialViewsState = () => {
-		let initialActiveView = views[0];
+		let initialActiveView =
+			views.find(({default: defaultProp}) => defaultProp) || views[0];
+
 		let initialVisibleFieldNames = {};
 
 		if (activeViewSettings) {

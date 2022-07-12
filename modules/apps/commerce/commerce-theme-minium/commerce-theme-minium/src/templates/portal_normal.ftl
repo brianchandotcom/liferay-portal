@@ -9,18 +9,18 @@
 	<@liferay_util["include"] page=top_head_include />
 </head>
 
-<#if is_login_page && redirect_to_private_layouts && themeDisplay.isSignedIn() && themeDisplay.getLayout().isPublicLayout()>
+<#if is_login_page && themeDisplay.isSignedIn()>
 
 	<#-- Instant redirect, when the page is hit directly or refreshed -->
 
 	<script>
-		window.location.replace("${themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()}");
+		window.location.replace("${catalog_url}");
 	</script>
 
 	<#-- Redirect for Senna (I.E. when you press "Go to Site"). This will cause a flash as the page has to fully load -->
 
 	<@liferay_aui.script>
-		window.location.replace("${themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()}");
+		window.location.replace("${catalog_url}");
 	</@>
 </#if>
 

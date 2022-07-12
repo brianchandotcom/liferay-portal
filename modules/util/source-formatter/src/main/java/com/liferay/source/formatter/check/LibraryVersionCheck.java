@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -50,6 +51,10 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+
 /**
  * @author Qi Zhang
  */
@@ -58,7 +63,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws IOException {
+		throws DocumentException, IOException {
 
 		_pageNumber = GetterUtil.getInteger(
 			getAttributeValue(_QUERY_ARGUMENTS_PAGE_NUMBER, absolutePath));
@@ -507,84 +512,42 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	}
 
 	private void _xmlLibraryVersionCheck(String fileName, String content)
-		throws IOException {
-
-		int x = -1;
+		throws DocumentException, IOException {
 
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 
-		while (true) {
-			x = content.indexOf("<dependency", x);
+		Document document = SourceUtil.readXML(content);
 
-			if (x == -1) {
-				break;
-			}
+		Element rootElement = document.getRootElement();
 
-			char nextChar = content.charAt(x + "<dependency".length());
+		for (Element dependenciesElement :
+				(List<Element>)rootElement.elements("dependencies")) {
 
-			String group;
-			String artifact;
-			String version;
+			for (Element dependencyElement :
+					(List<Element>)dependenciesElement.elements("dependency")) {
 
-			if (nextChar == CharPool.GREATER_THAN) {
-				int closeTagIndex = content.indexOf("</dependency>", x);
+				String name = dependencyElement.attributeValue("name");
 
-				if (closeTagIndex == -1) {
-					x++;
-
+				if (Validator.isNull(name)) {
 					continue;
 				}
 
-				String dependencyTagStatement = content.substring(
-					x, closeTagIndex);
+				String org = dependencyElement.attributeValue("org");
 
-				group = _getContentByPattern(
-					dependencyTagStatement, _xmlGroupIdPattern);
-				artifact = _getContentByPattern(
-					dependencyTagStatement, _xmlArtifactIdPattern);
-				version = _getContentByPattern(
-					dependencyTagStatement, _xmlVersionPattern1);
-			}
-			else if ((nextChar == CharPool.SPACE) ||
-					 (nextChar == CharPool.NEW_LINE)) {
-
-				int closeGreaterThanIndex = content.indexOf("/>", x);
-
-				if (closeGreaterThanIndex == -1) {
-					x++;
-
+				if (Validator.isNull(org)) {
 					continue;
 				}
 
-				String dependencyStatement = content.substring(
-					x, closeGreaterThanIndex);
+				String rev = dependencyElement.attributeValue("rev");
 
-				group = _getContentByPattern(
-					dependencyStatement, _xmlOrgPattern);
-				artifact = _getContentByPattern(
-					dependencyStatement, _xmlNamePattern);
-				version = _getContentByPattern(
-					dependencyStatement, _xmlVersionPattern2);
+				if (Validator.isNull(rev)) {
+					continue;
+				}
+
+				_checkIsContainVulnerabilities(
+					fileName, org + StringPool.COLON + name, rev, httpClient,
+					SecurityAdvisoryEcosystemEnum.MAVEN);
 			}
-			else {
-				x++;
-
-				continue;
-			}
-
-			if (Validator.isNull(group) || Validator.isNull(artifact) ||
-				Validator.isNull(version)) {
-
-				x++;
-
-				continue;
-			}
-
-			_checkIsContainVulnerabilities(
-				fileName, group + StringPool.COLON + artifact, version,
-				httpClient, SecurityAdvisoryEcosystemEnum.MAVEN);
-
-			x++;
 		}
 
 		try {
@@ -614,18 +577,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		"version: \"([^,\n\\\\)]+)\"");
 	private static final Map<String, List<SecurityVulnerabilityNode>>
 		_queryResultMap = new ConcurrentHashMap<>();
-	private static final Pattern _xmlArtifactIdPattern = Pattern.compile(
-		"<artifactId>(.+)</artifactId>");
-	private static final Pattern _xmlGroupIdPattern = Pattern.compile(
-		"<groupId>(.+)</groupId>");
-	private static final Pattern _xmlNamePattern = Pattern.compile(
-		"name=\"([^ /\n]+)\"");
-	private static final Pattern _xmlOrgPattern = Pattern.compile(
-		"org=\"([^ /\n]+)\"");
-	private static final Pattern _xmlVersionPattern1 = Pattern.compile(
-		"<version>(.+)</version>");
-	private static final Pattern _xmlVersionPattern2 = Pattern.compile(
-		"rev=\"([^ /\n]+)\"");
 
 	private int _pageNumber;
 	private List<String> _severities;

@@ -955,11 +955,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 			}
 
-
 			documentsStringUtilReplaceValues.put(
 				"[$SITE_ENTRY_NAME$]",
-				String.valueOf(serviceContext.getAttribute("name"))
-			);
+				String.valueOf(serviceContext.getAttribute("name")));
 
 			String key = resourcePath;
 
@@ -1705,7 +1703,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				json = StringUtil.replace(
 					json,
-					new String[] {"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]", "[$SITE_ENTRY_NAME$]"},
+					new String[] {
+						"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
+						"[$SITE_ENTRY_NAME$]"
+					},
 					new String[] {
 						scopeGroup.getFriendlyURL(),
 						String.valueOf(serviceContext.getScopeGroupId()),

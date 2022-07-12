@@ -30,6 +30,68 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "COMMERCE-9509 Verify that the Collection Display fragment with the product specifications can be deployed and that the buyer can see the specifications inside the Collection Display on the storefront"
+	@priority = "4"
+	test CanAddProductSpecificationsCollectionDisplay {
+		task ("When a new Commerce Product type Display Page Template is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And the Collection Display fragment is deployed on the page") {
+			DisplayPageTemplate.addFragment(
+				collectionName = "Content Display",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fragmentName = "Collection Display",
+				publish = "false",
+				siteURLKey = "minium");
+		}
+
+		task ("And Product Specifications is selected, Style Display is set to Bordered List") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "Product Specifications",
+				styleDisplay = "Bordered List");
+		}
+
+		task ("And the template is published and Marked as Default") {
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Mark as Default",
+				rowEntry = "Test Commerce Product Display Page Template");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("And after the buyer navigates to U-Joint the product's specifications are shown in the collection display") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+			CommerceDisplayPageTemplates.checkCollectionDisplayProductSpecificationsPresent(product = "U-Joint");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+		}
+
+		task ("And after the buyer navigates to Transmission Cooler Line Assembly the product's specifications are shown in the collection display") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Transmission Cooler Line Assembly");
+
+			CommerceDisplayPageTemplates.checkCollectionDisplayProductSpecificationsPresent(product = "Transmission Cooler Line Assembly");
+		}
+	}
+
 	@description = "Verify a product's availability can be viewed via an availability fragment deployed on a default Commerce Product Display Page Template."
 	@priority = "3"
 	test CanAssertProductAvailabilityUsingAvailabilityFragment {

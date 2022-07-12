@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -213,64 +214,48 @@ public class OpenIdConnectProviderManagedServiceFactory
 	}
 
 	private String _generateAuthRequestParametersJSON(
-		Dictionary<String, ?> properties, String parametersName) {
+		Dictionary<String, ?> properties) {
 
 		JSONObject requestParametersJSONObject =
-			_generateRequestParametersJSONObject(properties, parametersName);
+			_generateRequestParametersJSONObject(
+				properties, "customAuthorizationRequestParameters");
 
-		requestParametersJSONObject.put("response_type", "code");
-
-		return requestParametersJSONObject.toString();
+		return requestParametersJSONObject.put(
+			"response_type", "code"
+		).toString();
 	}
 
-	private String _generateInfoJSON(Dictionary<String, ?> properties) {
-		JSONObject infoJSONObject = JSONFactoryUtil.createJSONObject();
-
-		String openIdConnectClientId = GetterUtil.getString(
-			properties.get("openIdConnectClientId"));
-
-		if (Validator.isNotNull(openIdConnectClientId)) {
-			infoJSONObject.put("client_id", openIdConnectClientId);
-		}
-
+	private String _generateClientName(Dictionary<String, ?> properties) {
 		String providerName = GetterUtil.getString(
 			properties.get("providerName"));
 
-		if (Validator.isNotNull(providerName)) {
-			infoJSONObject.put("client_name", "client to " + providerName);
+		if (Validator.isNull(providerName)) {
+			return null;
 		}
 
-		String openIdConnectClientSecret = GetterUtil.getString(
-			properties.get("openIdConnectClientSecret"));
+		return "client to " + providerName;
+	}
 
-		if (Validator.isNotNull(openIdConnectClientSecret)) {
-			infoJSONObject.put("client_secret", openIdConnectClientSecret);
-		}
-
-		String scopes = GetterUtil.getString(properties.get("scopes"));
-
-		if (Validator.isNotNull(scopes)) {
-			infoJSONObject.put("scope", scopes);
-		}
-
-		String registeredIdTokenSigningAlg = GetterUtil.getString(
-			properties.get("registeredIdTokenSigningAlg"));
-
-		if (Validator.isNotNull(registeredIdTokenSigningAlg)) {
-			infoJSONObject.put(
-				"id_token_signed_response_alg", registeredIdTokenSigningAlg);
-		}
-
-		infoJSONObject.put(
-			"grant_types",
-			JSONFactoryUtil.createJSONArray(
-				new String[] {"authorization_code", "refresh_token"})
+	private String _generateInfoJSON(Dictionary<String, ?> properties) {
+		return JSONUtil.put(
+			"client_id",
+			_getPropertyAsString("openIdConnectClientId", properties)
 		).put(
-			"response_types",
-			JSONFactoryUtil.createJSONArray(new String[] {"code"})
-		);
-
-		return infoJSONObject.toString();
+			"client_name", _generateClientName(properties)
+		).put(
+			"client_secret",
+			_getPropertyAsString("openIdConnectClientSecret", properties)
+		).put(
+			"grant_types",
+			JSONUtil.putAll("authorization_code", "refresh_token")
+		).put(
+			"id_token_signed_response_alg",
+			_getPropertyAsString("registeredIdTokenSigningAlg", properties)
+		).put(
+			"response_types", JSONUtil.put("code")
+		).put(
+			"scope", _getPropertyAsString("scopes", properties)
+		).toString();
 	}
 
 	private String _generateLocalWellKnownURI(
@@ -288,84 +273,34 @@ public class OpenIdConnectProviderManagedServiceFactory
 	}
 
 	private String _generateMetadataJSON(Dictionary<String, ?> properties) {
-		JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		String authorizationEndPoint = GetterUtil.getString(
-			properties.get("authorizationEndPoint"));
-
-		if (Validator.isNotNull(authorizationEndPoint)) {
-			metadataJSONObject.put(
-				"authorization_endpoint", authorizationEndPoint);
-		}
-
-		String[] idTokenSigningAlgValues = GetterUtil.getStringValues(
-			properties.get("idTokenSigningAlgValues"));
-
-		if (idTokenSigningAlgValues.length > 0) {
-			metadataJSONObject.put(
-				"id_token_signing_alg_values_supported",
-				JSONFactoryUtil.createJSONArray(idTokenSigningAlgValues));
-		}
-
-		String issuerURL = GetterUtil.getString(properties.get("issuerURL"));
-
-		if (Validator.isNotNull(issuerURL)) {
-			metadataJSONObject.put("issuer", issuerURL);
-		}
-
-		String jwksURI = GetterUtil.getString(properties.get("jwksURI"));
-
-		if (Validator.isNotNull(jwksURI)) {
-			metadataJSONObject.put("jwks_uri", jwksURI);
-		}
-
-		String scopes = GetterUtil.getString(properties.get("scopes"));
-
-		if (Validator.isNotNull(scopes)) {
-			String[] scopesArray = scopes.split(" ");
-
-			metadataJSONObject.put(
-				"scopes_supported",
-				JSONFactoryUtil.createJSONArray(scopesArray));
-		}
-
-		String[] subjectTypes = GetterUtil.getStringValues(
-			properties.get("subjectTypes"));
-
-		if (subjectTypes.length > 0) {
-			metadataJSONObject.put(
-				"subject_types_supported",
-				JSONFactoryUtil.createJSONArray(subjectTypes));
-		}
-
-		String tokenEndPoint = GetterUtil.getString(
-			properties.get("tokenEndPoint"));
-
-		if (Validator.isNotNull(tokenEndPoint)) {
-			metadataJSONObject.put("token_endpoint", tokenEndPoint);
-		}
-
-		String userInfoEndPoint = GetterUtil.getString(
-			properties.get("userInfoEndPoint"));
-
-		if (Validator.isNotNull(userInfoEndPoint)) {
-			metadataJSONObject.put("userinfo_endpoint", userInfoEndPoint);
-		}
-
-		return metadataJSONObject.toString();
+		return JSONUtil.put(
+			"authorization_endpoint",
+			_getPropertyAsString("authorizationEndPoint", properties)
+		).put(
+			"id_token_signing_alg_values_supported",
+			_getPropertyAsJSONArray("idTokenSigningAlgValues", properties)
+		).put(
+			"issuer", _getPropertyAsString("issuerURL", properties)
+		).put(
+			"jwks_uri", _getPropertyAsString("jwksURI", properties)
+		).put(
+			"scopes_supported", _getPropertyAsJSONArray("scopes", properties)
+		).put(
+			"subject_types_supported",
+			_getPropertyAsJSONArray("subjectTypes", properties)
+		).put(
+			"token_endpoint", _getPropertyAsString("tokenEndPoint", properties)
+		).put(
+			"userinfo_endpoint",
+			_getPropertyAsString("userInfoEndPoint", properties)
+		).toString();
 	}
 
 	private JSONObject _generateRequestParametersJSONObject(
 		Dictionary<String, ?> properties, String parametersName) {
 
-		JSONObject requestParametersJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		String scopes = GetterUtil.getString(properties.get("scopes"));
-
-		if (Validator.isNotNull(scopes)) {
-			requestParametersJSONObject.put("scope", scopes);
-		}
+		JSONObject requestParametersJSONObject = JSONUtil.put(
+			"scope", properties.get("scopes"));
 
 		String[] parameters = GetterUtil.getStringValues(
 			properties.get(parametersName));
@@ -393,12 +328,8 @@ public class OpenIdConnectProviderManagedServiceFactory
 				}
 				else {
 					requestParametersJSONObject.put(
-						pair[0],
-						JSONFactoryUtil.createJSONArray(pair[1].split(" ")));
+						pair[0], JSONUtil.putAll((Object[])pair[1].split(" ")));
 				}
-			}
-			else if (pair[0].equals("scope")) {
-				requestParametersJSONObject.put("scope", pair[1]);
 			}
 			else {
 				JSONObject customRequestParametersJSONObject =
@@ -425,8 +356,7 @@ public class OpenIdConnectProviderManagedServiceFactory
 				}
 				else {
 					customRequestParametersJSONObject.put(
-						pair[0],
-						JSONFactoryUtil.createJSONArray(pair[1].split(" ")));
+						pair[0], JSONUtil.putAll((Object[])pair[1].split(" ")));
 				}
 			}
 		}
@@ -435,14 +365,52 @@ public class OpenIdConnectProviderManagedServiceFactory
 	}
 
 	private String _generateTokenRequestParametersJSON(
-		Dictionary<String, ?> properties, String parametersName) {
+		Dictionary<String, ?> properties) {
 
 		JSONObject requestParametersJSONObject =
-			_generateRequestParametersJSONObject(properties, parametersName);
+			_generateRequestParametersJSONObject(
+				properties, "customTokenRequestParameters");
 
-		requestParametersJSONObject.put("grant_type", "authorization_code");
+		return requestParametersJSONObject.put(
+			"grant_type", "authorization_code"
+		).toString();
+	}
 
-		return requestParametersJSONObject.toString();
+	private JSONArray _getPropertyAsJSONArray(
+		String key, Dictionary<String, ?> properties) {
+
+		if (properties.get(key) == null) {
+			return null;
+		}
+
+		String[] values;
+
+		if (key.equals("scopes")) {
+			String scopes = GetterUtil.getString(properties.get("scopes"));
+
+			values = scopes.split(" ");
+		}
+		else {
+			values = GetterUtil.getStringValues(properties.get(key));
+		}
+
+		if (values.length < 1) {
+			return null;
+		}
+
+		return JSONUtil.putAll((Object[])values);
+	}
+
+	private String _getPropertyAsString(
+		String key, Dictionary<String, ?> properties) {
+
+		String value = GetterUtil.getString(properties.get(key));
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		return value;
 	}
 
 	private void _updateCompanyIdProviderNameOAuthClientEntryIds(
@@ -546,21 +514,17 @@ public class OpenIdConnectProviderManagedServiceFactory
 				oAuthClientEntry =
 					_oAuthClientEntryLocalService.addOAuthClientEntry(
 						defaultUserId,
-						_generateAuthRequestParametersJSON(
-							properties, "customAuthorizationRequestParameters"),
+						_generateAuthRequestParametersJSON(properties),
 						authServerWellKnownURI, _generateInfoJSON(properties),
-						_generateTokenRequestParametersJSON(
-							properties, "customTokenRequestParameters"));
+						_generateTokenRequestParametersJSON(properties));
 			}
 			else {
 				oAuthClientEntry =
 					_oAuthClientEntryLocalService.updateOAuthClientEntry(
 						oAuthClientEntry.getOAuthClientEntryId(),
-						_generateAuthRequestParametersJSON(
-							properties, "customAuthorizationRequestParameters"),
+						_generateAuthRequestParametersJSON(properties),
 						authServerWellKnownURI, _generateInfoJSON(properties),
-						_generateTokenRequestParametersJSON(
-							properties, "customTokenRequestParameters"));
+						_generateTokenRequestParametersJSON(properties));
 			}
 
 			_updateCompanyIdProviderNameOAuthClientEntryIds(

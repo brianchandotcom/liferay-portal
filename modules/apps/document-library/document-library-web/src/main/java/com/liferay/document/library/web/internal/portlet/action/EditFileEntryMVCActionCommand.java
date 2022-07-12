@@ -552,6 +552,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				_classNameLocalService.getClassNameId(FileEntry.class),
 				fileEntryId);
 
+		if (friendlyURLEntry == null) {
+			return;
+		}
+
 		String currentUrlTitle = friendlyURLEntry.getUrlTitle();
 
 		if (Validator.isNull(originalUrlTitle) ||

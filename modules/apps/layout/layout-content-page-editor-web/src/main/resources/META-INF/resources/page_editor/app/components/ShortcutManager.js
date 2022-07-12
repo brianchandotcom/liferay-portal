@@ -55,7 +55,8 @@ const isInteractiveElement = (element) => {
 		!!element.closest('.alloy-editor-container') ||
 		!!element.closest('.cke_editable') ||
 		!!element.closest('.dropdown-menu') ||
-		!!element.closest('.page-editor__page-structure__item-configuration')
+		!!element.closest('.page-editor__page-structure__item-configuration') ||
+		!!element.closest('.page-editor__allowed-fragment__tree')
 	);
 };
 

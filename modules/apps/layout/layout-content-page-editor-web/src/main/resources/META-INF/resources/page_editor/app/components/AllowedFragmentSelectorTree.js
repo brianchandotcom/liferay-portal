@@ -15,7 +15,6 @@
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -167,6 +166,20 @@ const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 		onSelectedFragment,
 	]);
 
+	const onClick = (event, item, selection) => {
+		event.preventDefault();
+
+		selection.toggle(item.id);
+	};
+
+	const onKeyDown = (event, item, selection) => {
+		if (event.key === ' ' || event.key === 'Enter') {
+			event.preventDefault();
+
+			selection.toggle(item.id);
+		}
+	};
+
 	return (
 		<>
 			<div className="px-4">
@@ -182,10 +195,6 @@ const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 					<div className="mb-2 page-editor__allowed-fragment__tree pl-2">
 						<ClayTreeView
 							defaultExpandedKeys={expandedKeys}
-							expanderIcons={{
-								close: <ClayIcon symbol="hr" />,
-								open: <ClayIcon symbol="plus" />,
-							}}
 							items={items}
 							nestedKey="children"
 							onItemsChange={setItems}
@@ -194,17 +203,43 @@ const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 							selectionMode="multiple-recursive"
 							showExpanderOnHover={false}
 						>
-							{(item) => (
+							{(item, selection) => (
 								<ClayTreeView.Item>
-									<ClayTreeView.ItemStack>
-										<ClayCheckbox label={item.name} />
+									<ClayTreeView.ItemStack
+										onClick={(event) =>
+											onClick(event, item, selection)
+										}
+										onKeyDown={(event) =>
+											onKeyDown(event, item, selection)
+										}
+									>
+										<ClayCheckbox
+											label={item.name}
+											tabIndex={-1}
+										/>
 									</ClayTreeView.ItemStack>
 
 									<ClayTreeView.Group items={item.children}>
 										{(item) => (
-											<ClayTreeView.Item>
+											<ClayTreeView.Item
+												onClick={(event) =>
+													onClick(
+														event,
+														item,
+														selection
+													)
+												}
+												onKeyDown={(event) =>
+													onKeyDown(
+														event,
+														item,
+														selection
+													)
+												}
+											>
 												<ClayCheckbox
 													label={item.name}
+													tabIndex={-1}
 												/>
 											</ClayTreeView.Item>
 										)}

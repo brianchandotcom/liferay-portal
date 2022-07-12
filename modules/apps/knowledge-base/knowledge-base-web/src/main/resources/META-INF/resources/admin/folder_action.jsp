@@ -73,7 +73,7 @@ else {
 
 		<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.MOVE_KB_FOLDER) %>">
 			<liferay-portlet:renderURL var="moveKBFolderURL">
-				<portlet:param name="mvcPath" value='<%= templatePath + "move_object.jsp" %>' />
+				<portlet:param name="mvcPath" value="/admin/common/move_object.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbFolder.getClassNameId()) %>" />
 				<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />

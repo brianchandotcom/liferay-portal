@@ -67,7 +67,7 @@ public class MoveKBFolderPortletConfigurationIcon
 				portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 				PortletRequest.RENDER_PHASE)
 		).setMVCPath(
-			"/admin/move_object.jsp"
+			"/admin/common/move_object.jsp"
 		).setRedirect(
 			_portal.getCurrentURL(portletRequest)
 		).setParameter(

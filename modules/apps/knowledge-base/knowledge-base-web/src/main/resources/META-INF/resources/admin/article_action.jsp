@@ -110,7 +110,7 @@ else {
 
 	<c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.MOVE_KB_ARTICLE) %>">
 		<liferay-portlet:renderURL var="moveKBArticleURL">
-			<portlet:param name="mvcPath" value='<%= templatePath + "move_object.jsp" %>' />
+			<portlet:param name="mvcPath" value="/admin/common/move_object.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="resourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
 			<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />

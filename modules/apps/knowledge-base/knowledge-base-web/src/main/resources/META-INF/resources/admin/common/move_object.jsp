@@ -71,7 +71,7 @@ if (portletTitleBasedNavigation) {
 	<liferay-portlet:actionURL name="/knowledge_base/move_kb_object" var="moveKBObjectURL" />
 
 	<aui:form action="<%= moveKBObjectURL %>" method="post" name="fm">
-		<aui:input name="mvcPath" type="hidden" value='<%= templatePath + "move_object.jsp" %>' />
+		<aui:input name="mvcPath" type="hidden" value="/admin/common/move_object.jsp" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(resourceClassNameId) %>" />
 		<aui:input name="resourcePrimKey" type="hidden" value="<%= String.valueOf(resourcePrimKey) %>" />

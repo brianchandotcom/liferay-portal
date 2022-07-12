@@ -555,12 +555,17 @@ public class LibraryVersionCheck extends BaseFileCheck {
 					continue;
 				}
 
+				String version = versionElement.getText();
+
+				if (version.startsWith(StringPool.DOLLAR)) {
+					continue;
+				}
+
 				_checkIsContainVulnerabilities(
 					fileName,
 					groupIdElement.getText() + StringPool.COLON +
 						artifactIdElement.getText(),
-					versionElement.getText(), httpClient,
-					SecurityAdvisoryEcosystemEnum.MAVEN);
+					version, httpClient, SecurityAdvisoryEcosystemEnum.MAVEN);
 			}
 		}
 

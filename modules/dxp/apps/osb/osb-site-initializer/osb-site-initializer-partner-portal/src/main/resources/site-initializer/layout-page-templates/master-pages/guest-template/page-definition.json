@@ -5,9 +5,40 @@
 				"definition": {
 					"fragmentStyle": {
 						"borderWidth": "0",
+						"paddingLeft": "6",
+						"paddingRight": "6",
 						"shadow": "boxShadowSm",
 						"textAlign": ""
 					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "0",
+								"marginRight": "0",
+								"paddingLeft": "4",
+								"paddingRight": "4"
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "0",
+								"marginRight": "0",
+								"paddingLeft": "4",
+								"paddingRight": "4"
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "0",
+								"marginRight": "0",
+								"paddingLeft": "5",
+								"paddingRight": "5"
+							},
+							"id": "tablet"
+						}
+					],
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
@@ -16,8 +47,8 @@
 						"marginRight": 0,
 						"marginTop": 0,
 						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
+						"paddingLeft": 6,
+						"paddingRight": 6,
 						"paddingTop": 0,
 						"widthType": "Fluid"
 					}
@@ -43,7 +74,7 @@
 								"paddingLeft": 0,
 								"paddingRight": 0,
 								"paddingTop": 0,
-								"widthType": "Fixed"
+								"widthType": "Fluid"
 							}
 						},
 						"pageElements": [
@@ -101,8 +132,7 @@
 																}
 															}
 														},
-														"fragmentLink": {
-														}
+														"fragmentLink": {}
 													}
 												}
 											],
@@ -122,23 +152,22 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {
-														},
+														"fragmentLink": {},
 														"text": {
 															"value_i18n": {
-																"ar_SA": "Partner Portal",
+																"sv_SE": "Partner Portal",
+																"pt_BR": "Partner Portal",
+																"fr_FR": "Partner Portal",
+																"ja_JP": "Partner Portal",
 																"ca_ES": "Partner Portal",
 																"de_DE": "Partner Portal",
+																"hu_HU": "Partner Portal",
+																"ar_SA": "Partner Portal",
+																"fi_FI": "Partner Portal",
 																"en_US": "Partner Portal",
 																"es_ES": "Partner Portal",
-																"fi_FI": "Partner Portal",
-																"fr_FR": "Partner Portal",
-																"hu_HU": "Partner Portal",
-																"ja_JP": "Partner Portal",
-																"nl_NL": "Partner Portal",
-																"pt_BR": "Partner Portal",
-																"sv_SE": "Partner Portal",
-																"zh_CN": "Partner Portal"
+																"zh_CN": "Partner Portal",
+																"nl_NL": "Partner Portal"
 															}
 														}
 													}
@@ -146,7 +175,8 @@
 											],
 											"fragmentStyle": {
 												"fontSize": "fontSizeBase",
-												"fontWeight": "fontWeightBold"
+												"fontWeight": "fontWeightBold",
+												"textAlign": ""
 											},
 											"indexed": true
 										},
@@ -163,12 +193,42 @@
 			},
 			{
 				"definition": {
-					"fragmentSettings": {
-						"unallowedFragments": [
-						]
+					"fragmentStyle": {},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {},
+							"id": "tablet"
+						}
+					],
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
 					}
 				},
-				"type": "DropZone"
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentSettings": {
+								"unallowedFragments": []
+							}
+						},
+						"type": "DropZone"
+					}
+				],
+				"type": "Section"
 			}
 		],
 		"type": "Root"
@@ -177,10 +237,10 @@
 		"colorSchemeName": "01",
 		"themeName": "Dialect",
 		"themeSettings": {
-			"lfr-theme:regular:show-footer": "false",
 			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false",
 			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:wrap-widget-page-content": "false"
+			"lfr-theme:regular:show-footer": "false"
 		}
 	},
 	"version": 1.1

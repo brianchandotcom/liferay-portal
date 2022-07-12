@@ -18,6 +18,7 @@ import React, {useEffect, useMemo} from 'react';
 
 import {StyleBookContextProvider} from '../../plugins/page-design-options/hooks/useStyleBook';
 import {INIT} from '../actions/types';
+import updatePageContents from '../actions/updatePageContents';
 import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {config} from '../config/index';
 import {CollectionActiveItemContextProvider} from '../contexts/CollectionActiveItemContext';
@@ -25,12 +26,17 @@ import {ControlsProvider} from '../contexts/ControlsContext';
 import {DisplayPagePreviewItemContextProvider} from '../contexts/DisplayPagePreviewItemContext';
 import {EditableProcessorContextProvider} from '../contexts/EditableProcessorContext';
 import {GlobalContextProvider} from '../contexts/GlobalContext';
-import {StoreContextProvider, useSelector} from '../contexts/StoreContext';
+import {
+	StoreContextProvider,
+	useDispatch,
+	useSelector,
+} from '../contexts/StoreContext';
 import {StyleErrorsContextProvider} from '../contexts/StyleErrorsContext';
 import {WidgetsContextProvider} from '../contexts/WidgetsContext';
 import {reducer} from '../reducers/index';
 import selectLanguageId from '../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
+import InfoItemService from '../services/InfoItemService';
 import {DragAndDropContextProvider} from '../utils/drag-and-drop/useDragAndDrop';
 import CommonStylesManager from './CommonStylesManager';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
@@ -71,6 +77,8 @@ export default function App({state}) {
 			<BackURL />
 
 			<LanguageDirection />
+
+			<PortetConfigurationListener />
 
 			<URLParser />
 
@@ -177,6 +185,40 @@ const LanguageDirection = () => {
 			wrapper.lang = languageId;
 		}
 	}, [languageId]);
+
+	return null;
+};
+
+const PAGE_CONTENTS_AWARE_PORTLET_IDS = [
+	'com_liferay_journal_content_web_portlet_JournalContentPortlet',
+	'com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet',
+];
+
+const PortetConfigurationListener = () => {
+	const dispatch = useDispatch();
+
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+
+	useEffect(() => {
+		const onEditConfiguration = ({portletId}) => {
+			if (PAGE_CONTENTS_AWARE_PORTLET_IDS.includes(portletId)) {
+				InfoItemService.getPageContents({
+					onNetworkStatus: dispatch,
+					segmentsExperienceId,
+				}).then((pageContents) => {
+					dispatch(
+						updatePageContents({
+							pageContents,
+						})
+					);
+				});
+			}
+		};
+
+		Liferay.on('editConfiguration', onEditConfiguration);
+
+		return () => Liferay.detach('editConfiguration', onEditConfiguration);
+	}, [dispatch, segmentsExperienceId]);
 
 	return null;
 };

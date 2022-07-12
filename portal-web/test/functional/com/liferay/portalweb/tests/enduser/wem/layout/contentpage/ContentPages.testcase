@@ -365,7 +365,7 @@ definition {
 		task ("Discard the draft") {
 			MenuItem.clickNoError(menuItem = "Discard Draft");
 
-			AssertConfirm(value1 = "Are you sure you want to discard current draft and apply latest published changes?");
+			AssertConfirm(value1 = "Are you sure you want to discard the current draft and apply the latest published changes?");
 
 			Alert.viewSuccessMessage();
 		}

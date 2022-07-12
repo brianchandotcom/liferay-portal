@@ -25,7 +25,7 @@ import {NewApplicationAutoContext} from '../context/NewApplicationAutoContextPro
 import ContactInfo from '../forms/steps/ContactInfo';
 import DriverInfo from '../forms/steps/DriverInfo';
 import VehicleInfo from '../forms/steps/VehicleInfo';
-import NewApplication from './NewApplications';
+import NewApplication from './newApplication/NewApplications';
 
 enum ModalType {
 	insurance = 1,

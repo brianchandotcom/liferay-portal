@@ -144,14 +144,17 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When invoking Web Content 3 by Headless Admin Content getStructuredContentByVersion") {
+			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(title = "Web Content 3");
 
-			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(title="Web Content 3");
-
-			var response = HeadlessWebcontentAPI.versionStructureContent(versionvalue = "1.0",structuredContentId="${structuredContentId}");
+			var response = HeadlessWebcontentAPI.versionStructureContent(
+				structuredContentId = "${structuredContentId}",
+				versionvalue = "1.0");
 		}
 
 		task ("Then I should see in response Web Content 3 with a priority field set") {
-			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(responseToParse="${response}",expectedPriorityValue="2.99");
+			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(
+				expectedPriorityValue = "2.99",
+				responseToParse = "${response}");
 		}
 	}
 

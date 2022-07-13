@@ -579,6 +579,16 @@ definition {
 		return "${response}";
 	}
 
+	macro getStructuredContentIdByTitle {
+		Variables.assertDefined(parameterList = "${title}");
+
+		var response = HeadlessWebcontentAPI._allStructuredContent();
+
+		var structuredContentId = JSONUtil.getWithJSONPath("${response}", "$..['items'][?(@.title == '${title}')].id");
+
+		return "${structuredContentId}";
+	}
+
 	macro getStructuredContentsByErcInAssetLibrary {
 		Variables.assertDefined(parameterList = "${assetLibraryId},${externalReferenceCode}");
 
@@ -621,16 +631,6 @@ definition {
 		return "${structuredContentId}";
 	}
 
-	macro getStructuredContentIdByTitle {
-		Variables.assertDefined(parameterList = "${title}");
-
-		var response = HeadlessWebcontentAPI._allStructuredContent();
-
-		var structuredContentId = JSONUtil.getWithJSONPath("${response}", "$..['items'][?(@.title == '${title}')].id");
-
-		return "${structuredContentId}";
-	}
-
 	macro sortStructureContent {
 		var response = HeadlessWebcontentAPI._sortStructureContent(sortvalue = "${sortvalue}");
 
@@ -658,11 +658,11 @@ definition {
 	}
 
 	macro versionStructureContent {
-				Variables.assertDefined(parameterList = "${structuredContentId},${versionvalue}");
+		Variables.assertDefined(parameterList = "${structuredContentId},${versionvalue}");
 
-				var response = HeadlessWebcontentAPI._versionStructureContent(
-					structuredContentId = "${structuredContentId}",
-					versionvalue = "${versionvalue}");
+		var response = HeadlessWebcontentAPI._versionStructureContent(
+			structuredContentId = "${structuredContentId}",
+			versionvalue = "${versionvalue}");
 
 		return "${response}";
 	}

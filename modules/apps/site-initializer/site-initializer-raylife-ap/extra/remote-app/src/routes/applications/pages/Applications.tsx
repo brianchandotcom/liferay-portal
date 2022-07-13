@@ -14,25 +14,20 @@
 
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import {Liferay} from '../../../common/services/liferay/liferay';
+import {redirectTo} from '../../../common/utils/liferay';
 import LoadingIndicator from '../components/LoadingIndicator';
 import Modal from '../components/Modal';
 import InsuranceCard from '../contents/InsuranceCard';
 import ProductCardPersona from '../contents/ProductCardPersona';
-import {NewApplicationAutoContext} from '../context/NewApplicationAutoContextProvider';
-import ContactInfo from '../forms/steps/ContactInfo';
-import DriverInfo from '../forms/steps/DriverInfo';
-import VehicleInfo from '../forms/steps/VehicleInfo';
-import NewApplication from './newApplication/NewApplications';
 
 enum ModalType {
 	insurance = 1,
 	insuranceProducts = 2,
 }
 const Applications = () => {
-	const [state] = useContext(NewApplicationAutoContext);
 	const [visible, setVisible] = useState(false);
 	const insuranceCards = ['Personal', 'Business'];
 	const [isLoading, setIsLoading] = useState(false);
@@ -45,6 +40,10 @@ const Applications = () => {
 
 	const handleNextClick = () => {
 		setContentModal(ModalType.insuranceProducts);
+	};
+
+	const handleRedirectToForms = () => {
+		redirectTo('app-edit');
 	};
 
 	const handlePreviousClick = () => {
@@ -89,7 +88,7 @@ const Applications = () => {
 			<ClayButton
 				className="m-1"
 				displayType="primary"
-				onClick={() => handleNextClick()}
+				onClick={() => handleRedirectToForms()}
 			>
 				Next
 			</ClayButton>
@@ -101,7 +100,7 @@ const Applications = () => {
 		setContentModal(ModalType.insurance);
 		setCardSelected(insuranceCards[0]);
 		setIsLoading(true);
-		setTimeout(() => setIsLoading(false), 2000);
+		setTimeout(() => setIsLoading(false), 1000);
 
 		Liferay.on('openModalEvent', handler);
 
@@ -137,13 +136,6 @@ const Applications = () => {
 					<ProductCardPersona />
 				)}
 			</Modal>
-			<NewApplication>
-				{state.currentStep === 0 && <ContactInfo />}
-
-				{state.currentStep === 1 && <VehicleInfo />}
-
-				{state.currentStep === 2 && <DriverInfo />}
-			</NewApplication>
 		</>
 	);
 };

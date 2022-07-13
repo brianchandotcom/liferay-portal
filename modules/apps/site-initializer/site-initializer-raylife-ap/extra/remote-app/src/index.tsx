@@ -19,6 +19,7 @@ import ClayIconProvider from './common/context/ClayIconProvider';
 import './common/styles/index.scss';
 import NewApplicationAutoContextProvider from './routes/applications/context/NewApplicationAutoContextProvider';
 import Applications from './routes/applications/pages/Applications';
+import NewApplication from './routes/applications/pages/NewApplication';
 import Claims from './routes/claims/pages/Claims';
 import RecentApplications from './routes/dashboard/pages/RecentApplications';
 import Policies from './routes/policies/pages/Policies';
@@ -38,11 +39,7 @@ const DirectToCustomer: React.FC<Props> = ({route}) => {
 	}
 
 	if (routeEntry === 'applications') {
-		return (
-			<NewApplicationAutoContextProvider>
-				<Applications />
-			</NewApplicationAutoContextProvider>
-		);
+		return <Applications />;
 	}
 
 	if (routeEntry === 'policies') {
@@ -55,6 +52,14 @@ const DirectToCustomer: React.FC<Props> = ({route}) => {
 
 	if (routeEntry === 'reports') {
 		return <Reports />;
+	}
+
+	if (routeEntry === 'new-application') {
+		return (
+			<NewApplicationAutoContextProvider>
+				<NewApplication />
+			</NewApplicationAutoContextProvider>
+		);
 	}
 
 	return <></>;

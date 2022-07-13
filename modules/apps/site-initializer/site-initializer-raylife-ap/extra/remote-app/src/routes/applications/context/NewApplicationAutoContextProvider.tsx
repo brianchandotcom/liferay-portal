@@ -179,6 +179,7 @@ const initialState: InitialStateTypes = {
 };
 
 export enum ACTIONS {
+	SET_APPLICATION_ID = 'SET_APPLICATION_ID',
 	SET_CURRENT_STEP = 'SET_CURRENT_STEP',
 	SET_CONTACT_INFO_FORM = 'SET_CONTACT_INFO_FORM',
 	SET_VEHICLE_INFO_FORM = 'SET_VEHICLE_INFO_FORM',
@@ -186,14 +187,13 @@ export enum ACTIONS {
 	SET_DRIVER_INFO_FORM = 'SET_DRIVER_INFO_FORM',
 	SET_HAS_FORM_CHANGE = 'SET_HAS_FORM_CHANGE',
 	SET_NEW_VEHICLE = 'SET_NEW_VEHICLE',
-	SET_REMOVE_VEHICLE = 'SET_REMOVE_VEHICLE',
 	SET_NEW_DRIVER = 'SET_NEW_DRIVER',
 	SET_REMOVE_DRIVER = 'SET_REMOVE_DRIVER',
-	SET_NEW_VEHICLE = 'SET_NEW_VEHICLE',
 	SET_REMOVE_VEHICLE = 'SET_REMOVE_VEHICLE',
 }
 
 type ActionsPayload = {
+	[ACTIONS.SET_APPLICATION_ID]: {id: number};
 	[ACTIONS.SET_CONTACT_INFO_FORM]: ContactInfoFormTypes;
 	[ACTIONS.SET_COVERAGE_FORM]: CoverageFormTypes;
 	[ACTIONS.SET_CURRENT_STEP]: number;
@@ -224,6 +224,13 @@ export const NewApplicationAutoContext = createContext<
 
 const reducer = (state: InitialStateTypes, action: ApplicationActions) => {
 	switch (action.type) {
+		case ACTIONS.SET_APPLICATION_ID: {
+			return {
+				...state,
+				applicationId: action.payload.id.toString(),
+			};
+		}
+
 		case ACTIONS.SET_CURRENT_STEP: {
 			return {
 				...state,

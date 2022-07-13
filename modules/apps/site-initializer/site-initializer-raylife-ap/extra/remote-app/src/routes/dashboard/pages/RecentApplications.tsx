@@ -104,7 +104,7 @@ const RecentApplications = () => {
 		setCardSelected(insuranceCards[0]);
 		setIsLoading(true);
 		setVisible(!visible);
-		setTimeout(() => setIsLoading(false), 2000);
+		setTimeout(() => setIsLoading(false), 1000);
 	};
 
 	const handleEditApplication = (externalReferenceCode: string) => {
@@ -144,6 +144,10 @@ const RecentApplications = () => {
 
 	const handleNextClick = () => {
 		setContentModal(ModalType.insuranceProducts);
+	};
+
+	const handleRedirectToForms = () => {
+		redirectTo('app-edit');
 	};
 
 	const handlePreviousClick = () => {
@@ -188,7 +192,7 @@ const RecentApplications = () => {
 			<ClayButton
 				className="m-1"
 				displayType="primary"
-				onClick={() => handleNextClick()}
+				onClick={() => handleRedirectToForms()}
 			>
 				Next
 			</ClayButton>

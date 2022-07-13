@@ -18,19 +18,19 @@ import ClayMultiStepNav from '@clayui/multi-step-nav';
 import classNames from 'classnames';
 import {ReactNode, useContext} from 'react';
 
-import ClayIconProvider from '../../../../common/context/ClayIconProvider';
-import {createOrUpdateRaylifeApplication} from '../../../../common/services';
-import {CONSTANTS} from '../../../../common/utils/constants';
+import ClayIconProvider from '../../../../../common/context/ClayIconProvider';
+import {createOrUpdateRaylifeApplication} from '../../../../../common/services';
+import {CONSTANTS} from '../../../../../common/utils/constants';
 import {
 	ACTIONS,
 	NewApplicationAutoContext,
-} from '../../context/NewApplicationAutoContextProvider';
+} from '../../../context/NewApplicationAutoContextProvider';
 
 type DriverInfoProps = {
 	children: ReactNode;
 };
 
-const NewApplication = ({children}: DriverInfoProps) => {
+const NewApplicationAuto = ({children}: DriverInfoProps) => {
 	const [state, dispatch] = useContext(NewApplicationAutoContext);
 
 	const steps = [
@@ -61,13 +61,24 @@ const NewApplication = ({children}: DriverInfoProps) => {
 		},
 	];
 
-	const handleNextClick = () => {
+	const handleNextClick = (event: any) => {
+		event?.preventDefault();
 		dispatch({payload: false, type: ACTIONS.SET_HAS_FORM_CHANGE});
 
 		const applicationStatus =
-			state.currentStep === 0 ? CONSTANTS.APPLICATION_STATUS.OPEN : '';
+			state.currentStep < 4
+				? CONSTANTS.APPLICATION_STATUS.OPEN
+				: CONSTANTS.APPLICATION_STATUS.QUOTED;
 
-		createOrUpdateRaylifeApplication(state, applicationStatus);
+		createOrUpdateRaylifeApplication(state, applicationStatus).then(
+			(response) => {
+				const {
+					data: {id},
+				} = response;
+
+				dispatch({payload: {id}, type: ACTIONS.SET_APPLICATION_ID});
+			}
+		);
 
 		if (state.currentStep < steps.length) {
 			dispatch({
@@ -184,7 +195,7 @@ const NewApplication = ({children}: DriverInfoProps) => {
 						<ClayButton
 							className="text-uppercase"
 							displayType="primary"
-							onClick={() => handleNextClick()}
+							onClick={(event) => handleNextClick(event)}
 							small={true}
 						>
 							Next
@@ -196,4 +207,4 @@ const NewApplication = ({children}: DriverInfoProps) => {
 	);
 };
 
-export default NewApplication;
+export default NewApplicationAuto;

@@ -18,9 +18,22 @@ const buttonElement = fragmentElement.querySelector('#plus-button');
 const buttonName = configuration.buttonName;
 const eventName = configuration.eventName;
 
+const handleClick = () => {
+	const EVENT_OPTION = {
+		async: true,
+		fireOn: true,
+	};
+
+	const eventPublish = Liferay.publish('openModalEvent', EVENT_OPTION);
+
+	eventPublish.fire({
+		show: true,
+	});
+};
+
 buttonNameElement.innerText = buttonName;
 buttonElement.onclick = () => {
 	if (eventName) {
-		alert(`Event name: ${eventName}`);
+		handleClick();
 	}
 };

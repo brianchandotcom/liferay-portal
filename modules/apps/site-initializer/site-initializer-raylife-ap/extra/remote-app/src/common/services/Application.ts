@@ -53,11 +53,20 @@ const adaptToFormApplicationRequest = (state: any, status: any) => ({
 		key: status,
 	},
 	city: state?.contactInfo?.form?.city,
-	dataJSON: JSON.stringify({ownership: state?.contactInfo?.ownership}),
+	dataJSON: JSON.stringify({
+		driverInfo: {
+			form: state?.driverInfo?.form,
+		},
+		ownership: state?.contactInfo?.ownership,
+		vehicleInfo: {
+			form: state?.vehicleInfo?.form,
+		},
+	}),
 	email: state?.contactInfo?.form?.email,
 	firstName: state?.contactInfo?.form?.firstName,
 	lastName: state?.contactInfo?.form?.lastName,
 	phone: state?.contactInfo?.form?.phone,
+	productName: 'Auto',
 	state: state?.contactInfo?.form?.state,
 	zip: state?.contactInfo?.form?.zipCode,
 });

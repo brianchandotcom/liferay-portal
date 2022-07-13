@@ -38,9 +38,18 @@ export default function LocalesList({
 	onLocaleClicked,
 	onLocaleRemoved,
 }) {
+	const availableLocalesArray = Array.from(availableLocales.values());
+
+	const sortedLocales = [
+		availableLocalesArray.find((locale) => locale.id === defaultLocale),
+		...availableLocalesArray.filter(
+			(locale) => locale.id !== defaultLocale
+		),
+	];
+
 	return (
 		<>
-			{Array.from(availableLocales.values()).map((locale) => (
+			{sortedLocales.map((locale) => (
 				<Locale
 					editingLocale={editingLocale}
 					key={locale.id}

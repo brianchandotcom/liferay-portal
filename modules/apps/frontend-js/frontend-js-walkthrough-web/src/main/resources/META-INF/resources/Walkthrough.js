@@ -323,19 +323,15 @@ const Step = ({
 
 	useObserveRect(align, popoverRef?.current);
 
-	const path = themeDisplay.getLayoutRelativeURL();
+	const currentPage = useMemo(
+		() =>
+			Object.keys(pages).find((url) =>
+				themeDisplay.getLayoutRelativeURL().includes(url)
+			),
+		[pages]
+	);
 
-	const locationURL =
-		themeDisplay.getPathContext() +
-		location.pathname +
-		location.search +
-		location.hash;
-
-	if (
-		!pages[path]?.includes(id) ||
-		!urlSearchParamsContainsAnother(path, locationURL) ||
-		!pathContainsLayoutRelativeURL(locationURL)
-	) {
+	if (!pages[currentPage]?.includes(id)) {
 		return null;
 	}
 

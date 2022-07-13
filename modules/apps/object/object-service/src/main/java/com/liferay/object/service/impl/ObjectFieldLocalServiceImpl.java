@@ -49,6 +49,8 @@ import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -286,6 +288,42 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		return activeObjectFields;
+	}
+
+	@Override
+	public Column<?, ?> getColumn(long objectDefinitionId, String name) {
+		try {
+			ObjectField objectField = Optional.ofNullable(
+				fetchObjectField(objectDefinitionId, name)
+			).orElseGet(
+				() -> _getObjectRelationshipField(objectDefinitionId, name)
+			);
+
+			if (objectField == null) {
+				throw new UnsupportedOperationException(
+					"Unsupported method getColumn with field name " + name);
+			}
+
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
+				Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT)) {
+
+				throw new UnsupportedOperationException(
+					"Unsupported operation with " +
+						objectField.getBusinessType() + " field");
+			}
+
+			Table<?> table = getTable(
+				objectDefinitionId, objectField.getName());
+
+			return table.getColumn(objectField.getDBColumnName());
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
 	}
 
 	@Override
@@ -743,6 +781,24 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		return objectField;
+	}
+
+	private ObjectField _getObjectRelationshipField(
+		long objectDefinitionId, String relationshipIdName) {
+
+		for (ObjectField objectField : getObjectFields(objectDefinitionId)) {
+			if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP) &&
+				StringUtil.endsWith(
+					objectField.getName(),
+					StringPool.UNDERLINE + relationshipIdName)) {
+
+				return objectField;
+			}
+		}
+
+		return null;
 	}
 
 	private void _setBusinessTypeAndDBType(

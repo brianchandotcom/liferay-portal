@@ -14,12 +14,15 @@
 
 package com.liferay.search.experiences.internal.upgrade.v1_3_0;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.search.experiences.model.impl.SXPElementImpl;
@@ -123,6 +126,15 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 		return Arrays.toString(elementInstances);
 	}
 
+	private String _getExternalReferenceCode(String title) throws Exception {
+		String localizedTitle = LocalizationUtil.getLocalization(
+			title, LocaleUtil.toLanguageId(LocaleUtil.US));
+
+		return StringUtil.replace(
+			StringUtil.toUpperCase(localizedTitle), CharPool.SPACE,
+			CharPool.UNDERLINE);
+	}
+
 	private String _renameDescription(String description) {
 		return StringUtil.replace(
 			description,
@@ -197,32 +209,38 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select sxpElementId, description, elementDefinitionJSON, " +
-					"readOnly, title, version from SXPElement");
+					"externalReferenceCode, readOnly, title, version from " +
+						"SXPElement");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					StringBundler.concat(
 						"update SXPElement set description = ?, ",
-						"elementDefinitionJSON = ?, title = ?, version = ? ",
-						"where sxpElementId = ?"))) {
+						"elementDefinitionJSON = ?, externalReferenceCode = ?,",
+						"title = ?, version = ? where sxpElementId = ?"))) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
 					String description = resultSet.getString("description");
 					String elementDefinitionJSON = resultSet.getString(
 						"elementDefinitionJSON");
+					String externalReferenceCode = resultSet.getString(
+						"externalReferenceCode");
 					String title = resultSet.getString("title");
 
 					if (resultSet.getBoolean("readOnly")) {
 						description = _renameDescription(description);
 						elementDefinitionJSON = _renameElementDefinitionJSON(
 							elementDefinitionJSON);
+						externalReferenceCode = _getExternalReferenceCode(
+							title);
 						title = _renameTitle(title);
 					}
 
 					preparedStatement2.setString(1, description);
 					preparedStatement2.setString(2, elementDefinitionJSON);
-					preparedStatement2.setString(3, title);
+					preparedStatement2.setString(3, externalReferenceCode);
+					preparedStatement2.setString(4, title);
 
 					String version = resultSet.getString("version");
 
@@ -230,10 +248,10 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 						version = "1.0";
 					}
 
-					preparedStatement2.setString(4, version);
+					preparedStatement2.setString(5, version);
 
 					preparedStatement2.setLong(
-						5, resultSet.getLong("sxpElementId"));
+						6, resultSet.getLong("sxpElementId"));
 					preparedStatement2.addBatch();
 				}
 

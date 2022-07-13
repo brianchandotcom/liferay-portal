@@ -209,7 +209,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			return;
 		}
 
-		if (!_queryResultMap.containsKey(packageName)) {
+		if (!_vulnerableVersionMap.containsKey(packageName)) {
 			_getServerData(
 				packageName, httpClient, securityAdvisoryEcosystemEnum);
 		}
@@ -222,7 +222,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		String fileName, String packageName, Version version) {
 
 		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
-			_queryResultMap.get(packageName);
+			_vulnerableVersionMap.get(packageName);
 
 		for (SecurityVulnerabilityNode securityVulnerabilityNode :
 				securityVulnerabilityNodes) {
@@ -284,7 +284,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
 		throws IOException {
 
-		if (_queryResultMap.containsKey(packageName)) {
+		if (_vulnerableVersionMap.containsKey(packageName)) {
 			return;
 		}
 
@@ -295,7 +295,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			packageName, null, httpClient, securityAdvisoryEcosystemEnum,
 			securityVulnerabilityNodes);
 
-		_queryResultMap.put(packageName, securityVulnerabilityNodes);
+		_vulnerableVersionMap.put(packageName, securityVulnerabilityNodes);
 	}
 
 	private void _gradleLibraryVersionCheck(String fileName, String content)
@@ -579,7 +579,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	private static final Pattern _gradleVersionPattern = Pattern.compile(
 		"version: \"([^,\n\\\\)]+)\"");
 	private static final Map<String, List<SecurityVulnerabilityNode>>
-		_queryResultMap = new ConcurrentHashMap<>();
+		_vulnerableVersionMap = new ConcurrentHashMap<>();
 
 	private int _pageNumber;
 	private List<String> _severities;

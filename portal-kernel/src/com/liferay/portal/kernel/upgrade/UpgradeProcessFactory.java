@@ -118,7 +118,7 @@ public class UpgradeProcessFactory {
 	private static String _getUpgradeInfo(String tableName, String message) {
 		Thread thread = Thread.currentThread();
 
-		String callerClassName = thread.getStackTrace()[2].getClassName();
+		String callerClassName = thread.getStackTrace()[3].getClassName();
 
 		String tableInfo = StringPool.BLANK;
 

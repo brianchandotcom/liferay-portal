@@ -1,4 +1,4 @@
 able-global-js:
-    name: Able Global JavaScript
+    name: Able Global JS
     type: globalJS
     url: global.js

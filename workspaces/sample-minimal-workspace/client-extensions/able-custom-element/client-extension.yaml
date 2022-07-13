@@ -6,7 +6,6 @@ able-custom-element:
     instanceable: false
     name: Able Custom Element
     portletCategoryName: category.remote-apps
-    sourceCodeURL: https://www.liferay.com
     type: customElement
     urls:
         - index.js

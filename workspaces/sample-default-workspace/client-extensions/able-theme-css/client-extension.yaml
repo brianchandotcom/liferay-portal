@@ -2,5 +2,4 @@ able-theme-css:
     clayURL: css/clay.css
     mainURL: css/main.css
     name: Able Theme CSS
-    sourceCodeURL: https://www.liferay.com
     type: themeCSS

@@ -318,12 +318,13 @@ public class ObjectEntryOpenAPIResourceImpl
 		}
 
 		return new DTOProperty(
-			HashMapBuilder.<String, Object>put(
-				"x-parent-map", "properties"
-			).put(
-				"x-required", String.valueOf(objectField.isRequired())
-			).build(),
-			objectField.getName(), objectField.getDBType());
+			Collections.singletonMap("x-parent-map", "properties"),
+			objectField.getName(), objectField.getDBType()) {
+
+			{
+				setRequired(objectField.isRequired());
+			}
+		};
 	}
 
 	private OpenAPISchemaFilter _getOpenAPISchemaFilter(

@@ -117,8 +117,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 		if (fieldsTemplateVariableGroup != null) {
 			fieldsTemplateVariableGroup.addVariable(
-				"friendly-url", String.class,
-				"friendlyURLs[themeDisplay.getLanguageId()]!\"\"");
+				"friendly-url", String.class, "friendlyURL");
 		}
 
 		String[] restrictedVariables = getRestrictedVariables(language);

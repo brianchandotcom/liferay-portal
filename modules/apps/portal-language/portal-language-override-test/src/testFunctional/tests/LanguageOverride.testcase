@@ -390,6 +390,37 @@ definition {
 		}
 	}
 
+	@description = "It asserts proper override and translation infos for new language key."
+	@priority = "4"
+	test CanViewProperOverrideInfosforNewLanguageKey {
+		task ("Given one new language key is created with all language override translations") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "month",
+				translationOverrideList = "en-US,ar-SA,ca-ES,zh-CN,nl-NL,fi-FI,fr-FR,de-DE,hu-HU,ja-JP,pt-BR,es-ES,sv-SE",
+				translationOverrideValueList = "month,دقيقة,mes,月,maand,kuukausi,mois,Monat,hónap,のメモ,mês,mes,månad");
+		}
+
+		task ("When the user filters by 'Any Language' and change language to "pt-BR"") {
+			ManagementBar.setFilterAndOrder(filterBy = "Any Language");
+
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "pt-BR");
+		}
+
+		task ("Then the key should appear and list all languages it has translations for") {
+			LexiconList.viewListEntryTitle(listEntry = "month");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "month",
+				listEntrySubtitle = "mês");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "month",
+				listEntrySubtitle = "Languages With Override: ar_SA, ca_ES, de_DE, en_US, es_ES, fi_FI, fr_FR, hu_HU, ja_JP, nl_NL, pt_BR, sv_SE, zh_CN");
+		}
+	}
+
 	@description = "This test clears all overrides for an overridden language key via the Edit page. Doing so will delete the language key."
 	@priority = "5"
 	test ClearingAllOverridesInEditPageWillDeleteCreatedKey {

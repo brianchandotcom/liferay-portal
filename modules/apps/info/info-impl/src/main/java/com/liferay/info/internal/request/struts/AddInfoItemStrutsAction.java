@@ -87,17 +87,32 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 		String formItemId = ParamUtil.getString(
 			httpServletRequest, "formItemId");
 
-		String redirect = null;
-
 		List<InfoFieldValue<Object>> infoFieldValues = null;
-
-		boolean success = false;
 
 		try {
 			infoFieldValues =
 				_infoRequestFieldValuesProviderHelper.getInfoFieldValues(
 					httpServletRequest);
+		}
+		catch (InfoFormException infoFormException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(infoFormException);
+			}
 
+			SessionErrors.add(
+				httpServletRequest, formItemId, infoFormException);
+
+			httpServletResponse.sendRedirect(
+				httpServletRequest.getHeader(HttpHeaders.REFERER));
+
+			return null;
+		}
+
+		String redirect = null;
+
+		boolean success = false;
+
+		try {
 			if (!Objects.equals(
 					Constants.VIEW,
 					ParamUtil.getString(httpServletRequest, "p_l_mode"))) {

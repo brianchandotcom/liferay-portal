@@ -26,7 +26,6 @@ import React, {useRef, useState} from 'react';
 
 export default function SearchBar({
 	emptySearchEnabled,
-	isSelectedEverythingSearchScope = false,
 	keywords = '',
 	keywordsParameterName = 'q',
 	letUserChooseScope = false,
@@ -35,6 +34,7 @@ export default function SearchBar({
 	scopeParameterStringCurrentSite,
 	scopeParameterStringEverything,
 	searchURL,
+	selectedEverythingSearchScope = false,
 	suggestionsContributorConfiguration = '{}',
 	suggestionsDisplayThreshold = '2',
 	suggestionsURL = '/o/portal-search-rest/v1.0/suggestions',
@@ -53,7 +53,7 @@ export default function SearchBar({
 		networkStatus: 4,
 	}));
 	const [scope, setScope] = useState(
-		isSelectedEverythingSearchScope
+		selectedEverythingSearchScope
 			? scopeParameterStringEverything
 			: scopeParameterStringCurrentSite
 	);

@@ -87,8 +87,6 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 									HashMapBuilder.<String, Object>put(
 										"emptySearchEnabled", searchBarPortletDisplayContext.isEmptySearchEnabled()
 									).put(
-										"isSelectedEverythingSearchScope", searchBarPortletDisplayContext.isSelectedEverythingSearchScope()
-									).put(
 										"keywords", searchBarPortletDisplayContext.getKeywords()
 									).put(
 										"keywordsParameterName", searchBarPortletDisplayContext.getKeywordsParameterName()
@@ -104,6 +102,8 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 										"scopeParameterStringEverything", searchBarPortletDisplayContext.getEverythingSearchScopeParameterString()
 									).put(
 										"searchURL", searchBarPortletDisplayContext.getSearchURL()
+									).put(
+										"selectedEverythingSearchScope", searchBarPortletDisplayContext.isSelectedEverythingSearchScope()
 									).put(
 										"suggestionsContributorConfiguration", searchBarPortletDisplayContext.getSuggestionsContributorConfiguration()
 									).put(

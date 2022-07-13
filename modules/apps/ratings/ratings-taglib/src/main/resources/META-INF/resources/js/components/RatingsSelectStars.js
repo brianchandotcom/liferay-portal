@@ -32,10 +32,17 @@ export default function RatingsSelectStars({
 	totalEntries,
 }) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+	const [focusId, setFocusId] = useState();
 
 	const handleOnClick = (index) => {
 		setIsDropdownOpen(false);
 		onVote(index);
+	};
+
+	const handleInitialFocus = () => {
+		if (!focusId) {
+			setFocusId('rsd_0');
+		}
 	};
 
 	return (
@@ -51,9 +58,13 @@ export default function RatingsSelectStars({
 						className: 'ratings-stars-dropdown',
 					}}
 					onActiveChange={(isActive) => setIsDropdownOpen(isActive)}
+					onFocus={handleInitialFocus}
+					role="listbox"
 					trigger={
 						<ClayButton
-							aria-pressed={!!score}
+							aria-expanded={isDropdownOpen}
+							aria-haspopup="listbox"
+							aria-label={getTitle()}
 							borderless
 							className="ratings-stars-dropdown-toggle"
 							disabled={disabled}
@@ -72,7 +83,10 @@ export default function RatingsSelectStars({
 						</ClayButton>
 					}
 				>
-					<ClayDropDown.ItemList>
+					<ClayDropDown.ItemList
+						aria-activeDescendant={focusId}
+						role="listbox"
+					>
 						{starScores.map(({label}, index) => {
 							const srMessage =
 								index === 0
@@ -86,10 +100,15 @@ export default function RatingsSelectStars({
 							return (
 								<ClayDropDown.Item
 									active={label === score}
+									id={'rsd_' + index}
 									key={index}
 									onClick={() => {
 										handleOnClick(index);
 									}}
+									onFocus={() => {
+										setFocusId('rsd_' + index);
+									}}
+									role="option"
 								>
 									{label}
 
@@ -105,7 +124,14 @@ export default function RatingsSelectStars({
 
 						<ClayDropDown.Item
 							disabled={score === 0}
+							id={'rsd_' + Liferay.Language.get('delete')}
 							onClick={handleOnClick}
+							onFocus={() => {
+								setFocusId(
+									'rsd_' + Liferay.Language.get('delete')
+								);
+							}}
+							role="option"
 						>
 							{Liferay.Language.get('delete')}
 						</ClayDropDown.Item>

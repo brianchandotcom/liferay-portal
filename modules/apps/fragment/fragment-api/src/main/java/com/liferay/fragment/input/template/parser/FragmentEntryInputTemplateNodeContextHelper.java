@@ -219,12 +219,27 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				fileSourceTypeOptional.orElse(null);
 
 			if (fileSourceType != null) {
+				String fileName = null;
+				FileEntry fileEntry = null;
+
 				boolean selectFromDocumentLibrary = false;
+
+				if (Validator.isNotNull(value)) {
+					fileEntry = _fetchFileEntry(GetterUtil.getLong(value));
+				}
 
 				if (fileSourceType ==
 						FileInfoFieldType.FileSourceType.DOCUMENTS_AND_MEDIA) {
 
 					selectFromDocumentLibrary = true;
+
+					if (fileEntry != null) {
+						fileName = fileEntry.getFileName();
+					}
+				}
+
+				if (fileName != null) {
+					inputTemplateNode.addAttribute("fileName", fileName);
 				}
 
 				inputTemplateNode.addAttribute(

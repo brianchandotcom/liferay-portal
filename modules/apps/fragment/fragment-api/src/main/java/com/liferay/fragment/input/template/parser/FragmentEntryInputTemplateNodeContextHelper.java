@@ -285,6 +285,9 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 			}
 
 			inputTemplateNode.addAttribute("options", options);
+		}
+		else if (infoField.getInfoFieldType() instanceof
+					RelationshipInfoFieldType) {
 
 			Optional<String> optionsLabelFieldNameOptional =
 				infoField.getAttributeOptional(

@@ -41,13 +41,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.apache.maven.artifact.versioning.InvalidVersionSpecificationException;
@@ -120,7 +121,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 	private void _checkIsContainVulnerabilities(
 			String fileName, String packageName, String version,
-			CloseableHttpClient httpClient,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
 		throws IOException {
 
@@ -130,16 +130,14 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 		if (!_vulnerableVersionMap.containsKey(packageName)) {
 			_generateVulnerableVersionMap(
-				packageName, httpClient, securityAdvisoryEcosystemEnum);
+				packageName, securityAdvisoryEcosystemEnum);
 		}
 
 		_checkIsContainVulnerabilities(
 			fileName, packageName, new DefaultArtifactVersion(version));
 	}
 
-	private void _checkVersionInJsonFile(
-			String fileName, CloseableHttpClient httpClient,
-			JSONObject jsonObject)
+	private void _checkVersionInJsonFile(String fileName, JSONObject jsonObject)
 		throws IOException {
 
 		if (jsonObject == null) {
@@ -156,13 +154,13 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			}
 
 			_checkIsContainVulnerabilities(
-				fileName, dependencyName, version, httpClient,
+				fileName, dependencyName, version,
 				SecurityAdvisoryEcosystemEnum.NPM);
 		}
 	}
 
 	private void _generateVulnerableVersionMap(
-			String packageName, CloseableHttpClient httpClient,
+			String packageName,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
 		throws IOException {
 
@@ -172,7 +170,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
 			_getSecurityVulnerabilityNodes(
-				packageName, null, httpClient, securityAdvisoryEcosystemEnum);
+				packageName, null, securityAdvisoryEcosystemEnum);
 
 		_vulnerableVersionMap.put(packageName, securityVulnerabilityNodes);
 	}
@@ -188,7 +186,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	}
 
 	private List<SecurityVulnerabilityNode> _getSecurityVulnerabilityNodes(
-			String packageName, String cursor, CloseableHttpClient httpClient,
+			String packageName, String cursor,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
 		throws IOException {
 
@@ -196,48 +194,56 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			return Collections.emptyList();
 		}
 
-		HttpPost httpPost = new HttpPost("https://api.github.com/graphql");
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
-		httpPost.addHeader(
-			"Authorization", "bearer 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");
-		httpPost.addHeader(
-			"Content-Type",
-			"application/json; charset=utf-8; application/graphql");
+		try (CloseableHttpClient closeableHttpClient =
+				httpClientBuilder.build()) {
 
-		String queryArguments = StringBundler.concat(
-			"first: ", _pageNumber, ", package:\\\"", packageName,
-			"\\\", ecosystem: ", securityAdvisoryEcosystemEnum.name());
+			HttpPost httpPost = new HttpPost("https://api.github.com/graphql");
 
-		if (ListUtil.isNotNull(_severities)) {
-			queryArguments = queryArguments + ", severities: " + _severities;
-		}
+			httpPost.addHeader(
+				"Authorization",
+				"bearer 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");
+			httpPost.addHeader(
+				"Content-Type",
+				"application/json; charset=utf-8; application/graphql");
 
-		if (Validator.isNotNull(cursor)) {
-			queryArguments += "after: \\\"" + cursor + "\\\"";
-		}
+			String queryArguments = StringBundler.concat(
+				"first: ", _pageNumber, ", package:\\\"", packageName,
+				"\\\", ecosystem: ", securityAdvisoryEcosystemEnum.name());
 
-		String resultArguments =
-			"{nodes { advisory {summary, permalink} package {name} severity " +
-				"vulnerableVersionRange } pageInfo {endCursor hasNextPage } " +
-					"totalCount }";
+			if (ListUtil.isNotNull(_severities)) {
+				queryArguments =
+					queryArguments + ", severities: " + _severities;
+			}
 
-		String query = StringBundler.concat(
-			"{\"query\": \"{ securityVulnerabilities(", queryArguments, ") ",
-			resultArguments, "}\" }");
+			if (Validator.isNotNull(cursor)) {
+				queryArguments += "after: \\\"" + cursor + "\\\"";
+			}
 
-		StringEntity stringEntity = new StringEntity(
-			query, ContentType.APPLICATION_JSON);
+			String resultArguments =
+				"{nodes { advisory {summary, permalink} package {name} " +
+					"severity vulnerableVersionRange } pageInfo {endCursor " +
+						"hasNextPage } totalCount }";
 
-		httpPost.setEntity(stringEntity);
+			String query = StringBundler.concat(
+				"{\"query\": \"{ securityVulnerabilities(", queryArguments,
+				") ", resultArguments, "}\" }");
 
-		try {
-			HttpResponse httpResponse = httpClient.execute(httpPost);
+			StringEntity stringEntity = new StringEntity(
+				query, ContentType.APPLICATION_JSON);
 
-			StatusLine statusLine = httpResponse.getStatusLine();
+			httpPost.setEntity(stringEntity);
 
-			if (statusLine.getStatusCode() == 200) {
+			CloseableHttpResponse closeableHttpResponse =
+				closeableHttpClient.execute(httpPost);
+
+			StatusLine statusLine = closeableHttpResponse.getStatusLine();
+
+			if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
 				JSONObject jsonObject = new JSONObjectImpl(
-					EntityUtils.toString(httpResponse.getEntity(), "UTF-8"));
+					EntityUtils.toString(
+						closeableHttpResponse.getEntity(), "UTF-8"));
 
 				JSONObject dataJSONObject = jsonObject.getJSONObject("data");
 
@@ -287,7 +293,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 						_getSecurityVulnerabilityNodes(
 							packageName,
 							pageInfoJSONObject.getString("endCursor"),
-							httpClient, securityAdvisoryEcosystemEnum));
+							securityAdvisoryEcosystemEnum));
 				}
 
 				if (!securityVulnerabilityNodes.isEmpty()) {
@@ -342,8 +348,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			y = content.indexOf("}", y + 1);
 		}
 
-		CloseableHttpClient httpClient = HttpClients.createDefault();
-
 		for (String dependency : dependencies.split(StringPool.NEW_LINE)) {
 			dependency = dependency.trim();
 
@@ -368,17 +372,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			}
 
 			_checkIsContainVulnerabilities(
-				fileName, group + StringPool.COLON + name, version, httpClient,
+				fileName, group + StringPool.COLON + name, version,
 				SecurityAdvisoryEcosystemEnum.MAVEN);
-		}
-
-		try {
-			httpClient.close();
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
-			}
 		}
 	}
 
@@ -388,8 +383,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		if (Validator.isNull(content)) {
 			return;
 		}
-
-		CloseableHttpClient httpClient = HttpClients.createDefault();
 
 		Document document = SourceUtil.readXML(content);
 
@@ -420,17 +413,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				}
 
 				_checkIsContainVulnerabilities(
-					fileName, org + StringPool.COLON + name, rev, httpClient,
+					fileName, org + StringPool.COLON + name, rev,
 					SecurityAdvisoryEcosystemEnum.MAVEN);
-			}
-		}
-
-		try {
-			httpClient.close();
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
 			}
 		}
 	}
@@ -442,32 +426,18 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			return;
 		}
 
-		CloseableHttpClient httpClient = HttpClients.createDefault();
-
 		try {
 			JSONObject contentJSONObject = new JSONObjectImpl(content);
 
 			_checkVersionInJsonFile(
-				fileName, httpClient,
-				contentJSONObject.getJSONObject("dependencies"));
+				fileName, contentJSONObject.getJSONObject("dependencies"));
 
 			_checkVersionInJsonFile(
-				fileName, httpClient,
-				contentJSONObject.getJSONObject("devDependencies"));
+				fileName, contentJSONObject.getJSONObject("devDependencies"));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
-			}
-		}
-		finally {
-			try {
-				httpClient.close();
-			}
-			catch (IOException ioException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(ioException);
-				}
 			}
 		}
 	}
@@ -478,8 +448,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		if (Validator.isNull(content)) {
 			return;
 		}
-
-		CloseableHttpClient httpClient = HttpClients.createDefault();
 
 		Document document = SourceUtil.readXML(content);
 
@@ -520,16 +488,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 					fileName,
 					groupIdElement.getText() + StringPool.COLON +
 						artifactIdElement.getText(),
-					version, httpClient, SecurityAdvisoryEcosystemEnum.MAVEN);
-			}
-		}
-
-		try {
-			httpClient.close();
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
+					version, SecurityAdvisoryEcosystemEnum.MAVEN);
 			}
 		}
 	}
@@ -543,8 +502,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 		Enumeration<String> enumeration =
 			(Enumeration<String>)properties.propertyNames();
-
-		CloseableHttpClient httpClient = HttpClients.createDefault();
 
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
@@ -562,17 +519,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			}
 
 			_checkIsContainVulnerabilities(
-				fileName, dependency[1], dependency[2], httpClient,
+				fileName, dependency[1], dependency[2],
 				SecurityAdvisoryEcosystemEnum.MAVEN);
-		}
-
-		try {
-			httpClient.close();
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
-			}
 		}
 	}
 

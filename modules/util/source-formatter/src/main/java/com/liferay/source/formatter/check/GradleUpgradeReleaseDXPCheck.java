@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.upgrade.GradleBuildFile;
+import com.liferay.source.formatter.upgrade.GradleDependency;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.net.HttpURLConnection;
@@ -29,6 +31,7 @@ import java.net.URL;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -47,6 +50,10 @@ public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {
+
+		if (!fileName.endsWith("build.gradle")) {
+			return content;
+		}
 
 		String upgradeToVersion = getAttributeValue(
 			SourceFormatterUtil.UPGRADE_TO_VERSION, absolutePath);
@@ -68,7 +75,55 @@ public class GradleUpgradeReleaseDXPCheck extends BaseFileCheck {
 			return content;
 		}
 
-		return content;
+		GradleBuildFile buildFile = new GradleBuildFile(content);
+
+		List<GradleDependency> dependencies = buildFile.getDependencies();
+
+		Iterator<GradleDependency> iterator = dependencies.iterator();
+
+		boolean hasCompile = false;
+		boolean hasTest = false;
+
+		while (iterator.hasNext()) {
+			GradleDependency dependency = iterator.next();
+
+			Set<String> names = releaseDXPDependencies.get(
+				dependency.getGroup());
+
+			if ((names != null) && names.contains(dependency.getName())) {
+				continue;
+			}
+
+			iterator.remove();
+
+			String configuration = dependency.getConfiguration();
+
+			if (configuration.startsWith("compile")) {
+				hasCompile = true;
+			}
+
+			if (configuration.startsWith("test")) {
+				hasTest = true;
+			}
+		}
+
+		if (dependencies.isEmpty()) {
+			return content;
+		}
+
+		buildFile.deleteDependencies(dependencies);
+
+		if (hasCompile) {
+			buildFile.insertDependency(
+				"compileOnly", "com.liferay.portal", "release.dxp.api");
+		}
+
+		if (hasTest) {
+			buildFile.insertDependency(
+				"testCompile", "com.liferay.portal", "release.dxp.api");
+		}
+
+		return buildFile.getSource();
 	}
 
 	private Map<String, Set<String>> _getReleaseDXPDependencies(

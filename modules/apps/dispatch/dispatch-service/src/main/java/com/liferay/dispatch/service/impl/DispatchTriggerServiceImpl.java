@@ -109,7 +109,7 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 			int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
 			boolean neverEnd, boolean overlapAllowed, int startDateMonth,
 			int startDateDay, int startDateYear, int startDateHour,
-			int startDateMinute)
+			int startDateMinute, String timeZoneId)
 		throws PortalException {
 
 		_dispatchTriggerModelResourcePermission.check(
@@ -119,7 +119,7 @@ public class DispatchTriggerServiceImpl extends DispatchTriggerServiceBaseImpl {
 			dispatchTriggerId, active, cronExpression, dispatchTaskClusterMode,
 			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
 			neverEnd, overlapAllowed, startDateMonth, startDateDay,
-			startDateYear, startDateHour, startDateMinute);
+			startDateYear, startDateHour, startDateMinute, timeZoneId);
 	}
 
 	@Override

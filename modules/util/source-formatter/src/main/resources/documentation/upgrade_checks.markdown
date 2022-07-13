@@ -2,6 +2,7 @@
 
 Check | File Extensions | Description
 ----- | --------------- | -----------
+GradleUpgradeReleaseDXPCheck | .gradle | Remove and replaced dependencies in `build.gradle` that are already in `release.dxp.api` with `released.dxp.api` dependency. |
 JSPUpgradeRemovedTagsCheck | .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds removed tags when upgrading. |
 UpgradeDeprecatedAPICheck | .java | Finds calls to deprecated classes, constructors, fields or methods after an upgrade |
 UpgradeJavaCheck | .java | Performs upgrade checks for `java` files |

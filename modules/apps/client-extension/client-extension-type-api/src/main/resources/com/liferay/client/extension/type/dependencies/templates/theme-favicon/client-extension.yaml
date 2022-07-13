@@ -1,0 +1,4 @@
+${id}:
+    name: ${name}
+    type: themeFavicon
+    url: favicon.ico

@@ -1,0 +1,4 @@
+${id}:
+    name: ${name}
+    type: globalCSS
+    url: global.css

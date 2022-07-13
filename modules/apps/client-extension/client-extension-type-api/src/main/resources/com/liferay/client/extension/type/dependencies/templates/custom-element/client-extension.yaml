@@ -1,0 +1,12 @@
+${id}:
+    cssURLs:
+        - style.css
+    friendlyURLMapping: vanilla-counter
+    htmlElementName: vanilla-counter
+    instanceable: false
+    name: ${name}
+    portletCategoryName: category.remote-apps
+    type: customElement
+    urls:
+        - index.js
+    useESM: false

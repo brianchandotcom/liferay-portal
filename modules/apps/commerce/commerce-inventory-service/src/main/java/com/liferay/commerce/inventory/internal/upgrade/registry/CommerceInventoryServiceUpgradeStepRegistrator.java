@@ -96,6 +96,32 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 
 			});
 
+		registry.register(
+			"2.3.1", "2.4.0",
+			new BaseUuidUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"CIReplenishmentItem", "CIReplenishmentItemId"}
+					};
+				}
+
+			});
+
+		registry.register(
+			"2.4.0", "2.4.1",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"CIReplenishmentItem", "CIReplenishmentItemId"}
+					};
+				}
+
+			});
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce inventory upgrade step registrator finished");
 		}

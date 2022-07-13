@@ -24,6 +24,89 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-155247. The Related Assets Widget should display the assets related to all contents placed on content page."
+	@priority = "4"
+	test DisplayAllRelatedAssetsOnContentPage {
+		task ("Given a page designer has a displayed related assets and Web Content Display on content page") {
+			task ("Add a web content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Add a blogs entry") {
+				HeadlessBlog.addBlogEntry(
+					content = "Blogs Entry Content",
+					groupName = "Site Name",
+					title = "Blogs Entry Title");
+			}
+
+			task ("Select web content as related assets in blogs entry") {
+				BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+				BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+				BlogsEntry.addRelatedAsset(
+					assetTitle = "Web Content Title",
+					assetType = "Basic Web Content");
+
+				PortletEntry.publish();
+			}
+
+			task ("Add an Asset Publisher, Web Content Display and Related Assets on content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Site Name");
+
+				PageEditor.addWidget(portletName = "Asset Publisher");
+
+				PageEditor.addWidget(
+					collectionName = "Content Management",
+					portletName = "Web Content Display",
+					targetFragmentName = "Asset Publisher");
+
+				PageEditor.addWidget(
+					collectionName = "Content Management",
+					portletName = "Related Assets",
+					targetFragmentName = "Web Content Display");
+			}
+
+			task ("Select the web content in Web Content Display") {
+				WebContentDisplayPortlet.selectWebContent(webContentTitle = "Web Content Title");
+
+				IFrame.closeFrame();
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the page designer navigates to content page at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+		}
+
+		task ("Then the page designer can see blogs entry in Related Asssets widget") {
+			RelatedAssets.viewPG(relatedAssetTitle = "Blogs Entry Title");
+		}
+
+		task ("When the page designer clicks on blogs entry title") {
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
+		}
+
+		task ("Then the page designer should not see Related Assets widget") {
+			AssertElementNotPresent(
+				key_portletName = "Related Assets",
+				locator1 = "Portlet#SPECIFIC_FRAGMENTS_AND_WIDGETS");
+		}
+	}
+
 	@description = "Folders should not be shown as related assets"
 	@priority = "3"
 	@uitest

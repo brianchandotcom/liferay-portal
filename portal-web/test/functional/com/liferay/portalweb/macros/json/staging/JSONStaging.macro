@@ -42,6 +42,8 @@ definition {
 			groupId = "${groupId}",
 			unCheckedContent = "${unCheckedContent}");
 
+		// Pause is necessary because the process of activating staging via API is too fast and doesn't have time to process if you navigate to staging site quickly.
+
 		Pause(locator1 = "3000");
 	}
 

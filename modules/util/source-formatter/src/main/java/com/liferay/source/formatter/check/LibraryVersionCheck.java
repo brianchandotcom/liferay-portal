@@ -161,7 +161,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 	}
 
-	private synchronized void _generateVulnerableVersionMap(
+	private void _generateVulnerableVersionMap(
 			String packageName, CloseableHttpClient httpClient,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
 		throws IOException {
@@ -591,11 +591,11 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		"name: \"([^,\n\\\\)]+)\"");
 	private static final Pattern _gradleVersionPattern = Pattern.compile(
 		"version: \"([^,\n\\\\)]+)\"");
-	private static final Map<String, List<SecurityVulnerabilityNode>>
-		_vulnerableVersionMap = new ConcurrentHashMap<>();
 
 	private int _pageNumber;
 	private List<String> _severities;
+	private final Map<String, List<SecurityVulnerabilityNode>>
+		_vulnerableVersionMap = new ConcurrentHashMap<>();
 
 	private static class SecurityVulnerabilityNode {
 

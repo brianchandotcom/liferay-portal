@@ -68,6 +68,17 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		return _jsonObject.getString("name");
 	}
 
+	public String getPortalSHA() {
+		Matcher matcher = _portalSHAPattern.matcher(
+			_jsonObject.optString("description"));
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		return matcher.group("portalSHA");
+	}
+
 	public String getStartYearMonth() {
 		Matcher matcher = _getTestrayAttachmentURLMatcher();
 
@@ -200,6 +211,8 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		return null;
 	}
 
+	private static final Pattern _portalSHAPattern = Pattern.compile(
+		"Portal SHA: (?<portalSHA>[^;]+);");
 	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"https://testray.liferay.com/reports/production/logs/",

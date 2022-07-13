@@ -211,10 +211,7 @@ public class CASFilter extends BaseFilter {
 			assertion = ticketValidator.validate(ticket, serviceURL);
 		}
 		catch (TicketValidationException ticketValidationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ticketValidationException);
-			}
-			else if (_log.isInfoEnabled()) {
+			if (_log.isInfoEnabled()) {
 				_log.info(ticketValidationException);
 			}
 

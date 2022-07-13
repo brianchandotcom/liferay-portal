@@ -1204,10 +1204,7 @@ public class LayoutReferencesExportImportContentProcessor
 			}
 		}
 		catch (UnknownHostException unknownHostException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(unknownHostException);
-			}
-			else if (_log.isWarnEnabled()) {
+			if (_log.isWarnEnabled()) {
 				_log.warn(unknownHostException);
 			}
 		}

@@ -255,10 +255,7 @@ public abstract class BaseSegmentsEntryProvider
 						contextFilterString, context);
 				}
 				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
-					}
-					else if (_log.isWarnEnabled()) {
+					if (_log.isWarnEnabled()) {
 						_log.warn(portalException);
 					}
 				}

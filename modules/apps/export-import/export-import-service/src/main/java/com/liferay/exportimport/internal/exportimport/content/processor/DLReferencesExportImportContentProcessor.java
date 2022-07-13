@@ -328,10 +328,7 @@ public class DLReferencesExportImportContentProcessor
 			}
 		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-			else if (_log.isWarnEnabled()) {
+			if (_log.isWarnEnabled()) {
 				_log.warn(exception);
 			}
 		}
@@ -626,10 +623,7 @@ public class DLReferencesExportImportContentProcessor
 						fileEntryId);
 				}
 				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
-					}
-					else if (_log.isWarnEnabled()) {
+					if (_log.isWarnEnabled()) {
 						_log.warn(portalException);
 					}
 

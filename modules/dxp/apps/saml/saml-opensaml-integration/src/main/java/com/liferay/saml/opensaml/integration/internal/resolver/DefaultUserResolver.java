@@ -151,10 +151,7 @@ public class DefaultUserResolver implements UserResolver {
 					samlSpIdpConnection.getNormalizedUserAttributeMappings());
 		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-			else if (_log.isWarnEnabled()) {
+			if (_log.isWarnEnabled()) {
 				_log.warn(exception);
 			}
 		}

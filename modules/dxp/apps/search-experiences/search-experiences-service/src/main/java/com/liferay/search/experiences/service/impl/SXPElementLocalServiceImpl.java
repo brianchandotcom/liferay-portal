@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.search.experiences.exception.DuplicateSXPElementExternalReferenceCodeException;
 import com.liferay.search.experiences.exception.SXPElementElementDefinitionJSONException;
 import com.liferay.search.experiences.exception.SXPElementTitleException;
 import com.liferay.search.experiences.model.SXPElement;
@@ -75,6 +76,16 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		}
 
 		User user = _userLocalService.getUser(userId);
+
+		SXPElement existingSXPElement = fetchSXPElementByExternalReferenceCode(
+			user.getCompanyId(), sxpElement.getExternalReferenceCode());
+
+		if ((existingSXPElement != null) &&
+			(existingSXPElement.getSXPElementId() !=
+				sxpElement.getSXPElementId())) {
+
+			throw new DuplicateSXPElementExternalReferenceCodeException();
+		}
 
 		sxpElement.setCompanyId(user.getCompanyId());
 		sxpElement.setUserId(user.getUserId());

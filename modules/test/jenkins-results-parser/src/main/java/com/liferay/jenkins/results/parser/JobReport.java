@@ -121,12 +121,6 @@ public class JobReport {
 					continue;
 				}
 
-				Object result = buildJSONObject.opt("result");
-
-				if (result == JSONObject.NULL) {
-					continue;
-				}
-
 				_topLevelBuildReports.add(
 					BuildReportFactory.newTopLevelBuildReport(
 						buildJSONObject, this));

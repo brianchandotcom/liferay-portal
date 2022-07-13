@@ -90,8 +90,8 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.0.0", "3.0.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"LayoutPageTemplateStructureRel", "TEXT null", "data_"));
+			UpgradeProcessFactory.alterColumnType(
+				"LayoutPageTemplateStructureRel", "data_", "TEXT null"));
 
 		registry.register(
 			"3.0.1", "3.1.0",

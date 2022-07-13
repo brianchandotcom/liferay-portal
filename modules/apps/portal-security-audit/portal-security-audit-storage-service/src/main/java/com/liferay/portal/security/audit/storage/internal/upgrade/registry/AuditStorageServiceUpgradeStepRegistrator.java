@@ -65,8 +65,8 @@ public class AuditStorageServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.0", "1.0.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"Audit_AuditEvent", "VARCHAR(255) null", "clientIP"));
+			UpgradeProcessFactory.alterColumnType(
+				"Audit_AuditEvent", "clientIP", "VARCHAR(255) null"));
 
 		registry.register(
 			"1.0.1", "2.0.0",

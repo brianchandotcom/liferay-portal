@@ -28,8 +28,8 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 		_deleteLegacyResourcePermission();
 
 		upgrade(
-			UpgradeProcessFactory.alterColumnTypes(
-				"UserNotificationEvent", "VARCHAR(200) null", "type_"));
+			UpgradeProcessFactory.alterColumnType(
+				"UserNotificationEvent", "type_", "VARCHAR(200) null"));
 
 		super.doUpgrade();
 	}

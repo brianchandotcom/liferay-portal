@@ -67,12 +67,12 @@ public class ReportsServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.0", "1.0.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"Reports_Definition", "TEXT null", "reportParameters"),
-			UpgradeProcessFactory.alterColumnTypes(
-				"Reports_Entry", "TEXT null", "reportParameters"),
-			UpgradeProcessFactory.alterColumnTypes(
-				"Reports_Entry", "STRING null", "errorMessage"),
+			UpgradeProcessFactory.alterColumnType(
+				"Reports_Definition", "reportParameters", "TEXT null"),
+			UpgradeProcessFactory.alterColumnType(
+				"Reports_Entry", "reportParameters", "TEXT null"),
+			UpgradeProcessFactory.alterColumnType(
+				"Reports_Entry", "errorMessage", "STRING null"),
 			new UpgradeKernelPackage(), new UpgradeLastPublishDate());
 	}
 

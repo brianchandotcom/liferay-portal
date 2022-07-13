@@ -36,8 +36,8 @@ public class ClientExtensionUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.register(
 			"1.0.0", "1.0.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"RemoteAppEntry", "VARCHAR(1024) null", "url"));
+			UpgradeProcessFactory.alterColumnType(
+				"RemoteAppEntry", "url", "VARCHAR(1024) null"));
 
 		registry.register(
 			"1.0.1", "2.0.0",

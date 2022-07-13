@@ -46,8 +46,8 @@ public class UpgradeProcess_7_0_1 extends UpgradeProcess {
 			UpgradeModulesFactory.create(
 				_BUNDLE_SYMBOLIC_NAMES, _CONVERTED_LEGACY_MODULES));
 		upgrade(
-			UpgradeProcessFactory.alterColumnTypes(
-				"UserNotificationEvent", "VARCHAR(200) null", "type_"));
+			UpgradeProcessFactory.alterColumnType(
+				"UserNotificationEvent", "type_", "VARCHAR(200) null"));
 
 		clearIndexesCache();
 	}

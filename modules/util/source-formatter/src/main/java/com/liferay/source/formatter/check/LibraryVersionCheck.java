@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -88,113 +89,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 
 		return content;
-	}
-
-	private void _addVulnerableVersions(
-			String packageName, String cursor, CloseableHttpClient httpClient,
-			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum,
-			List<SecurityVulnerabilityNode> securityVulnerabilityNodes)
-		throws IOException {
-
-		if (_pageNumber == 0) {
-			return;
-		}
-
-		HttpPost httpPost = new HttpPost("https://api.github.com/graphql");
-
-		httpPost.addHeader(
-			"Authorization", "bearer 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");
-		httpPost.addHeader(
-			"Content-Type",
-			"application/json; charset=utf-8; application/graphql");
-
-		String queryArguments = StringBundler.concat(
-			"first: ", _pageNumber, ", package:\\\"", packageName,
-			"\\\", ecosystem: ", securityAdvisoryEcosystemEnum.name());
-
-		if (ListUtil.isNotNull(_severities)) {
-			queryArguments = queryArguments + ", severities: " + _severities;
-		}
-
-		if (Validator.isNotNull(cursor)) {
-			queryArguments += "after: \\\"" + cursor + "\\\"";
-		}
-
-		String resultArguments =
-			"{nodes { advisory {summary, permalink} package {name} severity " +
-				"vulnerableVersionRange } pageInfo {endCursor hasNextPage } " +
-					"totalCount }";
-
-		String query = StringBundler.concat(
-			"{\"query\": \"{ securityVulnerabilities(", queryArguments, ") ",
-			resultArguments, "}\" }");
-
-		StringEntity stringEntity = new StringEntity(
-			query, ContentType.APPLICATION_JSON);
-
-		httpPost.setEntity(stringEntity);
-
-		try {
-			HttpResponse httpResponse = httpClient.execute(httpPost);
-
-			StatusLine statusLine = httpResponse.getStatusLine();
-
-			if (statusLine.getStatusCode() == 200) {
-				JSONObject jsonObject = new JSONObjectImpl(
-					EntityUtils.toString(httpResponse.getEntity(), "UTF-8"));
-
-				JSONObject dataJSONObject = jsonObject.getJSONObject("data");
-
-				JSONObject securityVulnerabilitiesJSONObject =
-					dataJSONObject.getJSONObject("securityVulnerabilities");
-
-				int totalCount = securityVulnerabilitiesJSONObject.getInt(
-					"totalCount");
-
-				if (totalCount == 0) {
-					return;
-				}
-
-				JSONArray nodesJSONArray =
-					securityVulnerabilitiesJSONObject.getJSONArray("nodes");
-
-				for (Object tmpObject : nodesJSONArray) {
-					JSONObject tmpJSONObject = (JSONObject)tmpObject;
-
-					SecurityVulnerabilityNode securityVulnerabilityNode =
-						new SecurityVulnerabilityNode();
-
-					JSONObject advisoryJSONObject = tmpJSONObject.getJSONObject(
-						"advisory");
-
-					securityVulnerabilityNode.setPermalink(
-						advisoryJSONObject.getString("permalink"));
-					securityVulnerabilityNode.setSummary(
-						advisoryJSONObject.getString("summary"));
-					securityVulnerabilityNode.setVersionRange(
-						tmpJSONObject.getString("vulnerableVersionRange"));
-					securityVulnerabilityNode.setVulnerableVersionRange(
-						tmpJSONObject.getString("vulnerableVersionRange"));
-
-					securityVulnerabilityNodes.add(securityVulnerabilityNode);
-				}
-
-				JSONObject pageInfoJSONObject =
-					securityVulnerabilitiesJSONObject.getJSONObject("pageInfo");
-
-				if (pageInfoJSONObject.getBoolean("hasNextPage")) {
-					_addVulnerableVersions(
-						packageName, pageInfoJSONObject.getString("endCursor"),
-						httpClient, securityAdvisoryEcosystemEnum,
-						securityVulnerabilityNodes);
-				}
-			}
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-		}
 	}
 
 	private void _checkIsContainVulnerabilities(
@@ -277,11 +171,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 
 		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
-			new ArrayList<>();
-
-		_addVulnerableVersions(
-			packageName, null, httpClient, securityAdvisoryEcosystemEnum,
-			securityVulnerabilityNodes);
+			_getSecurityVulnerabilityNodes(
+				packageName, null, httpClient, securityAdvisoryEcosystemEnum);
 
 		_vulnerableVersionMap.put(packageName, securityVulnerabilityNodes);
 	}
@@ -294,6 +185,122 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 
 		return null;
+	}
+
+	private List<SecurityVulnerabilityNode> _getSecurityVulnerabilityNodes(
+			String packageName, String cursor, CloseableHttpClient httpClient,
+			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
+		throws IOException {
+
+		if (_pageNumber == 0) {
+			return Collections.emptyList();
+		}
+
+		HttpPost httpPost = new HttpPost("https://api.github.com/graphql");
+
+		httpPost.addHeader(
+			"Authorization", "bearer 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");
+		httpPost.addHeader(
+			"Content-Type",
+			"application/json; charset=utf-8; application/graphql");
+
+		String queryArguments = StringBundler.concat(
+			"first: ", _pageNumber, ", package:\\\"", packageName,
+			"\\\", ecosystem: ", securityAdvisoryEcosystemEnum.name());
+
+		if (ListUtil.isNotNull(_severities)) {
+			queryArguments = queryArguments + ", severities: " + _severities;
+		}
+
+		if (Validator.isNotNull(cursor)) {
+			queryArguments += "after: \\\"" + cursor + "\\\"";
+		}
+
+		String resultArguments =
+			"{nodes { advisory {summary, permalink} package {name} severity " +
+				"vulnerableVersionRange } pageInfo {endCursor hasNextPage } " +
+					"totalCount }";
+
+		String query = StringBundler.concat(
+			"{\"query\": \"{ securityVulnerabilities(", queryArguments, ") ",
+			resultArguments, "}\" }");
+
+		StringEntity stringEntity = new StringEntity(
+			query, ContentType.APPLICATION_JSON);
+
+		httpPost.setEntity(stringEntity);
+
+		try {
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+
+			StatusLine statusLine = httpResponse.getStatusLine();
+
+			if (statusLine.getStatusCode() == 200) {
+				JSONObject jsonObject = new JSONObjectImpl(
+					EntityUtils.toString(httpResponse.getEntity(), "UTF-8"));
+
+				JSONObject dataJSONObject = jsonObject.getJSONObject("data");
+
+				JSONObject securityVulnerabilitiesJSONObject =
+					dataJSONObject.getJSONObject("securityVulnerabilities");
+
+				int totalCount = securityVulnerabilitiesJSONObject.getInt(
+					"totalCount");
+
+				if (totalCount == 0) {
+					return Collections.emptyList();
+				}
+
+				List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
+					new ArrayList<>();
+
+				JSONArray nodesJSONArray =
+					securityVulnerabilitiesJSONObject.getJSONArray("nodes");
+
+				for (Object tmpObject : nodesJSONArray) {
+					JSONObject tmpJSONObject = (JSONObject)tmpObject;
+
+					SecurityVulnerabilityNode securityVulnerabilityNode =
+						new SecurityVulnerabilityNode();
+
+					JSONObject advisoryJSONObject = tmpJSONObject.getJSONObject(
+						"advisory");
+
+					securityVulnerabilityNode.setPermalink(
+						advisoryJSONObject.getString("permalink"));
+					securityVulnerabilityNode.setSummary(
+						advisoryJSONObject.getString("summary"));
+					securityVulnerabilityNode.setVersionRange(
+						tmpJSONObject.getString("vulnerableVersionRange"));
+					securityVulnerabilityNode.setVulnerableVersionRange(
+						tmpJSONObject.getString("vulnerableVersionRange"));
+
+					securityVulnerabilityNodes.add(securityVulnerabilityNode);
+				}
+
+				JSONObject pageInfoJSONObject =
+					securityVulnerabilitiesJSONObject.getJSONObject("pageInfo");
+
+				if (pageInfoJSONObject.getBoolean("hasNextPage")) {
+					securityVulnerabilityNodes.addAll(
+						_getSecurityVulnerabilityNodes(
+							packageName,
+							pageInfoJSONObject.getString("endCursor"),
+							httpClient, securityAdvisoryEcosystemEnum));
+				}
+
+				if (!securityVulnerabilityNodes.isEmpty()) {
+					return securityVulnerabilityNodes;
+				}
+			}
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+		}
+
+		return Collections.emptyList();
 	}
 
 	private void _gradleLibraryVersionCheck(String fileName, String content)

@@ -1,39 +1,27 @@
 [
 	{
-		"actions": [
-		],
-		"description": "",
-		"name": "Customer Portal Member",
-		"subtype": "",
-		"type": 1
-	},
-	{
-		"actions": [
-		],
+		"actions": [],
 		"description": "",
 		"name": "Requester",
 		"subtype": "",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
+		"actions": [],
 		"description": "",
 		"name": "Partner Manager",
 		"subtype": "",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
+		"actions": [],
 		"description": "",
 		"name": "Partner Member",
 		"subtype": "",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
+		"actions": [],
 		"description": "",
 		"name": "Provisioning",
 		"subtype": "",

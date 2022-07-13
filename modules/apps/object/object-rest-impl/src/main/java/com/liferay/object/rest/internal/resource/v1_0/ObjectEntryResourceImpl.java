@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.FilterParserProvider;
@@ -220,21 +219,15 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerTracker.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
-			return objectEntryManager.getObjectEntries(
-				contextCompany.getCompanyId(), _objectDefinition, null,
-				aggregation, _getDTOConverterContext(null), pagination,
-				PredicateUtil.toPredicate(
-					_filterParserProvider,
-					ParamUtil.getString(contextHttpServletRequest, "filter"),
-					_objectDefinition.getObjectDefinitionId(),
-					_objectFieldLocalService),
-				search, sorts);
-		}
-
 		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, null, aggregation,
-			_getDTOConverterContext(null), filter, pagination, search, sorts);
+			_getDTOConverterContext(null), pagination,
+			PredicateUtil.toPredicate(
+				_filterParserProvider,
+				ParamUtil.getString(contextHttpServletRequest, "filter"),
+				_objectDefinition.getObjectDefinitionId(),
+				_objectFieldLocalService),
+			search, sorts);
 	}
 
 	@Override
@@ -273,21 +266,14 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerTracker.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-153768"))) {
-			return objectEntryManager.getObjectEntries(
-				contextCompany.getCompanyId(), _objectDefinition, scopeKey,
-				aggregation, _getDTOConverterContext(null), pagination,
-				PredicateUtil.toPredicate(
-					_filterParserProvider,
-					ParamUtil.getString(contextHttpServletRequest, "filter"),
-					_objectDefinition.getObjectDefinitionId(),
-					_objectFieldLocalService),
-				search, sorts);
-		}
-
 		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, scopeKey,
-			aggregation, _getDTOConverterContext(null), filter, pagination,
+			aggregation, _getDTOConverterContext(null), pagination,
+			PredicateUtil.toPredicate(
+				_filterParserProvider,
+				ParamUtil.getString(contextHttpServletRequest, "filter"),
+				_objectDefinition.getObjectDefinitionId(),
+				_objectFieldLocalService),
 			search, sorts);
 	}
 

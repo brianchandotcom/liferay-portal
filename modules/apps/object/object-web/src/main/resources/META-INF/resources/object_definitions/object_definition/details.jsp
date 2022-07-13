@@ -185,7 +185,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			</clay:sheet-section>
 
 			<clay:sheet-section
-				cssClass='<%= (objectDefinition.isSystem() || !GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-151877"))) ? "hide" : "" %>'
+				cssClass='<%= objectDefinition.isSystem() ? "hide" : "" %>'
 			>
 				<h3 class="sheet-subtitle">
 					<%= LanguageUtil.get(request, "account-restriction") %>

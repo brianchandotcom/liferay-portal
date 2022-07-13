@@ -15,13 +15,7 @@
 import {SidebarCategory} from '@liferay/object-js-components-web';
 import {useMemo} from 'react';
 
-import {METADATA} from '../components/ObjectView/context';
-import {defaultLanguageId} from '../utils/locale';
-
-export default function useMetadata(
-	elementList: SidebarCategory[],
-	ffUseMetadataAsSystemFields: boolean
-) {
+export default function useMetadata(elementList: SidebarCategory[]) {
 	return useMemo(() => {
 		if (!elementList || !elementList.length) {
 			return [] as SidebarCategory[];
@@ -30,16 +24,6 @@ export default function useMetadata(
 		const [first, ...others] = elementList;
 		const items = [...first.items];
 
-		if (!ffUseMetadataAsSystemFields) {
-			METADATA.forEach(({label, name}) => {
-				items.push({
-					content: name,
-					helpText: '',
-					label: label[defaultLanguageId]!,
-				});
-			});
-		}
-
 		return [{...first, items}, ...others];
-	}, [ffUseMetadataAsSystemFields, elementList]);
+	}, [elementList]);
 }

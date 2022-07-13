@@ -70,7 +70,6 @@ export declare type TObjectView = {
 	objectViewSortColumns: TObjectViewSortColumn[];
 };
 export declare type TState = {
-	ffUseMetadataAsSystemFields: boolean;
 	isViewOnly: boolean;
 	objectFields: ObjectField[];
 	objectView: TObjectView;

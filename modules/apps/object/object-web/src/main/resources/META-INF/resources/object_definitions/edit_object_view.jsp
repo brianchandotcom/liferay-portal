@@ -25,8 +25,6 @@ ObjectView objectView = (ObjectView)request.getAttribute(ObjectWebKeys.OBJECT_VI
 	module="js/components/ObjectView/index"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"ffUseMetadataAsSystemFields", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-154872"))
-		).put(
 			"isViewOnly", !objectDefinitionsViewsDisplayContext.hasUpdateObjectDefinitionPermission()
 		).put(
 			"objectViewId", objectView.getObjectViewId()

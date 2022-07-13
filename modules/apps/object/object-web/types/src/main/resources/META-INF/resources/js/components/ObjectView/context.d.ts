@@ -59,7 +59,6 @@ export declare enum TYPES {
 declare const initialState: TState;
 interface IViewContextProviderProps extends React.HTMLAttributes<HTMLElement> {
 	value: {
-		ffUseMetadataAsSystemFields: boolean;
 		isViewOnly: boolean;
 		objectViewId: string;
 		workflowStatusJSONArray: TWorkflowStatus[];

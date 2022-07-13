@@ -22,7 +22,6 @@ import {BoxesVisitor} from '../../utils/visitor';
 import {TObjectField, TObjectLayout, TObjectRelationship} from './types';
 
 type TState = {
-	ffUseMetadataAsSystemFields: boolean;
 	isViewOnly: boolean;
 	objectFieldTypes: ObjectFieldType[];
 	objectFields: TObjectField[];
@@ -355,7 +354,6 @@ const layoutReducer = (state: TState, action: TAction) => {
 interface ILayoutContextProviderProps
 	extends React.HTMLAttributes<HTMLElement> {
 	value: {
-		ffUseMetadataAsSystemFields: boolean;
 		isViewOnly: boolean;
 		objectFieldTypes: ObjectFieldType[];
 		objectLayoutId: string;

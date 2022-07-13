@@ -14,6 +14,5 @@
 
 import {SidebarCategory} from '@liferay/object-js-components-web';
 export default function useMetadata(
-	elementList: SidebarCategory[],
-	ffUseMetadataAsSystemFields: boolean
+	elementList: SidebarCategory[]
 ): SidebarCategory[];

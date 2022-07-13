@@ -25,8 +25,6 @@ ObjectLayout objectLayout = (ObjectLayout)request.getAttribute(ObjectWebKeys.OBJ
 	module="js/components/Layout/index"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"ffUseMetadataAsSystemFields", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-154872"))
-		).put(
 			"isViewOnly", !objectDefinitionsLayoutsDisplayContext.hasUpdateObjectDefinitionPermission()
 		).put(
 			"objectFieldTypes", objectDefinitionsLayoutsDisplayContext.getObjectFieldBusinessTypeMaps(locale)

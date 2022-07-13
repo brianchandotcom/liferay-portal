@@ -15,7 +15,6 @@
 import React from 'react';
 import {TWorkflowStatus} from './types';
 interface ICustomViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
-	ffUseMetadataAsSystemFields: boolean;
 	isViewOnly: boolean;
 	objectViewId: string;
 	workflowStatusJSONArray: TWorkflowStatus[];

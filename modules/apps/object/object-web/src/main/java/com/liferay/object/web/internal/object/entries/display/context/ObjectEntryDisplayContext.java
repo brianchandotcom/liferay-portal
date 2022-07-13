@@ -596,45 +596,22 @@ public class ObjectEntryDisplayContext {
 			}
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-154872"))) {
-			List<ObjectField> objectFields =
-				_objectFieldLocalService.getCustomObjectFields(
-					objectDefinition.getObjectDefinitionId());
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getCustomObjectFields(
+				objectDefinition.getObjectDefinitionId());
 
-			if (objectLayoutTab == null) {
-				for (ObjectField objectField : objectFields) {
-					if (!_isActive(objectField)) {
-						continue;
-					}
-
-					ddmForm.addDDMFormField(
-						_getDDMFormField(objectField, readOnly));
+		if (objectLayoutTab == null) {
+			for (ObjectField objectField : objectFields) {
+				if (!_isActive(objectField)) {
+					continue;
 				}
-			}
-			else {
-				_addDDMFormFields(
-					ddmForm, objectFields, objectLayoutTab, readOnly);
+
+				ddmForm.addDDMFormField(
+					_getDDMFormField(objectField, readOnly));
 			}
 		}
 		else {
-			List<ObjectField> objectFields =
-				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId());
-
-			if (objectLayoutTab == null) {
-				for (ObjectField objectField : objectFields) {
-					if (!_isActive(objectField)) {
-						continue;
-					}
-
-					ddmForm.addDDMFormField(
-						_getDDMFormField(objectField, readOnly));
-				}
-			}
-			else {
-				_addDDMFormFields(
-					ddmForm, objectFields, objectLayoutTab, readOnly);
-			}
+			_addDDMFormFields(ddmForm, objectFields, objectLayoutTab, readOnly);
 		}
 
 		ddmForm.setDefaultLocale(_objectRequestHelper.getLocale());

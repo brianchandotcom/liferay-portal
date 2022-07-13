@@ -76,7 +76,6 @@ export type TObjectView = {
 };
 
 export type TState = {
-	ffUseMetadataAsSystemFields: boolean;
 	isViewOnly: boolean;
 	objectFields: ObjectField[];
 	objectView: TObjectView;

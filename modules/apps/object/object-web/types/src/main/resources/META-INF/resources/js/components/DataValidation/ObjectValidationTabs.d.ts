@@ -29,7 +29,6 @@ declare function Conditions({
 	defaultLocale,
 	disabled,
 	errors,
-	ffUseMetadataAsSystemFields,
 	locales,
 	objectValidationRuleElements,
 	setValues,
@@ -51,7 +50,6 @@ interface IBasicInfo extends ITabs {
 	componentLabel: string;
 }
 interface IConditions extends ITabs {
-	ffUseMetadataAsSystemFields: boolean;
 	objectValidationRuleElements: SidebarCategory[];
 }
 export {BasicInfo, Conditions};

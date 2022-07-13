@@ -20,16 +20,12 @@ import React from 'react';
 
 import useMetadata from '../../hooks/useMetadata';
 
-export default function ExpressionBuilderModal({
-	ffUseMetadataAsSystemFields,
-	sidebarElements,
-}: IProps) {
-	const elements = useMetadata(sidebarElements, ffUseMetadataAsSystemFields);
+export default function ExpressionBuilderModal({sidebarElements}: IProps) {
+	const elements = useMetadata(sidebarElements);
 
 	return <Modal sidebarElements={elements} />;
 }
 
 interface IProps {
-	ffUseMetadataAsSystemFields: boolean;
 	sidebarElements: SidebarCategory[];
 }

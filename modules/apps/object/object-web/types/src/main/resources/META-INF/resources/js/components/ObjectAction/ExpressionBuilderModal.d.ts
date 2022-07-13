@@ -16,11 +16,9 @@
 
 import {SidebarCategory} from '@liferay/object-js-components-web';
 export default function ExpressionBuilderModal({
-	ffUseMetadataAsSystemFields,
 	sidebarElements,
 }: IProps): JSX.Element;
 interface IProps {
-	ffUseMetadataAsSystemFields: boolean;
 	sidebarElements: SidebarCategory[];
 }
 export {};

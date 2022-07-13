@@ -348,6 +348,11 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				options.add(
 					new InputTemplateNode.Option(
 						option.getLabel(locale), option.getValue()));
+
+				if ((value != null) && value.equals(option.getValue())) {
+					inputTemplateNode.addAttribute(
+						"selectedOptionLabel", option.getLabel(locale));
+				}
 			}
 
 			inputTemplateNode.addAttribute("options", options);

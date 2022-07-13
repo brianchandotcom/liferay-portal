@@ -25,19 +25,22 @@ import {GlobalCETOrderHelpIcon} from './GlobalCETOrderHelpIcon';
 
 const DEFAULT_LOAD_TYPE_OPTION: ILoadTypeOptions = 'default';
 
-const LOAD_TYPE_OPTIONS: Record<
-	ILoadTypeOptions,
-	React.OptionHTMLAttributes<HTMLOptionElement>
-> = {
-	async: {label: 'async', value: 'async'},
-	default: {label: 'default', value: 'default'},
-	defer: {label: 'defer', value: 'defer'},
-};
+const LOAD_TYPE_OPTIONS: Array<{
+	label: string;
+	value: ILoadTypeOptions;
+}> = [
+	{label: 'default', value: 'default'},
+	{label: 'async', value: 'async'},
+	{label: 'defer', value: 'defer'},
+];
 
-const SCRIPT_LOCATION_LABELS: Record<IScriptLocationOptions, string> = {
-	bottom: Liferay.Language.get('in-page-bottom'),
-	head: Liferay.Language.get('in-page-head'),
-};
+const SCRIPT_LOCATION_LABELS: Array<{
+	label: string;
+	scriptLocation: IScriptLocationOptions;
+}> = [
+	{label: Liferay.Language.get('in-page-head'), scriptLocation: 'head'},
+	{label: Liferay.Language.get('in-page-bottom'), scriptLocation: 'bottom'},
+];
 
 const DEFAULT_SCRIPT_LOCATION_OPTION: IScriptLocationOptions = 'bottom';
 
@@ -318,16 +321,11 @@ function AddExtensionButton({
 	return (
 		<ClayDropDownWithItems
 			active={active}
-			items={[...Object.entries(SCRIPT_LOCATION_LABELS)].map(
-				([scriptLocation, label]) => ({
-					label,
-					onClick: () =>
-						addGlobalJSCET(
-							scriptLocation as IScriptLocationOptions
-						),
-					role: 'menuitem',
-				})
-			)}
+			items={SCRIPT_LOCATION_LABELS.map(({label, scriptLocation}) => ({
+				label,
+				onClick: () => addGlobalJSCET(scriptLocation),
+				role: 'menuitem',
+			}))}
 			menuElementAttrs={{
 				'aria-labelledby': dropdownTriggerId,
 				'role': 'menu',
@@ -404,7 +402,7 @@ function ExtensionRow({
 							event.target.value as ILoadTypeOptions
 						)
 					}
-					options={Object.values(LOAD_TYPE_OPTIONS)}
+					options={LOAD_TYPE_OPTIONS}
 					sizing="sm"
 				/>
 			</ClayTable.Cell>

@@ -241,7 +241,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#CUSTOMIZED_PAGE_INFO",
-			value1 = "Each page modification can trigger a propagation from the site template to the connected sites. You can disable the propagation temporally and enable it later when the template is ready.");
+			value1 = "Each page modification can trigger a propagation from the site template to the connected sites. You can disable the propagation temporally and enable it later when the template is ready. Automatic propagation can be resource intensive depending on the scope of changes made to the template.");
 
 		AssertTextEquals(
 			locator1 = "Button#DISABLE_PROPAGATION",
@@ -253,7 +253,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ALERT_DISMISSIBLE",
-			value1 = "Propagation is disabled. Connected sites might not have been updated yet. Propagation is only triggered when a site created from the template is visited.");
+			value1 = "Propagation is disabled. Connected sites might not have been updated yet. Initial propagations to sites that are being created from this template still run.");
 	}
 
 	macro editCP {
@@ -321,7 +321,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#CUSTOMIZED_PAGE_INFO",
-			value1 = "Each page modification can trigger a propagation from the site template to the connected sites. You can disable the propagation temporally and enable it later when the template is ready.");
+			value1 = "Each page modification can trigger a propagation from the site template to the connected sites. You can disable the propagation temporally and enable it later when the template is ready. Automatic propagation can be resource intensive depending on the scope of changes made to the template.");
 
 		AssertTextEquals(
 			locator1 = "Button#ENABLE_PROPAGATION",

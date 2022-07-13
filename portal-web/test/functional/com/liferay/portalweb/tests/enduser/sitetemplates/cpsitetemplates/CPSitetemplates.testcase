@@ -1019,6 +1019,8 @@ definition {
 
 			Refresh();
 
+			ContentPages.gotoPageEditor();
+
 			AssertElementPresent(
 				key_portletName = "AssetPublisher",
 				locator1 = "Portlet#SPECIFIC_FRAGMENTS_AND_WIDGETS");

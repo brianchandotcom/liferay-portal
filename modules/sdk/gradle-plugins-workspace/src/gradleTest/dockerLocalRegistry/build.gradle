@@ -8,11 +8,11 @@ runGradleTest {
 	dependsOn createDockerfile
 
 	doLast {
-		File dockerfile = createDockerfile.destFile.getAsFile().get()
+		File dockerFile = createDockerfile.destFile.getAsFile().get()
 
-		assert dockerfile.exists()
+		assert dockerFile.exists()
 
-		String text = dockerfile.text
+		String text = dockerFile.text
 
 		assert text.indexOf("FROM localhost:5000/dxp:7.4.13-u22") != -1;
 	}

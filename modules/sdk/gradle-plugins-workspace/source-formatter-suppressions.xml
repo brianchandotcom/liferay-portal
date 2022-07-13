@@ -3,5 +3,6 @@
 <suppressions>
 	<source-check>
 		<suppress checks="GradleDependenciesCheck" files="src/gradleTest/testIntegrationClasses/modules/foo/foo-test/build\.gradle" />
+		<suppress checks="PropertiesDefinitionKeysCheck" files="src/gradleTest/dockerLocalRegistry/gradle\.properties" />
 	</source-check>
 </suppressions>

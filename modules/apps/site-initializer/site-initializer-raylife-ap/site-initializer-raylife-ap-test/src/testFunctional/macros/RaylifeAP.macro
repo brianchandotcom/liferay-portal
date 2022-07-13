@@ -8,16 +8,16 @@ definition {
 			siteTemplateName = "Raylife AP");
 	}
 
-	macro clickOnSubsectionTasks {
-		Click(
-			locator1 = "RaylifeAP#TASKS_SECTION",
-			key_subsection = "${key_subsection}");
-	}
-
 	macro assertPageHeader {
 		AssertElementPresent(
 			key_header = "${key_header}",
 			locator1 = "RaylifeAP#COMPONENT_HEADER");
+	}
+
+	macro clickOnSubsectionTasks {
+		Click(
+			key_subsection = "${key_subsection}",
+			locator1 = "RaylifeAP#TASKS_SECTION");
 	}
 
 	macro mouseOverSidebar {

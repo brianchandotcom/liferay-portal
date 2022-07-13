@@ -98,31 +98,6 @@ public class WhilePoshiElement extends IfPoshiElement {
 	}
 
 	@Override
-	protected String getCondition(String poshiScript) {
-		String parentheticalContent = getParentheticalContent(poshiScript);
-
-		if (parentheticalContent.contains("&& (maxIterations = ")) {
-			int index = parentheticalContent.lastIndexOf("&&");
-
-			String maxIterationsAssignment = parentheticalContent.substring(
-				index + 2);
-
-			maxIterationsAssignment = getParentheticalContent(
-				maxIterationsAssignment);
-
-			String maxIterationsValue = getValueFromAssignment(
-				maxIterationsAssignment);
-
-			addAttribute(
-				"max-iterations", getDoubleQuotedContent(maxIterationsValue));
-
-			parentheticalContent = parentheticalContent.substring(0, index);
-		}
-
-		return parentheticalContent.trim();
-	}
-
-	@Override
 	protected String getPoshiScriptKeyword() {
 		return _ELEMENT_NAME;
 	}

@@ -51,65 +51,57 @@ if (auditEventId > 0) {
 			</div>
 		</c:when>
 		<c:otherwise>
-			<clay:col
-				size="12"
-			>
-				<aui:field-wrapper label="event-id">
-					<%= auditEvent.getAuditEventId() %>
-				</aui:field-wrapper>
+			<aui:field-wrapper label="event-id">
+				<%= auditEvent.getAuditEventId() %>
+			</aui:field-wrapper>
 
-				<aui:field-wrapper label="create-date">
-					<%= dateFormatDateTime.format(auditEvent.getCreateDate()) %>
-				</aui:field-wrapper>
+			<aui:field-wrapper label="create-date">
+				<%= dateFormatDateTime.format(auditEvent.getCreateDate()) %>
+			</aui:field-wrapper>
 
-				<aui:field-wrapper label="resource-id">
-					<%= auditEvent.getClassPK() %>
-				</aui:field-wrapper>
+			<aui:field-wrapper label="resource-id">
+				<%= auditEvent.getClassPK() %>
+			</aui:field-wrapper>
 
-				<aui:field-wrapper label="resource-name">
-					<%= auditEvent.getClassName() %>
+			<aui:field-wrapper label="resource-name">
+				<%= auditEvent.getClassName() %>
 
-					(<%= (String)PortalClassInvoker.invoke(new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getModelResource", HttpServletRequest.class, String.class), request, auditEvent.getClassName()) %>)
-				</aui:field-wrapper>
+				(<%= (String)PortalClassInvoker.invoke(new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getModelResource", HttpServletRequest.class, String.class), request, auditEvent.getClassName()) %>)
+			</aui:field-wrapper>
 
-				<aui:field-wrapper label="resource-action">
-					<%= auditEvent.getEventType() %>
+			<aui:field-wrapper label="resource-action">
+				<%= auditEvent.getEventType() %>
 
-					(<%= eventTypeAction %>)
-				</aui:field-wrapper>
-			</clay:col>
+				(<%= eventTypeAction %>)
+			</aui:field-wrapper>
 
-			<clay:col
-				size="12"
-			>
-				<aui:field-wrapper label="user-id">
-					<%= auditEvent.getUserId() %>
-				</aui:field-wrapper>
+			<aui:field-wrapper label="user-id">
+				<%= auditEvent.getUserId() %>
+			</aui:field-wrapper>
 
-				<aui:field-wrapper label="user-name">
-					<%= auditEvent.getUserName() %>
-				</aui:field-wrapper>
+			<aui:field-wrapper label="user-name">
+				<%= auditEvent.getUserName() %>
+			</aui:field-wrapper>
 
-				<aui:field-wrapper label="client-host">
-					<%= Validator.isNotNull(auditEvent.getClientHost()) ? auditEvent.getClientHost() : LanguageUtil.get(request, "none") %>
-				</aui:field-wrapper>
+			<aui:field-wrapper label="client-host">
+				<%= Validator.isNotNull(auditEvent.getClientHost()) ? auditEvent.getClientHost() : LanguageUtil.get(request, "none") %>
+			</aui:field-wrapper>
 
-				<aui:field-wrapper label="client-ip">
-					<%= Validator.isNotNull(auditEvent.getClientIP()) ? auditEvent.getClientIP() : LanguageUtil.get(request, "none") %>
-				</aui:field-wrapper>
+			<aui:field-wrapper label="client-ip">
+				<%= Validator.isNotNull(auditEvent.getClientIP()) ? auditEvent.getClientIP() : LanguageUtil.get(request, "none") %>
+			</aui:field-wrapper>
 
-				<aui:field-wrapper label="server-name">
-					<%= Validator.isNotNull(auditEvent.getServerName()) ? auditEvent.getServerName() : LanguageUtil.get(request, "none") %>
-				</aui:field-wrapper>
+			<aui:field-wrapper label="server-name">
+				<%= Validator.isNotNull(auditEvent.getServerName()) ? auditEvent.getServerName() : LanguageUtil.get(request, "none") %>
+			</aui:field-wrapper>
 
-				<aui:field-wrapper label="session-id">
-					<%= Validator.isNotNull(auditEvent.getSessionID()) ? auditEvent.getSessionID() : LanguageUtil.get(request, "none") %>
-				</aui:field-wrapper>
+			<aui:field-wrapper label="session-id">
+				<%= Validator.isNotNull(auditEvent.getSessionID()) ? auditEvent.getSessionID() : LanguageUtil.get(request, "none") %>
+			</aui:field-wrapper>
 
-				<aui:field-wrapper label="additional-information">
-					<%= Validator.isNotNull(auditEvent.getAdditionalInfo()) ? auditEvent.getAdditionalInfo() : LanguageUtil.get(request, "none") %>
-				</aui:field-wrapper>
-			</clay:col>
+			<aui:field-wrapper label="additional-information">
+				<%= Validator.isNotNull(auditEvent.getAdditionalInfo()) ? auditEvent.getAdditionalInfo() : LanguageUtil.get(request, "none") %>
+			</aui:field-wrapper>
 		</c:otherwise>
 	</c:choose>
 </aui:fieldset>

@@ -44,4 +44,19 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
+	<model name="com.liferay.frontend.view.state.model.FVSFrontendDataSetEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="fvsFrontendDataSetEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="fdsName" type="String" />
+		<field name="fvsEntryId" type="long" />
+		<field name="name" type="String" />
+		<field name="plid" type="long" />
+		<field name="portletId" type="String" />
+	</model>
 </model-hints>

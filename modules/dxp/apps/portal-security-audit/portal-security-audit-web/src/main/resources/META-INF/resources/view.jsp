@@ -54,6 +54,7 @@
 			<hr class="separator" />
 
 			<liferay-ui:search-iterator
+				markupView="lexicon"
 				searchContainer="<%= auditDisplayContext.getSearchContainer() %>"
 			/>
 		</liferay-ui:search-container>

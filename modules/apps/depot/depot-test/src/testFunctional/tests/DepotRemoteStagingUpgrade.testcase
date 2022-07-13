@@ -45,14 +45,11 @@ definition {
 
 		PortletEntry.publish();
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page DM",
-			widgetName = "Blogs");
-
 		Navigator.openSitePage(
 			pageName = "Test Page DM",
 			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
 
 		Staging.gotoPublishToLive();
 
@@ -90,14 +87,11 @@ definition {
 
 		PortletEntry.publish();
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page DM",
-			widgetName = "Blogs");
-
 		Navigator.openSitePage(
 			pageName = "Test Page DM",
 			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
 
 		Staging.gotoPublishToLive();
 
@@ -127,14 +121,11 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page DM",
-			widgetName = "Media Gallery");
-
 		Navigator.openSitePage(
 			pageName = "Test Page DM",
 			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Media Gallery");
 
 		MGPortlet.setRootFolder(
 			depotName = "Test Depot Name",

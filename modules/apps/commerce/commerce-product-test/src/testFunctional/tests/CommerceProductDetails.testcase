@@ -1,6 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -475,6 +476,218 @@ definition {
 				conditionNotSatisfied = "${conditionNotSatisfied}",
 				quantity = "${minimumQuantity}",
 				quantityConfiguration = "min");
+		}
+	}
+
+	@description = "COMMERCE-9674 | As a buyer, I want to be able to view the incoming dates/quantities for a multiple SKUs product"
+	@priority = "3"
+	test CanViewMultipleSkusProductIncomingQuantity {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("the admin navigates to the Inventory page -> 3 SKUs product-related SKUs(e.g. Hoses)") {
+			CommerceInventory.openInventoryAdmin();
+		}
+
+		task ("And 2 incoming quantities are added for the first SKU") {
+			CommerceNavigator.searchEntry(entryName = "MIN93022A");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN93022A");
+
+			Navigator.gotoNavTab(navTab = "Incoming");
+
+			var nearestIncomingDate = CommerceUtilities.getFutureDate(
+				increaseYears = "2",
+				yearFormat = "yyyy");
+			var fartherIncomingDate = CommerceUtilities.getFutureDate(
+				increaseYears = "3",
+				yearFormat = "yyyy");
+			var quantity = "4";
+
+			for (var expectedDeliveryDate : list "${nearestIncomingDate},${fartherIncomingDate}") {
+				CommerceInventory.addIncomingQuantity(
+					expectedDeliveryDate = "${expectedDeliveryDate}",
+					quantity = "${quantity}");
+
+				var quantity = ${quantity} - 2;
+			}
+		}
+
+		task ("And 1 incoming quantity is added for the second SKU") {
+			CommerceInventory.openInventoryAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "MIN93022B");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN93022B");
+
+			Navigator.gotoNavTab(navTab = "Incoming");
+
+			var incomingDate = CommerceUtilities.getFutureDate(
+				increaseYears = "3",
+				yearFormat = "yyyy");
+
+			CommerceInventory.addIncomingQuantity(
+				expectedDeliveryDate = "${incomingDate}",
+				quantity = "2");
+		}
+
+		task ("When the buyer logs in And navigates to Minium -> Catalog -> Hoses ") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Type(
+				locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+				value1 = "Hoses");
+
+			Click(locator1 = "Button#SUBMIT");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
+		}
+
+		task ("Then the buyer can select the first SKU and see the incoming quantity with the nearest date") {
+			var incomingDate1 = CommerceUtilities.getFutureDate(
+				increaseYears = "2",
+				yearFormat = "yy");
+
+			WaitForElementPresent(
+				key_productSku = "MIN93022A",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
+
+			AssertElementPresent(
+				key_incomingDate = "${incomingDate1}",
+				key_incomingQuantity = "4",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL_INCOMING_DATE_QUANTITY");
+		}
+
+		task ("And the buyer can select the second SKU and see the incoming quantity") {
+			var incomingDate2 = CommerceUtilities.getFutureDate(
+				increaseYears = "3",
+				yearFormat = "yy");
+
+			FrontStore.selectAssociatedFSOptionsValue(
+				fsOptionName = "Package Quantity",
+				fsOptionValue = "24");
+
+			WaitForElementPresent(
+				key_productSku = "MIN93022B",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
+
+			AssertElementPresent(
+				key_incomingDate = "${incomingDate2}",
+				key_incomingQuantity = "2",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL_INCOMING_DATE_QUANTITY");
+		}
+
+		task ("And the buyer can select the third SKU and not see the incoming quantity") {
+			FrontStore.selectAssociatedFSOptionsValue(
+				fsOptionName = "Package Quantity",
+				fsOptionValue = "48");
+
+			WaitForElementPresent(
+				key_productSku = "MIN93022C",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
+
+			AssertElementNotPresent(
+				key_incomingDate = "${incomingDate1}",
+				key_incomingQuantity = "4",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL_INCOMING_DATE_QUANTITY");
+
+			AssertElementNotPresent(
+				key_incomingDate = "${incomingDate2}",
+				key_incomingQuantity = "2",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL_INCOMING_DATE_QUANTITY");
+		}
+	}
+
+	@description = "COMMERCE-9673 | As a buyer, I want to be able to view the incoming date/quantity for a single SKU product"
+	@priority = "3"
+	test CanViewSingleSkuProductIncomingQuantity {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the admin navigates to the Inventory page -> MIN93015(ABS Sensor)") {
+			CommerceInventory.openInventoryAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "MIN93015");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN93015");
+
+			Navigator.gotoNavTab(navTab = "Incoming");
+		}
+
+		task ("And 2 incoming quantities are added(date/quantities have to be different)") {
+			var nearestIncomingDate = CommerceUtilities.getFutureDate(
+				increaseYears = "2",
+				yearFormat = "yyyy");
+			var fartherIncomingDate = CommerceUtilities.getFutureDate(
+				increaseYears = "3",
+				yearFormat = "yyyy");
+
+			for (var expectedDeliveryDate : list "${nearestIncomingDate},${fartherIncomingDate}") {
+				CommerceInventory.addIncomingQuantity(
+					expectedDeliveryDate = "${expectedDeliveryDate}",
+					quantity = "1");
+			}
+		}
+
+		task ("When the buyer logs in And navigates to Minium -> Catalog -> ABS Sensor ") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
+		}
+
+		task ("Then the buyer can see the incoming date/quantity with the nearest date") {
+			var nearestIncomingDate = CommerceUtilities.getFutureDate(
+				increaseYears = "2",
+				yearFormat = "yy");
+
+			AssertElementPresent(
+				key_incomingDate = "${nearestIncomingDate}",
+				key_incomingQuantity = "1",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL_INCOMING_DATE_QUANTITY");
 		}
 	}
 

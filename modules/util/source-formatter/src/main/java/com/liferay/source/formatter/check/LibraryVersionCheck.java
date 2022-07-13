@@ -167,15 +167,13 @@ public class LibraryVersionCheck extends BaseFileCheck {
 					JSONObject advisoryJSONObject = tmpJSONObject.getJSONObject(
 						"advisory");
 
-					securityVulnerabilityNode.setSummary(
-						advisoryJSONObject.getString("summary"));
 					securityVulnerabilityNode.setPermalink(
 						advisoryJSONObject.getString("permalink"));
-
-					securityVulnerabilityNode.setVulnerableVersionRange(
-						tmpJSONObject.getString("vulnerableVersionRange"));
-
+					securityVulnerabilityNode.setSummary(
+						advisoryJSONObject.getString("summary"));
 					securityVulnerabilityNode.setVersionRange(
+						tmpJSONObject.getString("vulnerableVersionRange"));
+					securityVulnerabilityNode.setVulnerableVersionRange(
 						tmpJSONObject.getString("vulnerableVersionRange"));
 
 					securityVulnerabilityNodes.add(securityVulnerabilityNode);

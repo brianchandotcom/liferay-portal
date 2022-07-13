@@ -185,14 +185,13 @@ public class CETDeployerImpl implements CETDeployer {
 			String[] urlsArray = urls.split(StringPool.NEW_LINE);
 
 			if (customElementCET.isUseESM()) {
-				for (int i = 0; i< urlsArray.length; i++) {
+				for (int i = 0; i < urlsArray.length; i++) {
 					urlsArray[i] = "module:" + urlsArray[i];
 				}
 			}
 
 			dictionary.put(
-				"com.liferay.portlet.header-portlet-javascript",
-				urlsArray);
+				"com.liferay.portlet.header-portlet-javascript", urlsArray);
 		}
 		else if (iFrameCET != null) {
 			dictionary.put(

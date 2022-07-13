@@ -182,6 +182,21 @@ public class InputTag extends IncludeTag {
 				return StringPool.BLANK;
 			}
 
+			if (Objects.equals(getClassName(), Layout.class.getName())) {
+				Layout layout = LayoutLocalServiceUtil.fetchLayout(
+					getClassPK());
+
+				if (layout != null) {
+					if (isLocalizable()) {
+						return layout.getFriendlyURLsXML();
+					}
+
+					return layout.getFriendlyURL();
+				}
+
+				return StringPool.BLANK;
+			}
+
 			String urlTitle = BeanPropertiesUtil.getString(
 				_getModel(), "urlTitle");
 

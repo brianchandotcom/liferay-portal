@@ -168,7 +168,7 @@ public class GetFragmentEntryLinkMVCResourceCommand
 
 		LayoutStructure layoutStructure =
 			LayoutStructureUtil.getLayoutStructure(
-				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				themeDisplay.getScopeGroupId(), fragmentEntryLink.getPlid(),
 				fragmentEntryLink.getSegmentsExperienceId());
 
 		try {

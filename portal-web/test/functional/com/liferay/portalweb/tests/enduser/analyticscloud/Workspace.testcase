@@ -291,8 +291,8 @@ definition {
 
 		task ("Change the timezone to Tokyo of Japan") {
 			ACWorkspace.configureWorkspaceSettings(
-				timezone = "Japan",
-				timezoneId = "UTC+09:00 Japan Time (Asia/Tokyo)");
+				timezone = "China",
+				timezoneId = "UTC+06:00 Xinjiang Time (Asia/Urumqi)");
 
 			ACUtils.waitForLoading();
 		}
@@ -302,7 +302,7 @@ definition {
 		}
 
 		task ("View the information banner") {
-			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC+09:00 Japan Time");
+			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC+06:00 XinJiang Time");
 		}
 
 		task ("Change the timezone to Shanghai of China") {

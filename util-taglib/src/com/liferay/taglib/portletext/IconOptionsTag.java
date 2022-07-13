@@ -137,7 +137,6 @@ public class IconOptionsTag extends IconTag {
 
 		iconMenuTag.setExtended(false);
 		iconMenuTag.setIcon("ellipsis-v");
-		iconMenuTag.setMarkupView("lexicon");
 		iconMenuTag.setMessage("options");
 		iconMenuTag.setShowArrow(false);
 		iconMenuTag.setShowWhenSingleIcon(true);
@@ -199,7 +198,6 @@ public class IconOptionsTag extends IconTag {
 
 					iconTag.setIcon(portletConfigurationIcon.getIconCssClass());
 					iconTag.setIconCssClass("dropdown-item-indicator-start");
-					iconTag.setMarkupView("lexicon");
 				}
 
 				iconTag.setId(portletConfigurationIcon.getId());

@@ -93,8 +93,6 @@ public class IconDeleteTag extends IconTag {
 
 		setIcon(icon);
 
-		setMarkupView("lexicon");
-
 		if (Validator.isNull(getMessage())) {
 			setMessage(LanguageUtil.get(_getResourceBundle(), "delete"));
 		}

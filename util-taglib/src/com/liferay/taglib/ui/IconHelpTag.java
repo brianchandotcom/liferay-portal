@@ -37,7 +37,6 @@ public class IconHelpTag extends IconTag {
 		setIcon("question-circle-full");
 		setId(StringUtil.randomId());
 		setLocalizeMessage(false);
-		setMarkupView("lexicon");
 
 		setMessage(
 			LanguageUtil.get(

@@ -251,7 +251,15 @@ public class CompanyLogServlet extends HttpServlet {
 			sb.append(
 				_language.formatStorageSize(
 					file.length(), httpServletRequest.getLocale()));
-			sb.append(")</a></li>");
+			sb.append(")</a><form action = \"");
+			sb.append(href);
+			sb.append("\" method = \"GET\">");
+			sb.append("StartIndex: <input name = \"startIndex\" type = \"text");
+			sb.append("\" />");
+			sb.append("EndIndex: <input name = \"endIndex\" type = \"text\" ");
+			sb.append("/> <input type = \"submit\" value = \"download\" />");
+			sb.append("</form>");
+			sb.append("</li>");
 		}
 
 		sb.append("</ul>");

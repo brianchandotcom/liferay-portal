@@ -14,10 +14,17 @@
 
 package com.liferay.frontend.view.state.service.impl;
 
+import com.liferay.frontend.view.state.model.FVSFrontendDataSetEntry;
 import com.liferay.frontend.view.state.service.base.FVSFrontendDataSetEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -28,4 +35,42 @@ import org.osgi.service.component.annotations.Component;
 )
 public class FVSFrontendDataSetEntryLocalServiceImpl
 	extends FVSFrontendDataSetEntryLocalServiceBaseImpl {
+
+	@Override
+	public FVSFrontendDataSetEntry addFVSFrontendDataSetEntry(
+			String fdsName, long fvsEntryId, String name, long plid,
+			String portletId, long userId)
+		throws PortalException {
+
+		FVSFrontendDataSetEntry fvsFrontendDataSetEntry =
+			fvsFrontendDataSetEntryPersistence.create(
+				counterLocalService.increment());
+
+		User user = _userLocalService.getUserById(userId);
+
+		fvsFrontendDataSetEntry.setCompanyId(user.getCompanyId());
+		fvsFrontendDataSetEntry.setUserId(user.getUserId());
+		fvsFrontendDataSetEntry.setUserName(user.getFullName());
+
+		fvsFrontendDataSetEntry.setFdsName(fdsName);
+		fvsFrontendDataSetEntry.setFvsEntryId(fvsEntryId);
+		fvsFrontendDataSetEntry.setName(name);
+		fvsFrontendDataSetEntry.setPlid(plid);
+		fvsFrontendDataSetEntry.setPortletId(portletId);
+
+		return fvsFrontendDataSetEntryPersistence.update(
+			fvsFrontendDataSetEntry);
+	}
+
+	@Override
+	public List<FVSFrontendDataSetEntry> getFVSFrontendDataSetEntries(
+		String fdsName, long plid, String portletId, long userId) {
+
+		return fvsFrontendDataSetEntryPersistence.findByU_F_P_P(
+			userId, fdsName, plid, portletId);
+	}
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 }

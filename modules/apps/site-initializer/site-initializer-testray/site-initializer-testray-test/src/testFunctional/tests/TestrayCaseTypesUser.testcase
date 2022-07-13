@@ -41,7 +41,7 @@ definition {
 		}
 
 		task ("Create a new Case Type and assert if it was created") {
-			Testray.clickOnModalNumber(pageNumber = "2");
+			Testray.clickOnModalNumber(pageNumber = "4");
 
 			TestrayManage.createNewCaseTypes(key_value = "Test Case Type");
 

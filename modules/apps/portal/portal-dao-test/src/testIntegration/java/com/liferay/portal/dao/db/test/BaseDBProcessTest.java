@@ -93,7 +93,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	@Test
 	public void testAlterColumnNameChangeType() throws Exception {
 		try {
-			alterColumnName(_TABLE_NAME, "typeBoolean", "typeChanged INTEGER");
+			alterColumnName(_TABLE_NAME, "typeBoolean", "typeChanged VARCHAR");
 
 			Assert.fail();
 		}
@@ -134,7 +134,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 	public void testAlterColumnNameNoNeededWithAlterType() throws Exception {
 		try {
 			alterColumnName(
-				_TABLE_NAME, "deletedColumn", "typeBoolean INTEGER");
+				_TABLE_NAME, "deletedColumn", "typeBoolean VARCHAR");
 
 			Assert.fail();
 		}
@@ -145,7 +145,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 			_dbInspector.hasColumn(_TABLE_NAME, "deletedColumn"));
 
 		Assert.assertFalse(
-			_dbInspector.hasColumnType(_TABLE_NAME, "typeBoolean", "INTEGER"));
+			_dbInspector.hasColumnType(_TABLE_NAME, "typeBoolean", "VARCHAR"));
 	}
 
 	@Test
@@ -153,7 +153,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 		throws Exception {
 
 		try {
-			alterColumnName(_TABLE_NAME, "typeInteger", "typeBoolean INTEGER");
+			alterColumnName(_TABLE_NAME, "typeInteger", "typeBoolean VARCHAR");
 
 			Assert.fail();
 		}
@@ -163,7 +163,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 		Assert.assertTrue(_dbInspector.hasColumn(_TABLE_NAME, "typeInteger"));
 
 		Assert.assertFalse(
-			_dbInspector.hasColumnType(_TABLE_NAME, "typeBoolean", "INTEGER"));
+			_dbInspector.hasColumnType(_TABLE_NAME, "typeBoolean", "VARCHAR"));
 	}
 
 	@Test
@@ -370,7 +370,7 @@ public class BaseDBProcessTest extends BaseDBProcess {
 		throws Exception {
 
 		try {
-			alterTableAddColumn(_TABLE_NAME, "typeDouble", "INTEGER");
+			alterTableAddColumn(_TABLE_NAME, "typeDouble", "VARCHAR");
 
 			Assert.fail();
 		}

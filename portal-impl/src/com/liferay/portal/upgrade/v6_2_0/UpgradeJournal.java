@@ -130,7 +130,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			addDDMStructure(
 				uuid, ddmStructureId, groupId, companyId, userId, userName,
 				createDate, modifiedDate, parentDDMStructureId,
-				PortalUtil.getClassNameId(
+				_getClassNameId(
 					"com.liferay.portlet.journal.model.JournalArticle"),
 				ddmStructureKey, name, description, xsd, "xml",
 				_DDM_STRUCTURE_TYPE_DEFAULT);
@@ -280,8 +280,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					"classPK = ?")) {
 
 			preparedStatement.setLong(
-				1,
-				PortalUtil.getClassNameId("com.liferay.portal.model.Company"));
+				1, _getClassNameId("com.liferay.portal.model.Company"));
 			preparedStatement.setLong(2, companyId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -300,7 +299,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected long getDDMStructureClassNameId() {
-		return PortalUtil.getClassNameId(
+		return _getClassNameId(
 			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure");
 	}
 
@@ -395,7 +394,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected long getJournalStructureClassNameId() {
-		return PortalUtil.getClassNameId(
+		return _getClassNameId(
 			"com.liferay.portlet.journal.model.JournalStructure");
 	}
 
@@ -469,7 +468,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 							"!= ''"));
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
-			long classNameId = PortalUtil.getClassNameId(
+			long classNameId = _getClassNameId(
 				"com.liferay.portlet.journal.model.JournalArticle");
 
 			try (PreparedStatement preparedStatement2 =
@@ -1215,6 +1214,18 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		}
 	}
 
+	private long _getClassNameId(String className) {
+		Long classNameId = _classNameIds.get(className);
+
+		if (classNameId == null) {
+			classNameId = PortalUtil.getClassNameId(className);
+
+			_classNameIds.put(className, classNameId);
+		}
+
+		return classNameId;
+	}
+
 	private String _getUniqueUrlTitle(
 			long groupId, String articleId, String urlTitle,
 			Map<String, String> processedArticleIds)
@@ -1293,6 +1304,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
 
+	private final Map<String, Long> _classNameIds = new HashMap<>();
 	private final Map<Long, Long> _companyGroupIds = new HashMap<>();
 	private final Map<String, String> _ddmDataTypes = new HashMap<>();
 	private final Map<String, String> _ddmMetadataAttributes = new HashMap<>();

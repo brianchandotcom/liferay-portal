@@ -72,6 +72,39 @@
 
 		<column name="viewState" type="String" />
 	</entity>
+	<entity local-service="true" name="FVSFrontendDataSetEntry" remote-service="false" trash-enabled="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column container-model="true" name="fvsFrontendDataSetEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="fdsName" type="String" />
+		<column name="fvsEntryId" type="long" />
+		<column name="name" type="String" />
+		<column name="plid" type="long" />
+		<column name="portletId" type="String" />
+
+		<!-- Order -->
+
+		<!-- Finder methods -->
+
+		<finder name="U_F_P_P" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="fdsName" />
+			<finder-column name="plid" />
+			<finder-column name="portletId" />
+		</finder>
+	</entity>
 	<exceptions>
 	</exceptions>
 </service-builder>

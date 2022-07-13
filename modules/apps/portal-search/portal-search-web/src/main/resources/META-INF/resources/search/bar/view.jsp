@@ -132,7 +132,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 
 										<div class="input-group-append input-group-item input-group-item-shrink">
 											<clay:button
-												aria-label='<%= LanguageUtil.get(request, "submit") %>'
+												aria-label='<%= LanguageUtil.get(request, "search") %>'
 												displayType="secondary"
 												icon="search"
 												type="submit"
@@ -147,7 +147,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 
 											<div class="input-group-inset-item input-group-inset-item-after">
 												<clay:button
-													aria-label='<%= LanguageUtil.get(request, "submit") %>'
+													aria-label='<%= LanguageUtil.get(request, "search") %>'
 													displayType="unstyled"
 													icon="search"
 													type="submit"

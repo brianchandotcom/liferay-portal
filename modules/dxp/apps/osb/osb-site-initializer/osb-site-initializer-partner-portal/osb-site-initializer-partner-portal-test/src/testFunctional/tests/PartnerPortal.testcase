@@ -2,16 +2,16 @@
 definition {
 
 	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
-    property osgi.modules.includes = "osb-site-initializer-partner-portal";
+	property osgi.modules.includes = "osb-site-initializer-partner-portal";
 	property portal.release = "false";
 	property portal.upstream = "true";
-    property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-    property testray.main.component.name = "OSB Site Initializer Partner Portal";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Partner Portal";
 
-    var testSiteName = "Partner Portal Name";
+	var testSiteName = "Partner Portal Name";
 	var testSiteURL = "partner-portal-name";
 
-    setUp {
+	setUp {
 		task ("Set up instance and sign in") {
 			TestCase.setUpPortalInstance();
 
@@ -19,7 +19,7 @@ definition {
 		}
 	}
 
-    tearDown {
+	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
@@ -32,7 +32,7 @@ definition {
 
 	@description = "This is a test for LPS-158190. It ensures that a PRM Site can be created."
 	@priority = "5"
-    test SiteCanBeCreated {
+	test SiteCanBeCreated {
 		task ("Given a new Partner Portal Site") {
 			Site.openSitesAdmin();
 
@@ -48,6 +48,6 @@ definition {
 				key_title = "Partner Portal",
 				locator1 = "Header#H3_TITLE");
 		}
-    }
+	}
 
 }

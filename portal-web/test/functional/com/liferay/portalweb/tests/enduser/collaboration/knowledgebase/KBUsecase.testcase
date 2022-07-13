@@ -34,6 +34,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test DeleteImportedArticles {
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		JSONLayout.addPublicLayout(
@@ -286,6 +287,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test SearchKBArticleViaSearchPortlet {
+		property portal.acceptance = "true";
+
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(

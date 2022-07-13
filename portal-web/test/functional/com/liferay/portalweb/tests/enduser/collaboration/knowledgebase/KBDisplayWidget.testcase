@@ -42,6 +42,8 @@ definition {
 	@refactordone
 	@uitest
 	test CanAddChildArticle {
+		property portal.acceptance = "true";
+
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -123,6 +125,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDeleteArticle {
+		property portal.acceptance = "true";
+
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -138,6 +142,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDeleteChildArticle {
+		property portal.acceptance = "true";
+
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -162,6 +168,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanEditArticle {
+		property portal.acceptance = "true";
+
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -184,6 +192,8 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanEditChildArticle {
+		property portal.acceptance = "true";
+
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Parent Content 1",
@@ -586,6 +596,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewCustomFriendlyURL {
+		property portal.acceptance = "true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		for (var num : list "1,2") {
@@ -662,6 +674,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewSuggestionsWorkflow {
+		property portal.acceptance = "true";
+
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article1 Content",

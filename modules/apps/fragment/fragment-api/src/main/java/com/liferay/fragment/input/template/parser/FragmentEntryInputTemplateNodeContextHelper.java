@@ -31,9 +31,13 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -328,6 +332,20 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		return inputTemplateNode;
 	}
 
+	private FileEntry _fetchFileEntry(long fileEntryId) {
+		try {
+			return _dlAppLocalService.getFileEntry(fileEntryId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get file entry " + fileEntryId, portalException);
+			}
+
+			return null;
+		}
+	}
+
 	private String _getStep(Integer decimalPartMaxLength) {
 		if (decimalPartMaxLength == null) {
 			return StringPool.BLANK;
@@ -344,6 +362,9 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 				StringPool.BLANK),
 			"1");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryInputTemplateNodeContextHelper.class);
 
 	private final String _defaultInputLabel;
 	private final DLAppLocalService _dlAppLocalService;

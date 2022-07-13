@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.input.template.parser;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -58,11 +59,12 @@ import javax.servlet.http.HttpServletRequest;
 public class FragmentEntryInputTemplateNodeContextHelper {
 
 	public FragmentEntryInputTemplateNodeContextHelper(
-		String defaultInputLabel,
+		String defaultInputLabel, DLAppLocalService dlAppLocalService,
 		FragmentEntryConfigurationParser fragmentEntryConfigurationParser,
 		ItemSelector itemSelector) {
 
 		_defaultInputLabel = defaultInputLabel;
+		_dlAppLocalService = dlAppLocalService;
 		_fragmentEntryConfigurationParser = fragmentEntryConfigurationParser;
 		_itemSelector = itemSelector;
 	}
@@ -344,6 +346,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 	}
 
 	private final String _defaultInputLabel;
+	private final DLAppLocalService _dlAppLocalService;
 	private final FragmentEntryConfigurationParser
 		_fragmentEntryConfigurationParser;
 	private final ItemSelector _itemSelector;

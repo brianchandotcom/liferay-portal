@@ -78,6 +78,11 @@ public interface FVSFrontendDataSetEntryLocalService
 	public FVSFrontendDataSetEntry addFVSFrontendDataSetEntry(
 		FVSFrontendDataSetEntry fvsFrontendDataSetEntry);
 
+	public FVSFrontendDataSetEntry addFVSFrontendDataSetEntry(
+			String fdsName, long fvsEntryId, String name, long plid,
+			String portletId, long userId)
+		throws PortalException;
+
 	/**
 	 * Creates a new fvs frontend data set entry with the primary key. Does not add the fvs frontend data set entry to the database.
 	 *
@@ -240,6 +245,10 @@ public interface FVSFrontendDataSetEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FVSFrontendDataSetEntry> getFVSFrontendDataSetEntries(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FVSFrontendDataSetEntry> getFVSFrontendDataSetEntries(
+		String fdsName, long plid, String portletId, long userId);
 
 	/**
 	 * Returns the number of fvs frontend data set entries.

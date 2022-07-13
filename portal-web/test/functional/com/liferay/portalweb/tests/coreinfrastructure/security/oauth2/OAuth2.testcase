@@ -25,13 +25,14 @@ definition {
 	@description = "This is a use case for LPS-129398. User can authorize external application multiple times without any user session, when remember device is chosen."
 	@priority = "4"
 	test ApplicationCanBeAuthorizedWithoutUserSession {
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCanBeAuthorizedWithoutUserSession";
 
 		task ("Add and edit 2 external applications") {
 			for (var count : list "1,2") {
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
-					callbackUri = '''http://martamedio.com/oauth2-tester/?url=http://localhost:8080&client_id=default${count}''',
+					callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
 					clientProfile = "Web Application",
@@ -84,6 +85,7 @@ definition {
 	@priority = "5"
 	test ApplicationCanBeAuthorizedWithRememberDeviceEnabled {
 		property portal.acceptance = "true";
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCanBeAuthorizedWithRememberDeviceEnabled";
 
 		task ("Add and edit an external application with remember device enabled") {
@@ -118,6 +120,7 @@ definition {
 	@description = "This is a use case for LPS-145191 TC-1:Liferay will not issue an access token back to the client when configure OAuth 2 Application as Client Secret JWT without the client sending client info in JWT."
 	@priority = "4"
 	test ApplicationCannotBeAuthorizedWithClientSecretJWTWithoutJWTAssertion {
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithClientSecretJWTWithoutJWTAssertion";
 
 		task ("Add and edit an external application") {
@@ -225,6 +228,7 @@ definition {
 	@description = "This is a use case for LPS-145191 TC-2:Liferay will not issue an access token back to the client when configure OAuth 2 Application as Private Key JWT without the client sending client info in JWT."
 	@priority = "4"
 	test ApplicationCannotBeAuthorizedWithPrivateKeyJWTWithoutJWTAssertion {
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithPrivateKeyJWTWithoutJWTAssertion";
 
 		task ("Add and edit an external application") {
@@ -413,6 +417,7 @@ definition {
 	@priority = "5"
 	test AuthorizationCanBeRevokedViaKebabMenu {
 		property portal.acceptance = "true";
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#AuthorizationCanBeRevokedViaKebabMenu";
 
 		task ("Add and edit an external application") {
@@ -463,6 +468,7 @@ definition {
 	@description = "This is a use case for LPS-129397 TC-2: User can revoke authorizations from a trusted application via kebab menu on the OAuth 2 administration page."
 	@priority = "3"
 	test AuthorizationCanBeRevokedViaKebabMenuWithTrustedDevice {
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#AuthorizationCanBeRevokedViaKebabMenuWithTrustedDevice";
 
 		task ("Add and edit an external application") {
@@ -883,6 +889,7 @@ definition {
 	test ExpiredAuthorizationShouldBeRemovedFromTable {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config:com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=&quot;30&quot;${line.separator}refresh.token.expires.in=&quot;60&quot;:oauth2.expired.authorizations.afterlife.duration=&quot;30&quot;${line.separator}oauth2.expired.authorizations.check.interval=&quot;30&quot;";
+		property portal.ssl.enabled = "true";
 
 		task ("Add a new OAuth 2 application") {
 			var portalURL = PropsUtil.get("portal.url");
@@ -1074,6 +1081,7 @@ definition {
 	test ExternalApplicationCanBeAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property portal.acceptance = "true";
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeAuthorized";
 
 		task ("Add and edit an external application") {
@@ -1100,6 +1108,7 @@ definition {
 	@priority = "3"
 	test ExternalApplicationCanBeTrustedAndAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#ExternalApplicationCanBeTrustedAndAuthorized";
 
 		task ("Add and edit an external trusted application") {
@@ -1623,6 +1632,7 @@ definition {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=&quot;8&quot;";
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#RefreshTokenTimeCanBeSetExpiredAndRenewed";
 
 		task ("Add and edit an external application") {
@@ -1656,6 +1666,7 @@ definition {
 	@description = "This is a use case for LPS-129395. Remember device option should be visible in OAuth 2 admin page if it was set in the application settings."
 	@priority = "5"
 	test RememberDeviceExternalPropertyShouldBeVisible {
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#RememberDeviceExternalPropertyShouldBeVisible";
 
 		task ("Add a new external application with remember device checked") {
@@ -1683,13 +1694,14 @@ definition {
 	@description = "This is a use case for LPS-129398. User can authorize multiple external applications which have the remember device option checked."
 	@priority = "4"
 	test RememberDeviceShouldWorkWithMultipleAuthorizations {
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#RememberDeviceShouldWorkWithMultipleAuthorizations";
 
 		task ("Add and edit 2 external applications") {
 			for (var count : list "1,2") {
 				OAuth2.addAndEditExternalApplication(
 					applicationName = "My Application${count}",
-					callbackUri = '''http://martamedio.com/oauth2-tester/?url=http://localhost:8080&client_id=default${count}''',
+					callbackUri = '''http://martamedio.com/oauth2-tester/?url=https://localhost:8443&client_id=default${count}''',
 					checkboxCheckList = "Remember Device",
 					clientId = "default${count}",
 					clientProfile = "Web Application",
@@ -1739,6 +1751,7 @@ definition {
 	@description = "This is a use case for LPS-129397 TC-3: User can evoke authorizations via new kebab menu option in OAuth 2 application's row when the device is remembered."
 	@priority = "3"
 	test RevokeAuthorizationViaKebabMenuWithRememberDevice {
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#RevokeAuthorizationViaKebabMenuWithRememberDevice";
 
 		task ("Add and edit an external application") {
@@ -1928,6 +1941,7 @@ definition {
 	@description = "This is a use case for LPS-130869. OAuth2 token introspection should work with empty client secret for PKCE application."
 	@priority = "4"
 	test TokenIntrospectionShouldWorkWithEmptyClientSecretForPKCE {
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#TokenIntrospectionShouldWorkWithEmptyClientSecretForPKCE";
 
 		task ("Given: Add and edit an PKCE application") {
@@ -1954,6 +1968,7 @@ definition {
 	@description = "This is a use case for LPS-129395. External applications have trusted label in OAuth 2 admin page when they are created with the trusted device option."
 	@priority = "5"
 	test TrustedExternalPropertyShouldBeVisible {
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#TrustedExternalPropertyShouldBeVisible";
 
 		task ("Add a trusted OAuth 2 application") {

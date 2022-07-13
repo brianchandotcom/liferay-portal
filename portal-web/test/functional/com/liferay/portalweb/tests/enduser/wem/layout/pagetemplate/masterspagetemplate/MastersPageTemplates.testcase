@@ -556,7 +556,7 @@ definition {
 		}
 
 		task ("Type content in the HTML Title field") {
-			Navigator.gotoEditPageViaControlMenu(pageName = "Test Page Name");
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
 			Navigator.gotoNavTab(navTab = "SEO");
 

@@ -1,4 +1,5 @@
 @component-name = "portal-solutions"
+@ignore = "true"
 definition {
 
 	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";

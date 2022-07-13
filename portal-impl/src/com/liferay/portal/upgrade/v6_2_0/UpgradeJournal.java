@@ -269,6 +269,12 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected long getCompanyGroupId(long companyId) throws Exception {
+		Long companyGroupId = _companyGroupIds.get(companyId);
+
+		if (companyGroupId != null) {
+			return companyGroupId;
+		}
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select groupId from Group_ where classNameId = ? and " +
 					"classPK = ?")) {
@@ -280,10 +286,15 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getLong("groupId");
+					companyGroupId = resultSet.getLong("groupId");
+				}
+				else {
+					companyGroupId = 0L;
 				}
 
-				return 0;
+				_companyGroupIds.put(companyId, companyGroupId);
+
+				return companyGroupId;
 			}
 		}
 	}
@@ -1282,6 +1293,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	private static final Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
 
+	private final Map<Long, Long> _companyGroupIds = new HashMap<>();
 	private final Map<String, String> _ddmDataTypes = new HashMap<>();
 	private final Map<String, String> _ddmMetadataAttributes = new HashMap<>();
 	private final Map<String, Long> _ddmStructureIds = new HashMap<>();

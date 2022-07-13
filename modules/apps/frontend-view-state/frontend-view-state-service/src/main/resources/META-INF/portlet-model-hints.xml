@@ -53,10 +53,16 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="fdsName" type="String" />
+		<field name="fdsName" type="String">
+			<hint name="max-length">200</hint>
+		</field>
 		<field name="fvsEntryId" type="long" />
-		<field name="name" type="String" />
+		<field name="name" type="String">
+			<hint name="max-length">200</hint>
+		</field>
 		<field name="plid" type="long" />
-		<field name="portletId" type="String" />
+		<field name="portletId" type="String">
+			<hint name="max-length">200</hint>
+		</field>
 	</model>
 </model-hints>

@@ -32,7 +32,7 @@
 			</div>
 		</div>
 
-		<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="list-unstyled" id="${fragmentEntryLinkNamespace}-listbox" role="listbox" tabindex="0">
+		<ul aria-labelledby="${fragmentEntryLinkNamespace}-label" class="list-unstyled" id="${fragmentEntryLinkNamespace}-listbox" role="listbox" tabindex="0" [#if input.value??]aria-activedescendant="${fragmentEntryLinkNamespace}-option-${input.value}"[/#if]>
 			<li class="dropdown-item text-muted" data-option-value="" id="${fragmentEntryLinkNamespace}-option--" role="option">
 				${languageUtil.get(locale, "choose-an-option")}
 			</li>

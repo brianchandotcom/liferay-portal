@@ -1,0 +1,1197 @@
+components:
+    schemas:
+        Error:
+            properties:
+                errorCode:
+                    description:
+                        Internal error code mapping
+                    example: 996
+                    readOnly: true
+                    type: integer
+                errorDescription:
+                    example: Unable to find currency. Currency code should be expressed with
+                        3-letter ISO 4217 format.
+                    readOnly: true
+                    type: string
+                message:
+                    example: No CommerceCurrency exists with the key {groupId=41811, code=US
+                        Dollar}
+                    readOnly: true
+                    type: string
+                status:
+                    description:
+                        HTTP Status code
+                    example: 404
+                    readOnly: true
+                    type: integer
+            type: object
+        PlacedOrder:
+            properties:
+                account:
+                    readOnly: true
+                    type: string
+                accountId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                author:
+                    readOnly: true
+                    type: string
+                channelId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                couponCode:
+                    readOnly: true
+                    type: string
+                createDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                currencyCode:
+                    readOnly: true
+                    type: string
+                customFields:
+                    additionalProperties: true
+                    readOnly: true
+                    type: object
+                errorMessages:
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                lastPriceUpdateDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                modifiedDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                orderStatusInfo:
+                    allOf:
+                        - $ref: "#/components/schemas/Status"
+                    readOnly: true
+                orderTypeExternalReferenceCode:
+                    example: AB-34098-789-N
+                    readOnly: true
+                    type: string
+                orderTypeId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                orderUUID:
+                    readOnly: true
+                    type: string
+                paymentMethod:
+                    readOnly: true
+                    type: string
+                paymentMethodLabel:
+                    readOnly: true
+                    type: string
+                paymentStatus:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                paymentStatusInfo:
+                    allOf:
+                        - $ref: "#/components/schemas/Status"
+                    readOnly: true
+                paymentStatusLabel:
+                    readOnly: true
+                    type: string
+                placedOrderBillingAddress:
+                    $ref: "#/components/schemas/PlacedOrderAddress"
+                    readOnly: true
+                placedOrderBillingAddressId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                placedOrderComments:
+                    items:
+                        $ref: "#/components/schemas/PlacedOrderComment"
+                    readOnly: true
+                    type: array
+                placedOrderItems:
+                    items:
+                        $ref: "#/components/schemas/PlacedOrderItem"
+                    readOnly: true
+                    type: array
+                placedOrderShippingAddress:
+                    $ref: "#/components/schemas/PlacedOrderAddress"
+                    readOnly: true
+                placedOrderShippingAddressId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                printedNote:
+                    readOnly: true
+                    type: string
+                purchaseOrderNumber:
+                    readOnly: true
+                    type: string
+                shippingMethod:
+                    readOnly: true
+                    type: string
+                shippingOption:
+                    readOnly: true
+                    type: string
+                status:
+                    readOnly: true
+                    type: string
+                summary:
+                    $ref: "#/components/schemas/Summary"
+                    readOnly: true
+                useAsBilling:
+                    readOnly: true
+                    type: boolean
+                valid:
+                    readOnly: true
+                    type: boolean
+                workflowStatusInfo:
+                    allOf:
+                        - $ref: "#/components/schemas/Status"
+                    readOnly: true
+            type: object
+        PlacedOrderAddress:
+            properties:
+                city:
+                    readOnly: true
+                    type: string
+                country:
+                    readOnly: true
+                    type: string
+                countryISOCode:
+                    readOnly: true
+                    type: string
+                description:
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                latitude:
+                    format: double
+                    readOnly: true
+                    type: number
+                longitude:
+                    format: double
+                    readOnly: true
+                    type: number
+                name:
+                    readOnly: true
+                    type: string
+                phoneNumber:
+                    readOnly: true
+                    type: string
+                region:
+                    readOnly: true
+                    type: string
+                regionISOCode:
+                    readOnly: true
+                    type: string
+                street1:
+                    readOnly: true
+                    type: string
+                street2:
+                    readOnly: true
+                    type: string
+                street3:
+                    readOnly: true
+                    type: string
+                type:
+                    readOnly: true
+                    type: string
+                typeId:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                vatNumber:
+                    readOnly: true
+                    type: string
+                zip:
+                    readOnly: true
+                    type: string
+            type: object
+        PlacedOrderComment:
+            properties:
+                author:
+                    readOnly: true
+                    type: string
+                content:
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                orderId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                restricted:
+                    readOnly: true
+                    type: boolean
+            type: object
+        PlacedOrderItem:
+            properties:
+                adaptiveMediaImageHTMLTag:
+                    readOnly: true
+                    type: string
+                customFields:
+                    additionalProperties: true
+                    readOnly: true
+                    type: object
+                errorMessages:
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    readOnly: true
+                    type: string
+                options:
+                    readOnly: true
+                    type: string
+                parentOrderItemId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                placedOrderItemShipments:
+                    items:
+                        $ref: "#/components/schemas/PlacedOrderItemShipment"
+                    readOnly: true
+                    type: array
+                placedOrderItems:
+                    items:
+                        $ref: "#/components/schemas/PlacedOrderItem"
+                    readOnly: true
+                    type: array
+                price:
+                    $ref: "#/components/schemas/Price"
+                    readOnly: true
+                productId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                productURLs:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: product-url-us
+                        hr_HR: product-url-hr
+                        hu_HU: product-url-hu
+                    readOnly: true
+                    type: object
+                quantity:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                settings:
+                    $ref: "#/components/schemas/Settings"
+                    readOnly: true
+                sku:
+                    readOnly: true
+                    type: string
+                skuId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                subscription:
+                    example: true
+                    readOnly: true
+                    type: boolean
+                thumbnail:
+                    readOnly: true
+                    type: string
+                valid:
+                    readOnly: true
+                    type: boolean
+            type: object
+        PlacedOrderItemShipment:
+            properties:
+                accountId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                author:
+                    example: "Author"
+                    readOnly: true
+                    type: string
+                carrier:
+                    example: "FedEx"
+                    readOnly: true
+                    type: string
+                createDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                estimatedDeliveryDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                estimatedShippingDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                modifiedDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                orderId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                quantity:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                shippingAddressId:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                shippingMethodId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                shippingOptionName:
+                    example: "Standard Delivery"
+                    readOnly: true
+                    type: string
+                status:
+                    allOf:
+                        - $ref: "#/components/schemas/Status"
+                    readOnly: true
+                trackingNumber:
+                    example: "123AD-asd"
+                    readOnly: true
+                    type: string
+            type: object
+        Price:
+            properties:
+                currency:
+                    readOnly: true
+                    type: string
+                discount:
+                    format: double
+                    readOnly: true
+                    type: number
+                discountFormatted:
+                    readOnly: true
+                    type: string
+                discountPercentage:
+                    readOnly: true
+                    type: string
+                discountPercentageLevel1:
+                    format: double
+                    readOnly: true
+                    type: number
+                discountPercentageLevel2:
+                    format: double
+                    readOnly: true
+                    type: number
+                discountPercentageLevel3:
+                    format: double
+                    readOnly: true
+                    type: number
+                discountPercentageLevel4:
+                    format: double
+                    readOnly: true
+                    type: number
+                finalPrice:
+                    format: double
+                    readOnly: true
+                    type: number
+                finalPriceFormatted:
+                    readOnly: true
+                    type: string
+                price:
+                    format: double
+                    readOnly: true
+                    type: number
+                priceFormatted:
+                    readOnly: true
+                    type: string
+                promoPrice:
+                    format: double
+                    readOnly: true
+                    type: number
+                promoPriceFormatted:
+                    readOnly: true
+                    type: string
+            type: object
+        Settings:
+            properties:
+                allowedQuantities:
+                    items:
+                        format: int32
+                        type: integer
+                    readOnly: true
+                    type: array
+                maxQuantity:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                minQuantity:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                multipleQuantity:
+                    format: int32
+                    readOnly: true
+                    type: integer
+            type: object
+        ShippingMethod:
+            properties:
+                description:
+                    readOnly: true
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    readOnly: true
+                    type: string
+                shippingOption:
+                    $ref: "#/components/schemas/ShippingOption"
+                    readOnly: true
+            type: object
+        ShippingOption:
+            properties:
+                amount:
+                    format: double
+                    readOnly: true
+                    type: number
+                amountFormatted:
+                    readOnly: true
+                    type: string
+                label:
+                    readOnly: true
+                    type: string
+                name:
+                    readOnly: true
+                    type: string
+            type: object
+        Status:
+            properties:
+                code:
+                    format: int32
+                    readOnly: true
+                    type: integer
+                label:
+                    example: black
+                    readOnly: true
+                    type: string
+                label_i18n:
+                    example: black
+                    readOnly: true
+                    type: string
+            type: object
+        Summary:
+            properties:
+                currency:
+                    readOnly: true
+                    type: string
+                itemsQuantity:
+                    readOnly: true
+                    type: integer
+                shippingDiscountPercentages:
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                shippingDiscountValue:
+                    format: double
+                    readOnly: true
+                    type: number
+                shippingDiscountValueFormatted:
+                    readOnly: true
+                    type: string
+                shippingValue:
+                    format: double
+                    readOnly: true
+                    type: number
+                shippingValueFormatted:
+                    readOnly: true
+                    type: string
+                shippingValueWithTaxAmount:
+                    format: double
+                    readOnly: true
+                    type: number
+                shippingValueWithTaxAmountFormatted:
+                    readOnly: true
+                    type: string
+                subtotal:
+                    format: double
+                    readOnly: true
+                    type: number
+                subtotalDiscountPercentages:
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                subtotalDiscountValue:
+                    format: double
+                    readOnly: true
+                    type: number
+                subtotalDiscountValueFormatted:
+                    readOnly: true
+                    type: string
+                subtotalFormatted:
+                    readOnly: true
+                    type: string
+                taxValue:
+                    format: double
+                    readOnly: true
+                    type: number
+                taxValueFormatted:
+                    readOnly: true
+                    type: string
+                total:
+                    format: double
+                    readOnly: true
+                    type: number
+                totalDiscountPercentages:
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                totalDiscountValue:
+                    format: double
+                    readOnly: true
+                    type: number
+                totalDiscountValueFormatted:
+                    readOnly: true
+                    type: string
+                totalFormatted:
+                    readOnly: true
+                    type: string
+            type: object
+info:
+    description:
+        "Headless Delivery Commerce Order API. A Java client JAR is available for use with the group ID 'com.liferay',
+        artifact ID 'com.liferay.headless.commerce.delivery.order.client', and version '1.0.0'."
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Headless Delivery Commerce Order API
+    version: v1.0
+openapi: 3.0.1
+paths:
+    /channels/{channelId}/accounts/{accountId}/placed-orders:
+        get:
+            description:
+                Retrieves placed orders for specific account in the given channel.
+            parameters:
+                - in: path
+                  explode: false
+                  name: accountId
+                  required: true
+                  schema:
+                      description:
+                          Account Id
+                      format: int64
+                      type: integer
+                  style: simple
+                - in: path
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      format: int64
+                      type: integer
+                  style: simple
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrder"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrder"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrder"]
+    /placed-order-comments/{placedOrderCommentId}:
+        get:
+            parameters:
+                - in: path
+                  explode: false
+                  name: placedOrderCommentId
+                  required: true
+                  schema:
+                      description:
+                          Note Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderComment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderComment"
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Gets a Note by ID.
+            tags: ["PlacedOrderComment"]
+    /placed-order-items/{placedOrderItemId}:
+        get:
+            description:
+                Retrieve information of the given Placed Order.
+            parameters:
+                - in: path
+                  explode: false
+                  name: placedOrderItemId
+                  required: true
+                  schema:
+                      description:
+                          Placed Order Item Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderItem"
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrderItem"]
+    /placed-order-items/{placedOrderItemId}/placed-order-item-shipments:
+        get:
+            description:
+                Retrieve shipments of the given Placed Order Item.
+            parameters:
+                - in: path
+                  explode: false
+                  name: placedOrderItemId
+                  required: true
+                  schema:
+                      description:
+                          Placed Order Item Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrderItemShipment"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrderItemShipment"
+                                type: array
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrderItemShipment"]
+    /placed-orders/{placedOrderId}:
+        get:
+            description:
+                Retrieve information of the given Placed Order.
+            parameters:
+                - in: path
+                  explode: false
+                  name: placedOrderId
+                  required: true
+                  schema:
+                      description:
+                          Order Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrder"
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrder"]
+    /placed-orders/{placedOrderId}/payment-url:
+        get:
+            operationId: getPlacedOrderPaymentURL
+            parameters:
+                - in: path
+                  name: placedOrderId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: callbackURL
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+            tags: ["PlacedOrder"]
+    /placed-orders/{placedOrderId}/placed-order-billing-address:
+        get:
+            description:
+                Retrieve placed order billing address.
+            parameters:
+                - in: path
+                  explode: false
+                  name: placedOrderId
+                  required: true
+                  schema:
+                      description:
+                          Placed Order Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderAddress"
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrderAddress"]
+    /placed-orders/{placedOrderId}/placed-order-comments:
+        get:
+            parameters:
+                - in: path
+                  explode: false
+                  name: placedOrderId
+                  required: true
+                  schema:
+                      description:
+                          Placed Order Id
+                      format: int64
+                      type: integer
+                  style: simple
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrderComment"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrderComment"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Gets a list of Comments related to an Order.
+            tags: ["PlacedOrderComment"]
+    /placed-orders/{placedOrderId}/placed-order-items:
+        get:
+            description:
+                Retrieve placed order items.
+            parameters:
+                - in: path
+                  explode: false
+                  name: placedOrderId
+                  required: true
+                  schema:
+                      description:
+                          Placed Order Id
+                      format: int64
+                      type: integer
+                  style: simple
+                - in: query
+                  name: skuId
+                  required: false
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrderItem"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PlacedOrderItem"
+                                type: array
+                    description:
+                        Return the items of the placed order
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrderItem"]
+    /placed-orders/{placedOrderId}/placed-order-shipping-address:
+        get:
+            description:
+                Retrieve placed order shipping address.
+            parameters:
+                - in: path
+                  explode: false
+                  name: placedOrderId
+                  required: true
+                  schema:
+                      description:
+                          Placed Order Id
+                      format: int64
+                      type: integer
+                  style: simple
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderAddress"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/PlacedOrderAddress"
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["PlacedOrderAddress"]
+servers:
+    - url: /

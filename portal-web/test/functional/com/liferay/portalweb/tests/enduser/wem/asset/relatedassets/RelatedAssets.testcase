@@ -107,6 +107,130 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-155247. The Related Assets Widget should display the assets related to all contents placed on display page template."
+	@priority = "4"
+	test DisplayAllRelatedAssetsOnDisplayPageTemplate {
+		property testray.component.names = "Display Pages,Related Assets";
+
+		task ("Given a page designer has a displayed related assets on display page template with associated web content") {
+			task ("Add a web content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Site Name",
+					title = "Web Content Title");
+			}
+
+			task ("Add a blogs entry") {
+				HeadlessBlog.addBlogEntry(
+					content = "Blogs Entry Content",
+					groupName = "Site Name",
+					title = "Blogs Entry Title");
+			}
+
+			task ("Add a document") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentDescription = "DM Document Description",
+					dmDocumentTitle = "Document Title",
+					groupName = "Site Name",
+					mimeType = "image/jpeg",
+					sourceFileName = "Document_1.jpg");
+			}
+
+			task ("Select web content as related assets in blogs entry") {
+				BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+				BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+				BlogsEntry.addRelatedAsset(
+					assetTitle = "Web Content Title",
+					assetType = "Basic Web Content");
+
+				PortletEntry.publish();
+			}
+
+			task ("Select blogs entry as related assets in document") {
+				DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+				LexiconEntry.gotoEntryMenuItem(
+					menuItem = "Edit",
+					rowEntry = "Document Title");
+
+				RelatedAssets.selectAsset(
+					assetTitle = "Blogs Entry Title",
+					assetType = "Blogs Entry");
+
+				PortletEntry.publish();
+			}
+
+			task ("Add a display page template based on Basic Web Content") {
+				JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+					contentType = "Web Content Article",
+					displayPageTemplateEntryName = "Display Page Name",
+					groupName = "Site Name",
+					subType = "Basic Web Content");
+			}
+
+			task ("Add an Asset Publisher and Related Assets on display page template") {
+				DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
+
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+				PageEditor.addWidget(portletName = "Asset Publisher");
+
+				PageEditor.addWidget(
+					collectionName = "Content Management",
+					portletName = "Related Assets",
+					targetFragmentName = "Asset Publisher");
+			}
+
+			task ("Mark the display page template as default") {
+				PageEditor.publish();
+
+				DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			}
+		}
+
+		task ("When the page designer accesses to the associated display page template") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/w/web-content-title");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+		}
+
+		task ("Then the page designer can see blogs entry on Related Assets widget") {
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Blogs Entry Content",
+				assetTitle = "Blogs Entry Title");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "DM Document Description",
+				assetTitle = "Document Title");
+
+			RelatedAssets.viewPG(relatedAssetTitle = "Blogs Entry Title");
+		}
+
+		task ("When the page designer clicks on blogs entry title") {
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
+		}
+
+		task ("Then the page designer can see documents on Related Assets widget") {
+			RelatedAssets.viewPG(relatedAssetTitle = "Document Title");
+		}
+
+		task ("When the page designer clicks on document title") {
+			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Document Title");
+		}
+
+		task ("Then the page designer can see blogs entry on Related Assets widget") {
+			RelatedAssets.viewPG(relatedAssetTitle = "Blogs Entry Title");
+		}
+	}
+
 	@description = "Folders should not be shown as related assets"
 	@priority = "3"
 	@uitest

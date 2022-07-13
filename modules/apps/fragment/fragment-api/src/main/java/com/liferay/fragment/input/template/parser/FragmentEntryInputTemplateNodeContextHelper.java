@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
@@ -235,6 +236,14 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 					if (fileEntry != null) {
 						fileName = fileEntry.getFileName();
+					}
+				}
+				else if (fileSourceType ==
+							FileInfoFieldType.FileSourceType.USER_COMPUTER) {
+
+					if (fileEntry != null) {
+						fileName = TempFileEntryUtil.getOriginalTempFileName(
+							fileEntry.getFileName());
 					}
 				}
 

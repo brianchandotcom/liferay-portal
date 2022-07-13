@@ -478,6 +478,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testRedundantLogStatements() throws Exception {
+		test("RedundantLogStatements.testjava",
+			 "Redundant log statement between line '26' and line '31'.",
+			 26);
+	}
+
+	@Test
 	public void testResultCountSet() throws Exception {
 		test(
 			"ResultSetCount.testjava", "Use resultSet.getInt(1) for count", 35);

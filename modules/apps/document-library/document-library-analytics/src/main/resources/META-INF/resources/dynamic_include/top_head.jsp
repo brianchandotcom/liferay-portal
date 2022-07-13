@@ -23,45 +23,25 @@
 </script>
 
 <aui:script>
-	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
+	function getValueByAttribute(node, attr) {
+		return (
+			node.dataset[attr] ||
+			(node.parentElement && node.parentElement.dataset[attr])
+		);
+	}
 
 	function sendAnalyticsEvent(anchor) {
-		var fileEntryId =
-			anchor.dataset.analyticsFileEntryId ||
-			(anchor.parentElement &&
-				anchor.parentElement.dataset.analyticsFileEntryId);
+		var fileEntryId = getValueByAttribute(anchor, 'analyticsFileEntryId');
+		var title = getValueByAttribute(anchor, 'analyticsFileEntryTitle');
+		var version = getValueByAttribute(anchor, 'analyticsFileEntryVersion');
 
-		var title =
-			anchor.dataset.analyticsFileEntryTitle ||
-			(anchor.parentElement &&
-				anchor.parentElement.dataset.analyticsFileEntryTitle);
-
-		var getParameterValue = (parameterName) => {
-			var result = null;
-
-			anchor.search
-				.substr(1)
-				.split('&')
-				.forEach((item) => {
-					var tmp = item.split('=');
-
-					if (tmp[0] === parameterName) {
-						result = decodeURIComponent(tmp[1]);
-					}
-				});
-
-			return result;
-		};
-
-		var match = pathnameRegexp.exec(anchor.pathname);
-
-		if (fileEntryId && match) {
+		if (fileEntryId) {
 			Analytics.send('documentDownloaded', 'Document', {
-				groupId: match[1],
+				groupId: themeDisplay.getScopeGroupId(),
 				fileEntryId,
 				preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
-				title: title || decodeURIComponent(match[3].replace(/\+/gi, ' ')),
-				version: getParameterValue('version'),
+				title,
+				version,
 			});
 		}
 	}

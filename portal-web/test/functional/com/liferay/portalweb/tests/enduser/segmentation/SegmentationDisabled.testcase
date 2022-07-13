@@ -16,8 +16,6 @@ definition {
 		Navigator.openURL();
 
 		Segmentation.disableSegmentationAtInstanceSettings();
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
 	}
 
 	tearDown {
@@ -38,6 +36,8 @@ definition {
     Then the warning alert explains how to re-enable it"
 	@priority = "3"
 	test CheckRoleDisabledAlertAtInstanceSettings {
+		property test.name.skip.portal.instance = "SegmentationDisabled#CheckRoleDisabledAlertAtInstanceSettings";
+
 		task ("Disable asssigning role by segment at Instance Settings") {
 			Segmentation.disableSegmentationAtSystemSettings();
 		}

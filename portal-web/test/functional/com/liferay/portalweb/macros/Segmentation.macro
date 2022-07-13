@@ -217,6 +217,8 @@ definition {
 		}
 
 		Alert.viewSuccessMessage();
+
+		Navigator.openURL();
 	}
 
 	macro disableSegmentationAtSystemSettings {
@@ -414,7 +416,7 @@ definition {
 	}
 
 	macro resetSegmentationAtInstanceSettings {
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+		Navigator.openURL();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

@@ -165,7 +165,7 @@ public class ObjectStateFlowLocalServiceImpl
 
 			deleteObjectFieldObjectStateFlow(oldObjectField.getObjectFieldId());
 
-			addDefaultObjectStateFlow(newObjectField);
+			return addDefaultObjectStateFlow(newObjectField);
 		}
 
 		return null;

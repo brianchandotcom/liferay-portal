@@ -438,6 +438,10 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	private void _ivyXmlLibraryVersionCheck(String fileName, String content)
 		throws DocumentException, IOException {
 
+		if (Validator.isNull(content)) {
+			return;
+		}
+
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 
 		Document document = SourceUtil.readXML(content);
@@ -523,6 +527,10 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 	private void _pomXmlLibraryVersionCheck(String fileName, String content)
 		throws DocumentException, IOException {
+
+		if (Validator.isNull(content)) {
+			return;
+		}
 
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 

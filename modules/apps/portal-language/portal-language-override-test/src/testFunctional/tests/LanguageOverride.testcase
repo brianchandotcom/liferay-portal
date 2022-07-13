@@ -171,6 +171,61 @@ definition {
 		}
 	}
 
+	@description = "The testcase asserts the override filtered by 'Selected Language'."
+	@priority = "4"
+	test CanFilterOverridesbySelectedLanguage {
+		task ("Given three new keys with en-US and es-ES language translations") {
+			LanguageOverride.addLanguageKey(
+				languageKey = "text-contains-error1",
+				translationOverrideList = "en-US",
+				translationOverrideValueList = "Text contains error1");
+
+			LanguageOverride.addLanguageKey(
+				languageKey = "text-contains-error2",
+				translationOverrideList = "en-US",
+				translationOverrideValueList = "Text contains error2");
+
+			LanguageOverride.addLanguageKey(
+				languageKey = "text-contains-error3",
+				translationOverrideList = "es-ES",
+				translationOverrideValueList = "El texto contiene error3");
+		}
+
+		task ("When the user filters by 'Selected Language', only language key with default en-US override displays") {
+			ManagementBar.setFilterAndOrder(filterBy = "Selected Language");
+
+			LexiconEntry.viewEntryName(rowEntry = "text-contains-error1");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "text-contains-error1",
+				listEntrySubtitle = "Languages With Override: en_US");
+
+			LexiconEntry.viewEntryName(rowEntry = "text-contains-error2");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "text-contains-error2",
+				listEntrySubtitle = "Languages With Override: en_US");
+
+			LexiconEntry.viewNoEntry(rowEntry = "text-contains-error3");
+		}
+
+		task ("Then change the language selector to es-ES, only language key with es-ES override displays") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "es-ES");
+
+			LexiconEntry.viewEntryName(rowEntry = "text-contains-error3");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "text-contains-error3",
+				listEntrySubtitle = "Languages With Override: es_ES");
+
+			LexiconEntry.viewNoEntry(rowEntry = "text-contains-error1");
+
+			LexiconEntry.viewNoEntry(rowEntry = "text-contains-error2");
+		}
+	}
+
 	@description = "This test asserts that a user can remove all translation overrides on the main view page for language keys that are overridden and doing so will delete the language key"
 	@priority = "5"
 	test CanRemoveAllTranslationOverridesViaMenuItem {

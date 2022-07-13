@@ -1,0 +1,11 @@
+apiDir: "../headless-commerce-delivery-order-api/src/main/java"
+apiPackagePath: "com.liferay.headless.commerce.delivery.order"
+application:
+    baseURI: "/headless-commerce-delivery-order"
+    className: "HeadlessCommerceDeliveryOrderApplication"
+    name: "Liferay.Headless.Commerce.Delivery.Order"
+author: "Andrea Sbarra"
+clientDir: "../headless-commerce-delivery-order-client/src/main/java"
+forcePredictableSchemaPropertyName: false
+liferayEnterpriseApp: true
+testDir: "../headless-commerce-delivery-order-test/src/testIntegration/java"

@@ -62,6 +62,16 @@ public class SystemProperties {
 		return value;
 	}
 
+	public static String get(String key, String defaultValue) {
+		String value = _properties.get(key);
+
+		if (value == null) {
+			value = System.getProperty(key, defaultValue);
+		}
+
+		return value;
+	}
+
 	public static Properties getProperties() {
 		return PropertiesUtil.fromMap(_properties);
 	}

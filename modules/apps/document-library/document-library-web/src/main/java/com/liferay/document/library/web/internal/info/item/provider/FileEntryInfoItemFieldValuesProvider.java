@@ -215,7 +215,7 @@ public class FileEntryInfoItemFieldValuesProvider
 						new ClassPKInfoItemIdentifier(
 							fileEntry.getFileEntryId())));
 
-				fileURLWebImage.setAlt(fileEntry.getTitle());
+				fileURLWebImage.setAlt(fileEntry.getDescription());
 
 				fileEntryFieldValues.add(
 					new InfoFieldValue<>(
@@ -301,7 +301,7 @@ public class FileEntryInfoItemFieldValuesProvider
 					FileEntry.class.getName(),
 					new ClassPKInfoItemIdentifier(fileEntry.getFileEntryId())));
 
-			imagePreviewURLWebImage.setAlt(fileEntry.getTitle());
+			imagePreviewURLWebImage.setAlt(fileEntry.getDescription());
 
 			fileEntryFieldValues.add(
 				new InfoFieldValue<>(

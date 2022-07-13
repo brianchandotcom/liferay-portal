@@ -490,7 +490,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-146568. It asserts the language overriden will be bolded when it matches the selected language."
+	@description = "This is a use case for LPS-146568. It asserts the language overriden will be bolded and translation displayed when it matches the selected language."
 	@priority = "3"
 	test LanguageOverrideIsBoldedWhenMatchestheSelectedLanguage {
 		task ("Given new languages key are added for en-US and nl-NL separately") {
@@ -513,7 +513,7 @@ definition {
 				locale = "nl-NL");
 		}
 
-		task ("Then both keys should be present, but only the selected language 'nl-NL' should be bold") {
+		task ("Then both keys should be present, but only the selected language 'nl-NL' should be bold and translation in nl-NL display") {
 			AssertElementPresent(
 				key_languageKey = "text-not-bold",
 				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY");
@@ -527,6 +527,14 @@ definition {
 				key_language = "en-US",
 				key_languageKey = "text-not-bold",
 				locator1 = "LanguageOverride#BOLD_LANGUAGE_WITH_OVERRIDE");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "new-key",
+				listEntrySubtitle = "Nieuwe Sleutel");
+
+			AssertElementNotPresent(
+				key_translation = "Text not bold",
+				locator1 = "LanguageOverride#VIEW_PAGE_LANGUAGE_KEY_TRANSLATION");
 		}
 	}
 

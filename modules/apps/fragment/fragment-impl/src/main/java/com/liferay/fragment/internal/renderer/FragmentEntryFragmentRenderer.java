@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.internal.renderer;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.input.template.parser.FragmentEntryInputTemplateNodeContextHelper;
@@ -176,7 +177,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 			fragmentEntryInputTemplateNodeContextHelper =
 				new FragmentEntryInputTemplateNodeContextHelper(
 					_getFragmentEntryName(fragmentEntryLink),
-					_fragmentEntryConfigurationParser, _itemSelector);
+					_dlAppLocalService, _fragmentEntryConfigurationParser,
+					_itemSelector);
 
 		InputTemplateNode inputTemplateNode =
 			fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
@@ -457,6 +459,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		return unsyncStringWriter.toString();
 	}
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private FragmentCollectionContributorTracker

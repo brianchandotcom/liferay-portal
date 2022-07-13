@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.entry.processor.freemarker;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.entry.processor.freemarker.internal.configuration.FreeMarkerFragmentEntryProcessorConfiguration;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.helper.FragmentEntryLinkHelper;
@@ -159,7 +160,8 @@ public class FreeMarkerFragmentEntryProcessor
 						_fragmentEntryLinkHelper.getFragmentEntryName(
 							fragmentEntryLink,
 							fragmentEntryProcessorContext.getLocale()),
-						_fragmentEntryConfigurationParser, _itemSelector);
+						_dlAppLocalService, _fragmentEntryConfigurationParser,
+						_itemSelector);
 
 			template.put(
 				"input",
@@ -302,6 +304,9 @@ public class FreeMarkerFragmentEntryProcessor
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

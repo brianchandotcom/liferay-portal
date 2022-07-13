@@ -1149,6 +1149,19 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if (isSet(customCSS)) {
+			Type(
+				key_label = "Custom CSS",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "${customCSS}");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(headingLevel)) {
 			Select(
 				key_fieldLabel = "Heading Level",

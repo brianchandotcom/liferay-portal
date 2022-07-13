@@ -148,19 +148,18 @@ public class CompanyLogServlet extends HttpServlet {
 
 		File logFile = path.toFile();
 
-		if (logFile.exists()) {
-			ServletResponseUtil.sendFile(
-				httpServletRequest, httpServletResponse, fileName,
-				new FileInputStream(logFile), logFile.length(),
-				_mimeTypes.getContentType(fileName),
-				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
-		}
-		else {
+		if (!logFile.exists()) {
 			throw new FileNotFoundException(
 				StringBundler.concat(
 					"Unable to find log file ", fileName, " for company ",
 					companyId));
 		}
+
+		ServletResponseUtil.sendFile(
+			httpServletRequest, httpServletResponse, fileName,
+			new FileInputStream(logFile), logFile.length(),
+			_mimeTypes.getContentType(fileName),
+			HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
 	}
 
 	private PermissionChecker _getPermissionChecker(

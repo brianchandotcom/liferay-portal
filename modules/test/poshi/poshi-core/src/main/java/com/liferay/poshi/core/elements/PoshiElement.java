@@ -557,7 +557,11 @@ public abstract class PoshiElement
 						sb.toString()) &&
 					!nestedConditions.isEmpty()) {
 
-					nestedConditions.add(sb.toString());
+					String nestedCondition = sb.toString();
+
+					if (!nestedCondition.contains("maxIterations")) {
+						nestedConditions.add(nestedCondition);
+					}
 				}
 			}
 

@@ -73,6 +73,7 @@ definition {
 	@priority = "3"
 	test ButtonNotAvailableAfterSubmitForPublication {
 		property portal.upstream = "quarantine";
+
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",
 			siteName = "Site Name");
@@ -88,9 +89,6 @@ definition {
 		Staging.submitForPublicationPageRevision();
 
 		AssertElementNotPresent(locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION");
-
-
-		
 	}
 
 	@description = "Verify that, after approval, the Page status is Ready for Publish"
@@ -410,6 +408,7 @@ definition {
 	@priority = "3"
 	test WithdrawWorkflowSubmissionFromRemovedUser {
 		property portal.upstream = "quarantine";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

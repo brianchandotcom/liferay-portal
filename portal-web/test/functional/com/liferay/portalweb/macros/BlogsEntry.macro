@@ -1088,6 +1088,14 @@ definition {
 		if (isSet(entryInlineImage)) {
 			BlogsEntry.viewInlineImage(uploadFileName = "${entryInlineImage}");
 		}
+
+		if (isSet(entrySmallImage)) {
+			Panel.expandPanel(panel = "Configuration");
+
+			AssertVisible(
+				key_smallImage = "${entrySmallImage}",
+				locator1 = "BlogsEntry#SMALL_IMAGE");
+		}
 	}
 
 	macro viewEntryEmbeddedImage {

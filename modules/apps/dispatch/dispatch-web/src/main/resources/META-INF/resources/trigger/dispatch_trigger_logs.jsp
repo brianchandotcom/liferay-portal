@@ -69,7 +69,7 @@ SearchContainer<DispatchLog> dispatchLogSearchContainer = DispatchLogSearchConta
 							%>'
 							name="start-date"
 						>
-							<%= fastDateFormat.format(dispatchLog.getStartDate()) %>
+							<%= fastDateTimeFormat.format(dispatchLog.getStartDate()) %>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text

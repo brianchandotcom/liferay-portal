@@ -41,7 +41,7 @@ DispatchLog dispatchLog = dispatchLogDisplayContext.getDispatchLog();
 						<clay:col
 							md="8"
 						>
-							<%= (dispatchLog.getStartDate() != null) ? fastDateFormat.format(dispatchLog.getStartDate()) : "" %>
+							<%= (dispatchLog.getStartDate() != null) ? fastDateTimeFormat.format(dispatchLog.getStartDate()) : "" %>
 						</clay:col>
 					</clay:row>
 

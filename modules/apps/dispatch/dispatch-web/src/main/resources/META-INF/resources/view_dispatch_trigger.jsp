@@ -94,7 +94,7 @@ PortletURL portletURL = PortletURLBuilder.create(
 					String nextFireDateString = LanguageUtil.get(request, "not-scheduled");
 
 					if (dispatchTriggerMetadata.isDispatchTaskExecutorReady() && (dispatchTrigger.getNextFireDate() != null)) {
-						nextFireDateString = fastDateFormat.format(dispatchTrigger.getNextFireDate());
+						nextFireDateString = fastDateTimeFormat.format(dispatchTrigger.getNextFireDate());
 					}
 					%>
 

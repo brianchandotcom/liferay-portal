@@ -544,17 +544,22 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 						objectViewSortColumn.getSortOrder());
 			}
 
-			ObjectField objectField = _objectFieldPersistence.findByODI_N(
-				objectDefinitionId, objectViewSortColumn.getObjectFieldName());
+			if (!_objectFieldNames.contains(
+					objectViewSortColumn.getObjectFieldName())) {
 
-			if (Objects.equals(
-					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+				ObjectField objectField = _objectFieldPersistence.findByODI_N(
+					objectDefinitionId,
+					objectViewSortColumn.getObjectFieldName());
 
-				throw new ObjectViewSortColumnObjectFieldNameException(
-					"Object field " +
-						objectViewSortColumn.getObjectFieldName() +
-							" is not sortable");
+				if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+					throw new ObjectViewSortColumnObjectFieldNameException(
+						"Object field " +
+							objectViewSortColumn.getObjectFieldName() +
+								" is not sortable");
+				}
 			}
 		}
 	}

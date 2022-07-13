@@ -98,7 +98,7 @@ definition {
 			var response = HeadlessWebcontentAPI.filterAdminStructuredContent(filtervalue = "priority%20ge%200.99");
 		}
 
-		task ("Then the response body only includes items with priority  greater than to 0.99") {
+		task ("Then the response body only includes items with priority greater than to 0.99") {
 			HeadlessWebcontentAPI.assertTitleFieldWithCorrectName(
 				expectedTitleName = "Web Content 1,Web Content 2,Web Content 3,Web Content 4",
 				responseToParse = "${response}");
@@ -132,7 +132,7 @@ definition {
 				sortvalue = "priority%3Aasc");
 		}
 
-		task ("Then the response body only includes itens without priority 1.0") {
+		task ("Then the response body only includes items without priority 1.0") {
 			HeadlessWebcontentAPI.assertTitleFieldWithCorrectName(
 				expectedTitleName = "Web Content 4,Web Content 3",
 				responseToParse = "${response}");
@@ -143,14 +143,15 @@ definition {
 	test CanInvokeAllStructuredContentCreated {
 		property portal.acceptance = "true";
 
-		task ("When returning only web content with version 1.0") {
-			var response = HeadlessWebcontentAPI.versionStructureContent(versionvalue = "1.0");
+		task ("When invoking Web Content 3 by Headless Admin Content getStructuredContentByVersion") {
+
+			var structuredContentId = HeadlessWebcontentAPI.getStructuredContentIdByTitle(title="Web Content 3");
+
+			var response = HeadlessWebcontentAPI.versionStructureContent(versionvalue = "1.0",structuredContentId="${structuredContentId}");
 		}
 
-		task ("Then the response body only includes itens with version 1.0") {
-			TestUtils.assertEquals(
-				actual = "${response}",
-				expected = "Web Content 1,Web Content 2,Web Content 3,Web Content 4,");
+		task ("Then I should see in response Web Content 3 with a priority field set") {
+			HeadlessWebcontentAPI.assertPriorityFieldWithCorrectValue(responseToParse="${response}",expectedPriorityValue="2.99");
 		}
 	}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.vulcan.internal.resource;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
@@ -336,13 +335,7 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 							childDTOProperty.getName(),
 							_addSchema(childDTOProperty));
 
-						Map<String, Object> extensions =
-							childDTOProperty.getExtensions();
-
-						if ((extensions != null) &&
-							GetterUtil.getBoolean(
-								extensions.get("x-required"))) {
-
+						if (childDTOProperty.isRequired()) {
 							schema.addRequiredItem(childDTOProperty.getName());
 						}
 					}

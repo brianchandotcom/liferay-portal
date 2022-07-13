@@ -21,12 +21,15 @@ KBAdminNavigationDisplayContext kbAdminNavigationDisplayContext = new KBAdminNav
 %>
 
 <c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-156421")) %>'>
-	<div class="kbVerticalBar">
+	<div class="kbVerticalBar expanded" id="<portlet:namespace />verticalBarId">
 		<react:component
+			componentId="verticalBarId"
 			module="admin/js/components/VerticalBar"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"items", kbAdminNavigationDisplayContext.getVerticalNavigationItems()
+				).put(
+					"parentContainerId", liferayPortletResponse.getNamespace() + "verticalBarId"
 				).build()
 			%>'
 		/>

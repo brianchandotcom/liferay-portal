@@ -348,7 +348,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		_addTaskLogsDockerContainer(project);
 
 		DockerTagImage dockerTagImage = _addTaskDockerTagImage(
-			project, workspaceExtension);
+			project, workspaceExtension, dockerBuildImage);
 
 		_addTaskPullDockerImage(project, workspaceExtension, verifyProductTask);
 
@@ -973,13 +973,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private DockerTagImage _addTaskDockerTagImage(
-		Project project, WorkspaceExtension workspaceExtension) {
+		Project project, WorkspaceExtension workspaceExtension,
+		DockerBuildImage buildDockerImage) {
 
 		DockerTagImage dockerTagImage = GradleUtil.addTask(
 			project, TAG_DOCKER_IMAGE_TASK_NAME, DockerTagImage.class);
 
 		dockerTagImage.setGroup(DOCKER_GROUP);
 		dockerTagImage.setDescription("Tag the Docker image.");
+
+		dockerTagImage.dependsOn(buildDockerImage);
 
 		Property<String> imageIdProperty = dockerTagImage.getImageId();
 

@@ -67,8 +67,8 @@ public class BlogsServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.1.0", "1.1.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"BlogsEntry", "VARCHAR(255) null", "urlTitle"));
+			UpgradeProcessFactory.alterColumnType(
+				"BlogsEntry", "urlTitle", "VARCHAR(255) null"));
 
 		registry.register(
 			"1.1.1", "1.1.2",
@@ -104,8 +104,8 @@ public class BlogsServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.1.0", "2.1.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"BlogsEntry", "VARCHAR(255) null", "title"));
+			UpgradeProcessFactory.alterColumnType(
+				"BlogsEntry", "title", "VARCHAR(255) null"));
 
 		registry.register("2.1.1", "2.1.2", new DummyUpgradeStep());
 

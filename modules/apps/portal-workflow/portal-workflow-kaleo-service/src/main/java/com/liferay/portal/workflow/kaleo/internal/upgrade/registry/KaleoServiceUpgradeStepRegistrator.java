@@ -84,8 +84,8 @@ public class KaleoServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.2.0", "1.2.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"KaleoLog", "TEXT null", "comment_"),
+			UpgradeProcessFactory.alterColumnType(
+				"KaleoLog", "comment_", "TEXT null"),
 			new KaleoNotificationRecipientUpgradeProcess());
 
 		registry.register(

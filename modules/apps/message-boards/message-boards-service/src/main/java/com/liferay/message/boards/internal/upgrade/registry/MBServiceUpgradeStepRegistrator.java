@@ -116,15 +116,15 @@ public class MBServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register(
 			"6.0.0", "6.1.0",
-			UpgradeProcessFactory.alterColumnTypes(
-				"MBThread", "VARCHAR(75) null", "title"));
+			UpgradeProcessFactory.alterColumnType(
+				"MBThread", "title", "VARCHAR(75) null"));
 
 		registry.register(
 			"6.1.0", "6.1.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"MBMessage", "VARCHAR(255) null", "subject"),
-			UpgradeProcessFactory.alterColumnTypes(
-				"MBThread", "VARCHAR(255) null", "title"));
+			UpgradeProcessFactory.alterColumnType(
+				"MBMessage", "subject", "VARCHAR(255) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"MBThread", "title", "VARCHAR(255) null"));
 
 		registry.register(
 			"6.1.1", "6.2.0",

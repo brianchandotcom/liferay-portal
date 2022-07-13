@@ -66,34 +66,39 @@ public class SamlServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.0", "1.1.0",
-			UpgradeProcessFactory.alterColumnTypes(
-				"SamlIdpSpSession", "VARCHAR(1024) null", "nameIdFormat",
-				"nameIdValue", "samlSpEntityId"),
-			UpgradeProcessFactory.alterColumnTypes(
-				"SamlSpAuthRequest", "VARCHAR(1024) null", "samlIdpEntityId"),
-			UpgradeProcessFactory.alterColumnTypes(
-				"SamlSpMessage", "VARCHAR(1024) null", "samlIdpEntityId"),
-			UpgradeProcessFactory.alterColumnTypes(
-				"SamlSpSession", "VARCHAR(1024) null", "nameIdFormat",
-				"nameIdValue"));
+			UpgradeProcessFactory.alterColumnType(
+				"SamlIdpSpSession", "nameIdFormat", "VARCHAR(1024) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"SamlIdpSpSession", "nameIdValue", "VARCHAR(1024) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"SamlIdpSpSession", "samlSpEntityId", "VARCHAR(1024) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"SamlSpAuthRequest", "samlIdpEntityId", "VARCHAR(1024) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"SamlSpMessage", "samlIdpEntityId", "VARCHAR(1024) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"SamlSpSession", "nameIdFormat", "VARCHAR(1024) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"SamlSpSession", "nameIdValue", "VARCHAR(1024) null"));
 
 		registry.register(
 			"1.1.0", "1.1.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"SamlSpSession", "TEXT null", "assertionXml"),
-			UpgradeProcessFactory.alterColumnTypes(
-				"SamlSpSession", "VARCHAR(75) null", "samlSpSessionKey",
-				"sessionIndex"));
+			UpgradeProcessFactory.alterColumnType(
+				"SamlSpSession", "assertionXml", "TEXT null"),
+			UpgradeProcessFactory.alterColumnType(
+				"SamlSpSession", "samlSpSessionKey", "VARCHAR(75) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"SamlSpSession", "sessionIndex", "VARCHAR(75) null"));
 
 		registry.register(
 			"1.1.1", "1.1.2",
-			UpgradeProcessFactory.alterColumnTypes(
-				"SamlSpSession", "VARCHAR(200) null", "jSessionId"));
+			UpgradeProcessFactory.alterColumnType(
+				"SamlSpSession", "jSessionId", "VARCHAR(200) null"));
 
 		registry.register(
 			"1.1.2", "1.1.3",
-			UpgradeProcessFactory.alterColumnTypes(
-				"SamlSpIdpConnection", "BOOLEAN", "forceAuthn"));
+			UpgradeProcessFactory.alterColumnType(
+				"SamlSpIdpConnection", "forceAuthn", "BOOLEAN"));
 
 		registry.register(
 			"1.1.3", "1.1.4",

@@ -33,8 +33,10 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,6 +44,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -155,11 +159,55 @@ public class CompanyLogServlet extends HttpServlet {
 					companyId));
 		}
 
-		ServletResponseUtil.sendFile(
-			httpServletRequest, httpServletResponse, fileName,
-			new FileInputStream(logFile), logFile.length(),
-			_mimeTypes.getContentType(fileName),
-			HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+		String startIndex = ParamUtil.getString(
+			httpServletRequest, "startIndex");
+		String endIndex = ParamUtil.getString(httpServletRequest, "endIndex");
+
+		if (Validator.isNull(startIndex) && Validator.isNull(endIndex)) {
+			ServletResponseUtil.sendFile(
+				httpServletRequest, httpServletResponse, fileName,
+				new FileInputStream(logFile), logFile.length(),
+				_mimeTypes.getContentType(fileName),
+				HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+		}
+		else {
+			long start = 0;
+
+			if (Validator.isNotNull(startIndex)) {
+				start = GetterUtil.getLongStrict(startIndex);
+			}
+
+			long end = logFile.length();
+
+			if (Validator.isNotNull(endIndex)) {
+				long parsedEnd = GetterUtil.getLongStrict(endIndex);
+
+				if (parsedEnd < end) {
+					end = parsedEnd;
+				}
+			}
+
+			if ((start < 0) || (end < 0) || (start >= end)) {
+				throw new PrincipalException(
+					"startIndex or endIndex can not be less than 0, and " +
+						"startIndex can not be greater than or equal to " +
+							"endIndex");
+			}
+
+			if (start != 0) {
+				--start;
+			}
+
+			try (FileChannel fileChannel = FileChannel.open(logFile.toPath())) {
+				fileChannel.position(start);
+
+				ServletResponseUtil.sendFile(
+					httpServletRequest, httpServletResponse, fileName,
+					Channels.newInputStream(fileChannel), end - start,
+					_mimeTypes.getContentType(fileName),
+					HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT);
+			}
+		}
 	}
 
 	private PermissionChecker _getPermissionChecker(

@@ -29,11 +29,6 @@ function toElementHelper(elementOrSelector) {
  * compatibility for classes extending PortletBase.
  */
 class LifeCycles {
-	_STATE_ = {
-		namespace: null,
-		portletNamespace: null,
-		rootNode: null,
-	};
 	get namespace() {
 		return this._STATE_.namespace;
 	}
@@ -63,6 +58,13 @@ class LifeCycles {
 		this._STATE_.rootNode = rootNode;
 	}
 	constructor(props) {
+		this._EVENTS_ = {};
+		this._STATE_ = {
+			namespace: null,
+			portletNamespace: null,
+			rootNode: null,
+		};
+
 		const {namespace, portletNamespace, rootNode} = props;
 
 		if (namespace) {
@@ -92,6 +94,23 @@ class LifeCycles {
 	detached() {}
 	disposed() {}
 	disposeInternal() {}
+	emit(eventName, data) {
+		const callbacks = this._EVENTS_[eventName];
+
+		if (callbacks && callbacks.length) {
+			for (let i = 0; i < callbacks.length; i++) {
+				callbacks[i](data);
+			}
+		}
+	}
+
+	on(eventName, callback) {
+		if (!this._EVENTS_[eventName]) {
+			this._EVENTS_[eventName] = [];
+		}
+
+		this._EVENTS_[eventName].push(callback);
+	}
 }
 
 /**

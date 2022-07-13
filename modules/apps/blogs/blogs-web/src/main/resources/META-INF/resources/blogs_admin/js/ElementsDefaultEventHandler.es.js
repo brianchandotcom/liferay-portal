@@ -13,9 +13,12 @@
  */
 
 import {DefaultEventHandler, openConfirmModal} from 'frontend-js-web';
-import {Config} from 'metal-state';
 
 class ElementsDefaultEventHandler extends DefaultEventHandler {
+	created(props) {
+		this.trashEnabled = props.trashEnabled;
+	}
+
 	delete(itemData) {
 		if (this.trashEnabled) {
 			this._send(itemData.deleteURL);
@@ -65,9 +68,5 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 		submitForm(document.hrefFm, url);
 	}
 }
-
-ElementsDefaultEventHandler.STATE = {
-	trashEnabled: Config.bool(),
-};
 
 export default ElementsDefaultEventHandler;

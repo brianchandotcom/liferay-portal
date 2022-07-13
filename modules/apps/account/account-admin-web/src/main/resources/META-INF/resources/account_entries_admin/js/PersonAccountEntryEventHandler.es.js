@@ -40,7 +40,24 @@ class PersonAccountEntryEventHandler extends PortletBase {
 		this.container = this._setElement(props.container);
 		this.removeUserIconMarkup = props.removeUserIconMarkup;
 		this.removeUserLinkSelector = props.removeUserLinkSelector;
-		this.searchContainer = this._setSearchContainer(props.searchContainer);
+
+		/**
+		 * Weird hack to get around a race condition where
+		 * Liferay.SearchContainer doesn't exist yet. This will be mitigated
+		 * once we migrate that component away from AUI.
+		 */
+		if (!Liferay.SearchContainer) {
+			const interval = setInterval(() => {
+				if (Liferay.SearchContainer) {
+					this.searchContainer = this._setSearchContainer(
+						props.searchContainer
+					);
+
+					clearInterval(interval);
+				}
+			}, 60);
+		}
+
 		this.selectUserButton = this._setElement(props.selectUserButton);
 		this.selectUserEventName = props.selectUserEventName;
 		this.selectUserURL = props.selectUserURL;

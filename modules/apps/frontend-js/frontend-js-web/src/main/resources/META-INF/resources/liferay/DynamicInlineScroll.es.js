@@ -22,21 +22,6 @@ import delegate from './delegate/delegate.es';
  * @extends {Component}
  */
 class DynamicInlineScroll extends PortletBase {
-	constructor(config) {
-		super();
-
-		this.cur = Number(config.cur);
-		this.curParam = config.curParam;
-		this.forcePost = config.forcePost;
-		this.formName = config.formName;
-		this.initialPages = Number(config.initialPages);
-		this.jsCall = config.jsCall;
-		this.namespace = config.namespace;
-		this.pages = Number(config.pages);
-		this.randomNamespace = config.randomNamespace;
-		this.url = config.url;
-		this.urlAnchor = config.urlAnchor;
-	}
 
 	/**
 	 * @inheritDoc
@@ -57,7 +42,19 @@ class DynamicInlineScroll extends PortletBase {
 	/**
 	 * @inheritDoc
 	 */
-	created() {
+	created(props) {
+		this.cur = Number(props.cur);
+		this.curParam = props.curParam;
+		this.forcePost = props.forcePost;
+		this.formName = props.formName;
+		this.initialPages = Number(props.initialPages);
+		this.jsCall = props.jsCall;
+		this.namespace = props.namespace;
+		this.pages = Number(props.pages);
+		this.randomNamespace = props.randomNamespace;
+		this.url = props.url;
+		this.urlAnchor = props.urlAnchor;
+
 		this.handleListItemClick_ = this.handleListItemClick_.bind(this);
 	}
 

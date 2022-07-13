@@ -37,6 +37,4 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 }
 
-FragmentEntryDropdownDefaultEventHandler.STATE = {};
-
 export default FragmentEntryDropdownDefaultEventHandler;

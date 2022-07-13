@@ -15,6 +15,12 @@
 import {PortletBase, sub} from 'frontend-js-web';
 
 class AccountUserEmailDomainValidator extends PortletBase {
+	created(props) {
+		this.accountEntryNames = props.accountEntryNames;
+		this.blockedDomains = props.blockedDomains;
+		this.validDomains = props.validDomains;
+		this.viewValidDomainsURL = props.viewValidDomainsURL;
+	}
 	attached() {
 		const form = this.getForm_(this.ns('fm'));
 

@@ -658,11 +658,18 @@ definition {
 	}
 
 	macro versionStructureContent {
-		Variables.assertDefined(parameterList = "${structuredContentId},${versionvalue}");
+		if (!(isSet(responseToParse))) {
+			Variables.assertDefined(parameterList = "${structuredContentId},${versionvalue}");
 
-		var response = HeadlessWebcontentAPI._versionStructureContent(
-			structuredContentId = "${structuredContentId}",
-			versionvalue = "${versionvalue}");
+			var response = HeadlessWebcontentAPI._versionStructureContent(
+				structuredContentId = "${structuredContentId}",
+				versionvalue = "${versionvalue}");
+		}
+		else {
+			var response = HeadlessWebcontentAPI._versionStructureContent(
+				responseToParse = "${responseToParse}",
+				versionvalue = "${versionvalue}");
+		}
 
 		return "${response}";
 	}

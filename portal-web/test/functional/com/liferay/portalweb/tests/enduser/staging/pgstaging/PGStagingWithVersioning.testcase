@@ -218,11 +218,11 @@ definition {
 
 			Staging.viewVariationTooltipMessage(
 				pageName = "Staging Test Page",
-				title = "This is the page variation that is marked as ready for publish process.");
+				title = "This is the page variation that is marked as ready for the publish process.");
 
 			Staging.viewVariationTooltipMessage(
 				pageName = "Child Page",
-				title = "There is not a version of this page marked as ready for publish process.");
+				title = "There is not a version of this page marked as ready for the publish process.");
 		}
 	}
 

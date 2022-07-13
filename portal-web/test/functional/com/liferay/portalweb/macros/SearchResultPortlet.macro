@@ -20,6 +20,12 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
+		if ("${displayDocumentForm}" == "true") {
+			Check(
+				checkboxName = "Display Results in Document Form",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
 		if (isSet(federatedSearchKey)) {
 			Type(
 				key_fieldLabel = "Federated Search Key",

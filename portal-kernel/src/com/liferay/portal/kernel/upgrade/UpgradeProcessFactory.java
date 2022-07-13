@@ -65,6 +65,28 @@ public class UpgradeProcessFactory {
 		};
 	}
 
+	public static UpgradeProcess alterColumnType(
+		String tableName, String columnName, String newColumnType) {
+
+		return new UpgradeProcess(
+			_getUpgradeInfo(
+				tableName,
+				StringBundler.concat(
+					"alter the type of the column ", columnName, " to ",
+					newColumnType))) {
+
+			@Override
+			protected void doUpgrade() throws Exception {
+				alterColumnType(tableName, columnName, newColumnType);
+			}
+
+		};
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #alterColumnType(String, String, String)}
+	 */
+	@Deprecated
 	public static UpgradeProcess alterColumnTypes(
 		String tableName, String newType, String... columnNames) {
 

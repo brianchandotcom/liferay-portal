@@ -468,65 +468,114 @@ definition {
 
 		// TODO Review
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+		task ("Given a Commerce account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+		task ("And a minium site with a simple product") {
+			ApplicationsMenu.gotoSite(site = "Minium");
 
-		CPCommerceCatalog.newProductsEntry(
-			productCatalog = "Minium",
-			productName = "Simple T-Shirt",
-			productType = "Simple");
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
 
-		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+			CPCommerceCatalog.newProductsEntry(
+				productCatalog = "Minium",
+				productName = "Simple T-Shirt",
+				productType = "Simple");
+		}
 
-		AssertTextEquals(
-			key_productQuantity = "0",
-			locator1 = "CommerceEntry#PRODUCT_SKU_CONFIGURATION_AVAILABLE_QUANTITY",
-			value1 = "0");
+		task ("When the available quantity is set to 0 and back orders is disabled") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+			AssertTextEquals(
+				key_productQuantity = "0",
+				locator1 = "CommerceEntry#PRODUCT_SKU_CONFIGURATION_AVAILABLE_QUANTITY",
+				value1 = "0");
 
-		Uncheck.uncheckToggleSwitch(
-			key_toggleSwitchLabel = "Allow Back Order",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
 
-		Button.clickPublish();
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Allow Back Order",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+			Button.clickPublish();
+		}
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+		task ("Then as an administrator and buyer, the user is unable to add the product to cart. ") {
+			ApplicationsMenu.gotoSite(site = "Minium");
 
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test");
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Test");
 
-		AssertNotChecked.assertNotCheckedNotVisible(
-			key_productName = "Simple T-Shirt",
-			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
-		CommerceNavigator.gotoPortlet(
-			category = "Product Management",
-			portlet = "Products");
+			AssertElementPresent(
+				key_productName = "Simple T-Shirt",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
 
-		CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
+			User.logoutPG();
 
-		CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+			AssertElementPresent(
+				key_productName = "Simple T-Shirt",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_DISABLED");
 
-		Check.checkToggleSwitch(
-			key_toggleSwitchLabel = "Allow Back Order",
-			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			User.logoutPG();
+		}
 
-		Button.clickPublish();
+		task ("and can only be added when back orders are enabled.") {
+			User.firstLoginPG();
 
-		ApplicationsMenu.gotoSite(site = "Minium");
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
 
-		AssertNotChecked.assertNotCheckedNotVisible(
-			key_productName = "Simple T-Shirt",
-			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+			CommerceNavigator.searchEntry(entryName = "Simple T-Shirt");
+
+			CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Allow Back Order",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickPublish();
+
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			AssertElementPresent(
+				key_productName = "Simple T-Shirt",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_ENABLED");
+
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			AssertElementPresent(
+				key_productName = "Simple T-Shirt",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_ENABLED");
+		}
 	}
 
 	@description = "COMMERCE-6163. As a buyer I don't want to be able to add a product to the cart if the product is not purchasable"

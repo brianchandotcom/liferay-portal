@@ -34,9 +34,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test DeleteImportedArticles {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Knowledge Base Display Page");

@@ -429,8 +429,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotAddArticleWithoutContent {
-		property portal.acceptance = "true";
-
 		KBArticle.addCP(
 			kbArticleContent = "",
 			kbArticleInvalidContent = "true",
@@ -470,8 +468,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CannotAddArticleWithoutTitle {
-		property portal.acceptance = "true";
-
 		KBArticle.addCPWithInvalidTitle(
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "");
@@ -566,8 +562,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanSelectParentArticle {
-		property portal.acceptance = "true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content Parent",
@@ -642,8 +636,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewEmbeddedVideo {
-		property portal.acceptance = "true";
-
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		KBArticle.addCP(
@@ -663,8 +655,6 @@ definition {
 	@description = "This ensures that an image in the KB content field can be rendered correctly after moving it to a folder."
 	@priority = "4"
 	test CanViewImageInKBAfterMovingToFolder {
-		property portal.acceptance = "true";
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",

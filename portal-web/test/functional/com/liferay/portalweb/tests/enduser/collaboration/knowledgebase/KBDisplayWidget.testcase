@@ -125,8 +125,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDeleteArticle {
-		property portal.acceptance = "true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -142,8 +140,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanDeleteChildArticle {
-		property portal.acceptance = "true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
@@ -192,8 +188,6 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanEditChildArticle {
-		property portal.acceptance = "true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Parent Content 1",
@@ -674,8 +668,6 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewSuggestionsWorkflow {
-		property portal.acceptance = "true";
-
 		JSONKnowledgeBase.addkBArticle(
 			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article1 Content",

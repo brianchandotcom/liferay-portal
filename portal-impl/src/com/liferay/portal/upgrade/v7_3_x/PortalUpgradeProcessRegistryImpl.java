@@ -63,8 +63,8 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version(8, 1, 1),
-			UpgradeProcessFactory.alterColumnTypes(
-				"AssetCategory", "VARCHAR(255) null", "name"));
+			UpgradeProcessFactory.alterColumnType(
+				"AssetCategory", "name", "VARCHAR(255) null"));
 
 		upgradeProcesses.put(
 			new Version(8, 2, 0), new UpgradeAssetEntryMappingTables());

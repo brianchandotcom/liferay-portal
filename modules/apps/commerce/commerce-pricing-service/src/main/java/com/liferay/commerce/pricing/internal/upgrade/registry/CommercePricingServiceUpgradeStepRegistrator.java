@@ -40,8 +40,10 @@ public class CommercePricingServiceUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.register(
 			"1.0.0", "1.1.0",
-			UpgradeProcessFactory.alterColumnTypes(
-				"CommercePricingClass", "TEXT", "title", "description"));
+			UpgradeProcessFactory.alterColumnType(
+				"CommercePricingClass", "title", "TEXT"),
+			UpgradeProcessFactory.alterColumnType(
+				"CommercePricingClass", "description", "TEXT"));
 
 		registry.register(
 			"1.1.0", "2.0.0",

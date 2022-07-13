@@ -72,8 +72,10 @@ public class MarketplaceServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.0.2", "2.0.3",
-			UpgradeProcessFactory.alterColumnTypes(
-				"Marketplace_App", "VARCHAR(255) null", "title", "category"));
+			UpgradeProcessFactory.alterColumnType(
+				"Marketplace_App", "title", "VARCHAR(255) null"),
+			UpgradeProcessFactory.alterColumnType(
+				"Marketplace_App", "category", "VARCHAR(255) null"));
 	}
 
 	@Reference(unbind = "-")

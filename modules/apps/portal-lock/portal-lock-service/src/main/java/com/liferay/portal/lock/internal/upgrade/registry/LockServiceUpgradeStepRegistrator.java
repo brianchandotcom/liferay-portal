@@ -32,8 +32,8 @@ public class LockServiceUpgradeStepRegistrator
 	public void register(Registry registry) {
 		registry.register(
 			"0.0.1", "1.0.0",
-			UpgradeProcessFactory.alterColumnTypes(
-				"Lock_", "VARCHAR(1024) null", "owner"));
+			UpgradeProcessFactory.alterColumnType(
+				"Lock_", "owner", "VARCHAR(1024) null"));
 
 		registry.register(
 			"1.0.0", "2.0.0",
@@ -42,8 +42,8 @@ public class LockServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.0.0", "2.0.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"Lock_", "VARCHAR(255) null", "key_"));
+			UpgradeProcessFactory.alterColumnType(
+				"Lock_", "key_", "VARCHAR(255) null"));
 	}
 
 }

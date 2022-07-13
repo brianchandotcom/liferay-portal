@@ -72,8 +72,8 @@ public class DDLServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.1.0", "1.1.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"DDLRecordSet", "LONG", "versionUserId"));
+			UpgradeProcessFactory.alterColumnType(
+				"DDLRecordSet", "versionUserId", "LONG"));
 
 		registry.register(
 			"1.1.1", "2.0.0",

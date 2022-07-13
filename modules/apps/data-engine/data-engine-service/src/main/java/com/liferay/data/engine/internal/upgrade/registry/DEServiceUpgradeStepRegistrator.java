@@ -51,8 +51,8 @@ public class DEServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.1.0", "2.1.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"DEDataDefinitionFieldLink", "VARCHAR(75) null", "fieldName"));
+			UpgradeProcessFactory.alterColumnType(
+				"DEDataDefinitionFieldLink", "fieldName", "VARCHAR(75) null"));
 
 		registry.register(
 			"2.1.1", "2.2.0",
@@ -71,8 +71,8 @@ public class DEServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.2.0", "2.2.1",
-			UpgradeProcessFactory.alterColumnTypes(
-				"DEDataDefinitionFieldLink", "VARCHAR(255) null", "fieldName"));
+			UpgradeProcessFactory.alterColumnType(
+				"DEDataDefinitionFieldLink", "fieldName", "VARCHAR(255) null"));
 	}
 
 }

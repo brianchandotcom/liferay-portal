@@ -33,8 +33,8 @@ public class UpgradeProcess_7_0_6 extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgrade(
-			UpgradeProcessFactory.alterColumnTypes(
-				"Repository", "VARCHAR(200) null", "name"));
+			UpgradeProcessFactory.alterColumnType(
+				"Repository", "name", "VARCHAR(200) null"));
 		upgrade(new UpgradeResourceAction());
 		upgrade(new UpgradeThemeId());
 

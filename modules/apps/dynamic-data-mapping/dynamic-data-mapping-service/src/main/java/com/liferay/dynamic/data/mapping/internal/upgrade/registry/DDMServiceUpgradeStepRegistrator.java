@@ -144,8 +144,8 @@ public class DDMServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.1", "1.0.2",
-			UpgradeProcessFactory.alterColumnTypes(
-				"DDMTemplate", "STRING null", "smallImageURL"));
+			UpgradeProcessFactory.alterColumnType(
+				"DDMTemplate", "smallImageURL", "STRING null"));
 
 		registry.register(
 			"1.0.2", "1.0.3",
@@ -356,10 +356,10 @@ public class DDMServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.7.1", "3.7.2",
-			UpgradeProcessFactory.alterColumnTypes(
-				"DDMFormInstance", "TEXT null", "description"),
-			UpgradeProcessFactory.alterColumnTypes(
-				"DDMFormInstanceVersion", "TEXT null", "description"));
+			UpgradeProcessFactory.alterColumnType(
+				"DDMFormInstance", "description", "TEXT null"),
+			UpgradeProcessFactory.alterColumnType(
+				"DDMFormInstanceVersion", "description", "TEXT null"));
 
 		registry.register(
 			"3.7.2", "3.7.3",
@@ -491,8 +491,8 @@ public class DDMServiceUpgradeStepRegistrator
 
 		registry.register(
 			"5.1.2", "5.1.3",
-			UpgradeProcessFactory.alterColumnTypes(
-				"DDMField", "TEXT null", "fieldName"));
+			UpgradeProcessFactory.alterColumnType(
+				"DDMField", "fieldName",  "TEXT null"));
 
 		registry.register(
 			"5.1.3", "5.1.4",

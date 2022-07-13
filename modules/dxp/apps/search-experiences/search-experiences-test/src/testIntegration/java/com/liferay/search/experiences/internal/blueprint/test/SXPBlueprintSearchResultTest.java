@@ -1052,7 +1052,7 @@ public class SXPBlueprintSearchResultTest {
 	@Test
 	public void testHideByExactTermMatch() throws Exception {
 		_journalArticleBuilder.setTitle(
-			"Out of the folder"
+			"Out of the Folder"
 		).build();
 
 		JournalFolder journalFolder = JournalFolderServiceUtil.addFolder(
@@ -1060,7 +1060,7 @@ public class SXPBlueprintSearchResultTest {
 			StringPool.BLANK, _serviceContext);
 
 		_journalArticleBuilder.setTitle(
-			"In-Folder"
+			"In Folder"
 		).setJournalFolder(
 			journalFolder
 		).build();
@@ -1077,11 +1077,11 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Hide by Exact Term Match"});
 
-		_assertSearchIgnoreRelevance("[Out of the folder]");
+		_assertSearchIgnoreRelevance("[Out of the Folder]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[In-Folder, Out of the folder]");
+		_assertSearchIgnoreRelevance("[In Folder, Out of the Folder]");
 	}
 
 	@Test
@@ -1158,10 +1158,7 @@ public class SXPBlueprintSearchResultTest {
 
 	@Test
 	public void testHideContentsInACategoryForGuestUsers() throws Exception {
-		_user = _userLocalService.getDefaultUser(_group.getCompanyId());
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, _user.getUserId());
+		User siteUser = UserTestUtil.addUser(_group.getGroupId());
 
 		_journalArticleBuilder.setTitle(
 			"Guest Users"
@@ -1170,7 +1167,7 @@ public class SXPBlueprintSearchResultTest {
 		_journalArticleBuilder.setTitle(
 			"Non-Guest Users"
 		).setAssetCategory(
-			_addAssetCategory("Hide from Guest Users", _user)
+			_addAssetCategory("Hide from Guest Users", siteUser)
 		).build();
 
 		_updateElementInstancesJSON(
@@ -1183,6 +1180,17 @@ public class SXPBlueprintSearchResultTest {
 			new String[] {"Hide Contents in a Category for Guest Users"});
 
 		_keywords = "Guest";
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group, siteUser.getUserId());
+
+		_assertSearchIgnoreRelevance("[Guest Users, Non-Guest Users]");
+
+		User guestUser = _userLocalService.getDefaultUser(
+			_group.getCompanyId());
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group, guestUser.getUserId());
 
 		_assertSearchIgnoreRelevance("[Guest Users]");
 
@@ -2591,9 +2599,6 @@ public class SXPBlueprintSearchResultTest {
 
 		public void build() throws Exception {
 			if (_assetCategory != null) {
-				System.out.println(
-					"JournalArticleBuilder CategoryId: " +
-						_assetCategory.getCategoryId());
 				_serviceContext.setAssetCategoryIds(
 					new long[] {_assetCategory.getCategoryId()});
 			}

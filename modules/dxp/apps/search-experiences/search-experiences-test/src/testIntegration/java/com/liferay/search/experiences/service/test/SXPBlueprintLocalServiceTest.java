@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -39,8 +37,6 @@ import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.persistence.PersistenceException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -96,34 +92,11 @@ public class SXPBlueprintLocalServiceTest {
 
 	@Test
 	public void testUpdateSXPBlueprint() throws Exception {
-		SXPBlueprint sxpBlueprint = _addSXPBlueprint(
-			TestPropsValues.getUserId());
-
-		sxpBlueprint.setExternalReferenceCode(
-			_sxpBlueprint.getExternalReferenceCode());
-
-		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
-				"org.hibernate.engine.jdbc.batch.internal.BatchingBatch",
-				LoggerTestUtil.ERROR);
-			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
-				"org.hibernate.engine.jdbc.spi.SqlExceptionHelper",
-				LoggerTestUtil.ERROR)) {
-
-			try {
-				_sxpBlueprintLocalService.updateSXPBlueprint(sxpBlueprint);
-
-				Assert.fail();
-			}
-			catch (PersistenceException persistenceException) {
-				Assert.assertNotNull(persistenceException);
-			}
-		}
-
 		_company = CompanyTestUtil.addCompany();
 
 		User user = UserTestUtil.addCompanyAdminUser(_company);
 
-		sxpBlueprint = _addSXPBlueprint(user.getUserId());
+		SXPBlueprint sxpBlueprint = _addSXPBlueprint(user.getUserId());
 
 		sxpBlueprint.setExternalReferenceCode(
 			_sxpBlueprint.getExternalReferenceCode());

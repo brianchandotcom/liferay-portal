@@ -220,7 +220,8 @@ public class DispatchTriggerServiceHttp {
 				int endDateMonth, int endDateDay, int endDateYear,
 				int endDateHour, int endDateMinute, boolean neverEnd,
 				boolean overlapAllowed, int startDateMonth, int startDateDay,
-				int startDateYear, int startDateHour, int startDateMinute)
+				int startDateYear, int startDateHour, int startDateMinute,
+				String timeZoneId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -233,7 +234,7 @@ public class DispatchTriggerServiceHttp {
 				dispatchTaskClusterMode, endDateMonth, endDateDay, endDateYear,
 				endDateHour, endDateMinute, neverEnd, overlapAllowed,
 				startDateMonth, startDateDay, startDateYear, startDateHour,
-				startDateMinute);
+				startDateMinute, timeZoneId);
 
 			Object returnObj = null;
 
@@ -328,7 +329,7 @@ public class DispatchTriggerServiceHttp {
 			com.liferay.dispatch.executor.DispatchTaskClusterMode.class,
 			int.class, int.class, int.class, int.class, int.class,
 			boolean.class, boolean.class, int.class, int.class, int.class,
-			int.class, int.class
+			int.class, int.class, String.class
 		};
 	private static final Class<?>[] _updateDispatchTriggerParameterTypes5 =
 		new Class[] {

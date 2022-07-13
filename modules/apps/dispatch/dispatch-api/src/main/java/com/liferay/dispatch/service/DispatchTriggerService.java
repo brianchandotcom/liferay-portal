@@ -83,7 +83,7 @@ public interface DispatchTriggerService extends BaseService {
 			int endDateDay, int endDateYear, int endDateHour, int endDateMinute,
 			boolean neverEnd, boolean overlapAllowed, int startDateMonth,
 			int startDateDay, int startDateYear, int startDateHour,
-			int startDateMinute)
+			int startDateMinute, String timeZoneId)
 		throws PortalException;
 
 	public DispatchTrigger updateDispatchTrigger(

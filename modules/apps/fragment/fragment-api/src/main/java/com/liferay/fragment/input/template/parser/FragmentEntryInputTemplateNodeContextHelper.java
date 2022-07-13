@@ -17,7 +17,6 @@ package com.liferay.fragment.input.template.parser;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.constants.InfoFormConstants;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.FileInfoFieldType;
@@ -164,7 +163,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 
 		Map<String, String> formParameterMap =
 			(Map<String, String>)SessionMessages.get(
-				httpServletRequest, InfoFormConstants.INFO_FORM_PARAMETER_MAP);
+				httpServletRequest, "infoFormParameterMap");
 
 		if (formParameterMap != null) {
 			value = formParameterMap.get(infoField.getName());

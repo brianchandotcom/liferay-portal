@@ -254,7 +254,7 @@ public class DispatchTriggerLocalServiceTest {
 					dispatchTaskClusterMode, CronExpressionUtil.getMonth() + 1,
 					20, CronExpressionUtil.getYear(), 23, 59, false, true,
 					CronExpressionUtil.getMonth() - 1, 1,
-					CronExpressionUtil.getYear(), 0, 0);
+					CronExpressionUtil.getYear(), 0, 0, "UTC");
 
 			_basicAssertEquals(expectedDispatchTrigger, dispatchTrigger);
 

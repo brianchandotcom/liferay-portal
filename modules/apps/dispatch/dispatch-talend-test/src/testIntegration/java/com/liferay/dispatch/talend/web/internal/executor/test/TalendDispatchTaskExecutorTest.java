@@ -82,7 +82,7 @@ public class TalendDispatchTaskExecutorTest {
 		dispatchTrigger = _dispatchTriggerLocalService.updateDispatchTrigger(
 			dispatchTrigger.getDispatchTriggerId(), false, "* * * * * *",
 			DispatchTaskClusterMode.SINGLE_NODE, 5, 5, year, 11, 11, false,
-			false, 4, 4, year, 0, 0);
+			false, 4, 4, year, 0, 0, "UTC");
 
 		_simulateSchedulerEvent(dispatchTrigger.getDispatchTriggerId());
 
@@ -130,7 +130,7 @@ public class TalendDispatchTaskExecutorTest {
 		dispatchTrigger = _dispatchTriggerLocalService.updateDispatchTrigger(
 			dispatchTrigger.getDispatchTriggerId(), false, "* * * * * *",
 			DispatchTaskClusterMode.SINGLE_NODE, 5, 5, year, 11, 11, false,
-			false, 4, 4, year, 0, 0);
+			false, 4, 4, year, 0, 0, "UTC");
 
 		_simulateSchedulerEvent(dispatchTrigger.getDispatchTriggerId());
 

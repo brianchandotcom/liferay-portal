@@ -147,7 +147,7 @@ public class AnalyticsDXPEntityBatchExporterImpl
 			DispatchTaskClusterMode.NOT_APPLICABLE, 0, 0, 0, 0, 0, true, false,
 			localDateTime.getMonthValue() - 1, localDateTime.getDayOfMonth(),
 			localDateTime.getYear(), localDateTime.getHour(),
-			localDateTime.getMinute());
+			localDateTime.getMinute(), "UTC");
 	}
 
 	private static final String _CRON_EXPRESSION = "0 0 * * * ?";

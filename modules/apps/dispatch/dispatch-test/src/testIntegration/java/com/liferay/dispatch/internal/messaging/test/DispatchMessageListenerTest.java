@@ -240,7 +240,7 @@ public class DispatchMessageListenerTest {
 			DispatchTaskClusterMode.NOT_APPLICABLE, 0, 0, 0, 0, 0, true,
 			overlapAllowed, calendar.get(Calendar.MONTH),
 			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
-			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE));
+			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), "UTC");
 
 		_execute(
 			dispatchTrigger.getDispatchTriggerId(), executeCount,

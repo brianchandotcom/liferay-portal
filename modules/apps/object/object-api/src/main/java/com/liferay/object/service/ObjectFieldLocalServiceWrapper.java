@@ -343,6 +343,13 @@ public class ObjectFieldLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.petra.sql.dsl.Column<?, ?> getColumn(
+		long objectDefinitionId, String name) {
+
+		return _objectFieldLocalService.getColumn(objectDefinitionId, name);
+	}
+
+	@Override
 	public java.util.List<com.liferay.object.model.ObjectField>
 		getCustomObjectFields(long objectFieldId) {
 

@@ -302,6 +302,12 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().getActiveObjectFields(objectFields);
 	}
 
+	public static com.liferay.petra.sql.dsl.Column<?, ?> getColumn(
+		long objectDefinitionId, String name) {
+
+		return getService().getColumn(objectDefinitionId, name);
+	}
+
 	public static List<ObjectField> getCustomObjectFields(long objectFieldId) {
 		return getService().getCustomObjectFields(objectFieldId);
 	}

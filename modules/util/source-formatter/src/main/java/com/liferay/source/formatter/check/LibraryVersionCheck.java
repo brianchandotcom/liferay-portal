@@ -49,13 +49,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
+import org.apache.maven.artifact.versioning.InvalidVersionSpecificationException;
+import org.apache.maven.artifact.versioning.VersionRange;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
-
-import org.osgi.framework.Version;
-import org.osgi.framework.VersionRange;
 
 /**
  * @author Qi Zhang
@@ -92,6 +92,33 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	}
 
 	private void _checkIsContainVulnerabilities(
+		String fileName, String packageName, DefaultArtifactVersion version) {
+
+		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
+			_vulnerableVersionMap.get(packageName);
+
+		for (SecurityVulnerabilityNode securityVulnerabilityNode :
+				securityVulnerabilityNodes) {
+
+			VersionRange versionRange =
+				securityVulnerabilityNode.getVersionRange();
+
+			if (versionRange.containsVersion(version)) {
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Library '", packageName, "' ", version.toString(),
+						" contain vulnerabilities by '",
+						securityVulnerabilityNode.getSummary(),
+						"', look detail in ",
+						securityVulnerabilityNode.getPermalink()));
+
+				return;
+			}
+		}
+	}
+
+	private void _checkIsContainVulnerabilities(
 			String fileName, String packageName, String version,
 			CloseableHttpClient httpClient,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
@@ -107,34 +134,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 
 		_checkIsContainVulnerabilities(
-			fileName, packageName, Version.parseVersion(version));
-	}
-
-	private void _checkIsContainVulnerabilities(
-		String fileName, String packageName, Version version) {
-
-		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
-			_vulnerableVersionMap.get(packageName);
-
-		for (SecurityVulnerabilityNode securityVulnerabilityNode :
-				securityVulnerabilityNodes) {
-
-			VersionRange versionRange =
-				securityVulnerabilityNode.getVersionRange();
-
-			if (versionRange.includes(version)) {
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Library '", packageName, "' ", version.toString(),
-						" contain vulnerabilities by '",
-						securityVulnerabilityNode.getSummary(),
-						"', look detail in ",
-						securityVulnerabilityNode.getPermalink()));
-
-				return;
-			}
-		}
+			fileName, packageName, new DefaultArtifactVersion(version));
 	}
 
 	private void _checkVersionInJsonFile(
@@ -270,6 +270,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 						advisoryJSONObject.getString("permalink"));
 					securityVulnerabilityNode.setSummary(
 						advisoryJSONObject.getString("summary"));
+
 					securityVulnerabilityNode.setVersionRange(
 						tmpJSONObject.getString("vulnerableVersionRange"));
 					securityVulnerabilityNode.setVulnerableVersionRange(
@@ -292,6 +293,13 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				if (!securityVulnerabilityNodes.isEmpty()) {
 					return securityVulnerabilityNodes;
 				}
+			}
+		}
+		catch (InvalidVersionSpecificationException
+					invalidVersionSpecificationException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(invalidVersionSpecificationException);
 			}
 		}
 		catch (JSONException jsonException) {
@@ -631,47 +639,36 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			_summary = summary;
 		}
 
-		public void setVersionRange(String vulnerableVersionRange) {
+		public void setVersionRange(String vulnerableVersionRange)
+			throws InvalidVersionSpecificationException {
+
 			if (!vulnerableVersionRange.contains(StringPool.COMMA)) {
 				String[] versionArray = vulnerableVersionRange.split(
-					StringPool.SPACE);
+					StringPool.SPACE, 2);
 
 				if (versionArray[0].equals(StringPool.EQUAL)) {
-					_versionRange = new VersionRange(
-						VersionRange.LEFT_CLOSED,
-						Version.parseVersion(versionArray[1]),
-						Version.parseVersion(versionArray[1]),
-						VersionRange.RIGHT_CLOSED);
+					_versionRange = VersionRange.createFromVersion(
+						versionArray[1]);
+				}
+				else if (versionArray[0].equals(StringPool.LESS_THAN)) {
+					_versionRange = VersionRange.createFromVersionSpec(
+						"(," + versionArray[1] + ")");
 				}
 				else if (versionArray[0].equals(
 							StringPool.LESS_THAN_OR_EQUAL)) {
 
-					_versionRange = new VersionRange(
-						VersionRange.LEFT_CLOSED, Version.emptyVersion,
-						Version.parseVersion(versionArray[1]),
-						VersionRange.RIGHT_CLOSED);
-				}
-				else if (versionArray[0].equals(StringPool.LESS_THAN)) {
-					_versionRange = new VersionRange(
-						VersionRange.LEFT_CLOSED, Version.emptyVersion,
-						Version.parseVersion(versionArray[1]),
-						VersionRange.RIGHT_OPEN);
+					_versionRange = VersionRange.createFromVersionSpec(
+						"(," + versionArray[1] + "]");
 				}
 				else if (versionArray[0].equals(StringPool.GREATER_THAN)) {
-					_versionRange = new VersionRange(
-						VersionRange.LEFT_OPEN,
-						Version.parseVersion(versionArray[1]),
-						Version.parseVersion("999.999.999"),
-						VersionRange.RIGHT_OPEN);
+					_versionRange = VersionRange.createFromVersionSpec(
+						"(" + versionArray[1] + ",)");
 				}
 				else if (versionArray[0].equals(
 							StringPool.GREATER_THAN_OR_EQUAL)) {
 
-					_versionRange = new VersionRange(
-						VersionRange.LEFT_CLOSED,
-						Version.parseVersion(versionArray[1]),
-						Version.parseVersion("999.999.999"),
-						VersionRange.RIGHT_OPEN);
+					_versionRange = VersionRange.createFromVersionSpec(
+						"[" + versionArray[1] + ",)");
 				}
 			}
 			else {
@@ -690,7 +687,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 						StringPool.CLOSE_BRACKET, StringPool.CLOSE_PARENTHESIS
 					});
 
-				_versionRange = new VersionRange(vulnerableVersionRange);
+				_versionRange = VersionRange.createFromVersionSpec(
+					vulnerableVersionRange);
 			}
 		}
 

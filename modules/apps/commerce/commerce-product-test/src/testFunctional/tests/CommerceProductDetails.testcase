@@ -432,6 +432,10 @@ definition {
 			key_productName = "${product}",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 
+		AssertElementPresent(
+			key_minQuantity = "${minimumQuantity}",
+			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_MIN_QUANTITY_PER_ORDER");
+
 		AssertTextEquals(
 			key_productName = "${product}",
 			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
@@ -1411,6 +1415,10 @@ definition {
 			locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL");
 
 		AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE");
+
+		AssertElementNotPresent(
+			key_minQuantity = "1",
+			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_MIN_QUANTITY_PER_ORDER");
 
 		Click(
 			key_text = "Specifications",

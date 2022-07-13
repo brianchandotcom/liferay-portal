@@ -39,6 +39,7 @@ export const FRAGMENT_CONFIGURATION_FIELDS = {
 	hideFragment: HideFragmentField,
 	imageSelector: ImageSelectorField,
 	itemSelector: ItemSelectorField,
+	length: TextField,
 	navigationMenuSelector: NavigationMenuSelectorField,
 	select: SelectField,
 	spacing: SpacingBoxField,

@@ -89,7 +89,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_CONTENT</td>
-	<td>xpath=(//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__topper__content')])[${index}]</td>
+	<td>xpath=(//div[@aria-label='${key_fragmentName}']//div[contains(@class,'page-editor__fragment-content')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

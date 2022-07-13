@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
+import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -39,6 +40,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSetBranchConstants;
@@ -70,6 +72,8 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.staging.configuration.StagingConfiguration;
@@ -266,6 +270,49 @@ public class StagingImplTest {
 	@Test
 	public void testRemoteStaging() throws Exception {
 		enableRemoteStaging(false);
+	}
+
+	@Test
+	public void testRemoteStagingHiddenError() throws Exception {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNEL_SERVLET_HIDE_EXCEPTION_DATA", true)) {
+
+			Throwable caughtThrowable = _enableRemoteStagingWithError();
+
+			Assert.assertEquals(
+				"Invocation failed due to " +
+					"com.liferay.portal.kernel.exception.NoSuchGroupException",
+				caughtThrowable.getMessage());
+
+			Assert.assertNotEquals(
+				caughtThrowable.getClass(), RemoteExportException.class);
+		}
+	}
+
+	@Test
+	public void testRemoteStagingVisibleError() throws Exception {
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNEL_SERVLET_HIDE_EXCEPTION_DATA", false)) {
+
+			Throwable caughtThrowable = _enableRemoteStagingWithError();
+
+			Assert.assertNotEquals(
+				"Invocation failed due to " +
+					"com.liferay.portal.kernel.exception.NoSuchGroupException",
+				caughtThrowable.getMessage());
+
+			Assert.assertEquals(
+				caughtThrowable.getClass(), RemoteExportException.class);
+
+			RemoteExportException remoteExportException =
+				(RemoteExportException)caughtThrowable;
+
+			Assert.assertEquals(
+				remoteExportException.getType(),
+				RemoteExportException.NO_GROUP);
+		}
 	}
 
 	@Test
@@ -599,6 +646,51 @@ public class StagingImplTest {
 			category.getParentCategoryId(), titleMap,
 			category.getDescriptionMap(), category.getVocabularyId(), null,
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private Throwable _enableRemoteStagingWithError() throws PortalException {
+		Throwable caughtThrowable = null;
+
+		try (SafeCloseable safeCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET",
+					"F0E1D2C3B4A5968778695A4B3C2D1E0F");
+			SafeCloseable safeCloseable2 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"TUNNELING_SERVLET_SHARED_SECRET_HEX", true);
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.servlet.TunnelServlet",
+				LoggerTestUtil.OFF)) {
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					_remoteStagingGroup.getGroupId());
+
+			Map<String, Serializable> attributes =
+				serviceContext.getAttributes();
+
+			attributes.putAll(
+				ExportImportConfigurationParameterMapFactoryUtil.
+					buildParameterMap());
+
+			UserTestUtil.setUser(TestPropsValues.getUser());
+
+			try {
+				StagingLocalServiceUtil.enableRemoteStaging(
+					TestPropsValues.getUserId(), _remoteStagingGroup, false,
+					false, "localhost", PortalUtil.getPortalServerPort(false),
+					PortalUtil.getPathContext(), false,
+					_remoteLiveGroup.getGroupId() + 1, serviceContext);
+			}
+			catch (Throwable throwable) {
+				caughtThrowable = throwable;
+			}
+			finally {
+				GroupUtil.clearCache();
+			}
+		}
+
+		return caughtThrowable;
 	}
 
 	private <T> T _executeWithRemoteCredentials(

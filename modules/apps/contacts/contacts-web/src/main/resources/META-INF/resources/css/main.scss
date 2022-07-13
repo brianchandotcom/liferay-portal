@@ -240,15 +240,13 @@ $section-header-bg: #cce6f7;
 
 		.lfr-contact-name {
 			font-size: 2em;
-			height: 1.25em;
 			line-height: 1em;
 			overflow: hidden;
-			position: relative;
 			text-overflow: ellipsis;
 		}
 
 		.lfr-contact-name a {
-			position: absolute;
+			white-space: normal;
 		}
 
 		.lfr-contact-job-title {

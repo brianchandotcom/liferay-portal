@@ -53,13 +53,7 @@ public class SystemProperties {
 	}
 
 	public static String get(String key) {
-		String value = _properties.get(key);
-
-		if (value == null) {
-			value = System.getProperty(key);
-		}
-
-		return value;
+		return get(key, null);
 	}
 
 	public static String get(String key, String defaultValue) {

@@ -13,7 +13,13 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, findByRole, render, screen} from '@testing-library/react';
+import {
+	act,
+	findByRole,
+	fireEvent,
+	render,
+	screen,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {openSelectionModal} from 'frontend-js-web';
 import * as React from 'react';
@@ -190,17 +196,17 @@ describe('GlobalCSSCETsConfiguration', () => {
 			/>
 		);
 
-		userEvent.click(
+		fireEvent.click(
 			await screen.findByRole('button', {name: 'show-options'})
 		);
 
-		userEvent.click(
-			await findByRole(
-				await screen.findByRole('menu', {name: 'show-options'}),
-				'menuitem',
-				{name: 'delete'}
-			)
+		const item = await findByRole(
+			await screen.findByRole('menu', {name: 'show-options'}),
+			'menuitem',
+			{name: 'delete'}
 		);
+
+		fireEvent.click(item.firstChild!);
 
 		await screen.findByText('no-css-extensions-were-loaded');
 	});

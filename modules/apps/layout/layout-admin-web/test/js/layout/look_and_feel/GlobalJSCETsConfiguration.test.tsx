@@ -13,8 +13,13 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, findByRole, render, screen} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import {
+	act,
+	findByRole,
+	fireEvent,
+	render,
+	screen,
+} from '@testing-library/react';
 import {openSelectionModal} from 'frontend-js-web';
 import * as React from 'react';
 
@@ -111,15 +116,17 @@ describe('GlobalJSCETsConfiguration', () => {
 			/>
 		);
 
-		userEvent.click(
+		fireEvent.click(
 			await screen.findByRole('button', {
 				name: 'add-javascript-extensions',
 			})
 		);
 
-		userEvent.click(
-			await screen.findByRole('menuitem', {name: 'in-page-bottom'})
-		);
+		const item = await screen.findByRole('menuitem', {
+			name: 'in-page-bottom',
+		});
+
+		fireEvent.click(item.firstChild!);
 
 		expect(openSelectionModal).toHaveBeenCalled();
 	});
@@ -143,15 +150,17 @@ describe('GlobalJSCETsConfiguration', () => {
 			/>
 		);
 
-		userEvent.click(
+		fireEvent.click(
 			await screen.findByRole('button', {
 				name: 'add-javascript-extensions',
 			})
 		);
 
-		userEvent.click(
-			await screen.findByRole('menuitem', {name: 'in-page-bottom'})
-		);
+		const item = await screen.findByRole('menuitem', {
+			name: 'in-page-bottom',
+		});
+
+		fireEvent.click(item.firstChild!);
 
 		expect(openSelectionModal).toHaveBeenCalledTimes(1);
 
@@ -199,17 +208,17 @@ describe('GlobalJSCETsConfiguration', () => {
 			/>
 		);
 
-		userEvent.click(
+		fireEvent.click(
 			await screen.findByRole('button', {name: 'show-options'})
 		);
 
-		userEvent.click(
-			await findByRole(
-				await screen.findByRole('menu', {name: 'show-options'}),
-				'menuitem',
-				{name: 'delete'}
-			)
+		const item = await findByRole(
+			await screen.findByRole('menu', {name: 'show-options'}),
+			'menuitem',
+			{name: 'delete'}
 		);
+
+		fireEvent.click(item.firstChild!);
 
 		await screen.findByText('no-javascript-extensions-were-loaded');
 	});

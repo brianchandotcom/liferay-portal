@@ -90,7 +90,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _addResultList(
+	private void _addVulnerableVersions(
 			String packageName, String cursor, CloseableHttpClient httpClient,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum,
 			List<SecurityVulnerabilityNode> securityVulnerabilityNodes)
@@ -185,7 +185,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 					securityVulnerabilitiesJSONObject.getJSONObject("pageInfo");
 
 				if (pageInfoJSONObject.getBoolean("hasNextPage")) {
-					_addResultList(
+					_addVulnerableVersions(
 						packageName, pageInfoJSONObject.getString("endCursor"),
 						httpClient, securityAdvisoryEcosystemEnum,
 						securityVulnerabilityNodes);
@@ -210,7 +210,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 
 		if (!_vulnerableVersionMap.containsKey(packageName)) {
-			_getServerData(
+			_generateVulnerableVersionMap(
 				packageName, httpClient, securityAdvisoryEcosystemEnum);
 		}
 
@@ -269,17 +269,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 	}
 
-	private String _getContentByPattern(String content, Pattern pattern) {
-		Matcher matcher = pattern.matcher(content);
-
-		if (matcher.find()) {
-			return matcher.group(1);
-		}
-
-		return null;
-	}
-
-	private synchronized void _getServerData(
+	private synchronized void _generateVulnerableVersionMap(
 			String packageName, CloseableHttpClient httpClient,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
 		throws IOException {
@@ -291,11 +281,21 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
 			new ArrayList<>();
 
-		_addResultList(
+		_addVulnerableVersions(
 			packageName, null, httpClient, securityAdvisoryEcosystemEnum,
 			securityVulnerabilityNodes);
 
 		_vulnerableVersionMap.put(packageName, securityVulnerabilityNodes);
+	}
+
+	private String _getContentByPattern(String content, Pattern pattern) {
+		Matcher matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return null;
 	}
 
 	private void _gradleLibraryVersionCheck(String fileName, String content)

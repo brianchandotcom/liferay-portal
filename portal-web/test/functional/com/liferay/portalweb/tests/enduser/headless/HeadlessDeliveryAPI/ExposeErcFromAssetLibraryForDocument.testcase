@@ -26,6 +26,28 @@ definition {
 		}
 	}
 
+	@description = "Document is created in an asset library with custom erc"
+	@priority = "5"
+	test DocumentIsCreatedInAssetLibraryWithCustomErc {
+		property portal.acceptance = "true";
+
+		task ("When with POST request I create a new document with a custom erc in asset library") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc",
+				filePath = "${filePath}");
+		}
+
+		task ("Then the document is being created with custom erc in the body response") {
+			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "erc",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "Document is created in an asset library with erc by default"
 	@priority = "5"
 	test DocumentIsCreatedInAssetLibraryWithErcByDefault {

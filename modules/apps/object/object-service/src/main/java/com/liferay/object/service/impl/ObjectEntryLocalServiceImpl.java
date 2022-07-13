@@ -61,6 +61,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.sql.dsl.spi.ast.DefaultASTNodeListener;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -669,7 +670,8 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public List<Map<String, Serializable>> getValuesList(
 			long objectDefinitionId, long groupId, long[] accountEntryIds,
-			Predicate predicate, String search, int start, int end)
+			Predicate predicate, String search, int start, int end,
+			OrderByExpression[] orderByExpressions)
 		throws PortalException {
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
@@ -729,6 +731,8 @@ public class ObjectEntryLocalServiceImpl
 							dynamicObjectDefinitionTable.getPrimaryKeyColumn());
 					}
 				)
+			).orderBy(
+				orderByExpressions
 			).limit(
 				start, end
 			),

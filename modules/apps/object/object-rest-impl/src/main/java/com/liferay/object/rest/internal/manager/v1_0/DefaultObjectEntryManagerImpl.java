@@ -28,6 +28,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
+import com.liferay.object.rest.internal.petra.sql.dsl.expression.OrderByExpressionUtil;
 import com.liferay.object.rest.internal.petra.sql.dsl.expression.PredicateUtil;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
@@ -394,7 +395,10 @@ public class DefaultObjectEntryManagerImpl
 			TransformUtil.transform(
 				_objectEntryLocalService.getValuesList(
 					objectDefinition.getObjectDefinitionId(), groupId,
-					accountEntryIds, predicate, search, start, end),
+					accountEntryIds, predicate, search, start, end,
+					OrderByExpressionUtil.getOrderByExpressions(
+						objectDefinition.getObjectDefinitionId(), sorts,
+						_objectFieldLocalService)),
 				values -> getObjectEntry(
 					dtoConverterContext, objectDefinition,
 					GetterUtil.getLong(

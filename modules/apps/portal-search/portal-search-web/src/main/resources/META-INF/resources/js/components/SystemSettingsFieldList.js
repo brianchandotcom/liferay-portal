@@ -24,10 +24,6 @@ const ADD_DELETE_BUTTON_STYLING = {
 	width: '18px',
 };
 
-function escapeCommas(value) {
-	return value.replaceAll(',', '\\,');
-}
-
 function SystemSettingsFieldList({
 	fieldLabel,
 	fieldName,
@@ -99,7 +95,7 @@ function SystemSettingsFieldList({
 			<input
 				name={`${namespace}${fieldName}`}
 				type="hidden"
-				value={value.map((item) => escapeCommas(item)).join(',')}
+				value={value.filter((item) => item.trim() !== '').join('|')}
 			/>
 		</div>
 	);

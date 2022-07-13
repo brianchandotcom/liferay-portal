@@ -16,9 +16,11 @@ package com.liferay.portal.search.web.internal.search.bar.portlet.configuration;
 
 import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.rest.configuration.SearchSuggestionsCompanyConfiguration;
 import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletInstanceConfigurationDisplayContext;
 
@@ -68,8 +70,10 @@ public class SearchBarPortletInstanceConfigurationRenderer
 			ParamUtil.getBoolean(httpServletRequest, "enableSuggestions")
 		).put(
 			"suggestionsContributorConfigurations",
-			ParamUtil.getStringValues(
-				httpServletRequest, "suggestionsContributorConfiguration")
+			StringUtil.split(
+				ParamUtil.getString(
+					httpServletRequest, "suggestionsContributorConfigurations"),
+				CharPool.PIPE)
 		).put(
 			"suggestionsDisplayThreshold",
 			ParamUtil.getInteger(

@@ -47,7 +47,7 @@ SearchBarPortletInstanceConfigurationDisplayContext searchBarPortletInstanceConf
 				HashMapBuilder.<String, Object>put(
 					"fieldLabel", LanguageUtil.get(request, "suggestions-contributor-configuration")
 				).put(
-					"fieldName", "suggestionsContributorConfiguration"
+					"fieldName", "suggestionsContributorConfigurations"
 				).put(
 					"initialValue", searchBarPortletInstanceConfigurationDisplayContext.getSuggestionsContributorConfigurations()
 				).put(

@@ -298,15 +298,15 @@ public class PortletPathsUtil {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		for (String cssPathSet : cssPathsSet) {
+		for (String cssPath : cssPathsSet) {
 			printWriter.print("<link href=\"");
-			printWriter.print(HtmlUtil.escape(cssPathSet));
+			printWriter.print(HtmlUtil.escape(cssPath));
 			printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
 		}
 
-		for (String javaScriptPathSet : javaScriptPathsSet) {
+		for (String javaScriptPath : javaScriptPathsSet) {
 			printWriter.print("<script src=\"");
-			printWriter.print(HtmlUtil.escape(javaScriptPathSet));
+			printWriter.print(HtmlUtil.escape(javaScriptPath));
 			printWriter.println("\" type=\"text/javascript\"></script>");
 		}
 	}

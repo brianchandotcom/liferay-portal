@@ -715,7 +715,7 @@
 													"fragmentStyle": {
 														"marginBottom": "3",
 														"textAlign": "",
-														"textColor": "brandColor3"
+														"textColor": "colorBrandPrimaryDarken4"
 													},
 													"indexed": true
 												},
@@ -989,7 +989,7 @@
 													"fragmentStyle": {
 														"marginBottom": "3",
 														"textAlign": "",
-														"textColor": "brandColor3"
+														"textColor": "colorBrandPrimaryDarken4"
 													},
 													"indexed": true
 												},
@@ -1263,7 +1263,7 @@
 													"fragmentStyle": {
 														"marginBottom": "3",
 														"textAlign": "",
-														"textColor": "brandColor3"
+														"textColor": "colorBrandPrimaryDarken4"
 													},
 													"indexed": true
 												},
@@ -1540,7 +1540,7 @@
 													"fragmentStyle": {
 														"marginBottom": "3",
 														"textAlign": "",
-														"textColor": "brandColor3"
+														"textColor": "colorBrandPrimaryDarken4"
 													},
 													"indexed": true
 												},

@@ -59,6 +59,17 @@ public class FVSFrontendDataSetEntryLocalServiceWrapper
 			fvsFrontendDataSetEntry);
 	}
 
+	@Override
+	public com.liferay.frontend.view.state.model.FVSFrontendDataSetEntry
+			addFVSFrontendDataSetEntry(
+				String fdsName, long fvsEntryId, String name, long plid,
+				String portletId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _fvsFrontendDataSetEntryLocalService.addFVSFrontendDataSetEntry(
+			fdsName, fvsEntryId, name, plid, portletId, userId);
+	}
+
 	/**
 	 * Creates a new fvs frontend data set entry with the primary key. Does not add the fvs frontend data set entry to the database.
 	 *
@@ -300,6 +311,16 @@ public class FVSFrontendDataSetEntryLocalServiceWrapper
 
 		return _fvsFrontendDataSetEntryLocalService.
 			getFVSFrontendDataSetEntries(start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.frontend.view.state.model.FVSFrontendDataSetEntry>
+			getFVSFrontendDataSetEntries(
+				String fdsName, long plid, String portletId, long userId) {
+
+		return _fvsFrontendDataSetEntryLocalService.
+			getFVSFrontendDataSetEntries(fdsName, plid, portletId, userId);
 	}
 
 	/**

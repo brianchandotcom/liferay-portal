@@ -17,13 +17,29 @@ import {VerticalBar} from '@clayui/core';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
-const VerticalNavigationBar = ({items}) => {
+const CSS_EXPANDED = 'expanded';
+
+const VerticalNavigationBar = ({items, parentContainerId}) => {
+	const parentContainer = document.getElementById(parentContainerId);
+
 	const activeItem = items.find((item) => item.active);
+
+	const onIconClick = (item) => {
+		if (item.key !== activeItem.key) {
+			if (!parentContainer.classList.contains(CSS_EXPANDED)) {
+				parentContainer.classList.add(CSS_EXPANDED);
+			}
+
+			navigate(item.href);
+		}
+		else {
+			parentContainer.classList.toggle(CSS_EXPANDED);
+		}
+	};
 
 	return (
 		<VerticalBar
 			absolute
-			className="kbVerticalBar"
 			defaultActive={activeItem?.key}
 			position="left"
 		>
@@ -34,9 +50,7 @@ const VerticalNavigationBar = ({items}) => {
 							data-tooltip-align="right"
 							displayType="unstyled"
 							onClick={() => {
-								if (item.key !== activeItem.key) {
-									navigate(item.href);
-								}
+								onIconClick(item);
 							}}
 							symbol={item.icon}
 							title={Liferay.Language.get(item.title)}

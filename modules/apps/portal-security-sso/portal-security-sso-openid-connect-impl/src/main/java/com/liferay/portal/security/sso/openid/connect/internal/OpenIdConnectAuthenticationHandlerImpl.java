@@ -293,9 +293,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			builder::customParameter,
 			authenticationRequestParametersJSONObject);
 
-		AuthenticationRequest authenticationRequest = builder.build();
-
-		return authenticationRequest.toURI();
+		return builder.build(
+		).toURI();
 	}
 
 	private AuthenticationSuccessResponse _getAuthenticationSuccessResponse(

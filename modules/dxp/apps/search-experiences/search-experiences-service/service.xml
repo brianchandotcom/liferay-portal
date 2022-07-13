@@ -82,6 +82,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>DuplicateSXPElementExternalReferenceCode</exception>
 		<exception>SXPBlueprintConfigurationJSON</exception>
 		<exception>SXPBlueprintTitle</exception>
 		<exception>SXPElementElementDefinitionJSON</exception>

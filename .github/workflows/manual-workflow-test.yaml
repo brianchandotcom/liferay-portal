@@ -1,68 +1,68 @@
+jobs:
+    build:
+        runs-on: ${{matrix.os}}
+        steps:
+            - name: set up git for checkout
+              run: git config --global core.longpaths 260
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: 14.x
+            - env:
+                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                  npm_config_arch: ${{matrix.npm_config_arch}}
+              name: install node modules
+              run: npm install
+              working-directory: ./modules/test/poshi/poshi-vscode
+            - name: set target
+              run: echo "target=${{ matrix.platform }}-${{ matrix.arch }}" >> $env:GITHUB_ENV
+              shell: pwsh
+            - name: build package
+              run: npx vsce package --target ${{env.target}}
+              working-directory: ./modules/test/poshi/poshi-vscode
+            - uses: actions/upload-artifact@v2
+              with:
+                  name: ${{env.target}}
+                  path: "./modules/test/poshi/poshi-vscode/*.vsix"
+        strategy:
+            matrix:
+                include:
+                    - arch: x64
+                      npm_config_arch: x64
+                      os: windows-latest
+                      platform: win32
+                    - arch: ia32
+                      npm_config_arch: ia32
+                      os: windows-latest
+                      platform: win32
+                    - arch: arm64
+                      npm_config_arch: arm
+                      os: windows-latest
+                      platform: win32
+                    - arch: x64
+                      npm_config_arch: x64
+                      os: ubuntu-latest
+                      platform: linux
+                    - arch: arm64
+                      npm_config_arch: arm64
+                      os: ubuntu-latest
+                      platform: linux
+                    - arch: armhf
+                      npm_config_arch: arm
+                      os: ubuntu-latest
+                      platform: linux
+                    - arch: x64
+                      npm_config_arch: x64
+                      os: ubuntu-latest
+                      platform: alpine
+                    - arch: x64
+                      npm_config_arch: x64
+                      os: macos-latest
+                      platform: darwin
+                    - arch: arm64
+                      npm_config_arch: arm64
+                      os: macos-latest
+                      platform: darwin
 name: Manual Test Workflow
 on:
-  workflow_dispatch:
-jobs:
-  build:
-    strategy:
-      matrix:
-        include:
-          - os: windows-latest
-            platform: win32
-            arch: x64
-            npm_config_arch: x64
-          - os: windows-latest
-            platform: win32
-            arch: ia32
-            npm_config_arch: ia32
-          - os: windows-latest
-            platform: win32
-            arch: arm64
-            npm_config_arch: arm
-          - os: ubuntu-latest
-            platform: linux
-            arch: x64
-            npm_config_arch: x64
-          - os: ubuntu-latest
-            platform: linux
-            arch: arm64
-            npm_config_arch: arm64
-          - os: ubuntu-latest
-            platform: linux
-            arch: armhf
-            npm_config_arch: arm
-          - os: ubuntu-latest
-            platform: alpine
-            arch: x64
-            npm_config_arch: x64
-          - os: macos-latest
-            platform: darwin
-            arch: x64
-            npm_config_arch: x64
-          - os: macos-latest
-            platform: darwin
-            arch: arm64
-            npm_config_arch: arm64
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: set up git for checkout
-        run: git config --global core.longpaths 260
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14.x
-      - name: install node modules
-        run: npm install
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          npm_config_arch: ${{ matrix.npm_config_arch }}
-        working-directory: ./modules/test/poshi/poshi-vscode
-      - name: set target
-        shell: pwsh
-        run: echo "target=${{ matrix.platform }}-${{ matrix.arch }}" >> $env:GITHUB_ENV
-      - name: build package
-        run: npx vsce package --target ${{ env.target }}
-        working-directory: ./modules/test/poshi/poshi-vscode
-      - uses: actions/upload-artifact@v2
-        with:
-          name: ${{ env.target }}
-          path: "./modules/test/poshi/poshi-vscode/*.vsix"
+    workflow_dispatch:

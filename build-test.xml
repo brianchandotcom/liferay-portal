@@ -14424,6 +14424,29 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<get-testcase-property property.name="configure.servlet.multipart" />
+
+		<if>
+			<equals arg1="${configure.servlet.multipart}" arg2="true" />
+			<then>
+				<mkdir dir="${app.server.dir}/work/Catalina/localhost/ROOT/tmp" />
+
+				<replace
+					file="${app.server.portal.dir}/WEB-INF/shielded-container-web.xml"
+				>
+					<replacetoken><![CDATA[<servlet-class>com.liferay.portal.module.framework.ModuleFrameworkServletAdapter</servlet-class>]]></replacetoken>
+					<replacevalue><![CDATA[
+					<servlet-class>com.liferay.portal.module.framework.ModuleFrameworkServletAdapter</servlet-class>
+					<multipart-config>
+						<location>/tmp</location>
+						<max-file-size>20848820</max-file-size>
+						<max-request-size>418018841</max-request-size>
+						<file-size-threshold>1048576</file-size-threshold>
+					</multipart-config>]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="theme.file.name" />
 
 		<if>

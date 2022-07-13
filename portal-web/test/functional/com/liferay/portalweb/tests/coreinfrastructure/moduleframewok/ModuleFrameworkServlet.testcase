@@ -1,0 +1,46 @@
+@component-name = "portal-module-framework-servlet"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Module Framework Servlet";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "This is a use case for LPS-153486."
+	@priority = "3"
+	test ServletMultipartConfigInShieldedContainer {
+		property configure.servlet.multipart = "true";
+		property test.name.skip.portal.instance = "ModuleFrameworkServlet#ServletMultipartConfigInShieldedContainer";
+
+		var portalURL = JSONCompany.getPortalURL();
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+		var curl = '''
+			${portalURL}/o/graphql \
+				-u test@liferay.com:test \
+				-F operations={"query":"mutation($file: [Upload]) {createSiteDocument(siteKey: \"guest\", multipartBody: $file) {id}}","variables":{"file":null}} \
+				-F map={"0": ["variables.file"]} \
+				-F 0=@${dependencyFilePath}
+		''';
+
+		JSONCurlUtil.post("${curl}");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.viewPG(dmDocumentTitle = "Document_1.txt");
+	}
+
+}

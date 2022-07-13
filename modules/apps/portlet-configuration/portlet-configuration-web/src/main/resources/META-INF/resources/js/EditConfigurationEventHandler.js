@@ -23,8 +23,12 @@ export default function ({namespace, portletId}) {
 		);
 
 	form?.addEventListener('submit', handleSubmit);
+	Liferay.on('submitForm', handleSubmit);
 
 	return {
-		dispose: () => form?.removeEventListener('submit', handleSubmit),
+		dispose: () => {
+			form?.removeEventListener('submit', handleSubmit);
+			Liferay.detach('submitForm', handleSubmit);
+		},
 	};
 }

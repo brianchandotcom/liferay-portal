@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String referrer = (String)request.getAttribute(WebKeys.REFERER);
-
 long auditEventId = ParamUtil.getLong(request, "auditEventId");
 
 AuditEvent auditEvent = null;
@@ -34,14 +32,12 @@ if (auditEventId > 0) {
 		eventTypeAction = (String)PortalClassInvoker.invoke(new MethodKey(ClassResolverUtil.resolve("com.liferay.portal.kernel.security.permission.ResourceActionsUtil", PortalClassLoaderUtil.getClassLoader()), "getAction", HttpServletRequest.class, String.class), request, auditEvent.getEventType());
 	}
 }
-%>
 
-<liferay-ui:header
-	backURL='<%= Validator.isNotNull(referrer) ? referrer : "javascript:history.go(-1);" %>'
-	escapeXml="<%= false %>"
-	localizeTitle="<%= auditEvent == null %>"
-	title='<%= (auditEvent == null) ? "audit-event" : auditEvent.getEventType() + " (" + eventTypeAction + ")" %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(ParamUtil.getString(request, "redirect", String.valueOf(renderResponse.createRenderURL())));
+
+renderResponse.setTitle((auditEvent == null) ? "audit-event" : auditEvent.getEventType() + " (" + eventTypeAction + ")");
+%>
 
 <clay:sheet>
 	<c:choose>

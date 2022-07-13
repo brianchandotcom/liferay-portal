@@ -20,6 +20,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
@@ -35,7 +36,6 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalClassInvoker" %><%@
 page import="com.liferay.portal.kernel.util.PortalClassLoaderUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.security.audit.AuditEvent" %><%@
 page import="com.liferay.portal.security.audit.web.internal.AuditEventManagerUtil" %><%@
 page import="com.liferay.portal.security.audit.web.internal.display.context.AuditDisplayContext" %>
@@ -43,6 +43,8 @@ page import="com.liferay.portal.security.audit.web.internal.display.context.Audi
 <%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.Calendar" %>
+
+<liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
 

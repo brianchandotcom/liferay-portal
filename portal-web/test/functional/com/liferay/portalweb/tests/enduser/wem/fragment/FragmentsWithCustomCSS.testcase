@@ -1,0 +1,107 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-136411. When add a custom css to a fragment inside Collection Display, the custom css will be applied to all similar fragments inside Collection Display."
+	@priority = "4"
+	test ViewAppliedCustomCSSOfFragmentInsideCollectionDisplay {
+		task ("Given a page creator has a content page with a Heading and Button fragments inside Collection Display") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+
+			for (var i : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content ${i}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${i}");
+			}
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Web Content Title 3",
+				fragmentName = "Heading");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
+		}
+
+		task ("When the page creator accesses to the Advanced panel of Button") {
+			PageEditor.gotoAdvanced(fragmentName = "Button");
+		}
+
+		task ("Then the page creator could add Custom CSS to Button") {
+			var customCSS = '''
+.[$FRAGMENT_CLASS$] {
+	background-color: var(--success);
+}''';
+
+			PageEditor.configureFragment(customCSS = "${customCSS}");
+
+			for (var i : list "1,2,3") {
+				PageEditor.viewFragmentStyle(
+					backgroundColor = "success",
+					fragmentName = "Button",
+					position = "${i}");
+			}
+
+			for (var i : list "1,2,3") {
+				AssertCssValue(
+					index = "${i}",
+					key_fragmentName = "Heading",
+					locator1 = "Fragment#FRAGMENT_CONTENT",
+					locator2 = "background-color",
+					value1 = "rgba(0, 0, 0, 0)");
+			}
+		}
+	}
+
+}

@@ -75,6 +75,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.login.web.internal.configuration.AuthLoginConfiguration;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectActionUtil;
@@ -109,6 +110,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -132,6 +134,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -188,6 +191,7 @@ import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleWiring;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -2679,6 +2683,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
+		_configurationProvider.saveGroupConfiguration(
+			AuthLoginConfiguration.class, serviceContext.getScopeGroupId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"promptEnabled", jsonObject.getBoolean("promptEnabled", false)
+			).build());
+
 		group.setType(jsonObject.getInt("typeSite"));
 		group.setManualMembership(jsonObject.getBoolean("manualMembership"));
 		group.setMembershipRestriction(
@@ -3851,4 +3861,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	}
 
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 }

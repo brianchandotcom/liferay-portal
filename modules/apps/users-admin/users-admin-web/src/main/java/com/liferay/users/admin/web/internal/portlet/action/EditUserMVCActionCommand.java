@@ -18,6 +18,7 @@ import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.RequiredUserException;
@@ -64,6 +66,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -73,6 +76,7 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.InvokerPortletUtil;
 import com.liferay.portlet.admin.util.AdminUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
@@ -315,6 +319,19 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 						return;
 					}
+				}
+			}
+			else if (GetterUtil.getBoolean(
+						PropsUtil.get("feature.flag.LPS-151671")) &&
+					 (exception instanceof ModelListenerException) &&
+					 (exception.getCause() instanceof
+						 ObjectValidationRuleEngineException)) {
+
+				Throwable throwable = exception.getCause();
+
+				if (throwable != null) {
+					SessionErrors.add(
+						actionRequest, throwable.getClass(), exception);
 				}
 			}
 			else {

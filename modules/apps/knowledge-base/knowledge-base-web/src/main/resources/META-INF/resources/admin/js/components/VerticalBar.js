@@ -26,9 +26,7 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 
 	const onIconClick = (item) => {
 		if (item.key !== activeItem.key) {
-			if (!parentContainer.classList.contains(CSS_EXPANDED)) {
-				parentContainer.classList.add(CSS_EXPANDED);
-			}
+			parentContainer.classList.add(CSS_EXPANDED);
 
 			navigate(item.href);
 		}
@@ -38,11 +36,7 @@ const VerticalNavigationBar = ({items, parentContainerId}) => {
 	};
 
 	return (
-		<VerticalBar
-			absolute
-			defaultActive={activeItem?.key}
-			position="left"
-		>
+		<VerticalBar absolute defaultActive={activeItem?.key} position="left">
 			<VerticalBar.Bar displayType="light" items={items}>
 				{(item) => (
 					<VerticalBar.Item key={item.key}>

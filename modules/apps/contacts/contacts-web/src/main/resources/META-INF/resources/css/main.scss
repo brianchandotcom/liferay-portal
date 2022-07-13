@@ -546,6 +546,7 @@ $section-header-bg: #cce6f7;
 			top: 5px;
 		}
 
+		&:focus-within,
 		&:hover {
 			.lexicon-icon-pencil {
 				display: block;

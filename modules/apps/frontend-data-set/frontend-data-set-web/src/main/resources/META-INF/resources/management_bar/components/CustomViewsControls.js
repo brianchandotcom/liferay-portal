@@ -17,16 +17,22 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import {openModal} from 'frontend-js-web';
-import React, {useContext, useState} from 'react';
+import {fetch, openModal, openToast} from 'frontend-js-web';
+import React, {useContext, useRef, useState} from 'react';
 
-import FrontendDataSetContext from './../../FrontendDataSetContext';
+import FrontendDataSetContext from '../../FrontendDataSetContext';
+import ViewsContext from '../../views/ViewsContext';
 
 const CustomViewsControls = () => {
 	const [viewsDropdownActive, setViewsDropdownActive] = useState(false);
 	const [actionsDropdownActive, setActionsDropdownActive] = useState(false);
 
-	const {namespace} = useContext(FrontendDataSetContext);
+	const {appURL, id, namespace, portletId} = useContext(
+		FrontendDataSetContext
+	);
+	const [{activeView}] = useContext(ViewsContext);
+
+	const customViewNameInputRef = useRef();
 
 	const SaveCustomViewModalBody = () => {
 		return (
@@ -40,6 +46,7 @@ const CustomViewsControls = () => {
 				<ClayInput
 					autoFocus={true}
 					id={`${namespace}customViewNameInput`}
+					ref={customViewNameInputRef}
 					type="text"
 				/>
 			</ClayForm.Group>
@@ -57,8 +64,52 @@ const CustomViewsControls = () => {
 				},
 				{
 					label: Liferay.Language.get('save'),
-					onClick: ({processClose}) => {
-						processClose();
+					onClick: () => {
+						const url = new URL(`${appURL}/fds/${id}/custom-views`);
+
+						const data = {
+							name: customViewNameInputRef.current.value,
+							plid: themeDisplay.getPlid(),
+							portletId,
+							viewState: {
+								contentRenderer: activeView.contentRenderer,
+							},
+						};
+
+						fetch(url, {
+							body: JSON.stringify(data),
+							headers: {
+								'Accept': 'application/json',
+								'Content-Type': 'application/json',
+							},
+							method: 'POST',
+						})
+							.then((response) => {
+								if (response.ok) {
+									openToast({
+										message: Liferay.Language.get(
+											'view-was-saved-successfully'
+										),
+										type: 'success',
+									});
+								}
+								else {
+									openToast({
+										message: Liferay.Language.get(
+											'an-unexpected-error-occurred'
+										),
+										type: 'danger',
+									});
+								}
+							})
+							.catch(() => {
+								openToast({
+									message: Liferay.Language.get(
+										'an-unexpected-error-occurred'
+									),
+									type: 'danger',
+								});
+							});
 					},
 				},
 			],

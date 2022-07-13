@@ -27,11 +27,10 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.search.experiences.exception.DuplicateSXPElementExternalReferenceCodeException;
 import com.liferay.search.experiences.exception.NoSuchSXPElementException;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementLocalService;
@@ -39,8 +38,6 @@ import com.liferay.search.experiences.service.SXPElementLocalService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.persistence.PersistenceException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -66,13 +63,31 @@ public class SXPElementLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_sxpElement = _addSXPElement(TestPropsValues.getUserId());
+		_sxpElement = _addSXPElement(
+			false, RandomTestUtil.randomString(), TestPropsValues.getUserId());
 	}
 
 	@Test
 	public void testAddSXPElement() throws Exception {
 		Assert.assertEquals("1.0", _sxpElement.getVersion());
 		Assert.assertNotNull(_sxpElement.getExternalReferenceCode());
+
+		SXPElement sxpElement = _addSXPElement(
+			true, RandomTestUtil.randomString(75), TestPropsValues.getUserId());
+
+		try {
+			_addSXPElement(
+				true, sxpElement.getTitle(LocaleUtil.US),
+				TestPropsValues.getUserId());
+
+			Assert.fail();
+		}
+		catch (DuplicateSXPElementExternalReferenceCodeException
+					duplicateSXPElementExternalReferenceCodeException) {
+
+			Assert.assertNotNull(
+				duplicateSXPElementExternalReferenceCodeException);
+		}
 	}
 
 	@Test
@@ -95,33 +110,12 @@ public class SXPElementLocalServiceTest {
 
 	@Test
 	public void testUpdateSXPElement() throws Exception {
-		SXPElement sxpElement = _addSXPElement(TestPropsValues.getUserId());
-
-		sxpElement.setExternalReferenceCode(
-			_sxpElement.getExternalReferenceCode());
-
-		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
-				"org.hibernate.engine.jdbc.batch.internal.BatchingBatch",
-				LoggerTestUtil.ERROR);
-			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
-				"org.hibernate.engine.jdbc.spi.SqlExceptionHelper",
-				LoggerTestUtil.ERROR)) {
-
-			try {
-				_sxpElementLocalService.updateSXPElement(sxpElement);
-
-				Assert.fail();
-			}
-			catch (PersistenceException persistenceException) {
-				Assert.assertNotNull(persistenceException);
-			}
-		}
-
 		_company = CompanyTestUtil.addCompany();
 
 		User user = UserTestUtil.addCompanyAdminUser(_company);
 
-		sxpElement = _addSXPElement(user.getUserId());
+		SXPElement sxpElement = _addSXPElement(
+			false, RandomTestUtil.randomString(), user.getUserId());
 
 		sxpElement.setExternalReferenceCode(
 			_sxpElement.getExternalReferenceCode());
@@ -131,11 +125,6 @@ public class SXPElementLocalServiceTest {
 		Assert.assertEquals(
 			_sxpElement.getExternalReferenceCode(),
 			sxpElement.getExternalReferenceCode());
-	}
-
-	@Test
-	public void testUpdateSXPElementWithCustomExternalReferenceCode()
-		throws Exception {
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -171,13 +160,15 @@ public class SXPElementLocalServiceTest {
 		Assert.assertEquals("1.2", _sxpElement.getVersion());
 	}
 
-	private SXPElement _addSXPElement(long userId) throws Exception {
+	private SXPElement _addSXPElement(
+			boolean readOnly, String title, long userId)
+		throws Exception {
+
 		SXPElement sxpElement = _sxpElementLocalService.addSXPElement(
-			userId, Collections.singletonMap(LocaleUtil.US, ""), "{}", false,
+			userId, Collections.singletonMap(LocaleUtil.US, ""), "{}", readOnly,
 			RandomTestUtil.randomString(),
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			0, ServiceContextTestUtil.getServiceContext(_group, userId));
+			Collections.singletonMap(LocaleUtil.US, title), 0,
+			ServiceContextTestUtil.getServiceContext(_group, userId));
 
 		_sxpElements.add(sxpElement);
 

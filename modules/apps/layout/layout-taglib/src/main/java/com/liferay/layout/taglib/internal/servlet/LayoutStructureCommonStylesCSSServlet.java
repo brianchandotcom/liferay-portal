@@ -122,6 +122,8 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
+		printWriter.write(_EXTRA_CSS);
+
 		JSONObject frontendTokensJSONObject = _getFrontendTokensJSONObject(
 			layout.getGroupId(), layout,
 			ParamUtil.getBoolean(httpServletRequest, "styleBookEntryPreview"));
@@ -421,6 +423,9 @@ public class LayoutStructureCommonStylesCSSServlet extends HttpServlet {
 
 		return true;
 	}
+
+	private static final String _EXTRA_CSS =
+		".lfr-layout-structure-item-row { overflow: hidden; }";
 
 	private static final String _FRAGMENT_CLASS_PLACEHOLDER =
 		"[$FRAGMENT_CLASS$]";

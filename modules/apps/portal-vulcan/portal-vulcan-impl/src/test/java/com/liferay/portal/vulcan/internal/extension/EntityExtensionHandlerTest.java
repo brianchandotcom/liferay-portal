@@ -16,6 +16,7 @@ package com.liferay.portal.vulcan.internal.extension;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
@@ -103,6 +104,62 @@ public class EntityExtensionHandlerTest {
 			propertyValue1, extendedProperties.get(propertyName1));
 		Assert.assertEquals(
 			propertyValue2, extendedProperties.get(propertyName2));
+	}
+
+	@Test
+	public void testGetExtendedPropertyDefinitions() throws Exception {
+		String propertyName1 = RandomTestUtil.randomString();
+		String propertyName2 = RandomTestUtil.randomString();
+		PropertyDefinition propertyDefinition1 = Mockito.mock(
+			PropertyDefinition.class);
+		PropertyDefinition propertyDefinition2 = Mockito.mock(
+			PropertyDefinition.class);
+
+		Map<String, PropertyDefinition> testMap1 = Collections.singletonMap(
+			propertyName1, propertyDefinition1);
+
+		Mockito.when(
+			_mockedExtensionProvider1.getExtendedPropertyDefinitions(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			testMap1
+		);
+
+		Map<String, PropertyDefinition> testMap2 = Collections.singletonMap(
+			propertyName2, propertyDefinition2);
+
+		Mockito.when(
+			_mockedExtensionProvider2.getExtendedPropertyDefinitions(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			testMap2
+		);
+
+		Map<String, PropertyDefinition> extendedPropertyDefinitions =
+			_entityExtensionHandler.getExtendedPropertyDefinitions(
+				_COMPANY_ID, _CLASS_NAME);
+
+		Mockito.verify(
+			_mockedExtensionProvider1
+		).getExtendedPropertyDefinitions(
+			_COMPANY_ID, _CLASS_NAME
+		);
+
+		Mockito.verify(
+			_mockedExtensionProvider2
+		).getExtendedPropertyDefinitions(
+			_COMPANY_ID, _CLASS_NAME
+		);
+
+		Assert.assertEquals(
+			MapUtil.toString(extendedPropertyDefinitions), 2,
+			extendedPropertyDefinitions.size());
+		Assert.assertSame(
+			propertyDefinition1,
+			extendedPropertyDefinitions.get(propertyName1));
+		Assert.assertSame(
+			propertyDefinition2,
+			extendedPropertyDefinitions.get(propertyName2));
 	}
 
 	@Test

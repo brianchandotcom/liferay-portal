@@ -26,6 +26,27 @@ definition {
 		}
 	}
 
+	@description = "Structured content folder is created with custom erc in an asset library"
+	@priority = "5"
+	test StructuredContentFolderIsCreatedInAssetLibraryWithCustomErc {
+		property portal.acceptance = "true";
+
+		task ("When with POST request I create a structured content folder without a custom erc") {
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				externalReferenceCode = "erc",
+				name = "Test Folder");
+		}
+
+		task ("Then a new folder is being created with the custom erc in the body response") {
+			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "erc",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "Structured content folder is created in an asset library with erc equals to uuid by default"
 	@priority = "5"
 	test StructuredContentFolderIsCreatedInAssetLibraryWithErcByDefault {

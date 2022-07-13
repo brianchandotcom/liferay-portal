@@ -119,4 +119,11 @@ definition {
 			locator1 = "CommerceEntry#ASSERT_FRAGMENTS_TEXT_IN_SF");
 	}
 
+	@summary = "Verify the multiple mapped fields’ outcome."
+	macro viewMappedFragmentsText {
+		for (var fragmentText : list "${fragmentsTextList}") {
+			CommerceDisplayPageTemplates.viewFragmentText(fragmentText = "${fragmentText}");
+		}
+	}
+
 }

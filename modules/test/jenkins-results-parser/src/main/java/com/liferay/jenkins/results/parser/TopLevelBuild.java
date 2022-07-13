@@ -29,6 +29,7 @@ import com.liferay.jenkins.results.parser.failure.message.generator.JenkinsSourc
 import com.liferay.jenkins.results.parser.failure.message.generator.PoshiTestFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.PoshiValidationFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.RebaseFailureMessageGenerator;
+import com.liferay.jenkins.results.parser.testray.TestrayBuild;
 
 import java.io.File;
 import java.io.IOException;
@@ -1598,9 +1599,8 @@ public abstract class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getNewAnchorElement(getJenkinsReportURL(), "here"), ".");
 	}
 
-	protected Element getReevaluationDetailsElement(int upstreamBuildNumber) {
-		String upstreamBuildURL =
-			getAcceptanceUpstreamJobURL() + "/" + upstreamBuildNumber;
+	protected Element getReevaluationDetailsElement(
+		TopLevelBuildReport upstreamTopLevelBuildReport) {
 
 		Element growURLElement = Dom4JUtil.getNewAnchorElement(
 			"https://grow.liferay.com/share" +
@@ -1616,7 +1616,9 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return Dom4JUtil.getNewElement(
 			"p", null, "This pull is eligible for ", growURLElement,
 			". When this ",
-			Dom4JUtil.getNewAnchorElement(upstreamBuildURL, "upstream build"),
+			Dom4JUtil.getNewAnchorElement(
+				String.valueOf(upstreamTopLevelBuildReport.getBuildURL()),
+				"upstream build"),
 			" has completed, using the following CI command will compare ",
 			"this pull request result against a more recent upstream result:",
 			preElement);
@@ -1771,14 +1773,16 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 			String upstreamBranchSHA = getUpstreamBranchSHA();
 
-			int buildNumber =
-				UpstreamFailureUtil.getUpstreamJobFailuresBuildNumber(
+			TopLevelBuildReport upstreamTopLevelBuildReport =
+				UpstreamFailureUtil.getUpstreamTopLevelBuildReport(
 					this, upstreamBranchSHA);
 
-			if (isEligibleForReevaluation(result, upstreamBranchSHA)) {
+			if ((upstreamTopLevelBuildReport != null) &&
+				isEligibleForReevaluation(result, upstreamBranchSHA)) {
+
 				Dom4JUtil.addToElement(
 					detailsElement, Dom4JUtil.getNewElement("br"),
-					getReevaluationDetailsElement(buildNumber));
+					getReevaluationDetailsElement(upstreamTopLevelBuildReport));
 			}
 		}
 
@@ -1834,20 +1838,14 @@ public abstract class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.getNewAnchorElement(
 				upstreamCommitURL, upstreamJobFailuresSHA));
 
-		int buildNumber = UpstreamFailureUtil.getUpstreamJobFailuresBuildNumber(
+		TestrayBuild testrayBuild = UpstreamFailureUtil.getUpstreamTestrayBuild(
 			this);
-
-		String buildURL =
-			UpstreamFailureUtil.getUpstreamJobFailuresJobURL(this) + "/" +
-				buildNumber;
 
 		Dom4JUtil.addToElement(
 			upstreamComparisonDetailsElement, Dom4JUtil.getNewElement("br"),
 			"Jenkins Build URL: ",
 			Dom4JUtil.getNewAnchorElement(
-				buildURL,
-				"Acceptance Upstream DXP (" + getBranchName() + ") #" +
-					buildNumber));
+				String.valueOf(testrayBuild.getURL()), testrayBuild.getName()));
 
 		return upstreamComparisonDetailsElement;
 	}

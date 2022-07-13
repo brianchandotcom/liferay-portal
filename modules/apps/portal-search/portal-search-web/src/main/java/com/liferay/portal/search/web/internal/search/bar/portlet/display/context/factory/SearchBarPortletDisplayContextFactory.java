@@ -302,14 +302,7 @@ public class SearchBarPortletDisplayContextFactory {
 			}
 		}
 
-		SearchScopePreference searchScopePreference =
-			searchBarPortletPreferences.getSearchScopePreference();
-
-		if (searchScopePreference != null) {
-			return searchScopePreference;
-		}
-
-		return SearchScopePreference.THIS_SITE;
+		return searchBarPortletPreferences.getSearchScopePreference();
 	}
 
 	protected boolean isAvailableEverythingSearchScope() {

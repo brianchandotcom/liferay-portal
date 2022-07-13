@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Petra Apache HTTP Components
 Bundle-SymbolicName: com.liferay.petra.apache.http.components
-Bundle-Version: 1.0.8
+Bundle-Version: 2.0.0
 Export-Package:\
 	org.apache.http;version="4.4.13",\
 	org.apache.http.auth;version="4.5.13",\

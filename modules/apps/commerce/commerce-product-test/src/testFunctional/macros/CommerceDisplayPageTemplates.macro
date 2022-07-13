@@ -108,4 +108,15 @@ definition {
 		PageEditor.publish();
 	}
 
+	macro viewFragmentText {
+		if (!(isSet(id))) {
+			var id = "element-text";
+		}
+
+		AssertElementPresent(
+			key_fragmentText = "${fragmentText}",
+			key_id = "${id}",
+			locator1 = "CommerceEntry#ASSERT_FRAGMENTS_TEXT_IN_SF");
+	}
+
 }

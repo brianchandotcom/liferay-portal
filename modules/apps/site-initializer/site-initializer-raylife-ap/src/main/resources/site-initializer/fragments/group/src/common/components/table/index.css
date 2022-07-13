@@ -1,6 +1,10 @@
+.general-table{
+  white-space: nowrap !important;
+}
+
 .general-table .btn-table .lexicon-icon {
-  font-size: 15px;
   color: rgb(137, 137, 137);
+  font-size: 15px;
 }
 
 .general-table .header{

@@ -1,5 +1,5 @@
 <div class="forms-select-from-list">
-	<input name="${input.name}" ${input.required?then('required', '')} type="hidden" />
+	<input name="${input.name}" ${input.required?then('required', '')} type="hidden" [#if input.value??]value="${input.value}"[/#if] />
 
 	<label id="${fragmentEntryLinkNamespace}-label" class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]">${input.label}[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]</label>
 

@@ -1,0 +1,47 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given an asset library is created") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+		}
+	}
+
+	@description = "Structured content folder is created in an asset library with erc equals to uuid by default"
+	@priority = "5"
+	test StructuredContentFolderIsCreatedInAssetLibraryWithErcByDefault {
+		property portal.acceptance = "true";
+
+		task ("When with POST request I create a structured content folder without a custom erc") {
+			var depotId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+
+			var response = HeadlessWebcontentFolderAPI.createStructuredContentFolderInAssetLibrary(
+				assetLibraryId = "${depotId}",
+				name = "Test Folder");
+		}
+
+		task ("Then a new folder is being created with the erc value equals to the uuid in the body response") {
+			HeadlessWebcontentFolderAPI.assertExternalReferenceCodeWithCorrectValue(responseToParse = "${response}");
+		}
+	}
+
+}

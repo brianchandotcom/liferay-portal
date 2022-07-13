@@ -1,0 +1,78 @@
+definition {
+
+	macro _addWebcontentFolder {
+		Variables.assertDefined(parameterList = "${name}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		if (isSet(assetLibraryId)) {
+			var api = "asset-libraries/${assetLibraryId}/structured-content-folders";
+		}
+		else {
+			var api = "sites/${siteId}/structured-contents";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/${api} \
+				-u ${userEmailAddress}:${userPassword} \
+				-H accept: application/json \
+				-H Content-Type: application/json \
+				-d {
+                    "externalReferenceCode": "${externalReferenceCode}",
+                    "name": "${name}"
+				}
+		''';
+
+		var response = JSONCurlUtil.post("${curl}");
+
+		return "${response}";
+	}
+
+	macro assertExternalReferenceCodeWithCorrectValue {
+		if (!(isSet(expectedExternalReferenceCodeValue))) {
+			var folderId = JSONUtil.getWithJSONPath("${responseToParse}", "$.id");
+
+			var mysqlStatement = "SELECT uuid_ FROM JournalFolder WHERE folderid = '${folderId}';";
+
+			var sqlResults = SQL.executeMySQLStatement(mysqlStatement = "${mysqlStatement}");
+
+			var uuidResult = StringUtil.regexReplaceAll("${sqlResults}", "[\r\n]", "");
+
+			var expectedExternalReferenceCodeValue = StringUtil.extractLast("${uuidResult}", "uuid_");
+		}
+
+		var actualExternalReferenceCodeValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..externalReferenceCode");
+
+		TestUtils.assertEquals(
+			actual = "${actualExternalReferenceCodeValue}",
+			expected = "${expectedExternalReferenceCodeValue}");
+	}
+
+	macro createStructuredContentFolderInAssetLibrary {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${name}");
+
+		var response = HeadlessWebcontentFolderAPI._addWebcontentFolder(
+			assetLibraryId = "${assetLibraryId}",
+			description = "${description}",
+			externalReferenceCode = "${externalReferenceCode}",
+			name = "${name}",
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}",
+			viewableBy = "${viewableBy}");
+
+		return "${response}";
+	}
+
+}

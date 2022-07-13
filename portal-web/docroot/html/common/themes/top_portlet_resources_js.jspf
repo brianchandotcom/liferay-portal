@@ -30,11 +30,7 @@
 
 	<%
 	for (String url : urls) {
-	%>
-
-		<script data-senna-track="temporary" src="<%= HtmlUtil.escapeAttribute(url) %>" type="text/javascript"></script>
-
-	<%
+		PortletPathsUtil.writeJavaScriptPath(out, url, Collections.singletonMap("data-senna-track", "temporary"));
 	}
 	%>
 

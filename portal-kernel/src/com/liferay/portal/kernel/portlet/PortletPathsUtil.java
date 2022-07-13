@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -92,6 +93,40 @@ public class PortletPathsUtil {
 		_writePaths(
 			httpServletResponse, (Set<String>)paths.get("headerCssPaths"),
 			(Set<String>)paths.get("headerJavaScriptPaths"));
+	}
+
+	public static void writeJavaScriptPath(
+			Writer writer, String javaScriptPath,
+			Map<String, String> attributes)
+		throws IOException {
+
+		String type = "text/javascript";
+
+		if (javaScriptPath.startsWith("module:")) {
+			javaScriptPath = javaScriptPath.substring(7);
+
+			type = "module";
+		}
+
+		PrintWriter printWriter = new PrintWriter(writer, true);
+
+		printWriter.print("<script src=\"");
+		printWriter.print(HtmlUtil.escapeAttribute(javaScriptPath));
+		printWriter.print("\" type=\"");
+		printWriter.print(type);
+		printWriter.print(StringPool.QUOTE);
+
+		if (attributes != null) {
+			for (Map.Entry<String, String> entry : attributes.entrySet()) {
+				printWriter.print(StringPool.SPACE);
+				printWriter.print(entry.getKey());
+				printWriter.print("=\"");
+				printWriter.print(HtmlUtil.escapeAttribute(entry.getValue()));
+				printWriter.print(StringPool.QUOTE);
+			}
+		}
+
+		printWriter.println("></script>");
 	}
 
 	private static List<Portlet> _getAllPortlets(
@@ -305,9 +340,7 @@ public class PortletPathsUtil {
 		}
 
 		for (String javaScriptPath : javaScriptPathsSet) {
-			printWriter.print("<script src=\"");
-			printWriter.print(HtmlUtil.escape(javaScriptPath));
-			printWriter.println("\" type=\"text/javascript\"></script>");
+			writeJavaScriptPath(printWriter, javaScriptPath, null);
 		}
 	}
 

@@ -180,43 +180,15 @@ class WikiPortlet {
 	}
 
 	/**
-	 * Checks if there are images that have not been uploaded yet.
-	 * In that case, it removes them after asking
-	 * confirmation to the user.
-	 *
-	 * @protected
-	 * @return {void} Call the callback if there aren't temporal
-	 * images, and the user does not confirm she wants to lose them.
-	 * Otherwise, the callback will not be called.
-	 */
-	_maybeRemoveTempImages(callback) {
-		const tempImages = this.rootNode.querySelector('img[data-random-id]');
-
-		if (tempImages && !!tempImages.length) {
-			openConfirmModal({
-				message: this._strings.confirmDiscardImages,
-				onConfirm: (isConfirmed) => {
-					if (isConfirmed) {
-						tempImages.forEach((node) => {
-							node.parentElement.remove();
-						});
-
-						callback();
-					}
-				},
-			});
-		}
-	}
-
-	/**
 	 * Submits the wiki page.
 	 *
 	 * @protected
 	 */
 	_save() {
 		const namespace = this._namespace;
+		const tempImages = this.rootNode.querySelector('img[data-random-id]');
 
-		this._maybeRemoveTempImages(() => {
+		const submit = () => {
 			document.getElementById(
 				namespace + this._constants.CMD
 			).value = this._currentAction;
@@ -230,7 +202,25 @@ class WikiPortlet {
 			}
 
 			submitForm(document[`${namespace}fm`]);
-		});
+		};
+
+		if (tempImages && !!tempImages.length) {
+			openConfirmModal({
+				message: this._strings.confirmDiscardImages,
+				onConfirm: (isConfirmed) => {
+					if (isConfirmed) {
+						tempImages.forEach((node) => {
+							node.parentElement.remove();
+						});
+					}
+
+					submit();
+				},
+			});
+		}
+		else {
+			submit();
+		}
 	}
 }
 

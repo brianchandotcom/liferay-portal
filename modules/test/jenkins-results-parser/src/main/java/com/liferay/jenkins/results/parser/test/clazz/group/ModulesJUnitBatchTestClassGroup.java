@@ -152,7 +152,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 				getRequiredModuleDirs(new ArrayList<>(modifiedFilesList)));
 		}
 
-		List<JobProperty> includesJobProperties = new ArrayList<>();
+		Set<JobProperty> includesJobProperties = new HashSet<>();
 
 		Matcher matcher = _singleModuleBatchNamePattern.matcher(batchName);
 
@@ -196,7 +196,7 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 				"modules.includes.required.test.batch.class.names.includes",
 				workingDirectory, JobProperty.Type.MODULE_INCLUDE_GLOB));
 
-		return includesJobProperties;
+		return new ArrayList<>(includesJobProperties);
 	}
 
 	private String _getAppTitle(File appBndFile) {

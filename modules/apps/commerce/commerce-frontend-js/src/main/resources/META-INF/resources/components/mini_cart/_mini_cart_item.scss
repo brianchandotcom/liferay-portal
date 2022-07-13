@@ -10,7 +10,7 @@
 		'info quantity price delete'
 		'errors errors errors errors';
 	grid-template-columns: auto 90px minmax(min-content, 100px) min-content;
-	overflow: hidden;
+	overflow: visible;
 	position: relative;
 	transition: height 0.2s ease-in, padding 0.1s ease-in;
 	width: 100%;

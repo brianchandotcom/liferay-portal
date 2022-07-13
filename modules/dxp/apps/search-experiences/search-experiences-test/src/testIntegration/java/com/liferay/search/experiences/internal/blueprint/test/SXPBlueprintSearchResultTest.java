@@ -635,20 +635,18 @@ public class SXPBlueprintSearchResultTest {
 			"Article 2.0"
 		).build();
 
+		JournalArticle journalArticle = _journalArticles.get(1);
+
+		journalArticle.setVersion(2.0);
+
+		_journalArticleLocalService.updateJournalArticle(journalArticle);
+
 		_journalArticles.set(
 			0,
 			JournalTestUtil.updateArticle(
 				_journalArticles.get(0), "Article 1.1"));
 
-		_journalArticles.set(
-			1,
-			JournalTestUtil.updateArticle(
-				_journalArticles.get(1), "Article 2.1"));
-
-		_journalArticles.set(
-			1,
-			JournalTestUtil.updateArticle(
-				_journalArticles.get(1), "Article 2.2"));
+		_keywords = "Article";
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -662,13 +660,11 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Boost Contents With More Versions"});
 
-		_keywords = "Article";
-
-		_assertSearch("[Article 2.2, Article 1.1]");
+		_assertSearch("[Article 2.0, Article 1.1]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearch("[Article 1.1, Article 2.2]");
+		_assertSearch("[Article 1.1, Article 2.0]");
 	}
 
 	@Test

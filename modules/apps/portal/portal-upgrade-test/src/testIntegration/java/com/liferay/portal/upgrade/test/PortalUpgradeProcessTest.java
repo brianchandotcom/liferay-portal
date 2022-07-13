@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.kernel.version.VersionTreeMap;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
@@ -152,6 +154,44 @@ public class PortalUpgradeProcessTest {
 
 		Assert.assertEquals(
 			latestSchemaVersion.getMajor(), requiredSchemaVersion.getMajor());
+	}
+
+	@Test
+	public void testGetRequiredSchemaVersionWhenMultipleSteps() {
+		VersionTreeMap newUpgradeProcesses = new VersionTreeMap();
+
+		VersionTreeMap currentUpgradeProcesses =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PortalUpgradeProcess.class, "_upgradeProcesses",
+				newUpgradeProcesses);
+
+		try {
+			newUpgradeProcesses.put(
+				new Version(2, 3, 2), new DummyUpgradeProcess());
+			newUpgradeProcesses.put(
+				new Version(2, 4, 0), new DummyUpgradeProcess(),
+				new DummyUpgradeProcess(), new DummyUpgradeProcess());
+			newUpgradeProcesses.put(
+				new Version(2, 4, 1), new DummyUpgradeProcess());
+
+			Version requiredSchemaVersion =
+				PortalUpgradeProcess.getRequiredSchemaVersion();
+
+			Assert.assertEquals(2, requiredSchemaVersion.getMajor());
+			Assert.assertEquals(4, requiredSchemaVersion.getMinor());
+			Assert.assertEquals(0, requiredSchemaVersion.getMicro());
+
+			String lastStepSuffix = ReflectionTestUtil.getFieldValue(
+				Version.class, "_LAST_STEP");
+
+			Assert.assertEquals(
+				lastStepSuffix, requiredSchemaVersion.getStep());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PortalUpgradeProcess.class, "_upgradeProcesses",
+				currentUpgradeProcesses);
+		}
 	}
 
 	@Test

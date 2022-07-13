@@ -20,6 +20,7 @@ import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLo
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -61,7 +62,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration",
-	service = OpenIdConnectProviderManagedServiceFactory.class
+	service = {
+		ManagedServiceFactory.class,
+		OpenIdConnectProviderManagedServiceFactory.class,
+		PortalInstanceLifecycleListener.class
+	}
 )
 @Deprecated
 public class OpenIdConnectProviderManagedServiceFactory

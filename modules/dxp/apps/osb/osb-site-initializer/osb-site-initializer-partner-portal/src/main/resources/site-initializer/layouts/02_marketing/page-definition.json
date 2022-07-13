@@ -208,7 +208,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resouces/dollar-sign-blue.png$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/dollar-sign-blue.png$]"
 																					}
 																				}
 																			}
@@ -552,7 +552,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resouces/book-green.png$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/book-green.png$]"
 																					}
 																				}
 																			}
@@ -900,7 +900,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resouces/video-green.png$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/video-green.png$]"
 																					}
 																				}
 																			}
@@ -1216,7 +1216,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resouces/calendar-blue.png$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/calendar-blue.png$]"
 																					}
 																				}
 																			}
@@ -1677,7 +1677,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resouces/dollar-sign-blue.png$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/dollar-sign-blue.png$]"
 																					}
 																				}
 																			}
@@ -2018,7 +2018,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resouces/book-green.png$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/book-green.png$]"
 																					}
 																				}
 																			}
@@ -2336,7 +2336,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resouces/video-green.png$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/video-green.png$]"
 																					}
 																				}
 																			}
@@ -2646,7 +2646,7 @@
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resouces/calendar-blue.png$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/calendar-blue.png$]"
 																					}
 																				}
 																			}

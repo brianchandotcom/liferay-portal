@@ -1549,6 +1549,8 @@ definition {
 			key_text = "Import",
 			locator1 = "Button#ANY");
 
+		SelectFrameTop();
+
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
 		AssertElementPresent(
@@ -1615,6 +1617,8 @@ definition {
 		Click(
 			key_text = "Import",
 			locator1 = "Button#ANY");
+
+		SelectFrameTop();
 
 		Blueprints.gotoElement(element = "Test Element");
 

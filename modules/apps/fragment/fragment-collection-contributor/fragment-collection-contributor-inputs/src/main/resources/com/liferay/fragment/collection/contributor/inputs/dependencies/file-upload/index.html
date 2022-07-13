@@ -13,7 +13,7 @@
 				[@clay["icon"] symbol="times-circle-full" /]
 			</button>
 
-			<input accept="${(input.attributes.allowedFileExtensions?has_content)?then(input.attributes.allowedFileExtensions, '*')}" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" class="d-none" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" name="${input.name}" ${input.required?then('required', '' )} type="${(input.attributes.selectFromDocumentLibrary?? && input.attributes.selectFromDocumentLibrary)?then('text', 'file')}" />
+			<input accept="${(input.attributes.allowedFileExtensions?has_content)?then(input.attributes.allowedFileExtensions, '*')}" aria-describedby="${fragmentEntryLinkNamespace}-file-upload-help-text" class="d-none" formenctype="multipart/form-data" id="${fragmentEntryLinkNamespace}-file-upload" name="${input.name}" ${input.required?then('required', '' )} type="${(input.attributes.selectFromDocumentLibrary?? && input.attributes.selectFromDocumentLibrary)?then('text', 'file')}" [#if input.value??]value="${input.value}"[/#if] />
 		</div>
 
 		[#if (input.showHelpText && input.helpText?has_content) || (configuration.showSupportedFileInfo && input.attributes.allowedFileExtensions?? && input.attributes.maxFileSize??)]

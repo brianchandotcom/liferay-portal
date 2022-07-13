@@ -47,13 +47,11 @@ definition {
 		}
 
 		task ("Go to section applications through in the subsection Tasks") {
-			Click(
-				locator1 = "RaylifeAP#TASKS_SECTION",
-				section = "Review Eligibility Reports");
+			RaylifeAP.clickOnSubsectionTasks(key_subsection = "Review Eligibility Reports");
+		}
 
-			AssertElementPresent(
-				key_titlePage = "Applications",
-				locator1 = "RaylifeAP#TITLE_PAGE");
+		task ("Assert Page Applications") {
+			RaylifeAP.assertPageHeader(key_header = "Applications");
 		}
 	}
 
@@ -65,13 +63,11 @@ definition {
 		}
 
 		task ("Go to section policies through in the subsection Tasks") {
-			Click(
-				locator1 = "RaylifeAP#TASKS_SECTION",
-				section = "Contact Expiring Policies");
+			RaylifeAP.clickOnSubsectionTasks(key_subsection = "Contact Expiring Policies");
+		}
 
-			AssertElementPresent(
-				key_titlePage = "Policies",
-				locator1 = "RaylifeAP#TITLE_PAGE");
+		task ("Assert Page Policies") {
+			RaylifeAP.assertPageHeader(key_header = "Policies");
 		}
 	}
 

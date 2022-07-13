@@ -544,6 +544,8 @@ public class UIItemsBuilder {
 			).put(
 				"analytics-file-entry-title", _fileEntry.getTitle()
 			).put(
+				"analytics-file-entry-version", _fileEntry.getVersion()
+			).put(
 				"senna-off", "true"
 			).build());
 		urlMenuItem.setMethod("get");
@@ -566,6 +568,8 @@ public class UIItemsBuilder {
 				"analytics-file-entry-id", _fileEntry.getFileEntryId()
 			).put(
 				"analytics-file-entry-title", _fileEntry.getTitle()
+			).put(
+				"analytics-file-entry-version", _fileEntry.getVersion()
 			).build());
 
 		_addURLUIItem(
@@ -1120,6 +1124,8 @@ public class UIItemsBuilder {
 				"analytics-file-entry-id", _fileEntry.getFileEntryId()
 			).put(
 				"analytics-file-entry-title", _fileEntry.getTitle()
+			).put(
+				"analytics-file-entry-version", _fileEntry.getVersion()
 			).put(
 				"senna-off", "true"
 			).build()

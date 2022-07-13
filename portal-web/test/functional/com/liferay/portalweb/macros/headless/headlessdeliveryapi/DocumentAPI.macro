@@ -1,0 +1,59 @@
+definition {
+
+	macro _addDocument {
+		Variables.assertDefined(parameterList = "${filePath}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(assetLibraryId)) {
+			var api = "asset-libraries/${assetLibraryId}/documents";
+		}
+		else {
+			var api = "sites/${siteId}/documents";
+		}
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/${api} \
+			-u test@liferay.com:test \
+			-H Content-Type: multipart/form-data \
+            -F document={"externalReferenceCode": "${externalReferenceCode}"} \
+			-F file=@${filePath} 
+		''';
+
+		var curl = JSONCurlUtil.post("${curl}");
+
+		return "${curl}";
+	}
+
+	macro addDocumentInAssetLibraryByUploadFile {
+		Variables.assertDefined(parameterList = "${assetLibraryId},${filePath}");
+
+		var response = DocumentAPI._addDocument(
+			assetLibraryId = "${assetLibraryId}",
+			externalReferenceCode = "${externalReferenceCode}",
+			filePath = "${filePath}");
+
+		return "${response}";
+	}
+
+	macro assertExternalReferenceCodeWithCorrectValue {
+		if (!(isSet(expectedExternalReferenceCodeValue))) {
+			var contentURL = JSONUtil.getWithJSONPath("${responseToParse}", "$.['contentUrl']");
+
+			var contentURLSubString = StringUtil.extractFirst("${contentURL}", "?");
+
+			var expectedExternalReferenceCodeValue = StringUtil.extractLast("${contentURLSubString}", "/");
+		}
+
+		var actualExternalReferenceCodeValue = JSONUtil.getWithJSONPath("${responseToParse}", "$..externalReferenceCode");
+
+		TestUtils.assertEquals(
+			actual = "${actualExternalReferenceCodeValue}",
+			expected = "${expectedExternalReferenceCodeValue}");
+	}
+
+}

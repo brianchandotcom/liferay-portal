@@ -1,0 +1,48 @@
+@component-name = "portal-headless-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless Frontend Infrastructure";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given an asset library is created") {
+			JSONDepot.addDepot(depotName = "Test Depot Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONDepot.deleteDepot(depotName = "Test Depot Name");
+		}
+	}
+
+	@description = "Document is created in an asset library with erc by default"
+	@priority = "5"
+	test DocumentIsCreatedInAssetLibraryWithErcByDefault {
+		property portal.acceptance = "true";
+
+		task ("When with POST request I create a new document without a custom erc") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var filePath = TestCase.getDependenciesDirPath(fileName = "Document_1.txt");
+
+			var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
+				assetLibraryId = "${assetLibraryId}",
+				filePath = "${filePath}");
+		}
+
+		task ("Then the document is being created with erc value equals to uuid in the body response") {
+			DocumentAPI.assertExternalReferenceCodeWithCorrectValue(responseToParse = "${response}");
+		}
+	}
+
+}

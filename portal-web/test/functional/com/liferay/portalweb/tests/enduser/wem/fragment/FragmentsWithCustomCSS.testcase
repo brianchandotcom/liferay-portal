@@ -35,6 +35,76 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136411. The page creator could add custom css of fragment in each viewport."
+	@priority = "4"
+	test AddCustomCSSOfFragmentInEachViewport {
+		task ("Given a page creator has a content page with a Heading fragment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("When the page creator accesses to the Advanced panel of Heading") {
+			PageEditor.gotoAdvanced(fragmentName = "Heading");
+		}
+
+		task ("Then the page creator could add Custom CSS to Heading in each viewport") {
+			PageEditor.configureFragment(customCSS = ".[$FRAGMENT_CLASS$] { background-color: var(--info); }");
+
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			PageEditor.configureFragment(customCSS = ".[$FRAGMENT_CLASS$] { background-color: var(--success); }");
+
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			PageEditor.configureFragment(customCSS = ".[$FRAGMENT_CLASS$] { background-color: var(--warning); }");
+
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			PageEditor.configureFragment(customCSS = ".[$FRAGMENT_CLASS$] { background-color: var(--danger); }");
+
+			PageEditor.switchViewport(deviceType = "Desktop");
+
+			PageEditor.viewFragmentStyle(
+				backgroundColor = "info",
+				fragmentName = "Heading");
+
+			PageEditor.switchViewport(deviceType = "Tablet");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentStyle(
+				backgroundColor = "success",
+				fragmentName = "Heading");
+
+			SelectFrameTop();
+
+			PageEditor.switchViewport(deviceType = "Landscape Phone");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentStyle(
+				backgroundColor = "warning",
+				fragmentName = "Heading");
+
+			SelectFrameTop();
+
+			PageEditor.switchViewport(deviceType = "Portrait Phone");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
+
+			PageEditor.viewFragmentStyle(
+				backgroundColor = "danger",
+				fragmentName = "Heading");
+
+			SelectFrameTop();
+		}
+	}
+
 	@description = "This is a test for LPS-136411. When add a custom css to a fragment inside Collection Display, the custom css will be applied to all similar fragments inside Collection Display."
 	@priority = "4"
 	test ViewAppliedCustomCSSOfFragmentInsideCollectionDisplay {

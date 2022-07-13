@@ -634,6 +634,10 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/update_configuration_values")
 			).put(
+				"updateFormItemConfigURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor/update_form_item_config")
+			).put(
 				"updateItemConfigURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/update_item_config")

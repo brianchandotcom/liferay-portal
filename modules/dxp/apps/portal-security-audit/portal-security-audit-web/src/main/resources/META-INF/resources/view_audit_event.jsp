@@ -43,7 +43,7 @@ if (auditEventId > 0) {
 	title='<%= (auditEvent == null) ? "audit-event" : auditEvent.getEventType() + " (" + eventTypeAction + ")" %>'
 />
 
-<aui:fieldset>
+<clay:sheet>
 	<c:choose>
 		<c:when test="<%= auditEvent == null %>">
 			<div class="portlet-msg-error">
@@ -104,4 +104,4 @@ if (auditEventId > 0) {
 			</aui:field-wrapper>
 		</c:otherwise>
 	</c:choose>
-</aui:fieldset>
+</clay:sheet>

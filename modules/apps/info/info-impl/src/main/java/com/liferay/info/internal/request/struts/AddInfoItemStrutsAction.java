@@ -20,7 +20,6 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.info.constants.InfoFormConstants;
 import com.liferay.info.exception.InfoFormException;
 import com.liferay.info.exception.InfoFormInvalidGroupException;
 import com.liferay.info.exception.InfoFormInvalidLayoutModeException;
@@ -209,8 +208,7 @@ public class AddInfoItemStrutsAction implements StrutsAction {
 			}
 
 			SessionMessages.add(
-				httpServletRequest,
-				InfoFormConstants.INFO_FORM_PARAMETER_MAP + formItemId,
+				httpServletRequest, "infoFormParameterMap" + formItemId,
 				formParameterMap);
 		}
 

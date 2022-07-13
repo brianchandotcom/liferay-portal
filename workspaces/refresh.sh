@@ -28,6 +28,15 @@ function check_blade {
 	echo "${bladePath}"
 }
 
+function copy_template {
+	cp -R ../modules/apps/client-extension/client-extension-type-api/src/main/resources/com/liferay/client/extension/type/dependencies/templates/$1 "$2"
+
+	local baseName=$(basename $2)
+
+	find "$2" -type f -not -path '*/*\.ico' -exec sed -i'.bak' "s/\${id}/${baseName}/g" {} +
+	find "$2" -type f -not -path '*/*\.ico' -exec sed -i'.bak' "s/\${name}/$3/g" {} +
+}
+
 function refresh_sample_default_workspace {
 	local bladePath=$(check_blade)
 
@@ -68,6 +77,15 @@ function refresh_sample_minimal_workspace {
 	mkdir -p sample-minimal-workspace/configs/local
 
 	cp sample-default-workspace/configs/local/portal-ext.properties sample-minimal-workspace/configs/local
+
+	rm -fr sample-minimal-workspace/client-extensions/able-*
+
+	copy_template custom-element sample-minimal-workspace/client-extensions/able-custom-element "Able Custom Element"
+	copy_template global-css sample-minimal-workspace/client-extensions/able-global-css "Able Global CSS"
+	copy_template global-js sample-minimal-workspace/client-extensions/able-global-js "Able Global JS"
+	copy_template iframe sample-minimal-workspace/client-extensions/able-iframe "Able IFrame"
+	copy_template theme-css sample-minimal-workspace/client-extensions/able-theme-css "Able Theme CSS"
+	copy_template theme-favicon sample-minimal-workspace/client-extensions/able-theme-favicon "Able Theme Favicon"
 }
 
 function main {

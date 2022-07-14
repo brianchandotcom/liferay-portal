@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.inventory.internal.graphql.servlet.v
 
 import com.liferay.headless.commerce.admin.inventory.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.commerce.admin.inventory.internal.graphql.query.v1_0.Query;
+import com.liferay.headless.commerce.admin.inventory.resource.v1_0.ReplenishmentItemResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseItemResource;
 import com.liferay.headless.commerce.admin.inventory.resource.v1_0.WarehouseResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -39,11 +40,15 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setReplenishmentItemResourceComponentServiceObjects(
+			_replenishmentItemResourceComponentServiceObjects);
 		Mutation.setWarehouseResourceComponentServiceObjects(
 			_warehouseResourceComponentServiceObjects);
 		Mutation.setWarehouseItemResourceComponentServiceObjects(
 			_warehouseItemResourceComponentServiceObjects);
 
+		Query.setReplenishmentItemResourceComponentServiceObjects(
+			_replenishmentItemResourceComponentServiceObjects);
 		Query.setWarehouseResourceComponentServiceObjects(
 			_warehouseResourceComponentServiceObjects);
 		Query.setWarehouseItemResourceComponentServiceObjects(
@@ -64,6 +69,10 @@ public class ServletDataImpl implements ServletData {
 	public Query getQuery() {
 		return new Query();
 	}
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ReplenishmentItemResource>
+		_replenishmentItemResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<WarehouseResource>

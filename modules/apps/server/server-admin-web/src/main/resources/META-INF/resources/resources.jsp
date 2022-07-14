@@ -37,84 +37,78 @@ long usedMemory = totalMemory - runtime.freeMemory();
 
 <aui:fieldset-group markupView="lexicon">
 	<aui:fieldset>
-		<div class="panel panel-secondary server-admin-tabs" id="adminServerInformationPanel">
-			<div class="panel-body">
-				<div class="alert alert-info">
-					<strong><liferay-ui:message key="info" /></strong>: <%= ReleaseInfo.getReleaseInfo() %>
-					<c:if test="<%= (installedPatches != null) && (installedPatches.length > 0) %>">
-						<strong><liferay-ui:message key="patch" /></strong>: <%= StringUtil.merge(installedPatches, StringPool.COMMA_AND_SPACE) %>
-					</c:if>
+		<div class="alert alert-info">
+			<strong><liferay-ui:message key="info" /></strong>: <%= ReleaseInfo.getReleaseInfo() %>
+			<c:if test="<%= (installedPatches != null) && (installedPatches.length > 0) %>">
+				<strong><liferay-ui:message key="patch" /></strong>: <%= StringUtil.merge(installedPatches, StringPool.COMMA_AND_SPACE) %>
+			</c:if>
 
-					<strong><liferay-ui:message key="uptime" /></strong>:
+			<strong><liferay-ui:message key="uptime" /></strong>:
 
-					<c:if test="<%= days > 0 %>">
-						<%= days %> <%= LanguageUtil.get(request, ((days > 1) ? "days" : "day")) %>,
-					</c:if>
+			<c:if test="<%= days > 0 %>">
+				<%= days %> <%= LanguageUtil.get(request, ((days > 1) ? "days" : "day")) %>,
+			</c:if>
 
-					<%
-					NumberFormat timeNumberFormat = NumberFormat.getInstance();
+			<%
+			NumberFormat timeNumberFormat = NumberFormat.getInstance();
 
-					timeNumberFormat.setMaximumIntegerDigits(2);
-					timeNumberFormat.setMinimumIntegerDigits(2);
-					%>
+			timeNumberFormat.setMaximumIntegerDigits(2);
+			timeNumberFormat.setMinimumIntegerDigits(2);
+			%>
 
-					<%= timeNumberFormat.format(hours) %>:<%= timeNumberFormat.format(minutes) %>:<%= timeNumberFormat.format(seconds) %>
-				</div>
-
-				<div class="meter-wrapper text-center">
-					<portlet:resourceURL id="/server_admin/view_chart" var="totalMemoryChartURL">
-						<portlet:param name="type" value="total" />
-						<portlet:param name="totalMemory" value="<%= String.valueOf(totalMemory) %>" />
-						<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
-					</portlet:resourceURL>
-
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="memory-used-vs-total-memory" />" src="<%= totalMemoryChartURL %>" />
-
-					<portlet:resourceURL id="/server_admin/view_chart" var="maxMemoryChartURL">
-						<portlet:param name="type" value="max" />
-						<portlet:param name="maxMemory" value="<%= String.valueOf(runtime.maxMemory()) %>" />
-						<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
-					</portlet:resourceURL>
-
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="memory-used-vs-max-memory" />" src="<%= maxMemoryChartURL %>" />
-				</div>
-
-				<br />
-
-				<%
-				NumberFormat basicNumberFormat = NumberFormat.getInstance(locale);
-				%>
-
-				<table class="lfr-table memory-status-table">
-					<tr>
-						<td>
-							<span class="font-weight-semi-bold"><liferay-ui:message key="used-memory" /></span>
-						</td>
-						<td>
-							<span class="text-muted"><%= basicNumberFormat.format(usedMemory) %> <liferay-ui:message key="bytes" /></span>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="font-weight-semi-bold"><liferay-ui:message key="total-memory" /></span>
-						</td>
-						<td>
-							<span class="text-muted"><%= basicNumberFormat.format(runtime.totalMemory()) %> <liferay-ui:message key="bytes" /></span>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="font-weight-semi-bold"><liferay-ui:message key="maximum-memory" /></span>
-						</td>
-						<td>
-							<span class="text-muted"><%= basicNumberFormat.format(runtime.maxMemory()) %> <liferay-ui:message key="bytes" /></span>
-						</td>
-					</tr>
-				</table>
-
-				<br />
-			</div>
+			<%= timeNumberFormat.format(hours) %>:<%= timeNumberFormat.format(minutes) %>:<%= timeNumberFormat.format(seconds) %>
 		</div>
+
+		<div class="meter-wrapper text-center">
+			<portlet:resourceURL id="/server_admin/view_chart" var="totalMemoryChartURL">
+				<portlet:param name="type" value="total" />
+				<portlet:param name="totalMemory" value="<%= String.valueOf(totalMemory) %>" />
+				<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
+			</portlet:resourceURL>
+
+			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="memory-used-vs-total-memory" />" src="<%= totalMemoryChartURL %>" />
+
+			<portlet:resourceURL id="/server_admin/view_chart" var="maxMemoryChartURL">
+				<portlet:param name="type" value="max" />
+				<portlet:param name="maxMemory" value="<%= String.valueOf(runtime.maxMemory()) %>" />
+				<portlet:param name="usedMemory" value="<%= String.valueOf(usedMemory) %>" />
+			</portlet:resourceURL>
+
+			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="memory-used-vs-max-memory" />" src="<%= maxMemoryChartURL %>" />
+		</div>
+
+		<br />
+
+		<%
+		NumberFormat basicNumberFormat = NumberFormat.getInstance(locale);
+		%>
+
+		<table class="lfr-table memory-status-table">
+			<tr>
+				<td>
+					<span class="font-weight-semi-bold"><liferay-ui:message key="used-memory" /></span>
+				</td>
+				<td>
+					<span class="text-muted"><%= basicNumberFormat.format(usedMemory) %> <liferay-ui:message key="bytes" /></span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="font-weight-semi-bold"><liferay-ui:message key="total-memory" /></span>
+				</td>
+				<td>
+					<span class="text-muted"><%= basicNumberFormat.format(runtime.totalMemory()) %> <liferay-ui:message key="bytes" /></span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="font-weight-semi-bold"><liferay-ui:message key="maximum-memory" /></span>
+				</td>
+				<td>
+					<span class="text-muted"><%= basicNumberFormat.format(runtime.maxMemory()) %> <liferay-ui:message key="bytes" /></span>
+				</td>
+			</tr>
+		</table>
 	</aui:fieldset>
 
 	<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="system-actions">

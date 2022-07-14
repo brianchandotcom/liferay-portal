@@ -24,7 +24,9 @@ import com.liferay.document.library.web.internal.display.context.helper.DLReques
 import com.liferay.document.library.web.internal.display.context.helper.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.internal.display.context.helper.FileVersionDisplayContextHelper;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.document.library.web.internal.util.DDMFormValuesUtil;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
+import com.liferay.dynamic.data.mapping.form.renderer.constants.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.kernel.DDMForm;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
@@ -42,11 +44,14 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.RepositoryUtil;
 
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -79,6 +84,12 @@ public class DefaultDLEditFileEntryDisplayContext
 		this(
 			httpServletRequest, (DLFileEntryType)null, dlValidator, fileEntry,
 			storageEngine);
+	}
+
+	@Override
+	public DDMFormValues getDDMFormValues(DDMStructure ddmStructure) {
+		return DDMFormValuesUtil.getDDMFormValuesHttpServletRequest(
+			ddmStructure, _httpServletRequest);
 	}
 
 	@Override
@@ -208,6 +219,33 @@ public class DefaultDLEditFileEntryDisplayContext
 	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
 		return _fileEntryDisplayContextHelper.
 			isCheckoutDocumentActionAvailable();
+	}
+
+	@Override
+	public boolean isDDMFormValuesEdited(DDMStructure ddmStructure) {
+		Enumeration<String> enumeration =
+			_httpServletRequest.getParameterNames();
+
+		String namespace =
+			String.valueOf(ddmStructure.getStructureId()) +
+				StringPool.UNDERLINE;
+
+		while (enumeration.hasMoreElements()) {
+			String parameterName = enumeration.nextElement();
+
+			if (StringUtil.startsWith(
+					parameterName,
+					namespace +
+						DDMFormRendererConstants.DDM_FORM_FIELD_NAME_PREFIX) &&
+				StringUtil.endsWith(parameterName, "_edited") &&
+				GetterUtil.getBoolean(
+					_httpServletRequest.getParameter(parameterName))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

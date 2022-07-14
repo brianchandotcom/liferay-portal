@@ -37,6 +37,16 @@ public class ObjectFilterLocalServiceWrapper
 		_objectFilterLocalService = objectFilterLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectFilter addObjectFilter(
+			long userId, long objectFieldId, String filterBy, String filterType,
+			String json)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFilterLocalService.addObjectFilter(
+			userId, objectFieldId, filterBy, filterType, json);
+	}
+
 	/**
 	 * Adds the object filter to the database. Also notifies the appropriate model listeners.
 	 *
@@ -76,6 +86,11 @@ public class ObjectFilterLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFilterLocalService.createPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public void deleteObjectFieldObjectFilter(long objectFieldId) {
+		_objectFilterLocalService.deleteObjectFieldObjectFilter(objectFieldId);
 	}
 
 	/**
@@ -271,6 +286,14 @@ public class ObjectFilterLocalServiceWrapper
 		getIndexableActionableDynamicQuery() {
 
 		return _objectFilterLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectFilter>
+		getObjectFieldObjectFilter(long objectFieldId) {
+
+		return _objectFilterLocalService.getObjectFieldObjectFilter(
+			objectFieldId);
 	}
 
 	/**

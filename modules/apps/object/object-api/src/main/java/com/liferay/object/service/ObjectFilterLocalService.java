@@ -63,6 +63,10 @@ public interface ObjectFilterLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFilterLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object filter local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectFilterLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public ObjectFilter addObjectFilter(
+			long userId, long objectFieldId, String filterBy, String filterType,
+			String json)
+		throws PortalException;
 
 	/**
 	 * Adds the object filter to the database. Also notifies the appropriate model listeners.
@@ -91,6 +95,8 @@ public interface ObjectFilterLocalService
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void deleteObjectFieldObjectFilter(long objectFieldId);
 
 	/**
 	 * Deletes the object filter with the primary key from the database. Also notifies the appropriate model listeners.
@@ -222,6 +228,9 @@ public interface ObjectFilterLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectFilter> getObjectFieldObjectFilter(long objectFieldId);
 
 	/**
 	 * Returns the object filter with the primary key.

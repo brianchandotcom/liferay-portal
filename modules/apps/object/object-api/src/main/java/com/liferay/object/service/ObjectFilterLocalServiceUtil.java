@@ -44,6 +44,14 @@ public class ObjectFilterLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFilterLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectFilter addObjectFilter(
+			long userId, long objectFieldId, String filterBy, String filterType,
+			String json)
+		throws PortalException {
+
+		return getService().addObjectFilter(
+			userId, objectFieldId, filterBy, filterType, json);
+	}
 
 	/**
 	 * Adds the object filter to the database. Also notifies the appropriate model listeners.
@@ -77,6 +85,10 @@ public class ObjectFilterLocalServiceUtil {
 		throws PortalException {
 
 		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	public static void deleteObjectFieldObjectFilter(long objectFieldId) {
+		getService().deleteObjectFieldObjectFilter(objectFieldId);
 	}
 
 	/**
@@ -242,6 +254,12 @@ public class ObjectFilterLocalServiceUtil {
 			getIndexableActionableDynamicQuery() {
 
 		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static List<ObjectFilter> getObjectFieldObjectFilter(
+		long objectFieldId) {
+
+		return getService().getObjectFieldObjectFilter(objectFieldId);
 	}
 
 	/**

@@ -591,7 +591,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for OAUTH2-259. Verify that client credential is in the user scope and can be added to an external application."
+	@description = "This is a use case for OAUTH2-259 and LPS-156552. Verify that client credential is in the user scope and can be added to an external application."
 	@priority = "4"
 	test ClientCredentialsShouldBeConfigurableInUserScope {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
@@ -617,30 +617,32 @@ definition {
 				title = "delete journal articles");
 		}
 
-		task ("Add user") {
+		task ("Add user and assign the OAuth2 App Creator role to the User") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
+
+			OAuth2.addOAuth2AppCreatorRole();
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "OAuth2 App Creator",
+				userEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Add OAuth application") {
+		task ("Add OAuth application and edit OAuth scopes") {
 			OAuth2.openOAuth2Admin();
 
 			OAuth2.addApplication(
 				applicationName = "OAuth Application",
 				checkboxUncheckList = "Authorization Code");
-		}
 
-		task ("Input OAuth valuies") {
 			OAuth2.inputApplicationValues(
 				clientCredentialsUser = "usersn",
 				clientId = "abc123",
 				clientSecret = "abc123");
-		}
 
-		task ("Edit OAuth scopes") {
 			Navigator.gotoBack();
 
 			OAuth2.editScopes(
@@ -649,60 +651,36 @@ definition {
 				resourcePanels = "Portal Services");
 		}
 
-		task ("Set article Id") {
-			var portalURL = PropsUtil.get("portal.url");
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
-			var tokenCurl = '''
-				${portalURL}/o/oauth2/token \
-					-d client_id=abc123 \
-					-d client_secret=abc123 \
-					-d grant_type=client_credentials
-				''';
-
-			var accessToken = OAuth2.getAccessToken(tokenCurl = "${tokenCurl}");
-
-			echo("## * Access Token: ${accessToken}");
-
-			var articleId = JSONWebcontentSetter.setArticleId(
-				groupName = "Guest",
-				title = "WC Title");
-		}
-
 		task ("Verify permission is required to delete article") {
-			var liferaySiteId = JSONGroupAPI._getGroupIdByName(
-				groupName = "Guest",
-				site = "true");
+			var accessToken1 = OAuth2.getAccessToken(
+				client_id = "abc123",
+				client_secret = "abc123",
+				grantFlow = "clientCredentials");
 
-			var deleteCurl = '''
-				${portalURL}/api/jsonws/journal.journalarticle/delete-article -H 'Authorization: Bearer ${accessToken}' \
-					-d groupId=${liferaySiteId} \
-					-d articleId=${articleId} \
-					-d articleURL='wc-title'
-			''';
-
-			var deleteOutput1 = JSONCurlUtil.post("${deleteCurl}");
+			var deleteOutput1 = OAuth2.getDeleteOutput(accessToken = "${accessToken1}");
 
 			OAuth2.assertPermissionsDenied(
 				deleteOutput = "${deleteOutput1}",
 				msg = "must have DELETE permission for com.liferay.journal.model.JournalArticle");
 		}
 
-		task ("Define DELETE permission for the User") {
+		task ("Verify WC is deleted after granted the delete permission") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "DELETE",
 				resourceName = "com.liferay.journal.model.JournalArticle",
 				roleTitle = "Guest");
-		}
 
-		task ("Verify permission required to delete article") {
-			var deleteOutput2 = JSONCurlUtil.post("${deleteCurl}");
+			var accessToken2 = OAuth2.getAccessToken(
+				client_id = "abc123",
+				client_secret = "abc123",
+				grantFlow = "clientCredentials");
+
+			var deleteOutput2 = OAuth2.getDeleteOutput(accessToken = "${accessToken2}");
 
 			OAuth2.assertAbleToDeleteJournalArticle(
 				deleteOutput = "${deleteOutput2}",
 				msg = "must have DELETE permission for com.liferay.journal.model.JournalArticle");
-		}
 
-		task ("Verify WC deleted") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 			AssertTextNotPresent(value1 = "WC Title");

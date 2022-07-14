@@ -451,9 +451,14 @@ definition {
 
 		CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = "${productFullDescription}");
 
-		Click(
-			key_text = "Save as Draft",
-			locator1 = "Button#ANY");
+		if (isSet(publishProduct) && ("${publishProduct}" == "true")) {
+			CommerceEntry.publishEntry(status = "Approved");
+		}
+		else {
+			Click(
+				key_text = "Save as Draft",
+				locator1 = "Button#ANY");
+		}
 	}
 
 	macro addProductsEntry {

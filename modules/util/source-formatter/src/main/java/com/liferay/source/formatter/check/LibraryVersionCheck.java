@@ -24,8 +24,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.processor.SourceProcessor;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.StringReader;
 
 import java.util.ArrayList;
@@ -167,10 +172,39 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			return;
 		}
 
+		SourceProcessor sourceProcessor = getSourceProcessor();
+
+		SourceFormatterArgs sourceFormatterArgs =
+			sourceProcessor.getSourceFormatterArgs();
+
+		String githubToken = sourceFormatterArgs.getGithubToken();
+
+		if (Validator.isNull(githubToken)) {
+			File file = new File(
+				getPortalDir() + "/portal-impl/src/portal-ext.properties");
+
+			if (!file.exists()) {
+				throw new FileNotFoundException(
+					"'portal-impl/src/portal-ext.properties' does not exist");
+			}
+
+			Properties properties = new Properties();
+
+			properties.load(new FileInputStream(file));
+
+			githubToken = properties.getProperty("github.token");
+
+			if (Validator.isNull(githubToken)) {
+				throw new RuntimeException(
+					"No github token found, place 'github.token' in " +
+						"'portal-impl/src/portal-ext.properties'");
+			}
+		}
+
 		_vulnerableVersionMap.put(
 			packageName,
 			_getSecurityVulnerabilityNodes(
-				packageName, null, securityAdvisoryEcosystemEnum));
+				packageName, null, securityAdvisoryEcosystemEnum, githubToken));
 	}
 
 	private String _getContentByPattern(String content, Pattern pattern) {
@@ -185,7 +219,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 	private List<SecurityVulnerabilityNode> _getSecurityVulnerabilityNodes(
 			String packageName, String cursor,
-			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
+			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum,
+			String githubToken)
 		throws Exception {
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
@@ -195,9 +230,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 			HttpPost httpPost = new HttpPost("https://api.github.com/graphql");
 
-			httpPost.addHeader(
-				"Authorization",
-				"bearer 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");
+			httpPost.addHeader("Authorization", "bearer " + githubToken);
 			httpPost.addHeader(
 				"Content-Type",
 				"application/json; charset=utf-8; application/graphql");
@@ -283,7 +316,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 						_getSecurityVulnerabilityNodes(
 							packageName,
 							pageInfoJSONObject.getString("endCursor"),
-							securityAdvisoryEcosystemEnum));
+							securityAdvisoryEcosystemEnum, githubToken));
 				}
 
 				if (!securityVulnerabilityNodes.isEmpty()) {

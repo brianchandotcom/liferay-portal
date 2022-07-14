@@ -157,6 +157,10 @@ public class SourceFormatter {
 				ArgumentsUtil.getBoolean(
 					arguments, "format.local.changes",
 					SourceFormatterArgs.FORMAT_LOCAL_CHANGES));
+			sourceFormatterArgs.setGithubToken(
+				ArgumentsUtil.getString(
+					arguments, "github.token",
+					SourceFormatterArgs.GIT_WORKING_BRANCH_NAME));
 			sourceFormatterArgs.setGitWorkingBranchName(
 				ArgumentsUtil.getString(
 					arguments, "git.working.branch.name",

@@ -26,6 +26,9 @@ create index IX_594B4995 on ObjectField (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_BB322D4A on ObjectFieldSetting (objectFieldId, name[$COLUMN_LENGTH:75$]);
 create index IX_46FCF8AF on ObjectFieldSetting (uuid_[$COLUMN_LENGTH:75$], companyId);
 
+create index IX_B3C95F49 on ObjectFilter (objectFieldId);
+create index IX_1E3B6271 on ObjectFilter (uuid_[$COLUMN_LENGTH:75$], companyId);
+
 create index IX_FD0CCE8A on ObjectLayout (objectDefinitionId, defaultObjectLayout);
 create index IX_E27AC523 on ObjectLayout (uuid_[$COLUMN_LENGTH:75$], companyId);
 

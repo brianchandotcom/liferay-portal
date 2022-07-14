@@ -8,8 +8,6 @@ definition {
 
 	macro clickAdd {
 		Button.click(button = "Add");
-
-		SelectFrameTop();
 	}
 
 	macro clickAddRow {

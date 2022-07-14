@@ -41,7 +41,7 @@ const ChangeUserPassword: React.FC = () => {
 	};
 
 	return (
-		<Container className="containerPassword d-flex flex-column">
+		<Container className="change-user-password">
 			<ClayForm>
 				<div>
 					<Form.Input

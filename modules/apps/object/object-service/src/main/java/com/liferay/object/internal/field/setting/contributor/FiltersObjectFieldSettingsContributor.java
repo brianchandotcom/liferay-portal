@@ -40,8 +40,7 @@ public class FiltersObjectFieldSettingsContributor
 			ObjectFieldSetting newObjectFieldSetting)
 		throws PortalException {
 
-		_objectFilterLocalService.deleteObjectFilterByObjectFieldId(
-			objectFieldId);
+		_objectFilterLocalService.deleteObjectFieldObjectFilter(objectFieldId);
 
 		for (ObjectFilter objectFilter :
 				newObjectFieldSetting.getObjectFilters()) {

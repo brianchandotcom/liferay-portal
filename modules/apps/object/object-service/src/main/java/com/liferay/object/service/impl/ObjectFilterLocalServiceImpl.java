@@ -57,6 +57,11 @@ public class ObjectFilterLocalServiceImpl
 		return objectFilterPersistence.update(objectFilter);
 	}
 
+	@Override
+	public void deleteObjectFieldObjectFilter(long objectFieldId) {
+		objectFilterPersistence.removeByObjectFieldId(objectFieldId);
+	}
+
 	@Reference
 	private UserLocalService _userLocalService;
 

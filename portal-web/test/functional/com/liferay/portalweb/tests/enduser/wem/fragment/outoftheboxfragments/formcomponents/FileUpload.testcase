@@ -1,0 +1,93 @@
+@component-name = "portal-wcm"
+definition {
+
+	property custom.properties = "feature.flag.LPS-150277=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a new site and page in it") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			task ("Disable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:disable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-155170. File Upload fragment could add file from computer."
+	@priority = "3"
+	test AddFileFromComputerDiectly {
+		property test.name.skip.portal.instance = "FileUpload#AddFileFromComputerDiectly";
+
+		// Need to remove or change this case after LPS-157740 get merged
+
+		task ("Given a page creator has a File Upload fragment") {
+			task ("Enable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			task ("Add a File Upload fragment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "File Upload");
+			}
+		}
+
+		task ("When uploading file from computer") {
+			task ("Publish page and go to view mode") {
+				ContentPagesNavigator.openViewContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+			}
+		}
+
+		task ("Then the file from computer is added") {
+			task ("Add file from computer") {
+				UploadDependencyFile.uploadFile(fileName = "Document_1.jpg");
+			}
+
+			task ("Assert upload is sucessful") {
+				AssertTextEquals.assertPartialText(
+					locator1 = "TextInput#FILE_PRESENT",
+					value1 = "Document_1.jpg");
+			}
+		}
+	}
+
+}

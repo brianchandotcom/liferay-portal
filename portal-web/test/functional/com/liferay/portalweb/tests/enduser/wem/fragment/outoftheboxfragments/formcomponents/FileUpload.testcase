@@ -283,4 +283,100 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-155170. File Upload fragment could add file from computer to DM when enable Show Files in Documents and Media."
+	@priority = "3"
+	test CanAddFileFromComputerToDMWhenEnableShowFilesInDocumentsAndMedia {
+		property test.name.skip.portal.instance = "FileUpload#CanAddFileFromComputerToDMWhenEnableShowFilesInDocumentsAndMedia";
+
+		task ("Given a company Object with a attachment field") {
+			task ("Enable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			task ("Add a company Object with attachment fields") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "Upload Object",
+					objectName = "UploadObject",
+					pluralLabelName = "Upload Object");
+
+				ObjectAdmin.openObjectAdmin();
+
+				ObjectPortlet.selectCustomObject(label = "Upload Object");
+
+				ObjectAdmin.goToFieldsTab();
+
+				ObjectAdmin.addObjectFieldViaUI(
+					enableShowFiles = "true",
+					fieldAttachment = "Upload Directly from the User's Computer",
+					fieldLabel = "Custom Attachment From Computer",
+					fieldType = "Attachment");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "UploadObject");
+			}
+		}
+
+		task ("When mapping File Upload fragment to attachment object") {
+			task ("Add a Form Container framgment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Upload Object",
+					panel = "General");
+			}
+
+			task ("Add a File Upload fragment and Submit Button fragment into Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "File Upload");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "File Upload");
+			}
+
+			task ("Map the File Upload fragment to Attachment field and publish") {
+				PageEditor.editInput(
+					field = "Custom Attachment From Computer",
+					fragmentName = "File Upload");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("Then the file from computer is added to DM") {
+			task ("Assert could add file from computer") {
+				ContentPagesNavigator.openViewContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				UploadDependencyFile.uploadFile(fileName = "Document_1.jpg");
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "TextInput#FILE_PRESENT",
+					value1 = "Document_1.jpg");
+
+				Button.clickSubmitButton();
+			}
+
+			task ("View the file added in DM") {
+				DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+				DMNavigator.gotoFolder(dmFolderName = "UploadObject");
+
+				DMDocument.viewPG(dmDocumentTitle = "Document_1");
+			}
+		}
+	}
+
 }

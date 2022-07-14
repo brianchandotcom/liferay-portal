@@ -22,7 +22,7 @@ definition {
 		}
 	}
 
-	@priority = "5"
+	@priority = "3"
 	test RunAllJSONMacros {
 		JSONAssetlistTest.runSmoke(groupName = "Test Site Name");
 

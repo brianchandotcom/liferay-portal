@@ -160,7 +160,7 @@ public class SourceFormatter {
 			sourceFormatterArgs.setGithubToken(
 				ArgumentsUtil.getString(
 					arguments, "github.token",
-					SourceFormatterArgs.GIT_WORKING_BRANCH_NAME));
+					SourceFormatterArgs.GITHUB_TOKEN));
 			sourceFormatterArgs.setGitWorkingBranchName(
 				ArgumentsUtil.getString(
 					arguments, "git.working.branch.name",

@@ -231,4 +231,16 @@ definition {
 		return "${importTaskId}";
 	}
 
+	macro getIdOfUpdateOneBlogPostingBodyParameter {
+		var response = BlogPostingAPI._updateOneBlogPostingBodyParameter(
+			blogPostingId = "${blogPostingId}",
+			bodyParameterKey = "${bodyParameterKey}",
+			bodyParameterValue = "${bodyParameterValue}",
+			updateStrategy = "${updateStrategy}");
+
+		var importTaskId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+		return "${importTaskId}";
+	}
+
 }

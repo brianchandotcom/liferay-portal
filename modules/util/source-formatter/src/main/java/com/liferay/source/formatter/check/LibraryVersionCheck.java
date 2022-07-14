@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -67,8 +66,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		_pageNumber = GetterUtil.getInteger(
-			getAttributeValue(_QUERY_ARGUMENTS_PAGE_NUMBER, absolutePath));
 		_severities = getAttributeValues(
 			_QUERY_ARGUMENTS_SEVERITIES, absolutePath);
 
@@ -187,10 +184,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
 		throws Exception {
 
-		if (_pageNumber == 0) {
-			return Collections.emptyList();
-		}
-
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
 		try (CloseableHttpClient closeableHttpClient =
@@ -206,8 +199,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				"application/json; charset=utf-8; application/graphql");
 
 			String queryArguments = StringBundler.concat(
-				"first: ", _pageNumber, ", package:\\\"", packageName,
-				"\\\", ecosystem: ", securityAdvisoryEcosystemEnum.name());
+				"first: 100, package:\\\"", packageName, "\\\", ecosystem: ",
+				securityAdvisoryEcosystemEnum.name());
 
 			if (ListUtil.isNotNull(_severities)) {
 				queryArguments =
@@ -513,9 +506,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 	}
 
-	private static final String _QUERY_ARGUMENTS_PAGE_NUMBER =
-		"queryArgumentsPageNumber";
-
 	private static final String _QUERY_ARGUMENTS_SEVERITIES =
 		"queryArgumentsSeverities";
 
@@ -529,7 +519,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	private static final Pattern _gradleVersionPattern = Pattern.compile(
 		"version: \"([^,\n\\\\)]+)\"");
 
-	private int _pageNumber;
 	private List<String> _severities;
 	private final Map<String, List<SecurityVulnerabilityNode>>
 		_vulnerableVersionMap = new ConcurrentHashMap<>();

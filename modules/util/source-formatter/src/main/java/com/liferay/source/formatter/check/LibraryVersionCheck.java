@@ -515,6 +515,49 @@ public class LibraryVersionCheck extends BaseFileCheck {
 					version, SecurityAdvisoryEcosystemEnum.MAVEN);
 			}
 		}
+
+		for (Element buildsElement :
+				(List<Element>)rootElement.elements("build")) {
+
+			for (Element pluginsElement :
+					(List<Element>)buildsElement.elements("plugins")) {
+
+				for (Element pluginElement :
+						(List<Element>)pluginsElement.elements("plugin")) {
+
+					Element artifactIdElement = pluginElement.element(
+						"artifactId");
+
+					if (artifactIdElement == null) {
+						continue;
+					}
+
+					Element groupIdElement = pluginElement.element("groupId");
+
+					if (groupIdElement == null) {
+						continue;
+					}
+
+					Element versionElement = pluginElement.element("version");
+
+					if (versionElement == null) {
+						continue;
+					}
+
+					String version = versionElement.getText();
+
+					if (version.startsWith(StringPool.DOLLAR)) {
+						continue;
+					}
+
+					_checkVulnerabilities(
+						fileName, absolutePath,
+						groupIdElement.getText() + StringPool.COLON +
+							artifactIdElement.getText(),
+						version, SecurityAdvisoryEcosystemEnum.MAVEN);
+				}
+			}
+		}
 	}
 
 	private void _propertiesLibraryVersionCheck(

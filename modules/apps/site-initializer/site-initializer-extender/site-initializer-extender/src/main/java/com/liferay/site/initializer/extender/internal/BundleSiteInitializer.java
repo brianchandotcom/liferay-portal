@@ -2356,7 +2356,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					curAssetListEntry.getAssetListEntryKey(),
 					assetListEntryKey)) {
 
-				assetListEntry = assetListEntry;
+				assetListEntry = curAssetListEntry;
 
 				break;
 			}

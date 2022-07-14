@@ -28,12 +28,35 @@ definition {
 	}
 
 	@description = "This test covers LPS-84585. It ensures that a user can delete the reply of MB in Japanese."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteThreadReplyInJapanese {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "メッセージボードのネジ本体",
+			threadSubject = "スレッドメッセージの件名");
 
-		// TODO LPS-150083 CanDeleteThreadReply pending implementation
+		JSONMBMessage.addMessageReply(
+			groupName = "Guest",
+			replyBody = "スレッドメッセージの返信",
+			threadSubject = "スレッドメッセージの件名");
 
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			threadSubject = "スレッドメッセージの件名");
+
+		Navigator.ensureLocaleURL(locale = "ja");
+
+		MessageboardsThread.deleteReply(
+			localizedConfirmMessage = "削除してよろしいですか？直ちに削除されます。",
+			localizedMenuItem = "削除");
+
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			threadSubject = "スレッドメッセージの件名");
+
+		MessageboardsThread.viewNoReplies(replyBody = "スレッドメッセージの返信");
 	}
 
 	@description = "This is a test for LPS-136929. It checks that categories can be viewed in Arabic."

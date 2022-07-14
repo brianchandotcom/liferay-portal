@@ -16,7 +16,7 @@ import {useQuery} from '@apollo/client';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useForm} from 'react-hook-form';
-import {useParams} from 'react-router-dom';
+import {useOutletContext, useParams} from 'react-router-dom';
 
 import Form from '../../../components/Form';
 import Container from '../../../components/Layout/Container';
@@ -27,26 +27,30 @@ import i18n from '../../../i18n';
 import yupSchema, {yupResolver} from '../../../schema/yup';
 
 type userFormDefault = {
+	__typename?: any;
 	alternateName: string;
-	confirmPassword: string;
 	emailAddress: string;
 	familyName: string;
 	givenName: string;
 	id: string;
-	password: string;
-	roles: number[];
+	password?: string;
+	repassword?: string;
+	roleBriefs?: any;
+	roles?: number[];
 	testrayUser: boolean;
 };
 
 const UserForm = () => {
 	const {data} = useQuery<TypePagination<'roles', Role>>(getLiferayRoles);
+	const {projectId, userId} = useParams();
 
+	const userAccount = useOutletContext<any>();
+
+	const currentUser = userAccount?.userAccount || [];
 	const roles = data?.roles.items || [];
 
-	const {projectId} = useParams();
-
 	const {
-		form: {onClose, onSubmit},
+		form: {onClose, onSubmitAndSave},
 	} = useFormActions();
 
 	const {
@@ -56,12 +60,18 @@ const UserForm = () => {
 		setValue,
 		watch,
 	} = useForm<userFormDefault>({
-		defaultValues: {roles: []},
+		defaultValues: userId ? currentUser : {roles: []},
 		resolver: yupResolver(yupSchema.user),
 	});
 
 	const _onSubmit = (form: userFormDefault) => {
-		onSubmit(
+		delete form.password;
+		delete form.repassword;
+		delete form.roles;
+		delete form.__typename;
+		delete form.roleBriefs;
+
+		onSubmitAndSave(
 			{...form, projectId},
 			{
 				createMutation: createUserAccount,
@@ -70,10 +80,10 @@ const UserForm = () => {
 		);
 	};
 
-	const rolesWatch = watch('roles');
+	const rolesWatch = watch('roles') || [];
 
 	const setCheckedValue = (value: any) => {
-		const valueInsideList = rolesWatch.includes(value);
+		const valueInsideList = rolesWatch?.includes(value);
 		let newRoles = [...rolesWatch];
 
 		if (valueInsideList) {

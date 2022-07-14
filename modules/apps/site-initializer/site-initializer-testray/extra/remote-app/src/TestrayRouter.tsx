@@ -207,10 +207,10 @@ const TestrayRoute = () => (
 							<Route element={<Users />} index />
 
 							<Route element={<UserForm />} path="create" />
-						</Route>
 
-						<Route element={<UserOutlet />} path="user/:name">
-							<Route element={<UserForm />} path="update" />
+							<Route element={<UserOutlet />} path=":userId">
+								<Route element={<UserForm />} path="update" />
+							</Route>
 						</Route>
 
 						<Route element={<OutletBridge />} path="user/me">

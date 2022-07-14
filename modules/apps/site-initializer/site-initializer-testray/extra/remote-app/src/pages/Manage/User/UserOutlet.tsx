@@ -12,20 +12,27 @@
  * details.
  */
 
-import {useContext, useEffect} from 'react';
-import {Outlet} from 'react-router-dom';
+import {useQuery} from '@apollo/client';
+import {useEffect} from 'react';
+import {Outlet, useParams} from 'react-router-dom';
 
-import {AccountContext} from '../../../context/AccountContext';
+import {UserAccount, getLiferayUserAccount} from '../../../graphql/queries';
 import {useHeader} from '../../../hooks';
 import i18n from '../../../i18n';
 
 const UserOutlet = () => {
-	const [{myUserAccount}] = useContext(AccountContext);
+	const {userId} = useParams();
+	const {data} = useQuery<{userAccount: UserAccount}>(getLiferayUserAccount, {
+		variables: {
+			userAccountId: userId,
+		},
+	});
 
+	const userAccount = data?.userAccount;
 	const {setHeading, setTabs} = useHeader();
 
 	useEffect(() => {
-		if (myUserAccount) {
+		if (userAccount) {
 			setTimeout(() => {
 				setHeading(
 					[
@@ -38,16 +45,16 @@ const UserOutlet = () => {
 				);
 			}, 0);
 		}
-	}, [setHeading, myUserAccount]);
+	}, [setHeading, userAccount]);
 
 	useEffect(() => {
 		setTabs([]);
 	}, [setTabs]);
 
-	if (!myUserAccount) {
+	if (!userAccount) {
 		return null;
 	}
 
-	return <Outlet context={myUserAccount} />;
+	return <Outlet context={{userAccount}} />;
 };
 export default UserOutlet;

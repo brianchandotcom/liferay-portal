@@ -19,8 +19,8 @@ import {liferayUserAccountFragment} from '../fragments';
 export const createUserAccount = gql`
 	${liferayUserAccountFragment}
 
-	mutation createUserAccount($userAccount: InputUserAccount!) {
-		createUserAccount(userAccount: $userAccount) {
+	mutation createUserAccount($data: InputUserAccount!) {
+		createUserAccount(userAccount: $data) {
 			...LiferayUserAccountFragment
 		}
 	}
@@ -29,14 +29,8 @@ export const createUserAccount = gql`
 export const updateUserAccount = gql`
 	${liferayUserAccountFragment}
 
-	mutation updateUserAccount(
-		$userAccount: InputUserAccount!
-		$userAccountId: Long!
-	) {
-		updateUserAccount(
-			userAccount: $userAccount
-			userAccountId: $userAccountId
-		) {
+	mutation updateUserAccount($data: InputUserAccount!, $id: Long!) {
+		updateUserAccount(userAccount: $data, userAccountId: $id) {
 			...LiferayUserAccountFragment
 		}
 	}

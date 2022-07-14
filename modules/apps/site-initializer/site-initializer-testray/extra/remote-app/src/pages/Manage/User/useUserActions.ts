@@ -12,18 +12,22 @@
  * details.
  */
 
+import {useNavigate} from 'react-router-dom';
+
 import {UserAccount} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
 const useUserActions = () => {
+	const navigate = useNavigate();
 	const formModal = useFormModal();
-	const modal = formModal.modal;
 
 	return {
 		actions: [
 			{
-				action: (UserAccount: UserAccount) => modal.open(UserAccount),
+				action: (userAccount: UserAccount) => {
+					navigate(`${userAccount?.id}/update`);
+				},
 				name: i18n.translate('edit'),
 			},
 		],

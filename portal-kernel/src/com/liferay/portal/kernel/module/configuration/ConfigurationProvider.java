@@ -66,6 +66,10 @@ public interface ConfigurationProvider {
 			Class<T> clazz, long groupId, Dictionary<String, Object> properties)
 		throws ConfigurationException;
 
+	public <T> void saveGroupConfiguration(
+		long groupId, String pid, Dictionary<String, Object> properties)
+		throws ConfigurationException;
+
 	public <T> void savePortletInstanceConfiguration(
 			Class<T> clazz, String portletId,
 			Dictionary<String, Object> properties)

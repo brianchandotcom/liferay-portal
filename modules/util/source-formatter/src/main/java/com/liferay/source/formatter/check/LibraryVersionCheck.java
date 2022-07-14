@@ -75,29 +75,27 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		_severities = getAttributeValues(
-			_QUERY_ARGUMENTS_SEVERITIES, absolutePath);
-
 		if (fileName.endsWith(".gradle")) {
-			_gradleLibraryVersionCheck(fileName, content);
+			_gradleLibraryVersionCheck(fileName, absolutePath, content);
 		}
 		else if (fileName.endsWith(".json")) {
-			_jsonLibraryVersionCheck(fileName, content);
+			_jsonLibraryVersionCheck(fileName, absolutePath, content);
 		}
 		else if (fileName.endsWith(".properties")) {
-			_propertiesLibraryVersionCheck(fileName, content);
+			_propertiesLibraryVersionCheck(fileName, absolutePath, content);
 		}
 		else if (fileName.endsWith("ivy.xml")) {
-			_ivyXmlLibraryVersionCheck(fileName, content);
+			_ivyXmlLibraryVersionCheck(fileName, absolutePath, content);
 		}
 		else if (fileName.endsWith("pom.xml")) {
-			_pomXmlLibraryVersionCheck(fileName, content);
+			_pomXmlLibraryVersionCheck(fileName, absolutePath, content);
 		}
 
 		return content;
 	}
 
-	private void _checkVersionInJsonFile(String fileName, JSONObject jsonObject)
+	private void _checkVersionInJsonFile(
+			String fileName, String absolutePath, JSONObject jsonObject)
 		throws Exception {
 
 		if (jsonObject == null) {
@@ -114,7 +112,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			}
 
 			_checkVulnerabilities(
-				fileName, dependencyName, version,
+				fileName, absolutePath, dependencyName, version,
 				SecurityAdvisoryEcosystemEnum.NPM);
 		}
 	}
@@ -146,7 +144,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	}
 
 	private void _checkVulnerabilities(
-			String fileName, String packageName, String version,
+			String fileName, String absolutePath, String packageName,
+			String version,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
 		throws Exception {
 
@@ -156,7 +155,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 		if (!_vulnerableVersionMap.containsKey(packageName)) {
 			_generateVulnerableVersionMap(
-				packageName, securityAdvisoryEcosystemEnum);
+				packageName, securityAdvisoryEcosystemEnum,
+				getAttributeValues(_QUERY_ARGUMENTS_SEVERITIES, absolutePath));
 		}
 
 		_checkVulnerabilities(
@@ -165,7 +165,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 	private void _generateVulnerableVersionMap(
 			String packageName,
-			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
+			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum,
+			List<String> severities)
 		throws Exception {
 
 		if (_vulnerableVersionMap.containsKey(packageName)) {
@@ -204,7 +205,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		_vulnerableVersionMap.put(
 			packageName,
 			_getSecurityVulnerabilityNodes(
-				packageName, null, securityAdvisoryEcosystemEnum, githubToken));
+				packageName, null, securityAdvisoryEcosystemEnum, severities,
+				githubToken));
 	}
 
 	private String _getContentByPattern(String content, Pattern pattern) {
@@ -220,7 +222,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	private List<SecurityVulnerabilityNode> _getSecurityVulnerabilityNodes(
 			String packageName, String cursor,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum,
-			String githubToken)
+			List<String> severities, String githubToken)
 		throws Exception {
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
@@ -316,7 +318,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 						_getSecurityVulnerabilityNodes(
 							packageName,
 							pageInfoJSONObject.getString("endCursor"),
-							securityAdvisoryEcosystemEnum, githubToken));
+							securityAdvisoryEcosystemEnum, severities,
+							githubToken));
 				}
 
 				if (!securityVulnerabilityNodes.isEmpty()) {
@@ -332,7 +335,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		return Collections.emptyList();
 	}
 
-	private void _gradleLibraryVersionCheck(String fileName, String content)
+	private void _gradleLibraryVersionCheck(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		int x = content.indexOf("dependencies {");
@@ -387,12 +391,13 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			}
 
 			_checkVulnerabilities(
-				fileName, group + StringPool.COLON + name, version,
-				SecurityAdvisoryEcosystemEnum.MAVEN);
+				fileName, absolutePath, group + StringPool.COLON + name,
+				version, SecurityAdvisoryEcosystemEnum.MAVEN);
 		}
 	}
 
-	private void _ivyXmlLibraryVersionCheck(String fileName, String content)
+	private void _ivyXmlLibraryVersionCheck(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (Validator.isNull(content)) {
@@ -428,13 +433,14 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				}
 
 				_checkVulnerabilities(
-					fileName, org + StringPool.COLON + name, rev,
+					fileName, absolutePath, org + StringPool.COLON + name, rev,
 					SecurityAdvisoryEcosystemEnum.MAVEN);
 			}
 		}
 	}
 
-	private void _jsonLibraryVersionCheck(String fileName, String content)
+	private void _jsonLibraryVersionCheck(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (Validator.isNull(content)) {
@@ -445,10 +451,12 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			JSONObject contentJSONObject = new JSONObjectImpl(content);
 
 			_checkVersionInJsonFile(
-				fileName, contentJSONObject.getJSONObject("dependencies"));
+				fileName, absolutePath,
+				contentJSONObject.getJSONObject("dependencies"));
 
 			_checkVersionInJsonFile(
-				fileName, contentJSONObject.getJSONObject("devDependencies"));
+				fileName, absolutePath,
+				contentJSONObject.getJSONObject("devDependencies"));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -457,7 +465,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _pomXmlLibraryVersionCheck(String fileName, String content)
+	private void _pomXmlLibraryVersionCheck(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		if (Validator.isNull(content)) {
@@ -500,7 +509,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				}
 
 				_checkVulnerabilities(
-					fileName,
+					fileName, absolutePath,
 					groupIdElement.getText() + StringPool.COLON +
 						artifactIdElement.getText(),
 					version, SecurityAdvisoryEcosystemEnum.MAVEN);
@@ -508,7 +517,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _propertiesLibraryVersionCheck(String fileName, String content)
+	private void _propertiesLibraryVersionCheck(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		Properties properties = new Properties();
@@ -534,7 +544,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			}
 
 			_checkVulnerabilities(
-				fileName, dependency[1], dependency[2],
+				fileName, absolutePath, dependency[1], dependency[2],
 				SecurityAdvisoryEcosystemEnum.MAVEN);
 		}
 	}

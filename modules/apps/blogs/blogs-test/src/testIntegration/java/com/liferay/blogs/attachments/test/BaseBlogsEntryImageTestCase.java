@@ -207,7 +207,7 @@ public abstract class BaseBlogsEntryImageTestCase {
 			"com/liferay/blogs/dependencies/test.jpg");
 
 		return _portletFileRepository.addPortletFileEntry(
-			serviceContext.getScopeGroupId(), userId,
+			null, serviceContext.getScopeGroupId(), userId,
 			BlogsEntry.class.getName(), 0, StringUtil.randomString(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, inputStream, title,
 			MimeTypesUtil.getContentType(title), false);

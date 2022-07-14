@@ -47,7 +47,7 @@ public class MBAttachmentFileEntryUtil {
 		for (FileEntry tempFileEntry : tempFileEntries) {
 			FileEntry mbFileEntry =
 				PortletFileRepositoryUtil.addPortletFileEntry(
-					groupId, userId, MBMessage.class.getName(), messageId,
+					null, groupId, userId, MBMessage.class.getName(), messageId,
 					MBConstants.SERVICE_NAME, folderId,
 					tempFileEntry.getContentStream(),
 					uniqueFileNameUnsafeFunction.apply(

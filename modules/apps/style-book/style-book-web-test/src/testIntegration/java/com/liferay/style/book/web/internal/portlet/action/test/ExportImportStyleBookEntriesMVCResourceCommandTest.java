@@ -334,7 +334,7 @@ public class ExportImportStyleBookEntriesMVCResourceCommandTest {
 		Class<?> clazz = getClass();
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
-			_sourceGroup.getGroupId(), TestPropsValues.getUserId(),
+			null, _sourceGroup.getGroupId(), TestPropsValues.getUserId(),
 			StyleBookEntry.class.getName(),
 			styleBookEntry.getStyleBookEntryId(), RandomTestUtil.randomString(),
 			repository.getDlFolderId(),

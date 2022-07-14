@@ -7029,7 +7029,8 @@ public class JournalArticleLocalServiceImpl
 							tempFileEntry.getFileName(), false);
 
 						fileEntry = _portletFileRepository.addPortletFileEntry(
-							folder.getGroupId(), tempFileEntry.getUserId(),
+							null, folder.getGroupId(),
+							tempFileEntry.getUserId(),
 							JournalArticle.class.getName(),
 							article.getResourcePrimKey(),
 							JournalConstants.SERVICE_NAME, folder.getFolderId(),
@@ -7448,7 +7449,7 @@ public class JournalArticleLocalServiceImpl
 
 			for (FileEntry fileEntry : oldArticle.getImagesFileEntries()) {
 				_portletFileRepository.addPortletFileEntry(
-					oldArticle.getGroupId(), newArticle.getUserId(),
+					null, oldArticle.getGroupId(), newArticle.getUserId(),
 					JournalArticle.class.getName(),
 					newArticle.getResourcePrimKey(),
 					JournalConstants.SERVICE_NAME, folder.getFolderId(),
@@ -9324,7 +9325,7 @@ public class JournalArticleLocalServiceImpl
 				Folder folder = article.addImagesFolder();
 
 				_portletFileRepository.addPortletFileEntry(
-					article.getGroupId(), fileEntry.getUserId(),
+					null, article.getGroupId(), fileEntry.getUserId(),
 					JournalArticle.class.getName(),
 					article.getResourcePrimKey(), JournalConstants.SERVICE_NAME,
 					folder.getFolderId(), fileEntry.getContentStream(),

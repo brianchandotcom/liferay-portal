@@ -124,7 +124,7 @@ public class MessageBoardAttachmentResourceImpl
 
 		return _toMessageBoardAttachment(
 			_portletFileRepository.addPortletFileEntry(
-				mbMessage.getGroupId(), contextUser.getUserId(),
+				null, mbMessage.getGroupId(), contextUser.getUserId(),
 				MBMessage.class.getName(), mbMessage.getClassPK(),
 				MBConstants.SERVICE_NAME, folder.getFolderId(),
 				binaryFile.getInputStream(), binaryFile.getFileName(),

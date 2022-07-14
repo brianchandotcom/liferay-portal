@@ -104,7 +104,7 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 			groupId, folderId, fileName);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, DDMFormInstance.class.getName(), 0,
+			null, groupId, userId, DDMFormInstance.class.getName(), 0,
 			DDMFormConstants.SERVICE_NAME, folderId, file, uniqueFileName,
 			mimeType, true);
 	}

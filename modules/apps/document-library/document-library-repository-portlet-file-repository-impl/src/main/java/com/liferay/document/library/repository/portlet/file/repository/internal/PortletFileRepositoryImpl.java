@@ -90,7 +90,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			String fileName = inputStreamOVP.getKey();
 
 			addPortletFileEntry(
-				groupId, userId, className, classPK, portletId, folderId,
+				null, groupId, userId, className, classPK, portletId, folderId,
 				inputStream, fileName, StringPool.BLANK, true);
 		}
 	}
@@ -112,8 +112,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			file = FileUtil.createTempFile(bytes);
 
 			return addPortletFileEntry(
-				groupId, userId, className, classPK, portletId, folderId, file,
-				fileName, mimeType, indexingEnabled);
+				null, groupId, userId, className, classPK, portletId, folderId,
+				file, fileName, mimeType, indexingEnabled);
 		}
 		catch (IOException ioException) {
 			throw new SystemException(
@@ -126,9 +126,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public FileEntry addPortletFileEntry(
-			long groupId, long userId, String className, long classPK,
-			String portletId, long folderId, File file, String fileName,
-			String mimeType, boolean indexingEnabled)
+			String externalReferenceCode, long groupId, long userId,
+			String className, long classPK, String portletId, long folderId,
+			File file, String fileName, String mimeType,
+			boolean indexingEnabled)
 		throws PortalException {
 
 		if (Validator.isNull(fileName)) {
@@ -166,9 +167,9 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 					repository.getRepositoryId());
 
 			return localRepository.addFileEntry(
-				null, userId, folderId, fileName, mimeType, fileName, fileName,
-				StringPool.BLANK, StringPool.BLANK, file, null, null,
-				serviceContext);
+				externalReferenceCode, userId, folderId, fileName, mimeType,
+				fileName, fileName, StringPool.BLANK, StringPool.BLANK, file,
+				null, null, serviceContext);
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
@@ -193,8 +194,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			file = FileUtil.createTempFile(inputStream);
 
 			return addPortletFileEntry(
-				groupId, userId, className, classPK, portletId, folderId, file,
-				fileName, mimeType, indexingEnabled);
+				externalReferenceCode, groupId, userId, className, classPK,
+				portletId, folderId, file, fileName, mimeType, indexingEnabled);
 		}
 		catch (IOException ioException) {
 			throw new SystemException(

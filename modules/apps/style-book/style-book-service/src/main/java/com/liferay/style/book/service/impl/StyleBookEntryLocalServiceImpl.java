@@ -479,7 +479,7 @@ public class StyleBookEntryLocalServiceImpl
 				fileEntry.getExtension();
 
 		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, StyleBookEntry.class.getName(),
+			null, groupId, userId, StyleBookEntry.class.getName(),
 			copyStyleBookEntry.getStyleBookEntryId(),
 			StyleBookPortletKeys.STYLE_BOOK, repository.getDlFolderId(),
 			fileEntry.getContentStream(), fileName, fileEntry.getMimeType(),

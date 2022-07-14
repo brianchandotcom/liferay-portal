@@ -80,7 +80,7 @@ public class AddFragmentCollectionResourceMVCActionCommand
 				serviceContext, fragmentCollection, curFileName));
 
 		PortletFileRepositoryUtil.addPortletFileEntry(
-			serviceContext.getScopeGroupId(), serviceContext.getUserId(),
+			null, serviceContext.getScopeGroupId(), serviceContext.getUserId(),
 			FragmentCollection.class.getName(),
 			fragmentCollection.getFragmentCollectionId(),
 			FragmentPortletKeys.FRAGMENT,

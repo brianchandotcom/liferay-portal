@@ -178,7 +178,7 @@ public class KBArticleImporterUtil {
 		}
 
 		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			kbArticle.getGroupId(), userId, KBArticle.class.getName(),
+			null, kbArticle.getGroupId(), userId, KBArticle.class.getName(),
 			kbArticle.getClassPK(), KBPortletKeys.KNOWLEDGE_BASE_ARTICLE,
 			kbArticle.getAttachmentsFolderId(), inputStream, imageFileName,
 			mimeType, false);

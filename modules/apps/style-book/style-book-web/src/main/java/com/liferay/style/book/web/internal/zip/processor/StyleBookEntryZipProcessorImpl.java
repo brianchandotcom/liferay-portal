@@ -256,7 +256,7 @@ public class StyleBookEntryZipProcessorImpl
 		}
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, className, classPK,
+			null, groupId, userId, className, classPK,
 			StyleBookPortletKeys.STYLE_BOOK, repository.getDlFolderId(),
 			inputStream,
 			classPK + "_preview." + FileUtil.getExtension(contentPath),

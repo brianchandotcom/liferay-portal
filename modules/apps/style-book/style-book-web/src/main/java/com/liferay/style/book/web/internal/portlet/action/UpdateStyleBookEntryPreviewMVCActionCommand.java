@@ -96,7 +96,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommand
 		}
 
 		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			null, themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			StyleBookEntry.class.getName(), styleBookEntryId,
 			StyleBookPortletKeys.STYLE_BOOK, repository.getDlFolderId(),
 			fileEntry.getContentStream(), fileName, fileEntry.getMimeType(),

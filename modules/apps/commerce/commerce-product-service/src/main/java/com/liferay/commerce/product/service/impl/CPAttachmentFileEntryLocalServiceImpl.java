@@ -852,7 +852,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			groupId, folder.getFolderId(), fileEntry.getFileName());
 
 		FileEntry newFileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, className, classPK,
+			null, groupId, userId, className, classPK,
 			CPConstants.SERVICE_NAME_PRODUCT, folder.getFolderId(),
 			fileEntry.getContentStream(), uniqueFileName,
 			fileEntry.getMimeType(), true);

@@ -338,6 +338,249 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-7277 Verify mapped Basic Information fields to fragments are visible in Store Front"
+	@priority = "3"
+	test CanMapBasicInformationFieldsToFragments {
+		property portal.acceptance = "false";
+
+		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Basic Information fields") {
+			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fieldsList = "Availability Status,Description,Final Price,Inventory,Name,Product Type,Short Description,SKU,Author Name",
+				fragmentName = "Heading",
+				groupName = "Minium",
+				menuItem = "Mark as Default",
+				siteURLKey = "minium");
+		}
+
+		task ("And a product updated") {
+			CommerceNavigator.gotoPortlet(
+				category = "Product Management",
+				portlet = "Products");
+
+			CommerceProducts.searchProduct(search = "U-Joint");
+
+			CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+			CommerceEntry.addProductDescription(
+				productFullDescription = "This is a Full Description",
+				productShortDescription = "This is a Short Description",
+				publishProduct = "true");
+		}
+
+		task ("When the buyer logs in and clicks on a product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then verifies the mapped fragments are visible") {
+			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "available,This is a Full Description,$ 24.00,120,U-Joint,simple,This is a Short Description,MIN55861,Test Test");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-7277 Verify mapped Delivery Subscription related fields to fragments are visible in Store Fronts"
+	@priority = "3"
+	test CanMapDeliverySubscriptionFieldsToFragments {
+		property portal.acceptance = "false";
+
+		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Delivery Subscription related fields") {
+			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fieldsList = "Delivery Subscription Enabled,Delivery Subscription Length,Delivery Subscription Type,Delivery Subscription Type Settings",
+				fragmentName = "Heading",
+				groupName = "Minium",
+				menuItem = "Mark as Default",
+				siteURLKey = "minium");
+		}
+
+		task ("And a product with Delivery Subscription") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Product Management",
+				panel = "Commerce",
+				portlet = "Products");
+
+			CommerceProducts.configureSubscription(
+				productName = "U-Joint",
+				subscriptionExactDay = "1",
+				subscriptionLength = "5",
+				subscriptionMode = "Exact Day of Month",
+				subscriptionName = "Delivery Subscription",
+				subscriptionType = "Month");
+		}
+
+		task ("When the buyer logs in and clicks on a product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then verifies the mapped fragments are visible") {
+			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "true,5,monthly,deliveryMonthDay=1 deliveryMonthlyMode=1");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-7277 Verify mapped Detailed Information fields to fragments are visible in Store Fronts"
+	@priority = "3"
+	test CanMapDetailedInformationFieldsToFragments {
+		property portal.acceptance = "false";
+
+		task ("Given a new product created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				neverExpire = "false",
+				price = "50",
+				productDescription = "Full Description",
+				productName = "Simple Product",
+				productType = "Simple",
+				shortDescription = "Short Description",
+				sku = "SKU1001");
+		}
+
+		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Detailed Information fields") {
+			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fieldsList = "Account Group Filter Enabled,Channel Filter Enabled,Create Date,Status,Tax Exempt,Telco or Electronics,Version",
+				fragmentName = "Heading",
+				groupName = "Minium",
+				menuItem = "Mark as Default",
+				siteURLKey = "minium");
+		}
+
+		task ("When the buyer logs in and clicks on the new product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "Simple Product",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+
+		task ("Then verifies the mapped fragments are visible") {
+			var productCreateDate = CommerceJSONProductsAPI._getProductCreateDate(productName = "Simple Product");
+
+			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "false,false,${productCreateDate},0,false,false,1");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-7277 Verify mapped Display Page and Schedule related fields to fragments are visible in Store Fronts"
+	@priority = "3"
+	test CanMapDisplayPageAndScheduleFieldsToFragments {
+		property portal.acceptance = "false";
+
+		task ("Given a new product created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				neverExpire = "false",
+				price = "50",
+				productDescription = "This is a Full Description",
+				productName = "Simple Product",
+				productType = "Simple",
+				shortDescription = "This is a Short Description",
+				sku = "SKU1001");
+		}
+
+		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Display Page and Schedule related fields") {
+			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fieldsList = "Display Page URL,Display Date,Expiration Date",
+				fragmentName = "Heading",
+				groupName = "Minium",
+				menuItem = "Mark as Default",
+				siteURLKey = "minium");
+		}
+
+		task ("When the buyer logs in and clicks on a product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "Simple Product",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+
+		task ("Then verifies the mapped fragments are visible") {
+			var baseURL = PropsUtil.get("portal.url");
+
+			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "${baseURL}/group/minium/p/simple-product,1/1/22 1:01 AM,1/1/23 1:01 AM");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-7277 Verify mapped Payment Subscription related fields to fragments are visible in Store Fronts"
+	@priority = "3"
+	test CanMapPaymentSubscriptionFieldsToFragments {
+		property portal.acceptance = "false";
+
+		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Payment Subscription related fields") {
+			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fieldsList = "Subscription Enabled,Subscription Length,Subscription Type,Subscription Type Settings",
+				fragmentName = "Heading",
+				groupName = "Minium",
+				menuItem = "Mark as Default",
+				siteURLKey = "minium");
+		}
+
+		task ("And a product with Payment Subscription") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Product Management",
+				panel = "Commerce",
+				portlet = "Products");
+
+			CommerceProducts.configureSubscription(
+				productName = "U-Joint",
+				subscriptionExactDay = "15",
+				subscriptionLength = "10",
+				subscriptionMode = "Exact Day of Month",
+				subscriptionName = "Payment Subscription",
+				subscriptionType = "Month");
+		}
+
+		task ("When the buyer logs in and clicks on a product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then verifies the mapped fragments are visible") {
+			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "true,10,monthly,monthDay=15 monthlyMode=1");
+		}
+	}
+
 	@description = "COMMERCE-9461 Verify that the Product Custom fields are available in the list of fields that can be mapped to fragment and that the buyer can see the Product Custom field inside the fragment on the storefront."
 	@priority = "4"
 	test CanMapProductCustomFieldsToFragments {
@@ -427,6 +670,40 @@ definition {
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "ABS Sensor");
 
 			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "${customField1Desc},${customField2Desc}");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-7277 Verify mapped Shipping related fields to fragments are visible in Store Fronts"
+	@priority = "3"
+	test CanMapShippingFieldsToFragments {
+		property portal.acceptance = "false";
+
+		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Shipping related fields") {
+			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
+				contentType = "Commerce Product",
+				displayPageName = "Test Commerce Product Display Page Template",
+				fieldsList = "Free Shipping,Shippable,Shipping Extra Price,Ship Separately,Depth,Height,Weight,Width",
+				fragmentName = "Heading",
+				groupName = "Minium",
+				menuItem = "Mark as Default",
+				siteURLKey = "minium");
+		}
+
+		task ("When the buyer logs in and clicks on a product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "u-joint",
+				locator1 = "CommerceFrontStore#PRODUCT_CARD_IMAGE");
+		}
+
+		task ("Then verifies the mapped fragments are visible") {
+			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "false,true,0.0,false,7.0,2.0,1.0,5.0");
 		}
 	}
 

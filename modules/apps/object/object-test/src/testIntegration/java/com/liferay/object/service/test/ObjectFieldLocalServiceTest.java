@@ -1123,8 +1123,8 @@ public class ObjectFieldLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (PortalException portalException) {
-			Assert.assertEquals(message, portalException.getMessage());
+		catch (Exception exception) {
+			Assert.assertEquals(expectedMessage, exception.getMessage());
 		}
 	}
 

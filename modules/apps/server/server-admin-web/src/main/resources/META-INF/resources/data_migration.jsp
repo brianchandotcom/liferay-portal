@@ -30,11 +30,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 			</div>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:panel-container
-				extended="<%= true %>"
-				id="convertPanelContainer"
-				persistState="<%= true %>"
-			>
+			<aui:fieldset-group markupView="lexicon">
 
 				<%
 				int i = 0;
@@ -45,14 +41,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 					String[] parameterNames = convertProcess.getParameterNames();
 				%>
 
-					<liferay-ui:panel
-						collapsible="<%= true %>"
-						extended="<%= true %>"
-						id='<%= "convert" + i + "Panel" %>'
-						markupView="lexicon"
-						persistState="<%= true %>"
-						title="<%= convertProcess.getDescription() %>"
-					>
+					<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="<%= convertProcess.getDescription() %>">
 						<c:choose>
 							<c:when test="<%= convertProcess.hasCustomView() %>">
 
@@ -67,7 +56,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 								</div>
 							</c:when>
 							<c:otherwise>
-								<aui:fieldset label='<%= Validator.isNotNull(parameterDescription) ? parameterDescription : "" %>'>
+								<aui:field-wrapper label='<%= Validator.isNotNull(parameterDescription) ? parameterDescription : "" %>'>
 
 									<%
 									for (String parameterName : parameterNames) {
@@ -121,21 +110,21 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 									}
 									%>
 
-								</aui:fieldset>
+								</aui:field-wrapper>
 
 								<aui:button-row>
 									<aui:button cssClass="save-server-button" data-cmd='<%= "convertProcess." + clazz.getName() %>' value="execute" />
 								</aui:button-row>
 							</c:otherwise>
 						</c:choose>
-					</liferay-ui:panel>
+					</aui:fieldset>
 
 				<%
 					i++;
 				}
 				%>
 
-			</liferay-ui:panel-container>
+			</aui:fieldset-group>
 		</c:otherwise>
 	</c:choose>
 </div>

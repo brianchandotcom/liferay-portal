@@ -49,7 +49,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -1115,19 +1114,6 @@ public class ObjectFieldLocalServiceTest {
 			).build());
 	}
 
-	private void _testAddCustomObjectField(
-		String expectedMessage, ObjectField objectField) {
-
-		try {
-			_testAddCustomObjectField(objectField);
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			Assert.assertEquals(expectedMessage, exception.getMessage());
-		}
-	}
-
 	private void _assertObjectFieldSetting(
 			String name, long objectFieldId, String value)
 		throws Exception {
@@ -1205,6 +1191,19 @@ public class ObjectFieldLocalServiceTest {
 				_objectDefinitionLocalService.deleteObjectDefinition(
 					objectDefinition);
 			}
+		}
+	}
+
+	private void _testAddCustomObjectField(
+		String expectedMessage, ObjectField objectField) {
+
+		try {
+			_testAddCustomObjectField(objectField);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(expectedMessage, exception.getMessage());
 		}
 	}
 

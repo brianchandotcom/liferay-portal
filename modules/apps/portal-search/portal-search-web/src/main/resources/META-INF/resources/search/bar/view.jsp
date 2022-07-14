@@ -164,11 +164,11 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 				</c:choose>
 			</liferay-ddm:template-renderer>
 		</aui:form>
+
+		<aui:script use="aui-base,liferay-search-bar">
+			if (!A.one('#<portlet:namespace />reactSearchBar')) {
+				new Liferay.Search.SearchBar(A.one('#<portlet:namespace />fm'));
+			}
+		</aui:script>
 	</c:otherwise>
 </c:choose>
-
-<aui:script use="liferay-search-bar">
-	if (!A.one('#<portlet:namespace />reactSearchBar')) {
-		new Liferay.Search.SearchBar(A.one('#<portlet:namespace />fm'));
-	}
-</aui:script>

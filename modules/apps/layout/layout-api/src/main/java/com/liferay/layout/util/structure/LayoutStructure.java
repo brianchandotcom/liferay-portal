@@ -51,6 +51,7 @@ public class LayoutStructure {
 
 		try {
 			Set<String> deletedItemIds = new HashSet<>();
+			Set<String> deletedPortletIds = new HashSet<>();
 
 			JSONObject layoutStructureJSONObject =
 				JSONFactoryUtil.createJSONObject(layoutStructure);
@@ -99,13 +100,16 @@ public class LayoutStructure {
 					deletedItemIds.addAll(
 						deletedLayoutStructureItem.getChildrenItemIds());
 
+					deletedPortletIds.addAll(
+						deletedLayoutStructureItem.getPortletIds());
+
 					deletedLayoutStructureItems.put(
 						deletedLayoutStructureItem.getItemId(),
 						deletedLayoutStructureItem);
 				});
 
 			return new LayoutStructure(
-				deletedItemIds, deletedLayoutStructureItems,
+				deletedItemIds, deletedLayoutStructureItems, deletedPortletIds,
 				formStyledLayoutStructureItems, fragmentLayoutStructureItems,
 				layoutStructureItems, rootItemsJSONObject.getString("main"));
 		}
@@ -121,6 +125,7 @@ public class LayoutStructure {
 	public LayoutStructure() {
 		_deletedItemIds = new HashSet<>();
 		_deletedLayoutStructureItems = new HashMap<>();
+		_deletedPortletIds = new HashSet<>();
 		_formStyledLayoutStructureItems = new ArrayList<>();
 		_fragmentLayoutStructureItems = new HashMap<>();
 		_layoutStructureItems = new HashMap<>();
@@ -410,6 +415,10 @@ public class LayoutStructure {
 		return _deletedItemIds.contains(itemId);
 	}
 
+	public boolean isPortletMarkedForDeletion(String portletId) {
+		return _deletedPortletIds.contains(portletId);
+	}
+
 	public void markLayoutStructureItemForDeletion(
 		String itemId, List<String> portletIds) {
 
@@ -447,6 +456,8 @@ public class LayoutStructure {
 
 		_deletedItemIds.add(itemId);
 		_deletedItemIds.addAll(deletedLayoutStructureItem.getChildrenItemIds());
+
+		_deletedPortletIds.addAll(portletIds);
 	}
 
 	public LayoutStructureItem moveLayoutStructureItem(
@@ -551,6 +562,9 @@ public class LayoutStructure {
 		_deletedItemIds.remove(itemId);
 		_deletedItemIds.removeAll(
 			deletedLayoutStructureItem.getChildrenItemIds());
+
+		_deletedPortletIds.removeAll(
+			deletedLayoutStructureItem.getPortletIds());
 
 		_deletedLayoutStructureItems.remove(itemId);
 	}
@@ -711,6 +725,7 @@ public class LayoutStructure {
 	private LayoutStructure(
 		Set<String> deletedItemIds,
 		Map<String, DeletedLayoutStructureItem> deletedLayoutStructureItems,
+		Set<String> deletedPortletIds,
 		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems,
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems,
 		Map<String, LayoutStructureItem> layoutStructureItems,
@@ -718,6 +733,7 @@ public class LayoutStructure {
 
 		_deletedItemIds = deletedItemIds;
 		_deletedLayoutStructureItems = deletedLayoutStructureItems;
+		_deletedPortletIds = deletedPortletIds;
 		_formStyledLayoutStructureItems = formStyledLayoutStructureItems;
 		_fragmentLayoutStructureItems = fragmentLayoutStructureItems;
 		_layoutStructureItems = layoutStructureItems;
@@ -947,6 +963,7 @@ public class LayoutStructure {
 	private final Set<String> _deletedItemIds;
 	private final Map<String, DeletedLayoutStructureItem>
 		_deletedLayoutStructureItems;
+	private final Set<String> _deletedPortletIds;
 	private final List<FormStyledLayoutStructureItem>
 		_formStyledLayoutStructureItems;
 	private final Map<Long, LayoutStructureItem> _fragmentLayoutStructureItems;

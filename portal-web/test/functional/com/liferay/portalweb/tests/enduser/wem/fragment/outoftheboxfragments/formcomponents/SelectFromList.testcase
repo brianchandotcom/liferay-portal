@@ -380,6 +380,125 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
 		}
 	}
+
+	@description = "This is a test for LPS-154568. The page designer can map a Form Container to Object field with relationship on system object"
+	@priority = "4"
+	test MapRelationshipWithSystemObject {
+		property test.name.skip.portal.instance = "TextInput#MapRelationshipWithSystemObject";
+
+		task ("Given a page designer has a mapped Form Container to an Object with relationship on system object") {
+			task ("Add relationship with Account object") {
+				ObjectAdmin.addObjectRelationshipViaAPI(
+					objectName_1 = "AccountEntry",
+					objectName_2 = "PurchaseOrder",
+					relationshipLabel = "Account Name",
+					relationshipName = "accountName",
+					relationshipType = "oneToMany");
+			}
+
+			task ("Select title field on Account object") {
+				ObjectAdmin.openObjectAdmin();
+
+				ObjectPortlet.selectCustomObject(label = "Account");
+
+				CreateObject.selectTitleField(fieldLabel = "Name");
+
+				CreateObject.saveObject();
+			}
+
+			task ("Add four accounts") {
+				for (var accountName : list "Assets,Equity,Expenses,Free") {
+					JSONAccountEntry.addAccountEntry(
+						accountEntryName = "${accountName}",
+						accountEntryType = "Business");
+				}
+			}
+
+			task ("Add a Form Container fragment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add Select from List inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Select from List");
+			}
+		}
+
+		task ("When the page designer maps Select from list fragment to relationship") {
+			PageEditor.editInput(
+				field = "Account Name",
+				fragmentName = "Select from List",
+				label = "Select your account");
+		}
+
+		task ("Then the page designer can see available entries on select from list dropdown menu at edit mode") {
+			Click(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			MenuItem.viewOrder(menuItemList = "Choose an Option,Assets,Equity,Expenses,Free");
+		}
+
+		task ("When the page designer navigates to published content page at view mode") {
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the pages designer can see four entries on select from list dropdown menu at view mode") {
+			Click(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			MenuItem.viewOrder(menuItemList = "Choose an Option,Assets,Equity,Expenses,Free");
+		}
+
+		task ("When the page designer adds six accounts") {
+			for (var accountName : list "Liabilities,Nominal,Personal,Real,Revenue,Saving") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "${accountName}",
+					accountEntryType = "Business");
+			}
+		}
+
+		task ("Then the pages designer can see ten entries on select from list dropdown menu at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Click(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			MenuItem.viewOrder(menuItemList = "Choose an Option,Assets,Equity,Expenses,Free,Liabilities,Nominal,Personal,Real,Revenue,Saving");
+
+			AssertNotVisible(
+				key_type = "search",
+				locator1 = "MenuItem#SEARCH_FIELD");
+		}
+	}
+
 	@description = "This is a test for LPS-151402. The user could see error message when submit a form with invalid field."
 	@priority = "4"
 	test ViewErrorMessageWhenSubmitFormWithInvalidField {

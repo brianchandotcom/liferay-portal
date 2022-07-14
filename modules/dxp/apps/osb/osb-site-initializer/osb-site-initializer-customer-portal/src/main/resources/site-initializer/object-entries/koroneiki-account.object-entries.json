@@ -9,7 +9,7 @@
 			"name": "Test Account 01",
 			"partner": false,
 			"region": "Brazil",
-			"slaCurrent": "Premium Subscription",
+			"slaCurrent": "Gold Subscription",
 			"slaCurrentEndDate": "2022-01-12 00:00:00.0"
 		},
 		{
@@ -163,7 +163,7 @@
 			"slaCurrent": "Platinum Subscription",
 			"slaCurrentEndDate": "2022-08-24 00:00:00.0",
 			"slaCurrentStartDate": "2021-08-24 00:00:00.0",
-			"slaExpired": "Platinum Subscription",
+			"slaExpired": "Premium Subscription",
 			"slaExpiredEndDate": "2021-08-23 00:00:00.0",
 			"slaExpiredStartDate": "2020-08-23 00:00:00.0",
 			"slaFuture": "Gold Subscription",

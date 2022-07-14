@@ -32,6 +32,7 @@ import {
 } from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import {deepEqual} from '../utils/checkDeepEqual';
+import {useDropContainerId} from '../utils/drag-and-drop/useDragAndDrop';
 import FragmentWithControls from './layout-data-items/FragmentWithControls';
 import {
 	CollectionItemWithControls,
@@ -128,14 +129,21 @@ export default function Layout({mainItemId}) {
 			)}
 
 			{mainItem && (
-				<div
-					className="page-editor"
-					id="page-editor"
-					onClick={onClick}
-					ref={layoutRef}
-				>
-					<LayoutDataItem item={mainItem} layoutData={layoutData} />
-				</div>
+				<>
+					<div
+						className="page-editor"
+						id="page-editor"
+						onClick={onClick}
+						ref={layoutRef}
+					>
+						<LayoutDataItem
+							item={mainItem}
+							layoutData={layoutData}
+						/>
+					</div>
+
+					<LayoutClassManager layoutRef={layoutRef} />
+				</>
 			)}
 		</>
 	);
@@ -268,3 +276,18 @@ LayoutDataItemInteractionFilter.propTypes = {
 	componentRef: PropTypes.object.isRequired,
 	item: getLayoutDataItemPropTypes().isRequired,
 };
+
+function LayoutClassManager({layoutRef}) {
+	const dropContainerId = useDropContainerId();
+
+	useEffect(() => {
+		if (dropContainerId) {
+			layoutRef.current?.classList.add('is-dragging');
+		}
+		else {
+			layoutRef.current?.classList.remove('is-dragging');
+		}
+	}, [dropContainerId, layoutRef]);
+
+	return null;
+}

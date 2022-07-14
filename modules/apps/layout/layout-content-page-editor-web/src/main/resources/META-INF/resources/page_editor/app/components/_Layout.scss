@@ -8,6 +8,19 @@ $dashedBorderWidth: 2px;
 
 html#{$cadmin-selector} {
 	.page-editor {
+		&.is-dragging {
+			.page-editor__fragment-content,
+			.empty {
+				opacity: 0.5;
+				transition: opacity 0.2s;
+			}
+
+			.highlighted .page-editor__fragment-content,
+			.highlighted .empty {
+				opacity: 1;
+			}
+		}
+
 		&__collection {
 			&__block {
 				box-shadow: inset 0 0 0 1px fade_out($cadmin-purple, 0.7);

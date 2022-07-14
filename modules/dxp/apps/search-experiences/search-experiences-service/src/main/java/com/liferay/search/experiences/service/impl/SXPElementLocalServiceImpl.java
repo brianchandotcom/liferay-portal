@@ -77,15 +77,9 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 
 		User user = _userLocalService.getUser(userId);
 
-		SXPElement existingSXPElement = fetchSXPElementByExternalReferenceCode(
-			user.getCompanyId(), sxpElement.getExternalReferenceCode());
-
-		if ((existingSXPElement != null) &&
-			(existingSXPElement.getSXPElementId() !=
-				sxpElement.getSXPElementId())) {
-
-			throw new DuplicateSXPElementExternalReferenceCodeException();
-		}
+		_validateExternalReferenceCode(
+			user.getCompanyId(), sxpElement.getSXPElementId(),
+			sxpElement.getExternalReferenceCode());
 
 		sxpElement.setCompanyId(user.getCompanyId());
 		sxpElement.setUserId(user.getUserId());
@@ -209,6 +203,20 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 
 			_sxpElementValidator.validate(
 				elementDefinitionJSON, titleMap, type);
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			long companyId, long sxpElementId, String externalReferenceCode)
+		throws PortalException {
+
+		SXPElement sxpElement = fetchSXPElementByExternalReferenceCode(
+			companyId, externalReferenceCode);
+
+		if ((sxpElement != null) &&
+			(sxpElement.getSXPElementId() != sxpElementId)) {
+
+			throw new DuplicateSXPElementExternalReferenceCodeException();
 		}
 	}
 

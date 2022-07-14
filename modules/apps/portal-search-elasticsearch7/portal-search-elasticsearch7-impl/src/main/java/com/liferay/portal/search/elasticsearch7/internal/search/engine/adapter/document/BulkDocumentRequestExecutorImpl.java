@@ -26,8 +26,6 @@ import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
-import java.io.IOException;
-
 import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -173,6 +171,7 @@ public class BulkDocumentRequestExecutorImpl
 		BulkResponse bulkResponse = null;
 
 		int count = 0;
+
 		do {
 			try {
 				bulkResponse = restHighLevelClient.bulk(
@@ -188,7 +187,7 @@ public class BulkDocumentRequestExecutorImpl
 				_log.error(
 					"There was an exception during getting a response to a " +
 						"request from the search server, retrying after 1 " +
-						"minute (5/" + count +").",
+							"minute (5/" + count + ").",
 					exception);
 
 				try {

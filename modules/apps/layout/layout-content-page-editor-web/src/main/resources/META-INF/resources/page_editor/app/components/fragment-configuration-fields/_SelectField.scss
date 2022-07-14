@@ -6,12 +6,15 @@ html#{$cadmin-selector} .cadmin {
 	#{$prefix} {
 		display: grid;
 		grid-template-columns: 2em auto;
-		place-items: center;
+		place-items: stretch;
 	}
 
 	#{$prefix}__label-icon {
-		font-size: $font-size-sm;
 		grid-area: 1 / 1 / 2 / 2;
+	}
+
+	#{$prefix} label#{$prefix}__label-icon {
+		font-size: $font-size-sm;
 	}
 
 	#{$prefix}__select,

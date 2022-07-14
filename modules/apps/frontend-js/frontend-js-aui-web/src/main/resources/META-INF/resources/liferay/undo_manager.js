@@ -31,7 +31,7 @@ AUI.add(
 
 		const CSS_QUEUE_EMPTY = 'lfr-queue-empty d-none';
 
-		const CSS_QUEUE_SINGLE = 'lfr-queue-single';
+		const CSS_QUEUE_ITEMS = 'd-flex justify-content-between';
 
 		const TPL_ACTION_CLEAR =
 			'<a class="' +
@@ -105,19 +105,13 @@ AUI.add(
 
 					const contentBox = instance.get('contentBox');
 
-					let actionEmpty = 'addClass';
-					let actionSingle = 'removeClass';
+					let action = 'removeClass';
 
 					if (itemsLeft > 0) {
-						if (itemsLeft === 1) {
-							actionSingle = 'addClass';
-						}
-
-						actionEmpty = 'removeClass';
+						action = 'addClass';
 					}
 
-					contentBox[actionSingle](CSS_QUEUE_SINGLE);
-					contentBox[actionEmpty](CSS_QUEUE_EMPTY);
+					contentBox[action](CSS_QUEUE_ITEMS);
 
 					instance._undoItemsLeft.text('(' + itemsLeft + ')');
 				},

@@ -120,40 +120,16 @@ function isVisibleInViewport(element, maybeRect) {
 }
 
 /**
- * Checks if the search parameters of the provided URL are contained in the browser's current URL.
- * @param {String} jsonPath Received path string to be checked if it contains the parameters of locationPath
- * @param {String} locationPath Received path string to be compared
- * @returns {boolean}
+ * Given a `layoutRelativeURL,` this function will match the paths
+ * of the pages contained in it and return the longest path.
+ * @param {String} currentLayoutRelativeURL
+ * @param {Array<String>} pagesArray
+ * @returns {String} longest path
  */
-function urlSearchParamsContainsAnother(jsonPath, locationPath) {
-	const locationURLInstance = new URL(locationPath, window.location.origin);
-	const jsonURLInstance = new URL(jsonPath, window.location.origin);
-
-	let contains = true;
-
-	jsonURLInstance.searchParams.forEach((value, key) => {
-		if (
-			!locationURLInstance.searchParams.has(key) ||
-			locationURLInstance.searchParams.get(key) !== value
-		) {
-			contains = false;
-		}
-	});
-
-	return contains;
-}
-
-/**
- * Checks if a given path contains a layoutRelativeURL
- * @param {String} path
- * @returns {boolean}
- */
-function pathContainsLayoutRelativeURL(path) {
-	const layoutRelativeURLWithoutSearchParams = themeDisplay
-		.getLayoutRelativeURL()
-		.split('?')[0];
-
-	return layoutRelativeURLWithoutSearchParams.includes(path);
+function findLongestMatch(currentLayoutRelativeURL, pagesArray) {
+	return pagesArray
+		.filter((pagePath) => currentLayoutRelativeURL.includes(pagePath))
+		.sort((a, b) => (a.length > b.length ? -1 : 1))[0];
 }
 
 const Step = ({
@@ -323,12 +299,11 @@ const Step = ({
 
 	useObserveRect(align, popoverRef?.current);
 
+	const currentLayoutRelativeURL = `${themeDisplay.getLayoutRelativeURL()}/`;
+
 	const currentPage = useMemo(
-		() =>
-			Object.keys(pages).find((url) =>
-				themeDisplay.getLayoutRelativeURL().includes(url)
-			),
-		[pages]
+		() => findLongestMatch(currentLayoutRelativeURL, Object.keys(pages)),
+		[pages, currentLayoutRelativeURL]
 	);
 
 	if (!pages[currentPage]?.includes(id)) {

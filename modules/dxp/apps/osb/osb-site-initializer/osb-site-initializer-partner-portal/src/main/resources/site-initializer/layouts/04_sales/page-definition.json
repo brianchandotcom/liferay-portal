@@ -4,24 +4,36 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundFragmentImage": {
-						}
+						"borderWidth": "0",
+						"marginBottom": "4",
+						"paddingLeft": "6",
+						"paddingRight": "6",
+						"textAlign": ""
 					},
 					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "4",
+								"paddingRight": "4"
+							},
+							"id": "landscapeMobile"
+						},
 						{
 							"fragmentViewportStyle": {
 								"hidden": false,
 								"marginLeft": "0",
 								"marginRight": "0",
 								"paddingLeft": "4",
-								"paddingRight": "0"
+								"paddingRight": "4"
 							},
 							"id": "portraitMobile"
 						},
 						{
 							"fragmentViewportStyle": {
-								"marginLeft": "3",
-								"marginRight": "3"
+								"marginLeft": "0",
+								"marginRight": "0",
+								"paddingLeft": "5",
+								"paddingRight": "5"
 							},
 							"id": "tablet"
 						}
@@ -29,13 +41,13 @@
 					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
-						"marginBottom": 0,
+						"marginBottom": 2,
 						"marginLeft": 0,
 						"marginRight": 0,
 						"marginTop": 0,
 						"paddingBottom": 0,
-						"paddingLeft": 0,
-						"paddingRight": 0,
+						"paddingLeft": 6,
+						"paddingRight": 6,
 						"paddingTop": 0,
 						"widthType": "Fluid"
 					}
@@ -43,685 +55,38 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {
-								"key": "BASIC_COMPONENT-heading"
-							},
-							"fragmentConfig": {
-								"headingLevel": "h1"
-							},
-							"fragmentFields": [
-								{
-									"id": "element-text",
-									"value": {
-										"fragmentLink": {
-										},
-										"text": {
-											"value_i18n": {
-												"ar_SA": "Sales",
-												"ca_ES": "Sales",
-												"de_DE": "Sales",
-												"en_US": "Sales",
-												"es_ES": "Sales",
-												"fi_FI": "Sales",
-												"fr_FR": "Sales",
-												"hu_HU": "Sales",
-												"ja_JP": "Sales",
-												"nl_NL": "Sales",
-												"pt_BR": "Sales",
-												"sv_SE": "Sales",
-												"zh_CN": "Sales"
-											}
-										}
-									}
-								}
-							],
-							"indexed": true
+							"indexed": true,
+							"layout": {
+								"borderWidth": 0,
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
 						},
 						"pageElements": [
 							{
 								"definition": {
-									"gutters": true,
-									"indexed": true,
-									"modulesPerRow": 3,
-									"numberOfColumns": 3,
-									"reverseOrder": false,
-									"rowViewports": [
-										{
-											"id": "landscapeMobile",
-											"rowViewportDefinition": {
-												"modulesPerRow": 1
-											}
-										},
-										{
-											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
-										},
-										{
-											"id": "tablet",
-											"rowViewportDefinition": {
-												"modulesPerRow": 1
-											}
-										}
+									"fragment": {
+										"key": "first-time-welcome-banner"
+									},
+									"fragmentConfig": {
+										"descriptionText": "Here you'll find easy access to tools associated with your sales process. For further information or assistance with these selling tools, contact your Channel Account Manager.",
+										"firstTitleText": "Welcome to Partner Sales",
+										"primaryButtonText": "Watch a Video Tour",
+										"secondTitleText": "Partner Sales",
+										"secondaryButtonText": "Register a New Deal"
+									},
+									"fragmentFields": [
 									],
-									"verticalAlignment": "top"
+									"indexed": true
 								},
-								"pageElements": [
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 4
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentLink": {
-														"href": {
-															"mapping": {
-																"fieldKey": "FileEntry_downloadURL",
-																"itemReference": {
-																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																	"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/referral-program-guide.pdf$]"
-																}
-															}
-														},
-														"target": "Blank"
-													},
-													"fragmentStyle": {
-														"borderColor": "colorNeutral3",
-														"borderRadius": "borderRadiusSm",
-														"borderWidth": "1",
-														"paddingBottom": "4",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "4"
-													},
-													"fragmentViewports": [
-														{
-															"fragmentViewportStyle": {
-																"marginBottom": "4",
-																"marginTop": "4"
-															},
-															"id": "tablet"
-														}
-													],
-													"indexed": true,
-													"layout": {
-														"borderColor": "colorNeutral3",
-														"borderWidth": 1,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 2,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 2,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragmentStyle": {
-																"paddingBottom": "2"
-															},
-															"indexed": true,
-															"layout": {
-																"align": "End",
-																"borderWidth": 0,
-																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "clay-icon-link"
-																	},
-																	"fragmentConfig": {
-																		"iconName": "document-pdf"
-																	},
-																	"fragmentFields": [
-																	],
-																	"fragmentStyle": {
-																		"textColor": "colorNeutral7"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "DIALECT-dialect-text"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h6"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"ar_SA": "PDF",
-																						"ca_ES": "PDF",
-																						"de_DE": "PDF",
-																						"en_US": "PDF",
-																						"es_ES": "PDF",
-																						"fi_FI": "PDF",
-																						"fr_FR": "PDF",
-																						"hu_HU": "PDF",
-																						"ja_JP": "PDF",
-																						"nl_NL": "PDF",
-																						"pt_BR": "PDF",
-																						"sv_SE": "PDF",
-																						"zh_CN": "PDF"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontWeight": "fontWeightBold",
-																		"paddingLeft": "1",
-																		"textColor": "colorNeutral7"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "h4"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Referral Program Guide",
-																				"ca_ES": "Referral Program Guide",
-																				"de_DE": "Referral Program Guide",
-																				"en_US": "Referral Program Guide",
-																				"es_ES": "Referral Program Guide",
-																				"fi_FI": "Referral Program Guide",
-																				"fr_FR": "Referral Program Guide",
-																				"hu_HU": "Referral Program Guide",
-																				"ja_JP": "Referral Program Guide",
-																				"nl_NL": "Referral Program Guide",
-																				"pt_BR": "Referral Program Guide",
-																				"sv_SE": "Referral Program Guide",
-																				"zh_CN": "Referral Program Guide"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBold",
-																"textColor": "linkColor"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 4
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentLink": {
-														"href": {
-															"mapping": {
-																"fieldKey": "FileEntry_downloadURL",
-																"itemReference": {
-																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																	"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/reseller-program-guide.pdf$]"
-																}
-															}
-														},
-														"target": "Blank"
-													},
-													"fragmentStyle": {
-														"borderColor": "colorNeutral3",
-														"borderRadius": "borderRadiusSm",
-														"borderWidth": "1",
-														"paddingBottom": "4",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "4"
-													},
-													"fragmentViewports": [
-														{
-															"fragmentViewportStyle": {
-																"marginBottom": "4"
-															},
-															"id": "tablet"
-														}
-													],
-													"indexed": true,
-													"layout": {
-														"borderColor": "colorNeutral3",
-														"borderWidth": 1,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 2,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 2,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragmentStyle": {
-																"paddingBottom": "2"
-															},
-															"indexed": true,
-															"layout": {
-																"align": "End",
-																"borderWidth": 0,
-																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "clay-icon-link"
-																	},
-																	"fragmentConfig": {
-																		"iconName": "document-pdf"
-																	},
-																	"fragmentFields": [
-																	],
-																	"fragmentStyle": {
-																		"textColor": "colorNeutral7"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "DIALECT-dialect-text"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h6"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"ar_SA": "PDF",
-																						"ca_ES": "PDF",
-																						"de_DE": "PDF",
-																						"en_US": "PDF",
-																						"es_ES": "PDF",
-																						"fi_FI": "PDF",
-																						"fr_FR": "PDF",
-																						"hu_HU": "PDF",
-																						"ja_JP": "PDF",
-																						"nl_NL": "PDF",
-																						"pt_BR": "PDF",
-																						"sv_SE": "PDF",
-																						"zh_CN": "PDF"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontWeight": "fontWeightBold",
-																		"paddingLeft": "1",
-																		"textColor": "colorNeutral7"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "h4"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Reseller Program Guide",
-																				"ca_ES": "Reseller Program Guide",
-																				"de_DE": "Reseller Program Guide",
-																				"en_US": "Reseller Program Guide",
-																				"es_ES": "Reseller Program Guide",
-																				"fi_FI": "Reseller Program Guide",
-																				"fr_FR": "Reseller Program Guide",
-																				"hu_HU": "Reseller Program Guide",
-																				"ja_JP": "Reseller Program Guide",
-																				"nl_NL": "Reseller Program Guide",
-																				"pt_BR": "Reseller Program Guide",
-																				"sv_SE": "Reseller Program Guide",
-																				"zh_CN": "Reseller Program Guide"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBold",
-																"textColor": "linkColor"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									},
-									{
-										"definition": {
-											"columnViewports": [
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "landscapeMobile"
-												},
-												{
-													"columnViewportDefinition": {
-													},
-													"id": "portraitMobile"
-												},
-												{
-													"columnViewportDefinition": {
-														"size": 12
-													},
-													"id": "tablet"
-												}
-											],
-											"size": 4
-										},
-										"pageElements": [
-											{
-												"definition": {
-													"fragmentLink": {
-														"href": {
-															"mapping": {
-																"fieldKey": "FileEntry_downloadURL",
-																"itemReference": {
-																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																	"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/program-rules-of-engagement.pdf$]"
-																}
-															}
-														},
-														"target": "Blank"
-													},
-													"fragmentStyle": {
-														"borderColor": "colorNeutral3",
-														"borderRadius": "borderRadiusSm",
-														"borderWidth": "1",
-														"paddingBottom": "4",
-														"paddingLeft": "4",
-														"paddingRight": "4",
-														"paddingTop": "4"
-													},
-													"fragmentViewports": [
-														{
-															"fragmentViewportStyle": {
-																"marginBottom": "4"
-															},
-															"id": "tablet"
-														}
-													],
-													"indexed": true,
-													"layout": {
-														"borderColor": "colorNeutral3",
-														"borderWidth": 1,
-														"marginBottom": 0,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 0,
-														"paddingBottom": 2,
-														"paddingLeft": 2,
-														"paddingRight": 2,
-														"paddingTop": 2,
-														"widthType": "Fluid"
-													}
-												},
-												"pageElements": [
-													{
-														"definition": {
-															"fragmentStyle": {
-																"paddingBottom": "2"
-															},
-															"indexed": true,
-															"layout": {
-																"align": "End",
-																"borderWidth": 0,
-																"contentDisplay": "FlexRow",
-																"marginBottom": 0,
-																"marginLeft": 0,
-																"marginRight": 0,
-																"marginTop": 0,
-																"paddingBottom": 0,
-																"paddingLeft": 0,
-																"paddingRight": 0,
-																"paddingTop": 0,
-																"widthType": "Fluid"
-															}
-														},
-														"pageElements": [
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "clay-icon-link"
-																	},
-																	"fragmentConfig": {
-																		"iconName": "document-pdf"
-																	},
-																	"fragmentFields": [
-																	],
-																	"fragmentStyle": {
-																		"textColor": "colorNeutral7"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "DIALECT-dialect-text"
-																	},
-																	"fragmentConfig": {
-																		"textType": "h6"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-text",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"value_i18n": {
-																						"ar_SA": "PDF",
-																						"ca_ES": "PDF",
-																						"de_DE": "PDF",
-																						"en_US": "PDF",
-																						"es_ES": "PDF",
-																						"fi_FI": "PDF",
-																						"fr_FR": "PDF",
-																						"hu_HU": "PDF",
-																						"ja_JP": "PDF",
-																						"nl_NL": "PDF",
-																						"pt_BR": "PDF",
-																						"sv_SE": "PDF",
-																						"zh_CN": "PDF"
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"fragmentStyle": {
-																		"fontWeight": "fontWeightBold",
-																		"paddingLeft": "1",
-																		"textColor": "colorNeutral7"
-																	},
-																	"indexed": true
-																},
-																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "DIALECT-dialect-text"
-															},
-															"fragmentConfig": {
-																"textType": "h4"
-															},
-															"fragmentFields": [
-																{
-																	"id": "element-text",
-																	"value": {
-																		"fragmentLink": {
-																		},
-																		"text": {
-																			"value_i18n": {
-																				"ar_SA": "Rules of Engagement Guide",
-																				"ca_ES": "Rules of Engagement Guide",
-																				"de_DE": "Rules of Engagement Guide",
-																				"en_US": "Rules of Engagement Guide",
-																				"es_ES": "Rules of Engagement Guide",
-																				"fi_FI": "Rules of Engagement Guide",
-																				"fr_FR": "Rules of Engagement Guide",
-																				"hu_HU": "Rules of Engagement Guide",
-																				"ja_JP": "Rules of Engagement Guide",
-																				"nl_NL": "Rules of Engagement Guide",
-																				"pt_BR": "Rules of Engagement Guide",
-																				"sv_SE": "Rules of Engagement Guide",
-																				"zh_CN": "Rules of Engagement Guide"
-																			}
-																		}
-																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBold",
-																"textColor": "linkColor"
-															},
-															"indexed": true
-														},
-														"type": "Fragment"
-													}
-												],
-												"type": "Section"
-											}
-										],
-										"type": "Column"
-									}
-								],
-								"type": "Row"
+								"type": "Fragment"
 							}
 						],
 						"type": "Section"
@@ -729,34 +94,15 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0",
-								"textAlign": ""
+								"marginTop": "5"
 							},
-							"fragmentViewports": [
-								{
-									"fragmentViewportStyle": {
-										"hidden": true
-									},
-									"id": "portraitMobile"
-								},
-								{
-									"fragmentViewportStyle": {
-										"paddingLeft": "3",
-										"paddingRight": "3"
-									},
-									"id": "tablet"
-								}
-							],
 							"indexed": true,
 							"layout": {
-								"align": "Start",
 								"borderWidth": 0,
-								"contentDisplay": "FlexColumn",
-								"justify": "Center",
 								"marginBottom": 0,
 								"marginLeft": 0,
 								"marginRight": 0,
-								"marginTop": 0,
+								"marginTop": 4,
 								"paddingBottom": 0,
 								"paddingLeft": 0,
 								"paddingRight": 0,
@@ -812,9 +158,782 @@
 							{
 								"definition": {
 									"fragmentStyle": {
-										"marginBottom": "4",
-										"paddingBottom": "4",
-										"paddingTop": "4"
+										"marginTop": "4"
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"marginTop": "4"
+											},
+											"id": "tablet"
+										}
+									],
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 3,
+									"numberOfColumns": 3,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {
+											}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentLink": {
+														"href": {
+															"defaultFragmentInlineValue": {
+																"value": "/documents/42835/42953/referral-program-guide.pdf/d7b6496f-ba0b-fe5f-e219-8b18e0853f1a?version=1.0&t=1657571078565&download=true"
+															},
+															"mapping": {
+																"fieldKey": "FileEntry_downloadURL",
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/referral-program-guide.pdf$]"
+																}
+															}
+														},
+														"target": "Blank"
+													},
+													"fragmentStyle": {
+														"borderColor": "colorNeutral3",
+														"borderRadius": "borderRadiusSm",
+														"borderWidth": "1",
+														"paddingBottom": "4",
+														"paddingLeft": "4",
+														"paddingRight": "4",
+														"paddingTop": "4",
+														"textAlign": ""
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "4",
+																"marginTop": "0"
+															},
+															"id": "tablet"
+														}
+													],
+													"indexed": true,
+													"layout": {
+														"borderColor": "colorNeutral3",
+														"borderWidth": 1,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 2,
+														"paddingLeft": 2,
+														"paddingRight": 2,
+														"paddingTop": 2,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"paddingBottom": "2",
+																"textAlign": ""
+															},
+															"indexed": true,
+															"layout": {
+																"align": "End",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "document-pdf"
+																	},
+																	"fragmentFields": [
+																	],
+																	"fragmentStyle": {
+																		"textAlign": "",
+																		"textColor": "colorNeutral7"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "DIALECT-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "h6"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "PDF",
+																						"ca_ES": "PDF",
+																						"de_DE": "PDF",
+																						"en_US": "PDF",
+																						"es_ES": "PDF",
+																						"fi_FI": "PDF",
+																						"fr_FR": "PDF",
+																						"hu_HU": "PDF",
+																						"ja_JP": "PDF",
+																						"nl_NL": "PDF",
+																						"pt_BR": "PDF",
+																						"sv_SE": "PDF",
+																						"zh_CN": "PDF"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBold",
+																		"paddingLeft": "1",
+																		"textAlign": "",
+																		"textColor": "colorNeutral7"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h4"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Referral Program Guide",
+																				"ca_ES": "Referral Program Guide",
+																				"de_DE": "Referral Program Guide",
+																				"en_US": "Referral Program Guide",
+																				"es_ES": "Referral Program Guide",
+																				"fi_FI": "Referral Program Guide",
+																				"fr_FR": "Referral Program Guide",
+																				"hu_HU": "Referral Program Guide",
+																				"ja_JP": "Referral Program Guide",
+																				"nl_NL": "Referral Program Guide",
+																				"pt_BR": "Referral Program Guide",
+																				"sv_SE": "Referral Program Guide",
+																				"zh_CN": "Referral Program Guide"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontWeight": "fontWeightBold",
+																"textAlign": "",
+																"textColor": "linkColor"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentLink": {
+														"href": {
+															"defaultFragmentInlineValue": {
+																"value": "/documents/42835/42953/reseller-program-guide.pdf/56dd2ff7-15cf-acde-353c-831aa779c1d1?version=1.0&t=1657571078608&download=true"
+															},
+															"mapping": {
+																"fieldKey": "FileEntry_downloadURL",
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/reseller-program-guide.pdf$]"
+																}
+															}
+														},
+														"target": "Blank"
+													},
+													"fragmentStyle": {
+														"borderColor": "colorNeutral3",
+														"borderRadius": "borderRadiusSm",
+														"borderWidth": "1",
+														"paddingBottom": "4",
+														"paddingLeft": "4",
+														"paddingRight": "4",
+														"paddingTop": "4",
+														"textAlign": ""
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "4"
+															},
+															"id": "tablet"
+														}
+													],
+													"indexed": true,
+													"layout": {
+														"borderColor": "colorNeutral3",
+														"borderWidth": 1,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 2,
+														"paddingLeft": 2,
+														"paddingRight": 2,
+														"paddingTop": 2,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"paddingBottom": "2",
+																"textAlign": ""
+															},
+															"indexed": true,
+															"layout": {
+																"align": "End",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "document-pdf"
+																	},
+																	"fragmentFields": [
+																	],
+																	"fragmentStyle": {
+																		"textAlign": "",
+																		"textColor": "colorNeutral7"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "DIALECT-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "h6"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "PDF",
+																						"ca_ES": "PDF",
+																						"de_DE": "PDF",
+																						"en_US": "PDF",
+																						"es_ES": "PDF",
+																						"fi_FI": "PDF",
+																						"fr_FR": "PDF",
+																						"hu_HU": "PDF",
+																						"ja_JP": "PDF",
+																						"nl_NL": "PDF",
+																						"pt_BR": "PDF",
+																						"sv_SE": "PDF",
+																						"zh_CN": "PDF"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBold",
+																		"paddingLeft": "1",
+																		"textAlign": "",
+																		"textColor": "colorNeutral7"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h4"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Reseller Program Guide",
+																				"ca_ES": "Reseller Program Guide",
+																				"de_DE": "Reseller Program Guide",
+																				"en_US": "Reseller Program Guide",
+																				"es_ES": "Reseller Program Guide",
+																				"fi_FI": "Reseller Program Guide",
+																				"fr_FR": "Reseller Program Guide",
+																				"hu_HU": "Reseller Program Guide",
+																				"ja_JP": "Reseller Program Guide",
+																				"nl_NL": "Reseller Program Guide",
+																				"pt_BR": "Reseller Program Guide",
+																				"sv_SE": "Reseller Program Guide",
+																				"zh_CN": "Reseller Program Guide"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontWeight": "fontWeightBold",
+																"textAlign": "",
+																"textColor": "linkColor"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentLink": {
+														"href": {
+															"defaultFragmentInlineValue": {
+																"value": "/documents/42835/42953/program-rules-of-engagement.pdf/4f3df08b-2e88-f2fa-9444-03a4609d5262?version=1.0&t=1657571078527&download=true"
+															},
+															"mapping": {
+																"fieldKey": "FileEntry_downloadURL",
+																"itemReference": {
+																	"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																	"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/sales-resources-pdf/program-rules-of-engagement.pdf$]"
+																}
+															}
+														},
+														"target": "Blank"
+													},
+													"fragmentStyle": {
+														"borderColor": "colorNeutral3",
+														"borderRadius": "borderRadiusSm",
+														"borderWidth": "1",
+														"paddingBottom": "4",
+														"paddingLeft": "4",
+														"paddingRight": "4",
+														"paddingTop": "4",
+														"textAlign": ""
+													},
+													"fragmentViewports": [
+														{
+															"fragmentViewportStyle": {
+																"marginBottom": "4"
+															},
+															"id": "tablet"
+														}
+													],
+													"indexed": true,
+													"layout": {
+														"borderColor": "colorNeutral3",
+														"borderWidth": 1,
+														"marginBottom": 0,
+														"marginLeft": 0,
+														"marginRight": 0,
+														"marginTop": 0,
+														"paddingBottom": 2,
+														"paddingLeft": 2,
+														"paddingRight": 2,
+														"paddingTop": 2,
+														"widthType": "Fluid"
+													}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragmentStyle": {
+																"borderWidth": "0",
+																"paddingBottom": "2",
+																"textAlign": ""
+															},
+															"indexed": true,
+															"layout": {
+																"align": "End",
+																"borderWidth": 0,
+																"contentDisplay": "FlexRow",
+																"marginBottom": 0,
+																"marginLeft": 0,
+																"marginRight": 0,
+																"marginTop": 0,
+																"paddingBottom": 0,
+																"paddingLeft": 0,
+																"paddingRight": 0,
+																"paddingTop": 0,
+																"widthType": "Fluid"
+															}
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "clay-icon-link"
+																	},
+																	"fragmentConfig": {
+																		"iconLink": "",
+																		"iconName": "document-pdf"
+																	},
+																	"fragmentFields": [
+																	],
+																	"fragmentStyle": {
+																		"textAlign": "",
+																		"textColor": "colorNeutral7"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "DIALECT-dialect-text"
+																	},
+																	"fragmentConfig": {
+																		"textType": "h6"
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"ar_SA": "PDF",
+																						"ca_ES": "PDF",
+																						"de_DE": "PDF",
+																						"en_US": "PDF",
+																						"es_ES": "PDF",
+																						"fi_FI": "PDF",
+																						"fr_FR": "PDF",
+																						"hu_HU": "PDF",
+																						"ja_JP": "PDF",
+																						"nl_NL": "PDF",
+																						"pt_BR": "PDF",
+																						"sv_SE": "PDF",
+																						"zh_CN": "PDF"
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentStyle": {
+																		"fontWeight": "fontWeightBold",
+																		"paddingLeft": "1",
+																		"textAlign": "",
+																		"textColor": "colorNeutral7"
+																	},
+																	"indexed": true
+																},
+																"type": "Fragment"
+															}
+														],
+														"type": "Section"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "DIALECT-dialect-text"
+															},
+															"fragmentConfig": {
+																"textType": "h4"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"ar_SA": "Rules of Engagement Guide",
+																				"ca_ES": "Rules of Engagement Guide",
+																				"de_DE": "Rules of Engagement Guide",
+																				"en_US": "Rules of Engagement Guide",
+																				"es_ES": "Rules of Engagement Guide",
+																				"fi_FI": "Rules of Engagement Guide",
+																				"fr_FR": "Rules of Engagement Guide",
+																				"hu_HU": "Rules of Engagement Guide",
+																				"ja_JP": "Rules of Engagement Guide",
+																				"nl_NL": "Rules of Engagement Guide",
+																				"pt_BR": "Rules of Engagement Guide",
+																				"sv_SE": "Rules of Engagement Guide",
+																				"zh_CN": "Rules of Engagement Guide"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontWeight": "fontWeightBold",
+																"textAlign": "",
+																"textColor": "linkColor"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"marginTop": "5",
+								"textAlign": ""
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"hidden": true
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"fragmentViewportStyle": {
+										"marginTop": "4",
+										"paddingLeft": "0",
+										"paddingRight": "0"
+									},
+									"id": "tablet"
+								}
+							],
+							"indexed": true,
+							"layout": {
+								"align": "Start",
+								"borderWidth": 0,
+								"contentDisplay": "FlexColumn",
+								"justify": "Center",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 4,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "DIALECT-dialect-text"
+									},
+									"fragmentConfig": {
+										"textType": "h4"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"ar_SA": "Quick Links",
+														"ca_ES": "Quick Links",
+														"de_DE": "Quick Links",
+														"en_US": "Quick Links",
+														"es_ES": "Quick Links",
+														"fi_FI": "Quick Links",
+														"fr_FR": "Quick Links",
+														"hu_HU": "Quick Links",
+														"ja_JP": "Quick Links",
+														"nl_NL": "Quick Links",
+														"pt_BR": "Quick Links",
+														"sv_SE": "Quick Links",
+														"zh_CN": "Quick Links"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontFamily": "fontFamilySansSerif",
+										"fontWeight": "fontWeightBold",
+										"textAlign": "",
+										"textColor": "colorNeutral10"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginTop": "4",
+										"textAlign": ""
 									},
 									"fragmentViewports": [
 										{
@@ -923,7 +1042,6 @@
 														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
-														"justify": "Center",
 														"marginBottom": 2,
 														"marginLeft": 0,
 														"marginRight": 1,
@@ -1127,26 +1245,13 @@
 																"definition": {
 																	"fragmentLink": {
 																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/home"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "PRM-1"
-																						}
-																					]
-																				}
+																			"value_i18n": {
+																				"en_US": "https://www.liferay.com/pt/home"
 																			}
 																		}
+																	},
+																	"fragmentStyle": {
+																		"borderWidth": "0"
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -1223,11 +1328,13 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"textAlign": "",
 																				"textColor": "linkColor"
 																			},
 																			"indexed": true
@@ -1304,7 +1411,7 @@
 													],
 													"indexed": true,
 													"layout": {
-														"align": "Start",
+														"align": "Center",
 														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
@@ -1506,29 +1613,13 @@
 																"definition": {
 																	"fragmentLink": {
 																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/home"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "PRM-1"
-																						}
-																					]
-																				}
+																			"value_i18n": {
+																				"en_US": ""
 																			}
 																		}
 																	},
 																	"fragmentStyle": {
-																		"width": "fit-content"
+																		"borderWidth": "0"
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -1559,22 +1650,29 @@
 																					"id": "element-text",
 																					"value": {
 																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": "https://www.liferay.com/pt/home"
+																									}
+																								}
+																							}
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"ar_SA": "Opportunity Registration",
-																								"ca_ES": "Opportunity Registration",
-																								"de_DE": "Opportunity Registration",
+																								"ar_SA": "View Dashboard",
+																								"ca_ES": "View Dashboard",
+																								"de_DE": "View Dashboard",
 																								"en_US": "Opportunity Registration",
-																								"es_ES": "Opportunity Registration",
-																								"fi_FI": "Opportunity Registration",
-																								"fr_FR": "Opportunity Registration",
-																								"hu_HU": "Opportunity Registration",
-																								"ja_JP": "Opportunity Registration",
-																								"nl_NL": "Opportunity Registration",
-																								"pt_BR": "Opportunity Registration",
-																								"sv_SE": "Opportunity Registration",
-																								"zh_CN": "Opportunity Registration"
+																								"es_ES": "View Dashboard",
+																								"fi_FI": "View Dashboard",
+																								"fr_FR": "View Dashboard",
+																								"hu_HU": "View Dashboard",
+																								"ja_JP": "View Dashboard",
+																								"nl_NL": "View Dashboard",
+																								"pt_BR": "View Dashboard",
+																								"sv_SE": "View Dashboard",
+																								"zh_CN": "View Dashboard"
 																							}
 																						}
 																					}
@@ -1605,11 +1703,13 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"textAlign": "",
 																				"textColor": "linkColor"
 																			},
 																			"indexed": true
@@ -1692,6 +1792,7 @@
 													],
 													"indexed": true,
 													"layout": {
+														"align": "Center",
 														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
@@ -1724,9 +1825,6 @@
 																				"value_i18n": {
 																					"en_US": ""
 																				}
-																			},
-																			"title": {
-																				"value": "video-green.png"
 																			},
 																			"url": {
 																				"mapping": {
@@ -1823,7 +1921,8 @@
 																	],
 																	"fragmentStyle": {
 																		"fontWeight": "fontWeightBold",
-																		"height": "28px",
+																		"maxHeight": "60px",
+																		"minHeight": "28px",
 																		"textAlign": "",
 																		"textColor": "colorNeutral10"
 																	},
@@ -1891,28 +1990,14 @@
 																"definition": {
 																	"fragmentLink": {
 																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/home"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "PRM-1"
-																						}
-																					]
-																				}
+																			"value_i18n": {
+																				"en_US": ""
 																			}
 																		}
 																	},
 																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"textAlign": "",
 																		"width": "fit-content"
 																	},
 																	"indexed": true,
@@ -1944,6 +2029,13 @@
 																					"id": "element-text",
 																					"value": {
 																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": "https://www.liferay.com/pt/home"
+																									}
+																								}
+																							}
 																						},
 																						"text": {
 																							"value_i18n": {
@@ -1990,11 +2082,13 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"textAlign": "",
 																				"textColor": "linkColor"
 																			},
 																			"indexed": true
@@ -2070,6 +2164,7 @@
 													],
 													"indexed": true,
 													"layout": {
+														"align": "Center",
 														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
@@ -2103,9 +2198,6 @@
 																					"en_US": ""
 																				}
 																			},
-																			"title": {
-																				"value": "calendar-blue.png"
-																			},
 																			"url": {
 																				"mapping": {
 																					"fieldKey": "FileEntry_previewImage",
@@ -2137,7 +2229,8 @@
 														"definition": {
 															"fragmentStyle": {
 																"borderWidth": "0",
-																"paddingLeft": "4"
+																"paddingLeft": "4",
+																"textAlign": ""
 															},
 															"indexed": true,
 															"layout": {
@@ -2244,6 +2337,7 @@
 																		"height": "72px",
 																		"paddingBottom": "2",
 																		"paddingTop": "2",
+																		"textAlign": "",
 																		"textColor": "btnOutlineSecondaryColor"
 																	},
 																	"indexed": true
@@ -2254,28 +2348,14 @@
 																"definition": {
 																	"fragmentLink": {
 																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/home"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "PRM-1"
-																						}
-																					]
-																				}
+																			"value_i18n": {
+																				"en_US": "https://www.liferay.com/pt/home"
 																			}
 																		}
 																	},
 																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"textAlign": "",
 																		"width": "fit-content"
 																	},
 																	"indexed": true,
@@ -2353,11 +2433,13 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"textAlign": "",
 																				"textColor": "linkColor"
 																			},
 																			"indexed": true
@@ -2441,6 +2523,7 @@
 													],
 													"indexed": true,
 													"layout": {
+														"align": "Center",
 														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
@@ -2474,9 +2557,6 @@
 																					"en_US": ""
 																				}
 																			},
-																			"title": {
-																				"value": "video-blue.png"
-																			},
 																			"url": {
 																				"mapping": {
 																					"fieldKey": "FileEntry_previewImage",
@@ -2507,6 +2587,12 @@
 																		"textAlign": "left"
 																	},
 																	"id": "portraitMobile"
+																},
+																{
+																	"fragmentViewportStyle": {
+																		"marginRight": "2"
+																	},
+																	"id": "tablet"
 																}
 															],
 															"indexed": true
@@ -2521,6 +2607,14 @@
 																"paddingLeft": "4",
 																"textAlign": ""
 															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"paddingLeft": "4"
+																	},
+																	"id": "tablet"
+																}
+															],
 															"indexed": true,
 															"layout": {
 																"contentDisplay": "FlexColumn",
@@ -2637,28 +2731,14 @@
 																"definition": {
 																	"fragmentLink": {
 																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/home"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "PRM-1"
-																						}
-																					]
-																				}
+																			"value_i18n": {
+																				"en_US": ""
 																			}
 																		}
 																	},
 																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"textAlign": "",
 																		"width": "fit-content"
 																	},
 																	"indexed": true,
@@ -2690,6 +2770,13 @@
 																					"id": "element-text",
 																					"value": {
 																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": "https://www.liferay.com/pt/home"
+																									}
+																								}
+																							}
 																						},
 																						"text": {
 																							"value_i18n": {
@@ -2736,11 +2823,13 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"textAlign": "",
 																				"textColor": "linkColor"
 																			},
 																			"indexed": true
@@ -2816,6 +2905,7 @@
 													],
 													"indexed": true,
 													"layout": {
+														"align": "Center",
 														"borderColor": "colorNeutral3",
 														"borderWidth": 1,
 														"contentDisplay": "FlexRow",
@@ -2848,9 +2938,6 @@
 																				"value_i18n": {
 																					"en_US": ""
 																				}
-																			},
-																			"title": {
-																				"value": "calendar-green.png"
 																			},
 																			"url": {
 																				"mapping": {
@@ -3003,28 +3090,14 @@
 																"definition": {
 																	"fragmentLink": {
 																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/home"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "PRM-1"
-																						}
-																					]
-																				}
+																			"value_i18n": {
+																				"en_US": ""
 																			}
 																		}
 																	},
 																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"textAlign": "",
 																		"width": "fit-content"
 																	},
 																	"indexed": true,
@@ -3056,6 +3129,13 @@
 																					"id": "element-text",
 																					"value": {
 																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": "https://www.liferay.com/pt/home"
+																									}
+																								}
+																							}
 																						},
 																						"text": {
 																							"value_i18n": {
@@ -3102,11 +3182,13 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"textAlign": "",
 																				"textColor": "linkColor"
 																			},
 																			"indexed": true
@@ -3223,7 +3305,7 @@
 									"fragmentViewports": [
 										{
 											"fragmentViewportStyle": {
-												"marginBottom": "4"
+												"marginBottom": "0"
 											},
 											"id": "portraitMobile"
 										}
@@ -3237,12 +3319,15 @@
 									"fragmentStyle": {
 										"marginBottom": "4",
 										"paddingBottom": "4",
-										"paddingTop": "4"
+										"paddingTop": "4",
+										"textAlign": ""
 									},
 									"fragmentViewports": [
 										{
 											"fragmentViewportStyle": {
+												"marginBottom": "4",
 												"marginLeft": "0",
+												"marginTop": "4",
 												"paddingBottom": "0",
 												"paddingTop": "0",
 												"textAlign": "left"
@@ -3564,28 +3649,8 @@
 															},
 															{
 																"definition": {
-																	"fragmentLink": {
-																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/home"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "PRM-1"
-																						}
-																					]
-																				}
-																			}
-																		}
+																	"fragmentStyle": {
+																		"borderWidth": "0"
 																	},
 																	"indexed": true,
 																	"layout": {
@@ -3616,6 +3681,13 @@
 																					"id": "element-text",
 																					"value": {
 																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": "https://www.liferay.com/pt/home"
+																									}
+																								}
+																							}
 																						},
 																						"text": {
 																							"value_i18n": {
@@ -3661,11 +3733,13 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"textAlign": "",
 																				"textColor": "linkColor"
 																			},
 																			"indexed": true
@@ -3955,30 +4029,9 @@
 															},
 															{
 																"definition": {
-																	"fragmentLink": {
-																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/home"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "PRM-1"
-																						}
-																					]
-																				}
-																			}
-																		}
-																	},
 																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"textAlign": "",
 																		"width": "fit-content"
 																	},
 																	"indexed": true,
@@ -4010,6 +4063,13 @@
 																					"id": "element-text",
 																					"value": {
 																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": "https://www.liferay.com/pt/home"
+																									}
+																								}
+																							}
 																						},
 																						"text": {
 																							"value_i18n": {
@@ -4055,12 +4115,13 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
-																				"iconLink": "/home",
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"textAlign": "",
 																				"textColor": "linkColor"
 																			},
 																			"indexed": true
@@ -4179,9 +4240,6 @@
 																				"value_i18n": {
 																					"en_US": ""
 																				}
-																			},
-																			"title": {
-																				"value": "video-green.png"
 																			},
 																			"url": {
 																				"mapping": {
@@ -4354,30 +4412,9 @@
 															},
 															{
 																"definition": {
-																	"fragmentLink": {
-																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/home"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "PRM-1"
-																						}
-																					]
-																				}
-																			}
-																		}
-																	},
 																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"textAlign": "",
 																		"width": "fit-content"
 																	},
 																	"indexed": true,
@@ -4409,6 +4446,13 @@
 																					"id": "element-text",
 																					"value": {
 																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": "https://www.liferay.com/pt/home"
+																									}
+																								}
+																							}
 																						},
 																						"text": {
 																							"value_i18n": {
@@ -4454,11 +4498,13 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"textAlign": "",
 																				"textColor": "linkColor"
 																			},
 																			"indexed": true
@@ -4571,9 +4617,6 @@
 																					"en_US": ""
 																				}
 																			},
-																			"title": {
-																				"value": "calendar-blue.png"
-																			},
 																			"url": {
 																				"mapping": {
 																					"fieldKey": "FileEntry_previewImage",
@@ -4617,7 +4660,8 @@
 														"definition": {
 															"fragmentStyle": {
 																"borderWidth": "0",
-																"paddingLeft": "4"
+																"paddingLeft": "4",
+																"textAlign": ""
 															},
 															"fragmentViewports": [
 																{
@@ -4732,6 +4776,7 @@
 																	"fragmentStyle": {
 																		"paddingBottom": "2",
 																		"paddingTop": "2",
+																		"textAlign": "",
 																		"textColor": "btnOutlineSecondaryColor"
 																	},
 																	"indexed": true
@@ -4740,30 +4785,9 @@
 															},
 															{
 																"definition": {
-																	"fragmentLink": {
-																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/home"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "PRM-1"
-																						}
-																					]
-																				}
-																			}
-																		}
-																	},
 																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"textAlign": "",
 																		"width": "fit-content"
 																	},
 																	"indexed": true,
@@ -4795,6 +4819,13 @@
 																					"id": "element-text",
 																					"value": {
 																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": "https://www.liferay.com/pt/home"
+																									}
+																								}
+																							}
 																						},
 																						"text": {
 																							"value_i18n": {
@@ -4840,11 +4871,13 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"textAlign": "",
 																				"textColor": "linkColor"
 																			},
 																			"indexed": true
@@ -4965,15 +4998,12 @@
 																					"en_US": ""
 																				}
 																			},
-																			"title": {
-																				"value": "video-blue.png"
-																			},
 																			"url": {
 																				"mapping": {
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/video-blue.png$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/video-green.png$]"
 																					}
 																				}
 																			}
@@ -5136,30 +5166,9 @@
 															},
 															{
 																"definition": {
-																	"fragmentLink": {
-																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/home"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "PRM-1"
-																						}
-																					]
-																				}
-																			}
-																		}
-																	},
 																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"textAlign": "",
 																		"width": "fit-content"
 																	},
 																	"indexed": true,
@@ -5191,6 +5200,13 @@
 																					"id": "element-text",
 																					"value": {
 																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": "https://www.liferay.com/pt/home"
+																									}
+																								}
+																							}
 																						},
 																						"text": {
 																							"value_i18n": {
@@ -5237,11 +5253,13 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"textAlign": "",
 																				"textColor": "linkColor"
 																			},
 																			"indexed": true
@@ -5301,6 +5319,7 @@
 													"fragmentViewports": [
 														{
 															"fragmentViewportStyle": {
+																"marginBottom": "0",
 																"marginLeft": "0",
 																"maxHeight": "194px",
 																"paddingBottom": "3",
@@ -5354,15 +5373,12 @@
 																					"en_US": ""
 																				}
 																			},
-																			"title": {
-																				"value": "calendar-green.png"
-																			},
 																			"url": {
 																				"mapping": {
 																					"fieldKey": "FileEntry_previewImage",
 																					"itemReference": {
 																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/calendar-green.png$]"
+																						"classPK": "[$DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/quick-links-resources/calendar-blue.png$]"
 																					}
 																				}
 																			}
@@ -5525,30 +5541,9 @@
 															},
 															{
 																"definition": {
-																	"fragmentLink": {
-																		"href": {
-																			"mapping": {
-																				"itemReference": {
-																					"className": "com.liferay.portal.kernel.model.Layout",
-																					"fields": [
-																						{
-																							"fieldName": "friendlyURL",
-																							"fieldValue": "/home"
-																						},
-																						{
-																							"fieldName": "privatePage",
-																							"fieldValue": "false"
-																						},
-																						{
-																							"fieldName": "siteKey",
-																							"fieldValue": "PRM-1"
-																						}
-																					]
-																				}
-																			}
-																		}
-																	},
 																	"fragmentStyle": {
+																		"borderWidth": "0",
+																		"textAlign": "",
 																		"width": "fit-content"
 																	},
 																	"indexed": true,
@@ -5580,6 +5575,13 @@
 																					"id": "element-text",
 																					"value": {
 																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": "https://www.liferay.com/pt/home"
+																									}
+																								}
+																							}
 																						},
 																						"text": {
 																							"value_i18n": {
@@ -5625,11 +5627,13 @@
 																				"key": "clay-icon-link"
 																			},
 																			"fragmentConfig": {
+																				"iconLink": "https://www.liferay.com/pt/home",
 																				"iconName": "order-arrow-right"
 																			},
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"textAlign": "",
 																				"textColor": "linkColor"
 																			},
 																			"indexed": true

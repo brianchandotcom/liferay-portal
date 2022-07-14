@@ -70,8 +70,8 @@ public class SyncDLFileVersionDiffLocalServiceImpl
 			fileEntry.getCompanyId());
 
 		FileEntry dataFileEntry = _portletFileRepository.addPortletFileEntry(
-			company.getGroupId(), fileEntry.getUserId(),
-			SyncDLFileVersionDiff.class.getName(),
+			fileEntry.getExternalReferenceCode(), company.getGroupId(),
+			fileEntry.getUserId(), SyncDLFileVersionDiff.class.getName(),
 			syncDLFileVersionDiff.getSyncDLFileVersionDiffId(),
 			PortletKeys.DOCUMENT_LIBRARY,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file,

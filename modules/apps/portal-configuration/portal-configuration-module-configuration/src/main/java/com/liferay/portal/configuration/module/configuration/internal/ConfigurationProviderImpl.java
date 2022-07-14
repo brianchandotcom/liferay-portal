@@ -188,8 +188,8 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		throws ConfigurationException {
 
 		_saveFactoryConfiguration(
-			pid,
-			ExtendedObjectClassDefinition.Scope.GROUP, groupId, properties);
+			pid, ExtendedObjectClassDefinition.Scope.GROUP, groupId,
+			properties);
 	}
 
 	@Override

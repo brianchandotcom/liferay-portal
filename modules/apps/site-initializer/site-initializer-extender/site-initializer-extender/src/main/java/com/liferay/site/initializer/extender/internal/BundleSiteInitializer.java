@@ -109,6 +109,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -132,6 +133,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -201,6 +203,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
 		ClientExtensionEntryLocalService clientExtensionEntryLocalService,
+		ConfigurationProvider configurationProvider,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -259,6 +262,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
 		_clientExtensionEntryLocalService = clientExtensionEntryLocalService;
+		_configurationProvider = configurationProvider;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -411,6 +415,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addOrganizations(serviceContext));
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addSiteConfiguration(serviceContext));
+			_invoke(() -> _addSiteSettings(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
 			_invoke(() -> _addUserGroups(serviceContext));
 
@@ -2677,32 +2682,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Group group = _groupLocalService.getGroup(
 			serviceContext.getScopeGroupId());
 
-		JSONObject jsonObject1 = JSONFactoryUtil.createJSONObject(json);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
-		group.setType(jsonObject1.getInt("typeSite"));
-		group.setManualMembership(jsonObject1.getBoolean("manualMembership"));
+		group.setType(jsonObject.getInt("typeSite"));
+		group.setManualMembership(jsonObject.getBoolean("manualMembership"));
 		group.setMembershipRestriction(
-			jsonObject1.getInt("membershipRestriction"));
+			jsonObject.getInt("membershipRestriction"));
 
 		_groupLocalService.updateGroup(group);
-
-		JSONArray jsonArray = jsonObject1.getJSONArray(
-			"interfaceConfigurations");
-
-		if (JSONUtil.isEmpty(jsonArray)) {
-			return;
-		}
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject2 = jsonArray.get(i);
-
-			_configurationProvider.saveGroupConfiguration(
-				Class.forName(jsonObject2.getString("className")),
-				serviceContext.getScopeGroupId(),
-				jsonObject2.get(
-					"values"
-				).toMap());
-		}
 	}
 
 	private void _addSiteNavigationMenu(
@@ -2846,6 +2833,39 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_addSiteNavigationMenu(
 				jsonArray.getJSONObject(i), serviceContext,
 				siteNavigationMenuItemSettings);
+		}
+	}
+
+	private void _addSiteSettings(ServiceContext serviceContext)
+		throws Exception {
+
+		String resourcePath = "site-initializer/site-settings.json";
+
+		String json = SiteInitializerUtil.read(resourcePath, _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		if (JSONUtil.isEmpty(jsonArray)) {
+			return;
+		}
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONObject propertiesJSONObject = jsonObject.getJSONObject(
+				"properties");
+
+			Map<String, Object> propertiesMap = propertiesJSONObject.toMap();
+
+			_configurationProvider.saveGroupConfiguration(
+				serviceContext.getScopeGroupId(), jsonObject.getString("pid"),
+				HashMapDictionaryBuilder.<String, Object>create(
+					propertiesMap
+				).build());
 		}
 	}
 
@@ -3773,6 +3793,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ClientExtensionEntryLocalService
 		_clientExtensionEntryLocalService;
 	private CommerceSiteInitializer _commerceSiteInitializer;
+	private final ConfigurationProvider _configurationProvider;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DDMTemplateLocalService _ddmTemplateLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;

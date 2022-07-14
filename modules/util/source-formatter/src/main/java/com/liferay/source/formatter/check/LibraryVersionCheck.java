@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
-import java.io.IOException;
 import java.io.StringReader;
 
 import java.util.ArrayList;
@@ -56,7 +55,6 @@ import org.apache.maven.artifact.versioning.InvalidVersionSpecificationException
 import org.apache.maven.artifact.versioning.VersionRange;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
 /**
@@ -67,7 +65,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
-		throws DocumentException, IOException {
+		throws Exception {
 
 		_pageNumber = GetterUtil.getInteger(
 			getAttributeValue(_QUERY_ARGUMENTS_PAGE_NUMBER, absolutePath));
@@ -122,7 +120,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	private void _checkIsContainVulnerabilities(
 			String fileName, String packageName, String version,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
-		throws IOException {
+		throws Exception {
 
 		if (!version.matches("(\\d|v).+")) {
 			return;
@@ -138,7 +136,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	}
 
 	private void _checkVersionInJsonFile(String fileName, JSONObject jsonObject)
-		throws IOException {
+		throws Exception {
 
 		if (jsonObject == null) {
 			return;
@@ -162,7 +160,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	private void _generateVulnerableVersionMap(
 			String packageName,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
-		throws IOException {
+		throws Exception {
 
 		if (_vulnerableVersionMap.containsKey(packageName)) {
 			return;
@@ -187,7 +185,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	private List<SecurityVulnerabilityNode> _getSecurityVulnerabilityNodes(
 			String packageName, String cursor,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
-		throws IOException {
+		throws Exception {
 
 		if (_pageNumber == 0) {
 			return Collections.emptyList();
@@ -237,7 +235,9 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 			StatusLine statusLine = closeableHttpResponse.getStatusLine();
 
-			if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+			int statusCode = statusLine.getStatusCode();
+
+			if (statusCode == HttpStatus.SC_OK) {
 				JSONObject jsonObject = new JSONObjectImpl(
 					EntityUtils.toString(
 						closeableHttpResponse.getEntity(), "UTF-8"));
@@ -297,17 +297,9 @@ public class LibraryVersionCheck extends BaseFileCheck {
 					return securityVulnerabilityNodes;
 				}
 			}
-		}
-		catch (InvalidVersionSpecificationException
-					invalidVersionSpecificationException) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(invalidVersionSpecificationException);
-			}
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
+			else if (statusCode == HttpStatus.SC_UNAUTHORIZED) {
+				throw new Exception(
+					"Not authorized to access GitHub GraphQL API");
 			}
 		}
 
@@ -315,7 +307,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	}
 
 	private void _gradleLibraryVersionCheck(String fileName, String content)
-		throws IOException {
+		throws Exception {
 
 		int x = content.indexOf("dependencies {");
 
@@ -375,7 +367,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	}
 
 	private void _ivyXmlLibraryVersionCheck(String fileName, String content)
-		throws DocumentException, IOException {
+		throws Exception {
 
 		if (Validator.isNull(content)) {
 			return;
@@ -417,7 +409,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	}
 
 	private void _jsonLibraryVersionCheck(String fileName, String content)
-		throws IOException {
+		throws Exception {
 
 		if (Validator.isNull(content)) {
 			return;
@@ -440,7 +432,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	}
 
 	private void _pomXmlLibraryVersionCheck(String fileName, String content)
-		throws DocumentException, IOException {
+		throws Exception {
 
 		if (Validator.isNull(content)) {
 			return;
@@ -491,7 +483,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	}
 
 	private void _propertiesLibraryVersionCheck(String fileName, String content)
-		throws IOException {
+		throws Exception {
 
 		Properties properties = new Properties();
 

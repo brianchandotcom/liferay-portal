@@ -91,7 +91,29 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private void _checkIsContainVulnerabilities(
+	private void _checkVersionInJsonFile(String fileName, JSONObject jsonObject)
+		throws Exception {
+
+		if (jsonObject == null) {
+			return;
+		}
+
+		for (String dependencyName : jsonObject.keySet()) {
+			String version = jsonObject.getString(dependencyName);
+
+			if (version.startsWith("^") || version.startsWith("~") ||
+				version.startsWith("*")) {
+
+				continue;
+			}
+
+			_checkVulnerabilities(
+				fileName, dependencyName, version,
+				SecurityAdvisoryEcosystemEnum.NPM);
+		}
+	}
+
+	private void _checkVulnerabilities(
 		String fileName, String packageName, DefaultArtifactVersion version) {
 
 		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
@@ -117,7 +139,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _checkIsContainVulnerabilities(
+	private void _checkVulnerabilities(
 			String fileName, String packageName, String version,
 			SecurityAdvisoryEcosystemEnum securityAdvisoryEcosystemEnum)
 		throws Exception {
@@ -131,30 +153,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				packageName, securityAdvisoryEcosystemEnum);
 		}
 
-		_checkIsContainVulnerabilities(
+		_checkVulnerabilities(
 			fileName, packageName, new DefaultArtifactVersion(version));
-	}
-
-	private void _checkVersionInJsonFile(String fileName, JSONObject jsonObject)
-		throws Exception {
-
-		if (jsonObject == null) {
-			return;
-		}
-
-		for (String dependencyName : jsonObject.keySet()) {
-			String version = jsonObject.getString(dependencyName);
-
-			if (version.startsWith("^") || version.startsWith("~") ||
-				version.startsWith("*")) {
-
-				continue;
-			}
-
-			_checkIsContainVulnerabilities(
-				fileName, dependencyName, version,
-				SecurityAdvisoryEcosystemEnum.NPM);
-		}
 	}
 
 	private void _generateVulnerableVersionMap(
@@ -360,7 +360,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				continue;
 			}
 
-			_checkIsContainVulnerabilities(
+			_checkVulnerabilities(
 				fileName, group + StringPool.COLON + name, version,
 				SecurityAdvisoryEcosystemEnum.MAVEN);
 		}
@@ -401,7 +401,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 					continue;
 				}
 
-				_checkIsContainVulnerabilities(
+				_checkVulnerabilities(
 					fileName, org + StringPool.COLON + name, rev,
 					SecurityAdvisoryEcosystemEnum.MAVEN);
 			}
@@ -473,7 +473,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 					continue;
 				}
 
-				_checkIsContainVulnerabilities(
+				_checkVulnerabilities(
 					fileName,
 					groupIdElement.getText() + StringPool.COLON +
 						artifactIdElement.getText(),
@@ -507,7 +507,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				continue;
 			}
 
-			_checkIsContainVulnerabilities(
+			_checkVulnerabilities(
 				fileName, dependency[1], dependency[2],
 				SecurityAdvisoryEcosystemEnum.MAVEN);
 		}

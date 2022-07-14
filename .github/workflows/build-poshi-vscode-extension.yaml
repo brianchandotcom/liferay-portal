@@ -63,6 +63,6 @@ jobs:
                       npm_config_arch: arm64
                       os: macos-latest
                       platform: darwin
-name: Manual Test Workflow
+name: Build Poshi VSCode Extension
 on:
     workflow_dispatch:

@@ -1136,6 +1136,14 @@ definition {
 			value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 	}
 
+	macro checkoutViaManagementBar {
+		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Checkout");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro configureCacheControl {
 		if (isSet(systemSettingsInstanceScope)) {
 			DMNavigator.openToConfigInSystemSettings(portlet = "Cache Control");

@@ -22,11 +22,11 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../../src/main/resour
 import {VIEWPORT_SIZES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/viewportSizes';
 import {config} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
-import updateItemConfig from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
+import updateFormItemConfig from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateFormItemConfig';
 import {FormGeneralPanel} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/item-configuration-panels/FormGeneralPanel';
 
 jest.mock(
-	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
+	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateFormItemConfig',
 	() => jest.fn()
 );
 
@@ -101,7 +101,7 @@ const renderComponent = ({item = MAPPED_FORM_ITEM} = {}) => {
 
 describe('FormGeneralPanel', () => {
 	beforeEach(() => {
-		updateItemConfig.mockClear();
+		updateFormItemConfig.mockClear();
 	});
 
 	it('renders success message options if the form is mapped', async () => {
@@ -150,7 +150,7 @@ describe('FormGeneralPanel', () => {
 
 		fireEvent.blur(input);
 
-		expect(updateItemConfig).toBeCalledWith(
+		expect(updateFormItemConfig).toBeCalledWith(
 			expect.objectContaining({
 				itemConfig: {
 					successMessage: {message: {en_US: 'New message'}},
@@ -179,7 +179,7 @@ describe('FormGeneralPanel', () => {
 
 		fireEvent.blur(input);
 
-		expect(updateItemConfig).toBeCalledWith(
+		expect(updateFormItemConfig).toBeCalledWith(
 			expect.objectContaining({
 				itemConfig: {
 					successMessage: {url: {en_US: 'https://liferay.com'}},

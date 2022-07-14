@@ -20,6 +20,7 @@ import {
 	MOVE_ITEM,
 	UPDATE_COLLECTION_DISPLAY_COLLECTION,
 	UPDATE_COL_SIZE,
+	UPDATE_FORM_ITEM_CONFIG,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_ITEM_CONFIG,
 	UPDATE_ITEM_LOCAL_CONFIG,
@@ -47,6 +48,7 @@ export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 		case UPDATE_ROW_COLUMNS:
 			return action.layoutData;
 
+		case UPDATE_FORM_ITEM_CONFIG:
 		case UPDATE_ITEM_CONFIG: {
 			const {itemId, layoutData: nextLayoutData} = action;
 

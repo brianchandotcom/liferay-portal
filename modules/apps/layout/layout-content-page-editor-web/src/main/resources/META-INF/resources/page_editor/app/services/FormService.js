@@ -57,4 +57,32 @@ export default {
 			onNetworkStatus
 		);
 	},
+
+	/**
+	 * Updates a config into an item
+	 * @param {object} options
+	 * @param {object} options.itemConfig Updated item config
+	 * @param {string} options.itemId id of the item to be updated
+	 * @param {string} options.segmentsExperienceId Segments experience id
+	 * @param {function} options.onNetworkStatus
+	 * @return {Promise<void>}
+	 */
+	updateFormItemConfig({
+		itemConfig,
+		itemId,
+		onNetworkStatus,
+		segmentsExperienceId,
+	}) {
+		return serviceFetch(
+			config.updateFormItemConfigURL,
+			{
+				body: {
+					itemConfig: JSON.stringify(itemConfig),
+					itemId,
+					segmentsExperienceId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
 };

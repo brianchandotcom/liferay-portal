@@ -23,8 +23,7 @@ import {
 	useSelector,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
-import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
+import updateFormItemConfig from '../../../../../../app/thunks/updateFormItemConfig';
 import {formIsMapped} from '../../../../../../app/utils/formIsMapped';
 import {getEditableLocalizedValue} from '../../../../../../app/utils/getEditableLocalizedValue';
 import {useId} from '../../../../../../app/utils/useId';
@@ -38,18 +37,16 @@ import FormMappingOptions from './FormMappingOptions';
 
 export function FormGeneralPanel({item}) {
 	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const onValueSelect = useCallback(
 		(nextConfig) =>
 			dispatch(
-				updateItemConfig({
+				updateFormItemConfig({
 					itemConfig: nextConfig,
 					itemId: item.itemId,
-					segmentsExperienceId,
 				})
 			),
-		[dispatch, item.itemId, segmentsExperienceId]
+		[dispatch, item.itemId]
 	);
 
 	return (

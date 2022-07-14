@@ -22,8 +22,7 @@ import {
 	useSelectorCallback,
 } from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import updateItemConfig from '../../thunks/updateItemConfig';
+import updateFormItemConfig from '../../thunks/updateFormItemConfig';
 import {formIsMapped} from '../../utils/formIsMapped';
 import {getEditableLocalizedValue} from '../../utils/getEditableLocalizedValue';
 import isItemEmpty from '../../utils/isItemEmpty';
@@ -65,18 +64,16 @@ export default FormWithControls;
 
 function FormEmptyState({isMapped, item}) {
 	const dispatch = useDispatch();
-	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const onValueSelect = useCallback(
 		(nextConfig) =>
 			dispatch(
-				updateItemConfig({
+				updateFormItemConfig({
 					itemConfig: nextConfig,
 					itemId: item.itemId,
-					segmentsExperienceId,
 				})
 			),
-		[dispatch, item.itemId, segmentsExperienceId]
+		[dispatch, item.itemId]
 	);
 
 	if (isMapped) {

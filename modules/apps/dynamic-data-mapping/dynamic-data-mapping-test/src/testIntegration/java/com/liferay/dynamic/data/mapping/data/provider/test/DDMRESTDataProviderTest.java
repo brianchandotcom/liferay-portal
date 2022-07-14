@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -290,7 +291,10 @@ public class DDMRESTDataProviderTest {
 			ddmDataProviderResponse.getOutputOptional(
 				outputParameterId, Number.class);
 
-		Assert.assertEquals(246, outputOptional.get());
+		Assert.assertEquals(
+			_countryLocalService.getCompanyCountriesCount(
+				TestPropsValues.getCompanyId()),
+			outputOptional.get());
 	}
 
 	@Test
@@ -652,6 +656,9 @@ public class DDMRESTDataProviderTest {
 
 	private static final String _GET_COUNTRY_BY_NAME_URL =
 		"http://localhost:8080/api/jsonws/country/get-country-by-name";
+
+	@Inject
+	private CountryLocalService _countryLocalService;
 
 	@Inject(
 		filter = "ddm.data.provider.type=rest", type = DDMDataProvider.class

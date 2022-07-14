@@ -199,18 +199,16 @@ public class DDMFormAssetRenderer
 
 	@Override
 	public String getURLViewInContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
-			String noSuchEntryRedirect)
-		throws Exception {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		String noSuchEntryRedirect) {
 
 		return noSuchEntryRedirect;
 	}
 
 	@Override
 	public String getURLViewInContext(
-			ThemeDisplay themeDisplay, String noSuchEntryRedirect)
-		throws Exception {
+		ThemeDisplay themeDisplay, String noSuchEntryRedirect) {
 
 		return noSuchEntryRedirect;
 	}

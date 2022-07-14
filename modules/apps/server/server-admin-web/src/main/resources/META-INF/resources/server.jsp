@@ -24,7 +24,7 @@ ServerDisplayContext serverDisplayContext = new ServerDisplayContext(request, re
 	navigationItems="<%= serverDisplayContext.getServerNavigationItems() %>"
 />
 
-<div class="<%= (tabs1.equals("log-levels") || tabs1.equals("properties")) ? StringPool.BLANK : "container-fluid container-fluid-max-xl" %>">
+<div class="<%= (tabs1.equals("log-levels") || tabs1.equals("properties")) ? StringPool.BLANK : "container-fluid container-fluid-max-xl mt-3" %>">
 	<c:choose>
 		<c:when test='<%= tabs1.equals("data-migration") %>'>
 			<liferay-util:include page="/data_migration.jsp" servletContext="<%= application %>" />

@@ -46,9 +46,11 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
@@ -1164,12 +1166,46 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void upgradeURLTitle() throws Exception {
-		_runSQL(
-			"create index IX_LPP_41834_MXJT on JournalArticle (groupId, " +
-				"articleId, urlTitle);");
 		_runSQL("create index IX_LPP_41834_UXEC on JournalArticle (urlTitle);");
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
+		Map<String, Map<Long, Set<String>>> map1 = new HashMap<>();
+
+		try (LoggingTimer loggingTimer = new LoggingTimer("step1");
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select distinct groupId, articleId, urlTitle from " +
+					"JournalArticle");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				long groupId = resultSet.getLong("groupId");
+				String articleId = resultSet.getString("articleId");
+
+				String urlTitle = GetterUtil.getString(
+					resultSet.getString("urlTitle"));
+
+				Map<Long, Set<String>> map2 = map1.get(urlTitle);
+
+				if (map2 == null) {
+					map2 = new HashMap<>();
+
+					map1.put(urlTitle, map2);
+				}
+
+				Set<String> articleIds = map2.get(groupId);
+
+				if (articleIds == null) {
+					articleIds = new HashSet<>();
+
+					map2.put(groupId, articleIds);
+				}
+
+				articleIds.add(articleId);
+			}
+		}
+
+		int count = 0;
+
+		try (LoggingTimer loggingTimer = new LoggingTimer("step2");
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select distinct groupId, articleId, urlTitle from " +
 					"JournalArticle");
@@ -1199,7 +1235,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					String articleId = resultSet.getString("articleId");
 
 					normalizedURLTitle = _getUniqueUrlTitle(
-						groupId, articleId, normalizedURLTitle,
+						groupId, articleId, normalizedURLTitle, map1,
 						processedArticleIds);
 
 					preparedStatement2.setString(1, normalizedURLTitle);
@@ -1207,10 +1243,18 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 					preparedStatement2.setString(2, urlTitle);
 
 					preparedStatement2.addBatch();
+
+					count++;
+
+					map1.put(normalizedURLTitle, map1.remove(urlTitle));
 				}
 
 				preparedStatement2.executeBatch();
 			}
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Updated journal article URL titles " + count + " times");
 		}
 	}
 
@@ -1228,6 +1272,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	private String _getUniqueUrlTitle(
 			long groupId, String articleId, String urlTitle,
+			Map<String, Map<Long, Set<String>>> map1,
 			Map<String, String> processedArticleIds)
 		throws Exception {
 
@@ -1238,7 +1283,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 			if (((processedArticleId == null) ||
 				 processedArticleId.equals(articleId)) &&
-				_isValidUrlTitle(groupId, articleId, urlTitle)) {
+				_isValidUrlTitle(groupId, articleId, urlTitle, map1)) {
 
 				processedArticleIds.put(key, articleId);
 
@@ -1259,10 +1304,33 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	private boolean _isValidUrlTitle(
-			long groupId, String articleId, String urlTitle)
+			long groupId, String articleId, String urlTitle,
+			Map<String, Map<Long, Set<String>>> map1)
 		throws Exception {
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
+		Map<Long, Set<String>> map2 = map1.get(urlTitle);
+
+		if (map2 == null) {
+			return true;
+		}
+
+		Set<String> articleIds = map2.get(groupId);
+
+		if (articleIds == null) {
+			return true;
+		}
+
+		if (!articleIds.contains(articleId) && (articleIds.size() > 0)) {
+			return false;
+		}
+
+		if (articleIds.contains(articleId) && (articleIds.size() > 1)) {
+			return false;
+		}
+
+		return true;
+
+		/*try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(*) from JournalArticle where groupId = ? and " +
 					"articleId != ? and urlTitle = ?")) {
 
@@ -1281,7 +1349,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 				return true;
 			}
-		}
+		}*/
 	}
 
 	private void _runSQL(String sql) throws Exception {

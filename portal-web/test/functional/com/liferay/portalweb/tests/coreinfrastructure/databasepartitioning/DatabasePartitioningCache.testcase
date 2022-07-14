@@ -20,6 +20,8 @@ definition {
 
 	@priority = "5"
 	test CacheIsOnlyPopulatedToSingleCompany {
+		property test.name.skip.portal.instance = "DatabasePartitioningCache#CacheIsOnlyPopulatedToSingleCompany";
+
 		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.addCP(
@@ -45,6 +47,7 @@ definition {
 		property cluster.enabled = "true";
 		property minimum.slave.ram = "24";
 		property remote.elasticsearch.enabled = "true";
+		property test.name.skip.portal.instance = "DatabasePartitioningCache#CacheOnlyClearsOnSameCompanyAcrossCluster";
 
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -100,6 +103,8 @@ definition {
 
 	@priority = "4"
 	test NullCacheDoesNotBreakSiteFromAnotherPartition {
+		property test.name.skip.portal.instance = "DatabasePartitioningCache#NullCacheDoesNotBreakSiteFromAnotherPartition";
+
 		PortalInstances.openVirtualInstancesAdmin();
 
 		PortalInstances.addCP(

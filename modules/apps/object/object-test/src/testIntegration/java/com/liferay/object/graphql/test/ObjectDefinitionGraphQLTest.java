@@ -224,26 +224,6 @@ public class ObjectDefinitionGraphQLTest {
 									new GraphQLField(_objectFieldName)))))),
 				"JSONObject/data", "JSONObject/c", "JSONObject/" + key,
 				"Object/items", "Object/0", "Object/" + _objectFieldName));
-		Assert.assertEquals(
-			"peter@liferay.com",
-			JSONUtil.getValueAsString(
-				_invoke(
-					new GraphQLField(
-						"query",
-						new GraphQLField(
-							"c",
-							new GraphQLField(
-								key,
-								HashMapBuilder.<String, Object>put(
-									"filter",
-									"\"userId eq " +
-										TestPropsValues.getUserId() + "\""
-								).build(),
-								new GraphQLField(
-									"items",
-									new GraphQLField(_objectFieldName)))))),
-				"JSONObject/data", "JSONObject/c", "JSONObject/" + key,
-				"Object/items", "Object/0", "Object/" + _objectFieldName));
 	}
 
 	@Test

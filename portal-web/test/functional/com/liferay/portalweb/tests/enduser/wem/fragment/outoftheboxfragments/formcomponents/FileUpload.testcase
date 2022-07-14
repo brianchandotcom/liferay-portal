@@ -429,4 +429,64 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-151402. The user could see error message when submit a form with invalid extension of attached file."
+	@priority = "4"
+	test ViewErrorMessageWhenSubmitFormWithInvalidExtensionOfAttachedFile {
+		property test.name.skip.portal.instance = "FileUpload#ViewErrorMessageWhenSubmitFormWithInvalidExtensionOfAttachedFile";
+
+		task ("Given a user has a content page where a File Upload and Submit Button fragments are inside a Form Container") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Upload Object",
+					panel = "General");
+			}
+
+			task ("Add a File Upload and Submit Button fragment into Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "File Upload");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "File Upload");
+			}
+
+			task ("Map the File Upload fragment to an Attachment field") {
+				PageEditor.editInput(
+					field = "Custom Attachment From Computer",
+					fragmentName = "File Upload");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the user submits form with invalid extension of attached file") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			UploadDependencyFile.uploadFile(fileName = "Document_1.doc");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should see an error message") {
+			Alert.viewErrorMessage(errorMessage = "Please enter a file with a valid extension (jpeg, jpg, pdf, png).");
+		}
+	}
+
 }

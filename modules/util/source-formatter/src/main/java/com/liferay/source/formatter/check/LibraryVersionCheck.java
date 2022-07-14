@@ -109,11 +109,10 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Library '", packageName, "' ", version.toString(),
-						" contain vulnerabilities by '",
-						securityVulnerabilityNode.getSummary(),
-						"', look detail in ",
-						securityVulnerabilityNode.getPermalink()));
+						packageName, ":", version.toString(),
+						" contains known vulnerabilities(",
+						securityVulnerabilityNode.getSummary(), ", ",
+						securityVulnerabilityNode.getPermalink(), ")"));
 
 				return;
 			}

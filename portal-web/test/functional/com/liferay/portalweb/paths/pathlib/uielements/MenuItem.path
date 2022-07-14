@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//div[contains(@class,'dropdown-menu show')]//input[contains(@type,'text')]</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//input[.//following-sibling::span//*[name()='svg'][contains(@class,'icon-search')]]</td>
 	<td></td>
 </tr>
 </tbody>

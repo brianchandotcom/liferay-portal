@@ -2916,7 +2916,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_styleBookEntryZipProcessor.importStyleBookEntries(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			zipWriter.getFile(), false);
+			zipWriter.getFile(), true);
 	}
 
 	private Map<String, String> _addTaxonomyCategories(

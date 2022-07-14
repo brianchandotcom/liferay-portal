@@ -682,7 +682,7 @@ definition {
 			siteName = "Site Name");
 
 		WebContentDisplayPortlet.viewContent(
-			imageFileName = "Document_1.jpg",
+			imageFileName = "document_1",
 			webContentTitle = "Web Content Title");
 	}
 

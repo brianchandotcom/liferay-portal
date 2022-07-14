@@ -142,7 +142,12 @@ export function normalizeReference(fields, currentField, index) {
  * decides which of these two values will be used.
  * 2. If the default value is null, use the string Option.
  */
-export function normalizeValue(fields, currentField, generateValueUsingLabel) {
+export function normalizeValue(
+	allowSpecialCharacters,
+	currentField,
+	fields,
+	generateValueUsingLabel
+) {
 	const {label, value: prevValue} = currentField;
 
 	let value = prevValue
@@ -155,12 +160,21 @@ export function normalizeValue(fields, currentField, generateValueUsingLabel) {
 
 	value = dedupValue(fields, value, currentField.id, generateValueUsingLabel);
 
-	return normalizeFieldName(value);
+	return allowSpecialCharacters ? value : normalizeFieldName(value);
 }
 
-export function normalizeFields(fields, generateValueUsingLabel) {
+export function normalizeFields(
+	allowSpecialCharacters,
+	fields,
+	generateValueUsingLabel
+) {
 	return fields.map((field, index) => {
-		const value = normalizeValue(fields, field, generateValueUsingLabel);
+		const value = normalizeValue(
+			allowSpecialCharacters,
+			field,
+			fields,
+			generateValueUsingLabel
+		);
 
 		return {
 			...field,

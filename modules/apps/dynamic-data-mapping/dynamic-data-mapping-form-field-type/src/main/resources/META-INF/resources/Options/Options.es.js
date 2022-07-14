@@ -88,6 +88,7 @@ const getInitialOption = (generateOptionValueUsingOptionLabel) => {
 };
 
 const refreshFields = (
+	allowSpecialCharacters,
 	defaultLanguageId,
 	editingLanguageId,
 	generateOptionValueUsingOptionLabel,
@@ -119,12 +120,14 @@ const refreshFields = (
 	].filter((field) => field && !!Object.keys(field).length);
 
 	return normalizeFields(
+		allowSpecialCharacters,
 		refreshedFields,
 		generateOptionValueUsingOptionLabel
 	);
 };
 
 const Options = ({
+	allowSpecialCharacters,
 	children,
 	defaultLanguageId,
 	disabled,
@@ -150,6 +153,7 @@ const Options = ({
 			}
 
 			formattedValue[languageId] = normalizeFields(
+				allowSpecialCharacters,
 				formattedValue[languageId].map((option) => {
 					let newOption = {
 						id: random(),
@@ -191,6 +195,7 @@ const Options = ({
 			[];
 
 		return refreshFields(
+			allowSpecialCharacters,
 			defaultLanguageId,
 			editingLanguageId,
 			generateOptionValueUsingOptionLabel,
@@ -213,6 +218,7 @@ const Options = ({
 
 			availableLanguageIds.forEach((languageId) => {
 				normalizedValue[languageId] = normalizeFields(
+					allowSpecialCharacters,
 					value[languageId].map((option) => {
 						if (option.edited) {
 							return {
@@ -240,6 +246,7 @@ const Options = ({
 
 			setFields(
 				refreshFields(
+					allowSpecialCharacters,
 					defaultLanguageId,
 					editingLanguageId,
 					generateOptionValueUsingOptionLabel,
@@ -249,6 +256,7 @@ const Options = ({
 			);
 		}
 	}, [
+		allowSpecialCharacters,
 		defaultLanguageId,
 		editingLanguageId,
 		generateOptionValueUsingOptionLabel,
@@ -460,7 +468,13 @@ const Options = ({
 			index
 		);
 
-		return [normalizeFields(fields, generateOptionValueUsingOptionLabel)];
+		return [
+			normalizeFields(
+				allowSpecialCharacters,
+				fields,
+				generateOptionValueUsingOptionLabel
+			),
+		];
 	};
 
 	const composedAdd = compose(clone, dedup, add, set);
@@ -538,6 +552,7 @@ const Options = ({
 };
 
 const Main = ({
+	allowSpecialCharacters,
 	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
 	editingLanguageId = themeDisplay.getDefaultLanguageId(),
 	generateOptionValueUsingOptionLabel = false,
@@ -554,6 +569,7 @@ const Main = ({
 	<DndProvider backend={HTML5Backend} context={window}>
 		<FieldBase {...otherProps} readOnly={readOnly} visible={visible}>
 			<Options
+				allowSpecialCharacters={allowSpecialCharacters}
 				defaultLanguageId={defaultLanguageId}
 				disabled={readOnly}
 				editingLanguageId={editingLanguageId}
@@ -573,6 +589,7 @@ const Main = ({
 				}) =>
 					option && (
 						<KeyValue
+							allowSpecialCharacters={allowSpecialCharacters}
 							displayErrors={
 								fieldError && fieldError === option.value
 							}
@@ -585,9 +602,7 @@ const Main = ({
 							keywordReadOnly={keywordReadOnly}
 							name={`option${index}`}
 							onBlur={handleBlur}
-							onChange={(event) =>
-								handleField('label', event.target.value)
-							}
+							onChange={(value) => handleField('label', value)}
 							onFocus={() => {
 								if (defaultOptionRef.current) {
 									handleField('label', '');
@@ -595,14 +610,14 @@ const Main = ({
 								}
 							}}
 							onKeywordBlur={handleBlur}
-							onKeywordChange={(event, value, generate) => {
+							onKeywordChange={(value, generate) => {
 								handleField('generateKeyword', generate);
 								handleField('value', value);
 							}}
 							onReferenceBlur={handleBlur}
-							onReferenceChange={(event) => {
-								handleField('reference', event.target.value);
-							}}
+							onReferenceChange={(value) =>
+								handleField('reference', value)
+							}
 							placeholder={placeholder}
 							readOnly={option.disabled}
 							reference={option.reference}

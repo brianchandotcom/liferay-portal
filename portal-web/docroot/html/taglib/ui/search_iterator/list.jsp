@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/ui/search_iterator/init.jsp" %>
 
-<%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jspf" %>
+<%@ include file="/html/taglib/ui/search_iterator/top.jspf" %>
 
 <%
 if (searchResultCssClass == null) {
@@ -385,4 +385,4 @@ if (fixedHeader) {
 String rowHtmlTag = "tr";
 %>
 
-<%@ include file="/html/taglib/ui/search_iterator/lexicon/bottom.jspf" %>
+<%@ include file="/html/taglib/ui/search_iterator/bottom.jspf" %>

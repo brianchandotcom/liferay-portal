@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/ui/search_iterator/init.jsp" %>
 
-<%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jspf" %>
+<%@ include file="/html/taglib/ui/search_iterator/top.jspf" %>
 
 <%
 if (searchResultCssClass == null) {
@@ -141,4 +141,4 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 String rowHtmlTag = "dd";
 %>
 
-<%@ include file="/html/taglib/ui/search_iterator/lexicon/bottom.jspf" %>
+<%@ include file="/html/taglib/ui/search_iterator/bottom.jspf" %>

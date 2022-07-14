@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/ui/search_iterator/init.jsp" %>
 
-<%@ include file="/html/taglib/ui/search_iterator/lexicon/top.jspf" %>
+<%@ include file="/html/taglib/ui/search_iterator/top.jspf" %>
 
 <div class="lfr-search-container-list">
 
@@ -164,4 +164,4 @@
 
 </div>
 
-<%@ include file="/html/taglib/ui/search_iterator/lexicon/bottom.jspf" %>
+<%@ include file="/html/taglib/ui/search_iterator/bottom.jspf" %>

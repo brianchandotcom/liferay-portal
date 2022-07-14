@@ -70,9 +70,11 @@ definition {
 				GogoShell.viewOutput(outputContent = "true");
 			}
 
+			JSONAccountEntryAPI._deleteAllAccountEntries();
+
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 
-			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
 
 			Picklist.deletePicklistViaAPI(picklistName = "Ticket Type");
 		}

@@ -202,7 +202,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-154648. Assert close button on final step can end walkthrough process."
+	@description = "LPS-154648. Assert close button on final step can reset walkthrough process."
 	@priority = "5"
 	test CloseButtonOnFinalStepCanResetTheProcess {
 		task ("And Given popover mode") {
@@ -227,11 +227,11 @@ definition {
 			Click(locator1 = "Button#CLOSE");
 		}
 
-		task ("And Then popover is not present") {
+		task ("Then popover is not present") {
 			AssertElementNotPresent(locator1 = "Walkthrough#POPOVER");
 		}
 
-		task ("Then hotspot element is present on 1st element") {
+		task ("And Then hotspot element is present on 1st element") {
 			AssertElementPresent(locator1 = "Walkthrough#HOTSPOT");
 
 			WalkthroughPopover.viewCoordinatePositionMatchesElementStep(

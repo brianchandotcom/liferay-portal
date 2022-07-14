@@ -40,6 +40,42 @@ definition {
 		}
 	}
 
+	@description = "Structured content is deleted in an asset library by custom erc"
+	@priority = "4"
+	test CanDeleteStructuredContentInAssetLibraryByAssetLibraryIdAndCustomErc {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content with a custom erc is created with a POST request in asset library") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			HeadlessWebcontentAPI.createStructuredContentInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				externalReferenceCode = "erc",
+				label = "Text",
+				name = "Text",
+				title = "WC WebContent Title");
+		}
+
+		task ("When I make a DELETE request by assetLibraryId and the custom erc") {
+			HeadlessWebcontentAPI.deleteStructuredContentInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "erc");
+		}
+
+		task ("Then the structured content is correctly deleted") {
+			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%27");
+
+			HeadlessWebcontentAPI.assertProperNumberOfItems(
+				expectedTotalElement = "0",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "Structured content is deleted in an asset library by default erc"
 	@priority = "4"
 	test CanDeleteStructuredContentInAssetLibraryByAssetLibraryIdAndDefaultErc {

@@ -42,6 +42,32 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
+	@summary = "Add Display Page Template entry and map fragments to the given fields."
+	macro addMappedDisplayPageTemplateEntry {
+		task ("Given a new ${contentType} type display page template with fragment created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "${contentType}",
+				displayPageTemplateEntryName = "${displayPageName}",
+				groupName = "${groupName}");
+		}
+
+		task ("And the fragments mapped to the given fields, published and optionally click on the given menu item") {
+			CommerceDisplayPageTemplates.mapFragmentsToFields(
+				displayPageName = "${displayPageName}",
+				fieldsList = "${fieldsList}",
+				fragmentName = "${fragmentName}",
+				siteURLKey = "${siteURLKey}");
+
+			if (isSet(menuItem)) {
+				LexiconEntry.gotoEntryMenuItem(
+					menuItem = "${menuItem}",
+					rowEntry = "${displayPageName}");
+
+				Alert.viewSuccessMessage();
+			}
+		}
+	}
+
 	macro checkCollectionDisplayProductSpecificationsPresent {
 		var productSpecifications = CommerceJSONProductsAPI._getCommerceProductSpecifications(productName = "${product}");
 

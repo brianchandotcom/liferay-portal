@@ -34,6 +34,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -260,14 +261,16 @@ public class LibraryVersionCheck extends BaseFileCheck {
 				JSONArray nodesJSONArray =
 					securityVulnerabilitiesJSONObject.getJSONArray("nodes");
 
-				for (Object tmpObject : nodesJSONArray) {
-					JSONObject tmpJSONObject = (JSONObject)tmpObject;
+				Iterator<JSONObject> iterator = nodesJSONArray.iterator();
+
+				while (iterator.hasNext()) {
+					JSONObject nodeJSONObject = iterator.next();
 
 					SecurityVulnerabilityNode securityVulnerabilityNode =
 						new SecurityVulnerabilityNode();
 
-					JSONObject advisoryJSONObject = tmpJSONObject.getJSONObject(
-						"advisory");
+					JSONObject advisoryJSONObject =
+						nodeJSONObject.getJSONObject("advisory");
 
 					securityVulnerabilityNode.setPermalink(
 						advisoryJSONObject.getString("permalink"));
@@ -275,7 +278,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 						advisoryJSONObject.getString("summary"));
 
 					securityVulnerabilityNode.setVersionRange(
-						tmpJSONObject.getString("vulnerableVersionRange"));
+						nodeJSONObject.getString("vulnerableVersionRange"));
 
 					securityVulnerabilityNodes.add(securityVulnerabilityNode);
 				}

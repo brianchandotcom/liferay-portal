@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <div class="server-admin-tabs">
-	<aui:fieldset>
+	<aui:fieldset-group markupView="lexicon">
 		<liferay-ui:panel-container
 			extended="<%= true %>"
 			id="adminExternalServicesPanelContainer"
@@ -56,5 +56,5 @@
 				</aui:button-row>
 			</liferay-ui:panel>
 		</liferay-ui:panel-container>
-	</aui:fieldset>
+	</aui:fieldset-group>
 </div>

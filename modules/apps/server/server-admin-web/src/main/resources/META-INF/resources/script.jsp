@@ -48,7 +48,7 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 </liferay-ui:error>
 
 <div class="server-admin-tabs">
-	<aui:fieldset-group margin-bottom="0 !important" markupView="lexicon">
+	<aui:fieldset-group markupView="lexicon">
 		<aui:select name="language">
 
 			<%

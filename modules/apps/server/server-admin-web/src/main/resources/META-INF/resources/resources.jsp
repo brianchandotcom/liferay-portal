@@ -91,7 +91,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 			<table class="lfr-table memory-status-table">
 				<tr>
 					<td>
-						<h4 class="float-right"><liferay-ui:message key="used-memory" /></h4>
+						<span class="font-weight-semi-bold"><liferay-ui:message key="used-memory" /></span>
 					</td>
 					<td>
 						<span class="text-muted"><%= basicNumberFormat.format(usedMemory) %> <liferay-ui:message key="bytes" /></span>
@@ -99,7 +99,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</tr>
 				<tr>
 					<td>
-						<h4 class="float-right"><liferay-ui:message key="total-memory" /></h4>
+						<span class="font-weight-semi-bold"><liferay-ui:message key="total-memory" /></span>
 					</td>
 					<td>
 						<span class="text-muted"><%= basicNumberFormat.format(runtime.totalMemory()) %> <liferay-ui:message key="bytes" /></span>
@@ -107,7 +107,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 				</tr>
 				<tr>
 					<td>
-						<h4 class="float-right"><liferay-ui:message key="maximum-memory" /></h4>
+						<span class="font-weight-semi-bold"><liferay-ui:message key="maximum-memory" /></span>
 					</td>
 					<td>
 						<span class="text-muted"><%= basicNumberFormat.format(runtime.maxMemory()) %> <liferay-ui:message key="bytes" /></span>

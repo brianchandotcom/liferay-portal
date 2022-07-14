@@ -2860,7 +2860,7 @@ export default function ChangeTrackingChangesView({
 					style={
 						showComments
 							? {
-									'height': '100%',
+									'height': '85vh',
 									'min-height': '485px',
 									'width': '320px',
 							  }

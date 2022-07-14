@@ -90,4 +90,197 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-155170. File Upload fragment could map to attachment type object."
+	@priority = "5"
+	test CanAddFileFromComputerAndDMInMappedObject {
+		property test.name.skip.portal.instance = "FileUpload#CanAddFileFromComputerAndDMInMappedObject";
+
+		task ("Given a company Object with attachment fields") {
+			task ("Enable Inputs Fragment collection in Gogo Shell") {
+				GogoShell.openGogoShellAdmin();
+
+				GogoShell.executeCommand(commandName = "scr:enable com.liferay.fragment.collection.contributor.inputs.InputsFragmentCollectionContributor");
+
+				GogoShell.viewOutput(outputContent = "true");
+			}
+
+			task ("Add a company Object with attachment fields") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "Upload Object",
+					objectName = "UploadObject",
+					pluralLabelName = "Upload Object");
+
+				ObjectAdmin.openObjectAdmin();
+
+				ObjectPortlet.selectCustomObject(label = "Upload Object");
+
+				ObjectAdmin.goToFieldsTab();
+
+				ObjectAdmin.addObjectFieldViaUI(
+					fieldAttachment = "Upload Directly from the User's Computer",
+					fieldLabel = "Custom Attachment From Computer",
+					fieldType = "Attachment");
+
+				ObjectAdmin.addObjectFieldViaUI(
+					fieldAttachment = "Upload or Select from Documents and Media Item Selector",
+					fieldLabel = "Custom Attachment From DM",
+					fieldType = "Attachment");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "UploadObject");
+			}
+		}
+
+		task ("When mapping File Upload fragment to attachment object") {
+			task ("Add a Form Container framgment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Upload Object",
+					panel = "General");
+			}
+
+			task ("Add a File Upload fragment to Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "File Upload");
+			}
+
+			task ("Map the File Upload fragment to Attachment field and publish") {
+				PageEditor.editInput(
+					field = "Custom Attachment From Computer",
+					fragmentName = "File Upload");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("Then the files from computer and DM are added in object") {
+			task ("Assert could add file from computer") {
+				ContentPagesNavigator.openViewContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				UploadDependencyFile.uploadFile(fileName = "Document_1.jpg");
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "TextInput#FILE_PRESENT",
+					value1 = "Document_1.jpg");
+			}
+
+			task ("Assert "Show Supported File Info" toggle displayed and is set to "ON" by default") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.gotoConfiguration(fragmentName = "File Upload");
+
+				AssertChecked.assertCheckedNotVisible(
+					key_toggleSwitchLabel = "Show Supported File Info",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+
+			task ("Assert "Label" and "Show Help Text" toggles and configs displayed") {
+				AssertElementPresent(
+					key_toggleSwitchLabel = "Show Label",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				AssertElementPresent(
+					key_toggleSwitchLabel = "Show Help Text",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				AssertTextEquals(
+					key_text = "Help Text",
+					locator1 = "TextInput#ANY",
+					value1 = "Add your help text here.");
+
+				AssertTextEquals(
+					key_text = "Label",
+					locator1 = "TextInput#ANY",
+					value1 = "Custom Attachment From Computer");
+			}
+
+			task ("Assert there's a help text displayed") {
+				PageEditor.viewInputStyle(
+					helpText = "Upload a .jpeg,.jpg,.pdf,.png no larger than 100 MB.",
+					type = "file-upload");
+			}
+
+			task ("Select the second field from the object") {
+				PageEditor.editInput(
+					field = "Custom Attachment From DM",
+					fragmentName = "File Upload");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert could add file from Documents and Media") {
+				ContentPagesNavigator.openViewContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				Click(locator1 = "Button#SELECT_FILE");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				UploadDependencyFile.uploadFile(fileName = "Document_2.jpg");
+
+				WaitForVisible(
+					key_text = "Add",
+					locator1 = "Button#ANY");
+
+				Button.clickAdd();
+
+				SelectFrameTop(value1 = "relative=top");
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "TextInput#FILE_PRESENT",
+					value1 = "Document_2.jpg");
+			}
+
+			task ("Assert "Show Supported File Info" toggle displayed and is set to "ON" by default") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.gotoConfiguration(fragmentName = "File Upload");
+
+				AssertChecked.assertCheckedNotVisible(
+					key_toggleSwitchLabel = "Show Supported File Info",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+
+			task ("Assert "Label" and "Show Help Text" toggles and configs displayed") {
+				AssertElementPresent(
+					key_toggleSwitchLabel = "Show Label",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				AssertElementPresent(
+					key_toggleSwitchLabel = "Show Help Text",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				AssertTextEquals(
+					key_text = "Help Text",
+					locator1 = "TextInput#ANY",
+					value1 = "Add your help text here.");
+
+				AssertTextEquals(
+					key_text = "Label",
+					locator1 = "TextInput#ANY",
+					value1 = "Custom Attachment From DM");
+			}
+
+			task ("Assert there's a help text displayed") {
+				PageEditor.viewInputStyle(
+					helpText = "Upload a .jpeg,.jpg,.pdf,.png no larger than 100 MB.",
+					type = "file-upload");
+			}
+		}
+	}
+
 }

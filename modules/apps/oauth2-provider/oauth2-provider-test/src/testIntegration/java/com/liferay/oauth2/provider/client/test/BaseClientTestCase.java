@@ -55,6 +55,7 @@ import org.apache.cxf.jaxrs.impl.RuntimeDelegateImpl;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
@@ -212,6 +213,9 @@ public abstract class BaseClientTestCase {
 
 		Cookie authenticatedCookie = getAuthenticatedCookie(
 			login, password, hostname);
+
+		Assert.assertNotNull(
+			"authenticatedCookie must not be null", authenticatedCookie);
 
 		return webtarget -> {
 			Invocation.Builder invocationBuilder = getInvocationBuilder(

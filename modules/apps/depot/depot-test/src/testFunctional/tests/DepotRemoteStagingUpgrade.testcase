@@ -45,10 +45,11 @@ definition {
 
 		PortletEntry.publish();
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page DM",
-			widgetName = "Blogs");
+		Navigator.gotoSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
 
 		Navigator.openSitePage(
 			pageName = "Test Page DM",
@@ -90,10 +91,11 @@ definition {
 
 		PortletEntry.publish();
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page DM",
-			widgetName = "Blogs");
+		Navigator.gotoSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Blogs");
 
 		Navigator.openSitePage(
 			pageName = "Test Page DM",
@@ -127,10 +129,11 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page DM",
-			widgetName = "Media Gallery");
+		Navigator.gotoSitePage(
+			pageName = "Test Page DM",
+			siteName = "Site Name");
+
+		Portlet.addPG(portletName = "Media Gallery");
 
 		Navigator.openSitePage(
 			pageName = "Test Page DM",

@@ -155,7 +155,12 @@ const MultiSelect = ({
 
 	return (
 		<>
-			<label id={labelId}>{field.label}</label>
+			<label
+				className={classNames({'sr-only': field.hideLabel})}
+				id={labelId}
+			>
+				{field.label}
+			</label>
 
 			<ClayDropDown
 				active={active}
@@ -202,7 +207,12 @@ const SingleSelect = ({disabled, field, onValueSelect, options, value}) => {
 
 	return (
 		<>
-			<label htmlFor={inputId}>{field.label}</label>
+			<label
+				className={classNames({'sr-only': field.hideLabel})}
+				htmlFor={inputId}
+			>
+				{field.label}
+			</label>
 
 			<ClaySelectWithOption
 				aria-describedby={helpTextId}

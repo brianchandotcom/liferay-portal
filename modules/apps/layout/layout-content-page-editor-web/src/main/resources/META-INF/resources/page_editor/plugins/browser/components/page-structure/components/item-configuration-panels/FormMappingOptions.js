@@ -18,7 +18,11 @@ import {SelectField} from '../../../../../../app/components/fragment-configurati
 import {FORM_MAPPING_SOURCES} from '../../../../../../app/config/constants/formMappingSources';
 import {config} from '../../../../../../app/config/index';
 
-export default function FormMappingOptions({item, onValueSelect}) {
+export default function FormMappingOptions({
+	hideLabel = false,
+	item,
+	onValueSelect,
+}) {
 	const formTypes = [
 		{
 			label: Liferay.Language.get('none'),
@@ -39,6 +43,7 @@ export default function FormMappingOptions({item, onValueSelect}) {
 		<>
 			<SelectField
 				field={{
+					hideLabel,
 					label: Liferay.Language.get('content-type'),
 					name: 'classNameId',
 					typeOptions: {
@@ -62,6 +67,7 @@ export default function FormMappingOptions({item, onValueSelect}) {
 			{selectedType?.subtypes?.length > 0 && (
 				<SelectField
 					field={{
+						hideLabel,
 						label: Liferay.Language.get('subtype'),
 						name: 'classTypeId',
 						typeOptions: {

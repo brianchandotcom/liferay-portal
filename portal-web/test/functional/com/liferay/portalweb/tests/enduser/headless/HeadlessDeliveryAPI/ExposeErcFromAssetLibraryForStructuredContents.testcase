@@ -364,6 +364,46 @@ definition {
 		}
 	}
 
+	@description = "Structured content is not able to delete with a nonexistent erc in asset library"
+	@priority = "3"
+	test StructruedContentDeletionImpossibleByAssetLibraryIdAndNonexistentErc {
+		property portal.acceptance = "true";
+
+		task ("Given a structured content with custom erc is created with a POST request in asset library") {
+			var assetLibraryId = JSONGroupAPI._getDepotIdByName(depotName = "Test Depot Name");
+			var ddmStructureId = WebContentStructures.getDdmStructureId(structureName = "content-structure");
+
+			HeadlessWebcontentAPI.createStructuredContentInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				data = "<p>My content</p>",
+				ddmStructureId = "${ddmStructureId}",
+				externalReferenceCode = "erc",
+				label = "Text",
+				name = "Text",
+				title = "WC WebContent Title");
+		}
+
+		task ("When I make a DELETE request by assetLibraryId and a non-existent erc") {
+			HeadlessWebcontentAPI.deleteStructuredContentInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				externalReferenceCode = "nonexistent-erc");
+		}
+
+		task ("Then the structured content with a custom erc created earlier still exists") {
+			var response = HeadlessWebcontentAPI.filterStructuredContentInAssetLibrary(
+				assetLibraryId = "${assetLibraryId}",
+				filtervalue = "title%20eq%20%27WC%20WebContent%20Title%27");
+
+			HeadlessWebcontentAPI.assertExternalReferenceCodeWithCorrectValue(
+				expectedExternalReferenceCodeValue = "erc",
+				responseToParse = "${response}");
+
+			HeadlessWebcontentAPI.assertProperNumberOfItems(
+				expectedTotalElement = "1",
+				responseToParse = "${response}");
+		}
+	}
+
 	@description = "Structured content is created by put nonexistent erc in asset library without erc in the body"
 	@priority = "5"
 	test StructuredContentIsCreatedInAssetLibraryByPutNonexistentErc {

@@ -26,20 +26,20 @@ ServerDisplayContext serverDisplayContext = new ServerDisplayContext(request, re
 
 <div class="<%= (tabs1.equals("log-levels") || tabs1.equals("properties")) ? StringPool.BLANK : "container-fluid container-fluid-max-xl" %>">
 	<c:choose>
-		<c:when test='<%= tabs1.equals("log-levels") %>'>
-			<liferay-util:include page="/log_levels.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:when test='<%= tabs1.equals("properties") %>'>
-			<liferay-util:include page="/properties.jsp" servletContext="<%= application %>" />
-		</c:when>
 		<c:when test='<%= tabs1.equals("data-migration") %>'>
 			<liferay-util:include page="/data_migration.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= tabs1.equals("external-services") %>'>
+			<liferay-util:include page="/external_services.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= tabs1.equals("log-levels") %>'>
+			<liferay-util:include page="/log_levels.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test='<%= tabs1.equals("mail") %>'>
 			<liferay-util:include page="/mail.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test='<%= tabs1.equals("external-services") %>'>
-			<liferay-util:include page="/external_services.jsp" servletContext="<%= application %>" />
+		<c:when test='<%= tabs1.equals("properties") %>'>
+			<liferay-util:include page="/properties.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test='<%= tabs1.equals("script") %>'>
 			<liferay-util:include page="/script.jsp" servletContext="<%= application %>" />

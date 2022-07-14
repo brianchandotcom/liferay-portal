@@ -391,6 +391,7 @@ definition {
 	}
 
 	@description = "It asserts proper override and translation infos for new language key."
+	@ignore = "true"
 	@priority = "4"
 	test CanViewProperOverrideInfosforNewLanguageKey {
 		task ("Given one new language key is created with all language override translations") {

@@ -1,0 +1,35 @@
+@import 'atlas-variables';
+
+$prefix: '.page-editor__single-select-with-icon';
+
+html#{$cadmin-selector} .cadmin {
+	#{$prefix} {
+		display: grid;
+		grid-template-columns: 2em auto;
+		place-items: center;
+	}
+
+	#{$prefix}__label-icon {
+		font-size: $font-size-sm;
+		grid-area: 1 / 1 / 2 / 2;
+	}
+
+	#{$prefix}__select,
+	#{$prefix}__label {
+		grid-area: 1 / 2 / 2 / 3;
+	}
+
+	#{$prefix}__select {
+		opacity: 0;
+		z-index: 1;
+	}
+
+	#{$prefix}:hover,
+	#{$prefix}:focus-within {
+		background-color: $cadmin-gray-100;
+	}
+
+	#{$prefix}:focus-within {
+		box-shadow: $btn-focus-box-shadow;
+	}
+}

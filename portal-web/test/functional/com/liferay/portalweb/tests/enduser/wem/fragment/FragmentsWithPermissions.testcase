@@ -55,6 +55,79 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136411. The page builder only with Update - Limited and Advanced Options cannot define custom css of fragment."
+	@priority = "4"
+	test CannotDefineCustomCSSOfFragmentAsUserWithUpdateLimitedAndAdvancedOptionsPermissions {
+		task ("Given a page builder has a content page") {
+			JSONRole.addSiteRole(
+				roleKey = "Page Builder",
+				roleTitle = "Page Builder");
+
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Test Site Name",
+				roleTitle = "Page Builder",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page builder has the Update - Limited and Advanced Options permissions in Page section") {
+			for (var resourceActionIndex : list "UPDATE_LAYOUT_LIMITED,UPDATE_LAYOUT_ADVANCED_OPTIONS") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.portal.kernel.model.Layout",
+					roleTitle = "Page Builder",
+					roleType = "site");
+			}
+		}
+
+		task ("Then the page builder cannot define the Custom CSS of fragment") {
+			task ("Add a Container to a content page") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = "userea@liferay.com",
+					userLoginFullName = "userfn userln");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Layout Elements",
+					fragmentName = "Container");
+			}
+
+			task ("Access to the Advanced panel of Container") {
+				PageEditor.gotoAdvanced(fragmentName = "Container");
+
+				AssertElementNotPresent(
+					key_fieldSetLabel = "CSS",
+					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
+			}
+
+			task ("Add a Heading fragment into Container") {
+				PageEditor.addElementToContainer(
+					collectionName = "Basic Components",
+					fragmentName = "Heading",
+					navTab = "Fragments");
+			}
+
+			task ("Access to the Advanced panel of Heading") {
+				PageEditor.gotoAdvanced(fragmentName = "Heading");
+
+				AssertElementNotPresent(
+					key_fieldSetLabel = "CSS",
+					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
+			}
+
+			task ("Delete the site role") {
+				JSONRole.deleteRole(roleTitle = "Page Builder");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-147787. The designer has full access permissions when given Update permission in Page section."
 	@priority = "5"
 	test EditContentPageAsUserWithUpdatePermission {

@@ -14,8 +14,6 @@
 
 /* eslint-disable @liferay/no-get-data-attribute */
 
-import {openToast} from 'frontend-js-web';
-
 if (!CKEDITOR.plugins.get('videoembed')) {
 	const REGEX_HTTP = /^https?/;
 
@@ -358,7 +356,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 		},
 
 		_showError(editor, errorMsg) {
-			openToast({
+			Liferay.Util.openToast({
 				message: errorMsg,
 				type: 'danger',
 			});

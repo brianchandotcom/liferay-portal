@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.upgrade.v6_2_0;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BasePortletPreferencesUpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -150,6 +152,10 @@ public abstract class BaseUpgradePortletPreferences
 			rightTableName, " on PortletPreferences.", leftColumnName, " = ",
 			rightTableName, StringPool.PERIOD, rightColumnName, sb.toString());
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(sql);
+		}
+
 		try (LoggingTimer loggingTimer = new LoggingTimer(rightTableName)) {
 			try (PreparedStatement preparedStatement1 =
 					connection.prepareStatement(sql);
@@ -185,5 +191,8 @@ public abstract class BaseUpgradePortletPreferences
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseUpgradePortletPreferences.class);
 
 }

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.verify.model.VerifiableAuditedModel;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeAnnouncements;
-import com.liferay.portal.upgrade.v6_2_0.UpgradeAssetPublisher;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeBlogs;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeBlogsAggregator;
 import com.liferay.portal.upgrade.v6_2_0.UpgradeCalendar;
@@ -296,7 +295,6 @@ public class UpgradeProcess_6_2_0 extends Pre7UpgradeProcess {
 		upgrade(new UpgradeSchema());
 
 		upgrade(new UpgradeAnnouncements());
-		upgrade(new UpgradeAssetPublisher());
 		upgrade(new UpgradeBlogs());
 		upgrade(new UpgradeBlogsAggregator());
 		upgrade(new UpgradeCalendar());

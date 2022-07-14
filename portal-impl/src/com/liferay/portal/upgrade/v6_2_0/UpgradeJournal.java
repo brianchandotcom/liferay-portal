@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
+import com.liferay.portal.upgrade.v6_2_0.util.RSSUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -1140,6 +1141,12 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			updatePreferencesClassPKs(preferences, "classTypeIds");
 			updatePreferencesClassPKs(
 				preferences, "classTypeIdsJournalArticleAssetRendererFactory");
+
+			// Moved from com.liferay.portal.upgrade.v6_2_0.
+			// UpgradeAssetPublisher to improve performance
+
+			upgradeRss(preferences);
+			upgradeScopeIds(preferences);
 		}
 		else if (portletId.startsWith(_PORTLET_ID_JOURNAL_CONTENT)) {
 			String templateId = preferences.getValue(
@@ -1163,6 +1170,45 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(preferences);
+	}
+
+	protected void upgradeRss(PortletPreferences portletPreferences)
+		throws Exception {
+
+		String rssFormat = GetterUtil.getString(
+			portletPreferences.getValue("rssFormat", null));
+
+		if (Validator.isNotNull(rssFormat)) {
+			portletPreferences.setValue(
+				"rssFeedType",
+				RSSUtil.getFeedType(
+					RSSUtil.getFormatType(rssFormat),
+					RSSUtil.getFormatVersion(rssFormat)));
+		}
+
+		portletPreferences.reset("rssFormat");
+	}
+
+	protected void upgradeScopeIds(PortletPreferences portletPreferences)
+		throws Exception {
+
+		String defaultScope = GetterUtil.getString(
+			portletPreferences.getValue("defaultScope", null));
+
+		if (Validator.isNull(defaultScope)) {
+			return;
+		}
+
+		if (defaultScope.equals("true")) {
+			portletPreferences.setValues(
+				"scopeIds", new String[] {"Group_default"});
+		}
+		else if (!defaultScope.equals("false")) {
+			portletPreferences.setValues(
+				"scopeIds", new String[] {defaultScope});
+		}
+
+		portletPreferences.reset("defaultScope");
 	}
 
 	protected void upgradeURLTitle() throws Exception {

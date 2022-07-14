@@ -172,7 +172,7 @@ const SUCCESS_MESSAGE_OPTIONS = [
 		value: LAYOUT_OPTION,
 	},
 	{
-		label: Liferay.Language.get('url'),
+		label: Liferay.Language.get('external-url'),
 		value: URL_OPTION,
 	},
 ];
@@ -328,7 +328,9 @@ function SuccessMessageOptions({item, onValueSelect}) {
 
 			{selectedSource === URL_OPTION && (
 				<ClayForm.Group small>
-					<label htmlFor={urlId}>{Liferay.Language.get('url')}</label>
+					<label htmlFor={urlId}>
+						{Liferay.Language.get('external-url')}
+					</label>
 
 					<ClayInput.Group small>
 						<ClayInput.GroupItem>

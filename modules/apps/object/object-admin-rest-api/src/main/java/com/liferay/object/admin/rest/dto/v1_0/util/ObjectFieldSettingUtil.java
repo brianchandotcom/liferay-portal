@@ -15,9 +15,11 @@
 package com.liferay.object.admin.rest.dto.v1_0.util;
 
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectStateFlowLocalServiceUtil;
+import com.liferay.object.util.ObjectFilterUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -53,7 +55,17 @@ public class ObjectFieldSettingUtil {
 		String businessType, ObjectFieldSetting objectFieldSetting) {
 
 		if (Objects.equals(
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT, businessType)) {
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION, businessType) &&
+			Objects.equals(
+				objectFieldSetting.getName(),
+				ObjectFieldSettingConstants.FILTERS)) {
+
+			return ObjectFilterUtil.getObjectFiltersJSONArray(
+				objectFieldSetting.getObjectFilters());
+		}
+		else if (Objects.equals(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+					businessType)) {
 
 			if (Objects.equals(
 					objectFieldSetting.getName(), "maximumFileSize")) {

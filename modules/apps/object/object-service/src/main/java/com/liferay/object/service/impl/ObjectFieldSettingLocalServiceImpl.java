@@ -107,8 +107,38 @@ public class ObjectFieldSettingLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectFieldSetting> getObjectFieldSettings(long objectFieldId) {
-		return objectFieldSettingPersistence.findByObjectFieldId(objectFieldId);
+	public List<ObjectFieldSetting> getObjectFieldSettingsByObjectFieldId(
+		long objectFieldId) {
+
+		ObjectField objectField = _objectFieldPersistence.fetchByPrimaryKey(
+			objectFieldId);
+
+		if (objectField == null) {
+			return Collections.emptyList();
+		}
+
+		List<ObjectFieldSetting> objectFieldSettings =
+			objectFieldSettingPersistence.findByObjectFieldId(objectFieldId);
+
+		if (!Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)) {
+
+			return objectFieldSettings;
+		}
+
+		ObjectFieldSetting objectFieldSetting = new ObjectFieldSettingImpl();
+
+		objectFieldSetting.setName(ObjectFieldSettingConstants.FILTERS);
+		objectFieldSetting.setObjectFilters(
+			_objectFilterLocalService.getObjectFieldObjectFilter(
+				objectFieldId));
+
+		objectFieldSettings = new ArrayList<>(objectFieldSettings);
+
+		objectFieldSettings.add(objectFieldSetting);
+
+		return objectFieldSettings;
 	}
 
 	@Override

@@ -267,8 +267,9 @@ public class ObjectFieldLocalServiceImpl
 
 		for (ObjectField objectField : objectFields) {
 			objectField.setObjectFieldSettings(
-				_objectFieldSettingPersistence.findByObjectFieldId(
-					objectField.getObjectFieldId()));
+				_objectFieldSettingLocalService.
+					getObjectFieldSettingsByObjectFieldId(
+						objectField.getObjectFieldId()));
 
 			if (Validator.isNotNull(objectField.getRelationshipType())) {
 				ObjectRelationship objectRelationship =
@@ -334,8 +335,9 @@ public class ObjectFieldLocalServiceImpl
 
 		for (ObjectField objectField : objectFields) {
 			objectField.setObjectFieldSettings(
-				_objectFieldSettingPersistence.findByObjectFieldId(
-					objectField.getObjectFieldId()));
+				_objectFieldSettingLocalService.
+					getObjectFieldSettingsByObjectFieldId(
+						objectField.getObjectFieldId()));
 		}
 
 		return objectFields;
@@ -356,7 +358,9 @@ public class ObjectFieldLocalServiceImpl
 			objectFieldId);
 
 		objectField.setObjectFieldSettings(
-			_objectFieldSettingPersistence.findByObjectFieldId(objectFieldId));
+			_objectFieldSettingLocalService.
+				getObjectFieldSettingsByObjectFieldId(
+					objectField.getObjectFieldId()));
 
 		return objectField;
 	}
@@ -369,8 +373,9 @@ public class ObjectFieldLocalServiceImpl
 			objectDefinitionId, name);
 
 		objectField.setObjectFieldSettings(
-			_objectFieldSettingPersistence.findByObjectFieldId(
-				objectField.getObjectFieldId()));
+			_objectFieldSettingLocalService.
+				getObjectFieldSettingsByObjectFieldId(
+					objectField.getObjectFieldId()));
 
 		return objectField;
 	}
@@ -382,8 +387,9 @@ public class ObjectFieldLocalServiceImpl
 
 		for (ObjectField objectField : objectFields) {
 			objectField.setObjectFieldSettings(
-				_objectFieldSettingPersistence.findByObjectFieldId(
-					objectField.getObjectFieldId()));
+				_objectFieldSettingLocalService.
+					getObjectFieldSettingsByObjectFieldId(
+						objectField.getObjectFieldId()));
 		}
 
 		return objectFields;
@@ -398,8 +404,9 @@ public class ObjectFieldLocalServiceImpl
 
 		for (ObjectField objectField : objectFields) {
 			objectField.setObjectFieldSettings(
-				_objectFieldSettingPersistence.findByObjectFieldId(
-					objectField.getObjectFieldId()));
+				_objectFieldSettingLocalService.
+					getObjectFieldSettingsByObjectFieldId(
+						objectField.getObjectFieldId()));
 		}
 
 		return objectFields;

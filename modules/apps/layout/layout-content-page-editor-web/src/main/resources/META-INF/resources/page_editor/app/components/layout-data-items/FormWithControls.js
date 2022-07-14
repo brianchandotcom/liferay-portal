@@ -98,11 +98,13 @@ function FormEmptyState({isMapped, item}) {
 				)}
 			</p>
 
-			<FormMappingOptions
-				hideLabel={true}
-				item={item}
-				onValueSelect={onValueSelect}
-			/>
+			<div onClick={(event) => event.stopPropagation()}>
+				<FormMappingOptions
+					hideLabel={true}
+					item={item}
+					onValueSelect={onValueSelect}
+				/>
+			</div>
 		</div>
 	);
 }

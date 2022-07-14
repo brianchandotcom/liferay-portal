@@ -756,9 +756,9 @@ definition {
 			locator1 = "Home#PAGE_2_GUEST_VIEW",
 			value1 = "New Page Name");
 
-		// Pausing 180 seconds due to LRQA-75909
+		// Pausing 300 seconds due to LRQA-75909
 
-		Pause(locator1 = "180000");
+		Pause(locator1 = "300000");
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Home",

@@ -30,30 +30,32 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-category"));
 	<portlet:param name="redirect" value="<%= String.valueOf(redirect) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= addLogCategoryURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
-	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
-			<aui:input cssClass="lfr-input-text-container" label="logger-name" name="loggerName" type="text" />
+<liferay-frontend:edit-form
+	action="<%= addLogCategoryURL %>"
+	method="post"
+	name="fm"
+>
+	<liferay-frontend:edit-form-body>
+		<aui:input cssClass="lfr-input-text-container" label="logger-name" name="loggerName" type="text" />
 
-			<aui:select label="log-level" name="priority">
+		<aui:select label="log-level" name="priority">
 
-				<%
-				for (int i = 0; i < _ALL_PRIORITIES.length; i++) {
-				%>
+			<%
+			for (int i = 0; i < _ALL_PRIORITIES.length; i++) {
+			%>
 
-					<aui:option label="<%= _ALL_PRIORITIES[i] %>" selected="<%= Objects.equals(String.valueOf(Level.INFO), _ALL_PRIORITIES[i]) %>" />
+				<aui:option label="<%= _ALL_PRIORITIES[i] %>" selected="<%= Objects.equals(String.valueOf(Level.INFO), _ALL_PRIORITIES[i]) %>" />
 
-				<%
-				}
-				%>
+			<%
+			}
+			%>
 
-			</aui:select>
-		</aui:fieldset>
-	</aui:fieldset-group>
+		</aui:select>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

@@ -195,6 +195,8 @@ public class BulkDocumentRequestExecutorImpl
 					Thread.sleep(60000);
 				}
 				catch (InterruptedException interruptedException) {
+					_log.error(interruptedException);
+
 					throw new RuntimeException(exception);
 				}
 			}

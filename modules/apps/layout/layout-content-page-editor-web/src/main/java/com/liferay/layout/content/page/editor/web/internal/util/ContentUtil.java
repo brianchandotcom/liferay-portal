@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -418,7 +419,16 @@ public class ContentUtil {
 
 		long fragmentEntryLinkClassNameId = PortalUtil.getClassNameId(
 			FragmentEntryLink.class);
-		LayoutStructure layoutStructure = null;
+		long portletClassNameId = PortalUtil.getClassNameId(Portlet.class);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		LayoutStructure layoutStructure =
+			LayoutStructureUtil.getLayoutStructure(
+				themeDisplay.getScopeGroupId(), plid, segmentsExperienceId);
+
 		Set<String> uniqueLayoutClassedModelUsageKeys = new HashSet<>();
 
 		List<LayoutClassedModelUsage> layoutClassedModelUsages =
@@ -477,6 +487,14 @@ public class ContentUtil {
 
 					continue;
 				}
+			}
+
+			if ((layoutClassedModelUsage.getContainerType() ==
+					portletClassNameId) &&
+				layoutStructure.isPortletMarkedForDeletion(
+					layoutClassedModelUsage.getContainerKey())) {
+
+				continue;
 			}
 
 			try {

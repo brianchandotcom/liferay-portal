@@ -15,48 +15,26 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.list.type.model.ListTypeDefinition;
-import com.liferay.list.type.service.ListTypeDefinitionLocalService;
-import com.liferay.list.type.service.ListTypeEntryLocalService;
-import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.model.ObjectStateTransition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectStateFlowLocalService;
-import com.liferay.object.service.ObjectStateLocalService;
-import com.liferay.object.service.ObjectStateTransitionLocalService;
 import com.liferay.object.service.persistence.ObjectStatePersistence;
 import com.liferay.object.service.persistence.ObjectStateTransitionPersistence;
-import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-import com.liferay.portal.util.PropsUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -66,7 +44,8 @@ import org.junit.runner.RunWith;
  * @author Selton Guedes
  */
 @RunWith(Arquillian.class)
-public class ObjectStateTransitionLocalServiceTest {
+public class ObjectStateTransitionLocalServiceTest
+	extends BaseObjectStateLocalServiceTest {
 
 	@ClassRule
 	@Rule
@@ -76,55 +55,6 @@ public class ObjectStateTransitionLocalServiceTest {
 			new TransactionalTestRule(
 				Propagation.REQUIRED, "com.liferay.object.service"));
 
-	@BeforeClass
-	public static void setUpClass() {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-152677", "true"
-			).build());
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				"feature.flag.LPS-152677", "false"
-			).build());
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		_listTypeDefinition =
-			_listTypeDefinitionLocalService.addListTypeDefinition(
-				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(
-					RandomTestUtil.randomString()));
-
-		for (String key : Arrays.asList("step1", "step2", "step3")) {
-			_listTypeEntryLocalService.addListTypeEntry(
-				TestPropsValues.getUserId(),
-				_listTypeDefinition.getListTypeDefinitionId(), key,
-				LocalizedMapUtil.getLocalizedMap(key));
-		}
-
-		_objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList());
-
-		_objectStateFlow = _addDefaultObjectStateFlow();
-	}
-
-	@After
-	public void tearDown() throws PortalException {
-		_objectDefinitionLocalService.deleteObjectDefinition(_objectDefinition);
-	}
-
 	@Test
 	public void testAddObjectStateTransition() throws PortalException {
 		long objectStateFlowId = RandomTestUtil.randomLong();
@@ -132,7 +62,7 @@ public class ObjectStateTransitionLocalServiceTest {
 		long targetObjectStateId = RandomTestUtil.randomLong();
 
 		ObjectStateTransition objectStateTransition =
-			_objectStateTransitionLocalService.addObjectStateTransition(
+			objectStateTransitionLocalService.addObjectStateTransition(
 				TestPropsValues.getUserId(), objectStateFlowId,
 				sourceObjectStateId, targetObjectStateId);
 
@@ -155,7 +85,7 @@ public class ObjectStateTransitionLocalServiceTest {
 	public void testDeleteObjectStateObjectStateTransitions() {
 		ObjectState objectState =
 			_objectStatePersistence.fetchByObjectStateFlowId_First(
-				_objectStateFlow.getObjectStateFlowId(), null);
+				objectStateFlow.getObjectStateFlowId(), null);
 
 		List<ObjectStateTransition> objectStateTransitions =
 			_objectStateTransitionPersistence.findBySourceObjectStateId(
@@ -165,7 +95,7 @@ public class ObjectStateTransitionLocalServiceTest {
 			objectStateTransitions.toString(), 2,
 			objectStateTransitions.size());
 
-		_objectStateTransitionLocalService.
+		objectStateTransitionLocalService.
 			deleteObjectStateObjectStateTransitions(
 				objectState.getObjectStateId());
 
@@ -182,11 +112,9 @@ public class ObjectStateTransitionLocalServiceTest {
 
 	@Test
 	public void testUpdateObjectStateTransitions() throws PortalException {
-		ObjectStateFlow originalObjectStateFlow = _addDefaultObjectStateFlow();
-
 		List<ObjectState> objectStates =
-			_objectStateLocalService.getObjectStateFlowObjectStates(
-				originalObjectStateFlow.getObjectStateFlowId());
+			objectStateLocalService.getObjectStateFlowObjectStates(
+				objectStateFlow.getObjectStateFlowId());
 
 		for (ObjectState objectState : objectStates) {
 			objectState.setObjectStateTransitions(
@@ -194,10 +122,10 @@ public class ObjectStateTransitionLocalServiceTest {
 					objectState.getObjectStateId()));
 		}
 
-		originalObjectStateFlow.setObjectStates(objectStates);
+		objectStateFlow.setObjectStates(objectStates);
 
 		ObjectStateFlow newObjectStateFlow =
-			(ObjectStateFlow)originalObjectStateFlow.clone();
+			(ObjectStateFlow)objectStateFlow.clone();
 
 		List<ObjectState> newObjectStates = new ArrayList<>(objectStates);
 
@@ -211,29 +139,13 @@ public class ObjectStateTransitionLocalServiceTest {
 
 		newObjectStateFlow.setObjectStates(newObjectStates);
 
-		_objectStateTransitionLocalService.updateObjectStateTransitions(
+		objectStateTransitionLocalService.updateObjectStateTransitions(
 			newObjectStateFlow);
 
 		_assertEquals(
 			newObjectStates,
-			_objectStateLocalService.getObjectStateFlowObjectStates(
-				originalObjectStateFlow.getObjectStateFlowId()));
-	}
-
-	private ObjectStateFlow _addDefaultObjectStateFlow()
-		throws PortalException {
-
-		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
-			TestPropsValues.getUserId(),
-			_listTypeDefinition.getListTypeDefinitionId(),
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_PICKLIST,
-			ObjectFieldConstants.DB_TYPE_STRING, null, false, true, "",
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			StringUtil.randomId(), true, true, Collections.emptyList());
-
-		return _objectStateFlowLocalService.getObjectFieldObjectStateFlow(
-			objectField.getObjectFieldId());
+			objectStateLocalService.getObjectStateFlowObjectStates(
+				objectStateFlow.getObjectStateFlowId()));
 	}
 
 	private void _assertEquals(
@@ -277,37 +189,8 @@ public class ObjectStateTransitionLocalServiceTest {
 		}
 	}
 
-	@DeleteAfterTestRun
-	private ListTypeDefinition _listTypeDefinition;
-
-	@Inject
-	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
-
-	@Inject
-	private ListTypeEntryLocalService _listTypeEntryLocalService;
-
-	private ObjectDefinition _objectDefinition;
-
-	@Inject
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Inject
-	private ObjectFieldLocalService _objectFieldLocalService;
-
-	private ObjectStateFlow _objectStateFlow;
-
-	@Inject
-	private ObjectStateFlowLocalService _objectStateFlowLocalService;
-
-	@Inject
-	private ObjectStateLocalService _objectStateLocalService;
-
 	@Inject
 	private ObjectStatePersistence _objectStatePersistence;
-
-	@Inject
-	private ObjectStateTransitionLocalService
-		_objectStateTransitionLocalService;
 
 	@Inject
 	private ObjectStateTransitionPersistence _objectStateTransitionPersistence;

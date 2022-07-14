@@ -57,19 +57,27 @@ const FormWithControls = React.forwardRef(({children, item, ...rest}, ref) => {
 export default FormWithControls;
 
 function FormEmptyState({isMapped}) {
-	return (
-		<div
-			className={classNames('page-editor__no-fragments-message', {
-				'bg-lighter': !isMapped,
-			})}
-		>
-			<div className="page-editor__no-fragments-message__title">
-				{isMapped
-					? Liferay.Language.get('place-fragments-here')
-					: Liferay.Language.get(
-							'select-a-content-type-to-start-creating-the-form'
-					  )}
+	if (isMapped) {
+		return (
+			<div className="page-editor__no-fragments-state">
+				<p className="m-0 page-editor__no-fragments-state__message">
+					{Liferay.Language.get('place-fragments-here')}
+				</p>
 			</div>
+		);
+	}
+
+	return (
+		<div className="bg-lighter page-editor__no-fragments-state">
+			<p className="page-editor__no-fragments-state__title">
+				{Liferay.Language.get('map-your-form')}
+			</p>
+
+			<p className="page-editor__no-fragments-state__message">
+				{Liferay.Language.get(
+					'select-a-content-type-to-start-creating-the-form'
+				)}
+			</p>
 		</div>
 	);
 }

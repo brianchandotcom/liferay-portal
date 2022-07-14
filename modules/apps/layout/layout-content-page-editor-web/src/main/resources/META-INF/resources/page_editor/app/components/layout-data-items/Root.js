@@ -30,10 +30,10 @@ const Root = React.forwardRef(({children, item}, ref) => {
 		<TopperEmpty item={item}>
 			<div className="page-editor__root" ref={ref}>
 				{isEmpty ? (
-					<div className="page-editor__no-fragments-message">
-						<div className="page-editor__no-fragments-message__title">
+					<div className="page-editor__no-fragments-state">
+						<p className="page-editor__no-fragments-state__message">
 							{Liferay.Language.get('place-fragments-here')}
-						</div>
+						</p>
 					</div>
 				) : (
 					children

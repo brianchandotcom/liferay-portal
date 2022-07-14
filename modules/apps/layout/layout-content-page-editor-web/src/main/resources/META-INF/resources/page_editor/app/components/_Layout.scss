@@ -233,18 +233,28 @@ html#{$cadmin-selector} {
 			left: 1px;
 		}
 
-		&__no-fragments-message {
+		&__no-fragments-state {
 			background: $cadmin-primary-l3;
 			border: $dashedBorderWidth dashed $cadmin-primary-l2;
-			padding: 15vh 0;
+			padding: 15vh 5vw;
+
+			&__message,
+			&__title {
+				font-family: $cadmin-font-family-base;
+				text-align: center;
+			}
+
+			&__message {
+				color: $secondary;
+				font-size: 14px;
+				margin: 0;
+			}
 
 			&__title {
-				color: $cadmin-gray-500;
-				font-family: $cadmin-font-family-base;
-				font-size: 14px;
+				color: $dark;
+				font-size: 16px;
 				font-weight: 600;
-				margin-top: 0;
-				text-align: center;
+				margin-bottom: 12px;
 			}
 		}
 

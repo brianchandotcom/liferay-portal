@@ -169,10 +169,10 @@ html#{$cadmin-selector} {
 			border-bottom: $dragOverWidth solid $cadmin-primary-l1;
 		}
 
-		&.drag-over-middle .page-editor__no-fragments-message {
+		&.drag-over-middle .page-editor__no-fragments-state {
 			border: 2px solid $cadmin-primary-l1;
 
-			.page-editor__no-fragments-message__title {
+			.page-editor__no-fragments-state__message {
 				color: $cadmin-gray-400;
 			}
 		}

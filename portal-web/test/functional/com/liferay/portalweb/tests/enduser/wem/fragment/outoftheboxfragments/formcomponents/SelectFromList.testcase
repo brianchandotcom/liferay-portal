@@ -371,7 +371,6 @@ definition {
 
 		task ("Then the pages designer can see 11º entry on select from list dropdown menu") {
 			Type(
-				key_type = "search",
 				locator1 = "MenuItem#SEARCH_FIELD",
 				value1 = "Rice");
 
@@ -493,9 +492,7 @@ definition {
 
 			MenuItem.viewOrder(menuItemList = "Choose an Option,Assets,Equity,Expenses,Free,Liabilities,Nominal,Personal,Real,Revenue,Saving");
 
-			AssertNotVisible(
-				key_type = "search",
-				locator1 = "MenuItem#SEARCH_FIELD");
+			AssertNotVisible(locator1 = "MenuItem#SEARCH_FIELD");
 		}
 	}
 

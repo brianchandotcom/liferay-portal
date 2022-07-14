@@ -71,7 +71,7 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 		<aui:input cssClass="lfr-textarea-container" name="script" resizable="<%= true %>" type="textarea" value="<%= script %>" />
 
 		<aui:button-row>
-			<aui:button cssClass="save-server-button" data-cmd="runScript" value="execute" />
+			<aui:button cssClass="save-server-button" data-cmd="runScript" primary="<%= true %>" value="execute" />
 		</aui:button-row>
 	</aui:fieldset-group>
 

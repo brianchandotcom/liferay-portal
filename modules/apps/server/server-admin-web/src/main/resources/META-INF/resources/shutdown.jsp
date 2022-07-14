@@ -33,7 +33,7 @@
 
 				<aui:input cssClass="lfr-textarea-container" label="custom-message" name="message" type="textarea" />
 
-				<aui:button cssClass="save-server-button" data-cmd="shutdown" value="shutdown" />
+				<aui:button cssClass="save-server-button" data-cmd="shutdown" primary="<%= true %>" value="shutdown" />
 			</aui:fieldset-group>
 		</c:otherwise>
 	</c:choose>

@@ -41,7 +41,7 @@
 		</aui:fieldset>
 
 		<aui:button-row>
-			<aui:button cssClass="save-server-button" data-cmd="updateExternalServices" value="save" />
+			<aui:button cssClass="save-server-button" data-cmd="updateExternalServices" primary="<%= true %>" value="save" />
 		</aui:button-row>
 	</aui:fieldset-group>
 </div>

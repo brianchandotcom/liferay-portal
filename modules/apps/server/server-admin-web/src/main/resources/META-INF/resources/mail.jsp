@@ -23,7 +23,7 @@
 		</liferay-util:include>
 
 		<aui:button-row>
-			<aui:button cssClass="save-server-button" data-cmd="updateMail" value="save" />
+			<aui:button cssClass="save-server-button" data-cmd="updateMail" primary="<%= true %>" value="save" />
 		</aui:button-row>
 	</aui:fieldset-group>
 </div>

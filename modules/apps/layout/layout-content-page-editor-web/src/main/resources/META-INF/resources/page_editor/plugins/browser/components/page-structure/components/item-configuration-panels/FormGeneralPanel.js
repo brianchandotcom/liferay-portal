@@ -18,8 +18,6 @@ import React, {useCallback, useEffect, useState} from 'react';
 import updateItemLocalConfig from '../../../../../../app/actions/updateItemLocalConfig';
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
-import {FORM_MAPPING_SOURCES} from '../../../../../../app/config/constants/formMappingSources';
-import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
@@ -36,6 +34,7 @@ import {LayoutSelector} from '../../../../../../common/components/LayoutSelector
 import useControlledState from '../../../../../../core/hooks/useControlledState';
 import {CommonStyles} from './CommonStyles';
 import ContainerDisplayOptions from './ContainerDisplayOptions';
+import FormMappingOptions from './FormMappingOptions';
 
 export function FormGeneralPanel({item}) {
 	const dispatch = useDispatch();
@@ -67,81 +66,13 @@ export function FormGeneralPanel({item}) {
 }
 
 function FormOptions({item, onValueSelect}) {
-	const formTypes = [
-		{
-			label: Liferay.Language.get('none'),
-			value: '',
-		},
-		...config.formTypes,
-	];
-
-	const {classNameId, classTypeId} = item.config;
-
-	const selectedType = formTypes.find(({value}) => value === classNameId);
-
-	const selectedSubtype = selectedType?.subtypes.find(
-		({value}) => value === classTypeId
-	);
-
 	return (
 		<div className="mb-3">
 			<Collapse
 				label={Liferay.Language.get('form-container-options')}
 				open
 			>
-				{!!formTypes.length && (
-					<SelectField
-						disabled={!formTypes.length}
-						field={{
-							label: Liferay.Language.get('content-type'),
-							name: 'classNameId',
-							typeOptions: {
-								validValues: formTypes,
-							},
-						}}
-						onValueSelect={(_name, classNameId) => {
-							const type = formTypes.find(
-								({value}) => value === classNameId
-							);
-
-							return onValueSelect({
-								classNameId,
-								classTypeId: type?.subtypes?.[0]?.value || '0',
-								formConfig:
-									FORM_MAPPING_SOURCES.otherContentType,
-							});
-						}}
-						value={selectedType ? classNameId : ''}
-					/>
-				)}
-
-				{selectedType?.subtypes?.length > 0 && (
-					<SelectField
-						disabled={!formTypes.length}
-						field={{
-							label: Liferay.Language.get('subtype'),
-							name: 'classTypeId',
-							typeOptions: {
-								validValues: [
-									{
-										label: Liferay.Language.get('none'),
-										value: '',
-									},
-									...selectedType.subtypes,
-								],
-							},
-						}}
-						onValueSelect={(_name, classTypeId) =>
-							onValueSelect({
-								classNameId: item.config.classNameId,
-								classTypeId,
-								formConfig:
-									FORM_MAPPING_SOURCES.otherContentType,
-							})
-						}
-						value={selectedSubtype ? classTypeId : ''}
-					/>
-				)}
+				<FormMappingOptions item={item} onValueSelect={onValueSelect} />
 
 				{formIsMapped(item) && (
 					<>

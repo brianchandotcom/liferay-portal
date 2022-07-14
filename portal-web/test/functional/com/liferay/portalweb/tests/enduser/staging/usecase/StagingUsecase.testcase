@@ -900,10 +900,12 @@ definition {
 
 		Click(
 			key_append = "",
-			key_url = "/Document_1.jpg",
+			key_url = "/dm-document-title",
 			locator1 = "Fragment#FRAGMENT_LINK");
 
-		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg')]");
+		AssertVisible(
+			key_imageSourceURL = "dm-document-title",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_VIEWPORT_PREVIEW");
 	}
 
 	@priority = "5"

@@ -1046,7 +1046,12 @@ definition {
 			locator1 = "Button#RENAME",
 			value1 = "Rename");
 
-		Alert.viewSuccessMessage();
+		if (isSet(renameDraftWikiPage)) {
+			Alert.viewErrorMessage(errorMessage = "Your request failed to complete.");
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro renameWikiPagePG {

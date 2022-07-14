@@ -483,6 +483,78 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-9675. Users can view and download a product's attachments"
+	@priority = "3"
+	test CanDownloadProductAttachments {
+		property portal.acceptance = "false";
+
+		var fileName1 = "Document_1.pdf";
+		var fileName2 = "Commerce_Black.jpg";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a Business Account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a product with 2 attachments") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "U-Joint");
+
+			CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			CommerceProductImages.addAttachments(fileNames = "${fileName1},${fileName2}");
+		}
+
+		task ("When the buyer navigates to the product detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoProductDetails(productName = "U-Joint");
+		}
+
+		task ("Then the buyer can see the attachments tab") {
+			AssertElementPresent(
+				key_text = "Attachments",
+				locator1 = "Button#ANY");
+
+			for (var fileName : list "${fileName1},${fileName2}") {
+				FrontStore.viewProductAttachment(attachmentName = "${fileName}");
+			}
+		}
+
+		task ("When the buyer clicks the 'Download' button of an attachment") {
+			Click(
+				key_button = "Download",
+				key_entryName = "${fileName1}",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_ATTACHMENTS_BUTTON");
+		}
+
+		task ("Then the file is downloaded successfully") {
+			ImportExport.assertDownloadedFileName(downloadedFile = "${fileName1}");
+		}
+	}
+
 	@description = "COMMERCE-9674 | As a buyer, I want to be able to view the incoming dates/quantities for a multiple SKUs product"
 	@priority = "3"
 	test CanViewMultipleSkusProductIncomingQuantity {

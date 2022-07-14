@@ -42,9 +42,19 @@ definition {
 			groupId = "${groupId}",
 			unCheckedContent = "${unCheckedContent}");
 
-		// Pause is necessary because the process of activating staging via API is too fast and doesn't have time to process if you navigate to staging site quickly.
+		var groupId = JSONGroupAPI._getGroupIdByNameNoError(
+			grandParentGroupName = "${grandParentGroupName}",
+			groupName = "${groupName} (Staging)",
+			parentGroupName = "${parentGroupName}",
+			site = "false");
 
-		Pause(locator1 = "3000");
+		while (("${groupId}" == "")) {
+			var groupId = JSONGroupAPI._getGroupIdByNameNoError(
+				grandParentGroupName = "${grandParentGroupName}",
+				groupName = "${groupName} (Staging)",
+				parentGroupName = "${parentGroupName}",
+				site = "false");
+		}
 	}
 
 	@summary = "Activate remote staging with or without page versioning with all content"

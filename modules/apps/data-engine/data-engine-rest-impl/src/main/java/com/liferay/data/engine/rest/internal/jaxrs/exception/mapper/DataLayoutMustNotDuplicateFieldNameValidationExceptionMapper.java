@@ -16,7 +16,6 @@ package com.liferay.data.engine.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.data.engine.rest.resource.exception.DataLayoutValidationException;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
 import java.util.Set;
@@ -40,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class DataLayoutMustNotDuplicateFieldNameValidationExceptionMapper
-	extends BaseExceptionMapper
+	extends DataEngineExceptionMapper
 		<DataLayoutValidationException.MustNotDuplicateFieldName> {
 
 	@Override

@@ -423,7 +423,7 @@ public class SXPBlueprintSearchResultTest {
 
 		User user = UserTestUtil.addUser(_group.getGroupId());
 
-		_serviceContext.setUserId(user.getUserId());
+		_setCurrentUser(user);
 
 		_assertSearch("[Article, Article With Category]");
 
@@ -447,7 +447,7 @@ public class SXPBlueprintSearchResultTest {
 		User guestUser = _userLocalService.getDefaultUser(
 			_group.getCompanyId());
 
-		_serviceContext.setUserId(guestUser.getUserId());
+		_setCurrentUser(guestUser);
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -466,7 +466,7 @@ public class SXPBlueprintSearchResultTest {
 
 		User user = UserTestUtil.addUser(_group.getGroupId());
 
-		_serviceContext.setUserId(user.getUserId());
+		_setCurrentUser(user);
 
 		_assertSearch("[Article, Article With Category]");
 
@@ -520,7 +520,7 @@ public class SXPBlueprintSearchResultTest {
 
 		_userLocalService.updateUser(user);
 
-		_serviceContext.setUserId(user.getUserId());
+		_setCurrentUser(user);
 
 		_assertSearch("[Article, Article With Category]");
 
@@ -605,7 +605,7 @@ public class SXPBlueprintSearchResultTest {
 
 		User userSiteB = UserTestUtil.addUser(groupB.getGroupId());
 
-		_serviceContext.setUserId(userSiteB.getUserId());
+		_setCurrentUser(userSiteB);
 
 		_keywords = "Site";
 
@@ -1181,16 +1181,14 @@ public class SXPBlueprintSearchResultTest {
 
 		_keywords = "Guest";
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, siteUser.getUserId());
+		_setCurrentUser(siteUser);
 
 		_assertSearchIgnoreRelevance("[Guest Users, Non-Guest Users]");
 
 		User guestUser = _userLocalService.getDefaultUser(
 			_group.getCompanyId());
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, guestUser.getUserId());
+		_setCurrentUser(guestUser);
 
 		_assertSearchIgnoreRelevance("[Guest Users]");
 
@@ -1382,7 +1380,7 @@ public class SXPBlueprintSearchResultTest {
 	public void testLimitSearchToMyContents() throws Exception {
 		User newUser = UserTestUtil.addUser(_group.getGroupId());
 
-		_serviceContext.setUserId(newUser.getUserId());
+		_setCurrentUser(newUser);
 
 		_journalArticleBuilder.setTitle(
 			"Article 1 New User"
@@ -1392,7 +1390,7 @@ public class SXPBlueprintSearchResultTest {
 			"Article 2 New User"
 		).build();
 
-		_serviceContext.setUserId(_user.getUserId());
+		_setCurrentUser(_user);
 
 		_journalArticleBuilder.setTitle(
 			"Article 1 Default User"
@@ -1441,7 +1439,7 @@ public class SXPBlueprintSearchResultTest {
 
 		User user = UserTestUtil.addUser(groupA.getGroupId());
 
-		_serviceContext.setUserId(user.getUserId());
+		_setCurrentUser(user);
 
 		_keywords = "Site";
 
@@ -1540,7 +1538,7 @@ public class SXPBlueprintSearchResultTest {
 
 		User user = UserTestUtil.addUser(groupA.getGroupId());
 
-		_serviceContext.setUserId(user.getUserId());
+		_setCurrentUser(user);
 
 		_updateElementInstancesJSON(
 			null, new String[] {"Limit Search to the Current Site"});
@@ -2467,6 +2465,10 @@ public class SXPBlueprintSearchResultTest {
 		}
 
 		return false;
+	}
+
+	private void _setCurrentUser(User user) {
+		_serviceContext.setUserId(user.getUserId());
 	}
 
 	private void _updateConfigurationJSON(

@@ -93,16 +93,16 @@ public class ObjectFieldSetting implements Cloneable, Serializable {
 
 	protected Long objectFieldId;
 
-	public String getValue() {
+	public Object getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Object value) {
 		this.value = value;
 	}
 
 	public void setValue(
-		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
+		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
 
 		try {
 			value = valueUnsafeSupplier.get();
@@ -112,7 +112,7 @@ public class ObjectFieldSetting implements Cloneable, Serializable {
 		}
 	}
 
-	protected String value;
+	protected Object value;
 
 	@Override
 	public ObjectFieldSetting clone() throws CloneNotSupportedException {

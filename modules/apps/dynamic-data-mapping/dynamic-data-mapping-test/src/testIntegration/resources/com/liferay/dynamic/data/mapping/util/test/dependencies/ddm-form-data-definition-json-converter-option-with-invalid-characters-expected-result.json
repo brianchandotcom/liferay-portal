@@ -19,7 +19,7 @@
 					"label": {
 						"en_US": "option 1"
 					},
-					"reference": "value10",
+					"reference": "value 1.0:$%&:;<=>?@",
 					"value": "value 1.0:$%&:;<=>?@"
 				}
 			],

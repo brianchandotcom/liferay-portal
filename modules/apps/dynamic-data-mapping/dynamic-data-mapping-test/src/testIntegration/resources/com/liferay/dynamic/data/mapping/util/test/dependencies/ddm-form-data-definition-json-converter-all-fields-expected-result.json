@@ -268,21 +268,21 @@
 					"label": {
 						"en_US": "option 1"
 					},
-					"reference": "value1",
+					"reference": "value 1",
 					"value": "value 1"
 				},
 				{
 					"label": {
 						"en_US": "option 2"
 					},
-					"reference": "value2",
+					"reference": "value 2",
 					"value": "value 2"
 				},
 				{
 					"label": {
 						"en_US": "option 3"
 					},
-					"reference": "value3",
+					"reference": "value 3",
 					"value": "value 3"
 				}
 			],
@@ -317,21 +317,21 @@
 					"label": {
 						"en_US": "option 1"
 					},
-					"reference": "value1",
+					"reference": "value 1",
 					"value": "value 1"
 				},
 				{
 					"label": {
 						"en_US": "option 2"
 					},
-					"reference": "value2",
+					"reference": "value 2",
 					"value": "value 2"
 				},
 				{
 					"label": {
 						"en_US": "option 3"
 					},
-					"reference": "value3",
+					"reference": "value 3",
 					"value": "value 3"
 				}
 			],

@@ -363,7 +363,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-147787. The marketer has Basic permissions and view Advanced tab when given Update - Basic and Update - Advanced options permission in Page Section."
+	@description = "This is a test for LPS-147787 and LPS-136411. The marketer has Basic permissions and view Advanced tab when given Update - Basic and Update - Advanced options permission in Page Section. The marketer only with Update - Basic and Advanced Options cannot define custom css of fragment."
 	@priority = "5"
 	test EditPageLayoutAsUserWithUpdateBasicAndAdvancedPermissions {
 		task ("Given a marketer has a content page") {
@@ -455,6 +455,10 @@ definition {
 				AssertElementPresent(
 					checkboxName = "Hide from Site Search Results",
 					locator1 = "Checkbox#ANY_CHECKBOX");
+
+				AssertElementNotPresent(
+					key_fieldSetLabel = "CSS",
+					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 			}
 
 			task ("Add a Heading fragment into Container") {
@@ -496,6 +500,10 @@ definition {
 				AssertElementPresent(
 					checkboxName = "Hide from Site Search Results",
 					locator1 = "Checkbox#ANY_CHECKBOX");
+
+				AssertElementNotPresent(
+					key_fieldSetLabel = "CSS",
+					locator1 = "PageEditor#ITEM_CONFIGURATION_FIELDSET_LABEL");
 			}
 
 			task ("Delete the site role") {

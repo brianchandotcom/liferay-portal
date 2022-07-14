@@ -251,6 +251,135 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-154568. The page designer can map a Form Container to Object field with relationship on custom object."
+	@priority = "5"
+	test MapRelationshipWithCustomObject {
+		property test.name.skip.portal.instance = "TextInput#MapRelationshipWithCustomObject";
+
+		task ("Given a page designer has a mapped Form Container to an Object with relationship on custom object") {
+			task ("Add a second company Object with Text field") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "Menu List",
+					objectName = "MenuList",
+					pluralLabelName = "Menu Lists");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Lunch",
+					fieldName = "lunch",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = "MenuList");
+
+				ObjectAdmin.publishObjectViaAPI(objectName = "MenuList");
+			}
+
+			task ("Add 11 entries on Menu List object") {
+				for (var entryName : list "Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta,Rice") {
+					ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+						fieldName = "lunch",
+						objectName = "MenuList",
+						value = "${entryName}");
+				}
+			}
+
+			task ("Add relationship with Purchase Order object") {
+				ObjectAdmin.addObjectRelationshipViaAPI(
+					objectName_1 = "MenuList",
+					objectName_2 = "PurchaseOrder",
+					relationshipLabel = "Lunch Menu",
+					relationshipName = "lunchMenu",
+					relationshipType = "oneToMany");
+			}
+
+			task ("Select title field on Menu List object") {
+				ObjectAdmin.openObjectAdmin();
+
+				ObjectPortlet.selectCustomObject(label = "Menu List");
+
+				CreateObject.selectTitleField(fieldLabel = "Lunch");
+
+				CreateObject.saveObject();
+			}
+
+			task ("Add a Form Container fragment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+
+			task ("Add Select from List inside Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Select from List");
+			}
+		}
+
+		task ("When the page designer maps Select from list fragment to relationship") {
+			PageEditor.editInput(
+				field = "Lunch Menu",
+				fragmentName = "Select from List",
+				label = "Select your lunch");
+		}
+
+		task ("Then the page designer can see 10 entries on select from list dropdown menu edit mode") {
+			Click(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			MenuItem.viewOrder(menuItemList = "Choose an Option,Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
+
+			MenuItem.viewNotPresent(menuItem = "Rice");
+		}
+
+		task ("When the page designer navigates to published content page at view mode") {
+			PageEditor.publish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Then the page designer can see max numbers of items to be displayed are 10 on select from list fragment at view mode") {
+			Click(
+				index = "1",
+				locator1 = "Fragment#INPUT_TOGGLE",
+				type = "select-from-list");
+
+			MenuItem.viewOrder(menuItemList = "Choose an Option,Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
+
+			MenuItem.viewNotPresent(menuItem = "Rice");
+		}
+
+		task ("When the page designer searches for 11º entry") {
+			MenuItem.viewNotPresent(menuItem = "Soup");
+		}
+
+		task ("Then the pages designer can see 11º entry on select from list dropdown menu") {
+			Type(
+				key_type = "search",
+				locator1 = "MenuItem#SEARCH_FIELD",
+				value1 = "Rice");
+
+			MenuItem.viewOrder(menuItemList = "Choose an Option,Rice");
+
+			MenuItem.viewNotPresent(menuItem = "Fried chicken,Omelet,Pizza,Kebab,Fish,Steak,Broth,Tossed Salad,Dressing,Pasta");
+		}
+	}
 	@description = "This is a test for LPS-151402. The user could see error message when submit a form with invalid field."
 	@priority = "4"
 	test ViewErrorMessageWhenSubmitFormWithInvalidField {

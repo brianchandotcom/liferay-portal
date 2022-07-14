@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
@@ -185,10 +186,10 @@ public class BulkDocumentRequestExecutorImpl
 				}
 
 				_log.error(
-					"There was an exception during getting a response to a " +
-						"request from the search server, retrying after 1 " +
-							"minute (5/" + count + ").",
-					exception);
+					StringBundler.concat(
+						"There was an exception during getting a response to ",
+						"a request from the search server, retrying after 1 ",
+						"minute (5/", count, ").", exception));
 
 				try {
 					Thread.sleep(60000);

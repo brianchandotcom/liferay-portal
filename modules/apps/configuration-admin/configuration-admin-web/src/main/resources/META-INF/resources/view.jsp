@@ -57,9 +57,9 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 		%>
 
 			<li class="list-group-header">
-				<h3 class="list-group-header-title text-uppercase">
+				<p class="list-group-header-title text-uppercase">
 					<%= HtmlUtil.escape(configurationCategorySectionDisplay.getConfigurationCategorySectionLabel(locale)) %>
-				</h3>
+				</p>
 			</li>
 			<li class="list-group-card">
 				<ul class="list-group">

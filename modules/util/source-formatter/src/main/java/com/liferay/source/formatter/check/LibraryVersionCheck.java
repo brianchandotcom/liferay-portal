@@ -168,11 +168,10 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			return;
 		}
 
-		List<SecurityVulnerabilityNode> securityVulnerabilityNodes =
+		_vulnerableVersionMap.put(
+			packageName,
 			_getSecurityVulnerabilityNodes(
-				packageName, null, securityAdvisoryEcosystemEnum);
-
-		_vulnerableVersionMap.put(packageName, securityVulnerabilityNodes);
+				packageName, null, securityAdvisoryEcosystemEnum));
 	}
 
 	private String _getContentByPattern(String content, Pattern pattern) {

@@ -608,7 +608,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		Folder folder = message.addAttachmentsFolder();
 
 		_portletFileRepository.addPortletFileEntry(
-			message.getGroupId(), userId, MBMessage.class.getName(),
+			null, message.getGroupId(), userId, MBMessage.class.getName(),
 			message.getMessageId(), MBConstants.SERVICE_NAME,
 			folder.getFolderId(), file, fileName, mimeType, true);
 	}

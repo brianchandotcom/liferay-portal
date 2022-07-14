@@ -604,7 +604,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 		try {
 			PortletFileRepositoryUtil.addPortletFileEntry(
-				folder.getGroupId(), userId, Group.class.getName(),
+				null, folder.getGroupId(), userId, Group.class.getName(),
 				folder.getGroupId(), _PORTLET_REPOSITORY_ID,
 				folder.getFolderId(), new UnsyncByteArrayInputStream(bytes),
 				fileName, ContentTypes.APPLICATION_ZIP, false);
@@ -1029,7 +1029,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			}
 
 			PortletFileRepositoryUtil.addPortletFileEntry(
-				folder.getGroupId(), userId, Group.class.getName(),
+				null, folder.getGroupId(), userId, Group.class.getName(),
 				folder.getGroupId(), _PORTLET_REPOSITORY_ID,
 				folder.getFolderId(), tempFile,
 				getAssembledFileName(stagingRequestId),

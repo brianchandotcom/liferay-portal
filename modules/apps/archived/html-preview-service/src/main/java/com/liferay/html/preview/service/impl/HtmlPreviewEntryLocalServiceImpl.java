@@ -170,7 +170,7 @@ public class HtmlPreviewEntryLocalServiceImpl
 		}
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, HtmlPreviewEntry.class.getName(),
+			null, groupId, userId, HtmlPreviewEntry.class.getName(),
 			htmlPreviewEntryId, HtmlPreviewEntry.class.getName(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file,
 			String.valueOf(htmlPreviewEntryId), mimeType, false);

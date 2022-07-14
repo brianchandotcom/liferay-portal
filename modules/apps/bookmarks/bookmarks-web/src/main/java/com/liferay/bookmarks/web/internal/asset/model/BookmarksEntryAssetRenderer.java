@@ -176,6 +176,15 @@ public class BookmarksEntryAssetRenderer
 	}
 
 	@Override
+	public String getURLViewInContext(
+		ThemeDisplay themeDisplay, String noSuchEntryRedirect) {
+
+		return getURLViewInContext(
+			themeDisplay, noSuchEntryRedirect, "/bookmarks/find_entry",
+			"entryId", _entry.getEntryId());
+	}
+
+	@Override
 	public long getUserId() {
 		return _entry.getUserId();
 	}

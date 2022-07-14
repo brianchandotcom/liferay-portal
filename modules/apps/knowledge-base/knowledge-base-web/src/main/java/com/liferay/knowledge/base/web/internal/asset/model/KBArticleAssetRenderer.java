@@ -144,6 +144,15 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 	}
 
 	@Override
+	public String getURLViewInContext(
+		ThemeDisplay themeDisplay, String noSuchEntryRedirect) {
+
+		return KnowledgeBaseUtil.getKBArticleURL(
+			themeDisplay.getPlid(), _kbArticle.getResourcePrimKey(),
+			_kbArticle.getStatus(), themeDisplay.getPortalURL(), false);
+	}
+
+	@Override
 	public long getUserId() {
 		return _kbArticle.getUserId();
 	}

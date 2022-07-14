@@ -167,6 +167,15 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer<MBCategory> {
 	}
 
 	@Override
+	public String getURLViewInContext(
+		ThemeDisplay themeDisplay, String noSuchEntryRedirect) {
+
+		return getURLViewInContext(
+			themeDisplay, noSuchEntryRedirect, "/message_boards/find_category",
+			"mbCategoryId", _category.getCategoryId());
+	}
+
+	@Override
 	public long getUserId() {
 		return _category.getUserId();
 	}

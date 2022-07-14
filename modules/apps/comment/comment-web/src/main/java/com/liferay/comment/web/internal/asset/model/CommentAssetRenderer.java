@@ -210,6 +210,26 @@ public class CommentAssetRenderer
 	}
 
 	@Override
+	public String getURLViewInContext(
+			ThemeDisplay themeDisplay, String noSuchEntryRedirect)
+		throws Exception {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_workflowableComment.getClassName());
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
+			_workflowableComment.getClassPK());
+
+		return assetRenderer.getURLViewInContext(
+			themeDisplay, noSuchEntryRedirect);
+	}
+
+	@Override
 	public long getUserId() {
 		return _workflowableComment.getUserId();
 	}

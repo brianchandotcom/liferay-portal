@@ -137,6 +137,13 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer<User> {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		return getURLViewInContext(themeDisplay, noSuchEntryRedirect);
+	}
+
+	@Override
+	public String getURLViewInContext(
+		ThemeDisplay themeDisplay, String noSuchEntryRedirect) {
+
 		try {
 			return _user.getDisplayURL(themeDisplay);
 		}

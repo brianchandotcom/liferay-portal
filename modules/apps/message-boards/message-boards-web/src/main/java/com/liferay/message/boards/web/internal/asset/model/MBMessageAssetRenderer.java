@@ -198,11 +198,19 @@ public class MBMessageAssetRenderer
 			String noSuchEntryRedirect)
 		throws Exception {
 
-		if (_assetDisplayPageFriendlyURLProvider != null) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)liferayPortletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
+		return getURLViewInContext(themeDisplay, noSuchEntryRedirect);
+	}
+
+	@Override
+	public String getURLViewInContext(
+			ThemeDisplay themeDisplay, String noSuchEntryRedirect)
+		throws Exception {
+
+		if (_assetDisplayPageFriendlyURLProvider != null) {
 			String friendlyURL =
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 					getClassName(), getClassPK(), themeDisplay);
@@ -212,10 +220,6 @@ public class MBMessageAssetRenderer
 			}
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		if (!_hasViewInContextGroupLayout(
 				_message.getGroupId(), themeDisplay)) {
 
@@ -223,9 +227,8 @@ public class MBMessageAssetRenderer
 		}
 
 		return getURLViewInContext(
-			liferayPortletRequest, noSuchEntryRedirect,
-			"/message_boards/find_message", "messageId",
-			_message.getMessageId());
+			themeDisplay, noSuchEntryRedirect, "/message_boards/find_message",
+			"messageId", _message.getMessageId());
 	}
 
 	@Override

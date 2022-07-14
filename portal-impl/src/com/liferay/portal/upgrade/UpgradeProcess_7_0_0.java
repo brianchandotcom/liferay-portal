@@ -154,8 +154,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(new UpgradeSubscription());
 		upgrade(new UpgradeUser());
 		upgrade(
-			UpgradeProcessFactory.alterColumnType(
-				"Website", "typeId", "LONG"));
+			UpgradeProcessFactory.alterColumnType("Website", "typeId", "LONG"));
 		upgrade(new UpgradeWorkflow());
 
 		upgrade(new UpgradeMobileDeviceRules());

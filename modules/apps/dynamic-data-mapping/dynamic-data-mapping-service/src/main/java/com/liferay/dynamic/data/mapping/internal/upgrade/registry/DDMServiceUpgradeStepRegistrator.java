@@ -492,7 +492,7 @@ public class DDMServiceUpgradeStepRegistrator
 		registry.register(
 			"5.1.2", "5.1.3",
 			UpgradeProcessFactory.alterColumnType(
-				"DDMField", "fieldName",  "TEXT null"));
+				"DDMField", "fieldName", "TEXT null"));
 
 		registry.register(
 			"5.1.3", "5.1.4",

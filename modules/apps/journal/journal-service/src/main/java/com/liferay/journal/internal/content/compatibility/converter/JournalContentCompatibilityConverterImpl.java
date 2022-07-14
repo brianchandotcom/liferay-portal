@@ -220,7 +220,7 @@ public class JournalContentCompatibilityConverterImpl
 	private String _convertLinkToLayoutValue(
 		Locale defaultLocale, String value) {
 
-		if (JSONUtil.isValid(value)) {
+		if (JSONUtil.createJSONObject(value) != null) {
 			return value;
 		}
 

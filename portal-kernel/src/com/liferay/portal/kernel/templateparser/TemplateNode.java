@@ -209,13 +209,13 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 
 		String data = (String)get("data");
 
-		if (!JSONUtil.isValid(data)) {
+		JSONObject jsonObject = JSONUtil.createJSONObject(data);
+
+		if (jsonObject == null) {
 			return StringPool.BLANK;
 		}
 
 		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
-
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(
 				jsonObject.getLong("groupId"),
 				jsonObject.getBoolean("privateLayout"),

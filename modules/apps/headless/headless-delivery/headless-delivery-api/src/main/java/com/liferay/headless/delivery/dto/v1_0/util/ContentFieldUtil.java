@@ -247,12 +247,14 @@ public class ContentFieldUtil {
 
 						String alt = jsonObject.getString("alt");
 
-						if (Validator.isNotNull(alt) && JSONUtil.isValid(alt)) {
-							JSONObject altJSONObject = jsonObject.getJSONObject(
-								"alt");
+						if (Validator.isNotNull(alt)) {
+							JSONObject altJSONObject =
+								JSONUtil.createJSONObject(alt);
 
-							alt = altJSONObject.getString(
-								LocaleUtil.toLanguageId(locale));
+							if (altJSONObject != null) {
+								alt = altJSONObject.getString(
+									LocaleUtil.toLanguageId(locale));
+							}
 						}
 
 						image.setDescription(alt);

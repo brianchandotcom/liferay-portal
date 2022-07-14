@@ -132,7 +132,7 @@ public class DDMFormFieldValidationUpgradeProcess extends UpgradeProcess {
 			String originalValue = validationJSONObject.getString(
 				"errorMessage");
 
-			if (JSONUtil.isValid(originalValue)) {
+			if (JSONUtil.createJSONObject(originalValue) != null) {
 				continue;
 			}
 

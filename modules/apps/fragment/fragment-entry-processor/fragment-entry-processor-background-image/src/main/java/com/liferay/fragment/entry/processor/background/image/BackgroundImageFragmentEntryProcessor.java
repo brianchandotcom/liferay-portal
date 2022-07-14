@@ -135,10 +135,9 @@ public class BackgroundImageFragmentEntryProcessor
 			if (Validator.isNotNull(value)) {
 				long fileEntryId = 0;
 
-				if (JSONUtil.isValid(value)) {
-					JSONObject valueJSONObject =
-						JSONFactoryUtil.createJSONObject(value);
+				JSONObject valueJSONObject = JSONUtil.createJSONObject(value);
 
+				if (valueJSONObject != null) {
 					fileEntryId = valueJSONObject.getLong("fileEntryId");
 
 					if (fileEntryId == 0) {

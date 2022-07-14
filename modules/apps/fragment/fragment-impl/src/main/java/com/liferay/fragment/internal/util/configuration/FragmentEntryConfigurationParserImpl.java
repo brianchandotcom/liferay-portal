@@ -226,22 +226,15 @@ public class FragmentEntryConfigurationParserImpl
 
 		value = GetterUtil.getString(value);
 
-		if (fragmentConfigurationField.isLocalizable() &&
-			JSONUtil.isValid(value)) {
+		if (fragmentConfigurationField.isLocalizable()) {
+			JSONObject valueJSONObject = JSONUtil.createJSONObject(value);
 
-			try {
-				JSONObject valueJSONObject = JSONFactoryUtil.createJSONObject(
-					value);
-
+			if (valueJSONObject != null) {
 				value = valueJSONObject.getString(
 					LocaleUtil.toLanguageId(locale),
 					valueJSONObject.getString(
 						LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
 						fragmentConfigurationField.getDefaultValue()));
-			}
-			catch (JSONException jsonException) {
-				_log.error(
-					"Unable to parse configuration value JSON", jsonException);
 			}
 		}
 		else if (Validator.isNull(value)) {

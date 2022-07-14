@@ -22,13 +22,9 @@ import com.liferay.info.type.WebImage;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -73,11 +69,13 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 			alt = fieldValueJSONObject.getString("alt");
 
-			if (Validator.isNotNull(alt) && JSONUtil.isValid(alt)) {
-				JSONObject altJSONObject = fieldValueJSONObject.getJSONObject(
-					"alt");
+			if (Validator.isNotNull(alt)) {
+				JSONObject altJSONObject = JSONUtil.createJSONObject(alt);
 
-				alt = altJSONObject.getString(LocaleUtil.toLanguageId(locale));
+				if (altJSONObject != null) {
+					alt = altJSONObject.getString(
+						LocaleUtil.toLanguageId(locale));
+				}
 			}
 
 			if (fieldValueJSONObject.has("className") &&
@@ -178,18 +176,11 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 		long fileEntryId = 0;
 
-		if (JSONUtil.isValid(value)) {
-			try {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+		JSONObject jsonObject = JSONUtil.createJSONObject(value);
 
-				fileEntryId = jsonObject.getLong("fileEntryId");
-				value = jsonObject.getString("url");
-			}
-			catch (JSONException jsonException) {
-				_log.error("Unable to parse JSON value " + value);
-
-				value = StringPool.BLANK;
-			}
+		if (jsonObject != null) {
+			fileEntryId = jsonObject.getLong("fileEntryId");
+			value = jsonObject.getString("url");
 		}
 		else {
 			fileEntryId = configJSONObject.getLong("fileEntryId");
@@ -222,12 +213,14 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 		String alt = configJSONObject.getString("alt");
 
-		if (Validator.isNotNull(alt) && JSONUtil.isValid(alt)) {
-			JSONObject altJSONObject = configJSONObject.getJSONObject("alt");
+		if (Validator.isNotNull(alt)) {
+			JSONObject altJSONObject = JSONUtil.createJSONObject(alt);
 
-			Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+			if (altJSONObject != null) {
+				Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
-			alt = altJSONObject.getString(LocaleUtil.toLanguageId(locale));
+				alt = altJSONObject.getString(LocaleUtil.toLanguageId(locale));
+			}
 		}
 
 		if (Validator.isNotNull(alt)) {
@@ -302,9 +295,6 @@ public class ImageEditableElementParser implements EditableElementParser {
 				imageConfiguration);
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ImageEditableElementParser.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");

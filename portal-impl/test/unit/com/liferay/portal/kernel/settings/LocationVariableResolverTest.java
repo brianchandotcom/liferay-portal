@@ -161,13 +161,13 @@ public class LocationVariableResolverTest {
 		String json = _locationVariableResolver.resolve(
 			String.format("${language:%s}", validKey));
 
-		Assert.assertTrue(JSONUtil.isValid(json));
+		Assert.assertNotNull(JSONUtil.createJSONObject(json));
 		Assert.assertEquals(expectedValueJSONObject.toString(), json);
 
 		json = _locationVariableResolver.resolve(
 			String.format("${language:%s}", invalidKey));
 
-		Assert.assertTrue(JSONUtil.isValid(json));
+		Assert.assertNotNull(JSONUtil.createJSONObject(json));
 		Assert.assertEquals("{}", json);
 	}
 

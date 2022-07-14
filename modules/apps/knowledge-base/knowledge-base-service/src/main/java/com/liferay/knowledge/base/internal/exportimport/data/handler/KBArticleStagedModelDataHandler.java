@@ -460,7 +460,7 @@ public class KBArticleStagedModelDataHandler
 				}
 
 				_portletFileRepository.addPortletFileEntry(
-					portletDataContext.getScopeGroupId(),
+					null, portletDataContext.getScopeGroupId(),
 					portletDataContext.getUserId(
 						importedKBArticle.getUserUuid()),
 					KBArticle.class.getName(), importedKBArticle.getClassPK(),

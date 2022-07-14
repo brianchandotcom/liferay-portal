@@ -106,7 +106,7 @@ public class ImageBlogsUploadFileEntryHandler
 			themeDisplay.getScopeGroupId(), folder.getFolderId(), fileName);
 
 		return portletFileRepository.addPortletFileEntry(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			null, themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			BlogsEntry.class.getName(), 0, BlogsConstants.SERVICE_NAME,
 			folder.getFolderId(), inputStream, uniqueFileName, contentType,
 			true);

@@ -151,7 +151,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
 		return _portletFileRepository.addPortletFileEntry(
-			kbArticle.getGroupId(), userId, KBArticle.class.getName(),
+			null, kbArticle.getGroupId(), userId, KBArticle.class.getName(),
 			kbArticle.getClassPK(), KBConstants.SERVICE_NAME,
 			kbArticle.getAttachmentsFolderId(), inputStream, fileName, mimeType,
 			false);

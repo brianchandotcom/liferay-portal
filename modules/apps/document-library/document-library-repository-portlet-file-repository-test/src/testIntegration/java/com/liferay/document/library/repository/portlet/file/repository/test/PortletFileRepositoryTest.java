@@ -243,7 +243,7 @@ public class PortletFileRepositoryTest {
 				TestDataConstants.TEST_BYTE_ARRAY)) {
 
 			return PortletFileRepositoryUtil.addPortletFileEntry(
-				_group.getGroupId(), TestPropsValues.getUserId(),
+				null, _group.getGroupId(), TestPropsValues.getUserId(),
 				User.class.getName(), TestPropsValues.getUserId(), _portletId,
 				_folder.getFolderId(), inputStream, name,
 				ContentTypes.APPLICATION_OCTET_STREAM, false);

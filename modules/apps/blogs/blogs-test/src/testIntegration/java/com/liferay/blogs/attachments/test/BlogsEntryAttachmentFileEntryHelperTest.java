@@ -261,7 +261,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 		String uniqueFileName = _getUniqueFileName(groupId, fileName, folderId);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, BlogsEntry.class.getName(), blogsEntryId,
+			null, groupId, userId, BlogsEntry.class.getName(), blogsEntryId,
 			BlogsConstants.SERVICE_NAME, folderId, inputStream, uniqueFileName,
 			mimeType, true);
 	}

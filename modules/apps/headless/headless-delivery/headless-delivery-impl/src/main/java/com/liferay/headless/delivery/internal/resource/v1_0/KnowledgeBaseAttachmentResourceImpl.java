@@ -97,7 +97,7 @@ public class KnowledgeBaseAttachmentResourceImpl
 
 		return _toKnowledgeBaseAttachment(
 			_portletFileRepository.addPortletFileEntry(
-				kbArticle.getGroupId(), contextUser.getUserId(),
+				null, kbArticle.getGroupId(), contextUser.getUserId(),
 				KBArticle.class.getName(), kbArticle.getClassPK(),
 				KBConstants.SERVICE_NAME, kbArticle.getAttachmentsFolderId(),
 				binaryFile.getInputStream(), binaryFile.getFileName(),

@@ -138,10 +138,10 @@ public class BackgroundTaskLocalServiceImpl
 		Folder folder = backgroundTask.addAttachmentsFolder();
 
 		PortletFileRepositoryUtil.addPortletFileEntry(
-			backgroundTask.getGroupId(), userId, BackgroundTask.class.getName(),
-			backgroundTask.getPrimaryKey(), PortletKeys.BACKGROUND_TASK,
-			folder.getFolderId(), file, fileName, ContentTypes.APPLICATION_ZIP,
-			false);
+			null, backgroundTask.getGroupId(), userId,
+			BackgroundTask.class.getName(), backgroundTask.getPrimaryKey(),
+			PortletKeys.BACKGROUND_TASK, folder.getFolderId(), file, fileName,
+			ContentTypes.APPLICATION_ZIP, false);
 	}
 
 	@Override
@@ -155,10 +155,10 @@ public class BackgroundTaskLocalServiceImpl
 		Folder folder = backgroundTask.addAttachmentsFolder();
 
 		PortletFileRepositoryUtil.addPortletFileEntry(
-			backgroundTask.getGroupId(), userId, BackgroundTask.class.getName(),
-			backgroundTask.getPrimaryKey(), PortletKeys.BACKGROUND_TASK,
-			folder.getFolderId(), inputStream, fileName,
-			ContentTypes.APPLICATION_ZIP, false);
+			null, backgroundTask.getGroupId(), userId,
+			BackgroundTask.class.getName(), backgroundTask.getPrimaryKey(),
+			PortletKeys.BACKGROUND_TASK, folder.getFolderId(), inputStream,
+			fileName, ContentTypes.APPLICATION_ZIP, false);
 	}
 
 	@Override

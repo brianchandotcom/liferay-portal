@@ -103,7 +103,7 @@ public class FragmentEntryStagedModelDataHandlerTest
 			serviceContext);
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			stagingGroup.getGroupId(), TestPropsValues.getUserId(),
+			null, stagingGroup.getGroupId(), TestPropsValues.getUserId(),
 			FragmentEntry.class.getName(), fragmentEntry.getFragmentEntryId(),
 			FragmentPortletKeys.FRAGMENT, repository.getDlFolderId(),
 			classLoader.getResourceAsStream(

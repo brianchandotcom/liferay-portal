@@ -774,7 +774,7 @@ public class FragmentEntryLocalServiceImpl
 					fileEntry.getExtension();
 
 			fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-				groupId, userId, FragmentEntry.class.getName(),
+				null, groupId, userId, FragmentEntry.class.getName(),
 				copyFragmentEntry.getFragmentEntryId(),
 				FragmentPortletKeys.FRAGMENT, repository.getDlFolderId(),
 				fileEntry.getContentStream(), fileName, fileEntry.getMimeType(),
@@ -819,7 +819,7 @@ public class FragmentEntryLocalServiceImpl
 
 				if (existingFileEntry == null) {
 					PortletFileRepositoryUtil.addPortletFileEntry(
-						serviceContext.getScopeGroupId(),
+						null, serviceContext.getScopeGroupId(),
 						serviceContext.getUserId(),
 						FragmentCollection.class.getName(),
 						targetFragmentCollection.getFragmentCollectionId(),

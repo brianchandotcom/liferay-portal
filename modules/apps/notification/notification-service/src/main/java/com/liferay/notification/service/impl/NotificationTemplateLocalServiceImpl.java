@@ -506,7 +506,7 @@ public class NotificationTemplateLocalServiceImpl
 			}
 
 			FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
-				repository.getGroupId(),
+				null, repository.getGroupId(),
 				_userLocalService.getDefaultUserId(companyId),
 				NotificationTemplate.class.getName(), 0,
 				NotificationPortletKeys.NOTIFICATION_TEMPLATES,

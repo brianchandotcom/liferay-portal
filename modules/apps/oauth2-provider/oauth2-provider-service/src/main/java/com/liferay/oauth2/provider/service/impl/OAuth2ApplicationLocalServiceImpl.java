@@ -594,7 +594,7 @@ public class OAuth2ApplicationLocalServiceImpl
 			oAuth2Application.getClientId());
 
 		FileEntry fileEntry = _portletFileRepository.addPortletFileEntry(
-			group.getGroupId(), oAuth2Application.getUserId(),
+			null, group.getGroupId(), oAuth2Application.getUserId(),
 			OAuth2Application.class.getName(),
 			oAuth2Application.getOAuth2ApplicationId(),
 			OAuth2ProviderConstants.SERVICE_NAME, folder.getFolderId(),

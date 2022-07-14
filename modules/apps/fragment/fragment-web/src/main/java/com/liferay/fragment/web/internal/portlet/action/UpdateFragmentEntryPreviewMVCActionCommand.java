@@ -95,7 +95,7 @@ public class UpdateFragmentEntryPreviewMVCActionCommand
 		}
 
 		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+			null, themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			FragmentEntry.class.getName(), fragmentEntryId,
 			FragmentPortletKeys.FRAGMENT, repository.getDlFolderId(),
 			fileEntry.getContentStream(), fileName, fileEntry.getMimeType(),

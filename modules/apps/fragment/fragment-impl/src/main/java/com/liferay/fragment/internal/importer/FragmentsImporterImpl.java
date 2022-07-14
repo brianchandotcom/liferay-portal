@@ -603,8 +603,9 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		}
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, className, classPK, FragmentPortletKeys.FRAGMENT,
-			repository.getDlFolderId(), inputStream,
+			null, groupId, userId, className, classPK,
+			FragmentPortletKeys.FRAGMENT, repository.getDlFolderId(),
+			inputStream,
 			classPK + "_preview." + FileUtil.getExtension(contentPath),
 			MimeTypesUtil.getContentType(contentPath), false);
 
@@ -906,7 +907,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			String fileName = entry.getKey();
 
 			PortletFileRepositoryUtil.addPortletFileEntry(
-				groupId, userId, FragmentCollection.class.getName(),
+				null, groupId, userId, FragmentCollection.class.getName(),
 				fragmentCollection.getFragmentCollectionId(),
 				FragmentPortletKeys.FRAGMENT,
 				fragmentCollection.getResourcesFolderId(),

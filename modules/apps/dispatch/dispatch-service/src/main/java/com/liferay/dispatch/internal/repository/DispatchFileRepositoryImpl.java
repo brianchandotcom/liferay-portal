@@ -142,8 +142,9 @@ public class DispatchFileRepositoryImpl implements DispatchFileRepository {
 		}
 
 		return _portletFileRepository.addPortletFileEntry(
-			groupId, userId, DispatchTrigger.class.getName(), dispatchTriggerId,
-			DispatchPortletKeys.DISPATCH, folder.getFolderId(), inputStream,
+			null, groupId, userId, DispatchTrigger.class.getName(),
+			dispatchTriggerId, DispatchPortletKeys.DISPATCH,
+			folder.getFolderId(), inputStream,
 			String.valueOf(dispatchTriggerId), contentType, false);
 	}
 

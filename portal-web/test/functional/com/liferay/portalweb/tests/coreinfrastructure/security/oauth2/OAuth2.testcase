@@ -652,12 +652,12 @@ definition {
 		}
 
 		task ("Verify permission is required to delete article") {
-			var accessToken1 = OAuth2.getAccessToken(
+			var accessToken = OAuth2.getAccessToken(
 				client_id = "abc123",
 				client_secret = "abc123",
 				grantFlow = "clientCredentials");
 
-			var deleteOutput1 = OAuth2.getDeleteOutput(accessToken = "${accessToken1}");
+			var deleteOutput1 = OAuth2.getDeleteOutput(accessToken = "${accessToken}");
 
 			OAuth2.assertPermissionsDenied(
 				deleteOutput = "${deleteOutput1}",
@@ -670,12 +670,7 @@ definition {
 				resourceName = "com.liferay.journal.model.JournalArticle",
 				roleTitle = "Guest");
 
-			var accessToken2 = OAuth2.getAccessToken(
-				client_id = "abc123",
-				client_secret = "abc123",
-				grantFlow = "clientCredentials");
-
-			var deleteOutput2 = OAuth2.getDeleteOutput(accessToken = "${accessToken2}");
+			var deleteOutput2 = OAuth2.getDeleteOutput(accessToken = "${accessToken}");
 
 			OAuth2.assertAbleToDeleteJournalArticle(
 				deleteOutput = "${deleteOutput2}",

@@ -97,6 +97,12 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
+		if (isSet(checkAllRoles)) {
+			for (var roleName : list "${checkAllRoles}") {
+				LexiconEntry.viewEntryName(rowEntry = "${roleName}");
+			}
+		}
+
 		LexiconCard.checkCardCheckbox(card = "${roleTitle}");
 
 		SelectFrameTop();

@@ -157,6 +157,9 @@ public class ObjectDefinitionResourceTest
 	protected ObjectDefinition randomObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition = super.randomObjectDefinition();
 
+		objectDefinition.setAccountEntryRestricted(false);
+		objectDefinition.setAccountEntryRestrictedObjectFieldId(
+			Long.valueOf(0));
 		objectDefinition.setActive(false);
 		objectDefinition.setLabel(
 			Collections.singletonMap(

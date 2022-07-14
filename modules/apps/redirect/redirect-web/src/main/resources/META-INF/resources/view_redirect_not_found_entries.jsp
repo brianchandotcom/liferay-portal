@@ -66,7 +66,7 @@ RedirectNotFoundEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 
 					<c:if test='<%= StringUtil.equals("all", ParamUtil.getString(request, "filterType")) %>'>
 						<liferay-ui:search-container-column-text
-							cssClass="table-cell-minw-200 table-cell-smallest table-column-text-center"
+							cssClass="table-cell-expand-smallest table-cell-minw-200 table-column-text-center"
 							name="ignored-urls"
 						>
 							<c:if test="<%= redirectNotFoundEntry.isIgnored() %>">

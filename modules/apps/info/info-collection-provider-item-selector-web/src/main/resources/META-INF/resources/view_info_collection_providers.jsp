@@ -121,7 +121,7 @@ SearchContainer<InfoCollectionProvider<?>> searchContainer = infoCollectionProvi
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand table-cell-smallest table-column-text-center"
+						cssClass="table-cell-expand table-cell-expand-smallest table-column-text-center"
 						name="supports-filters"
 					>
 						<c:choose>

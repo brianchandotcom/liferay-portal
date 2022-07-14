@@ -157,7 +157,7 @@ SearchContainer<AssetListEntry> searchContainer = assetListEntryItemSelectorDisp
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand table-cell-smallest table-column-text-center"
+						cssClass="table-cell-expand table-cell-expand-smallest table-column-text-center"
 						name="supports-filters"
 					>
 						<liferay-ui:message key="yes" />

@@ -65,11 +65,24 @@ SearchContainer<DispatchLog> dispatchLogSearchContainer = DispatchLogSearchConta
 									currentURL
 								).setParameter(
 									"dispatchLogId", dispatchLog.getDispatchLogId()
+								).setParameter(
+									"dispatchTriggerId", dispatchTrigger.getDispatchTriggerId()
 								).buildPortletURL()
 							%>'
 							name="start-date"
 						>
 							<%= fastDateTimeFormat.format(dispatchLog.getStartDate()) %>
+						</liferay-ui:search-container-column-text>
+
+						<%
+						Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.SHORT, FastDateFormatConstants.LONG, locale, TimeZone.getTimeZone(dispatchTrigger.getTimeZoneId()));
+						%>
+
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand"
+							name="scheduled-start-date"
+						>
+							<%= dateTimeFormat.format(dispatchLog.getStartDate()) %>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text

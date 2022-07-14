@@ -2107,6 +2107,68 @@ definition {
 		}
 	}
 
+	@description = "Test Automation for LPS-106196: Conjunction selector works as a switch"
+	@priority = "3"
+	test CanEditConjunctionInConditionsSegments {
+		task ("Add segment with condition and change the default conjunction") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "Email Address");
+
+			Segmentation.fillTitle(titleField = "CanEditConjunctionInConditionsSegments Test");
+
+			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+			Segmentation.fillProperty(propertyField = "@liferay.com");
+
+			Segmentation.addConditionWithConjunction();
+
+			AssertTextEquals(
+				locator1 = "Segmentation#CRITERION_CONJUNCTION",
+				value1 = "And");
+
+			Segmentation.changeCriterionConjunction(criterionConjunctionItem = "Or");
+
+			Segmentation.fillProperty(
+				indexNumber = "2",
+				propertyField = "@liferay2.com");
+
+			AssertTextEquals(
+				locator1 = "Segmentation#CRITERION_CONJUNCTION",
+				value1 = "Or");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Check if the change remains after saving the segment") {
+			Segmentation.editSegment(entry = "CanEditConjunctionInConditionsSegments Test");
+
+			AssertTextEquals(
+				locator1 = "Segmentation#CRITERION_CONJUNCTION",
+				value1 = "Or");
+		}
+
+		task ("Edit the condition conjunction again and save the segment") {
+			Segmentation.changeCriterionConjunction(criterionConjunctionItem = "And");
+
+			AssertTextEquals(
+				locator1 = "Segmentation#CRITERION_CONJUNCTION",
+				value1 = "And");
+
+			Button.clickSave();
+		}
+
+		task ("Check if the change remains after saving the segment") {
+			Segmentation.editSegment(entry = "CanEditConjunctionInConditionsSegments Test");
+
+			AssertTextEquals(
+				locator1 = "Segmentation#CRITERION_CONJUNCTION",
+				value1 = "And");
+		}
+	}
+
 	@description = "LPS-135495 Validate if, The criteria default language must be tagged as such in the language selection dropdown."
 	@priority = "3"
 	test CheckDefaultLanguageTag {

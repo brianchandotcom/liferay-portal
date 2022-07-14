@@ -10,6 +10,10 @@ definition {
 		}
 	}
 
+	macro addConditionWithConjunction {
+		Click(locator1 = "Segmentation#CRITERION_CONJUNCTION_BUTTON");
+	}
+
 	macro addProperties {
 		var key_propertyOption = "${propertyOption}";
 
@@ -316,10 +320,18 @@ definition {
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
 				value1 = "${optionsValue}");
 		}
-		else {
-			Type.type(
-				locator1 = "Segmentation#PROPERTY_FIELD",
-				value1 = "${propertyField}");
+		else if (isSet(propertyField)) {
+			if (isSet(indexNumber)) {
+				Type.type(
+					key_indexNumber = "${indexNumber}",
+					locator1 = "Segmentation#PROPERTY_FIELD_2",
+					value1 = "${propertyField}");
+			}
+			else {
+				Type.type(
+					locator1 = "Segmentation#PROPERTY_FIELD",
+					value1 = "${propertyField}");
+			}
 		}
 	}
 

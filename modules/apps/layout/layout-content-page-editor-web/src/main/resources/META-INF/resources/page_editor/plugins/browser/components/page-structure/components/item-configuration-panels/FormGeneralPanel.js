@@ -183,6 +183,8 @@ function SuccessMessageOptions({item, onValueSelect}) {
 	const languageId = useSelector(selectLanguageId);
 	const dispatch = useDispatch();
 
+	const helpTextId = useId();
+
 	const [selectedSource, setSelectedSource] = useState(
 		getSelectedOption(successMessageConfig)
 	);
@@ -348,6 +350,7 @@ function SuccessMessageOptions({item, onValueSelect}) {
 									})
 								}
 								onChange={(event) => setUrl(event.target.value)}
+								placeholder="https://url.com"
 								type="text"
 								value={url || ''}
 							/>
@@ -357,6 +360,12 @@ function SuccessMessageOptions({item, onValueSelect}) {
 							<CurrentLanguageFlag />
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
+
+					<div className="mt-1 small text-secondary" id={helpTextId}>
+						{Liferay.Language.get(
+							'urls-must-have-a-valid-protocol'
+						)}
+					</div>
 				</ClayForm.Group>
 			)}
 		</>

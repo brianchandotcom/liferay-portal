@@ -32,12 +32,14 @@ public class ClientExtensionDynamicIncludeUtil {
 	public static List<ClientExtensionEntryRel> getClientExtensionEntryRels(
 		Layout layout, String type) {
 
+		LayoutSet layoutSet = layout.getLayoutSet();
+
 		List<ClientExtensionEntryRel> clientExtensionEntryRels =
 			new ArrayList<>(
 				ClientExtensionEntryRelLocalServiceUtil.
 					getClientExtensionEntryRels(
-						PortalUtil.getClassNameId(Layout.class),
-						layout.getPlid(), type));
+						PortalUtil.getClassNameId(LayoutSet.class),
+						layoutSet.getLayoutSetId(), type));
 
 		Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
 			layout.getMasterLayoutPlid());
@@ -50,12 +52,10 @@ public class ClientExtensionDynamicIncludeUtil {
 						masterLayout.getPlid(), type));
 		}
 
-		LayoutSet layoutSet = layout.getLayoutSet();
-
 		clientExtensionEntryRels.addAll(
 			ClientExtensionEntryRelLocalServiceUtil.getClientExtensionEntryRels(
-				PortalUtil.getClassNameId(LayoutSet.class),
-				layoutSet.getLayoutSetId(), type));
+				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+				type));
 
 		return clientExtensionEntryRels;
 	}

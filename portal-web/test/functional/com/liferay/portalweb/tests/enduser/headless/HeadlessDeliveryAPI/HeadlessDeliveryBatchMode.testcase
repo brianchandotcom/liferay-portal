@@ -108,4 +108,46 @@ definition {
 		}
 	}
 
+	@disable-webdriver = "true"
+	@priority = "5"
+	test CanUpdateOneFieldOfBlogPostingWithBatchPutPartialUpdate {
+		property portal.acceptance = "true";
+
+		task ("Given a blogPosting created") {
+			var blogPostingId = BlogPostingAPI.getIdOfCreatedBlogPosting(
+				articleBody = "Blog Content",
+				headline = "Blog Headline");
+		}
+
+		task ("When I use PUT 'http://localhost:8080/o/headless-delivery/v1.0/blog-postings/batch?updateStrategy=PARTIAL_UPDATE with created blogPostingId body parameter and one other body parameter to update ") {
+			var response = BlogPostingAPI._updateOneBlogPostingBodyParameter(
+				blogPostingId = "${blogPostingId}",
+				bodyParameterKey = "headline",
+				bodyParameterValue = "Updated Headline",
+				updateStrategy = "PARTIAL_UPDATE");
+		}
+
+		task ("And When I check the status of the task with its id in the batch engine") {
+			var importTaskId = JSONUtil.getWithJSONPath("${response}", "$.id");
+
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = "${importTaskId}");
+		}
+
+		task ("Then I receive executeStatus: completed") {
+			TestUtils.assertEquals(
+				actual = "${executeStatus}",
+				expected = "COMPLETED");
+		}
+
+		task ("And Then the blog article body is updated") {
+			var response = BlogPostingAPI._getBlogPostings();
+
+			var blogPostingHeadline = BlogPostingAPI._getHeadlineOfExistingBlogPosting(response = "${response}");
+
+			TestUtils.assertEquals(
+				actual = "${blogPostingHeadline}",
+				expected = "Updated Headline");
+		}
+	}
+
 }

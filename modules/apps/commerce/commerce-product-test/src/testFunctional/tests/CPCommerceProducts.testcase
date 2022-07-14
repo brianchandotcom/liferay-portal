@@ -1189,18 +1189,14 @@ definition {
   			-H 'Content-Type: application/json' \
   			-d '{
       			    "name": {
-           		      "en_US": "Liferay AntiSamy"
+           		      "en_US": "Simple Product"
         		    },
-        			"description": {
-            		"en_US": "Liferay'\''s AntiSamy application protects against malicious code that users may pass intentionally or unintentionally to your portal via their content. The app filters on specific HTML/CSS code and removes suspect JavaScript from it. The application leverages the powerful OWASP AntiSamy library to enforce a content policy that'\''s been proven effective for the online auction site eBay. The app'\''s hook plugin adds an OWASP AntiSamy implementation to your portal'\''s list of existing sanitizer implementations. Liferay Portal uses the AntiSamy sanitizer and any existing configured sanitizers to scrub user input to blogs entries, calendar events, message boards posts, wiki pages, and web content articles.\n\nThis app uses OWASP AntiSamy 1.4.4 and is enabled upon the portal'\''s redeployment."
-        			},
-        			"externalReferenceCode": 15098872,
         			"catalogId": ${catalogId},
         			"active": true,
         			"productType": "simple",
         			"images": [   
            			 		      {
-                				    "src": "https://web.liferay.com/marketplace/-/mp/asset/icon/15098872/2.0.2?p_p_cacheability=cacheLevelPage",
+                				    "src": "${baseURL}/documents/d/guest/tree-png",
                 				    "title": {
                     	 		      "en_US": "icon"
                 				    }
@@ -1223,7 +1219,7 @@ definition {
 				key_src = "account",
 				locator1 = "CommerceEntry#PRODUCT_ENTRY_IMAGE");
 
-			CommerceNavigator.gotoEntry(entryName = "Liferay AntiSamy");
+			CommerceNavigator.gotoEntry(entryName = "Simple Product");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Media");
 

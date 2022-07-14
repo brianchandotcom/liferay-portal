@@ -1,6 +1,7 @@
 $toolbarHeight: 112px;
 $sidebarButtonHeight: $sidebarButtonWidth;
 $desktopToolbarHeight: 64px;
+$changeTrackingBarHeight: 23px;
 
 // z-indexes for children of page-editor-sidebar (which is a stacking context).
 
@@ -9,10 +10,19 @@ $zIndexContent: 0;
 
 html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 	display: flex;
-	height: calc(100vh - #{$desktopToolbarHeight});
+	height: calc(
+		100vh -
+			(
+				var(--control-menu-height) + var(--toolbar-height) +
+					var(--change-tracking-bar-height)
+			)
+	);
 	position: fixed;
 	right: 0;
-	top: $desktopToolbarHeight;
+	top: calc(
+		var(--control-menu-height) + var(--toolbar-height) +
+			var(--change-tracking-bar-height)
+	);
 	z-index: $sidebarZIndex;
 
 	&__buttons {
@@ -71,7 +81,13 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		border-left: 1px solid $cadmin-secondary-l3;
 		display: flex;
 		flex-direction: column;
-		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
+		height: calc(
+			100vh -
+				(
+					var(--control-menu-height) + var(--toolbar-height) +
+						var(--change-tracking-bar-height)
+				)
+		);
 		overflow-x: hidden;
 		position: fixed;
 		right: $sidebarButtonWidth;
@@ -83,33 +99,28 @@ html#{$cadmin-selector} .cadmin .page-editor__sidebar {
 		&--open {
 			transform: translateX(0);
 		}
-
-		@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
-			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
-		}
-
-		@include media-breakpoint-up(xl, $cadmin-grid-breakpoints) {
-			height: calc(
-				100vh - #{$desktopControlMenuHeight + $desktopToolbarHeight}
-			);
-		}
 	}
 }
 
-html#{$cadmin-selector} body.has-control-menu .cadmin .page-editor__sidebar {
-	height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
-	top: $controlMenuHeight + $toolbarHeight;
+html#{$cadmin-selector} body {
+	--toolbar-height: #{$toolbarHeight};
+	--change-tracking-bar-height: 0;
+	--control-menu-height: 0;
 
-	@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
-		height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
-		top: $desktopControlMenuHeight + $toolbarHeight;
+	&.has-control-menu {
+		--control-menu-height: #{$controlMenuHeight};
+
+		@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+			--control-menu-height: #{$desktopControlMenuHeight};
+		}
+	}
+
+	&.change-tracking-enabled {
+		--change-tracking-bar-height: #{$changeTrackingBarHeight};
 	}
 
 	@include media-breakpoint-up(xl, $cadmin-grid-breakpoints) {
-		height: calc(
-			100vh - #{$desktopControlMenuHeight + $desktopToolbarHeight}
-		);
-		top: $desktopControlMenuHeight + $desktopToolbarHeight;
+		--toolbar-height: #{$desktopToolbarHeight};
 	}
 }
 

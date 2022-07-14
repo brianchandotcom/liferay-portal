@@ -79,12 +79,10 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 
 		dlFileEntry = super.deleteFileEntry(dlFileEntry);
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-				dlFileEntry.getGroupId(),
-				_classNameLocalService.getClassNameId(FileEntry.class),
-				dlFileEntry.getFileEntryId());
-		}
+		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+			dlFileEntry.getGroupId(),
+			_classNameLocalService.getClassNameId(FileEntry.class),
+			dlFileEntry.getFileEntryId());
 
 		return dlFileEntry;
 	}

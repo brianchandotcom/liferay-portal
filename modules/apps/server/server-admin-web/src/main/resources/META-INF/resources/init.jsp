@@ -88,8 +88,7 @@ page import="java.util.TreeMap" %><%@
 page import="java.util.function.Function" %>
 
 <%@ page import="javax.portlet.PortletPreferences" %><%@
-page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.WindowState" %>
+page import="javax.portlet.PortletURL" %>
 
 <%@ page import="org.apache.logging.log4j.Level" %>
 

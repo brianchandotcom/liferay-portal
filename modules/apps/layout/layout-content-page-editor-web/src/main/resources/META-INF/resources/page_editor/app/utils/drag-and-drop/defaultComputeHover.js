@@ -19,6 +19,7 @@ import checkAllowedChild from './checkAllowedChild';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import {ORIENTATIONS} from './constants/orientations';
 import {TARGET_POSITIONS} from './constants/targetPositions';
+import getDropContainerId from './getDropContainerId';
 import getDropTargetPosition from './getDropTargetPosition';
 import getTargetData from './getTargetData';
 import getTargetPositions from './getTargetPositions';
@@ -95,6 +96,11 @@ export default function defaultComputeHover({
 		!itemIsAncestor(sourceItem, targetItem, layoutDataRef)
 	) {
 		return dispatch({
+			dropContainerId: getDropContainerId(
+				layoutDataRef.current,
+				targetItem,
+				targetPositionWithMiddle
+			),
 			dropItem: sourceItem,
 			dropTargetItem: targetItem,
 			droppable: checkAllowedChild(sourceItem, targetItem),
@@ -119,6 +125,11 @@ export default function defaultComputeHover({
 		!itemIsAncestor(sourceItem, siblingItem, layoutDataRef)
 	) {
 		return dispatch({
+			dropContainerId: getDropContainerId(
+				layoutDataRef.current,
+				siblingItem,
+				targetPositionWithMiddle
+			),
 			dropItem: sourceItem,
 			dropTargetItem: siblingItem,
 			droppable: true,

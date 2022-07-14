@@ -53,6 +53,11 @@ export const initialDragDrop = {
 	state: {
 
 		/**
+		 * Id of the closest container of drop item
+		 */
+		dropContainerId: null,
+
+		/**
 		 * Item that is being dragged
 		 */
 		dropItem: null,
@@ -99,6 +104,10 @@ export const initialDragDrop = {
 };
 
 const DragAndDropContext = React.createContext(initialDragDrop);
+
+export function useDropContainerId() {
+	return useContext(DragAndDropContext).state.dropContainerId;
+}
 
 export function useSetCanDrag() {
 	return useContext(DragAndDropContext).setCanDrag;

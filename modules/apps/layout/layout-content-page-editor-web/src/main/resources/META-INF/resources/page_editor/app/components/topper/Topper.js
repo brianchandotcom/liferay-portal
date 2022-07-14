@@ -17,7 +17,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {switchSidebarPanel} from '../../actions/index';
@@ -43,39 +43,12 @@ import moveItem from '../../thunks/moveItem';
 import {TARGET_POSITIONS} from '../../utils/drag-and-drop/constants/targetPositions';
 import {
 	useDragItem,
+	useDropContainerId,
 	useDropTarget,
 } from '../../utils/drag-and-drop/useDragAndDrop';
 import {useId} from '../../utils/useId';
-import {fromControlsId} from '../layout-data-items/Collection';
 import TopperItemActions from './TopperItemActions';
 import {TopperLabel} from './TopperLabel';
-
-function isItemHighlighted(item, layoutData, targetItemId, targetPosition) {
-	if (
-		(item.type === LAYOUT_DATA_ITEM_TYPES.container ||
-			item.type === LAYOUT_DATA_ITEM_TYPES.form) &&
-		item.itemId === targetItemId &&
-		targetPosition === TARGET_POSITIONS.MIDDLE
-	) {
-		return true;
-	}
-	else if (item.children.includes(fromControlsId(targetItemId))) {
-		return true;
-	}
-	else if (
-		item.type === LAYOUT_DATA_ITEM_TYPES.row ||
-		item.type === LAYOUT_DATA_ITEM_TYPES.fragment ||
-		item.type === LAYOUT_DATA_ITEM_TYPES.collection
-	) {
-		return item.children.some((childId) => {
-			const child = layoutData.items[childId];
-
-			return child.children.includes(fromControlsId(targetItemId));
-		});
-	}
-
-	return false;
-}
 
 const MemoizedTopperContent = React.memo(TopperContent);
 
@@ -115,22 +88,15 @@ function TopperContent({
 	const commentsPanelId = config.sidebarPanels?.comments?.sidebarPanelId;
 	const dispatch = useDispatch();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
-	const layoutData = useSelector((state) => state.layoutData);
 	const hoverItem = useHoverItem();
-	const {
-		isOverTarget,
-		targetItemId,
-		targetPosition,
-		targetRef,
-	} = useDropTarget(item);
+	const {isOverTarget, targetPosition, targetRef} = useDropTarget(item);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const selectItem = useSelectItem();
 	const topperLabelId = useId();
 
-	const isHighlighted = useMemo(
-		() => isItemHighlighted(item, layoutData, targetItemId, targetPosition),
-		[item, layoutData, targetItemId, targetPosition]
-	);
+	const dropContainerId = useDropContainerId();
+
+	const isHighlighted = dropContainerId === item.itemId;
 
 	const canBeDragged = canUpdatePageStructure && !editableProcessorUniqueId;
 

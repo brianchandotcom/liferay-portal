@@ -96,7 +96,13 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-cell-ws-nowrap"
+				cssClass="table-cell-expand table-cell-minw-200"
+				name="plugin-id"
+				value="<%= portlet.getPortletId() %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
 				name="active"
 				value='<%= LanguageUtil.get(request, (portlet.isActive() ? "yes" : "no")) %>'
 			/>

@@ -709,12 +709,40 @@ definition {
 	}
 
 	@description = "This test covers LPS-67282. It ensures that a user cannot rename the draft wiki page."
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CannotRenameDraftPage {
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
 
-		// TODO LPS-150264 CannotRenameDraftPage pending implementation
+		WikiNavigator.openToEditPage(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
 
+		WikiEntry.saveAsDraft();
+
+		WikiNavigator.openToWikiPage(
+			siteURLKey = "guest",
+			wikiNodeName = "Main",
+			wikiPageTitle = "Wiki Page Title");
+
+		WikiPage.renameWikiPageCP(
+			renameDraftWikiPage = "true",
+			wikiPageTitle = "Wiki Page Title",
+			wikiPageTitleRename = "Rename Wiki Page Title");
+
+		WikiNavigator.openToWikiNode(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
+
+		LexiconEntry.viewEntryName(rowEntry = "Wiki Page Title");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Rename Wiki Page Title");
 	}
 
 	@description = "This ensures that javascript can not be viewed in wiki page content."

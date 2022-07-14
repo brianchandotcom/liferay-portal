@@ -359,9 +359,7 @@ public class DDMDataDefinitionConverterImpl
 
 		ddmFormFieldOptionsValues.forEach(
 			ddmFormFieldOptionsValue -> ddmFormFieldOptions.addOptionReference(
-				ddmFormFieldOptionsValue,
-				ddmFormFieldOptionsValue.replaceAll(
-					"([\\p{Punct}|\\p{Space}$]|_)+", StringPool.BLANK)));
+				ddmFormFieldOptionsValue, ddmFormFieldOptionsValue));
 	}
 
 	private void _upgradeDecimalField(DDMFormField ddmFormField) {

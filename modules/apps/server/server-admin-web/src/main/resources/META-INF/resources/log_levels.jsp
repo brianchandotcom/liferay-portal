@@ -111,19 +111,19 @@ CreationMenu creationMenu =
 				String priority = (String)entry.getValue();
 				%>
 
-				<select name="<%= liferayPortletResponse.getNamespace() + "logLevel" + HtmlUtil.escapeAttribute(name) %>">
+				<aui:select label="" name='<%= liferayPortletResponse.getNamespace() + "logLevel" + HtmlUtil.escapeAttribute(name) %>' useNamespace="<%= false %>" wrapperCssClass="mb-0">
 
 					<%
 					for (int j = 0; j < _ALL_PRIORITIES.length; j++) {
 					%>
 
-						<option <%= priority.equals(_ALL_PRIORITIES[j]) ? "selected" : StringPool.BLANK %> value="<%= _ALL_PRIORITIES[j] %>"><%= _ALL_PRIORITIES[j] %></option>
+						<aui:option label="<%= _ALL_PRIORITIES[j] %>" selected="<%= priority.equals(_ALL_PRIORITIES[j]) %>" value="<%= _ALL_PRIORITIES[j] %>" />
 
 					<%
 					}
 					%>
 
-				</select>
+				</aui:select>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

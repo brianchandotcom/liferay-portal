@@ -883,6 +883,17 @@ definition {
 			configurationName = "OpenID Connect Provider Connection",
 			configurationScope = "Virtual Instance Scope");
 
+		while (IsElementNotPresent(key_rowEntry = "Google", locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME")) {
+
+			// Pausing due to LRQA-75772, wait for the config file deploy.
+
+			Pause(locator1 = "1000");
+
+			Refresh();
+
+			echo("Refreshed Page");
+		}
+
 		LexiconEntry.viewEntryName(rowEntry = "Google");
 
 		ApplicationsMenu.gotoPortlet(

@@ -107,10 +107,6 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 				FragmentEntryProcessorConstants.
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
-			if (configuration == null) {
-				continue;
-			}
-
 			JSONObject configurationJSONObject = JSONUtil.createJSONObject(
 				configuration);
 

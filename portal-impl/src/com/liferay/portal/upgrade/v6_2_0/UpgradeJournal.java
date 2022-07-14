@@ -935,10 +935,10 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 	}
 
 	protected void updatePreferencesClassPKs(
-			PortletPreferences preferences, String key)
+			PortletPreferences portletPreferences, String key)
 		throws Exception {
 
-		String[] oldValues = preferences.getValues(key, null);
+		String[] oldValues = portletPreferences.getValues(key, null);
 
 		if (oldValues == null) {
 			return;
@@ -970,7 +970,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			newValues[i] = newValue;
 		}
 
-		preferences.setValues(key, newValues);
+		portletPreferences.setValues(key, newValues);
 	}
 
 	protected void updateResourcePermission(
@@ -1132,44 +1132,47 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			String portletId, String xml)
 		throws Exception {
 
-		PortletPreferences preferences = PortletPreferencesFactoryUtil.fromXML(
-			companyId, ownerId, ownerType, plid, portletId, xml);
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.fromXML(
+				companyId, ownerId, ownerType, plid, portletId, xml);
 
 		if (portletId.startsWith(_PORTLET_ID_ASSET_PUBLISHER)) {
 			updatePreferencesClassPKs(
-				preferences, "anyClassTypeJournalArticleAssetRendererFactory");
-			updatePreferencesClassPKs(preferences, "classTypeIds");
+				portletPreferences,
+				"anyClassTypeJournalArticleAssetRendererFactory");
+			updatePreferencesClassPKs(portletPreferences, "classTypeIds");
 			updatePreferencesClassPKs(
-				preferences, "classTypeIdsJournalArticleAssetRendererFactory");
+				portletPreferences,
+				"classTypeIdsJournalArticleAssetRendererFactory");
 
 			// Moved from com.liferay.portal.upgrade.v6_2_0.
 			// UpgradeAssetPublisher to improve performance
 
-			upgradeRss(preferences);
-			upgradeScopeIds(preferences);
+			upgradeRss(portletPreferences);
+			upgradeScopeIds(portletPreferences);
 		}
 		else if (portletId.startsWith(_PORTLET_ID_JOURNAL_CONTENT)) {
-			String templateId = preferences.getValue(
+			String templateId = portletPreferences.getValue(
 				"templateId", StringPool.BLANK);
 
 			if (Validator.isNotNull(templateId)) {
-				preferences.reset("templateId");
+				portletPreferences.reset("templateId");
 
-				preferences.setValue("ddmTemplateKey", templateId);
+				portletPreferences.setValue("ddmTemplateKey", templateId);
 			}
 		}
 		else if (portletId.startsWith(_PORTLET_ID_JOURNAL_CONTENT_LIST)) {
-			String structureId = preferences.getValue(
+			String structureId = portletPreferences.getValue(
 				"structureId", StringPool.BLANK);
 
 			if (Validator.isNotNull(structureId)) {
-				preferences.reset("structureId");
+				portletPreferences.reset("structureId");
 
-				preferences.setValue("ddmStructureKey", structureId);
+				portletPreferences.setValue("ddmStructureKey", structureId);
 			}
 		}
 
-		return PortletPreferencesFactoryUtil.toXML(preferences);
+		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
 	protected void upgradeRss(PortletPreferences portletPreferences)

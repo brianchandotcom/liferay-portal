@@ -582,15 +582,24 @@ definition {
 
 		DepotNavigator.openDepotMembershipsAdmin(depotName = "Test Depot Name");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Assign Roles",
-			rowEntry = "userfn userln");
+		Depot.assignAssetLibraryRole(
+			checkAllRoles = "Asset Library Administrator,Asset Library Owner,Asset Library Content Reviewer",
+			resourceName = "userfn userln",
+			roleTitle = "Asset Library Owner");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Roles");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		for (var roleTitle : list "Asset Library Administrator,Asset Library Owner,Asset Library Content Reviewer") {
 			LexiconEntry.viewEntryName(rowEntry = "${roleTitle}");
 		}
+
+		LexiconCard.clickCardTitle(card = "Asset Library Owner");
+
+		SelectFrameTop();
+
+		LexiconCard.viewCardTitle(card = "userfn userln");
 	}
 
 	@description = "This ensures that an asset library role can be edited."

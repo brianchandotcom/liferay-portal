@@ -582,16 +582,18 @@
 		"label": "text",
 		"styles": [
 			{
+				"cssProperty": "font-family",
 				"cssTemplate": "font-family: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
+				"icon": "font-family",
 				"label": "font-family",
 				"name": "fontFamily",
 				"responsive": false,
 				"type": "select",
 				"validValues": [
 					{
-						"label": "default",
+						"label": "inherited",
 						"value": ""
 					},
 					{
@@ -612,16 +614,18 @@
 				]
 			},
 			{
+				"cssProperty": "font-weight",
 				"cssTemplate": "font-weight: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
+				"icon": "bold",
 				"label": "font-weight",
 				"name": "fontWeight",
 				"responsive": false,
 				"type": "select",
 				"validValues": [
 					{
-						"label": "default",
+						"label": "inherited",
 						"value": ""
 					},
 					{
@@ -652,16 +656,18 @@
 				]
 			},
 			{
+				"cssProperty": "font-size",
 				"cssTemplate": "font-size: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
+				"icon": "font-size",
 				"label": "font-size",
 				"name": "fontSize",
 				"responsive": false,
 				"type": "select",
 				"validValues": [
 					{
-						"label": "default",
+						"label": "inherited",
 						"value": ""
 					},
 					{
@@ -760,9 +766,11 @@
 				}
 			},
 			{
+				"cssProperty": "border-radius",
 				"cssTemplate": "border-radius: {value} !important;",
 				"dataType": "string",
 				"defaultValue": "",
+				"icon": "corner-radius",
 				"label": "border-radius",
 				"name": "borderRadius",
 				"responsive": false,
@@ -822,9 +830,11 @@
 				}
 			},
 			{
+				"cssProperty": "box-shadow",
 				"cssTemplate": "box-shadow: {value} !important;",
 				"dataType": "object",
 				"defaultValue": "",
+				"icon": "shadow",
 				"label": "shadow",
 				"name": "shadow",
 				"responsive": false,

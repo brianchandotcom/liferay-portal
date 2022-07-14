@@ -22,7 +22,6 @@ import {useCustomerPortal} from '../../../context';
 import {actionTypes} from '../../../context/reducer';
 import {PRODUCT_TYPES, SUBSCRIPTIONS_STATUS} from '../../../utils/constants';
 import {getWebContents} from '../../../utils/getWebContents';
-import OverviewSkeleton from './Skeleton';
 import SupportOverview from './components/SupportOverview/';
 
 const Overview = () => {
@@ -123,13 +122,10 @@ const Overview = () => {
 		}
 	}, [dispatch, project, subscriptionGroups]);
 
-	if (!project || !subscriptionGroups) {
-		return <OverviewSkeleton />;
-	}
-
 	const isPartnership =
 		selectedSubscriptionGroup === PRODUCT_TYPES.partnership ||
-		subscriptionGroups[0]?.name === PRODUCT_TYPES.partnership;
+		(subscriptionGroups &&
+			subscriptionGroups[0]?.name === PRODUCT_TYPES.partnership);
 
 	return (
 		<>
@@ -197,5 +193,4 @@ const Overview = () => {
 	);
 };
 
-Overview.Skeleton = OverviewSkeleton;
 export default Overview;

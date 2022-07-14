@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import SupportOverviewSkeleton from './Skeleton';
 import LiferayContact from './components/LiferayContact';
 import SlaCardsList from './components/SlaCardsList';
 
@@ -26,7 +25,5 @@ const SupportOverview = ({koroneikiAccount}) => (
 		</div>
 	</div>
 );
-
-SupportOverview.Skeleton = SupportOverviewSkeleton;
 
 export default SupportOverview;

@@ -15,6 +15,10 @@ import getSlaCard from '../utils/getSlaCard';
 
 const useSlaCards = (koroneikiAccount) =>
 	useMemo(() => {
+		if (!koroneikiAccount) {
+			return null;
+		}
+
 		const {
 			slaCurrent,
 			slaCurrentEndDate,

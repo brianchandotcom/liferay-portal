@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useCustomerPortal} from '../context';
-import Overview from './Project/Overview';
 import ProjectRoutes from './Project/routes/project.routes';
 
 const Pages = () => {
@@ -20,7 +20,7 @@ const Pages = () => {
 		return <ProjectRoutes />;
 	}
 
-	return <Overview.Skeleton />;
+	return <ClayLoadingIndicator />;
 };
 
 export default Pages;

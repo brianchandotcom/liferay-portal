@@ -47,47 +47,45 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 	<pre><%= HtmlUtil.escape(se.getMessage()) %></pre>
 </liferay-ui:error>
 
-<div class="server-admin-tabs">
-	<aui:fieldset-group markupView="lexicon">
-		<aui:select name="language">
+<aui:fieldset-group markupView="lexicon">
+	<aui:select name="language">
 
-			<%
-			for (String supportedLanguage : ScriptingUtil.getSupportedLanguages()) {
-			%>
+		<%
+		for (String supportedLanguage : ScriptingUtil.getSupportedLanguages()) {
+		%>
 
-				<aui:option label="<%= TextFormatter.format(supportedLanguage, TextFormatter.J) %>" selected="<%= supportedLanguage.equals(language) %>" value="<%= supportedLanguage %>" />
+			<aui:option label="<%= TextFormatter.format(supportedLanguage, TextFormatter.J) %>" selected="<%= supportedLanguage.equals(language) %>" value="<%= supportedLanguage %>" />
 
-			<%
-			}
-			%>
+		<%
+		}
+		%>
 
-		</aui:select>
+	</aui:select>
 
-		<aui:select name="output">
-			<aui:option label="text" selected='<%= output.equals("text") %>' value="text" />
-			<aui:option label="html" selected='<%= output.equals("html") %>' value="html" />
-		</aui:select>
+	<aui:select name="output">
+		<aui:option label="text" selected='<%= output.equals("text") %>' value="text" />
+		<aui:option label="html" selected='<%= output.equals("html") %>' value="html" />
+	</aui:select>
 
-		<aui:input cssClass="lfr-textarea-container" name="script" resizable="<%= true %>" type="textarea" value="<%= script %>" />
+	<aui:input cssClass="lfr-textarea-container" name="script" resizable="<%= true %>" type="textarea" value="<%= script %>" />
 
-		<aui:button-row>
-			<aui:button cssClass="save-server-button" data-cmd="runScript" primary="<%= true %>" value="execute" />
-		</aui:button-row>
-	</aui:fieldset-group>
+	<aui:button-row>
+		<aui:button cssClass="save-server-button" data-cmd="runScript" primary="<%= true %>" value="execute" />
+	</aui:button-row>
+</aui:fieldset-group>
 
-	<c:if test="<%= Validator.isNotNull(scriptOutput) %>">
-		<b><liferay-ui:message key="output" /></b>
+<c:if test="<%= Validator.isNotNull(scriptOutput) %>">
+	<b><liferay-ui:message key="output" /></b>
 
-		<c:choose>
-			<c:when test='<%= output.equals("html") %>'>
-				<div><%= scriptOutput %></div>
-			</c:when>
-			<c:otherwise>
-				<pre><%= HtmlUtil.escape(scriptOutput) %></pre>
-			</c:otherwise>
-		</c:choose>
-	</c:if>
-</div>
+	<c:choose>
+		<c:when test='<%= output.equals("html") %>'>
+			<div><%= scriptOutput %></div>
+		</c:when>
+		<c:otherwise>
+			<pre><%= HtmlUtil.escape(scriptOutput) %></pre>
+		</c:otherwise>
+	</c:choose>
+</c:if>
 
 <aui:script>
 	var <portlet:namespace />selectLanguage = document.getElementById(

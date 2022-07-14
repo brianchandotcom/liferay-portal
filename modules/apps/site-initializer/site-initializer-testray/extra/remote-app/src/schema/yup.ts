@@ -56,6 +56,22 @@ const yupSchema = {
 	option: yup.object({
 		name: yup.string(),
 	}),
+	password: yup.object({
+		confirmpassword: yup
+			.string()
+			.required()
+			.oneOf(
+				[yup.ref('password'), null],
+				i18n.translate('passwords-must-match')
+			),
+		password: yup
+			.string()
+			.required()
+			.matches(
+				/[a-zA-Z]/,
+				i18n.translate('password-can-only-contain-latin-letters')
+			),
+	}),
 	project: yup.object({
 		description: yup.string(),
 		name: yup.string().required(),

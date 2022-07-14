@@ -352,4 +352,81 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-151402. The user could see error message when submit a form with attached file size larger than allowed maximum upload size."
+	@priority = "4"
+	test ViewErrorMessageWhenSubmitFormWithAttachedFileSizeLargerThanAllowedMaximumUploadSize {
+		property test.name.skip.portal.instance = "FileUpload#ViewErrorMessageWhenSubmitFormWithAttachedFileSizeLargerThanAllowedMaximumUploadSize";
+
+		task ("Given a user has a content page where a File Upload and Submit Button fragments are inside a Form Container") {
+			task ("Change the Maximum File Size to 2 MB") {
+				ObjectAdmin.openObjectAdmin();
+
+				ObjectPortlet.selectCustomObject(label = "Upload Object");
+
+				ObjectAdmin.goToFieldsTab();
+
+				ObjectAdmin.goToFieldsDetails(label = "Custom Attachment From Computer");
+
+				Type(
+					key_text = "Maximum File Size",
+					locator1 = "TextInput#ANY",
+					value1 = "2");
+
+				ObjectField.save();
+			}
+
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+
+				PageEditor.editFormContainer(
+					contentType = "Upload Object",
+					panel = "General");
+			}
+
+			task ("Add a File Upload and Submit Button fragment into Form Container") {
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "File Upload");
+
+				PageEditor.addFragmentToFormContainer(
+					collectionName = "Form Components",
+					fragmentName = "Submit Button",
+					targetFragmentName = "File Upload");
+			}
+
+			task ("Map the File Upload fragment to an Attachment field") {
+				PageEditor.editInput(
+					field = "Custom Attachment From Computer",
+					fragmentName = "File Upload");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("When the user submits form with attached file size larger than allowed maximum upload size") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			UploadDependencyFile.uploadFile(fileName = "high_resolution_photo.jpg");
+
+			Button.clickSubmitButton();
+		}
+
+		task ("Then the user should see an error message") {
+			Alert.viewErrorMessage(errorMessage = "File size is larger than the allowed maximum upload size (2 MB).");
+		}
+	}
+
 }

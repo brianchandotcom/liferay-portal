@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.SourceUtil;
@@ -200,12 +199,8 @@ public class LibraryVersionCheck extends BaseFileCheck {
 
 			String queryArguments = StringBundler.concat(
 				"first: 100, package:\\\"", packageName, "\\\", ecosystem: ",
-				securityAdvisoryEcosystemEnum.name());
-
-			if (ListUtil.isNotNull(_severities)) {
-				queryArguments =
-					queryArguments + ", severities: " + _severities;
-			}
+				securityAdvisoryEcosystemEnum.name(), ", severities: ",
+				_severities);
 
 			if (Validator.isNotNull(cursor)) {
 				queryArguments += "after: \\\"" + cursor + "\\\"";

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,7 +40,7 @@ import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletContext;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -226,9 +227,11 @@ public class UpdateKBArticleMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getTemplatePath(PortletRequest portletRequest) {
-		PortletContext portletContext = portletRequest.getPortletContext();
+		PortletConfig portletConfig =
+			(PortletConfig)portletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		return portletContext.getInitParameter("template-path");
+		return portletConfig.getInitParameter("template-path");
 	}
 
 	@Reference

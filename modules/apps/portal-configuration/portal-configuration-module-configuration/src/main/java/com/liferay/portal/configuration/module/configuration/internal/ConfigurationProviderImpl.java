@@ -183,6 +183,16 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 	}
 
 	@Override
+	public <T> void saveGroupConfiguration(
+			long groupId, String pid, Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		_saveFactoryConfiguration(
+			pid,
+			ExtendedObjectClassDefinition.Scope.GROUP, groupId, properties);
+	}
+
+	@Override
 	public <T> void savePortletInstanceConfiguration(
 			Class<T> clazz, String portletId,
 			Dictionary<String, Object> properties)

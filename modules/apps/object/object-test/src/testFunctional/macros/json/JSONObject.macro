@@ -75,23 +75,148 @@ definition {
 			var indexedAsKeyword = "true";
 		}
 
-		var curl = '''
-			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
-			-H 'Content-Type: application/json' \
-			-u ${userEmailAddress}:${userPassword} \
-			-d '{
-			"DBType": "${fieldType}",
-			"businessType": "${fieldBusinessType}",
-			"indexed": ${indexed},
-			"indexedAsKeyword": ${indexedAsKeyword},
-			"label": {
-				"en_US": "${fieldLabelName}"
-			},
-			"listTypeDefinitionId": ${picklistId},
-			"name": "${fieldName}",
-			"required": ${isRequired}
-			}'
-		''';
+		if (!(isSet(showFilesInDocumentsAndMedia))) {
+			var showFilesInDocumentsAndMedia = "false";
+		}
+
+		if (!(isSet(storageDLFolderPath))) {
+			var storageDLFolderPath = StringUtil.removeSpaces("${objectName}");
+
+			var storageDLFolderPath = "/${storageDLFolderPath}";
+		}
+
+		if ("${fileSource}" == "userComputer") {
+			if ("${showFilesInDocumentsAndMedia}" == "false") {
+				var curl = '''
+					${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+					"DBType": "${fieldType}",
+					"businessType": "${fieldBusinessType}",
+					"indexed": ${indexed},
+					"indexedAsKeyword": ${indexedAsKeyword},
+					"label": {
+						"en_US": "${fieldLabelName}"
+					},
+					"listTypeDefinitionId": ${picklistId},
+					"name": "${fieldName}",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "jpeg, jpg, pdf, png"
+							},
+							{
+							"name": "maximumFileSize",
+							"value": "100"
+							},
+						{
+							"name": "fileSource",
+							"value": "userComputer"
+						},
+						{
+							"name": "showFilesInDocumentsAndMedia",
+							"value": "false"
+						}
+					],
+					"required": ${isRequired}
+					}'
+				''';
+			}
+			else {
+				var curl = '''
+					${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+					"DBType": "${fieldType}",
+					"businessType": "${fieldBusinessType}",
+					"indexed": ${indexed},
+					"indexedAsKeyword": ${indexedAsKeyword},
+					"label": {
+						"en_US": "${fieldLabelName}"
+					},
+					"listTypeDefinitionId": ${picklistId},
+					"name": "${fieldName}",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "jpeg, jpg, pdf, png"
+							},
+							{
+							"name": "maximumFileSize",
+							"value": "100"
+							},
+						{
+							"name": "fileSource",
+							"value": "userComputer"
+						},
+						{
+							"name": "showFilesInDocumentsAndMedia",
+							"value": "true"
+						},
+						{
+							"name": "storageDLFolderPath",
+							"value": "${storageDLFolderPath}"
+						}
+					],
+					"required": ${isRequired}
+					}'
+				''';
+			}
+		}
+		else if ("${fileSource}" == "documentsAndMedia") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+				"DBType": "${fieldType}",
+				"businessType": "${fieldBusinessType}",
+				"indexed": ${indexed},
+				"indexedAsKeyword": ${indexedAsKeyword},
+				"label": {
+					"en_US": "${fieldLabelName}"
+				},
+				"listTypeDefinitionId": ${picklistId},
+				"name": "${fieldName}",
+				"objectFieldSettings": [
+					{
+						"name": "acceptedFileExtensions",
+						"value": "jpeg, jpg, pdf, png"
+						},
+						{
+						"name": "maximumFileSize",
+						"value": "100"
+						},
+					{
+						"name": "fileSource",
+						"value": "documentsAndMedia"
+					}
+				],
+				"required": ${isRequired}
+				}'
+			''';
+		}
+		else {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+				"DBType": "${fieldType}",
+				"businessType": "${fieldBusinessType}",
+				"indexed": ${indexed},
+				"indexedAsKeyword": ${indexedAsKeyword},
+				"label": {
+					"en_US": "${fieldLabelName}"
+				},
+				"listTypeDefinitionId": ${picklistId},
+				"name": "${fieldName}",
+				"required": ${isRequired}
+				}'
+			''';
+		}
 
 		JSONCurlUtil.post("${curl}");
 	}

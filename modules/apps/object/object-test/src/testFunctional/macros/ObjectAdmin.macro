@@ -77,12 +77,14 @@ definition {
 			fieldLabelName = "${fieldLabelName}",
 			fieldName = "${fieldName}",
 			fieldType = "${fieldType}",
+			fileSource = "${fileSource}",
 			indexed = "${indexed}",
 			indexedAsKeyword = "${indexedAsKeyword}",
 			indexedLanguageId = "${indexedLanguageId}",
 			isRequired = "${isRequired}",
 			objectName = "${objectName}",
 			picklistName = "${picklistName}",
+			showFilesInDocumentsAndMedia = "${showFilesInDocumentsAndMedia}",
 			userEmailAddress = "${userEmailAddress}",
 			userPassword = "${userPassword}");
 	}

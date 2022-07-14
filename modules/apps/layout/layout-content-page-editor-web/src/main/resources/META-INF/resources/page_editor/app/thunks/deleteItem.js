@@ -98,8 +98,12 @@ function findPortletIds(itemId, layoutData, fragmentEntryLinks) {
 			config.fragmentEntryLinkId
 		];
 
-		if (editableValues.portletId && !editableValues.instanceId) {
-			return [editableValues.portletId];
+		if (editableValues.portletId) {
+			return [
+				editableValues.instanceId
+					? `${editableValues.portletId}_INSTANCE_${editableValues.instanceId}`
+					: editableValues.portletId,
+			];
 		}
 	}
 

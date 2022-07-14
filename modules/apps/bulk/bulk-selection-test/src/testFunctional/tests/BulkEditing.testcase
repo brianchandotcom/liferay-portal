@@ -65,12 +65,45 @@ definition {
 	}
 
 	@description = "This test covers LPS-91749. It ensures that a user can edit tags by using the bulk append action for checked out document files."
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditAndAppendTagForCheckedOutFiles {
+		for (var entryCount : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}.doc",
+				groupName = "Guest",
+				mimeType = "application/msword",
+				sourceFileName = "Document_${entryCount}.doc");
+		}
 
-		// TODO LPS-149965 CanEditAndAppendTagsForCheckedOutFiles pending implementation
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1.doc,Document_2.doc");
+
+		DMDocument.checkoutViaManagementBar();
+
+		DMDocument.selectDocuments(dmDocumentTitle = "Document_1.doc,Document_2.doc");
+
+		Click(locator1 = "Icon#EDIT_TAGS");
+
+		DMDocument.editTags(
+			itemNumber = "2",
+			multipleDocuments = "true",
+			tagName = "newtag");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1.doc",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewTagInfo(tagName = "newtag");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_2.doc",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewTagInfo(tagName = "newtag");
 	}
 
 	@description = "This test covers LPS-94956. It ensures that users can delete common category tags by using the bulk append action."

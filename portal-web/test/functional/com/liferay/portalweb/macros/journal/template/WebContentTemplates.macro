@@ -53,18 +53,18 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			var key_ddlDataDefinitionName = "${structureName}";
+			var key_tableEntry = "${structureName}";
 
-			AssertElementPresent(locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK");
+			AssertElementPresent(locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
 
 			var browserType = PropsUtil.get("browser.type");
 
 			if ("${browserType}" == "safari") {
-				Click.javaScriptClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK");
+				Click.javaScriptClick(locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
 			}
 			else {
 				AssertClick.assertTextClickAt(
-					locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
+					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",
 					value1 = "${structureName}");
 			}
 

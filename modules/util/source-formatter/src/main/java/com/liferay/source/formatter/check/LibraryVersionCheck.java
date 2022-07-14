@@ -156,7 +156,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		if (!_vulnerableVersionMap.containsKey(packageName)) {
 			_generateVulnerableVersionMap(
 				packageName, securityAdvisoryEcosystemEnum,
-				getAttributeValues(_QUERY_ARGUMENTS_SEVERITIES, absolutePath));
+				getAttributeValues(_SEVERITIES, absolutePath));
 		}
 
 		_checkVulnerabilities(
@@ -240,7 +240,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 			String queryArguments = StringBundler.concat(
 				"first: 100, package:\\\"", packageName, "\\\", ecosystem: ",
 				securityAdvisoryEcosystemEnum.name(), ", severities: ",
-				_severities);
+				severities);
 
 			if (Validator.isNotNull(cursor)) {
 				queryArguments += "after: \\\"" + cursor + "\\\"";
@@ -549,8 +549,7 @@ public class LibraryVersionCheck extends BaseFileCheck {
 		}
 	}
 
-	private static final String _QUERY_ARGUMENTS_SEVERITIES =
-		"queryArgumentsSeverities";
+	private static final String _SEVERITIES = "severities";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LibraryVersionCheck.class);
@@ -562,7 +561,6 @@ public class LibraryVersionCheck extends BaseFileCheck {
 	private static final Pattern _gradleVersionPattern = Pattern.compile(
 		"version: \"([^,\n\\\\)]+)\"");
 
-	private List<String> _severities;
 	private final Map<String, List<SecurityVulnerabilityNode>>
 		_vulnerableVersionMap = new ConcurrentHashMap<>();
 

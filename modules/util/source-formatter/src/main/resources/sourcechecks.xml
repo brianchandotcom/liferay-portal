@@ -1244,10 +1244,7 @@
 		<check name="LibraryVersionCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks the introduction of libraries and third party components with known vulnerabilities" />
-
-			<!-- Severity of the vulnerability CRITICAL, HIGH, LOW, MODERATE -->
-
-			<property name="queryArgumentsSeverities" value="CRITICAL" />
+			<property name="enabled" value="false" />
 		</check>
 	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">

@@ -75,7 +75,8 @@ public class DispatchServiceUpgradeStepRegistrator
 		registry.register(
 			"4.0.0", "4.0.1",
 			UpgradeProcessFactory.alterColumnType(
-				"DispatchTrigger", "dispatchTaskExecutorType", "VARCHAR(75) null"),
+				"DispatchTrigger", "dispatchTaskExecutorType",
+				"VARCHAR(75) null"),
 			UpgradeProcessFactory.alterColumnType(
 				"DispatchTrigger", "dispatchTaskSettings", "TEXT null"));
 
